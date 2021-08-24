@@ -42,6 +42,7 @@ import org.jetbrains.annotations.*;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -59,7 +60,7 @@ public interface JSONTableColumnsFirstStep {
      * <code>JSON_TABLE</code> expression.
      */
     @NotNull
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     JSONTableColumnForOrdinalityStep column(String name);
 
     /**
@@ -67,7 +68,7 @@ public interface JSONTableColumnsFirstStep {
      * <code>JSON_TABLE</code> expression.
      */
     @NotNull
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     JSONTableColumnForOrdinalityStep column(Name name);
 
     /**
@@ -75,7 +76,7 @@ public interface JSONTableColumnsFirstStep {
      * <code>JSON_TABLE</code> expression.
      */
     @NotNull
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     JSONTableColumnPathStep column(Field<?> name);
 
     /**
@@ -83,7 +84,7 @@ public interface JSONTableColumnsFirstStep {
      * <code>JSON_TABLE</code> expression.
      */
     @NotNull
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     JSONTableColumnPathStep column(String name, DataType<?> type);
 
     /**
@@ -91,7 +92,7 @@ public interface JSONTableColumnsFirstStep {
      * <code>JSON_TABLE</code> expression.
      */
     @NotNull
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     JSONTableColumnPathStep column(Name name, DataType<?> type);
 
     /**
@@ -99,7 +100,7 @@ public interface JSONTableColumnsFirstStep {
      * <code>JSON_TABLE</code> expression.
      */
     @NotNull
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     JSONTableColumnPathStep column(Field<?> name, DataType<?> type);
 
 }

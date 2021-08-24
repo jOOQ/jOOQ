@@ -67,6 +67,7 @@ import static org.jooq.SQLDialect.MARIADB;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
@@ -23246,7 +23247,7 @@ public class DSL {
      * The JSON table function.
      */
     @NotNull
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static JSONTableColumnsFirstStep jsonTable(JSON json, String path) {
         return jsonTable(Tools.field(json), Tools.field(path));
     }
@@ -23255,7 +23256,7 @@ public class DSL {
      * The JSON table function.
      */
     @NotNull
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static JSONTableColumnsFirstStep jsonTable(Field<JSON> json, Field<String> path) {
         return new JSONTable(Tools.nullSafe(json), Tools.nullSafe(path));
     }
@@ -23264,7 +23265,7 @@ public class DSL {
      * The JSON table function.
      */
     @NotNull
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static JSONTableColumnsFirstStep jsonbTable(JSONB json, String path) {
         return jsonbTable(Tools.field(json), Tools.field(path));
     }
@@ -23273,7 +23274,7 @@ public class DSL {
      * The JSON table function.
      */
     @NotNull
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static JSONTableColumnsFirstStep jsonbTable(Field<JSONB> json, Field<String> path) {
         return new JSONTable(Tools.nullSafe(json), Tools.nullSafe(path));
     }

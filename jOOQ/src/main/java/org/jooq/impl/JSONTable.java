@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
@@ -75,9 +76,7 @@ import org.jooq.Name;
 // ...
 import org.jooq.Record;
 import org.jooq.SQLDialect;
-import org.jooq.SelectField;
 import org.jooq.TableOptions;
-import org.jooq.conf.ParamType;
 
 /**
  * @author Lukas Eder
@@ -86,7 +85,7 @@ final class JSONTable
 extends AbstractTable<Record>
 implements
     JSONTableColumnPathStep {
-    private static final Set<SQLDialect>         REQUIRES_COLUMN_PATH = SQLDialect.supportedBy(MYSQL);
+    private static final Set<SQLDialect>         REQUIRES_COLUMN_PATH = SQLDialect.supportedBy(MARIADB, MYSQL);
 
 
 

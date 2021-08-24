@@ -168,6 +168,7 @@ final class Limit extends AbstractQueryPart {
             case DERBY:
             case FIREBIRD:
             case H2:
+            case MARIADB:
             case POSTGRES: {
 
                 // [#8415] For backwards compatibility reasons, we generate standard
@@ -276,7 +277,6 @@ final class Limit extends AbstractQueryPart {
 
 
             // [#4785] OFFSET cannot be without LIMIT
-            case MARIADB:
 
 
 

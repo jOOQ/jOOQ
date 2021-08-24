@@ -329,7 +329,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2, POSTGRES);
+    private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2, MARIADB, POSTGRES);
     private static final Set<SQLDialect> EMULATE_DISTINCT_ON             = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
     static final Set<SQLDialect>         NO_SUPPORT_FOR_UPDATE_OF_FIELDS = SQLDialect.supportedBy(MYSQL, POSTGRES);
 
@@ -1767,7 +1767,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 case CUBRID:
                 case FIREBIRD:
-                case MARIADB:
                 case MYSQL: {
                     if (getLimit().isApplicable() && getLimit().withTies())
                         toSQLReferenceLimitWithWindowFunctions(context);
@@ -3824,7 +3823,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             // [#12328] Don't recurse into the RHS if the join does not affect the projection
             j -> j.type != JoinType.LEFT_ANTI_JOIN && j.type != JoinType.LEFT_SEMI_JOIN,
             null,
-            
+
             // TODO: PostgreSQL supports tables without columns, see e.g.
             // https://blog.jooq.org/creating-tables-dum-and-dee-in-postgresql/
             (r, t) -> r && t.fieldsRow().size() > 0

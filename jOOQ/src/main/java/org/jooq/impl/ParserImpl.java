@@ -706,8 +706,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 case 'D':
                     if (!parseResultQuery && peekKeyword("DECLARE") && requireProEdition())
                         return result = parseBlock(true);
-                    else if (!parseResultQuery && (peekKeyword("DELETE") || peekKeyword("DEL")))
-                        return result = parseDelete(null);
+                    else if (!parseSelect && (peekKeyword("DELETE") || peekKeyword("DEL")))
+                        return result = parseDelete(null, parseResultQuery);
                     else if (!parseResultQuery && peekKeyword("DROP"))
                         return result = metaLookupsForceIgnore(true).parseDrop();
                     else if (!parseResultQuery && peekKeyword("DO"))
@@ -735,8 +735,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     break;
 
                 case 'I':
-                    if (!parseResultQuery && (peekKeyword("INSERT") || peekKeyword("INS")))
-                        return result = parseInsert(null);
+                    if (!parseSelect && (peekKeyword("INSERT") || peekKeyword("INS")))
+                        return result = parseInsert(null, parseResultQuery);
 
                     break;
 
@@ -789,8 +789,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     break;
 
                 case 'U':
-                    if (!parseResultQuery && (peekKeyword("UPDATE") || peekKeyword("UPD")))
-                        return result = parseUpdate(null);
+                    if (!parseSelect && (peekKeyword("UPDATE") || peekKeyword("UPD")))
+                        return result = parseUpdate(null, parseResultQuery);
                     else if (!parseResultQuery && peekKeyword("USE"))
                         return result = parseUse();
                     else if (parseKeywordIf("UPSERT"))
@@ -876,20 +876,20 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             boolean materialized = parseKeywordIf("MATERIALIZED");
             boolean notMaterialized = !materialized && parseKeywordIf("NOT MATERIALIZED");
             parse('(');
-            Select<?> select = parseWithOrSelect();
+            ResultQuery<?> resultQuery = (ResultQuery<?>) parseQuery(true, false);
             parse(')');
 
             cte.add(dcl != null
                 ? materialized
-                    ? dcl.asMaterialized(select)
+                    ? dcl.asMaterialized(resultQuery)
                     : notMaterialized
-                    ? dcl.asNotMaterialized(select)
-                    : dcl.as(select)
+                    ? dcl.asNotMaterialized(resultQuery)
+                    : dcl.as(resultQuery)
                 : materialized
-                    ? name.asMaterialized(select)
+                    ? name.asMaterialized(resultQuery)
                     : notMaterialized
-                    ? name.asNotMaterialized(select)
-                    : name.as(select)
+                    ? name.asNotMaterialized(resultQuery)
+                    : name.as(resultQuery)
             );
         }
         while (parseIf(','));
@@ -898,15 +898,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         WithImpl with = (WithImpl) new WithImpl(dsl.configuration(), recursive).with(cte.toArray(EMPTY_COMMON_TABLE_EXPRESSION));
         Query result;
         if (!parseSelect && (peekKeyword("DELETE") || peekKeyword("DEL")))
-            result = parseDelete(with);
+            result = parseDelete(with, false);
         else if (!parseSelect && (peekKeyword("INSERT") || peekKeyword("INS")))
-            result = parseInsert(with);
+            result = parseInsert(with, false);
         else if (!parseSelect && peekKeyword("MERGE"))
             result = parseMerge(with);
         else if (peekSelect(true))
             result = parseSelect(degree, with);
         else if (!parseSelect && (peekKeyword("UPDATE") || peekKeyword("UPD")))
-            result = parseUpdate(with);
+            result = parseUpdate(with, false);
         else if ((parseWhitespaceIf() || true) && done())
             throw exception("Missing statement after WITH");
         else
@@ -1732,7 +1732,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return null;
     }
 
-    private final Query parseDelete(WithImpl with) {
+    private final Query parseDelete(WithImpl with, boolean parseResultQuery) {
         parseKeyword("DELETE", "DEL");
         Param<Long> limit = null;
 
@@ -1756,10 +1756,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         DeleteReturningStep<?> s5 = (limit != null || parseKeywordIf("LIMIT"))
             ? s4.limit(limit != null ? limit : requireParam(parseParenthesisedUnsignedIntegerOrBindVariable()))
             : s4;
-        return parseKeywordIf("RETURNING") ? s5.returning(parseSelectList()) : s5;
+        return (parseResultQuery ? parseKeyword("RETURNING") : parseKeywordIf("RETURNING"))
+            ? s5.returning(parseSelectList())
+            : s5;
     }
 
-    private final Query parseInsert(WithImpl with) {
+    private final Query parseInsert(WithImpl with, boolean parseResultQuery) {
         scopeStart();
         parseKeyword("INSERT", "INS");
         parseKeywordIf("INTO");
@@ -1908,17 +1910,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     throw expected("CONFLICT", "DUPLICATE");
             }
 
-            if (parseKeywordIf("RETURNING"))
-                return returning.returning(parseSelectList());
-            else
-                return returning;
+            return (parseResultQuery ? parseKeyword("RETURNING") : parseKeywordIf("RETURNING"))
+                ? returning.returning(parseSelectList())
+                : returning;
         }
         finally {
             scopeEnd(((InsertImpl) s1).getDelegate());
         }
     }
 
-    private final Query parseUpdate(WithImpl with) {
+    private final Query parseUpdate(WithImpl with, boolean parseResultQuery) {
         parseKeyword("UPDATE", "UPD");
         Param<Long> limit = null;
 
@@ -1967,7 +1968,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         UpdateReturningStep<?> s6 = (limit != null || parseKeywordIf("LIMIT"))
             ? s5.limit(limit != null ? limit : requireParam(parseParenthesisedUnsignedIntegerOrBindVariable()))
             : s5;
-        return parseKeywordIf("RETURNING") ? s6.returning(parseSelectList()) : s6;
+        return (parseResultQuery ? parseKeyword("RETURNING") : parseKeywordIf("RETURNING"))
+            ? s6.returning(parseSelectList())
+            : s6;
     }
 
     private final Map<Field<?>, Object> parseSetClauseList() {

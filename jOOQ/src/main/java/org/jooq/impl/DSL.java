@@ -10899,7 +10899,7 @@ public class DSL {
      * {@link Delete} statement was applied.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2 })
     public static <R extends Record> Table<R> oldTable(Update<R> query) {
         return new DataChangeDeltaTable<>(ResultOption.OLD, query);
     }
@@ -10921,7 +10921,7 @@ public class DSL {
      * {@link Delete} statement was applied.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2 })
     public static <R extends Record> Table<R> oldTable(Merge<R> query) {
         return new DataChangeDeltaTable<>(ResultOption.OLD, query);
     }
@@ -10931,10 +10931,11 @@ public class DSL {
      * retrieve the modified data from after the {@link Update} or
      * {@link Insert} statement was applied.
      * <p>
-     * This does not include trigger generated values.
+     * Depending on the dialect, this may show transitive data prior to
+     * referential integrity validation and the firing of any after triggers.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2 })
     public static <R extends Record> Table<R> newTable(Insert<R> query) {
         return new DataChangeDeltaTable<R>(ResultOption.NEW, query);
     }
@@ -10944,10 +10945,11 @@ public class DSL {
      * retrieve the modified data from after the {@link Update} or
      * {@link Insert} statement was applied.
      * <p>
-     * This does not include trigger generated values.
+     * Depending on the dialect, this may show transitive data prior to
+     * referential integrity validation and the firing of any after triggers.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2 })
     public static <R extends Record> Table<R> newTable(Update<R> query) {
         return new DataChangeDeltaTable<R>(ResultOption.NEW, query);
     }
@@ -10957,10 +10959,11 @@ public class DSL {
      * retrieve the modified data from after the {@link Update} or
      * {@link Insert} statement was applied.
      * <p>
-     * This does not include trigger generated values.
+     * Depending on the dialect, this may show transitive data prior to
+     * referential integrity validation and the firing of any after triggers.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2 })
     public static <R extends Record> Table<R> newTable(Merge<R> query) {
         return new DataChangeDeltaTable<R>(ResultOption.NEW, query);
     }
@@ -10970,7 +10973,10 @@ public class DSL {
      * retrieve the modified data from after the {@link Update} or
      * {@link Insert} statement was applied.
      * <p>
-     * This includes trigger generated values.
+     * Depending on the dialect, this may show data after all referential
+     * integrity validation and all triggers have been executed or fired,
+     * meaning there will be no more additional modification to the "final"
+     * version of the modified data.
      */
     @NotNull
     @Support({ H2, POSTGRES })
@@ -10983,7 +10989,10 @@ public class DSL {
      * retrieve the modified data from after the {@link Update} or
      * {@link Insert} statement was applied.
      * <p>
-     * This includes trigger generated values.
+     * Depending on the dialect, this may show data after all referential
+     * integrity validation and all triggers have been executed or fired,
+     * meaning there will be no more additional modification to the "final"
+     * version of the modified data.
      */
     @NotNull
     @Support({ H2, POSTGRES })
@@ -10996,10 +11005,13 @@ public class DSL {
      * retrieve the modified data from after the {@link Update} or
      * {@link Insert} statement was applied.
      * <p>
-     * This includes trigger generated values.
+     * Depending on the dialect, this may show data after all referential
+     * integrity validation and all triggers have been executed or fired,
+     * meaning there will be no more additional modification to the "final"
+     * version of the modified data.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2 })
     public static <R extends Record> Table<R> finalTable(Merge<R> query) {
         return new DataChangeDeltaTable<>(ResultOption.FINAL, query);
     }

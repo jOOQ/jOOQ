@@ -50,7 +50,9 @@ import org.jooq.DMLQuery;
 import org.jooq.Delete;
 import org.jooq.Insert;
 import org.jooq.Merge;
+import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.Update;
@@ -59,18 +61,28 @@ import org.jooq.Update;
 /**
  * @author Lukas Eder
  */
-final class DataChangeDeltaTable<R extends Record> extends AbstractTable<R> {
+final class DataChangeDeltaTable<R extends Record> extends AbstractTable<R> implements AutoAliasTable<R> {
 
     private final ResultOption result;
     private final DMLQuery<R>  query;
     private final Table<R>     table;
+    private final Name         alias;
 
     DataChangeDeltaTable(ResultOption result, DMLQuery<R> query) {
-        super(TableOptions.expression(), table(query).getUnqualifiedName());
+        this(result, query, table(query));
+    }
+
+    private DataChangeDeltaTable(ResultOption result, DMLQuery<R> query, Table<R> table) {
+        this(result, query, table, table.getUnqualifiedName());
+    }
+
+    private DataChangeDeltaTable(ResultOption result, DMLQuery<R> query, Table<R> table, Name alias) {
+        super(TableOptions.expression(), alias);
 
         this.result = result;
         this.query = query;
-        this.table = table(query);
+        this.table = table;
+        this.alias = alias;
     }
 
     enum ResultOption {
@@ -111,6 +123,21 @@ final class DataChangeDeltaTable<R extends Record> extends AbstractTable<R> {
     // -------------------------------------------------------------------------
 
     @Override
+    public Table<R> as(Name as) {
+        return new TableAlias<>(new DataChangeDeltaTable<>(result, query, table, as), as);
+    }
+
+    @Override
+    public Table<R> as(Name as, Name... fieldAliases) {
+        return new TableAlias<>(new DataChangeDeltaTable<>(result, query, table, as), as, fieldAliases);
+    }
+
+    @Override
+    public final Table<R> autoAlias(Context<?> ctx) {
+        return as(alias);
+    }
+
+    @Override
     public final Class<? extends R> getRecordType() {
         return table.getRecordType();
     }
@@ -118,6 +145,6 @@ final class DataChangeDeltaTable<R extends Record> extends AbstractTable<R> {
     @SuppressWarnings("unchecked")
     @Override
     final FieldsImpl<R> fields0() {
-        return ((AbstractRow<R>) table.fieldsRow()).fields;
+        return ((AbstractRow<R>) table.as(alias).fieldsRow()).fields;
     }
 }

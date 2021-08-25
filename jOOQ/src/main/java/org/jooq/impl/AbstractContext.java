@@ -55,11 +55,13 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION
 
 import java.sql.PreparedStatement;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Deque;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -801,7 +803,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public final DecimalFormat floatFormat() {
         if (floatFormat == null)
-            floatFormat = new DecimalFormat("0.#######E0");
+            floatFormat = new DecimalFormat("0.#######E0", DecimalFormatSymbols.getInstance(Locale.US));
 
         return floatFormat;
     }
@@ -809,7 +811,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public final DecimalFormat doubleFormat() {
         if (doubleFormat == null)
-            doubleFormat = new DecimalFormat("0.################E0");
+            doubleFormat = new DecimalFormat("0.################E0", DecimalFormatSymbols.getInstance(Locale.US));
 
         return doubleFormat;
     }

@@ -39,11 +39,20 @@ package org.jooq.impl;
 
 
 
+// ...
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.resultQuery;
 import static org.jooq.impl.Keywords.K_FINAL;
 import static org.jooq.impl.Keywords.K_NEW;
 import static org.jooq.impl.Keywords.K_OLD;
+import static org.jooq.impl.Keywords.K_RETURNING;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Tools.abstractDMLQuery;
+import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
+
+import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.DMLQuery;
@@ -52,7 +61,7 @@ import org.jooq.Insert;
 import org.jooq.Merge;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Record1;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.Update;
@@ -63,10 +72,12 @@ import org.jooq.Update;
  */
 final class DataChangeDeltaTable<R extends Record> extends AbstractTable<R> implements AutoAliasTable<R> {
 
-    private final ResultOption result;
-    private final DMLQuery<R>  query;
-    private final Table<R>     table;
-    private final Name         alias;
+    private final Set<SQLDialect> EMULATE_USING_CTE = SQLDialect.supportedBy(POSTGRES);
+
+    private final ResultOption    result;
+    private final DMLQuery<R>     query;
+    private final Table<R>        table;
+    private final Name            alias;
 
     DataChangeDeltaTable(ResultOption result, DMLQuery<R> query) {
         this(result, query, table(query));
@@ -105,6 +116,29 @@ final class DataChangeDeltaTable<R extends Record> extends AbstractTable<R> impl
 
     @Override
     public final void accept(Context<?> ctx) {
+        if (EMULATE_USING_CTE.contains(ctx.dialect()))
+            acceptCte(ctx);
+        else
+            acceptNative(ctx);
+    }
+
+    private final void acceptCte(Context<?> ctx) {
+        TopLevelCte cte = (TopLevelCte) ctx.data(DATA_TOP_LEVEL_CTE);
+        cte.add(name(alias).as(
+            resultQuery("{0}",
+
+                // TODO: Immutable QueryParts would be really useful here, to add a RETURNING clause to a query without mutating it
+                CustomQueryPart.of(c2 -> {
+                    c2.visit(query).formatSeparator()
+                        .visit(K_RETURNING).sql(' ').visit(new SelectFieldList<>(table.fields()));
+                })
+            )
+        ));
+
+        ctx.visit(DSL.table(alias));
+    }
+
+    private final void acceptNative(Context<?> ctx) {
         switch (result) {
             case FINAL: ctx.visit(K_FINAL); break;
             case OLD: ctx.visit(K_OLD); break;

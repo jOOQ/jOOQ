@@ -3491,6 +3491,15 @@ final class Tools {
             return null;
     }
 
+    static final InsertQueryImpl<?> insertQueryImpl(Query query) {
+        AbstractDMLQuery<?> result = abstractDMLQuery(query);
+
+        if (result instanceof InsertQueryImpl)
+            return (InsertQueryImpl<?>) result;
+        else
+            return null;
+    }
+
     static final UpdateQueryImpl<?> updateQueryImpl(Query query) {
         AbstractDMLQuery<?> result = abstractDMLQuery(query);
 

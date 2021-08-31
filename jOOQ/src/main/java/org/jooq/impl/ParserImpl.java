@@ -110,6 +110,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -474,22 +475,24 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     static final Set<SQLDialect>         SUPPORTS_HASH_COMMENT_SYNTAX  = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     final Queries parse() {
-        List<Query> result = new ArrayList<>();
-        Query query;
+        return wrap(() -> {
+            List<Query> result = new ArrayList<>();
+            Query query;
 
-        do {
-            parseDelimiterSpecifications();
-            while (parseDelimiterIf(false));
+            do {
+                parseDelimiterSpecifications();
+                while (parseDelimiterIf(false));
 
-            query = patchParsedQuery(parseQuery(false, false));
-            if (query == IGNORE || query == IGNORE_NO_DELIMITER)
-                continue;
-            if (query != null)
-                result.add(query);
-        }
-        while (parseDelimiterIf(true) && !done());
+                query = patchParsedQuery(parseQuery(false, false));
+                if (query == IGNORE || query == IGNORE_NO_DELIMITER)
+                    continue;
+                if (query != null)
+                    result.add(query);
+            }
+            while (parseDelimiterIf(true) && !done());
 
-        return done("Unexpected token or missing query delimiter", dsl.queries(result));
+            return done("Unexpected token or missing query delimiter", dsl.queries(result));
+        });
     }
 
     private static final Pattern P_SEARCH_PATH = Pattern.compile("(?i:select\\s+(pg_catalog\\s*\\.\\s*)?set_config\\s*\\(\\s*'search_path'\\s*,\\s*'([^']*)'\\s*,\\s*\\w+\\s*\\))");
@@ -527,12 +530,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     final Query parseQuery0() {
-        return done("Unexpected clause", parseQuery(false, false));
+        return wrap(() -> done("Unexpected clause", parseQuery(false, false)));
     }
 
     final Statement parseStatement0() {
-        return this.done("Unexpected content", parseStatementAndSemicolonIf());
+        return wrap(() -> done("Unexpected content", parseStatementAndSemicolonIf()));
     }
+
+
 
 
 
@@ -551,31 +556,31 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
     final ResultQuery<?> parseResultQuery0() {
-        return done("Unexpected content after end of query input", (ResultQuery<?>) parseQuery(true, false));
+        return wrap(() -> done("Unexpected content after end of query input", (ResultQuery<?>) parseQuery(true, false)));
     }
 
     final Select<?> parseSelect0() {
-        return done("Unexpected content after end of query input", (Select<?>) parseQuery(true, true));
+        return wrap(() -> done("Unexpected content after end of query input", (Select<?>) parseQuery(true, true)));
     }
 
     final Table<?> parseTable0() {
-        return done("Unexpected content after end of table input", parseTable());
+        return wrap(() -> done("Unexpected content after end of table input", parseTable()));
     }
 
     final Field<?> parseField0() {
-        return done("Unexpected content after end of field input", parseField());
+        return wrap(() -> done("Unexpected content after end of field input", parseField()));
     }
 
     final Row parseRow0() {
-        return done("Unexpected content after end of row input", parseRow());
+        return wrap(() -> done("Unexpected content after end of row input", parseRow()));
     }
 
     final Condition parseCondition0() {
-        return done("Unexpected content after end of condition input", parseCondition());
+        return wrap(() -> done("Unexpected content after end of condition input", parseCondition()));
     }
 
     final Name parseName0() {
-        return done("Unexpected content after end of name input", parseName());
+        return wrap(() -> done("Unexpected content after end of name input", parseName()));
     }
 
 
@@ -1226,7 +1231,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return lhs;
     }
 
-    private SelectQueryImpl<Record> degreeCheck(int expected, SelectQueryImpl<Record> s) {
+    private final SelectQueryImpl<Record> degreeCheck(int expected, SelectQueryImpl<Record> s) {
         if (expected == 0)
             return s;
 
@@ -13427,6 +13432,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+
         parseWhitespaceIf();
     }
 
@@ -13705,6 +13711,30 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return notify(result);
         else
             throw exception(message);
+    }
+
+    private final <Q extends QueryPart> Q wrap(Supplier<Q> supplier) {
+        ParserException suppressed = null;
+
+        try {
+            return supplier.get();
+        }
+        catch (ParserException e) {
+            throw suppressed = e;
+        }
+        finally {
+
+
+
+
+
+
+
+
+
+
+
+        }
     }
 
     private final <Q extends QueryPart> Q notify(Q result) {

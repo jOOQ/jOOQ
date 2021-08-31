@@ -320,6 +320,8 @@ import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Lukas Eder
  */
@@ -13371,7 +13373,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final DSLContext                      dsl;
     private final Locale                          locale;
     private final Meta                            meta;
-    private final char[]                          sql;
+    private char[]                                sql;
     private final ParseWithMetaLookups            metaLookups;
     private boolean                               metaLookupsForceIgnore;
     private final Consumer<Param<?>>              bindParamListener;
@@ -13386,7 +13388,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final ScopeStack<Name, FieldProxy<?>> lookupFields           = new ScopeStack<>(null);
     private boolean                               scopeClear             = false;
     private LanguageContext                       languageContext        = LanguageContext.QUERY;
-    private EnumSet<FunctionKeyword>              forbidden       = EnumSet.noneOf(FunctionKeyword.class);
+    private EnumSet<FunctionKeyword>              forbidden              = EnumSet.noneOf(FunctionKeyword.class);
 
 
 
@@ -13592,6 +13594,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final char characterNext() {
         return character(position + 1);
+    }
+
+    @Override
+    public final char[] characters() {
+        return sql;
+    }
+
+    @Override
+    public final ParseContext characters(char[] newCharacters) {
+        this.sql = newCharacters;
+        return this;
     }
 
     @Override

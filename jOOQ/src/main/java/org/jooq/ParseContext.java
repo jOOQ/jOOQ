@@ -82,6 +82,22 @@ public interface ParseContext extends Scope {
     LanguageContext languageContext();
 
     /**
+     * Get access to the underlying SQL string.
+     */
+    @NotNull
+    char[] characters();
+
+    /**
+     * Update the underlying SQL string.
+     * <p>
+     * This replaces the current SQL string being parsed by a new one. Callers
+     * must ensure this {@link ParseContext} maintains a consistent
+     * {@link #characters()} and {@link #position()}.
+     */
+    @NotNull
+    ParseContext characters(char[] newCharacters);
+
+    /**
      * The character at the current {@link #position()}.
      */
     char character();

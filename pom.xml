@@ -60,6 +60,7 @@
         <spring.version>5.3.7</spring.version>
         <spring.boot.version>2.4.0</spring.boot.version>
         <errorprone.version>2.3.4</errorprone.version>
+        <testcontainers.version>1.16.0</testcontainers.version>
     </properties>
 
     <licenses>
@@ -137,6 +138,7 @@
                 <version>19.0.0</version>
             </dependency>
 
+            <!-- R2DBC SPI and driver dependencies -->
             <dependency>
                 <groupId>io.r2dbc</groupId>
                 <artifactId>r2dbc-spi</artifactId>
@@ -356,6 +358,61 @@
 	            <artifactId>postgresql</artifactId>
 	            <version>${postgres.version}</version>
 	        </dependency>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- Some examples require testcontainers as dependencies -->
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers</artifactId>
+                <version>${testcontainers.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>mariadb</artifactId>
+                <version>${testcontainers.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>mysql</artifactId>
+                <version>${testcontainers.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${testcontainers.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.firebirdsql</groupId>
+                <artifactId>firebird-testcontainers-java</artifactId>
+                <version>1.1.0</version>
+            </dependency>
+
+
+
+
+
+
+
+
+
+
 
 
 

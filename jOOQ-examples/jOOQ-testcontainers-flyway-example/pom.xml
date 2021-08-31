@@ -123,13 +123,6 @@
                         <artifactId>postgresql</artifactId>
                         <version>1.15.2</version>
                     </dependency>
-                    
-                    <!-- Junit seems to be a transitive dependency of testcontainers? -->
-                    <dependency>
-                        <groupId>junit</groupId>
-                        <artifactId>junit</artifactId>
-                        <version>4.13.1</version>
-                    </dependency>
                 </dependencies>
             </plugin>
 
@@ -153,16 +146,6 @@
                         </configuration>
                     </execution>
                 </executions>
-                
-                <dependencies>
-                
-                    <!-- Junit seems to be a transitive dependency of testcontainers? -->
-                    <dependency>
-                        <groupId>junit</groupId>
-                        <artifactId>junit</artifactId>
-                        <version>4.13.1</version>
-                    </dependency>
-                </dependencies>
             </plugin>
             
             <plugin>
@@ -179,7 +162,6 @@
 
                         <configuration>
                             <jdbc>
-                                <driver>${db.driver}</driver>
                                 <url>${db.url}</url>
                                 <user>${db.username}</user>
                                 <password>${db.password}</password>
@@ -196,16 +178,6 @@
                         </configuration>
                     </execution>
                 </executions>
-
-                <dependencies>
-
-                    <!-- Junit seems to be a transitive dependency of testcontainers? -->
-                    <dependency>
-                        <groupId>junit</groupId>
-                        <artifactId>junit</artifactId>
-                        <version>4.13.1</version>
-                    </dependency>
-                </dependencies>
             </plugin>
             
             <plugin>

@@ -126,8 +126,10 @@ implements
     public final Class<? extends R> getRecordType() {
         if (coerceTable != null)
             return (Class<? extends R>) coerceTable.getRecordType();
-
-        return (Class<? extends R>) delegate.getRecordType();
+        else if (returningResult)
+            return (Class<? extends R>) delegate.getRecordType();
+        else
+            return delegate.table().getRecordType();
     }
 
     @Override

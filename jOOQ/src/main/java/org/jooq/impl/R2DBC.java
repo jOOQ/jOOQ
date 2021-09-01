@@ -548,15 +548,20 @@ final class R2DBC {
                 request1();
         }
 
-        private void request1() {
+        private final void forAllForwardingSubscriptions(Consumer<? super Subscription> consumer) {
+
             // Forwarders all forward to the same downstream and are not
             // expected to be contained in the map at the same time.
             for (Forwarding<T> f : forwarders.values()) {
                 Subscription s = f.subscription.get();
 
                 if (s != null)
-                    request2(s);
+                    consumer.accept(s);
             }
+        }
+
+        private final void request1() {
+            forAllForwardingSubscriptions(this::request2);
         }
 
         final void request2(Subscription s) {
@@ -566,6 +571,10 @@ final class R2DBC {
 
         @Override
         final void cancel0(boolean cancelled) {
+
+            // [#12108] Must pass along cancellation to forwarding subscriptions
+            forAllForwardingSubscriptions(Subscription::cancel);
+
             delegate().connection.updateAndGet(c -> {
 
                 // close() calls on already closed resources have no effect, so

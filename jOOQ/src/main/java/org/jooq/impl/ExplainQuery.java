@@ -48,6 +48,7 @@ import org.jooq.Field;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.conf.ParamType;
 
 // ...
 
@@ -60,6 +61,7 @@ final class ExplainQuery {
         Result<Record> result = null;
 
         switch (ctx.family()) {
+
 
 
 

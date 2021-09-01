@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.R2DBC.AbstractSubscription.onRequest;
 
+import java.time.Duration;
+
 import org.jooq.exception.DetachedException;
 
 import org.reactivestreams.Publisher;
@@ -92,6 +94,11 @@ final class DefaultConnectionFactory implements ConnectionFactory {
     }
 
     private final class NonClosingConnection implements Connection {
+
+        // ---------------------------------------------------------------------
+        // 0.9.0.M1 API
+        // ---------------------------------------------------------------------
+
         @Override
         public Publisher<Void> beginTransaction() {
             return connectionOrThrow().beginTransaction();
@@ -170,6 +177,20 @@ final class DefaultConnectionFactory implements ConnectionFactory {
         @Override
         public Publisher<Boolean> validate(ValidationDepth depth) {
             return connectionOrThrow().validate(depth);
+        }
+
+        // ---------------------------------------------------------------------
+        // 0.9.0.M2 API
+        // ---------------------------------------------------------------------
+
+        @Override
+        public Publisher<Void> setLockWaitTimeout(Duration timeout) {
+            return connectionOrThrow().setLockWaitTimeout(timeout);
+        }
+
+        @Override
+        public Publisher<Void> setStatementTimeout(Duration timeout) {
+            return connectionOrThrow().setStatementTimeout(timeout);
         }
     }
 }

@@ -43,6 +43,7 @@ import static org.jooq.impl.ParsingConnection.translate;
 import static org.jooq.impl.R2DBC.setParamType;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,6 +129,20 @@ final class ParsingConnectionFactory implements ConnectionFactory {
         }
 
         @Override
+        public final Batch createBatch() {
+            return new ParsingR2DBCBatch(delegate.createBatch());
+        }
+
+        @Override
+        public final Statement createStatement(String sql) {
+            return new ParsingR2DBCStatement(delegate, sql);
+        }
+
+        // ---------------------------------------------------------------------
+        // 0.9.0.M1 API
+        // ---------------------------------------------------------------------
+
+        @Override
         public final Publisher<Void> beginTransaction() {
             return delegate.beginTransaction();
         }
@@ -197,14 +212,18 @@ final class ParsingConnectionFactory implements ConnectionFactory {
             return delegate.validate(depth);
         }
 
+        // ---------------------------------------------------------------------
+        // 0.9.0.M2 API
+        // ---------------------------------------------------------------------
+
         @Override
-        public final Batch createBatch() {
-            return new ParsingR2DBCBatch(delegate.createBatch());
+        public final Publisher<Void> setLockWaitTimeout(Duration timeout) {
+            return delegate.setLockWaitTimeout(timeout);
         }
 
         @Override
-        public final Statement createStatement(String sql) {
-            return new ParsingR2DBCStatement(delegate, sql);
+        public final Publisher<Void> setStatementTimeout(Duration timeout) {
+            return delegate.setStatementTimeout(timeout);
         }
     }
 

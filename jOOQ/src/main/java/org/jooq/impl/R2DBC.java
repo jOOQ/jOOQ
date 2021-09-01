@@ -1094,6 +1094,10 @@ final class R2DBC {
 
         private static final /* record */ class DefaultRow implements Row { private final Configuration c; private final Row r; public DefaultRow(Configuration c, Row r) { this.c = c; this.r = r; } public Configuration c() { return c; } public Row r() { return r; } @Override public boolean equals(Object o) { if (!(o instanceof DefaultRow)) return false; DefaultRow other = (DefaultRow) o; if (!java.util.Objects.equals(this.c, other.c)) return false; if (!java.util.Objects.equals(this.r, other.r)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.c, this.r); } @Override public String toString() { return new StringBuilder("DefaultRow[").append("c=").append(this.c).append(", r=").append(this.r).append("]").toString(); }
 
+            // ---------------------------------------------------------------------
+            // 0.9.0.M1 API
+            // ---------------------------------------------------------------------
+
             // These methods are proxied for some drivers that can't convert
             // between data types. See:
             // - https://github.com/mirromutth/r2dbc-mysql/issues/177
@@ -1133,6 +1137,15 @@ final class R2DBC {
                     throw new DataTypeException("Cannot convert from " + o.getClass() + " to " + uType + ". Please report an issue here: https://github.com/jOOQ/jOOQ/issues/new. As a workaround, you can implement a ConverterProvider.");
                 else
                     return converter.from(o);
+            }
+
+            // ---------------------------------------------------------------------
+            // 0.9.0.M2 API
+            // ---------------------------------------------------------------------
+
+            @Override
+            public final RowMetadata getMetadata() {
+                return r.getMetadata();
             }
         }
     }

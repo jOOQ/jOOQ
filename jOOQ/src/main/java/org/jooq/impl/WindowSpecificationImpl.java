@@ -188,12 +188,15 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
             if (ordered) {
                 Field<Integer> constant;
 
+                switch (ctx.family()) {
 
 
 
 
 
-                constant = field(select(one()));
+                    default:
+                        constant = field(select(one())); break;
+                }
 
                 o = new SortFieldList();
                 o.add(constant.sortDefault());

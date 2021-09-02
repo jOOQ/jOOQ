@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.conf.StatementType.STATIC_STATEMENT;
+
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.util.regex.Matcher;
@@ -86,8 +88,12 @@ final class ExplainQuery {
                 result = ctx.fetch("{explain analyze} {0}", query);
                 break;
 
+            // [#12381] No bind values supported in HSQLDB
             case HSQLDB:
-                result = ctx.fetch("{explain plan for} {0}", query);
+                result = ctx.configuration()
+                            .deriveSettings(s -> s.withStatementType(STATIC_STATEMENT))
+                            .dsl()
+                            .fetch("{explain plan for} {0}", query);
                 break;
 
             default:

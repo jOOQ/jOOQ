@@ -1177,7 +1177,7 @@ final class R2DBC {
 
         @Override
         public final int getColumnCount() throws SQLException {
-            return m.getColumnNames().size();
+            return m.getColumnMetadatas().size();
         }
 
         @Override

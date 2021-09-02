@@ -35,7 +35,7 @@
         <!-- JDBC drivers for jOOQ-xyz-extensions modules and vendor-specific API access -->
         <postgres.version>42.2.22</postgres.version>
         <sqlserver.version>9.2.1.jre11</sqlserver.version>
-        <oracle.version>21.1.0.0</oracle.version>
+        <oracle.version>21.3.0.0</oracle.version>
         <redshift.version>2.0.0.6</redshift.version>
 
         <!-- R2DBC SPI version and some matching driver versions -->
@@ -172,7 +172,7 @@
             <dependency>
                 <groupId>com.oracle.database.r2dbc</groupId>
                 <artifactId>oracle-r2dbc</artifactId>
-                <version>0.2.0</version>
+                <version>0.3.0</version>
             </dependency>
             <dependency>
                 <groupId>org.postgresql</groupId>

@@ -1259,7 +1259,7 @@ final class Tools {
 
         if (result == null)
             result = CTX.configuration().converterProvider().provide(tType, uType);
-        
+
         // [#11823] [#12208] The new ad-hoc conversion API tries to avoid the Class<U> literal
         //                   meaning there are perfectly reasonable API usages when using MULTISET
         //                   where we can't decide on a converter prior to having an actual result

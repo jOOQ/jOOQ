@@ -6900,13 +6900,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return (Condition) part;
         }
         else if (part instanceof Field) {
-            Class<?> type = ((Field) part).getDataType().getType();
+            DataType dataType = ((Field) part).getDataType();
+            Class<?> type = dataType.getType();
 
             if (type == Boolean.class)
                 return condition((Field) part);
+            
+            // [#11631] [#12394] Numeric expressions are booleans in MySQL
+            else if (dataType.isNumeric())
+                return ((Field) part).ne(zero());
 
             // [#7266] Support parsing column references as predicates
-            // [#11631] Or bind values too
             else if (type == Object.class && (part instanceof TableFieldImpl || part instanceof Val))
                 return condition((Field) part);
             else

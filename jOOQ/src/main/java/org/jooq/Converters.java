@@ -223,5 +223,8 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
      * {@link DataType#asConvertedDataTypeFrom(Function)} or
      * {@link DataType#asConvertedDataTypeTo(Function)}
      */
-    static final class UnknownType {}
+    @Internal
+    public static final class UnknownType {
+        private UnknownType() {}
+    }
 }

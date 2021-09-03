@@ -247,6 +247,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.ConverterProvider;
+import org.jooq.Converters;
 import org.jooq.Cursor;
 import org.jooq.DMLQuery;
 import org.jooq.DSLContext;
@@ -1253,11 +1254,18 @@ final class Tools {
      * Get a converter from a {@link ConverterProvider} or <code>null</code> if
      * no converter could be provided.
      */
-    static final <T, U> Converter<T, U> converter(Configuration configuration, Class<T> tType, Class<U> uType) {
+    static final <T, U> Converter<T, U> converter(Configuration configuration, T instance, Class<T> tType, Class<U> uType) {
         Converter<T, U> result = configuration(configuration).converterProvider().provide(tType, uType);
 
         if (result == null)
             result = CTX.configuration().converterProvider().provide(tType, uType);
+        
+        // [#11823] [#12208] The new ad-hoc conversion API tries to avoid the Class<U> literal
+        //                   meaning there are perfectly reasonable API usages when using MULTISET
+        //                   where we can't decide on a converter prior to having an actual result
+        //                   type - so, let's try again if we have the result value.
+        if (result == null && tType == Converters.UnknownType.class)
+            result = converter(configuration, instance, (Class<T>) (instance == null ? Object.class : instance.getClass()), uType);
 
         return result;
     }
@@ -1266,8 +1274,8 @@ final class Tools {
      * Get a converter from a {@link ConverterProvider} or <code>null</code> if
      * no converter could be provided.
      */
-    static final <T, U> Converter<T, U> converterOrFail(Configuration configuration, Class<T> tType, Class<U> uType) {
-        Converter<T, U> result = converter(configuration, tType, uType);
+    static final <T, U> Converter<T, U> converterOrFail(Configuration configuration, T instance, Class<T> tType, Class<U> uType) {
+        Converter<T, U> result = converter(configuration, instance, tType, uType);
 
         if (result == null)
             throw new DataTypeException("No Converter found for types " + tType.getName() + " and " + uType.getName());
@@ -1278,8 +1286,8 @@ final class Tools {
     /**
      * Get a converter from a {@link ConverterProvider}.
      */
-    static final <T, U> Converter<T, U> converterOrFail(Attachable attachable, Class<T> tType, Class<U> uType) {
-        return converterOrFail(configuration(attachable), tType, uType);
+    static final <T, U> Converter<T, U> converterOrFail(Attachable attachable, T instance, Class<T> tType, Class<U> uType) {
+        return converterOrFail(configuration(attachable), instance, tType, uType);
     }
 
     /**

@@ -101,7 +101,7 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
 
     @Override
     public final <U> RecordMapper<R, U> mapper(int fieldIndex, Configuration configuration, Class<? extends U> type) {
-        return mapper(fieldIndex, converterOrFail(configuration, fields[safeIndex(fieldIndex)].getType(), type));
+        return mapper(fieldIndex, converterOrFail(configuration, null, fields[safeIndex(fieldIndex)].getType(), type));
     }
 
     @Override
@@ -121,7 +121,7 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
 
     @Override
     public final <U> RecordMapper<R, U> mapper(String fieldName, Configuration configuration, Class<? extends U> type) {
-        return mapper(fieldName, converterOrFail(configuration, field(indexOrFail(this, fieldName)).getType(), type));
+        return mapper(fieldName, converterOrFail(configuration, null, field(indexOrFail(this, fieldName)).getType(), type));
     }
 
     @Override
@@ -141,7 +141,7 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
 
     @Override
     public final <U> RecordMapper<R, U> mapper(Name fieldName, Configuration configuration, Class<? extends U> type) {
-        return mapper(fieldName, converterOrFail(configuration, field(indexOrFail(this, fieldName)).getType(), type));
+        return mapper(fieldName, converterOrFail(configuration, null, field(indexOrFail(this, fieldName)).getType(), type));
     }
 
     @Override
@@ -163,7 +163,7 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final <U> RecordMapper<R, U> mapper(Field<?> field, Configuration configuration, Class<? extends U> type) {
-        return mapper(field, (Converter) converterOrFail(configuration, field.getType(), type));
+        return mapper(field, (Converter) converterOrFail(configuration, null, field.getType(), type));
     }
 
     @SuppressWarnings("unchecked")

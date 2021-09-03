@@ -394,7 +394,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
 
         // [#10071] Single-field Record1 types can be mapped if there is a ConverterProvider allowing for this mapping
-        if ((debugVTFL = fields.length == 1) && (debugVTCP = Tools.converter(configuration, fields[0].getType(), type) != null)) {
+        if ((debugVTFL = fields.length == 1) && (debugVTCP = Tools.converter(configuration, instance, (Class) fields[0].getType(), type) != null)) {
             delegate = new ValueTypeMapper();
             return;
         }

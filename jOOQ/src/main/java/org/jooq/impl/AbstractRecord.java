@@ -332,8 +332,9 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public final <T> T get(Field<?> field, Class<? extends T> type) {
-        return (T) converterOrFail(this, field.getType(), (Class) type).from(get(field));
+    public final <U> U get(Field<?> field, Class<? extends U> type) {
+        Object t = get(field);
+        return (U) converterOrFail(this, t, (Class) field.getType(), type).from(t);
     }
 
     @Override
@@ -347,8 +348,9 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public final <T> T get(int index, Class<? extends T> type) {
-        return (T) converterOrFail(this, field(safeIndex(index)).getType(), (Class) type).from(get(index));
+    public final <U> U get(int index, Class<? extends U> type) {
+        Object t = get(index);
+        return (U) converterOrFail(this, t, (Class) field(safeIndex(index)).getType(), type).from(t);
     }
 
     @Override

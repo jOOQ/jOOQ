@@ -62,7 +62,6 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
 import java.util.Collection;
 import java.util.Set;
 
-import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -71,6 +70,7 @@ import org.jooq.OrderField;
 // ...
 import org.jooq.Record;
 import org.jooq.SQLDialect;
+import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.SelectHavingStep;
 
@@ -271,7 +271,7 @@ implements JSONArrayAggOrderByStep<J> {
         return (JSONArrayAgg<J>) super.orderBy(fields);
     }
 
-    static final <R extends Record> Select<R> patchOracleArrayAggBug(Configuration configuration, SelectHavingStep<R> select) {
+    static final <R extends Record> Select<R> patchOracleArrayAggBug(Scope scope, SelectHavingStep<R> select) {
 
 
 

@@ -44,6 +44,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.net.URI;
 import java.net.URL;
+import java.nio.ByteBuffer;
 import java.sql.Struct;
 import java.time.temporal.Temporal;
 import java.util.Calendar;
@@ -89,6 +90,7 @@ public final class DefaultConverterProvider implements ConverterProvider, Serial
             || uWrapper == Optional.class
             || uWrapper == String.class
             || uWrapper == byte[].class
+            || uWrapper == ByteBuffer.class
             || Number.class.isAssignableFrom(uWrapper) // No fail-fast implemented yet!
             || Boolean.class.isAssignableFrom(uWrapper) // No fail-fast implemented yet!
             || Character.class.isAssignableFrom(uWrapper)

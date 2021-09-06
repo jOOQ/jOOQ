@@ -86,6 +86,7 @@ import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.REQUIRES_LITERAL_CAST;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.infinity;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.nan;
+import static org.jooq.impl.DefaultBinding.DefaultJSONBBinding.EMULATE_AS_BLOB;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.impl.Keywords.K_ARRAY;
@@ -143,6 +144,8 @@ import static org.jooq.util.postgres.PostgresUtils.toPGArray;
 import static org.jooq.util.postgres.PostgresUtils.toPGArrayString;
 import static org.jooq.util.postgres.PostgresUtils.toPGInterval;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.io.StringReader;
 import java.lang.reflect.Modifier;
@@ -3818,8 +3821,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 case JSON:
                 case JSONB: {
-                    String s = ctx.resultSet().getString(ctx.index());
-                    return s == null ? null : new JSONReader<>(ctx.dsl(), (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType()).read(new StringReader(s), true);
+                    if (emulation == NestedCollectionEmulation.JSONB && EMULATE_AS_BLOB.contains(ctx.dialect())) {
+                        byte[] s = ctx.resultSet().getBytes(ctx.index());
+                        return s == null ? null : new JSONReader<>(ctx.dsl(), (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType()).read(new InputStreamReader(new ByteArrayInputStream(s)), true);
+                    }
+                    else {
+                        String s = ctx.resultSet().getString(ctx.index());
+                        return s == null ? null : new JSONReader<>(ctx.dsl(), (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType()).read(new StringReader(s), true);
+                    }
                 }
 
                 case XML: {
@@ -4501,7 +4510,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultJSONBBinding<U> extends AbstractBinding<JSONB, U> {
-        private static final Set<SQLDialect>   EMULATE_AS_BLOB  = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, SQLITE);
+        static final Set<SQLDialect> EMULATE_AS_BLOB = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, SQLITE);
 
         DefaultJSONBBinding(DataType<JSONB> dataType, Converter<JSONB, U> converter) {
             super(dataType, converter);

@@ -92,7 +92,6 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -173,7 +172,7 @@ import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Keywords.K_WINDOW;
 import static org.jooq.impl.Keywords.K_WITH_CHECK_OPTION;
 import static org.jooq.impl.Keywords.K_WITH_READ_ONLY;
-import static org.jooq.impl.Names.N_DUAL;
+import static org.jooq.impl.Multiset.returningClob;
 import static org.jooq.impl.Names.N_LEVEL;
 import static org.jooq.impl.Names.N_ROWNUM;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
@@ -182,7 +181,6 @@ import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
-import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.anyMatch;
@@ -240,8 +238,6 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import org.jooq.Asterisk;
 import org.jooq.Clause;
@@ -251,11 +247,11 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Fields;
 import org.jooq.ForeignKey;
 import org.jooq.GroupField;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectNullStep;
+import org.jooq.JSONObjectReturningStep;
 import org.jooq.JoinType;
 import org.jooq.Name;
 import org.jooq.Operator;
@@ -267,6 +263,7 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
+import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;

@@ -67,6 +67,7 @@ import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
 import static org.jooq.impl.Names.N_MULTISET;
 import static org.jooq.impl.Names.N_RECORD;
 import static org.jooq.impl.Names.N_RESULT;
+import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.emulateMultiset;
@@ -169,7 +170,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
                             returning = order.orderBy(t.fields());
 
                         Select<Record1<JSON>> s = patchOracleArrayAggBug(
-                            ctx.configuration(),
+                            ctx,
                             select(DSL.coalesce(
                                 returningClob(ctx, returning),
                                 returningClob(ctx, jsonArray())
@@ -212,7 +213,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
                             returning = order.orderBy(t.fields());
 
                         Select<Record1<JSONB>> s = patchOracleArrayAggBug(
-                            ctx.configuration(),
+                            ctx,
                             select(DSL.coalesce(
                                 returningClob(ctx, returning),
                                 returningClob(ctx, jsonbArray())

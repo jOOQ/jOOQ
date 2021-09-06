@@ -128,40 +128,16 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
     	if (converter instanceof IdentityConverter)
             return (Converter<U, T>) converter;
         else
-            return new AbstractConverter<U, T>(converter.toType(), converter.fromType()) {
-
-                @Override
-                public T from(U u) {
-                    return converter.to(u);
-                }
-
-                @Override
-                public U to(T t) {
-                    return converter.from(t);
-                }
-
-                @Override
-                public String toString() {
-                    return "InverseConverter [ " + fromType().getName() + " -> " + toType().getName() + " ]";
-                }
-            };
+            return Converter.of(converter.toType(), converter.fromType(), converter::to, converter::from);
     }
 
     public static <T, U> Converter<T[], U[]> forArrays(final Converter<T, U> converter) {
-        return new AbstractConverter<T[], U[]>(arrayType(converter.fromType()), arrayType(converter.toType())) {
+        final Converter<U, T> inverse = inverse(converter);
 
-            private final Converter<U, T> inverse = Converters.inverse(converter);
-
-            @Override
-            public U[] from(T[] t) {
-                return convertArray(t, converter);
-            }
-
-            @Override
-            public T[] to(U[] u) {
-                return convertArray(u, inverse);
-            }
-        };
+        return Converter.of(arrayType(converter.fromType()), arrayType(converter.toType()),
+            t -> convertArray(t, converter),
+            u -> convertArray(u, inverse)
+        );
     }
 
     Converters(Converter... chain) {

@@ -118,18 +118,10 @@ public final class DefaultConverterProvider implements ConverterProvider, Serial
                 return types.length == 1 && types[0] != uWrapper && provide(tType, types[0]) != null;
             }) != null
         ) {
-            return new AbstractConverter<T, U>(tType, uType) {
-
-                @Override
-                public U from(T t) {
-                    return Convert.convert(t, uType);
-                }
-
-                @Override
-                public T to(U u) {
-                    return Convert.convert(u, tType);
-                }
-            };
+            return Converter.of(tType, uType,
+                t -> Convert.convert(t, uType),
+                u -> Convert.convert(u, tType)
+            );
         }
 
         // [#11762] Make sure possibly legal downcasts / upcasts are working

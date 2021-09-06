@@ -72,26 +72,16 @@ import org.xml.sax.SAXException;
  */
 public class XMLasDOMBinding extends AbstractXMLBinding<Node> {
 
-    private final Converter<XML, Node> converter;
+    private static final Converter<XML, Node> CONVERTER = Converter.ofNullable(XML.class, Node.class,
+        t -> XMLasDOMBinding.fromString(t.data()),
+        u -> xml(XMLasDOMBinding.toString(u))
+    );
 
-    public XMLasDOMBinding() {
-        this.converter = new AbstractConverter<XML, Node>(XML.class, Node.class) {
-
-            @Override
-            public Node from(XML t) {
-                return t == null ? null : XMLasDOMBinding.fromString(t.data());
-            }
-
-            @Override
-            public XML to(Node u) {
-                return u == null ? null : xml(XMLasDOMBinding.toString(u));
-            }
-        };
-    }
+    public XMLasDOMBinding() {}
 
     @Override
     public final Converter<XML, Node> converter() {
-        return converter;
+        return CONVERTER;
     }
 
     // ------------------------------------------------------------------------

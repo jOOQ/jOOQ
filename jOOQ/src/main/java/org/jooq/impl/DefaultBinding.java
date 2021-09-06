@@ -3823,7 +3823,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 case JSONB: {
                     if (emulation == NestedCollectionEmulation.JSONB && EMULATE_AS_BLOB.contains(ctx.dialect())) {
                         byte[] s = ctx.resultSet().getBytes(ctx.index());
-                        return s == null ? null : new JSONReader<>(ctx.dsl(), (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType()).read(new InputStreamReader(new ByteArrayInputStream(s)), true);
+                        return s == null ? null : new JSONReader<>(ctx.dsl(), (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType()).read(new InputStreamReader(new ByteArrayInputStream(s), ctx.configuration().charsetProvider().provide()), true);
                     }
                     else {
                         String s = ctx.resultSet().getString(ctx.index());
@@ -4599,17 +4599,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         private final Converter<byte[], JSONB> bytesConverter(final Configuration configuration) {
-            return new AbstractConverter<byte[], JSONB>(byte[].class, JSONB.class) {
-                @Override
-                public JSONB from(byte[] t) {
-                    return t == null ? null : JSONB.valueOf(new String(t, configuration.charsetProvider().provide()));
-                }
-
-                @Override
-                public byte[] to(JSONB u) {
-                    return u == null ? null : u.toString().getBytes(configuration.charsetProvider().provide());
-                }
-            };
+            return Converter.ofNullable(byte[].class, JSONB.class,
+                t -> JSONB.valueOf(new String(t, configuration.charsetProvider().provide())),
+                u -> u.toString().getBytes(configuration.charsetProvider().provide())
+            );
         }
 
         @SuppressWarnings({ "unchecked", "rawtypes" })

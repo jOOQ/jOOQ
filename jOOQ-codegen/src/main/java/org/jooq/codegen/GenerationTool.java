@@ -150,6 +150,7 @@ public class GenerationTool {
     }
 
     public static void main(String[] args) throws Exception {
+        JooqLogger.initSimpleFormatter();
         String[] files;
 
         if (args.length > 0) {

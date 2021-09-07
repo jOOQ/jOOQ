@@ -37,6 +37,8 @@
  */
 package org.jooq.tools;
 
+import java.util.logging.SimpleFormatter;
+
 import org.jooq.Log;
 
 /**
@@ -595,5 +597,14 @@ public final class JooqLogger implements Log {
         public boolean supports(Level level) {
             return ordinal() <= level.ordinal();
         }
+    }
+
+    /**
+     * [#12405] The common {@link SimpleFormatter} format to be set in all of
+     * jOOQ's CLIs.
+     */
+    public static void initSimpleFormatter() {
+        if (System.getProperty("java.util.logging.SimpleFormatter.format") == null)
+            System.setProperty("java.util.logging.SimpleFormatter.format", "%1$tH:%1$tM:%1$tS %4$s %5$s%6$s%n");
     }
 }

@@ -6905,7 +6905,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             if (type == Boolean.class)
                 return condition((Field) part);
-            
+
             // [#11631] [#12394] Numeric expressions are booleans in MySQL
             else if (dataType.isNumeric())
                 return ((Field) part).ne(zero());
@@ -7497,6 +7497,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if ((field = parseFieldJSONObjectConstructorIf()) != null)
                     return field;
                 else if ((field = parseFieldJSONValueIf()) != null)
+                    return field;
+                else if ((field = parseFieldJSONLiteralIf()) != null)
                     return field;
 
                 break;
@@ -8489,6 +8491,60 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final DataType<?> parseJSONReturningIf() {
         return parseKeywordIf("RETURNING") ? parseDataType() : null;
+    }
+
+    private final Field<?> parseFieldJSONLiteralIf() {
+        if (parseKeywordIf("JSON")) {
+            if (parseIf('{')) {
+                if (parseIf('}'))
+                    return jsonObject();
+
+                List<JSONEntry<?>> entries = parseList(',', ctx -> {
+                    String key = parseJSONIdentifier();
+                    parse(':');
+                    return key(key).value(parseField());
+                });
+
+                parse('}');
+                return jsonObject(entries);
+            }
+            else if (parseIf('[')) {
+                if (parseIf(']'))
+                    return jsonArray();
+
+                List<Field<?>> fields = parseList(',', c -> parseField());
+                parse(']');
+                return jsonArray(fields);
+            }
+            else
+                throw expected("[", "{");
+        }
+
+        return null;
+    }
+
+    private final String parseJSONIdentifier() {
+        parse('"');
+        StringBuilder sb = new StringBuilder();
+
+        loop:
+        while (hasMore()) {
+            switch (character()) {
+                case '\\':
+                    if (hasMore(1))
+                        positionInc();
+
+                    break;
+                case '"':
+                    break loop;
+            }
+
+            sb.append(character());
+            positionInc();
+        }
+
+        parse('"');
+        return sb.toString();
     }
 
     private final Field<?> parseFieldJSONArrayConstructorIf() {

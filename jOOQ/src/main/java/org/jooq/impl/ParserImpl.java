@@ -8500,7 +8500,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return jsonObject();
 
                 List<JSONEntry<?>> entries = parseList(',', ctx -> {
-                    String key = parseJSONIdentifier();
+                    Field key = parseField();
                     parse(':');
                     return key(key).value(parseField());
                 });
@@ -8521,30 +8521,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         return null;
-    }
-
-    private final String parseJSONIdentifier() {
-        parse('"');
-        StringBuilder sb = new StringBuilder();
-
-        loop:
-        while (hasMore()) {
-            switch (character()) {
-                case '\\':
-                    if (hasMore(1))
-                        positionInc();
-
-                    break;
-                case '"':
-                    break loop;
-            }
-
-            sb.append(character());
-            positionInc();
-        }
-
-        parse('"');
-        return sb.toString();
     }
 
     private final Field<?> parseFieldJSONArrayConstructorIf() {

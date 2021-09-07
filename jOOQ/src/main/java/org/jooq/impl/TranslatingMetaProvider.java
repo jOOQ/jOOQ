@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.VisitListener.onVisitStart;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.Tools.configuration;
 
 import java.io.Reader;
 import java.sql.Connection;
@@ -58,8 +59,6 @@ import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.ResultQuery;
 import org.jooq.Source;
-import org.jooq.VisitContext;
-import org.jooq.VisitListener;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
@@ -83,7 +82,7 @@ final class TranslatingMetaProvider implements MetaProvider {
     private final Source[]          scripts;
 
     public TranslatingMetaProvider(Configuration configuration, Source... scripts) {
-        this.configuration = configuration == null ? new DefaultConfiguration() : configuration;
+        this.configuration = configuration(configuration);
         this.scripts = scripts;
     }
 

@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.configuration;
 import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 
 import java.io.Reader;
@@ -69,13 +70,13 @@ final class InterpreterMetaProvider implements MetaProvider {
     private final Query[]           queries;
 
     public InterpreterMetaProvider(Configuration configuration, Source... sources) {
-        this.configuration = configuration == null ? new DefaultConfiguration() : configuration;
+        this.configuration = configuration(configuration);
         this.sources = sources;
         this.queries = null;
     }
 
     public InterpreterMetaProvider(Configuration configuration, Query... queries) {
-        this.configuration = configuration == null ? new DefaultConfiguration() : configuration;
+        this.configuration = configuration(configuration);
         this.sources = null;
         this.queries = queries;
     }

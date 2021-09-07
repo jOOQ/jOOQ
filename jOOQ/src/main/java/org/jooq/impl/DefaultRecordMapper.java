@@ -43,6 +43,7 @@ import static java.util.Collections.emptyList;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.configuration;
 import static org.jooq.impl.Tools.getAnnotatedGetter;
 import static org.jooq.impl.Tools.getAnnotatedMembers;
 import static org.jooq.impl.Tools.getAnnotatedSetters;
@@ -350,7 +351,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         this.rowType = rowType;
         this.fields = rowType.fields();
         this.type = type;
-        this.configuration = configuration != null ? configuration : new DefaultConfiguration();
+        this.configuration = configuration(configuration);
         this.namePathSeparator = this.configuration.settings().getNamePathSeparator();
 
         init(instance);

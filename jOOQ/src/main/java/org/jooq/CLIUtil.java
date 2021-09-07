@@ -39,6 +39,8 @@ package org.jooq;
 
 import static org.jooq.Constants.MINOR_VERSION;
 
+import org.jooq.tools.JooqLogger;
+
 /**
  * Common utilities for {@link ParserCLI}, {@link DiffCLI} and others.
  *
@@ -47,6 +49,8 @@ import static org.jooq.Constants.MINOR_VERSION;
 final class CLIUtil {
 
     static void main(String url, Runnable runnable) {
+        JooqLogger.initSimpleFormatter();
+
         try {
             runnable.run();
         }

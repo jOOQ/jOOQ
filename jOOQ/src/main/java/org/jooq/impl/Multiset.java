@@ -285,39 +285,48 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
         }
     }
 
-    static final <J> Field<J> returningClob(Scope ctx, JSONObjectReturningStep<J> jsonObject) {
+    static final <J> Field<J> returningClob(Scope ctx, JSONObjectReturningStep<J> j) {
         switch (ctx.family()) {
 
 
 
 
 
+
+
+
             default:
-                return jsonObject;
+                return j;
         }
     }
 
-    static final <J> Field<J> returningClob(Scope ctx, JSONArrayReturningStep<J> jsonArray) {
+    static final <J> Field<J> returningClob(Scope ctx, JSONArrayReturningStep<J> j) {
         switch (ctx.family()) {
 
 
 
 
 
+
+
+
             default:
-                return jsonArray;
+                return j;
         }
     }
 
-    static final <J> Field<J> returningClob(Scope ctx, JSONArrayAggReturningStep<J> jsonArrayagg) {
+    static final <J> Field<J> returningClob(Scope ctx, JSONArrayAggReturningStep<J> j) {
         switch (ctx.family()) {
 
 
 
 
 
+
+
+
             default:
-                return jsonArrayagg;
+                return j;
         }
     }
 

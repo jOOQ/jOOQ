@@ -72,7 +72,7 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.impl.DSL;
-import org.jooq.tools.Convert;
+import org.jooq.impl.DefaultConfiguration;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -441,17 +441,25 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
 
         // [#11099] TODO: Possibly optimise this logic similar to that of MockResultSet.get(int, Class)
         Converter<?, ?> converter = Converters.inverse(field(columnLabel).getConverter());
-        T value = Convert.convert(record.get(columnLabel, converter), type);
-        wasNull = (value == null);
-        return value;
+        return get0(record.get(columnLabel, converter), type);
     }
 
     private <T> T get(int columnIndex, Class<T> type) throws SQLException {
         checkInRange();
 
-        T value = Convert.convert(record.get(columnIndex - 1, converter(columnIndex)), type);
-        wasNull = (value == null);
-        return value;
+        return get0(record.get(columnIndex - 1, converter(columnIndex)), type);
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> T get0(Object value, Class<T> type) {
+        Converter<Object, T> converter =
+        (record.configuration() == null ? new DefaultConfiguration() : record.configuration())
+            .converterProvider()
+            .provide(value == null ? Object.class : (Class<Object>) value.getClass(), type);
+
+        T converted = converter == null ? null : converter.from(value);
+        wasNull = (converted == null);
+        return converted;
     }
 
     private boolean index(int newIndex) {

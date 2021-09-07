@@ -41,6 +41,8 @@ import static java.time.temporal.ChronoField.INSTANT_SECONDS;
 import static java.time.temporal.ChronoField.MILLI_OF_DAY;
 import static java.time.temporal.ChronoField.MILLI_OF_SECOND;
 import static org.jooq.impl.Internal.arrayType;
+import static org.jooq.impl.Tools.configuration;
+import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.tools.reflect.Reflect.accessible;
 import static org.jooq.tools.reflect.Reflect.wrapper;
 import static org.jooq.types.Unsigned.ubyte;
@@ -95,11 +97,13 @@ import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.JSON;
 import org.jooq.JSONB;
+import org.jooq.JSONFormat;
 import org.jooq.QualifiedRecord;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.XML;
+import org.jooq.XMLFormat;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
@@ -630,6 +634,21 @@ final class Convert {
                         return (U) new MockArray(null, fromArray, fromClass);
                     else
                         return (U) convertArray(fromArray, toClass);
+                }
+
+                // [#12308] Result serialised as XML or JSON string
+                else if (Result.class.isAssignableFrom(fromClass) && toClass == String.class) {
+                    switch (emulateMultiset(configuration((Result<?>) from))) {
+                        case XML:
+                            return (U) ((Result<?>) from).formatXML(XMLFormat.DEFAULT_FOR_RECORDS);
+
+                        case JSON:
+                        case JSONB:
+                            return (U) ((Result<?>) from).formatJSON(JSONFormat.DEFAULT_FOR_RECORDS);
+                    }
+                }
+                else if (Result.class.isAssignableFrom(fromClass) && toClass == byte[].class) {
+                    return (U) convert(convert(from, String.class), byte[].class);
                 }
 
                 // [#11560] Results wrapped in ResultSet

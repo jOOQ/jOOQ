@@ -4509,7 +4509,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultJSONBBinding<U> extends AbstractBinding<JSONB, U> {
+    static final class DefaultJSONBBinding<U> extends AbstractBinding<org.jooq.JSONB, U> {
         static final Set<SQLDialect> EMULATE_AS_BLOB = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, SQLITE);
 
         DefaultJSONBBinding(DataType<JSONB> dataType, Converter<JSONB, U> converter) {

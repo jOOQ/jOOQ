@@ -122,6 +122,16 @@
                         </configuration>
                     </execution>
                 </executions>
+
+                <dependencies>
+
+                    <!-- Junit seems to be a transitive dependency of testcontainers? -->
+                    <dependency>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                        <version>4.13.1</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

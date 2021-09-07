@@ -184,8 +184,19 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         super(options, name, schema, comment);
 
         this.fields = new Fields<>();
-        this.child = child;
-        this.childPath = path == null ? null : Tools.aliasedKey((ForeignKey) path, child, this);
+
+        if (child != null) {
+            this.child = child;
+            this.childPath = path == null ? null : Tools.aliasedKey((ForeignKey) path, child, this);
+        }
+        else if (aliased instanceof TableImpl) {
+            this.child = ((TableImpl<?>) aliased).child;
+            this.childPath = ((TableImpl) aliased).childPath;
+        }
+        else {
+            this.child = null;
+            this.childPath = null;
+        }
 
         if (aliased != null) {
 
@@ -194,12 +205,12 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
             Alias<Table<R>> existingAlias = Tools.alias(aliased);
 
             if (existingAlias != null)
-                alias = new Alias<>(existingAlias.wrapped, this, name, existingAlias.fieldAliases, existingAlias.wrapInParentheses);
+                this.alias = new Alias<>(existingAlias.wrapped, this, name, existingAlias.fieldAliases, existingAlias.wrapInParentheses);
             else
-                alias = new Alias<>(aliased, this, name);
+                this.alias = new Alias<>(aliased, this, name);
         }
         else
-            alias = null;
+            this.alias = null;
 
         this.parameters = parameters;
     }

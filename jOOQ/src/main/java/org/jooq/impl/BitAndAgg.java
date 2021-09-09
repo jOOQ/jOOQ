@@ -83,7 +83,7 @@ extends
 
 
 
-    public static final Set<SQLDialect> NO_SUPPORT_NATIVE = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, HSQLDB, POSTGRES, SQLITE);
+    public static final Set<SQLDialect> NO_SUPPORT_NATIVE = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, HSQLDB, SQLITE);
 
     @Override
     public final void accept(Context<?> ctx) {

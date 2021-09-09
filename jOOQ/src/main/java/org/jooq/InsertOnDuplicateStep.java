@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
 import java.util.Collection;
 
@@ -104,14 +105,14 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this INSERT statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, MYSQL, POSTGRES, YUGABYTE })
     InsertOnConflictDoUpdateStep<R> onConflictOnConstraint(Constraint constraint);
 
     /**
      * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this INSERT statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, MYSQL, POSTGRES, YUGABYTE })
     InsertOnConflictDoUpdateStep<R> onConflictOnConstraint(Name constraint);
 
     /**
@@ -175,7 +176,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * H2 supports this clause in MySQL mode.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     InsertOnDuplicateSetStep<R> onDuplicateKeyUpdate();
 
     /**

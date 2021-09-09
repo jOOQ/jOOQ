@@ -43,6 +43,7 @@ import org.jetbrains.annotations.*;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.YUGABYTE;
 
 import org.jooq.impl.DSL;
 
@@ -80,7 +81,7 @@ public interface CreateTableOnCommitStep extends CreateTableCommentStep {
      * @see DSL#createGlobalTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     CreateTableCommentStep onCommitDeleteRows();
 
     /**
@@ -92,7 +93,7 @@ public interface CreateTableOnCommitStep extends CreateTableCommentStep {
      * @see DSL#createGlobalTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     CreateTableCommentStep onCommitPreserveRows();
 
     /**
@@ -104,6 +105,6 @@ public interface CreateTableOnCommitStep extends CreateTableCommentStep {
      * @see DSL#createGlobalTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     CreateTableCommentStep onCommitDrop();
 }

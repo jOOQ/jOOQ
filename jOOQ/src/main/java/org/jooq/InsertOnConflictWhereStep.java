@@ -52,6 +52,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
 import java.util.Collection;
 
@@ -100,7 +101,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTE })
     InsertOnConflictConditionStep<R> where(Condition condition);
 
     /**
@@ -109,7 +110,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * connecting them with each other using {@link Operator#AND}.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTE })
     InsertOnConflictConditionStep<R> where(Condition... conditions);
 
     /**
@@ -118,7 +119,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * connecting them with each other using {@link Operator#AND}.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTE })
     InsertOnConflictConditionStep<R> where(Collection<? extends Condition> conditions);
 
     /**
@@ -126,7 +127,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTE })
     InsertOnConflictConditionStep<R> where(Field<Boolean> field);
 
     /**
@@ -142,7 +143,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTE })
     @PlainSQL
     InsertOnConflictConditionStep<R> where(SQL sql);
 
@@ -159,7 +160,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTE })
     @PlainSQL
     InsertOnConflictConditionStep<R> where(String sql);
 
@@ -177,7 +178,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTE })
     @PlainSQL
     InsertOnConflictConditionStep<R> where(String sql, Object... bindings);
 
@@ -195,7 +196,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTE })
     @PlainSQL
     InsertOnConflictConditionStep<R> where(String sql, QueryPart... parts);
 
@@ -204,7 +205,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTE })
     InsertOnConflictConditionStep<R> whereExists(Select<?> select);
 
     /**
@@ -212,6 +213,6 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTE })
     InsertOnConflictConditionStep<R> whereNotExists(Select<?> select);
 }

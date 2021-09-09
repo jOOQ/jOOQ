@@ -8235,7 +8235,7 @@ public interface DSLContext extends Scope {
      * {@link #mergeInto(Table, Field...)}
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table);
 
 
@@ -10911,7 +10911,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTableIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateTableColumnStep createTableIfNotExists(String table);
 
     /**
@@ -10920,7 +10920,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTableIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateTableColumnStep createTableIfNotExists(Name table);
 
     /**
@@ -10929,7 +10929,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTableIfNotExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateTableColumnStep createTableIfNotExists(Table<?> table);
 
     /**
@@ -10938,7 +10938,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateTableColumnStep createTemporaryTable(String table);
 
     /**
@@ -10947,7 +10947,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateTableColumnStep createTemporaryTable(Name table);
 
     /**
@@ -10956,7 +10956,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateTableColumnStep createTemporaryTable(Table<?> table);
 
     /**
@@ -10965,7 +10965,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTemporaryTableIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateTableColumnStep createTemporaryTableIfNotExists(String table);
 
     /**
@@ -10974,7 +10974,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTemporaryTableIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateTableColumnStep createTemporaryTableIfNotExists(Name table);
 
     /**
@@ -10983,7 +10983,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTemporaryTableIfNotExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateTableColumnStep createTemporaryTableIfNotExists(Table<?> table);
 
     /**
@@ -10992,7 +10992,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateTableColumnStep createGlobalTemporaryTable(String table);
 
     /**
@@ -11001,7 +11001,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateTableColumnStep createGlobalTemporaryTable(Name table);
 
     /**
@@ -11010,7 +11010,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateTableColumnStep createGlobalTemporaryTable(Table<?> table);
 
     /**
@@ -11019,7 +11019,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createView(String, String...)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewAsStep<Record> createView(String view, String... fields);
 
     /**
@@ -11028,7 +11028,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createView(Name, Name...)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewAsStep<Record> createView(Name view, Name... fields);
 
     /**
@@ -11037,7 +11037,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createView(Table, Field...)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields);
 
     /**
@@ -11056,7 +11056,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewAsStep<Record> createView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
     /**
@@ -11075,7 +11075,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewAsStep<Record> createView(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
     /**
@@ -11094,7 +11094,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewAsStep<Record> createView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
 
     /**
@@ -11113,7 +11113,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewAsStep<Record> createView(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
 
     /**
@@ -11132,7 +11132,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewAsStep<Record> createView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
 
     /**
@@ -11151,7 +11151,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewAsStep<Record> createView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
     /**
@@ -11160,7 +11160,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createOrReplaceView(String, String...)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateViewAsStep<Record> createOrReplaceView(String view, String... fields);
 
     /**
@@ -11169,7 +11169,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createOrReplaceView(Name, Name...)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateViewAsStep<Record> createOrReplaceView(Name view, Name... fields);
 
     /**
@@ -11178,7 +11178,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createOrReplaceView(Table, Field...)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields);
 
     /**
@@ -11197,7 +11197,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateViewAsStep<Record> createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
     /**
@@ -11216,7 +11216,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateViewAsStep<Record> createOrReplaceView(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
     /**
@@ -11235,7 +11235,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateViewAsStep<Record> createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
 
     /**
@@ -11254,7 +11254,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateViewAsStep<Record> createOrReplaceView(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
 
     /**
@@ -11273,7 +11273,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
 
     /**
@@ -11292,7 +11292,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
     /**
@@ -11301,7 +11301,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createViewIfNotExists(String, String...)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewAsStep<Record> createViewIfNotExists(String view, String... fields);
 
     /**
@@ -11310,7 +11310,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createViewIfNotExists(Name, Name...)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewAsStep<Record> createViewIfNotExists(Name view, Name... fields);
 
     /**
@@ -11319,7 +11319,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createViewIfNotExists(Table, Field...)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields);
 
     /**
@@ -11338,7 +11338,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewAsStep<Record> createViewIfNotExists(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
     /**
@@ -11357,7 +11357,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewAsStep<Record> createViewIfNotExists(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
     /**
@@ -11376,7 +11376,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewAsStep<Record> createViewIfNotExists(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
 
     /**
@@ -11395,7 +11395,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewAsStep<Record> createViewIfNotExists(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
 
     /**
@@ -11414,7 +11414,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
 
     /**
@@ -11433,7 +11433,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
     /**
@@ -11442,7 +11442,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createType(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     CreateTypeStep createType(String type);
 
     /**
@@ -11451,7 +11451,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createType(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     CreateTypeStep createType(Name type);
 
     /**
@@ -11460,7 +11460,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropType(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     DropTypeStep dropType(String type);
 
     /**
@@ -11469,7 +11469,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropType(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     DropTypeStep dropType(Name type);
 
     /**
@@ -11478,7 +11478,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropType(String...)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     DropTypeStep dropType(String... type);
 
     /**
@@ -11487,7 +11487,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropType(Name...)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     DropTypeStep dropType(Name... type);
 
     /**
@@ -11496,7 +11496,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropType(Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     DropTypeStep dropType(Collection<?> type);
 
     /**
@@ -11505,7 +11505,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTypeIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     DropTypeStep dropTypeIfExists(String type);
 
     /**
@@ -11514,7 +11514,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTypeIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     DropTypeStep dropTypeIfExists(Name type);
 
     /**
@@ -11523,7 +11523,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTypeIfExists(String...)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     DropTypeStep dropTypeIfExists(String... type);
 
     /**
@@ -11532,7 +11532,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTypeIfExists(Name...)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     DropTypeStep dropTypeIfExists(Name... type);
 
     /**
@@ -11541,7 +11541,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTypeIfExists(Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     DropTypeStep dropTypeIfExists(Collection<?> type);
 
     /**
@@ -11577,7 +11577,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterTableIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, IGNITE, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES, YUGABYTE })
     AlterTableStep alterTableIfExists(String table);
 
     /**
@@ -11586,7 +11586,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterTableIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, IGNITE, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES, YUGABYTE })
     AlterTableStep alterTableIfExists(Name table);
 
     /**
@@ -11595,7 +11595,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterTableIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, IGNITE, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES, YUGABYTE })
     AlterTableStep alterTableIfExists(Table<?> table);
 
     // -------------------------------------------------------------------------

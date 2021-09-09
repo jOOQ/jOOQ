@@ -63,6 +63,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
 import java.util.Collection;
 
@@ -208,6 +209,6 @@ public interface CreateTableConstraintStep extends CreateTableIndexStep {
      * {@link #constraint(Constraint)} explicitly.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateTableConstraintStep check(Condition condition);
 }

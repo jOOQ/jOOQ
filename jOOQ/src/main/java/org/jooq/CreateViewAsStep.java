@@ -66,6 +66,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
 import org.jetbrains.annotations.*;
 
@@ -99,7 +100,7 @@ public interface CreateViewAsStep<R extends Record> {
      * Add an <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     CreateViewFinalStep as(Select<? extends R> select);
 
     /**
@@ -114,7 +115,7 @@ public interface CreateViewAsStep<R extends Record> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     @PlainSQL
     CreateViewFinalStep as(SQL sql);
 
@@ -130,7 +131,7 @@ public interface CreateViewAsStep<R extends Record> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     @PlainSQL
     CreateViewFinalStep as(String sql);
 
@@ -146,7 +147,7 @@ public interface CreateViewAsStep<R extends Record> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     @PlainSQL
     CreateViewFinalStep as(String sql, Object... bindings);
 
@@ -162,7 +163,7 @@ public interface CreateViewAsStep<R extends Record> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     @PlainSQL
     CreateViewFinalStep as(String sql, QueryPart... parts);
 }

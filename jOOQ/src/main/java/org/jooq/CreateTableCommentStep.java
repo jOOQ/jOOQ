@@ -41,17 +41,6 @@ import org.jetbrains.annotations.*;
 
 
 import static org.jooq.SQLDialect.*;
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
 
 /**
  * A {@link Query} that can create tables.
@@ -82,14 +71,14 @@ public interface CreateTableCommentStep extends CreateTableStorageStep {
      * Add a comment to the table.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateTableStorageStep comment(String comment);
 
     /**
      * Add a comment to the table.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     CreateTableStorageStep comment(Comment comment);
 
 }

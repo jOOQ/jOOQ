@@ -37,6 +37,28 @@
  */
 package org.jooq;
 
+// ...
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.YUGABYTE;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The step in the <code>ALTER TABLE</code> DSL used to <code>RENAME</code>
@@ -67,15 +89,21 @@ public interface AlterTableRenameConstraintToStep {
     /**
      * Specify a new constraint name.
      */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES, YUGABYTE })
     AlterTableFinalStep to(Constraint newName);
 
     /**
      * Specify a new constraint name.
      */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES, YUGABYTE })
     AlterTableFinalStep to(Name newName);
 
     /**
      * Specify a new constraint name.
      */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES, YUGABYTE })
     AlterTableFinalStep to(String newName);
 }

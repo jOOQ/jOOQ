@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
 /**
  * This type is used for the {@link Insert}'s DSL API.
@@ -80,7 +81,7 @@ public interface InsertOnConflictDoUpdateStep<R extends Record> {
      * Add the <code>DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTE })
     InsertOnDuplicateSetStep<R> doUpdate();
 
     /**

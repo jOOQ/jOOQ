@@ -5957,7 +5957,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table) {
         return dsl().mergeInto(table);
     }
@@ -10006,7 +10006,7 @@ public class DSL {
      * @see DSLContext#createTableIfNotExists(String)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static CreateTableColumnStep createTableIfNotExists(String table) {
         return dsl().createTableIfNotExists(table);
     }
@@ -10017,7 +10017,7 @@ public class DSL {
      * @see DSLContext#createTableIfNotExists(Name)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static CreateTableColumnStep createTableIfNotExists(Name table) {
         return dsl().createTableIfNotExists(table);
     }
@@ -10028,7 +10028,7 @@ public class DSL {
      * @see DSLContext#createTableIfNotExists(Table)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static CreateTableColumnStep createTableIfNotExists(Table<?> table) {
         return dsl().createTableIfNotExists(table);
     }
@@ -10039,7 +10039,7 @@ public class DSL {
      * @see DSLContext#createTemporaryTable(String)
      */
     @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static CreateTableColumnStep createTemporaryTable(String table) {
         return dsl().createTemporaryTable(table);
     }
@@ -10050,7 +10050,7 @@ public class DSL {
      * @see DSLContext#createTemporaryTable(Name)
      */
     @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static CreateTableColumnStep createTemporaryTable(Name table) {
         return dsl().createTemporaryTable(table);
     }
@@ -10061,7 +10061,7 @@ public class DSL {
      * @see DSLContext#createTemporaryTable(Table)
      */
     @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static CreateTableColumnStep createTemporaryTable(Table<?> table) {
         return dsl().createTemporaryTable(table);
     }
@@ -10072,7 +10072,7 @@ public class DSL {
      * @see DSLContext#createTemporaryTableIfNotExists(String)
      */
     @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static CreateTableColumnStep createTemporaryTableIfNotExists(String table) {
         return dsl().createTemporaryTableIfNotExists(table);
     }
@@ -10083,7 +10083,7 @@ public class DSL {
      * @see DSLContext#createTemporaryTableIfNotExists(Name)
      */
     @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static CreateTableColumnStep createTemporaryTableIfNotExists(Name table) {
         return dsl().createTemporaryTableIfNotExists(table);
     }
@@ -10094,7 +10094,7 @@ public class DSL {
      * @see DSLContext#createTemporaryTableIfNotExists(Table)
      */
     @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static CreateTableColumnStep createTemporaryTableIfNotExists(Table<?> table) {
         return dsl().createTemporaryTableIfNotExists(table);
     }
@@ -10105,7 +10105,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTable(String)
      */
     @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static CreateTableColumnStep createGlobalTemporaryTable(String table) {
         return dsl().createGlobalTemporaryTable(table);
     }
@@ -10116,7 +10116,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTable(Name)
      */
     @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static CreateTableColumnStep createGlobalTemporaryTable(Name table) {
         return dsl().createGlobalTemporaryTable(table);
     }
@@ -10127,7 +10127,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTable(Table)
      */
     @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static CreateTableColumnStep createGlobalTemporaryTable(Table<?> table) {
         return dsl().createGlobalTemporaryTable(table);
     }
@@ -10138,7 +10138,7 @@ public class DSL {
      * @see DSLContext#createView(String, String...)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static CreateViewAsStep createView(String view, String... fields) {
         return dsl().createView(view, fields);
     }
@@ -10149,7 +10149,7 @@ public class DSL {
      * @see DSLContext#createView(Name, Name...)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static CreateViewAsStep createView(Name view, Name... fields) {
         return dsl().createView(view, fields);
     }
@@ -10160,7 +10160,7 @@ public class DSL {
      * @see DSLContext#createView(Table, Field...)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static CreateViewAsStep createView(Table<?> view, Field<?>... fields) {
         return dsl().createView(view, fields);
     }
@@ -10181,7 +10181,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static CreateViewAsStep createView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return dsl().createView(view, fieldNameFunction);
     }
@@ -10202,7 +10202,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static CreateViewAsStep createView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return dsl().createView(view, fieldNameFunction);
     }
@@ -10223,7 +10223,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static CreateViewAsStep createView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createView(view, fieldNameFunction);
     }
@@ -10234,7 +10234,7 @@ public class DSL {
      * @see DSLContext#createOrReplaceView(String, String...)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static CreateViewAsStep createOrReplaceView(String view, String... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
@@ -10245,7 +10245,7 @@ public class DSL {
      * @see DSLContext#createOrReplaceView(Name, Name...)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static CreateViewAsStep createOrReplaceView(Name view, Name... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
@@ -10256,7 +10256,7 @@ public class DSL {
      * @see DSLContext#createOrReplaceView(Table, Field...)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static CreateViewAsStep createOrReplaceView(Table<?> view, Field<?>... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
@@ -10277,7 +10277,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static CreateViewAsStep createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }
@@ -10298,7 +10298,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static CreateViewAsStep createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }
@@ -10319,7 +10319,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static CreateViewAsStep createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }
@@ -10330,7 +10330,7 @@ public class DSL {
      * @see DSLContext#createViewIfNotExists(String, String...)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static CreateViewAsStep createViewIfNotExists(String view, String... fields) {
         return dsl().createViewIfNotExists(view, fields);
     }
@@ -10341,7 +10341,7 @@ public class DSL {
      * @see DSLContext#createViewIfNotExists(Name, Name...)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static CreateViewAsStep createViewIfNotExists(Name view, Name... fields) {
         return dsl().createViewIfNotExists(view, fields);
     }
@@ -10352,7 +10352,7 @@ public class DSL {
      * @see DSLContext#createViewIfNotExists(Table, Field...)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static CreateViewAsStep createViewIfNotExists(Table<?> view, Field<?>... fields) {
         return dsl().createViewIfNotExists(view, fields);
     }
@@ -10373,7 +10373,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static CreateViewAsStep createViewIfNotExists(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return dsl().createViewIfNotExists(view, fieldNameFunction);
     }
@@ -10394,7 +10394,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static CreateViewAsStep createViewIfNotExists(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return dsl().createViewIfNotExists(view, fieldNameFunction);
     }
@@ -10415,7 +10415,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static CreateViewAsStep createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createViewIfNotExists(view, fieldNameFunction);
     }
@@ -10426,7 +10426,7 @@ public class DSL {
      * @see DSLContext#createType(String)
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static CreateTypeStep createType(String type) {
         return dsl().createType(type);
     }
@@ -10437,7 +10437,7 @@ public class DSL {
      * @see DSLContext#createType(Name)
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static CreateTypeStep createType(Name type) {
         return dsl().createType(type);
     }
@@ -10448,7 +10448,7 @@ public class DSL {
      * @see DSL#dropType(String)
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static DropTypeStep dropType(String type) {
         return dsl().dropType(type);
     }
@@ -10459,7 +10459,7 @@ public class DSL {
      * @see DSL#dropType(Name)
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static DropTypeStep dropType(Name type) {
         return dsl().dropType(type);
     }
@@ -10470,7 +10470,7 @@ public class DSL {
      * @see DSL#dropType(String...)
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static DropTypeStep dropType(String... type) {
         return dsl().dropType(type);
     }
@@ -10481,7 +10481,7 @@ public class DSL {
      * @see DSL#dropType(Name...)
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static DropTypeStep dropType(Name... type) {
         return dsl().dropType(type);
     }
@@ -10492,7 +10492,7 @@ public class DSL {
      * @see DSL#dropType(Collection)
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static DropTypeStep dropType(Collection<?> type) {
         return dsl().dropType(type);
     }
@@ -10503,7 +10503,7 @@ public class DSL {
      * @see DSL#dropTypeIfExists(String)
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static DropTypeStep dropTypeIfExists(String type) {
         return dsl().dropTypeIfExists(type);
     }
@@ -10514,7 +10514,7 @@ public class DSL {
      * @see DSL#dropTypeIfExists(Name)
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static DropTypeStep dropTypeIfExists(Name type) {
         return dsl().dropTypeIfExists(type);
     }
@@ -10525,7 +10525,7 @@ public class DSL {
      * @see DSL#dropTypeIfExists(String...)
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static DropTypeStep dropTypeIfExists(String... type) {
         return dsl().dropTypeIfExists(type);
     }
@@ -10536,7 +10536,7 @@ public class DSL {
      * @see DSL#dropTypeIfExists(Name...)
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static DropTypeStep dropTypeIfExists(Name... type) {
         return dsl().dropTypeIfExists(type);
     }
@@ -10547,7 +10547,7 @@ public class DSL {
      * @see DSL#dropTypeIfExists(Collection)
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static DropTypeStep dropTypeIfExists(Collection<?> type) {
         return dsl().dropTypeIfExists(type);
     }
@@ -10591,7 +10591,7 @@ public class DSL {
      * @see DSLContext#alterTableIfExists(String)
      */
     @NotNull
-    @Support({ H2, IGNITE, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES, YUGABYTE })
     public static AlterTableStep alterTableIfExists(String table) {
         return dsl().alterTableIfExists(table);
     }
@@ -10602,7 +10602,7 @@ public class DSL {
      * @see DSLContext#alterTableIfExists(Name)
      */
     @NotNull
-    @Support({ H2, IGNITE, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES, YUGABYTE })
     public static AlterTableStep alterTableIfExists(Name table) {
         return dsl().alterTableIfExists(table);
     }
@@ -10613,7 +10613,7 @@ public class DSL {
      * @see DSLContext#alterTableIfExists(Table)
      */
     @NotNull
-    @Support({ H2, IGNITE, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES, YUGABYTE })
     public static AlterTableStep alterTableIfExists(Table<?> table) {
         return dsl().alterTableIfExists(table);
     }

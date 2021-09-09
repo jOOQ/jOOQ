@@ -43,6 +43,7 @@ import org.jetbrains.annotations.*;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.YUGABYTE;
 
 import java.util.Collection;
 
@@ -91,7 +92,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * <code>INSERT</code> statement's <code>ON CONFLICT ...</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, SQLITE })
+    @Support({ POSTGRES, SQLITE, YUGABYTE })
     InsertOnConflictDoUpdateStep<R> where(Condition condition);
 
     /**
@@ -100,7 +101,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * connecting them with each other using {@link Operator#AND}.
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, SQLITE })
+    @Support({ POSTGRES, SQLITE, YUGABYTE })
     InsertOnConflictDoUpdateStep<R> where(Condition... conditions);
 
     /**
@@ -109,7 +110,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * connecting them with each other using {@link Operator#AND}.
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, SQLITE })
+    @Support({ POSTGRES, SQLITE, YUGABYTE })
     InsertOnConflictDoUpdateStep<R> where(Collection<? extends Condition> conditions);
 
     /**
@@ -117,7 +118,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * <code>INSERT</code> statement's <code>ON CONFLICT ...</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, SQLITE })
+    @Support({ POSTGRES, SQLITE, YUGABYTE })
     InsertOnConflictDoUpdateStep<R> where(Field<Boolean> field);
 
     /**
@@ -133,7 +134,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, SQLITE })
+    @Support({ POSTGRES, SQLITE, YUGABYTE })
     @PlainSQL
     InsertOnConflictDoUpdateStep<R> where(SQL sql);
 
@@ -150,7 +151,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, SQLITE })
+    @Support({ POSTGRES, SQLITE, YUGABYTE })
     @PlainSQL
     InsertOnConflictDoUpdateStep<R> where(String sql);
 
@@ -168,7 +169,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, SQLITE })
+    @Support({ POSTGRES, SQLITE, YUGABYTE })
     @PlainSQL
     InsertOnConflictDoUpdateStep<R> where(String sql, Object... bindings);
 
@@ -186,7 +187,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, SQLITE })
+    @Support({ POSTGRES, SQLITE, YUGABYTE })
     @PlainSQL
     InsertOnConflictDoUpdateStep<R> where(String sql, QueryPart... parts);
 }

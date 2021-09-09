@@ -71,6 +71,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -1034,7 +1035,7 @@ extends
      * @see DSL#power(Field, Number)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> pow(Number exponent);
 
     /**
@@ -1047,7 +1048,7 @@ extends
      * @see DSL#power(Field, Field)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> pow(Field<? extends Number> exponent);
 
     /**
@@ -1056,7 +1057,7 @@ extends
      * @see #power(Number)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> power(Number exponent);
 
     /**
@@ -1065,7 +1066,7 @@ extends
      * @see #power(Field)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> power(Field<? extends Number> exponent);
 
     // ------------------------------------------------------------------------
@@ -1078,7 +1079,7 @@ extends
      * @see DSL#bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> bitNot();
 
     /**
@@ -1087,7 +1088,7 @@ extends
      * @see DSL#bitAnd(Field, Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> bitAnd(T value);
 
     /**
@@ -1096,7 +1097,7 @@ extends
      * @see DSL#bitAnd(Field, Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> bitAnd(Field<T> value);
 
     /**
@@ -1106,7 +1107,7 @@ extends
      * @see DSL#bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> bitNand(T value);
 
     /**
@@ -1116,7 +1117,7 @@ extends
      * @see DSL#bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> bitNand(Field<T> value);
 
     /**
@@ -1125,7 +1126,7 @@ extends
      * @see DSL#bitOr(Field, Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> bitOr(T value);
 
     /**
@@ -1134,7 +1135,7 @@ extends
      * @see DSL#bitOr(Field, Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> bitOr(Field<T> value);
 
     /**
@@ -1144,7 +1145,7 @@ extends
      * @see DSL#bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> bitNor(T value);
 
     /**
@@ -1154,7 +1155,7 @@ extends
      * @see DSL#bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> bitNor(Field<T> value);
 
     /**
@@ -1163,7 +1164,7 @@ extends
      * @see DSL#bitXor(Field, Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> bitXor(T value);
 
     /**
@@ -1172,7 +1173,7 @@ extends
      * @see DSL#bitXor(Field, Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> bitXor(Field<T> value);
 
     /**
@@ -1182,7 +1183,7 @@ extends
      * @see DSL#bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> bitXNor(T value);
 
     /**
@@ -1192,7 +1193,7 @@ extends
      * @see DSL#bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> bitXNor(Field<T> value);
 
     /**
@@ -1202,7 +1203,7 @@ extends
      * @see DSL#power(Field, Number)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> shl(Number value);
 
     /**
@@ -1212,7 +1213,7 @@ extends
      * @see DSL#power(Field, Number)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> shl(Field<? extends Number> value);
 
     /**
@@ -1222,7 +1223,7 @@ extends
      * @see DSL#power(Field, Number)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> shr(Number value);
 
     /**
@@ -1232,7 +1233,7 @@ extends
      * @see DSL#power(Field, Number)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> shr(Field<? extends Number> value);
 
     // ------------------------------------------------------------------------
@@ -1597,7 +1598,7 @@ extends
      * @see #likeRegex(String)
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Condition likeRegex(String pattern);
 
     /**
@@ -1608,7 +1609,7 @@ extends
      * @see #likeRegex(String)
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Condition likeRegex(Field<String> pattern);
 
     /**
@@ -1619,7 +1620,7 @@ extends
      * @see #likeRegex(String)
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Condition notLikeRegex(String pattern);
 
     /**
@@ -1630,7 +1631,7 @@ extends
      * @see #likeRegex(Field)
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Condition notLikeRegex(Field<String> pattern);
 
     // ------------------------------------------------------------------------
@@ -1643,7 +1644,7 @@ extends
      * SQL: <code>this similar to value</code>
      */
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     LikeEscapeStep similarTo(Field<String> value);
 
     /**
@@ -1654,7 +1655,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     Condition similarTo(Field<String> value, char escape);
 
     /**
@@ -1663,7 +1664,7 @@ extends
      * SQL: <code>this similar to value</code>
      */
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     LikeEscapeStep similarTo(String value);
 
     /**
@@ -1674,7 +1675,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     Condition similarTo(String value, char escape);
 
     /**
@@ -1683,7 +1684,7 @@ extends
      * SQL: <code>this not similar to field</code>
      */
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     LikeEscapeStep notSimilarTo(Field<String> field);
 
     /**
@@ -1694,7 +1695,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     Condition notSimilarTo(Field<String> field, char escape);
 
     /**
@@ -1703,7 +1704,7 @@ extends
      * SQL: <code>this not similar to value</code>
      */
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     LikeEscapeStep notSimilarTo(String value);
 
     /**
@@ -1714,7 +1715,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     Condition notSimilarTo(String value, char escape);
 
     // ------------------------------------------------------------------------
@@ -1998,7 +1999,7 @@ extends
      * @see #like(Field, char)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Condition contains(Field<T> value);
 
     /**
@@ -2012,7 +2013,7 @@ extends
      * Inverse of {@link #contains(Field)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Condition notContains(Field<T> value);
 
     /**
@@ -2031,7 +2032,7 @@ extends
      * @see #contains(Object)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Condition containsIgnoreCase(T value);
 
     /**
@@ -2050,21 +2051,21 @@ extends
      * @see #contains(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Condition containsIgnoreCase(Field<T> value);
 
     /**
      * Inverse of {@link #containsIgnoreCase(Object)}
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Condition notContainsIgnoreCase(T value);
 
     /**
      * Inverse of {@link #containsIgnoreCase(Field)}
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Condition notContainsIgnoreCase(Field<T> value);
 
     /**
@@ -2096,7 +2097,7 @@ extends
      * @see #like(Field, char)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Condition startsWith(Field<T> value);
 
     /**
@@ -2128,7 +2129,7 @@ extends
      * @see #like(Field, char)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Condition startsWithIgnoreCase(Field<T> value);
 
     /**
@@ -2160,7 +2161,7 @@ extends
      * @see #like(Field, char)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Condition endsWith(Field<T> value);
 
     /**
@@ -2192,7 +2193,7 @@ extends
      * @see #like(Field, char)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Condition endsWithIgnoreCase(Field<T> value);
 
     // ------------------------------------------------------------------------
@@ -2662,7 +2663,7 @@ extends
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Condition equal(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2703,7 +2704,7 @@ extends
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Condition eq(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2738,7 +2739,7 @@ extends
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Condition notEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2779,7 +2780,7 @@ extends
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Condition ne(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2814,7 +2815,7 @@ extends
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Condition lessThan(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2855,7 +2856,7 @@ extends
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Condition lt(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2890,7 +2891,7 @@ extends
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Condition lessOrEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2931,7 +2932,7 @@ extends
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Condition le(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2966,7 +2967,7 @@ extends
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Condition greaterThan(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -3007,7 +3008,7 @@ extends
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Condition gt(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -3042,7 +3043,7 @@ extends
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Condition greaterOrEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -3083,7 +3084,7 @@ extends
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Condition ge(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -3202,7 +3203,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> sqrt();
 
     /**
@@ -3211,7 +3212,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> exp();
 
     /**
@@ -3220,7 +3221,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> ln();
 
     /**
@@ -3229,7 +3230,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> log(int base);
 
     /**
@@ -3238,7 +3239,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> acos();
 
     /**
@@ -3247,7 +3248,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> asin();
 
     /**
@@ -3256,7 +3257,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> atan();
 
     /**
@@ -3265,7 +3266,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> atan2(Number y);
 
     /**
@@ -3274,7 +3275,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> atan2(Field<? extends Number> y);
 
     /**
@@ -3283,7 +3284,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> cos();
 
     /**
@@ -3292,7 +3293,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> sin();
 
     /**
@@ -3301,7 +3302,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> tan();
 
     /**
@@ -3310,7 +3311,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> cot();
 
     /**
@@ -3319,7 +3320,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> sinh();
 
     /**
@@ -3328,7 +3329,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> cosh();
 
     /**
@@ -3337,7 +3338,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> tanh();
 
     /**
@@ -3346,7 +3347,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> coth();
 
     /**
@@ -3436,7 +3437,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> stddevPop();
 
     /**
@@ -3445,7 +3446,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> stddevSamp();
 
     /**
@@ -3454,7 +3455,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> varPop();
 
     /**
@@ -3463,7 +3464,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> varSamp();
 
     /**
@@ -3473,7 +3474,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, POSTGRES, YUGABYTE })
     WindowPartitionByStep<Integer> countOver();
 
     /**
@@ -3483,7 +3484,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, POSTGRES, YUGABYTE })
     WindowPartitionByStep<T> maxOver();
 
     /**
@@ -3493,7 +3494,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, POSTGRES, YUGABYTE })
     WindowPartitionByStep<T> minOver();
 
     /**
@@ -3503,7 +3504,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, POSTGRES, YUGABYTE })
     WindowPartitionByStep<BigDecimal> sumOver();
 
     /**
@@ -3513,7 +3514,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, POSTGRES, YUGABYTE })
     WindowPartitionByStep<BigDecimal> avgOver();
 
     /**
@@ -3523,7 +3524,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, POSTGRES, YUGABYTE })
     WindowIgnoreNullsStep<T> firstValue();
 
     /**
@@ -3533,7 +3534,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, POSTGRES, YUGABYTE })
     WindowIgnoreNullsStep<T> lastValue();
 
     /**
@@ -3543,7 +3544,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     WindowIgnoreNullsStep<T> lead();
 
     /**
@@ -3553,7 +3554,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     WindowIgnoreNullsStep<T> lead(int offset);
 
     /**
@@ -3563,7 +3564,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     WindowIgnoreNullsStep<T> lead(int offset, T defaultValue);
 
     /**
@@ -3573,7 +3574,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     WindowIgnoreNullsStep<T> lead(int offset, Field<T> defaultValue);
 
     /**
@@ -3583,7 +3584,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     WindowIgnoreNullsStep<T> lag();
 
     /**
@@ -3593,7 +3594,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     WindowIgnoreNullsStep<T> lag(int offset);
 
     /**
@@ -3603,7 +3604,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     WindowIgnoreNullsStep<T> lag(int offset, T defaultValue);
 
     /**
@@ -3613,7 +3614,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     WindowIgnoreNullsStep<T> lag(int offset, Field<T> defaultValue);
 
     /**
@@ -3623,7 +3624,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, POSTGRES, YUGABYTE })
     WindowPartitionByStep<BigDecimal> stddevPopOver();
 
     /**
@@ -3633,7 +3634,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, POSTGRES, YUGABYTE })
     WindowPartitionByStep<BigDecimal> stddevSampOver();
 
     /**
@@ -3643,7 +3644,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, POSTGRES, YUGABYTE })
     WindowPartitionByStep<BigDecimal> varPopOver();
 
     /**
@@ -3653,7 +3654,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, POSTGRES, YUGABYTE })
     WindowPartitionByStep<BigDecimal> varSampOver();
 
     /**
@@ -3731,7 +3732,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<String> rpad(Field<? extends Number> length);
 
     /**
@@ -3744,7 +3745,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<String> rpad(int length);
 
     /**
@@ -3757,7 +3758,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<String> rpad(Field<? extends Number> length, Field<String> character);
 
     /**
@@ -3770,7 +3771,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<String> rpad(int length, char character);
 
     /**
@@ -3783,7 +3784,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<String> lpad(Field<? extends Number> length);
 
     /**
@@ -3796,7 +3797,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<String> lpad(int length);
 
     /**
@@ -3809,7 +3810,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<String> lpad(Field<? extends Number> length, Field<String> character);
 
     /**
@@ -3822,7 +3823,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<String> lpad(int length, char character);
 
     /**
@@ -3835,7 +3836,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<String> repeat(Number count);
 
     /**
@@ -3848,7 +3849,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<String> repeat(Field<? extends Number> count);
 
     /**
@@ -3861,7 +3862,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<String> replace(Field<String> search);
 
     /**
@@ -3874,7 +3875,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<String> replace(String search);
 
     /**
@@ -3887,7 +3888,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<String> replace(Field<String> search, Field<String> replace);
 
     /**
@@ -3900,7 +3901,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<String> replace(String search, String replace);
 
     /**
@@ -3913,7 +3914,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<Integer> position(String search);
 
     /**
@@ -3926,7 +3927,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<Integer> position(Field<String> search);
 
     /**
@@ -3939,7 +3940,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<Integer> ascii();
 
     /**
@@ -3948,7 +3949,7 @@ extends
      * @see DSL#collation(String)
      */
     @NotNull
-    @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<String> collate(String collation);
 
     /**
@@ -3957,14 +3958,14 @@ extends
      * @see DSL#collation(Name)
      */
     @NotNull
-    @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<String> collate(Name collation);
 
     /**
      * Apply a collation operator to this column expression.
      */
     @NotNull
-    @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<String> collate(Collation collation);
 
     /**

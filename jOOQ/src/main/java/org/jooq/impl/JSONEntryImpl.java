@@ -157,6 +157,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
             case MYSQL:
             case POSTGRES:
             case SQLITE:
+            case YUGABYTE:
                 ctx.visit(key).sql(", ").visit(jsonCast(ctx, value));
                 break;
 
@@ -220,6 +221,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
 
             case POSTGRES:
+            case YUGABYTE:
                 if (field instanceof Param)
                     if (field.getType() != Object.class)
                         return field.cast(field.getDataType());

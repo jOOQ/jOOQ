@@ -102,6 +102,6 @@ public interface LikeEscapeStep extends Condition {
      * </pre></code>
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition escape(char c);
 }

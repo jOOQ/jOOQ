@@ -305,7 +305,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
                 case POSTGRES:
-                case SQLITE: {
+                case SQLITE:
+                case YUGABYTE: {
                     toSQLInsert(ctx);
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
@@ -471,7 +472,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
                 case POSTGRES:
-                case SQLITE: {
+                case SQLITE:
+                case YUGABYTE: {
                     toSQLInsert(ctx);
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)

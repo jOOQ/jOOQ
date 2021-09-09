@@ -110,6 +110,7 @@ extends
             case MARIADB:
             case MYSQL:
             case POSTGRES:
+            case YUGABYTE:
                 ctx.visit(idiv(
                     isub(DSL.exp(imul(number, two())), one()),
                     imul(DSL.exp(number), two())

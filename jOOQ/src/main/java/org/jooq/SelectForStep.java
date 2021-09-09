@@ -52,6 +52,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic

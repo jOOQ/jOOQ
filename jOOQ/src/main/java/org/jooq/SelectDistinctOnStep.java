@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
 import java.util.Collection;
 
@@ -134,7 +135,7 @@ public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R
      * it is added explicitly via the jOOQ API.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     SelectIntoStep<R> on(SelectFieldOrAsterisk... fields);
 
     /**
@@ -145,7 +146,7 @@ public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R
      * it is added explicitly via the jOOQ API.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     SelectIntoStep<R> on(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
@@ -153,7 +154,7 @@ public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R
      * <code>SELECT DISTINCT ON (...)</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     SelectIntoStep<R> distinctOn(SelectFieldOrAsterisk... fields);
 
     /**
@@ -161,6 +162,6 @@ public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R
      * <code>SELECT DISTINCT ON (...)</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     SelectIntoStep<R> distinctOn(Collection<? extends SelectFieldOrAsterisk> fields);
 }

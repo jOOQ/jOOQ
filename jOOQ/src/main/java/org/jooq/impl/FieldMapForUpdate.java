@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.Tools.flattenEntrySet;
 import static org.jooq.impl.Tools.DataKey.DATA_ON_DUPLICATE_KEY_WHERE;
@@ -65,8 +66,8 @@ import org.jooq.Table;
  * @author Lukas Eder
  */
 final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
-    private static final Set<SQLDialect> CASTS_NEEDED       = SQLDialect.supportedBy(POSTGRES);
-    private static final Set<SQLDialect> NO_SUPPORT_QUALIFY = SQLDialect.supportedBy(POSTGRES, SQLITE);
+    private static final Set<SQLDialect> CASTS_NEEDED       = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect> NO_SUPPORT_QUALIFY = SQLDialect.supportedBy(POSTGRES, SQLITE, YUGABYTE);
 
     private final Table<?>               table;
     private final Clause                 assignmentClause;

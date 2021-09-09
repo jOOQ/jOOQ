@@ -119,21 +119,21 @@ public interface AlterDomainStep<T> {
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @NotNull @CheckReturnValue
     AlterDomainFinalStep renameTo(@Stringly.Name String renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @NotNull @CheckReturnValue
     AlterDomainFinalStep renameTo(Name renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @NotNull @CheckReturnValue
     AlterDomainFinalStep renameTo(Domain<?> renameTo);
 
@@ -184,21 +184,21 @@ public interface AlterDomainStep<T> {
      *
      * @param setDefault is wrapped as {@link org.jooq.impl.DSL#val(Object)}.
      */
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     @NotNull @CheckReturnValue
     AlterDomainFinalStep setDefault(T setDefault);
 
     /**
      * Add the <code>SET DEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     @NotNull @CheckReturnValue
     AlterDomainFinalStep setDefault(Field<T> setDefault);
 
     /**
      * Add the <code>DROP DEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     @NotNull @CheckReturnValue
     AlterDomainFinalStep dropDefault();
 

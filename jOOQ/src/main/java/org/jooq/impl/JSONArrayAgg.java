@@ -124,6 +124,7 @@ implements JSONArrayAggOrderByStep<J> {
 
 
             case POSTGRES:
+            case YUGABYTE:
                 ctx.visit(getDataType() == JSON ? N_JSON_AGG : N_JSONB_AGG).sql('(');
                 ctx.visit(arguments.get(0));
                 acceptOrderBy(ctx);

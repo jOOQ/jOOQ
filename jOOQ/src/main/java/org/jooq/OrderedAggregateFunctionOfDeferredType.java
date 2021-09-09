@@ -43,6 +43,7 @@ import org.jetbrains.annotations.*;
 // ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.YUGABYTE;
 
 /**
  * An ordered-set aggregate function.
@@ -74,6 +75,6 @@ public interface OrderedAggregateFunctionOfDeferredType {
      * aggregate function
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     <T> AggregateFilterStep<T> withinGroupOrderBy(OrderField<T> field);
 }

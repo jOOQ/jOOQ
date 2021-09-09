@@ -90,7 +90,8 @@ final class FunctionTable<R extends Record> extends AbstractTable<R> {
             // with defaulted parameters.
 
 
-            case POSTGRES: {
+            case POSTGRES:
+            case YUGABYTE: {
                 ctx.visit(function);
                 break;
             }

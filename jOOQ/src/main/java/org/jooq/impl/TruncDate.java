@@ -126,7 +126,8 @@ final class TruncDate<T> extends AbstractField<T> {
 
 
 
-            case POSTGRES: {
+            case POSTGRES:
+            case YUGABYTE: {
                 switch (part) {
                     case YEAR:   keyword = "year";   break;
                     case MONTH:  keyword = "month";  break;

@@ -125,6 +125,7 @@ final class TimestampDiff extends AbstractField<DayToSecond> {
 
 
             case POSTGRES:
+            case YUGABYTE:
 
                 // [#4481] Parentheses are important in case this expression is
                 //         placed in the context of other arithmetic

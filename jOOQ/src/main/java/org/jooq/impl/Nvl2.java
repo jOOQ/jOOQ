@@ -97,6 +97,7 @@ final class Nvl2<T> extends AbstractField<T> {
             case MYSQL:
             case POSTGRES:
             case SQLITE:
+            case YUGABYTE:
                 acceptCase(ctx);
                 break;
 

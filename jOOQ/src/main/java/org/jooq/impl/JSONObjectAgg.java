@@ -97,6 +97,7 @@ implements JSONObjectAggNullStep<J> {
 
 
             case POSTGRES:
+            case YUGABYTE:
                 acceptPostgres(ctx);
                 break;
 

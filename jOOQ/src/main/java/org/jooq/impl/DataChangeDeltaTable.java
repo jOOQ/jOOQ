@@ -42,6 +42,7 @@ package org.jooq.impl;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.resultQuery;
 import static org.jooq.impl.Keywords.K_FINAL;
@@ -72,7 +73,7 @@ import org.jooq.Update;
  */
 final class DataChangeDeltaTable<R extends Record> extends AbstractTable<R> implements AutoAliasTable<R> {
 
-    private final Set<SQLDialect> EMULATE_USING_CTE = SQLDialect.supportedBy(POSTGRES);
+    private final Set<SQLDialect> EMULATE_USING_CTE = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
     private final ResultOption    result;
     private final DMLQuery<R>     query;

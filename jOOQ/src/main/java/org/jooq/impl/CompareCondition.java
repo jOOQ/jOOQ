@@ -76,6 +76,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.inline;
@@ -106,7 +107,6 @@ import org.jooq.LikeEscapeStep;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.conf.ParamType;
-import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
  * @author Lukas Eder
@@ -114,7 +114,7 @@ import org.jooq.impl.Tools.BooleanDataKey;
 final class CompareCondition extends AbstractCondition implements LikeEscapeStep {
 
     private static final Clause[]        CLAUSES               = { CONDITION, CONDITION_COMPARISON };
-    private static final Set<SQLDialect> REQUIRES_CAST_ON_LIKE = SQLDialect.supportedBy(DERBY, POSTGRES);
+    private static final Set<SQLDialect> REQUIRES_CAST_ON_LIKE = SQLDialect.supportedBy(DERBY, POSTGRES, YUGABYTE);
     private static final Set<SQLDialect> NO_SUPPORT_ILIKE      = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
 
     final Field<?>                       field1;

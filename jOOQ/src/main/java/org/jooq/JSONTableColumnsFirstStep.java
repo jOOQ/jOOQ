@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
 /**
  * A step in the construction of an <code>JSON_TABLE</code> expression.
@@ -60,7 +61,7 @@ public interface JSONTableColumnsFirstStep {
      * <code>JSON_TABLE</code> expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     JSONTableColumnForOrdinalityStep column(String name);
 
     /**
@@ -68,7 +69,7 @@ public interface JSONTableColumnsFirstStep {
      * <code>JSON_TABLE</code> expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     JSONTableColumnForOrdinalityStep column(Name name);
 
     /**
@@ -76,7 +77,7 @@ public interface JSONTableColumnsFirstStep {
      * <code>JSON_TABLE</code> expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     JSONTableColumnPathStep column(Field<?> name);
 
     /**
@@ -84,7 +85,7 @@ public interface JSONTableColumnsFirstStep {
      * <code>JSON_TABLE</code> expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     JSONTableColumnPathStep column(String name, DataType<?> type);
 
     /**
@@ -92,7 +93,7 @@ public interface JSONTableColumnsFirstStep {
      * <code>JSON_TABLE</code> expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     JSONTableColumnPathStep column(Name name, DataType<?> type);
 
     /**
@@ -100,7 +101,7 @@ public interface JSONTableColumnsFirstStep {
      * <code>JSON_TABLE</code> expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     JSONTableColumnPathStep column(Field<?> name, DataType<?> type);
 
 }

@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
@@ -97,7 +98,7 @@ implements
 
 
 
-    static final Set<SQLDialect>  SUPPORT_FILTER       = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, SQLITE);
+    static final Set<SQLDialect>  SUPPORT_FILTER       = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, SQLITE, YUGABYTE);
     static final Set<SQLDialect>  SUPPORT_DISTINCT_RVE = SQLDialect.supportedBy(H2, POSTGRES);
 
     static final Field<Integer>   ASTERISK             = DSL.field("*", Integer.class);

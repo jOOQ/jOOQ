@@ -114,6 +114,7 @@ extends
             case DERBY:
             case POSTGRES:
             case SQLITE:
+            case YUGABYTE:
                 ctx.visit(function(N_RANDOM, getDataType()));
                 break;
 

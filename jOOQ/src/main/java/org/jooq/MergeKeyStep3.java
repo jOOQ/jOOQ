@@ -71,7 +71,7 @@ public interface MergeKeyStep3<R extends Record, T1, T2, T3> extends MergeValues
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     MergeValuesStep3<R, T1, T2, T3> key(Field<?>... keys);
 
     /**
@@ -84,6 +84,6 @@ public interface MergeKeyStep3<R extends Record, T1, T2, T3> extends MergeValues
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     MergeValuesStep3<R, T1, T2, T3> key(Collection<? extends Field<?>> keys);
 }

@@ -232,6 +232,7 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
             case CUBRID:
             case POSTGRES:
+            case YUGABYTE:
                 switch (p) {
                     case MILLENNIUM:
                     case CENTURY:
@@ -260,6 +261,7 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
 
                             case POSTGRES:
+                            case YUGABYTE:
                                 if (endDate.getDataType().isDate() && startDate.getDataType().isDate())
                                     ctx.sql('(').visit(endDate).sql(" - ").visit(startDate).sql(')');
                                 else

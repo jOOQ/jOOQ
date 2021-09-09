@@ -62,7 +62,8 @@ final class CountTable extends DefaultAggregateFunction<Integer> {
 
 
 
-            case POSTGRES: {
+            case POSTGRES:
+            case YUGABYTE: {
                 super.accept(ctx);
                 break;
             }

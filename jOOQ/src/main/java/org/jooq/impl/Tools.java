@@ -69,6 +69,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
 import static org.jooq.conf.ParamType.INLINED;
@@ -923,9 +924,10 @@ final class Tools {
 
     static final Set<SQLDialect>    REQUIRES_BACKSLASH_ESCAPING        = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>    NO_SUPPORT_NULL                    = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
-    static final Set<SQLDialect>    NO_SUPPORT_BINARY_TYPE_LENGTH      = SQLDialect.supportedBy(POSTGRES);
+    static final Set<SQLDialect>    NO_SUPPORT_BINARY_TYPE_LENGTH      = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
     static final Set<SQLDialect>    NO_SUPPORT_CAST_TYPE_IN_DDL        = SQLDialect.supportedBy(MARIADB, MYSQL);
-    static final Set<SQLDialect>    SUPPORT_NON_BIND_VARIABLE_SUFFIXES = SQLDialect.supportedBy(POSTGRES);
+    static final Set<SQLDialect>    SUPPORT_NON_BIND_VARIABLE_SUFFIXES = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    static final Set<SQLDialect>    SUPPORT_POSTGRES_LITERALS          = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
     static final Set<SQLDialect>    DEFAULT_BEFORE_NULL                = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
     static final Set<SQLDialect>    NO_SUPPORT_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(DERBY);
     static final Set<SQLDialect>    DEFAULT_TIMESTAMP_NOT_NULL         = SQLDialect.supportedBy(MARIADB);
@@ -2633,7 +2635,7 @@ final class Tools {
 
             // [#6704] PostgreSQL supports additional quoted string literals, which we must skip: E'...'
             else if ((sqlChars[i] == 'e' || sqlChars[i] == 'E')
-                        && ( ctx.family() == POSTGRES)
+                        && SUPPORT_POSTGRES_LITERALS.contains(ctx.dialect())
                         && i + 1 < sqlChars.length
                         && sqlChars[i + 1] == '\'') {
 
@@ -5107,7 +5109,8 @@ final class Tools {
 
 
                 case DERBY:
-                case FIREBIRD:  ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
+                case FIREBIRD:
+                case YUGABYTE: ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
             }
         }
     }
@@ -5197,7 +5200,8 @@ final class Tools {
                 // [#7597] In PostgreSQL, the enum type reference should be used
 
 
-                case POSTGRES: {
+                case POSTGRES:
+                case YUGABYTE: {
 
                     // [#7597] but only if the EnumType.getSchema() value is present
                     //         i.e. when it is a known, stored enum type
@@ -6010,6 +6014,7 @@ final class Tools {
 
 
                 case POSTGRES:
+                case YUGABYTE:
                     return ParseNameCase.LOWER_IF_UNQUOTED;
 
 
@@ -6042,6 +6047,7 @@ final class Tools {
 
                 case H2:
                 case POSTGRES:
+                case YUGABYTE:
                     return NestedCollectionEmulation.JSONB;
 
                 case MARIADB:

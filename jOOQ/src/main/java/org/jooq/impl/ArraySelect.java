@@ -85,10 +85,6 @@ final class ArraySelect<T> extends AbstractField<T[]> {
                 break;
             }
 
-
-
-            case HSQLDB:
-            case POSTGRES:
             default:
                 ctx.visit(K_ARRAY);
                 visitSubquery(ctx, select);

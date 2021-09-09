@@ -189,7 +189,8 @@ extends
 
 
 
-            case POSTGRES: {
+            case POSTGRES:
+            case YUGABYTE: {
                 switch (datePart) {
                     case YEAR:   string = "1 year";   break;
                     case MONTH:  string = "1 month";  break;

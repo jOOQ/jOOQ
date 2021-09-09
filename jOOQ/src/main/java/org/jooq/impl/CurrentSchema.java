@@ -127,6 +127,7 @@ extends
 
             case HSQLDB:
             case POSTGRES:
+            case YUGABYTE:
                 ctx.visit(K_CURRENT_SCHEMA);
                 break;
 

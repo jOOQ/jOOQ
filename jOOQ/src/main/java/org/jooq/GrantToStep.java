@@ -70,21 +70,21 @@ public interface GrantToStep {
     /**
      * Add the <code>TO</code> clause to the <code>GRANT</code> statement.
      */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     @NotNull @CheckReturnValue
     GrantWithGrantOptionStep to(User to);
 
     /**
      * Add the <code>TO</code> clause to the <code>GRANT</code> statement.
      */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     @NotNull @CheckReturnValue
     GrantWithGrantOptionStep to(Role to);
 
     /**
      * Add the <code>TO PUBLIC</code> clause to the <code>GRANT</code> statement.
      */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     @NotNull @CheckReturnValue
     GrantWithGrantOptionStep toPublic();
 }

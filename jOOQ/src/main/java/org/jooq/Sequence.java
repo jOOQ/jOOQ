@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
 import org.jooq.impl.DSL;
 
@@ -115,14 +116,14 @@ public interface Sequence<T extends Number> extends Qualified, Typed<T> {
      * An expression to get the current value of this sequence.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     Field<T> currval();
 
     /**
      * An expression to increment the sequence and get the next value.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     Field<T> nextval();
 
     /**
@@ -131,6 +132,6 @@ public interface Sequence<T extends Number> extends Qualified, Typed<T> {
      * This is done using {@link DSL#generateSeries(int, int)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     Select<Record1<T>> nextvals(int size);
 }

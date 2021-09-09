@@ -75,6 +75,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.impl.Cascade.CASCADE;
 import static org.jooq.impl.Cascade.RESTRICT;
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
@@ -222,11 +223,11 @@ final class AlterTableImpl extends AbstractDDLQuery implements
     private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS_COLUMN       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect>     SUPPORT_RENAME_COLUMN                 = SQLDialect.supportedBy(DERBY);
     private static final Set<SQLDialect>     SUPPORT_RENAME_TABLE                  = SQLDialect.supportedBy(DERBY);
-    private static final Set<SQLDialect>     NO_SUPPORT_RENAME_QUALIFIED_TABLE     = SQLDialect.supportedBy(POSTGRES);
-    private static final Set<SQLDialect>     NO_SUPPORT_ALTER_TYPE_AND_NULL        = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect>     NO_SUPPORT_RENAME_QUALIFIED_TABLE     = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect>     NO_SUPPORT_ALTER_TYPE_AND_NULL        = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
     private static final Set<SQLDialect>     NO_SUPPORT_DROP_CONSTRAINT            = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect>     REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES);
-    private static final Set<SQLDialect>     REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES);
+    private static final Set<SQLDialect>     REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect>     REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE);
 
 
 
@@ -1074,10 +1075,12 @@ final class AlterTableImpl extends AbstractDDLQuery implements
 
 
                 case POSTGRES:
+                case YUGABYTE:
                     alterColumnTypeAndNullabilityInBlock(ctx);
                     return;
             }
         }
+
 
 
 
@@ -1448,6 +1451,7 @@ final class AlterTableImpl extends AbstractDDLQuery implements
 
                     case FIREBIRD:
                     case POSTGRES:
+                    case YUGABYTE:
                         ctx.sql(' ').visit(K_TYPE);
                         break;
                 }
@@ -1835,7 +1839,8 @@ final class AlterTableImpl extends AbstractDDLQuery implements
 
 
 
-                case POSTGRES: {
+                case POSTGRES:
+                case YUGABYTE: {
                     AlterTableAlterStep<?> step = c1.dsl().alterTable(table).alterColumn(alterColumn);
                     c1.visit(alterColumnType.nullable() ? step.dropNotNull() : step.setNotNull())
                        .sql(';');

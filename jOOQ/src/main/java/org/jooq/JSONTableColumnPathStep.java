@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
 /**
  * A step in the construction of an <code>JSON_TABLE</code> expression.
@@ -60,7 +61,7 @@ public interface JSONTableColumnPathStep extends JSONTableColumnForOrdinalitySte
      * clause of the <code>JSON_TABLE</code> predicate.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     JSONTableColumnsStep path(String path);
 
 }

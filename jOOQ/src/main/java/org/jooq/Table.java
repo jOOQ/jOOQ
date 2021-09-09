@@ -73,6 +73,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -1272,7 +1273,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see #rightOuterJoin(TableLike)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     TablePartitionByStep<Record> rightJoin(TableLike<?> table);
 
     /**
@@ -1292,7 +1293,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     @PlainSQL
     TablePartitionByStep<Record> rightJoin(SQL sql);
 
@@ -1313,7 +1314,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     @PlainSQL
     TablePartitionByStep<Record> rightJoin(String sql);
 
@@ -1335,7 +1336,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     @PlainSQL
     TablePartitionByStep<Record> rightJoin(String sql, Object... bindings);
 
@@ -1357,7 +1358,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     @PlainSQL
     TablePartitionByStep<Record> rightJoin(String sql, QueryPart... parts);
 
@@ -1372,7 +1373,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see #rightOuterJoin(Name)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     TablePartitionByStep<Record> rightJoin(Name name);
 
     /**
@@ -1381,7 +1382,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * This is only possible where the underlying RDBMS supports it
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     TablePartitionByStep<Record> rightOuterJoin(TableLike<?> table);
 
     /**
@@ -1398,7 +1399,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     @PlainSQL
     TablePartitionByStep<Record> rightOuterJoin(SQL sql);
 
@@ -1416,7 +1417,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     @PlainSQL
     TablePartitionByStep<Record> rightOuterJoin(String sql);
 
@@ -1435,7 +1436,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     @PlainSQL
     TablePartitionByStep<Record> rightOuterJoin(String sql, Object... bindings);
 
@@ -1454,7 +1455,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     @PlainSQL
     TablePartitionByStep<Record> rightOuterJoin(String sql, QueryPart... parts);
 
@@ -1466,7 +1467,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see DSL#table(Name)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     TablePartitionByStep<Record> rightOuterJoin(Name name);
 
     /**
@@ -1475,7 +1476,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * A synonym for {@link #fullOuterJoin(TableLike)}.
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     TableOnStep<Record> fullJoin(TableLike<?> table);
 
     /**
@@ -1489,7 +1490,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * escape literals when concatenated into SQL clauses!
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     @PlainSQL
     TableOnStep<Record> fullJoin(SQL sql);
 
@@ -1504,7 +1505,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * escape literals when concatenated into SQL clauses!
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     @PlainSQL
     TableOnStep<Record> fullJoin(String sql);
 
@@ -1519,7 +1520,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * escape literals when concatenated into SQL clauses!
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     @PlainSQL
     TableOnStep<Record> fullJoin(String sql, Object... bindings);
 
@@ -1534,7 +1535,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * escape literals when concatenated into SQL clauses!
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     @PlainSQL
     TableOnStep<Record> fullJoin(String sql, QueryPart... parts);
 
@@ -1544,7 +1545,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * A synonym for {@link #fullOuterJoin(Name)}.
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     TableOnStep<Record> fullJoin(Name name);
 
     /**
@@ -1553,7 +1554,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * This is only possible where the underlying RDBMS supports it
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     TableOnStep<Record> fullOuterJoin(TableLike<?> table);
 
     /**
@@ -1570,7 +1571,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     @PlainSQL
     TableOnStep<Record> fullOuterJoin(SQL sql);
 
@@ -1588,7 +1589,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     @PlainSQL
     TableOnStep<Record> fullOuterJoin(String sql);
 
@@ -1607,7 +1608,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     @PlainSQL
     TableOnStep<Record> fullOuterJoin(String sql, Object... bindings);
 
@@ -1626,7 +1627,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     @PlainSQL
     TableOnStep<Record> fullOuterJoin(String sql, QueryPart... parts);
 
@@ -1638,7 +1639,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see DSL#table(Name)
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     TableOnStep<Record> fullOuterJoin(Name name);
 
     /**
@@ -1973,7 +1974,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * this behaviour using the information provided in this query.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Table<Record> naturalRightOuterJoin(TableLike<?> table);
 
     /**
@@ -1991,7 +1992,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> naturalRightOuterJoin(SQL sql);
 
@@ -2010,7 +2011,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> naturalRightOuterJoin(String sql);
 
@@ -2030,7 +2031,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> naturalRightOuterJoin(String sql, Object... bindings);
 
@@ -2050,7 +2051,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> naturalRightOuterJoin(String sql, QueryPart... parts);
 
@@ -2063,7 +2064,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see DSL#table(Name)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Table<Record> naturalRightOuterJoin(Name name);
 
     /**
@@ -2073,7 +2074,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * this behaviour using the information provided in this query.
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     Table<Record> naturalFullOuterJoin(TableLike<?> table);
 
     /**
@@ -2091,7 +2092,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> naturalFullOuterJoin(SQL sql);
 
@@ -2110,7 +2111,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> naturalFullOuterJoin(String sql);
 
@@ -2130,7 +2131,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> naturalFullOuterJoin(String sql, Object... bindings);
 
@@ -2150,7 +2151,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> naturalFullOuterJoin(String sql, QueryPart... parts);
 
@@ -2163,7 +2164,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see DSL#table(Name)
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     Table<Record> naturalFullOuterJoin(Name name);
 
     // -------------------------------------------------------------------------
@@ -2174,7 +2175,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * <code>CROSS APPLY</code> a table to this table.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     Table<Record> crossApply(TableLike<?> table);
 
     /**
@@ -2189,7 +2190,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> crossApply(SQL sql);
 
@@ -2205,7 +2206,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> crossApply(String sql);
 
@@ -2222,7 +2223,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> crossApply(String sql, Object... bindings);
 
@@ -2239,7 +2240,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> crossApply(String sql, QueryPart... parts);
 
@@ -2249,14 +2250,14 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see DSL#table(Name)
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     Table<Record> crossApply(Name name);
 
     /**
      * <code>OUTER APPLY</code> a table to this table.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     Table<Record> outerApply(TableLike<?> table);
 
     /**
@@ -2271,7 +2272,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> outerApply(SQL sql);
 
@@ -2287,7 +2288,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> outerApply(String sql);
 
@@ -2304,7 +2305,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> outerApply(String sql, Object... bindings);
 
@@ -2321,7 +2322,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see SQL
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> outerApply(String sql, QueryPart... parts);
 
@@ -2331,7 +2332,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * @see DSL#table(Name)
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     Table<Record> outerApply(Name name);
 
     /**

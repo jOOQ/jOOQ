@@ -67,6 +67,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -130,6 +131,7 @@ import org.jooq.util.sqlite.SQLiteDataType;
 // ...
 // ...
 // ...
+import org.jooq.util.yugabyte.YugabyteDataType;
 
 
 
@@ -805,6 +807,9 @@ public final class SQLDataType {
 
             Class.forName(SQLiteDataType.class.getName());
             initJSR310Types(SQLITE);
+
+            Class.forName(YugabyteDataType.class.getName());
+            initJSR310Types(YUGABYTE);
 
         } catch (Exception ignore) {}
     }

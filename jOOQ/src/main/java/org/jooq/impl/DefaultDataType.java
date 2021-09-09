@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.impl.CommentImpl.NO_COMMENT;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DefaultBinding.binding;
@@ -98,8 +99,9 @@ import org.jooq.types.UShort;
 @org.jooq.Internal
 public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
-    private static final Set<SQLDialect>                        ENCODED_TIMESTAMP_PRECISION    = SQLDialect.supportedBy(HSQLDB, MARIADB);
-    private static final Set<SQLDialect>                        NO_SUPPORT_TIMESTAMP_PRECISION = SQLDialect.supportedBy(FIREBIRD, MYSQL, SQLITE);
+    private static final Set<SQLDialect>                        ENCODED_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(HSQLDB, MARIADB);
+    private static final Set<SQLDialect>                        NO_SUPPORT_TIMESTAMP_PRECISION  = SQLDialect.supportedBy(FIREBIRD, MYSQL, SQLITE);
+    private static final Set<SQLDialect>                        SUPPORT_POSTGRES_ARRAY_NOTATION = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
     /**
      * A pattern for data type name normalisation.
@@ -567,7 +569,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
                     result = TYPES_BY_NAME[SQLDialect.DEFAULT.ordinal()].get("INTEGER");
 
                 // [#4065] PostgreSQL reports array types as _typename, e.g. _varchar
-                else if (result == null && ( family == POSTGRES) && normalised.charAt(0) == '_')
+                else if (result == null && SUPPORT_POSTGRES_ARRAY_NOTATION.contains(dialect) && normalised.charAt(0) == '_')
                     result = getDataType(dialect, normalised.substring(1)).getArrayDataType();
 
                 // [#6466] HSQLDB reports array types as XYZARRAY

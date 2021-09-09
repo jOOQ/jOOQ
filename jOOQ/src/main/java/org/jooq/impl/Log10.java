@@ -98,8 +98,9 @@ extends
 
 
 
-
-
+            case YUGABYTE:
+                ctx.visit(DSL.log(value, inline(10)));
+                break;
 
 
 

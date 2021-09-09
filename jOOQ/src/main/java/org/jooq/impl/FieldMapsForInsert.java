@@ -44,6 +44,7 @@ import static org.jooq.Clause.INSERT_VALUES;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_VALUES;

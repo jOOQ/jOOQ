@@ -75,7 +75,7 @@ public interface DropIndexOnStep extends DropIndexCascadeStep {
      * the ON clause is mandatory in order to unambiguously identify an index. In all other
      * databases, the ON clause will simply be ignored for compatibility reasons.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     @NotNull @CheckReturnValue
     DropIndexCascadeStep on(@Stringly.Name String on);
 
@@ -87,7 +87,7 @@ public interface DropIndexOnStep extends DropIndexCascadeStep {
      * the ON clause is mandatory in order to unambiguously identify an index. In all other
      * databases, the ON clause will simply be ignored for compatibility reasons.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     @NotNull @CheckReturnValue
     DropIndexCascadeStep on(Name on);
 
@@ -99,7 +99,7 @@ public interface DropIndexOnStep extends DropIndexCascadeStep {
      * the ON clause is mandatory in order to unambiguously identify an index. In all other
      * databases, the ON clause will simply be ignored for compatibility reasons.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     @NotNull @CheckReturnValue
     DropIndexCascadeStep on(Table<?> on);
 }

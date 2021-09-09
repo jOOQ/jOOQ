@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
 import java.util.Collection;
 
@@ -81,7 +82,7 @@ public interface MergeKeyStepN<R extends Record> extends MergeValuesStepN<R> {
      * <code>PRIMARY KEY</code>.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     MergeValuesStepN<R> key(Field<?>... keys);
 
     /**
@@ -91,6 +92,6 @@ public interface MergeKeyStepN<R extends Record> extends MergeValuesStepN<R> {
      * <code>PRIMARY KEY</code>.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     MergeValuesStepN<R> key(Collection<? extends Field<?>> keys);
 }

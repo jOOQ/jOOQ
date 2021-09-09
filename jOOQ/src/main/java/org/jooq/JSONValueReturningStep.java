@@ -70,7 +70,7 @@ public interface JSONValueReturningStep<T> extends Field<T> {
     /**
      * Add the <code>RETURNING</code> clause to the <code>JSON VALUE</code> function.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     @NotNull
     Field<T> returning(DataType<?> returning);
 }

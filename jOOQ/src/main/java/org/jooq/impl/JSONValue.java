@@ -179,6 +179,7 @@ implements
 
 
             case POSTGRES:
+            case YUGABYTE:
                 ctx.visit(N_JSONB_PATH_QUERY_FIRST).sql('(').visit(castIfNeeded(json, JSONB)).sql(", ").visit(path).sql("::jsonpath)");
                 break;
 

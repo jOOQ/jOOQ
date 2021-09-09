@@ -157,6 +157,7 @@ extends
 
             // There's no function round(double precision, integer) in Postgres
             case POSTGRES:
+            case YUGABYTE:
                 if (decimals == null)
                     ctx.visit(function(N_ROUND, getDataType(), value));
                 else

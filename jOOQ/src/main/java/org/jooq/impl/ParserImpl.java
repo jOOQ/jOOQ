@@ -9917,6 +9917,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                     case POSTGRES:
+                    case YUGABYTE:
                         first = true;
                         break;
                 }

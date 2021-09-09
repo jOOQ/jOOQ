@@ -40,7 +40,7 @@ package org.jooq.impl;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.impl.DSL.field;
+import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.consumeResultSets;
 import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
@@ -77,7 +77,7 @@ import org.jooq.tools.jdbc.MockResultSet;
 abstract class AbstractResultQuery<R extends Record> extends AbstractQuery<R> implements ResultQueryTrait<R> {
     private static final JooqLogger        log                               = JooqLogger.getLogger(AbstractResultQuery.class);
 
-    private static final Set<SQLDialect>   REPORT_FETCH_SIZE_WITH_AUTOCOMMIT = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect>   REPORT_FETCH_SIZE_WITH_AUTOCOMMIT = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
     private int                            maxRows;
     private int                            fetchSize;

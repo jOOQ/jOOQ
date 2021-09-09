@@ -84,7 +84,7 @@ extends
 
 
 
-    private static final Set<SQLDialect> EMULATE_WITH_PERCENTILES = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect> EMULATE_WITH_PERCENTILES = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
     @Override
     public final void accept(Context<?> ctx) {

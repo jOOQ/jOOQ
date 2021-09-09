@@ -109,6 +109,7 @@ extends
             case MARIADB:
             case POSTGRES:
             case SQLITE:
+            case YUGABYTE:
                 ctx.visit(N_MIN);
                 break;
 

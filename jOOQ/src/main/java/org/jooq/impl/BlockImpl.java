@@ -52,7 +52,11 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.conf.ParamType.INLINED;
+// ...
+// ...
+// ...
 import static org.jooq.impl.Keywords.K_ALIAS;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_ATOMIC;
@@ -106,7 +110,7 @@ import org.jetbrains.annotations.NotNull;
  */
 final class BlockImpl extends AbstractRowCountQuery implements Block {
     private static final Set<SQLDialect>  REQUIRES_EXECUTE_IMMEDIATE_ON_DDL = SQLDialect.supportedBy(FIREBIRD);
-    private static final Set<SQLDialect>  SUPPORTS_NULL_STATEMENT           = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect>  SUPPORTS_NULL_STATEMENT           = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
 
 
@@ -152,7 +156,8 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
                 break;
             }
 
-            case POSTGRES: {
+            case POSTGRES:
+            case YUGABYTE: {
                 bodyAsString(ctx, K_DO, c -> accept0(c));
                 break;
             }
@@ -201,27 +206,19 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
             case MYSQL: {
-                String name = randomName();
 
-                if (increment(ctx.data(), DATA_BLOCK_NESTING)) {
-                    ctx.paramType(INLINED)
-                       .visit(K_CREATE).sql(' ')
-                       .visit(K_PROCEDURE).sql(' ').sql(name).sql("()")
-                       .formatIndentStart()
-                       .formatSeparator();
 
-                    ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
-                }
+
+
+
+
+
+
+
+
+
 
                 accept0(ctx);
-
-                if (decrement(ctx.data(), DATA_BLOCK_NESTING))
-                    ctx.formatIndentEnd()
-                       .formatSeparator()
-                       .visit(K_CALL).sql(' ').sql(name).sql("();")
-                       .formatSeparator()
-                       .visit(K_DROP).sql(' ').visit(K_PROCEDURE).sql(' ').sql(name).sql(';');
-
                 break;
             }
 

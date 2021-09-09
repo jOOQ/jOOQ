@@ -388,6 +388,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
 
 
                 case POSTGRES:
+                case YUGABYTE:
                 default:
                     return Types.OTHER;
             }

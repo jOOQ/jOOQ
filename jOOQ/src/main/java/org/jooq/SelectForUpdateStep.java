@@ -60,6 +60,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -135,7 +136,7 @@ public interface SelectForUpdateStep<R extends Record> extends SelectForStep<R> 
      * @see SelectQuery#setForUpdate(boolean)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     SelectForUpdateOfStep<R> forUpdate();
 
     /**
@@ -144,7 +145,7 @@ public interface SelectForUpdateStep<R extends Record> extends SelectForStep<R> 
      * @see SelectQuery#setForShare(boolean)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     SelectForUpdateOfStep<R> forNoKeyUpdate();
 
     /**
@@ -153,7 +154,7 @@ public interface SelectForUpdateStep<R extends Record> extends SelectForStep<R> 
      * @see SelectQuery#setForShare(boolean)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     SelectForUpdateOfStep<R> forShare();
 
     /**
@@ -162,7 +163,7 @@ public interface SelectForUpdateStep<R extends Record> extends SelectForStep<R> 
      * @see SelectQuery#setForShare(boolean)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     SelectForUpdateOfStep<R> forKeyShare();
 
 

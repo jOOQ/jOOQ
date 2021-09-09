@@ -116,6 +116,7 @@ extends
             case MARIADB:
             case MYSQL:
             case POSTGRES:
+            case YUGABYTE:
                 ctx.visit(DSL.exp(one()));
                 break;
 

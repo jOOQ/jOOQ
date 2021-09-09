@@ -99,6 +99,7 @@ final class Nvl<T> extends AbstractField<T> {
             case IGNITE:
             case FIREBIRD:
             case POSTGRES:
+            case YUGABYTE:
                 ctx.visit(DSL.coalesce(arg1, arg2));
                 break;
 

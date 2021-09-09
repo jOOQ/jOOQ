@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.YUGABYTE;
 
 import org.jooq.impl.DSL;
 
@@ -62,13 +63,13 @@ public interface JSONArrayAggNullStep<T> extends JSONArrayAggReturningStep<T> {
      * Include <code>NULL</code> values in output JSON.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
     JSONArrayAggReturningStep<T> nullOnNull();
 
     /**
      * Exclude <code>NULL</code> values in output JSON.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
     JSONArrayAggReturningStep<T> absentOnNull();
 }

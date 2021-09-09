@@ -114,6 +114,7 @@ extends
 
 
             case POSTGRES:
+            case YUGABYTE:
                 ctx.visit(K_SET).sql(' ').visit(K_SEARCH_PATH).sql(" = ").visit(schema);
                 break;
 

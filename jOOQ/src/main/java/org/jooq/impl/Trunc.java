@@ -123,6 +123,7 @@ extends
 
 
             case POSTGRES:
+            case YUGABYTE:
                 ctx.visit(castIfNeeded(
                     DSL.function("trunc", NUMERIC,
                         castIfNeeded(value, NUMERIC),

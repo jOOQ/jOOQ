@@ -93,6 +93,7 @@ final class RatioToReport extends DefaultAggregateFunction<BigDecimal> {
             case MYSQL:
             case POSTGRES:
             case SQLITE:
+            case YUGABYTE:
                 ctx.visit(castIfNeeded(field, (DataType<?>) (ctx.family() == SQLITE ? DOUBLE : DECIMAL)))
                    .sql(" / ")
                    .visit(DSL.sum(field));

@@ -62,6 +62,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.inlined;
@@ -150,8 +151,8 @@ final class Expression<T> extends AbstractTransformable<T> {
     private static final Set<SQLDialect> SUPPORT_BIT_OR_XOR     = SQLDialect.supportedBy(H2, HSQLDB);
     private static final Set<SQLDialect> EMULATE_BIT_XOR        = SQLDialect.supportedBy(SQLITE);
     private static final Set<SQLDialect> EMULATE_SHR_SHL        = SQLDialect.supportedBy(HSQLDB);
-    private static final Set<SQLDialect> HASH_OP_FOR_BIT_XOR    = SQLDialect.supportedBy(POSTGRES);
-    private static final Set<SQLDialect> SUPPORT_YEAR_TO_SECOND = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect> HASH_OP_FOR_BIT_XOR    = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect> SUPPORT_YEAR_TO_SECOND = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
     private final ExpressionOperator     operator;
     private final boolean                internal;
@@ -766,12 +767,6 @@ final class Expression<T> extends AbstractTransformable<T> {
 
 
 
-
-
-
-                case H2:
-                case HSQLDB:
-                case POSTGRES:
                 default:
                     ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
                     break;
@@ -892,7 +887,8 @@ final class Expression<T> extends AbstractTransformable<T> {
 
 
 
-                case POSTGRES: {
+                case POSTGRES:
+                case YUGABYTE: {
 
                     // This seems to be the most reliable way to avoid issues
                     // with incompatible data types and timezones

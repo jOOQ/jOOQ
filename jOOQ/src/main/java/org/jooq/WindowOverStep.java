@@ -62,6 +62,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -95,7 +96,7 @@ public interface WindowOverStep<T> {
      * </pre>
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     WindowPartitionByStep<T> over();
 
     /**
@@ -112,7 +113,7 @@ public interface WindowOverStep<T> {
      * windows will be inlined.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     WindowFinalStep<T> over(Name name);
 
     /**
@@ -129,7 +130,7 @@ public interface WindowOverStep<T> {
      * windows will be inlined.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     WindowFinalStep<T> over(String name);
 
     /**
@@ -141,7 +142,7 @@ public interface WindowOverStep<T> {
      * </pre>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     WindowFinalStep<T> over(WindowSpecification specification);
 
     /**
@@ -158,7 +159,7 @@ public interface WindowOverStep<T> {
      * windows will be inlined.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     WindowFinalStep<T> over(WindowDefinition definition);
 
 }

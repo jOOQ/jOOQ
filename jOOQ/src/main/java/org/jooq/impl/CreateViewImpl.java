@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.selectFrom;
@@ -101,7 +102,7 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
     CreateViewFinalStep {
 
     private static final Clause[]                                                   CLAUSES                  = { CREATE_VIEW };
-    private static final Set<SQLDialect>                                            NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD, MYSQL, POSTGRES);
+    private static final Set<SQLDialect>                                            NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD, MYSQL, POSTGRES, YUGABYTE);
 
     private final boolean                                                           ifNotExists;
     private final boolean                                                           orReplace;

@@ -92,6 +92,7 @@ final class RegexpLike extends AbstractCondition {
 
 
             case POSTGRES:
+            case YUGABYTE:
                 ctx.sql('(').visit(search).sql(" ~ ").visit(pattern).sql(')');
                 break;
 

@@ -112,6 +112,7 @@ extends
             case FIREBIRD:
             case HSQLDB:
             case POSTGRES:
+            case YUGABYTE:
                 ctx.visit(N_CURRENT_USER);
                 break;
 

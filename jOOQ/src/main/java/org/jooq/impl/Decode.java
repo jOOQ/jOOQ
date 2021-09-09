@@ -54,7 +54,7 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 final class Decode<T, Z> extends AbstractField<Z> {
-    private static final Set<SQLDialect> EMULATE_DISTINCT = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> EMULATE_DISTINCT = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE);
 
 
 

@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 
@@ -68,7 +69,7 @@ import org.jooq.Table;
  * @author Lukas Eder
  */
 class IndexImpl extends AbstractNamed implements Index {
-    private static final Set<SQLDialect>     NO_SUPPORT_INDEX_QUALIFICATION = SQLDialect.supportedBy(MARIADB, MYSQL, POSTGRES);
+    private static final Set<SQLDialect>     NO_SUPPORT_INDEX_QUALIFICATION = SQLDialect.supportedBy(MARIADB, MYSQL, POSTGRES, YUGABYTE);
 
     private final Table<?>                   table;
     private final SortField<?>[]             fields;

@@ -73,6 +73,7 @@ final class RegexpReplace extends AbstractField<String> {
 
 
             case POSTGRES:
+            case YUGABYTE:
                 ctx.visit(N_REGEXP_REPLACE).sql('(').visit(field).sql(", ").visit(pattern).sql(", ").visit(replacement);
 
                 if (all)

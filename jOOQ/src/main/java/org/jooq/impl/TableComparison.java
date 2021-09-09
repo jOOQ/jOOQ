@@ -64,6 +64,7 @@ final class TableComparison<R extends Record> extends AbstractCondition {
         switch (ctx.family()) {
 
             case POSTGRES:
+            case YUGABYTE:
                 ctx.sql('(').visit(lhs).sql(' ').sql(comparator.toSQL()).sql(' ').visit(rhs).sql(')');
                 break;
 

@@ -41,6 +41,7 @@ package org.jooq.impl;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Keywords.K_INT;
 import static org.jooq.impl.Names.N_ARRAY;
@@ -58,7 +59,7 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 final class Array<T> extends AbstractField<T[]> {
-    private static final Set<SQLDialect> REQUIRES_CAST    = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect> REQUIRES_CAST    = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
     private final FieldsImpl<Record>     fields;
 
@@ -85,11 +86,6 @@ final class Array<T> extends AbstractField<T[]> {
 
 
 
-
-
-            case H2:
-            case HSQLDB:
-            case POSTGRES:
             default:
                 boolean squareBrackets = true;
 

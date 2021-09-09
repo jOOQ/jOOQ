@@ -402,6 +402,23 @@ public enum SQLDialect {
 
 
 
+    /**
+     * The Yugabyte dialect family.
+     */
+    YUGABYTE("Yugabyte", false, true),
+
+
+
+
+
+
+
+
+
+
+
+
+
     // -------------------------------------------------------------------------
     // SQL dialects for commercial usage
     // -------------------------------------------------------------------------
@@ -1206,7 +1223,8 @@ public enum SQLDialect {
 
 
                 case MYSQL:       return "MySQL";
-                case POSTGRES:    return "PostgreSQL";
+                case POSTGRES:
+                case YUGABYTE:    return "PostgreSQL";
 
                 default:          return null;
             }
@@ -1280,7 +1298,8 @@ public enum SQLDialect {
 
 
 
-                case POSTGRES:      return "org.hibernate.dialect.PostgreSQL94Dialect";
+                case POSTGRES:
+                case YUGABYTE:      return "org.hibernate.dialect.PostgreSQL94Dialect";
                 case SQLITE:        return null;
 
                 default:            return null;

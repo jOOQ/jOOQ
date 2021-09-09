@@ -67,6 +67,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
 import java.sql.Types;
 import java.util.Collection;
@@ -444,7 +445,7 @@ public interface DataType<T> extends Named {
      * Return a new data type like this, with a new collation.
      */
     @NotNull
-    @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     DataType<T> collation(Collation collation);
 
     /**
@@ -478,7 +479,7 @@ public interface DataType<T> extends Named {
      * @return The new data type
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     DataType<T> identity(boolean identity);
 
     /**

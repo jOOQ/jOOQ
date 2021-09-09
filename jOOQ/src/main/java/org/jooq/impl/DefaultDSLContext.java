@@ -4226,6 +4226,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
             case POSTGRES:
+            case YUGABYTE:
                 return fetchValue(field("lastval()", BigInteger.class));
 
 

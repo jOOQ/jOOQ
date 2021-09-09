@@ -121,7 +121,8 @@ extends
             case IGNITE:
             case MARIADB:
             case MYSQL:
-            case POSTGRES: {
+            case POSTGRES:
+            case YUGABYTE: {
                 if (isSimple(value))
                     ctx.visit(imul(value, value));
                 else

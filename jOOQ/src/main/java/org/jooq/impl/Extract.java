@@ -361,6 +361,7 @@ final class Extract extends AbstractField<Integer> {
 
 
             case POSTGRES:
+            case YUGABYTE:
                 switch (datePart) {
                     case DAY_OF_WEEK:
                         ctx.sql('(');

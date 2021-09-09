@@ -70,14 +70,14 @@ public interface DropSchemaStep extends DropSchemaFinalStep {
     /**
      * Add the <code>CASCADE</code> clause to the <code>DROP SCHEMA</code> statement.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     @NotNull @CheckReturnValue
     DropSchemaFinalStep cascade();
 
     /**
      * Add the <code>RESTRICT</code> clause to the <code>DROP SCHEMA</code> statement.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, POSTGRES, YUGABYTE })
     @NotNull @CheckReturnValue
     DropSchemaFinalStep restrict();
 }

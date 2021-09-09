@@ -95,6 +95,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Keywords.K_CUBE;
 import static org.jooq.impl.Keywords.K_DEFAULT;
@@ -910,7 +911,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep with(String alias) {
         return new WithImpl(null, false).with(alias);
     }
@@ -929,7 +930,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep with(String alias, String... fieldAliases) {
         return new WithImpl(null, false).with(alias, fieldAliases);
     }
@@ -948,7 +949,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep with(String alias, Collection<String> fieldAliases) {
         return new WithImpl(null, false).with(alias, fieldAliases);
     }
@@ -967,7 +968,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep with(Name alias) {
         return new WithImpl(null, false).with(alias);
     }
@@ -986,7 +987,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep with(Name alias, Name... fieldAliases) {
         return new WithImpl(null, false).with(alias, fieldAliases);
     }
@@ -1005,7 +1006,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep with(Name alias, Collection<? extends Name> fieldAliases) {
         return new WithImpl(null, false).with(alias, fieldAliases);
     }
@@ -1034,7 +1035,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep with(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return new WithImpl(null, false).with(alias, fieldNameFunction);
     }
@@ -1055,7 +1056,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep1 with(String alias, String fieldAlias1) {
         return new WithImpl(null, false).with(alias, fieldAlias1);
     }
@@ -1074,7 +1075,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep2 with(String alias, String fieldAlias1, String fieldAlias2) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2);
     }
@@ -1093,7 +1094,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep3 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3);
     }
@@ -1112,7 +1113,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep4 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4);
     }
@@ -1131,7 +1132,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep5 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5);
     }
@@ -1150,7 +1151,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep6 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6);
     }
@@ -1169,7 +1170,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep7 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7);
     }
@@ -1188,7 +1189,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep8 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8);
     }
@@ -1207,7 +1208,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep9 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9);
     }
@@ -1226,7 +1227,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep10 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10);
     }
@@ -1245,7 +1246,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep11 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11);
     }
@@ -1264,7 +1265,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep12 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12);
     }
@@ -1283,7 +1284,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep13 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13);
     }
@@ -1302,7 +1303,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep14 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14);
     }
@@ -1321,7 +1322,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep15 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15);
     }
@@ -1340,7 +1341,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep16 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16);
     }
@@ -1359,7 +1360,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep17 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17);
     }
@@ -1378,7 +1379,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep18 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18);
     }
@@ -1397,7 +1398,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep19 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19);
     }
@@ -1416,7 +1417,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep20 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20);
     }
@@ -1435,7 +1436,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep21 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21);
     }
@@ -1454,7 +1455,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep22 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21, String fieldAlias22) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22);
     }
@@ -1473,7 +1474,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep1 with(Name alias, Name fieldAlias1) {
         return new WithImpl(null, false).with(alias, fieldAlias1);
     }
@@ -1492,7 +1493,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep2 with(Name alias, Name fieldAlias1, Name fieldAlias2) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2);
     }
@@ -1511,7 +1512,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep3 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3);
     }
@@ -1530,7 +1531,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep4 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4);
     }
@@ -1549,7 +1550,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep5 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5);
     }
@@ -1568,7 +1569,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep6 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6);
     }
@@ -1587,7 +1588,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep7 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7);
     }
@@ -1606,7 +1607,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep8 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8);
     }
@@ -1625,7 +1626,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep9 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9);
     }
@@ -1644,7 +1645,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep10 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10);
     }
@@ -1663,7 +1664,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep11 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11);
     }
@@ -1682,7 +1683,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep12 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12);
     }
@@ -1701,7 +1702,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep13 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13);
     }
@@ -1720,7 +1721,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep14 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14);
     }
@@ -1739,7 +1740,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep15 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15);
     }
@@ -1758,7 +1759,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep16 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16);
     }
@@ -1777,7 +1778,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep17 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17);
     }
@@ -1796,7 +1797,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep18 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18);
     }
@@ -1815,7 +1816,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep19 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19);
     }
@@ -1834,7 +1835,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep20 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20);
     }
@@ -1853,7 +1854,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep21 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21);
     }
@@ -1872,7 +1873,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep22 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21, Name fieldAlias22) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22);
     }
@@ -1901,7 +1902,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithStep with(CommonTableExpression<?>... tables) {
         return new WithImpl(null, false).with(tables);
     }
@@ -1928,7 +1929,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithStep with(Collection<? extends CommonTableExpression<?>> tables) {
         return new WithImpl(null, false).with(tables);
     }
@@ -1950,7 +1951,7 @@ public class DSL {
      * <code>RECURSIVE</code> common table expression lists.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep withRecursive(String alias) {
         return new WithImpl(null, true).with(alias);
     }
@@ -1972,7 +1973,7 @@ public class DSL {
      * <code>RECURSIVE</code> common table expression lists.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep withRecursive(String alias, String... fieldAliases) {
         return new WithImpl(null, true).with(alias, fieldAliases);
     }
@@ -1994,7 +1995,7 @@ public class DSL {
      * <code>RECURSIVE</code> common table expression lists.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep withRecursive(String alias, Collection<String> fieldAliases) {
         return new WithImpl(null, true).with(alias, fieldAliases);
     }
@@ -2016,7 +2017,7 @@ public class DSL {
      * <code>RECURSIVE</code> common table expression lists.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep withRecursive(Name alias) {
         return new WithImpl(null, true).with(alias);
     }
@@ -2035,7 +2036,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep withRecursive(Name alias, Name... fieldAliases) {
         return new WithImpl(null, true).with(alias, fieldAliases);
     }
@@ -2054,7 +2055,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep withRecursive(Name alias, Collection<? extends Name> fieldAliases) {
         return new WithImpl(null, true).with(alias, fieldAliases);
     }
@@ -2087,7 +2088,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep withRecursive(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return new WithImpl(null, true).with(alias, fieldNameFunction);
     }
@@ -2108,7 +2109,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep1 withRecursive(String alias, String fieldAlias1) {
         return new WithImpl(null, true).with(alias, fieldAlias1);
     }
@@ -2127,7 +2128,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep2 withRecursive(String alias, String fieldAlias1, String fieldAlias2) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2);
     }
@@ -2146,7 +2147,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep3 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3);
     }
@@ -2165,7 +2166,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep4 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4);
     }
@@ -2184,7 +2185,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep5 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5);
     }
@@ -2203,7 +2204,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep6 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6);
     }
@@ -2222,7 +2223,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep7 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7);
     }
@@ -2241,7 +2242,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep8 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8);
     }
@@ -2260,7 +2261,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep9 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9);
     }
@@ -2279,7 +2280,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep10 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10);
     }
@@ -2298,7 +2299,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep11 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11);
     }
@@ -2317,7 +2318,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep12 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12);
     }
@@ -2336,7 +2337,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep13 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13);
     }
@@ -2355,7 +2356,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep14 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14);
     }
@@ -2374,7 +2375,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep15 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15);
     }
@@ -2393,7 +2394,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep16 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16);
     }
@@ -2412,7 +2413,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep17 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17);
     }
@@ -2431,7 +2432,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep18 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18);
     }
@@ -2450,7 +2451,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep19 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19);
     }
@@ -2469,7 +2470,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep20 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20);
     }
@@ -2488,7 +2489,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep21 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21);
     }
@@ -2507,7 +2508,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep22 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21, String fieldAlias22) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22);
     }
@@ -2526,7 +2527,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep1 withRecursive(Name alias, Name fieldAlias1) {
         return new WithImpl(null, true).with(alias, fieldAlias1);
     }
@@ -2545,7 +2546,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep2 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2);
     }
@@ -2564,7 +2565,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep3 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3);
     }
@@ -2583,7 +2584,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep4 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4);
     }
@@ -2602,7 +2603,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep5 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5);
     }
@@ -2621,7 +2622,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep6 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6);
     }
@@ -2640,7 +2641,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep7 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7);
     }
@@ -2659,7 +2660,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep8 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8);
     }
@@ -2678,7 +2679,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep9 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9);
     }
@@ -2697,7 +2698,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep10 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10);
     }
@@ -2716,7 +2717,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep11 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11);
     }
@@ -2735,7 +2736,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep12 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12);
     }
@@ -2754,7 +2755,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep13 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13);
     }
@@ -2773,7 +2774,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep14 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14);
     }
@@ -2792,7 +2793,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep15 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15);
     }
@@ -2811,7 +2812,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep16 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16);
     }
@@ -2830,7 +2831,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep17 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17);
     }
@@ -2849,7 +2850,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep18 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18);
     }
@@ -2868,7 +2869,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep19 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19);
     }
@@ -2887,7 +2888,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep20 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20);
     }
@@ -2906,7 +2907,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep21 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21);
     }
@@ -2925,7 +2926,7 @@ public class DSL {
      * recursive CTE.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithAsStep22 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21, Name fieldAlias22) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22);
     }
@@ -2957,7 +2958,7 @@ public class DSL {
      * <code>RECURSIVE</code> common table expression lists.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithStep withRecursive(CommonTableExpression<?>... tables) {
         return new WithImpl(null, true).with(tables);
     }
@@ -2987,7 +2988,7 @@ public class DSL {
      * <code>RECURSIVE</code> common table expression lists.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WithStep withRecursive(Collection<? extends CommonTableExpression<?>> tables) {
         return new WithImpl(null, true).with(tables);
     }
@@ -5972,7 +5973,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1> MergeKeyStep1<R, T1> mergeInto(Table<R> table, Field<T1> field1) {
         return using(new DefaultConfiguration()).mergeInto(table, field1);
     }
@@ -5986,7 +5987,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2> MergeKeyStep2<R, T1, T2> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2);
     }
@@ -6000,7 +6001,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3> MergeKeyStep3<R, T1, T2, T3> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3);
     }
@@ -6014,7 +6015,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4> MergeKeyStep4<R, T1, T2, T3, T4> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4);
     }
@@ -6028,7 +6029,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4, T5> MergeKeyStep5<R, T1, T2, T3, T4, T5> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5);
     }
@@ -6042,7 +6043,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4, T5, T6> MergeKeyStep6<R, T1, T2, T3, T4, T5, T6> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6);
     }
@@ -6056,7 +6057,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7> MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7);
     }
@@ -6070,7 +6071,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8);
     }
@@ -6084,7 +6085,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9);
     }
@@ -6098,7 +6099,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
     }
@@ -6112,7 +6113,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
     }
@@ -6126,7 +6127,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12);
     }
@@ -6140,7 +6141,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13);
     }
@@ -6154,7 +6155,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14);
     }
@@ -6168,7 +6169,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15);
     }
@@ -6182,7 +6183,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16);
     }
@@ -6196,7 +6197,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17);
     }
@@ -6210,7 +6211,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18);
     }
@@ -6224,7 +6225,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19);
     }
@@ -6238,7 +6239,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20);
     }
@@ -6252,7 +6253,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21);
     }
@@ -6266,7 +6267,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
     }
@@ -7115,7 +7116,7 @@ public class DSL {
      * Create an unnamed (system named) <code>CHECK</code> constraint.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static ConstraintEnforcementStep check(Condition condition) {
         return constraint().check(condition);
     }
@@ -7140,7 +7141,7 @@ public class DSL {
      * @see DSLContext#alterDatabase(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static org.jooq.AlterDatabaseStep alterDatabase(@Stringly.Name String database) {
         return dsl().alterDatabase(database);
     }
@@ -7155,7 +7156,7 @@ public class DSL {
      * @see DSLContext#alterDatabase(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static org.jooq.AlterDatabaseStep alterDatabase(Name database) {
         return dsl().alterDatabase(database);
     }
@@ -7170,7 +7171,7 @@ public class DSL {
      * @see DSLContext#alterDatabase(Catalog)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static org.jooq.AlterDatabaseStep alterDatabase(Catalog database) {
         return dsl().alterDatabase(database);
     }
@@ -7230,7 +7231,7 @@ public class DSL {
      * @see DSLContext#alterDomain(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> org.jooq.AlterDomainStep<T> alterDomain(@Stringly.Name String domain) {
         return dsl().alterDomain(domain);
     }
@@ -7245,7 +7246,7 @@ public class DSL {
      * @see DSLContext#alterDomain(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> org.jooq.AlterDomainStep<T> alterDomain(Name domain) {
         return dsl().alterDomain(domain);
     }
@@ -7260,7 +7261,7 @@ public class DSL {
      * @see DSLContext#alterDomain(Domain)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> org.jooq.AlterDomainStep<T> alterDomain(Domain<T> domain) {
         return dsl().alterDomain(domain);
     }
@@ -7500,7 +7501,7 @@ public class DSL {
      * @see DSLContext#alterSequence(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.AlterSequenceStep<Number> alterSequence(@Stringly.Name String sequence) {
         return dsl().alterSequence(sequence);
     }
@@ -7515,7 +7516,7 @@ public class DSL {
      * @see DSLContext#alterSequence(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.AlterSequenceStep<Number> alterSequence(Name sequence) {
         return dsl().alterSequence(sequence);
     }
@@ -7530,7 +7531,7 @@ public class DSL {
      * @see DSLContext#alterSequence(Sequence)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static <T extends Number> org.jooq.AlterSequenceStep<T> alterSequence(Sequence<T> sequence) {
         return dsl().alterSequence(sequence);
     }
@@ -7545,7 +7546,7 @@ public class DSL {
      * @see DSLContext#alterSequenceIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.AlterSequenceStep<Number> alterSequenceIfExists(@Stringly.Name String sequence) {
         return dsl().alterSequenceIfExists(sequence);
     }
@@ -7560,7 +7561,7 @@ public class DSL {
      * @see DSLContext#alterSequenceIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.AlterSequenceStep<Number> alterSequenceIfExists(Name sequence) {
         return dsl().alterSequenceIfExists(sequence);
     }
@@ -7575,7 +7576,7 @@ public class DSL {
      * @see DSLContext#alterSequenceIfExists(Sequence)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES, YUGABYTE })
     public static <T extends Number> org.jooq.AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence) {
         return dsl().alterSequenceIfExists(sequence);
     }
@@ -7620,7 +7621,7 @@ public class DSL {
      * @see DSLContext#alterView(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static org.jooq.AlterViewStep alterView(@Stringly.Name String view) {
         return dsl().alterView(view);
     }
@@ -7635,7 +7636,7 @@ public class DSL {
      * @see DSLContext#alterView(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static org.jooq.AlterViewStep alterView(Name view) {
         return dsl().alterView(view);
     }
@@ -7650,7 +7651,7 @@ public class DSL {
      * @see DSLContext#alterView(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static org.jooq.AlterViewStep alterView(Table<?> view) {
         return dsl().alterView(view);
     }
@@ -7665,7 +7666,7 @@ public class DSL {
      * @see DSLContext#alterViewIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static org.jooq.AlterViewStep alterViewIfExists(@Stringly.Name String view) {
         return dsl().alterViewIfExists(view);
     }
@@ -7680,7 +7681,7 @@ public class DSL {
      * @see DSLContext#alterViewIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static org.jooq.AlterViewStep alterViewIfExists(Name view) {
         return dsl().alterViewIfExists(view);
     }
@@ -7695,7 +7696,7 @@ public class DSL {
      * @see DSLContext#alterViewIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static org.jooq.AlterViewStep alterViewIfExists(Table<?> view) {
         return dsl().alterViewIfExists(view);
     }
@@ -7710,7 +7711,7 @@ public class DSL {
      * @see DSLContext#commentOnTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.CommentOnIsStep commentOnTable(@Stringly.Name String table) {
         return dsl().commentOnTable(table);
     }
@@ -7725,7 +7726,7 @@ public class DSL {
      * @see DSLContext#commentOnTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.CommentOnIsStep commentOnTable(Name table) {
         return dsl().commentOnTable(table);
     }
@@ -7740,7 +7741,7 @@ public class DSL {
      * @see DSLContext#commentOnTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.CommentOnIsStep commentOnTable(Table<?> table) {
         return dsl().commentOnTable(table);
     }
@@ -7755,7 +7756,7 @@ public class DSL {
      * @see DSLContext#commentOnView(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static org.jooq.CommentOnIsStep commentOnView(@Stringly.Name String view) {
         return dsl().commentOnView(view);
     }
@@ -7770,7 +7771,7 @@ public class DSL {
      * @see DSLContext#commentOnView(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static org.jooq.CommentOnIsStep commentOnView(Name view) {
         return dsl().commentOnView(view);
     }
@@ -7785,7 +7786,7 @@ public class DSL {
      * @see DSLContext#commentOnView(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static org.jooq.CommentOnIsStep commentOnView(Table<?> view) {
         return dsl().commentOnView(view);
     }
@@ -7800,7 +7801,7 @@ public class DSL {
      * @see DSLContext#commentOnColumn(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.CommentOnIsStep commentOnColumn(@Stringly.Name String field) {
         return dsl().commentOnColumn(field);
     }
@@ -7815,7 +7816,7 @@ public class DSL {
      * @see DSLContext#commentOnColumn(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.CommentOnIsStep commentOnColumn(Name field) {
         return dsl().commentOnColumn(field);
     }
@@ -7830,7 +7831,7 @@ public class DSL {
      * @see DSLContext#commentOnColumn(Field)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.CommentOnIsStep commentOnColumn(Field<?> field) {
         return dsl().commentOnColumn(field);
     }
@@ -7845,7 +7846,7 @@ public class DSL {
      * @see DSLContext#createDatabase(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.CreateDatabaseFinalStep createDatabase(@Stringly.Name String database) {
         return dsl().createDatabase(database);
     }
@@ -7860,7 +7861,7 @@ public class DSL {
      * @see DSLContext#createDatabase(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.CreateDatabaseFinalStep createDatabase(Name database) {
         return dsl().createDatabase(database);
     }
@@ -7875,7 +7876,7 @@ public class DSL {
      * @see DSLContext#createDatabase(Catalog)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.CreateDatabaseFinalStep createDatabase(Catalog database) {
         return dsl().createDatabase(database);
     }
@@ -7935,7 +7936,7 @@ public class DSL {
      * @see DSLContext#createDomain(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static org.jooq.CreateDomainAsStep createDomain(@Stringly.Name String domain) {
         return dsl().createDomain(domain);
     }
@@ -7950,7 +7951,7 @@ public class DSL {
      * @see DSLContext#createDomain(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static org.jooq.CreateDomainAsStep createDomain(Name domain) {
         return dsl().createDomain(domain);
     }
@@ -7965,7 +7966,7 @@ public class DSL {
      * @see DSLContext#createDomain(Domain)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static org.jooq.CreateDomainAsStep createDomain(Domain<?> domain) {
         return dsl().createDomain(domain);
     }
@@ -8153,7 +8154,7 @@ public class DSL {
      * @see DSLContext#createIndexIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.CreateIndexStep createIndexIfNotExists(@Stringly.Name String index) {
         return dsl().createIndexIfNotExists(index);
     }
@@ -8168,7 +8169,7 @@ public class DSL {
      * @see DSLContext#createIndexIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.CreateIndexStep createIndexIfNotExists(Name index) {
         return dsl().createIndexIfNotExists(index);
     }
@@ -8183,7 +8184,7 @@ public class DSL {
      * @see DSLContext#createIndexIfNotExists(Index)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.CreateIndexStep createIndexIfNotExists(Index index) {
         return dsl().createIndexIfNotExists(index);
     }
@@ -8198,7 +8199,7 @@ public class DSL {
      * @see DSLContext#createIndexIfNotExists()
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.CreateIndexStep createIndexIfNotExists() {
         return dsl().createIndexIfNotExists();
     }
@@ -8213,7 +8214,7 @@ public class DSL {
      * @see DSLContext#createUniqueIndex(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.CreateIndexStep createUniqueIndex(@Stringly.Name String index) {
         return dsl().createUniqueIndex(index);
     }
@@ -8228,7 +8229,7 @@ public class DSL {
      * @see DSLContext#createUniqueIndex(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.CreateIndexStep createUniqueIndex(Name index) {
         return dsl().createUniqueIndex(index);
     }
@@ -8243,7 +8244,7 @@ public class DSL {
      * @see DSLContext#createUniqueIndex(Index)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.CreateIndexStep createUniqueIndex(Index index) {
         return dsl().createUniqueIndex(index);
     }
@@ -8258,7 +8259,7 @@ public class DSL {
      * @see DSLContext#createUniqueIndex()
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.CreateIndexStep createUniqueIndex() {
         return dsl().createUniqueIndex();
     }
@@ -8273,7 +8274,7 @@ public class DSL {
      * @see DSLContext#createUniqueIndexIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(@Stringly.Name String index) {
         return dsl().createUniqueIndexIfNotExists(index);
     }
@@ -8288,7 +8289,7 @@ public class DSL {
      * @see DSLContext#createUniqueIndexIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(Name index) {
         return dsl().createUniqueIndexIfNotExists(index);
     }
@@ -8303,7 +8304,7 @@ public class DSL {
      * @see DSLContext#createUniqueIndexIfNotExists(Index)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(Index index) {
         return dsl().createUniqueIndexIfNotExists(index);
     }
@@ -8318,7 +8319,7 @@ public class DSL {
      * @see DSLContext#createUniqueIndexIfNotExists()
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists() {
         return dsl().createUniqueIndexIfNotExists();
     }
@@ -8465,7 +8466,7 @@ public class DSL {
      * @see DSLContext#createSchema(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.CreateSchemaFinalStep createSchema(@Stringly.Name String schema) {
         return dsl().createSchema(schema);
     }
@@ -8480,7 +8481,7 @@ public class DSL {
      * @see DSLContext#createSchema(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.CreateSchemaFinalStep createSchema(Name schema) {
         return dsl().createSchema(schema);
     }
@@ -8495,7 +8496,7 @@ public class DSL {
      * @see DSLContext#createSchema(Schema)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.CreateSchemaFinalStep createSchema(Schema schema) {
         return dsl().createSchema(schema);
     }
@@ -8510,7 +8511,7 @@ public class DSL {
      * @see DSLContext#createSchemaIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(@Stringly.Name String schema) {
         return dsl().createSchemaIfNotExists(schema);
     }
@@ -8525,7 +8526,7 @@ public class DSL {
      * @see DSLContext#createSchemaIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(Name schema) {
         return dsl().createSchemaIfNotExists(schema);
     }
@@ -8540,7 +8541,7 @@ public class DSL {
      * @see DSLContext#createSchemaIfNotExists(Schema)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(Schema schema) {
         return dsl().createSchemaIfNotExists(schema);
     }
@@ -8555,7 +8556,7 @@ public class DSL {
      * @see DSLContext#createSequence(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.CreateSequenceFlagsStep createSequence(@Stringly.Name String sequence) {
         return dsl().createSequence(sequence);
     }
@@ -8570,7 +8571,7 @@ public class DSL {
      * @see DSLContext#createSequence(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.CreateSequenceFlagsStep createSequence(Name sequence) {
         return dsl().createSequence(sequence);
     }
@@ -8585,7 +8586,7 @@ public class DSL {
      * @see DSLContext#createSequence(Sequence)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.CreateSequenceFlagsStep createSequence(Sequence<?> sequence) {
         return dsl().createSequence(sequence);
     }
@@ -8600,7 +8601,7 @@ public class DSL {
      * @see DSLContext#createSequenceIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(@Stringly.Name String sequence) {
         return dsl().createSequenceIfNotExists(sequence);
     }
@@ -8615,7 +8616,7 @@ public class DSL {
      * @see DSLContext#createSequenceIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence) {
         return dsl().createSequenceIfNotExists(sequence);
     }
@@ -8630,7 +8631,7 @@ public class DSL {
      * @see DSLContext#createSequenceIfNotExists(Sequence)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence) {
         return dsl().createSequenceIfNotExists(sequence);
     }
@@ -8645,7 +8646,7 @@ public class DSL {
      * @see DSLContext#dropDatabase(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.DropDatabaseFinalStep dropDatabase(@Stringly.Name String database) {
         return dsl().dropDatabase(database);
     }
@@ -8660,7 +8661,7 @@ public class DSL {
      * @see DSLContext#dropDatabase(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.DropDatabaseFinalStep dropDatabase(Name database) {
         return dsl().dropDatabase(database);
     }
@@ -8675,7 +8676,7 @@ public class DSL {
      * @see DSLContext#dropDatabase(Catalog)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.DropDatabaseFinalStep dropDatabase(Catalog database) {
         return dsl().dropDatabase(database);
     }
@@ -8690,7 +8691,7 @@ public class DSL {
      * @see DSLContext#dropDatabaseIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(@Stringly.Name String database) {
         return dsl().dropDatabaseIfExists(database);
     }
@@ -8705,7 +8706,7 @@ public class DSL {
      * @see DSLContext#dropDatabaseIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(Name database) {
         return dsl().dropDatabaseIfExists(database);
     }
@@ -8720,7 +8721,7 @@ public class DSL {
      * @see DSLContext#dropDatabaseIfExists(Catalog)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(Catalog database) {
         return dsl().dropDatabaseIfExists(database);
     }
@@ -8735,7 +8736,7 @@ public class DSL {
      * @see DSLContext#dropDomain(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static org.jooq.DropDomainCascadeStep dropDomain(@Stringly.Name String domain) {
         return dsl().dropDomain(domain);
     }
@@ -8750,7 +8751,7 @@ public class DSL {
      * @see DSLContext#dropDomain(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static org.jooq.DropDomainCascadeStep dropDomain(Name domain) {
         return dsl().dropDomain(domain);
     }
@@ -8765,7 +8766,7 @@ public class DSL {
      * @see DSLContext#dropDomain(Domain)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static org.jooq.DropDomainCascadeStep dropDomain(Domain<?> domain) {
         return dsl().dropDomain(domain);
     }
@@ -8780,7 +8781,7 @@ public class DSL {
      * @see DSLContext#dropDomainIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static org.jooq.DropDomainCascadeStep dropDomainIfExists(@Stringly.Name String domain) {
         return dsl().dropDomainIfExists(domain);
     }
@@ -8795,7 +8796,7 @@ public class DSL {
      * @see DSLContext#dropDomainIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static org.jooq.DropDomainCascadeStep dropDomainIfExists(Name domain) {
         return dsl().dropDomainIfExists(domain);
     }
@@ -8810,7 +8811,7 @@ public class DSL {
      * @see DSLContext#dropDomainIfExists(Domain)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static org.jooq.DropDomainCascadeStep dropDomainIfExists(Domain<?> domain) {
         return dsl().dropDomainIfExists(domain);
     }
@@ -8938,7 +8939,7 @@ public class DSL {
      * @see DSLContext#dropIndexIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.DropIndexOnStep dropIndexIfExists(@Stringly.Name String index) {
         return dsl().dropIndexIfExists(index);
     }
@@ -8953,7 +8954,7 @@ public class DSL {
      * @see DSLContext#dropIndexIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.DropIndexOnStep dropIndexIfExists(Name index) {
         return dsl().dropIndexIfExists(index);
     }
@@ -8968,7 +8969,7 @@ public class DSL {
      * @see DSLContext#dropIndexIfExists(Index)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.DropIndexOnStep dropIndexIfExists(Index index) {
         return dsl().dropIndexIfExists(index);
     }
@@ -9051,7 +9052,7 @@ public class DSL {
      * @see DSLContext#dropSchema(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.DropSchemaStep dropSchema(@Stringly.Name String schema) {
         return dsl().dropSchema(schema);
     }
@@ -9066,7 +9067,7 @@ public class DSL {
      * @see DSLContext#dropSchema(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.DropSchemaStep dropSchema(Name schema) {
         return dsl().dropSchema(schema);
     }
@@ -9081,7 +9082,7 @@ public class DSL {
      * @see DSLContext#dropSchema(Schema)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.DropSchemaStep dropSchema(Schema schema) {
         return dsl().dropSchema(schema);
     }
@@ -9096,7 +9097,7 @@ public class DSL {
      * @see DSLContext#dropSchemaIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.DropSchemaStep dropSchemaIfExists(@Stringly.Name String schema) {
         return dsl().dropSchemaIfExists(schema);
     }
@@ -9111,7 +9112,7 @@ public class DSL {
      * @see DSLContext#dropSchemaIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.DropSchemaStep dropSchemaIfExists(Name schema) {
         return dsl().dropSchemaIfExists(schema);
     }
@@ -9126,7 +9127,7 @@ public class DSL {
      * @see DSLContext#dropSchemaIfExists(Schema)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.DropSchemaStep dropSchemaIfExists(Schema schema) {
         return dsl().dropSchemaIfExists(schema);
     }
@@ -9141,7 +9142,7 @@ public class DSL {
      * @see DSLContext#dropSequence(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.DropSequenceFinalStep dropSequence(@Stringly.Name String sequence) {
         return dsl().dropSequence(sequence);
     }
@@ -9156,7 +9157,7 @@ public class DSL {
      * @see DSLContext#dropSequence(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.DropSequenceFinalStep dropSequence(Name sequence) {
         return dsl().dropSequence(sequence);
     }
@@ -9171,7 +9172,7 @@ public class DSL {
      * @see DSLContext#dropSequence(Sequence)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.DropSequenceFinalStep dropSequence(Sequence<?> sequence) {
         return dsl().dropSequence(sequence);
     }
@@ -9186,7 +9187,7 @@ public class DSL {
      * @see DSLContext#dropSequenceIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.DropSequenceFinalStep dropSequenceIfExists(@Stringly.Name String sequence) {
         return dsl().dropSequenceIfExists(sequence);
     }
@@ -9201,7 +9202,7 @@ public class DSL {
      * @see DSLContext#dropSequenceIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.DropSequenceFinalStep dropSequenceIfExists(Name sequence) {
         return dsl().dropSequenceIfExists(sequence);
     }
@@ -9216,7 +9217,7 @@ public class DSL {
      * @see DSLContext#dropSequenceIfExists(Sequence)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static org.jooq.DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence) {
         return dsl().dropSequenceIfExists(sequence);
     }
@@ -9276,7 +9277,7 @@ public class DSL {
      * @see DSLContext#dropTableIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.DropTableStep dropTableIfExists(@Stringly.Name String table) {
         return dsl().dropTableIfExists(table);
     }
@@ -9291,7 +9292,7 @@ public class DSL {
      * @see DSLContext#dropTableIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.DropTableStep dropTableIfExists(Name table) {
         return dsl().dropTableIfExists(table);
     }
@@ -9306,7 +9307,7 @@ public class DSL {
      * @see DSLContext#dropTableIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.DropTableStep dropTableIfExists(Table<?> table) {
         return dsl().dropTableIfExists(table);
     }
@@ -9321,7 +9322,7 @@ public class DSL {
      * @see DSLContext#dropTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.DropTableStep dropTemporaryTable(@Stringly.Name String table) {
         return dsl().dropTemporaryTable(table);
     }
@@ -9336,7 +9337,7 @@ public class DSL {
      * @see DSLContext#dropTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.DropTableStep dropTemporaryTable(Name table) {
         return dsl().dropTemporaryTable(table);
     }
@@ -9351,7 +9352,7 @@ public class DSL {
      * @see DSLContext#dropTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.DropTableStep dropTemporaryTable(Table<?> table) {
         return dsl().dropTemporaryTable(table);
     }
@@ -9366,7 +9367,7 @@ public class DSL {
      * @see DSLContext#dropTemporaryTableIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.DropTableStep dropTemporaryTableIfExists(@Stringly.Name String table) {
         return dsl().dropTemporaryTableIfExists(table);
     }
@@ -9381,7 +9382,7 @@ public class DSL {
      * @see DSLContext#dropTemporaryTableIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.DropTableStep dropTemporaryTableIfExists(Name table) {
         return dsl().dropTemporaryTableIfExists(table);
     }
@@ -9396,7 +9397,7 @@ public class DSL {
      * @see DSLContext#dropTemporaryTableIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.DropTableStep dropTemporaryTableIfExists(Table<?> table) {
         return dsl().dropTemporaryTableIfExists(table);
     }
@@ -9479,7 +9480,7 @@ public class DSL {
      * @see DSLContext#dropView(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.DropViewFinalStep dropView(@Stringly.Name String view) {
         return dsl().dropView(view);
     }
@@ -9494,7 +9495,7 @@ public class DSL {
      * @see DSLContext#dropView(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.DropViewFinalStep dropView(Name view) {
         return dsl().dropView(view);
     }
@@ -9509,7 +9510,7 @@ public class DSL {
      * @see DSLContext#dropView(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.DropViewFinalStep dropView(Table<?> view) {
         return dsl().dropView(view);
     }
@@ -9524,7 +9525,7 @@ public class DSL {
      * @see DSLContext#dropViewIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.DropViewFinalStep dropViewIfExists(@Stringly.Name String view) {
         return dsl().dropViewIfExists(view);
     }
@@ -9539,7 +9540,7 @@ public class DSL {
      * @see DSLContext#dropViewIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.DropViewFinalStep dropViewIfExists(Name view) {
         return dsl().dropViewIfExists(view);
     }
@@ -9554,7 +9555,7 @@ public class DSL {
      * @see DSLContext#dropViewIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static org.jooq.DropViewFinalStep dropViewIfExists(Table<?> view) {
         return dsl().dropViewIfExists(view);
     }
@@ -9569,7 +9570,7 @@ public class DSL {
      * @see DSLContext#grant(Privilege)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.GrantOnStep grant(Privilege privileges) {
         return dsl().grant(privileges);
     }
@@ -9584,7 +9585,7 @@ public class DSL {
      * @see DSLContext#grant(Privilege...)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.GrantOnStep grant(Privilege... privileges) {
         return dsl().grant(privileges);
     }
@@ -9599,7 +9600,7 @@ public class DSL {
      * @see DSLContext#grant(Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.GrantOnStep grant(Collection<? extends Privilege> privileges) {
         return dsl().grant(privileges);
     }
@@ -9614,7 +9615,7 @@ public class DSL {
      * @see DSLContext#revoke(Privilege)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.RevokeOnStep revoke(Privilege privileges) {
         return dsl().revoke(privileges);
     }
@@ -9629,7 +9630,7 @@ public class DSL {
      * @see DSLContext#revoke(Privilege...)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.RevokeOnStep revoke(Privilege... privileges) {
         return dsl().revoke(privileges);
     }
@@ -9644,7 +9645,7 @@ public class DSL {
      * @see DSLContext#revoke(Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.RevokeOnStep revoke(Collection<? extends Privilege> privileges) {
         return dsl().revoke(privileges);
     }
@@ -9659,7 +9660,7 @@ public class DSL {
      * @see DSLContext#revokeGrantOptionFor(Privilege)
      */
     @NotNull @CheckReturnValue
-    @Support({ HSQLDB, POSTGRES })
+    @Support({ HSQLDB, POSTGRES, YUGABYTE })
     public static org.jooq.RevokeOnStep revokeGrantOptionFor(Privilege privileges) {
         return dsl().revokeGrantOptionFor(privileges);
     }
@@ -9674,7 +9675,7 @@ public class DSL {
      * @see DSLContext#revokeGrantOptionFor(Privilege...)
      */
     @NotNull @CheckReturnValue
-    @Support({ HSQLDB, POSTGRES })
+    @Support({ HSQLDB, POSTGRES, YUGABYTE })
     public static org.jooq.RevokeOnStep revokeGrantOptionFor(Privilege... privileges) {
         return dsl().revokeGrantOptionFor(privileges);
     }
@@ -9689,7 +9690,7 @@ public class DSL {
      * @see DSLContext#revokeGrantOptionFor(Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ HSQLDB, POSTGRES })
+    @Support({ HSQLDB, POSTGRES, YUGABYTE })
     public static org.jooq.RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges) {
         return dsl().revokeGrantOptionFor(privileges);
     }
@@ -9706,7 +9707,7 @@ public class DSL {
      * @see DSLContext#set(Name, Param)
      */
     @NotNull @CheckReturnValue
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.RowCountQuery set(Name name, Param<?> value) {
         return dsl().set(name, value);
     }
@@ -9723,7 +9724,7 @@ public class DSL {
      * @see DSLContext#setLocal(Name, Param)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static org.jooq.RowCountQuery setLocal(Name name, Param<?> value) {
         return dsl().setLocal(name, value);
     }
@@ -9791,7 +9792,7 @@ public class DSL {
      * @see DSLContext#setSchema(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.RowCountQuery setSchema(@Stringly.Name String schema) {
         return dsl().setSchema(schema);
     }
@@ -9808,7 +9809,7 @@ public class DSL {
      * @see DSLContext#setSchema(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.RowCountQuery setSchema(Name schema) {
         return dsl().setSchema(schema);
     }
@@ -9825,7 +9826,7 @@ public class DSL {
      * @see DSLContext#setSchema(Schema)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static org.jooq.RowCountQuery setSchema(Schema schema) {
         return dsl().setSchema(schema);
     }
@@ -10634,7 +10635,7 @@ public class DSL {
      * @see Field#like(QuantifiedSelect)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record> QuantifiedSelect<R> all(Select<R> select) {
         return new QuantifiedSelectImpl<>(Quantifier.ALL, select);
     }
@@ -10655,7 +10656,7 @@ public class DSL {
      * @see Field#like(QuantifiedSelect)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <T> QuantifiedSelect<Record1<T>> all(T... array) {
         return array instanceof Field[] ? all((Field<T>[]) array) : new QuantifiedSelectImpl<>(Quantifier.ALL, val(array));
     }
@@ -10676,7 +10677,7 @@ public class DSL {
      * @see Field#like(QuantifiedSelect)
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> QuantifiedSelect<Record1<T>> all(Field<T[]> array) {
         return new QuantifiedSelectImpl<>(Quantifier.ALL, array);
     }
@@ -10716,7 +10717,7 @@ public class DSL {
      * @see Field#like(QuantifiedSelect)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record> QuantifiedSelect<R> any(Select<R> select) {
         return new QuantifiedSelectImpl<>(Quantifier.ANY, select);
     }
@@ -10737,7 +10738,7 @@ public class DSL {
      * @see Field#like(QuantifiedSelect)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <T> QuantifiedSelect<Record1<T>> any(T... array) {
         return array instanceof Field[] ? any((Field<T>[]) array) : new QuantifiedSelectImpl<>(Quantifier.ANY, val(array));
     }
@@ -10758,7 +10759,7 @@ public class DSL {
      * @see Field#like(QuantifiedSelect)
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> QuantifiedSelect<Record1<T>> any(Field<T[]> array) {
         return new QuantifiedSelectImpl<>(Quantifier.ANY, array);
     }
@@ -11266,7 +11267,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Table<Record1<Integer>> generateSeries(int from, int to) {
         return generateSeries(val(from), val(to));
     }
@@ -11286,7 +11287,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Table<Record1<Integer>> generateSeries(int from, Field<Integer> to) {
         return generateSeries(val(from), Tools.nullSafe(to));
     }
@@ -11306,7 +11307,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, int to) {
         return new GenerateSeries(Tools.nullSafe(from), val(to));
     }
@@ -11326,7 +11327,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, Field<Integer> to) {
         return new GenerateSeries(Tools.nullSafe(from), Tools.nullSafe(to));
     }
@@ -11346,7 +11347,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Table<Record1<Integer>> generateSeries(int from, int to, int step) {
         return generateSeries(val(from), val(to), val(step));
     }
@@ -11366,7 +11367,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Table<Record1<Integer>> generateSeries(int from, Field<Integer> to, int step) {
         return generateSeries(val(from), Tools.nullSafe(to), val(step));
     }
@@ -11386,7 +11387,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, int to, int step) {
         return new GenerateSeries(Tools.nullSafe(from), val(to), val(step));
     }
@@ -11406,7 +11407,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, Field<Integer> to, int step) {
         return new GenerateSeries(Tools.nullSafe(from), Tools.nullSafe(to), val(step));
     }
@@ -11426,7 +11427,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Table<Record1<Integer>> generateSeries(int from, int to, Field<Integer> step) {
         return generateSeries(val(from), val(to), Tools.nullSafe(step));
     }
@@ -11446,7 +11447,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Table<Record1<Integer>> generateSeries(int from, Field<Integer> to, Field<Integer> step) {
         return generateSeries(val(from), Tools.nullSafe(to), Tools.nullSafe(step));
     }
@@ -11466,7 +11467,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, int to, Field<Integer> step) {
         return new GenerateSeries(Tools.nullSafe(from), val(to), Tools.nullSafe(step));
     }
@@ -11486,7 +11487,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, Field<Integer> to, Field<Integer> step) {
         return new GenerateSeries(Tools.nullSafe(from), Tools.nullSafe(to), Tools.nullSafe(step));
     }
@@ -11503,7 +11504,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MYSQL, POSTGRES, YUGABYTE })
     public static <R extends Record> Table<R> lateral(TableLike<R> table) {
         return new Lateral<>(table.asTable());
     }
@@ -12001,7 +12002,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static Sequence<BigInteger> sequence(Name name) {
         return sequence(name, BigInteger.class);
     }
@@ -12020,7 +12021,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static <T extends Number> Sequence<T> sequence(Name name, Class<T> type) {
         return sequence(name, getDataType(type));
     }
@@ -12039,7 +12040,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static <T extends Number> Sequence<T> sequence(Name name, DataType<T> type) {
         return new SequenceImpl<>(
             name.unqualifiedName(),
@@ -12368,7 +12369,7 @@ public class DSL {
      * @see DSLContext#begin(Statement...)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Block begin(Statement... statements) {
         return begin(Arrays.asList(statements));
     }
@@ -12379,7 +12380,7 @@ public class DSL {
      * @see DSLContext#begin(Collection)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Block begin(Collection<? extends Statement> statements) {
         return DSL.using(new DefaultConfiguration()).begin(statements);
     }
@@ -13463,7 +13464,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.10")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     @PlainSQL
     public static Sequence<BigInteger> sequence(String sql) {
         return sequence(sql, BigInteger.class);
@@ -13485,7 +13486,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.10")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     @PlainSQL
     public static <T extends Number> Sequence<T> sequence(String sql, Class<T> type) {
         return sequence(sql, getDataType(type));
@@ -13508,7 +13509,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.10")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     @PlainSQL
     public static <T extends Number> Sequence<T> sequence(String sql, DataType<T> type) {
         return new SequenceImpl<>(sql, null, type, true);
@@ -13519,7 +13520,7 @@ public class DSL {
      * <code>DOMAIN</code> specifications.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> Field<T> value(Class<T> type) {
         return value(DefaultDataType.getDataType(null, type));
     }
@@ -13529,7 +13530,7 @@ public class DSL {
      * <code>DOMAIN</code> specifications.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> Field<T> value(DataType<T> type) {
         return field("{0}", type, N_VALUE);
     }
@@ -13538,7 +13539,7 @@ public class DSL {
      * Create a <code>DOMAIN</code> reference.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static Domain<?> domain(String name) {
         return domain(name(name));
     }
@@ -13547,7 +13548,7 @@ public class DSL {
      * Create a <code>DOMAIN</code> reference.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
     public static Domain<?> domain(Name name) {
         return new DomainImpl<>(
             name.qualified() ? schema(name.qualifier()) : null,
@@ -15934,7 +15935,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> acos(Number number) {
         return new Acos(Tools.field(number));
     }
@@ -15943,7 +15944,7 @@ public class DSL {
      * The <code>ACOS</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> acos(Field<? extends Number> number) {
         return new Acos(number);
     }
@@ -15954,7 +15955,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> asin(Number number) {
         return new Asin(Tools.field(number));
     }
@@ -15963,7 +15964,7 @@ public class DSL {
      * The <code>ASIN</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> asin(Field<? extends Number> number) {
         return new Asin(number);
     }
@@ -15974,7 +15975,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> atan(Number number) {
         return new Atan(Tools.field(number));
     }
@@ -15983,7 +15984,7 @@ public class DSL {
      * The <code>ATAN</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> atan(Field<? extends Number> number) {
         return new Atan(number);
     }
@@ -15995,7 +15996,7 @@ public class DSL {
      * @param y is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> atan2(Number x, Number y) {
         return new Atan2(Tools.field(x), Tools.field(y));
     }
@@ -16006,7 +16007,7 @@ public class DSL {
      * @param x is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> atan2(Number x, Field<? extends Number> y) {
         return new Atan2(Tools.field(x), y);
     }
@@ -16017,7 +16018,7 @@ public class DSL {
      * @param y is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
         return new Atan2(x, Tools.field(y));
     }
@@ -16026,7 +16027,7 @@ public class DSL {
      * The <code>ATAN2</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Field<? extends Number> y) {
         return new Atan2(x, y);
     }
@@ -16061,7 +16062,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> cos(Number number) {
         return new Cos(Tools.field(number));
     }
@@ -16070,7 +16071,7 @@ public class DSL {
      * The <code>COS</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> cos(Field<? extends Number> number) {
         return new Cos(number);
     }
@@ -16081,7 +16082,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> cosh(Number number) {
         return new Cosh(Tools.field(number));
     }
@@ -16090,7 +16091,7 @@ public class DSL {
      * The <code>COSH</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> cosh(Field<? extends Number> number) {
         return new Cosh(number);
     }
@@ -16101,7 +16102,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> cot(Number number) {
         return new Cot(Tools.field(number));
     }
@@ -16110,7 +16111,7 @@ public class DSL {
      * The <code>COT</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> cot(Field<? extends Number> number) {
         return new Cot(number);
     }
@@ -16121,7 +16122,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> coth(Number number) {
         return new Coth(Tools.field(number));
     }
@@ -16130,7 +16131,7 @@ public class DSL {
      * The <code>COTH</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> coth(Field<? extends Number> number) {
         return new Coth(number);
     }
@@ -16178,7 +16179,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> exp(Number value) {
         return new Exp(Tools.field(value));
     }
@@ -16187,7 +16188,7 @@ public class DSL {
      * The <code>EXP</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> exp(Field<? extends Number> value) {
         return new Exp(value);
     }
@@ -16222,7 +16223,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> ln(Number value) {
         return new Log(Tools.field(value));
     }
@@ -16231,7 +16232,7 @@ public class DSL {
      * The <code>LN</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> ln(Field<? extends Number> value) {
         return new Log(value);
     }
@@ -16243,7 +16244,7 @@ public class DSL {
      * @param base is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> log(Number value, int base) {
         return new Log(Tools.field(value), Tools.field(base));
     }
@@ -16254,7 +16255,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> log(Number value, Field<? extends Number> base) {
         return new Log(Tools.field(value), base);
     }
@@ -16265,7 +16266,7 @@ public class DSL {
      * @param base is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> log(Field<? extends Number> value, int base) {
         return new Log(value, Tools.field(base));
     }
@@ -16274,7 +16275,7 @@ public class DSL {
      * The <code>LOG</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> log(Field<? extends Number> value, Field<? extends Number> base) {
         return new Log(value, base);
     }
@@ -16285,7 +16286,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> log10(Number value) {
         return new Log10(Tools.field(value));
     }
@@ -16294,7 +16295,7 @@ public class DSL {
      * The <code>LOG10</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> log10(Field<? extends Number> value) {
         return new Log10(value);
     }
@@ -16317,7 +16318,7 @@ public class DSL {
      * @param exponent is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> power(Number value, Number exponent) {
         return new Power(Tools.field(value), Tools.field(exponent));
     }
@@ -16328,7 +16329,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> power(Number value, Field<? extends Number> exponent) {
         return new Power(Tools.field(value), exponent);
     }
@@ -16339,7 +16340,7 @@ public class DSL {
      * @param exponent is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> power(Field<? extends Number> value, Number exponent) {
         return new Power(value, Tools.field(exponent));
     }
@@ -16348,7 +16349,7 @@ public class DSL {
      * The <code>POWER</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> power(Field<? extends Number> value, Field<? extends Number> exponent) {
         return new Power(value, exponent);
     }
@@ -16502,7 +16503,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> sin(Number number) {
         return new Sin(Tools.field(number));
     }
@@ -16511,7 +16512,7 @@ public class DSL {
      * The <code>SIN</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> sin(Field<? extends Number> number) {
         return new Sin(number);
     }
@@ -16522,7 +16523,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> sinh(Number number) {
         return new Sinh(Tools.field(number));
     }
@@ -16531,7 +16532,7 @@ public class DSL {
      * The <code>SINH</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> sinh(Field<? extends Number> number) {
         return new Sinh(number);
     }
@@ -16542,7 +16543,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> sqrt(Number value) {
         return new Sqrt(Tools.field(value));
     }
@@ -16551,7 +16552,7 @@ public class DSL {
      * The <code>SQRT</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> sqrt(Field<? extends Number> value) {
         return new Sqrt(value);
     }
@@ -16582,7 +16583,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> tan(Number number) {
         return new Tan(Tools.field(number));
     }
@@ -16591,7 +16592,7 @@ public class DSL {
      * The <code>TAN</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> tan(Field<? extends Number> number) {
         return new Tan(number);
     }
@@ -16602,7 +16603,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> tanh(Number number) {
         return new Tanh(Tools.field(number));
     }
@@ -16611,7 +16612,7 @@ public class DSL {
      * The <code>TANH</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<BigDecimal> tanh(Field<? extends Number> number) {
         return new Tanh(number);
     }
@@ -16636,7 +16637,7 @@ public class DSL {
      * @param decimals The decimals to truncate to.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <T extends Number> Field<T> trunc(T value, int decimals) {
         return new Trunc(Tools.field(value), Tools.field(decimals));
     }
@@ -16650,7 +16651,7 @@ public class DSL {
      * @param decimals The decimals to truncate to.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <T extends Number> Field<T> trunc(T value, Field<Integer> decimals) {
         return new Trunc(Tools.field(value), decimals);
     }
@@ -16664,7 +16665,7 @@ public class DSL {
      * @param decimals The decimals to truncate to.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <T extends Number> Field<T> trunc(Field<T> value, int decimals) {
         return new Trunc(value, Tools.field(decimals));
     }
@@ -16678,7 +16679,7 @@ public class DSL {
      * @param decimals The decimals to truncate to.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <T extends Number> Field<T> trunc(Field<T> value, Field<Integer> decimals) {
         return new Trunc(value, decimals);
     }
@@ -16727,7 +16728,7 @@ public class DSL {
      * @param string is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<Integer> ascii(@Stringly.Param String string) {
         return new Ascii(Tools.field(string));
     }
@@ -16738,7 +16739,7 @@ public class DSL {
      * The ASCII value of a character.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<Integer> ascii(Field<String> string) {
         return new Ascii(string);
     }
@@ -16797,7 +16798,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> chr(Number number) {
         return new Chr(Tools.field(number));
     }
@@ -16806,7 +16807,7 @@ public class DSL {
      * The <code>CHR</code> function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> chr(Field<? extends Number> number) {
         return new Chr(number);
     }
@@ -16945,7 +16946,7 @@ public class DSL {
      * @param character The padding character, if different from whitespace
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> lpad(Field<String> string, int length, @Stringly.Param String character) {
         return new Lpad(string, Tools.field(length), Tools.field(character));
     }
@@ -16960,7 +16961,7 @@ public class DSL {
      * @param character The padding character, if different from whitespace
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> lpad(Field<String> string, int length, Field<String> character) {
         return new Lpad(string, Tools.field(length), character);
     }
@@ -16975,7 +16976,7 @@ public class DSL {
      * @param character The padding character, if different from whitespace
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> lpad(Field<String> string, Field<? extends Number> length, @Stringly.Param String character) {
         return new Lpad(string, length, Tools.field(character));
     }
@@ -16990,7 +16991,7 @@ public class DSL {
      * @param character The padding character, if different from whitespace
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> lpad(Field<String> string, Field<? extends Number> length, Field<String> character) {
         return new Lpad(string, length, character);
     }
@@ -17004,7 +17005,7 @@ public class DSL {
      * @param length The maximum length to pad the string to.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> lpad(Field<String> string, int length) {
         return new Lpad(string, Tools.field(length));
     }
@@ -17018,7 +17019,7 @@ public class DSL {
      * @param length The maximum length to pad the string to.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> lpad(Field<String> string, Field<? extends Number> length) {
         return new Lpad(string, length);
     }
@@ -17032,7 +17033,7 @@ public class DSL {
      * @param characters The characters to be trimmed.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> ltrim(@Stringly.Param String string, @Stringly.Param String characters) {
         return new Ltrim(Tools.field(string), Tools.field(characters));
     }
@@ -17046,7 +17047,7 @@ public class DSL {
      * @param characters The characters to be trimmed.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> ltrim(@Stringly.Param String string, Field<String> characters) {
         return new Ltrim(Tools.field(string), characters);
     }
@@ -17060,7 +17061,7 @@ public class DSL {
      * @param characters The characters to be trimmed.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> ltrim(Field<String> string, @Stringly.Param String characters) {
         return new Ltrim(string, Tools.field(characters));
     }
@@ -17074,7 +17075,7 @@ public class DSL {
      * @param characters The characters to be trimmed.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> ltrim(Field<String> string, Field<String> characters) {
         return new Ltrim(string, characters);
     }
@@ -17113,7 +17114,7 @@ public class DSL {
      * @param string is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<String> md5(@Stringly.Param String string) {
         return new Md5(Tools.field(string));
     }
@@ -17124,7 +17125,7 @@ public class DSL {
      * Calculate an MD5 hash from a string.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<String> md5(Field<String> string) {
         return new Md5(string);
     }
@@ -17488,7 +17489,7 @@ public class DSL {
      * @param count The number of times to repeat the string.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> repeat(@Stringly.Param String string, int count) {
         return new Repeat(Tools.field(string), Tools.field(count));
     }
@@ -17502,7 +17503,7 @@ public class DSL {
      * @param count The number of times to repeat the string.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> repeat(@Stringly.Param String string, Field<? extends Number> count) {
         return new Repeat(Tools.field(string), count);
     }
@@ -17516,7 +17517,7 @@ public class DSL {
      * @param count The number of times to repeat the string.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> repeat(Field<String> string, int count) {
         return new Repeat(string, Tools.field(count));
     }
@@ -17530,7 +17531,7 @@ public class DSL {
      * @param count The number of times to repeat the string.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> repeat(Field<String> string, Field<? extends Number> count) {
         return new Repeat(string, count);
     }
@@ -17545,7 +17546,7 @@ public class DSL {
      * @param replace The replacement for each substring, if not empty.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> replace(Field<String> string, @Stringly.Param String search, @Stringly.Param String replace) {
         return new Replace(string, Tools.field(search), Tools.field(replace));
     }
@@ -17560,7 +17561,7 @@ public class DSL {
      * @param replace The replacement for each substring, if not empty.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> replace(Field<String> string, @Stringly.Param String search, Field<String> replace) {
         return new Replace(string, Tools.field(search), replace);
     }
@@ -17575,7 +17576,7 @@ public class DSL {
      * @param replace The replacement for each substring, if not empty.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> replace(Field<String> string, Field<String> search, @Stringly.Param String replace) {
         return new Replace(string, search, Tools.field(replace));
     }
@@ -17590,7 +17591,7 @@ public class DSL {
      * @param replace The replacement for each substring, if not empty.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> replace(Field<String> string, Field<String> search, Field<String> replace) {
         return new Replace(string, search, replace);
     }
@@ -17604,7 +17605,7 @@ public class DSL {
      * @param search The substring to search for.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> replace(Field<String> string, @Stringly.Param String search) {
         return new Replace(string, Tools.field(search));
     }
@@ -17618,7 +17619,7 @@ public class DSL {
      * @param search The substring to search for.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> replace(Field<String> string, Field<String> search) {
         return new Replace(string, search);
     }
@@ -17631,7 +17632,7 @@ public class DSL {
      * @param string is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<String> reverse(@Stringly.Param String string) {
         return new Reverse(Tools.field(string));
     }
@@ -17642,7 +17643,7 @@ public class DSL {
      * Reverse a string.
      */
     @NotNull
-    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<String> reverse(Field<String> string) {
         return new Reverse(string);
     }
@@ -17713,7 +17714,7 @@ public class DSL {
      * @param character The padding character, if different from whitespace
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> rpad(Field<String> string, int length, @Stringly.Param String character) {
         return new Rpad(string, Tools.field(length), Tools.field(character));
     }
@@ -17728,7 +17729,7 @@ public class DSL {
      * @param character The padding character, if different from whitespace
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> rpad(Field<String> string, int length, Field<String> character) {
         return new Rpad(string, Tools.field(length), character);
     }
@@ -17743,7 +17744,7 @@ public class DSL {
      * @param character The padding character, if different from whitespace
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> rpad(Field<String> string, Field<? extends Number> length, @Stringly.Param String character) {
         return new Rpad(string, length, Tools.field(character));
     }
@@ -17758,7 +17759,7 @@ public class DSL {
      * @param character The padding character, if different from whitespace
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> rpad(Field<String> string, Field<? extends Number> length, Field<String> character) {
         return new Rpad(string, length, character);
     }
@@ -17772,7 +17773,7 @@ public class DSL {
      * @param length The maximum length to pad the string to.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> rpad(Field<String> string, int length) {
         return new Rpad(string, Tools.field(length));
     }
@@ -17786,7 +17787,7 @@ public class DSL {
      * @param length The maximum length to pad the string to.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> rpad(Field<String> string, Field<? extends Number> length) {
         return new Rpad(string, length);
     }
@@ -17881,7 +17882,7 @@ public class DSL {
      * @param count The number of spaces to produce.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> space(Number count) {
         return new Space(Tools.field(count));
     }
@@ -17894,7 +17895,7 @@ public class DSL {
      * @param count The number of spaces to produce.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> space(Field<? extends Number> count) {
         return new Space(count);
     }
@@ -17909,7 +17910,7 @@ public class DSL {
      * @param n The token number (1-based).
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<String> splitPart(Field<String> string, @Stringly.Param String delimiter, Number n) {
         return new SplitPart(string, Tools.field(delimiter), Tools.field(n));
     }
@@ -17924,7 +17925,7 @@ public class DSL {
      * @param n The token number (1-based).
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<String> splitPart(Field<String> string, @Stringly.Param String delimiter, Field<? extends Number> n) {
         return new SplitPart(string, Tools.field(delimiter), n);
     }
@@ -17939,7 +17940,7 @@ public class DSL {
      * @param n The token number (1-based).
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<String> splitPart(Field<String> string, Field<String> delimiter, Number n) {
         return new SplitPart(string, delimiter, Tools.field(n));
     }
@@ -17954,7 +17955,7 @@ public class DSL {
      * @param n The token number (1-based).
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<String> splitPart(Field<String> string, Field<String> delimiter, Field<? extends Number> n) {
         return new SplitPart(string, delimiter, n);
     }
@@ -18198,7 +18199,7 @@ public class DSL {
      * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static Field<Date> toDate(@Stringly.Param String value, @Stringly.Param String formatMask) {
         return new ToDate(Tools.field(value), Tools.field(formatMask));
     }
@@ -18212,7 +18213,7 @@ public class DSL {
      * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static Field<Date> toDate(@Stringly.Param String value, Field<String> formatMask) {
         return new ToDate(Tools.field(value), formatMask);
     }
@@ -18226,7 +18227,7 @@ public class DSL {
      * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static Field<Date> toDate(Field<String> value, @Stringly.Param String formatMask) {
         return new ToDate(value, Tools.field(formatMask));
     }
@@ -18240,7 +18241,7 @@ public class DSL {
      * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static Field<Date> toDate(Field<String> value, Field<String> formatMask) {
         return new ToDate(value, formatMask);
     }
@@ -18253,7 +18254,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> toHex(Number value) {
         return new ToHex(Tools.field(value));
     }
@@ -18264,7 +18265,7 @@ public class DSL {
      * Format a number to its hex value.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> toHex(Field<? extends Number> value) {
         return new ToHex(value);
     }
@@ -18278,7 +18279,7 @@ public class DSL {
      * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static Field<Timestamp> toTimestamp(@Stringly.Param String value, @Stringly.Param String formatMask) {
         return new ToTimestamp(Tools.field(value), Tools.field(formatMask));
     }
@@ -18292,7 +18293,7 @@ public class DSL {
      * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static Field<Timestamp> toTimestamp(@Stringly.Param String value, Field<String> formatMask) {
         return new ToTimestamp(Tools.field(value), formatMask);
     }
@@ -18306,7 +18307,7 @@ public class DSL {
      * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static Field<Timestamp> toTimestamp(Field<String> value, @Stringly.Param String formatMask) {
         return new ToTimestamp(value, Tools.field(formatMask));
     }
@@ -18320,7 +18321,7 @@ public class DSL {
      * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static Field<Timestamp> toTimestamp(Field<String> value, Field<String> formatMask) {
         return new ToTimestamp(value, formatMask);
     }
@@ -18335,7 +18336,7 @@ public class DSL {
      * @param to The set of target characters, matched with source characters by position.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static Field<String> translate(Field<String> string, @Stringly.Param String from, @Stringly.Param String to) {
         return new Translate(string, Tools.field(from), Tools.field(to));
     }
@@ -18350,7 +18351,7 @@ public class DSL {
      * @param to The set of target characters, matched with source characters by position.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static Field<String> translate(Field<String> string, @Stringly.Param String from, Field<String> to) {
         return new Translate(string, Tools.field(from), to);
     }
@@ -18365,7 +18366,7 @@ public class DSL {
      * @param to The set of target characters, matched with source characters by position.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static Field<String> translate(Field<String> string, Field<String> from, @Stringly.Param String to) {
         return new Translate(string, from, Tools.field(to));
     }
@@ -18380,7 +18381,7 @@ public class DSL {
      * @param to The set of target characters, matched with source characters by position.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static Field<String> translate(Field<String> string, Field<String> from, Field<String> to) {
         return new Translate(string, from, to);
     }
@@ -18978,7 +18979,7 @@ public class DSL {
      * The <code>CURRENT_CATALOG</code> function.
      */
     @NotNull
-    @Support({ FIREBIRD, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> currentCatalog() {
         return new CurrentCatalog();
     }
@@ -18987,7 +18988,7 @@ public class DSL {
      * The <code>CURRENT_SCHEMA</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<String> currentSchema() {
         return new CurrentSchema();
     }
@@ -19188,7 +19189,7 @@ public class DSL {
      * The <code>JSON_ARRAY</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONArrayNullStep<JSON> jsonArray(Field<?>... fields) {
         return new JSONArray<>(SQLDataType.JSON, Arrays.asList(fields));
     }
@@ -19197,7 +19198,7 @@ public class DSL {
      * The <code>JSON_ARRAY</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONArrayNullStep<JSON> jsonArray(Collection<? extends Field<?>> fields) {
         return new JSONArray<>(SQLDataType.JSON, fields);
     }
@@ -19206,7 +19207,7 @@ public class DSL {
      * The <code>JSONB_ARRAY</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONArrayNullStep<JSONB> jsonbArray(Field<?>... fields) {
         return new JSONArray<>(SQLDataType.JSONB, Arrays.asList(fields));
     }
@@ -19215,7 +19216,7 @@ public class DSL {
      * The <code>JSONB_ARRAY</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONArrayNullStep<JSONB> jsonbArray(Collection<? extends Field<?>> fields) {
         return new JSONArray<>(SQLDataType.JSONB, fields);
     }
@@ -19224,7 +19225,7 @@ public class DSL {
      * The <code>JSON_OBJECT</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectNullStep<JSON> jsonObject(Field<?>... entries) {
         return new JSONObject<>(SQLDataType.JSON, Tools.jsonEntries(entries));
     }
@@ -19233,7 +19234,7 @@ public class DSL {
      * The <code>JSON_OBJECT</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectNullStep<JSON> jsonObject(JSONEntry<?>... entries) {
         return new JSONObject<>(SQLDataType.JSON, Arrays.asList(entries));
     }
@@ -19242,7 +19243,7 @@ public class DSL {
      * The <code>JSON_OBJECT</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectNullStep<JSON> jsonObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject<>(SQLDataType.JSON, entries);
     }
@@ -19251,7 +19252,7 @@ public class DSL {
      * The <code>JSONB_OBJECT</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectNullStep<JSONB> jsonbObject(Field<?>... entries) {
         return new JSONObject<>(SQLDataType.JSONB, Tools.jsonEntries(entries));
     }
@@ -19260,7 +19261,7 @@ public class DSL {
      * The <code>JSONB_OBJECT</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectNullStep<JSONB> jsonbObject(JSONEntry<?>... entries) {
         return new JSONObject<>(SQLDataType.JSONB, Arrays.asList(entries));
     }
@@ -19269,7 +19270,7 @@ public class DSL {
      * The <code>JSONB_OBJECT</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectNullStep<JSONB> jsonbObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject<>(SQLDataType.JSONB, entries);
     }
@@ -19322,7 +19323,7 @@ public class DSL {
      * Calculate the bitwise <code>AND</code> aggregate value.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> AggregateFunction<T> bitAndAgg(Field<T> value) {
         return new BitAndAgg(value);
     }
@@ -19333,7 +19334,7 @@ public class DSL {
      * Calculate the bitwise <code>OR</code> aggregate value.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> AggregateFunction<T> bitOrAgg(Field<T> value) {
         return new BitOrAgg(value);
     }
@@ -19344,7 +19345,7 @@ public class DSL {
      * Calculate the bitwise <code>XOR</code> aggregate value.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> AggregateFunction<T> bitXorAgg(Field<T> value) {
         return new BitXorAgg(value);
     }
@@ -19358,7 +19359,7 @@ public class DSL {
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static AggregateFunction<BigDecimal> corr(Field<? extends Number> y, Field<? extends Number> x) {
         return new Corr(y, x);
     }
@@ -19395,7 +19396,7 @@ public class DSL {
      * The <code>MEDIAN</code> function.
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
         return new Median(field);
     }
@@ -19465,7 +19466,7 @@ public class DSL {
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static AggregateFunction<BigDecimal> regrR2(Field<? extends Number> y, Field<? extends Number> x) {
         return new RegrR2(y, x);
     }
@@ -19535,7 +19536,7 @@ public class DSL {
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static AggregateFunction<BigDecimal> stddevPop(Field<? extends Number> field) {
         return new StddevPop(field);
     }
@@ -19549,7 +19550,7 @@ public class DSL {
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field) {
         return new StddevSamp(field);
     }
@@ -19577,7 +19578,7 @@ public class DSL {
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
         return new VarSamp(field);
     }
@@ -19714,7 +19715,7 @@ public class DSL {
      * Get the <code>REGEXP_REPLACE_ALL</code> function.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<String> regexpReplaceAll(Field<String> field, String pattern, String replacement) {
         return regexpReplaceAll(field, Tools.field(pattern), Tools.field(replacement));
     }
@@ -19723,7 +19724,7 @@ public class DSL {
      * Get the <code>REGEXP_REPLACE_ALL</code> function.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<String> regexpReplaceAll(Field<String> field, Field<String> pattern, Field<String> replacement) {
         return new RegexpReplace(field, Tools.nullSafe(pattern), Tools.nullSafe(replacement), true);
     }
@@ -19732,7 +19733,7 @@ public class DSL {
      * Get the <code>REGEXP_REPLACE_ALL</code> function.
      */
     @NotNull
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MYSQL, POSTGRES, YUGABYTE })
     public static Field<String> regexpReplaceFirst(Field<String> field, String pattern, String replacement) {
         return regexpReplaceFirst(field, Tools.field(pattern), Tools.field(replacement));
     }
@@ -19741,7 +19742,7 @@ public class DSL {
      * Get the <code>REGEXP_REPLACE_ALL</code> function.
      */
     @NotNull
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MYSQL, POSTGRES, YUGABYTE })
     public static Field<String> regexpReplaceFirst(Field<String> field, Field<String> pattern, Field<String> replacement) {
         return new RegexpReplace(field, Tools.nullSafe(pattern), Tools.nullSafe(replacement), false);
     }
@@ -20053,7 +20054,7 @@ public class DSL {
      * replicates that of SQL Server.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<Integer> dateDiff(DatePart part, Date startDate, Date endDate) {
         return dateDiff(part, Tools.field(startDate), Tools.field(endDate));
     }
@@ -20067,7 +20068,7 @@ public class DSL {
      * replicates that of SQL Server.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<Integer> dateDiff(DatePart part, Field<Date> startDate, Date endDate) {
         return dateDiff(part, Tools.nullSafe(startDate), Tools.field(endDate));
     }
@@ -20081,7 +20082,7 @@ public class DSL {
      * replicates that of SQL Server.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<Integer> dateDiff(DatePart part, Date startDate, Field<Date> endDate) {
         return dateDiff(part, Tools.field(startDate), Tools.nullSafe(endDate));
     }
@@ -20095,7 +20096,7 @@ public class DSL {
      * replicates that of SQL Server.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static Field<Integer> dateDiff(DatePart part, Field<Date> startDate, Field<Date> endDate) {
         return new DateDiff<>(part, Tools.nullSafe(startDate), Tools.nullSafe(endDate));
     }
@@ -22233,7 +22234,7 @@ public class DSL {
      * @see #bitCount(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<Integer> bitCount(Number value) {
         return bitCount(Tools.field(value));
     }
@@ -22256,7 +22257,7 @@ public class DSL {
      * More efficient algorithms are very welcome
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static Field<Integer> bitCount(Field<? extends Number> field) {
         return new BitCount(Tools.nullSafe(field));
     }
@@ -22267,7 +22268,7 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitNot(T value) {
         return bitNot(Tools.field(value));
     }
@@ -22279,7 +22280,7 @@ public class DSL {
      * emulates this operator in some dialects using <code>-[field] - 1</code>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitNot(Field<T> field) {
         return new Neg<>(Tools.nullSafe(field), false, ExpressionOperator.BIT_NOT);
     }
@@ -22290,7 +22291,7 @@ public class DSL {
      * @see #bitAnd(Field, Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitAnd(T value1, T value2) {
         return bitAnd(Tools.field(value1), Tools.field(value2));
     }
@@ -22301,7 +22302,7 @@ public class DSL {
      * @see #bitAnd(Field, Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitAnd(T value1, Field<T> value2) {
         return bitAnd(Tools.field(value1, value2), Tools.nullSafe(value2));
     }
@@ -22312,7 +22313,7 @@ public class DSL {
      * @see #bitAnd(Field, Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitAnd(Field<T> value1, T value2) {
         return bitAnd(Tools.nullSafe(value1), Tools.field(value2, value1));
     }
@@ -22328,7 +22329,7 @@ public class DSL {
      * <code><pre>bitand([field1], [field2])</pre></code>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitAnd(Field<T> field1, Field<T> field2) {
         return new Expression<>(ExpressionOperator.BIT_AND, false, Tools.nullSafe(field1), Tools.nullSafe(field2));
     }
@@ -22340,7 +22341,7 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitNand(T value1, T value2) {
         return bitNand(Tools.field(value1), Tools.field(value2));
     }
@@ -22352,7 +22353,7 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitNand(T value1, Field<T> value2) {
         return bitNand(Tools.field(value1, value2), Tools.nullSafe(value2));
     }
@@ -22364,7 +22365,7 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitNand(Field<T> value1, T value2) {
         return bitNand(Tools.nullSafe(value1), Tools.field(value2, value1));
     }
@@ -22382,7 +22383,7 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitNand(Field<T> field1, Field<T> field2) {
         return new Expression<>(ExpressionOperator.BIT_NAND, false, Tools.nullSafe(field1), Tools.nullSafe(field2));
     }
@@ -22393,7 +22394,7 @@ public class DSL {
      * @see #bitOr(Field, Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitOr(T value1, T value2) {
         return bitOr(Tools.field(value1), Tools.field(value2));
     }
@@ -22404,7 +22405,7 @@ public class DSL {
      * @see #bitOr(Field, Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitOr(T value1, Field<T> value2) {
         return bitOr(Tools.field(value1, value2), Tools.nullSafe(value2));
     }
@@ -22415,7 +22416,7 @@ public class DSL {
      * @see #bitOr(Field, Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitOr(Field<T> value1, T value2) {
         return bitOr(Tools.nullSafe(value1), Tools.field(value2, value1));
     }
@@ -22431,7 +22432,7 @@ public class DSL {
      * <code><pre>bitor([field1], [field2])</pre></code>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitOr(Field<T> field1, Field<T> field2) {
         return new Expression<>(ExpressionOperator.BIT_OR, false, Tools.nullSafe(field1), Tools.nullSafe(field2));
     }
@@ -22443,7 +22444,7 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitNor(T value1, T value2) {
         return bitNor(Tools.field(value1), Tools.field(value2));
     }
@@ -22454,7 +22455,7 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitNor(T value1, Field<T> value2) {
         return bitNor(Tools.field(value1, value2), Tools.nullSafe(value2));
     }
@@ -22465,7 +22466,7 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitNor(Field<T> value1, T value2) {
         return bitNor(Tools.nullSafe(value1), Tools.field(value2, value1));
     }
@@ -22483,7 +22484,7 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitNor(Field<T> field1, Field<T> field2) {
         return new Expression<>(ExpressionOperator.BIT_NOR, false, Tools.nullSafe(field1), Tools.nullSafe(field2));
     }
@@ -22494,7 +22495,7 @@ public class DSL {
      * @see #bitXor(Field, Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXor(T value1, T value2) {
         return bitXor(Tools.field(value1), Tools.field(value2));
     }
@@ -22505,7 +22506,7 @@ public class DSL {
      * @see #bitXor(Field, Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXor(T value1, Field<T> value2) {
         return bitXor(Tools.field(value1, value2), Tools.nullSafe(value2));
     }
@@ -22516,7 +22517,7 @@ public class DSL {
      * @see #bitXor(Field, Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXor(Field<T> value1, T value2) {
         return bitXor(Tools.nullSafe(value1), Tools.field(value2, value1));
     }
@@ -22532,7 +22533,7 @@ public class DSL {
      * <code><pre>bitxor([field1], [field2])</pre></code>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXor(Field<T> field1, Field<T> field2) {
         return new Expression<>(ExpressionOperator.BIT_XOR, false, Tools.nullSafe(field1), Tools.nullSafe(field2));
     }
@@ -22544,7 +22545,7 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXNor(T value1, T value2) {
         return bitXNor(Tools.field(value1), Tools.field(value2));
     }
@@ -22556,7 +22557,7 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXNor(T value1, Field<T> value2) {
         return bitXNor(Tools.field(value1, value2), Tools.nullSafe(value2));
     }
@@ -22568,7 +22569,7 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXNor(Field<T> value1, T value2) {
         return bitXNor(Tools.nullSafe(value1), Tools.field(value2, value1));
     }
@@ -22584,7 +22585,7 @@ public class DSL {
      * <code><pre>bitnot(bitxor([field1], [field2]))</pre></code>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXNor(Field<T> field1, Field<T> field2) {
         return new Expression<>(ExpressionOperator.BIT_XNOR, false, Tools.nullSafe(field1), Tools.nullSafe(field2));
     }
@@ -22596,7 +22597,7 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> shl(T value1, Number value2) {
         return shl(Tools.field(value1), Tools.field(value2));
     }
@@ -22608,7 +22609,7 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> shl(T value1, Field<? extends Number> value2) {
         return shl(Tools.field(value1), Tools.nullSafe(value2));
     }
@@ -22620,7 +22621,7 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> shl(Field<T> value1, Number value2) {
         return shl(Tools.nullSafe(value1), Tools.field(value2));
     }
@@ -22635,7 +22636,7 @@ public class DSL {
      * @see #power(Field, Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> shl(Field<T> field1, Field<? extends Number> field2) {
         return new Expression<>(ExpressionOperator.SHL, false, Tools.nullSafe(field1), Tools.nullSafe(field2));
     }
@@ -22647,7 +22648,7 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> shr(T value1, Number value2) {
         return shr(Tools.field(value1), Tools.field(value2));
     }
@@ -22659,7 +22660,7 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> shr(T value1, Field<? extends Number> value2) {
         return shr(Tools.field(value1), Tools.nullSafe(value2));
     }
@@ -22671,7 +22672,7 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> shr(Field<T> value1, Number value2) {
         return shr(Tools.nullSafe(value1), Tools.field(value2));
     }
@@ -22686,7 +22687,7 @@ public class DSL {
      * @see #power(Field, Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> shr(Field<T> field1, Field<? extends Number> field2) {
         return new Expression<>(ExpressionOperator.SHR, false, Tools.nullSafe(field1), Tools.nullSafe(field2));
     }
@@ -23066,7 +23067,7 @@ public class DSL {
      * The JSON value extractor function.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONValueOnStep<JSON> jsonValue(Field<JSON> json, String path) {
         return jsonValue(json, Tools.field(path));
     }
@@ -23075,7 +23076,7 @@ public class DSL {
      * The JSON value extractor function.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONValueOnStep<JSON> jsonValue(Field<JSON> json, Field<String> path) {
         return new JSONValue<>(SQLDataType.JSON, json, path, null);
     }
@@ -23084,7 +23085,7 @@ public class DSL {
      * The JSON value extractor function.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONValueOnStep<JSONB> jsonbValue(Field<JSONB> json, String path) {
         return jsonbValue(json, Tools.field(path));
     }
@@ -23093,7 +23094,7 @@ public class DSL {
      * The JSON value extractor function.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONValueOnStep<JSONB> jsonbValue(Field<JSONB> json, Field<String> path) {
         return new JSONValue<>(SQLDataType.JSONB, json, path, null);
     }
@@ -23105,7 +23106,7 @@ public class DSL {
      * This is the same as calling {@link #jsonEntry(String, Field)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONEntryValueStep key(String key) {
         return key(Tools.field(key));
     }
@@ -23117,7 +23118,7 @@ public class DSL {
      * This is the same as calling {@link #jsonEntry(Field, Field)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONEntryValueStep key(Field<String> key) {
         return new JSONEntryImpl<>(key);
     }
@@ -23130,7 +23131,7 @@ public class DSL {
      * {@link Field#getName()} as a key.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> JSONEntry<T> jsonEntry(Field<T> value) {
         return jsonEntry(value.getName(), value);
     }
@@ -23140,7 +23141,7 @@ public class DSL {
      * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> JSONEntry<T> jsonEntry(String key, T value) {
         return jsonEntry(Tools.field(key), Tools.field(value));
     }
@@ -23150,7 +23151,7 @@ public class DSL {
      * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> JSONEntry<T> jsonEntry(String key, Field<T> value) {
         return jsonEntry(Tools.field(key), value);
     }
@@ -23160,7 +23161,7 @@ public class DSL {
      * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> JSONEntry<T> jsonEntry(String key, Select<? extends Record1<T>> value) {
         return jsonEntry(Tools.field(key), field(value));
     }
@@ -23170,7 +23171,7 @@ public class DSL {
      * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> JSONEntry<T> jsonEntry(Field<String> key, T value) {
         return jsonEntry(key, Tools.field(value));
     }
@@ -23180,7 +23181,7 @@ public class DSL {
      * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> JSONEntry<T> jsonEntry(Field<String> key, Field<T> value) {
         return new JSONEntryImpl<>(key, value);
     }
@@ -23190,7 +23191,7 @@ public class DSL {
      * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> JSONEntry<T> jsonEntry(Field<String> key, Select<? extends Record1<T>> value) {
         return jsonEntry(key, field(value));
     }
@@ -23199,7 +23200,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectNullStep<JSON> jsonObject(String key, Field<?> value) {
         return jsonObject(jsonEntry(key, value));
     }
@@ -23208,7 +23209,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectNullStep<JSON> jsonObject(Field<String> key, Field<?> value) {
         return jsonObject(jsonEntry(key, value));
     }
@@ -23217,7 +23218,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectNullStep<JSON> jsonObject(Field<String> key, Select<? extends Record1<?>> value) {
         return jsonObject(jsonEntry(key, value));
     }
@@ -23226,7 +23227,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectNullStep<JSON> jsonObject() {
         return jsonObject(Tools.EMPTY_JSONENTRY);
     }
@@ -23235,7 +23236,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectNullStep<JSONB> jsonbObject() {
         return jsonbObject(Tools.EMPTY_JSONENTRY);
     }
@@ -23244,7 +23245,7 @@ public class DSL {
      * The JSON array aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONArrayAggOrderByStep<JSON> jsonArrayAgg(Field<?> value) {
         return new JSONArrayAgg<>(JSON, value);
     }
@@ -23253,7 +23254,7 @@ public class DSL {
      * The JSON array aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONArrayAggOrderByStep<JSONB> jsonbArrayAgg(Field<?> value) {
         return new JSONArrayAgg<>(JSONB, value);
     }
@@ -23265,7 +23266,7 @@ public class DSL {
      * {@link Field#getName()} as a key.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectAggNullStep<JSON> jsonObjectAgg(Field<?> value) {
         return jsonObjectAgg(jsonEntry(value));
     }
@@ -23274,7 +23275,7 @@ public class DSL {
      * The JSON object aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectAggNullStep<JSON> jsonObjectAgg(String key, Field<?> value) {
         return jsonObjectAgg(Tools.field(key), value);
     }
@@ -23283,7 +23284,7 @@ public class DSL {
      * The JSON object aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectAggNullStep<JSON> jsonObjectAgg(Field<String> key, Field<?> value) {
         return jsonObjectAgg(jsonEntry(key, value));
     }
@@ -23292,7 +23293,7 @@ public class DSL {
      * The JSON object aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectAggNullStep<JSON> jsonObjectAgg(JSONEntry<?> entry) {
         return new JSONObjectAgg<>(JSON, entry);
     }
@@ -23304,7 +23305,7 @@ public class DSL {
      * {@link Field#getName()} as a key.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(Field<?> field) {
         return jsonbObjectAgg(jsonEntry(field));
     }
@@ -23313,7 +23314,7 @@ public class DSL {
      * The JSONB object aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(String key, Field<?> value) {
         return jsonbObjectAgg(Tools.field(key), value);
     }
@@ -23322,7 +23323,7 @@ public class DSL {
      * The JSONB object aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(Field<String> key, Field<?> value) {
         return jsonbObjectAgg(jsonEntry(key, value));
     }
@@ -23331,7 +23332,7 @@ public class DSL {
      * The JSONB object aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(JSONEntry<?> entry) {
         return new JSONObjectAgg<>(JSONB, entry);
     }
@@ -23349,7 +23350,7 @@ public class DSL {
      * The JSON exists predicate.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONExistsOnStep jsonExists(Field<JSON> field, Field<String> path) {
         return new JSONExists(field, Tools.nullSafe(path));
     }
@@ -23358,7 +23359,7 @@ public class DSL {
      * The JSONB exists predicate.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONExistsOnStep jsonbExists(Field<JSONB> field, String path) {
         return jsonbExists(field, Tools.field(path));
     }
@@ -23367,7 +23368,7 @@ public class DSL {
      * The JSONB exists predicate.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONExistsOnStep jsonbExists(Field<JSONB> field, Field<String> path) {
         return new JSONExists(field, Tools.nullSafe(path));
     }
@@ -23376,7 +23377,7 @@ public class DSL {
      * The JSON table function.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static JSONTableColumnsFirstStep jsonTable(JSON json, String path) {
         return jsonTable(Tools.field(json), Tools.field(path));
     }
@@ -23385,7 +23386,7 @@ public class DSL {
      * The JSON table function.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static JSONTableColumnsFirstStep jsonTable(Field<JSON> json, Field<String> path) {
         return new JSONTable(Tools.nullSafe(json), Tools.nullSafe(path));
     }
@@ -23394,7 +23395,7 @@ public class DSL {
      * The JSON table function.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static JSONTableColumnsFirstStep jsonbTable(JSONB json, String path) {
         return jsonbTable(Tools.field(json), Tools.field(path));
     }
@@ -23403,7 +23404,7 @@ public class DSL {
      * The JSON table function.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static JSONTableColumnsFirstStep jsonbTable(Field<JSONB> json, Field<String> path) {
         return new JSONTable(Tools.nullSafe(json), Tools.nullSafe(path));
     }
@@ -23435,7 +23436,7 @@ public class DSL {
      * </table>
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> Field<T[]> array(T... values) {
         return array(Tools.fields(values));
     }
@@ -23464,7 +23465,7 @@ public class DSL {
      */
     @SafeVarargs
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> Field<T[]> array(Field<T>... fields) {
         return array(Arrays.asList(fields));
     }
@@ -23492,7 +23493,7 @@ public class DSL {
      * </table>
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> Field<T[]> array(Collection<? extends Field<T>> fields) {
         return new Array<>(fields);
     }
@@ -23505,7 +23506,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> Field<T[]> array(Select<? extends Record1<T>> select) {
         return new ArraySelect<>(select);
     }
@@ -23514,7 +23515,7 @@ public class DSL {
      * Calculate the cardinality of an array field.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static Field<Integer> cardinality(Field<? extends Object[]> field) {
         return new Cardinality(field);
     }
@@ -23523,7 +23524,7 @@ public class DSL {
      * Get an array element at a given index (1 based)
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> Field<T> arrayGet(Field<T[]> field, int index) {
         return arrayGet(field, Tools.field(index));
     }
@@ -23532,7 +23533,7 @@ public class DSL {
      * Get an array element at a given index (1 based)
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> Field<T> arrayGet(Field<T[]> field, Field<Integer> index) {
         return new ArrayGet<>(Tools.nullSafe(field), Tools.nullSafe(index));
     }
@@ -23594,7 +23595,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <R extends Record> Field<Result<R>> multiset(Select<R> select) {
         return new Multiset<>(select);
     }
@@ -23667,7 +23668,7 @@ public class DSL {
      * Get the count(distinct field) function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static AggregateFunction<Integer> countDistinct(SelectFieldOrAsterisk field) {
         return new DefaultAggregateFunction<>(true, N_COUNT, SQLDataType.INTEGER, field("{0}", field));
     }
@@ -23680,7 +23681,7 @@ public class DSL {
      * {@link #count(Field)}, instead.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static AggregateFunction<Integer> countDistinct(Table<?> table) {
         return new CountTable(table, true);
     }
@@ -23763,7 +23764,7 @@ public class DSL {
      * Get the <code>array_agg()</code> aggregate function.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> ArrayAggOrderByStep<T[]> arrayAgg(Field<T> field) {
         return new ArrayAgg(false, Tools.nullSafe(field));
     }
@@ -23772,7 +23773,7 @@ public class DSL {
      * Get the <code>array_agg()</code> aggregate function.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> ArrayAggOrderByStep<T[]> arrayAggDistinct(Field<T> field) {
         return new ArrayAgg(true, Tools.nullSafe(field));
     }
@@ -23821,7 +23822,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static ArrayAggOrderByStep<Result<Record>> multisetAgg(Collection<? extends Field<?>> fields) {
         return new MultisetAgg<>(false, row(fields));
     }
@@ -23870,7 +23871,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static ArrayAggOrderByStep<Result<Record>> multisetAgg(Field<?>... fields) {
         return new MultisetAgg<>(false, row(fields));
     }
@@ -23921,7 +23922,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1> ArrayAggOrderByStep<Result<Record1<T1>>> multisetAgg(SelectField<T1> field1) {
         return new MultisetAgg<>(false, row(field1));
     }
@@ -23970,7 +23971,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2> ArrayAggOrderByStep<Result<Record2<T1, T2>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2) {
         return new MultisetAgg<>(false, row(field1, field2));
     }
@@ -24019,7 +24020,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3> ArrayAggOrderByStep<Result<Record3<T1, T2, T3>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3) {
         return new MultisetAgg<>(false, row(field1, field2, field3));
     }
@@ -24068,7 +24069,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4> ArrayAggOrderByStep<Result<Record4<T1, T2, T3, T4>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4));
     }
@@ -24117,7 +24118,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4, T5> ArrayAggOrderByStep<Result<Record5<T1, T2, T3, T4, T5>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5));
     }
@@ -24166,7 +24167,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4, T5, T6> ArrayAggOrderByStep<Result<Record6<T1, T2, T3, T4, T5, T6>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6));
     }
@@ -24215,7 +24216,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4, T5, T6, T7> ArrayAggOrderByStep<Result<Record7<T1, T2, T3, T4, T5, T6, T7>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7));
     }
@@ -24264,7 +24265,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4, T5, T6, T7, T8> ArrayAggOrderByStep<Result<Record8<T1, T2, T3, T4, T5, T6, T7, T8>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8));
     }
@@ -24313,7 +24314,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> ArrayAggOrderByStep<Result<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9));
     }
@@ -24362,7 +24363,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> ArrayAggOrderByStep<Result<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10));
     }
@@ -24411,7 +24412,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> ArrayAggOrderByStep<Result<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11));
     }
@@ -24460,7 +24461,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> ArrayAggOrderByStep<Result<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12));
     }
@@ -24509,7 +24510,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> ArrayAggOrderByStep<Result<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13));
     }
@@ -24558,7 +24559,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> ArrayAggOrderByStep<Result<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14));
     }
@@ -24607,7 +24608,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> ArrayAggOrderByStep<Result<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15));
     }
@@ -24656,7 +24657,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> ArrayAggOrderByStep<Result<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16));
     }
@@ -24705,7 +24706,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> ArrayAggOrderByStep<Result<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17));
     }
@@ -24754,7 +24755,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> ArrayAggOrderByStep<Result<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18));
     }
@@ -24803,7 +24804,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> ArrayAggOrderByStep<Result<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19));
     }
@@ -24852,7 +24853,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> ArrayAggOrderByStep<Result<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20));
     }
@@ -24901,7 +24902,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> ArrayAggOrderByStep<Result<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21));
     }
@@ -24950,7 +24951,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> ArrayAggOrderByStep<Result<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
     }
@@ -25089,7 +25090,7 @@ public class DSL {
      * "https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql</a>.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static AggregateFunction<BigDecimal> product(Field<? extends Number> field) {
         return new Product(false, Tools.nullSafe(field));
     }
@@ -25108,7 +25109,7 @@ public class DSL {
      * "https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql</a>.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static AggregateFunction<BigDecimal> productDistinct(Field<? extends Number> field) {
         return new Product(true, Tools.nullSafe(field));
     }
@@ -25281,7 +25282,7 @@ public class DSL {
      * aggregate function.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static OrderedAggregateFunctionOfDeferredType mode() {
         return new ModeDeferred();
     }
@@ -25291,7 +25292,7 @@ public class DSL {
      * ordered-set aggregate function.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static OrderedAggregateFunction<Integer> rank(Field<?>... fields) {
         return new DefaultAggregateFunction<>(N_RANK, SQLDataType.INTEGER, fields);
     }
@@ -25301,7 +25302,7 @@ public class DSL {
      * ordered-set aggregate function.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static OrderedAggregateFunction<Integer> rank(Collection<? extends Field<?>> fields) {
         return new DefaultAggregateFunction<>(N_RANK, SQLDataType.INTEGER, fields.toArray(EMPTY_FIELD));
     }
@@ -25311,7 +25312,7 @@ public class DSL {
      * ordered-set aggregate function.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static OrderedAggregateFunction<Integer> denseRank(Field<?>... fields) {
         return new DefaultAggregateFunction<>(N_DENSE_RANK, SQLDataType.INTEGER, fields);
     }
@@ -25321,7 +25322,7 @@ public class DSL {
      * ordered-set aggregate function.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static OrderedAggregateFunction<Integer> denseRank(Collection<? extends Field<?>> fields) {
         return new DefaultAggregateFunction<>(N_DENSE_RANK, SQLDataType.INTEGER, fields.toArray(EMPTY_FIELD));
     }
@@ -25331,7 +25332,7 @@ public class DSL {
      * ordered-set aggregate function.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static OrderedAggregateFunction<Integer> percentRank(Field<?>... fields) {
         return new DefaultAggregateFunction<>(N_PERCENT_RANK, SQLDataType.INTEGER, fields);
     }
@@ -25341,7 +25342,7 @@ public class DSL {
      * ordered-set aggregate function.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static OrderedAggregateFunction<Integer> percentRank(Collection<? extends Field<?>> fields) {
         return new DefaultAggregateFunction<>(N_PERCENT_RANK, SQLDataType.INTEGER, fields.toArray(EMPTY_FIELD));
     }
@@ -25351,7 +25352,7 @@ public class DSL {
      * ordered-set aggregate function.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static OrderedAggregateFunction<BigDecimal> cumeDist(Field<?>... fields) {
         return new DefaultAggregateFunction<>(N_CUME_DIST, SQLDataType.NUMERIC, fields);
     }
@@ -25361,7 +25362,7 @@ public class DSL {
      * ordered-set aggregate function.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static OrderedAggregateFunction<BigDecimal> cumeDist(Collection<? extends Field<?>> fields) {
         return new DefaultAggregateFunction<>(N_CUME_DIST, SQLDataType.NUMERIC, fields.toArray(EMPTY_FIELD));
     }
@@ -25376,7 +25377,7 @@ public class DSL {
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static OrderedAggregateFunction<BigDecimal> percentileCont(Number number) {
         return percentileCont(val(number));
     }
@@ -25391,7 +25392,7 @@ public class DSL {
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static OrderedAggregateFunction<BigDecimal> percentileCont(Field<? extends Number> field) {
         return new DefaultAggregateFunction<>(N_PERCENTILE_CONT, SQLDataType.NUMERIC, Tools.nullSafe(field));
     }
@@ -25406,7 +25407,7 @@ public class DSL {
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static OrderedAggregateFunction<BigDecimal> percentileDisc(Number number) {
         return percentileDisc(val(number));
     }
@@ -25421,7 +25422,7 @@ public class DSL {
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ H2, POSTGRES, YUGABYTE })
     public static OrderedAggregateFunction<BigDecimal> percentileDisc(Field<? extends Number> field) {
         return new DefaultAggregateFunction<>(N_PERCENTILE_DISC, SQLDataType.NUMERIC, Tools.nullSafe(field));
     }
@@ -25434,7 +25435,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>PARTITION BY</code> clause.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationOrderByStep partitionBy(Field<?>... fields) {
         return new WindowSpecificationImpl().partitionBy(fields);
     }
@@ -25443,7 +25444,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>PARTITION BY</code> clause.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationOrderByStep partitionBy(Collection<? extends Field<?>> fields) {
         return new WindowSpecificationImpl().partitionBy(fields);
     }
@@ -25452,7 +25453,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationRowsStep orderBy(Field<?>... fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
@@ -25461,7 +25462,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationRowsStep orderBy(OrderField<?>... fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
@@ -25470,7 +25471,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationRowsStep orderBy(Collection<? extends OrderField<?>> fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
@@ -25479,7 +25480,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationExcludeStep rowsUnboundedPreceding() {
         return new WindowSpecificationImpl().rowsUnboundedPreceding();
     }
@@ -25488,7 +25489,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationExcludeStep rowsPreceding(int number) {
         return new WindowSpecificationImpl().rowsPreceding(number);
     }
@@ -25497,7 +25498,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationExcludeStep rowsCurrentRow() {
         return new WindowSpecificationImpl().rowsCurrentRow();
     }
@@ -25506,7 +25507,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationExcludeStep rowsUnboundedFollowing() {
         return new WindowSpecificationImpl().rowsUnboundedFollowing();
     }
@@ -25515,7 +25516,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationExcludeStep rowsFollowing(int number) {
         return new WindowSpecificationImpl().rowsFollowing(number);
     }
@@ -25524,7 +25525,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationRowsAndStep rowsBetweenUnboundedPreceding() {
         return new WindowSpecificationImpl().rowsBetweenUnboundedPreceding();
     }
@@ -25533,7 +25534,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationRowsAndStep rowsBetweenPreceding(int number) {
         return new WindowSpecificationImpl().rowsBetweenPreceding(number);
     }
@@ -25542,7 +25543,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationRowsAndStep rowsBetweenCurrentRow() {
         return new WindowSpecificationImpl().rowsBetweenCurrentRow();
     }
@@ -25551,7 +25552,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationRowsAndStep rowsBetweenUnboundedFollowing() {
         return new WindowSpecificationImpl().rowsBetweenUnboundedFollowing();
     }
@@ -25560,7 +25561,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationRowsAndStep rowsBetweenFollowing(int number) {
         return new WindowSpecificationImpl().rowsBetweenFollowing(number);
     }
@@ -25569,7 +25570,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationExcludeStep rangeUnboundedPreceding() {
         return new WindowSpecificationImpl().rangeUnboundedPreceding();
     }
@@ -25578,7 +25579,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationExcludeStep rangePreceding(int number) {
         return new WindowSpecificationImpl().rangePreceding(number);
     }
@@ -25587,7 +25588,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationExcludeStep rangeCurrentRow() {
         return new WindowSpecificationImpl().rangeCurrentRow();
     }
@@ -25596,7 +25597,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationExcludeStep rangeUnboundedFollowing() {
         return new WindowSpecificationImpl().rangeUnboundedFollowing();
     }
@@ -25605,7 +25606,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationExcludeStep rangeFollowing(int number) {
         return new WindowSpecificationImpl().rangeFollowing(number);
     }
@@ -25614,7 +25615,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationRowsAndStep rangeBetweenUnboundedPreceding() {
         return new WindowSpecificationImpl().rangeBetweenUnboundedPreceding();
     }
@@ -25623,7 +25624,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationRowsAndStep rangeBetweenPreceding(int number) {
         return new WindowSpecificationImpl().rangeBetweenPreceding(number);
     }
@@ -25632,7 +25633,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationRowsAndStep rangeBetweenCurrentRow() {
         return new WindowSpecificationImpl().rangeBetweenCurrentRow();
     }
@@ -25641,7 +25642,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationRowsAndStep rangeBetweenUnboundedFollowing() {
         return new WindowSpecificationImpl().rangeBetweenUnboundedFollowing();
     }
@@ -25650,7 +25651,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationRowsAndStep rangeBetweenFollowing(int number) {
         return new WindowSpecificationImpl().rangeBetweenFollowing(number);
     }
@@ -25659,7 +25660,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationExcludeStep groupsUnboundedPreceding() {
         return new WindowSpecificationImpl().groupsUnboundedPreceding();
     }
@@ -25668,7 +25669,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationExcludeStep groupsPreceding(int number) {
         return new WindowSpecificationImpl().groupsPreceding(number);
     }
@@ -25677,7 +25678,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationExcludeStep groupsCurrentRow() {
         return new WindowSpecificationImpl().groupsCurrentRow();
     }
@@ -25686,7 +25687,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationExcludeStep groupsUnboundedFollowing() {
         return new WindowSpecificationImpl().groupsUnboundedFollowing();
     }
@@ -25695,7 +25696,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationExcludeStep groupsFollowing(int number) {
         return new WindowSpecificationImpl().groupsFollowing(number);
     }
@@ -25704,7 +25705,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationRowsAndStep groupsBetweenUnboundedPreceding() {
         return new WindowSpecificationImpl().groupsBetweenUnboundedPreceding();
     }
@@ -25713,7 +25714,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationRowsAndStep groupsBetweenPreceding(int number) {
         return new WindowSpecificationImpl().groupsBetweenPreceding(number);
     }
@@ -25722,7 +25723,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationRowsAndStep groupsBetweenCurrentRow() {
         return new WindowSpecificationImpl().groupsBetweenCurrentRow();
     }
@@ -25731,7 +25732,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationRowsAndStep groupsBetweenUnboundedFollowing() {
         return new WindowSpecificationImpl().groupsBetweenUnboundedFollowing();
     }
@@ -25740,7 +25741,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
     public static WindowSpecificationRowsAndStep groupsBetweenFollowing(int number) {
         return new WindowSpecificationImpl().groupsBetweenFollowing(number);
     }
@@ -25759,7 +25760,7 @@ public class DSL {
      * <code>ROWNUM()</code>
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowOverStep<Integer> rowNumber() {
         return new RowNumber();
     }
@@ -25768,7 +25769,7 @@ public class DSL {
      * The <code>rank() over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowOverStep<Integer> rank() {
         return new RankingFunction<>(RANK, INTEGER);
     }
@@ -25777,7 +25778,7 @@ public class DSL {
      * The <code>dense_rank() over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowOverStep<Integer> denseRank() {
         return new RankingFunction<>(DENSE_RANK, INTEGER);
     }
@@ -25786,7 +25787,7 @@ public class DSL {
      * The <code>precent_rank() over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowOverStep<BigDecimal> percentRank() {
         return new RankingFunction<>(PERCENT_RANK, NUMERIC);
     }
@@ -25795,7 +25796,7 @@ public class DSL {
      * The <code>cume_dist() over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowOverStep<BigDecimal> cumeDist() {
         return new RankingFunction<>(CUME_DIST, NUMERIC);
     }
@@ -25804,7 +25805,7 @@ public class DSL {
      * The <code>ntile([number]) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowOverStep<Integer> ntile(int number) {
         return new Ntile(inline(number));
     }
@@ -25813,7 +25814,7 @@ public class DSL {
      * The <code>ntile([number]) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowOverStep<Integer> ntile(Field<Integer> number) {
         return new Ntile(number);
     }
@@ -25822,7 +25823,7 @@ public class DSL {
      * The <code>ratio_to_report([expression]) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowOverStep<BigDecimal> ratioToReport(Number number) {
         return ratioToReport(Tools.field(number));
     }
@@ -25831,7 +25832,7 @@ public class DSL {
      * The <code>ratio_to_report([expression]) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowOverStep<BigDecimal> ratioToReport(Field<? extends Number> field) {
         return new RatioToReport(Tools.nullSafe(field));
     }
@@ -25840,7 +25841,7 @@ public class DSL {
      * The <code>first_value(field) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> firstValue(Field<T> field) {
         return new PositionalWindowFunction(FIRST_VALUE, Tools.nullSafe(field));
     }
@@ -25849,7 +25850,7 @@ public class DSL {
      * The <code>last_value(field) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lastValue(Field<T> field) {
         return new PositionalWindowFunction(LAST_VALUE, Tools.nullSafe(field));
     }
@@ -25858,7 +25859,7 @@ public class DSL {
      * The <code>nth_value(field) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowFromFirstLastStep<T> nthValue(Field<T> field, int nth) {
         return nthValue(field, val(nth));
     }
@@ -25867,7 +25868,7 @@ public class DSL {
      * The <code>nth_value(field) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowFromFirstLastStep<T> nthValue(Field<T> field, Field<Integer> nth) {
         return new PositionalWindowFunction(NTH_VALUE, Tools.nullSafe(field), Tools.nullSafe(nth), null);
     }
@@ -25876,7 +25877,7 @@ public class DSL {
      * The <code>lead(field) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field) {
         return new PositionalWindowFunction(LEAD, Tools.nullSafe(field));
     }
@@ -25885,7 +25886,7 @@ public class DSL {
      * The <code>lead(field, offset) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset) {
         return lead(field, inline(offset));
     }
@@ -25894,7 +25895,7 @@ public class DSL {
      * The <code>lead(field, offset) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, Field<Integer> offset) {
         return new PositionalWindowFunction(LEAD, Tools.nullSafe(field), Tools.nullSafe(offset), null);
     }
@@ -25905,7 +25906,7 @@ public class DSL {
      * function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, T defaultValue) {
         return lead(Tools.nullSafe(field), inline(offset), Tools.field(defaultValue, field));
     }
@@ -25916,7 +25917,7 @@ public class DSL {
      * function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, Field<T> defaultValue) {
         return lead(field, inline(offset), defaultValue);
     }
@@ -25927,7 +25928,7 @@ public class DSL {
      * function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, Field<Integer> offset, T defaultValue) {
         return lead(field, Tools.nullSafe(offset), Tools.field(defaultValue, field));
     }
@@ -25938,7 +25939,7 @@ public class DSL {
      * function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, Field<Integer> offset, Field<T> defaultValue) {
         return new PositionalWindowFunction(LEAD, Tools.nullSafe(field), Tools.nullSafe(offset), Tools.nullSafe(defaultValue));
     }
@@ -25947,7 +25948,7 @@ public class DSL {
      * The <code>lag(field) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field) {
         return new PositionalWindowFunction(LAG, Tools.nullSafe(field));
     }
@@ -25956,7 +25957,7 @@ public class DSL {
      * The <code>lag(field, offset) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset) {
         return lag(field, inline(offset));
     }
@@ -25965,7 +25966,7 @@ public class DSL {
      * The <code>lag(field, offset) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, Field<Integer> offset) {
         return new PositionalWindowFunction(LAG, Tools.nullSafe(field), Tools.nullSafe(offset), null);
     }
@@ -25976,7 +25977,7 @@ public class DSL {
      * function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, T defaultValue) {
         return lag(Tools.nullSafe(field), inline(offset), Tools.field(defaultValue, field));
     }
@@ -25987,7 +25988,7 @@ public class DSL {
      * function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, Field<T> defaultValue) {
         return lag(field, inline(offset), defaultValue);
     }
@@ -25998,7 +25999,7 @@ public class DSL {
      * function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, Field<Integer> offset, T defaultValue) {
         return lag(field, offset, Tools.field(defaultValue, field));
     }
@@ -26009,7 +26010,7 @@ public class DSL {
      * function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, Field<Integer> offset, Field<T> defaultValue) {
         return new PositionalWindowFunction(LAG, Tools.nullSafe(field), Tools.nullSafe(offset), Tools.nullSafe(defaultValue));
     }

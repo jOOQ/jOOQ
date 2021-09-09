@@ -139,6 +139,7 @@ implements
 
 
             case POSTGRES:
+            case YUGABYTE:
                 if (onNull == JSONOnNull.ABSENT_ON_NULL) {
                     Row1[] rows = map(fields, f -> row(f), Row1[]::new);
                     Table<?> t = values(rows).as("t", "a");

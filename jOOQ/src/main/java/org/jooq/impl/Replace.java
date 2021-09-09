@@ -148,6 +148,7 @@ extends
             case MYSQL:
             case POSTGRES:
             case SQLITE:
+            case YUGABYTE:
                 if (replace == null)
                     ctx.visit(function(N_REPLACE, VARCHAR, string, search, inline("")));
                 else

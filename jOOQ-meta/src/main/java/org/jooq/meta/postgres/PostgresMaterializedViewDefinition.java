@@ -135,27 +135,27 @@ public class PostgresMaterializedViewDefinition extends AbstractTableDefinition 
                     .and(a.ATTNUM.eq(ad.ADNUM))
                 .join(c
                     .join(nc)
-                        .on(c.RELNAMESPACE.eq(oid(nc))))
-                    .on(a.ATTRELID.eq(oid(c)))
+                        .on(c.RELNAMESPACE.eq(nc.OID)))
+                    .on(a.ATTRELID.eq(c.OID))
                 .join(t
                     .join(nt)
-                        .on(t.TYPNAMESPACE.eq(oid(nt))))
-                    .on(a.ATTTYPID.eq(oid(t))))
+                        .on(t.TYPNAMESPACE.eq(nt.OID)))
+                    .on(a.ATTTYPID.eq(t.OID)))
                 .leftJoin(bt
                     .join(nbt)
-                        .on(bt.TYPNAMESPACE.eq(oid(nbt))))
-                    .on(t.TYPTYPE.eq(inline("d")).and(t.TYPBASETYPE.eq(oid(bt))))
+                        .on(bt.TYPNAMESPACE.eq(nbt.OID)))
+                    .on(t.TYPTYPE.eq(inline("d")).and(t.TYPBASETYPE.eq(bt.OID)))
                 .leftJoin(co
                     .join(nco)
-                        .on(co.COLLNAMESPACE.eq(oid(nco))))
-                    .on(a.ATTCOLLATION.eq(oid(co)).and(
+                        .on(co.COLLNAMESPACE.eq(nco.OID)))
+                    .on(a.ATTCOLLATION.eq(co.OID).and(
                         nco.NSPNAME.ne(inline("pg_catalog")).or(co.COLLNAME.ne(inline("default")))
                     ))
                 .leftJoin(PG_DESCRIPTION)
-                    .on(PG_DESCRIPTION.OBJOID.eq(oid(c)))
+                    .on(PG_DESCRIPTION.OBJOID.eq(c.OID))
                     .and(PG_DESCRIPTION.OBJSUBID.eq(a.ATTNUM.coerce(PG_DESCRIPTION.OBJSUBID)))
             .where(
-                not(condition("pg_is_other_temp_schema({0})", oid(nc)))
+                not(condition("pg_is_other_temp_schema({0})", nc.OID))
                 .and(a.ATTNUM.gt(inline((short) 0)))
                 .and(not(a.ATTISDROPPED))
                 .and(c.RELKIND.eq(inline("m")))

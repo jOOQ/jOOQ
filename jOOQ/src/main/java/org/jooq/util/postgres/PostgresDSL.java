@@ -718,10 +718,15 @@ public class PostgresDSL extends DSL {
     }
 
     /**
-     * Get the PostgreSQL-specific <code>[table].oid</code> column from any table.
+     * Get the PostgreSQL-specific <code>[table].oid</code> column from any
+     * table.
+     *
+     * @deprecated - [#12420] - 3.16.0 - Use actual <code>OID</code> column
+     *             references in jOOQ-meta, instead.
      */
     @NotNull
     @Support({ POSTGRES })
+    @Deprecated(forRemoval = true, since = "3.16")
     public static Field<Long> oid(Table<?> table) {
         return field("{0}.oid", Long.class, table);
     }

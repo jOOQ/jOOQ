@@ -128,7 +128,7 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
             .join(p).on(row(r.SPECIFIC_CATALOG, r.SPECIFIC_SCHEMA, r.SPECIFIC_NAME)
                         .eq(p.SPECIFIC_CATALOG, p.SPECIFIC_SCHEMA, p.SPECIFIC_NAME))
             .join(pg_n).on(r.SPECIFIC_SCHEMA.eq(pg_n.NSPNAME))
-            .join(pg_p).on(pg_p.PRONAMESPACE.eq(oid(pg_n)))
+            .join(pg_p).on(pg_p.PRONAMESPACE.eq(pg_n.OID))
                        .and(pg_p.PRONAME.eq(r.ROUTINE_NAME))
             .where(r.SPECIFIC_NAME.eq(specificName))
             .and(p.PARAMETER_MODE.ne("IN"))
@@ -151,7 +151,7 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                 coalesce(c.COLUMN_DEFAULT            , inline((String) null)       ).as(c.COLUMN_DEFAULT),
                 coalesce(c.UDT_SCHEMA                , inline((String) null)       ).as(c.UDT_SCHEMA),
                 coalesce(c.UDT_NAME                  , r.UDT_NAME                  ,
-                         field(select(pg_t.TYPNAME).from(pg_t).where(oid(pg_t).eq(pg_p.PRORETTYPE)))
+                         field(select(pg_t.TYPNAME).from(pg_t).where(pg_t.OID.eq(pg_p.PRORETTYPE)))
                                                                                    ).as(c.UDT_NAME)
             )
             .from(r)
@@ -163,8 +163,8 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                 .on(row(r.TYPE_UDT_CATALOG, r.TYPE_UDT_SCHEMA, r.TYPE_UDT_NAME)
                     .eq(c.TABLE_CATALOG,    c.TABLE_SCHEMA,    c.TABLE_NAME))
             .join(pg_n).on(r.SPECIFIC_SCHEMA.eq(pg_n.NSPNAME))
-            .join(pg_p).on(pg_p.PRONAMESPACE.eq(oid(pg_n)))
-                       .and(pg_p.PRONAME.concat("_").concat(oid(pg_p)).eq(r.SPECIFIC_NAME))
+            .join(pg_p).on(pg_p.PRONAMESPACE.eq(pg_n.OID))
+                       .and(pg_p.PRONAME.concat("_").concat(pg_p.OID).eq(r.SPECIFIC_NAME))
             .where(r.SPECIFIC_NAME.eq(specificName))
 
             // [#4269] Exclude TABLE [ some type ] routines from the first UNION ALL subselect

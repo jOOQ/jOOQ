@@ -223,7 +223,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     field("{0}::int[]", Integer[].class, i.INDOPTION).as("asc_or_desc")
                 )
                 .from(i)
-                .join(trel).on(oid(trel).eq(i.INDRELID))
+                .join(trel).on(trel.OID.eq(i.INDRELID))
                 .where(trel.pgNamespace().NSPNAME.in(getInputSchemata()))
                 .and(getIncludeSystemIndexes()
                     ? noCondition()
@@ -492,9 +492,9 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                         .on(TABLES.TABLE_SCHEMA.eq(PG_NAMESPACE.NSPNAME))
                     .join(PG_CLASS)
                         .on(PG_CLASS.RELNAME.eq(TABLES.TABLE_NAME))
-                        .and(PG_CLASS.RELNAMESPACE.eq(oid(PG_NAMESPACE)))
+                        .and(PG_CLASS.RELNAMESPACE.eq(PG_NAMESPACE.OID))
                     .leftJoin(PG_DESCRIPTION)
-                        .on(PG_DESCRIPTION.OBJOID.eq(oid(PG_CLASS)))
+                        .on(PG_DESCRIPTION.OBJOID.eq(PG_CLASS.OID))
                         .and(PG_DESCRIPTION.OBJSUBID.eq(0))
                     .leftJoin(VIEWS)
                         .on(TABLES.TABLE_SCHEMA.eq(VIEWS.TABLE_SCHEMA))
@@ -510,7 +510,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                                 PG_CLASS.RELNAME)
                             .from(PG_CLASS)
                             .join(PG_NAMESPACE)
-                                .on(PG_CLASS.RELNAMESPACE.eq(oid(PG_NAMESPACE)))
+                                .on(PG_CLASS.RELNAMESPACE.eq(PG_NAMESPACE.OID))
                             .where(PG_CLASS.RELKIND.eq(inline("m"))))
                         : noCondition()
                     )
@@ -529,9 +529,9 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                         inline(""))
                     .from(PG_CLASS)
                     .join(PG_NAMESPACE)
-                        .on(PG_CLASS.RELNAMESPACE.eq(oid(PG_NAMESPACE)))
+                        .on(PG_CLASS.RELNAMESPACE.eq(PG_NAMESPACE.OID))
                     .leftOuterJoin(PG_DESCRIPTION)
-                        .on(PG_DESCRIPTION.OBJOID.eq(oid(PG_CLASS)))
+                        .on(PG_DESCRIPTION.OBJOID.eq(PG_CLASS.OID))
                         .and(PG_DESCRIPTION.OBJSUBID.eq(0))
                     .where(PG_NAMESPACE.NSPNAME.in(getInputSchemata()))
                     .and(PG_CLASS.RELKIND.eq(inline("m"))))
@@ -549,8 +549,8 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                             inline(""))
                         .from(ROUTINES)
                         .join(PG_NAMESPACE).on(ROUTINES.SPECIFIC_SCHEMA.eq(PG_NAMESPACE.NSPNAME))
-                        .join(PG_PROC).on(PG_PROC.PRONAMESPACE.eq(oid(PG_NAMESPACE)))
-                                      .and(PG_PROC.PRONAME.concat("_").concat(oid(PG_PROC)).eq(ROUTINES.SPECIFIC_NAME))
+                        .join(PG_PROC).on(PG_PROC.PRONAMESPACE.eq(PG_NAMESPACE.OID))
+                                      .and(PG_PROC.PRONAME.concat("_").concat(PG_PROC.OID).eq(ROUTINES.SPECIFIC_NAME))
                         .where(ROUTINES.ROUTINE_SCHEMA.in(getInputSchemata()))
                         .and(PG_PROC.PRORETSET)
 
@@ -601,10 +601,10 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                         max(i.INHSEQNO).over().partitionBy(i.INHRELID).as("m")
                     )
                     .from(ct)
-                    .join(cn).on(ct.RELNAMESPACE.eq(oid(cn)))
-                    .join(i).on(i.INHRELID.eq(oid(ct)))
-                    .join(pt).on(i.INHPARENT.eq(oid(pt)))
-                    .join(pn).on(pt.RELNAMESPACE.eq(oid(pn)))
+                    .join(cn).on(ct.RELNAMESPACE.eq(cn.OID))
+                    .join(i).on(i.INHRELID.eq(ct.OID))
+                    .join(pt).on(i.INHPARENT.eq(pt.OID))
+                    .join(pn).on(pt.RELNAMESPACE.eq(pn.OID))
                     .where(cn.NSPNAME.in(getInputSchemata()))
                     .and(pn.NSPNAME.in(getInputSchemata()))
                     .fetch()) {
@@ -769,7 +769,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                         PG_TYPE.TYPNAME)
                     .from(PG_TYPE)
                     .where(PG_TYPE.pgNamespace().NSPNAME.in(getInputSchemata()))
-                    .and(oid(PG_TYPE).in(select(PG_ENUM.ENUMTYPID).from(PG_ENUM)))
+                    .and(PG_TYPE.OID.in(select(PG_ENUM.ENUMTYPID).from(PG_ENUM)))
                     .orderBy(
                         PG_TYPE.pgNamespace().NSPNAME,
                         PG_TYPE.TYPNAME)
@@ -804,7 +804,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             PgType b = PG_TYPE.as("b");
 
             Field<String[]> src = field(name("domains", "src"), String[].class);
-            Field<String> constraintDef = field("pg_get_constraintdef({0})", VARCHAR, oid(c));
+            Field<String> constraintDef = field("pg_get_constraintdef({0})", VARCHAR, c.OID);
 
             for (Record record : create()
                     .withRecursive("domains",
@@ -815,22 +815,22 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     )
                     .as(
                          select(
-                             oid(d),
-                             oid(d),
+                             d.OID,
+                             d.OID,
                              d.TYPBASETYPE,
-                             when(oid(c).isNotNull(), array(constraintDef))
+                             when(c.OID.isNotNull(), array(constraintDef))
                          )
                         .from(d)
                         .join(n)
-                            .on(oid(n).eq(d.TYPNAMESPACE))
+                            .on(n.OID.eq(d.TYPNAMESPACE))
                         .leftJoin(c)
-                            .on(oid(d).eq(c.CONTYPID))
+                            .on(d.OID.eq(c.CONTYPID))
                         .where(d.TYPTYPE.eq("d"))
                         .and(n.NSPNAME.in(getInputSchemata()))
                     .unionAll(
                          select(
                              field(name("domains", "domain_id"), Long.class),
-                             oid(d),
+                             d.OID,
                              d.TYPBASETYPE,
                              decode()
                                  .when(c.CONBIN.isNull(), src)
@@ -838,9 +838,9 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                          )
                         .from(name("domains"))
                         .join(d)
-                            .on(field(name("domains", d.TYPBASETYPE.getName())).eq(oid(d)))
+                            .on(field(name("domains", d.TYPBASETYPE.getName())).eq(d.OID))
                         .leftJoin(c)
-                            .on(oid(d).eq(c.CONTYPID))
+                            .on(d.OID.eq(c.CONTYPID))
                     ))
                     .select(
                         n.NSPNAME,
@@ -857,11 +857,11 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     .from(d)
                     .join(name("domains"))
                         .on(field(name("domains", "typbasetype")).eq(0))
-                        .and(field(name("domains", "domain_id")).eq(oid(d)))
+                        .and(field(name("domains", "domain_id")).eq(d.OID))
                     .join(b)
-                        .on(field(name("domains", "base_id")).eq(oid(b)))
+                        .on(field(name("domains", "base_id")).eq(b.OID))
                     .join(n)
-                        .on(oid(n).eq(d.TYPNAMESPACE))
+                        .on(n.OID.eq(d.TYPNAMESPACE))
                     .where(d.TYPTYPE.eq("d"))
                     .and(n.NSPNAME.in(getInputSchemata()))
                     .orderBy(n.NSPNAME, d.TYPNAME)) {
@@ -980,7 +980,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     rowNumber().over(partitionBy(r1.ROUTINE_SCHEMA, r1.ROUTINE_NAME).orderBy(
 
                         // [#9754] To stabilise overload calculation, we use the type signature
-                        // replace(field("pg_get_function_arguments({0})", VARCHAR, oid(PG_PROC)), inline('"'), inline("")),
+                        // replace(field("pg_get_function_arguments({0})", VARCHAR, PG_PROC.OID), inline('"'), inline("")),
                         r1.SPECIFIC_NAME
                     ))
                 ).as("overload"),
@@ -990,10 +990,10 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
             // [#3375] Exclude table-valued functions as they're already generated as tables
             .join(PG_NAMESPACE).on(PG_NAMESPACE.NSPNAME.eq(r1.SPECIFIC_SCHEMA))
-            .join(PG_PROC).on(PG_PROC.PRONAMESPACE.eq(oid(PG_NAMESPACE)))
+            .join(PG_PROC).on(PG_PROC.PRONAMESPACE.eq(PG_NAMESPACE.OID))
                           .and(is12()
-                              ? condition("nameconcatoid({0}, {1}) = {2}", PG_PROC.PRONAME, oid(PG_PROC), r1.SPECIFIC_NAME)
-                              : PG_PROC.PRONAME.concat("_").concat(oid(PG_PROC)).eq(r1.SPECIFIC_NAME))
+                              ? condition("nameconcatoid({0}, {1}) = {2}", PG_PROC.PRONAME, PG_PROC.OID, r1.SPECIFIC_NAME)
+                              : PG_PROC.PRONAME.concat("_").concat(PG_PROC.OID).eq(r1.SPECIFIC_NAME))
             .where(r1.ROUTINE_SCHEMA.in(getInputSchemata()))
             .and(tableValuedFunctions()
                     ? condition(not(PG_PROC.PRORETSET))
@@ -1073,7 +1073,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
         // [#11325] nameconcatoid was added in PostgreSQL 12 only
         if (is12 == null)
-            is12 = configuredDialectIsNotFamilyAndSupports(asList(POSTGRES), () -> exists(table(select(field("nameconcatoid({0}, {1})", PG_PROC.PRONAME, oid(PG_PROC))).from(PG_PROC))));
+            is12 = configuredDialectIsNotFamilyAndSupports(asList(POSTGRES), () -> exists(table(select(field("nameconcatoid({0}, {1})", PG_PROC.PRONAME, PG_PROC.OID)).from(PG_PROC))));
 
         return is12;
     }

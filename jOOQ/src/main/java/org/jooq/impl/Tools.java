@@ -4555,6 +4555,7 @@ final class Tools {
 
 
             case POSTGRES:
+            case YUGABYTE:
                 if (increment(ctx.data(), DATA_BLOCK_NESTING))
                     ctx.visit(K_DO).sql(" $$").formatSeparator();
 
@@ -4586,6 +4587,7 @@ final class Tools {
 
 
             case POSTGRES:
+            case YUGABYTE:
                 ctx.formatIndentEnd().formatSeparator()
                    .visit(K_END);
 
@@ -4985,7 +4987,8 @@ final class Tools {
             }
 
 
-            case POSTGRES: {
+            case POSTGRES:
+            case YUGABYTE: {
                 begin(ctx, c -> {
                     String sqlstate;
 

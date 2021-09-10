@@ -7186,7 +7186,7 @@ public class DSL {
      * @see DSLContext#alterDatabaseIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static org.jooq.AlterDatabaseStep alterDatabaseIfExists(@Stringly.Name String database) {
         return dsl().alterDatabaseIfExists(database);
     }
@@ -7201,7 +7201,7 @@ public class DSL {
      * @see DSLContext#alterDatabaseIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static org.jooq.AlterDatabaseStep alterDatabaseIfExists(Name database) {
         return dsl().alterDatabaseIfExists(database);
     }
@@ -7216,7 +7216,7 @@ public class DSL {
      * @see DSLContext#alterDatabaseIfExists(Catalog)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static org.jooq.AlterDatabaseStep alterDatabaseIfExists(Catalog database) {
         return dsl().alterDatabaseIfExists(database);
     }
@@ -7276,7 +7276,7 @@ public class DSL {
      * @see DSLContext#alterDomainIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(@Stringly.Name String domain) {
         return dsl().alterDomainIfExists(domain);
     }
@@ -7291,7 +7291,7 @@ public class DSL {
      * @see DSLContext#alterDomainIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(Name domain) {
         return dsl().alterDomainIfExists(domain);
     }
@@ -7306,7 +7306,7 @@ public class DSL {
      * @see DSLContext#alterDomainIfExists(Domain)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(Domain<T> domain) {
         return dsl().alterDomainIfExists(domain);
     }
@@ -7891,7 +7891,7 @@ public class DSL {
      * @see DSLContext#createDatabaseIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL })
+    @Support({ MARIADB, MYSQL, YUGABYTE })
     public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(@Stringly.Name String database) {
         return dsl().createDatabaseIfNotExists(database);
     }
@@ -7906,7 +7906,7 @@ public class DSL {
      * @see DSLContext#createDatabaseIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL })
+    @Support({ MARIADB, MYSQL, YUGABYTE })
     public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(Name database) {
         return dsl().createDatabaseIfNotExists(database);
     }
@@ -7921,7 +7921,7 @@ public class DSL {
      * @see DSLContext#createDatabaseIfNotExists(Catalog)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL })
+    @Support({ MARIADB, MYSQL, YUGABYTE })
     public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database) {
         return dsl().createDatabaseIfNotExists(database);
     }
@@ -7981,7 +7981,7 @@ public class DSL {
      * @see DSLContext#createDomainIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES, YUGABYTE })
     public static org.jooq.CreateDomainAsStep createDomainIfNotExists(@Stringly.Name String domain) {
         return dsl().createDomainIfNotExists(domain);
     }
@@ -7996,7 +7996,7 @@ public class DSL {
      * @see DSLContext#createDomainIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES, YUGABYTE })
     public static org.jooq.CreateDomainAsStep createDomainIfNotExists(Name domain) {
         return dsl().createDomainIfNotExists(domain);
     }
@@ -8011,7 +8011,7 @@ public class DSL {
      * @see DSLContext#createDomainIfNotExists(Domain)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES, YUGABYTE })
     public static org.jooq.CreateDomainAsStep createDomainIfNotExists(Domain<?> domain) {
         return dsl().createDomainIfNotExists(domain);
     }

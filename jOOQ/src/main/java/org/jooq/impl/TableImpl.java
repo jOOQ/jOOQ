@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.impl.DefaultMetaProvider.meta;
 import static org.jooq.impl.Internal.createPathAlias;
 import static org.jooq.impl.Keywords.K_TABLE;
@@ -91,7 +92,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> implements Sco
 
     private static final Clause[]        CLAUSES_TABLE_REFERENCE           = { TABLE, TABLE_REFERENCE };
     private static final Clause[]        CLAUSES_TABLE_ALIAS               = { TABLE, TABLE_ALIAS };
-    private static final Set<SQLDialect> NO_SUPPORT_QUALIFIED_TVF_CALLS    = SQLDialect.supportedBy(HSQLDB, POSTGRES);
+    private static final Set<SQLDialect> NO_SUPPORT_QUALIFIED_TVF_CALLS    = SQLDialect.supportedBy(HSQLDB, POSTGRES, YUGABYTE);
     private static final Set<SQLDialect> REQUIRES_TVF_TABLE_CONSTRUCTOR    = SQLDialect.supportedBy(HSQLDB);
 
 

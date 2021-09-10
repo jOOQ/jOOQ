@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
 import static org.jooq.impl.DSL.field;
@@ -167,6 +168,8 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
+    private static final Set<SQLDialect>      REQUIRE_SELECT_FROM                = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect>      REQUIRE_DISAMBIGUATE_OVERLOADS     = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
     // ------------------------------------------------------------------------
     // Meta-data attributes (the same for every call)
@@ -354,7 +357,8 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
     @Override
     public final int execute() {
-        SQLDialect family = configurationOrThrow(this).family();
+        Configuration config = configurationOrThrow(this);
+        SQLDialect family = config.family();
 
         results.clear();
         outValues.clear();
@@ -362,7 +366,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         // [#4254] In PostgreSQL, there are only functions, no procedures. Some
         // functions cannot be called using a CallableStatement, e.g. those with
         // DEFAULT parameters
-        if ( family == POSTGRES) {
+        if (REQUIRE_SELECT_FROM.contains(config.dialect())) {
             return executeSelectFromPOSTGRES();
         }
 
@@ -2109,7 +2113,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
                     continue;
 
                 // Disambiguate overloaded function signatures
-                if ( family == POSTGRES)
+                if (REQUIRE_DISAMBIGUATE_OVERLOADS.contains(ctx.dialect()))
 
                     // [#4920] In case there are any unnamed parameters, we mustn't
                     if (hasUnnamedParameters())

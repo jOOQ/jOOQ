@@ -9179,7 +9179,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterDatabaseIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     AlterDatabaseStep alterDatabaseIfExists(@Stringly.Name String database);
 
     /**
@@ -9188,7 +9188,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterDatabaseIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     AlterDatabaseStep alterDatabaseIfExists(Name database);
 
     /**
@@ -9197,7 +9197,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterDatabaseIfExists(Catalog)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     AlterDatabaseStep alterDatabaseIfExists(Catalog database);
 
     /**
@@ -9233,7 +9233,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterDomainIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     <T> AlterDomainStep<T> alterDomainIfExists(@Stringly.Name String domain);
 
     /**
@@ -9242,7 +9242,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterDomainIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     <T> AlterDomainStep<T> alterDomainIfExists(Name domain);
 
     /**
@@ -9251,7 +9251,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterDomainIfExists(Domain)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTE })
     <T> AlterDomainStep<T> alterDomainIfExists(Domain<T> domain);
 
     /**
@@ -9602,7 +9602,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createDatabaseIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL })
+    @Support({ MARIADB, MYSQL, YUGABYTE })
     CreateDatabaseFinalStep createDatabaseIfNotExists(@Stringly.Name String database);
 
     /**
@@ -9611,7 +9611,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createDatabaseIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL })
+    @Support({ MARIADB, MYSQL, YUGABYTE })
     CreateDatabaseFinalStep createDatabaseIfNotExists(Name database);
 
     /**
@@ -9620,7 +9620,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createDatabaseIfNotExists(Catalog)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL })
+    @Support({ MARIADB, MYSQL, YUGABYTE })
     CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database);
 
     /**
@@ -9656,7 +9656,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createDomainIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES, YUGABYTE })
     CreateDomainAsStep createDomainIfNotExists(@Stringly.Name String domain);
 
     /**
@@ -9665,7 +9665,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createDomainIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES, YUGABYTE })
     CreateDomainAsStep createDomainIfNotExists(Name domain);
 
     /**
@@ -9674,7 +9674,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createDomainIfNotExists(Domain)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES, YUGABYTE })
     CreateDomainAsStep createDomainIfNotExists(Domain<?> domain);
 
 

@@ -145,8 +145,9 @@ implements
 
 
 
-    private static final Clause[]        CLAUSES           = { Clause.ALTER_VIEW };
-    private static final Set<SQLDialect> SUPPORT_IF_EXISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Clause[]        CLAUSES                    = { Clause.ALTER_VIEW };
+    private static final Set<SQLDialect> SUPPORT_IF_EXISTS          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect> SUPPORT_ALTER_TABLE_RENAME = SQLDialect.supportedBy(HSQLDB, YUGABYTE);
 
     private final boolean supportsIfExists(Context<?> ctx) {
         return !SUPPORT_IF_EXISTS.contains(ctx.dialect());
@@ -239,7 +240,7 @@ implements
     private final void accept1(Context<?> ctx) {
         ctx.start(Clause.ALTER_VIEW_VIEW)
            .visit(K_ALTER).sql(' ')
-           .visit(ctx.family() == HSQLDB ? K_TABLE : K_VIEW);
+           .visit(SUPPORT_ALTER_TABLE_RENAME.contains(ctx.dialect()) ? K_TABLE : K_VIEW);
 
         if (alterViewIfExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);

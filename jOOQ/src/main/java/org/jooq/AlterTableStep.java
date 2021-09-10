@@ -738,7 +738,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, YUGABYTE })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL })
     AlterTableDropStep dropPrimaryKey();
 
     /**
@@ -752,7 +752,7 @@ public interface AlterTableStep {
      * {@link #dropConstraint(Constraint)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropPrimaryKey(Constraint constraint);
 
     /**
@@ -768,7 +768,7 @@ public interface AlterTableStep {
      * @see DSL#constraint(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropPrimaryKey(Name constraint);
 
     /**
@@ -784,7 +784,7 @@ public interface AlterTableStep {
      * @see DSL#constraint(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropPrimaryKey(String constraint);
 
     /**

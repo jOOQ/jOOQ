@@ -39,6 +39,7 @@ package org.jooq.util.postgres;
 
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.YUGABYTE;
 
 import org.jooq.Condition;
 import org.jooq.Field;
@@ -75,7 +76,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Condition arrayOverlap(T[] left, T[] right) {
         return arrayOverlap(val(left), val(right));
     }
@@ -88,7 +89,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Condition arrayOverlap(T[] left, Field<T[]> right) {
         return arrayOverlap(val(left), right);
     }
@@ -101,7 +102,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Condition arrayOverlap(Field<T[]> left, T[] right) {
         return arrayOverlap(left, val(right));
     }
@@ -114,7 +115,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Condition arrayOverlap(Field<T[]> left, Field<T[]> right) {
         return DSL.condition("{0} && {1}", left, right);
     }
@@ -127,7 +128,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayAppend(T[] array, T value) {
         return arrayAppend0(val(array), val(value));
     }
@@ -140,7 +141,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayAppend(T[] array, Field<T> value) {
         return arrayAppend0(val(array), value);
     }
@@ -153,7 +154,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayAppend(Field<T[]> array, T value) {
         return arrayAppend0(array, val(value));
     }
@@ -166,7 +167,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayAppend(Field<T[]> array, Field<T> value) {
         return arrayAppend0(array, value);
     }
@@ -185,7 +186,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayPrepend(T value, T[] array) {
         return arrayPrepend0(val(value), val(array));
     }
@@ -198,7 +199,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayPrepend(Field<T> value, T[] array) {
         return arrayPrepend0(value, val(array));
     }
@@ -211,7 +212,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayPrepend(T value, Field<T[]> array) {
         return arrayPrepend0(val(value), array);
     }
@@ -224,7 +225,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayPrepend(Field<T> value, Field<T[]> array) {
         return arrayPrepend0(value, array);
     }
@@ -243,7 +244,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayCat(T[] array1, T[] array2) {
         return arrayCat(val(array1), val(array2));
     }
@@ -256,7 +257,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayCat(T[] array1, Field<T[]> array2) {
         return arrayCat(val(array1), array2);
     }
@@ -269,7 +270,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayCat(Field<T[]> array1, T[] array2) {
         return arrayCat(array1, val(array2));
     }
@@ -282,7 +283,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayCat(Field<T[]> array1, Field<T[]> array2) {
         return function("array_cat", nullSafeDataType(array1), array1, array2);
     }
@@ -295,7 +296,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayRemove(T[] array, T element) {
         return arrayRemove0(val(array), val(element));
     }
@@ -308,7 +309,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayRemove(Field<T[]> array, T element) {
         return arrayRemove0(nullSafe(array), val(element));
     }
@@ -321,7 +322,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayRemove(T[] array, Field<T> element) {
         return arrayRemove0(val(array), element);
     }
@@ -334,7 +335,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayRemove(Field<T[]> array, Field<T> element) {
         return arrayRemove0(array, element);
     }
@@ -354,7 +355,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayReplace(T[] array, T search, T replace) {
         return arrayReplace0(val(array), val(search), val(replace));
     }
@@ -368,7 +369,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayReplace(T[] array, Field<T> search, Field<T> replace) {
         return arrayReplace0(val(array), search, replace);
     }
@@ -382,7 +383,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayReplace(Field<T[]> array, T search, T replace) {
         return arrayReplace0(nullSafe(array), val(search), val(replace));
     }
@@ -396,7 +397,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayReplace(Field<T[]> array, Field<T> search, Field<T> replace) {
         return arrayReplace0(array, search, replace);
     }
@@ -415,7 +416,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayFill(T value, Integer[] dimensions) {
         return arrayFill(val(value), val(dimensions));
     }
@@ -428,7 +429,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayFill(Field<T> value, Integer[] dimensions) {
         return arrayFill(nullSafe(value), val(dimensions));
     }
@@ -441,7 +442,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayFill(T value, Field<Integer[]> dimensions) {
         return arrayFill(val(value), dimensions);
     }
@@ -454,7 +455,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayFill(Field<T> value, Field<Integer[]> dimensions) {
         return function("array_fill", nullSafeDataType(value).getArrayDataType(), value, dimensions);
     }
@@ -467,7 +468,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayFill(T value, Integer[] dimensions, Integer[] bounds) {
         return arrayFill(val(value), val(dimensions), val(bounds));
     }
@@ -480,7 +481,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayFill(Field<T> value, Integer[] dimensions, Integer[] bounds) {
         return arrayFill(nullSafe(value), val(dimensions), val(bounds));
     }
@@ -493,7 +494,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayFill(T value, Field<Integer[]> dimensions, Field<Integer[]> bounds) {
         return arrayFill(val(value), dimensions, bounds);
     }
@@ -506,7 +507,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static <T> Field<T[]> arrayFill(Field<T> value, Field<Integer[]> dimensions, Field<Integer[]> bounds) {
         return function("array_fill", nullSafeDataType(value).getArrayDataType(), value, dimensions, bounds);
     }
@@ -522,7 +523,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static Field<Integer> arrayLength(Object[] array) {
         return arrayLength(val(array));
     }
@@ -538,7 +539,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static Field<Integer> arrayLength(Field<? extends Object[]> array) {
         return field("{array_length}({0}, 1)", SQLDataType.INTEGER, array);
     }
@@ -551,7 +552,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static Field<String> arrayToString(Object[] array, String delimiter) {
         return arrayToString(val(array), val(delimiter, String.class));
     }
@@ -564,7 +565,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static Field<String> arrayToString(Object[] array, Field<String> delimiter) {
         return arrayToString(val(array), delimiter);
     }
@@ -577,7 +578,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static Field<String> arrayToString(Field<? extends Object[]> array, String delimiter) {
         return arrayToString(array, val(delimiter, String.class));
     }
@@ -590,7 +591,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static Field<String> arrayToString(Field<? extends Object[]> array, Field<String> delimiter) {
         return function("array_to_string", SQLDataType.VARCHAR, array, delimiter);
     }
@@ -603,7 +604,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static Field<String[]> stringToArray(String string, String delimiter) {
         return stringToArray(val(string, String.class), val(delimiter, String.class));
     }
@@ -616,7 +617,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static Field<String[]> stringToArray(String string, Field<String> delimiter) {
         return stringToArray(val(string, String.class), delimiter);
     }
@@ -629,7 +630,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static Field<String[]> stringToArray(Field<String> string, String delimiter) {
         return stringToArray(string, val(delimiter, String.class));
     }
@@ -642,7 +643,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static Field<String[]> stringToArray(Field<String> string, Field<String> delimiter) {
         return function("string_to_array", SQLDataType.VARCHAR.getArrayDataType(), string, delimiter);
     }
@@ -655,7 +656,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static Field<String[]> stringToArray(String string, String delimiter, String nullString) {
         return stringToArray(val(string, String.class), val(delimiter, String.class), val(nullString, String.class));
     }
@@ -668,7 +669,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static Field<String[]> stringToArray(String string, Field<String> delimiter, Field<String> nullString) {
         return stringToArray(val(string, String.class), delimiter, nullString);
     }
@@ -681,7 +682,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static Field<String[]> stringToArray(Field<String> string, String delimiter, String nullString) {
         return stringToArray(string, val(delimiter, String.class), val(nullString, String.class));
     }
@@ -694,7 +695,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTE })
     public static Field<String[]> stringToArray(Field<String> string, Field<String> delimiter, Field<String> nullString) {
         return function("string_to_array", SQLDataType.VARCHAR.getArrayDataType(), string, delimiter, nullString);
     }

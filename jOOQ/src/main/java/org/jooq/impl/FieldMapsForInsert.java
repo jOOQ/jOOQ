@@ -84,7 +84,7 @@ import org.jooq.impl.AbstractStoreQuery.UnknownField;
  * @author Lukas Eder
  */
 final class FieldMapsForInsert extends AbstractQueryPart {
-    private static final Set<SQLDialect> CASTS_NEEDED     = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect> CASTS_NEEDED     = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
     final Table<?>                       table;
     final Map<Field<?>, Field<?>>        empty;

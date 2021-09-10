@@ -37,11 +37,12 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.tools.Convert.convert;
+import static org.jooq.impl.Convert.convert;
 import static org.jooq.tools.reflect.Reflect.wrapper;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * A base class for enum conversion.
@@ -50,14 +51,25 @@ import java.util.Map;
  */
 public class EnumConverter<T, U extends Enum<U>> extends AbstractConverter<T, U> {
 
-    private final Map<T, U>   lookup;
-    private final EnumType    enumType;
+    private final Map<T, U>                        lookup;
+    private final Function<? super U, ? extends T> to;
 
     public EnumConverter(Class<T> fromType, Class<U> toType) {
+        this(
+            fromType,
+            toType,
+
+            // [#8045] Also support Kotlin Int type (which translates to int.class)
+            Number.class.isAssignableFrom(wrapper(fromType))
+                ? u -> convert(u.ordinal(), fromType)
+                : u -> convert(u.name(), fromType)
+        );
+    }
+
+    public EnumConverter(Class<T> fromType, Class<U> toType, Function<? super U, ? extends T> to) {
         super(fromType, toType);
 
-        // [#8045] Also support Kotlin Int type (which translates to int.class)
-        this.enumType = Number.class.isAssignableFrom(wrapper(fromType)) ? EnumType.ORDINAL : EnumType.STRING;
+        this.to = to;
         this.lookup = new LinkedHashMap<>();
 
         for (U u : toType.getEnumConstants())
@@ -79,28 +91,8 @@ public class EnumConverter<T, U extends Enum<U>> extends AbstractConverter<T, U>
     public T to(U userObject) {
         if (userObject == null)
             return null;
-        else if (enumType == EnumType.ORDINAL)
-            return convert(userObject.ordinal(), fromType());
         else
-            return convert(userObject.name(), fromType());
-    }
-
-    /**
-     * The type of the converted <code>Enum</code>.
-     * <p>
-     * This corresponds to JPA's <code>EnumType</code>
-     */
-    enum EnumType {
-
-        /**
-         * Ordinal enum type
-         */
-        ORDINAL,
-
-        /**
-         * String enum type
-         */
-        STRING
+            return to.apply(userObject);
     }
 
     @Override

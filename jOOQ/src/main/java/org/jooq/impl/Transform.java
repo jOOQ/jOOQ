@@ -73,14 +73,10 @@ final class Transform {
         if (condition instanceof ConditionProviderImpl)
             return transform(((ConditionProviderImpl) condition).getWhere());
         else if (condition instanceof CombinedCondition)
-            return CombinedCondition.of(((CombinedCondition) condition).operator, transform(((CombinedCondition) condition).conditions));
+            return CombinedCondition.of(((CombinedCondition) condition).operator, transform(((CombinedCondition) condition).op1), transform(((CombinedCondition) condition).op2));
         else if (condition instanceof CompareCondition)
             return new CompareCondition(fieldTransformer.apply(((CompareCondition) condition).field1), fieldTransformer.apply(((CompareCondition) condition).field2), ((CompareCondition) condition).comparator);
         else
             return condition;
-    }
-
-    List<Condition> transform(List<Condition> conditions) {
-        return map(conditions, this::transform);
     }
 }

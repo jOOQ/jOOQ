@@ -169,7 +169,7 @@ final class Expression<T> extends AbstractTransformable<T> {
     }
 
     @Override
-    DataType<?> getExpressionDataType() {
+    final DataType<?> getExpressionDataType() {
 
         // [#11959] Workaround for lack of proper data type information for interval based expressions
         AbstractField<?> l = (AbstractField<?>) lhs;

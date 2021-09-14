@@ -131,7 +131,7 @@ extends
             case IGNITE:
             case POSTGRES:
             case YUGABYTE:
-                ctx.visit(DSL.coalesce(value, defaultValue));
+                ctx.visit(function(N_COALESCE, getDataType(), value, defaultValue));
                 break;
 
 

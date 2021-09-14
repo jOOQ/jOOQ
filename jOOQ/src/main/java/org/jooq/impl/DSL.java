@@ -15583,94 +15583,6 @@ public class DSL {
     }
 
     /**
-     * Gets the SQL Server-style ISNULL(value, defaultValue) function.
-     *
-     * @see #nvl(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static <T> Field<T> isnull(T value, T defaultValue) {
-        return nvl(value, defaultValue);
-    }
-
-    /**
-     * Gets the SQL Server-style ISNULL(value, defaultValue) function.
-     *
-     * @see #nvl(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static <T> Field<T> isnull(T value, Field<T> defaultValue) {
-        return nvl(value, defaultValue);
-    }
-
-    /**
-     * Gets the SQL Server-style ISNULL(value, defaultValue) function.
-     *
-     * @see #nvl(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static <T> Field<T> isnull(Field<T> value, T defaultValue) {
-        return nvl(value, defaultValue);
-    }
-
-    /**
-     * Gets the SQL Server-style ISNULL(value, defaultValue) function.
-     *
-     * @see #nvl(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static <T> Field<T> isnull(Field<T> value, Field<T> defaultValue) {
-        return nvl(value, defaultValue);
-    }
-
-    /**
-     * The <code>IFNULL()</code> function, a synonym of <code>NVL()</code>.
-     *
-     * @see #nvl(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static <T> Field<T> ifnull(T value, T defaultValue) {
-        return nvl(value, defaultValue);
-    }
-
-    /**
-     * The <code>IFNULL()</code> function, a synonym of <code>NVL()</code>.
-     *
-     * @see #nvl(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static <T> Field<T> ifnull(T value, Field<T> defaultValue) {
-        return nvl(value, defaultValue);
-    }
-
-    /**
-     * The <code>IFNULL()</code> function, a synonym of <code>NVL()</code>.
-     *
-     * @see #nvl(Field, Object)
-     */
-    @NotNull
-    @Support
-    public static <T> Field<T> ifnull(Field<T> value, T defaultValue) {
-        return nvl(value, defaultValue);
-    }
-
-    /**
-     * The <code>IFNULL()</code> function, a synonym of <code>NVL()</code>.
-     *
-     * @see #nvl(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static <T> Field<T> ifnull(Field<T> value, Field<T> defaultValue) {
-        return nvl(value, defaultValue);
-    }
-
-    /**
      * Gets the Oracle-style NVL2(value, valueIfNotNull, valueIfNull) function.
      *
      * @see #nvl2(Field, Field, Field)
@@ -16825,7 +16737,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<Integer> length(@Stringly.Param String string) {
-        return charLength(Tools.field(string));
+        return charLength(string);
     }
 
     /**
@@ -17069,7 +16981,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<String> mid(Field<String> string, int startingPosition, int length) {
-        return substring(string, Tools.field(startingPosition), Tools.field(length));
+        return substring(string, startingPosition, length);
     }
 
     /**
@@ -17084,7 +16996,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<String> mid(Field<String> string, int startingPosition, Field<? extends Number> length) {
-        return substring(string, Tools.field(startingPosition), length);
+        return substring(string, startingPosition, length);
     }
 
     /**
@@ -17099,7 +17011,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<String> mid(Field<String> string, Field<? extends Number> startingPosition, int length) {
-        return substring(string, startingPosition, Tools.field(length));
+        return substring(string, startingPosition, length);
     }
 
     /**
@@ -17128,7 +17040,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<String> mid(Field<String> string, int startingPosition) {
-        return substring(string, Tools.field(startingPosition));
+        return substring(string, startingPosition);
     }
 
     /**
@@ -18995,6 +18907,166 @@ public class DSL {
     @Support
     public static <T> Field<T> nvl(Field<T> value, Field<T> defaultValue) {
         return new Nvl(value, defaultValue);
+    }
+
+    /**
+     * The <code>ISNULL</code> function, an alias for the <code>NVL</code> function.
+     * <p>
+     * Return the first non-null argument.
+     *
+     * @param value The nullable value.
+     * @param defaultValue The default value if the other value is null.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> isnull(T value, T defaultValue) {
+        return nvl(value, defaultValue);
+    }
+
+    /**
+     * The <code>ISNULL</code> function, an alias for the <code>NVL</code> function.
+     * <p>
+     * Return the first non-null argument.
+     *
+     * @param value The nullable value.
+     * @param defaultValue The default value if the other value is null.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> isnull(T value, Field<T> defaultValue) {
+        return nvl(value, defaultValue);
+    }
+
+    /**
+     * The <code>ISNULL</code> function, an alias for the <code>NVL</code> function.
+     * <p>
+     * Return the first non-null argument.
+     *
+     * @param value The nullable value.
+     * @param defaultValue The default value if the other value is null.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> isnull(Field<T> value, T defaultValue) {
+        return nvl(value, defaultValue);
+    }
+
+    /**
+     * The <code>ISNULL</code> function, an alias for the <code>NVL</code> function.
+     * <p>
+     * Return the first non-null argument.
+     *
+     * @param value The nullable value.
+     * @param defaultValue The default value if the other value is null.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> isnull(Field<T> value, Field<T> defaultValue) {
+        return nvl(value, defaultValue);
+    }
+
+    /**
+     * The <code>IFNULL</code> function, an alias for the <code>NVL</code> function.
+     * <p>
+     * Return the first non-null argument.
+     *
+     * @param value The nullable value.
+     * @param defaultValue The default value if the other value is null.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> ifnull(T value, T defaultValue) {
+        return nvl(value, defaultValue);
+    }
+
+    /**
+     * The <code>IFNULL</code> function, an alias for the <code>NVL</code> function.
+     * <p>
+     * Return the first non-null argument.
+     *
+     * @param value The nullable value.
+     * @param defaultValue The default value if the other value is null.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> ifnull(T value, Field<T> defaultValue) {
+        return nvl(value, defaultValue);
+    }
+
+    /**
+     * The <code>IFNULL</code> function, an alias for the <code>NVL</code> function.
+     * <p>
+     * Return the first non-null argument.
+     *
+     * @param value The nullable value.
+     * @param defaultValue The default value if the other value is null.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> ifnull(Field<T> value, T defaultValue) {
+        return nvl(value, defaultValue);
+    }
+
+    /**
+     * The <code>IFNULL</code> function, an alias for the <code>NVL</code> function.
+     * <p>
+     * Return the first non-null argument.
+     *
+     * @param value The nullable value.
+     * @param defaultValue The default value if the other value is null.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> ifnull(Field<T> value, Field<T> defaultValue) {
+        return nvl(value, defaultValue);
+    }
+
+    /**
+     * The <code>NULLIF</code> function.
+     *
+     * @param value The result value if the other value is not equal.
+     * @param other The value to compare the result value with.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> nullif(T value, T other) {
+        return new Nullif(Tools.field(value), Tools.field(other));
+    }
+
+    /**
+     * The <code>NULLIF</code> function.
+     *
+     * @param value The result value if the other value is not equal.
+     * @param other The value to compare the result value with.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> nullif(T value, Field<T> other) {
+        return new Nullif(Tools.field(value), other);
+    }
+
+    /**
+     * The <code>NULLIF</code> function.
+     *
+     * @param value The result value if the other value is not equal.
+     * @param other The value to compare the result value with.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> nullif(Field<T> value, T other) {
+        return new Nullif(value, Tools.field(other, value));
+    }
+
+    /**
+     * The <code>NULLIF</code> function.
+     *
+     * @param value The result value if the other value is not equal.
+     * @param other The value to compare the result value with.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> nullif(Field<T> value, Field<T> other) {
+        return new Nullif(value, other);
     }
 
     // -------------------------------------------------------------------------

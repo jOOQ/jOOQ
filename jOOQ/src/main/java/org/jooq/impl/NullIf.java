@@ -37,28 +37,54 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.Keywords.K_NULL;
-import static org.jooq.impl.Names.N_IIF;
-import static org.jooq.impl.Names.N_NULLIF;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.Record;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>NULLIF</code> statement.
  */
-final class NullIf<T> extends AbstractField<T> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Nullif<T>
+extends
+    AbstractField<T>
+{
 
-    private final Field<T>    arg1;
-    private final Field<T>    arg2;
+    private final Field<T> value;
+    private final Field<T> other;
 
-    NullIf(Field<T> arg1, Field<T> arg2) {
-        super(N_NULLIF, arg1.getDataType().null_());
+    Nullif(
+        Field<T> value,
+        Field<T> other
+    ) {
+        super(
+            N_NULLIF,
+            nullable((DataType) dataType(value), value, other)
+        );
 
-        this.arg1 = arg1;
-        this.arg2 = arg2;
+        this.value = nullSafeNotNull(value, (DataType) OTHER);
+        this.other = nullSafeNotNull(other, (DataType) OTHER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -69,9 +95,45 @@ final class NullIf<T> extends AbstractField<T> {
 
 
 
+
+
+
+
+
+
+
             default:
-                ctx.visit(function(N_NULLIF, getDataType(), arg1, arg2));
+                ctx.visit(function(N_NULLIF, getDataType(), value, other));
                 break;
         }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Nullif) {
+            return
+                StringUtils.equals(value, ((Nullif) that).value) &&
+                StringUtils.equals(other, ((Nullif) that).other)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

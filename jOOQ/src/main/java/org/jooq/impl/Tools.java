@@ -6184,6 +6184,22 @@ final class Tools {
         return result;
     }
 
+    static final <T> DataType<T> nullable(DataType<T> defaultType, Field<?> f1) {
+        return dataType(defaultType, f1, false).null_();
+    }
+
+    static final <T> DataType<T> nullable(DataType<T> defaultType, Field<?> f1, Field<?> f2) {
+        return dataType(defaultType, f1, false).null_();
+    }
+
+    static final <T> DataType<T> nullable(DataType<T> defaultType, Field<?> f1, Field<?> f2, Field<?> f3) {
+        return dataType(defaultType, f1, false).null_();
+    }
+
+    static final <T> DataType<T> nullable(DataType<T> defaultType, Field<?>... fields) {
+        return dataType(defaultType, isEmpty(fields) ? null : fields[0], false).null_();
+    }
+
     static final <T> Field<T> nullSafe(Field<T> field) {
         return field == null ? DSL.val((T) null) : field;
     }

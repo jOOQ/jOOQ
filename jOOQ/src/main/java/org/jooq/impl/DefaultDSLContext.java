@@ -3784,12 +3784,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.TruncateIdentityStep<Record> truncateTable(@Stringly.Name String table) {
-        return truncate(DSL.table(DSL.name(table)));
+        return truncate(table);
     }
 
     @Override
     public org.jooq.TruncateIdentityStep<Record> truncateTable(Name table) {
-        return truncate(DSL.table(table));
+        return truncate(table);
     }
 
     @Override

@@ -37,31 +37,54 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Keywords.K_IS_NULL;
-import static org.jooq.impl.Names.N_IFNULL;
-import static org.jooq.impl.Names.N_IIF;
-import static org.jooq.impl.Names.N_NVL;
-import static org.jooq.impl.Tools.anyNotNull;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.Record;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>NVL</code> statement.
  */
-final class Nvl<T> extends AbstractField<T> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Nvl<T>
+extends
+    AbstractField<T>
+{
 
-    private final Field<T>    arg1;
-    private final Field<T>    arg2;
+    private final Field<T> value;
+    private final Field<T> defaultValue;
 
-    Nvl(Field<T> arg1, Field<T> arg2) {
-        super(N_NVL, anyNotNull(arg1.getDataType(), arg1, arg2));
+    Nvl(
+        Field<T> value,
+        Field<T> defaultValue
+    ) {
+        super(
+            N_NVL,
+            anyNotNull((DataType) dataType(value), value, defaultValue)
+        );
 
-        this.arg1 = arg1;
-        this.arg2 = arg2;
+        this.value = nullSafeNotNull(value, (DataType) OTHER);
+        this.defaultValue = nullSafeNotNull(defaultValue, (DataType) OTHER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -94,13 +117,21 @@ final class Nvl<T> extends AbstractField<T> {
 
 
 
+
+
+
+
+
+
+
+
             case CUBRID:
             case DERBY:
-            case IGNITE:
             case FIREBIRD:
+            case IGNITE:
             case POSTGRES:
             case YUGABYTE:
-                ctx.visit(DSL.coalesce(arg1, arg2));
+                ctx.visit(DSL.coalesce(value, defaultValue));
                 break;
 
 
@@ -109,12 +140,41 @@ final class Nvl<T> extends AbstractField<T> {
             case MARIADB:
             case MYSQL:
             case SQLITE:
-                ctx.visit(function(N_IFNULL, getDataType(), arg1, arg2));
+                ctx.visit(function(N_IFNULL, getDataType(), value, defaultValue));
                 break;
 
             default:
-                ctx.visit(function(N_NVL, getDataType(), arg1, arg2));
+                ctx.visit(function(N_NVL, getDataType(), value, defaultValue));
                 break;
         }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Nvl) {
+            return
+                StringUtils.equals(value, ((Nvl) that).value) &&
+                StringUtils.equals(defaultValue, ((Nvl) that).defaultValue)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

@@ -15627,73 +15627,6 @@ public class DSL {
     }
 
     /**
-     * Gets the Oracle-style NVL(value, defaultValue) function.
-     *
-     * @see #nvl(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static <T> Field<T> nvl(T value, T defaultValue) {
-        return nvl0(Tools.field(value), Tools.field(defaultValue));
-    }
-
-    /**
-     * Gets the Oracle-style NVL(value, defaultValue) function.
-     *
-     * @see #nvl(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static <T> Field<T> nvl(T value, Field<T> defaultValue) {
-        return nvl0(Tools.field(value, defaultValue), Tools.nullSafe(defaultValue));
-    }
-
-    /**
-     * Gets the Oracle-style NVL(value, defaultValue) function.
-     *
-     * @see #nvl(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static <T> Field<T> nvl(Field<T> value, T defaultValue) {
-        return nvl0(Tools.nullSafe(value), Tools.field(defaultValue, value));
-    }
-
-    /**
-     * Gets the Oracle-style NVL(value, defaultValue) function.
-     * <p>
-     * Returns the dialect's equivalent to NVL:
-     * <ul>
-     * <li>DB2 <a href=
-     * "http://publib.boulder.ibm.com/infocenter/db2luw/v9r7/index.jsp?topic=/com.ibm.db2.luw.sql.ref.doc/doc/r0052627.html"
-     * >NVL</a></li>
-     * <li>Derby <a
-     * href="http://db.apache.org/derby/docs/10.7/ref/rreffunccoalesce.html"
-     * >COALESCE</a></li>
-     * <li>H2 <a
-     * href="http://www.h2database.com/html/functions.html#ifnull">IFNULL</a></li>
-     * <li>HSQLDB <a
-     * href="http://hsqldb.org/doc/2.0/guide/builtinfunctions-chapt.html"
-     * >NVL</a></li>
-     * <li>MySQL <a href=
-     * "http://dev.mysql.com/doc/refman/5.0/en/control-flow-functions.html"
-     * >IFNULL</a></li>
-     * <li>Oracle <a
-     * href="http://www.techonthenet.com/oracle/functions/nvl.php">NVL</a></li>
-     * <li>Postgres <a href=
-     * "http://www.postgresql.org/docs/8.1/static/functions-conditional.html"
-     * >COALESCE</a></li>
-     * <li>SQLite <a
-     * href="http://www.sqlite.org/lang_corefunc.html#ifnull">IFNULL</a></li>
-     * </ul>
-     */
-    @NotNull
-    @Support
-    public static <T> Field<T> nvl(Field<T> value, Field<T> defaultValue) {
-        return nvl0(value, defaultValue);
-    }
-
-    /**
      * The <code>IFNULL()</code> function, a synonym of <code>NVL()</code>.
      *
      * @see #nvl(Field, Field)
@@ -15735,12 +15668,6 @@ public class DSL {
     @Support
     public static <T> Field<T> ifnull(Field<T> value, Field<T> defaultValue) {
         return nvl(value, defaultValue);
-    }
-
-    // Java 8 is stricter than Java 7 with respect to generics and overload
-    // resolution (http://stackoverflow.com/q/5361513/521799)
-    static <T> Field<T> nvl0(Field<T> value, Field<T> defaultValue) {
-        return new Nvl<>(Tools.nullSafe(value), Tools.nullSafe(defaultValue));
     }
 
     /**
@@ -16697,7 +16624,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> widthBucket(Field<T> field, T low, T high, int buckets) {
-        return new WidthBucket(field, Tools.field(low), Tools.field(high), Tools.field(buckets));
+        return new WidthBucket(field, Tools.field(low, field), Tools.field(high, field), Tools.field(buckets));
     }
 
     /**
@@ -19008,6 +18935,66 @@ public class DSL {
     @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> Field<T> arrayGet(Field<T[]> array, Field<Integer> index) {
         return new ArrayGet(array, index);
+    }
+
+    // -------------------------------------------------------------------------
+    // Utility functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * The <code>NVL</code> function.
+     * <p>
+     * Return the first non-null argument.
+     *
+     * @param value The nullable value.
+     * @param defaultValue The default value if the other value is null.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> nvl(T value, T defaultValue) {
+        return new Nvl(Tools.field(value), Tools.field(defaultValue));
+    }
+
+    /**
+     * The <code>NVL</code> function.
+     * <p>
+     * Return the first non-null argument.
+     *
+     * @param value The nullable value.
+     * @param defaultValue The default value if the other value is null.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> nvl(T value, Field<T> defaultValue) {
+        return new Nvl(Tools.field(value), defaultValue);
+    }
+
+    /**
+     * The <code>NVL</code> function.
+     * <p>
+     * Return the first non-null argument.
+     *
+     * @param value The nullable value.
+     * @param defaultValue The default value if the other value is null.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> nvl(Field<T> value, T defaultValue) {
+        return new Nvl(value, Tools.field(defaultValue, value));
+    }
+
+    /**
+     * The <code>NVL</code> function.
+     * <p>
+     * Return the first non-null argument.
+     *
+     * @param value The nullable value.
+     * @param defaultValue The default value if the other value is null.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> nvl(Field<T> value, Field<T> defaultValue) {
+        return new Nvl(value, defaultValue);
     }
 
     // -------------------------------------------------------------------------

@@ -76,11 +76,11 @@ extends
     ) {
         super(
             N_DATE_ADD,
-            allNotNull((DataType) dataType(date))
+            allNotNull((DataType) dataType(date), date, interval)
         );
 
-        this.date = date;
-        this.interval = interval;
+        this.date = nullSafeNotNull(date, (DataType) OTHER);
+        this.interval = nullSafeNotNull(interval, (DataType) OTHER);
         this.datePart = null;
     }
 
@@ -91,11 +91,11 @@ extends
     ) {
         super(
             N_DATE_ADD,
-            allNotNull((DataType) dataType(date))
+            allNotNull((DataType) dataType(date), date, interval)
         );
 
-        this.date = date;
-        this.interval = interval;
+        this.date = nullSafeNotNull(date, (DataType) OTHER);
+        this.interval = nullSafeNotNull(interval, (DataType) OTHER);
         this.datePart = datePart;
     }
 

@@ -81,7 +81,7 @@ extends
         );
 
         this.content = content;
-        this.value = value;
+        this.value = nullSafeNotNull(value, (DataType) OTHER);
         this.type = type;
     }
 

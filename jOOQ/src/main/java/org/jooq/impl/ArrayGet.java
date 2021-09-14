@@ -75,11 +75,11 @@ extends
     ) {
         super(
             N_ARRAY_GET,
-            allNotNull((DataType<T>) StringUtils.defaultIfNull(array.getDataType().getArrayComponentDataType(), OTHER))
+            allNotNull((DataType<T>) StringUtils.defaultIfNull(array.getDataType().getArrayComponentDataType(), OTHER), array, index)
         );
 
-        this.array = array;
-        this.index = index;
+        this.array = nullSafeNotNull(array, (DataType) OTHER);
+        this.index = nullSafeNotNull(index, (DataType) OTHER);
     }
 
     // -------------------------------------------------------------------------

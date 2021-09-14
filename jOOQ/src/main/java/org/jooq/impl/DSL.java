@@ -15640,61 +15640,6 @@ public class DSL {
     }
 
     /**
-     * Gets the Oracle-style NULLIF(value, other) function.
-     *
-     * @see #nullif(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static <T> Field<T> nullif(T value, T other) {
-        return nullif0(Tools.field(value), Tools.field(other));
-    }
-
-    /**
-     * Gets the Oracle-style NULLIF(value, other) function.
-     *
-     * @see #nullif(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static <T> Field<T> nullif(T value, Field<T> other) {
-        return nullif0(Tools.field(value, other), Tools.nullSafe(other));
-    }
-
-    /**
-     * Gets the Oracle-style NULLIF(value, other) function.
-     *
-     * @see #nullif(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static <T> Field<T> nullif(Field<T> value, T other) {
-        return nullif0(Tools.nullSafe(value), Tools.field(other, value));
-    }
-
-    /**
-     * Gets the Oracle-style NULLIF(value, other) function.
-     * <p>
-     * Returns the dialect's equivalent to NULLIF:
-     * <ul>
-     * <li>Oracle <a
-     * href="http://www.techonthenet.com/oracle/functions/nullif.php">NULLIF</a></li>
-     * </ul>
-     * <p>
-     */
-    @NotNull
-    @Support
-    public static <T> Field<T> nullif(Field<T> value, Field<T> other) {
-        return nullif0(value, other);
-    }
-
-    // Java 8 is stricter than Java 7 with respect to generics and overload
-    // resolution (http://stackoverflow.com/q/5361513/521799)
-    static <T> Field<T> nullif0(Field<T> value, Field<T> other) {
-        return new NullIf<>(Tools.nullSafe(value), Tools.nullSafe(other));
-    }
-
-    /**
      * Gets the SQL Server style IIF(condition, ifTrue, ifFalse) function.
      *
      * @see #iif(Condition, Field, Field)

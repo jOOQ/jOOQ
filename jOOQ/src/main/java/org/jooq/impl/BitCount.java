@@ -37,34 +37,68 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Names.N_BITCOUNT;
-import static org.jooq.impl.Names.N_BIT_COUNT;
-import static org.jooq.impl.Names.N_COUNTSET;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.Record;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>BIT COUNT</code> statement.
  */
-final class BitCount extends AbstractField<Integer> {
-    private final        Field<?>         field;
+@SuppressWarnings({ "rawtypes", "unused" })
+final class BitCount
+extends
+    AbstractField<Integer>
+{
 
-    BitCount(Field<?> field) {
-        super(N_BIT_COUNT, SQLDataType.INTEGER);
+    private final Field<? extends Number> number;
 
-        this.field = field;
+    BitCount(
+        Field<? extends Number> number
+    ) {
+        super(
+            N_BIT_COUNT,
+            allNotNull(INTEGER, number)
+        );
+
+        this.number = nullSafeNotNull(number, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
 
+
+
+
+
+
+
             case MARIADB:
             case MYSQL:
-                ctx.visit(N_BIT_COUNT).sql('(').visit(field).sql(')');
+                ctx.visit(N_BIT_COUNT).sql('(').visit(number).sql(')');
                 return;
 
 
@@ -92,9 +126,9 @@ final class BitCount extends AbstractField<Integer> {
 
             case H2:
             case HSQLDB: {
-                if (field.getType() == Byte.class) {
+                if (number.getType() == Byte.class) {
                     @SuppressWarnings("unchecked")
-                    Field<Byte> f = (Field<Byte>) field;
+                    Field<Byte> f = (Field<Byte>) number;
 
                     ctx.visit(
                         DSL.bitAnd(f, inline((byte) 0x01))                          .add(
@@ -107,9 +141,9 @@ final class BitCount extends AbstractField<Integer> {
                         DSL.bitAnd(f, inline((byte) 0x80)).div(inline((byte) 0x80))).cast(Integer.class));
                     return;
                 }
-                else if (field.getType() == Short.class) {
+                else if (number.getType() == Short.class) {
                     @SuppressWarnings("unchecked")
-                    Field<Short> f = (Field<Short>) field;
+                    Field<Short> f = (Field<Short>) number;
 
                     ctx.visit(
                         DSL.bitAnd(f, inline((short) 0x0001))                             .add(
@@ -130,9 +164,9 @@ final class BitCount extends AbstractField<Integer> {
                         DSL.bitAnd(f, inline((short) 0x8000)).div(inline((short) 0x8000))).cast(Integer.class));
                     return;
                 }
-                else if (field.getType() == Integer.class) {
+                else if (number.getType() == Integer.class) {
                     @SuppressWarnings("unchecked")
-                    Field<Integer> f = (Field<Integer>) field;
+                    Field<Integer> f = (Field<Integer>) number;
 
                     ctx.visit(
                         DSL.bitAnd(f, inline(0x00000001))                         .add(
@@ -169,9 +203,9 @@ final class BitCount extends AbstractField<Integer> {
                         DSL.bitAnd(f, inline(0x80000000)).div(inline(0x80000000))));
                     return;
                 }
-                else if (field.getType() == Long.class) {
+                else if (number.getType() == Long.class) {
                     @SuppressWarnings("unchecked")
-                    Field<Long> f = (Field<Long>) field;
+                    Field<Long> f = (Field<Long>) number;
 
                     ctx.visit(
                         DSL.bitAnd(f, inline(0x0000000000000001L))                                  .add(
@@ -242,15 +276,15 @@ final class BitCount extends AbstractField<Integer> {
                 }
                 else {
                     // Currently not supported
-                    ctx.visit(N_BIT_COUNT).sql('(').visit(field).sql(')');
+                    ctx.visit(N_BIT_COUNT).sql('(').visit(number).sql(')');
                     return;
                 }
             }
 
             default: {
-                if (field.getType() == Byte.class) {
+                if (number.getType() == Byte.class) {
                     @SuppressWarnings("unchecked")
-                    Field<Byte> f = (Field<Byte>) field;
+                    Field<Byte> f = (Field<Byte>) number;
 
                     byte i = 0;
                     ctx.visit(
@@ -264,9 +298,9 @@ final class BitCount extends AbstractField<Integer> {
                         DSL.shr(DSL.bitAnd(f, inline((byte) 0x80)), inline(++i))).cast(Integer.class));
                     return;
                 }
-                else if (field.getType() == Short.class) {
+                else if (number.getType() == Short.class) {
                     @SuppressWarnings("unchecked")
-                    Field<Short> f = (Field<Short>) field;
+                    Field<Short> f = (Field<Short>) number;
 
                     short i = 0;
                     ctx.visit(
@@ -288,9 +322,9 @@ final class BitCount extends AbstractField<Integer> {
                         DSL.shr(DSL.bitAnd(f, inline((short) 0x8000)), inline(++i))).cast(Integer.class));
                     return;
                 }
-                else if (field.getType() == Integer.class) {
+                else if (number.getType() == Integer.class) {
                     @SuppressWarnings("unchecked")
-                    Field<Integer> f = (Field<Integer>) field;
+                    Field<Integer> f = (Field<Integer>) number;
 
                     int i = 0;
                     ctx.visit(
@@ -328,9 +362,9 @@ final class BitCount extends AbstractField<Integer> {
                         DSL.shr(DSL.bitAnd(f, inline(0x80000000)), inline(++i))));
                     return;
                 }
-                else if (field.getType() == Long.class) {
+                else if (number.getType() == Long.class) {
                     @SuppressWarnings("unchecked")
-                    Field<Long> f = (Field<Long>) field;
+                    Field<Long> f = (Field<Long>) number;
 
                     long i = 0;
                     ctx.visit(
@@ -402,10 +436,38 @@ final class BitCount extends AbstractField<Integer> {
                 }
                 else {
                     // Currently not supported
-                    ctx.visit(N_BIT_COUNT).sql('(').visit(field).sql(')');
+                    ctx.visit(N_BIT_COUNT).sql('(').visit(number).sql(')');
                     return;
                 }
             }
         }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof BitCount) {
+            return
+                StringUtils.equals(number, ((BitCount) that).number)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

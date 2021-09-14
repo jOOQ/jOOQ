@@ -15817,6 +15817,30 @@ public class DSL {
     }
 
     /**
+     * The <code>BIT_COUNT</code> function.
+     * <p>
+     * Count the number of bits set in a number
+     *
+     * @param number is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static Field<Integer> bitCount(Number number) {
+        return new BitCount(Tools.field(number));
+    }
+
+    /**
+     * The <code>BIT_COUNT</code> function.
+     * <p>
+     * Count the number of bits set in a number
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static Field<Integer> bitCount(Field<? extends Number> number) {
+        return new BitCount(number);
+    }
+
+    /**
      * The <code>CEIL</code> function.
      * <p>
      * Get the smallest integer value equal or greater to a value.
@@ -22269,41 +22293,6 @@ public class DSL {
     // ------------------------------------------------------------------------
     // XXX Bitwise operations
     // ------------------------------------------------------------------------
-
-    /**
-     * The MySQL <code>BIT_COUNT(field)</code> function, counting the number of
-     * bits that are set in this number.
-     *
-     * @see #bitCount(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static Field<Integer> bitCount(Number value) {
-        return bitCount(Tools.field(value));
-    }
-
-    /**
-     * The MySQL <code>BIT_COUNT(field)</code> function, counting the number of
-     * bits that are set in this number.
-     * <p>
-     * This function is emulated in most other databases like this (for a
-     * TINYINT field): <code><pre>
-     * ([field] &amp;   1) +
-     * ([field] &amp;   2) &gt;&gt; 1 +
-     * ([field] &amp;   4) &gt;&gt; 2 +
-     * ([field] &amp;   8) &gt;&gt; 3 +
-     * ([field] &amp;  16) &gt;&gt; 4 +
-     *  ...
-     * ([field] &amp; 128) &gt;&gt; 7
-     * </pre></code>
-     * <p>
-     * More efficient algorithms are very welcome
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static Field<Integer> bitCount(Field<? extends Number> field) {
-        return new BitCount(Tools.nullSafe(field));
-    }
 
     /**
      * The bitwise not operator.

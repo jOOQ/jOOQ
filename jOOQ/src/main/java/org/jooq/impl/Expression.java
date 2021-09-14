@@ -41,7 +41,6 @@ import static org.jooq.DatePart.MONTH;
 import static org.jooq.DatePart.SECOND;
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -49,7 +48,6 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
-// ...
 // ...
 // ...
 // ...
@@ -61,13 +59,11 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.inlined;
 import static org.jooq.impl.DSL.keyword;
-import static org.jooq.impl.DSL.two;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.BIT_AND;
@@ -79,8 +75,6 @@ import static org.jooq.impl.ExpressionOperator.BIT_XOR;
 import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 import static org.jooq.impl.Internal.iadd;
-import static org.jooq.impl.Internal.idiv;
-import static org.jooq.impl.Internal.imul;
 import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
@@ -100,20 +94,12 @@ import static org.jooq.impl.Names.N_ADD_MONTHS;
 import static org.jooq.impl.Names.N_ADD_SECONDS;
 import static org.jooq.impl.Names.N_BIN_AND;
 import static org.jooq.impl.Names.N_BIN_OR;
-import static org.jooq.impl.Names.N_BIN_SHL;
-import static org.jooq.impl.Names.N_BIN_SHR;
 import static org.jooq.impl.Names.N_BIN_XOR;
 import static org.jooq.impl.Names.N_BITAND;
 import static org.jooq.impl.Names.N_BITOR;
-import static org.jooq.impl.Names.N_BITSHIFTLEFT;
-import static org.jooq.impl.Names.N_BITSHIFTRIGHT;
 import static org.jooq.impl.Names.N_BITXOR;
 import static org.jooq.impl.Names.N_DATEADD;
 import static org.jooq.impl.Names.N_DATE_ADD;
-import static org.jooq.impl.Names.N_LSHIFT;
-import static org.jooq.impl.Names.N_RSHIFT;
-import static org.jooq.impl.Names.N_SHIFTLEFT;
-import static org.jooq.impl.Names.N_SHIFTRIGHT;
 import static org.jooq.impl.Names.N_SQL_TSI_FRAC_SECOND;
 import static org.jooq.impl.Names.N_SQL_TSI_MILLI_SECOND;
 import static org.jooq.impl.Names.N_SQL_TSI_MONTH;
@@ -187,7 +173,6 @@ final class Expression<T> extends AbstractTransformable<T> {
         return lt;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     final void accept0(Context<?> ctx) {
         SQLDialect family = ctx.family();

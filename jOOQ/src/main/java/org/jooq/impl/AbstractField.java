@@ -337,6 +337,34 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return new SortFieldImpl<>(new ConstantSortField<>((Field) this), SortOrder.DEFAULT);
     }
 
+
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> shl(Number count) {
+        return DSL.shl((Field) this, count);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> shl(Field<? extends Number> count) {
+        return DSL.shl((Field) this, count);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> shr(Number count) {
+        return DSL.shr((Field) this, count);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> shr(Field<? extends Number> count) {
+        return DSL.shr((Field) this, count);
+    }
+
+
+
     // ------------------------------------------------------------------------
     // XXX: Arithmetic operations
     // ------------------------------------------------------------------------
@@ -572,38 +600,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     public final Field<T> bitXNor(Field<T> value) {
         return DSL.bitXNor((Field) this, (Field) value);
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final Field<T> shl(Number value) {
-        // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.shl((Field) this, (Field) Tools.field(value));
-        return result;
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final Field<T> shl(Field<? extends Number> value) {
-        // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.shl((Field) this, value);
-        return result;
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final Field<T> shr(Number value) {
-        // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.shr((Field) this, (Field) Tools.field(value));
-        return result;
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final Field<T> shr(Field<? extends Number> value) {
-        // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.shr((Field) this, (Field) value);
-        return result;
     }
 
     // ------------------------------------------------------------------------

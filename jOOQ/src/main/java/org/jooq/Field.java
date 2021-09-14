@@ -675,6 +675,58 @@ extends
     @Support
     <Z> SortField<Z> sort(Map<T, Z> sortMap);
 
+
+
+    /**
+     * The <code>SHL</code> operator.
+     * <p>
+     * Left shift all bits in a number
+     *
+     * @param value The number whose bits to shift left.
+     * @param count The number of bits to shift.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    Field<T> shl(Number count);
+
+    /**
+     * The <code>SHL</code> operator.
+     * <p>
+     * Left shift all bits in a number
+     *
+     * @param value The number whose bits to shift left.
+     * @param count The number of bits to shift.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    Field<T> shl(Field<? extends Number> count);
+
+    /**
+     * The <code>SHR</code> operator.
+     * <p>
+     * Right shift all bits in a number
+     *
+     * @param value The number whose bits to shift right
+     * @param count The number of bits to shift.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    Field<T> shr(Number count);
+
+    /**
+     * The <code>SHR</code> operator.
+     * <p>
+     * Right shift all bits in a number
+     *
+     * @param value The number whose bits to shift right
+     * @param count The number of bits to shift.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    Field<T> shr(Field<? extends Number> count);
+
+
+
     // ------------------------------------------------------------------------
     // Arithmetic operations
     // ------------------------------------------------------------------------
@@ -1195,46 +1247,6 @@ extends
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> bitXNor(Field<T> value);
-
-    /**
-     * The bitwise left shift operator.
-     *
-     * @see DSL#shl(Field, Field)
-     * @see DSL#power(Field, Number)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Field<T> shl(Number value);
-
-    /**
-     * The bitwise left shift operator.
-     *
-     * @see DSL#shl(Field, Field)
-     * @see DSL#power(Field, Number)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Field<T> shl(Field<? extends Number> value);
-
-    /**
-     * The bitwise right shift operator.
-     *
-     * @see DSL#shr(Field, Field)
-     * @see DSL#power(Field, Number)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Field<T> shr(Number value);
-
-    /**
-     * The bitwise right shift operator.
-     *
-     * @see DSL#shr(Field, Field)
-     * @see DSL#power(Field, Number)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Field<T> shr(Field<? extends Number> value);
 
     // ------------------------------------------------------------------------
     // XML predicates

@@ -15841,6 +15841,135 @@ public class DSL {
     }
 
     /**
+     * The <code>BIT_NAND</code> function.
+     *
+     * @param arg1 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitNand(T arg1, T arg2) {
+        return new BitNand(Tools.field(arg1), Tools.field(arg2));
+    }
+
+    /**
+     * The <code>BIT_NAND</code> function.
+     *
+     * @param arg1 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitNand(T arg1, Field<T> arg2) {
+        return new BitNand(Tools.field(arg1), arg2);
+    }
+
+    /**
+     * The <code>BIT_NAND</code> function.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitNand(Field<T> arg1, T arg2) {
+        return new BitNand(arg1, Tools.field(arg2, arg1));
+    }
+
+    /**
+     * The <code>BIT_NAND</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitNand(Field<T> arg1, Field<T> arg2) {
+        return new BitNand(arg1, arg2);
+    }
+
+    /**
+     * The <code>BIT_NOR</code> function.
+     *
+     * @param arg1 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitNor(T arg1, T arg2) {
+        return new BitNor(Tools.field(arg1), Tools.field(arg2));
+    }
+
+    /**
+     * The <code>BIT_NOR</code> function.
+     *
+     * @param arg1 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitNor(T arg1, Field<T> arg2) {
+        return new BitNor(Tools.field(arg1), arg2);
+    }
+
+    /**
+     * The <code>BIT_NOR</code> function.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitNor(Field<T> arg1, T arg2) {
+        return new BitNor(arg1, Tools.field(arg2, arg1));
+    }
+
+    /**
+     * The <code>BIT_NOR</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitNor(Field<T> arg1, Field<T> arg2) {
+        return new BitNor(arg1, arg2);
+    }
+
+    /**
+     * The <code>BIT_X_NOR</code> function.
+     *
+     * @param arg1 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitXNor(T arg1, T arg2) {
+        return new BitXNor(Tools.field(arg1), Tools.field(arg2));
+    }
+
+    /**
+     * The <code>BIT_X_NOR</code> function.
+     *
+     * @param arg1 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitXNor(T arg1, Field<T> arg2) {
+        return new BitXNor(Tools.field(arg1), arg2);
+    }
+
+    /**
+     * The <code>BIT_X_NOR</code> function.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitXNor(Field<T> arg1, T arg2) {
+        return new BitXNor(arg1, Tools.field(arg2, arg1));
+    }
+
+    /**
+     * The <code>BIT_X_NOR</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitXNor(Field<T> arg1, Field<T> arg2) {
+        return new BitXNor(arg1, arg2);
+    }
+
+    /**
      * The <code>CEIL</code> function.
      * <p>
      * Get the smallest integer value equal or greater to a value.
@@ -22479,60 +22608,6 @@ public class DSL {
     }
 
     /**
-     * The bitwise not and operator.
-     *
-     * @see #bitNand(Field, Field)
-     * @see #bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitNand(T value1, T value2) {
-        return bitNand(Tools.field(value1), Tools.field(value2));
-    }
-
-    /**
-     * The bitwise not and operator.
-     *
-     * @see #bitNand(Field, Field)
-     * @see #bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitNand(T value1, Field<T> value2) {
-        return bitNand(Tools.field(value1, value2), Tools.nullSafe(value2));
-    }
-
-    /**
-     * The bitwise not and operator.
-     *
-     * @see #bitNand(Field, Field)
-     * @see #bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitNand(Field<T> value1, T value2) {
-        return bitNand(Tools.nullSafe(value1), Tools.field(value2, value1));
-    }
-
-    /**
-     * The bitwise not and operator.
-     * <p>
-     * This is not supported by Derby, Ingres
-     * <p>
-     * This renders the not and operation where available:
-     * <code><pre>~([field1] &amp; [field2])</pre></code>
-     * ... or the not and function elsewhere:
-     * <code><pre>bitnot(bitand([field1], [field2]))</pre></code>
-     *
-     * @see #bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitNand(Field<T> field1, Field<T> field2) {
-        return new Expression<>(ExpressionOperator.BIT_NAND, false, Tools.nullSafe(field1), Tools.nullSafe(field2));
-    }
-
-    /**
      * The bitwise or operator.
      *
      * @see #bitOr(Field, Field)
@@ -22582,58 +22657,6 @@ public class DSL {
     }
 
     /**
-     * The bitwise not or operator.
-     *
-     * @see #bitNor(Field, Field)
-     * @see #bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitNor(T value1, T value2) {
-        return bitNor(Tools.field(value1), Tools.field(value2));
-    }
-    /**
-     * The bitwise not or operator.
-     *
-     * @see #bitNor(Field, Field)
-     * @see #bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitNor(T value1, Field<T> value2) {
-        return bitNor(Tools.field(value1, value2), Tools.nullSafe(value2));
-    }
-    /**
-     * The bitwise not or operator.
-     *
-     * @see #bitNor(Field, Field)
-     * @see #bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitNor(Field<T> value1, T value2) {
-        return bitNor(Tools.nullSafe(value1), Tools.field(value2, value1));
-    }
-
-    /**
-     * The bitwise not or operator.
-     * <p>
-     * This is not supported by Derby, Ingres
-     * <p>
-     * This renders the not or operation where available:
-     * <code><pre>~([field1] | [field2])</pre></code>
-     * ... or the not or function elsewhere:
-     * <code><pre>bitnot(bitor([field1], [field2]))</pre></code>
-     *
-     * @see #bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitNor(Field<T> field1, Field<T> field2) {
-        return new Expression<>(ExpressionOperator.BIT_NOR, false, Tools.nullSafe(field1), Tools.nullSafe(field2));
-    }
-
-    /**
      * The bitwise xor operator.
      *
      * @see #bitXor(Field, Field)
@@ -22680,58 +22703,6 @@ public class DSL {
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXor(Field<T> field1, Field<T> field2) {
         return new Expression<>(ExpressionOperator.BIT_XOR, false, Tools.nullSafe(field1), Tools.nullSafe(field2));
-    }
-
-    /**
-     * The bitwise not xor operator.
-     *
-     * @see #bitXNor(Field, Field)
-     * @see #bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitXNor(T value1, T value2) {
-        return bitXNor(Tools.field(value1), Tools.field(value2));
-    }
-
-    /**
-     * The bitwise not xor operator.
-     *
-     * @see #bitXNor(Field, Field)
-     * @see #bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitXNor(T value1, Field<T> value2) {
-        return bitXNor(Tools.field(value1, value2), Tools.nullSafe(value2));
-    }
-
-    /**
-     * The bitwise not xor operator.
-     *
-     * @see #bitXNor(Field, Field)
-     * @see #bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitXNor(Field<T> value1, T value2) {
-        return bitXNor(Tools.nullSafe(value1), Tools.field(value2, value1));
-    }
-
-    /**
-     * The bitwise not xor operator.
-     * <p>
-     * This is not supported by Derby, Ingres
-     * <p>
-     * This renders the or operation where available:
-     * <code><pre>~([field1] ^ [field2])</pre></code>
-     * ... or the not xor function elsewhere:
-     * <code><pre>bitnot(bitxor([field1], [field2]))</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitXNor(Field<T> field1, Field<T> field2) {
-        return new Expression<>(ExpressionOperator.BIT_XNOR, false, Tools.nullSafe(field1), Tools.nullSafe(field2));
     }
 
     // ------------------------------------------------------------------------

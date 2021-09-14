@@ -341,6 +341,42 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> bitNand(T arg2) {
+        return DSL.bitNand((Field) this, (Number) arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> bitNand(Field<T> arg2) {
+        return DSL.bitNand((Field) this, (Field<Number>) arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> bitNor(T arg2) {
+        return DSL.bitNor((Field) this, (Number) arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> bitNor(Field<T> arg2) {
+        return DSL.bitNor((Field) this, (Field<Number>) arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> bitXNor(T arg2) {
+        return DSL.bitXNor((Field) this, (Number) arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> bitXNor(Field<T> arg2) {
+        return DSL.bitXNor((Field) this, (Field<Number>) arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Field<T> shl(Number count) {
         return DSL.shl((Field) this, count);
     }
@@ -544,18 +580,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public final Field<T> bitNand(T value) {
-        return DSL.bitNand((Field) this, (Field) val(value, this));
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final Field<T> bitNand(Field<T> value) {
-        return DSL.bitNand((Field) this, (Field) value);
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
     public final Field<T> bitOr(T value) {
         return DSL.bitOr((Field) this, (Field) val(value, this));
     }
@@ -568,18 +592,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public final Field<T> bitNor(T value) {
-        return DSL.bitNor((Field) this, (Field) val(value, this));
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final Field<T> bitNor(Field<T> value) {
-        return DSL.bitNor((Field) this, (Field) value);
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
     public final Field<T> bitXor(T value) {
         return DSL.bitXor((Field) this, (Field) val(value, this));
     }
@@ -588,18 +600,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     public final Field<T> bitXor(Field<T> value) {
         return DSL.bitXor((Field) this, (Field) value);
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final Field<T> bitXNor(T value) {
-        return DSL.bitXNor((Field) this, (Field) val(value, this));
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final Field<T> bitXNor(Field<T> value) {
-        return DSL.bitXNor((Field) this, (Field) value);
     }
 
     // ------------------------------------------------------------------------

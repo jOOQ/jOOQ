@@ -96,21 +96,6 @@ enum ExpressionOperator {
      */
     BIT_XOR("^", true, true),
 
-    /**
-     * Bitwise nand
-     */
-    BIT_NAND("~&"),
-
-    /**
-     * Bitwise nor
-     */
-    BIT_NOR("~|"),
-
-    /**
-     * Bitwise xor
-     */
-    BIT_XNOR("~^"),
-
     ;
 
     private final String  sql;

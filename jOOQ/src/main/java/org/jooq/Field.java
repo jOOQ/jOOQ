@@ -678,6 +678,54 @@ extends
 
 
     /**
+     * The <code>BIT_NAND</code> operator.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    Field<T> bitNand(T arg2);
+
+    /**
+     * The <code>BIT_NAND</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    Field<T> bitNand(Field<T> arg2);
+
+    /**
+     * The <code>BIT_NOR</code> operator.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    Field<T> bitNor(T arg2);
+
+    /**
+     * The <code>BIT_NOR</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    Field<T> bitNor(Field<T> arg2);
+
+    /**
+     * The <code>BIT_X_NOR</code> operator.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    Field<T> bitXNor(T arg2);
+
+    /**
+     * The <code>BIT_X_NOR</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    Field<T> bitXNor(Field<T> arg2);
+
+    /**
      * The <code>SHL</code> operator.
      * <p>
      * Left shift all bits in a number
@@ -1153,26 +1201,6 @@ extends
     Field<T> bitAnd(Field<T> value);
 
     /**
-     * The bitwise not and operator.
-     *
-     * @see DSL#bitNand(Field, Field)
-     * @see DSL#bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Field<T> bitNand(T value);
-
-    /**
-     * The bitwise not and operator.
-     *
-     * @see DSL#bitNand(Field, Field)
-     * @see DSL#bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Field<T> bitNand(Field<T> value);
-
-    /**
      * The bitwise or operator.
      *
      * @see DSL#bitOr(Field, Field)
@@ -1191,26 +1219,6 @@ extends
     Field<T> bitOr(Field<T> value);
 
     /**
-     * The bitwise not or operator.
-     *
-     * @see DSL#bitNor(Field, Field)
-     * @see DSL#bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Field<T> bitNor(T value);
-
-    /**
-     * The bitwise not or operator.
-     *
-     * @see DSL#bitNor(Field, Field)
-     * @see DSL#bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Field<T> bitNor(Field<T> value);
-
-    /**
      * The bitwise xor operator.
      *
      * @see DSL#bitXor(Field, Field)
@@ -1227,26 +1235,6 @@ extends
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> bitXor(Field<T> value);
-
-    /**
-     * The bitwise not xor operator.
-     *
-     * @see DSL#bitXNor(Field, Field)
-     * @see DSL#bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Field<T> bitXNor(T value);
-
-    /**
-     * The bitwise not xor operator.
-     *
-     * @see DSL#bitXNor(Field, Field)
-     * @see DSL#bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Field<T> bitXNor(Field<T> value);
 
     // ------------------------------------------------------------------------
     // XML predicates

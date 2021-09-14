@@ -67,10 +67,7 @@ import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.BIT_AND;
-import static org.jooq.impl.ExpressionOperator.BIT_NAND;
-import static org.jooq.impl.ExpressionOperator.BIT_NOR;
 import static org.jooq.impl.ExpressionOperator.BIT_OR;
-import static org.jooq.impl.ExpressionOperator.BIT_XNOR;
 import static org.jooq.impl.ExpressionOperator.BIT_XOR;
 import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
@@ -214,14 +211,6 @@ final class Expression<T> extends AbstractTransformable<T> {
                 DSL.bitNot(DSL.bitAnd(lhsAsNumber(), rhsAsNumber())),
                 DSL.bitOr(lhsAsNumber(), rhsAsNumber())));
 
-        // These operators are not supported in any dialect
-        else if (BIT_NAND == operator)
-            ctx.visit(DSL.bitNot(DSL.bitAnd(lhsAsNumber(), rhsAsNumber())));
-        else if (BIT_NOR == operator)
-            ctx.visit(DSL.bitNot(DSL.bitOr(lhsAsNumber(), rhsAsNumber())));
-        else if (BIT_XNOR == operator)
-            ctx.visit(DSL.bitNot(DSL.bitXor(lhsAsNumber(), rhsAsNumber())));
-
         // ---------------------------------------------------------------------
         // XXX: Date time arithmetic operators
         // ---------------------------------------------------------------------
@@ -241,9 +230,6 @@ final class Expression<T> extends AbstractTransformable<T> {
         else
             ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
     }
-
-
-
 
 
 

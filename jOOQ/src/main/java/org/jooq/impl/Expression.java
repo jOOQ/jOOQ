@@ -77,8 +77,6 @@ import static org.jooq.impl.ExpressionOperator.BIT_OR;
 import static org.jooq.impl.ExpressionOperator.BIT_XNOR;
 import static org.jooq.impl.ExpressionOperator.BIT_XOR;
 import static org.jooq.impl.ExpressionOperator.MULTIPLY;
-import static org.jooq.impl.ExpressionOperator.SHL;
-import static org.jooq.impl.ExpressionOperator.SHR;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 import static org.jooq.impl.Internal.iadd;
 import static org.jooq.impl.Internal.idiv;
@@ -150,7 +148,6 @@ final class Expression<T> extends AbstractTransformable<T> {
     private static final Set<SQLDialect> SUPPORT_BIT_AND        = SQLDialect.supportedBy(H2, HSQLDB);
     private static final Set<SQLDialect> SUPPORT_BIT_OR_XOR     = SQLDialect.supportedBy(H2, HSQLDB);
     private static final Set<SQLDialect> EMULATE_BIT_XOR        = SQLDialect.supportedBy(SQLITE);
-    private static final Set<SQLDialect> EMULATE_SHR_SHL        = SQLDialect.supportedBy(HSQLDB);
     private static final Set<SQLDialect> HASH_OP_FOR_BIT_XOR    = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
     private static final Set<SQLDialect> SUPPORT_YEAR_TO_SECOND = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
@@ -232,45 +229,6 @@ final class Expression<T> extends AbstractTransformable<T> {
                 DSL.bitNot(DSL.bitAnd(lhsAsNumber(), rhsAsNumber())),
                 DSL.bitOr(lhsAsNumber(), rhsAsNumber())));
 
-        else if (operator == SHL || operator == SHR) {
-            switch (family) {
-                case FIREBIRD:
-                    ctx.visit(function(SHL == operator ? N_BIN_SHL : N_BIN_SHR, getDataType(), lhs, rhs));
-                    break;
-
-                case H2:
-                    ctx.visit(function(SHL == operator ? N_LSHIFT : N_RSHIFT, getDataType(), lhs, rhs));
-                    break;
-
-
-
-
-
-
-
-
-
-
-
-                default:
-
-                    // Many dialects don't support shifts. Use multiplication/division instead
-                    if (SHL == operator && EMULATE_SHR_SHL.contains(ctx.dialect()))
-                        ctx.visit(imul(lhs, (Field<? extends Number>) castIfNeeded(DSL.power(two(), rhsAsNumber()), lhs)));
-
-                    // [#3962] This emulation is expensive. If this is emulated, BitCount should
-                    // use division instead of SHR directly
-                    else if (SHR == operator && EMULATE_SHR_SHL.contains(ctx.dialect()))
-                        ctx.visit(idiv(lhs, (Field<? extends Number>) castIfNeeded(DSL.power(two(), rhsAsNumber()), lhs)));
-
-                    // Use the default operator expression for all other cases
-                    else
-                        ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
-
-                    break;
-            }
-        }
-
         // These operators are not supported in any dialect
         else if (BIT_NAND == operator)
             ctx.visit(DSL.bitNot(DSL.bitAnd(lhsAsNumber(), rhsAsNumber())));
@@ -298,8 +256,6 @@ final class Expression<T> extends AbstractTransformable<T> {
         else
             ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
     }
-
-
 
 
 

@@ -16282,6 +16282,118 @@ public class DSL {
     }
 
     /**
+     * The <code>SHL</code> function.
+     * <p>
+     * Left shift all bits in a number
+     *
+     * @param value The number whose bits to shift left.
+     * @param count The number of bits to shift.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> shl(T value, Number count) {
+        return new Shl(Tools.field(value), Tools.field(count));
+    }
+
+    /**
+     * The <code>SHL</code> function.
+     * <p>
+     * Left shift all bits in a number
+     *
+     * @param value The number whose bits to shift left.
+     * @param count The number of bits to shift.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> shl(T value, Field<? extends Number> count) {
+        return new Shl(Tools.field(value), count);
+    }
+
+    /**
+     * The <code>SHL</code> function.
+     * <p>
+     * Left shift all bits in a number
+     *
+     * @param value The number whose bits to shift left.
+     * @param count The number of bits to shift.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> shl(Field<T> value, Number count) {
+        return new Shl(value, Tools.field(count));
+    }
+
+    /**
+     * The <code>SHL</code> function.
+     * <p>
+     * Left shift all bits in a number
+     *
+     * @param value The number whose bits to shift left.
+     * @param count The number of bits to shift.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> shl(Field<T> value, Field<? extends Number> count) {
+        return new Shl(value, count);
+    }
+
+    /**
+     * The <code>SHR</code> function.
+     * <p>
+     * Right shift all bits in a number
+     *
+     * @param value The number whose bits to shift right
+     * @param count The number of bits to shift.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> shr(T value, Number count) {
+        return new Shr(Tools.field(value), Tools.field(count));
+    }
+
+    /**
+     * The <code>SHR</code> function.
+     * <p>
+     * Right shift all bits in a number
+     *
+     * @param value The number whose bits to shift right
+     * @param count The number of bits to shift.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> shr(T value, Field<? extends Number> count) {
+        return new Shr(Tools.field(value), count);
+    }
+
+    /**
+     * The <code>SHR</code> function.
+     * <p>
+     * Right shift all bits in a number
+     *
+     * @param value The number whose bits to shift right
+     * @param count The number of bits to shift.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> shr(Field<T> value, Number count) {
+        return new Shr(value, Tools.field(count));
+    }
+
+    /**
+     * The <code>SHR</code> function.
+     * <p>
+     * Right shift all bits in a number
+     *
+     * @param value The number whose bits to shift right
+     * @param count The number of bits to shift.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> shr(Field<T> value, Field<? extends Number> count) {
+        return new Shr(value, count);
+    }
+
+    /**
      * The <code>SIGN</code> function.
      * <p>
      * Get the sign of a number and return it as any of +1, 0, -1.
@@ -22620,108 +22732,6 @@ public class DSL {
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXNor(Field<T> field1, Field<T> field2) {
         return new Expression<>(ExpressionOperator.BIT_XNOR, false, Tools.nullSafe(field1), Tools.nullSafe(field2));
-    }
-
-    /**
-     * The bitwise left shift operator.
-     *
-     * @see #shl(Field, Field)
-     * @see #power(Field, Number)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> shl(T value1, Number value2) {
-        return shl(Tools.field(value1), Tools.field(value2));
-    }
-
-    /**
-     * The bitwise left shift operator.
-     *
-     * @see #shl(Field, Field)
-     * @see #power(Field, Number)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> shl(T value1, Field<? extends Number> value2) {
-        return shl(Tools.field(value1), Tools.nullSafe(value2));
-    }
-
-    /**
-     * The bitwise left shift operator.
-     *
-     * @see #shl(Field, Field)
-     * @see #power(Field, Number)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> shl(Field<T> value1, Number value2) {
-        return shl(Tools.nullSafe(value1), Tools.field(value2));
-    }
-
-    /**
-     * The bitwise left shift operator.
-     * <p>
-     * Some dialects natively support this using <code>[field1] &lt;&lt; [field2]</code>.
-     * jOOQ emulates this operator in some dialects using
-     * <code>[field1] * power(2, [field2])</code>, where power might also be emulated.
-     *
-     * @see #power(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> shl(Field<T> field1, Field<? extends Number> field2) {
-        return new Expression<>(ExpressionOperator.SHL, false, Tools.nullSafe(field1), Tools.nullSafe(field2));
-    }
-
-    /**
-     * The bitwise right shift operator.
-     *
-     * @see #shr(Field, Field)
-     * @see #power(Field, Number)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> shr(T value1, Number value2) {
-        return shr(Tools.field(value1), Tools.field(value2));
-    }
-
-    /**
-     * The bitwise right shift operator.
-     *
-     * @see #shr(Field, Field)
-     * @see #power(Field, Number)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> shr(T value1, Field<? extends Number> value2) {
-        return shr(Tools.field(value1), Tools.nullSafe(value2));
-    }
-
-    /**
-     * The bitwise right shift operator.
-     *
-     * @see #shr(Field, Field)
-     * @see #power(Field, Number)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> shr(Field<T> value1, Number value2) {
-        return shr(Tools.nullSafe(value1), Tools.field(value2));
-    }
-
-    /**
-     * The bitwise right shift operator.
-     * <p>
-     * Some dialects natively support this using <code>[field1] &gt;&gt; [field2]</code>.
-     * jOOQ emulates this operator in some dialects using
-     * <code>[field1] / power(2, [field2])</code>, where power might also be emulated.
-     *
-     * @see #power(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> shr(Field<T> field1, Field<? extends Number> field2) {
-        return new Expression<>(ExpressionOperator.SHR, false, Tools.nullSafe(field1), Tools.nullSafe(field2));
     }
 
     // ------------------------------------------------------------------------

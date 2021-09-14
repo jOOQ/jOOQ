@@ -326,6 +326,8 @@ final class Names {
     static final Name N_SGN                    = unquotedName("sgn");
     static final Name N_SHIFTLEFT              = unquotedName("shiftleft");
     static final Name N_SHIFTRIGHT             = unquotedName("shiftright");
+    static final Name N_SHL                    = unquotedName("shl");
+    static final Name N_SHR                    = unquotedName("shr");
     static final Name N_SIGN                   = unquotedName("sign");
     static final Name N_SIN                    = unquotedName("sin");
     static final Name N_SINH                   = unquotedName("sinh");

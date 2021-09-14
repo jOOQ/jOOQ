@@ -111,16 +111,6 @@ enum ExpressionOperator {
      */
     BIT_XNOR("~^"),
 
-    /**
-     * Bitwise shift left
-     */
-    SHL("<<"),
-
-    /**
-     * Bitwise shift right
-     */
-    SHR(">>"),
-
     ;
 
     private final String  sql;

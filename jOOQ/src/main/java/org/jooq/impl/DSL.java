@@ -15927,6 +15927,26 @@ public class DSL {
     }
 
     /**
+     * The <code>BIT_NOT</code> function.
+     *
+     * @param value is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitNot(T value) {
+        return new BitNot(Tools.field(value));
+    }
+
+    /**
+     * The <code>BIT_NOT</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitNot(Field<T> value) {
+        return new BitNot(value);
+    }
+
+    /**
      * The <code>BIT_X_NOR</code> function.
      *
      * @param arg1 is wrapped as {@link #val(Object)}.
@@ -22534,29 +22554,6 @@ public class DSL {
     // ------------------------------------------------------------------------
     // XXX Bitwise operations
     // ------------------------------------------------------------------------
-
-    /**
-     * The bitwise not operator.
-     *
-     * @see #bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitNot(T value) {
-        return bitNot(Tools.field(value));
-    }
-
-    /**
-     * The bitwise not operator.
-     * <p>
-     * Most dialects natively support this using <code>~[field]</code>. jOOQ
-     * emulates this operator in some dialects using <code>-[field] - 1</code>
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitNot(Field<T> field) {
-        return new Neg<>(Tools.nullSafe(field), false, ExpressionOperator.BIT_NOT);
-    }
 
     /**
      * The bitwise and operator.

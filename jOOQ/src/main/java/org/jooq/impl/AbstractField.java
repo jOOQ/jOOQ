@@ -365,6 +365,12 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> bitNot() {
+        return DSL.bitNot((Field) this);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Field<T> bitXNor(T arg2) {
         return DSL.bitXNor((Field) this, (Number) arg2);
     }
@@ -559,12 +565,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     // ------------------------------------------------------------------------
     // Unsafe casting is needed here, as bitwise operations only work on
     // numeric values...
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final Field<T> bitNot() {
-        return DSL.bitNot((Field) this);
-    }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override

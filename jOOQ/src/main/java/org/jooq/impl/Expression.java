@@ -254,7 +254,6 @@ final class Expression<T> extends AbstractTransformable<T> {
 
 
 
-
     @Override
     @SuppressWarnings("null")
     public final Field<?> transform(TransformUnneededArithmeticExpressions transform) {

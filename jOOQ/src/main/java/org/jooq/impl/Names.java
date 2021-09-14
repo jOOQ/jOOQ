@@ -96,6 +96,7 @@ final class Names {
     static final Name N_BIT_LENGTH             = unquotedName("bit_length");
     static final Name N_BIT_NAND               = unquotedName("bit_nand");
     static final Name N_BIT_NOR                = unquotedName("bit_nor");
+    static final Name N_BIT_NOT                = unquotedName("bit_not");
     static final Name N_BIT_OR                 = unquotedName("bit_or");
     static final Name N_BIT_OR_AGG             = unquotedName("bit_or_agg");
     static final Name N_BIT_XOR                = unquotedName("bit_xor");

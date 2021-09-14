@@ -710,6 +710,13 @@ extends
     Field<T> bitNor(Field<T> arg2);
 
     /**
+     * The <code>BIT_NOT</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    Field<T> bitNot();
+
+    /**
      * The <code>BIT_X_NOR</code> operator.
      *
      * @param arg2 is wrapped as {@link #val(Object)}.
@@ -1172,15 +1179,6 @@ extends
     // ------------------------------------------------------------------------
     // Bitwise operations
     // ------------------------------------------------------------------------
-
-    /**
-     * The bitwise not operator.
-     *
-     * @see DSL#bitNot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Field<T> bitNot();
 
     /**
      * The bitwise and operator.

@@ -77,11 +77,6 @@ enum ExpressionOperator {
     MODULO("%"),
 
     /**
-     * Bitwise not
-     */
-    BIT_NOT("~"),
-
-    /**
      * Bitwise and
      */
     BIT_AND("&", true, true),

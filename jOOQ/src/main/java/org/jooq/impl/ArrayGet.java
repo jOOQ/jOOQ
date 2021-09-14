@@ -37,30 +37,56 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.cardinality;
-import static org.jooq.impl.DSL.when;
-import static org.jooq.impl.Names.N_ARRAY_GET;
-import static org.jooq.impl.SQLDataType.OTHER;
-import static org.jooq.tools.StringUtils.defaultIfNull;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.DataType;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.Record;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>ARRAY GET</code> statement.
  */
-final class ArrayGet<T> extends AbstractField<T> {
-    private final Field<T[]>     field;
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class ArrayGet<T>
+extends
+    AbstractField<T>
+{
+
+    private final Field<T[]>     array;
     private final Field<Integer> index;
 
-    @SuppressWarnings("unchecked")
-    ArrayGet(Field<T[]> field, Field<Integer> index) {
-        super(N_ARRAY_GET, (DataType<T>) defaultIfNull(field.getDataType().getArrayComponentDataType(), OTHER));
+    ArrayGet(
+        Field<T[]> array,
+        Field<Integer> index
+    ) {
+        super(
+            N_ARRAY_GET,
+            allNotNull((DataType<T>) StringUtils.defaultIfNull(array.getDataType().getArrayComponentDataType(), OTHER))
+        );
 
-        this.field = field;
+        this.array = array;
         this.index = index;
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -72,11 +98,11 @@ final class ArrayGet<T> extends AbstractField<T> {
 
 
             case H2:
-                ctx.visit(N_ARRAY_GET).sql('(').visit(field).sql(", ").visit(index).sql(')');
+                ctx.visit(N_ARRAY_GET).sql('(').visit(array).sql(", ").visit(index).sql(')');
                 break;
 
             case HSQLDB:
-                ctx.visit(when(cardinality(field).ge(index), new Standard()));
+                ctx.visit(when(cardinality(array).ge(index), new Standard()));
                 break;
 
             default:
@@ -93,7 +119,38 @@ final class ArrayGet<T> extends AbstractField<T> {
 
         @Override
         public void accept(Context<?> ctx) {
-            ctx.visit(field).sql('[').visit(index).sql(']');
+            ctx.visit(array).sql('[').visit(index).sql(']');
         }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof ArrayGet) {
+            return
+                StringUtils.equals(array, ((ArrayGet) that).array) &&
+                StringUtils.equals(index, ((ArrayGet) that).index)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

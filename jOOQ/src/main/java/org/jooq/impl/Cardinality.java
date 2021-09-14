@@ -37,32 +37,90 @@
  */
 package org.jooq.impl;
 
-// ...
-import static org.jooq.impl.Names.N_CARDINALITY;
-import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.Record;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>CARDINALITY</code> statement.
  */
-final class Cardinality extends AbstractField<Integer> {
-    private final Field<?>    arg;
+@SuppressWarnings({ "rawtypes", "unused" })
+final class Cardinality
+extends
+    AbstractField<Integer>
+{
 
-    Cardinality(Field<? extends Object[]> arg) {
-        super(N_CARDINALITY, INTEGER);
+    private final Field<? extends Object[]> array;
 
-        this.arg = arg;
+    Cardinality(
+        Field<? extends Object[]> array
+    ) {
+        super(
+            N_CARDINALITY,
+            allNotNull(INTEGER, array)
+        );
+
+        this.array = nullSafeNotNull(array, OTHER.getArrayDataType());
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
 
 
-        ctx.visit(N_CARDINALITY).sql('(').visit(arg).sql(')');
+
+            default:
+                ctx.visit(function(N_CARDINALITY, getDataType(), array));
+                break;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Cardinality) {
+            return
+                StringUtils.equals(array, ((Cardinality) that).array)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

@@ -18972,6 +18972,45 @@ public class DSL {
     }
 
     // -------------------------------------------------------------------------
+    // Array functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * The <code>CARDINALITY</code> function.
+     * <p>
+     * Calculate the cardinality of an array field.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
+    public static Field<Integer> cardinality(Field<? extends Object[]> array) {
+        return new Cardinality(array);
+    }
+
+    /**
+     * The <code>ARRAY_GET</code> function.
+     * <p>
+     * Get an array element at a given index (1 based).
+     *
+     * @param index is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
+    public static <T> Field<T> arrayGet(Field<T[]> array, int index) {
+        return new ArrayGet(array, Tools.field(index));
+    }
+
+    /**
+     * The <code>ARRAY_GET</code> function.
+     * <p>
+     * Get an array element at a given index (1 based).
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
+    public static <T> Field<T> arrayGet(Field<T[]> array, Field<Integer> index) {
+        return new ArrayGet(array, index);
+    }
+
+    // -------------------------------------------------------------------------
     // System functions
     // -------------------------------------------------------------------------
 
@@ -23509,33 +23548,6 @@ public class DSL {
     @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> Field<T[]> array(Select<? extends Record1<T>> select) {
         return new ArraySelect<>(select);
-    }
-
-    /**
-     * Calculate the cardinality of an array field.
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
-    public static Field<Integer> cardinality(Field<? extends Object[]> field) {
-        return new Cardinality(field);
-    }
-
-    /**
-     * Get an array element at a given index (1 based)
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
-    public static <T> Field<T> arrayGet(Field<T[]> field, int index) {
-        return arrayGet(field, Tools.field(index));
-    }
-
-    /**
-     * Get an array element at a given index (1 based)
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
-    public static <T> Field<T> arrayGet(Field<T[]> field, Field<Integer> index) {
-        return new ArrayGet<>(Tools.nullSafe(field), Tools.nullSafe(index));
     }
 
     /**

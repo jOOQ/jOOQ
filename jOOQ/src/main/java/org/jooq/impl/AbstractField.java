@@ -103,7 +103,8 @@ import org.jooq.WindowPartitionByStep;
  * @author Lukas Eder
  */
 abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T>, ScopeMappable {
-    private static final Clause[]            CLAUSES          = { FIELD };
+
+    private static final Clause[] CLAUSES = { FIELD };
 
     AbstractField(Name name, DataType<T> type) {
         this(name, type, null);
@@ -416,6 +417,38 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> mod(Number arg2) {
+        return new Mod(this, Tools.field(arg2));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> mod(Field<? extends Number> arg2) {
+        return new Mod(this, arg2);
+    }
+
+    @Override
+    public final Field<T> modulo(Number arg2) {
+        return mod(arg2);
+    }
+
+    @Override
+    public final Field<T> modulo(Field<? extends Number> arg2) {
+        return mod(arg2);
+    }
+
+    @Override
+    public final Field<T> rem(Number arg2) {
+        return mod(arg2);
+    }
+
+    @Override
+    public final Field<T> rem(Field<? extends Number> arg2) {
+        return mod(arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Field<T> shl(Number count) {
         return DSL.shl((Field) this, count);
     }
@@ -499,16 +532,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return new Expression<>(DIVIDE, false, this, nullSafe(value, getDataType()));
     }
 
-    @Override
-    public final Field<T> mod(Number value) {
-        return mod(Tools.field(value));
-    }
-
-    @Override
-    public final Field<T> mod(Field<? extends Number> value) {
-        return new Mod<>(this, nullSafe(value, getDataType()));
-    }
-
     // ------------------------------------------------------------------------
     // XXX: Arithmetic operation aliases
     // ------------------------------------------------------------------------
@@ -571,26 +594,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     public final Field<T> divide(Field<? extends Number> value) {
         return div(value);
-    }
-
-    @Override
-    public final Field<T> modulo(Number value) {
-        return mod(value);
-    }
-
-    @Override
-    public final Field<T> modulo(Field<? extends Number> value) {
-        return mod(value);
-    }
-
-    @Override
-    public final Field<T> rem(Number value) {
-        return mod(value);
-    }
-
-    @Override
-    public final Field<T> rem(Field<? extends Number> value) {
-        return mod(value);
     }
 
     // ------------------------------------------------------------------------

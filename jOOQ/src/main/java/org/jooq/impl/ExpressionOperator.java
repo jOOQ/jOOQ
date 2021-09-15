@@ -71,11 +71,6 @@ enum ExpressionOperator {
      */
     DIVIDE("/"),
 
-    /**
-     * Modulo
-     */
-    MODULO("%"),
-
     ;
 
     private final String  sql;

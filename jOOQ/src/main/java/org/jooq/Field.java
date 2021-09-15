@@ -779,6 +779,54 @@ extends
     Field<T> bitXor(Field<T> arg2);
 
     /**
+     * The <code>MOD</code> operator.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    Field<T> mod(Number arg2);
+
+    /**
+     * The <code>MOD</code> operator.
+     */
+    @NotNull
+    @Support
+    Field<T> mod(Field<? extends Number> arg2);
+
+    /**
+     * The <code>MODULO</code> operator, an alias for the <code>MOD</code> operator.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    Field<T> modulo(Number arg2);
+
+    /**
+     * The <code>MODULO</code> operator, an alias for the <code>MOD</code> operator.
+     */
+    @NotNull
+    @Support
+    Field<T> modulo(Field<? extends Number> arg2);
+
+    /**
+     * The <code>REM</code> operator, an alias for the <code>MOD</code> operator.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    Field<T> rem(Number arg2);
+
+    /**
+     * The <code>REM</code> operator, an alias for the <code>MOD</code> operator.
+     */
+    @NotNull
+    @Support
+    Field<T> rem(Field<? extends Number> arg2);
+
+    /**
      * The <code>SHL</code> operator.
      * <p>
      * Left shift all bits in a number
@@ -1119,64 +1167,6 @@ extends
     @NotNull
     @Support
     Field<T> divide(Field<? extends Number> value);
-
-    /**
-     * An arithmetic expression getting the modulo of this divided by value.
-     * <p>
-     * This renders the modulo operation where available:
-     * <code><pre>[this] % [value]</pre></code> ... or the modulo function
-     * elsewhere: <code><pre>mod([this], [value])</pre></code>
-     */
-    @NotNull
-    @Support
-    Field<T> mod(Number value);
-
-    /**
-     * An arithmetic expression getting the modulo of this divided by value.
-     * <p>
-     * This renders the modulo operation where available:
-     * <code><pre>[this] % [value]</pre></code> ... or the modulo function
-     * elsewhere: <code><pre>mod([this], [value])</pre></code>
-     */
-    @NotNull
-    @Support
-    Field<T> mod(Field<? extends Number> value);
-
-    /**
-     * An alias for {@link #mod(Number)}.
-     *
-     * @see #mod(Number)
-     */
-    @NotNull
-    @Support
-    Field<T> modulo(Number value);
-
-    /**
-     * An alias for {@link #mod(Field)}.
-     *
-     * @see #mod(Field)
-     */
-    @NotNull
-    @Support
-    Field<T> modulo(Field<? extends Number> value);
-
-    /**
-     * An alias for {@link #mod(Number)}.
-     *
-     * @see #mod(Number)
-     */
-    @NotNull
-    @Support
-    Field<T> rem(Number value);
-
-    /**
-     * An alias for {@link #mod(Field)}.
-     *
-     * @see #mod(Field)
-     */
-    @NotNull
-    @Support
-    Field<T> rem(Field<? extends Number> value);
 
     /**
      * An arithmetic expression getting this value raised to the power of <code>exponent</code>.

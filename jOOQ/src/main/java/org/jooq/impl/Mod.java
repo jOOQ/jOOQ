@@ -37,27 +37,54 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.ExpressionOperator.MODULO;
-import static org.jooq.impl.Keywords.K_MOD;
-import static org.jooq.impl.Names.N_MOD;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.Record;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>MOD</code> statement.
  */
-final class Mod<T> extends AbstractField<T> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Mod<T extends Number>
+extends
+    AbstractField<T>
+{
 
     private final Field<T>                arg1;
     private final Field<? extends Number> arg2;
 
-    Mod(Field<T> arg1, Field<? extends Number> arg2) {
-        super(N_MOD, arg1.getDataType());
+    Mod(
+        Field<T> arg1,
+        Field<? extends Number> arg2
+    ) {
+        super(
+            N_MOD,
+            allNotNull((DataType) dataType(INTEGER, arg1, false), arg1, arg2)
+        );
 
-        this.arg1 = arg1;
-        this.arg2 = arg2;
+        this.arg1 = nullSafeNotNull(arg1, INTEGER);
+        this.arg2 = nullSafeNotNull(arg2, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -77,12 +104,46 @@ final class Mod<T> extends AbstractField<T> {
 
 
 
-            case SQLITE:
-                ctx.visit(new Expression<>(MODULO, false, arg1, arg2));
+
+
+
+            case SQLITE: {
+                ctx.sql('(').visit(arg1).sql(" % ").visit(arg2).sql(')');
                 break;
+            }
+
             default:
-                ctx.visit(K_MOD).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
+                ctx.visit(function(N_MOD, getDataType(), arg1, arg2));
                 break;
         }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Mod) {
+            return
+                StringUtils.equals(arg1, ((Mod) that).arg1) &&
+                StringUtils.equals(arg2, ((Mod) that).arg2)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

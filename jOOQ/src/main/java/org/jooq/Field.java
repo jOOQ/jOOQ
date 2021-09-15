@@ -47,6 +47,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.H2;
@@ -827,6 +828,38 @@ extends
     Field<T> rem(Field<? extends Number> arg2);
 
     /**
+     * The <code>POWER</code> operator.
+     *
+     * @param exponent is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    Field<BigDecimal> power(Number exponent);
+
+    /**
+     * The <code>POWER</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    Field<BigDecimal> power(Field<? extends Number> exponent);
+
+    /**
+     * The <code>POW</code> operator, an alias for the <code>POWER</code> operator.
+     *
+     * @param exponent is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    Field<BigDecimal> pow(Number exponent);
+
+    /**
+     * The <code>POW</code> operator, an alias for the <code>POWER</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    Field<BigDecimal> pow(Field<? extends Number> exponent);
+
+    /**
      * The <code>SHL</code> operator.
      * <p>
      * Left shift all bits in a number
@@ -1167,50 +1200,6 @@ extends
     @NotNull
     @Support
     Field<T> divide(Field<? extends Number> value);
-
-    /**
-     * An arithmetic expression getting this value raised to the power of <code>exponent</code>.
-     * <p>
-     * This renders the power operation where available:
-     * <code><pre>[this] ^ [value]</pre></code> ... or the power function
-     * elsewhere: <code><pre>power([this], [value])</pre></code>
-     *
-     * @see DSL#power(Field, Number)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
-    Field<BigDecimal> pow(Number exponent);
-
-    /**
-     * An arithmetic expression getting this value raised to the power of <code>exponent</code>.
-     * <p>
-     * This renders the power operation where available:
-     * <code><pre>[this] ^ [value]</pre></code> ... or the power function
-     * elsewhere: <code><pre>power([this], [value])</pre></code>
-     *
-     * @see DSL#power(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
-    Field<BigDecimal> pow(Field<? extends Number> exponent);
-
-    /**
-     * An alias for {@link #power(Number)}.
-     *
-     * @see #power(Number)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
-    Field<BigDecimal> power(Number exponent);
-
-    /**
-     * An alias for {@link #power(Field)}.
-     *
-     * @see #power(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
-    Field<BigDecimal> power(Field<? extends Number> exponent);
 
     // ------------------------------------------------------------------------
     // XML predicates

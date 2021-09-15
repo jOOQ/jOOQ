@@ -449,6 +449,28 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<BigDecimal> power(Number exponent) {
+        return DSL.power((Field) this, exponent);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<BigDecimal> power(Field<? extends Number> exponent) {
+        return DSL.power((Field) this, exponent);
+    }
+
+    @Override
+    public final Field<BigDecimal> pow(Number exponent) {
+        return power(exponent);
+    }
+
+    @Override
+    public final Field<BigDecimal> pow(Field<? extends Number> exponent) {
+        return power(exponent);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Field<T> shl(Number count) {
         return DSL.shl((Field) this, count);
     }

@@ -121,10 +121,9 @@ extends
             default:
                 ctx.sql('(');
                 SQL op = Expression.HASH_OP_FOR_BIT_XOR.contains(ctx.dialect()) ? Operators.OP_NUM : Operators.OP_HAT;
-                Expression.acceptAssociative(
+                Expression.<Field<T>, BitXor<T>>acceptAssociative(
                     ctx,
                     this,
-                    BitXor.class,
                     q -> new Expression.Expr<>(q.arg1, op, q.arg2),
                     c -> c.sql(' ')
                 );

@@ -1503,26 +1503,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    public final Field<BigDecimal> pow(Number exponent) {
-        return DSL.power(numeric(), exponent);
-    }
-
-    @Override
-    public final Field<BigDecimal> power(Number exponent) {
-        return pow(exponent);
-    }
-
-    @Override
-    public final Field<BigDecimal> pow(Field<? extends Number> exponent) {
-        return DSL.power(numeric(), exponent);
-    }
-
-    @Override
-    public final Field<BigDecimal> power(Field<? extends Number> exponent) {
-        return pow(exponent);
-    }
-
-    @Override
     @Deprecated
     public final Field<BigDecimal> acos() {
         return DSL.acos(numeric());

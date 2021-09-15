@@ -894,16 +894,17 @@ final class Expression<T> extends AbstractTransformable<T> {
         }
     }
 
-    static final /* record */ class Expr<Q> { private final Q lhs; private final QueryPart op; private final Q rhs; public Expr(Q lhs, QueryPart op, Q rhs) { this.lhs = lhs; this.op = op; this.rhs = rhs; } public Q lhs() { return lhs; } public QueryPart op() { return op; } public Q rhs() { return rhs; } @Override public boolean equals(Object o) { if (!(o instanceof Expr)) return false; Expr other = (Expr) o; if (!java.util.Objects.equals(this.lhs, other.lhs)) return false; if (!java.util.Objects.equals(this.op, other.op)) return false; if (!java.util.Objects.equals(this.rhs, other.rhs)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.lhs, this.op, this.rhs); } @Override public String toString() { return new StringBuilder("Expr[").append("lhs=").append(this.lhs).append(", op=").append(this.op).append(", rhs=").append(this.rhs).append("]").toString(); } }
+    static final /* record */ class Expr<Q extends QueryPart> { private final Q lhs; private final QueryPart op; private final Q rhs; public Expr(Q lhs, QueryPart op, Q rhs) { this.lhs = lhs; this.op = op; this.rhs = rhs; } public Q lhs() { return lhs; } public QueryPart op() { return op; } public Q rhs() { return rhs; } @Override public boolean equals(Object o) { if (!(o instanceof Expr)) return false; Expr other = (Expr) o; if (!java.util.Objects.equals(this.lhs, other.lhs)) return false; if (!java.util.Objects.equals(this.op, other.op)) return false; if (!java.util.Objects.equals(this.rhs, other.rhs)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.lhs, this.op, this.rhs); } @Override public String toString() { return new StringBuilder("Expr[").append("lhs=").append(this.lhs).append(", op=").append(this.op).append(", rhs=").append(this.rhs).append("]").toString(); } }
 
+    @SuppressWarnings("unchecked")
     static final <Q1 extends QueryPart, Q2 extends Q1> void acceptAssociative(
         Context<?> ctx,
         Q2 exp,
-        Class<Q2> expType,
         Function<? super Q2, ? extends Expr<Q1>> expProvider,
         Consumer<? super Context<?>> formatSeparator
     ) {
         Expr<Q1> e = expProvider.apply(exp);
+        Class<Q2> expType = (Class<Q2>) exp.getClass();
 
         // [#10665] Associativity is only given for two operands of the same data type
         boolean associativity = e.lhs instanceof Typed && e.rhs instanceof Typed
@@ -931,7 +932,7 @@ final class Expression<T> extends AbstractTransformable<T> {
             Expr<Q1> exp = expProvider.apply((Q2) q);
 
             if (op.equals(exp.op)) {
-                acceptAssociative(ctx, (Q2) q, expType, expProvider, formatSeparator);
+                acceptAssociative(ctx, (Q2) q, expProvider, formatSeparator);
                 return;
             }
         }

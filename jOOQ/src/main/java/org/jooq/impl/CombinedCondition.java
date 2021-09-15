@@ -154,10 +154,9 @@ final class CombinedCondition extends AbstractCondition {
 
         {
             ctx.sqlIndentStart('(');
-            Expression.acceptAssociative(
+            Expression.<Condition, CombinedCondition>acceptAssociative(
                 ctx,
                 this,
-                CombinedCondition.class,
                 q -> new Expr<>(q.op1, q.operator.toKeyword(), q.op2),
                 Context::formatSeparator
             );

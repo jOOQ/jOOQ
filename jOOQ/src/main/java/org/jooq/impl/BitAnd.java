@@ -112,10 +112,9 @@ extends
 
             default:
                 ctx.sql('(');
-                Expression.acceptAssociative(
+                Expression.<Field<T>, BitAnd<T>>acceptAssociative(
                     ctx,
                     this,
-                    BitAnd.class,
                     q -> new Expression.Expr<>(q.arg1, Operators.OP_AMP, q.arg2),
                     c -> c.sql(' ')
                 );

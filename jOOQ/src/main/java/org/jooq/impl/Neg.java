@@ -93,10 +93,10 @@ final class Neg<T> extends AbstractTransformable<T> {
 
 
 
-        else
-            ctx.sql(operator.toSQL())
-               .sql('(')
-               .visit(field)
-               .sql(')');
+
+        ctx.sql(operator.toSQL())
+           .sql('(')
+           .visit(field)
+           .sql(')');
     }
 }

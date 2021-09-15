@@ -15817,6 +15817,49 @@ public class DSL {
     }
 
     /**
+     * The <code>BIT_AND</code> function.
+     *
+     * @param arg1 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitAnd(T arg1, T arg2) {
+        return new BitAnd(Tools.field(arg1), Tools.field(arg2));
+    }
+
+    /**
+     * The <code>BIT_AND</code> function.
+     *
+     * @param arg1 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitAnd(T arg1, Field<T> arg2) {
+        return new BitAnd(Tools.field(arg1), arg2);
+    }
+
+    /**
+     * The <code>BIT_AND</code> function.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitAnd(Field<T> arg1, T arg2) {
+        return new BitAnd(arg1, Tools.field(arg2, arg1));
+    }
+
+    /**
+     * The <code>BIT_AND</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitAnd(Field<T> arg1, Field<T> arg2) {
+        return new BitAnd(arg1, arg2);
+    }
+
+    /**
      * The <code>BIT_COUNT</code> function.
      * <p>
      * Count the number of bits set in a number
@@ -15947,6 +15990,49 @@ public class DSL {
     }
 
     /**
+     * The <code>BIT_OR</code> function.
+     *
+     * @param arg1 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitOr(T arg1, T arg2) {
+        return new BitOr(Tools.field(arg1), Tools.field(arg2));
+    }
+
+    /**
+     * The <code>BIT_OR</code> function.
+     *
+     * @param arg1 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitOr(T arg1, Field<T> arg2) {
+        return new BitOr(Tools.field(arg1), arg2);
+    }
+
+    /**
+     * The <code>BIT_OR</code> function.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitOr(Field<T> arg1, T arg2) {
+        return new BitOr(arg1, Tools.field(arg2, arg1));
+    }
+
+    /**
+     * The <code>BIT_OR</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitOr(Field<T> arg1, Field<T> arg2) {
+        return new BitOr(arg1, arg2);
+    }
+
+    /**
      * The <code>BIT_X_NOR</code> function.
      *
      * @param arg1 is wrapped as {@link #val(Object)}.
@@ -15987,6 +16073,49 @@ public class DSL {
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXNor(Field<T> arg1, Field<T> arg2) {
         return new BitXNor(arg1, arg2);
+    }
+
+    /**
+     * The <code>BIT_XOR</code> function.
+     *
+     * @param arg1 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitXor(T arg1, T arg2) {
+        return new BitXor(Tools.field(arg1), Tools.field(arg2));
+    }
+
+    /**
+     * The <code>BIT_XOR</code> function.
+     *
+     * @param arg1 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitXor(T arg1, Field<T> arg2) {
+        return new BitXor(Tools.field(arg1), arg2);
+    }
+
+    /**
+     * The <code>BIT_XOR</code> function.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitXor(Field<T> arg1, T arg2) {
+        return new BitXor(arg1, Tools.field(arg2, arg1));
+    }
+
+    /**
+     * The <code>BIT_XOR</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    public static <T extends Number> Field<T> bitXor(Field<T> arg1, Field<T> arg2) {
+        return new BitXor(arg1, arg2);
     }
 
     /**
@@ -22549,157 +22678,6 @@ public class DSL {
     @Support({ POSTGRES })
     public static Field<Integer> grouping(Field<?> field) {
         return function("grouping", Integer.class, field);
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX Bitwise operations
-    // ------------------------------------------------------------------------
-
-    /**
-     * The bitwise and operator.
-     *
-     * @see #bitAnd(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitAnd(T value1, T value2) {
-        return bitAnd(Tools.field(value1), Tools.field(value2));
-    }
-
-    /**
-     * The bitwise and operator.
-     *
-     * @see #bitAnd(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitAnd(T value1, Field<T> value2) {
-        return bitAnd(Tools.field(value1, value2), Tools.nullSafe(value2));
-    }
-
-    /**
-     * The bitwise and operator.
-     *
-     * @see #bitAnd(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitAnd(Field<T> value1, T value2) {
-        return bitAnd(Tools.nullSafe(value1), Tools.field(value2, value1));
-    }
-
-    /**
-     * The bitwise and operator.
-     * <p>
-     * This is not supported by Derby, Ingres
-     * <p>
-     * This renders the and operation where available:
-     * <code><pre>[field1] &amp; [field2]</pre></code>
-     * ... or the and function elsewhere:
-     * <code><pre>bitand([field1], [field2])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitAnd(Field<T> field1, Field<T> field2) {
-        return new Expression<>(ExpressionOperator.BIT_AND, false, Tools.nullSafe(field1), Tools.nullSafe(field2));
-    }
-
-    /**
-     * The bitwise or operator.
-     *
-     * @see #bitOr(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitOr(T value1, T value2) {
-        return bitOr(Tools.field(value1), Tools.field(value2));
-    }
-
-    /**
-     * The bitwise or operator.
-     *
-     * @see #bitOr(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitOr(T value1, Field<T> value2) {
-        return bitOr(Tools.field(value1, value2), Tools.nullSafe(value2));
-    }
-
-    /**
-     * The bitwise or operator.
-     *
-     * @see #bitOr(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitOr(Field<T> value1, T value2) {
-        return bitOr(Tools.nullSafe(value1), Tools.field(value2, value1));
-    }
-
-    /**
-     * The bitwise or operator.
-     * <p>
-     * This is not supported by Derby, Ingres
-     * <p>
-     * This renders the or operation where available:
-     * <code><pre>[field1] | [field2]</pre></code>
-     * ... or the or function elsewhere:
-     * <code><pre>bitor([field1], [field2])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitOr(Field<T> field1, Field<T> field2) {
-        return new Expression<>(ExpressionOperator.BIT_OR, false, Tools.nullSafe(field1), Tools.nullSafe(field2));
-    }
-
-    /**
-     * The bitwise xor operator.
-     *
-     * @see #bitXor(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitXor(T value1, T value2) {
-        return bitXor(Tools.field(value1), Tools.field(value2));
-    }
-
-    /**
-     * The bitwise xor operator.
-     *
-     * @see #bitXor(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitXor(T value1, Field<T> value2) {
-        return bitXor(Tools.field(value1, value2), Tools.nullSafe(value2));
-    }
-
-    /**
-     * The bitwise xor operator.
-     *
-     * @see #bitXor(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitXor(Field<T> value1, T value2) {
-        return bitXor(Tools.nullSafe(value1), Tools.field(value2, value1));
-    }
-
-    /**
-     * The bitwise xor operator.
-     * <p>
-     * This is not supported by Derby, Ingres
-     * <p>
-     * This renders the or operation where available:
-     * <code><pre>[field1] ^ [field2]</pre></code>
-     * ... or the xor function elsewhere:
-     * <code><pre>bitxor([field1], [field2])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitXor(Field<T> field1, Field<T> field2) {
-        return new Expression<>(ExpressionOperator.BIT_XOR, false, Tools.nullSafe(field1), Tools.nullSafe(field2));
     }
 
     // ------------------------------------------------------------------------

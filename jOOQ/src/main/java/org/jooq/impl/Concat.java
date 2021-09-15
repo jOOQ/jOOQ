@@ -40,7 +40,6 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.ExpressionOperator.ADD;
-import static org.jooq.impl.ExpressionOperator.BIT_AND;
 import static org.jooq.impl.ExpressionOperator.CONCAT;
 import static org.jooq.impl.Names.N_CONCAT;
 import static org.jooq.impl.Tools.castAllIfNeeded;
@@ -89,6 +88,7 @@ final class Concat extends AbstractField<String> {
             case MYSQL:
                 ctx.visit(function("concat", SQLDataType.VARCHAR, cast));
                 return;
+
 
 
 

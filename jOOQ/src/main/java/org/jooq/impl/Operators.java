@@ -35,56 +35,33 @@
  *
  *
  */
+package org.jooq.impl;
 
-package org.jooq;
+import static org.jooq.impl.DSL.sql;
 
-import static org.jooq.impl.DSL.keyword;
-
-import org.jooq.impl.DSL;
-
-import org.jetbrains.annotations.*;
-
+import org.jooq.SQL;
 
 /**
- * An operator used for combining conditions
+ * An internal {@link SQL} cache.
  *
  * @author Lukas Eder
  */
-public enum Operator {
+final class Operators {
 
-    /**
-     * The and operator
-     */
-    @NotNull
-    @Support
-    AND("and"),
+    // For a list of standardised HTML entity names, see https://dev.w3.org/html5/html-author/charref
+    static final SQL OP_AMP    = sql("&");
+    static final SQL OP_AST    = sql("*");
+    static final SQL OP_COMMAT = sql("@");
+    static final SQL OP_DOLLAR = sql("$");
+    static final SQL OP_EQUALS = sql("=");
+    static final SQL OP_EXCL   = sql("!");
+    static final SQL OP_GT     = sql(">");
+    static final SQL OP_HAT    = sql("^");
+    static final SQL OP_LT     = sql("<");
+    static final SQL OP_NUM    = sql("#");
+    static final SQL OP_PERCNT = sql("%");
+    static final SQL OP_PLUS   = sql("+");
+    static final SQL OP_QUEST  = sql("?");
+    static final SQL OP_VERBAR = sql("|");
 
-    /**
-     * The or operator
-     */
-    @NotNull
-    @Support
-    OR("or");
-
-    private final String  sql;
-    private final Keyword keyword;
-
-    private Operator(String sql) {
-        this.sql = sql;
-        this.keyword = keyword(sql);
-    }
-
-    /**
-     * A SQL rendition of this operator.
-     */
-    public final String toSQL() {
-        return sql;
-    }
-
-    /**
-     * A {@link Keyword} rendition of this operator.
-     */
-    public final Keyword toKeyword() {
-        return keyword;
-    }
 }

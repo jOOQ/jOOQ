@@ -46,22 +46,15 @@ import static org.jooq.Operator.AND;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.trueCondition;
-import static org.jooq.impl.ExpressionOperator.BIT_XOR;
-import static org.jooq.impl.Keywords.K_AND;
-import static org.jooq.impl.Keywords.K_OR;
-import static org.jooq.impl.Tools.anyMatch;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.function.Function;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.Keyword;
 import org.jooq.Operator;
+import org.jooq.impl.Expression.Expr;
 
 /**
  * @author Lukas Eder
@@ -161,29 +154,14 @@ final class CombinedCondition extends AbstractCondition {
 
         {
             ctx.sqlIndentStart('(');
-            accept0(ctx, operator, op1, op2);
+            Expression.acceptAssociative(
+                ctx,
+                this,
+                CombinedCondition.class,
+                q -> new Expr<>(q.op1, q.operator.toKeyword(), q.op2),
+                Context::formatSeparator
+            );
             ctx.sqlIndentEnd(')');
         }
-    }
-
-    private static final void accept0(Context<?> ctx, Operator operator, Condition op1, Condition op2) {
-        accept1(ctx, operator, op1);
-        ctx.formatSeparator()
-           .visit(operator == AND ? K_AND : K_OR)
-           .sql(' ');
-        accept1(ctx, operator, op2);
-    }
-
-    private static final void accept1(Context<?> ctx, Operator operator, Condition op) {
-        if (op instanceof CombinedCondition) {
-            CombinedCondition c = (CombinedCondition) op;
-
-            if (operator == c.operator) {
-                accept0(ctx, c.operator, c.op1, c.op2);
-                return;
-            }
-        }
-
-        ctx.visit(op);
     }
 }

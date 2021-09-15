@@ -42,37 +42,21 @@ import static org.jooq.DatePart.SECOND;
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
-// ...
 import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-// ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.SQLITE;
-// ...
-// ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTE;
-import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.inlined;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.ExpressionOperator.ADD;
-import static org.jooq.impl.ExpressionOperator.BIT_AND;
-import static org.jooq.impl.ExpressionOperator.BIT_OR;
-import static org.jooq.impl.ExpressionOperator.BIT_XOR;
 import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
-import static org.jooq.impl.Internal.iadd;
-import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_DAY;
@@ -89,12 +73,6 @@ import static org.jooq.impl.Keywords.K_YEAR_TO_MONTH;
 import static org.jooq.impl.Names.N_ADD_DAYS;
 import static org.jooq.impl.Names.N_ADD_MONTHS;
 import static org.jooq.impl.Names.N_ADD_SECONDS;
-import static org.jooq.impl.Names.N_BIN_AND;
-import static org.jooq.impl.Names.N_BIN_OR;
-import static org.jooq.impl.Names.N_BIN_XOR;
-import static org.jooq.impl.Names.N_BITAND;
-import static org.jooq.impl.Names.N_BITOR;
-import static org.jooq.impl.Names.N_BITXOR;
 import static org.jooq.impl.Names.N_DATEADD;
 import static org.jooq.impl.Names.N_DATE_ADD;
 import static org.jooq.impl.Names.N_SQL_TSI_FRAC_SECOND;
@@ -111,6 +89,8 @@ import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.sql.Timestamp;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 
 import org.jooq.Context;
@@ -119,7 +99,9 @@ import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.Param;
 // ...
+import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
+import org.jooq.Typed;
 import org.jooq.conf.TransformUnneededArithmeticExpressions;
 import org.jooq.exception.DataTypeException;
 import org.jooq.types.DayToSecond;
@@ -128,16 +110,13 @@ import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 
 final class Expression<T> extends AbstractTransformable<T> {
-    private static final Set<SQLDialect> SUPPORT_BIT_AND        = SQLDialect.supportedBy(H2, HSQLDB);
-    private static final Set<SQLDialect> SUPPORT_BIT_OR_XOR     = SQLDialect.supportedBy(H2, HSQLDB);
-    private static final Set<SQLDialect> EMULATE_BIT_XOR        = SQLDialect.supportedBy(SQLITE);
-    private static final Set<SQLDialect> HASH_OP_FOR_BIT_XOR    = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
-    private static final Set<SQLDialect> SUPPORT_YEAR_TO_SECOND = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    static final Set<SQLDialect>     HASH_OP_FOR_BIT_XOR    = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    static final Set<SQLDialect>     SUPPORT_YEAR_TO_SECOND = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
-    private final ExpressionOperator     operator;
-    private final boolean                internal;
-    private final Field<T>               lhs;
-    private final Field<?>               rhs;
+    private final ExpressionOperator operator;
+    private final boolean            internal;
+    private final Field<T>           lhs;
+    private final Field<?>           rhs;
 
     Expression(ExpressionOperator operator, boolean internal, Field<T> lhs, Field<?> rhs) {
         super(DSL.name(operator.toSQL()), lhs.getDataType());
@@ -182,41 +161,11 @@ final class Expression<T> extends AbstractTransformable<T> {
 
 
         // ---------------------------------------------------------------------
-        // XXX: Bitwise operators
-        // ---------------------------------------------------------------------
-
-        // DB2, H2 and HSQLDB know functions, instead of operators
-        if (BIT_AND == operator && SUPPORT_BIT_AND.contains(ctx.dialect()))
-            ctx.visit(function(N_BITAND, getDataType(), lhs, rhs));
-        else if (BIT_AND == operator && FIREBIRD == family)
-            ctx.visit(function(N_BIN_AND, getDataType(), lhs, rhs));
-        else if (BIT_XOR == operator && SUPPORT_BIT_OR_XOR.contains(ctx.dialect()))
-            ctx.visit(function(N_BITXOR, getDataType(), lhs, rhs));
-        else if (BIT_XOR == operator && FIREBIRD == family)
-            ctx.visit(function(N_BIN_XOR, getDataType(), lhs, rhs));
-        else if (BIT_OR == operator && SUPPORT_BIT_OR_XOR.contains(ctx.dialect()))
-            ctx.visit(function(N_BITOR, getDataType(), lhs, rhs));
-        else if (BIT_OR == operator && FIREBIRD == family)
-            ctx.visit(function(N_BIN_OR, getDataType(), lhs, rhs));
-
-
-
-
-
-
-
-        // ~(a & b) & (a | b)
-        else if (BIT_XOR == operator && EMULATE_BIT_XOR.contains(ctx.dialect()))
-            ctx.visit(DSL.bitAnd(
-                DSL.bitNot(DSL.bitAnd(lhsAsNumber(), rhsAsNumber())),
-                DSL.bitOr(lhsAsNumber(), rhsAsNumber())));
-
-        // ---------------------------------------------------------------------
         // XXX: Date time arithmetic operators
         // ---------------------------------------------------------------------
 
         // [#585] Date time arithmetic for numeric or interval RHS
-        else if ((ADD == operator || SUBTRACT == operator) &&
+        if ((ADD == operator || SUBTRACT == operator) &&
              lhs.getDataType().isDateTime() &&
             (rhs.getDataType().isNumeric() ||
              rhs.getDataType().isInterval()))
@@ -230,9 +179,6 @@ final class Expression<T> extends AbstractTransformable<T> {
         else
             ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
     }
-
-
-
 
 
 
@@ -922,11 +868,8 @@ final class Expression<T> extends AbstractTransformable<T> {
             ctx.sql(')');
         }
 
-        private static final void accept0(Context<?> ctx, ExpressionOperator operator, Field<?> lhs, Field<?> rhs) {
+        static final void accept0(Context<?> ctx, ExpressionOperator operator, Field<?> lhs, Field<?> rhs) {
             String op = operator.toSQL();
-
-            if (operator == BIT_XOR && HASH_OP_FOR_BIT_XOR.contains(ctx.dialect()))
-                op = "#";
 
             // [#10665] Associativity is only given for two operands of the same data type
             boolean associativity = operator.associative() && lhs.getDataType().equals(rhs.getDataType());
@@ -938,7 +881,7 @@ final class Expression<T> extends AbstractTransformable<T> {
             accept1(ctx, operator, rhs, associativity);
         }
 
-        private static final void accept1(Context<?> ctx, ExpressionOperator operator, Field<?> field, boolean associativity) {
+        static final void accept1(Context<?> ctx, ExpressionOperator operator, Field<?> field, boolean associativity) {
             if (associativity && field instanceof Expression) {
                 Expression<?> expr = (Expression<?>) field;
 
@@ -950,5 +893,50 @@ final class Expression<T> extends AbstractTransformable<T> {
 
             ctx.visit(field);
         }
+    }
+
+    static final /* record */ class Expr<Q> { private final Q lhs; private final QueryPart op; private final Q rhs; public Expr(Q lhs, QueryPart op, Q rhs) { this.lhs = lhs; this.op = op; this.rhs = rhs; } public Q lhs() { return lhs; } public QueryPart op() { return op; } public Q rhs() { return rhs; } @Override public boolean equals(Object o) { if (!(o instanceof Expr)) return false; Expr other = (Expr) o; if (!java.util.Objects.equals(this.lhs, other.lhs)) return false; if (!java.util.Objects.equals(this.op, other.op)) return false; if (!java.util.Objects.equals(this.rhs, other.rhs)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.lhs, this.op, this.rhs); } @Override public String toString() { return new StringBuilder("Expr[").append("lhs=").append(this.lhs).append(", op=").append(this.op).append(", rhs=").append(this.rhs).append("]").toString(); } }
+
+    static final <Q1 extends QueryPart, Q2 extends Q1> void acceptAssociative(
+        Context<?> ctx,
+        Q2 exp,
+        Class<Q2> expType,
+        Function<? super Q2, ? extends Expr<Q1>> expProvider,
+        Consumer<? super Context<?>> formatSeparator
+    ) {
+        Expr<Q1> e = expProvider.apply(exp);
+
+        // [#10665] Associativity is only given for two operands of the same data type
+        boolean associativity = e.lhs instanceof Typed && e.rhs instanceof Typed
+            ? ((Typed<?>) e.lhs).getDataType().equals(((Typed<?>) e.rhs).getDataType())
+            : true;
+
+        acceptAssociative(ctx, associativity, e.lhs, e.op, expType, expProvider, formatSeparator);
+        formatSeparator.accept(ctx);
+        ctx.visit(e.op)
+           .sql(' ');
+        acceptAssociative(ctx, associativity, e.rhs, e.op, expType, expProvider, formatSeparator);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static final <Q1 extends QueryPart, Q2 extends Q1> void acceptAssociative(
+        Context<?> ctx,
+        boolean associativity,
+        Q1 q,
+        QueryPart op,
+        Class<Q2> expType,
+        Function<? super Q2, ? extends Expr<Q1>> expProvider,
+        Consumer<? super Context<?>> formatSeparator
+    ) {
+        if (associativity && expType.isInstance(q)) {
+            Expr<Q1> exp = expProvider.apply((Q2) q);
+
+            if (op.equals(exp.op)) {
+                acceptAssociative(ctx, (Q2) q, expType, expProvider, formatSeparator);
+                return;
+            }
+        }
+
+        ctx.visit(q);
     }
 }

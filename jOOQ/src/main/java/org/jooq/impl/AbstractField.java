@@ -55,13 +55,11 @@ import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
 import static org.jooq.Comparator.NOT_SIMILAR_TO;
 import static org.jooq.Comparator.SIMILAR_TO;
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.DIVIDE;
 import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
-import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.fieldsArray;
 import static org.jooq.impl.Tools.map;
@@ -72,7 +70,6 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -341,6 +338,18 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> bitAnd(T arg2) {
+        return DSL.bitAnd((Field) this, (Number) arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> bitAnd(Field<T> arg2) {
+        return DSL.bitAnd((Field) this, (Field<Number>) arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Field<T> bitNand(T arg2) {
         return DSL.bitNand((Field) this, (Number) arg2);
     }
@@ -371,6 +380,18 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> bitOr(T arg2) {
+        return DSL.bitOr((Field) this, (Number) arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> bitOr(Field<T> arg2) {
+        return DSL.bitOr((Field) this, (Field<Number>) arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Field<T> bitXNor(T arg2) {
         return DSL.bitXNor((Field) this, (Number) arg2);
     }
@@ -379,6 +400,18 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Field<T> bitXNor(Field<T> arg2) {
         return DSL.bitXNor((Field) this, (Field<Number>) arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> bitXor(T arg2) {
+        return DSL.bitXor((Field) this, (Number) arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Field<T> bitXor(Field<T> arg2) {
+        return DSL.bitXor((Field) this, (Field<Number>) arg2);
     }
 
     @Override
@@ -558,48 +591,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     public final Field<T> rem(Field<? extends Number> value) {
         return mod(value);
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: Bitwise operations
-    // ------------------------------------------------------------------------
-    // Unsafe casting is needed here, as bitwise operations only work on
-    // numeric values...
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final Field<T> bitAnd(T value) {
-        return DSL.bitAnd((Field) this, (Field) val(value, this));
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final Field<T> bitAnd(Field<T> value) {
-        return DSL.bitAnd((Field) this, (Field) value);
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final Field<T> bitOr(T value) {
-        return DSL.bitOr((Field) this, (Field) val(value, this));
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final Field<T> bitOr(Field<T> value) {
-        return DSL.bitOr((Field) this, (Field) value);
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final Field<T> bitXor(T value) {
-        return DSL.bitXor((Field) this, (Field) val(value, this));
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final Field<T> bitXor(Field<T> value) {
-        return DSL.bitXor((Field) this, (Field) value);
     }
 
     // ------------------------------------------------------------------------

@@ -76,21 +76,6 @@ enum ExpressionOperator {
      */
     MODULO("%"),
 
-    /**
-     * Bitwise and
-     */
-    BIT_AND("&", true, true),
-
-    /**
-     * Bitwise or
-     */
-    BIT_OR("|", true, true),
-
-    /**
-     * Bitwise xor
-     */
-    BIT_XOR("^", true, true),
-
     ;
 
     private final String  sql;

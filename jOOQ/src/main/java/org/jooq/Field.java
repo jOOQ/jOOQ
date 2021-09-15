@@ -79,8 +79,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.jooq.conf.Settings;
-import org.jooq.exception.MappingException;
-import org.jooq.impl.CustomField;
 import org.jooq.impl.DSL;
 import org.jooq.types.Interval;
 // ...
@@ -678,6 +676,22 @@ extends
 
 
     /**
+     * The <code>BIT_AND</code> operator.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    Field<T> bitAnd(T arg2);
+
+    /**
+     * The <code>BIT_AND</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    Field<T> bitAnd(Field<T> arg2);
+
+    /**
      * The <code>BIT_NAND</code> operator.
      *
      * @param arg2 is wrapped as {@link #val(Object)}.
@@ -717,6 +731,22 @@ extends
     Field<T> bitNot();
 
     /**
+     * The <code>BIT_OR</code> operator.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    Field<T> bitOr(T arg2);
+
+    /**
+     * The <code>BIT_OR</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    Field<T> bitOr(Field<T> arg2);
+
+    /**
      * The <code>BIT_X_NOR</code> operator.
      *
      * @param arg2 is wrapped as {@link #val(Object)}.
@@ -731,6 +761,22 @@ extends
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> bitXNor(Field<T> arg2);
+
+    /**
+     * The <code>BIT_XOR</code> operator.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    Field<T> bitXor(T arg2);
+
+    /**
+     * The <code>BIT_XOR</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    Field<T> bitXor(Field<T> arg2);
 
     /**
      * The <code>SHL</code> operator.
@@ -1175,64 +1221,6 @@ extends
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Field<BigDecimal> power(Field<? extends Number> exponent);
-
-    // ------------------------------------------------------------------------
-    // Bitwise operations
-    // ------------------------------------------------------------------------
-
-    /**
-     * The bitwise and operator.
-     *
-     * @see DSL#bitAnd(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Field<T> bitAnd(T value);
-
-    /**
-     * The bitwise and operator.
-     *
-     * @see DSL#bitAnd(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Field<T> bitAnd(Field<T> value);
-
-    /**
-     * The bitwise or operator.
-     *
-     * @see DSL#bitOr(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Field<T> bitOr(T value);
-
-    /**
-     * The bitwise or operator.
-     *
-     * @see DSL#bitOr(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Field<T> bitOr(Field<T> value);
-
-    /**
-     * The bitwise xor operator.
-     *
-     * @see DSL#bitXor(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Field<T> bitXor(T value);
-
-    /**
-     * The bitwise xor operator.
-     *
-     * @see DSL#bitXor(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Field<T> bitXor(Field<T> value);
 
     // ------------------------------------------------------------------------
     // XML predicates

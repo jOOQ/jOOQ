@@ -58,10 +58,10 @@ import java.util.*;
 
 
 /**
- * The <code>IS DISTINCT FROM</code> statement.
+ * The <code>IS NOT DISTINCT FROM</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class IsDistinctFrom<T>
+final class IsNotDistinctFrom<T>
 extends
     AbstractCondition
 {
@@ -69,7 +69,7 @@ extends
     private final Field<T> arg1;
     private final Field<T> arg2;
 
-    IsDistinctFrom(
+    IsNotDistinctFrom(
         Field<T> arg1,
         Field<T> arg2
     ) {
@@ -84,22 +84,10 @@ extends
 
 
 
-    static final Set<SQLDialect> EMULATE_DISTINCT_PREDICATE  = SQLDialect.supportedUntil(CUBRID, DERBY);
-    static final Set<SQLDialect> SUPPORT_DISTINCT_WITH_ARROW = SQLDialect.supportedBy(MARIADB, MYSQL);
-
-
-
-
-
-    @Override
-    final boolean isNullable() {
-        return false;
-    }
-
     @Override
     public final void accept(Context<?> ctx) {
         if (arg1.getDataType().isEmbeddable() && arg2.getDataType().isEmbeddable())
-            ctx.visit(row(embeddedFields(arg1)).isDistinctFrom(row(embeddedFields(arg2))));
+            ctx.visit(row(embeddedFields(arg1)).isNotDistinctFrom(row(embeddedFields(arg2))));
 
 
 
@@ -109,19 +97,25 @@ extends
         // [#3511]         These dialects need to emulate the IS DISTINCT FROM predicate,
         //                 optimally using INTERSECT...
         // [#7222] [#7224] Make sure the columns are aliased
-        else if (EMULATE_DISTINCT_PREDICATE.contains(ctx.dialect()))
-            ctx.visit(notExists(select(arg1.as("x")).intersect(select(arg2.as("x")))));
+        else if (IsDistinctFrom.EMULATE_DISTINCT_PREDICATE.contains(ctx.dialect()))
+            ctx.visit(exists(select(arg1.as("x")).intersect(select(arg2.as("x")))));
 
         // MySQL knows the <=> operator
-        else if (SUPPORT_DISTINCT_WITH_ARROW.contains(ctx.dialect()))
-            ctx.visit(condition("{not}({0} <=> {1})", arg1, arg2));
+        else if (IsDistinctFrom.SUPPORT_DISTINCT_WITH_ARROW.contains(ctx.dialect()))
+            ctx.visit(condition("{0} <=> {1}", arg1, arg2));
 
         // SQLite knows the IS / IS NOT predicate
         else if (SQLITE == ctx.family())
-            ctx.visit(condition("{0} {is not} {1}", arg1, arg2));
+            ctx.visit(condition("{0} {is} {1}", arg1, arg2));
+
+
+
+
+
+
 
         else
-            ctx.visit(arg1).sql(' ').visit(K_IS).sql(' ').visit(K_DISTINCT).sql(' ').visit(K_FROM).sql(' ').visit(arg2);
+            ctx.visit(arg1).sql(' ').visit(K_IS).sql(' ').visit(K_NOT).sql(' ').visit(K_DISTINCT).sql(' ').visit(K_FROM).sql(' ').visit(arg2);
     }
 
     final Field<T> $arg1() {
@@ -140,10 +134,10 @@ extends
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof IsDistinctFrom) {
+        if (that instanceof IsNotDistinctFrom) {
             return
-                StringUtils.equals(arg1, ((IsDistinctFrom) that).arg1) &&
-                StringUtils.equals(arg2, ((IsDistinctFrom) that).arg2)
+                StringUtils.equals(arg1, ((IsNotDistinctFrom) that).arg1) &&
+                StringUtils.equals(arg2, ((IsNotDistinctFrom) that).arg2)
             ;
         }
         else

@@ -42,8 +42,6 @@ import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.GREATER;
 import static org.jooq.Comparator.GREATER_OR_EQUAL;
 import static org.jooq.Comparator.IN;
-import static org.jooq.Comparator.IS_DISTINCT_FROM;
-import static org.jooq.Comparator.IS_NOT_DISTINCT_FROM;
 import static org.jooq.Comparator.LESS;
 import static org.jooq.Comparator.LESS_OR_EQUAL;
 import static org.jooq.Comparator.LIKE;
@@ -336,6 +334,46 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // Boolean functions
+    // -------------------------------------------------------------------------
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition isDistinctFrom(T arg2) {
+        return new IsDistinctFrom(this, Tools.field(arg2, this));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition isDistinctFrom(Select<? extends Record1<T>> arg2) {
+        return new IsDistinctFrom(this, DSL.field(arg2));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition isDistinctFrom(Field<T> arg2) {
+        return new IsDistinctFrom(this, arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition isNotDistinctFrom(T arg2) {
+        return new IsNotDistinctFrom(this, Tools.field(arg2, this));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition isNotDistinctFrom(Select<? extends Record1<T>> arg2) {
+        return new IsNotDistinctFrom(this, DSL.field(arg2));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition isNotDistinctFrom(Field<T> arg2) {
+        return new IsNotDistinctFrom(this, arg2);
+    }
 
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -650,36 +688,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     public final Condition isNotNull() {
         return new IsNull(this, false);
-    }
-
-    @Override
-    public final Condition isDistinctFrom(T value) {
-        return isDistinctFrom(Tools.field(value, this));
-    }
-
-    @Override
-    public final Condition isDistinctFrom(Field<T> field) {
-        return compare(IS_DISTINCT_FROM, field);
-    }
-
-    @Override
-    public final Condition isDistinctFrom(Select<? extends Record1<T>> select) {
-        return isDistinctFrom(DSL.field(select));
-    }
-
-    @Override
-    public final Condition isNotDistinctFrom(T value) {
-        return isNotDistinctFrom(Tools.field(value, this));
-    }
-
-    @Override
-    public final Condition isNotDistinctFrom(Field<T> field) {
-        return compare(IS_NOT_DISTINCT_FROM, field);
-    }
-
-    @Override
-    public final Condition isNotDistinctFrom(Select<? extends Record1<T>> select) {
-        return isNotDistinctFrom(DSL.field(select));
     }
 
     /**
@@ -1381,9 +1389,9 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     public final Condition compare(Comparator comparator, Field<T> field) {
         switch (comparator) {
             case IS_DISTINCT_FROM:
+                return new IsDistinctFrom<>(this, nullSafe(field, getDataType()));
             case IS_NOT_DISTINCT_FROM:
-                return new IsDistinctFrom<>(this, nullSafe(field, getDataType()), comparator);
-
+                return new IsNotDistinctFrom<>(this, nullSafe(field, getDataType()));
             default:
                 return new CompareCondition(this, nullSafe(field, getDataType()), comparator);
         }

@@ -14548,28 +14548,6 @@ public class DSL {
     }
 
     /**
-     * Create a unique condition.
-     * <p>
-     * <code>UNIQUE ([query])</code>
-     */
-    @NotNull
-    @Support
-    public static Condition unique(Select<?> query) {
-        return new UniqueCondition(query);
-    }
-
-    /**
-     * Create a not unique condition.
-     * <p>
-     * <code>NOT UNIQUE ([query])</code>
-     */
-    @NotNull
-    @Support
-    public static Condition notUnique(Select<?> query) {
-        return not(unique(query));
-    }
-
-    /**
      * Invert a boolean value.
      * <p>
      * This is convenience for calling {@link #field(Condition)},
@@ -15685,6 +15663,24 @@ public class DSL {
     @Support
     public static Condition not(Condition arg1) {
         return new Not(arg1);
+    }
+
+    /**
+     * The <code>UNIQUE</code> function.
+     */
+    @NotNull
+    @Support
+    public static Condition unique(Select<?> query) {
+        return new Unique(query);
+    }
+
+    /**
+     * The <code>NOT UNIQUE</code> function.
+     */
+    @NotNull
+    @Support
+    public static Condition notUnique(Select<?> query) {
+        return not(unique(query));
     }
 
     // -------------------------------------------------------------------------

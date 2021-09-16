@@ -35,35 +35,51 @@
  *
  *
  */
-
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.count;
-import static org.jooq.impl.DSL.exists;
-import static org.jooq.impl.DSL.notExists;
-import static org.jooq.impl.DSL.one;
-import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Keywords.K_NOT;
-import static org.jooq.impl.Keywords.K_UNIQUE;
-import static org.jooq.impl.Tools.visitSubquery;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Condition;
-import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.Select;
-import org.jooq.Table;
+import org.jooq.*;
+import org.jooq.Record;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+
 
 /**
- * @author Knut Wannheden
+ * The <code>UNIQUE</code> statement.
  */
-final class UniqueCondition extends AbstractCondition {
+@SuppressWarnings({ "rawtypes", "unused" })
+final class Unique
+extends
+    AbstractCondition
+{
 
     private final Select<?> query;
 
-    UniqueCondition(Select<?> query) {
+    Unique(
+        Select<?> query
+    ) {
+
         this.query = query;
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     final boolean isNullable() {
@@ -91,5 +107,22 @@ final class UniqueCondition extends AbstractCondition {
                 ctx.visit(notExists(subquery));
                 break;
         }
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Unique) {
+            return
+                StringUtils.equals(query, ((Unique) that).query)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

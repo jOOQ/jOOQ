@@ -192,6 +192,10 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
 
 
 
+    // -------------------------------------------------------------------------
+    // Generic predicates
+    // -------------------------------------------------------------------------
+
     @Override
     public final Condition not() {
         return DSL.not(this);

@@ -2418,52 +2418,41 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
     @PlainSQL
     TableOnStep<Record> straightJoin(Name name);
 
+
+
     // -------------------------------------------------------------------------
-    // XXX: Convenience methods and synthetic methods
+    // Generic predicates
     // -------------------------------------------------------------------------
 
     /**
-     * Create a predicate comparing records from self-joined tables.
-     * <p>
-     * This is a convenience method for self-joins, comparing complete records
-     * between tables.
-     * <p>
-     * For example: <code><pre>
-     * MyTable a = MY_TABLE.as("a");
-     * MyTable b = MY_TABLE.as("b");
-     *
-     * DSL.using(configuration)
-     *    .select()
-     *    .from(a)
-     *    .join(b).on(a.eq(b));
-     * </pre></code>
-     *
-     * @see #equal(Table)
+     * The <code>EQ</code> operator.
      */
     @NotNull
     @Support
-    Condition eq(Table<R> table);
+    Condition eq(Table<R> arg2);
 
     /**
-     * Create a predicate comparing records from self-joined tables.
-     * <p>
-     * This is a convenience method for self-joins, comparing complete records
-     * between tables.
-     * <p>
-     * For example:
-     * <code><pre>
-     * MyTable a = MY_TABLE.as("a");
-     * MyTable b = MY_TABLE.as("b");
-     *
-     * DSL.using(configuration)
-     *    .select()
-     *    .from(a)
-     *    .join(b).on(a.equal(b));
-     * </pre></code>
+     * The <code>EQUAL</code> operator, an alias for the <code>EQ</code> operator.
      */
     @NotNull
     @Support
-    Condition equal(Table<R> table);
+    Condition equal(Table<R> arg2);
+
+    /**
+     * The <code>NE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition ne(Table<R> arg2);
+
+    /**
+     * The <code>NOT_EQUAL</code> operator, an alias for the <code>NE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition notEqual(Table<R> arg2);
+
+
 
     /**
      * {@inheritDoc}
@@ -2473,49 +2462,6 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      */
     @Override
     boolean equals(Object other);
-
-    /**
-     * Create a predicate comparing records from self-non-equi-joined tables.
-     * This is a convenience method for self-joins, comparing complete records
-     * between tables.
-     * <p>
-     * For example:
-     * <code><pre>
-     * MyTable a = MY_TABLE.as("a");
-     * MyTable b = MY_TABLE.as("b");
-     *
-     * DSL.using(configuration)
-     *    .select()
-     *    .from(a)
-     *    .join(b).on(a.ne(b));
-     * </pre></code>
-     *
-     * @see #notEqual(Table)
-     */
-    @NotNull
-    @Support
-    Condition ne(Table<R> table);
-
-    /**
-     * Create a predicate comparing records from self-non-equi-joined tables.
-     * <p>
-     * This is a convenience method for self-joins, comparing complete records
-     * between tables.
-     * <p>
-     * For example:
-     * <code><pre>
-     * MyTable a = MY_TABLE.as("a");
-     * MyTable b = MY_TABLE.as("b");
-     *
-     * DSL.using(configuration)
-     *    .select()
-     *    .from(a)
-     *    .join(b).on(a.notEqual(b));
-     * </pre></code>
-     */
-    @NotNull
-    @Support
-    Condition notEqual(Table<R> table);
 
     // -------------------------------------------------------------------------
     // XXX: Exotic and vendor-specific clauses on tables

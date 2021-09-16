@@ -756,29 +756,33 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
         return createField(name, type, this, comment, converter, binding);
     }
 
-    // ------------------------------------------------------------------------
-    // XXX: Convenience methods and synthetic methods
-    // ------------------------------------------------------------------------
+
+
+    // -------------------------------------------------------------------------
+    // Generic predicates
+    // -------------------------------------------------------------------------
 
     @Override
-    public final Condition eq(Table<R> that) {
-        return equal(that);
+    public final Condition eq(Table<R> arg2) {
+        return new TableEq(this, arg2);
     }
 
     @Override
-    public final Condition equal(Table<R> that) {
-        return new TableComparison<>(this, that, Comparator.EQUALS);
+    public final Condition equal(Table<R> arg2) {
+        return eq(arg2);
     }
 
     @Override
-    public final Condition ne(Table<R> that) {
-        return notEqual(that);
+    public final Condition ne(Table<R> arg2) {
+        return new TableNe(this, arg2);
     }
 
     @Override
-    public final Condition notEqual(Table<R> that) {
-        return new TableComparison<>(this, that, Comparator.NOT_EQUALS);
+    public final Condition notEqual(Table<R> arg2) {
+        return ne(arg2);
     }
+
+
 
     // ------------------------------------------------------------------------
     // XXX: Other API

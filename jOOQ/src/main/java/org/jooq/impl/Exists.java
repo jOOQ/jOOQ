@@ -104,6 +104,11 @@ extends
         }
     }
 
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return CLAUSES_EXISTS;
+    }
+
 
 
 

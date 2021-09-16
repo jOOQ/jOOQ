@@ -74,8 +74,8 @@ extends
         Field<T> arg2
     ) {
 
-        this.arg1 = nullSafeNotNull(arg1, (DataType) OTHER);
-        this.arg2 = nullSafeNotNull(arg2, (DataType) OTHER);
+        this.arg1 = nullableIf(true, Tools.nullSafe(arg1, arg2.getDataType()));
+        this.arg2 = nullableIf(true, Tools.nullSafe(arg2, arg1.getDataType()));
     }
 
     // -------------------------------------------------------------------------

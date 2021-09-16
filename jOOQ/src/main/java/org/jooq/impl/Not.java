@@ -58,24 +58,21 @@ import java.util.*;
 
 
 /**
- * The <code>IS NOT DISTINCT FROM</code> statement.
+ * The <code>NOT</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class IsNotDistinctFrom<T>
+@SuppressWarnings({ "unused" })
+final class Not
 extends
     AbstractCondition
 {
 
-    private final Field<T> arg1;
-    private final Field<T> arg2;
+    private final Condition arg1;
 
-    IsNotDistinctFrom(
-        Field<T> arg1,
-        Field<T> arg2
+    Not(
+        Condition arg1
     ) {
 
-        this.arg1 = nullableIf(true, Tools.nullSafe(arg1, arg2.getDataType()));
-        this.arg2 = nullableIf(true, Tools.nullSafe(arg2, arg1.getDataType()));
+        this.arg1 = arg1;
     }
 
     // -------------------------------------------------------------------------
@@ -84,46 +81,35 @@ extends
 
 
 
+    private static final Clause[] CLAUSES = { Clause.CONDITION, Clause.CONDITION_NOT };
+
+    @Override
+    boolean isNullable() {
+        return !(arg1 instanceof AbstractCondition) || ((AbstractCondition) arg1).isNullable();
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
-        if (arg1.getDataType().isEmbeddable() && arg2.getDataType().isEmbeddable())
-            ctx.visit(row(embeddedFields(arg1)).isNotDistinctFrom(row(embeddedFields(arg2))));
+        switch (ctx.family()) {
 
 
 
 
 
 
-        // [#3511]         These dialects need to emulate the IS DISTINCT FROM predicate,
-        //                 optimally using INTERSECT...
-        // [#7222] [#7224] Make sure the columns are aliased
-        else if (IsDistinctFrom.EMULATE_DISTINCT_PREDICATE.contains(ctx.dialect()))
-            ctx.visit(exists(select(arg1.as("x")).intersect(select(arg2.as("x")))));
-
-        // MySQL knows the <=> operator
-        else if (IsDistinctFrom.SUPPORT_DISTINCT_WITH_ARROW.contains(ctx.dialect()))
-            ctx.visit(condition("{0} <=> {1}", arg1, arg2));
-
-        // SQLite knows the IS / IS NOT predicate
-        else if (SQLITE == ctx.family())
-            ctx.visit(condition("{0} {is} {1}", arg1, arg2));
-
-
-
-
-
-
-
-        else
-            ctx.visit(arg1).sql(' ').visit(K_IS).sql(' ').visit(K_NOT).sql(' ').visit(K_DISTINCT).sql(' ').visit(K_FROM).sql(' ').visit(arg2);
+            default:
+                ctx.visit(K_NOT).sql(" (").visit(arg1).sql(')');
+                break;
+        }
     }
 
-    final Field<T> $arg1() {
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return CLAUSES;
+    }
+
+    final Condition $arg1() {
         return arg1;
-    }
-
-    final Field<T> $arg2() {
-        return arg2;
     }
 
 
@@ -134,10 +120,9 @@ extends
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof IsNotDistinctFrom) {
+        if (that instanceof Not) {
             return
-                StringUtils.equals(arg1, ((IsNotDistinctFrom) that).arg1) &&
-                StringUtils.equals(arg2, ((IsNotDistinctFrom) that).arg2)
+                StringUtils.equals(arg1, ((Not) that).arg1)
             ;
         }
         else

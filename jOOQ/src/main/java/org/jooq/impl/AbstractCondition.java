@@ -178,19 +178,24 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
         return or(notExists(select));
     }
 
-    @Override
-    public /* non-final */ Condition not() {
-        return new NotCondition(this);
-    }
-
     static final Condition unwrapNot(Condition c, BiFunction<? super Condition, ? super Boolean, ? extends Condition> function) {
         boolean not = false;
 
-        while (c instanceof NotCondition) {
-            c = ((NotCondition) c).condition;
+        while (c instanceof Not) {
+            c = ((Not) c).$arg1();
             not = !not;
         }
 
         return function.apply(c, not);
     }
+
+
+
+    @Override
+    public final Condition not() {
+        return DSL.not(this);
+    }
+
+
+
 }

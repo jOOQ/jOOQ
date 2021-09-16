@@ -354,7 +354,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isDistinctFrom(Field<T> arg2) {
-        return new IsDistinctFrom(this, arg2);
+        return new IsDistinctFrom(this, nullSafe(arg2, getDataType()));
     }
 
     @Override
@@ -372,7 +372,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isNotDistinctFrom(Field<T> arg2) {
-        return new IsNotDistinctFrom(this, arg2);
+        return new IsNotDistinctFrom(this, nullSafe(arg2, getDataType()));
     }
 
     @Override
@@ -462,7 +462,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Field<T> mod(Field<? extends Number> arg2) {
-        return new Mod(this, arg2);
+        return new Mod(this, nullSafe(arg2, getDataType()));
     }
 
     @Override

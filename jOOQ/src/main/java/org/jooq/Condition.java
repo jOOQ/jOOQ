@@ -380,14 +380,14 @@ public interface Condition extends QueryPart {
     @Support
     Condition orNotExists(Select<?> select);
 
+
+
     /**
-     * Invert this condition
-     * <p>
-     * This is the same as calling {@link DSL#not(Condition)}
-     *
-     * @return This condition, inverted
+     * The <code>NOT</code> operator.
      */
     @NotNull
     @Support
     Condition not();
+
+
 }

@@ -14555,7 +14555,7 @@ public class DSL {
     @NotNull
     @Support
     public static Condition unique(Select<?> query) {
-        return new UniqueCondition(query, true);
+        return new UniqueCondition(query);
     }
 
     /**
@@ -14566,18 +14566,7 @@ public class DSL {
     @NotNull
     @Support
     public static Condition notUnique(Select<?> query) {
-        return new UniqueCondition(query, false);
-    }
-
-    /**
-     * Invert a condition.
-     * <p>
-     * This is the same as calling {@link Condition#not()}
-     */
-    @NotNull
-    @Support
-    public static Condition not(Condition condition) {
-        return condition.not();
+        return not(unique(query));
     }
 
     /**
@@ -15688,6 +15677,15 @@ public class DSL {
     }
 
 
+
+    /**
+     * The <code>NOT</code> function.
+     */
+    @NotNull
+    @Support
+    public static Condition not(Condition arg1) {
+        return new Not(arg1);
+    }
 
     // -------------------------------------------------------------------------
     // Numeric functions

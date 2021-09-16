@@ -60,11 +60,9 @@ import org.jooq.Table;
 final class UniqueCondition extends AbstractCondition {
 
     private final Select<?> query;
-    private final boolean   unique;
 
-    UniqueCondition(Select<?> query, boolean unique) {
+    UniqueCondition(Select<?> query) {
         this.query = query;
-        this.unique = unique;
     }
 
     @Override
@@ -76,9 +74,6 @@ final class UniqueCondition extends AbstractCondition {
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
             case H2:
-                if (!unique)
-                    ctx.visit(K_NOT).sql(' ');
-
                 ctx.visit(K_UNIQUE).sql(' ');
                 visitSubquery(ctx, query);
                 break;
@@ -92,15 +87,9 @@ final class UniqueCondition extends AbstractCondition {
                     .groupBy(queryFields)
                     .having(count().gt(one()));
 
-                ctx.visit(unique ? notExists(subquery) : exists(subquery));
+                // TODO: [#7362] [#10304] Find a better way to prevent double negation and unnecessary parentheses
+                ctx.visit(notExists(subquery));
                 break;
         }
-    }
-
-    @Override
-    public final Condition not() {
-
-        // TODO: [#7362] [#10304] Find a better way to prevent double negation and unnecessary parentheses
-        return unique ? new UniqueCondition(query, false) : super.not();
     }
 }

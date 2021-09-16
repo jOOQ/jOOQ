@@ -91,22 +91,31 @@ package org.jooq.impl;
 
 
 
+            default:
+                ctx.visit(N_CONNECT_BY_IS_CYCLE);
+                break;
+        }
+    }
 
 
 
+    @Pro
+    private final void acceptJava(Context<?> ctx) {
+        ctx.sql("connectByIsCycle()");
+    }
 
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
 
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof ConnectByIsCycle) {
+            return true;
+        }
+        else
+            return super.equals(that);
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* [/pro] */

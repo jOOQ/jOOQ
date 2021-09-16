@@ -87,16 +87,31 @@ package org.jooq.impl;
 
 
 
+            default:
+                ctx.visit(N_DELETING);
+                break;
+        }
+    }
 
 
 
+    @Pro
+    private final void acceptJava(Context<?> ctx) {
+        ctx.sql("deleting()");
+    }
 
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
 
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Deleting) {
+            return true;
+        }
+        else
+            return super.equals(that);
+    }
+}
 
-
-
-
-
-
-
-
+/* [/pro] */

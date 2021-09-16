@@ -89,6 +89,10 @@ extends
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+            case JAVA:
+                acceptJava(ctx);
+                break;
+
             case H2:
                 ctx.visit(K_UNIQUE).sql(' ');
                 visitSubquery(ctx, query);
@@ -108,6 +112,17 @@ extends
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

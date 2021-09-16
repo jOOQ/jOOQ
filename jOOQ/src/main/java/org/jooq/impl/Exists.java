@@ -81,7 +81,7 @@ extends
 
 
 
-    private static final Clause[] CLAUSES_EXISTS = { CONDITION, CONDITION_EXISTS };
+    private static final Clause[] CLAUSES_EXISTS = { Clause.CONDITION, Clause.CONDITION_EXISTS };
 
     @Override
     final boolean isNullable() {
@@ -97,13 +97,23 @@ extends
 
 
 
-
             default:
                 ctx.visit(K_EXISTS).sql(' ');
                 visitSubquery(ctx, query);
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -129,7 +129,7 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                         .eq(p.SPECIFIC_CATALOG, p.SPECIFIC_SCHEMA, p.SPECIFIC_NAME))
             .join(pg_n).on(r.SPECIFIC_SCHEMA.eq(pg_n.NSPNAME))
             .join(pg_p).on(pg_p.PRONAMESPACE.eq(oid(pg_n)))
-                       .and(pg_p.PRONAME.eq(r.ROUTINE_NAME))
+                       .and(pg_p.PRONAME.concat("_").concat(oid(pg_p)).eq(r.SPECIFIC_NAME))
             .where(r.SPECIFIC_NAME.eq(specificName))
             .and(p.PARAMETER_MODE.ne("IN"))
             .and(pg_p.PRORETSET)

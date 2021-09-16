@@ -66,8 +66,8 @@ extends
     AbstractField<String>
 {
 
-    private final Field<?>      value;
-    private final Field<String> formatMask;
+    final Field<?>      value;
+    final Field<String> formatMask;
 
     ToChar(
         Field<?> value

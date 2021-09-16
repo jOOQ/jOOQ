@@ -69,10 +69,10 @@ implements
     CommentOnFinalStep
 {
 
-    private final Table<?> table;
-    private final boolean  isView;
-    private final Field<?> field;
-    private       Comment  comment;
+    final Table<?> table;
+    final boolean  isView;
+    final Field<?> field;
+          Comment  comment;
 
     CommentOnImpl(
         Configuration configuration,

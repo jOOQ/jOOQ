@@ -67,8 +67,8 @@ extends
     AbstractField<BigDecimal>
 {
 
-    private final Field<? extends Number> value;
-    private final Field<? extends Number> base;
+    final Field<? extends Number> value;
+    final Field<? extends Number> base;
 
     Log(
         Field<? extends Number> value

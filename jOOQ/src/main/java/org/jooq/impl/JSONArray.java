@@ -69,10 +69,10 @@ implements
     JSONArrayReturningStep<T>
 {
 
-    private final DataType<T>                    type;
-    private final Collection<? extends Field<?>> fields;
-    private       JSONOnNull                     onNull;
-    private       DataType<?>                    returning;
+    final DataType<T>                    type;
+    final Collection<? extends Field<?>> fields;
+          JSONOnNull                     onNull;
+          DataType<?>                    returning;
 
     JSONArray(
         DataType<T> type,

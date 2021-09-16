@@ -69,18 +69,18 @@ implements
     CreateSequenceFinalStep
 {
 
-    private final Sequence<?>             sequence;
-    private final boolean                 createSequenceIfNotExists;
-    private       Field<? extends Number> startWith;
-    private       Field<? extends Number> incrementBy;
-    private       Field<? extends Number> minvalue;
-    private       boolean                 noMinvalue;
-    private       Field<? extends Number> maxvalue;
-    private       boolean                 noMaxvalue;
-    private       boolean                 cycle;
-    private       boolean                 noCycle;
-    private       Field<? extends Number> cache;
-    private       boolean                 noCache;
+    final Sequence<?>             sequence;
+    final boolean                 createSequenceIfNotExists;
+          Field<? extends Number> startWith;
+          Field<? extends Number> incrementBy;
+          Field<? extends Number> minvalue;
+          boolean                 noMinvalue;
+          Field<? extends Number> maxvalue;
+          boolean                 noMaxvalue;
+          boolean                 cycle;
+          boolean                 noCycle;
+          Field<? extends Number> cache;
+          boolean                 noCache;
 
     CreateSequenceImpl(
         Configuration configuration,

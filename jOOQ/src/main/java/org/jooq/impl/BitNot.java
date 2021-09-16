@@ -66,7 +66,7 @@ extends
     AbstractField<T>
 {
 
-    private final Field<T> value;
+    final Field<T> value;
 
     BitNot(
         Field<T> value

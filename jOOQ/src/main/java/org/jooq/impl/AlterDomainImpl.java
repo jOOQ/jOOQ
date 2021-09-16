@@ -71,20 +71,20 @@ implements
     AlterDomainFinalStep
 {
 
-    private final Domain<T>  domain;
-    private final boolean    alterDomainIfExists;
-    private       Constraint addConstraint;
-    private       Constraint dropConstraint;
-    private       boolean    dropConstraintIfExists;
-    private       Domain<?>  renameTo;
-    private       Constraint renameConstraint;
-    private       boolean    renameConstraintIfExists;
-    private       Field<T>   setDefault;
-    private       boolean    dropDefault;
-    private       boolean    setNotNull;
-    private       boolean    dropNotNull;
-    private       Cascade    cascade;
-    private       Constraint renameConstraintTo;
+    final Domain<T>  domain;
+    final boolean    alterDomainIfExists;
+          Constraint addConstraint;
+          Constraint dropConstraint;
+          boolean    dropConstraintIfExists;
+          Domain<?>  renameTo;
+          Constraint renameConstraint;
+          boolean    renameConstraintIfExists;
+          Field<T>   setDefault;
+          boolean    dropDefault;
+          boolean    setNotNull;
+          boolean    dropNotNull;
+          Cascade    cascade;
+          Constraint renameConstraintTo;
 
     AlterDomainImpl(
         Configuration configuration,

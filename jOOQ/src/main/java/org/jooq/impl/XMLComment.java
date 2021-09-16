@@ -66,7 +66,7 @@ extends
     AbstractField<XML>
 {
 
-    private final Field<String> comment;
+    final Field<String> comment;
 
     Xmlcomment(
         Field<String> comment

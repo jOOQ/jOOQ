@@ -67,8 +67,8 @@ extends
     AbstractField<Timestamp>
 {
 
-    private final Field<String> value;
-    private final Field<String> formatMask;
+    final Field<String> value;
+    final Field<String> formatMask;
 
     ToTimestamp(
         Field<String> value,

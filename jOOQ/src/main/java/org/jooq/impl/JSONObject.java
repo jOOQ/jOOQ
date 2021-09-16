@@ -69,10 +69,10 @@ implements
     JSONObjectReturningStep<T>
 {
 
-    private final DataType<T>                        type;
-    private final Collection<? extends JSONEntry<?>> entries;
-    private       JSONOnNull                         onNull;
-    private       DataType<?>                        returning;
+    final DataType<T>                        type;
+    final Collection<? extends JSONEntry<?>> entries;
+          JSONOnNull                         onNull;
+          DataType<?>                        returning;
 
     JSONObject(
         DataType<T> type,

@@ -70,10 +70,10 @@ implements
     DropIndexFinalStep
 {
 
-    private final Index    index;
-    private final boolean  dropIndexIfExists;
-    private       Table<?> on;
-    private       Cascade  cascade;
+    final Index    index;
+    final boolean  dropIndexIfExists;
+          Table<?> on;
+          Cascade  cascade;
 
     DropIndexImpl(
         Configuration configuration,

@@ -66,8 +66,8 @@ extends
     AbstractField<String>
 {
 
-    private final Field<String> string;
-    private final Field<String> characters;
+    final Field<String> string;
+    final Field<String> characters;
 
     Rtrim(
         Field<String> string

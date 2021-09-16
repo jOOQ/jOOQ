@@ -66,9 +66,9 @@ extends
     AbstractField<T>
 {
 
-    private final boolean     content;
-    private final Field<XML>  value;
-    private final DataType<T> type;
+    final boolean     content;
+    final Field<XML>  value;
+    final DataType<T> type;
 
     Xmlserialize(
         boolean content,

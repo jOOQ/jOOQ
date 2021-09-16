@@ -67,8 +67,8 @@ extends
     AbstractField<Date>
 {
 
-    private final Field<String> value;
-    private final Field<String> formatMask;
+    final Field<String> value;
+    final Field<String> formatMask;
 
     ToDate(
         Field<String> value,

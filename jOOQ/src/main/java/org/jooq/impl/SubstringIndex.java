@@ -66,9 +66,9 @@ extends
     AbstractField<String>
 {
 
-    private final Field<String>           string;
-    private final Field<String>           delimiter;
-    private final Field<? extends Number> n;
+    final Field<String>           string;
+    final Field<String>           delimiter;
+    final Field<? extends Number> n;
 
     SubstringIndex(
         Field<String> string,

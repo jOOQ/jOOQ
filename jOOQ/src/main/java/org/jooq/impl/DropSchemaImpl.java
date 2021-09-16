@@ -69,9 +69,9 @@ implements
     DropSchemaFinalStep
 {
 
-    private final Schema  schema;
-    private final boolean dropSchemaIfExists;
-    private       Cascade cascade;
+    final Schema  schema;
+    final boolean dropSchemaIfExists;
+          Cascade cascade;
 
     DropSchemaImpl(
         Configuration configuration,

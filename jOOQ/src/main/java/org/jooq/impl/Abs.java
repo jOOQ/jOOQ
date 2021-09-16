@@ -66,7 +66,7 @@ extends
     AbstractField<T>
 {
 
-    private final Field<T> number;
+    final Field<T> number;
 
     Abs(
         Field<T> number

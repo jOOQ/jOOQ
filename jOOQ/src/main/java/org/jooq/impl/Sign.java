@@ -66,7 +66,7 @@ extends
     AbstractField<Integer>
 {
 
-    private final Field<? extends Number> number;
+    final Field<? extends Number> number;
 
     Sign(
         Field<? extends Number> number

@@ -66,7 +66,7 @@ extends
     AbstractDDLQuery
 {
 
-    private final Schema schema;
+    final Schema schema;
 
     SetSchema(
         Configuration configuration,

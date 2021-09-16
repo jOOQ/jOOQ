@@ -66,9 +66,9 @@ extends
     AbstractField<String>
 {
 
-    private final Field<String> string;
-    private final Field<String> from;
-    private final Field<String> to;
+    final Field<String> string;
+    final Field<String> from;
+    final Field<String> to;
 
     Translate(
         Field<String> string,

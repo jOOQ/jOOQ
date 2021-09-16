@@ -71,14 +71,14 @@ implements
     CreateIndexFinalStep
 {
 
-    private final Boolean                             unique;
-    private final Index                               index;
-    private final boolean                             createIndexIfNotExists;
-    private       Table<?>                            table;
-    private       Collection<? extends OrderField<?>> on;
-    private       Collection<? extends Field<?>>      include;
-    private       Condition                           where;
-    private       boolean                             excludeNullKeys;
+    final Boolean                             unique;
+    final Index                               index;
+    final boolean                             createIndexIfNotExists;
+          Table<?>                            table;
+          Collection<? extends OrderField<?>> on;
+          Collection<? extends Field<?>>      include;
+          Condition                           where;
+          boolean                             excludeNullKeys;
 
     CreateIndexImpl(
         Configuration configuration,

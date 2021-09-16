@@ -66,7 +66,7 @@ extends
     AbstractField<String>
 {
 
-    private final Field<? extends Number> value;
+    final Field<? extends Number> value;
 
     Digits(
         Field<? extends Number> value

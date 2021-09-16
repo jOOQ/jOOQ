@@ -66,8 +66,8 @@ extends
     AbstractField<T>
 {
 
-    private final Field<T>       value;
-    private final Field<Integer> decimals;
+    final Field<T>       value;
+    final Field<Integer> decimals;
 
     Round(
         Field<T> value

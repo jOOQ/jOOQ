@@ -68,8 +68,8 @@ implements
     DropViewFinalStep
 {
 
-    private final Table<?> view;
-    private final boolean  dropViewIfExists;
+    final Table<?> view;
+    final boolean  dropViewIfExists;
 
     DropViewImpl(
         Configuration configuration,

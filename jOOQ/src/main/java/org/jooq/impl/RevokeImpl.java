@@ -70,11 +70,11 @@ implements
     RevokeFinalStep
 {
 
-    private final Collection<? extends Privilege> privileges;
-    private final boolean                         revokeGrantOptionFor;
-    private       Table<?>                        on;
-    private       Role                            from;
-    private       Boolean                         fromPublic;
+    final Collection<? extends Privilege> privileges;
+    final boolean                         revokeGrantOptionFor;
+          Table<?>                        on;
+          Role                            from;
+          Boolean                         fromPublic;
 
     RevokeImpl(
         Configuration configuration,

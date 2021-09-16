@@ -66,8 +66,8 @@ extends
     AbstractField<T>
 {
 
-    private final Field<T> arg1;
-    private final Field<T> arg2;
+    final Field<T> arg1;
+    final Field<T> arg2;
 
     BitAnd(
         Field<T> arg1,

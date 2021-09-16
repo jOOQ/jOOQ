@@ -66,7 +66,7 @@ extends
     AbstractCondition
 {
 
-    private final Condition arg1;
+    final Condition arg1;
 
     Not(
         Condition arg1

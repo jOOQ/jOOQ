@@ -69,9 +69,9 @@ implements
     AlterDatabaseFinalStep
 {
 
-    private final Catalog database;
-    private final boolean alterDatabaseIfExists;
-    private       Catalog renameTo;
+    final Catalog database;
+    final boolean alterDatabaseIfExists;
+          Catalog renameTo;
 
     AlterDatabaseImpl(
         Configuration configuration,

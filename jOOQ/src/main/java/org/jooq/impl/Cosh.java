@@ -67,7 +67,7 @@ extends
     AbstractField<BigDecimal>
 {
 
-    private final Field<? extends Number> number;
+    final Field<? extends Number> number;
 
     Cosh(
         Field<? extends Number> number

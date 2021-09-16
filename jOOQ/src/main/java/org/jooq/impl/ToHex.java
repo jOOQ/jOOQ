@@ -66,7 +66,7 @@ extends
     AbstractField<String>
 {
 
-    private final Field<? extends Number> value;
+    final Field<? extends Number> value;
 
     ToHex(
         Field<? extends Number> value

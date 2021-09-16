@@ -69,10 +69,10 @@ implements
     AlterViewFinalStep
 {
 
-    private final Table<?> view;
-    private final boolean  alterViewIfExists;
-    private       Comment  comment;
-    private       Table<?> renameTo;
+    final Table<?> view;
+    final boolean  alterViewIfExists;
+          Comment  comment;
+          Table<?> renameTo;
 
     AlterViewImpl(
         Configuration configuration,

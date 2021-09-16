@@ -69,9 +69,9 @@ implements
     AlterSchemaFinalStep
 {
 
-    private final Schema  schema;
-    private final boolean alterSchemaIfExists;
-    private       Schema  renameTo;
+    final Schema  schema;
+    final boolean alterSchemaIfExists;
+          Schema  renameTo;
 
     AlterSchemaImpl(
         Configuration configuration,

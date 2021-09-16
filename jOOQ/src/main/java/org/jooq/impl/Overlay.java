@@ -66,10 +66,10 @@ extends
     AbstractField<String>
 {
 
-    private final Field<String>           in;
-    private final Field<String>           placing;
-    private final Field<? extends Number> startIndex;
-    private final Field<? extends Number> length;
+    final Field<String>           in;
+    final Field<String>           placing;
+    final Field<? extends Number> startIndex;
+    final Field<? extends Number> length;
 
     Overlay(
         Field<String> in,

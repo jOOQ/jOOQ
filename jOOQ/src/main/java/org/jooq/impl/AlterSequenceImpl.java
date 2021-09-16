@@ -70,20 +70,20 @@ implements
     AlterSequenceFinalStep
 {
 
-    private final Sequence<T> sequence;
-    private final boolean     alterSequenceIfExists;
-    private       Sequence<?> renameTo;
-    private       boolean     restart;
-    private       Field<T>    restartWith;
-    private       Field<T>    startWith;
-    private       Field<T>    incrementBy;
-    private       Field<T>    minvalue;
-    private       boolean     noMinvalue;
-    private       Field<T>    maxvalue;
-    private       boolean     noMaxvalue;
-    private       Boolean     cycle;
-    private       Field<T>    cache;
-    private       boolean     noCache;
+    final Sequence<T> sequence;
+    final boolean     alterSequenceIfExists;
+          Sequence<?> renameTo;
+          boolean     restart;
+          Field<T>    restartWith;
+          Field<T>    startWith;
+          Field<T>    incrementBy;
+          Field<T>    minvalue;
+          boolean     noMinvalue;
+          Field<T>    maxvalue;
+          boolean     noMaxvalue;
+          Boolean     cycle;
+          Field<T>    cache;
+          boolean     noCache;
 
     AlterSequenceImpl(
         Configuration configuration,

@@ -66,7 +66,7 @@ extends
     AbstractCondition
 {
 
-    private final Select<?> query;
+    final Select<?> query;
 
     Unique(
         Select<?> query

@@ -66,8 +66,8 @@ extends
     AbstractField<T>
 {
 
-    private final Field<T> value;
-    private final Field<T> other;
+    final Field<T> value;
+    final Field<T> other;
 
     Nullif(
         Field<T> value,

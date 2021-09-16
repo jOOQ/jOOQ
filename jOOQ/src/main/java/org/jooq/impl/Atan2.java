@@ -67,8 +67,8 @@ extends
     AbstractField<BigDecimal>
 {
 
-    private final Field<? extends Number> x;
-    private final Field<? extends Number> y;
+    final Field<? extends Number> x;
+    final Field<? extends Number> y;
 
     Atan2(
         Field<? extends Number> x,

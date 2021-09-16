@@ -66,8 +66,8 @@ extends
     AbstractField<T>
 {
 
-    private final Field<T[]>     array;
-    private final Field<Integer> index;
+    final Field<T[]>     array;
+    final Field<Integer> index;
 
     ArrayGet(
         Field<T[]> array,

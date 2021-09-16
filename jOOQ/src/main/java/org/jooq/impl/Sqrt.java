@@ -67,7 +67,7 @@ extends
     AbstractField<BigDecimal>
 {
 
-    private final Field<? extends Number> value;
+    final Field<? extends Number> value;
 
     Sqrt(
         Field<? extends Number> value

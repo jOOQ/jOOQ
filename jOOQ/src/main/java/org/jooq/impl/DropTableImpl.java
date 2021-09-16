@@ -69,10 +69,10 @@ implements
     DropTableFinalStep
 {
 
-    private final Boolean  temporary;
-    private final Table<?> table;
-    private final boolean  dropTableIfExists;
-    private       Cascade  cascade;
+    final Boolean  temporary;
+    final Table<?> table;
+    final boolean  dropTableIfExists;
+          Cascade  cascade;
 
     DropTableImpl(
         Configuration configuration,

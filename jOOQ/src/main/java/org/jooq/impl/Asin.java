@@ -67,7 +67,7 @@ extends
     AbstractField<BigDecimal>
 {
 
-    private final Field<? extends Number> number;
+    final Field<? extends Number> number;
 
     Asin(
         Field<? extends Number> number

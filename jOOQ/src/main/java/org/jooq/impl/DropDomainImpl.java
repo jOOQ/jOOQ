@@ -69,9 +69,9 @@ implements
     DropDomainFinalStep
 {
 
-    private final Domain<?> domain;
-    private final boolean   dropDomainIfExists;
-    private       Cascade   cascade;
+    final Domain<?> domain;
+    final boolean   dropDomainIfExists;
+          Cascade   cascade;
 
     DropDomainImpl(
         Configuration configuration,

@@ -67,8 +67,8 @@ extends
     AbstractField<BigDecimal>
 {
 
-    private final Field<? extends Number> value;
-    private final Field<? extends Number> exponent;
+    final Field<? extends Number> value;
+    final Field<? extends Number> exponent;
 
     Power(
         Field<? extends Number> value,

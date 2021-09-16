@@ -66,9 +66,9 @@ extends
     AbstractDDLQuery
 {
 
-    private final Name     name;
-    private final Param<?> value;
-    private final boolean  setLocal;
+    final Name     name;
+    final Param<?> value;
+    final boolean  setLocal;
 
     SetCommand(
         Configuration configuration,

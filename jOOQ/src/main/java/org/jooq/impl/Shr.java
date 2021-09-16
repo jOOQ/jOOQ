@@ -66,8 +66,8 @@ extends
     AbstractField<T>
 {
 
-    private final Field<T>                value;
-    private final Field<? extends Number> count;
+    final Field<T>                value;
+    final Field<? extends Number> count;
 
     Shr(
         Field<T> value,

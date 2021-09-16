@@ -66,9 +66,9 @@ extends
     AbstractField<T>
 {
 
-    private final Field<T>                date;
-    private final Field<? extends Number> interval;
-    private final DatePart                datePart;
+    final Field<T>                date;
+    final Field<? extends Number> interval;
+    final DatePart                datePart;
 
     DateAdd(
         Field<T> date,

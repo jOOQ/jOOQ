@@ -67,7 +67,7 @@ extends
     AbstractField<BigDecimal>
 {
 
-    private final Field<? extends Number> degrees;
+    final Field<? extends Number> degrees;
 
     Radians(
         Field<? extends Number> degrees

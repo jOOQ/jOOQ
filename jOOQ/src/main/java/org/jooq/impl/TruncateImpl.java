@@ -71,9 +71,9 @@ implements
     Truncate<R>
 {
 
-    private final Table<R> table;
-    private       Boolean  restartIdentity;
-    private       Cascade  cascade;
+    final Table<R> table;
+          Boolean  restartIdentity;
+          Cascade  cascade;
 
     TruncateImpl(
         Configuration configuration,

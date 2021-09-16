@@ -66,7 +66,7 @@ extends
     AbstractField<Integer>
 {
 
-    private final Field<? extends Object[]> array;
+    final Field<? extends Object[]> array;
 
     Cardinality(
         Field<? extends Object[]> array

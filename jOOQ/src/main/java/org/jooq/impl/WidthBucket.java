@@ -66,10 +66,10 @@ extends
     AbstractField<T>
 {
 
-    private final Field<T>       field;
-    private final Field<T>       low;
-    private final Field<T>       high;
-    private final Field<Integer> buckets;
+    final Field<T>       field;
+    final Field<T>       low;
+    final Field<T>       high;
+    final Field<Integer> buckets;
 
     WidthBucket(
         Field<T> field,

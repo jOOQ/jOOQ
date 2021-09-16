@@ -66,9 +66,9 @@ extends
     AbstractField<String>
 {
 
-    private final Field<String> string;
-    private final Field<String> search;
-    private final Field<String> replace;
+    final Field<String> string;
+    final Field<String> search;
+    final Field<String> replace;
 
     Replace(
         Field<String> string,

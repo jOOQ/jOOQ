@@ -66,7 +66,7 @@ extends
     AbstractField<String>
 {
 
-    private final Field<? extends Number> count;
+    final Field<? extends Number> count;
 
     Space(
         Field<? extends Number> count

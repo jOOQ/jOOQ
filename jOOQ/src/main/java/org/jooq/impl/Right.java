@@ -66,8 +66,8 @@ extends
     AbstractField<String>
 {
 
-    private final Field<String>           string;
-    private final Field<? extends Number> length;
+    final Field<String>           string;
+    final Field<? extends Number> length;
 
     Right(
         Field<String> string,

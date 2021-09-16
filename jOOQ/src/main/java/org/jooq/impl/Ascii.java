@@ -66,7 +66,7 @@ extends
     AbstractField<Integer>
 {
 
-    private final Field<String> string;
+    final Field<String> string;
 
     Ascii(
         Field<String> string

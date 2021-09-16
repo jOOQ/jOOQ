@@ -71,11 +71,11 @@ implements
     GrantFinalStep
 {
 
-    private final Collection<? extends Privilege> privileges;
-    private       Table<?>                        on;
-    private       Role                            to;
-    private       Boolean                         toPublic;
-    private       Boolean                         withGrantOption;
+    final Collection<? extends Privilege> privileges;
+          Table<?>                        on;
+          Role                            to;
+          Boolean                         toPublic;
+          Boolean                         withGrantOption;
 
     GrantImpl(
         Configuration configuration,

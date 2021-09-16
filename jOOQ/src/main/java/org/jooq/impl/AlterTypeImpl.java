@@ -70,12 +70,12 @@ implements
     AlterTypeFinalStep
 {
 
-    private final Name          type;
-    private       Name          renameTo;
-    private       Schema        setSchema;
-    private       Field<String> addValue;
-    private       Field<String> renameValue;
-    private       Field<String> renameValueTo;
+    final Name          type;
+          Name          renameTo;
+          Schema        setSchema;
+          Field<String> addValue;
+          Field<String> renameValue;
+          Field<String> renameValueTo;
 
     AlterTypeImpl(
         Configuration configuration,

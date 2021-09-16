@@ -66,9 +66,9 @@ extends
     AbstractField<Integer>
 {
 
-    private final Field<String>           in;
-    private final Field<String>           search;
-    private final Field<? extends Number> startIndex;
+    final Field<String>           in;
+    final Field<String>           search;
+    final Field<? extends Number> startIndex;
 
     Position(
         Field<String> in,

@@ -68,8 +68,8 @@ implements
     DropDatabaseFinalStep
 {
 
-    private final Catalog database;
-    private final boolean dropDatabaseIfExists;
+    final Catalog database;
+    final boolean dropDatabaseIfExists;
 
     DropDatabaseImpl(
         Configuration configuration,

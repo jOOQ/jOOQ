@@ -66,7 +66,7 @@ extends
     AbstractField<XML>
 {
 
-    private final Collection<? extends Field<?>> fields;
+    final Collection<? extends Field<?>> fields;
 
     Xmlforest(
         Collection<? extends Field<?>> fields

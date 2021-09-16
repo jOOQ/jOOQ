@@ -66,7 +66,7 @@ extends
     AbstractField<String>
 {
 
-    private final Field<? extends Number> number;
+    final Field<? extends Number> number;
 
     Chr(
         Field<? extends Number> number

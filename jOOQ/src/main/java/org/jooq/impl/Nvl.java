@@ -66,8 +66,8 @@ extends
     AbstractField<T>
 {
 
-    private final Field<T> value;
-    private final Field<T> defaultValue;
+    final Field<T> value;
+    final Field<T> defaultValue;
 
     Nvl(
         Field<T> value,

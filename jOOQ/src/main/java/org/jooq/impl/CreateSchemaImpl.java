@@ -68,8 +68,8 @@ implements
     CreateSchemaFinalStep
 {
 
-    private final Schema  schema;
-    private final boolean createSchemaIfNotExists;
+    final Schema  schema;
+    final boolean createSchemaIfNotExists;
 
     CreateSchemaImpl(
         Configuration configuration,

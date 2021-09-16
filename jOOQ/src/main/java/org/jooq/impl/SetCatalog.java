@@ -66,7 +66,7 @@ extends
     AbstractDDLQuery
 {
 
-    private final Catalog catalog;
+    final Catalog catalog;
 
     SetCatalog(
         Configuration configuration,

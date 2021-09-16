@@ -71,11 +71,11 @@ implements
     CreateDomainFinalStep
 {
 
-    private final Domain<?>                        domain;
-    private final boolean                          createDomainIfNotExists;
-    private       DataType<T>                      dataType;
-    private       Field<T>                         default_;
-    private       Collection<? extends Constraint> constraints;
+    final Domain<?>                        domain;
+    final boolean                          createDomainIfNotExists;
+          DataType<T>                      dataType;
+          Field<T>                         default_;
+          Collection<? extends Constraint> constraints;
 
     CreateDomainImpl(
         Configuration configuration,

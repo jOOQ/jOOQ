@@ -66,7 +66,7 @@ extends
     AbstractField<String>
 {
 
-    private final Field<String> string;
+    final Field<String> string;
 
     Md5(
         Field<String> string

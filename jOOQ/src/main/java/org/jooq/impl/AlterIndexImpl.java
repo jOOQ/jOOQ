@@ -70,10 +70,10 @@ implements
     AlterIndexFinalStep
 {
 
-    private final Index    index;
-    private final boolean  alterIndexIfExists;
-    private       Table<?> on;
-    private       Index    renameTo;
+    final Index    index;
+    final boolean  alterIndexIfExists;
+          Table<?> on;
+          Index    renameTo;
 
     AlterIndexImpl(
         Configuration configuration,

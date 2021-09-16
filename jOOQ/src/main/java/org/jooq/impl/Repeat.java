@@ -66,8 +66,8 @@ extends
     AbstractField<String>
 {
 
-    private final Field<String>           string;
-    private final Field<? extends Number> count;
+    final Field<String>           string;
+    final Field<? extends Number> count;
 
     Repeat(
         Field<String> string,

@@ -66,9 +66,9 @@ extends
     AbstractField<String>
 {
 
-    private final Field<String>           string;
-    private final Field<? extends Number> length;
-    private final Field<String>           character;
+    final Field<String>           string;
+    final Field<? extends Number> length;
+    final Field<String>           character;
 
     Lpad(
         Field<String> string,

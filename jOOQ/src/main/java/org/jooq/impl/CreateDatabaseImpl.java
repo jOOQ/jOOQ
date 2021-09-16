@@ -68,8 +68,8 @@ implements
     CreateDatabaseFinalStep
 {
 
-    private final Catalog database;
-    private final boolean createDatabaseIfNotExists;
+    final Catalog database;
+    final boolean createDatabaseIfNotExists;
 
     CreateDatabaseImpl(
         Configuration configuration,

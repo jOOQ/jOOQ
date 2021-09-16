@@ -537,6 +537,21 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // ------------------------------------------------------------------------
     // XXX: Arithmetic operations
     // ------------------------------------------------------------------------
@@ -1410,14 +1425,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     public final Condition compare(Comparator comparator, QuantifiedSelect<? extends Record1<T>> query) {
         return new QuantifiedComparisonCondition(query, this, comparator);
     }
-
-
-
-
-
-
-
-
 
     // ------------------------------------------------------------------------
     // XXX: Pre-2.0 API. This API is maintained for backwards-compatibility. It

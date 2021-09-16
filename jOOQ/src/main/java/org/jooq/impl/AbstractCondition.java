@@ -56,7 +56,8 @@ import org.jooq.Select;
  * @author Lukas Eder
  */
 abstract class AbstractCondition extends AbstractQueryPart implements Condition {
-    private static final Clause[] CLAUSES          = { CONDITION };
+
+    private static final Clause[] CLAUSES = { CONDITION };
 
     AbstractCondition() {}
 

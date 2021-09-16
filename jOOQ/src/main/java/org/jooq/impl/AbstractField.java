@@ -336,7 +336,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
 
     // -------------------------------------------------------------------------
-    // Boolean functions
+    // Generic predicates
     // -------------------------------------------------------------------------
 
     @Override
@@ -373,6 +373,22 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isNotDistinctFrom(Field<T> arg2) {
         return new IsNotDistinctFrom(this, nullSafe(arg2, getDataType()));
+    }
+
+    // -------------------------------------------------------------------------
+    // JSON predicates
+    // -------------------------------------------------------------------------
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition isJson() {
+        return new IsJson(this);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition isNotJson() {
+        return new IsNotJson(this);
     }
 
     // -------------------------------------------------------------------------
@@ -687,16 +703,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     public final Condition isNotDocument() {
         return new IsDocument(this, false);
-    }
-
-    @Override
-    public final Condition isJson() {
-        return new IsJSON(this, true);
-    }
-
-    @Override
-    public final Condition isNotJson() {
-        return new IsJSON(this, false);
     }
 
     @Override

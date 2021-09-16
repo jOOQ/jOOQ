@@ -58,17 +58,17 @@ import java.util.*;
 
 
 /**
- * The <code>IS JSON</code> statement.
+ * The <code>IS NOT JSON</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unused" })
-final class IsJson
+final class IsNotJson
 extends
     AbstractCondition
 {
 
     final Field<?> arg1;
 
-    IsJson(
+    IsNotJson(
         Field<?> arg1
     ) {
 
@@ -89,7 +89,7 @@ extends
 
 
             case MYSQL:
-                ctx.visit(function(N_JSON_VALID, BOOLEAN, arg1));
+                ctx.visit(condition(function(N_JSON_VALID, BOOLEAN, arg1)).not());
                 break;
 
 
@@ -101,7 +101,7 @@ extends
 
 
             default:
-                ctx.visit(arg1).sql(' ').visit(K_IS_JSON);
+                ctx.visit(arg1).sql(' ').visit(K_IS_NOT_JSON);
                 break;
         }
     }
@@ -121,9 +121,9 @@ extends
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof IsJson) {
+        if (that instanceof IsNotJson) {
             return
-                StringUtils.equals(arg1, ((IsJson) that).arg1)
+                StringUtils.equals(arg1, ((IsNotJson) that).arg1)
             ;
         }
         else

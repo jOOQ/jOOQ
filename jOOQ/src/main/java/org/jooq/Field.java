@@ -677,7 +677,7 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // Boolean functions
+    // Generic predicates
     // -------------------------------------------------------------------------
 
     /**
@@ -739,6 +739,28 @@ extends
     @NotNull
     @Support
     Condition isNotDistinctFrom(Field<T> arg2);
+
+    // -------------------------------------------------------------------------
+    // JSON predicates
+    // -------------------------------------------------------------------------
+
+    /**
+     * The <code>IS_JSON</code> operator.
+     * <p>
+     * Create a condition to check if this field contains JSON data.
+     */
+    @NotNull
+    @Support({ MYSQL })
+    Condition isJson();
+
+    /**
+     * The <code>IS_NOT_JSON</code> operator.
+     * <p>
+     * Create a condition to check if this field does not contain JSON data.
+     */
+    @NotNull
+    @Support({ MYSQL })
+    Condition isNotJson();
 
     // -------------------------------------------------------------------------
     // Numeric functions
@@ -1320,24 +1342,6 @@ extends
     @NotNull
     @Support({ POSTGRES })
     Condition isNotDocument();
-
-    // ------------------------------------------------------------------------
-    // JSON predicates
-    // ------------------------------------------------------------------------
-
-    /**
-     * Create a condition to check if this field contains JSON data.
-     */
-    @NotNull
-    @Support({ MYSQL })
-    Condition isJson();
-
-    /**
-     * Create a condition to check if this field does not contain JSON data.
-     */
-    @NotNull
-    @Support({ MYSQL })
-    Condition isNotJson();
 
     // ------------------------------------------------------------------------
     // NULL predicates

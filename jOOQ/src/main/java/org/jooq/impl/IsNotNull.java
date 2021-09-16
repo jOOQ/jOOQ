@@ -58,17 +58,17 @@ import java.util.*;
 
 
 /**
- * The <code>IS NULL</code> statement.
+ * The <code>IS NOT NULL</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unused" })
-final class IsNull
+final class IsNotNull
 extends
     AbstractCondition
 {
 
     final Field<?> arg1;
 
-    IsNull(
+    IsNotNull(
         Field<?> arg1
     ) {
 
@@ -81,7 +81,7 @@ extends
 
 
 
-    private static final Clause[] CLAUSES = { Clause.CONDITION, Clause.CONDITION_IS_NULL };
+    private static final Clause[] CLAUSES = { Clause.CONDITION, Clause.CONDITION_IS_NOT_NULL };
 
     @Override
     final boolean isNullable() {
@@ -96,9 +96,9 @@ extends
 
 
         if (arg1.getDataType().isEmbeddable())
-            ctx.visit(row(embeddedFields(arg1)).isNull());
+            ctx.visit(row(embeddedFields(arg1)).isNotNull());
         else
-            ctx.visit(arg1).sql(' ').visit(K_IS_NULL);
+            ctx.visit(arg1).sql(' ').visit(K_IS_NOT_NULL);
     }
 
     @Override
@@ -123,9 +123,9 @@ extends
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof IsNull) {
+        if (that instanceof IsNotNull) {
             return
-                StringUtils.equals(arg1, ((IsNull) that).arg1)
+                StringUtils.equals(arg1, ((IsNotNull) that).arg1)
             ;
         }
         else

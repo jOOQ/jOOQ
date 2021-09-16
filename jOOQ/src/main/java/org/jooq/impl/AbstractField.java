@@ -359,6 +359,12 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition isNull() {
+        return new IsNull(this);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isNotDistinctFrom(T arg2) {
         return new IsNotDistinctFrom(this, Tools.field(arg2, this));
     }
@@ -373,6 +379,12 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isNotDistinctFrom(Field<T> arg2) {
         return new IsNotDistinctFrom(this, nullSafe(arg2, getDataType()));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition isNotNull() {
+        return new IsNotNull(this);
     }
 
     // -------------------------------------------------------------------------
@@ -710,16 +722,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     // ------------------------------------------------------------------------
     // XXX: Conditions created from this field
     // ------------------------------------------------------------------------
-
-    @Override
-    public final Condition isNull() {
-        return new IsNull(this, true);
-    }
-
-    @Override
-    public final Condition isNotNull() {
-        return new IsNull(this, false);
-    }
 
     /**
      * [#11200] Nest these constants to prevent initialisation deadlocks.

@@ -711,6 +711,13 @@ extends
     Condition isDistinctFrom(Field<T> arg2);
 
     /**
+     * The <code>IS_NULL</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition isNull();
+
+    /**
      * The <code>IS_NOT_DISTINCT_FROM</code> operator.
      * <p>
      * The NOT DISTINCT predicate allows for creating NULL safe comparisons where the two
@@ -739,6 +746,13 @@ extends
     @NotNull
     @Support
     Condition isNotDistinctFrom(Field<T> arg2);
+
+    /**
+     * The <code>IS_NOT_NULL</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition isNotNull();
 
     // -------------------------------------------------------------------------
     // XML predicates
@@ -1346,28 +1360,6 @@ extends
     @NotNull
     @Support
     Field<T> divide(Field<? extends Number> value);
-
-    // ------------------------------------------------------------------------
-    // NULL predicates
-    // ------------------------------------------------------------------------
-
-    /**
-     * Create a condition to check this field against <code>null</code>.
-     * <p>
-     * SQL: <code>this is null</code>
-     */
-    @NotNull
-    @Support
-    Condition isNull();
-
-    /**
-     * Create a condition to check this field against <code>null</code>.
-     * <p>
-     * SQL: <code>this is not null</code>
-     */
-    @NotNull
-    @Support
-    Condition isNotNull();
 
     // ------------------------------------------------------------------------
     // LIKE_REGEX predicates

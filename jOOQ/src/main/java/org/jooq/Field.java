@@ -740,6 +740,10 @@ extends
     @Support
     Condition isNotDistinctFrom(Field<T> arg2);
 
+    // -------------------------------------------------------------------------
+    // Numeric functions
+    // -------------------------------------------------------------------------
+
     /**
      * The <code>BIT_AND</code> operator.
      *

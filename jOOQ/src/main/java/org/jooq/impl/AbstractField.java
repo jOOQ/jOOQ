@@ -375,6 +375,10 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return new IsNotDistinctFrom(this, nullSafe(arg2, getDataType()));
     }
 
+    // -------------------------------------------------------------------------
+    // Numeric functions
+    // -------------------------------------------------------------------------
+
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Field<T> bitAnd(T arg2) {

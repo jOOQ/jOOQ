@@ -14526,28 +14526,6 @@ public class DSL {
     }
 
     /**
-     * Create an exists condition.
-     * <p>
-     * <code>EXISTS ([query])</code>
-     */
-    @NotNull
-    @Support
-    public static Condition exists(Select<?> query) {
-        return new ExistsCondition(query);
-    }
-
-    /**
-     * Create a not exists condition.
-     * <p>
-     * <code>NOT EXISTS ([query])</code>
-     */
-    @NotNull
-    @Support
-    public static Condition notExists(Select<?> query) {
-        return not(exists(query));
-    }
-
-    /**
      * Invert a boolean value.
      * <p>
      * This is convenience for calling {@link #field(Condition)},
@@ -15655,6 +15633,28 @@ public class DSL {
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // Boolean functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * The <code>EXISTS</code> function.
+     */
+    @NotNull
+    @Support
+    public static Condition exists(Select<?> query) {
+        return new Exists(query);
+    }
+
+    /**
+     * The <code>NOT EXISTS</code> function.
+     */
+    @NotNull
+    @Support
+    public static Condition notExists(Select<?> query) {
+        return not(exists(query));
+    }
 
     /**
      * The <code>NOT</code> function.

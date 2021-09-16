@@ -58,17 +58,17 @@ import java.util.*;
 
 
 /**
- * The <code>IS DOCUMENT</code> statement.
+ * The <code>IS NOT DOCUMENT</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unused" })
-final class IsDocument
+final class IsNotDocument
 extends
     AbstractCondition
 {
 
     final Field<?> arg1;
 
-    IsDocument(
+    IsNotDocument(
         Field<?> arg1
     ) {
 
@@ -89,7 +89,7 @@ extends
 
 
             default:
-                ctx.visit(arg1).sql(' ').visit(K_IS_DOCUMENT);
+                ctx.visit(arg1).sql(' ').visit(K_IS_NOT_DOCUMENT);
                 break;
         }
     }
@@ -109,9 +109,9 @@ extends
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof IsDocument) {
+        if (that instanceof IsNotDocument) {
             return
-                StringUtils.equals(arg1, ((IsDocument) that).arg1)
+                StringUtils.equals(arg1, ((IsNotDocument) that).arg1)
             ;
         }
         else

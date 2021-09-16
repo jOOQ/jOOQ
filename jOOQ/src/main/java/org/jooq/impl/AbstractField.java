@@ -376,6 +376,22 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     // -------------------------------------------------------------------------
+    // XML predicates
+    // -------------------------------------------------------------------------
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition isDocument() {
+        return new IsDocument(this);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition isNotDocument() {
+        return new IsNotDocument(this);
+    }
+
+    // -------------------------------------------------------------------------
     // JSON predicates
     // -------------------------------------------------------------------------
 
@@ -694,16 +710,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     // ------------------------------------------------------------------------
     // XXX: Conditions created from this field
     // ------------------------------------------------------------------------
-
-    @Override
-    public final Condition isDocument() {
-        return new IsDocument(this, true);
-    }
-
-    @Override
-    public final Condition isNotDocument() {
-        return new IsDocument(this, false);
-    }
 
     @Override
     public final Condition isNull() {

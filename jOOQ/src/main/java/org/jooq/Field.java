@@ -741,6 +741,28 @@ extends
     Condition isNotDistinctFrom(Field<T> arg2);
 
     // -------------------------------------------------------------------------
+    // XML predicates
+    // -------------------------------------------------------------------------
+
+    /**
+     * The <code>IS_DOCUMENT</code> operator.
+     * <p>
+     * Create a condition to check if this field contains XML data.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    Condition isDocument();
+
+    /**
+     * The <code>IS_NOT_DOCUMENT</code> operator.
+     * <p>
+     * Create a condition to check if this field does not contain XML data.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    Condition isNotDocument();
+
+    // -------------------------------------------------------------------------
     // JSON predicates
     // -------------------------------------------------------------------------
 
@@ -1324,24 +1346,6 @@ extends
     @NotNull
     @Support
     Field<T> divide(Field<? extends Number> value);
-
-    // ------------------------------------------------------------------------
-    // XML predicates
-    // ------------------------------------------------------------------------
-
-    /**
-     * Create a condition to check if this field contains XML data.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    Condition isDocument();
-
-    /**
-     * Create a condition to check if this field does not contain XML data.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    Condition isNotDocument();
 
     // ------------------------------------------------------------------------
     // NULL predicates

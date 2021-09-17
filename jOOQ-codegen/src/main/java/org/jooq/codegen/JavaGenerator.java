@@ -7269,8 +7269,14 @@ public class JavaGenerator extends AbstractGenerator {
         if (kotlin
                 && generateKotlinSetterJvmNameAnnotationsOnIsPrefix()
                 && column instanceof ColumnDefinition
-                && P_IS.matcher(getStrategy().getJavaMemberName(column, mode)).matches())
+                && P_IS.matcher(getStrategy().getJavaMemberName(column, mode)).matches()) {
+
+            // [#12440] And if we have interfaces, we'll run into https://youtrack.jetbrains.com/issue/KT-31420
+            if (generateInterfaces())
+                out.println("@Suppress(\"INAPPLICABLE_JVM_NAME\")");
+
             out.println("@set:JvmName(\"%s\")", getStrategy().getJavaSetterName(column, mode));
+        }
     }
 
     private String nullableAnnotation(JavaWriter out) {

@@ -1421,18 +1421,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     public final Condition compare(Comparator comparator, Field<T> field) {
         switch (comparator) {
-            case IN:
-                if (field instanceof ScalarSubquery)
-                    return new CompareCondition(this, field, comparator);
-                else
-                    return in(field);
-
-            case NOT_IN:
-                if (field instanceof ScalarSubquery)
-                    return new CompareCondition(this, field, comparator);
-                else
-                    return notIn(field);
-
             case IS_DISTINCT_FROM:
                 return new IsDistinctFrom<>(this, nullSafe(field, getDataType()));
             case IS_NOT_DISTINCT_FROM:

@@ -4246,7 +4246,11 @@ public class JavaGenerator extends AbstractGenerator {
                 else if (kotlin)
                     params.append("o.").append(getStrategy().getJavaMemberName(column, Mode.POJO));
                 else
-                    params.append("object.").append(getStrategy().getJavaGetterName(column, Mode.POJO)).append("()");
+                    params.append("object.").append(
+                        generatePojosAsJavaRecordClasses()
+                            ? getStrategy().getJavaMemberName(column, Mode.POJO)
+                            : getStrategy().getJavaGetterName(column, Mode.POJO)
+                    ).append("()");
 
                 params.append(separator);
             });

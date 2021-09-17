@@ -30,8 +30,22 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <configuration>
+                
+                    <!-- [#12434] These two dependencies are outdated transitive dependencies from
+                                  maven-core:3.8.2, which we can't update easily without risking to break
+                                  maven stuff -->
+                    <excludes>
+                        <exclude>commons-io:commons-io:jar:2.6</exclude>
+                        <exclude>com.google.guava:guava:jar:25.1-android</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
 
-            <!-- More details about this plugin can be found here:
+            <!-- More details about this plugin can be found here:PatternExcludesArtifactFilter
                  http://maven.apache.org/plugin-tools/maven-plugin-plugin/examples/using-annotations.html
               -->
 

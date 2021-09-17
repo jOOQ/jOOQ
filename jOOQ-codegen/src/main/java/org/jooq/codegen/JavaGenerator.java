@@ -2351,7 +2351,7 @@ public class JavaGenerator extends AbstractGenerator {
                 printKotlinSetterAnnotation(out, column, Mode.RECORD);
 
                 out.println("%s%svar %s: %s?", visibility(generateInterfaces()), (generateInterfaces() ? "override " : ""), member, type);
-                out.tab(1).println("set(value): %s = set(%s, value)", setterReturnType, index);
+                out.tab(1).println("set(value) = set(%s, value)", index);
             }
             else {
                 final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);

@@ -60,6 +60,7 @@
         <spring.version>5.3.7</spring.version>
         <spring.boot.version>2.4.0</spring.boot.version>
         <errorprone.version>2.3.4</errorprone.version>
+        <errorprone.version>2.9.0</errorprone.version>
         <testcontainers.version>1.16.0</testcontainers.version>
     </properties>
 
@@ -518,12 +519,12 @@
             <dependency>
                 <groupId>org.apache.maven</groupId>
                 <artifactId>maven-plugin-api</artifactId>
-                <version>3.6.3</version>
+                <version>3.8.2</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven</groupId>
                 <artifactId>maven-core</artifactId>
-                <version>3.6.3</version>
+                <version>3.8.2</version>
 
                 <!-- junit 4.8.2 sneaking in here -->
                 <exclusions>
@@ -536,7 +537,7 @@
             <dependency>
                 <groupId>org.apache.maven.plugin-tools</groupId>
                 <artifactId>maven-plugin-annotations</artifactId>
-                <version>3.6.0</version>
+                <version>3.6.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -768,6 +769,16 @@
                     <artifactId>jooq-codegen-maven</artifactId>
                     <version>${project.version}</version>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>6.3.1</version>
+                    <configuration>
+                        <failBuildOnCVSS>0</failBuildOnCVSS>
+                        <skipTestScope>true</skipTestScope>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -844,6 +855,34 @@
     </modules>
 
     <profiles>
+        <profile>
+            <id>owasp-check</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+
         <profile>
             <id>default</id>
             <activation>

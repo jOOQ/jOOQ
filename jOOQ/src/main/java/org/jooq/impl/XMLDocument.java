@@ -49,7 +49,7 @@ import org.jooq.XML;
  */
 final class XMLDocument extends AbstractField<XML> {
 
-    private final Field<XML>  content;
+    private final Field<XML> content;
 
     XMLDocument(Field<XML> content) {
         super(N_XMLDOCUMENT, SQLDataType.XML);
@@ -59,12 +59,10 @@ final class XMLDocument extends AbstractField<XML> {
 
     @Override
     public final void accept(Context<?> ctx) {
-
-
-
-
-
-
+        if (ctx.family() == JAVA) {
+            ctx.sql("xmldocument(").visit(content).sql(')');
+            return;
+        }
 
         ctx.visit(N_XMLDOCUMENT).sql('(').visit(content).sql(')');
     }

@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.14.15-SNAPSHOT</version>
+        <version>3.14.15</version>
     </parent>
 
     <artifactId>jooq-meta-extensions-liquibase</artifactId>

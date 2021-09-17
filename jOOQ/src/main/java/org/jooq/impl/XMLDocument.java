@@ -37,28 +37,6 @@
  */
 package org.jooq.impl;
 
-// ...
-import static org.jooq.impl.Names.N_XMLDOCUMENT;
-
-import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.XML;
-
-/**
- * @author Lukas Eder
- */
-final class XMLDocument extends AbstractField<XML> {
-
-    private final Field<XML>  content;
-
-    XMLDocument(Field<XML> content) {
-        super(N_XMLDOCUMENT, SQLDataType.XML);
-
-        this.content = content;
-    }
-
-    @Override
-    public final void accept(Context<?> ctx) {
 
 
 
@@ -66,8 +44,31 @@ final class XMLDocument extends AbstractField<XML> {
 
 
 
-        ctx.visit(N_XMLDOCUMENT).sql('(').visit(content).sql(')');
-    }
-}
 
-/* [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

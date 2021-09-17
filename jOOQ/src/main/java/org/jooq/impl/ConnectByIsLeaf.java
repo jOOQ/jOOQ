@@ -91,31 +91,29 @@ package org.jooq.impl;
 
 
 
-            default:
-                ctx.visit(N_CONNECT_BY_IS_LEAF);
-                break;
-        }
-    }
 
 
 
-    @Pro
-    private final void acceptJava(Context<?> ctx) {
-        ctx.sql("connectByIsLeaf()");
-    }
 
-    // -------------------------------------------------------------------------
-    // The Object API
-    // -------------------------------------------------------------------------
 
-    @Override
-    public boolean equals(Object that) {
-        if (that instanceof ConnectByIsLeaf) {
-            return true;
-        }
-        else
-            return super.equals(that);
-    }
-}
 
-/* [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

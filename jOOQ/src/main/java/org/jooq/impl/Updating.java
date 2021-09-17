@@ -87,31 +87,29 @@ package org.jooq.impl;
 
 
 
-            default:
-                ctx.visit(N_UPDATING);
-                break;
-        }
-    }
 
 
 
-    @Pro
-    private final void acceptJava(Context<?> ctx) {
-        ctx.sql("updating()");
-    }
 
-    // -------------------------------------------------------------------------
-    // The Object API
-    // -------------------------------------------------------------------------
 
-    @Override
-    public boolean equals(Object that) {
-        if (that instanceof Updating) {
-            return true;
-        }
-        else
-            return super.equals(that);
-    }
-}
 
-/* [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

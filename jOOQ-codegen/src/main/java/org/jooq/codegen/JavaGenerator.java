@@ -6951,6 +6951,11 @@ public class JavaGenerator extends AbstractGenerator {
                     .getColumns()
                     .stream()
                     .anyMatch(c -> member.equals("is" + StringUtils.toUC(getStrategy().getJavaMemberName(c, mode))))) {
+
+                // [#12440] And if we have interfaces, we'll run into https://youtrack.jetbrains.com/issue/KT-31420
+                if (generateInterfaces())
+                    out.println("@Suppress(\"INAPPLICABLE_JVM_NAME\")");
+
                 out.println("@set:JvmName(\"%s\")", getStrategy().getJavaSetterName(column, mode));
             }
         }

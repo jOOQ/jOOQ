@@ -14525,31 +14525,6 @@ public class DSL {
         return CombinedCondition.of(operator, conditions);
     }
 
-    /**
-     * Invert a boolean value.
-     * <p>
-     * This is convenience for calling {@link #field(Condition)},
-     * {@link #not(Condition)}, {@link #condition(Field)}, i.e. <code><pre>
-     * field(not(condition(field)));
-     * </pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<Boolean> not(Field<Boolean> field) {
-        return new NotField(field);
-    }
-
-    /**
-     * Transform a condition into a boolean field.
-     */
-    @NotNull
-    @Support
-    public static Field<Boolean> field(Condition condition) {
-        return condition instanceof FieldCondition
-            ? ((FieldCondition) condition).field
-            : new ConditionAsField(condition);
-    }
-
     // -------------------------------------------------------------------------
     // XXX Global Field and Function factory
     // -------------------------------------------------------------------------
@@ -15663,6 +15638,15 @@ public class DSL {
     @Support
     public static Condition not(Condition arg1) {
         return new Not(arg1);
+    }
+
+    /**
+     * The <code>NOT</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Boolean> not(Field<Boolean> arg1) {
+        return new NotField(arg1);
     }
 
     /**
@@ -19763,6 +19747,21 @@ public class DSL {
 
 
 
+
+    // -------------------------------------------------------------------------
+    // Utilities
+    // -------------------------------------------------------------------------
+
+    /**
+     * The <code>FIELD</code> function.
+     * <p>
+     * Transform a condition into a boolean field.
+     */
+    @NotNull
+    @Support
+    public static Field<Boolean> field(Condition condition) {
+        return condition instanceof FieldCondition ? ((FieldCondition) condition).field : new ConditionAsField(condition);
+    }
 
     // -------------------------------------------------------------------------
     // Aggregate functions

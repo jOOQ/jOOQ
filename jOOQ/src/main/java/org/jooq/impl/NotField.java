@@ -37,28 +37,51 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CONDITION;
-import static org.jooq.Clause.CONDITION_NOT;
-import static org.jooq.impl.DSL.condition;
-import static org.jooq.impl.DSL.not;
-import static org.jooq.impl.Keywords.K_NOT;
-import static org.jooq.impl.Names.N_NOT;
-import static org.jooq.impl.SQLDataType.BOOLEAN;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Clause;
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.Record;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
 
-final class NotField extends AbstractField<Boolean> {
+import java.util.*;
 
-    private static final Clause[] CLAUSES = { CONDITION, CONDITION_NOT };
 
-    private final Field<Boolean>  field;
+/**
+ * The <code>NOT</code> statement.
+ */
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class NotField
+extends
+    AbstractField<Boolean>
+{
 
-    NotField(Field<Boolean> field) {
-        super(N_NOT, BOOLEAN);
-        this.field = field;
+    final Field<Boolean> arg1;
+
+    NotField(
+        Field<Boolean> arg1
+    ) {
+        super(
+            N_NOT_FIELD,
+            allNotNull(BOOLEAN, arg1)
+        );
+
+        this.arg1 = nullSafeNotNull(arg1, BOOLEAN);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -72,22 +95,49 @@ final class NotField extends AbstractField<Boolean> {
 
 
 
+
+
+
+
+
+
             case CUBRID:
             case FIREBIRD:
-                ctx.visit(DSL.field(not(condition(field))));
+                ctx.visit(DSL.field(not(condition(arg1))));
                 break;
 
             default:
                 ctx.visit(K_NOT)
-                    .sql('(')
-                    .visit(Tools.hasDefaultConverter(field) ? field : condition(field))
-                    .sql(')');
+                   .sql('(')
+                   .visit(Tools.hasDefaultConverter(arg1) ? arg1 : condition(arg1))
+                   .sql(')');
                 break;
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
     @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
+    public boolean equals(Object that) {
+        if (that instanceof NotField) {
+            return
+                StringUtils.equals(arg1, ((NotField) that).arg1)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

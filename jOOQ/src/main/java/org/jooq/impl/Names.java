@@ -119,6 +119,7 @@ final class Names {
     static final Name N_CHR                    = unquotedName("chr");
     static final Name N_COALESCE               = unquotedName("coalesce");
     static final Name N_COLLECT                = unquotedName("collect");
+    static final Name N_CONDITION_AS_FIELD     = unquotedName("condition_as_field");
     static final Name N_CONCAT                 = unquotedName("concat");
     static final Name N_CONNECT_BY_IS_CYCLE    = unquotedName("connect_by_iscycle");
     static final Name N_CONNECT_BY_IS_LEAF     = unquotedName("connect_by_isleaf");
@@ -262,6 +263,7 @@ final class Names {
     static final Name N_NEWID                  = unquotedName("newid");
     static final Name N_NEXTVAL                = unquotedName("nextval");
     static final Name N_NOT                    = unquotedName("not");
+    static final Name N_NOT_FIELD              = unquotedName("not_field");
     static final Name N_NOW                    = unquotedName("now");
     static final Name N_NTILE                  = unquotedName("ntile");
     static final Name N_NULLIF                 = unquotedName("nullif");

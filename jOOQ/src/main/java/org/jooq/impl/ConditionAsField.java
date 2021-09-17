@@ -37,24 +37,51 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.not;
-import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Condition;
-import org.jooq.Context;
+import org.jooq.*;
+import org.jooq.Record;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>FIELD</code> statement.
  */
-final class ConditionAsField extends AbstractField<Boolean> {
-    final Condition           condition;
+@SuppressWarnings({ "unused" })
+final class ConditionAsField
+extends
+    AbstractField<Boolean>
+{
 
-    ConditionAsField(Condition condition) {
-        super(DSL.name(condition.toString()), SQLDataType.BOOLEAN);
+    final Condition condition;
+
+    ConditionAsField(
+        Condition condition
+    ) {
+        super(
+            N_CONDITION_AS_FIELD,
+            allNotNull(BOOLEAN)
+        );
 
         this.condition = condition;
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -73,28 +100,50 @@ final class ConditionAsField extends AbstractField<Boolean> {
 
 
 
-            case CUBRID:
-            case FIREBIRD:
-                acceptCase(ctx);
-                break;
 
-            // Other dialects can inline predicates in column expression contexts
+            case CUBRID:
+            case FIREBIRD: {
+                // [#10179] Avoid 3VL when not necessary
+                if (condition instanceof AbstractCondition && !((AbstractCondition) condition).isNullable())
+                    ctx.visit(DSL.when(condition, inline(true))
+                                 .else_(inline(false)));
+
+                // [#3206] Implement 3VL if necessary or unknown
+                else
+                    ctx.visit(DSL.when(condition, inline(true))
+                                 .when(not(condition), inline(false)));
+                break;
+            }
+
             default:
                 ctx.sql('(').visit(condition).sql(')');
                 break;
         }
     }
 
-    private final void acceptCase(Context<?> ctx) {
 
-        // [#10179] Avoid 3VL when not necessary
-        if (condition instanceof AbstractCondition && !((AbstractCondition) condition).isNullable())
-            ctx.visit(DSL.when(condition, inline(true))
-                         .else_(inline(false)));
 
-        // [#3206] Implement 3VL if necessary or unknown
+
+
+
+
+
+
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof ConditionAsField) {
+            return
+                StringUtils.equals(condition, ((ConditionAsField) that).condition)
+            ;
+        }
         else
-            ctx.visit(DSL.when(condition, inline(true))
-                         .when(not(condition), inline(false)));
+            return super.equals(that);
     }
 }

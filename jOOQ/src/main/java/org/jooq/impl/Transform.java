@@ -69,6 +69,7 @@ final class Transform {
         this.fieldTransformer = fieldTransformer;
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     Condition transform(Condition condition) {
         if (condition instanceof ConditionProviderImpl)
             return transform(((ConditionProviderImpl) condition).getWhere());
@@ -76,8 +77,18 @@ final class Transform {
             return transform(((And) condition).arg1).and(transform(((And) condition).arg2));
         else if (condition instanceof Or)
             return transform(((Or) condition).arg1).or(transform(((Or) condition).arg2));
-        else if (condition instanceof CompareCondition)
-            return new CompareCondition(fieldTransformer.apply(((CompareCondition) condition).field1), fieldTransformer.apply(((CompareCondition) condition).field2), ((CompareCondition) condition).comparator);
+        else if (condition instanceof Eq)
+            return fieldTransformer.apply(((Eq<?>) condition).arg1).eq((Field) fieldTransformer.apply(((Eq<?>) condition).arg2));
+        else if (condition instanceof Ne)
+            return fieldTransformer.apply(((Ne<?>) condition).arg1).ne((Field) fieldTransformer.apply(((Ne<?>) condition).arg2));
+        else if (condition instanceof Lt)
+            return fieldTransformer.apply(((Lt<?>) condition).arg1).lt((Field) fieldTransformer.apply(((Lt<?>) condition).arg2));
+        else if (condition instanceof Le)
+            return fieldTransformer.apply(((Le<?>) condition).arg1).le((Field) fieldTransformer.apply(((Le<?>) condition).arg2));
+        else if (condition instanceof Gt)
+            return fieldTransformer.apply(((Gt<?>) condition).arg1).gt((Field) fieldTransformer.apply(((Gt<?>) condition).arg2));
+        else if (condition instanceof Ge)
+            return fieldTransformer.apply(((Ge<?>) condition).arg1).ge((Field) fieldTransformer.apply(((Ge<?>) condition).arg2));
         else
             return condition;
     }

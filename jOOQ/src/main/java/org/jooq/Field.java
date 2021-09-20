@@ -681,6 +681,132 @@ extends
     // -------------------------------------------------------------------------
 
     /**
+     * The <code>EQ</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition eq(T arg2);
+
+    /**
+     * The <code>EQ</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition eq(Select<? extends Record1<T>> arg2);
+
+    /**
+     * The <code>EQ</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition eq(Field<T> arg2);
+
+    /**
+     * The <code>EQUAL</code> operator, an alias for the <code>EQ</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition equal(T arg2);
+
+    /**
+     * The <code>EQUAL</code> operator, an alias for the <code>EQ</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition equal(Select<? extends Record1<T>> arg2);
+
+    /**
+     * The <code>EQUAL</code> operator, an alias for the <code>EQ</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition equal(Field<T> arg2);
+
+    /**
+     * The <code>GE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition ge(T arg2);
+
+    /**
+     * The <code>GE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition ge(Select<? extends Record1<T>> arg2);
+
+    /**
+     * The <code>GE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition ge(Field<T> arg2);
+
+    /**
+     * The <code>GREATER_OR_EQUAL</code> operator, an alias for the <code>GE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition greaterOrEqual(T arg2);
+
+    /**
+     * The <code>GREATER_OR_EQUAL</code> operator, an alias for the <code>GE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition greaterOrEqual(Select<? extends Record1<T>> arg2);
+
+    /**
+     * The <code>GREATER_OR_EQUAL</code> operator, an alias for the <code>GE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition greaterOrEqual(Field<T> arg2);
+
+    /**
+     * The <code>GREATER_THAN</code> operator, an alias for the <code>GT</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition greaterThan(T arg2);
+
+    /**
+     * The <code>GREATER_THAN</code> operator, an alias for the <code>GT</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition greaterThan(Select<? extends Record1<T>> arg2);
+
+    /**
+     * The <code>GREATER_THAN</code> operator, an alias for the <code>GT</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition greaterThan(Field<T> arg2);
+
+    /**
+     * The <code>GT</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition gt(T arg2);
+
+    /**
+     * The <code>GT</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition gt(Select<? extends Record1<T>> arg2);
+
+    /**
+     * The <code>GT</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition gt(Field<T> arg2);
+
+    /**
      * The <code>IS_DISTINCT_FROM</code> operator.
      * <p>
      * The DISTINCT predicate allows for creating NULL safe comparisons where the two operands
@@ -753,6 +879,132 @@ extends
     @NotNull
     @Support
     Condition isNotNull();
+
+    /**
+     * The <code>LE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition le(T arg2);
+
+    /**
+     * The <code>LE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition le(Select<? extends Record1<T>> arg2);
+
+    /**
+     * The <code>LE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition le(Field<T> arg2);
+
+    /**
+     * The <code>LESS_OR_EQUAL</code> operator, an alias for the <code>LE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition lessOrEqual(T arg2);
+
+    /**
+     * The <code>LESS_OR_EQUAL</code> operator, an alias for the <code>LE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition lessOrEqual(Select<? extends Record1<T>> arg2);
+
+    /**
+     * The <code>LESS_OR_EQUAL</code> operator, an alias for the <code>LE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition lessOrEqual(Field<T> arg2);
+
+    /**
+     * The <code>LESS_THAN</code> operator, an alias for the <code>LT</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition lessThan(T arg2);
+
+    /**
+     * The <code>LESS_THAN</code> operator, an alias for the <code>LT</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition lessThan(Select<? extends Record1<T>> arg2);
+
+    /**
+     * The <code>LESS_THAN</code> operator, an alias for the <code>LT</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition lessThan(Field<T> arg2);
+
+    /**
+     * The <code>LT</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition lt(T arg2);
+
+    /**
+     * The <code>LT</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition lt(Select<? extends Record1<T>> arg2);
+
+    /**
+     * The <code>LT</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition lt(Field<T> arg2);
+
+    /**
+     * The <code>NE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition ne(T arg2);
+
+    /**
+     * The <code>NE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition ne(Select<? extends Record1<T>> arg2);
+
+    /**
+     * The <code>NE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition ne(Field<T> arg2);
+
+    /**
+     * The <code>NOT_EQUAL</code> operator, an alias for the <code>NE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition notEqual(T arg2);
+
+    /**
+     * The <code>NOT_EQUAL</code> operator, an alias for the <code>NE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition notEqual(Select<? extends Record1<T>> arg2);
+
+    /**
+     * The <code>NOT_EQUAL</code> operator, an alias for the <code>NE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition notEqual(Field<T> arg2);
 
     // -------------------------------------------------------------------------
     // XML predicates
@@ -2515,27 +2767,6 @@ extends
     // ------------------------------------------------------------------------
 
     /**
-     * <code>this = value</code>.
-     */
-    @NotNull
-    @Support
-    Condition equal(T value);
-
-    /**
-     * <code>this = field</code>.
-     */
-    @NotNull
-    @Support
-    Condition equal(Field<T> field);
-
-    /**
-     * <code>this = (Select&lt;?&gt; ...)</code>.
-     */
-    @NotNull
-    @Support
-    Condition equal(Select<? extends Record1<T>> query);
-
-    /**
      * <code>this = [quantifier] (Select&lt;?&gt; ...)</code>.
      *
      * @see DSL#all(Field)
@@ -2548,33 +2779,6 @@ extends
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Condition equal(QuantifiedSelect<? extends Record1<T>> query);
-
-    /**
-     * <code>this = value</code>.
-     *
-     * @see #equal(Object)
-     */
-    @NotNull
-    @Support
-    Condition eq(T value);
-
-    /**
-     * <code>this = field</code>.
-     *
-     * @see #equal(Field)
-     */
-    @NotNull
-    @Support
-    Condition eq(Field<T> field);
-
-    /**
-     * <code>this = (Select&lt;?&gt; ...)</code>.
-     *
-     * @see #equal(Select)
-     */
-    @NotNull
-    @Support
-    Condition eq(Select<? extends Record1<T>> query);
 
     /**
      * <code>this = [quantifier] (Select&lt;?&gt; ...)</code>.
@@ -2591,27 +2795,6 @@ extends
     Condition eq(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this != value</code>.
-     */
-    @NotNull
-    @Support
-    Condition notEqual(T value);
-
-    /**
-     * <code>this != field</code>.
-     */
-    @NotNull
-    @Support
-    Condition notEqual(Field<T> field);
-
-    /**
-     * <code>this != (Select&lt;?&gt; ...)</code>.
-     */
-    @NotNull
-    @Support
-    Condition notEqual(Select<? extends Record1<T>> query);
-
-    /**
      * <code>this != [quantifier] (Select&lt;?&gt; ...)</code>.
      *
      * @see DSL#all(Field)
@@ -2624,33 +2807,6 @@ extends
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Condition notEqual(QuantifiedSelect<? extends Record1<T>> query);
-
-    /**
-     * <code>this != value</code>.
-     *
-     * @see #notEqual(Object)
-     */
-    @NotNull
-    @Support
-    Condition ne(T value);
-
-    /**
-     * <code>this != field</code>.
-     *
-     * @see #notEqual(Field)
-     */
-    @NotNull
-    @Support
-    Condition ne(Field<T> field);
-
-    /**
-     * <code>this != (Select&lt;?&gt; ...)</code>.
-     *
-     * @see #notEqual(Select)
-     */
-    @NotNull
-    @Support
-    Condition ne(Select<? extends Record1<T>> query);
 
     /**
      * <code>this != [quantifier] (Select&lt;?&gt; ...)</code>.
@@ -2667,27 +2823,6 @@ extends
     Condition ne(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this &lt; value</code>.
-     */
-    @NotNull
-    @Support
-    Condition lessThan(T value);
-
-    /**
-     * <code>this &lt; field</code>.
-     */
-    @NotNull
-    @Support
-    Condition lessThan(Field<T> field);
-
-    /**
-     * <code>this &lt; (Select&lt;?&gt; ...)</code>.
-     */
-    @NotNull
-    @Support
-    Condition lessThan(Select<? extends Record1<T>> query);
-
-    /**
      * <code>this &lt; [quantifier] (Select&lt;?&gt; ...)</code>.
      *
      * @see DSL#all(Field)
@@ -2700,33 +2835,6 @@ extends
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Condition lessThan(QuantifiedSelect<? extends Record1<T>> query);
-
-    /**
-     * <code>this &lt; value</code>.
-     *
-     * @see #lessThan(Object)
-     */
-    @NotNull
-    @Support
-    Condition lt(T value);
-
-    /**
-     * <code>this &lt; field</code>.
-     *
-     * @see #lessThan(Field)
-     */
-    @NotNull
-    @Support
-    Condition lt(Field<T> field);
-
-    /**
-     * <code>this &lt; (Select&lt;?&gt; ...)</code>.
-     *
-     * @see #lessThan(Select)
-     */
-    @NotNull
-    @Support
-    Condition lt(Select<? extends Record1<T>> query);
 
     /**
      * <code>this &lt; [quantifier] (Select&lt;?&gt; ...)</code>.
@@ -2743,27 +2851,6 @@ extends
     Condition lt(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this &lt;= value</code>.
-     */
-    @NotNull
-    @Support
-    Condition lessOrEqual(T value);
-
-    /**
-     * <code>this &lt;= field</code>.
-     */
-    @NotNull
-    @Support
-    Condition lessOrEqual(Field<T> field);
-
-    /**
-     * <code>this &lt;= (Select&lt;?&gt; ...)</code>.
-     */
-    @NotNull
-    @Support
-    Condition lessOrEqual(Select<? extends Record1<T>> query);
-
-    /**
      * <code>this &lt;= [quantifier] (Select&lt;?&gt; ...)</code>.
      *
      * @see DSL#all(Field)
@@ -2776,33 +2863,6 @@ extends
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Condition lessOrEqual(QuantifiedSelect<? extends Record1<T>> query);
-
-    /**
-     * <code>this &lt;= value</code>.
-     *
-     * @see #lessOrEqual(Object)
-     */
-    @NotNull
-    @Support
-    Condition le(T value);
-
-    /**
-     * <code>this &lt;= field</code>.
-     *
-     * @see #lessOrEqual(Field)
-     */
-    @NotNull
-    @Support
-    Condition le(Field<T> field);
-
-    /**
-     * <code>this &lt;= (Select&lt;?&gt; ...)</code>.
-     *
-     * @see #lessOrEqual(Select)
-     */
-    @NotNull
-    @Support
-    Condition le(Select<? extends Record1<T>> query);
 
     /**
      * <code>this &lt;= [quantifier] (Select&lt;?&gt; ...)</code>.
@@ -2819,27 +2879,6 @@ extends
     Condition le(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this &gt; value</code>.
-     */
-    @NotNull
-    @Support
-    Condition greaterThan(T value);
-
-    /**
-     * <code>this &gt; field</code>.
-     */
-    @NotNull
-    @Support
-    Condition greaterThan(Field<T> field);
-
-    /**
-     * <code>this &gt; (Select&lt;?&gt; ...)</code>.
-     */
-    @NotNull
-    @Support
-    Condition greaterThan(Select<? extends Record1<T>> query);
-
-    /**
      * <code>this &gt; [quantifier] (Select&lt;?&gt; ...)</code>.
      *
      * @see DSL#all(Field)
@@ -2852,33 +2891,6 @@ extends
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Condition greaterThan(QuantifiedSelect<? extends Record1<T>> query);
-
-    /**
-     * <code>this &gt; value</code>.
-     *
-     * @see #greaterThan(Object)
-     */
-    @NotNull
-    @Support
-    Condition gt(T value);
-
-    /**
-     * <code>this &gt; field</code>.
-     *
-     * @see #greaterThan(Field)
-     */
-    @NotNull
-    @Support
-    Condition gt(Field<T> field);
-
-    /**
-     * <code>this &gt; (Select&lt;?&gt; ...)</code>.
-     *
-     * @see #greaterThan(Select)
-     */
-    @NotNull
-    @Support
-    Condition gt(Select<? extends Record1<T>> query);
 
     /**
      * <code>this &gt; [quantifier] (Select&lt;?&gt; ...)</code>.
@@ -2895,27 +2907,6 @@ extends
     Condition gt(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this &gt;= value</code>.
-     */
-    @NotNull
-    @Support
-    Condition greaterOrEqual(T value);
-
-    /**
-     * <code>this &gt;= field</code>.
-     */
-    @NotNull
-    @Support
-    Condition greaterOrEqual(Field<T> field);
-
-    /**
-     * <code>this &gt;= (Select&lt;?&gt; ...)</code>.
-     */
-    @NotNull
-    @Support
-    Condition greaterOrEqual(Select<? extends Record1<T>> query);
-
-    /**
      * <code>this &gt;= [quantifier] (Select&lt;?&gt; ...)</code>.
      *
      * @see DSL#all(Field)
@@ -2928,33 +2919,6 @@ extends
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     Condition greaterOrEqual(QuantifiedSelect<? extends Record1<T>> query);
-
-    /**
-     * <code>this &gt;= value</code>.
-     *
-     * @see #greaterOrEqual(Object)
-     */
-    @NotNull
-    @Support
-    Condition ge(T value);
-
-    /**
-     * <code>this &gt;= field</code>.
-     *
-     * @see #greaterOrEqual(Field)
-     */
-    @NotNull
-    @Support
-    Condition ge(Field<T> field);
-
-    /**
-     * <code>this &gt;= (Select&lt;?&gt; ...)</code>.
-     *
-     * @see #greaterOrEqual(Select)
-     */
-    @NotNull
-    @Support
-    Condition ge(Select<? extends Record1<T>> query);
 
     /**
      * <code>this &gt;= [quantifier] (Select&lt;?&gt; ...)</code>.

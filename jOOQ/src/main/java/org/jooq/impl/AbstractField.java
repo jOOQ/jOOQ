@@ -341,6 +341,105 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition eq(T arg2) {
+        return new Eq(this, Tools.field(arg2, this));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition eq(Select<? extends Record1<T>> arg2) {
+        return new Eq(this, DSL.field(arg2));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition eq(Field<T> arg2) {
+        return new Eq(this, nullSafe(arg2, getDataType()));
+    }
+
+    @Override
+    public final Condition equal(T arg2) {
+        return eq(arg2);
+    }
+
+    @Override
+    public final Condition equal(Select<? extends Record1<T>> arg2) {
+        return eq(arg2);
+    }
+
+    @Override
+    public final Condition equal(Field<T> arg2) {
+        return eq(arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition ge(T arg2) {
+        return new Ge(this, Tools.field(arg2, this));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition ge(Select<? extends Record1<T>> arg2) {
+        return new Ge(this, DSL.field(arg2));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition ge(Field<T> arg2) {
+        return new Ge(this, nullSafe(arg2, getDataType()));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T arg2) {
+        return ge(arg2);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Select<? extends Record1<T>> arg2) {
+        return ge(arg2);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T> arg2) {
+        return ge(arg2);
+    }
+
+    @Override
+    public final Condition greaterThan(T arg2) {
+        return gt(arg2);
+    }
+
+    @Override
+    public final Condition greaterThan(Select<? extends Record1<T>> arg2) {
+        return gt(arg2);
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T> arg2) {
+        return gt(arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition gt(T arg2) {
+        return new Gt(this, Tools.field(arg2, this));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition gt(Select<? extends Record1<T>> arg2) {
+        return new Gt(this, DSL.field(arg2));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition gt(Field<T> arg2) {
+        return new Gt(this, nullSafe(arg2, getDataType()));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isDistinctFrom(T arg2) {
         return new IsDistinctFrom(this, Tools.field(arg2, this));
     }
@@ -383,6 +482,105 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     public final Condition isNotNull() {
         return new IsNotNull(this);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition le(T arg2) {
+        return new Le(this, Tools.field(arg2, this));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition le(Select<? extends Record1<T>> arg2) {
+        return new Le(this, DSL.field(arg2));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition le(Field<T> arg2) {
+        return new Le(this, nullSafe(arg2, getDataType()));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T arg2) {
+        return le(arg2);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Select<? extends Record1<T>> arg2) {
+        return le(arg2);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T> arg2) {
+        return le(arg2);
+    }
+
+    @Override
+    public final Condition lessThan(T arg2) {
+        return lt(arg2);
+    }
+
+    @Override
+    public final Condition lessThan(Select<? extends Record1<T>> arg2) {
+        return lt(arg2);
+    }
+
+    @Override
+    public final Condition lessThan(Field<T> arg2) {
+        return lt(arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition lt(T arg2) {
+        return new Lt(this, Tools.field(arg2, this));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition lt(Select<? extends Record1<T>> arg2) {
+        return new Lt(this, DSL.field(arg2));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition lt(Field<T> arg2) {
+        return new Lt(this, nullSafe(arg2, getDataType()));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition ne(T arg2) {
+        return new Ne(this, Tools.field(arg2, this));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition ne(Select<? extends Record1<T>> arg2) {
+        return new Ne(this, DSL.field(arg2));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition ne(Field<T> arg2) {
+        return new Ne(this, nullSafe(arg2, getDataType()));
+    }
+
+    @Override
+    public final Condition notEqual(T arg2) {
+        return ne(arg2);
+    }
+
+    @Override
+    public final Condition notEqual(Select<? extends Record1<T>> arg2) {
+        return ne(arg2);
+    }
+
+    @Override
+    public final Condition notEqual(Field<T> arg2) {
+        return ne(arg2);
     }
 
     // -------------------------------------------------------------------------
@@ -1146,38 +1344,8 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    public final Condition eq(T value) {
-        return equal(value);
-    }
-
-    @Override
-    public final Condition eq(Field<T> field) {
-        return equal(field);
-    }
-
-    @Override
-    public final Condition eq(Select<? extends Record1<T>> query) {
-        return equal(query);
-    }
-
-    @Override
     public final Condition eq(QuantifiedSelect<? extends Record1<T>> query) {
         return equal(query);
-    }
-
-    @Override
-    public final Condition ne(T value) {
-        return notEqual(value);
-    }
-
-    @Override
-    public final Condition ne(Field<T> field) {
-        return notEqual(field);
-    }
-
-    @Override
-    public final Condition ne(Select<? extends Record1<T>> query) {
-        return notEqual(query);
     }
 
     @Override
@@ -1186,38 +1354,8 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    public final Condition lt(T value) {
-        return lessThan(value);
-    }
-
-    @Override
-    public final Condition lt(Field<T> field) {
-        return lessThan(field);
-    }
-
-    @Override
-    public final Condition lt(Select<? extends Record1<T>> query) {
-        return lessThan(query);
-    }
-
-    @Override
     public final Condition lt(QuantifiedSelect<? extends Record1<T>> query) {
         return lessThan(query);
-    }
-
-    @Override
-    public final Condition le(T value) {
-        return lessOrEqual(value);
-    }
-
-    @Override
-    public final Condition le(Field<T> field) {
-        return lessOrEqual(field);
-    }
-
-    @Override
-    public final Condition le(Select<? extends Record1<T>> query) {
-        return lessOrEqual(query);
     }
 
     @Override
@@ -1226,53 +1364,13 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    public final Condition gt(T value) {
-        return greaterThan(value);
-    }
-
-    @Override
-    public final Condition gt(Field<T> field) {
-        return greaterThan(field);
-    }
-
-    @Override
-    public final Condition gt(Select<? extends Record1<T>> query) {
-        return greaterThan(query);
-    }
-
-    @Override
     public final Condition gt(QuantifiedSelect<? extends Record1<T>> query) {
         return greaterThan(query);
     }
 
     @Override
-    public final Condition ge(T value) {
-        return greaterOrEqual(value);
-    }
-
-    @Override
-    public final Condition ge(Field<T> field) {
-        return greaterOrEqual(field);
-    }
-
-    @Override
-    public final Condition ge(Select<? extends Record1<T>> query) {
-        return greaterOrEqual(query);
-    }
-
-    @Override
     public final Condition ge(QuantifiedSelect<? extends Record1<T>> query) {
         return greaterOrEqual(query);
-    }
-
-    @Override
-    public final Condition equal(T value) {
-        return equal(Tools.field(value, this));
-    }
-
-    @Override
-    public final Condition equal(Field<T> field) {
-        return compare(EQUALS, nullSafe(field, getDataType()));
     }
 
     @Override
@@ -1286,23 +1384,8 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    public final Condition equal(Select<? extends Record1<T>> query) {
-        return compare(EQUALS, query);
-    }
-
-    @Override
     public final Condition equal(QuantifiedSelect<? extends Record1<T>> query) {
         return compare(EQUALS, query);
-    }
-
-    @Override
-    public final Condition notEqual(T value) {
-        return notEqual(Tools.field(value, this));
-    }
-
-    @Override
-    public final Condition notEqual(Field<T> field) {
-        return compare(NOT_EQUALS, nullSafe(field, getDataType()));
     }
 
     @Override
@@ -1316,28 +1399,8 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    public final Condition notEqual(Select<? extends Record1<T>> query) {
-        return compare(NOT_EQUALS, query);
-    }
-
-    @Override
     public final Condition notEqual(QuantifiedSelect<? extends Record1<T>> query) {
         return compare(NOT_EQUALS, query);
-    }
-
-    @Override
-    public final Condition lessThan(T value) {
-        return lessThan(Tools.field(value, this));
-    }
-
-    @Override
-    public final Condition lessThan(Field<T> field) {
-        return compare(LESS, nullSafe(field, getDataType()));
-    }
-
-    @Override
-    public final Condition lessThan(Select<? extends Record1<T>> query) {
-        return compare(LESS, query);
     }
 
     @Override
@@ -1346,58 +1409,13 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    public final Condition lessOrEqual(T value) {
-        return lessOrEqual(Tools.field(value, this));
-    }
-
-    @Override
-    public final Condition lessOrEqual(Field<T> field) {
-        return compare(LESS_OR_EQUAL, nullSafe(field, getDataType()));
-    }
-
-    @Override
-    public final Condition lessOrEqual(Select<? extends Record1<T>> query) {
-        return compare(LESS_OR_EQUAL, query);
-    }
-
-    @Override
     public final Condition lessOrEqual(QuantifiedSelect<? extends Record1<T>> query) {
         return compare(LESS_OR_EQUAL, query);
     }
 
     @Override
-    public final Condition greaterThan(T value) {
-        return greaterThan(Tools.field(value, this));
-    }
-
-    @Override
-    public final Condition greaterThan(Field<T> field) {
-        return compare(GREATER, nullSafe(field, getDataType()));
-    }
-
-    @Override
-    public final Condition greaterThan(Select<? extends Record1<T>> query) {
-        return compare(GREATER, query);
-    }
-
-    @Override
     public final Condition greaterThan(QuantifiedSelect<? extends Record1<T>> query) {
         return compare(GREATER, query);
-    }
-
-    @Override
-    public final Condition greaterOrEqual(T value) {
-        return greaterOrEqual(Tools.field(value, this));
-    }
-
-    @Override
-    public final Condition greaterOrEqual(Field<T> field) {
-        return compare(GREATER_OR_EQUAL, nullSafe(field, getDataType()));
-    }
-
-    @Override
-    public final Condition greaterOrEqual(Select<? extends Record1<T>> query) {
-        return compare(GREATER_OR_EQUAL, query);
     }
 
     @Override
@@ -1413,10 +1431,24 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     public final Condition compare(Comparator comparator, Field<T> field) {
         switch (comparator) {
+            case EQUALS:
+                return new Eq<>(this, nullSafe(field, getDataType()));
+            case GREATER:
+                return new Gt<>(this, nullSafe(field, getDataType()));
+            case GREATER_OR_EQUAL:
+                return new Ge<>(this, nullSafe(field, getDataType()));
+            case LESS:
+                return new Lt<>(this, nullSafe(field, getDataType()));
+            case LESS_OR_EQUAL:
+                return new Le<>(this, nullSafe(field, getDataType()));
+            case NOT_EQUALS:
+                return new Ne<>(this, nullSafe(field, getDataType()));
+
             case IS_DISTINCT_FROM:
                 return new IsDistinctFrom<>(this, nullSafe(field, getDataType()));
             case IS_NOT_DISTINCT_FROM:
                 return new IsNotDistinctFrom<>(this, nullSafe(field, getDataType()));
+
             default:
                 return new CompareCondition(this, nullSafe(field, getDataType()), comparator);
         }

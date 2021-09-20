@@ -120,7 +120,7 @@ extends
      * @deprecated - This will be implemented using QOM.replace, instead.
      */
     @Deprecated
-    final Condition transform(Function<? super Condition, ? extends Condition> function) {
+    final Condition transform(java.util.function.Function<? super Condition, ? extends Condition> function) {
         Condition t1 = arg1 instanceof And
             ? ((And) arg1).transform(function)
             : arg1 instanceof Or

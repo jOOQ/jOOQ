@@ -93,17 +93,6 @@ public interface Condition extends QueryPart {
      */
     @NotNull
     @Support
-    Condition and(Condition other);
-
-    /**
-     * Combine this condition with another one using the {@link Operator#AND}
-     * operator.
-     *
-     * @param other The other condition
-     * @return The combined condition
-     */
-    @NotNull
-    @Support
     Condition and(Field<Boolean> other);
 
     /**
@@ -231,17 +220,6 @@ public interface Condition extends QueryPart {
     @NotNull
     @Support
     Condition andNotExists(Select<?> select);
-
-    /**
-     * Combine this condition with another one using the {@link Operator#OR}
-     * operator.
-     *
-     * @param other The other condition
-     * @return The combined condition
-     */
-    @NotNull
-    @Support
-    Condition or(Condition other);
 
     /**
      * Combine this condition with another one using the {@link Operator#OR}
@@ -387,11 +365,25 @@ public interface Condition extends QueryPart {
     // -------------------------------------------------------------------------
 
     /**
+     * The <code>AND</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition and(Condition arg2);
+
+    /**
      * The <code>NOT</code> operator.
      */
     @NotNull
     @Support
     Condition not();
+
+    /**
+     * The <code>OR</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition or(Condition arg2);
 
 
 }

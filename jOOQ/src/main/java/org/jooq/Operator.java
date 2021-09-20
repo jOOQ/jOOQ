@@ -38,15 +38,15 @@
 
 package org.jooq;
 
+import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.keyword;
-
-import org.jooq.impl.DSL;
+import static org.jooq.impl.DSL.trueCondition;
 
 import org.jetbrains.annotations.*;
 
 
 /**
- * An operator used for combining conditions
+ * An operator used for combining conditions.
  *
  * @author Lukas Eder
  */
@@ -66,8 +66,8 @@ public enum Operator {
     @Support
     OR("or");
 
-    private final String  sql;
-    private final Keyword keyword;
+    private final String    sql;
+    private final Keyword   keyword;
 
     private Operator(String sql) {
         this.sql = sql;
@@ -86,5 +86,12 @@ public enum Operator {
      */
     public final Keyword toKeyword() {
         return keyword;
+    }
+
+    /**
+     * The identity condition for this operator.
+     */
+    public final Condition identity() {
+        return this == AND ? trueCondition() : falseCondition();
     }
 }

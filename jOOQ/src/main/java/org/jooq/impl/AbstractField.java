@@ -358,7 +358,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isNull() {
         return new IsNull(this);
     }
@@ -382,7 +381,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isNotNull() {
         return new IsNotNull(this);
     }
@@ -392,13 +390,11 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     // -------------------------------------------------------------------------
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isDocument() {
         return new IsDocument(this);
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isNotDocument() {
         return new IsNotDocument(this);
     }
@@ -408,13 +404,11 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     // -------------------------------------------------------------------------
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isJson() {
         return new IsJson(this);
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isNotJson() {
         return new IsNotJson(this);
     }
@@ -460,7 +454,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Field<T> bitNot() {
         return DSL.bitNot((Field) this);
     }
@@ -578,7 +571,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     public final Field<T> shr(Field<? extends Number> count) {
         return DSL.shr((Field) this, count);
     }
-
 
 
 

@@ -98,7 +98,6 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Keywords.K_CUBE;
-import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_GROUPING_SETS;
 import static org.jooq.impl.Names.N_AVG;
 import static org.jooq.impl.Names.N_COUNT;
@@ -152,7 +151,6 @@ import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.temporal.Temporal;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -212,7 +210,6 @@ import org.jooq.ConstraintTypeStep;
 import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTypeStep;
 import org.jooq.CreateViewAsStep;
-import org.jooq.DMLQuery;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DatePart;
@@ -339,7 +336,6 @@ import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Record8;
 import org.jooq.Record9;
-import org.jooq.RecordHandler;
 import org.jooq.RecordType;
 // ...
 import org.jooq.Result;
@@ -387,7 +383,6 @@ import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.True;
-import org.jooq.UDTRecord;
 import org.jooq.Update;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.User;
@@ -14502,7 +14497,14 @@ public class DSL {
     @NotNull
     @Support
     public static Condition condition(Operator operator, Condition left, Condition right) {
-        return CombinedCondition.of(operator, left, right);
+        if (left == null || left instanceof NoCondition)
+            return right == null ? noCondition() : right;
+        else if (right == null || right instanceof NoCondition)
+            return left;
+        else if (operator == AND)
+            return new And(left, right);
+        else
+            return new Or(left, right);
     }
 
     /**
@@ -14522,7 +14524,24 @@ public class DSL {
     @NotNull
     @Support
     public static Condition condition(Operator operator, Collection<? extends Condition> conditions) {
-        return CombinedCondition.of(operator, conditions);
+        Condition result = null;
+
+        for (Condition condition : conditions)
+            if (result == null)
+                result = condition;
+            else
+                result = condition(operator, result, condition);
+
+        if (result != null)
+            return result;
+
+        // [#9998] All conditions were NoCondition
+        else if (!conditions.isEmpty())
+            return noCondition();
+
+        // [#9998] Otherwise, return the identity for the operator
+        else
+            return operator.identity();
     }
 
     // -------------------------------------------------------------------------

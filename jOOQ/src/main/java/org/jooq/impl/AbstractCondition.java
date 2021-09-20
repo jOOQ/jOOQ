@@ -38,6 +38,8 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.CONDITION;
+import static org.jooq.Operator.AND;
+import static org.jooq.Operator.OR;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
@@ -75,11 +77,6 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
         return CLAUSES;
     }
 
-    @Override
-    public final Condition and(Condition other) {
-        return DSL.and(this, other);
-    }
-
     /*
      * Subclasses may override this implementation when implementing
      * A BETWEEN B AND C
@@ -87,11 +84,6 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
     @Override
     public Condition and(Field<Boolean> other) {
         return and(condition(other));
-    }
-
-    @Override
-    public final Condition or(Condition other) {
-        return DSL.or(this, other);
     }
 
     @Override
@@ -197,8 +189,18 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
     // -------------------------------------------------------------------------
 
     @Override
+    public final Condition and(Condition arg2) {
+        return DSL.condition(AND, this, arg2);
+    }
+
+    @Override
     public final Condition not() {
         return DSL.not(this);
+    }
+
+    @Override
+    public final Condition or(Condition arg2) {
+        return DSL.condition(OR, this, arg2);
     }
 
 

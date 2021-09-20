@@ -183,7 +183,7 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
             accept1(ctx);
         }
         else if (query.values != null || quantifiedArray) {
-            ctx.visit(CombinedCondition.of(
+            ctx.visit(DSL.condition(
                 query.quantifier == Quantifier.ALL ? Operator.AND : Operator.OR,
                 query.values != null
                     ? map(query.values, v -> comparisonCondition(comparator, (Field<String>) v))

@@ -1227,11 +1227,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
-
-
-
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private final Select<?> distinctOnEmulation() {
 
@@ -2613,11 +2608,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         else
             return table;
     }
-
-
-
-
-
 
 
 

@@ -55,6 +55,8 @@ import org.jooq.impl.*;
 import org.jooq.tools.*;
 
 import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 
 
 /**
@@ -118,7 +120,7 @@ extends
      * @deprecated - This will be implemented using QOM.replace, instead.
      */
     @Deprecated
-    final Condition transform(java.util.function.Function<? super Condition, ? extends Condition> function) {
+    final Condition transform(Function<? super Condition, ? extends Condition> function) {
         Condition t1 = arg1 instanceof And
             ? ((And) arg1).transform(function)
             : arg1 instanceof Or

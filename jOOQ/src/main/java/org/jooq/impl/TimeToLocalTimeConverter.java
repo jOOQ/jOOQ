@@ -39,13 +39,14 @@ package org.jooq.impl;
 
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.function.Function;
 
 import org.jooq.Converter;
 
 /**
  * @author Lukas Eder
  * @deprecated - 3.15.0 - [#11505] - Use
- *             {@link Converter#ofNullable(Class, Class, java.util.function.Function, java.util.function.Function)}
+ *             {@link Converter#ofNullable(Class, Class, Function, Function)}
  *             instead, e.g.
  *             <code>Converter.ofNullable(Time.class, LocalTime.class, Time::toLocalTime, Time::valueOf)</code>.
  */

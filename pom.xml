@@ -600,6 +600,11 @@
                     <configuration>
                         <failBuildOnCVSS>0</failBuildOnCVSS>
                         <skipTestScope>true</skipTestScope>
+
+                        <!-- CVE-2020-29582: 5.3. No fix is available in kotlin 1.3. Please upgrade to jOOQ 3.15 -->
+                        <excludes>
+                        	<exclude>kotlin-stdlib</exclude>
+                        </excludes>
                     </configuration>
                 </plugin>
             </plugins>

@@ -2316,7 +2316,9 @@ public class JavaGenerator extends AbstractGenerator {
 
     private final void generateRecordSetter0(TypedElementDefinition<?> column, int index, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(column.getContainer(), Mode.RECORD);
-        final String setterReturnType = generateFluentSetters() ? className : tokenVoid;
+
+        // [#12459] Kotlin setters must return Unit
+        final String setterReturnType = generateFluentSetters() && !kotlin ? className : tokenVoid;
         final String setter = getStrategy().getJavaSetterName(column, Mode.RECORD);
         final String member = getStrategy().getJavaMemberName(column, Mode.POJO);
         final String typeFull = getJavaType(column.getType(resolver(out)), out);

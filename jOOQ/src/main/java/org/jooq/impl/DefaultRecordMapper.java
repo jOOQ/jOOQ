@@ -1109,7 +1109,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                         nestedMappingInfo[i].row = row0(nestedMappedFields[i].toArray(EMPTY_FIELD));
                         nestedMappingInfo[i].recordDelegate = newRecord(true, recordType(nestedMappingInfo[i].row.size()), nestedMappingInfo[i].row, configuration);
                         nestedMappingInfo[i].mappers.add(
-                            nestedMappingInfo[i].row.fields.mapper(configuration, parameterTypes[propertyIndexes[i] != null ? propertyIndexes[i] : i])
+                            nestedMappingInfo[i].row.fields.mapper(configuration, parameterTypes[propertyIndexes[nestedMappingInfo[i].indexLookup.get(0)]])
                         );
                     }
                 }

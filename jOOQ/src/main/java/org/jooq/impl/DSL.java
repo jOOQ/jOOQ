@@ -19526,6 +19526,24 @@ public class DSL {
     }
 
     /**
+     * The <code>XMLCONCAT</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static Field<XML> xmlconcat(Field<?>... args) {
+        return new Xmlconcat(Arrays.asList(args));
+    }
+
+    /**
+     * The <code>XMLCONCAT</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static Field<XML> xmlconcat(Collection<? extends Field<?>> args) {
+        return new Xmlconcat(args);
+    }
+
+    /**
      * The <code>XMLFOREST</code> function.
      */
     @NotNull

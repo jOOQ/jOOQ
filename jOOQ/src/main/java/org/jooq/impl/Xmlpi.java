@@ -110,7 +110,13 @@ extends
 
 
 
-        // TODO: Implement this stub
+
+        ctx.visit(N_XMLPI).sql('(').visit(K_NAME).sql(' ').visit(target);
+
+        if (content != null)
+            ctx.sql(", ").visit(content);
+
+        ctx.sql(')');
     }
 
 

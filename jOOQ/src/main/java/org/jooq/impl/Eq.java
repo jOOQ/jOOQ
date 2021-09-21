@@ -158,7 +158,7 @@ extends
      * @deprecated - [#12425] After the QOM refactoring, this should be improved
      */
     @Deprecated
-    static final Comparator comparator(Condition condition) {
+    static final org.jooq.Comparator comparator(Condition condition) {
         if (condition instanceof Eq)
             return org.jooq.Comparator.EQUALS;
         else if (condition instanceof Ne)

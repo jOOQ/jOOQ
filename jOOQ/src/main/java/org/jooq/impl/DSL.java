@@ -19543,6 +19543,20 @@ public class DSL {
         return new Xmlconcat(args);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The <code>XMLFOREST</code> function.
      */
@@ -22894,20 +22908,6 @@ public class DSL {
     public static Field<XML> xmlparseContent(Field<String> content) {
         return new XMLParse(content, DocumentOrContent.CONTENT);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * The XML element constructor.

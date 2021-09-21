@@ -19544,6 +19544,42 @@ public class DSL {
     }
 
     /**
+     * The <code>XMLPI</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static Field<XML> xmlpi(@Stringly.Name String target, Field<?> content) {
+        return new Xmlpi(DSL.name(target), content);
+    }
+
+    /**
+     * The <code>XMLPI</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static Field<XML> xmlpi(Name target, Field<?> content) {
+        return new Xmlpi(target, content);
+    }
+
+    /**
+     * The <code>XMLPI</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static Field<XML> xmlpi(@Stringly.Name String target) {
+        return new Xmlpi(DSL.name(target));
+    }
+
+    /**
+     * The <code>XMLPI</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static Field<XML> xmlpi(Name target) {
+        return new Xmlpi(target);
+    }
+
+    /**
      * The <code>XMLSERIALIZE_DOCUMENT</code> function.
      *
      * @param value is wrapped as {@link #val(Object)}.
@@ -22962,42 +22998,6 @@ public class DSL {
     @Support({ POSTGRES })
     public static XMLAttributes xmlattributes(Collection<? extends Field<?>> attributes) {
         return new XMLAttributesImpl(attributes);
-    }
-
-    /**
-     * The XML processing instruction constructor.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static Field<XML> xmlpi(String target) {
-        return xmlpi(name(target), null);
-    }
-
-    /**
-     * The XML processing instruction constructor.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static Field<XML> xmlpi(Name target) {
-        return xmlpi(target, null);
-    }
-
-    /**
-     * The XML processing instruction constructor.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static Field<XML> xmlpi(String target, Field<?> content) {
-        return xmlpi(name(target), content);
-    }
-
-    /**
-     * The XML processing instruction constructor.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static Field<XML> xmlpi(Name target, Field<?> content) {
-        return new XMLPI(target, content);
     }
 
     /**

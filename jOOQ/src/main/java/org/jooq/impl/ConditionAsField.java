@@ -74,7 +74,7 @@ extends
         Condition condition
     ) {
         super(
-            N_CONDITION_AS_FIELD,
+            N_FIELD,
             allNotNull(BOOLEAN)
         );
 

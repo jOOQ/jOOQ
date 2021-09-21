@@ -60,7 +60,7 @@ import java.util.stream.*;
 
 
 /**
- * The <code>XMLSERIALIZE DOCUMENT</code> statement.
+ * The <code>XMLSERIALIZE</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class Xmlserialize<T>

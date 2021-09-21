@@ -61,7 +61,7 @@ import java.math.BigDecimal;
 
 
 /**
- * The <code>REGR AVG X</code> statement.
+ * The <code>REGR AVGX</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unused" })
 final class RegrAvgx

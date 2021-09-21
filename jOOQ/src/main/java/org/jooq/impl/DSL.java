@@ -19612,7 +19612,7 @@ public class DSL {
     }
 
     /**
-     * The <code>XMLSERIALIZE_DOCUMENT</code> function.
+     * The <code>XMLSERIALIZE</code> function.
      *
      * @param value is wrapped as {@link #val(Object)}.
      */
@@ -19623,7 +19623,7 @@ public class DSL {
     }
 
     /**
-     * The <code>XMLSERIALIZE_DOCUMENT</code> function.
+     * The <code>XMLSERIALIZE</code> function.
      */
     @NotNull
     @Support({ POSTGRES })
@@ -19887,7 +19887,7 @@ public class DSL {
     }
 
     /**
-     * The <code>REGR_AVG_X</code> function.
+     * The <code>REGR_AVGX</code> function.
      * <p>
      * Calculate the average of the independent values (x). This standard SQL function may
      * be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
@@ -19901,7 +19901,7 @@ public class DSL {
     }
 
     /**
-     * The <code>REGR_AVG_Y</code> function.
+     * The <code>REGR_AVGY</code> function.
      * <p>
      * Calculate the average of the dependent values (y). This standard SQL function may
      * be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.

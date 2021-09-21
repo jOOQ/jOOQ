@@ -76,7 +76,7 @@ extends
         Field<? extends Number> value
     ) {
         super(
-            N_LOG,
+            N_LN,
             allNotNull(NUMERIC, value)
         );
 
@@ -89,7 +89,7 @@ extends
         Field<? extends Number> base
     ) {
         super(
-            N_LOG,
+            N_LN,
             allNotNull(NUMERIC, value, base)
         );
 

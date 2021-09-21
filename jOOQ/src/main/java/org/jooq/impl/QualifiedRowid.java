@@ -60,25 +60,25 @@ import java.util.stream.*;
 
 
 /**
- * The <code>NOT</code> statement.
+ * The <code>ROWID</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class NotField
+@SuppressWarnings({ "rawtypes", "unused" })
+final class QualifiedRowid
 extends
-    AbstractField<Boolean>
+    AbstractField<RowId>
 {
 
-    final Field<Boolean> arg1;
+    final Table<?> arg1;
 
-    NotField(
-        Field<Boolean> arg1
+    QualifiedRowid(
+        Table<?> arg1
     ) {
         super(
-            N_NOT,
-            allNotNull(BOOLEAN, arg1)
+            N_ROWID,
+            allNotNull(ROWID)
         );
 
-        this.arg1 = nullSafeNotNull(arg1, BOOLEAN);
+        this.arg1 = arg1;
     }
 
     // -------------------------------------------------------------------------
@@ -94,30 +94,25 @@ extends
 
 
 
-
-
-
-
-
-
-
-
-
-            case CUBRID:
-            case FIREBIRD:
-                ctx.visit(DSL.field(not(condition(arg1))));
+            case H2:
+                ctx.visit(arg1.getQualifiedName().append(unquotedName("_rowid_")));
                 break;
 
+            case POSTGRES:
+                ctx.visit(arg1.getQualifiedName().append(unquotedName("ctid")));
+                break;
+
+
+
+
+
+
+
             default:
-                ctx.visit(K_NOT)
-                   .sql('(')
-                   .visit(Tools.hasDefaultConverter(arg1) ? arg1 : condition(arg1))
-                   .sql(')');
+                ctx.visit(arg1.getQualifiedName().append(unquotedName("rowid")));
                 break;
         }
     }
-
-
 
 
 
@@ -134,9 +129,9 @@ extends
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof NotField) {
+        if (that instanceof QualifiedRowid) {
             return
-                StringUtils.equals(arg1, ((NotField) that).arg1)
+                StringUtils.equals(arg1, ((QualifiedRowid) that).arg1)
             ;
         }
         else

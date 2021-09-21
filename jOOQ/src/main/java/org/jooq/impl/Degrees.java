@@ -75,7 +75,7 @@ extends
         Field<? extends Number> radians
     ) {
         super(
-            N_DEGREES,
+            N_DEG,
             allNotNull(NUMERIC, radians)
         );
 

@@ -71,7 +71,7 @@ extends
 
     Euler() {
         super(
-            N_EULER,
+            N_E,
             allNotNull(NUMERIC)
         );
     }

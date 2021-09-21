@@ -119,7 +119,6 @@ final class Names {
     static final Name N_CHR                    = unquotedName("chr");
     static final Name N_COALESCE               = unquotedName("coalesce");
     static final Name N_COLLECT                = unquotedName("collect");
-    static final Name N_CONDITION_AS_FIELD     = unquotedName("condition_as_field");
     static final Name N_CONCAT                 = unquotedName("concat");
     static final Name N_CONNECT_BY_IS_CYCLE    = unquotedName("connect_by_iscycle");
     static final Name N_CONNECT_BY_IS_LEAF     = unquotedName("connect_by_isleaf");
@@ -162,6 +161,7 @@ final class Names {
     static final Name N_DB_NAME                = unquotedName("db_name");
     static final Name N_DECODE                 = unquotedName("decode");
     static final Name N_DEFAULT                = unquotedName("default");
+    static final Name N_DEG                    = unquotedName("deg");
     static final Name N_DEGREES                = unquotedName("degrees");
     static final Name N_DELETING               = unquotedName("deleting");
     static final Name N_DENSE_RANK             = unquotedName("dense_rank");
@@ -263,7 +263,6 @@ final class Names {
     static final Name N_NEWID                  = unquotedName("newid");
     static final Name N_NEXTVAL                = unquotedName("nextval");
     static final Name N_NOT                    = unquotedName("not");
-    static final Name N_NOT_FIELD              = unquotedName("not_field");
     static final Name N_NOW                    = unquotedName("now");
     static final Name N_NTILE                  = unquotedName("ntile");
     static final Name N_NULLIF                 = unquotedName("nullif");
@@ -287,6 +286,7 @@ final class Names {
     static final Name N_PRINTF                 = unquotedName("printf");
     static final Name N_PRIOR                  = unquotedName("prior");
     static final Name N_PRODUCT                = unquotedName("product");
+    static final Name N_RAD                    = unquotedName("rad");
     static final Name N_RADIANS                = unquotedName("radians");
     static final Name N_RAND                   = unquotedName("rand");
     static final Name N_RANDOM                 = unquotedName("random");
@@ -319,6 +319,7 @@ final class Names {
     static final Name N_ROUND                  = unquotedName("round");
     static final Name N_ROUND_DOWN             = unquotedName("round_down");
     static final Name N_ROW                    = unquotedName("row");
+    static final Name N_ROWID                  = unquotedName("rowid");
     static final Name N_ROWNUM                 = unquotedName("rownum");
     static final Name N_ROWSFROM               = unquotedName("rowsfrom");
     static final Name N_ROW_NUMBER             = unquotedName("row_number");

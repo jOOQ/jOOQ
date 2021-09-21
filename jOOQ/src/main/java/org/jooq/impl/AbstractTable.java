@@ -174,11 +174,6 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
         return new QualifiedAsteriskImpl(this);
     }
 
-    @Override
-    public final Field<RowId> rowid() {
-        return new RowIdField(this);
-    }
-
     // ------------------------------------------------------------------------
     // XXX: TableLike API
     // ------------------------------------------------------------------------
@@ -780,6 +775,15 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     @Override
     public final Condition notEqual(Table<R> arg2) {
         return ne(arg2);
+    }
+
+    // -------------------------------------------------------------------------
+    // Table functions
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<RowId> rowid() {
+        return new QualifiedRowid(this);
     }
 
 

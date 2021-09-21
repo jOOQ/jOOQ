@@ -108,7 +108,7 @@ extends
                 break;
 
             case FIREBIRD:
-                ctx.visit(function(N_BIN_XOR, getDataType(), arg1, arg2));
+                ctx.visit(function(N_BIN_OR, getDataType(), arg1, arg2));
                 break;
 
 

@@ -22895,25 +22895,6 @@ public class DSL {
         return new XMLParse(content, DocumentOrContent.CONTENT);
     }
 
-    /**
-     * The XML concat function.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    @SafeVarargs
-    public static Field<XML> xmlconcat(Field<?>... fields) {
-        return xmlconcat(asList(fields));
-    }
-
-    /**
-     * The XML concat function.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static Field<XML> xmlconcat(Collection<? extends Field<?>> fields) {
-        return new XMLConcat(fields);
-    }
-
 
 
 

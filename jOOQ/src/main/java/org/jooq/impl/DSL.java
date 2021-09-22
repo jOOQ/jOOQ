@@ -14265,28 +14265,6 @@ public class DSL {
     }
 
     /**
-     * Create a condition from a boolean field.
-     * <p>
-     * Databases that support boolean data types can use boolean expressions
-     * as predicates or as columns interchangeably. This extends to any type
-     * of field, including functions. A Postgres example:
-     * <p>
-     * <code><pre>
-     * select 1 where texteq('a', 'a');
-     * </pre></code>
-     *
-     * @param field The boolean expression.
-     * @return A condition wrapping the boolean expression
-     */
-    @NotNull
-    @Support
-    public static Condition condition(Field<Boolean> field) {
-        return field instanceof ConditionAsField
-            ? ((ConditionAsField) field).condition
-            : new FieldCondition(field);
-    }
-
-    /**
      * Create a condition from a map.
      * <p>
      * The result is a condition generated from keys and values of the argument <code>map</code>, such that:
@@ -19790,12 +19768,31 @@ public class DSL {
     /**
      * The <code>FIELD</code> function.
      * <p>
-     * Transform a condition into a boolean field.
+     * Wrap a condition in a boolean field.
      */
     @NotNull
     @Support
     public static Field<Boolean> field(Condition condition) {
         return condition instanceof FieldCondition ? ((FieldCondition) condition).field : new ConditionAsField(condition);
+    }
+
+    /**
+     * The <code>CONDITION</code> function.
+     * <p>
+     * Create a condition from a boolean field.
+     * <p>
+     * Databases that support boolean data types can use boolean expressions
+     * as predicates or as columns interchangeably. This extends to any type
+     * of field, including functions. A Postgres example:
+     * <p>
+     * <code><pre>
+     * select 1 where texteq('a', 'a');
+     * </pre></code>
+     */
+    @NotNull
+    @Support
+    public static Condition condition(Field<Boolean> field) {
+        return field instanceof ConditionAsField ? ((ConditionAsField) field).condition : new FieldCondition(field);
     }
 
     // -------------------------------------------------------------------------

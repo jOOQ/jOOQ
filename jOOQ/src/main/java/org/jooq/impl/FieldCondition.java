@@ -37,24 +37,52 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Clause;
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.Record;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>CONDITION</code> statement.
  */
-final class FieldCondition extends AbstractCondition {
-    final Field<Boolean>      field;
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class FieldCondition
+extends
+    AbstractCondition
+{
 
-    FieldCondition(Field<Boolean> field) {
-        this.field = field;
+    final Field<Boolean> field;
+
+    FieldCondition(
+        Field<Boolean> field
+    ) {
+
+        this.field = nullSafeNotNull(field, BOOLEAN);
     }
 
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
     @Override
-    public void accept(Context<?> ctx) {
+    public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
 
@@ -62,7 +90,6 @@ final class FieldCondition extends AbstractCondition {
 
 
 
-            // [#2485] Some of these don't work nicely, yet
 
 
 
@@ -83,9 +110,29 @@ final class FieldCondition extends AbstractCondition {
         }
     }
 
-    @Override // Avoid AbstractCondition implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
 
+
+
+
+
+
+
+
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof FieldCondition) {
+            return
+                StringUtils.equals(field, ((FieldCondition) that).field)
+            ;
+        }
+        else
+            return super.equals(that);
+    }
 }

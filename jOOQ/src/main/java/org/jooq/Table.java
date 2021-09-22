@@ -2445,7 +2445,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * -- ... in other databases
      * DELETE FROM x
      * WHERE x.rowid IN (
-     * SELECT x.rowid FROM x ORDER BY x.a LIMIT 1
+     *   SELECT x.rowid FROM x ORDER BY x.a LIMIT 1
      * )
      * </pre></code>
      * <p>

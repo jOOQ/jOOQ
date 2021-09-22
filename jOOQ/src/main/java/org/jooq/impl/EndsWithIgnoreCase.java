@@ -60,24 +60,24 @@ import java.util.stream.*;
 
 
 /**
- * The <code>CONTAINS IGNORE CASE</code> statement.
+ * The <code>ENDS WITH IGNORE CASE</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class ContainsIgnoreCase<T>
+final class EndsWithIgnoreCase<T>
 extends
     AbstractCondition
 {
 
-    final Field<T> value;
-    final Field<T> content;
+    final Field<T> string;
+    final Field<T> suffix;
 
-    ContainsIgnoreCase(
-        Field<T> value,
-        Field<T> content
+    EndsWithIgnoreCase(
+        Field<T> string,
+        Field<T> suffix
     ) {
 
-        this.value = nullableIf(false, Tools.nullSafe(value, content.getDataType()));
-        this.content = nullableIf(false, Tools.nullSafe(content, value.getDataType()));
+        this.string = nullableIf(false, Tools.nullSafe(string, suffix.getDataType()));
+        this.suffix = nullableIf(false, Tools.nullSafe(suffix, string.getDataType()));
     }
 
     // -------------------------------------------------------------------------
@@ -94,7 +94,7 @@ extends
 
 
             default:
-                ctx.visit(value.likeIgnoreCase(DSL.concat(inline("%"), Tools.escapeForLike(content, ctx.configuration()), inline("%")), Tools.ESCAPE));
+                ctx.visit(string.likeIgnoreCase(DSL.concat(inline("%"), Tools.escapeForLike(suffix, ctx.configuration())), Tools.ESCAPE));
                 break;
         }
     }
@@ -114,10 +114,10 @@ extends
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof ContainsIgnoreCase) {
+        if (that instanceof EndsWithIgnoreCase) {
             return
-                StringUtils.equals(value, ((ContainsIgnoreCase) that).value) &&
-                StringUtils.equals(content, ((ContainsIgnoreCase) that).content)
+                StringUtils.equals(string, ((EndsWithIgnoreCase) that).string) &&
+                StringUtils.equals(suffix, ((EndsWithIgnoreCase) that).suffix)
             ;
         }
         else

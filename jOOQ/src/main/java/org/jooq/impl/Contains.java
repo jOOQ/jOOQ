@@ -37,60 +37,56 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CONDITION;
-import static org.jooq.Clause.CONDITION_COMPARISON;
-// ...
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Clause;
-import org.jooq.Condition;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.Record;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 
 /**
- * Abstraction for various "contains" operations
- *
- * @author Lukas Eder
+ * The <code>CONTAINS</code> statement.
  */
-final class Contains<T> extends AbstractCondition {
-    private static final Clause[] CLAUSES = { CONDITION, CONDITION_COMPARISON };
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Contains<T>
+extends
+    AbstractCondition
+{
 
-    private final Field<T>        lhs;
-    private final Field<T>        rhs;
-    private final T               value;
-    private final boolean         leftWildcard;
-    private final boolean         rightWildcard;
+    final Field<T> value;
+    final Field<T> content;
 
-    Contains(Field<T> field, T value, boolean leftWildcard, boolean rightWildcard) {
-        this.lhs = field;
-        this.rhs = null;
-        this.value = value;
-        this.leftWildcard = leftWildcard;
-        this.rightWildcard = rightWildcard;
+    Contains(
+        Field<T> value,
+        Field<T> content
+    ) {
+
+        this.value = nullableIf(false, Tools.nullSafe(value, content.getDataType()));
+        this.content = nullableIf(false, Tools.nullSafe(content, value.getDataType()));
     }
 
-    Contains(Field<T> field, Field<T> rhs, boolean leftWildcard, boolean rightWildcard) {
-        this.lhs = field;
-        this.rhs = rhs;
-        this.value = null;
-        this.leftWildcard = leftWildcard;
-        this.rightWildcard = rightWildcard;
-    }
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {
-        // [#1107] Some dialects support "contains" operations for ARRAYs
-        // [#5929] Check both sides of the operation for array types
-        if (lhs.getDataType().isArray()
-            || (rhs != null && rhs.getDataType().isArray())
-            || (rhs == null && value != null && value.getClass().isArray()))
-            ctx.visit(new PostgresArrayContains());
-
-        // "contains" operations on Strings
-        else {
-            switch (ctx.family()) {
+        switch (ctx.family()) {
 
 
 
@@ -99,53 +95,49 @@ final class Contains<T> extends AbstractCondition {
 
 
 
-
-
-
-
-
-
-
-                default:
-                    Field<?>[] array = new Field[1 + (leftWildcard ? 1 : 0) + (rightWildcard ? 1 : 0)];
-
-                    int i = 0;
-                    if (leftWildcard)
-                        array[i++] = inline("%");
-
-                    array[i++] = Tools.escapeForLike(rhs == null ? Tools.field(value, lhs) : rhs, ctx.configuration());
-
-                    if (rightWildcard)
-                        array[i++] = inline("%");
-
-                    ctx.visit(lhs.like(DSL.concat(array), Tools.ESCAPE));
-                    break;
+            case POSTGRES:
+            case YUGABYTE: {
+                // [#1107] Some dialects support "contains" operations for ARRAYs
+                // [#5929] Check both sides of the operation for array types
+                if (value.getDataType().isArray() || content.getDataType().isArray())
+                    ctx.visit(value).sql(" @> ").visit(content);
+                else
+                    acceptDefault(ctx);
+                break;
             }
+
+            default:
+                acceptDefault(ctx);
+                break;
         }
     }
 
-    /**
-     * The Postgres array contains operator
-     */
-    private class PostgresArrayContains extends AbstractCondition {
 
-        @Override
-        public final void accept(Context<?> ctx) {
-            ctx.visit(lhs).sql(" @> ").visit(rhs());
-        }
 
-        @Override
-        public final Clause[] clauses(Context<?> ctx) {
-            return CLAUSES;
-        }
 
-        private final Field<T> rhs() {
-            return (rhs == null) ? val(value, lhs) : rhs;
-        }
+
+
+
+
+
+
+    private final void acceptDefault(Context<?> ctx) {
+        ctx.visit(value.like(DSL.concat(inline("%"), Tools.escapeForLike(content, ctx.configuration()), inline("%")), Tools.ESCAPE));
     }
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
 
     @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
+    public boolean equals(Object that) {
+        if (that instanceof Contains) {
+            return
+                StringUtils.equals(value, ((Contains) that).value) &&
+                StringUtils.equals(content, ((Contains) that).content)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

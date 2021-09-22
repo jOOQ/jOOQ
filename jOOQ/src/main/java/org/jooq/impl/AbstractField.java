@@ -770,6 +770,82 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return DSL.shr((Field) this, count);
     }
 
+    // -------------------------------------------------------------------------
+    // String functions
+    // -------------------------------------------------------------------------
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition contains(T content) {
+        return new Contains(this, Tools.field(content, this));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition contains(Field<T> content) {
+        return new Contains(this, nullSafe(content, getDataType()));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition containsIgnoreCase(T content) {
+        return new ContainsIgnoreCase(this, Tools.field(content, this));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition containsIgnoreCase(Field<T> content) {
+        return new ContainsIgnoreCase(this, nullSafe(content, getDataType()));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition endsWith(T suffix) {
+        return new EndsWith(this, Tools.field(suffix, this));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition endsWith(Field<T> suffix) {
+        return new EndsWith(this, nullSafe(suffix, getDataType()));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition endsWithIgnoreCase(T suffix) {
+        return new EndsWithIgnoreCase(this, Tools.field(suffix, this));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition endsWithIgnoreCase(Field<T> suffix) {
+        return new EndsWithIgnoreCase(this, nullSafe(suffix, getDataType()));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition startsWith(T prefix) {
+        return new StartsWith(this, Tools.field(prefix, this));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition startsWith(Field<T> prefix) {
+        return new StartsWith(this, nullSafe(prefix, getDataType()));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition startsWithIgnoreCase(T prefix) {
+        return new StartsWithIgnoreCase(this, Tools.field(prefix, this));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition startsWithIgnoreCase(Field<T> prefix) {
+        return new StartsWithIgnoreCase(this, nullSafe(prefix, getDataType()));
+    }
+
 
 
 
@@ -1101,20 +1177,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return likeRegex(pattern).not();
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final Condition contains(T value) {
-        if (value instanceof Field)
-            return contains((Field) value);
-        else
-            return new Contains<>(this, value, true, true);
-    }
-
-    @Override
-    public final Condition contains(Field<T> value) {
-        return new Contains<>(this, value, true, true);
-    }
-
     @Override
     public final Condition notContains(T value) {
         return contains(value).not();
@@ -1126,16 +1188,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    public final Condition containsIgnoreCase(T value) {
-        return containsIgnoreCase(Tools.field(value, this));
-    }
-
-    @Override
-    public final Condition containsIgnoreCase(Field<T> value) {
-        return new ContainsIgnoreCase(this, value, true, true);
-    }
-
-    @Override
     public final Condition notContainsIgnoreCase(T value) {
         return containsIgnoreCase(value).not();
     }
@@ -1143,46 +1195,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     public final Condition notContainsIgnoreCase(Field<T> value) {
         return containsIgnoreCase(value).not();
-    }
-
-    @Override
-    public final Condition startsWith(T value) {
-        return startsWith(Tools.field(value, this));
-    }
-
-    @Override
-    public final Condition startsWith(Field<T> value) {
-        return new Contains<>(this, value, false, true);
-    }
-
-    @Override
-    public final Condition startsWithIgnoreCase(T value) {
-        return startsWithIgnoreCase(Tools.field(value, this));
-    }
-
-    @Override
-    public final Condition startsWithIgnoreCase(Field<T> value) {
-        return new ContainsIgnoreCase(this, value, false, true);
-    }
-
-    @Override
-    public final Condition endsWith(T value) {
-        return endsWith(Tools.field(value, this));
-    }
-
-    @Override
-    public final Condition endsWith(Field<T> value) {
-        return new Contains<>(this, value, true, false);
-    }
-
-    @Override
-    public final Condition endsWithIgnoreCase(T value) {
-        return endsWithIgnoreCase(Tools.field(value, this));
-    }
-
-    @Override
-    public final Condition endsWithIgnoreCase(Field<T> value) {
-        return new ContainsIgnoreCase(this, value, true, false);
     }
 
     private final boolean isAccidentalSelect(T[] values) {

@@ -1285,6 +1285,228 @@ extends
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Field<T> shr(Field<? extends Number> count);
 
+    // -------------------------------------------------------------------------
+    // String functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * The <code>CONTAINS</code> operator.
+     * <p>
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
+     * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).contains(13)</code>
+     * <p>
+     * If you're using {@link SQLDialect#POSTGRES}, then you can use this method
+     * also to express the "ARRAY contains" operator. For example: <code><pre>
+     * // Use this expression
+     * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
+     * 
+     * // ... to render this SQL
+     * ARRAY[1, 2, 3] @&gt; ARRAY[1, 2]
+     * </pre></code>
+     * <p>
+     * Note, this does not correspond to the Oracle Text <code>CONTAINS()</code>
+     * function. Refer to {@link OracleDSL#contains(Field, String)} instead.
+     *
+     * @param content is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    Condition contains(T content);
+
+    /**
+     * The <code>CONTAINS</code> operator.
+     * <p>
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
+     * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).contains(13)</code>
+     * <p>
+     * If you're using {@link SQLDialect#POSTGRES}, then you can use this method
+     * also to express the "ARRAY contains" operator. For example: <code><pre>
+     * // Use this expression
+     * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
+     * 
+     * // ... to render this SQL
+     * ARRAY[1, 2, 3] @&gt; ARRAY[1, 2]
+     * </pre></code>
+     * <p>
+     * Note, this does not correspond to the Oracle Text <code>CONTAINS()</code>
+     * function. Refer to {@link OracleDSL#contains(Field, String)} instead.
+     */
+    @NotNull
+    @Support
+    Condition contains(Field<T> content);
+
+    /**
+     * The <code>CONTAINS_IGNORE_CASE</code> operator.
+     * <p>
+     * Convenience method for {@link #likeIgnoreCase(String, char)} including
+     * proper adding of wildcards and escaping.
+     * <p>
+     * This translates to
+     * <code>this ilike ('%' || escape(value, '\') || '%') escape '\'</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) not like lower(('%' || escape(value, '\') || '%') escape '\')</code>
+     * in all other dialects.
+     *
+     * @param content is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    Condition containsIgnoreCase(T content);
+
+    /**
+     * The <code>CONTAINS_IGNORE_CASE</code> operator.
+     * <p>
+     * Convenience method for {@link #likeIgnoreCase(String, char)} including
+     * proper adding of wildcards and escaping.
+     * <p>
+     * This translates to
+     * <code>this ilike ('%' || escape(value, '\') || '%') escape '\'</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) not like lower(('%' || escape(value, '\') || '%') escape '\')</code>
+     * in all other dialects.
+     */
+    @NotNull
+    @Support
+    Condition containsIgnoreCase(Field<T> content);
+
+    /**
+     * The <code>ENDS_WITH</code> operator.
+     * <p>
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
+     * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).endsWith(33)</code>
+     *
+     * @param suffix is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    Condition endsWith(T suffix);
+
+    /**
+     * The <code>ENDS_WITH</code> operator.
+     * <p>
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
+     * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).endsWith(33)</code>
+     */
+    @NotNull
+    @Support
+    Condition endsWith(Field<T> suffix);
+
+    /**
+     * The <code>ENDS_WITH_IGNORE_CASE</code> operator.
+     * <p>
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
+     * SQL: <code>lower(this) like ('%' || lower(escape(value, '\'))) escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).endsWithIgnoreCase(33)</code>
+     *
+     * @param suffix is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    Condition endsWithIgnoreCase(T suffix);
+
+    /**
+     * The <code>ENDS_WITH_IGNORE_CASE</code> operator.
+     * <p>
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
+     * SQL: <code>lower(this) like ('%' || lower(escape(value, '\'))) escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).endsWithIgnoreCase(33)</code>
+     */
+    @NotNull
+    @Support
+    Condition endsWithIgnoreCase(Field<T> suffix);
+
+    /**
+     * The <code>STARTS_WITH</code> operator.
+     * <p>
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
+     * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).startsWith(11)</code>
+     *
+     * @param prefix is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    Condition startsWith(T prefix);
+
+    /**
+     * The <code>STARTS_WITH</code> operator.
+     * <p>
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
+     * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).startsWith(11)</code>
+     */
+    @NotNull
+    @Support
+    Condition startsWith(Field<T> prefix);
+
+    /**
+     * The <code>STARTS_WITH_IGNORE_CASE</code> operator.
+     * <p>
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
+     * SQL: <code>lower(this) like (lower(escape(value, '\')) || '%') escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).startsWithIgnoreCase(11)</code>
+     *
+     * @param prefix is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    Condition startsWithIgnoreCase(T prefix);
+
+    /**
+     * The <code>STARTS_WITH_IGNORE_CASE</code> operator.
+     * <p>
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
+     * SQL: <code>lower(this) like (lower(escape(value, '\')) || '%') escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).startsWithIgnoreCase(11)</code>
+     */
+    @NotNull
+    @Support
+    Condition startsWithIgnoreCase(Field<T> prefix);
+
 
 
 
@@ -2082,62 +2304,6 @@ extends
     Condition notLikeIgnoreCase(String value, char escape);
 
     /**
-     * Convenience method for {@link #like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).contains(13)</code>
-     * <p>
-     * If you're using {@link SQLDialect#POSTGRES}, then you can use this method
-     * also to express the "ARRAY contains" operator. For example: <code><pre>
-     * // Use this expression
-     * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
-     *
-     * // ... to render this SQL
-     * ARRAY[1, 2, 3] @&gt; ARRAY[1, 2]
-     * </pre></code>
-     * <p>
-     * Note, this does not correspond to the Oracle Text <code>CONTAINS()</code>
-     * function. Refer to {@link OracleDSL#contains(Field, String)} instead.
-     *
-     * @see DSL#escape(String, char)
-     * @see #like(String, char)
-     */
-    @NotNull
-    @Support
-    Condition contains(T value);
-
-    /**
-     * Convenience method for {@link #like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).contains(13)</code>
-     * <p>
-     * If you're using {@link SQLDialect#POSTGRES}, then you can use this method
-     * also to express the "ARRAY contains" operator. For example: <code><pre>
-     * // Use this expression
-     * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
-     *
-     * // ... to render this SQL
-     * ARRAY[1, 2, 3] @&gt; ARRAY[1, 2]
-     * </pre></code>
-     * <p>
-     * Note, this does not correspond to the Oracle Text <code>CONTAINS()</code>
-     * function. Refer to {@link OracleDSL#contains(Field, String)} instead.
-     *
-     * @see DSL#escape(Field, char)
-     * @see #like(Field, char)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Condition contains(Field<T> value);
-
-    /**
      * Inverse of {@link #contains(Object)}.
      */
     @NotNull
@@ -2152,44 +2318,6 @@ extends
     Condition notContains(Field<T> value);
 
     /**
-     * Convenience method for {@link #likeIgnoreCase(String, char)} including
-     * proper adding of wildcards and escaping.
-     * <p>
-     * This translates to
-     * <code>this ilike ('%' || escape(value, '\') || '%') escape '\'</code> in
-     * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) not like lower(('%' || escape(value, '\') || '%') escape '\')</code>
-     * in all other dialects.
-     * </p>
-     *
-     * @see DSL#escape(Field, char)
-     * @see #likeIgnoreCase(String, char)
-     * @see #contains(Object)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Condition containsIgnoreCase(T value);
-
-    /**
-     * Convenience method for {@link #likeIgnoreCase(String, char)} including
-     * proper adding of wildcards and escaping.
-     * <p>
-     * This translates to
-     * <code>this ilike ('%' || escape(value, '\') || '%') escape '\'</code>
-     * in {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) like lower(('%' || escape(value, '\') || '%') escape '\')</code>
-     * in all other dialects.
-     * </p>
-     *
-     * @see DSL#escape(Field, char)
-     * @see #likeIgnoreCase(Field, char)
-     * @see #contains(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Condition containsIgnoreCase(Field<T> value);
-
-    /**
      * Inverse of {@link #containsIgnoreCase(Object)}
      */
     @NotNull
@@ -2202,134 +2330,6 @@ extends
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     Condition notContainsIgnoreCase(Field<T> value);
-
-    /**
-     * Convenience method for {@link #like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).startsWith(11)</code>
-     *
-     * @see DSL#escape(String, char)
-     * @see #like(String, char)
-     */
-    @NotNull
-    @Support
-    Condition startsWith(T value);
-
-    /**
-     * Convenience method for {@link #like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).startsWith(11)</code>
-     *
-     * @see DSL#escape(Field, char)
-     * @see #like(Field, char)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Condition startsWith(Field<T> value);
-
-    /**
-     * Convenience method for {@link #like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>lower(this) like (lower(escape(value, '\')) || '%') escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).startsWithIgnoreCase(11)</code>
-     *
-     * @see DSL#escape(String, char)
-     * @see #like(String, char)
-     */
-    @NotNull
-    @Support
-    Condition startsWithIgnoreCase(T value);
-
-    /**
-     * Convenience method for {@link #like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>lower(this) like (lower(escape(value, '\')) || '%') escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).startsWithIgnoreCase(11)</code>
-     *
-     * @see DSL#escape(Field, char)
-     * @see #like(Field, char)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Condition startsWithIgnoreCase(Field<T> value);
-
-    /**
-     * Convenience method for {@link #like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).endsWith(33)</code>
-     *
-     * @see DSL#escape(String, char)
-     * @see #like(String, char)
-     */
-    @NotNull
-    @Support
-    Condition endsWith(T value);
-
-    /**
-     * Convenience method for {@link #like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).endsWith(33)</code>
-     *
-     * @see DSL#escape(Field, char)
-     * @see #like(Field, char)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Condition endsWith(Field<T> value);
-
-    /**
-     * Convenience method for {@link #like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>lower(this) like ('%' || lower(escape(value, '\'))) escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).endsWithIgnoreCase(33)</code>
-     *
-     * @see DSL#escape(String, char)
-     * @see #like(String, char)
-     */
-    @NotNull
-    @Support
-    Condition endsWithIgnoreCase(T value);
-
-    /**
-     * Convenience method for {@link #like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>this like ('%' || lower(escape(value, '\'))) escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).endsWithIgnoreCase(33)</code>
-     *
-     * @see DSL#escape(Field, char)
-     * @see #like(Field, char)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    Condition endsWithIgnoreCase(Field<T> value);
 
     // ------------------------------------------------------------------------
     // IN predicates

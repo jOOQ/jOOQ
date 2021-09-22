@@ -60,24 +60,24 @@ import java.util.stream.*;
 
 
 /**
- * The <code>CONTAINS IGNORE CASE</code> statement.
+ * The <code>STARTS WITH</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class ContainsIgnoreCase<T>
+final class StartsWith<T>
 extends
     AbstractCondition
 {
 
-    final Field<T> value;
-    final Field<T> content;
+    final Field<T> string;
+    final Field<T> prefix;
 
-    ContainsIgnoreCase(
-        Field<T> value,
-        Field<T> content
+    StartsWith(
+        Field<T> string,
+        Field<T> prefix
     ) {
 
-        this.value = nullableIf(false, Tools.nullSafe(value, content.getDataType()));
-        this.content = nullableIf(false, Tools.nullSafe(content, value.getDataType()));
+        this.string = nullableIf(false, Tools.nullSafe(string, prefix.getDataType()));
+        this.prefix = nullableIf(false, Tools.nullSafe(prefix, string.getDataType()));
     }
 
     // -------------------------------------------------------------------------
@@ -94,7 +94,7 @@ extends
 
 
             default:
-                ctx.visit(value.likeIgnoreCase(DSL.concat(inline("%"), Tools.escapeForLike(content, ctx.configuration()), inline("%")), Tools.ESCAPE));
+                ctx.visit(string.like(DSL.concat(Tools.escapeForLike(prefix, ctx.configuration()), inline("%")), Tools.ESCAPE));
                 break;
         }
     }
@@ -114,10 +114,10 @@ extends
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof ContainsIgnoreCase) {
+        if (that instanceof StartsWith) {
             return
-                StringUtils.equals(value, ((ContainsIgnoreCase) that).value) &&
-                StringUtils.equals(content, ((ContainsIgnoreCase) that).content)
+                StringUtils.equals(string, ((StartsWith) that).string) &&
+                StringUtils.equals(prefix, ((StartsWith) that).prefix)
             ;
         }
         else

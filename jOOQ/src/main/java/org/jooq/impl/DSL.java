@@ -19862,6 +19862,42 @@ public class DSL {
     }
 
     /**
+     * The <code>BOOL_AND</code> function.
+     */
+    @NotNull
+    @Support
+    public static AggregateFunction<Boolean> boolAnd(Field<Boolean> condition) {
+        return new BoolAnd(DSL.condition(condition));
+    }
+
+    /**
+     * The <code>BOOL_AND</code> function.
+     */
+    @NotNull
+    @Support
+    public static AggregateFunction<Boolean> boolAnd(Condition condition) {
+        return new BoolAnd(condition);
+    }
+
+    /**
+     * The <code>BOOL_OR</code> function.
+     */
+    @NotNull
+    @Support
+    public static AggregateFunction<Boolean> boolOr(Field<Boolean> condition) {
+        return new BoolOr(DSL.condition(condition));
+    }
+
+    /**
+     * The <code>BOOL_OR</code> function.
+     */
+    @NotNull
+    @Support
+    public static AggregateFunction<Boolean> boolOr(Condition condition) {
+        return new BoolOr(condition);
+    }
+
+    /**
      * The <code>CORR</code> function.
      * <p>
      * Calculate the correlation coefficient. This standard SQL function may be supported
@@ -19919,6 +19955,24 @@ public class DSL {
     @Support
     public static AggregateFunction<BigDecimal> covarPop(Field<? extends Number> y, Field<? extends Number> x) {
         return new CovarPop(y, x);
+    }
+
+    /**
+     * The <code>EVERY</code> function, an alias for the <code>BOOL_AND</code> function.
+     */
+    @NotNull
+    @Support
+    public static AggregateFunction<Boolean> every(Field<Boolean> condition) {
+        return boolAnd(condition);
+    }
+
+    /**
+     * The <code>EVERY</code> function, an alias for the <code>BOOL_AND</code> function.
+     */
+    @NotNull
+    @Support
+    public static AggregateFunction<Boolean> every(Condition condition) {
+        return boolAnd(condition);
     }
 
     /**
@@ -23787,64 +23841,6 @@ public class DSL {
     public static AggregateFunction<Integer> countDistinct(Field<?>... fields) {
         fields = Tools.nullSafe(fields);
         return fields.length == 0 ? countDistinct(asterisk()) : new DefaultAggregateFunction<>(true, N_COUNT, SQLDataType.INTEGER, fields);
-    }
-
-    /**
-     * Get the every value over a field: every(field).
-     * <p>
-     * This is a synonym for {@link #boolAnd(Field)}.
-     */
-    @NotNull
-    @Support
-    public static AggregateFunction<Boolean> every(Field<Boolean> field) {
-        return boolAnd(field);
-    }
-
-    /**
-     * Get the every value over a condition: every(condition).
-     * <p>
-     * This is a synonym for {@link #boolAnd(Condition)}.
-     */
-    @NotNull
-    @Support
-    public static AggregateFunction<Boolean> every(Condition condition) {
-        return boolAnd(condition);
-    }
-
-    /**
-     * Get the every value over a field: bool_and(field).
-     */
-    @NotNull
-    @Support
-    public static AggregateFunction<Boolean> boolAnd(Field<Boolean> field) {
-        return boolAnd(condition(Tools.nullSafe(field)));
-    }
-
-    /**
-     * Get the every value over a condition: bool_and(condition).
-     */
-    @NotNull
-    @Support
-    public static AggregateFunction<Boolean> boolAnd(Condition condition) {
-        return new BoolAnd(condition);
-    }
-
-    /**
-     * Get the every value over a field: bool_and(field).
-     */
-    @NotNull
-    @Support
-    public static AggregateFunction<Boolean> boolOr(Field<Boolean> field) {
-        return boolOr(condition(Tools.nullSafe(field)));
-    }
-
-    /**
-     * Get the every value over a condition: bool_and(condition).
-     */
-    @NotNull
-    @Support
-    public static AggregateFunction<Boolean> boolOr(Condition condition) {
-        return new BoolOr(condition);
     }
 
     /**

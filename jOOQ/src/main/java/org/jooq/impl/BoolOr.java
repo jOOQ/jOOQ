@@ -37,54 +37,55 @@
  */
 package org.jooq.impl;
 
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.IGNITE;
-// ...
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.SQLITE;
-// ...
-// ...
-// ...
-// ...
 import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
 import static org.jooq.impl.Names.*;
 import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.Record;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
 
-import org.jooq.Condition;
-import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.SQLDialect;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>BOOL OR</code> statement.
  */
-final class BoolOr extends AbstractAggregateFunction<Boolean> {
-    private static final Set<SQLDialect> EMULATE          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
+@SuppressWarnings({ "unused" })
+final class BoolOr
+extends
+    AbstractAggregateFunction<Boolean>
+{
 
-    private final Condition              condition;
-
-    BoolOr(Condition condition) {
-        super(N_BOOL_OR, BOOLEAN, DSL.field(condition));
-
-        this.condition = condition;
+    BoolOr(
+        Condition condition
+    ) {
+        super(
+            false,
+            N_BOOL_OR,
+            BOOLEAN,
+            DSL.field(condition)
+        );
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Set<SQLDialect> EMULATE  = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
 
     @Override
     final void acceptFunctionName(Context<?> ctx) {
@@ -110,11 +111,18 @@ final class BoolOr extends AbstractAggregateFunction<Boolean> {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    final Condition condition() {
+        return DSL.condition((Field<Boolean>) getArguments().get(0));
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
         if (EMULATE.contains(ctx.dialect()))
-            ctx.visit(DSL.field(fo(DSL.max(DSL.when(condition, one()).otherwise(zero()))).eq(one())));
+            ctx.visit(DSL.field(fo(DSL.max(DSL.when(condition(), one()).otherwise(zero()))).eq(one())));
         else
             super.accept(ctx);
     }
+
+
 }

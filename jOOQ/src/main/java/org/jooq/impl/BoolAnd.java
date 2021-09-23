@@ -37,30 +37,55 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.*;
 import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
 import static org.jooq.impl.Names.*;
 import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.Record;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
 
-import org.jooq.Condition;
-import org.jooq.Context;
-import org.jooq.SQLDialect;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>BOOL AND</code> statement.
  */
-final class BoolAnd extends AbstractAggregateFunction<Boolean> {
-    private static final Set<SQLDialect> EMULATE          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
+@SuppressWarnings({ "unused" })
+final class BoolAnd
+extends
+    AbstractAggregateFunction<Boolean>
+{
 
-    private final Condition              condition;
-
-    BoolAnd(Condition condition) {
-        super(N_BOOL_AND, BOOLEAN, DSL.field(condition));
-
-        this.condition = condition;
+    BoolAnd(
+        Condition condition
+    ) {
+        super(
+            false,
+            N_BOOL_AND,
+            BOOLEAN,
+            DSL.field(condition)
+        );
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Set<SQLDialect> EMULATE = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
 
     @Override
     final void acceptFunctionName(Context<?> ctx) {
@@ -85,11 +110,18 @@ final class BoolAnd extends AbstractAggregateFunction<Boolean> {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    final Condition condition() {
+        return DSL.condition((Field<Boolean>) getArguments().get(0));
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
         if (EMULATE.contains(ctx.dialect()))
-            ctx.visit(DSL.field(fo(DSL.min(DSL.when(condition, one()).otherwise(zero()))).eq(one())));
+            ctx.visit(DSL.field(fo(DSL.min(DSL.when(condition(), one()).otherwise(zero()))).eq(one())));
         else
             super.accept(ctx);
     }
+
+
 }

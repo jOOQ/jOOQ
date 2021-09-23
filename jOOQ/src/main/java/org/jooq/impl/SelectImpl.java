@@ -3282,12 +3282,12 @@ implements
 
     @Override
     public final Condition isNull() {
-        return new RowIsNull(this, true);
+        return new SelectIsNull(this, true);
     }
 
     @Override
     public final Condition isNotNull() {
-        return new RowIsNull(this, false);
+        return new SelectIsNull(this, false);
     }
 
     /**

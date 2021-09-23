@@ -160,7 +160,14 @@ public enum SQLDialect {
 
     /**
      * The Apache Ignite dialect family.
+     *
+     * @deprecated - [#12465] - 3.16.0 - This dialect is hardly used by anyone
+     *             with jOOQ or without jOOQ and will be removed in the near
+     *             future. If you're actively using this dialect, please get in
+     *             touch for extended support:
+     *             https://github.com/jOOQ/jOOQ/issues/12465
      */
+    @Deprecated(forRemoval = true, since = "3.16")
     IGNITE("Ignite", false, true),
 
     /**

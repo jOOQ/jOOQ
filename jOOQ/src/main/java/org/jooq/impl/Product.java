@@ -37,37 +37,55 @@
  */
 package org.jooq.impl;
 
-// ...
-// ...
-// ...
-import static org.jooq.impl.DSL.aggregate;
-import static org.jooq.impl.DSL.aggregateDistinct;
-import static org.jooq.impl.DSL.choose;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.one;
-import static org.jooq.impl.DSL.when;
-import static org.jooq.impl.DSL.zero;
-import static org.jooq.impl.Internal.imul;
-import static org.jooq.impl.Names.N_MUL;
-import static org.jooq.impl.Names.N_PRODUCT;
-import static org.jooq.impl.SQLDataType.NUMERIC;
-import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
+import org.jooq.*;
+import org.jooq.Record;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 import java.math.BigDecimal;
 
-import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.Name;
-// ...
 
 /**
- * @author Lukas Eder
+ * The <code>PRODUCT</code> statement.
  */
-final class Product extends AbstractAggregateFunction<BigDecimal> {
+@SuppressWarnings({ "rawtypes", "unused" })
+final class Product
+extends
+    AbstractAggregateFunction<BigDecimal>
+{
 
-    Product(boolean distinct, Field<?>... arguments) {
-        super(distinct, N_PRODUCT, NUMERIC, arguments);
+    Product(
+        Field<? extends Number> field,
+        boolean productDistinct
+    ) {
+        super(
+            productDistinct,
+            N_PRODUCT,
+            NUMERIC,
+            nullSafeNotNull(field, INTEGER)
+        );
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -105,7 +123,7 @@ final class Product extends AbstractAggregateFunction<BigDecimal> {
 
     private final void acceptEmulation(Context<?> ctx) {
 
-        @SuppressWarnings({ "unchecked", "rawtypes" })
+        @SuppressWarnings({ "unchecked" })
         final Field<Integer> f = (Field) DSL.field("{0}", arguments.get(0).getDataType(), arguments.get(0));
         final Field<Integer> negatives = DSL.when(f.lt(zero()), inline(-1));
 
@@ -150,4 +168,6 @@ final class Product extends AbstractAggregateFunction<BigDecimal> {
             DSL.exp(logarithmsSum)
         ));
     }
+
+
 }

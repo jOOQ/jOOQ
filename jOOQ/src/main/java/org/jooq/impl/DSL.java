@@ -19956,6 +19956,48 @@ public class DSL {
     }
 
     /**
+     * The <code>PRODUCT</code> function.
+     * <p>
+     * Get the sum over a numeric field: product(distinct field).
+     * <p>
+     * Few dialects currently support multiplicative aggregation natively. jOOQ
+     * emulates this using <code>exp(sum(log(arg)))</code> for strictly positive
+     * numbers, and does some additional handling for zero and negative numbers.
+     * <p>
+     * Note that this implementation may introduce rounding errors, even for
+     * integer multiplication.
+     * <p>
+     * More information here: <a href=
+     * "https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql</a>.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    public static AggregateFunction<BigDecimal> product(Field<? extends Number> field) {
+        return new Product(field, false);
+    }
+
+    /**
+     * The <code>PRODUCT_DISTINCT</code> function.
+     * <p>
+     * Get the sum over a numeric field: product(distinct field).
+     * <p>
+     * Few dialects currently support multiplicative aggregation natively. jOOQ
+     * emulates this using <code>exp(sum(log(arg)))</code> for strictly positive
+     * numbers, and does some additional handling for zero and negative numbers.
+     * <p>
+     * Note that this implementation may introduce rounding errors, even for
+     * integer multiplication.
+     * <p>
+     * More information here: <a href=
+     * "https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql</a>.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    public static AggregateFunction<BigDecimal> productDistinct(Field<? extends Number> field) {
+        return new Product(field, true);
+    }
+
+    /**
      * The <code>REGR_AVGX</code> function.
      * <p>
      * Calculate the average of the independent values (x). This standard SQL function may
@@ -25066,44 +25108,6 @@ public class DSL {
 
 
 
-
-    /**
-     * Get the product over a numeric field: product(field).
-     * <p>
-     * No database currently supports multiplicative aggregation natively. jOOQ
-     * emulates this using <code>exp(sum(log(arg)))</code> for strictly positive
-     * numbers, and does some additional handling for zero and negative numbers.
-     * <p>
-     * Note that this implementation may introduce rounding errors, even for
-     * integer multiplication.
-     * <p>
-     * More information here: <a href=
-     * "https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql</a>.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
-    public static AggregateFunction<BigDecimal> product(Field<? extends Number> field) {
-        return new Product(false, Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the sum over a numeric field: product(distinct field).
-     * <p>
-     * No database currently supports multiplicative aggregation natively. jOOQ
-     * emulates this using <code>exp(sum(log(arg)))</code> for strictly positive
-     * numbers, and does some additional handling for zero and negative numbers.
-     * <p>
-     * Note that this implementation may introduce rounding errors, even for
-     * integer multiplication.
-     * <p>
-     * More information here: <a href=
-     * "https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql</a>.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
-    public static AggregateFunction<BigDecimal> productDistinct(Field<? extends Number> field) {
-        return new Product(true, Tools.nullSafe(field));
-    }
 
     /**
      * The <code>mode(field)</code> aggregate function.

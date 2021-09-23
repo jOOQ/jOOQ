@@ -63,7 +63,7 @@ import java.util.*;
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class AnyValue<T>
 extends
-    DefaultAggregateFunction<T>
+    AbstractAggregateFunction<T>
 {
 
     AnyValue(

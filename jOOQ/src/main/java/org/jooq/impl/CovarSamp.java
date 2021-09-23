@@ -66,7 +66,7 @@ import java.math.BigDecimal;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class CovarSamp
 extends
-    DefaultAggregateFunction<BigDecimal>
+    AbstractAggregateFunction<BigDecimal>
 {
 
     CovarSamp(

@@ -56,7 +56,7 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-final class Mode<T> extends DefaultAggregateFunction<T> {
+final class Mode<T> extends AbstractAggregateFunction<T> {
     private static final Set<SQLDialect> EMULATE_AS_ORDERED_SET_AGG = SQLDialect.supportedBy(H2, POSTGRES, YUGABYTE);
 
     Mode(Field<T> arg) {

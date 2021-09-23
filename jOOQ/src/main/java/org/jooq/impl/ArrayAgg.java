@@ -45,7 +45,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-final class ArrayAgg<T> extends DefaultAggregateFunction<T[]> {
+final class ArrayAgg<T> extends AbstractAggregateFunction<T[]> {
 
     ArrayAgg(boolean distinct, Field<T> arg) {
         super(distinct, N_ARRAY_AGG, arg.getDataType().getArrayDataType(), arg);

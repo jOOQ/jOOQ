@@ -52,7 +52,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-final class RatioToReport extends DefaultAggregateFunction<BigDecimal> {
+final class RatioToReport extends AbstractAggregateFunction<BigDecimal> {
     private final Field<? extends Number> field;
 
     RatioToReport(Field<? extends Number> field) {

@@ -69,7 +69,7 @@ import org.jooq.XMLAggOrderByStep;
 /**
  * @author Lukas Eder
  */
-final class MultisetAgg<R extends Record> extends DefaultAggregateFunction<Result<R>> {
+final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Result<R>> {
 
     private final AbstractRow<R> row;
 

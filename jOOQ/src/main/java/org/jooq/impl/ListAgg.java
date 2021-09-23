@@ -86,7 +86,7 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-final class ListAgg extends DefaultAggregateFunction<String> {
+final class ListAgg extends AbstractAggregateFunction<String> {
     private static final Set<SQLDialect> SET_GROUP_CONCAT_MAX_LEN     = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> SUPPORT_GROUP_CONCAT         = SQLDialect.supportedBy(CUBRID, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> SUPPORT_STRING_AGG           = SQLDialect.supportedBy(POSTGRES);

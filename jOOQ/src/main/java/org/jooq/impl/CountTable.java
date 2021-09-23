@@ -44,7 +44,7 @@ import org.jooq.UniqueKey;
 /**
  * @author Lukas Eder
  */
-final class CountTable extends DefaultAggregateFunction<Integer> {
+final class CountTable extends AbstractAggregateFunction<Integer> {
 
     private final Table<?>    table;
 

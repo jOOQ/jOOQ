@@ -75,7 +75,7 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-final class BoolOr extends DefaultAggregateFunction<Boolean> {
+final class BoolOr extends AbstractAggregateFunction<Boolean> {
     private static final Set<SQLDialect> EMULATE          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
 
     private final Condition              condition;

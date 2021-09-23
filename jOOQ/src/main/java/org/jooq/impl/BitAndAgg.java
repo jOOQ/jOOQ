@@ -65,7 +65,7 @@ import java.util.stream.*;
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class BitAndAgg<T extends Number>
 extends
-    DefaultAggregateFunction<T>
+    AbstractAggregateFunction<T>
 {
 
     BitAndAgg(

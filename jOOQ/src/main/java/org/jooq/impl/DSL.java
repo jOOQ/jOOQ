@@ -19800,6 +19800,24 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
+     * The <code>AVG</code> function.
+     */
+    @NotNull
+    @Support
+    public static AggregateFunction<BigDecimal> avg(Field<? extends Number> field) {
+        return new Avg(field, false);
+    }
+
+    /**
+     * The <code>AVG_DISTINCT</code> function.
+     */
+    @NotNull
+    @Support
+    public static AggregateFunction<BigDecimal> avgDistinct(Field<? extends Number> field) {
+        return new Avg(field, true);
+    }
+
+    /**
      * The <code>BIT_AND_AGG</code> function.
      * <p>
      * Calculate the bitwise <code>AND</code> aggregate value.
@@ -19847,6 +19865,24 @@ public class DSL {
     }
 
     /**
+     * The <code>COUNT</code> function.
+     */
+    @NotNull
+    @Support
+    public static AggregateFunction<Integer> count(Field<?> field) {
+        return new Count(field, false);
+    }
+
+    /**
+     * The <code>COUNT_DISTINCT</code> function.
+     */
+    @NotNull
+    @Support
+    public static AggregateFunction<Integer> countDistinct(Field<?> field) {
+        return new Count(field, true);
+    }
+
+    /**
      * The <code>COVAR_SAMP</code> function.
      * <p>
      * Calculate the sample covariance. This standard SQL function may be supported natively,
@@ -19875,12 +19911,48 @@ public class DSL {
     }
 
     /**
+     * The <code>MAX</code> function.
+     */
+    @NotNull
+    @Support
+    public static <T> AggregateFunction<T> max(Field<T> field) {
+        return new Max(field, false);
+    }
+
+    /**
+     * The <code>MAX_DISTINCT</code> function.
+     */
+    @NotNull
+    @Support
+    public static <T> AggregateFunction<T> maxDistinct(Field<T> field) {
+        return new Max(field, true);
+    }
+
+    /**
      * The <code>MEDIAN</code> function.
      */
     @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTE })
     public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
         return new Median(field);
+    }
+
+    /**
+     * The <code>MIN</code> function.
+     */
+    @NotNull
+    @Support
+    public static <T> AggregateFunction<T> min(Field<T> field) {
+        return new Min(field, false);
+    }
+
+    /**
+     * The <code>MIN_DISTINCT</code> function.
+     */
+    @NotNull
+    @Support
+    public static <T> AggregateFunction<T> minDistinct(Field<T> field) {
+        return new Min(field, true);
     }
 
     /**
@@ -20035,6 +20107,24 @@ public class DSL {
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field) {
         return new StddevSamp(field);
+    }
+
+    /**
+     * The <code>SUM</code> function.
+     */
+    @NotNull
+    @Support
+    public static AggregateFunction<BigDecimal> sum(Field<? extends Number> field) {
+        return new Sum(field, false);
+    }
+
+    /**
+     * The <code>SUM_DISTINCT</code> function.
+     */
+    @NotNull
+    @Support
+    public static AggregateFunction<BigDecimal> sumDistinct(Field<? extends Number> field) {
+        return new Sum(field, true);
     }
 
     /**
@@ -23602,15 +23692,6 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static AggregateFunction<Integer> count(Field<?> field) {
-        return new DefaultAggregateFunction<>(N_COUNT, SQLDataType.INTEGER, Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the count(field) function.
-     */
-    @NotNull
-    @Support
     public static AggregateFunction<Integer> count(SelectFieldOrAsterisk field) {
         return new DefaultAggregateFunction<>(N_COUNT, SQLDataType.INTEGER, field("{0}", field));
     }
@@ -23626,15 +23707,6 @@ public class DSL {
     @Support
     public static AggregateFunction<Integer> count(Table<?> table) {
         return new CountTable(table, false);
-    }
-
-    /**
-     * Get the count(distinct field) function.
-     */
-    @NotNull
-    @Support
-    public static AggregateFunction<Integer> countDistinct(Field<?> field) {
-        return new DefaultAggregateFunction<>(true, N_COUNT, SQLDataType.INTEGER, Tools.nullSafe(field));
     }
 
     /**
@@ -24996,60 +25068,6 @@ public class DSL {
 
 
     /**
-     * Get the max value over a field: max(field).
-     */
-    @NotNull
-    @Support
-    public static <T> AggregateFunction<T> max(Field<T> field) {
-        return new DefaultAggregateFunction<>(N_MAX, Tools.nullSafeDataType(field), Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the max value over a field: max(distinct field).
-     */
-    @NotNull
-    @Support
-    public static <T> AggregateFunction<T> maxDistinct(Field<T> field) {
-        return new DefaultAggregateFunction<>(true, N_MAX, Tools.nullSafeDataType(field), Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the min value over a field: min(field).
-     */
-    @NotNull
-    @Support
-    public static <T> AggregateFunction<T> min(Field<T> field) {
-        return new DefaultAggregateFunction<>(N_MIN, Tools.nullSafeDataType(field), Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the min value over a field: min(distinct field).
-     */
-    @NotNull
-    @Support
-    public static <T> AggregateFunction<T> minDistinct(Field<T> field) {
-        return new DefaultAggregateFunction<>(true, N_MIN, Tools.nullSafeDataType(field), Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the sum over a numeric field: sum(field).
-     */
-    @NotNull
-    @Support
-    public static AggregateFunction<BigDecimal> sum(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>(N_SUM, SQLDataType.NUMERIC, Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the sum over a numeric field: sum(distinct field).
-     */
-    @NotNull
-    @Support
-    public static AggregateFunction<BigDecimal> sumDistinct(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>(true, N_SUM, SQLDataType.NUMERIC, Tools.nullSafe(field));
-    }
-
-    /**
      * Get the product over a numeric field: product(field).
      * <p>
      * No database currently supports multiplicative aggregation natively. jOOQ
@@ -25085,24 +25103,6 @@ public class DSL {
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static AggregateFunction<BigDecimal> productDistinct(Field<? extends Number> field) {
         return new Product(true, Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the average over a numeric field: avg(field).
-     */
-    @NotNull
-    @Support
-    public static AggregateFunction<BigDecimal> avg(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>(N_AVG, SQLDataType.NUMERIC, Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the average over a numeric field: avg(distinct field).
-     */
-    @NotNull
-    @Support
-    public static AggregateFunction<BigDecimal> avgDistinct(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>(true, N_AVG, SQLDataType.NUMERIC, Tools.nullSafe(field));
     }
 
     /**

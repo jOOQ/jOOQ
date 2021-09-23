@@ -55,6 +55,8 @@ import org.jooq.impl.*;
 import org.jooq.tools.*;
 
 import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 
 
 /**
@@ -67,13 +69,13 @@ extends
 {
 
     AnyValue(
-        Field<T> value
+        Field<T> field
     ) {
         super(
             false,
             N_ANY_VALUE,
-            Tools.nullSafeDataType(value),
-            nullSafeNotNull(value, OTHER)
+            Tools.nullSafeDataType(field),
+            nullSafeNotNull(field, (DataType) OTHER)
         );
     }
 

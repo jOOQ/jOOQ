@@ -42,96 +42,40 @@ import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
 import static org.jooq.Comparator.IN;
-import static org.jooq.Comparator.LIKE;
-import static org.jooq.Comparator.LIKE_IGNORE_CASE;
 import static org.jooq.Comparator.NOT_IN;
-import static org.jooq.Comparator.NOT_LIKE;
-import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
-import static org.jooq.Comparator.NOT_SIMILAR_TO;
-import static org.jooq.Comparator.SIMILAR_TO;
 // ...
-// ...
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-import static org.jooq.SQLDialect.SQLITE;
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.YUGABYTE;
-import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.asterisk;
-import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Keywords.K_CAST;
-import static org.jooq.impl.Keywords.K_ESCAPE;
-import static org.jooq.impl.Keywords.K_VARCHAR;
-import static org.jooq.impl.Tools.castIfNeeded;
-import static org.jooq.impl.Tools.characterLiteral;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.nullSafe;
 import static org.jooq.impl.Tools.nullableIf;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
-import static org.jooq.impl.Transformations.transformInConditionSubqueryWithLimitToDerivedTable;
 import static org.jooq.impl.Transformations.subqueryWithLimit;
-
-import java.util.Set;
+import static org.jooq.impl.Transformations.transformInConditionSubqueryWithLimitToDerivedTable;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
-import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.LikeEscapeStep;
 // ...
-import org.jooq.SQLDialect;
 import org.jooq.Select;
-import org.jooq.conf.ParamType;
 
 /**
  * @author Lukas Eder
  */
-final class CompareCondition extends AbstractCondition implements LikeEscapeStep {
+final class CompareCondition extends AbstractCondition {
 
     private static final Clause[]        CLAUSES               = { CONDITION, CONDITION_COMPARISON };
-    private static final Set<SQLDialect> REQUIRES_CAST_ON_LIKE = SQLDialect.supportedBy(DERBY, POSTGRES, YUGABYTE);
-    private static final Set<SQLDialect> NO_SUPPORT_ILIKE      = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
 
     final Field<?>                       field1;
     final Field<?>                       field2;
     final Comparator                     comparator;
-    private Character                    escape;
 
     CompareCondition(Field<?> field1, Field<?> field2, Comparator comparator) {
         this.field1 = nullableIf(comparator.supportsNulls(), nullSafe(field1, field2.getDataType()));
         this.field2 = nullableIf(comparator.supportsNulls(), nullSafe(field2, field1.getDataType()));
         this.comparator = comparator;
-    }
-
-    @Override
-    public final Condition escape(char c) {
-        this.escape = c;
-        return this;
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -167,61 +111,8 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
 
 
 
-        SQLDialect family = ctx.family();
-        Field<?> lhs = field1;
-        Field<?> rhs = field2;
-        Comparator op = comparator;
-
-        // [#1159] [#1725] Some dialects cannot auto-convert the LHS operand to a
-        // VARCHAR when applying a LIKE predicate
-        if ((op == LIKE || op == NOT_LIKE || op == SIMILAR_TO || op == NOT_SIMILAR_TO)
-                && field1.getType() != String.class
-                && REQUIRES_CAST_ON_LIKE.contains(ctx.dialect())) {
-
-            lhs = castIfNeeded(lhs, String.class);
-        }
-
-        // [#1423] [#9889] PostgreSQL and H2 support ILIKE natively. Other dialects
-        // need to emulate this as LOWER(lhs) LIKE LOWER(rhs)
-        else if ((op == LIKE_IGNORE_CASE || op == NOT_LIKE_IGNORE_CASE) && NO_SUPPORT_ILIKE.contains(ctx.dialect())) {
-            lhs = lhs.lower();
-            rhs = rhs.lower();
-            op = (op == LIKE_IGNORE_CASE ? LIKE : NOT_LIKE);
-        }
-
-        ctx.visit(lhs)
-           .sql(' ');
-
-        boolean castRhs = false;
-        ParamType previousParamType = ctx.paramType();
-        ParamType forcedParamType = previousParamType;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                     ctx.visit(op.toKeyword()).sql(' ');
-        if (castRhs) ctx.visit(K_CAST).sql('(');
-                     ctx.visit(rhs, forcedParamType);
-        if (castRhs) ctx.sql(' ').visit(K_AS).sql(' ').visit(K_VARCHAR).sql("(4000))");
-
-        if (escape != null) {
-            ctx.sql(' ').visit(K_ESCAPE).sql(' ')
-               .visit(inline(escape));
-        }
+        ctx.visit(field1).sql(' ').visit(comparator.toKeyword()).sql(' ').visit(field2);
     }
-
-
-
 
 
 

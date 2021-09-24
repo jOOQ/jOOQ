@@ -960,6 +960,36 @@ extends
     LikeEscapeStep like(Field<String> pattern);
 
     /**
+     * The <code>LIKE_IGNORE_CASE</code> operator.
+     * <p>
+     * Create a condition to case-insensitively pattern-check this field against
+     * a value.
+     * <p>
+     * This translates to <code>this not ilike value</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) not like lower(value)</code> in all other dialects.
+     *
+     * @param pattern is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    LikeEscapeStep likeIgnoreCase(@Stringly.Param String pattern);
+
+    /**
+     * The <code>LIKE_IGNORE_CASE</code> operator.
+     * <p>
+     * Create a condition to case-insensitively pattern-check this field against
+     * a value.
+     * <p>
+     * This translates to <code>this not ilike value</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) not like lower(value)</code> in all other dialects.
+     */
+    @NotNull
+    @Support
+    LikeEscapeStep likeIgnoreCase(Field<String> pattern);
+
+    /**
      * The <code>LT</code> operator.
      */
     @NotNull
@@ -1037,6 +1067,68 @@ extends
     @NotNull
     @Support
     LikeEscapeStep notLike(Field<String> pattern);
+
+    /**
+     * The <code>NOT_LIKE_IGNORE_CASE</code> operator.
+     * <p>
+     * Create a condition to case-insensitively pattern-check this field against
+     * a value.
+     * <p>
+     * This translates to <code>this not ilike value</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) not like lower(value)</code> in all other dialects.
+     *
+     * @param pattern is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    LikeEscapeStep notLikeIgnoreCase(@Stringly.Param String pattern);
+
+    /**
+     * The <code>NOT_LIKE_IGNORE_CASE</code> operator.
+     * <p>
+     * Create a condition to case-insensitively pattern-check this field against
+     * a value.
+     * <p>
+     * This translates to <code>this not ilike value</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) not like lower(value)</code> in all other dialects.
+     */
+    @NotNull
+    @Support
+    LikeEscapeStep notLikeIgnoreCase(Field<String> pattern);
+
+    /**
+     * The <code>NOT_SIMILAR_TO</code> operator.
+     *
+     * @param pattern is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    LikeEscapeStep notSimilarTo(@Stringly.Param String pattern);
+
+    /**
+     * The <code>NOT_SIMILAR_TO</code> operator.
+     */
+    @NotNull
+    @Support
+    LikeEscapeStep notSimilarTo(Field<String> pattern);
+
+    /**
+     * The <code>SIMILAR_TO</code> operator.
+     *
+     * @param pattern is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    LikeEscapeStep similarTo(@Stringly.Param String pattern);
+
+    /**
+     * The <code>SIMILAR_TO</code> operator.
+     */
+    @NotNull
+    @Support
+    LikeEscapeStep similarTo(Field<String> pattern);
 
     // -------------------------------------------------------------------------
     // XML predicates
@@ -1336,7 +1428,7 @@ extends
      * also to express the "ARRAY contains" operator. For example: <code><pre>
      * // Use this expression
      * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
-     * 
+     *
      * // ... to render this SQL
      * ARRAY[1, 2, 3] @&gt; ARRAY[1, 2]
      * </pre></code>
@@ -1365,7 +1457,7 @@ extends
      * also to express the "ARRAY contains" operator. For example: <code><pre>
      * // Use this expression
      * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
-     * 
+     *
      * // ... to render this SQL
      * ARRAY[1, 2, 3] @&gt; ARRAY[1, 2]
      * </pre></code>
@@ -2030,15 +2122,6 @@ extends
     /**
      * Create a condition to pattern-check this field against a value.
      * <p>
-     * SQL: <code>this similar to value</code>
-     */
-    @NotNull
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
-    LikeEscapeStep similarTo(Field<String> value);
-
-    /**
-     * Create a condition to pattern-check this field against a value.
-     * <p>
      * SQL: <code>this similar to value escape 'e'</code>
      *
      * @see LikeEscapeStep#escape(char)
@@ -2046,15 +2129,6 @@ extends
     @NotNull
     @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     Condition similarTo(Field<String> value, char escape);
-
-    /**
-     * Create a condition to pattern-check this field against a value.
-     * <p>
-     * SQL: <code>this similar to value</code>
-     */
-    @NotNull
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
-    LikeEscapeStep similarTo(String value);
 
     /**
      * Create a condition to pattern-check this field against a value.
@@ -2070,15 +2144,6 @@ extends
     /**
      * Create a condition to pattern-check this field against a field.
      * <p>
-     * SQL: <code>this not similar to field</code>
-     */
-    @NotNull
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
-    LikeEscapeStep notSimilarTo(Field<String> field);
-
-    /**
-     * Create a condition to pattern-check this field against a field.
-     * <p>
      * SQL: <code>this not similar to field escape 'e'</code>
      *
      * @see LikeEscapeStep#escape(char)
@@ -2086,15 +2151,6 @@ extends
     @NotNull
     @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     Condition notSimilarTo(Field<String> field, char escape);
-
-    /**
-     * Create a condition to pattern-check this field against a value.
-     * <p>
-     * SQL: <code>this not similar to value</code>
-     */
-    @NotNull
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
-    LikeEscapeStep notSimilarTo(String value);
 
     /**
      * Create a condition to pattern-check this field against a value.
@@ -2160,36 +2216,12 @@ extends
      * This translates to <code>this ilike field</code> in
      * {@link SQLDialect#POSTGRES}, or to
      * <code>lower(this) like lower(field)</code> in all other dialects.
-     */
-    @NotNull
-    @Support
-    LikeEscapeStep likeIgnoreCase(Field<String> field);
-
-    /**
-     * Create a condition to case-insensitively pattern-check this field against
-     * a field.
-     * <p>
-     * This translates to <code>this ilike field</code> in
-     * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) like lower(field)</code> in all other dialects.
      *
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
     @Support
     Condition likeIgnoreCase(Field<String> field, char escape);
-
-    /**
-     * Create a condition to case-insensitively pattern-check this field against
-     * a value.
-     * <p>
-     * This translates to <code>this ilike value</code> in
-     * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) like lower(value)</code> in all other dialects.
-     */
-    @NotNull
-    @Support
-    LikeEscapeStep likeIgnoreCase(String value);
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
@@ -2254,36 +2286,12 @@ extends
      * This translates to <code>this not ilike field</code> in
      * {@link SQLDialect#POSTGRES}, or to
      * <code>lower(this) not like lower(field)</code> in all other dialects.
-     */
-    @NotNull
-    @Support
-    LikeEscapeStep notLikeIgnoreCase(Field<String> field);
-
-    /**
-     * Create a condition to case-insensitively pattern-check this field against
-     * a field.
-     * <p>
-     * This translates to <code>this not ilike field</code> in
-     * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) not like lower(field)</code> in all other dialects.
      *
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
     @Support
     Condition notLikeIgnoreCase(Field<String> field, char escape);
-
-    /**
-     * Create a condition to case-insensitively pattern-check this field against
-     * a value.
-     * <p>
-     * This translates to <code>this not ilike value</code> in
-     * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) not like lower(value)</code> in all other dialects.
-     */
-    @NotNull
-    @Support
-    LikeEscapeStep notLikeIgnoreCase(String value);
 
     /**
      * Create a condition to case-insensitively pattern-check this field against

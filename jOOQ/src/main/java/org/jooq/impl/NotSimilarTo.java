@@ -46,12 +46,6 @@ import static org.jooq.impl.Tools.*;
 import static org.jooq.impl.Tools.BooleanDataKey.*;
 import static org.jooq.impl.Tools.DataExtendedKey.*;
 import static org.jooq.impl.Tools.DataKey.*;
-import static org.jooq.Comparator.LIKE;
-import static org.jooq.Comparator.LIKE_IGNORE_CASE;
-import static org.jooq.Comparator.NOT_LIKE;
-import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
-import static org.jooq.Comparator.NOT_SIMILAR_TO;
-import static org.jooq.Comparator.SIMILAR_TO;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
@@ -66,10 +60,10 @@ import java.util.stream.*;
 
 
 /**
- * The <code>LIKE</code> statement.
+ * The <code>NOT SIMILAR TO</code> statement.
  */
 @SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
-final class Like
+final class NotSimilarTo
 extends
     AbstractCondition
 implements
@@ -80,7 +74,7 @@ implements
     final Field<String> pattern;
           Character     escape;
 
-    Like(
+    NotSimilarTo(
         Field<?> value,
         Field<String> pattern
     ) {
@@ -91,7 +85,7 @@ implements
         );
     }
 
-    Like(
+    NotSimilarTo(
         Field<?> value,
         Field<String> pattern,
         Character escape
@@ -107,7 +101,7 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Like escape(char escape) {
+    public final NotSimilarTo escape(char escape) {
         this.escape = escape;
         return this;
     }
@@ -118,9 +112,6 @@ implements
 
 
 
-    private static final Set<SQLDialect> REQUIRES_CAST_ON_LIKE = SQLDialect.supportedBy(DERBY, POSTGRES, YUGABYTE);
-    private static final Set<SQLDialect> NO_SUPPORT_ILIKE      = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
-
     @Override
     public final void accept(Context<?> ctx) {
 
@@ -130,71 +121,7 @@ implements
 
 
 
-
-        accept0(ctx, value, org.jooq.Comparator.LIKE, pattern, escape);
-    }
-
-    static final boolean castRhs(Context<?> ctx, Field<?> arg2) {
-        boolean castRhs = false;
-
-
-
-
-
-
-
-
-
-        return castRhs;
-    }
-
-    static final ParamType forcedParamType(Context<?> ctx, Character escape) {
-        ParamType forcedParamType = ctx.paramType();
-
-
-
-
-
-
-
-
-        return forcedParamType;
-    }
-
-    static final void accept0(Context<?> ctx, Field<?> arg1, org.jooq.Comparator op, Field<?> arg2, Character escape) {
-
-        // [#1159] [#1725] Some dialects cannot auto-convert the LHS operand to a
-        // VARCHAR when applying a LIKE predicate
-        if ((op == LIKE || op == NOT_LIKE || op == SIMILAR_TO || op == NOT_SIMILAR_TO)
-            && arg1.getType() != String.class
-            && REQUIRES_CAST_ON_LIKE.contains(ctx.dialect())) {
-            arg1 = castIfNeeded(arg1, String.class);
-        }
-
-        // [#1423] [#9889] PostgreSQL and H2 support ILIKE natively. Other dialects
-        // need to emulate this as LOWER(lhs) LIKE LOWER(rhs)
-        else if ((op == LIKE_IGNORE_CASE || op == NOT_LIKE_IGNORE_CASE) && NO_SUPPORT_ILIKE.contains(ctx.dialect())) {
-            arg1 = DSL.lower((Field) arg1);
-            arg2 = DSL.lower((Field) arg2);
-            op = (op == LIKE_IGNORE_CASE ? LIKE : NOT_LIKE);
-        }
-
-        boolean castRhs = castRhs(ctx, arg2);
-
-        ctx.visit(arg1).sql(' ').visit(op.toKeyword()).sql(' ');
-
-        if (castRhs)
-            ctx.visit(K_CAST).sql('(');
-
-        ctx.visit(arg2, forcedParamType(ctx, escape));
-
-        if (castRhs)
-            ctx.sql(' ').visit(K_AS).sql(' ').visit(K_VARCHAR).sql("(4000))");
-
-        if (escape != null) {
-            ctx.sql(' ').visit(K_ESCAPE).sql(' ')
-               .visit(inline(escape));
-        }
+        Like.accept0(ctx, value, org.jooq.Comparator.NOT_SIMILAR_TO, pattern, escape);
     }
 
 
@@ -214,11 +141,11 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Like) {
+        if (that instanceof NotSimilarTo) {
             return
-                StringUtils.equals(value, ((Like) that).value) &&
-                StringUtils.equals(pattern, ((Like) that).pattern) &&
-                StringUtils.equals(escape, ((Like) that).escape)
+                StringUtils.equals(value, ((NotSimilarTo) that).value) &&
+                StringUtils.equals(pattern, ((NotSimilarTo) that).pattern) &&
+                StringUtils.equals(escape, ((NotSimilarTo) that).escape)
             ;
         }
         else

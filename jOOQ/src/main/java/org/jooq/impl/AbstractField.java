@@ -546,6 +546,18 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final LikeEscapeStep likeIgnoreCase(String pattern) {
+        return new LikeIgnoreCase(this, Tools.field(pattern));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final LikeEscapeStep likeIgnoreCase(Field<String> pattern) {
+        return new LikeIgnoreCase(this, nullSafe(pattern, getDataType()));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition lt(T arg2) {
         return new Lt(this, Tools.field(arg2, this));
     }
@@ -605,6 +617,42 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public final LikeEscapeStep notLike(Field<String> pattern) {
         return new NotLike(this, nullSafe(pattern, getDataType()));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final LikeEscapeStep notLikeIgnoreCase(String pattern) {
+        return new NotLikeIgnoreCase(this, Tools.field(pattern));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final LikeEscapeStep notLikeIgnoreCase(Field<String> pattern) {
+        return new NotLikeIgnoreCase(this, nullSafe(pattern, getDataType()));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final LikeEscapeStep notSimilarTo(String pattern) {
+        return new NotSimilarTo(this, Tools.field(pattern));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final LikeEscapeStep notSimilarTo(Field<String> pattern) {
+        return new NotSimilarTo(this, nullSafe(pattern, getDataType()));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final LikeEscapeStep similarTo(String pattern) {
+        return new SimilarTo(this, Tools.field(pattern));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final LikeEscapeStep similarTo(Field<String> pattern) {
+        return new SimilarTo(this, nullSafe(pattern, getDataType()));
     }
 
     // -------------------------------------------------------------------------
@@ -1052,18 +1100,8 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    public final LikeEscapeStep similarTo(String value) {
-        return similarTo(Tools.field(value));
-    }
-
-    @Override
     public final Condition similarTo(String value, char escape) {
         return similarTo(Tools.field(value), escape);
-    }
-
-    @Override
-    public final LikeEscapeStep similarTo(Field<String> field) {
-        return new CompareCondition(this, nullSafe(field, getDataType()), SIMILAR_TO);
     }
 
     @Override
@@ -1072,18 +1110,8 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    public final LikeEscapeStep notSimilarTo(String value) {
-        return notSimilarTo(Tools.field(value));
-    }
-
-    @Override
     public final Condition notSimilarTo(String value, char escape) {
         return notSimilarTo(Tools.field(value), escape);
-    }
-
-    @Override
-    public final LikeEscapeStep notSimilarTo(Field<String> field) {
-        return new CompareCondition(this, nullSafe(field, getDataType()), NOT_SIMILAR_TO);
     }
 
     @Override
@@ -1107,18 +1135,8 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    public final LikeEscapeStep likeIgnoreCase(String value) {
-        return likeIgnoreCase(Tools.field(value));
-    }
-
-    @Override
     public final Condition likeIgnoreCase(String value, char escape) {
         return likeIgnoreCase(Tools.field(value), escape);
-    }
-
-    @Override
-    public final LikeEscapeStep likeIgnoreCase(Field<String> field) {
-        return new CompareCondition(this, nullSafe(field, getDataType()), LIKE_IGNORE_CASE);
     }
 
     @Override
@@ -1152,18 +1170,8 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    public final LikeEscapeStep notLikeIgnoreCase(String value) {
-        return notLikeIgnoreCase(Tools.field(value));
-    }
-
-    @Override
     public final Condition notLikeIgnoreCase(String value, char escape) {
         return notLikeIgnoreCase(Tools.field(value), escape);
-    }
-
-    @Override
-    public final LikeEscapeStep notLikeIgnoreCase(Field<String> field) {
-        return new CompareCondition(this, nullSafe(field, getDataType()), NOT_LIKE_IGNORE_CASE);
     }
 
     @Override
@@ -1444,6 +1452,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return compare(comparator, Tools.field(value, this));
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final Condition compare(Comparator comparator, Field<T> field) {
         switch (comparator) {
@@ -1462,8 +1471,16 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
             case LIKE:
                 return new Like(this, (Field) nullSafe(field, getDataType()));
+            case LIKE_IGNORE_CASE:
+                return new LikeIgnoreCase(this, (Field) nullSafe(field, getDataType()));
+            case SIMILAR_TO:
+                return new SimilarTo(this, (Field) nullSafe(field, getDataType()));
             case NOT_LIKE:
                 return new NotLike(this, (Field) nullSafe(field, getDataType()));
+            case NOT_LIKE_IGNORE_CASE:
+                return new NotLikeIgnoreCase(this, (Field) nullSafe(field, getDataType()));
+            case NOT_SIMILAR_TO:
+                return new NotSimilarTo(this, (Field) nullSafe(field, getDataType()));
 
             case IS_DISTINCT_FROM:
                 return new IsDistinctFrom<>(this, nullSafe(field, getDataType()));

@@ -44,7 +44,7 @@ import java.util.*;
 import org.jetbrains.annotations.*;
 
 /**
- * A step in the construction of the <code>NOT LIKE</code> function.
+ * A step in the construction of the <code>LIKE</code> function.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -68,7 +68,7 @@ import org.jetbrains.annotations.*;
 public interface LikeEscapeStep extends Condition {
 
     /**
-     * Add the <code>ESCAPE</code> clause to the <code>NOT LIKE</code> function.
+     * Add the <code>ESCAPE</code> clause to the <code>LIKE</code> function.
      * <p>
      * For example:
      * 

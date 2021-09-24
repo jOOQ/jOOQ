@@ -60,24 +60,24 @@ import java.util.stream.*;
 
 
 /**
- * The <code>GT</code> statement.
+ * The <code>IN</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class Gt<T>
+final class In<T>
 extends
     AbstractCondition
 {
 
-    final Field<T> arg1;
-    final Field<T> arg2;
+    final Field<T>                     arg1;
+    final Select<? extends Record1<T>> arg2;
 
-    Gt(
+    In(
         Field<T> arg1,
-        Field<T> arg2
+        Select<? extends Record1<T>> arg2
     ) {
 
-        this.arg1 = nullableIf(false, Tools.nullSafe(arg1, arg2.getDataType()));
-        this.arg2 = nullableIf(false, Tools.nullSafe(arg2, arg1.getDataType()));
+        this.arg1 = nullSafeNotNull(arg1, (DataType) OTHER);
+        this.arg2 = arg2;
     }
 
     // -------------------------------------------------------------------------
@@ -95,12 +95,8 @@ extends
 
 
 
-        Eq.acceptCompareCondition(ctx, this, arg1, org.jooq.Comparator.GREATER, arg2, RowN::gt, RowN::gt, c -> c.visit(arg1).sql(" > ").visit(arg2));
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return Eq.CLAUSES;
+        ScalarSubquery<T> f = new ScalarSubquery<>(arg2, arg1.getDataType());
+        Eq.acceptCompareCondition(ctx, this, arg1, org.jooq.Comparator.IN, f, RowN::eq, RowN::eq, c -> c.visit(arg1).sql(' ').visit(K_IN).sql(' ').visit(f));
     }
 
 
@@ -120,10 +116,10 @@ extends
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Gt) {
+        if (that instanceof In) {
             return
-                StringUtils.equals(arg1, ((Gt) that).arg1) &&
-                StringUtils.equals(arg2, ((Gt) that).arg2)
+                StringUtils.equals(arg1, ((In) that).arg1) &&
+                StringUtils.equals(arg2, ((In) that).arg2)
             ;
         }
         else

@@ -95,7 +95,6 @@ import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
 import org.jooq.tools.StringUtils;
 
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -306,6 +305,12 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
                     end(clauses[i]);
         }
 
+        return (C) this;
+    }
+
+    @Override
+    public final C visitSubquery(QueryPart part) {
+        Tools.visitSubquery(this, part);
         return (C) this;
     }
 

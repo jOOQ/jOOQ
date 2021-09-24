@@ -97,7 +97,7 @@ extends
 
 
 
-        Eq.acceptCompareCondition(ctx, this, arg1, arg2, RowN::eq, RowN::eq, c -> c.visit(arg1).sql(" = ").visit(arg2));
+        Eq.acceptCompareCondition(ctx, this, arg1, org.jooq.Comparator.EQUALS, arg2, RowN::eq, RowN::eq, c -> c.visit(arg1).sql(" = ").visit(arg2));
     }
 
     @Override
@@ -113,6 +113,7 @@ extends
         Context<?> ctx,
         AbstractCondition condition,
         Field<T> arg1,
+        org.jooq.Comparator op,
         Field<T> arg2,
         BiFunction<RowN, Select<?>, Condition> compareRowSubquery,
         BiFunction<RowN, RowN, Condition> compareRowRow,
@@ -125,6 +126,13 @@ extends
             ctx.visit(compareRowSubquery.apply(row(embeddedFields(arg1)), ((ScalarSubquery<?>) arg2).query));
         else if (field1Embeddable && arg2.getDataType().isEmbeddable())
             ctx.visit(compareRowRow.apply(row(embeddedFields(arg1)), row(embeddedFields(arg2))));
+        else if ((op == org.jooq.Comparator.IN || op == org.jooq.Comparator.NOT_IN)
+            && (s = Transformations.subqueryWithLimit(arg2)) != null
+            && Transformations.transformInConditionSubqueryWithLimitToDerivedTable(ctx.configuration())) {
+
+
+
+        }
         else if (arg1.getDataType().isMultiset()
                 && arg2.getDataType().isMultiset()
                 && !Boolean.TRUE.equals(ctx.data(DATA_MULTISET_CONDITION)))

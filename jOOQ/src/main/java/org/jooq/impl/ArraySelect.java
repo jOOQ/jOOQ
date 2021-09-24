@@ -73,8 +73,6 @@ final class ArraySelect<T> extends AbstractField<T[]> {
 
 
 
-
-
             case H2: {
                 Table<?> t = select.asTable("t", "c");
                 Field<?> c = t.field("c");
@@ -86,8 +84,7 @@ final class ArraySelect<T> extends AbstractField<T[]> {
             }
 
             default:
-                ctx.visit(K_ARRAY);
-                visitSubquery(ctx, select);
+                ctx.visit(K_ARRAY).visitSubquery(select);
 
                 break;
         }

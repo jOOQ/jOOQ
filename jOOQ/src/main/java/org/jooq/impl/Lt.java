@@ -95,7 +95,7 @@ extends
 
 
 
-        Eq.acceptCompareCondition(ctx, this, arg1, arg2, RowN::lt, RowN::lt, c -> c.visit(arg1).sql(" < ").visit(arg2));
+        Eq.acceptCompareCondition(ctx, this, arg1, org.jooq.Comparator.LESS, arg2, RowN::lt, RowN::lt, c -> c.visit(arg1).sql(" < ").visit(arg2));
     }
 
     @Override

@@ -807,6 +807,17 @@ extends
     Condition gt(Field<T> arg2);
 
     /**
+     * The <code>IN</code> operator.
+     * <p>
+     * The subquery must return exactly one field. This is not checked
+     * by jOOQ and will result in syntax errors in the database, if not used
+     * correctly.
+     */
+    @NotNull
+    @Support
+    Condition in(Select<? extends Record1<T>> arg2);
+
+    /**
      * The <code>IS_DISTINCT_FROM</code> operator.
      * <p>
      * The DISTINCT predicate allows for creating NULL safe comparisons where the two operands
@@ -1051,6 +1062,21 @@ extends
     @NotNull
     @Support
     Condition notEqual(Field<T> arg2);
+
+    /**
+     * The <code>NOT_IN</code> operator.
+     * <p>
+     * The subquery must return exactly one field. This is not checked
+     * by jOOQ and will result in syntax errors in the database, if not used
+     * correctly.
+     * <p>
+     * If any of the passed values is <code>NULL</code>, then the
+     * condition will be <code>NULL</code> (or <code>false</code>, depending on
+     * the dialect) as well. This is standard SQL behaviour.
+     */
+    @NotNull
+    @Support
+    Condition notIn(Select<? extends Record1<T>> arg2);
 
     /**
      * The <code>NOT_LIKE</code> operator.
@@ -1428,7 +1454,7 @@ extends
      * also to express the "ARRAY contains" operator. For example: <code><pre>
      * // Use this expression
      * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
-     *
+     * 
      * // ... to render this SQL
      * ARRAY[1, 2, 3] @&gt; ARRAY[1, 2]
      * </pre></code>
@@ -1457,7 +1483,7 @@ extends
      * also to express the "ARRAY contains" operator. For example: <code><pre>
      * // Use this expression
      * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
-     *
+     * 
      * // ... to render this SQL
      * ARRAY[1, 2, 3] @&gt; ARRAY[1, 2]
      * </pre></code>
@@ -2416,19 +2442,6 @@ extends
     Condition in(Field<?>... values);
 
     /**
-     * Create a condition to check this field against a subquery.
-     * <p>
-     * Note that the subquery must return exactly one field. This is not checked
-     * by jOOQ and will result in syntax errors in the database, if not used
-     * correctly.
-     * <p>
-     * SQL: <code>this in (select...)</code>
-     */
-    @NotNull
-    @Support
-    Condition in(Select<? extends Record1<T>> query);
-
-    /**
      * Create a condition to check this field against several values.
      * <p>
      * Note that if any of the passed values is <code>NULL</code>, then the
@@ -2519,23 +2532,6 @@ extends
     @NotNull
     @Support
     Condition notIn(Field<?>... values);
-
-    /**
-     * Create a condition to check this field against a subquery.
-     * <p>
-     * Note that the subquery must return exactly one field. This is not checked
-     * by jOOQ and will result in syntax errors in the database, if not used
-     * correctly.
-     * <p>
-     * Note that if any of the passed values is <code>NULL</code>, then the
-     * condition will be <code>NULL</code> (or <code>false</code>, depending on
-     * the dialect) as well. This is standard SQL behaviour.
-     * <p>
-     * SQL: <code>this not in (select...)</code>
-     */
-    @NotNull
-    @Support
-    Condition notIn(Select<? extends Record1<T>> query);
 
     // ------------------------------------------------------------------------
     // BETWEEN predicates

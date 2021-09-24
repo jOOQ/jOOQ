@@ -440,6 +440,12 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition in(Select<? extends Record1<T>> arg2) {
+        return new In(this, arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isDistinctFrom(T arg2) {
         return new IsDistinctFrom(this, Tools.field(arg2, this));
     }
@@ -605,6 +611,12 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     public final Condition notEqual(Field<T> arg2) {
         return ne(arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Condition notIn(Select<? extends Record1<T>> arg2) {
+        return new NotIn(this, arg2);
     }
 
     @Override
@@ -1247,11 +1259,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return in(result.getValues(0, getType()));
     }
 
-    @Override
-    public final Condition in(Select<? extends Record1<T>> query) {
-        return compare(IN, query);
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public final Condition notIn(T... values) {
@@ -1280,11 +1287,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     public final Condition notIn(Result<? extends Record1<T>> result) {
         return notIn(result.getValues(0, getType()));
-    }
-
-    @Override
-    public final Condition notIn(Select<? extends Record1<T>> query) {
-        return compare(NOT_IN, query);
     }
 
     @Override
@@ -1487,9 +1489,20 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
             case IS_NOT_DISTINCT_FROM:
                 return new IsNotDistinctFrom<>(this, nullSafe(field, getDataType()));
 
-            default:
-                return new CompareCondition(this, nullSafe(field, getDataType()), comparator);
+            case IN:
+                if (field instanceof ScalarSubquery)
+                    return new In<>(this, (Select<? extends Record1<T>>) ((ScalarSubquery<?>) field).query);
+
+                break;
+
+            case NOT_IN:
+                if (field instanceof ScalarSubquery)
+                    return new NotIn<>(this, (Select<? extends Record1<T>>) ((ScalarSubquery<?>) field).query);
+
+                break;
         }
+
+        throw new IllegalArgumentException("Comparator not supported: " + comparator);
     }
 
     @Override

@@ -50,6 +50,7 @@ import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.Record1;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 
@@ -70,8 +71,6 @@ final class ScalarSubquery<T> extends AbstractField<T> {
     @Override
     public final void accept(Context<?> ctx) {
         SelectQueryImpl<?> q = Tools.selectQueryImpl(query);
-
-
 
 
 

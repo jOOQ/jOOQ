@@ -79,6 +79,21 @@ public interface Context<C extends Context<C>> extends Scope {
     C visit(QueryPart part) throws DataAccessException;
 
     /**
+     * Visit a <code>QueryPart</code> as a subquery in the current
+     * <code>Context</code>.
+     * <p>
+     * This method is called by certain <code>QueryPart</code> implementations
+     * to recursively visit component <code>QueryPart</code>s.
+     *
+     * @param part The component <code>QueryPart</code>
+     * @throws DataAccessException If something went wrong while visiting the
+     *             component <code>QueryPart</code>, e.g. when binding a
+     *             variable
+     */
+    @NotNull
+    C visitSubquery(QueryPart part) throws DataAccessException;
+
+    /**
      * TODO [#2667]
      *
      * Properties of these methods:

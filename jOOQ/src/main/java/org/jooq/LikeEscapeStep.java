@@ -37,37 +37,14 @@
  */
 package org.jooq;
 
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.IGNITE;
-// ...
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-import static org.jooq.SQLDialect.SQLITE;
-// ...
-// ...
-// ...
-// ...
+import static org.jooq.SQLDialect.*;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.*;
+
+import org.jetbrains.annotations.*;
 
 /**
- * A step in the creation of a <code>LIKE</code> predicate to which an
- * <code>ESCAPE</code> clause can be appended.
+ * A step in the construction of the <code>NOT LIKE</code> function.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -86,22 +63,20 @@ import org.jetbrains.annotations.NotNull;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface LikeEscapeStep extends Condition {
 
-
     /**
-     * Add an <code>ESCAPE</code> clause to the <code>LIKE</code> predicate.
+     * Add the <code>ESCAPE</code> clause to the <code>NOT LIKE</code> function.
      * <p>
      * For example:
-     *
+     * 
      * <code><pre>
      * some_column LIKE 'A!%%' ESCAPE '!'
      * </pre></code>
      */
-    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
-    Condition escape(char c);
+    @NotNull @CheckReturnValue
+    Condition escape(char escape);
 }

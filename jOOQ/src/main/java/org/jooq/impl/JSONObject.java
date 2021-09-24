@@ -183,6 +183,9 @@ implements
 
 
 
+
+
+
             case MARIADB: {
                 JSONEntry<?> first;
 
@@ -213,17 +216,6 @@ implements
             || field instanceof ScalarSubquery && isJSONArray(((ScalarSubquery<?>) field).query.getSelect().get(0));
     }
 
-
-
-
-
-
-
-
-
-
-
-
     private final void acceptStandard(Context<?> ctx) {
         JSONNull jsonNull;
         JSONReturning jsonReturning = new JSONReturning(returning);
@@ -241,6 +233,21 @@ implements
 
         ctx.visit(N_JSON_OBJECT).sql('(').visit(QueryPartListView.wrap(QueryPartCollectionView.wrap(entries), jsonNull, jsonReturning).separator("")).sql(')');
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

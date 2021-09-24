@@ -534,6 +534,18 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final LikeEscapeStep like(String pattern) {
+        return new Like(this, Tools.field(pattern));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final LikeEscapeStep like(Field<String> pattern) {
+        return new Like(this, nullSafe(pattern, getDataType()));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition lt(T arg2) {
         return new Lt(this, Tools.field(arg2, this));
     }
@@ -581,6 +593,18 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     public final Condition notEqual(Field<T> arg2) {
         return ne(arg2);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final LikeEscapeStep notLike(String pattern) {
+        return new NotLike(this, Tools.field(pattern));
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final LikeEscapeStep notLike(Field<String> pattern) {
+        return new NotLike(this, nullSafe(pattern, getDataType()));
     }
 
     // -------------------------------------------------------------------------
@@ -1068,18 +1092,8 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    public final LikeEscapeStep like(String value) {
-        return like(Tools.field(value));
-    }
-
-    @Override
     public final Condition like(String value, char escape) {
-        return like(Tools.field(value), escape);
-    }
-
-    @Override
-    public final LikeEscapeStep like(Field<String> field) {
-        return new CompareCondition(this, nullSafe(field, getDataType()), LIKE);
+        return like(value).escape(escape);
     }
 
     @Override
@@ -1123,18 +1137,8 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    public final LikeEscapeStep notLike(String value) {
-        return notLike(Tools.field(value));
-    }
-
-    @Override
     public final Condition notLike(String value, char escape) {
         return notLike(Tools.field(value), escape);
-    }
-
-    @Override
-    public final LikeEscapeStep notLike(Field<String> field) {
-        return new CompareCondition(this, nullSafe(field, getDataType()), NOT_LIKE);
     }
 
     @Override
@@ -1455,6 +1459,11 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
                 return new Le<>(this, nullSafe(field, getDataType()));
             case NOT_EQUALS:
                 return new Ne<>(this, nullSafe(field, getDataType()));
+
+            case LIKE:
+                return new Like(this, (Field) nullSafe(field, getDataType()));
+            case NOT_LIKE:
+                return new NotLike(this, (Field) nullSafe(field, getDataType()));
 
             case IS_DISTINCT_FROM:
                 return new IsDistinctFrom<>(this, nullSafe(field, getDataType()));

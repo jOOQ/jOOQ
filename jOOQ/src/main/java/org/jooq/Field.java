@@ -944,6 +944,22 @@ extends
     Condition lessThan(Field<T> arg2);
 
     /**
+     * The <code>LIKE</code> operator.
+     *
+     * @param pattern is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    LikeEscapeStep like(@Stringly.Param String pattern);
+
+    /**
+     * The <code>LIKE</code> operator.
+     */
+    @NotNull
+    @Support
+    LikeEscapeStep like(Field<String> pattern);
+
+    /**
      * The <code>LT</code> operator.
      */
     @NotNull
@@ -1005,6 +1021,22 @@ extends
     @NotNull
     @Support
     Condition notEqual(Field<T> arg2);
+
+    /**
+     * The <code>NOT_LIKE</code> operator.
+     *
+     * @param pattern is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    LikeEscapeStep notLike(@Stringly.Param String pattern);
+
+    /**
+     * The <code>NOT_LIKE</code> operator.
+     */
+    @NotNull
+    @Support
+    LikeEscapeStep notLike(Field<String> pattern);
 
     // -------------------------------------------------------------------------
     // XML predicates
@@ -2082,15 +2114,6 @@ extends
     /**
      * Create a condition to pattern-check this field against a value.
      * <p>
-     * SQL: <code>this like value</code>
-     */
-    @NotNull
-    @Support
-    LikeEscapeStep like(Field<String> value);
-
-    /**
-     * Create a condition to pattern-check this field against a value.
-     * <p>
      * SQL: <code>this like value escape 'e'</code>
      *
      * @see LikeEscapeStep#escape(char)
@@ -2098,15 +2121,6 @@ extends
     @NotNull
     @Support
     Condition like(Field<String> value, char escape);
-
-    /**
-     * Create a condition to pattern-check this field against a value.
-     * <p>
-     * SQL: <code>this like value</code>
-     */
-    @NotNull
-    @Support
-    LikeEscapeStep like(String value);
 
     /**
      * Create a condition to pattern-check this field against a value.
@@ -2194,15 +2208,6 @@ extends
     /**
      * Create a condition to pattern-check this field against a field.
      * <p>
-     * SQL: <code>this not like field</code>
-     */
-    @NotNull
-    @Support
-    LikeEscapeStep notLike(Field<String> field);
-
-    /**
-     * Create a condition to pattern-check this field against a field.
-     * <p>
      * SQL: <code>this not like field escape 'e'</code>
      *
      * @see LikeEscapeStep#escape(char)
@@ -2210,15 +2215,6 @@ extends
     @NotNull
     @Support
     Condition notLike(Field<String> field, char escape);
-
-    /**
-     * Create a condition to pattern-check this field against a value.
-     * <p>
-     * SQL: <code>this not like value</code>
-     */
-    @NotNull
-    @Support
-    LikeEscapeStep notLike(String value);
 
     /**
      * Create a condition to pattern-check this field against a value.

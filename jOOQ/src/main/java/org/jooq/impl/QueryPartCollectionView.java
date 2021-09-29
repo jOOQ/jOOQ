@@ -39,6 +39,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static org.jooq.impl.Tools.EMPTY_MQUERYPART;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.isRendersSeparator;
 import static org.jooq.impl.Tools.last;
@@ -51,11 +52,16 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import org.jooq.Context;
+import org.jooq.Function1;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
+// ...
+// ...
 
 /**
  * A {@link List} view, delegating all calls to a wrapped list, but acting like
@@ -63,7 +69,7 @@ import org.jooq.QueryPartInternal;
  *
  * @author Lukas Eder
  */
-class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart implements Collection<T>, SimpleQueryPart, SeparatedQueryPart {
+class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart implements MCollection<T>, SimpleQueryPart, SeparatedQueryPart {
 
     final Collection<T>              wrapped;
     Boolean                          qualify;
@@ -330,6 +336,30 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
     @Override
     public final void clear() {
         wrapped.clear();
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, wrapped.toArray(EMPTY_MQUERYPART));
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, wrapped, l -> {
+            QueryPartList<T> r = new QueryPartList<>(l);
+            if (qualify != null)
+                r = r.qualify(qualify);
+            return r.map(mapper).separator(separator);
+        }, replacement);
     }
 
     // -------------------------------------------------------------------------

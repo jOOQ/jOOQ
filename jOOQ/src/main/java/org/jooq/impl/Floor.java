@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class Floor<T extends Number>
 extends
     AbstractField<T>
+implements
+    MFloor<T>
 {
 
     final Field<T> value;
@@ -119,14 +123,55 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $value() {
+        return value;
+    }
+
+    @Override
+    public final MFloor<T> $value(MField<T> newValue) {
+        return constructor().apply(newValue);
+    }
+
+    public final Function1<? super MField<T>, ? extends MFloor<T>> constructor() {
+        return (a1) -> new Floor<>((Field<T>) a1);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $value(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $value()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Floor) {
             return
-                StringUtils.equals(value, ((Floor) that).value)
+                StringUtils.equals($value(), ((Floor) that).$value())
             ;
         }
         else

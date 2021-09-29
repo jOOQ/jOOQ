@@ -51,13 +51,15 @@ import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.SQL;
+// ...
+// ...
 
 /**
  * A plain SQL query that returns results
  *
  * @author Lukas Eder
  */
-final class SQLResultQuery extends AbstractResultQuery<Record> {
+final class SQLResultQuery extends AbstractResultQuery<Record> implements UEmptyQuery {
 
     private final SQL delegate;
 

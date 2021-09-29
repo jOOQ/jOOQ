@@ -50,17 +50,24 @@ import java.util.List;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function2;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class FieldFunction<T> extends AbstractField<Integer> {
-    private final QueryPartListView<Field<?>> arguments;
+final class FieldFunction<T> extends AbstractField<Integer> implements MFieldFunction<T> {
+
+    private final Field<T>                    field;
+    private final QueryPartListView<Field<T>> arguments;
 
     FieldFunction(Field<T> field, Field<T>[] arguments) {
         super(N_FIELD, INTEGER);
 
-        this.arguments = wrap(combine(field, arguments));
+        this.field = field;
+        this.arguments = wrap(arguments);
     }
 
     @Override
@@ -71,7 +78,7 @@ final class FieldFunction<T> extends AbstractField<Integer> {
             case MARIADB:
             case MYSQL:
                 if (arguments.size() > 1)
-                    ctx.visit(N_FIELD).sql('(').visit(arguments).sql(')');
+                    ctx.visit(N_FIELD).sql('(').visit(wrap(combine(field, arguments.toArray(EMPTY_FIELD)))).sql(')');
                 else
                     acceptDefault(ctx);
 
@@ -86,16 +93,16 @@ final class FieldFunction<T> extends AbstractField<Integer> {
     private final void acceptDefault(Context<?> ctx) {
         int size = arguments.size();
 
-        if (size == 1) {
+        if (size == 0) {
             ctx.visit(zero());
         }
         else {
             List<Field<?>> args = new ArrayList<>();
-            args.add(arguments.get(0));
+            args.add(field);
 
-            for (int i = 1; i < size; i++) {
+            for (int i = 0; i < size; i++) {
                 args.add(arguments.get(i));
-                args.add(inline(i));
+                args.add(inline(i + 1));
             }
 
             args.add(inline(0));
@@ -107,5 +114,24 @@ final class FieldFunction<T> extends AbstractField<Integer> {
                 (Object[]) args.subList(3, args.size()).toArray(EMPTY_FIELD)
             ));
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $arg1() {
+        return field;
+    }
+
+    @Override
+    public final MList<? extends Field<T>> $arg2() {
+        return arguments;
+    }
+
+    @Override
+    public final Function2<? super MField<T>, ? super MList<? extends MField<T>>, ? extends MField<Integer>> constructor() {
+        return (f, a) -> new FieldFunction<T>((Field<T>) f, (Field<T>[]) a.toArray(EMPTY_FIELD));
     }
 }

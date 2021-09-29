@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+// ...
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -44,7 +46,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface JSONEntry<T> extends QueryPart {
+public interface JSONEntry<T> extends QueryPart, MJSONEntry<T> {
 
     /**
      * The JSON entry key.

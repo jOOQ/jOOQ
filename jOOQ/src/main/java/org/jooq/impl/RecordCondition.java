@@ -37,17 +37,21 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.noCondition;
+
 import org.jooq.Clause;
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Record;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class RecordCondition extends AbstractCondition {
+final class RecordCondition extends AbstractCondition implements UEmpty {
 
-    private final Record      record;
+    private final Record record;
 
     RecordCondition(Record record) {
         this.record = record;
@@ -56,7 +60,7 @@ final class RecordCondition extends AbstractCondition {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void accept(Context<?> ctx) {
-        ConditionProviderImpl condition = new ConditionProviderImpl();
+        Condition c = noCondition();
 
         int size = record.size();
         for (int i = 0; i < size; i++) {
@@ -66,11 +70,11 @@ final class RecordCondition extends AbstractCondition {
                 Field f1 = record.field(i);
                 Field f2 = DSL.val(value, f1.getDataType());
 
-                condition.addConditions(f1.eq(f2));
+                c = c.and(f1.eq(f2));
             }
         }
 
-        ctx.visit(condition);
+        ctx.visit(c);
     }
 
     @Override // Avoid AbstractCondition implementation

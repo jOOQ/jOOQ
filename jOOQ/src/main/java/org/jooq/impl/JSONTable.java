@@ -77,14 +77,18 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.TableOptions;
+// ...
 
 /**
  * @author Lukas Eder
  */
 final class JSONTable
-extends AbstractTable<Record>
+extends
+    AbstractTable<Record>
 implements
-    JSONTableColumnPathStep {
+    JSONTableColumnPathStep,
+    UNotYetImplemented
+{
     private static final Set<SQLDialect>         REQUIRES_COLUMN_PATH = SQLDialect.supportedBy(MARIADB, MYSQL);
 
 
@@ -292,12 +296,12 @@ implements
         return true;
     }
 
-    private static class JSONTableColumn extends AbstractQueryPart {
+    private static class JSONTableColumn extends AbstractQueryPart implements UNotYetImplemented {
 
-        final Field<?>            field;
-        final DataType<?>         type;
-        final boolean             forOrdinality;
-        final String              path;
+        final Field<?>    field;
+        final DataType<?> type;
+        final boolean     forOrdinality;
+        final String      path;
 
         JSONTableColumn(Field<?> field, DataType<?> type, boolean forOrdinality, String path) {
             this.field = field;

@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,6 +69,7 @@ final class NotLikeIgnoreCase
 extends
     AbstractCondition
 implements
+    MNotLikeIgnoreCase,
     LikeEscapeStep
 {
 
@@ -91,9 +94,8 @@ implements
         Character escape
     ) {
 
-        this.value = nullSafeNotNull(value, OTHER);
-        this.pattern = nullSafeNotNull(pattern, VARCHAR);
-        this.escape = escape;
+        this.value = nullableIf(false, Tools.nullSafe(value, pattern.getDataType()));
+        this.pattern = nullableIf(false, Tools.nullSafe(pattern, value.getDataType()));
     }
 
     // -------------------------------------------------------------------------
@@ -136,16 +138,55 @@ implements
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<?> $arg1() {
+        return value;
+    }
+
+    @Override
+    public final Field<String> $arg2() {
+        return pattern;
+    }
+
+    @Override
+    public final Character $arg3() {
+        return escape;
+    }
+
+    @Override
+    public final MNotLikeIgnoreCase $arg1(MField<?> newValue) {
+        return constructor().apply(newValue, $arg2(), $arg3());
+    }
+
+    @Override
+    public final MNotLikeIgnoreCase $arg2(MField<String> newValue) {
+        return constructor().apply($arg1(), newValue, $arg3());
+    }
+
+    @Override
+    public final MNotLikeIgnoreCase $arg3(Character newValue) {
+        return constructor().apply($arg1(), $arg2(), newValue);
+    }
+
+    @Override
+    public final Function3<? super MField<?>, ? super MField<String>, ? super Character, ? extends MNotLikeIgnoreCase> constructor() {
+        return (a1, a2, a3) -> new NotLikeIgnoreCase((Field<?>) a1, (Field<String>) a2, a3);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof NotLikeIgnoreCase) {
             return
-                StringUtils.equals(value, ((NotLikeIgnoreCase) that).value) &&
-                StringUtils.equals(pattern, ((NotLikeIgnoreCase) that).pattern) &&
-                StringUtils.equals(escape, ((NotLikeIgnoreCase) that).escape)
+                StringUtils.equals($value(), ((NotLikeIgnoreCase) that).$value()) &&
+                StringUtils.equals($pattern(), ((NotLikeIgnoreCase) that).$pattern()) &&
+                StringUtils.equals($escape(), ((NotLikeIgnoreCase) that).$escape())
             ;
         }
         else

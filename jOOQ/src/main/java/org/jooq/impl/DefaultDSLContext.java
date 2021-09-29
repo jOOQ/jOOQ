@@ -67,7 +67,6 @@ import static org.jooq.impl.Tools.getMappedSchema;
 import static org.jooq.impl.Tools.getMappedTable;
 import static org.jooq.impl.Tools.list;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringReader;
@@ -91,9 +90,6 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import javax.sql.DataSource;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 import org.jooq.AlterTableStep;
 import org.jooq.Attachable;
@@ -3110,32 +3106,32 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.CreateDomainAsStep createDomain(@Stringly.Name String domain) {
-        return new CreateDomainImpl<>(configuration(), DSL.domain(DSL.name(domain)), false);
+        return new CreateDomainImpl(configuration(), DSL.domain(DSL.name(domain)), false);
     }
 
     @Override
     public org.jooq.CreateDomainAsStep createDomain(Name domain) {
-        return new CreateDomainImpl<>(configuration(), DSL.domain(domain), false);
+        return new CreateDomainImpl(configuration(), DSL.domain(domain), false);
     }
 
     @Override
     public org.jooq.CreateDomainAsStep createDomain(Domain<?> domain) {
-        return new CreateDomainImpl<>(configuration(), domain, false);
+        return new CreateDomainImpl(configuration(), domain, false);
     }
 
     @Override
     public org.jooq.CreateDomainAsStep createDomainIfNotExists(@Stringly.Name String domain) {
-        return new CreateDomainImpl<>(configuration(), DSL.domain(DSL.name(domain)), true);
+        return new CreateDomainImpl(configuration(), DSL.domain(DSL.name(domain)), true);
     }
 
     @Override
     public org.jooq.CreateDomainAsStep createDomainIfNotExists(Name domain) {
-        return new CreateDomainImpl<>(configuration(), DSL.domain(domain), true);
+        return new CreateDomainImpl(configuration(), DSL.domain(domain), true);
     }
 
     @Override
     public org.jooq.CreateDomainAsStep createDomainIfNotExists(Domain<?> domain) {
-        return new CreateDomainImpl<>(configuration(), domain, true);
+        return new CreateDomainImpl(configuration(), domain, true);
     }
 
 
@@ -3694,7 +3690,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.GrantOnStep grant(Collection<? extends Privilege> privileges) {
-        return new GrantImpl(configuration(), privileges);
+        return new GrantImpl(configuration(), new QueryPartList<>(privileges));
     }
 
     @Override
@@ -3709,7 +3705,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.RevokeOnStep revoke(Collection<? extends Privilege> privileges) {
-        return new RevokeImpl(configuration(), privileges, false);
+        return new RevokeImpl(configuration(), new QueryPartList<>(privileges), false);
     }
 
     @Override
@@ -3724,7 +3720,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges) {
-        return new RevokeImpl(configuration(), privileges, true);
+        return new RevokeImpl(configuration(), new QueryPartList<>(privileges), true);
     }
 
     @Override

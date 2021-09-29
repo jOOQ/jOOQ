@@ -39,6 +39,8 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.*;
 
+// ...
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -66,7 +68,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface DerivedColumnList extends QueryPart {
+public interface DerivedColumnList extends QueryPart, MDerivedColumnList {
 
     /**
      * Specify a subselect to refer to by the <code>DerivedColumnList</code> to

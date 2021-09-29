@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+// ...
 
 /**
  * A common base type for {@link Field} and {@link Row} where DSL API accepts
@@ -56,6 +57,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface FieldOrRow extends QueryPart {
+public interface FieldOrRow extends QueryPart, MFieldOrRow {
 
 }

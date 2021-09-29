@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,32 +69,33 @@ final class CreateIndexImpl
 extends
     AbstractDDLQuery
 implements
+    MCreateIndex,
     CreateIndexStep,
     CreateIndexIncludeStep,
     CreateIndexWhereStep,
     CreateIndexFinalStep
 {
 
-    final Boolean                             unique;
-    final Index                               index;
-    final boolean                             createIndexIfNotExists;
-          Table<?>                            table;
-          Collection<? extends OrderField<?>> on;
-          Collection<? extends Field<?>>      include;
-          Condition                           where;
-          boolean                             excludeNullKeys;
+    final Boolean                                    unique;
+    final Index                                      index;
+    final boolean                                    ifNotExists;
+          Table<?>                                   table;
+          QueryPartListView<? extends OrderField<?>> on;
+          QueryPartListView<? extends Field<?>>      include;
+          Condition                                  where;
+          boolean                                    excludeNullKeys;
 
     CreateIndexImpl(
         Configuration configuration,
         Boolean unique,
         Index index,
-        boolean createIndexIfNotExists
+        boolean ifNotExists
     ) {
         this(
             configuration,
             unique,
             index,
-            createIndexIfNotExists,
+            ifNotExists,
             null,
             null,
             null,
@@ -104,13 +107,13 @@ implements
     CreateIndexImpl(
         Configuration configuration,
         Boolean unique,
-        boolean createIndexIfNotExists
+        boolean ifNotExists
     ) {
         this(
             configuration,
             unique,
             null,
-            createIndexIfNotExists
+            ifNotExists
         );
     }
 
@@ -118,7 +121,7 @@ implements
         Configuration configuration,
         Boolean unique,
         Index index,
-        boolean createIndexIfNotExists,
+        boolean ifNotExists,
         Table<?> table,
         Collection<? extends OrderField<?>> on,
         Collection<? extends Field<?>> include,
@@ -129,22 +132,13 @@ implements
 
         this.unique = unique;
         this.index = index;
-        this.createIndexIfNotExists = createIndexIfNotExists;
+        this.ifNotExists = ifNotExists;
         this.table = table;
-        this.on = on;
-        this.include = include;
+        this.on = new QueryPartList<>(on);
+        this.include = new QueryPartList<>(include);
         this.where = where;
         this.excludeNullKeys = excludeNullKeys;
     }
-
-    final Boolean                             $unique()                 { return unique; }
-    final Index                               $index()                  { return index; }
-    final boolean                             $createIndexIfNotExists() { return createIndexIfNotExists; }
-    final Table<?>                            $table()                  { return table; }
-    final Collection<? extends OrderField<?>> $on()                     { return on; }
-    final Collection<? extends Field<?>>      $include()                { return include; }
-    final Condition                           $where()                  { return where; }
-    final boolean                             $excludeNullKeys()        { return excludeNullKeys; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -178,7 +172,7 @@ implements
     @Override
     public final CreateIndexImpl on(Table<?> table, Collection<? extends OrderField<?>> on) {
         this.table = table;
-        this.on = on;
+        this.on = new QueryPartList<>(on);
         return this;
     }
 
@@ -199,7 +193,7 @@ implements
 
     @Override
     public final CreateIndexImpl include(Collection<? extends Field<?>> include) {
-        this.include = include;
+        this.include = new QueryPartList<>(include);
         return this;
     }
 
@@ -268,7 +262,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (createIndexIfNotExists && !supportsIfNotExists(ctx))
+        if (ifNotExists && !supportsIfNotExists(ctx))
             tryCatch(ctx, DDLStatementType.CREATE_INDEX, c -> accept0(c));
         else
             accept0(ctx);
@@ -285,7 +279,7 @@ implements
            .visit(K_INDEX)
            .sql(' ');
 
-        if (createIndexIfNotExists && supportsIfNotExists(ctx))
+        if (ifNotExists && supportsIfNotExists(ctx))
             ctx.visit(K_IF_NOT_EXISTS)
                .sql(' ');
 
@@ -322,7 +316,7 @@ implements
 
             ctx.sql('(').visit(list).sql(')');
 
-        if (supportsInclude && include != null) {
+        if (supportsInclude && !include.isEmpty()) {
             Keyword keyword = K_INCLUDE;
 
 
@@ -378,4 +372,126 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Boolean $unique() {
+        return unique;
+    }
+
+    @Override
+    public final Index $index() {
+        return index;
+    }
+
+    @Override
+    public final boolean $ifNotExists() {
+        return ifNotExists;
+    }
+
+    @Override
+    public final Table<?> $table() {
+        return table;
+    }
+
+    @Override
+    public final MList<? extends OrderField<?>> $on() {
+        return on;
+    }
+
+    @Override
+    public final MList<? extends Field<?>> $include() {
+        return include;
+    }
+
+    @Override
+    public final Condition $where() {
+        return where;
+    }
+
+    @Override
+    public final boolean $excludeNullKeys() {
+        return excludeNullKeys;
+    }
+
+    @Override
+    public final MCreateIndex $unique(Boolean newValue) {
+        return constructor().apply(newValue, $index(), $ifNotExists(), $table(), $on(), $include(), $where(), $excludeNullKeys());
+    }
+
+    @Override
+    public final MCreateIndex $index(MIndex newValue) {
+        return constructor().apply($unique(), newValue, $ifNotExists(), $table(), $on(), $include(), $where(), $excludeNullKeys());
+    }
+
+    @Override
+    public final MCreateIndex $ifNotExists(boolean newValue) {
+        return constructor().apply($unique(), $index(), newValue, $table(), $on(), $include(), $where(), $excludeNullKeys());
+    }
+
+    @Override
+    public final MCreateIndex $table(MTable<?> newValue) {
+        return constructor().apply($unique(), $index(), $ifNotExists(), newValue, $on(), $include(), $where(), $excludeNullKeys());
+    }
+
+    @Override
+    public final MCreateIndex $on(MList<? extends OrderField<?>> newValue) {
+        return constructor().apply($unique(), $index(), $ifNotExists(), $table(), newValue, $include(), $where(), $excludeNullKeys());
+    }
+
+    @Override
+    public final MCreateIndex $include(MList<? extends Field<?>> newValue) {
+        return constructor().apply($unique(), $index(), $ifNotExists(), $table(), $on(), newValue, $where(), $excludeNullKeys());
+    }
+
+    @Override
+    public final MCreateIndex $where(MCondition newValue) {
+        return constructor().apply($unique(), $index(), $ifNotExists(), $table(), $on(), $include(), newValue, $excludeNullKeys());
+    }
+
+    @Override
+    public final MCreateIndex $excludeNullKeys(boolean newValue) {
+        return constructor().apply($unique(), $index(), $ifNotExists(), $table(), $on(), $include(), $where(), newValue);
+    }
+
+    public final Function8<? super Boolean, ? super MIndex, ? super Boolean, ? super MTable<?>, ? super MList<? extends OrderField<?>>, ? super MList<? extends Field<?>>, ? super MCondition, ? super Boolean, ? extends MCreateIndex> constructor() {
+        return (a1, a2, a3, a4, a5, a6, a7, a8) -> new CreateIndexImpl(configuration(), a1, (Index) a2, a3, (Table<?>) a4, (Collection<? extends OrderField<?>>) a5, (Collection<? extends Field<?>>) a6, (Condition) a7, a8);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $unique(),
+            $index(),
+            $ifNotExists(),
+            $table(),
+            $on(),
+            $include(),
+            $where(),
+            $excludeNullKeys(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $index(),
+            $table(),
+            $on(),
+            $include(),
+            $where()
+        );
+    }
 }

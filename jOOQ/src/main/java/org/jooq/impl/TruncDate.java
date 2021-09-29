@@ -51,11 +51,12 @@ import java.sql.Date;
 import org.jooq.Context;
 import org.jooq.DatePart;
 import org.jooq.Field;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class TruncDate<T> extends AbstractField<T> {
+final class TruncDate<T> extends AbstractField<T> implements UNotYetImplemented {
 
     private final Field<T>    date;
     private final DatePart    part;

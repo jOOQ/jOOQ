@@ -47,16 +47,25 @@ import static org.jooq.impl.Keywords.K_PRESERVE;
 import static org.jooq.impl.Keywords.K_WHITESPACE;
 import static org.jooq.impl.Names.N_XMLPARSE;
 import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.impl.XMLParse.DocumentOrContent.DOCUMENT;
+
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
+// ...
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.XML;
+// ...
+// ...
+// ...
+
 
 /**
  * @author Lukas Eder
  */
-final class XMLParse extends AbstractField<XML> {
+final class XMLParse extends AbstractField<XML> implements MXmlparse {
     private final Field<String>     content;
     private final DocumentOrContent documentOrContent;
 
@@ -115,5 +124,32 @@ final class XMLParse extends AbstractField<XML> {
         ctx.sql(')');
     }
 
-    enum DocumentOrContent { DOCUMENT, CONTENT }
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<String> $content() {
+        return content;
+    }
+
+    @Override
+    public final DocumentOrContent $documentOrContent() {
+        return documentOrContent;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, content);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, content, c -> new XMLParse(c, documentOrContent), replacement);
+    }
 }

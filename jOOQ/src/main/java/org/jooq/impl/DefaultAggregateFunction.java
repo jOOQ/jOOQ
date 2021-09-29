@@ -38,9 +38,13 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.EMPTY_FIELD;
+
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Name;
+// ...
 
 /**
  * A field that handles built-in functions, aggregate functions, and window
@@ -68,5 +72,14 @@ final class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
 
     DefaultAggregateFunction(boolean distinct, Name name, DataType<T> type, Field<?>... arguments) {
         super(distinct, name, type, arguments);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, arguments, a -> new DefaultAggregateFunction<>(distinct, getQualifiedName(), getDataType(), a.toArray(EMPTY_FIELD)), replacement);
     }
 }

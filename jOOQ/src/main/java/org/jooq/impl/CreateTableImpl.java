@@ -141,16 +141,21 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions.OnCommit;
+// ...
 
 
 /**
  * @author Lukas Eder
  */
-final class CreateTableImpl extends AbstractDDLQuery implements
-
-    // Cascading interface implementations for CREATE TABLE behaviour
+final class CreateTableImpl
+extends
+    AbstractDDLQuery
+implements
     CreateTableWithDataStep,
-    CreateTableColumnStep {
+    CreateTableColumnStep,
+    UNotYetImplemented
+
+{
     private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS           = SQLDialect.supportedBy(DERBY, FIREBIRD);
     private static final Set<SQLDialect> NO_SUPPORT_WITH_DATA               = SQLDialect.supportedBy(H2, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> NO_SUPPORT_CTAS_COLUMN_NAMES       = SQLDialect.supportedBy(H2);
@@ -626,7 +631,7 @@ final class CreateTableImpl extends AbstractDDLQuery implements
     }
 
     private final Field<?>[] primaryKeyColumns() {
-        return findAny(
+        return Tools.findAny(
             constraints,
             c -> c instanceof ConstraintImpl && ((ConstraintImpl) c).$primaryKey() != null,
             c -> ((ConstraintImpl) c).$primaryKey()

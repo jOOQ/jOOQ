@@ -45,6 +45,7 @@ import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.QueryPart;
+// ...
 
 /**
  * A base class for custom {@link QueryPart} implementations in client code.
@@ -70,8 +71,9 @@ import org.jooq.QueryPart;
  *
  * @author Lukas Eder
  */
-public abstract class CustomQueryPart extends AbstractQueryPart {
-    private static final Clause[] CLAUSES          = { CUSTOM };
+public abstract class CustomQueryPart extends AbstractQueryPart implements UEmpty {
+
+    private static final Clause[] CLAUSES = { CUSTOM };
 
     protected CustomQueryPart() {
     }

@@ -40,17 +40,27 @@ package org.jooq.impl;
 import static org.jooq.impl.Keywords.K_EXCEPT;
 
 import java.util.Arrays;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QualifiedAsterisk;
 import org.jooq.Table;
+// ...
+// ...
+// ...
+// ...
+// ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
  */
-final class QualifiedAsteriskImpl extends AbstractQueryPart implements QualifiedAsterisk {
+final class QualifiedAsteriskImpl extends AbstractQueryPart implements QualifiedAsterisk, MQualifiedAsterisk {
 
     private final Table<?>        table;
     final QueryPartList<Field<?>> fields;
@@ -112,5 +122,34 @@ final class QualifiedAsteriskImpl extends AbstractQueryPart implements Qualified
         list.addAll(Arrays.asList(f));
 
         return new QualifiedAsteriskImpl(table, list);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Table<?> $table() {
+        return table;
+    }
+
+    @Override
+    public final MList<? extends Field<?>> $except() {
+        return fields;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, fields);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, table, fields, QualifiedAsteriskImpl::new, replacement);
     }
 }

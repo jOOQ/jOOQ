@@ -135,6 +135,7 @@ final class Names {
     static final Name N_COUNT_IF               = unquotedName("count_if");
     static final Name N_COVAR_POP              = unquotedName("covar_pop");
     static final Name N_COVAR_SAMP             = unquotedName("covar_samp");
+    static final Name N_CUBE                   = unquotedName("cube");
     static final Name N_CUME_DIST              = unquotedName("cume_dist");
     static final Name N_CURRENTUSER            = unquotedName("currentuser");
     static final Name N_CURRENT_BIGDATETIME    = unquotedName("current_bigdatetime");
@@ -173,6 +174,7 @@ final class Names {
     static final Name N_EXP                    = unquotedName("exp");
     static final Name N_EXTRACT                = unquotedName("extract");
     static final Name N_FIELD                  = unquotedName("field");
+    static final Name N_FIRST_VALUE            = unquotedName("first_value");
     static final Name N_FLASHBACK              = unquotedName("flashback");
     static final Name N_FLOOR                  = unquotedName("floor");
     static final Name N_FORMAT                 = unquotedName("format");
@@ -188,6 +190,7 @@ final class Names {
     static final Name N_GEN_UUID               = unquotedName("gen_uuid");
     static final Name N_GETDATE                = unquotedName("getdate");
     static final Name N_GREATEST               = unquotedName("greatest");
+    static final Name N_GROUPING_SETS          = unquotedName("grouping sets");
     static final Name N_GROUP_CONCAT           = unquotedName("group_concat");
     static final Name N_HASHBYTES              = unquotedName("hashbytes");
     static final Name N_HASH_MD5               = unquotedName("hash_md5");
@@ -225,7 +228,10 @@ final class Names {
     static final Name N_JSON_TYPE              = unquotedName("json_type");
     static final Name N_JSON_VALID             = unquotedName("json_valid");
     static final Name N_JSON_VALUE             = unquotedName("json_value");
+    static final Name N_LAG                    = unquotedName("lag");
+    static final Name N_LAST_VALUE             = unquotedName("last_value");
     static final Name N_LCASE                  = unquotedName("lcase");
+    static final Name N_LEAD                   = unquotedName("lead");
     static final Name N_LEAST                  = unquotedName("least");
     static final Name N_LEFT                   = unquotedName("left");
     static final Name N_LEN                    = unquotedName("len");
@@ -260,10 +266,12 @@ final class Names {
     static final Name N_MULTISET               = unquotedName("multiset");
     static final Name N_MULTISET_AGG           = unquotedName("multiset_agg");
     static final Name N_NANO100_BETWEEN        = unquotedName("nano100_between");
+    static final Name N_NEG                    = unquotedName("neg");
     static final Name N_NEWID                  = unquotedName("newid");
     static final Name N_NEXTVAL                = unquotedName("nextval");
     static final Name N_NOT                    = unquotedName("not");
     static final Name N_NOW                    = unquotedName("now");
+    static final Name N_NTH_VALUE              = unquotedName("nth_value");
     static final Name N_NTILE                  = unquotedName("ntile");
     static final Name N_NULLIF                 = unquotedName("nullif");
     static final Name N_NVL                    = unquotedName("nvl");

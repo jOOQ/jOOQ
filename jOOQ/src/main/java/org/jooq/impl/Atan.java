@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,6 +69,8 @@ import java.math.BigDecimal;
 final class Atan
 extends
     AbstractField<BigDecimal>
+implements
+    MAtan
 {
 
     final Field<? extends Number> number;
@@ -119,14 +123,55 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<? extends Number> $number() {
+        return number;
+    }
+
+    @Override
+    public final MAtan $number(MField<? extends Number> newValue) {
+        return constructor().apply(newValue);
+    }
+
+    public final Function1<? super MField<? extends Number>, ? extends MAtan> constructor() {
+        return (a1) -> new Atan((Field<? extends Number>) a1);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $number(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $number()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Atan) {
             return
-                StringUtils.equals(number, ((Atan) that).number)
+                StringUtils.equals($number(), ((Atan) that).$number())
             ;
         }
         else

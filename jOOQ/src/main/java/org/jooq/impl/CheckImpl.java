@@ -45,11 +45,12 @@ import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class CheckImpl<R extends Record> extends AbstractNamed implements Check<R> {
+final class CheckImpl<R extends Record> extends AbstractNamed implements Check<R>, UNotYetImplemented {
 
     final Table<R>            table;
     final Condition           condition;

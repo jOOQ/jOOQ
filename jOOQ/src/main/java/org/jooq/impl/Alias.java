@@ -106,11 +106,12 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.conf.RenderOptionalKeyword;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Alias<Q extends QueryPart> extends AbstractQueryPart {
+final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmpty {
 
     private static final Clause[]        CLAUSES_TABLE_REFERENCE               = { TABLE, TABLE_REFERENCE };
     private static final Clause[]        CLAUSES_TABLE_ALIAS                   = { TABLE, TABLE_ALIAS };

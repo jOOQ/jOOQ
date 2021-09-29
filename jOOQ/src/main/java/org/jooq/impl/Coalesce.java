@@ -39,17 +39,23 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Names.N_COALESCE;
 import static org.jooq.impl.SQLDataType.OTHER;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.anyNotNull;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function1;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Coalesce<T> extends AbstractField<T> {
-    private final Field<T>[]  fields;
+final class Coalesce<T> extends AbstractField<T> implements MCoalesce<T> {
+
+    private final Field<T>[] fields;
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     Coalesce(Field<?>[] fields) {
@@ -79,5 +85,19 @@ final class Coalesce<T> extends AbstractField<T> {
                 break;
             }
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MList<? extends Field<T>> $arg1() {
+        return QueryPartListView.wrap(fields);
+    }
+
+    @Override
+    public final Function1<? super MList<? extends MField<T>>, ? extends MField<T>> constructor() {
+        return l -> new Coalesce<>(l.toArray(EMPTY_FIELD));
     }
 }

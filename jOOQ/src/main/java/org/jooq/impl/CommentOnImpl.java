@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,6 +69,7 @@ final class CommentOnImpl
 extends
     AbstractDDLQuery
 implements
+    MCommentOn,
     CommentOnIsStep,
     CommentOnFinalStep
 {
@@ -118,11 +121,6 @@ implements
         this.field = field;
         this.comment = comment;
     }
-
-    final Table<?> $table()   { return table; }
-    final boolean  $isView()  { return isView; }
-    final Field<?> $field()   { return field; }
-    final Comment  $comment() { return comment; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -262,4 +260,80 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Table<?> $table() {
+        return table;
+    }
+
+    @Override
+    public final boolean $isView() {
+        return isView;
+    }
+
+    @Override
+    public final Field<?> $field() {
+        return field;
+    }
+
+    @Override
+    public final Comment $comment() {
+        return comment;
+    }
+
+    @Override
+    public final MCommentOn $table(MTable<?> newValue) {
+        return constructor().apply(newValue, $isView(), $field(), $comment());
+    }
+
+    @Override
+    public final MCommentOn $isView(boolean newValue) {
+        return constructor().apply($table(), newValue, $field(), $comment());
+    }
+
+    @Override
+    public final MCommentOn $field(MField<?> newValue) {
+        return constructor().apply($table(), $isView(), newValue, $comment());
+    }
+
+    @Override
+    public final MCommentOn $comment(MComment newValue) {
+        return constructor().apply($table(), $isView(), $field(), newValue);
+    }
+
+    public final Function4<? super MTable<?>, ? super Boolean, ? super MField<?>, ? super MComment, ? extends MCommentOn> constructor() {
+        return (a1, a2, a3, a4) -> new CommentOnImpl(configuration(), (Table<?>) a1, a2, (Field<?>) a3, (Comment) a4);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $table(),
+            $isView(),
+            $field(),
+            $comment(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $table(),
+            $field(),
+            $comment()
+        );
+    }
 }

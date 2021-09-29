@@ -47,6 +47,7 @@ import java.util.function.Function;
 
 import org.jooq.Context;
 import org.jooq.QueryPart;
+// ...
 
 /**
  * A {@link List} view, delegating all calls to a wrapped list, but acting like
@@ -54,7 +55,7 @@ import org.jooq.QueryPart;
  *
  * @author Lukas Eder
  */
-class QueryPartListView<T extends QueryPart> extends QueryPartCollectionView<T> implements List<T> {
+class QueryPartListView<T extends QueryPart> extends QueryPartCollectionView<T> implements MList<T> {
 
     @SafeVarargs
     static final <T extends QueryPart> QueryPartListView<T> wrap(T... wrappedList) {

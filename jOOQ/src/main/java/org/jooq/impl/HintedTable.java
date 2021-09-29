@@ -42,11 +42,12 @@ import org.jooq.Keyword;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class HintedTable<R extends Record> extends AbstractTable<R> {
+final class HintedTable<R extends Record> extends AbstractTable<R> implements UNotYetImplemented {
 
     private final AbstractTable<R>    delegate;
     private final Keyword             keywords;

@@ -52,11 +52,12 @@ import java.util.Set;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.SQLDialect;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class JSONReturning extends AbstractQueryPart implements SimpleQueryPart {
+final class JSONReturning extends AbstractQueryPart implements SimpleQueryPart, UTransient {
     static final Set<SQLDialect> NO_SUPPORT_RETURNING = SQLDialect.supportedBy(H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE);
     final DataType<?>            type;
 

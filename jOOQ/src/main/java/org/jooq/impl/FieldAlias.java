@@ -38,15 +38,25 @@
 
 package org.jooq.impl;
 
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Name;
+// ...
+// ...
+// ...
+// ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
  */
-final class FieldAlias<T> extends AbstractField<T> {
+final class FieldAlias<T> extends AbstractField<T> implements MAliasedField<T> {
 
     private final Alias<Field<T>> alias;
 
@@ -89,5 +99,34 @@ final class FieldAlias<T> extends AbstractField<T> {
             return alias.wrapped();
 
         return null;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $field() {
+        return alias.wrapped();
+    }
+
+    @Override
+    public final Name $alias() {
+        return getQualifiedName();
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, $field(), $alias());
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, $field(), $alias(), FieldAlias::new, replacement);
     }
 }

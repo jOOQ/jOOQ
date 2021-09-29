@@ -40,6 +40,44 @@ package org.jooq.impl;
 
 
 
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

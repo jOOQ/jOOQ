@@ -42,21 +42,9 @@ import static java.lang.Boolean.TRUE;
 // ...
 // ...
 // ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.H2;
-// ...
-// ...
-import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-// ...
 import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
 import static org.jooq.SQLDialect.SQLITE;
-// ...
-// ...
 import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_FIRST;
@@ -70,7 +58,10 @@ import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -90,7 +81,12 @@ import org.jooq.WindowPartitionByStep;
 import org.jooq.WindowRowsAndStep;
 import org.jooq.WindowRowsStep;
 import org.jooq.WindowSpecification;
-import org.jooq.impl.Tools.BooleanDataKey;
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
 import org.jooq.impl.Tools.DataExtendedKey;
 
 /**
@@ -103,7 +99,8 @@ implements
     WindowPartitionByStep<T>,
     WindowRowsStep<T>,
     WindowRowsAndStep<T>,
-    WindowExcludeStep<T>
+    WindowExcludeStep<T>,
+    MWindowFunction<T>
 {
     private static final Set<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE          = SQLDialect.supportedBy(MYSQL, POSTGRES, SQLITE, YUGABYTE);
 
@@ -112,8 +109,8 @@ implements
     WindowDefinitionImpl                 windowDefinition;
     Name                                 windowName;
 
-    private Boolean                      ignoreNulls;
-    private Boolean                      fromLast;
+    NullTreatment                        nullTreatment;
+    FromFirstOrLast                      fromFirstOrLast;
 
     AbstractWindowFunction(Name name, DataType<T> type) {
         super(name, type);
@@ -122,6 +119,18 @@ implements
     // -------------------------------------------------------------------------
     // XXX QueryPart API
     // -------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
 
     @SuppressWarnings("unchecked")
     final QueryPart window(Context<?> ctx) {
@@ -231,9 +240,9 @@ implements
 
 
             default:
-                if (TRUE.equals(ignoreNulls))
+                if (nullTreatment == NullTreatment.IGNORE_NULLS)
                     ctx.sql(' ').visit(K_IGNORE_NULLS);
-                else if (FALSE.equals(ignoreNulls))
+                else if (nullTreatment == NullTreatment.RESPECT_NULLS)
                     ctx.sql(' ').visit(K_RESPECT_NULLS);
 
                 break;
@@ -253,9 +262,9 @@ implements
 
 
             default:
-                if (TRUE.equals(fromLast))
+                if (fromFirstOrLast == FromFirstOrLast.FROM_LAST)
                     ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_LAST);
-                else if (FALSE.equals(fromLast))
+                else if (fromFirstOrLast == FromFirstOrLast.FROM_FIRST)
                     ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_FIRST);
 
                 break;
@@ -268,25 +277,25 @@ implements
 
     @Override
     public final WindowOverStep<T> ignoreNulls() {
-        ignoreNulls = true;
+        nullTreatment = NullTreatment.IGNORE_NULLS;
         return this;
     }
 
     @Override
     public final WindowOverStep<T> respectNulls() {
-        ignoreNulls = false;
+        nullTreatment = NullTreatment.RESPECT_NULLS;
         return this;
     }
 
     @Override
     public final WindowIgnoreNullsStep<T> fromFirst() {
-        fromLast = false;
+        fromFirstOrLast = FromFirstOrLast.FROM_FIRST;
         return this;
     }
 
     @Override
     public final WindowIgnoreNullsStep<T> fromLast() {
-        fromLast = true;
+        fromFirstOrLast = FromFirstOrLast.FROM_LAST;
         return this;
     }
 
@@ -585,5 +594,61 @@ implements
     public final WindowFinalStep<T> excludeNoOthers() {
         windowSpecification.excludeNoOthers();
         return this;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MWindowSpecification $windowSpecification() {
+        return windowSpecification;
+    }
+
+    final AbstractWindowFunction<T> $windowSpecification(MWindowSpecification s) {
+        windowSpecification = (WindowSpecificationImpl) s;
+        return this;
+    }
+
+    @Override
+    public final MWindowDefinition $windowDefinition() {
+        return windowDefinition;
+    }
+
+    final AbstractWindowFunction<T> $windowDefinition(MWindowDefinition d) {
+        windowDefinition = (WindowDefinitionImpl) d;
+        return this;
+    }
+
+    public final NullTreatment $nullTreatment() {
+        return nullTreatment;
+    }
+
+    final AbstractWindowFunction<T> $nullTreatment(NullTreatment n) {
+        nullTreatment = n;
+        return this;
+    }
+
+    public final FromFirstOrLast $fromFirstOrLast() {
+        return fromFirstOrLast;
+    }
+
+    final AbstractWindowFunction<T> $fromFirstOrLast(FromFirstOrLast f) {
+        fromFirstOrLast = f;
+        return this;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public /* non-final */ <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, $windowDefinition(), $windowSpecification());
     }
 }

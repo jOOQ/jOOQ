@@ -54,10 +54,13 @@ import static org.jooq.impl.Tools.abstractDMLQuery;
 import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
 
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.DMLQuery;
 import org.jooq.Delete;
+import org.jooq.Function1;
 import org.jooq.Insert;
 import org.jooq.Merge;
 import org.jooq.Name;
@@ -66,39 +69,38 @@ import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.Update;
+// ...
+// ...
+// ...
 
 
 /**
  * @author Lukas Eder
  */
-final class DataChangeDeltaTable<R extends Record> extends AbstractTable<R> implements AutoAliasTable<R> {
+final class DataChangeDeltaTable<R extends Record> extends AbstractTable<R> implements AutoAliasTable<R>, MDataChangeDeltaTable<R> {
 
     private final Set<SQLDialect> EMULATE_USING_CTE = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
-    private final ResultOption    result;
+    private final ResultOption    resultOption;
     private final DMLQuery<R>     query;
     private final Table<R>        table;
     private final Name            alias;
 
-    DataChangeDeltaTable(ResultOption result, DMLQuery<R> query) {
-        this(result, query, table(query));
+    DataChangeDeltaTable(ResultOption resultOption, DMLQuery<R> query) {
+        this(resultOption, query, table(query));
     }
 
-    private DataChangeDeltaTable(ResultOption result, DMLQuery<R> query, Table<R> table) {
-        this(result, query, table, table.getUnqualifiedName());
+    private DataChangeDeltaTable(ResultOption resultOption, DMLQuery<R> query, Table<R> table) {
+        this(resultOption, query, table, table.getUnqualifiedName());
     }
 
-    private DataChangeDeltaTable(ResultOption result, DMLQuery<R> query, Table<R> table, Name alias) {
+    private DataChangeDeltaTable(ResultOption resultOption, DMLQuery<R> query, Table<R> table, Name alias) {
         super(TableOptions.expression(), alias);
 
-        this.result = result;
+        this.resultOption = resultOption;
         this.query = query;
         this.table = table;
         this.alias = alias;
-    }
-
-    enum ResultOption {
-        FINAL, OLD, NEW
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -140,11 +142,11 @@ final class DataChangeDeltaTable<R extends Record> extends AbstractTable<R> impl
     }
 
     private final void acceptNative(Context<?> ctx) {
-        switch (result) {
+        switch (resultOption) {
             case FINAL: ctx.visit(K_FINAL); break;
             case OLD: ctx.visit(K_OLD); break;
             case NEW: ctx.visit(K_NEW); break;
-            default: throw new IllegalStateException("Unsupported result option: " + result);
+            default: throw new IllegalStateException("Unsupported result option: " + resultOption);
         }
 
         ctx.sql(' ').visit(K_TABLE)
@@ -159,12 +161,12 @@ final class DataChangeDeltaTable<R extends Record> extends AbstractTable<R> impl
 
     @Override
     public Table<R> as(Name as) {
-        return new TableAlias<>(new DataChangeDeltaTable<>(result, query, table, as), as);
+        return new TableAlias<>(new DataChangeDeltaTable<>(resultOption, query, table, as), as);
     }
 
     @Override
     public Table<R> as(Name as, Name... fieldAliases) {
-        return new TableAlias<>(new DataChangeDeltaTable<>(result, query, table, as), as, fieldAliases);
+        return new TableAlias<>(new DataChangeDeltaTable<>(resultOption, query, table, as), as, fieldAliases);
     }
 
     @Override
@@ -181,5 +183,34 @@ final class DataChangeDeltaTable<R extends Record> extends AbstractTable<R> impl
     @Override
     final FieldsImpl<R> fields0() {
         return ((AbstractRow<R>) table.as(alias).fieldsRow()).fields;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final ResultOption $resultOption() {
+        return resultOption;
+    }
+
+    @Override
+    public final DMLQuery<R> $query() {
+        return query;
+    }
+
+    @Override
+    public final <T> T traverse(
+        T init,
+        Predicate<? super T> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super T, ? super MQueryPart, ? extends T> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, query);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, resultOption, query, DataChangeDeltaTable::new, replacement);
     }
 }

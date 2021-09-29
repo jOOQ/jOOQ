@@ -38,6 +38,7 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
+// ...
 
 /**
  * A comment.
@@ -62,7 +63,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface Comment extends QueryPart {
+public interface Comment extends QueryPart, MComment {
 
     /**
      * Get the comment.

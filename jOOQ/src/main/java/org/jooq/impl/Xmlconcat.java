@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,9 +68,11 @@ import java.util.stream.*;
 final class Xmlconcat
 extends
     AbstractField<XML>
+implements
+    MXmlconcat
 {
 
-    final Collection<? extends Field<?>> args;
+    final QueryPartListView<? extends Field<?>> args;
 
     Xmlconcat(
         Collection<? extends Field<?>> args
@@ -78,7 +82,7 @@ extends
             allNotNull(XML)
         );
 
-        this.args = args;
+        this.args = new QueryPartList<>(args);
     }
 
     // -------------------------------------------------------------------------
@@ -113,14 +117,55 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MList<? extends Field<?>> $args() {
+        return args;
+    }
+
+    @Override
+    public final MXmlconcat $args(MList<? extends Field<?>> newValue) {
+        return constructor().apply(newValue);
+    }
+
+    public final Function1<? super MList<? extends Field<?>>, ? extends MXmlconcat> constructor() {
+        return (a1) -> new Xmlconcat((Collection<? extends Field<?>>) a1);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $args(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $args()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Xmlconcat) {
             return
-                StringUtils.equals(args, ((Xmlconcat) that).args)
+                StringUtils.equals($args(), ((Xmlconcat) that).$args())
             ;
         }
         else

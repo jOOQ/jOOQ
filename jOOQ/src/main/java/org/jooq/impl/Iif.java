@@ -43,16 +43,20 @@ import static org.jooq.impl.Names.N_IIF;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function3;
 import org.jooq.Name;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Iif<T> extends AbstractField<T> {
+final class Iif<T> extends AbstractField<T> implements MIif<T> {
 
-    private final Condition   condition;
-    private final Field<T>    ifTrue;
-    private final Field<T>    ifFalse;
+    private final Condition condition;
+    private final Field<T>  ifTrue;
+    private final Field<T>  ifFalse;
 
     Iif(Name name, Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
         super(name, ifTrue.getDataType());
@@ -83,5 +87,29 @@ final class Iif<T> extends AbstractField<T> {
                 ctx.visit(DSL.when(condition, ifTrue).otherwise(ifFalse));
                 break;
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Condition $arg1() {
+        return condition;
+    }
+
+    @Override
+    public final Field<T> $arg2() {
+        return ifTrue;
+    }
+
+    @Override
+    public final Field<T> $arg3() {
+        return ifFalse;
+    }
+
+    @Override
+    public final Function3<? super MCondition, ? super MField<T>, ? super MField<T>, ? extends MField<T>> constructor() {
+        return (c, f1, f2) -> new Iif<>(getQualifiedName(), (Condition) c, (Field<T>) f1, (Field<T>) f2);
     }
 }

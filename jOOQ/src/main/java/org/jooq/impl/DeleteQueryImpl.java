@@ -106,11 +106,12 @@ import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.conf.ParamType;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implements DeleteQuery<R> {
+final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implements DeleteQuery<R>, UNotYetImplemented {
 
     private static final Clause[]        CLAUSES                         = { DELETE };
     private static final Set<SQLDialect> SPECIAL_DELETE_AS_SYNTAX        = SQLDialect.supportedBy(MARIADB, MYSQL);

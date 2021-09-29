@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,6 +69,8 @@ import java.math.BigDecimal;
 final class Median
 extends
     AbstractAggregateFunction<BigDecimal>
+implements
+    MMedian
 {
 
     Median(
@@ -97,4 +101,63 @@ extends
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Field<? extends Number> $field() {
+        return (Field<? extends Number>) getArguments().get(0);
+    }
+
+    @Override
+    public final MMedian $field(MField<? extends Number> newValue) {
+        return constructor().apply(newValue);
+    }
+
+    public final Function1<? super MField<? extends Number>, ? extends MMedian> constructor() {
+        return (a1) -> new Median((Field<? extends Number>) a1);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $field(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return super.traverse(
+            QOM.traverse(
+                init, abort, recurse, accumulate, this,
+                $field()
+            ), abort, recurse, accumulate
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Median) {
+            return
+                StringUtils.equals($field(), ((Median) that).$field())
+            ;
+        }
+        else
+            return super.equals(that);
+    }
 }

@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,6 +69,7 @@ final class AlterDomainImpl<T>
 extends
     AbstractDDLQuery
 implements
+    MAlterDomain<T>,
     AlterDomainStep<T>,
     AlterDomainDropConstraintCascadeStep,
     AlterDomainRenameConstraintStep,
@@ -74,7 +77,7 @@ implements
 {
 
     final Domain<T>  domain;
-    final boolean    alterDomainIfExists;
+    final boolean    ifExists;
           Constraint addConstraint;
           Constraint dropConstraint;
           boolean    dropConstraintIfExists;
@@ -91,12 +94,12 @@ implements
     AlterDomainImpl(
         Configuration configuration,
         Domain<T> domain,
-        boolean alterDomainIfExists
+        boolean ifExists
     ) {
         this(
             configuration,
             domain,
-            alterDomainIfExists,
+            ifExists,
             null,
             null,
             false,
@@ -115,7 +118,7 @@ implements
     AlterDomainImpl(
         Configuration configuration,
         Domain<T> domain,
-        boolean alterDomainIfExists,
+        boolean ifExists,
         Constraint addConstraint,
         Constraint dropConstraint,
         boolean dropConstraintIfExists,
@@ -132,7 +135,7 @@ implements
         super(configuration);
 
         this.domain = domain;
-        this.alterDomainIfExists = alterDomainIfExists;
+        this.ifExists = ifExists;
         this.addConstraint = addConstraint;
         this.dropConstraint = dropConstraint;
         this.dropConstraintIfExists = dropConstraintIfExists;
@@ -146,21 +149,6 @@ implements
         this.cascade = cascade;
         this.renameConstraintTo = renameConstraintTo;
     }
-
-    final Domain<T>  $domain()                   { return domain; }
-    final boolean    $alterDomainIfExists()      { return alterDomainIfExists; }
-    final Constraint $addConstraint()            { return addConstraint; }
-    final Constraint $dropConstraint()           { return dropConstraint; }
-    final boolean    $dropConstraintIfExists()   { return dropConstraintIfExists; }
-    final Domain<?>  $renameTo()                 { return renameTo; }
-    final Constraint $renameConstraint()         { return renameConstraint; }
-    final boolean    $renameConstraintIfExists() { return renameConstraintIfExists; }
-    final Field<T>   $setDefault()               { return setDefault; }
-    final boolean    $dropDefault()              { return dropDefault; }
-    final boolean    $setNotNull()               { return setNotNull; }
-    final boolean    $dropNotNull()              { return dropNotNull; }
-    final Cascade    $cascade()                  { return cascade; }
-    final Constraint $renameConstraintTo()       { return renameConstraintTo; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -342,7 +330,7 @@ implements
     private final void accept0(Context<?> ctx) {
         ctx.visit(K_ALTER).sql(' ').visit(K_DOMAIN).sql(' ');
 
-        if (alterDomainIfExists)
+        if (ifExists)
             ctx.visit(K_IF_EXISTS).sql(' ');
 
         ctx.visit(domain).sql(' ');
@@ -390,4 +378,194 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Domain<T> $domain() {
+        return domain;
+    }
+
+    @Override
+    public final boolean $ifExists() {
+        return ifExists;
+    }
+
+    @Override
+    public final Constraint $addConstraint() {
+        return addConstraint;
+    }
+
+    @Override
+    public final Constraint $dropConstraint() {
+        return dropConstraint;
+    }
+
+    @Override
+    public final boolean $dropConstraintIfExists() {
+        return dropConstraintIfExists;
+    }
+
+    @Override
+    public final Domain<?> $renameTo() {
+        return renameTo;
+    }
+
+    @Override
+    public final Constraint $renameConstraint() {
+        return renameConstraint;
+    }
+
+    @Override
+    public final boolean $renameConstraintIfExists() {
+        return renameConstraintIfExists;
+    }
+
+    @Override
+    public final Field<T> $setDefault() {
+        return setDefault;
+    }
+
+    @Override
+    public final boolean $dropDefault() {
+        return dropDefault;
+    }
+
+    @Override
+    public final boolean $setNotNull() {
+        return setNotNull;
+    }
+
+    @Override
+    public final boolean $dropNotNull() {
+        return dropNotNull;
+    }
+
+    @Override
+    public final Cascade $cascade() {
+        return cascade;
+    }
+
+    @Override
+    public final Constraint $renameConstraintTo() {
+        return renameConstraintTo;
+    }
+
+    @Override
+    public final MAlterDomain<T> $domain(MDomain<T> newValue) {
+        return constructor().apply(newValue, $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
+    }
+
+    @Override
+    public final MAlterDomain<T> $ifExists(boolean newValue) {
+        return constructor().apply($domain(), newValue, $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
+    }
+
+    @Override
+    public final MAlterDomain<T> $addConstraint(MConstraint newValue) {
+        return constructor().apply($domain(), $ifExists(), newValue, $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
+    }
+
+    @Override
+    public final MAlterDomain<T> $dropConstraint(MConstraint newValue) {
+        return constructor().apply($domain(), $ifExists(), $addConstraint(), newValue, $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
+    }
+
+    @Override
+    public final MAlterDomain<T> $dropConstraintIfExists(boolean newValue) {
+        return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), newValue, $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
+    }
+
+    @Override
+    public final MAlterDomain<T> $renameTo(MDomain<?> newValue) {
+        return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), newValue, $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
+    }
+
+    @Override
+    public final MAlterDomain<T> $renameConstraint(MConstraint newValue) {
+        return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), newValue, $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
+    }
+
+    @Override
+    public final MAlterDomain<T> $renameConstraintIfExists(boolean newValue) {
+        return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), newValue, $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
+    }
+
+    @Override
+    public final MAlterDomain<T> $setDefault(MField<T> newValue) {
+        return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), newValue, $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
+    }
+
+    @Override
+    public final MAlterDomain<T> $dropDefault(boolean newValue) {
+        return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), newValue, $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
+    }
+
+    @Override
+    public final MAlterDomain<T> $setNotNull(boolean newValue) {
+        return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), newValue, $dropNotNull(), $cascade(), $renameConstraintTo());
+    }
+
+    @Override
+    public final MAlterDomain<T> $dropNotNull(boolean newValue) {
+        return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), newValue, $cascade(), $renameConstraintTo());
+    }
+
+    @Override
+    public final MAlterDomain<T> $cascade(Cascade newValue) {
+        return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), newValue, $renameConstraintTo());
+    }
+
+    @Override
+    public final MAlterDomain<T> $renameConstraintTo(MConstraint newValue) {
+        return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), newValue);
+    }
+
+    public final Function14<? super MDomain<T>, ? super Boolean, ? super MConstraint, ? super MConstraint, ? super Boolean, ? super MDomain<?>, ? super MConstraint, ? super Boolean, ? super MField<T>, ? super Boolean, ? super Boolean, ? super Boolean, ? super Cascade, ? super MConstraint, ? extends MAlterDomain<T>> constructor() {
+        return (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) -> new AlterDomainImpl(configuration(), (Domain<T>) a1, a2, (Constraint) a3, (Constraint) a4, a5, (Domain<?>) a6, (Constraint) a7, a8, (Field<T>) a9, a10, a11, a12, a13, (Constraint) a14);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $domain(),
+            $ifExists(),
+            $addConstraint(),
+            $dropConstraint(),
+            $dropConstraintIfExists(),
+            $renameTo(),
+            $renameConstraint(),
+            $renameConstraintIfExists(),
+            $setDefault(),
+            $dropDefault(),
+            $setNotNull(),
+            $dropNotNull(),
+            $cascade(),
+            $renameConstraintTo(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $domain(),
+            $addConstraint(),
+            $dropConstraint(),
+            $renameTo(),
+            $renameConstraint(),
+            $setDefault(),
+            $renameConstraintTo()
+        );
+    }
 }

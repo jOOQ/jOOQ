@@ -72,9 +72,9 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.tryCatch;
 
-import java.util.List;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -83,6 +83,7 @@ import org.jooq.CreateViewAsStep;
 import org.jooq.CreateViewFinalStep;
 import org.jooq.DSLContext;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -91,6 +92,11 @@ import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
+// ...
+// ...
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
@@ -99,7 +105,10 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
 
     // Cascading interface implementations for CREATE VIEW behaviour
     CreateViewAsStep<R>,
-    CreateViewFinalStep {
+    CreateViewFinalStep,
+    MCreateView
+
+{
 
     private static final Clause[]                                                   CLAUSES                  = { CREATE_VIEW };
     private static final Set<SQLDialect>                                            NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD, MYSQL, POSTGRES, YUGABYTE);
@@ -131,12 +140,6 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
         this.ifNotExists = ifNotExists;
         this.orReplace = orReplace;
     }
-
-    final boolean    $ifNotExists() { return ifNotExists; }
-    final boolean    $orReplace()   { return orReplace; }
-    final Table<?>   $view()        { return view; }
-    final Field<?>[] $fields()      { return fields; }
-    final Select<?>  $select()      { return parsed(); }
 
     // ------------------------------------------------------------------------
     // XXX: DSL API
@@ -274,5 +277,57 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final boolean $ifNotExists() {
+        return ifNotExists;
+    }
+
+    @Override
+    public final boolean $orReplace() {
+        return orReplace;
+    }
+
+    @Override
+    public final Table<?> $view() {
+        return view;
+    }
+
+    @Override
+    public final MList<? extends Field<?>> $fields() {
+        return QueryPartListView.wrap(fields);
+    }
+
+    @Override
+    public final MResultQuery<?> $query() {
+        return select;
+    }
+
+    final Select<?> $select() {
+        return parsed();
+    }
+
+    @Override
+    public final <T> T traverse(
+        T init,
+        Predicate<? super T> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super T, ? super MQueryPart, ? extends T> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, $view(), $fields(), $query());
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, view, fields, select, (v, f, s) -> {
+            CreateViewImpl<Record> r = new CreateViewImpl<>(configuration(), v, f, ifNotExists, orReplace);
+            r.select = s;
+            return r;
+        }, replacement);
     }
 }

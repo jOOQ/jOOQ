@@ -53,6 +53,10 @@ import org.jooq.Schema;
 import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
+// ...
+// ...
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A common base type for UDT's
@@ -62,7 +66,7 @@ import org.jooq.UDTRecord;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UDT<R>, FieldsTrait {
+public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UDT<R>, FieldsTrait, UNotYetImplemented {
 
     private final Schema          schema;
     private final FieldsImpl<R>   fields;
@@ -301,5 +305,14 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
         final UDTFieldImpl<R, U> udtField = new UDTFieldImpl<>(name, actualType, udt, DSL.comment(comment), actualBinding);
 
         return udtField;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MSchema $schema() {
+        return schema;
     }
 }

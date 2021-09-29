@@ -49,13 +49,17 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.OrderField;
+// ...
 
 /**
  * @author Lukas Eder
  */
 final class GroupConcat
-extends AbstractAggregateFunction<String>
-implements GroupConcatOrderByStep {
+extends
+    AbstractAggregateFunction<String>
+implements
+    GroupConcatOrderByStep,
+    UNotYetImplemented {
 
     private final Field<?>      field;
     private final SortFieldList orderBy;

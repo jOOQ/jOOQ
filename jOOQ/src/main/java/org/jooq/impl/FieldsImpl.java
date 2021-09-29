@@ -68,6 +68,7 @@ import org.jooq.Row;
 import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
+// ...
 import org.jooq.tools.JooqLogger;
 
 
@@ -77,9 +78,9 @@ import org.jooq.tools.JooqLogger;
  *
  * @author Lukas Eder
  */
-final class FieldsImpl<R extends Record> extends AbstractQueryPart implements RecordType<R>, Mappable<R> {
+final class FieldsImpl<R extends Record> extends AbstractQueryPart implements RecordType<R>, Mappable<R>, UTransient {
 
-    private static final JooqLogger log              = JooqLogger.getLogger(FieldsImpl.class);
+    private static final JooqLogger log = JooqLogger.getLogger(FieldsImpl.class);
     Field<?>[]                      fields;
 
     FieldsImpl(SelectField<?>... fields) {

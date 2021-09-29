@@ -43,22 +43,28 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.when;
-import static org.jooq.impl.JSONOnNull.ABSENT_ON_NULL;
-import static org.jooq.impl.JSONOnNull.NULL_ON_NULL;
 import static org.jooq.impl.Names.N_FIELD;
 import static org.jooq.impl.Names.N_JSONB_OBJECT_AGG;
 import static org.jooq.impl.Names.N_JSON_GROUP_OBJECT;
 import static org.jooq.impl.Names.N_JSON_OBJECTAGG;
 import static org.jooq.impl.Names.N_JSON_OBJECT_AGG;
+// ...
+// ...
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.JSON;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectAggNullStep;
+// ...
+// ...
+// ...
+// ...
+// ...
 // ...
 
 
@@ -68,8 +74,11 @@ import org.jooq.JSONObjectAggNullStep;
  * @author Lukas Eder
  */
 final class JSONObjectAgg<J>
-extends AbstractAggregateFunction<J>
-implements JSONObjectAggNullStep<J> {
+extends
+    AbstractAggregateFunction<J>
+implements
+    JSONObjectAggNullStep<J>,
+    MJSONObjectAgg<J> {
 
     private final JSONEntry<?> entry;
     private JSONOnNull         onNull;
@@ -221,5 +230,34 @@ implements JSONObjectAggNullStep<J> {
     public final JSONObjectAgg<J> returning(DataType<?> r) {
         this.returning = r;
         return this;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MJSONEntry<?> $arg1() {
+        return entry;
+    }
+
+    @Override
+    public final JSONOnNull $onNull() {
+        return onNull;
+    }
+
+    @Override
+    public final MDataType<?> $returning() {
+        return returning;
+    }
+
+    @Override
+    public final Function1<? super MJSONEntry<?>, ? extends MAggregateFunction<J>> constructor() {
+        return e -> {
+            JSONObjectAgg<J> r = new JSONObjectAgg<J>(getDataType(), (JSONEntry<?>) e);
+            r.onNull = onNull;
+            r.returning = returning;
+            return r;
+        };
     }
 }

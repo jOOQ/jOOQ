@@ -65,11 +65,12 @@ import org.jooq.tools.StringUtils;
  * @author Lukas Eder
  */
 abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQueryPart {
-    private static final Clause[]   CLAUSES          = { FIELD, FIELD_VALUE };
 
-    private final String            paramName;
-    T                               value;
-    private boolean                 inline;
+    private static final Clause[] CLAUSES = { FIELD, FIELD_VALUE };
+
+    private final String          paramName;
+    T                             value;
+    private boolean               inline;
 
     AbstractParam(T value, DataType<T> type) {
         this(value, type, null);
@@ -185,6 +186,15 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
 
     @Override
     public void accept(Context<?> ctx) {}
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final T $value() {
+        return value;
+    }
 
     // ------------------------------------------------------------------------
     // XXX: Object API

@@ -57,7 +57,6 @@ import static org.jooq.impl.Names.N_CURRENT_TIMESTAMP;
 import static org.jooq.impl.Names.N_GETDATE;
 import static org.jooq.impl.Names.N_NOW;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Set;
 
@@ -65,11 +64,13 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class CurrentTimestamp<T> extends AbstractField<T> {
+final class CurrentTimestamp<T> extends AbstractField<T> implements MCurrentTimestamp<T> {
+
     private static final Set<SQLDialect> NO_SUPPORT_PRECISION = SQLDialect.supportedBy(CUBRID, DERBY, SQLITE);
 
     private final Field<Integer>         precision;

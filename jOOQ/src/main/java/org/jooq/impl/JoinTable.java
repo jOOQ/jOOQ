@@ -140,18 +140,24 @@ import org.jooq.TableOuterJoinStep;
 import org.jooq.TablePartitionByStep;
 import org.jooq.conf.RenderOptionalKeyword;
 import org.jooq.exception.DataAccessException;
+// ...
 
 /**
  * A table consisting of two joined tables and possibly a join condition
  *
  * @author Lukas Eder
  */
-final class JoinTable extends AbstractTable<Record>
+final class JoinTable
+extends
+     AbstractTable<Record>
 implements
     TableOuterJoinStep<Record>,
     TableOptionalOnStep<Record>,
     TablePartitionByStep<Record>,
-    TableOnConditionStep<Record> {
+    TableOnConditionStep<Record>,
+    UNotYetImplemented
+{
+
     private static final Clause[]         CLAUSES                    = { TABLE, TABLE_JOIN };
 
 

@@ -46,14 +46,21 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.CreateTypeFinalStep;
 import org.jooq.CreateTypeStep;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.conf.ParamType;
+// ...
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
@@ -62,15 +69,19 @@ final class CreateTypeImpl extends AbstractDDLQuery implements
 
     // Cascading interface implementations for CREATE TYPE behaviour
     CreateTypeStep,
-    CreateTypeFinalStep {
+    CreateTypeFinalStep,
+    MCreateType
 
-    private final Name        type;
-    private QueryPartList<?>  values;
+{
+
+    private final Name                         type;
+    private final QueryPartList<Field<String>> values;
 
     CreateTypeImpl(Configuration configuration, Name type) {
         super(configuration);
 
         this.type = type;
+        this.values = new QueryPartList<>();
     }
 
     // ------------------------------------------------------------------------
@@ -95,7 +106,7 @@ final class CreateTypeImpl extends AbstractDDLQuery implements
 
     @Override
     public final CreateTypeFinalStep asEnum(Collection<?> v) {
-        values = new QueryPartList<>(Tools.fields(v, VARCHAR));
+        values.addAll(Tools.fields(v, VARCHAR));
         return this;
     }
 
@@ -110,5 +121,34 @@ final class CreateTypeImpl extends AbstractDDLQuery implements
            .visit(K_AS).sql(' ').visit(K_ENUM).sql(" (")
            .visit(values, ParamType.INLINED)
            .sql(')');
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Name $name() {
+        return type;
+    }
+
+    @Override
+    public final MList<? extends Field<String>> $values() {
+        return values;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, type, values);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, type, values, (t, v) -> new CreateTypeImpl(configuration(), t).asEnum(v), replacement);
     }
 }

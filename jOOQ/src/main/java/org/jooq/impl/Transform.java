@@ -37,15 +37,13 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Tools.map;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.QueryPart;
+// ...
+// ...
 
 /**
  * A simple, preliminary pattern matching implementation for {@link Condition}
@@ -73,22 +71,10 @@ final class Transform {
     Condition transform(Condition condition) {
         if (condition instanceof ConditionProviderImpl)
             return transform(((ConditionProviderImpl) condition).getWhere());
-        else if (condition instanceof And)
-            return transform(((And) condition).arg1).and(transform(((And) condition).arg2));
-        else if (condition instanceof Or)
-            return transform(((Or) condition).arg1).or(transform(((Or) condition).arg2));
-        else if (condition instanceof Eq)
-            return fieldTransformer.apply(((Eq<?>) condition).arg1).eq((Field) fieldTransformer.apply(((Eq<?>) condition).arg2));
-        else if (condition instanceof Ne)
-            return fieldTransformer.apply(((Ne<?>) condition).arg1).ne((Field) fieldTransformer.apply(((Ne<?>) condition).arg2));
-        else if (condition instanceof Lt)
-            return fieldTransformer.apply(((Lt<?>) condition).arg1).lt((Field) fieldTransformer.apply(((Lt<?>) condition).arg2));
-        else if (condition instanceof Le)
-            return fieldTransformer.apply(((Le<?>) condition).arg1).le((Field) fieldTransformer.apply(((Le<?>) condition).arg2));
-        else if (condition instanceof Gt)
-            return fieldTransformer.apply(((Gt<?>) condition).arg1).gt((Field) fieldTransformer.apply(((Gt<?>) condition).arg2));
-        else if (condition instanceof Ge)
-            return fieldTransformer.apply(((Ge<?>) condition).arg1).ge((Field) fieldTransformer.apply(((Ge<?>) condition).arg2));
+        else if (condition instanceof MCombinedCondition)
+            return transform((Condition) ((MCombinedCondition) condition).$arg1()).and(transform((Condition) ((MCombinedCondition) condition).$arg2()));
+        else if (condition instanceof MCompareCondition)
+            return fieldTransformer.apply((Field) ((MCompareCondition<?>) condition).$arg1()).eq((Field) fieldTransformer.apply((Field) ((MCompareCondition<?>) condition).$arg2()));
         else
             return condition;
     }

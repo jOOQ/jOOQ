@@ -47,13 +47,14 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.exception.SQLDialectNotSupportedException;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class FunctionTable<R extends Record> extends AbstractTable<R> {
+final class FunctionTable<R extends Record> extends AbstractTable<R> implements UNotYetImplemented {
 
-    private final Field<?>       function;
+    private final Field<?> function;
 
     FunctionTable(Field<?> function) {
         super(TableOptions.function(), N_FUNCTION);

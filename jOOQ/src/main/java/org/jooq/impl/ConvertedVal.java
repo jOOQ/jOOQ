@@ -42,6 +42,7 @@ import org.jooq.DataType;
 import org.jooq.Param;
 import org.jooq.ParamMode;
 import org.jooq.conf.ParamType;
+// ...
 
 /**
  * A {@link Param} wrapper object that allows for lazily initialising the value
@@ -55,7 +56,7 @@ import org.jooq.conf.ParamType;
  *             not needed.
  */
 @Deprecated
-final class ConvertedVal<T> extends AbstractParamX<T> {
+final class ConvertedVal<T> extends AbstractParamX<T> implements UNotYetImplemented {
 
     final AbstractParamX<?> delegate;
 
@@ -111,6 +112,15 @@ final class ConvertedVal<T> extends AbstractParamX<T> {
     @Override
     public final ParamMode getParamMode() {
         return delegate.getParamMode();
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final T $value() {
+        return getValue();
     }
 
     // -------------------------------------------------------------------------

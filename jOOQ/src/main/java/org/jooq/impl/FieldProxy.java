@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
@@ -45,6 +48,9 @@ import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
+// ...
+// ...
+// ...
 
 /**
  * A {@link Field} that acts as another field, allowing for the proxied field to
@@ -53,7 +59,7 @@ import org.jooq.TableField;
  * @author Lukas Eder
  */
 @SuppressWarnings("unchecked")
-final class FieldProxy<T> extends AbstractField<T> implements TableField<Record, T> {
+final class FieldProxy<T> extends AbstractField<T> implements TableField<Record, T>, UProxy<MField<T>> {
 
     /**
      * The resolved field after a successful meta lookup.
@@ -174,5 +180,14 @@ final class FieldProxy<T> extends AbstractField<T> implements TableField<Record,
     @Override
     public final Table<Record> getTable() {
         return delegate instanceof TableField ? ((TableField<Record, ?>) delegate).getTable() : null;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MField<T> $delegate() {
+        return delegate;
     }
 }

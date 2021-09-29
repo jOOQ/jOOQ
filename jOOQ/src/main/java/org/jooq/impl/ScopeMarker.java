@@ -51,6 +51,8 @@ import org.jooq.Context;
 import org.jooq.QueryPartInternal;
 import org.jooq.Statement;
 import org.jooq.impl.AbstractContext.ScopeStackElement;
+// ...
+// ...
 import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.impl.Tools.DataKey;
 
@@ -178,7 +180,7 @@ enum ScopeMarker {
         boolean isEmpty();
     }
 
-    static class Marker implements QueryPartInternal {
+    static class Marker implements QueryPartInternal, UTransient {
         private final String marker;
 
         Marker(String marker) {

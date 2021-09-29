@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class Contains<T>
 extends
     AbstractCondition
+implements
+    MContains<T>
 {
 
     final Field<T> value;
@@ -126,15 +130,44 @@ extends
     }
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $arg1() {
+        return value;
+    }
+
+    @Override
+    public final Field<T> $arg2() {
+        return content;
+    }
+
+    @Override
+    public final MContains<T> $arg1(MField<T> newValue) {
+        return constructor().apply(newValue, $arg2());
+    }
+
+    @Override
+    public final MContains<T> $arg2(MField<T> newValue) {
+        return constructor().apply($arg1(), newValue);
+    }
+
+    @Override
+    public final Function2<? super MField<T>, ? super MField<T>, ? extends MContains<T>> constructor() {
+        return (a1, a2) -> new Contains<>((Field<T>) a1, (Field<T>) a2);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Contains) {
             return
-                StringUtils.equals(value, ((Contains) that).value) &&
-                StringUtils.equals(content, ((Contains) that).content)
+                StringUtils.equals($value(), ((Contains) that).$value()) &&
+                StringUtils.equals($content(), ((Contains) that).$content())
             ;
         }
         else

@@ -42,11 +42,14 @@ import static org.jooq.impl.Names.N_DEFAULT;
 
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.Function1;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Default<T> extends AbstractField<T> {
+final class Default<T> extends AbstractField<T> implements MDefault<T> {
 
     Default(DataType<T> type) {
         super(N_DEFAULT, type);

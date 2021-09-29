@@ -59,6 +59,8 @@ import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.UDTRecord;
 import org.jooq.exception.DataTypeException;
+// ...
+// ...
 import org.jooq.util.h2.H2DataType;
 
 /**
@@ -66,7 +68,7 @@ import org.jooq.util.h2.H2DataType;
  *
  * @author Lukas Eder
  */
-final class ArrayTable extends AbstractTable<Record> {
+final class ArrayTable extends AbstractTable<Record> implements UNotYetImplemented {
 
     private final Field<?>           array;
     private final FieldsImpl<Record> field;
@@ -244,7 +246,7 @@ final class ArrayTable extends AbstractTable<Record> {
 
 
 
-    private abstract class DialectArrayTable extends AbstractTable<Record> {
+    private abstract class DialectArrayTable extends AbstractTable<Record> implements UTransient {
 
         DialectArrayTable() {
             super(TableOptions.expression(), alias);

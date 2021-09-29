@@ -68,11 +68,14 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.JSONEntry;
 import org.jooq.JSONEntryValueStep;
 import org.jooq.Param;
@@ -82,6 +85,10 @@ import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.conf.NestedCollectionEmulation;
+// ...
+// ...
+
+import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -268,5 +275,34 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
             fields[0].getDataType(),
             combine(inline(empty), fields)
         );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MField<String> $key() {
+        return key;
+    }
+
+    @Override
+    public final MField<?> $value() {
+        return value;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, key, value);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, key, value, JSONEntryImpl::new, replacement);
     }
 }

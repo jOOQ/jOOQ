@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class DateAdd<T>
 extends
     AbstractField<T>
+implements
+    MDateAdd<T>
 {
 
     final Field<T>                date;
@@ -414,16 +418,80 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $date() {
+        return date;
+    }
+
+    @Override
+    public final Field<? extends Number> $interval() {
+        return interval;
+    }
+
+    @Override
+    public final DatePart $datePart() {
+        return datePart;
+    }
+
+    @Override
+    public final MDateAdd<T> $date(MField<T> newValue) {
+        return constructor().apply(newValue, $interval(), $datePart());
+    }
+
+    @Override
+    public final MDateAdd<T> $interval(MField<? extends Number> newValue) {
+        return constructor().apply($date(), newValue, $datePart());
+    }
+
+    @Override
+    public final MDateAdd<T> $datePart(DatePart newValue) {
+        return constructor().apply($date(), $interval(), newValue);
+    }
+
+    public final Function3<? super MField<T>, ? super MField<? extends Number>, ? super DatePart, ? extends MDateAdd<T>> constructor() {
+        return (a1, a2, a3) -> new DateAdd<>((Field<T>) a1, (Field<? extends Number>) a2, a3);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $date(),
+            $interval(),
+            $datePart(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $date(),
+            $interval()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof DateAdd) {
             return
-                StringUtils.equals(date, ((DateAdd) that).date) &&
-                StringUtils.equals(interval, ((DateAdd) that).interval) &&
-                StringUtils.equals(datePart, ((DateAdd) that).datePart)
+                StringUtils.equals($date(), ((DateAdd) that).$date()) &&
+                StringUtils.equals($interval(), ((DateAdd) that).$interval()) &&
+                StringUtils.equals($datePart(), ((DateAdd) that).$datePart())
             ;
         }
         else

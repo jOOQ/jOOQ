@@ -43,16 +43,25 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
 import static org.jooq.impl.XMLElement.xmlCastMapper;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
+import org.jooq.Name;
 import org.jooq.XMLAttributes;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
 final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes {
 
+    static final XMLAttributes      EMPTY = new XMLAttributesImpl(Collections.emptyList());
     final SelectFieldList<Field<?>> attributes;
 
     XMLAttributesImpl(Collection<? extends Field<?>> attributes) {
@@ -83,5 +92,29 @@ final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes
 
             c.sql(')');
         });
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MList<? extends Field<?>> $attributes() {
+        return attributes;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, $attributes());
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, $attributes(), XMLAttributesImpl::new, replacement);
     }
 }

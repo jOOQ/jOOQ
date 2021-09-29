@@ -42,17 +42,22 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.CONCAT;
 import static org.jooq.impl.Names.N_CONCAT;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.castAllIfNeeded;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Concat extends AbstractField<String> {
+final class Concat extends AbstractField<String> implements MConcat {
 
-    private final        Field<?>[] arguments;
+    private final Field<?>[] arguments;
 
     Concat(Field<?>... arguments) {
         super(N_CONCAT, SQLDataType.VARCHAR);
@@ -109,5 +114,19 @@ final class Concat extends AbstractField<String> {
             expression = new Expression<>(op, false, expression, cast[i]);
 
         ctx.visit(expression);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MList<? extends Field<?>> $arg1() {
+        return QueryPartListView.wrap(arguments);
+    }
+
+    @Override
+    public final Function1<? super MList<? extends MField<?>>, ? extends MField<String>> constructor() {
+        return l -> new Concat(l.toArray(EMPTY_FIELD));
     }
 }

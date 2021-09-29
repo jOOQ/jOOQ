@@ -50,11 +50,12 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class TableAlias<R extends Record> extends AbstractTable<R> {
+final class TableAlias<R extends Record> extends AbstractTable<R> implements UNotYetImplemented {
 
     final Alias<Table<R>> alias;
     final FieldsImpl<R>   aliasedFields;

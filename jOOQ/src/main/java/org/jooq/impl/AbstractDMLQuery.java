@@ -163,7 +163,7 @@ import org.jooq.conf.RenderMapping;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.DataChangeDeltaTable.ResultOption;
+// ...
 import org.jooq.impl.DefaultUnwrapperProvider.DefaultUnwrapper;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataKey;
@@ -171,7 +171,6 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.BatchedPreparedStatement;
 import org.jooq.tools.jdbc.JDBCUtils;
 
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -1298,7 +1297,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     private final Field<?> returnedIdentity() {
         return table.getIdentity() != null
             ? table.getIdentity().getField()
-            : findAny(returningResolvedAsterisks, f -> f.getDataType().identity());
+            : Tools.findAny(returningResolvedAsterisks, f -> f.getDataType().identity());
     }
 
     public final Field<?>[] getFields(ResultSetMetaData rs) throws SQLException {

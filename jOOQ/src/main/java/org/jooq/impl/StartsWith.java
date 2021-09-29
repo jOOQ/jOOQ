@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class StartsWith<T>
 extends
     AbstractCondition
+implements
+    MStartsWith<T>
 {
 
     final Field<T> string;
@@ -109,15 +113,44 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $arg1() {
+        return string;
+    }
+
+    @Override
+    public final Field<T> $arg2() {
+        return prefix;
+    }
+
+    @Override
+    public final MStartsWith<T> $arg1(MField<T> newValue) {
+        return constructor().apply(newValue, $arg2());
+    }
+
+    @Override
+    public final MStartsWith<T> $arg2(MField<T> newValue) {
+        return constructor().apply($arg1(), newValue);
+    }
+
+    @Override
+    public final Function2<? super MField<T>, ? super MField<T>, ? extends MStartsWith<T>> constructor() {
+        return (a1, a2) -> new StartsWith<>((Field<T>) a1, (Field<T>) a2);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof StartsWith) {
             return
-                StringUtils.equals(string, ((StartsWith) that).string) &&
-                StringUtils.equals(prefix, ((StartsWith) that).prefix)
+                StringUtils.equals($string(), ((StartsWith) that).$string()) &&
+                StringUtils.equals($prefix(), ((StartsWith) that).$prefix())
             ;
         }
         else

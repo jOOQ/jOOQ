@@ -48,8 +48,9 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
+// ...
 
-final class SQLImpl extends AbstractQueryPart implements SQL {
+final class SQLImpl extends AbstractQueryPart implements SQL, UEmpty {
 
     private static final Clause[] CLAUSES = { TEMPLATE };
     private final String          sql;

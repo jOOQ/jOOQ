@@ -40,13 +40,14 @@ package org.jooq;
 import java.io.Serializable;
 
 import org.jooq.conf.Settings;
+// ...
 
 /**
  * The common base type for all objects that can be used for query composition.
  *
  * @author Lukas Eder
  */
-public interface QueryPart extends Serializable {
+public interface QueryPart extends Serializable, MQueryPart {
 
     /**
      * Render a SQL string representation of this <code>QueryPart</code>.

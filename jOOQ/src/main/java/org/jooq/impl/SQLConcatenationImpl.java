@@ -43,9 +43,11 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
+// ...
 
-final class SQLConcatenationImpl extends AbstractQueryPart implements SQL {
-    private static final Clause[] CLAUSES          = { TEMPLATE };
+final class SQLConcatenationImpl extends AbstractQueryPart implements SQL, UEmpty {
+
+    private static final Clause[] CLAUSES = { TEMPLATE };
     private final QueryPart[]     input;
 
     SQLConcatenationImpl(QueryPart... input) {

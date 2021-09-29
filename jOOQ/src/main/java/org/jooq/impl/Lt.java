@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class Lt<T>
 extends
     AbstractCondition
+implements
+    MLt<T>
 {
 
     final Field<T> arg1;
@@ -115,15 +119,44 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $arg1() {
+        return arg1;
+    }
+
+    @Override
+    public final Field<T> $arg2() {
+        return arg2;
+    }
+
+    @Override
+    public final MLt<T> $arg1(MField<T> newValue) {
+        return constructor().apply(newValue, $arg2());
+    }
+
+    @Override
+    public final MLt<T> $arg2(MField<T> newValue) {
+        return constructor().apply($arg1(), newValue);
+    }
+
+    @Override
+    public final Function2<? super MField<T>, ? super MField<T>, ? extends MLt<T>> constructor() {
+        return (a1, a2) -> new Lt<>((Field<T>) a1, (Field<T>) a2);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Lt) {
             return
-                StringUtils.equals(arg1, ((Lt) that).arg1) &&
-                StringUtils.equals(arg2, ((Lt) that).arg2)
+                StringUtils.equals($arg1(), ((Lt) that).$arg1()) &&
+                StringUtils.equals($arg2(), ((Lt) that).$arg2())
             ;
         }
         else

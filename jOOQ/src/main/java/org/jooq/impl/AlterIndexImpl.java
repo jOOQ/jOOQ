@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,25 +69,26 @@ final class AlterIndexImpl
 extends
     AbstractDDLQuery
 implements
+    MAlterIndex,
     AlterIndexOnStep,
     AlterIndexStep,
     AlterIndexFinalStep
 {
 
     final Index    index;
-    final boolean  alterIndexIfExists;
+    final boolean  ifExists;
           Table<?> on;
           Index    renameTo;
 
     AlterIndexImpl(
         Configuration configuration,
         Index index,
-        boolean alterIndexIfExists
+        boolean ifExists
     ) {
         this(
             configuration,
             index,
-            alterIndexIfExists,
+            ifExists,
             null,
             null
         );
@@ -94,22 +97,17 @@ implements
     AlterIndexImpl(
         Configuration configuration,
         Index index,
-        boolean alterIndexIfExists,
+        boolean ifExists,
         Table<?> on,
         Index renameTo
     ) {
         super(configuration);
 
         this.index = index;
-        this.alterIndexIfExists = alterIndexIfExists;
+        this.ifExists = ifExists;
         this.on = on;
         this.renameTo = renameTo;
     }
-
-    final Index    $index()              { return index; }
-    final boolean  $alterIndexIfExists() { return alterIndexIfExists; }
-    final Table<?> $on()                 { return on; }
-    final Index    $renameTo()           { return renameTo; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -163,7 +161,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (alterIndexIfExists && !supportsIfExists(ctx))
+        if (ifExists && !supportsIfExists(ctx))
             tryCatch(ctx, DDLStatementType.ALTER_INDEX, c -> accept0(c));
         else
             accept0(ctx);
@@ -218,7 +216,7 @@ implements
                 ctx.start(Clause.ALTER_INDEX_INDEX)
                    .visit(renameIndex ? K_RENAME_INDEX : K_ALTER_INDEX);
 
-                if (alterIndexIfExists && supportsIfExists(ctx))
+                if (ifExists && supportsIfExists(ctx))
                     ctx.sql(' ').visit(K_IF_EXISTS);
 
                 ctx.sql(' ');
@@ -250,4 +248,80 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Index $index() {
+        return index;
+    }
+
+    @Override
+    public final boolean $ifExists() {
+        return ifExists;
+    }
+
+    @Override
+    public final Table<?> $on() {
+        return on;
+    }
+
+    @Override
+    public final Index $renameTo() {
+        return renameTo;
+    }
+
+    @Override
+    public final MAlterIndex $index(MIndex newValue) {
+        return constructor().apply(newValue, $ifExists(), $on(), $renameTo());
+    }
+
+    @Override
+    public final MAlterIndex $ifExists(boolean newValue) {
+        return constructor().apply($index(), newValue, $on(), $renameTo());
+    }
+
+    @Override
+    public final MAlterIndex $on(MTable<?> newValue) {
+        return constructor().apply($index(), $ifExists(), newValue, $renameTo());
+    }
+
+    @Override
+    public final MAlterIndex $renameTo(MIndex newValue) {
+        return constructor().apply($index(), $ifExists(), $on(), newValue);
+    }
+
+    public final Function4<? super MIndex, ? super Boolean, ? super MTable<?>, ? super MIndex, ? extends MAlterIndex> constructor() {
+        return (a1, a2, a3, a4) -> new AlterIndexImpl(configuration(), (Index) a1, a2, (Table<?>) a3, (Index) a4);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $index(),
+            $ifExists(),
+            $on(),
+            $renameTo(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $index(),
+            $on(),
+            $renameTo()
+        );
+    }
 }

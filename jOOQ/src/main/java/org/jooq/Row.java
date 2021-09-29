@@ -38,6 +38,7 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
+// ...
 
 import org.jetbrains.annotations.NotNull;
 
@@ -77,7 +78,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface Row extends Fields, FieldOrRow {
+public interface Row extends Fields, FieldOrRow, MRow {
 
     /**
      * Get the degree of this row value expression.

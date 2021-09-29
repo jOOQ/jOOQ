@@ -2621,7 +2621,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         static final <E extends EnumType> E getEnumType(Class<? extends E> type, String literal) {
             try {
-                return findAny(enums(type), e -> e.getLiteral().equals(literal));
+                return Tools.findAny(enums(type), e -> e.getLiteral().equals(literal));
             }
             catch (Exception e) {
                 throw new DataTypeException("Unknown enum literal found : " + literal);

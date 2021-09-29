@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,19 +68,21 @@ import java.util.stream.*;
 final class NotField
 extends
     AbstractField<Boolean>
+implements
+    MNotField
 {
 
-    final Field<Boolean> arg1;
+    final Field<Boolean> field;
 
     NotField(
-        Field<Boolean> arg1
+        Field<Boolean> field
     ) {
         super(
             N_NOT,
-            allNotNull(BOOLEAN, arg1)
+            allNotNull(BOOLEAN, field)
         );
 
-        this.arg1 = nullSafeNotNull(arg1, BOOLEAN);
+        this.field = nullSafeNotNull(field, BOOLEAN);
     }
 
     // -------------------------------------------------------------------------
@@ -105,13 +109,13 @@ extends
 
             case CUBRID:
             case FIREBIRD:
-                ctx.visit(DSL.field(not(condition(arg1))));
+                ctx.visit(DSL.field(not(condition(field))));
                 break;
 
             default:
                 ctx.visit(K_NOT)
                    .sql('(')
-                   .visit(Tools.hasDefaultConverter(arg1) ? arg1 : condition(arg1))
+                   .visit(Tools.hasDefaultConverter(field) ? field : condition(field))
                    .sql(')');
                 break;
         }
@@ -129,14 +133,33 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<Boolean> $arg1() {
+        return field;
+    }
+
+    @Override
+    public final MNotField $arg1(MField<Boolean> newValue) {
+        return constructor().apply(newValue);
+    }
+
+    @Override
+    public final Function1<? super MField<Boolean>, ? extends MNotField> constructor() {
+        return (a1) -> new NotField((Field<Boolean>) a1);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof NotField) {
             return
-                StringUtils.equals(arg1, ((NotField) that).arg1)
+                StringUtils.equals($field(), ((NotField) that).$field())
             ;
         }
         else

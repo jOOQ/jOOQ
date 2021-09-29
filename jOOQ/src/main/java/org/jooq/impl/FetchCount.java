@@ -41,21 +41,21 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.select;
 
-import java.sql.ResultSetMetaData;
-
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Select;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class FetchCount extends AbstractResultQuery<Record1<Integer>> {
+final class FetchCount extends AbstractResultQuery<Record1<Integer>> implements UTransient {
 
-    private final Field<?>[]  count            = { count().as("c") };
-    private final Select<?>   query;
+    private final Field<?>[] count = { count().as("c") };
+    private final Select<?>  query;
 
     FetchCount(Configuration configuration, Select<?> query) {
         super(configuration);

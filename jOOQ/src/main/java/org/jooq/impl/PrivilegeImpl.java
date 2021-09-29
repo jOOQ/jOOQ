@@ -43,12 +43,14 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Keyword;
 import org.jooq.Privilege;
+// ...
 
 /**
  * @author Timur Shaidullin
  */
-final class PrivilegeImpl extends AbstractQueryPart implements Privilege, SimpleQueryPart {
-    private static final Clause[] CLAUSES          = { PRIVILEGE };
+final class PrivilegeImpl extends AbstractQueryPart implements Privilege, SimpleQueryPart, UEmpty {
+
+    private static final Clause[] CLAUSES = { PRIVILEGE };
     private final Keyword         privilege;
 
     PrivilegeImpl(Keyword privilege) {

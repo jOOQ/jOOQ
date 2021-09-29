@@ -59,11 +59,12 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableOptions;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Dual extends AbstractTable<Record> {
+final class Dual extends AbstractTable<Record> implements MDual {
 
     private static final Table<Record> FORCED_DUAL    = select(new Field[] { inline("X").as("DUMMY") }).asTable("DUAL");
 

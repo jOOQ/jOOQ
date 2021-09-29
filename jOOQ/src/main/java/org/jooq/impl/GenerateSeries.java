@@ -37,7 +37,25 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.*;
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
@@ -46,8 +64,6 @@ import static org.jooq.impl.DSL.one;
 // ...
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.DSL.unnest;
-import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.withRecursive;
 import static org.jooq.impl.Internal.iadd;
 import static org.jooq.impl.Internal.idiv;
@@ -55,7 +71,8 @@ import static org.jooq.impl.Internal.imul;
 import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Names.N_GENERATE_ARRAY;
-import static org.jooq.impl.Names.*;
+import static org.jooq.impl.Names.N_GENERATE_SERIES;
+import static org.jooq.impl.Names.N_GENERATOR;
 import static org.jooq.impl.Names.N_SYSTEM_RANGE;
 import static org.jooq.impl.Names.N_UNNEST;
 import static org.jooq.impl.SQLDataType.INTEGER;
@@ -66,18 +83,21 @@ import java.util.Set;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function3;
 import org.jooq.Name;
 // ...
 import org.jooq.Record1;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableOptions;
-import org.jooq.conf.ParamType;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class GenerateSeries extends AbstractTable<Record1<Integer>> implements AutoAliasTable<Record1<Integer>> {
+final class GenerateSeries extends AbstractTable<Record1<Integer>> implements AutoAliasTable<Record1<Integer>>, MGenerateSeries<Integer> {
     private static final Set<SQLDialect> EMULATE_WITH_RECURSIVE = SQLDialect.supportedBy(FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> EMULATE_SYSTEM_RANGE   = SQLDialect.supportedBy(H2);
 
@@ -223,5 +243,29 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> implements Au
 
         else
             return null;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<Integer> $arg1() {
+        return from;
+    }
+
+    @Override
+    public final MField<Integer> $arg2() {
+        return to;
+    }
+
+    @Override
+    public final MField<Integer> $arg3() {
+        return step;
+    }
+
+    @Override
+    public final Function3<? super MField<Integer>, ? super MField<Integer>, ? super MField<Integer>, ? extends MTable<Record1<Integer>>> constructor() {
+        return (f1, f2, f3) -> new GenerateSeries((Field<Integer>) f1, (Field<Integer>) f2, (Field<Integer>) f3, name);
     }
 }

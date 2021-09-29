@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class Nullif<T>
 extends
     AbstractField<T>
+implements
+    MNullif<T>
 {
 
     final Field<T> value;
@@ -124,15 +128,68 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $value() {
+        return value;
+    }
+
+    @Override
+    public final Field<T> $other() {
+        return other;
+    }
+
+    @Override
+    public final MNullif<T> $value(MField<T> newValue) {
+        return constructor().apply(newValue, $other());
+    }
+
+    @Override
+    public final MNullif<T> $other(MField<T> newValue) {
+        return constructor().apply($value(), newValue);
+    }
+
+    public final Function2<? super MField<T>, ? super MField<T>, ? extends MNullif<T>> constructor() {
+        return (a1, a2) -> new Nullif<>((Field<T>) a1, (Field<T>) a2);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $value(),
+            $other(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $value(),
+            $other()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Nullif) {
             return
-                StringUtils.equals(value, ((Nullif) that).value) &&
-                StringUtils.equals(other, ((Nullif) that).other)
+                StringUtils.equals($value(), ((Nullif) that).$value()) &&
+                StringUtils.equals($other(), ((Nullif) that).$other())
             ;
         }
         else

@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,17 +69,18 @@ final class GrantImpl
 extends
     AbstractDDLQuery
 implements
+    MGrant,
     GrantOnStep,
     GrantToStep,
     GrantWithGrantOptionStep,
     GrantFinalStep
 {
 
-    final Collection<? extends Privilege> privileges;
-          Table<?>                        on;
-          Role                            to;
-          Boolean                         toPublic;
-          Boolean                         withGrantOption;
+    final QueryPartListView<? extends Privilege> privileges;
+          Table<?>                               on;
+          Role                                   to;
+          Boolean                                toPublic;
+          Boolean                                withGrantOption;
 
     GrantImpl(
         Configuration configuration,
@@ -103,18 +106,12 @@ implements
     ) {
         super(configuration);
 
-        this.privileges = privileges;
+        this.privileges = new QueryPartList<>(privileges);
         this.on = on;
         this.to = to;
         this.toPublic = toPublic;
         this.withGrantOption = withGrantOption;
     }
-
-    final Collection<? extends Privilege> $privileges()      { return privileges; }
-    final Table<?>                        $on()              { return on; }
-    final Role                            $to()              { return to; }
-    final Boolean                         $toPublic()        { return toPublic; }
-    final Boolean                         $withGrantOption() { return withGrantOption; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -198,4 +195,91 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MList<? extends Privilege> $privileges() {
+        return privileges;
+    }
+
+    @Override
+    public final Table<?> $on() {
+        return on;
+    }
+
+    @Override
+    public final Role $to() {
+        return to;
+    }
+
+    @Override
+    public final Boolean $toPublic() {
+        return toPublic;
+    }
+
+    @Override
+    public final Boolean $withGrantOption() {
+        return withGrantOption;
+    }
+
+    @Override
+    public final MGrant $privileges(MList<? extends Privilege> newValue) {
+        return constructor().apply(newValue, $on(), $to(), $toPublic(), $withGrantOption());
+    }
+
+    @Override
+    public final MGrant $on(MTable<?> newValue) {
+        return constructor().apply($privileges(), newValue, $to(), $toPublic(), $withGrantOption());
+    }
+
+    @Override
+    public final MGrant $to(MRole newValue) {
+        return constructor().apply($privileges(), $on(), newValue, $toPublic(), $withGrantOption());
+    }
+
+    @Override
+    public final MGrant $toPublic(Boolean newValue) {
+        return constructor().apply($privileges(), $on(), $to(), newValue, $withGrantOption());
+    }
+
+    @Override
+    public final MGrant $withGrantOption(Boolean newValue) {
+        return constructor().apply($privileges(), $on(), $to(), $toPublic(), newValue);
+    }
+
+    public final Function5<? super MList<? extends Privilege>, ? super MTable<?>, ? super MRole, ? super Boolean, ? super Boolean, ? extends MGrant> constructor() {
+        return (a1, a2, a3, a4, a5) -> new GrantImpl(configuration(), (Collection<? extends Privilege>) a1, (Table<?>) a2, (Role) a3, a4, a5);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $privileges(),
+            $on(),
+            $to(),
+            $toPublic(),
+            $withGrantOption(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $privileges(),
+            $on(),
+            $to()
+        );
+    }
 }

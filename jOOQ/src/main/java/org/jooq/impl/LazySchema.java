@@ -38,6 +38,8 @@
 package org.jooq.impl;
 
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.jooq.Catalog;
@@ -45,6 +47,7 @@ import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Domain;
 import org.jooq.ForeignKey;
+import org.jooq.Function1;
 import org.jooq.Index;
 import org.jooq.Internal;
 import org.jooq.Name;
@@ -53,6 +56,7 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UDT;
 import org.jooq.UniqueKey;
+// ...
 
 /**
  * A schema that references a lazy initialisable {@link Schema} singleton, for
@@ -261,5 +265,24 @@ public final class LazySchema extends AbstractNamed implements Schema {
     @Override
     public final Stream<Sequence<?>> sequenceStream() {
         return schema().sequenceStream();
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return schema().traverse(init, abort, recurse, accumulate);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return schema().replace(replacement);
     }
 }

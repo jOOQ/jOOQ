@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static java.lang.Boolean.TRUE;
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Integer.MIN_VALUE;
 // ...
@@ -73,46 +72,59 @@ import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_PRECEDING;
 import static org.jooq.impl.Keywords.K_UNBOUNDED_FOLLOWING;
 import static org.jooq.impl.Keywords.K_UNBOUNDED_PRECEDING;
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.DataExtendedKey.DATA_WINDOW_FUNCTION;
-import static org.jooq.impl.WindowSpecificationImpl.Exclude.CURRENT_ROW;
-import static org.jooq.impl.WindowSpecificationImpl.Exclude.GROUP;
-import static org.jooq.impl.WindowSpecificationImpl.Exclude.NO_OTHERS;
-import static org.jooq.impl.WindowSpecificationImpl.Exclude.TIES;
-import static org.jooq.impl.WindowSpecificationImpl.FrameUnits.GROUPS;
-import static org.jooq.impl.WindowSpecificationImpl.FrameUnits.RANGE;
-import static org.jooq.impl.WindowSpecificationImpl.FrameUnits.ROWS;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Keyword;
+import org.jooq.Function1;
 import org.jooq.OrderField;
 // ...
 import org.jooq.SQLDialect;
+import org.jooq.SortField;
 import org.jooq.WindowSpecificationExcludeStep;
 import org.jooq.WindowSpecificationFinalStep;
 import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationPartitionByStep;
 import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.conf.RenderImplicitWindowRange;
-import org.jooq.impl.Tools.BooleanDataKey;
-import org.jooq.impl.Tools.DataExtendedKey;
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class WindowSpecificationImpl extends AbstractQueryPart implements
+final class WindowSpecificationImpl
+extends AbstractQueryPart
+implements
 
     // Cascading interface implementations for window specification behaviour
     WindowSpecificationPartitionByStep,
     WindowSpecificationRowsAndStep,
-    WindowSpecificationExcludeStep
-    {
+    WindowSpecificationExcludeStep,
+    MWindowSpecification
+{
 
     private static final Set<SQLDialect>  OMIT_PARTITION_BY_ONE                       = SQLDialect.supportedBy(CUBRID, MYSQL, SQLITE);
 
@@ -134,7 +146,7 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     private Integer                       frameStart;
     private Integer                       frameEnd;
     private FrameUnits                    frameUnits;
-    private Exclude                       exclude;
+    private FrameExclude                  exclude;
     private boolean                       partitionByOne;
 
     WindowSpecificationImpl() {
@@ -176,9 +188,14 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
         if (o.isEmpty()) {
             boolean ordered =
                     w instanceof Ntile && REQUIRES_ORDER_BY_IN_NTILE.contains(ctx.dialect())
-                 || w instanceof PositionalWindowFunction && ((PositionalWindowFunction<?>) w).isLeadOrLag() && REQUIRES_ORDER_BY_IN_LEAD_LAG.contains(ctx.dialect())
-                 || w instanceof RankingFunction && ((RankingFunction<?>) w).isRankOrDenseRank() && REQUIRES_ORDER_BY_IN_RANK_DENSE_RANK.contains(ctx.dialect())
-                 || w instanceof RankingFunction && !((RankingFunction<?>) w).isRankOrDenseRank() && REQUIRES_ORDER_BY_IN_PERCENT_RANK_CUME_DIST.contains(ctx.dialect())
+                 || w instanceof Lead && REQUIRES_ORDER_BY_IN_LEAD_LAG.contains(ctx.dialect())
+                 || w instanceof Lag && REQUIRES_ORDER_BY_IN_LEAD_LAG.contains(ctx.dialect())
+                 || w instanceof Rank && REQUIRES_ORDER_BY_IN_RANK_DENSE_RANK.contains(ctx.dialect())
+                 || w instanceof DenseRank && REQUIRES_ORDER_BY_IN_RANK_DENSE_RANK.contains(ctx.dialect())
+                 || w instanceof PercentRank && REQUIRES_ORDER_BY_IN_PERCENT_RANK_CUME_DIST.contains(ctx.dialect())
+                 || w instanceof CumeDist && REQUIRES_ORDER_BY_IN_PERCENT_RANK_CUME_DIST.contains(ctx.dialect())
+
+
 
 
 
@@ -673,28 +690,70 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
         return this;
     }
 
-    enum FrameUnits {
-        ROWS("rows"),
-        RANGE("range"),
-        GROUPS("groups");
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
 
-        final Keyword keyword;
-
-        private FrameUnits(String keyword) {
-            this.keyword = DSL.keyword(keyword);
-        }
+    @Override
+    public final WindowDefinitionImpl $windowDefinition() {
+        return windowDefinition;
     }
 
-    enum Exclude {
-        CURRENT_ROW("current row"),
-        TIES("ties"),
-        GROUP("group"),
-        NO_OTHERS("no others");
+    @Override
+    public final MList<? extends Field<?>> $partitionBy() {
+        return partitionBy;
+    }
 
-        final Keyword keyword;
+    @Override
+    public final MList<? extends SortField<?>> $orderBy() {
+        return orderBy;
+    }
 
-        private Exclude(String keyword) {
-            this.keyword = DSL.keyword(keyword);
-        }
+    @Override
+    public final FrameUnits $frameUnits() {
+        return frameUnits;
+    }
+
+    @Override
+    public final Integer $frameStart() {
+        return frameStart;
+    }
+
+    @Override
+    public final Integer $frameEnd() {
+        return frameEnd;
+    }
+
+    @Override
+    public final FrameExclude $exclude() {
+        return exclude;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, $windowDefinition(), $partitionBy(), $orderBy());
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $windowDefinition(), $partitionBy(), $orderBy(),
+            (d, p, o) -> {
+                WindowSpecificationImpl r = new WindowSpecificationImpl(d);
+                r.partitionBy(p.toArray(EMPTY_FIELD)).orderBy(o.toArray(EMPTY_SORTFIELD));
+                r.frameUnits = frameUnits;
+                r.frameStart = frameStart;
+                r.frameEnd = frameEnd;
+                r.exclude = exclude;
+                return r;
+            },
+            replacement
+        );
     }
 }

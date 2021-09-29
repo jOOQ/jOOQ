@@ -50,13 +50,19 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
+// ...
 
 /**
  * @author Lukas Eder
  */
 final class EmbeddableTableField<R extends Record, E extends EmbeddableRecord<E>>
-extends AbstractField<E>
-implements TableField<R, E> {
+extends
+    AbstractField<E>
+implements
+    TableField<R, E>,
+    UNotYetImplemented
+{
+
     final Class<E>            recordType;
     final boolean             replacesFields;
     final Table<R>            table;

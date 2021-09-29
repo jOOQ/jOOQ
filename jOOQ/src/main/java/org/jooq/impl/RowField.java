@@ -87,20 +87,26 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class RowField<ROW extends Row, REC extends Record> extends AbstractField<REC> {
+final class RowField<ROW extends Row, REC extends Record> extends AbstractField<REC> implements MRowField<REC> {
 
     static final Set<SQLDialect> NO_NATIVE_SUPPORT = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
 
@@ -271,5 +277,29 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
     @Override
     public boolean declaresFields() {
         return true;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MRow $row() {
+        return row;
+    }
+
+    @Override
+    public final <T> T traverse(
+        T init,
+        Predicate<? super T> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super T, ? super MQueryPart, ? extends T> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, row);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, row, RowField::new, replacement);
     }
 }

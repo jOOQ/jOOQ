@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class Lpad
 extends
     AbstractField<String>
+implements
+    MLpad
 {
 
     final Field<String>           string;
@@ -107,7 +111,7 @@ extends
 
 
 
-    private final Field<String> character() {
+    private final Field<String> characterOrBlank() {
         return character == null ? inline(" ") : character;
     }
 
@@ -135,13 +139,13 @@ extends
                         .visit(N_HEX).sql('(')
                             .visit(N_ZEROBLOB).sql('(')
                                 .visit(length)
-                        .sql(")), '00', ").visit(character())
+                        .sql(")), '00', ").visit(characterOrBlank())
                     .sql("), 1, ").visit(length).sql(" - ").visit(N_LENGTH).sql('(').visit(string)
                 .sql(")) || ").visit(string);
                 break;
 
             default:
-                ctx.visit(function(N_LPAD, getDataType(), string, length, character()));
+                ctx.visit(function(N_LPAD, getDataType(), string, length, characterOrBlank()));
                 break;
         }
     }
@@ -163,16 +167,81 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<String> $string() {
+        return string;
+    }
+
+    @Override
+    public final Field<? extends Number> $length() {
+        return length;
+    }
+
+    @Override
+    public final Field<String> $character() {
+        return character;
+    }
+
+    @Override
+    public final MLpad $string(MField<String> newValue) {
+        return constructor().apply(newValue, $length(), $character());
+    }
+
+    @Override
+    public final MLpad $length(MField<? extends Number> newValue) {
+        return constructor().apply($string(), newValue, $character());
+    }
+
+    @Override
+    public final MLpad $character(MField<String> newValue) {
+        return constructor().apply($string(), $length(), newValue);
+    }
+
+    public final Function3<? super MField<String>, ? super MField<? extends Number>, ? super MField<String>, ? extends MLpad> constructor() {
+        return (a1, a2, a3) -> new Lpad((Field<String>) a1, (Field<? extends Number>) a2, (Field<String>) a3);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $string(),
+            $length(),
+            $character(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $string(),
+            $length(),
+            $character()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Lpad) {
             return
-                StringUtils.equals(string, ((Lpad) that).string) &&
-                StringUtils.equals(length, ((Lpad) that).length) &&
-                StringUtils.equals(character, ((Lpad) that).character)
+                StringUtils.equals($string(), ((Lpad) that).$string()) &&
+                StringUtils.equals($length(), ((Lpad) that).$length()) &&
+                StringUtils.equals($character(), ((Lpad) that).$character())
             ;
         }
         else

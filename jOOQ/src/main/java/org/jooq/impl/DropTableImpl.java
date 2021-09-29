@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,26 +69,27 @@ final class DropTableImpl
 extends
     AbstractDDLQuery
 implements
+    MDropTable,
     DropTableStep,
     DropTableFinalStep
 {
 
     final Boolean  temporary;
     final Table<?> table;
-    final boolean  dropTableIfExists;
+    final boolean  ifExists;
           Cascade  cascade;
 
     DropTableImpl(
         Configuration configuration,
         Boolean temporary,
         Table<?> table,
-        boolean dropTableIfExists
+        boolean ifExists
     ) {
         this(
             configuration,
             temporary,
             table,
-            dropTableIfExists,
+            ifExists,
             null
         );
     }
@@ -95,21 +98,16 @@ implements
         Configuration configuration,
         Boolean temporary,
         Table<?> table,
-        boolean dropTableIfExists,
+        boolean ifExists,
         Cascade cascade
     ) {
         super(configuration);
 
         this.temporary = temporary;
         this.table = table;
-        this.dropTableIfExists = dropTableIfExists;
+        this.ifExists = ifExists;
         this.cascade = cascade;
     }
-
-    final Boolean  $temporary()         { return temporary; }
-    final Table<?> $table()             { return table; }
-    final boolean  $dropTableIfExists() { return dropTableIfExists; }
-    final Cascade  $cascade()           { return cascade; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -143,7 +141,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (dropTableIfExists && !supportsIfExists(ctx))
+        if (ifExists && !supportsIfExists(ctx))
             tryCatch(ctx, DDLStatementType.DROP_TABLE, c -> accept0(c));
         else
             accept0(ctx);
@@ -161,7 +159,7 @@ implements
             ctx.visit(K_DROP_TABLE).sql(' ');
 
 
-        if (dropTableIfExists && supportsIfExists(ctx))
+        if (ifExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');
 
         ctx.visit(table);
@@ -176,4 +174,78 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Boolean $temporary() {
+        return temporary;
+    }
+
+    @Override
+    public final Table<?> $table() {
+        return table;
+    }
+
+    @Override
+    public final boolean $ifExists() {
+        return ifExists;
+    }
+
+    @Override
+    public final Cascade $cascade() {
+        return cascade;
+    }
+
+    @Override
+    public final MDropTable $temporary(Boolean newValue) {
+        return constructor().apply(newValue, $table(), $ifExists(), $cascade());
+    }
+
+    @Override
+    public final MDropTable $table(MTable<?> newValue) {
+        return constructor().apply($temporary(), newValue, $ifExists(), $cascade());
+    }
+
+    @Override
+    public final MDropTable $ifExists(boolean newValue) {
+        return constructor().apply($temporary(), $table(), newValue, $cascade());
+    }
+
+    @Override
+    public final MDropTable $cascade(Cascade newValue) {
+        return constructor().apply($temporary(), $table(), $ifExists(), newValue);
+    }
+
+    public final Function4<? super Boolean, ? super MTable<?>, ? super Boolean, ? super Cascade, ? extends MDropTable> constructor() {
+        return (a1, a2, a3, a4) -> new DropTableImpl(configuration(), a1, (Table<?>) a2, a3, a4);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $temporary(),
+            $table(),
+            $ifExists(),
+            $cascade(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $table()
+        );
+    }
 }

@@ -39,6 +39,8 @@ package org.jooq;
 
 import java.util.List;
 
+// ...
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -46,7 +48,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface Domain<T> extends Qualified, Typed<T> {
+public interface Domain<T> extends Qualified, Typed<T>, MDomain<T> {
 
     /**
      * The <code>DOMAIN</code>'s condition.

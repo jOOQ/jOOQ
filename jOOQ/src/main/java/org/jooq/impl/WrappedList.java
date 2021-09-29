@@ -38,11 +38,12 @@
 package org.jooq.impl;
 
 import org.jooq.Context;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class WrappedList extends AbstractQueryPart {
+final class WrappedList extends AbstractQueryPart implements UTransient {
 
     private final QueryPartList<?> wrapped;
 

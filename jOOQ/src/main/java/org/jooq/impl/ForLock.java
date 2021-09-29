@@ -83,6 +83,7 @@ import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
+// ...
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataExtendedKey;
 
@@ -92,7 +93,7 @@ import org.jooq.impl.Tools.DataExtendedKey;
  *
  * @author Lukas Eder
  */
-final class ForLock extends AbstractQueryPart {
+final class ForLock extends AbstractQueryPart implements UNotYetImplemented {
     private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE_QUALIFIED = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB);
     private static final Set<SQLDialect> NO_SUPPORT_STANDARD_FOR_SHARE   = SQLDialect.supportedUntil(MARIADB);
 

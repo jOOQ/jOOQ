@@ -42,6 +42,8 @@ import static org.jooq.impl.DSL.noCondition;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.Condition;
 import org.jooq.ConditionProvider;
@@ -51,11 +53,13 @@ import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.Select;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvider, Condition {
+final class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvider, Condition, UProxy<MCondition> {
 
     private Condition condition;
 
@@ -234,5 +238,14 @@ final class ConditionProviderImpl extends AbstractQueryPart implements Condition
     @Override
     public final Condition not() {
         return getWhere().not();
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MCondition $delegate() {
+        return getWhere();
     }
 }

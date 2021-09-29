@@ -45,7 +45,6 @@ import java.util.List;
 import org.jooq.Constraint;
 import org.jooq.ConstraintEnforcementStep;
 import org.jooq.Context;
-import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Key;
 import org.jooq.Name;
@@ -53,13 +52,14 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+// ...
 
 /**
  * Common base class for <code>Key</code>'s
  *
  * @author Lukas Eder
  */
-abstract class AbstractKey<R extends Record> extends AbstractNamed implements Key<R> {
+abstract class AbstractKey<R extends Record> extends AbstractNamed implements Key<R>, UEmpty {
 
     private final Table<R>           table;
     private final TableField<R, ?>[] fields;

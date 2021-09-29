@@ -79,11 +79,12 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.impl.AbstractStoreQuery.UnknownField;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class FieldMapsForInsert extends AbstractQueryPart {
+final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImplemented {
     private static final Set<SQLDialect> CASTS_NEEDED     = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
     final Table<?>                       table;

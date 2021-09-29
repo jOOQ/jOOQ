@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,14 +68,16 @@ import java.util.stream.*;
 final class Count
 extends
     AbstractAggregateFunction<Integer>
+implements
+    MCount
 {
 
     Count(
         Field<?> field,
-        boolean countDistinct
+        boolean distinct
     ) {
         super(
-            countDistinct,
+            distinct,
             N_COUNT,
             INTEGER,
             nullSafeNotNull(field, OTHER)
@@ -87,5 +91,70 @@ extends
     @Override
     public final void accept(Context<?> ctx) {
         super.accept(ctx);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<?> $field() {
+        return getArguments().get(0);
+    }
+
+    @Override
+    public final MCount $field(MField<?> newValue) {
+        return constructor().apply(newValue, $distinct());
+    }
+
+    @Override
+    public final MCount $distinct(boolean newValue) {
+        return constructor().apply($field(), newValue);
+    }
+
+    public final Function2<? super MField<?>, ? super Boolean, ? extends MCount> constructor() {
+        return (a1, a2) -> new Count((Field<?>) a1, a2);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $field(),
+            $distinct(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return super.traverse(
+            QOM.traverse(
+                init, abort, recurse, accumulate, this,
+                $field()
+            ), abort, recurse, accumulate
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Count) {
+            return
+                StringUtils.equals($field(), ((Count) that).$field()) &&
+                $distinct() == ((Count) that).$distinct()
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

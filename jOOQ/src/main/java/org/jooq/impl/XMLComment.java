@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class Xmlcomment
 extends
     AbstractField<XML>
+implements
+    MXmlcomment
 {
 
     final Field<String> comment;
@@ -111,14 +115,55 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<String> $comment() {
+        return comment;
+    }
+
+    @Override
+    public final MXmlcomment $comment(MField<String> newValue) {
+        return constructor().apply(newValue);
+    }
+
+    public final Function1<? super MField<String>, ? extends MXmlcomment> constructor() {
+        return (a1) -> new Xmlcomment((Field<String>) a1);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $comment(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $comment()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Xmlcomment) {
             return
-                StringUtils.equals(comment, ((Xmlcomment) that).comment)
+                StringUtils.equals($comment(), ((Xmlcomment) that).$comment())
             ;
         }
         else

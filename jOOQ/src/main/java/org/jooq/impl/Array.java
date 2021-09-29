@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 // ...
 // ...
 // ...
@@ -46,20 +47,31 @@ import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Keywords.K_INT;
 import static org.jooq.impl.Names.N_ARRAY;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
+// ...
+// ...
+// ...
+// ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
  */
-final class Array<T> extends AbstractField<T[]> {
-    private static final Set<SQLDialect> REQUIRES_CAST    = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+final class Array<T> extends AbstractField<T[]> implements MArray<T> {
+
+    private static final Set<SQLDialect> REQUIRES_CAST = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
     private final FieldsImpl<Record>     fields;
 
@@ -99,5 +111,29 @@ final class Array<T> extends AbstractField<T[]> {
 
                 break;
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MList<? extends Field<?>> $elements() {
+        return QueryPartListView.wrap(fields.fields);
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, $elements());
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, fields, f -> new Array<>(asList((Field<T>[]) f.fields)), replacement);
     }
 }

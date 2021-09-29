@@ -37,11 +37,18 @@
  */
 package org.jooq.impl;
 
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Param;
 import org.jooq.ParamMode;
 import org.jooq.conf.ParamType;
+// ...
+// ...
+// ...
 
 /**
  * A {@link Param} wrapper object that allows for lazily initialising the value
@@ -51,7 +58,7 @@ import org.jooq.conf.ParamType;
  *
  * @author Lukas Eder
  */
-final class LazyVal<T> extends AbstractParamX<T> {
+final class LazyVal<T> extends AbstractParamX<T> implements MVal<T> {
 
     private final Field<T>              field;
     private transient AbstractParamX<T> delegate;
@@ -136,5 +143,29 @@ final class LazyVal<T> extends AbstractParamX<T> {
 
         init();
         return delegate.getParamMode();
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final T $value() {
+        return delegate.$value();
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return delegate.traverse(init, abort, recurse, accumulate);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return delegate.replace(replacement);
     }
 }

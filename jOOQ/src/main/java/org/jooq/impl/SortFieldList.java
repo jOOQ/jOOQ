@@ -78,7 +78,7 @@ final class SortFieldList extends QueryPartList<SortField<?>> {
      * <code>NULLS FIRST</code> or <code>NULLS LAST</code> clause.
      */
     final boolean nulls() {
-        return anyMatch(this, f -> ((SortFieldImpl<?>) f).getNullsFirst() || ((SortFieldImpl<?>) f).getNullsLast());
+        return anyMatch(this, f -> ((SortFieldImpl<?>) f).nullOrdering != null);
     }
 
     final List<Field<?>> fields() {

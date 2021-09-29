@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,25 +69,23 @@ final class DropViewImpl
 extends
     AbstractDDLQuery
 implements
+    MDropView,
     DropViewFinalStep
 {
 
     final Table<?> view;
-    final boolean  dropViewIfExists;
+    final boolean  ifExists;
 
     DropViewImpl(
         Configuration configuration,
         Table<?> view,
-        boolean dropViewIfExists
+        boolean ifExists
     ) {
         super(configuration);
 
         this.view = view;
-        this.dropViewIfExists = dropViewIfExists;
+        this.ifExists = ifExists;
     }
-
-    final Table<?> $view()             { return view; }
-    final boolean  $dropViewIfExists() { return dropViewIfExists; }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
@@ -102,7 +102,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (dropViewIfExists && !supportsIfExists(ctx))
+        if (ifExists && !supportsIfExists(ctx))
             tryCatch(ctx, DDLStatementType.DROP_VIEW, c -> accept0(c));
         else
             accept0(ctx);
@@ -112,7 +112,7 @@ implements
         ctx.start(Clause.DROP_VIEW_TABLE)
            .visit(K_DROP_VIEW).sql(' ');
 
-        if (dropViewIfExists && supportsIfExists(ctx))
+        if (ifExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');
 
 
@@ -131,4 +131,56 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Table<?> $view() {
+        return view;
+    }
+
+    @Override
+    public final boolean $ifExists() {
+        return ifExists;
+    }
+
+    @Override
+    public final MDropView $view(MTable<?> newValue) {
+        return constructor().apply(newValue, $ifExists());
+    }
+
+    @Override
+    public final MDropView $ifExists(boolean newValue) {
+        return constructor().apply($view(), newValue);
+    }
+
+    public final Function2<? super MTable<?>, ? super Boolean, ? extends MDropView> constructor() {
+        return (a1, a2) -> new DropViewImpl(configuration(), (Table<?>) a1, a2);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $view(),
+            $ifExists(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $view()
+        );
+    }
 }

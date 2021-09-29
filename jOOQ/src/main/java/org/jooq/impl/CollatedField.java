@@ -39,16 +39,24 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.K_COLLATE;
 
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
 import org.jooq.Binding;
 import org.jooq.Collation;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function1;
+// ...
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class CollatedField extends AbstractField<String> {
+final class CollatedField extends AbstractField<String> implements MCollated {
 
     private final Field<?>  field;
     private final Collation collation;
@@ -78,5 +86,34 @@ final class CollatedField extends AbstractField<String> {
             ctx.sql("((").visit(field).sql(") ").visit(K_COLLATE).sql(' ').visit(collation).sql(')');
         else
             ctx.visit(field);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, field, collation);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, field, collation, CollatedField::new, replacement);
+    }
+
+    @Override
+    public final MField<?> $field() {
+        return field;
+    }
+
+    @Override
+    public final MCollation $collation() {
+        return collation;
     }
 }

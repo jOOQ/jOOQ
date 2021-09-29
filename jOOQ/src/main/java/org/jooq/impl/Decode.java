@@ -49,11 +49,12 @@ import org.jooq.Context;
 import org.jooq.Field;
 // ...
 import org.jooq.SQLDialect;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Decode<T, Z> extends AbstractField<Z> {
+final class Decode<T, Z> extends AbstractField<Z> implements UNotYetImplemented {
     private static final Set<SQLDialect> EMULATE_DISTINCT = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE);
 
 

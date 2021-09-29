@@ -52,6 +52,7 @@ import java.util.List;
 import java.util.concurrent.Flow;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import org.jooq.BetweenAndStep;
 import org.jooq.BetweenAndStepR;
@@ -62,6 +63,7 @@ import org.jooq.Cursor;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function1;
 import org.jooq.GroupField;
 import org.jooq.JoinType;
 import org.jooq.Name;
@@ -131,6 +133,20 @@ import org.jooq.TableField;
 import org.jooq.TableLike;
 // ...
 import org.jooq.WindowDefinition;
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A wrapper for a {@link SelectQuery}
@@ -195,7 +211,8 @@ implements
     SelectLimitPercentStep<R>,
     SelectLimitAfterOffsetStep<R>,
     SelectLimitPercentAfterOffsetStep<R>,
-    SelectForUpdateOfStep<R> {
+    SelectForUpdateOfStep<R>
+{
 
     /**
      * A temporary member holding a join table
@@ -3282,12 +3299,12 @@ implements
 
     @Override
     public final Condition isNull() {
-        return new SelectIsNull(this, true);
+        return new SelectIsNull(this);
     }
 
     @Override
     public final Condition isNotNull() {
-        return new SelectIsNull(this, false);
+        return new SelectIsNotNull(this);
     }
 
     /**
@@ -3345,5 +3362,69 @@ implements
     @Override
     public final Field<?>[] getFields() {
         return getDelegate().getFields();
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MWith $with() {
+        return getDelegate().$with();
+    }
+
+    @Override
+    public final MList<? extends MSelectFieldOrAsterisk> $select() {
+        return getDelegate().$select();
+    }
+
+    @Override
+    public final MSelect<?> $select(MList<? extends MSelectFieldOrAsterisk> select) {
+        return getDelegate().$select(select);
+    }
+
+    @Override
+    public final boolean $distinct() {
+        return getDelegate().$distinct();
+    }
+
+    @Override
+    public final MList<? extends MTable<?>> $from() {
+        return getDelegate().$from();
+    }
+
+    @Override
+    public final MSelect<?> $from(MList<? extends MTable<?>> from) {
+        return getDelegate().$from(from);
+    }
+
+    @Override
+    public final MCondition $where() {
+        return getDelegate().$where();
+    }
+
+    @Override
+    public final MList<? extends MGroupField> $groupBy() {
+        return getDelegate().$groupBy();
+    }
+
+    @Override
+    public final MCondition $having() {
+        return getDelegate().$having();
+    }
+
+    @Override
+    public final MList<? extends MWindowDefinition> $window() {
+        return getDelegate().$window();
+    }
+
+    @Override
+    public final MCondition $qualify() {
+        return getDelegate().$qualify();
+    }
+
+    @Override
+    public MList<? extends MSortField<?>> $orderBy() {
+        return getDelegate().$orderBy();
     }
 }

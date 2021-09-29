@@ -38,41 +38,37 @@
 package org.jooq.impl;
 
 // ...
-import static org.jooq.impl.DSL.condition;
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.iif;
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.inlined;
 import static org.jooq.impl.DSL.toChar;
-import static org.jooq.impl.Keywords.K_FORMAT;
-import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_NAME;
-import static org.jooq.impl.Names.N_JSON;
 import static org.jooq.impl.Names.N_XMLELEMENT;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
-import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import java.util.Collection;
-import java.util.UUID;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Name;
-import org.jooq.Param;
 import org.jooq.XML;
 import org.jooq.XMLAttributes;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class XMLElement extends AbstractField<XML> {
+final class XMLElement extends AbstractField<XML> implements MXmlelement {
+
     private final Name                    elementName;
     private final XMLAttributes           attributes;
     private final QueryPartList<Field<?>> content;
@@ -81,29 +77,30 @@ final class XMLElement extends AbstractField<XML> {
         super(N_XMLELEMENT, SQLDataType.XML);
 
         this.elementName = elementName;
-        this.attributes = attributes;
+        this.attributes = attributes == null ? XMLAttributesImpl.EMPTY : attributes;
         this.content = new QueryPartList<>(content);
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        boolean hasAttributes = attributes != null && !((XMLAttributesImpl) attributes).attributes.isEmpty();
         boolean hasContent = !content.isEmpty();
+        boolean hasAttributes = !((XMLAttributesImpl) attributes).attributes.isEmpty();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         boolean format = hasAttributes || !content.isSimple();
 
         Consumer<Context<?>> accept0 = c -> {
@@ -163,5 +160,39 @@ final class XMLElement extends AbstractField<XML> {
             return result.as(field);
         else
             return result;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Name $elementName() {
+        return elementName;
+    }
+
+    @Override
+    public final XMLAttributes $attributes() {
+        return attributes;
+    }
+
+    @Override
+    public final MList<? extends Field<?>> $content() {
+        return content;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, $elementName(), $attributes(), $content());
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, $elementName(), $attributes(), $content(), XMLElement::new, replacement);
     }
 }

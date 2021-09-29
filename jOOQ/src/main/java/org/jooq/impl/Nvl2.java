@@ -38,22 +38,24 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.MARIADB;
-// ...
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.iif;
 import static org.jooq.impl.Names.N_NVL2;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function3;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Nvl2<T> extends AbstractField<T> {
+final class Nvl2<T> extends AbstractField<T> implements MNvl2<T >{
 
-    private final Field<?>    arg1;
-    private final Field<T>    arg2;
-    private final Field<T>    arg3;
+    private final Field<?> arg1;
+    private final Field<T> arg2;
+    private final Field<T> arg3;
 
     Nvl2(Field<?> arg1, Field<T> arg2, Field<T> arg3) {
         super(N_NVL2, !arg1.getDataType().nullable() ? arg2.getDataType() : Tools.allNotNull(arg2.getDataType(), arg2, arg3));
@@ -113,5 +115,29 @@ final class Nvl2<T> extends AbstractField<T> {
 
     private final void acceptDefault(Context<?> ctx) {
         ctx.visit(function(N_NVL2, getDataType(), arg1, arg2, arg3));
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<?> $arg1() {
+        return arg1;
+    }
+
+    @Override
+    public final Field<T> $arg2() {
+        return arg2;
+    }
+
+    @Override
+    public final Field<T> $arg3() {
+        return arg3;
+    }
+
+    @Override
+    public final Function3<? super MField<?>, ? super MField<T>, ? super MField<T>, ? extends MField<T>> constructor() {
+        return (a1, a2, a3) -> new Nvl2<>((Field<?>) a1, (Field<T>) a2, (Field<T>) a3);
     }
 }

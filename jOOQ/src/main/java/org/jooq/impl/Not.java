@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,15 +68,17 @@ import java.util.stream.*;
 final class Not
 extends
     AbstractCondition
+implements
+    MNot
 {
 
-    final Condition arg1;
+    final Condition condition;
 
     Not(
-        Condition arg1
+        Condition condition
     ) {
 
-        this.arg1 = arg1;
+        this.condition = condition;
     }
 
     // -------------------------------------------------------------------------
@@ -87,7 +91,7 @@ extends
 
     @Override
     boolean isNullable() {
-        return !(arg1 instanceof AbstractCondition) || ((AbstractCondition) arg1).isNullable();
+        return !(condition instanceof AbstractCondition) || ((AbstractCondition) condition).isNullable();
     }
 
     @Override
@@ -100,7 +104,7 @@ extends
 
 
             default:
-                ctx.visit(K_NOT).sql(" (").visit(arg1).sql(')');
+                ctx.visit(K_NOT).sql(" (").visit(condition).sql(')');
                 break;
         }
     }
@@ -110,10 +114,6 @@ extends
         return CLAUSES;
     }
 
-    final Condition $arg1() {
-        return arg1;
-    }
-
 
 
 
@@ -126,14 +126,33 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Condition $arg1() {
+        return condition;
+    }
+
+    @Override
+    public final MNot $arg1(MCondition newValue) {
+        return constructor().apply(newValue);
+    }
+
+    @Override
+    public final Function1<? super MCondition, ? extends MNot> constructor() {
+        return (a1) -> new Not((Condition) a1);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Not) {
             return
-                StringUtils.equals(arg1, ((Not) that).arg1)
+                StringUtils.equals($condition(), ((Not) that).$condition())
             ;
         }
         else

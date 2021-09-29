@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+// ...
+
 /**
  * UDT definition.
  * <p>
@@ -46,7 +48,7 @@ package org.jooq;
  * @param <R> The record type
  * @author Lukas Eder
  */
-public interface UDT<R extends UDTRecord<R>> extends RecordQualifier<R> {
+public interface UDT<R extends UDTRecord<R>> extends RecordQualifier<R>, MUDT {
 
     /**
      * Whether this data type can be used from SQL statements.

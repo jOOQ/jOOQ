@@ -40,10 +40,19 @@ package org.jooq.impl;
 import static org.jooq.Clause.ROLE;
 import static org.jooq.impl.CommentImpl.NO_COMMENT;
 
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
 import org.jooq.Clause;
 import org.jooq.Context;
+import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.Role;
+// ...
+// ...
+// ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A common implementation of the Role type.
@@ -51,7 +60,8 @@ import org.jooq.Role;
  * @author Timur Shaidullin
  */
 final class RoleImpl extends AbstractNamed implements Role {
-    private static final Clause[] CLAUSES          = { ROLE };
+
+    private static final Clause[] CLAUSES = { ROLE };
 
     RoleImpl(Name name) {
         super(name, NO_COMMENT);
@@ -69,5 +79,24 @@ final class RoleImpl extends AbstractNamed implements Role {
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, $name());
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, $name(), RoleImpl::new, replacement);
     }
 }

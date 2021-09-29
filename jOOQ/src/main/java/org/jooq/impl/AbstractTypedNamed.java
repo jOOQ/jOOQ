@@ -95,4 +95,13 @@ abstract class AbstractTypedNamed<T> extends AbstractNamed implements Typed<T> {
     public final DataType<T> getDataType(Configuration configuration) {
         return getDataType().getDataType(configuration);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final DataType<T> $dataType() {
+        return getDataType();
+    }
 }

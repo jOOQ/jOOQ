@@ -55,8 +55,12 @@ import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.JSON;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONB;
@@ -65,11 +69,14 @@ import org.jooq.Result;
 import org.jooq.SelectField;
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Result<R>> {
+final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Result<R>> implements MMultisetAgg<R> {
 
     private final AbstractRow<R> row;
 
@@ -162,5 +169,29 @@ final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Resu
                 acceptOverClause(ctx);
                 break;
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MRow $row() {
+        return row;
+    }
+
+    @Override
+    public final <T> T traverse(
+        T init,
+        Predicate<? super T> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super T, ? super MQueryPart, ? extends T> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, row);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, distinct, row, MultisetAgg::new, replacement);
     }
 }

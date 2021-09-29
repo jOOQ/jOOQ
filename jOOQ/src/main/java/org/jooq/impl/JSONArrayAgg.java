@@ -47,14 +47,14 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
 import static org.jooq.impl.JSONEntryImpl.jsonMerge;
-import static org.jooq.impl.JSONOnNull.ABSENT_ON_NULL;
-import static org.jooq.impl.JSONOnNull.NULL_ON_NULL;
 import static org.jooq.impl.Names.N_GROUP_CONCAT;
 import static org.jooq.impl.Names.N_JSONB_AGG;
 import static org.jooq.impl.Names.N_JSON_AGG;
 import static org.jooq.impl.Names.N_JSON_ARRAYAGG;
 import static org.jooq.impl.Names.N_JSON_GROUP_ARRAY;
 import static org.jooq.impl.Names.N_JSON_QUOTE;
+// ...
+// ...
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
@@ -65,6 +65,7 @@ import java.util.Set;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.OrderField;
 // ...
@@ -73,6 +74,11 @@ import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.SelectHavingStep;
+// ...
+// ...
+// ...
+// ...
+// ...
 
 
 /**
@@ -81,8 +87,12 @@ import org.jooq.SelectHavingStep;
  * @author Lukas Eder
  */
 final class JSONArrayAgg<J>
-extends AbstractAggregateFunction<J>
-implements JSONArrayAggOrderByStep<J> {
+extends
+    AbstractAggregateFunction<J>
+implements
+    JSONArrayAggOrderByStep<J>,
+    MJSONArrayAgg<J>
+{
 
     static final Set<SQLDialect> EMULATE_WITH_GROUP_CONCAT   = SQLDialect.supportedBy(MARIADB, MYSQL);
 
@@ -281,5 +291,34 @@ implements JSONArrayAggOrderByStep<J> {
 
 
         return select;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<?> $arg1() {
+        return getArguments().get(0);
+    }
+
+    @Override
+    public final JSONOnNull $onNull() {
+        return onNull;
+    }
+
+    @Override
+    public final MDataType<?> $returning() {
+        return returning;
+    }
+
+    @Override
+    public final Function1<? super MField<?>, ? extends MAggregateFunction<J>> constructor() {
+        return f -> {
+            JSONArrayAgg<J> r = new JSONArrayAgg<J>(getDataType(), (Field<?>) f);
+            r.onNull = onNull;
+            r.returning = returning;
+            return r;
+        };
     }
 }

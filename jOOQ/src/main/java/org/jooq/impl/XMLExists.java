@@ -38,30 +38,39 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.K_XMLEXISTS;
-import static org.jooq.impl.XMLPassingMechanism.BY_REF;
-import static org.jooq.impl.XMLPassingMechanism.BY_VALUE;
+// ...
+// ...
 import static org.jooq.impl.XMLTable.acceptPassing;
 import static org.jooq.impl.XMLTable.acceptXPath;
+
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.XML;
 import org.jooq.XMLExistsPassingStep;
+// ...
+// ...
+// ...
+// ...
+
 
 /**
  * @author Lukas Eder
  */
-final class XMLExists extends AbstractCondition implements XMLExistsPassingStep {
+final class XMLExists extends AbstractCondition implements XMLExistsPassingStep, MXmlexists, UNotYetImplemented {
     private final Field<String>       xpath;
     private final Field<XML>          passing;
-    private final XMLPassingMechanism passingMechanism;
+    private final XmlPassingMechanism passingMechanism;
 
     XMLExists(Field<String> xpath) {
         this(xpath, null, null);
     }
 
-    private XMLExists(Field<String> xpath, Field<XML> passing, XMLPassingMechanism passingMechanism) {
+    private XMLExists(Field<String> xpath, Field<XML> passing, XmlPassingMechanism passingMechanism) {
         this.xpath = xpath;
         this.passing = passing;
         this.passingMechanism = passingMechanism;
@@ -110,5 +119,39 @@ final class XMLExists extends AbstractCondition implements XMLExistsPassingStep 
         acceptXPath(ctx, xpath);
         acceptPassing(ctx, passing, passingMechanism);
         ctx.sqlIndentEnd(')');
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<String> $xpath() {
+        return xpath;
+    }
+
+    @Override
+    public final Field<XML> $passing() {
+        return passing;
+    }
+
+    @Override
+    public final XmlPassingMechanism $passingMechanism() {
+        return passingMechanism;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, xpath, passing);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, xpath, passing, (x, p) -> new XMLExists(x, passing, passingMechanism), replacement);
     }
 }

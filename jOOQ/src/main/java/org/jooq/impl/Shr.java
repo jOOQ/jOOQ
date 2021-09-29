@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class Shr<T extends Number>
 extends
     AbstractField<T>
+implements
+    MShr<T>
 {
 
     final Field<T>                value;
@@ -143,15 +147,44 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $arg1() {
+        return value;
+    }
+
+    @Override
+    public final Field<? extends Number> $arg2() {
+        return count;
+    }
+
+    @Override
+    public final MShr<T> $arg1(MField<T> newValue) {
+        return constructor().apply(newValue, $arg2());
+    }
+
+    @Override
+    public final MShr<T> $arg2(MField<? extends Number> newValue) {
+        return constructor().apply($arg1(), newValue);
+    }
+
+    @Override
+    public final Function2<? super MField<T>, ? super MField<? extends Number>, ? extends MShr<T>> constructor() {
+        return (a1, a2) -> new Shr<>((Field<T>) a1, (Field<? extends Number>) a2);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Shr) {
             return
-                StringUtils.equals(value, ((Shr) that).value) &&
-                StringUtils.equals(count, ((Shr) that).count)
+                StringUtils.equals($value(), ((Shr) that).$value()) &&
+                StringUtils.equals($count(), ((Shr) that).$count())
             ;
         }
         else

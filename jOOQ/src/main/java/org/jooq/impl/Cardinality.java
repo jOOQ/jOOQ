@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class Cardinality
 extends
     AbstractField<Integer>
+implements
+    MCardinality
 {
 
     final Field<? extends Object[]> array;
@@ -112,14 +116,55 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<? extends Object[]> $array() {
+        return array;
+    }
+
+    @Override
+    public final MCardinality $array(MField<? extends Object[]> newValue) {
+        return constructor().apply(newValue);
+    }
+
+    public final Function1<? super MField<? extends Object[]>, ? extends MCardinality> constructor() {
+        return (a1) -> new Cardinality((Field<? extends Object[]>) a1);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $array(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $array()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Cardinality) {
             return
-                StringUtils.equals(array, ((Cardinality) that).array)
+                StringUtils.equals($array(), ((Cardinality) that).$array())
             ;
         }
         else

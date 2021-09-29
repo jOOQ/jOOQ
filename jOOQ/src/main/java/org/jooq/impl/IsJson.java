@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,15 +68,17 @@ import java.util.stream.*;
 final class IsJson
 extends
     AbstractCondition
+implements
+    MIsJson
 {
 
-    final Field<?> arg1;
+    final Field<?> field;
 
     IsJson(
-        Field<?> arg1
+        Field<?> field
     ) {
 
-        this.arg1 = nullSafeNotNull(arg1, OTHER);
+        this.field = nullSafeNotNull(field, OTHER);
     }
 
     // -------------------------------------------------------------------------
@@ -91,7 +95,7 @@ extends
 
 
             case MYSQL:
-                ctx.visit(function(N_JSON_VALID, BOOLEAN, arg1));
+                ctx.visit(function(N_JSON_VALID, BOOLEAN, field));
                 break;
 
 
@@ -103,7 +107,7 @@ extends
 
 
             default:
-                ctx.visit(arg1).sql(' ').visit(K_IS_JSON);
+                ctx.visit(field).sql(' ').visit(K_IS_JSON);
                 break;
         }
     }
@@ -118,14 +122,33 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<?> $arg1() {
+        return field;
+    }
+
+    @Override
+    public final MIsJson $arg1(MField<?> newValue) {
+        return constructor().apply(newValue);
+    }
+
+    @Override
+    public final Function1<? super MField<?>, ? extends MIsJson> constructor() {
+        return (a1) -> new IsJson((Field<?>) a1);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof IsJson) {
             return
-                StringUtils.equals(arg1, ((IsJson) that).arg1)
+                StringUtils.equals($field(), ((IsJson) that).$field())
             ;
         }
         else

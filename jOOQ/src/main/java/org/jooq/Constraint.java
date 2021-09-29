@@ -38,6 +38,7 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
+// ...
 
 /**
  * A DDL constraint.
@@ -61,6 +62,6 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface Constraint extends FieldOrConstraint {
+public interface Constraint extends FieldOrConstraint, MConstraint {
 
 }

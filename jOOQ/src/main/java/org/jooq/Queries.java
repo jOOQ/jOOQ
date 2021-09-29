@@ -42,6 +42,7 @@ import java.util.stream.Stream;
 
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DSL;
+// ...
 
 import org.jetbrains.annotations.NotNull;
 
@@ -52,7 +53,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface Queries extends AttachableQueryPart, Iterable<Query> {
+public interface Queries extends AttachableQueryPart, Iterable<Query>, MQueries {
 
     // ------------------------------------------------------------------------
     // Access API

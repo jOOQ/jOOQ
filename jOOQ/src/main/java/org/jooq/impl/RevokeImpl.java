@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,26 +69,27 @@ final class RevokeImpl
 extends
     AbstractDDLQuery
 implements
+    MRevoke,
     RevokeOnStep,
     RevokeFromStep,
     RevokeFinalStep
 {
 
-    final Collection<? extends Privilege> privileges;
-    final boolean                         revokeGrantOptionFor;
-          Table<?>                        on;
-          Role                            from;
-          Boolean                         fromPublic;
+    final QueryPartListView<? extends Privilege> privileges;
+    final boolean                                grantOptionFor;
+          Table<?>                               on;
+          Role                                   from;
+          Boolean                                fromPublic;
 
     RevokeImpl(
         Configuration configuration,
         Collection<? extends Privilege> privileges,
-        boolean revokeGrantOptionFor
+        boolean grantOptionFor
     ) {
         this(
             configuration,
             privileges,
-            revokeGrantOptionFor,
+            grantOptionFor,
             null,
             null,
             null
@@ -96,25 +99,19 @@ implements
     RevokeImpl(
         Configuration configuration,
         Collection<? extends Privilege> privileges,
-        boolean revokeGrantOptionFor,
+        boolean grantOptionFor,
         Table<?> on,
         Role from,
         Boolean fromPublic
     ) {
         super(configuration);
 
-        this.privileges = privileges;
-        this.revokeGrantOptionFor = revokeGrantOptionFor;
+        this.privileges = new QueryPartList<>(privileges);
+        this.grantOptionFor = grantOptionFor;
         this.on = on;
         this.from = from;
         this.fromPublic = fromPublic;
     }
-
-    final Collection<? extends Privilege> $privileges()           { return privileges; }
-    final boolean                         $revokeGrantOptionFor() { return revokeGrantOptionFor; }
-    final Table<?>                        $on()                   { return on; }
-    final Role                            $from()                 { return from; }
-    final Boolean                         $fromPublic()           { return fromPublic; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -166,11 +163,11 @@ implements
         ctx.start(Clause.REVOKE_PRIVILEGE)
            .visit(K_REVOKE).sql(' ');
 
-        if (revokeGrantOptionFor)
+        if (grantOptionFor)
             ctx.visit(K_GRANT_OPTION_FOR)
                .sql(' ');
 
-        ctx.visit(QueryPartCollectionView.wrap(privileges))
+        ctx.visit(privileges)
            .end(Clause.REVOKE_PRIVILEGE).sql(' ')
            .start(Clause.REVOKE_ON)
            .visit(K_ON).sql(' ')
@@ -196,4 +193,91 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MList<? extends Privilege> $privileges() {
+        return privileges;
+    }
+
+    @Override
+    public final boolean $grantOptionFor() {
+        return grantOptionFor;
+    }
+
+    @Override
+    public final Table<?> $on() {
+        return on;
+    }
+
+    @Override
+    public final Role $from() {
+        return from;
+    }
+
+    @Override
+    public final Boolean $fromPublic() {
+        return fromPublic;
+    }
+
+    @Override
+    public final MRevoke $privileges(MList<? extends Privilege> newValue) {
+        return constructor().apply(newValue, $grantOptionFor(), $on(), $from(), $fromPublic());
+    }
+
+    @Override
+    public final MRevoke $grantOptionFor(boolean newValue) {
+        return constructor().apply($privileges(), newValue, $on(), $from(), $fromPublic());
+    }
+
+    @Override
+    public final MRevoke $on(MTable<?> newValue) {
+        return constructor().apply($privileges(), $grantOptionFor(), newValue, $from(), $fromPublic());
+    }
+
+    @Override
+    public final MRevoke $from(MRole newValue) {
+        return constructor().apply($privileges(), $grantOptionFor(), $on(), newValue, $fromPublic());
+    }
+
+    @Override
+    public final MRevoke $fromPublic(Boolean newValue) {
+        return constructor().apply($privileges(), $grantOptionFor(), $on(), $from(), newValue);
+    }
+
+    public final Function5<? super MList<? extends Privilege>, ? super Boolean, ? super MTable<?>, ? super MRole, ? super Boolean, ? extends MRevoke> constructor() {
+        return (a1, a2, a3, a4, a5) -> new RevokeImpl(configuration(), (Collection<? extends Privilege>) a1, a2, (Table<?>) a3, (Role) a4, a5);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $privileges(),
+            $grantOptionFor(),
+            $on(),
+            $from(),
+            $fromPublic(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $privileges(),
+            $on(),
+            $from()
+        );
+    }
 }

@@ -38,6 +38,7 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
+// ...
 
 /**
  * A type modelling XML attributes for use in
@@ -45,6 +46,6 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface XMLAttributes extends QueryPart {
+public interface XMLAttributes extends QueryPart, MXmlAttributes {
 
 }

@@ -44,31 +44,36 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.jooq.Block;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DSLContext;
+import org.jooq.Function1;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.ResultQuery;
 import org.jooq.Results;
+// ...
+// ...
+// ...
+// ...
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
  */
 final class QueriesImpl extends AbstractAttachableQueryPart implements Queries {
 
-    private final Collection<? extends Query> queries;
+    private final QueryPartList<Query> queries;
 
     QueriesImpl(Configuration configuration, Collection<? extends Query> queries) {
         super(configuration);
 
-        this.queries = queries;
+        this.queries = new QueryPartList<>(queries);
     }
 
     // ------------------------------------------------------------------------
@@ -94,10 +99,9 @@ final class QueriesImpl extends AbstractAttachableQueryPart implements Queries {
         return configurationOrDefault().dsl().begin(queries);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Iterator<Query> iterator() {
-        return (Iterator) queries.iterator();
+        return queries.iterator();
     }
 
     @Override
@@ -105,10 +109,9 @@ final class QueriesImpl extends AbstractAttachableQueryPart implements Queries {
         return queryStream();
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Stream<Query> queryStream() {
-        return (Stream) queries.stream();
+        return queries.stream();
     }
 
     // ------------------------------------------------------------------------
@@ -151,6 +154,30 @@ final class QueriesImpl extends AbstractAttachableQueryPart implements Queries {
 
             ctx.visit(query).sql(';');
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, $queries());
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, queries, q -> new QueriesImpl(configuration(), q), replacement);
+    }
+
+    @Override
+    public final MList<? extends Query> $queries() {
+        return queries;
     }
 
     // ------------------------------------------------------------------------

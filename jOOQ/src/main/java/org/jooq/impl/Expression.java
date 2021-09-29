@@ -104,12 +104,14 @@ import org.jooq.SQLDialect;
 import org.jooq.Typed;
 import org.jooq.conf.TransformUnneededArithmeticExpressions;
 import org.jooq.exception.DataTypeException;
+// ...
+// ...
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 
-final class Expression<T> extends AbstractTransformable<T> {
+final class Expression<T> extends AbstractTransformable<T> implements UNotYetImplemented {
     static final Set<SQLDialect>     HASH_OP_FOR_BIT_XOR    = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
     static final Set<SQLDialect>     SUPPORT_YEAR_TO_SECOND = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
@@ -311,7 +313,7 @@ final class Expression<T> extends AbstractTransformable<T> {
     /**
      * Return the expression to be rendered when the RHS is an interval type
      */
-    private static class DateExpression<T> extends AbstractField<T> {
+    private static class DateExpression<T> extends AbstractField<T> implements UTransient {
 
         private final Field<T>           lhs;
         private final ExpressionOperator operator;
@@ -846,7 +848,7 @@ final class Expression<T> extends AbstractTransformable<T> {
         }
     }
 
-    private static class DefaultExpression<T> extends AbstractField<T> {
+    private static class DefaultExpression<T> extends AbstractField<T> implements UTransient {
 
         private final Field<T>           lhs;
         private final ExpressionOperator operator;

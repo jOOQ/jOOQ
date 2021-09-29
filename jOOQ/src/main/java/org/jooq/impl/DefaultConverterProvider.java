@@ -111,7 +111,7 @@ public final class DefaultConverterProvider implements ConverterProvider, Serial
             || Struct.class.isAssignableFrom(tWrapper) && QualifiedRecord.class.isAssignableFrom(uWrapper)
 
             // [#10229] Any type A can be converted into its wrapper B if a constructor B(A) exists.
-            || findAny(uWrapper.getDeclaredConstructors(), c -> {
+            || Tools.findAny(uWrapper.getDeclaredConstructors(), c -> {
                 Class<?>[] types = c.getParameterTypes();
 
                 // [#11183] Prevent StackOverflowError when recursing into UDT POJOs

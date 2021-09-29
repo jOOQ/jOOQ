@@ -75,15 +75,16 @@ import org.jooq.Context;
 import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.Name;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class DateDiff<T> extends AbstractField<Integer> {
+final class DateDiff<T> extends AbstractField<Integer> implements UNotYetImplemented {
 
-    private final DatePart    part;
-    private final Field<T>    startDate;
-    private final Field<T>    endDate;
+    private final DatePart part;
+    private final Field<T> startDate;
+    private final Field<T> endDate;
 
     DateDiff(DatePart part, Field<T> startDate, Field<T> endDate) {
         super(N_DATEDIFF, SQLDataType.INTEGER);

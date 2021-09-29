@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,25 +69,23 @@ final class DropSequenceImpl
 extends
     AbstractDDLQuery
 implements
+    MDropSequence,
     DropSequenceFinalStep
 {
 
     final Sequence<?> sequence;
-    final boolean     dropSequenceIfExists;
+    final boolean     ifExists;
 
     DropSequenceImpl(
         Configuration configuration,
         Sequence<?> sequence,
-        boolean dropSequenceIfExists
+        boolean ifExists
     ) {
         super(configuration);
 
         this.sequence = sequence;
-        this.dropSequenceIfExists = dropSequenceIfExists;
+        this.ifExists = ifExists;
     }
-
-    final Sequence<?> $sequence()             { return sequence; }
-    final boolean     $dropSequenceIfExists() { return dropSequenceIfExists; }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
@@ -102,7 +102,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (dropSequenceIfExists && !supportsIfExists(ctx))
+        if (ifExists && !supportsIfExists(ctx))
             tryCatch(ctx, DDLStatementType.DROP_SEQUENCE, c -> accept0(c));
         else
             accept0(ctx);
@@ -115,7 +115,7 @@ implements
            .visit(ctx.family() == CUBRID ? K_SERIAL : K_SEQUENCE)
            .sql(' ');
 
-        if (dropSequenceIfExists && supportsIfExists(ctx))
+        if (ifExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');
 
         switch (ctx.family()) {
@@ -144,4 +144,56 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Sequence<?> $sequence() {
+        return sequence;
+    }
+
+    @Override
+    public final boolean $ifExists() {
+        return ifExists;
+    }
+
+    @Override
+    public final MDropSequence $sequence(MSequence<?> newValue) {
+        return constructor().apply(newValue, $ifExists());
+    }
+
+    @Override
+    public final MDropSequence $ifExists(boolean newValue) {
+        return constructor().apply($sequence(), newValue);
+    }
+
+    public final Function2<? super MSequence<?>, ? super Boolean, ? extends MDropSequence> constructor() {
+        return (a1, a2) -> new DropSequenceImpl(configuration(), (Sequence<?>) a1, a2);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $sequence(),
+            $ifExists(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $sequence()
+        );
+    }
 }

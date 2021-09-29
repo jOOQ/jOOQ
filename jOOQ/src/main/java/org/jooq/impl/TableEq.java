@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class TableEq<R extends Record>
 extends
     AbstractCondition
+implements
+    MTableEq<R>
 {
 
     final Table<R> arg1;
@@ -116,15 +120,44 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Table<R> $arg1() {
+        return arg1;
+    }
+
+    @Override
+    public final Table<R> $arg2() {
+        return arg2;
+    }
+
+    @Override
+    public final MTableEq<R> $arg1(MTable<R> newValue) {
+        return constructor().apply(newValue, $arg2());
+    }
+
+    @Override
+    public final MTableEq<R> $arg2(MTable<R> newValue) {
+        return constructor().apply($arg1(), newValue);
+    }
+
+    @Override
+    public final Function2<? super MTable<R>, ? super MTable<R>, ? extends MTableEq<R>> constructor() {
+        return (a1, a2) -> new TableEq<>((Table<R>) a1, (Table<R>) a2);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof TableEq) {
             return
-                StringUtils.equals(arg1, ((TableEq) that).arg1) &&
-                StringUtils.equals(arg2, ((TableEq) that).arg2)
+                StringUtils.equals($arg1(), ((TableEq) that).$arg1()) &&
+                StringUtils.equals($arg2(), ((TableEq) that).$arg2())
             ;
         }
         else

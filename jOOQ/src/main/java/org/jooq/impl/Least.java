@@ -41,21 +41,27 @@ import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.Names.N_LEAST;
 import static org.jooq.impl.Names.N_MIN;
 import static org.jooq.impl.Names.N_MINVALUE;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function1;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Least<T> extends AbstractField<T> {
-    private final Field<?>[]  args;
+final class Least<T> extends AbstractField<T> implements MLeast<T> {
 
-    Least(DataType<T> type, Field<?>... args) {
-        super(N_LEAST, type);
+    private final QueryPartListView<? extends Field<?>> args;
 
-        this.args = args;
+    Least(Field<?>... args) {
+        super(N_LEAST, (DataType<T>) Tools.nullSafeDataType(args[0]));
+
+        this.args = QueryPartListView.wrap(args);
     }
 
     @SuppressWarnings("unchecked")
@@ -63,8 +69,8 @@ final class Least<T> extends AbstractField<T> {
     public final void accept(Context<?> ctx) {
 
         // In any dialect, a single argument is always the least
-        if (args.length == 1) {
-            ctx.visit(args[0]);
+        if (args.size() == 1) {
+            ctx.visit(args.get(0));
             return;
         }
 
@@ -79,37 +85,50 @@ final class Least<T> extends AbstractField<T> {
 
 
             case DERBY: {
-                Field<T> first = (Field<T>) args[0];
-                Field<T> other = (Field<T>) args[1];
+                Field<T> first = (Field<T>) args.get(0);
+                Field<T> other = (Field<T>) args.get(1);
 
-                if (args.length > 2) {
-                    Field<?>[] remaining = new Field<?>[args.length - 2];
+                if (args.size() > 2) {
+                    Field<?>[] remaining = new Field<?>[args.size() - 2];
                     System.arraycopy(args, 2, remaining, 0, remaining.length);
 
                     ctx.visit(DSL
-                        .when(first.lt(other), DSL.least(first, remaining))
-                        .otherwise(DSL.least(other, remaining)));
+                       .when(first.lt(other), DSL.least(first, remaining))
+                       .otherwise(DSL.least(other, remaining)));
                 }
-                else {
+                else
                     ctx.visit(DSL
-                        .when(first.lt(other), first)
-                        .otherwise(other));
-                }
+                       .when(first.lt(other), first)
+                       .otherwise(other));
 
                 return;
             }
 
             case FIREBIRD:
-                ctx.visit(function(N_MINVALUE, getDataType(), args));
+                ctx.visit(function(N_MINVALUE, getDataType(), args.toArray(EMPTY_FIELD)));
                 return;
 
             case SQLITE:
-                ctx.visit(function(N_MIN, getDataType(), args));
+                ctx.visit(function(N_MIN, getDataType(), args.toArray(EMPTY_FIELD)));
                 return;
 
             default:
-                ctx.visit(function(N_LEAST, getDataType(), args));
+                ctx.visit(function(N_LEAST, getDataType(), args.toArray(EMPTY_FIELD)));
                 return;
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MList<? extends Field<T>> $arg1() {
+        return (MList<? extends Field<T>>) args;
+    }
+
+    @Override
+    public final Function1<? super MList<? extends MField<T>>, ? extends MField<T>> constructor() {
+        return a -> new Least<>(a.toArray(EMPTY_FIELD));
     }
 }

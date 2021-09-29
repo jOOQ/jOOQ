@@ -47,12 +47,13 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Keyword;
+// ...
 
 
 /**
  * @author Lukas Eder
  */
-final class DateOrTime<T> extends AbstractField<T> {
+final class DateOrTime<T> extends AbstractField<T> implements UNotYetImplemented {
 
     private final Field<?>    field;
 

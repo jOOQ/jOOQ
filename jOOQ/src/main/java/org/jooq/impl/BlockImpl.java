@@ -85,12 +85,15 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import org.jooq.Block;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DDLQuery;
+import org.jooq.Function1;
 import org.jooq.Keyword;
 import org.jooq.LanguageContext;
 import org.jooq.Name;
@@ -100,6 +103,10 @@ import org.jooq.SQLDialect;
 import org.jooq.Statement;
 // ...
 import org.jooq.conf.ParamType;
+// ...
+// ...
+// ...
+// ...
 import org.jooq.impl.ScopeMarker.ScopeContent;
 import org.jooq.impl.Tools.DataExtendedKey;
 
@@ -108,7 +115,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Lukas Eder
  */
-final class BlockImpl extends AbstractRowCountQuery implements Block {
+final class BlockImpl extends AbstractRowCountQuery implements Block, MBlock {
     private static final Set<SQLDialect>  REQUIRES_EXECUTE_IMMEDIATE_ON_DDL = SQLDialect.supportedBy(FIREBIRD);
     private static final Set<SQLDialect>  SUPPORTS_NULL_STATEMENT           = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
@@ -584,4 +591,28 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MList<? extends Statement> $statements() {
+        return new QueryPartList<>(statements);
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, $statements());
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, statements, s -> new BlockImpl(configuration(), statements, alwaysWrapInBeginEnd), replacement);
+    }
 }

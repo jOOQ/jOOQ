@@ -72,16 +72,21 @@ import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.DatePart;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Keyword;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Extract extends AbstractField<Integer> {
+final class Extract extends AbstractField<Integer> implements MExtract {
 
     private final Field<?> field;
     private final DatePart datePart;
@@ -484,5 +489,34 @@ final class Extract extends AbstractField<Integer> {
 
     private final void acceptNativeFunction(Context<?> ctx, Keyword keyword) {
         ctx.visit(N_EXTRACT).sql('(').visit(keyword).sql(' ').visit(K_FROM).sql(' ').visit(field).sql(')');
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<?> $field() {
+        return field;
+    }
+
+    @Override
+    public final DatePart $datePart() {
+        return datePart;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, field);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, field, datePart, Extract::new, replacement);
     }
 }

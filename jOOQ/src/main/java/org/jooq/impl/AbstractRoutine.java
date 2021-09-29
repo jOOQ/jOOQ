@@ -110,6 +110,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 import java.util.Set;
 
 import org.jooq.AggregateFunction;
@@ -127,6 +129,7 @@ import org.jooq.DataType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.Package;
 import org.jooq.Param;
@@ -148,10 +151,19 @@ import org.jooq.XMLFormat;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.MappingException;
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.reflect.Reflect;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A common base class for stored procedures
@@ -161,7 +173,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-public abstract class AbstractRoutine<T> extends AbstractNamed implements Routine<T> {
+public abstract class AbstractRoutine<T> extends AbstractNamed implements Routine<T>, UNotYetImplemented {
     private static final Clause[]             CLAUSES                            = { FIELD, FIELD_FUNCTION };
 
 
@@ -1980,7 +1992,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     /**
      * The {@link Field} representation of this {@link Routine}
      */
-    private class RoutineField extends AbstractField<T> {
+    private class RoutineField extends AbstractField<T> implements UNotYetImplemented {
 
         @SuppressWarnings("unchecked")
         RoutineField() {
@@ -2181,5 +2193,14 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MSchema $schema() {
+        return schema;
     }
 }

@@ -41,13 +41,15 @@ import org.jooq.Context;
 import org.jooq.Keyword;
 import org.jooq.conf.RenderKeywordCase;
 import org.jooq.conf.SettingsTools;
+// ...
+// ...
 
 /**
  * A default {@link Keyword} implementation.
  *
  * @author Lukas Eder
  */
-final class KeywordImpl extends AbstractQueryPart implements Keyword {
+final class KeywordImpl extends AbstractQueryPart implements Keyword, UTransient {
 
     private final String      asIs;
 

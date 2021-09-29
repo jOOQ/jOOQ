@@ -118,13 +118,14 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+// ...
 import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.tools.StringUtils;
 
 /**
  * @author Lukas Eder
  */
-final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements InsertQuery<R> {
+final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements InsertQuery<R>, UNotYetImplemented {
 
     private static final Clause[]        CLAUSES                                       = { INSERT };
     private static final Set<SQLDialect> SUPPORT_INSERT_IGNORE                         = SQLDialect.supportedBy(MARIADB, MYSQL);
@@ -214,7 +215,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         this.onConstraint = constraint;
 
         if (onConstraintUniqueKey == null)
-            onConstraintUniqueKey = findAny(table().getKeys(), key -> constraint.getName().equals(key.getName()));
+            onConstraintUniqueKey = Tools.findAny(table().getKeys(), key -> constraint.getName().equals(key.getName()));
     }
 
     @Override

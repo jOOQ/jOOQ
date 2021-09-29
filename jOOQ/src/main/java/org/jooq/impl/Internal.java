@@ -391,7 +391,7 @@ public final class Internal {
 
     @Support
     static final <T> Field<T> ineg(Field<T> field) {
-        return new Neg<>(field, true, ExpressionOperator.SUBTRACT);
+        return new Neg<>(field, true);
     }
 
     @Support

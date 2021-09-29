@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+// ...
+
 /**
  * A <code>QueryPart</code> to be used exclusively in <code>SELECT</code>
  * clauses.
@@ -45,6 +47,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface SelectFieldOrAsterisk extends QueryPart {
+public interface SelectFieldOrAsterisk extends QueryPart, MSelectFieldOrAsterisk {
 
 }

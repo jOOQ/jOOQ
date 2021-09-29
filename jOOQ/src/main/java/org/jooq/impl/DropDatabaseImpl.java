@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,25 +69,23 @@ final class DropDatabaseImpl
 extends
     AbstractDDLQuery
 implements
+    MDropDatabase,
     DropDatabaseFinalStep
 {
 
     final Catalog database;
-    final boolean dropDatabaseIfExists;
+    final boolean ifExists;
 
     DropDatabaseImpl(
         Configuration configuration,
         Catalog database,
-        boolean dropDatabaseIfExists
+        boolean ifExists
     ) {
         super(configuration);
 
         this.database = database;
-        this.dropDatabaseIfExists = dropDatabaseIfExists;
+        this.ifExists = ifExists;
     }
-
-    final Catalog $database()             { return database; }
-    final boolean $dropDatabaseIfExists() { return dropDatabaseIfExists; }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
@@ -101,7 +101,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (dropDatabaseIfExists && !supportsIfExists(ctx))
+        if (ifExists && !supportsIfExists(ctx))
             tryCatch(ctx, DDLStatementType.DROP_DATABASE, c -> accept0(c));
         else
             accept0(ctx);
@@ -110,11 +110,63 @@ implements
     private void accept0(Context<?> ctx) {
         ctx.visit(K_DROP).sql(' ').visit(K_DATABASE);
 
-        if (dropDatabaseIfExists && supportsIfExists(ctx))
+        if (ifExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(database);
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Catalog $database() {
+        return database;
+    }
+
+    @Override
+    public final boolean $ifExists() {
+        return ifExists;
+    }
+
+    @Override
+    public final MDropDatabase $database(MCatalog newValue) {
+        return constructor().apply(newValue, $ifExists());
+    }
+
+    @Override
+    public final MDropDatabase $ifExists(boolean newValue) {
+        return constructor().apply($database(), newValue);
+    }
+
+    public final Function2<? super MCatalog, ? super Boolean, ? extends MDropDatabase> constructor() {
+        return (a1, a2) -> new DropDatabaseImpl(configuration(), (Catalog) a1, a2);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $database(),
+            $ifExists(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $database()
+        );
+    }
 }

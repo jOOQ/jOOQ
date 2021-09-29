@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class Or
 extends
     AbstractCondition
+implements
+    MOr
 {
 
     final Condition arg1;
@@ -160,15 +164,44 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Condition $arg1() {
+        return arg1;
+    }
+
+    @Override
+    public final Condition $arg2() {
+        return arg2;
+    }
+
+    @Override
+    public final MOr $arg1(MCondition newValue) {
+        return constructor().apply(newValue, $arg2());
+    }
+
+    @Override
+    public final MOr $arg2(MCondition newValue) {
+        return constructor().apply($arg1(), newValue);
+    }
+
+    @Override
+    public final Function2<? super MCondition, ? super MCondition, ? extends MOr> constructor() {
+        return (a1, a2) -> new Or((Condition) a1, (Condition) a2);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Or) {
             return
-                StringUtils.equals(arg1, ((Or) that).arg1) &&
-                StringUtils.equals(arg2, ((Or) that).arg2)
+                StringUtils.equals($arg1(), ((Or) that).$arg1()) &&
+                StringUtils.equals($arg2(), ((Or) that).$arg2())
             ;
         }
         else

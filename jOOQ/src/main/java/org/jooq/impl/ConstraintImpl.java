@@ -110,6 +110,10 @@ import org.jooq.Name;
 // ...
 import org.jooq.SQLDialect;
 import org.jooq.Table;
+// ...
+// ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -117,7 +121,8 @@ import org.jooq.Table;
 @SuppressWarnings("rawtypes")
 final class ConstraintImpl extends AbstractNamed
 implements
-    ConstraintTypeStep
+    UNotYetImplemented
+  , ConstraintTypeStep
   , ConstraintForeignKeyOnStep
   , ConstraintForeignKeyReferencesStepN
 

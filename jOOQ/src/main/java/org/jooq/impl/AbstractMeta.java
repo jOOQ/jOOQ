@@ -608,7 +608,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
         // key implementations (e.g. MetaPrimaryKey for H2) don't produce
         // the correct key name, but the index name.
         // [#11258] Also, we need position agnostic comparison, using sets
-        return findAny(in.getKeys(), k -> ukFields.equals(new HashSet<>(k.getFields())));
+        return Tools.findAny(in.getKeys(), k -> ukFields.equals(new HashSet<>(k.getFields())));
     }
 
     final UniqueKey<?> lookupUniqueKey(ForeignKey<?, ?> fk) {

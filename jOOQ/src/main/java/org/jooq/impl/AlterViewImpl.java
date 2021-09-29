@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,24 +69,25 @@ final class AlterViewImpl
 extends
     AbstractDDLQuery
 implements
+    MAlterView,
     AlterViewStep,
     AlterViewFinalStep
 {
 
     final Table<?> view;
-    final boolean  alterViewIfExists;
+    final boolean  ifExists;
           Comment  comment;
           Table<?> renameTo;
 
     AlterViewImpl(
         Configuration configuration,
         Table<?> view,
-        boolean alterViewIfExists
+        boolean ifExists
     ) {
         this(
             configuration,
             view,
-            alterViewIfExists,
+            ifExists,
             null,
             null
         );
@@ -93,22 +96,17 @@ implements
     AlterViewImpl(
         Configuration configuration,
         Table<?> view,
-        boolean alterViewIfExists,
+        boolean ifExists,
         Comment comment,
         Table<?> renameTo
     ) {
         super(configuration);
 
         this.view = view;
-        this.alterViewIfExists = alterViewIfExists;
+        this.ifExists = ifExists;
         this.comment = comment;
         this.renameTo = renameTo;
     }
-
-    final Table<?> $view()              { return view; }
-    final boolean  $alterViewIfExists() { return alterViewIfExists; }
-    final Comment  $comment()           { return comment; }
-    final Table<?> $renameTo()          { return renameTo; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -157,7 +155,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (alterViewIfExists && !supportsIfExists(ctx))
+        if (ifExists && !supportsIfExists(ctx))
             tryCatch(ctx, DDLStatementType.ALTER_VIEW, c -> accept0(c));
         else
             accept0(ctx);
@@ -244,7 +242,7 @@ implements
            .visit(K_ALTER).sql(' ')
            .visit(SUPPORT_ALTER_TABLE_RENAME.contains(ctx.dialect()) ? K_TABLE : K_VIEW);
 
-        if (alterViewIfExists && supportsIfExists(ctx))
+        if (ifExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(view)
@@ -267,4 +265,80 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Table<?> $view() {
+        return view;
+    }
+
+    @Override
+    public final boolean $ifExists() {
+        return ifExists;
+    }
+
+    @Override
+    public final Comment $comment() {
+        return comment;
+    }
+
+    @Override
+    public final Table<?> $renameTo() {
+        return renameTo;
+    }
+
+    @Override
+    public final MAlterView $view(MTable<?> newValue) {
+        return constructor().apply(newValue, $ifExists(), $comment(), $renameTo());
+    }
+
+    @Override
+    public final MAlterView $ifExists(boolean newValue) {
+        return constructor().apply($view(), newValue, $comment(), $renameTo());
+    }
+
+    @Override
+    public final MAlterView $comment(MComment newValue) {
+        return constructor().apply($view(), $ifExists(), newValue, $renameTo());
+    }
+
+    @Override
+    public final MAlterView $renameTo(MTable<?> newValue) {
+        return constructor().apply($view(), $ifExists(), $comment(), newValue);
+    }
+
+    public final Function4<? super MTable<?>, ? super Boolean, ? super MComment, ? super MTable<?>, ? extends MAlterView> constructor() {
+        return (a1, a2, a3, a4) -> new AlterViewImpl(configuration(), (Table<?>) a1, a2, (Comment) a3, (Table<?>) a4);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $view(),
+            $ifExists(),
+            $comment(),
+            $renameTo(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $view(),
+            $comment(),
+            $renameTo()
+        );
+    }
 }

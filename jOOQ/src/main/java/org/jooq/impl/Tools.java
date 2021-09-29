@@ -172,6 +172,7 @@ import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -258,6 +259,7 @@ import org.jooq.EnumType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
+import org.jooq.FieldOrRow;
 import org.jooq.Fields;
 import org.jooq.ForeignKey;
 import org.jooq.JSON;
@@ -312,6 +314,8 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TemplatingException;
 import org.jooq.exception.TooManyRowsException;
+// ...
+// ...
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
@@ -347,6 +351,7 @@ final class Tools {
     static final CommonTableExpression<?>[] EMPTY_COMMON_TABLE_EXPRESSION = {};
     static final ExecuteListener[]          EMPTY_EXECUTE_LISTENER        = {};
     static final Field<?>[]                 EMPTY_FIELD                   = {};
+    static final FieldOrRow[]               EMPTY_FIELD_OR_ROW            = {};
     static final int[]                      EMPTY_INT                     = {};
     static final JSONEntry<?>[]             EMPTY_JSONENTRY               = {};
     static final Name[]                     EMPTY_NAME                    = {};
@@ -365,6 +370,8 @@ final class Tools {
     static final TableField<?, ?>[]         EMPTY_TABLE_FIELD             = {};
     static final TableRecord<?>[]           EMPTY_TABLE_RECORD            = {};
     static final UpdatableRecord<?>[]       EMPTY_UPDATABLE_RECORD        = {};
+
+    static final QOM.MQueryPart[]           EMPTY_MQUERYPART              = {};
 
     // ------------------------------------------------------------------------
     // Some constants for use with Context.data()
@@ -1964,6 +1971,14 @@ final class Tools {
         }
 
         return null;
+    }
+
+    static final Condition allNull(Field<?>[] fields) {
+        return DSL.and(map(fields, Field::isNull));
+    }
+
+    static final Condition allNotNull(Field<?>[] fields) {
+        return DSL.and(map(fields, Field::isNotNull));
     }
 
     /**
@@ -6385,38 +6400,6 @@ final class Tools {
 
         return result;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

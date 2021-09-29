@@ -81,6 +81,7 @@ import java.util.function.Function;
 
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
+// ...
 import org.jooq.types.Interval;
 // ...
 
@@ -150,7 +151,8 @@ extends
     GroupField,
     OrderField<T>,
     FieldOrRow,
-    FieldOrConstraint {
+    FieldOrConstraint,
+    MField<T> {
 
     // ------------------------------------------------------------------------
     // API
@@ -1310,50 +1312,50 @@ extends
     /**
      * The <code>MOD</code> operator.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param divisor is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    Field<T> mod(Number arg2);
+    Field<T> mod(Number divisor);
 
     /**
      * The <code>MOD</code> operator.
      */
     @NotNull
     @Support
-    Field<T> mod(Field<? extends Number> arg2);
+    Field<T> mod(Field<? extends Number> divisor);
 
     /**
      * The <code>MODULO</code> operator, an alias for the <code>MOD</code> operator.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param divisor is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    Field<T> modulo(Number arg2);
+    Field<T> modulo(Number divisor);
 
     /**
      * The <code>MODULO</code> operator, an alias for the <code>MOD</code> operator.
      */
     @NotNull
     @Support
-    Field<T> modulo(Field<? extends Number> arg2);
+    Field<T> modulo(Field<? extends Number> divisor);
 
     /**
      * The <code>REM</code> operator, an alias for the <code>MOD</code> operator.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param divisor is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    Field<T> rem(Number arg2);
+    Field<T> rem(Number divisor);
 
     /**
      * The <code>REM</code> operator, an alias for the <code>MOD</code> operator.
      */
     @NotNull
     @Support
-    Field<T> rem(Field<? extends Number> arg2);
+    Field<T> rem(Field<? extends Number> divisor);
 
     /**
      * The <code>POWER</code> operator.

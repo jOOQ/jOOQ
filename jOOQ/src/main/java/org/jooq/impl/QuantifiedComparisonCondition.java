@@ -99,11 +99,12 @@ import org.jooq.Record1;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class QuantifiedComparisonCondition extends AbstractCondition implements LikeEscapeStep {
+final class QuantifiedComparisonCondition extends AbstractCondition implements LikeEscapeStep, UNotYetImplemented {
 
     private static final Clause[]         CLAUSES                          = { CONDITION, CONDITION_BETWEEN };
     private static final Set<SQLDialect>  NO_SUPPORT_QUANTIFIED_LIKE       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);

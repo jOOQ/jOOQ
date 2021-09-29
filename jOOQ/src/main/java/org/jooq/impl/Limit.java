@@ -69,12 +69,13 @@ import org.jooq.Param;
 import org.jooq.RenderContext.CastMode;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
+// ...
 import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
  * @author Lukas Eder
  */
-final class Limit extends AbstractQueryPart {
+final class Limit extends AbstractQueryPart implements UTransient {
     private static final Param<Integer> ZERO              = zero();
     private static final Param<Integer> ONE               = one();
     private static final Param<Integer> MAX               = DSL.inline(Integer.MAX_VALUE);

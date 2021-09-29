@@ -39,23 +39,31 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.K_ROWS_FROM;
 import static org.jooq.impl.Names.N_ROWSFROM;
+import static org.jooq.impl.Tools.EMPTY_TABLE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableOptions;
+// ...
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class RowsFrom extends AbstractTable<Record> {
+final class RowsFrom extends AbstractTable<Record> implements MRowsFrom {
 
-    private final TableList   tables;
+    private final TableList tables;
 
     RowsFrom(Table<?>... tables) {
         super(TableOptions.expression(), N_ROWSFROM);
@@ -83,5 +91,34 @@ final class RowsFrom extends AbstractTable<Record> {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(K_ROWS_FROM).sql(" (").declareTables(true, c -> c.visit(tables)).sql(')');
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MList<? extends Table<?>> $tables() {
+        return QueryPartListView.wrap(tables);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            tables.toArray(EMPTY_TABLE),
+            RowsFrom::new,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, $tables());
     }
 }

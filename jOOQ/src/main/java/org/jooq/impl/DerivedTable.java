@@ -44,16 +44,20 @@ import static org.jooq.impl.Tools.visitSubquery;
 
 import org.jooq.Clause;
 import org.jooq.Context;
+import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-class DerivedTable<R extends Record> extends AbstractTable<R> {
+class DerivedTable<R extends Record> extends AbstractTable<R> implements MDerivedTable<R> {
 
     private final Select<R> query;
 
@@ -99,5 +103,19 @@ class DerivedTable<R extends Record> extends AbstractTable<R> {
     @Override // Avoid AbstractTable implementation
     public final Clause[] clauses(Context<?> ctx) {
         return null;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Function1<? super MSelect<R>, ? extends MTable<R>> constructor() {
+        return t -> new DerivedTable<>((Select<R>) t);
+    }
+
+    @Override
+    public final Select<R> $arg1() {
+        return query;
     }
 }

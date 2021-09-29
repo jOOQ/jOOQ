@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,6 +69,8 @@ import java.sql.Timestamp;
 final class ToTimestamp
 extends
     AbstractField<Timestamp>
+implements
+    MToTimestamp
 {
 
     final Field<String> value;
@@ -133,15 +137,68 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<String> $value() {
+        return value;
+    }
+
+    @Override
+    public final Field<String> $formatMask() {
+        return formatMask;
+    }
+
+    @Override
+    public final MToTimestamp $value(MField<String> newValue) {
+        return constructor().apply(newValue, $formatMask());
+    }
+
+    @Override
+    public final MToTimestamp $formatMask(MField<String> newValue) {
+        return constructor().apply($value(), newValue);
+    }
+
+    public final Function2<? super MField<String>, ? super MField<String>, ? extends MToTimestamp> constructor() {
+        return (a1, a2) -> new ToTimestamp((Field<String>) a1, (Field<String>) a2);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $value(),
+            $formatMask(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $value(),
+            $formatMask()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof ToTimestamp) {
             return
-                StringUtils.equals(value, ((ToTimestamp) that).value) &&
-                StringUtils.equals(formatMask, ((ToTimestamp) that).formatMask)
+                StringUtils.equals($value(), ((ToTimestamp) that).$value()) &&
+                StringUtils.equals($formatMask(), ((ToTimestamp) that).$formatMask())
             ;
         }
         else

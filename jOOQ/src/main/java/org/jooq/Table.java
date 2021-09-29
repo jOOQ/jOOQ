@@ -84,6 +84,7 @@ import java.util.function.Function;
 import org.jooq.TableOptions.TableType;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
+// ...
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -124,7 +125,7 @@ import org.jetbrains.annotations.Nullable;
  * @param <R> The record type associated with this table
  * @author Lukas Eder
  */
-public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R> {
+public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R>, MTable<R> {
 
     /**
      * Get the table type.

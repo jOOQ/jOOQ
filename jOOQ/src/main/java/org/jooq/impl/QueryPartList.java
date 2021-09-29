@@ -80,4 +80,12 @@ class QueryPartList<T extends QueryPart> extends QueryPartListView<T> {
     QueryPartList<T> separator(String newSeparator) {
         return (QueryPartList<T>) super.separator(newSeparator);
     }
+
+    @SuppressWarnings("rawtypes")
+    private static final QueryPartList EMPTY_LIST = new QueryPartList<>();
+
+    @SuppressWarnings("unchecked")
+    static final <Q extends QueryPart> QueryPartList<Q> emptyList() {
+        return EMPTY_LIST;
+    }
 }

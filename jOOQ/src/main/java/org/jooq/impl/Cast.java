@@ -57,7 +57,8 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.regex.Pattern;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -67,11 +68,15 @@ import org.jooq.LanguageContext;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.RenderContext.CastMode;
+// ...
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Cast<T> extends AbstractField<T> {
+final class Cast<T> extends AbstractField<T> implements MCast<T> {
 
     private final Field<?> field;
 
@@ -119,10 +124,6 @@ final class Cast<T> extends AbstractField<T> {
                 break;
         }
     }
-
-
-
-
 
 
 
@@ -305,9 +306,7 @@ final class Cast<T> extends AbstractField<T> {
 
 
 
-
-
-    static class CastNative<T> extends AbstractQueryPart {
+    static class CastNative<T> extends AbstractQueryPart implements UTransient {
         private final QueryPart   expression;
         private final DataType<T> type;
         private final Keyword     typeAsKeyword;
@@ -349,5 +348,43 @@ final class Cast<T> extends AbstractField<T> {
 
             ctx.sql(')');
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<?> $field() {
+        return field;
+    }
+
+    @Override
+    public final MQueryPart replace(org.jooq.Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $field(),
+            $dataType(),
+            Cast::new,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init,
+            abort,
+            recurse,
+            accumulate,
+            this,
+            $field(),
+            $dataType()
+        );
     }
 }

@@ -40,13 +40,20 @@ package org.jooq.impl;
 import static org.jooq.impl.Names.N_NTILE;
 import static org.jooq.impl.SQLDataType.INTEGER;
 
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Ntile extends AbstractWindowFunction<Integer> {
+final class Ntile extends AbstractWindowFunction<Integer> implements MNtile {
+
     private final Field<Integer> tiles;
 
     Ntile(Field<Integer> tiles) {
@@ -69,5 +76,34 @@ final class Ntile extends AbstractWindowFunction<Integer> {
         }
 
         acceptOverClause(ctx);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<Integer> $tiles() {
+        return tiles;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, tiles, $windowSpecification() != null ? $windowSpecification() : $windowDefinition());
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            tiles, $windowSpecification(), $windowDefinition(),
+            (t, s, d) -> new Ntile(t).$windowSpecification(s).$windowDefinition(d),
+            replacement
+        );
     }
 }

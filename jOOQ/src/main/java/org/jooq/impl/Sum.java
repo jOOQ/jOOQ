@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,14 +69,16 @@ import java.math.BigDecimal;
 final class Sum
 extends
     AbstractAggregateFunction<BigDecimal>
+implements
+    MSum
 {
 
     Sum(
         Field<? extends Number> field,
-        boolean sumDistinct
+        boolean distinct
     ) {
         super(
-            sumDistinct,
+            distinct,
             N_SUM,
             NUMERIC,
             nullSafeNotNull(field, INTEGER)
@@ -88,5 +92,71 @@ extends
     @Override
     public final void accept(Context<?> ctx) {
         super.accept(ctx);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Field<? extends Number> $field() {
+        return (Field<? extends Number>) getArguments().get(0);
+    }
+
+    @Override
+    public final MSum $field(MField<? extends Number> newValue) {
+        return constructor().apply(newValue, $distinct());
+    }
+
+    @Override
+    public final MSum $distinct(boolean newValue) {
+        return constructor().apply($field(), newValue);
+    }
+
+    public final Function2<? super MField<? extends Number>, ? super Boolean, ? extends MSum> constructor() {
+        return (a1, a2) -> new Sum((Field<? extends Number>) a1, a2);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $field(),
+            $distinct(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return super.traverse(
+            QOM.traverse(
+                init, abort, recurse, accumulate, this,
+                $field()
+            ), abort, recurse, accumulate
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Sum) {
+            return
+                StringUtils.equals($field(), ((Sum) that).$field()) &&
+                $distinct() == ((Sum) that).$distinct()
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

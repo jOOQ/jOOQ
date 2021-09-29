@@ -46,11 +46,12 @@ import static org.jooq.impl.Names.N_REPLACE_REGEXPR;
 
 import org.jooq.Context;
 import org.jooq.Field;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class RegexpReplace extends AbstractField<String> {
+final class RegexpReplace extends AbstractField<String> implements UNotYetImplemented {
 
     private final Field<String> field;
     private final Field<String> pattern;

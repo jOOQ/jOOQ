@@ -37,15 +37,20 @@
  */
 package org.jooq.impl;
 
-import java.util.Map;
+import static org.jooq.impl.DSL.noCondition;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class MapCondition extends AbstractCondition {
+final class MapCondition extends AbstractCondition implements UEmpty {
 
     private final Map<Field<?>, ?> map;
 
@@ -56,8 +61,11 @@ final class MapCondition extends AbstractCondition {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void accept(Context<?> ctx) {
-        ConditionProviderImpl condition = new ConditionProviderImpl();
-        map.forEach((k, v) -> condition.addConditions(k.eq((Field) Tools.field(v, k))));
-        ctx.visit(condition);
+        Condition c = noCondition();
+
+        for (Entry<Field<?>, ?> e : map.entrySet())
+            c = c.and(e.getKey().eq((Field) Tools.field(e.getValue(), e.getKey())));
+
+        ctx.visit(c);
     }
 }

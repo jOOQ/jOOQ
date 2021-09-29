@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,14 +69,15 @@ final class JSONObject<T>
 extends
     AbstractField<T>
 implements
+    MJSONObject<T>,
     JSONObjectNullStep<T>,
     JSONObjectReturningStep<T>
 {
 
-    final DataType<T>                        type;
-    final Collection<? extends JSONEntry<?>> entries;
-          JSONOnNull                         onNull;
-          DataType<?>                        returning;
+    final DataType<T>                               type;
+    final QueryPartListView<? extends JSONEntry<?>> entries;
+          JSONOnNull                                onNull;
+          DataType<?>                               returning;
 
     JSONObject(
         DataType<T> type,
@@ -100,7 +103,7 @@ implements
         );
 
         this.type = type;
-        this.entries = entries;
+        this.entries = new QueryPartList<>(entries);
         this.onNull = onNull;
         this.returning = returning;
     }
@@ -252,17 +255,93 @@ implements
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final DataType<T> $type() {
+        return type;
+    }
+
+    @Override
+    public final MList<? extends JSONEntry<?>> $entries() {
+        return entries;
+    }
+
+    @Override
+    public final JSONOnNull $onNull() {
+        return onNull;
+    }
+
+    @Override
+    public final DataType<?> $returning() {
+        return returning;
+    }
+
+    @Override
+    public final MJSONObject<T> $type(MDataType<T> newValue) {
+        return constructor().apply(newValue, $entries(), $onNull(), $returning());
+    }
+
+    @Override
+    public final MJSONObject<T> $entries(MList<? extends JSONEntry<?>> newValue) {
+        return constructor().apply($type(), newValue, $onNull(), $returning());
+    }
+
+    @Override
+    public final MJSONObject<T> $onNull(JSONOnNull newValue) {
+        return constructor().apply($type(), $entries(), newValue, $returning());
+    }
+
+    @Override
+    public final MJSONObject<T> $returning(MDataType<?> newValue) {
+        return constructor().apply($type(), $entries(), $onNull(), newValue);
+    }
+
+    public final Function4<? super MDataType<T>, ? super MList<? extends JSONEntry<?>>, ? super JSONOnNull, ? super MDataType<?>, ? extends MJSONObject<T>> constructor() {
+        return (a1, a2, a3, a4) -> new JSONObject((DataType<T>) a1, (Collection<? extends JSONEntry<?>>) a2, a3, (DataType<?>) a4);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $type(),
+            $entries(),
+            $onNull(),
+            $returning(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $type(),
+            $entries(),
+            $returning()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof JSONObject) {
             return
-                StringUtils.equals(type, ((JSONObject) that).type) &&
-                StringUtils.equals(entries, ((JSONObject) that).entries) &&
-                StringUtils.equals(onNull, ((JSONObject) that).onNull) &&
-                StringUtils.equals(returning, ((JSONObject) that).returning)
+                StringUtils.equals($type(), ((JSONObject) that).$type()) &&
+                StringUtils.equals($entries(), ((JSONObject) that).$entries()) &&
+                StringUtils.equals($onNull(), ((JSONObject) that).$onNull()) &&
+                StringUtils.equals($returning(), ((JSONObject) that).$returning())
             ;
         }
         else

@@ -50,13 +50,22 @@ import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Domain;
+import org.jooq.Field;
+import org.jooq.Function1;
+import org.jooq.Function2;
 import org.jooq.Name;
 import org.jooq.Schema;
+// ...
+// ...
+// ...
+// ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
  */
-class DomainImpl<T> extends AbstractNamed implements Domain<T> {
+class DomainImpl<T> extends AbstractNamed implements Domain<T>, UNotYetImplemented {
     private final Schema      schema;
     private final Check<?>[]  checks;
     private final DataType<T> type;
@@ -112,5 +121,19 @@ class DomainImpl<T> extends AbstractNamed implements Domain<T> {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(getUnqualifiedName());
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final DataType<T> $dataType() {
+        return type;
+    }
+
+    @Override
+    public final Schema $schema() {
+        return getSchema();
     }
 }

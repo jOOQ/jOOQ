@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,6 +69,8 @@ import java.math.BigDecimal;
 final class Log
 extends
     AbstractField<BigDecimal>
+implements
+    MLog
 {
 
     final Field<? extends Number> value;
@@ -191,15 +195,68 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<? extends Number> $value() {
+        return value;
+    }
+
+    @Override
+    public final Field<? extends Number> $base() {
+        return base;
+    }
+
+    @Override
+    public final MLog $value(MField<? extends Number> newValue) {
+        return constructor().apply(newValue, $base());
+    }
+
+    @Override
+    public final MLog $base(MField<? extends Number> newValue) {
+        return constructor().apply($value(), newValue);
+    }
+
+    public final Function2<? super MField<? extends Number>, ? super MField<? extends Number>, ? extends MLog> constructor() {
+        return (a1, a2) -> new Log((Field<? extends Number>) a1, (Field<? extends Number>) a2);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $value(),
+            $base(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $value(),
+            $base()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Log) {
             return
-                StringUtils.equals(value, ((Log) that).value) &&
-                StringUtils.equals(base, ((Log) that).base)
+                StringUtils.equals($value(), ((Log) that).$value()) &&
+                StringUtils.equals($base(), ((Log) that).$base())
             ;
         }
         else

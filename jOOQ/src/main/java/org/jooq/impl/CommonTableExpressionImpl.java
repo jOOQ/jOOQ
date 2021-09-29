@@ -46,13 +46,15 @@ import static org.jooq.impl.Keywords.K_MATERIALIZED;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Tools.visitSubquery;
 
-import java.util.List;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.CommonTableExpression;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function1;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -60,6 +62,10 @@ import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.TableOptions;
+// ...
+// ...
+// ...
+// ...
 import org.jooq.impl.Tools.DataKey;
 
 /**
@@ -76,9 +82,9 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
     private final DerivedColumnListImpl  name;
     private final ResultQuery<R>         query;
     private final FieldsImpl<R>          fields;
-    private final Boolean                materialized;
+    private final Materialized           materialized;
 
-    CommonTableExpressionImpl(DerivedColumnListImpl name, ResultQuery<R> query, Boolean materialized) {
+    CommonTableExpressionImpl(DerivedColumnListImpl name, ResultQuery<R> query, Materialized materialized) {
         super(TableOptions.expression(), name.name);
 
         this.name = name;
@@ -121,7 +127,7 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
             Object previous = null;
             if (materialized != null) {
                 if (SUPPORT_MATERIALIZED.contains(ctx.dialect())) {
-                    if (materialized)
+                    if (materialized == Materialized.MATERIALIZED)
                         ctx.visit(K_MATERIALIZED).sql(' ');
                     else
                         ctx.visit(K_NOT).sql(' ').visit(K_MATERIALIZED).sql(' ');
@@ -166,5 +172,39 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
         }
 
         return new FieldsImpl<>(f);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MDerivedColumnList $derivedColumnList() {
+        return name;
+    }
+
+    @Override
+    public final MResultQuery<R> $query() {
+        return query;
+    }
+
+    @Override
+    public final Materialized $materialized() {
+        return materialized;
+    }
+
+    @Override
+    public final <T> T traverse(
+        T init,
+        Predicate<? super T> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super T, ? super MQueryPart, ? extends T> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, name, query);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, name, query, materialized, CommonTableExpressionImpl::new, replacement);
     }
 }

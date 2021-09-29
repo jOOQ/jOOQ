@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,28 +68,26 @@ import java.util.stream.*;
 final class SetCommand
 extends
     AbstractDDLQuery
+implements
+    MSetCommand
 {
 
     final Name     name;
     final Param<?> value;
-    final boolean  setLocal;
+    final boolean  local;
 
     SetCommand(
         Configuration configuration,
         Name name,
         Param<?> value,
-        boolean setLocal
+        boolean local
     ) {
         super(configuration);
 
         this.name = name;
         this.value = value;
-        this.setLocal = setLocal;
+        this.local = local;
     }
-
-    final Name     $name()     { return name; }
-    final Param<?> $value()    { return value; }
-    final boolean  $setLocal() { return setLocal; }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
@@ -101,11 +101,75 @@ extends
     public final void accept(Context<?> ctx) {
         ctx.visit(K_SET);
 
-        if (setLocal)
+        if (local)
             ctx.sql(' ').visit(K_LOCAL);
 
         ctx.sql(' ').visit(name).sql(" = ").paramTypeIf(ParamType.INLINED, NO_SUPPORT_BIND_VALUES.contains(ctx.dialect()), c -> c.visit(value));
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Name $name() {
+        return name;
+    }
+
+    @Override
+    public final Param<?> $value() {
+        return value;
+    }
+
+    @Override
+    public final boolean $local() {
+        return local;
+    }
+
+    @Override
+    public final MSetCommand $name(MName newValue) {
+        return constructor().apply(newValue, $value(), $local());
+    }
+
+    @Override
+    public final MSetCommand $value(MParam<?> newValue) {
+        return constructor().apply($name(), newValue, $local());
+    }
+
+    @Override
+    public final MSetCommand $local(boolean newValue) {
+        return constructor().apply($name(), $value(), newValue);
+    }
+
+    public final Function3<? super MName, ? super MParam<?>, ? super Boolean, ? extends MSetCommand> constructor() {
+        return (a1, a2, a3) -> new SetCommand(configuration(), (Name) a1, (Param<?>) a2, a3);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $name(),
+            $value(),
+            $local(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $name(),
+            $value()
+        );
+    }
 }

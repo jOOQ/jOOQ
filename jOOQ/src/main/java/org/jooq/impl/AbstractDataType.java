@@ -92,6 +92,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.XML;
+// ...
 import org.jooq.types.Interval;
 import org.jooq.types.UNumber;
 
@@ -101,7 +102,7 @@ import org.jooq.types.UNumber;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> {
+abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T>, UEmpty {
     static final Set<SQLDialect> NO_SUPPORT_TIMESTAMP_PRECISION = SQLDialect.supportedBy(DERBY, FIREBIRD);
 
     AbstractDataType(Name name, Comment comment) {

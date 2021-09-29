@@ -46,11 +46,12 @@ import static org.jooq.impl.TrueCondition.NO_SUPPORT_BOOLEAN;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.False;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class FalseCondition extends AbstractCondition implements False {
+final class FalseCondition extends AbstractCondition implements False, MFalse {
 
     private static final Clause[] CLAUSES  = { CONDITION, CONDITION_COMPARISON };
     static final FalseCondition   INSTANCE = new FalseCondition();

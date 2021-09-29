@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class Xmlpi
 extends
     AbstractField<XML>
+implements
+    MXmlpi
 {
 
     final Name     target;
@@ -135,15 +139,68 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Name $target() {
+        return target;
+    }
+
+    @Override
+    public final Field<?> $content() {
+        return content;
+    }
+
+    @Override
+    public final MXmlpi $target(MName newValue) {
+        return constructor().apply(newValue, $content());
+    }
+
+    @Override
+    public final MXmlpi $content(MField<?> newValue) {
+        return constructor().apply($target(), newValue);
+    }
+
+    public final Function2<? super MName, ? super MField<?>, ? extends MXmlpi> constructor() {
+        return (a1, a2) -> new Xmlpi((Name) a1, (Field<?>) a2);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $target(),
+            $content(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $target(),
+            $content()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Xmlpi) {
             return
-                StringUtils.equals(target, ((Xmlpi) that).target) &&
-                StringUtils.equals(content, ((Xmlpi) that).content)
+                StringUtils.equals($target(), ((Xmlpi) that).$target()) &&
+                StringUtils.equals($content(), ((Xmlpi) that).$content())
             ;
         }
         else

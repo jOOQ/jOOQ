@@ -37,13 +37,22 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Names.N_LAG;
 
-import org.jooq.*;
+import org.jooq.Field;
+// ...
 
 /**
- * The <code>JSONOnNull</code>.
+ * @author Lukas Eder
  */
-enum JSONOnNull {
-    NULL_ON_NULL,
-    ABSENT_ON_NULL,
+final class Lag<T> extends AbstractLeadLag<T> implements MLead<T> {
+
+    Lag(Field<T> field, Field<Integer> offset, Field<T> defaultValue) {
+        super(N_LAG, field, offset, defaultValue);
+    }
+
+    @Override
+    final AbstractLeadLag<T> constructor(Field<T> f, Field<Integer> o, Field<T> def) {
+        return new Lag<>(f, o, def);
+    }
 }

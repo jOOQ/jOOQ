@@ -78,11 +78,12 @@ import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class RowIsDistinctFrom extends AbstractCondition {
+final class RowIsDistinctFrom extends AbstractCondition implements UNotYetImplemented {
     private static final Set<SQLDialect> EMULATE_DISTINCT            = SQLDialect.supportedBy(CUBRID, DERBY);
 
     // An emulation may be required only for the version where a subquery is used

@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,6 +69,8 @@ import java.math.BigDecimal;
 final class Atan2
 extends
     AbstractField<BigDecimal>
+implements
+    MAtan2
 {
 
     final Field<? extends Number> x;
@@ -126,15 +130,68 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<? extends Number> $x() {
+        return x;
+    }
+
+    @Override
+    public final Field<? extends Number> $y() {
+        return y;
+    }
+
+    @Override
+    public final MAtan2 $x(MField<? extends Number> newValue) {
+        return constructor().apply(newValue, $y());
+    }
+
+    @Override
+    public final MAtan2 $y(MField<? extends Number> newValue) {
+        return constructor().apply($x(), newValue);
+    }
+
+    public final Function2<? super MField<? extends Number>, ? super MField<? extends Number>, ? extends MAtan2> constructor() {
+        return (a1, a2) -> new Atan2((Field<? extends Number>) a1, (Field<? extends Number>) a2);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $x(),
+            $y(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $x(),
+            $y()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Atan2) {
             return
-                StringUtils.equals(x, ((Atan2) that).x) &&
-                StringUtils.equals(y, ((Atan2) that).y)
+                StringUtils.equals($x(), ((Atan2) that).$x()) &&
+                StringUtils.equals($y(), ((Atan2) that).$y())
             ;
         }
         else

@@ -52,6 +52,7 @@ import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
+// ...
 
 /**
  * Essentially, this is the same as <code>ArrayTable</code>, except that it
@@ -59,7 +60,7 @@ import org.jooq.TableOptions;
  *
  * @author Lukas Eder
  */
-final class ArrayTableEmulation extends AbstractTable<Record> {
+final class ArrayTableEmulation extends AbstractTable<Record> implements UTransient {
 
     private final Object[]           array;
     private final FieldsImpl<Record> field;

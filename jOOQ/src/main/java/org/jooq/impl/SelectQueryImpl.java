@@ -239,6 +239,7 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import org.jooq.Asterisk;
 import org.jooq.Clause;
@@ -249,6 +250,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function1;
 import org.jooq.GroupField;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectNullStep;
@@ -288,11 +290,28 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Expression.Expr;
 import org.jooq.impl.ForLock.ForLockMode;
 import org.jooq.impl.ForLock.ForLockWaitMode;
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 
 /**
@@ -1259,21 +1278,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         else
             return limit.offset != null ? s1.offset((Param) limit.offset) : s1;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2959,10 +2963,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
-
-
     private final void toSQLOrderBy(
         final Context<?> ctx,
         final List<Field<?>> originalFields,
@@ -3000,7 +3000,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 // [#11904] Shift field indexes in ORDER BY <field index>, in
                 //          case we are projecting emulated nested records of some sort
                 if (RowField.NO_NATIVE_SUPPORT.contains(ctx.dialect())
-                    && findAny(actualOrderBy, s -> ((SortFieldImpl<?>) s).getField() instanceof Val) != null) {
+                    && Tools.findAny(actualOrderBy, s -> ((SortFieldImpl<?>) s).getField() instanceof Val) != null) {
                     SelectFieldIndexes s = getSelectFieldIndexes(ctx);
 
                     if (s.mapped) {
@@ -4487,5 +4487,139 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final void addOption(String o) {
         setOption(o);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final WithImpl $with() {
+        return with;
+    }
+
+    @Override
+    public final SelectFieldList<SelectFieldOrAsterisk> $select() {
+        return select;
+    }
+
+    @Override
+    public final SelectQueryImpl<?> $select(MList<? extends MSelectFieldOrAsterisk> select) {
+        if ($select() == select)
+            return this;
+        else
+            return copy(s -> {
+                s.select.clear();
+                s.select.addAll((List<SelectFieldOrAsterisk>) select);
+                return s;
+            });
+    }
+
+    @Override
+    public final boolean $distinct() {
+        return distinct;
+    }
+
+    @Override
+    public final TableList $from() {
+        return from;
+    }
+
+    @Override
+    public final SelectQueryImpl<?> $from(MList<? extends MTable<?>> from) {
+        if ($from() == from)
+            return this;
+        else
+            return copy(s -> {
+                s.from.clear();
+                s.from.addAll((List<Table<?>>) from);
+                return s;
+            });
+    }
+
+    @Override
+    public final Condition $where() {
+        return condition;
+    }
+
+    @Override
+    public final QueryPartList<GroupField> $groupBy() {
+        return groupBy == null ? QueryPartList.emptyList() : groupBy;
+    }
+
+    @Override
+    public final Condition $having() {
+        return having;
+    }
+
+    @Override
+    public final QueryPartList<WindowDefinition> $window() {
+        return window == null ? new QueryPartList<>() : window;
+    }
+
+    @Override
+    public final Condition $qualify() {
+        return qualify;
+    }
+
+    @Override
+    public final QueryPartList<SortField<?>> $orderBy() {
+        return orderBy;
+    }
+
+    @Override
+    public final <T> T traverse(
+        T init,
+        Predicate<? super T> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super T, ? super MQueryPart, ? extends T> accumulate
+    ) {
+        return QOM.traverse(
+            init,
+            abort,
+            recurse,
+            accumulate,
+            this,
+            $with(),
+            $select(),
+            $distinct(),
+            $from(),
+            $where(),
+            $groupBy(),
+            $having(),
+            $window(),
+            $qualify(),
+            $orderBy()
+        );
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $with(),
+            $select(),
+            $distinct(),
+            $from(),
+            $where(),
+            $groupBy(),
+            $having(),
+            $window(),
+            $qualify(),
+            $orderBy(),
+            (cte, s, d, f, c, g, h, w, q, o) -> {
+                SelectQueryImpl<?> r = new SelectQueryImpl<>(configuration(), cte, d);
+                r.select.addAll(s);
+                r.from.addAll(f);
+                r.condition.addConditions(c);
+                r.groupBy = g;
+                r.having.addConditions(h);
+                r.addWindow(w);
+                r.qualify.addConditions(q);
+                r.orderBy.addAll(o);
+                return r;
+            },
+            replacement
+        );
     }
 }

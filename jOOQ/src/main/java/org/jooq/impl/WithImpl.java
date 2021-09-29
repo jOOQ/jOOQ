@@ -59,6 +59,7 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import org.jooq.Clause;
 import org.jooq.CommonTableExpression;
@@ -66,6 +67,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DerivedColumnList;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.InsertSetStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Name;
@@ -126,6 +128,12 @@ import org.jooq.WithAsStep7;
 import org.jooq.WithAsStep8;
 import org.jooq.WithAsStep9;
 import org.jooq.WithStep;
+// ...
+// ...
+// ...
+// ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This type models an intermediary DSL construction step, which leads towards
@@ -164,7 +172,8 @@ implements
 
 
 
-    WithStep
+    WithStep,
+    MWith
 {
     private static final Clause[]                                           CLAUSES              = { WITH };
 
@@ -1159,5 +1168,34 @@ implements
     @Override
     public final <R extends Record> DeleteImpl delete(Table<R> table) {
         return new DeleteImpl(configuration, this, table);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MList<? extends CommonTableExpression<?>> $commonTableExpressions() {
+        return ctes;
+    }
+
+    @Override
+    public final boolean $recursive() {
+        return recursive;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, ctes);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, ctes, recursive, (c, r) -> new WithImpl(configuration, r).with(c), replacement);
     }
 }

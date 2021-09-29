@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class ArrayGet<T>
 extends
     AbstractField<T>
+implements
+    MArrayGet<T>
 {
 
     final Field<T[]>     array;
@@ -113,7 +117,7 @@ extends
         }
     }
 
-    private class Standard extends AbstractField<T> {
+    private class Standard extends AbstractField<T> implements UTransient {
 
         Standard() {
             super(ArrayGet.this.getQualifiedName(), ArrayGet.this.getDataType());
@@ -141,15 +145,68 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T[]> $array() {
+        return array;
+    }
+
+    @Override
+    public final Field<Integer> $index() {
+        return index;
+    }
+
+    @Override
+    public final MArrayGet<T> $array(MField<T[]> newValue) {
+        return constructor().apply(newValue, $index());
+    }
+
+    @Override
+    public final MArrayGet<T> $index(MField<Integer> newValue) {
+        return constructor().apply($array(), newValue);
+    }
+
+    public final Function2<? super MField<T[]>, ? super MField<Integer>, ? extends MArrayGet<T>> constructor() {
+        return (a1, a2) -> new ArrayGet<>((Field<T[]>) a1, (Field<Integer>) a2);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $array(),
+            $index(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $array(),
+            $index()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof ArrayGet) {
             return
-                StringUtils.equals(array, ((ArrayGet) that).array) &&
-                StringUtils.equals(index, ((ArrayGet) that).index)
+                StringUtils.equals($array(), ((ArrayGet) that).$array()) &&
+                StringUtils.equals($index(), ((ArrayGet) that).$index())
             ;
         }
         else

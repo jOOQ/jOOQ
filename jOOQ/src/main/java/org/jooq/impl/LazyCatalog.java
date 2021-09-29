@@ -38,13 +38,17 @@
 package org.jooq.impl;
 
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.jooq.Catalog;
 import org.jooq.Context;
+import org.jooq.Function1;
 import org.jooq.Internal;
 import org.jooq.Name;
 import org.jooq.Schema;
+// ...
 
 /**
  * A schema that references a lazy initialisable {@link Catalog} singleton, for
@@ -108,5 +112,24 @@ public final class LazyCatalog extends AbstractNamed implements Catalog {
     @Override
     public final Stream<Schema> schemaStream() {
         return catalog().schemaStream();
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return catalog().traverse(init, abort, recurse, accumulate);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return catalog().replace(replacement);
     }
 }

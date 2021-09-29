@@ -50,14 +50,19 @@ import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.Function1;
 import org.jooq.Record1;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class ScalarSubquery<T> extends AbstractField<T> {
+@SuppressWarnings("unchecked")
+final class ScalarSubquery<T> extends AbstractField<T> implements MScalarSubquery<T> {
 
     static final Set<SQLDialect> NO_SUPPORT_WITH_IN_SCALAR_SUBQUERY = SQLDialect.supportedBy(HSQLDB);
     final Select<?>              query;
@@ -84,5 +89,19 @@ final class ScalarSubquery<T> extends AbstractField<T> {
             visitSubquery(ctx, select(asterisk()).from(query.asTable("t")));
         else
             visitSubquery(ctx, query);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Function1<? super MSelect<? extends Record1<T>>, ? extends MField<T>> constructor() {
+        return s -> new ScalarSubquery<>((Select<?>) s, (DataType<T>) Tools.scalarType((Select<?>) s));
+    }
+
+    @Override
+    public final Select<? extends Record1<T>> $arg1() {
+        return (Select<? extends Record1<T>>) query;
     }
 }

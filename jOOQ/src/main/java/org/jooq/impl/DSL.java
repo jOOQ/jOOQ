@@ -97,7 +97,6 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.impl.Keywords.K_CUBE;
 import static org.jooq.impl.Keywords.K_GROUPING_SETS;
 import static org.jooq.impl.Names.N_AVG;
 import static org.jooq.impl.Names.N_COUNT;
@@ -114,20 +113,9 @@ import static org.jooq.impl.Names.N_RANK;
 import static org.jooq.impl.Names.N_SUM;
 import static org.jooq.impl.Names.N_SYSTEM_TIME;
 import static org.jooq.impl.Names.N_VALUE;
-import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.FIRST_VALUE;
-import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.LAG;
-import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.LAST_VALUE;
-import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.LEAD;
-import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.NTH_VALUE;
-import static org.jooq.impl.RankingFunction.RankingType.CUME_DIST;
-import static org.jooq.impl.RankingFunction.RankingType.DENSE_RANK;
-import static org.jooq.impl.RankingFunction.RankingType.PERCENT_RANK;
-import static org.jooq.impl.RankingFunction.RankingType.RANK;
 import static org.jooq.impl.SQLDataType.DATE;
-import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
-import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.SQLDataType.TIME;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
@@ -429,8 +417,8 @@ import org.jooq.XMLTablePassingStep;
 import org.jooq.conf.NestedCollectionEmulation;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.impl.DataChangeDeltaTable.ResultOption;
-import org.jooq.impl.XMLParse.DocumentOrContent;
+// ...
+// ...
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.types.DayToSecond;
@@ -15581,8 +15569,8 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Condition not(Condition arg1) {
-        return new Not(arg1);
+    public static Condition not(Condition condition) {
+        return new Not(condition);
     }
 
     /**
@@ -15590,8 +15578,8 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<Boolean> not(Field<Boolean> arg1) {
-        return new NotField(arg1);
+    public static Field<Boolean> not(Field<Boolean> field) {
+        return new NotField(field);
     }
 
     /**
@@ -15624,7 +15612,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> abs(T number) {
-        return new Abs(Tools.field(number));
+        return new Abs<>(Tools.field(number));
     }
 
     /**
@@ -15633,7 +15621,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> abs(Field<T> number) {
-        return new Abs(number);
+        return new Abs<>(number);
     }
 
     /**
@@ -15748,7 +15736,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitAnd(T arg1, T arg2) {
-        return new BitAnd(Tools.field(arg1), Tools.field(arg2));
+        return new BitAnd<>(Tools.field(arg1), Tools.field(arg2));
     }
 
     /**
@@ -15759,7 +15747,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitAnd(T arg1, Field<T> arg2) {
-        return new BitAnd(Tools.field(arg1), arg2);
+        return new BitAnd<>(Tools.field(arg1), arg2);
     }
 
     /**
@@ -15770,7 +15758,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitAnd(Field<T> arg1, T arg2) {
-        return new BitAnd(arg1, Tools.field(arg2, arg1));
+        return new BitAnd<>(arg1, Tools.field(arg2, arg1));
     }
 
     /**
@@ -15779,7 +15767,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitAnd(Field<T> arg1, Field<T> arg2) {
-        return new BitAnd(arg1, arg2);
+        return new BitAnd<>(arg1, arg2);
     }
 
     /**
@@ -15815,7 +15803,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitNand(T arg1, T arg2) {
-        return new BitNand(Tools.field(arg1), Tools.field(arg2));
+        return new BitNand<>(Tools.field(arg1), Tools.field(arg2));
     }
 
     /**
@@ -15826,7 +15814,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitNand(T arg1, Field<T> arg2) {
-        return new BitNand(Tools.field(arg1), arg2);
+        return new BitNand<>(Tools.field(arg1), arg2);
     }
 
     /**
@@ -15837,7 +15825,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitNand(Field<T> arg1, T arg2) {
-        return new BitNand(arg1, Tools.field(arg2, arg1));
+        return new BitNand<>(arg1, Tools.field(arg2, arg1));
     }
 
     /**
@@ -15846,7 +15834,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitNand(Field<T> arg1, Field<T> arg2) {
-        return new BitNand(arg1, arg2);
+        return new BitNand<>(arg1, arg2);
     }
 
     /**
@@ -15858,7 +15846,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitNor(T arg1, T arg2) {
-        return new BitNor(Tools.field(arg1), Tools.field(arg2));
+        return new BitNor<>(Tools.field(arg1), Tools.field(arg2));
     }
 
     /**
@@ -15869,7 +15857,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitNor(T arg1, Field<T> arg2) {
-        return new BitNor(Tools.field(arg1), arg2);
+        return new BitNor<>(Tools.field(arg1), arg2);
     }
 
     /**
@@ -15880,7 +15868,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitNor(Field<T> arg1, T arg2) {
-        return new BitNor(arg1, Tools.field(arg2, arg1));
+        return new BitNor<>(arg1, Tools.field(arg2, arg1));
     }
 
     /**
@@ -15889,18 +15877,18 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitNor(Field<T> arg1, Field<T> arg2) {
-        return new BitNor(arg1, arg2);
+        return new BitNor<>(arg1, arg2);
     }
 
     /**
      * The <code>BIT_NOT</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param arg1 is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitNot(T value) {
-        return new BitNot(Tools.field(value));
+    public static <T extends Number> Field<T> bitNot(T arg1) {
+        return new BitNot<>(Tools.field(arg1));
     }
 
     /**
@@ -15908,8 +15896,8 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
-    public static <T extends Number> Field<T> bitNot(Field<T> value) {
-        return new BitNot(value);
+    public static <T extends Number> Field<T> bitNot(Field<T> arg1) {
+        return new BitNot<>(arg1);
     }
 
     /**
@@ -15921,7 +15909,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitOr(T arg1, T arg2) {
-        return new BitOr(Tools.field(arg1), Tools.field(arg2));
+        return new BitOr<>(Tools.field(arg1), Tools.field(arg2));
     }
 
     /**
@@ -15932,7 +15920,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitOr(T arg1, Field<T> arg2) {
-        return new BitOr(Tools.field(arg1), arg2);
+        return new BitOr<>(Tools.field(arg1), arg2);
     }
 
     /**
@@ -15943,7 +15931,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitOr(Field<T> arg1, T arg2) {
-        return new BitOr(arg1, Tools.field(arg2, arg1));
+        return new BitOr<>(arg1, Tools.field(arg2, arg1));
     }
 
     /**
@@ -15952,7 +15940,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitOr(Field<T> arg1, Field<T> arg2) {
-        return new BitOr(arg1, arg2);
+        return new BitOr<>(arg1, arg2);
     }
 
     /**
@@ -15964,7 +15952,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXNor(T arg1, T arg2) {
-        return new BitXNor(Tools.field(arg1), Tools.field(arg2));
+        return new BitXNor<>(Tools.field(arg1), Tools.field(arg2));
     }
 
     /**
@@ -15975,7 +15963,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXNor(T arg1, Field<T> arg2) {
-        return new BitXNor(Tools.field(arg1), arg2);
+        return new BitXNor<>(Tools.field(arg1), arg2);
     }
 
     /**
@@ -15986,7 +15974,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXNor(Field<T> arg1, T arg2) {
-        return new BitXNor(arg1, Tools.field(arg2, arg1));
+        return new BitXNor<>(arg1, Tools.field(arg2, arg1));
     }
 
     /**
@@ -15995,7 +15983,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXNor(Field<T> arg1, Field<T> arg2) {
-        return new BitXNor(arg1, arg2);
+        return new BitXNor<>(arg1, arg2);
     }
 
     /**
@@ -16007,7 +15995,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXor(T arg1, T arg2) {
-        return new BitXor(Tools.field(arg1), Tools.field(arg2));
+        return new BitXor<>(Tools.field(arg1), Tools.field(arg2));
     }
 
     /**
@@ -16018,7 +16006,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXor(T arg1, Field<T> arg2) {
-        return new BitXor(Tools.field(arg1), arg2);
+        return new BitXor<>(Tools.field(arg1), arg2);
     }
 
     /**
@@ -16029,7 +16017,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXor(Field<T> arg1, T arg2) {
-        return new BitXor(arg1, Tools.field(arg2, arg1));
+        return new BitXor<>(arg1, Tools.field(arg2, arg1));
     }
 
     /**
@@ -16038,7 +16026,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> bitXor(Field<T> arg1, Field<T> arg2) {
-        return new BitXor(arg1, arg2);
+        return new BitXor<>(arg1, arg2);
     }
 
     /**
@@ -16051,7 +16039,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> ceil(T value) {
-        return new Ceil(Tools.field(value));
+        return new Ceil<>(Tools.field(value));
     }
 
     /**
@@ -16062,7 +16050,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> ceil(Field<T> value) {
-        return new Ceil(value);
+        return new Ceil<>(value);
     }
 
     /**
@@ -16212,7 +16200,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> floor(T value) {
-        return new Floor(Tools.field(value));
+        return new Floor<>(Tools.field(value));
     }
 
     /**
@@ -16223,7 +16211,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> floor(Field<T> value) {
-        return new Floor(value);
+        return new Floor<>(value);
     }
 
     /**
@@ -16323,24 +16311,24 @@ public class DSL {
     /**
      * The <code>POWER</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param base is wrapped as {@link #val(Object)}.
      * @param exponent is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
-    public static Field<BigDecimal> power(Number value, Number exponent) {
-        return new Power(Tools.field(value), Tools.field(exponent));
+    public static Field<BigDecimal> power(Number base, Number exponent) {
+        return new Power(Tools.field(base), Tools.field(exponent));
     }
 
     /**
      * The <code>POWER</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param base is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
-    public static Field<BigDecimal> power(Number value, Field<? extends Number> exponent) {
-        return new Power(Tools.field(value), exponent);
+    public static Field<BigDecimal> power(Number base, Field<? extends Number> exponent) {
+        return new Power(Tools.field(base), exponent);
     }
 
     /**
@@ -16350,8 +16338,8 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
-    public static Field<BigDecimal> power(Field<? extends Number> value, Number exponent) {
-        return new Power(value, Tools.field(exponent));
+    public static Field<BigDecimal> power(Field<? extends Number> base, Number exponent) {
+        return new Power(base, Tools.field(exponent));
     }
 
     /**
@@ -16359,8 +16347,8 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTE })
-    public static Field<BigDecimal> power(Field<? extends Number> value, Field<? extends Number> exponent) {
-        return new Power(value, exponent);
+    public static Field<BigDecimal> power(Field<? extends Number> base, Field<? extends Number> exponent) {
+        return new Power(base, exponent);
     }
 
     /**
@@ -16411,7 +16399,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> round(T value, int decimals) {
-        return new Round(Tools.field(value), Tools.field(decimals));
+        return new Round<>(Tools.field(value), Tools.field(decimals));
     }
 
     /**
@@ -16425,7 +16413,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> round(T value, Field<Integer> decimals) {
-        return new Round(Tools.field(value), decimals);
+        return new Round<>(Tools.field(value), decimals);
     }
 
     /**
@@ -16439,7 +16427,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> round(Field<T> value, int decimals) {
-        return new Round(value, Tools.field(decimals));
+        return new Round<>(value, Tools.field(decimals));
     }
 
     /**
@@ -16453,7 +16441,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> round(Field<T> value, Field<Integer> decimals) {
-        return new Round(value, decimals);
+        return new Round<>(value, decimals);
     }
 
     /**
@@ -16466,7 +16454,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> round(T value) {
-        return new Round(Tools.field(value));
+        return new Round<>(Tools.field(value));
     }
 
     /**
@@ -16479,7 +16467,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> round(Field<T> value) {
-        return new Round(value);
+        return new Round<>(value);
     }
 
     /**
@@ -16493,7 +16481,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> shl(T value, Number count) {
-        return new Shl(Tools.field(value), Tools.field(count));
+        return new Shl<>(Tools.field(value), Tools.field(count));
     }
 
     /**
@@ -16507,7 +16495,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> shl(T value, Field<? extends Number> count) {
-        return new Shl(Tools.field(value), count);
+        return new Shl<>(Tools.field(value), count);
     }
 
     /**
@@ -16521,7 +16509,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> shl(Field<T> value, Number count) {
-        return new Shl(value, Tools.field(count));
+        return new Shl<>(value, Tools.field(count));
     }
 
     /**
@@ -16535,7 +16523,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> shl(Field<T> value, Field<? extends Number> count) {
-        return new Shl(value, count);
+        return new Shl<>(value, count);
     }
 
     /**
@@ -16549,7 +16537,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> shr(T value, Number count) {
-        return new Shr(Tools.field(value), Tools.field(count));
+        return new Shr<>(Tools.field(value), Tools.field(count));
     }
 
     /**
@@ -16563,7 +16551,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> shr(T value, Field<? extends Number> count) {
-        return new Shr(Tools.field(value), count);
+        return new Shr<>(Tools.field(value), count);
     }
 
     /**
@@ -16577,7 +16565,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> shr(Field<T> value, Number count) {
-        return new Shr(value, Tools.field(count));
+        return new Shr<>(value, Tools.field(count));
     }
 
     /**
@@ -16591,7 +16579,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> Field<T> shr(Field<T> value, Field<? extends Number> count) {
-        return new Shr(value, count);
+        return new Shr<>(value, count);
     }
 
     /**
@@ -16686,7 +16674,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> square(T value) {
-        return new Square(Tools.field(value));
+        return new Square<>(Tools.field(value));
     }
 
     /**
@@ -16695,7 +16683,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> square(Field<T> value) {
-        return new Square(value);
+        return new Square<>(value);
     }
 
     /**
@@ -16760,7 +16748,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <T extends Number> Field<T> trunc(T value, int decimals) {
-        return new Trunc(Tools.field(value), Tools.field(decimals));
+        return new Trunc<>(Tools.field(value), Tools.field(decimals));
     }
 
     /**
@@ -16774,7 +16762,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <T extends Number> Field<T> trunc(T value, Field<Integer> decimals) {
-        return new Trunc(Tools.field(value), decimals);
+        return new Trunc<>(Tools.field(value), decimals);
     }
 
     /**
@@ -16788,7 +16776,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <T extends Number> Field<T> trunc(Field<T> value, int decimals) {
-        return new Trunc(value, Tools.field(decimals));
+        return new Trunc<>(value, Tools.field(decimals));
     }
 
     /**
@@ -16802,7 +16790,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static <T extends Number> Field<T> trunc(Field<T> value, Field<Integer> decimals) {
-        return new Trunc(value, decimals);
+        return new Trunc<>(value, decimals);
     }
 
     /**
@@ -16818,7 +16806,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> widthBucket(Field<T> field, T low, T high, int buckets) {
-        return new WidthBucket(field, Tools.field(low, field), Tools.field(high, field), Tools.field(buckets));
+        return new WidthBucket<>(field, Tools.field(low, field), Tools.field(high, field), Tools.field(buckets));
     }
 
     /**
@@ -16834,7 +16822,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> widthBucket(Field<T> field, Field<T> low, Field<T> high, Field<Integer> buckets) {
-        return new WidthBucket(field, low, high, buckets);
+        return new WidthBucket<>(field, low, high, buckets);
     }
 
     // -------------------------------------------------------------------------
@@ -18640,7 +18628,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<Date> dateAdd(Date date, Number interval, DatePart datePart) {
-        return new DateAdd(Tools.field(date), Tools.field(interval), datePart);
+        return new DateAdd<>(Tools.field(date), Tools.field(interval), datePart);
     }
 
     /**
@@ -18655,7 +18643,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<Date> dateAdd(Date date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd(Tools.field(date), interval, datePart);
+        return new DateAdd<>(Tools.field(date), interval, datePart);
     }
 
     /**
@@ -18670,7 +18658,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<Date> dateAdd(Field<Date> date, Number interval, DatePart datePart) {
-        return new DateAdd(date, Tools.field(interval), datePart);
+        return new DateAdd<>(date, Tools.field(interval), datePart);
     }
 
     /**
@@ -18685,7 +18673,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<Date> dateAdd(Field<Date> date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd(date, interval, datePart);
+        return new DateAdd<>(date, interval, datePart);
     }
 
     /**
@@ -18699,7 +18687,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<Date> dateAdd(Date date, Number interval) {
-        return new DateAdd(Tools.field(date), Tools.field(interval));
+        return new DateAdd<>(Tools.field(date), Tools.field(interval));
     }
 
     /**
@@ -18713,7 +18701,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<Date> dateAdd(Date date, Field<? extends Number> interval) {
-        return new DateAdd(Tools.field(date), interval);
+        return new DateAdd<>(Tools.field(date), interval);
     }
 
     /**
@@ -18727,7 +18715,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<Date> dateAdd(Field<Date> date, Number interval) {
-        return new DateAdd(date, Tools.field(interval));
+        return new DateAdd<>(date, Tools.field(interval));
     }
 
     /**
@@ -18741,7 +18729,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<Date> dateAdd(Field<Date> date, Field<? extends Number> interval) {
-        return new DateAdd(date, interval);
+        return new DateAdd<>(date, interval);
     }
 
     /**
@@ -18756,7 +18744,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<LocalDate> localDateAdd(LocalDate date, Number interval, DatePart datePart) {
-        return new DateAdd(Tools.field(date), Tools.field(interval), datePart);
+        return new DateAdd<>(Tools.field(date), Tools.field(interval), datePart);
     }
 
     /**
@@ -18771,7 +18759,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<LocalDate> localDateAdd(LocalDate date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd(Tools.field(date), interval, datePart);
+        return new DateAdd<>(Tools.field(date), interval, datePart);
     }
 
     /**
@@ -18786,7 +18774,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<LocalDate> localDateAdd(Field<LocalDate> date, Number interval, DatePart datePart) {
-        return new DateAdd(date, Tools.field(interval), datePart);
+        return new DateAdd<>(date, Tools.field(interval), datePart);
     }
 
     /**
@@ -18801,7 +18789,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<LocalDate> localDateAdd(Field<LocalDate> date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd(date, interval, datePart);
+        return new DateAdd<>(date, interval, datePart);
     }
 
     /**
@@ -18815,7 +18803,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<LocalDate> localDateAdd(LocalDate date, Number interval) {
-        return new DateAdd(Tools.field(date), Tools.field(interval));
+        return new DateAdd<>(Tools.field(date), Tools.field(interval));
     }
 
     /**
@@ -18829,7 +18817,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<LocalDate> localDateAdd(LocalDate date, Field<? extends Number> interval) {
-        return new DateAdd(Tools.field(date), interval);
+        return new DateAdd<>(Tools.field(date), interval);
     }
 
     /**
@@ -18843,7 +18831,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<LocalDate> localDateAdd(Field<LocalDate> date, Number interval) {
-        return new DateAdd(date, Tools.field(interval));
+        return new DateAdd<>(date, Tools.field(interval));
     }
 
     /**
@@ -18857,7 +18845,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<LocalDate> localDateAdd(Field<LocalDate> date, Field<? extends Number> interval) {
-        return new DateAdd(date, interval);
+        return new DateAdd<>(date, interval);
     }
 
     /**
@@ -18872,7 +18860,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<Timestamp> timestampAdd(Timestamp date, Number interval, DatePart datePart) {
-        return new DateAdd(Tools.field(date), Tools.field(interval), datePart);
+        return new DateAdd<>(Tools.field(date), Tools.field(interval), datePart);
     }
 
     /**
@@ -18887,7 +18875,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<Timestamp> timestampAdd(Timestamp date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd(Tools.field(date), interval, datePart);
+        return new DateAdd<>(Tools.field(date), interval, datePart);
     }
 
     /**
@@ -18902,7 +18890,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<Timestamp> timestampAdd(Field<Timestamp> date, Number interval, DatePart datePart) {
-        return new DateAdd(date, Tools.field(interval), datePart);
+        return new DateAdd<>(date, Tools.field(interval), datePart);
     }
 
     /**
@@ -18917,7 +18905,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<Timestamp> timestampAdd(Field<Timestamp> date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd(date, interval, datePart);
+        return new DateAdd<>(date, interval, datePart);
     }
 
     /**
@@ -18931,7 +18919,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<Timestamp> timestampAdd(Timestamp date, Number interval) {
-        return new DateAdd(Tools.field(date), Tools.field(interval));
+        return new DateAdd<>(Tools.field(date), Tools.field(interval));
     }
 
     /**
@@ -18945,7 +18933,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<Timestamp> timestampAdd(Timestamp date, Field<? extends Number> interval) {
-        return new DateAdd(Tools.field(date), interval);
+        return new DateAdd<>(Tools.field(date), interval);
     }
 
     /**
@@ -18959,7 +18947,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<Timestamp> timestampAdd(Field<Timestamp> date, Number interval) {
-        return new DateAdd(date, Tools.field(interval));
+        return new DateAdd<>(date, Tools.field(interval));
     }
 
     /**
@@ -18973,7 +18961,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<Timestamp> timestampAdd(Field<Timestamp> date, Field<? extends Number> interval) {
-        return new DateAdd(date, interval);
+        return new DateAdd<>(date, interval);
     }
 
     /**
@@ -18988,7 +18976,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Number interval, DatePart datePart) {
-        return new DateAdd(Tools.field(date), Tools.field(interval), datePart);
+        return new DateAdd<>(Tools.field(date), Tools.field(interval), datePart);
     }
 
     /**
@@ -19003,7 +18991,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd(Tools.field(date), interval, datePart);
+        return new DateAdd<>(Tools.field(date), interval, datePart);
     }
 
     /**
@@ -19018,7 +19006,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Number interval, DatePart datePart) {
-        return new DateAdd(date, Tools.field(interval), datePart);
+        return new DateAdd<>(date, Tools.field(interval), datePart);
     }
 
     /**
@@ -19033,7 +19021,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd(date, interval, datePart);
+        return new DateAdd<>(date, interval, datePart);
     }
 
     /**
@@ -19047,7 +19035,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Number interval) {
-        return new DateAdd(Tools.field(date), Tools.field(interval));
+        return new DateAdd<>(Tools.field(date), Tools.field(interval));
     }
 
     /**
@@ -19061,7 +19049,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Field<? extends Number> interval) {
-        return new DateAdd(Tools.field(date), interval);
+        return new DateAdd<>(Tools.field(date), interval);
     }
 
     /**
@@ -19075,7 +19063,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Number interval) {
-        return new DateAdd(date, Tools.field(interval));
+        return new DateAdd<>(date, Tools.field(interval));
     }
 
     /**
@@ -19089,7 +19077,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Field<? extends Number> interval) {
-        return new DateAdd(date, interval);
+        return new DateAdd<>(date, interval);
     }
 
     // -------------------------------------------------------------------------
@@ -19117,7 +19105,7 @@ public class DSL {
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> Field<T> arrayGet(Field<T[]> array, int index) {
-        return new ArrayGet(array, Tools.field(index));
+        return new ArrayGet<>(array, Tools.field(index));
     }
 
     /**
@@ -19128,7 +19116,7 @@ public class DSL {
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> Field<T> arrayGet(Field<T[]> array, Field<Integer> index) {
-        return new ArrayGet(array, index);
+        return new ArrayGet<>(array, index);
     }
 
     // -------------------------------------------------------------------------
@@ -19146,7 +19134,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> nvl(T value, T defaultValue) {
-        return new Nvl(Tools.field(value), Tools.field(defaultValue));
+        return new Nvl<>(Tools.field(value), Tools.field(defaultValue));
     }
 
     /**
@@ -19160,7 +19148,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> nvl(T value, Field<T> defaultValue) {
-        return new Nvl(Tools.field(value), defaultValue);
+        return new Nvl<>(Tools.field(value), defaultValue);
     }
 
     /**
@@ -19174,7 +19162,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> nvl(Field<T> value, T defaultValue) {
-        return new Nvl(value, Tools.field(defaultValue, value));
+        return new Nvl<>(value, Tools.field(defaultValue, value));
     }
 
     /**
@@ -19188,7 +19176,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> nvl(Field<T> value, Field<T> defaultValue) {
-        return new Nvl(value, defaultValue);
+        return new Nvl<>(value, defaultValue);
     }
 
     /**
@@ -19312,7 +19300,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> nullif(T value, T other) {
-        return new Nullif(Tools.field(value), Tools.field(other));
+        return new Nullif<>(Tools.field(value), Tools.field(other));
     }
 
     /**
@@ -19324,7 +19312,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> nullif(T value, Field<T> other) {
-        return new Nullif(Tools.field(value), other);
+        return new Nullif<>(Tools.field(value), other);
     }
 
     /**
@@ -19336,7 +19324,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> nullif(Field<T> value, T other) {
-        return new Nullif(value, Tools.field(other, value));
+        return new Nullif<>(value, Tools.field(other, value));
     }
 
     /**
@@ -19348,7 +19336,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> nullif(Field<T> value, Field<T> other) {
-        return new Nullif(value, other);
+        return new Nullif<>(value, other);
     }
 
     // -------------------------------------------------------------------------
@@ -19518,7 +19506,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlconcat(Collection<? extends Field<?>> args) {
-        return new Xmlconcat(args);
+        return new Xmlconcat(new QueryPartList<>(args));
     }
 
 
@@ -19550,7 +19538,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlforest(Collection<? extends Field<?>> fields) {
-        return new Xmlforest(fields);
+        return new Xmlforest(new QueryPartList<>(fields));
     }
 
     /**
@@ -19597,7 +19585,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static <T> Field<T> xmlserializeDocument(XML value, DataType<T> type) {
-        return new Xmlserialize(false, Tools.field(value), type);
+        return new Xmlserialize<>(false, Tools.field(value), type);
     }
 
     /**
@@ -19606,7 +19594,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static <T> Field<T> xmlserializeDocument(Field<XML> value, DataType<T> type) {
-        return new Xmlserialize(false, value, type);
+        return new Xmlserialize<>(false, value, type);
     }
 
     /**
@@ -19617,7 +19605,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static <T> Field<T> xmlserializeContent(XML value, DataType<T> type) {
-        return new Xmlserialize(true, Tools.field(value), type);
+        return new Xmlserialize<>(true, Tools.field(value), type);
     }
 
     /**
@@ -19626,7 +19614,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static <T> Field<T> xmlserializeContent(Field<XML> value, DataType<T> type) {
-        return new Xmlserialize(true, value, type);
+        return new Xmlserialize<>(true, value, type);
     }
 
     // -------------------------------------------------------------------------
@@ -19639,7 +19627,7 @@ public class DSL {
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONArrayNullStep<JSON> jsonArray(Field<?>... fields) {
-        return new JSONArray<>(SQLDataType.JSON, Arrays.asList(fields));
+        return new JSONArray(SQLDataType.JSON, Arrays.asList(fields));
     }
 
     /**
@@ -19648,7 +19636,7 @@ public class DSL {
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONArrayNullStep<JSON> jsonArray(Collection<? extends Field<?>> fields) {
-        return new JSONArray<>(SQLDataType.JSON, fields);
+        return new JSONArray(SQLDataType.JSON, new QueryPartList<>(fields));
     }
 
     /**
@@ -19657,7 +19645,7 @@ public class DSL {
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONArrayNullStep<JSONB> jsonbArray(Field<?>... fields) {
-        return new JSONArray<>(SQLDataType.JSONB, Arrays.asList(fields));
+        return new JSONArray(SQLDataType.JSONB, Arrays.asList(fields));
     }
 
     /**
@@ -19666,7 +19654,7 @@ public class DSL {
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONArrayNullStep<JSONB> jsonbArray(Collection<? extends Field<?>> fields) {
-        return new JSONArray<>(SQLDataType.JSONB, fields);
+        return new JSONArray(SQLDataType.JSONB, new QueryPartList<>(fields));
     }
 
     /**
@@ -19675,7 +19663,7 @@ public class DSL {
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectNullStep<JSON> jsonObject(Field<?>... entries) {
-        return new JSONObject<>(SQLDataType.JSON, Tools.jsonEntries(entries));
+        return new JSONObject(SQLDataType.JSON, Tools.jsonEntries(entries));
     }
 
     /**
@@ -19684,7 +19672,7 @@ public class DSL {
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectNullStep<JSON> jsonObject(JSONEntry<?>... entries) {
-        return new JSONObject<>(SQLDataType.JSON, Arrays.asList(entries));
+        return new JSONObject(SQLDataType.JSON, Arrays.asList(entries));
     }
 
     /**
@@ -19693,7 +19681,7 @@ public class DSL {
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectNullStep<JSON> jsonObject(Collection<? extends JSONEntry<?>> entries) {
-        return new JSONObject<>(SQLDataType.JSON, entries);
+        return new JSONObject(SQLDataType.JSON, new QueryPartList<>(entries));
     }
 
     /**
@@ -19702,7 +19690,7 @@ public class DSL {
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectNullStep<JSONB> jsonbObject(Field<?>... entries) {
-        return new JSONObject<>(SQLDataType.JSONB, Tools.jsonEntries(entries));
+        return new JSONObject(SQLDataType.JSONB, Tools.jsonEntries(entries));
     }
 
     /**
@@ -19711,7 +19699,7 @@ public class DSL {
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectNullStep<JSONB> jsonbObject(JSONEntry<?>... entries) {
-        return new JSONObject<>(SQLDataType.JSONB, Arrays.asList(entries));
+        return new JSONObject(SQLDataType.JSONB, Arrays.asList(entries));
     }
 
     /**
@@ -19720,7 +19708,7 @@ public class DSL {
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static JSONObjectNullStep<JSONB> jsonbObject(Collection<? extends JSONEntry<?>> entries) {
-        return new JSONObject<>(SQLDataType.JSONB, entries);
+        return new JSONObject(SQLDataType.JSONB, new QueryPartList<>(entries));
     }
 
 
@@ -19807,7 +19795,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> AggregateFunction<T> anyValue(Field<T> field) {
-        return new AnyValue(field);
+        return new AnyValue<>(field);
     }
 
     /**
@@ -19836,7 +19824,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> AggregateFunction<T> bitAndAgg(Field<T> value) {
-        return new BitAndAgg(value);
+        return new BitAndAgg<>(value);
     }
 
     /**
@@ -19847,7 +19835,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> AggregateFunction<T> bitOrAgg(Field<T> value) {
-        return new BitOrAgg(value);
+        return new BitOrAgg<>(value);
     }
 
     /**
@@ -19858,7 +19846,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T extends Number> AggregateFunction<T> bitXorAgg(Field<T> value) {
-        return new BitXorAgg(value);
+        return new BitXorAgg<>(value);
     }
 
     /**
@@ -19981,7 +19969,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> AggregateFunction<T> max(Field<T> field) {
-        return new Max(field, false);
+        return new Max<>(field, false);
     }
 
     /**
@@ -19990,7 +19978,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> AggregateFunction<T> maxDistinct(Field<T> field) {
-        return new Max(field, true);
+        return new Max<>(field, true);
     }
 
     /**
@@ -20008,7 +19996,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> AggregateFunction<T> min(Field<T> field) {
-        return new Min(field, false);
+        return new Min<>(field, false);
     }
 
     /**
@@ -20017,7 +20005,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> AggregateFunction<T> minDistinct(Field<T> field) {
-        return new Min(field, true);
+        return new Min<>(field, true);
     }
 
     /**
@@ -21055,7 +21043,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<DayToSecond> timestampDiff(Field<Timestamp> timestamp1, Field<Timestamp> timestamp2) {
-        return new TimestampDiff(Tools.nullSafe(timestamp1), Tools.nullSafe(timestamp2));
+        return new TimestampDiff<>(Tools.nullSafe(timestamp1), Tools.nullSafe(timestamp2));
     }
 
     /**
@@ -21415,7 +21403,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<DayToSecond> localDateTimeDiff(Field<LocalDateTime> timestamp1, Field<LocalDateTime> timestamp2) {
-        return new TimestampDiff(Tools.nullSafe(timestamp1), Tools.nullSafe(timestamp2));
+        return new TimestampDiff<>(Tools.nullSafe(timestamp1), Tools.nullSafe(timestamp2));
     }
 
     /**
@@ -22794,7 +22782,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static GroupField cube(FieldOrRow... fields) {
-        return field("{0} ({1})", Object.class, K_CUBE, new QueryPartList<>(fields));
+        return new Cube(fields);
     }
 
     /**
@@ -22883,12 +22871,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static GroupField groupingSets(Collection<? extends Field<?>>... fieldSets) {
-        QueryPartList<WrappedList> arg = new QueryPartList<>();
-
-        for (Collection<? extends Field<?>> fieldsSet : fieldSets)
-            arg.add(new WrappedList(new QueryPartList<>(fieldsSet)));
-
-        return field("{0} ({1})", SQLDataType.OTHER, K_GROUPING_SETS, arg);
+        return new GroupingSets(fieldSets);
     }
 
 
@@ -22993,7 +22976,7 @@ public class DSL {
     @Support
     @SafeVarargs
     public static <T> Field<T> greatest(Field<T> field, Field<?>... others) {
-        return new Greatest<>(Tools.nullSafeDataType(field), Tools.nullSafe(combine(field, others)));
+        return new Greatest<>(Tools.nullSafe(combine(field, others)));
     }
 
     /**
@@ -23027,7 +23010,7 @@ public class DSL {
     @Support
     @SafeVarargs
     public static <T> Field<T> least(Field<T> field, Field<?>... others) {
-        return new Least<>(Tools.nullSafeDataType(field), Tools.nullSafe(combine(field, others)));
+        return new Least<>(Tools.nullSafe(combine(field, others)));
     }
 
     /**
@@ -25744,7 +25727,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowOverStep<Integer> rank() {
-        return new RankingFunction<>(RANK, INTEGER);
+        return new Rank();
     }
 
     /**
@@ -25753,7 +25736,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowOverStep<Integer> denseRank() {
-        return new RankingFunction<>(DENSE_RANK, INTEGER);
+        return new DenseRank();
     }
 
     /**
@@ -25762,7 +25745,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowOverStep<BigDecimal> percentRank() {
-        return new RankingFunction<>(PERCENT_RANK, NUMERIC);
+        return new PercentRank();
     }
 
     /**
@@ -25771,7 +25754,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static WindowOverStep<BigDecimal> cumeDist() {
-        return new RankingFunction<>(CUME_DIST, NUMERIC);
+        return new CumeDist();
     }
 
     /**
@@ -25816,7 +25799,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> firstValue(Field<T> field) {
-        return new PositionalWindowFunction(FIRST_VALUE, Tools.nullSafe(field));
+        return new FirstValue<>(Tools.nullSafe(field));
     }
 
     /**
@@ -25825,7 +25808,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lastValue(Field<T> field) {
-        return new PositionalWindowFunction(LAST_VALUE, Tools.nullSafe(field));
+        return new LastValue<>(Tools.nullSafe(field));
     }
 
     /**
@@ -25843,7 +25826,7 @@ public class DSL {
     @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowFromFirstLastStep<T> nthValue(Field<T> field, Field<Integer> nth) {
-        return new PositionalWindowFunction(NTH_VALUE, Tools.nullSafe(field), Tools.nullSafe(nth), null);
+        return new NthValue<>(Tools.nullSafe(field), Tools.nullSafe(nth));
     }
 
     /**
@@ -25852,7 +25835,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field) {
-        return new PositionalWindowFunction(LEAD, Tools.nullSafe(field));
+        return new Lead<>(Tools.nullSafe(field), null, null);
     }
 
     /**
@@ -25870,7 +25853,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, Field<Integer> offset) {
-        return new PositionalWindowFunction(LEAD, Tools.nullSafe(field), Tools.nullSafe(offset), null);
+        return new Lead<>(Tools.nullSafe(field), Tools.nullSafe(offset), null);
     }
 
     /**
@@ -25914,7 +25897,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, Field<Integer> offset, Field<T> defaultValue) {
-        return new PositionalWindowFunction(LEAD, Tools.nullSafe(field), Tools.nullSafe(offset), Tools.nullSafe(defaultValue));
+        return new Lead<>(Tools.nullSafe(field), Tools.nullSafe(offset), Tools.nullSafe(defaultValue));
     }
 
     /**
@@ -25923,7 +25906,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field) {
-        return new PositionalWindowFunction(LAG, Tools.nullSafe(field));
+        return new Lag<>(Tools.nullSafe(field), null, null);
     }
 
     /**
@@ -25941,7 +25924,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, Field<Integer> offset) {
-        return new PositionalWindowFunction(LAG, Tools.nullSafe(field), Tools.nullSafe(offset), null);
+        return new Lag<>(Tools.nullSafe(field), Tools.nullSafe(offset), null);
     }
 
     /**
@@ -25985,7 +25968,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, Field<Integer> offset, Field<T> defaultValue) {
-        return new PositionalWindowFunction(LAG, Tools.nullSafe(field), Tools.nullSafe(offset), Tools.nullSafe(defaultValue));
+        return new Lag<>(Tools.nullSafe(field), Tools.nullSafe(offset), Tools.nullSafe(defaultValue));
     }
 
     // -------------------------------------------------------------------------

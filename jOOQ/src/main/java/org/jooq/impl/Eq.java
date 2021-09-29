@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class Eq<T>
 extends
     AbstractCondition
+implements
+    MEq<T>
 {
 
     final Field<T> arg1;
@@ -145,27 +149,6 @@ extends
      * @deprecated - [#12425] After the QOM refactoring, this should be improved
      */
     @Deprecated
-    static final Expression.Expr<Field<?>> expr(Condition condition) {
-        if (condition instanceof Eq)
-            return new Expression.Expr<>(((Eq<?>) condition).arg1, org.jooq.Comparator.EQUALS.toKeyword(), ((Eq<?>) condition).arg2);
-        else if (condition instanceof Ne)
-            return new Expression.Expr<>(((Ne<?>) condition).arg1, org.jooq.Comparator.NOT_EQUALS.toKeyword(), ((Ne<?>) condition).arg2);
-        else if (condition instanceof Gt)
-            return new Expression.Expr<>(((Gt<?>) condition).arg1, org.jooq.Comparator.GREATER.toKeyword(), ((Gt<?>) condition).arg2);
-        else if (condition instanceof Ge)
-            return new Expression.Expr<>(((Ge<?>) condition).arg1, org.jooq.Comparator.GREATER_OR_EQUAL.toKeyword(), ((Ge<?>) condition).arg2);
-        else if (condition instanceof Lt)
-            return new Expression.Expr<>(((Lt<?>) condition).arg1, org.jooq.Comparator.LESS.toKeyword(), ((Lt<?>) condition).arg2);
-        else if (condition instanceof Le)
-            return new Expression.Expr<>(((Le<?>) condition).arg1, org.jooq.Comparator.LESS_OR_EQUAL.toKeyword(), ((Le<?>) condition).arg2);
-        else
-            return null;
-    }
-
-    /**
-     * @deprecated - [#12425] After the QOM refactoring, this should be improved
-     */
-    @Deprecated
     static final org.jooq.Comparator comparator(Condition condition) {
         if (condition instanceof Eq)
             return org.jooq.Comparator.EQUALS;
@@ -183,27 +166,6 @@ extends
             return null;
     }
 
-    /**
-     * @deprecated - [#12425] After the QOM refactoring, this should be improved
-     */
-    @Deprecated
-    static final <T> Condition condition(Expression.Expr<? extends Field<T>> expr) {
-        if (expr.op().equals(org.jooq.Comparator.EQUALS.toKeyword()))
-            return expr.lhs().eq(expr.rhs());
-        else if (expr.op().equals(org.jooq.Comparator.NOT_EQUALS.toKeyword()))
-            return expr.lhs().ne(expr.rhs());
-        else if (expr.op().equals(org.jooq.Comparator.LESS.toKeyword()))
-            return expr.lhs().lt(expr.rhs());
-        else if (expr.op().equals(org.jooq.Comparator.LESS_OR_EQUAL.toKeyword()))
-            return expr.lhs().le(expr.rhs());
-        else if (expr.op().equals(org.jooq.Comparator.GREATER.toKeyword()))
-            return expr.lhs().gt(expr.rhs());
-        else if (expr.op().equals(org.jooq.Comparator.GREATER_OR_EQUAL.toKeyword()))
-            return expr.lhs().ge(expr.rhs());
-        else
-            return null;
-    }
-
 
 
 
@@ -216,15 +178,44 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $arg1() {
+        return arg1;
+    }
+
+    @Override
+    public final Field<T> $arg2() {
+        return arg2;
+    }
+
+    @Override
+    public final MEq<T> $arg1(MField<T> newValue) {
+        return constructor().apply(newValue, $arg2());
+    }
+
+    @Override
+    public final MEq<T> $arg2(MField<T> newValue) {
+        return constructor().apply($arg1(), newValue);
+    }
+
+    @Override
+    public final Function2<? super MField<T>, ? super MField<T>, ? extends MEq<T>> constructor() {
+        return (a1, a2) -> new Eq<>((Field<T>) a1, (Field<T>) a2);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Eq) {
             return
-                StringUtils.equals(arg1, ((Eq) that).arg1) &&
-                StringUtils.equals(arg2, ((Eq) that).arg2)
+                StringUtils.equals($arg1(), ((Eq) that).$arg1()) &&
+                StringUtils.equals($arg2(), ((Eq) that).$arg2())
             ;
         }
         else

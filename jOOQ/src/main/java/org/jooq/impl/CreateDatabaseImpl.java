@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,25 +69,23 @@ final class CreateDatabaseImpl
 extends
     AbstractDDLQuery
 implements
+    MCreateDatabase,
     CreateDatabaseFinalStep
 {
 
     final Catalog database;
-    final boolean createDatabaseIfNotExists;
+    final boolean ifNotExists;
 
     CreateDatabaseImpl(
         Configuration configuration,
         Catalog database,
-        boolean createDatabaseIfNotExists
+        boolean ifNotExists
     ) {
         super(configuration);
 
         this.database = database;
-        this.createDatabaseIfNotExists = createDatabaseIfNotExists;
+        this.ifNotExists = ifNotExists;
     }
-
-    final Catalog $database()                  { return database; }
-    final boolean $createDatabaseIfNotExists() { return createDatabaseIfNotExists; }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
@@ -101,7 +101,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (createDatabaseIfNotExists && !supportsIfNotExists(ctx))
+        if (ifNotExists && !supportsIfNotExists(ctx))
             tryCatch(ctx, DDLStatementType.CREATE_DATABASE, c -> accept0(c));
         else
             accept0(ctx);
@@ -110,11 +110,63 @@ implements
     private final void accept0(Context<?> ctx) {
         ctx.visit(K_CREATE).sql(' ').visit(K_DATABASE);
 
-        if (createDatabaseIfNotExists && supportsIfNotExists(ctx))
+        if (ifNotExists && supportsIfNotExists(ctx))
             ctx.sql(' ').visit(K_IF_NOT_EXISTS);
 
         ctx.sql(' ').visit(database);
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Catalog $database() {
+        return database;
+    }
+
+    @Override
+    public final boolean $ifNotExists() {
+        return ifNotExists;
+    }
+
+    @Override
+    public final MCreateDatabase $database(MCatalog newValue) {
+        return constructor().apply(newValue, $ifNotExists());
+    }
+
+    @Override
+    public final MCreateDatabase $ifNotExists(boolean newValue) {
+        return constructor().apply($database(), newValue);
+    }
+
+    public final Function2<? super MCatalog, ? super Boolean, ? extends MCreateDatabase> constructor() {
+        return (a1, a2) -> new CreateDatabaseImpl(configuration(), (Catalog) a1, a2);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $database(),
+            $ifNotExists(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $database()
+        );
+    }
 }

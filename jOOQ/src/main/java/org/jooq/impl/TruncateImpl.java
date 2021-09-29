@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,6 +69,7 @@ final class TruncateImpl<R extends Record>
 extends
     AbstractDDLQuery
 implements
+    MTruncate<R>,
     TruncateIdentityStep<R>,
     TruncateCascadeStep<R>,
     TruncateFinalStep<R>,
@@ -101,10 +104,6 @@ implements
         this.restartIdentity = restartIdentity;
         this.cascade = cascade;
     }
-
-    final Table<R> $table()           { return table; }
-    final Boolean  $restartIdentity() { return restartIdentity; }
-    final Cascade  $cascade()         { return cascade; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -197,4 +196,67 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Table<R> $table() {
+        return table;
+    }
+
+    @Override
+    public final Boolean $restartIdentity() {
+        return restartIdentity;
+    }
+
+    @Override
+    public final Cascade $cascade() {
+        return cascade;
+    }
+
+    @Override
+    public final MTruncate<R> $table(MTable<R> newValue) {
+        return constructor().apply(newValue, $restartIdentity(), $cascade());
+    }
+
+    @Override
+    public final MTruncate<R> $restartIdentity(Boolean newValue) {
+        return constructor().apply($table(), newValue, $cascade());
+    }
+
+    @Override
+    public final MTruncate<R> $cascade(Cascade newValue) {
+        return constructor().apply($table(), $restartIdentity(), newValue);
+    }
+
+    public final Function3<? super MTable<R>, ? super Boolean, ? super Cascade, ? extends MTruncate<R>> constructor() {
+        return (a1, a2, a3) -> new TruncateImpl(configuration(), (Table<R>) a1, a2, a3);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $table(),
+            $restartIdentity(),
+            $cascade(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $table()
+        );
+    }
 }

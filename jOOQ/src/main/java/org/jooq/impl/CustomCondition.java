@@ -44,6 +44,7 @@ import java.util.function.Consumer;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
+// ...
 
 /**
  * A base class for custom {@link Condition} implementations in client code.
@@ -58,8 +59,9 @@ import org.jooq.Context;
  *
  * @author Lukas Eder
  */
-public abstract class CustomCondition extends AbstractCondition {
-    private static final Clause[] CLAUSES          = { CUSTOM };
+public abstract class CustomCondition extends AbstractCondition implements UEmptyCondition {
+
+    private static final Clause[] CLAUSES = { CUSTOM };
 
     protected CustomCondition() {}
 

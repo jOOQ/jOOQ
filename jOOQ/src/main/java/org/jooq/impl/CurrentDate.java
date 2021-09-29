@@ -46,15 +46,15 @@ import static org.jooq.impl.Names.N_CURRENT_TIMESTAMP;
 import static org.jooq.impl.Names.N_TRUNC;
 
 import java.sql.Date;
-import java.sql.Time;
 
 import org.jooq.Context;
 import org.jooq.DataType;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class CurrentDate<T> extends AbstractField<T> {
+final class CurrentDate<T> extends AbstractField<T> implements MCurrentDate<T> {
 
     CurrentDate(DataType<T> type) {
         super(N_CURRENT_DATE, type);

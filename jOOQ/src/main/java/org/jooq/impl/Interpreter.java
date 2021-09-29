@@ -42,8 +42,8 @@ import static java.util.Arrays.asList;
 import static org.jooq.Name.Quoted.QUOTED;
 import static org.jooq.conf.SettingsTools.interpreterLocale;
 import static org.jooq.impl.AbstractName.NO_NAME;
-import static org.jooq.impl.Cascade.CASCADE;
-import static org.jooq.impl.Cascade.RESTRICT;
+// ...
+// ...
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.DSL.name;
@@ -110,6 +110,7 @@ import org.jooq.conf.InterpreterSearchSchema;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.ConstraintImpl.Action;
+// ...
 import org.jooq.tools.JooqLogger;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -256,7 +257,7 @@ final class Interpreter {
         Schema schema = query.$schema();
 
         if (getSchema(schema, false) != null) {
-            if (!query.$createSchemaIfNotExists())
+            if (!query.$ifNotExists())
                 throw alreadyExists(schema);
 
             return;
@@ -271,7 +272,7 @@ final class Interpreter {
 
         MutableSchema oldSchema = getSchema(schema);
         if (oldSchema == null) {
-            if (!query.$alterSchemaIfExists())
+            if (!query.$ifExists())
                 throw notExists(schema);
 
             return;
@@ -293,7 +294,7 @@ final class Interpreter {
         MutableSchema mutableSchema = getSchema(schema);
 
         if (mutableSchema == null) {
-            if (!query.$dropSchemaIfExists())
+            if (!query.$ifExists())
                 throw notExists(schema);
 
             return;
@@ -758,7 +759,7 @@ final class Interpreter {
         MutableSchema schema = getSchema(table.getSchema());
         MutableTable existing = schema.table(table);
         if (existing == null) {
-            if (!query.$dropTableIfExists())
+            if (!query.$ifExists())
                 throw notExists(table);
 
             return;
@@ -805,7 +806,7 @@ final class Interpreter {
             ? dataTypes(query.$select())
             : map(query.$fields(), f -> f.getDataType());
 
-        newTable(table, schema, asList(query.$fields()), columnTypes, query.$select(), null, TableOptions.view(query.$select()));
+        newTable(table, schema, query.$fields(), columnTypes, query.$select(), null, TableOptions.view(query.$select()));
     }
 
     private final void accept0(AlterViewImpl query) {
@@ -814,7 +815,7 @@ final class Interpreter {
 
         MutableTable existing = schema.table(table);
         if (existing == null) {
-            if (!query.$alterViewIfExists())
+            if (!query.$ifExists())
                 throw viewNotExists(table);
 
             return;
@@ -835,7 +836,7 @@ final class Interpreter {
 
         MutableTable existing = schema.table(table);
         if (existing == null) {
-            if (!query.$dropViewIfExists())
+            if (!query.$ifExists())
                 throw viewNotExists(table);
 
             return;
@@ -852,7 +853,7 @@ final class Interpreter {
 
         MutableSequence existing = schema.sequence(sequence);
         if (existing != null) {
-            if (!query.$createSequenceIfNotExists())
+            if (!query.$ifNotExists())
                 throw alreadyExists(sequence);
 
             return;
@@ -874,7 +875,7 @@ final class Interpreter {
 
         MutableSequence existing = schema.sequence(sequence);
         if (existing == null) {
-            if (!query.$alterSequenceIfExists())
+            if (!query.$ifExists())
                 throw notExists(sequence);
 
             return;
@@ -934,7 +935,7 @@ final class Interpreter {
 
         MutableSequence existing = schema.sequence(sequence);
         if (existing == null) {
-            if (!query.$dropSequenceIfExists())
+            if (!query.$ifExists())
                 throw notExists(sequence);
 
             return;
@@ -956,7 +957,7 @@ final class Interpreter {
         List<MutableSortField> mtf = mt.sortFields(query.$on());
 
         if (existing != null) {
-            if (!query.$createIndexIfNotExists())
+            if (!query.$ifNotExists())
                 throw alreadyExists(index);
 
             return;
@@ -968,7 +969,7 @@ final class Interpreter {
     private final void accept0(AlterIndexImpl query) {
         Index index = query.$index();
         Table<?> table = query.$on() != null ? query.$on() : index.getTable();
-        MutableIndex existing = index(index, table, query.$alterIndexIfExists(), true);
+        MutableIndex existing = index(index, table, query.$ifExists(), true);
 
         if (existing != null) {
             if (query.$renameTo() != null)
@@ -984,7 +985,7 @@ final class Interpreter {
     private final void accept0(DropIndexImpl query) {
         Index index = query.$index();
         Table<?> table = query.$on() != null ? query.$on() : index.getTable();
-        MutableIndex existing = index(index, table, query.$dropIndexIfExists(), true);
+        MutableIndex existing = index(index, table, query.$ifExists(), true);
 
         if (existing != null)
             existing.table.indexes.remove(existing);
@@ -996,7 +997,7 @@ final class Interpreter {
 
         MutableDomain existing = schema.domain(domain);
         if (existing != null) {
-            if (!query.$createDomainIfNotExists())
+            if (!query.$ifNotExists())
                 throw alreadyExists(domain);
 
             return;
@@ -1020,7 +1021,7 @@ final class Interpreter {
 
         MutableDomain existing = schema.domain(domain);
         if (existing == null) {
-            if (!query.$alterDomainIfExists())
+            if (!query.$ifExists())
                 throw notExists(domain);
 
             return;
@@ -1084,7 +1085,7 @@ final class Interpreter {
 
         MutableDomain existing = schema.domain(domain);
         if (existing == null) {
-            if (!query.$dropDomainIfExists())
+            if (!query.$ifExists())
                 throw notExists(domain);
 
             return;
@@ -1240,8 +1241,8 @@ final class Interpreter {
     private final MutableTable newTable(
         Table<?> table,
         MutableSchema schema,
-        List<Field<?>> columns,
-        List<DataType<?>> columnTypes,
+        List<? extends Field<?>> columns,
+        List<? extends DataType<?>> columnTypes,
         Select<?> select,
         Comment comment,
         TableOptions options
@@ -1702,7 +1703,7 @@ final class Interpreter {
             if (primaryKey != null && set.equals(new HashSet<>(primaryKey.fields)))
                 return primaryKey;
             else
-                return findAny(uniqueKeys, mu -> set.equals(new HashSet<>(mu.fields)));
+                return Tools.findAny(uniqueKeys, mu -> set.equals(new HashSet<>(mu.fields)));
         }
 
         private final class InterpretedTable extends TableImpl<Record> {

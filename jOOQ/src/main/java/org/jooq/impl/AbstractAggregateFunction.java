@@ -73,7 +73,9 @@ import static org.jooq.impl.Tools.isEmpty;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import org.jooq.AggregateFilterStep;
 import org.jooq.AggregateFunction;
@@ -90,6 +92,8 @@ import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.WindowBeforeOverStep;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
@@ -99,7 +103,8 @@ extends AbstractWindowFunction<T>
 implements
     AggregateFunction<T>,
     OrderedAggregateFunction<T>,
-    ArrayAggOrderByStep<T> {
+    ArrayAggOrderByStep<T>,
+    MAggregateFunction<T> {
 
 
 
@@ -352,14 +357,12 @@ implements
 
     @Override
     public final WindowBeforeOverStep<T> filterWhere(Condition... conditions) {
-        return filterWhere(Arrays.asList(conditions));
+        return filterWhere(DSL.and(conditions));
     }
 
     @Override
     public final WindowBeforeOverStep<T> filterWhere(Collection<? extends Condition> conditions) {
-        ConditionProviderImpl c = new ConditionProviderImpl();
-        c.addConditions(conditions);
-        return filterWhere(c);
+        return filterWhere(DSL.and(conditions));
     }
 
     @Override
@@ -532,5 +535,31 @@ implements
             default:
                 return NUMERIC;
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    public final boolean $distinct() {
+        return distinct;
+    }
+
+    @Override
+    public final Condition $filterWhere() {
+        return filter;
+    }
+
+    @Override
+    public /* non-final */ <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return super.traverse(
+            QOM.traverse(init, abort, recurse, accumulate, this, filter),
+            abort, recurse, accumulate
+        );
     }
 }

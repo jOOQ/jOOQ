@@ -51,6 +51,7 @@ import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
+// ...
 
 /**
  * A {@link Select} query that re-aliases its projection, or produces a derived
@@ -59,7 +60,7 @@ import org.jooq.TableOptions;
  *
  * @author Lukas Eder
  */
-final class AliasedSelect<R extends Record> extends AbstractTable<R> {
+final class AliasedSelect<R extends Record> extends AbstractTable<R> implements UTransient {
 
     private final Select<R> query;
     private final boolean   subquery;

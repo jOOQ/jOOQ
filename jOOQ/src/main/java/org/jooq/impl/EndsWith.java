@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class EndsWith<T>
 extends
     AbstractCondition
+implements
+    MEndsWith<T>
 {
 
     final Field<T> string;
@@ -109,15 +113,44 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $arg1() {
+        return string;
+    }
+
+    @Override
+    public final Field<T> $arg2() {
+        return suffix;
+    }
+
+    @Override
+    public final MEndsWith<T> $arg1(MField<T> newValue) {
+        return constructor().apply(newValue, $arg2());
+    }
+
+    @Override
+    public final MEndsWith<T> $arg2(MField<T> newValue) {
+        return constructor().apply($arg1(), newValue);
+    }
+
+    @Override
+    public final Function2<? super MField<T>, ? super MField<T>, ? extends MEndsWith<T>> constructor() {
+        return (a1, a2) -> new EndsWith<>((Field<T>) a1, (Field<T>) a2);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof EndsWith) {
             return
-                StringUtils.equals(string, ((EndsWith) that).string) &&
-                StringUtils.equals(suffix, ((EndsWith) that).suffix)
+                StringUtils.equals($string(), ((EndsWith) that).$string()) &&
+                StringUtils.equals($suffix(), ((EndsWith) that).$suffix())
             ;
         }
         else

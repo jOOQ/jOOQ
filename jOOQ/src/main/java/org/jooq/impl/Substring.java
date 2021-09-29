@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class Substring
 extends
     AbstractField<String>
+implements
+    MSubstring
 {
 
     final Field<String>           string;
@@ -190,16 +194,81 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<String> $string() {
+        return string;
+    }
+
+    @Override
+    public final Field<? extends Number> $startingPosition() {
+        return startingPosition;
+    }
+
+    @Override
+    public final Field<? extends Number> $length() {
+        return length;
+    }
+
+    @Override
+    public final MSubstring $string(MField<String> newValue) {
+        return constructor().apply(newValue, $startingPosition(), $length());
+    }
+
+    @Override
+    public final MSubstring $startingPosition(MField<? extends Number> newValue) {
+        return constructor().apply($string(), newValue, $length());
+    }
+
+    @Override
+    public final MSubstring $length(MField<? extends Number> newValue) {
+        return constructor().apply($string(), $startingPosition(), newValue);
+    }
+
+    public final Function3<? super MField<String>, ? super MField<? extends Number>, ? super MField<? extends Number>, ? extends MSubstring> constructor() {
+        return (a1, a2, a3) -> new Substring((Field<String>) a1, (Field<? extends Number>) a2, (Field<? extends Number>) a3);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $string(),
+            $startingPosition(),
+            $length(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $string(),
+            $startingPosition(),
+            $length()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Substring) {
             return
-                StringUtils.equals(string, ((Substring) that).string) &&
-                StringUtils.equals(startingPosition, ((Substring) that).startingPosition) &&
-                StringUtils.equals(length, ((Substring) that).length)
+                StringUtils.equals($string(), ((Substring) that).$string()) &&
+                StringUtils.equals($startingPosition(), ((Substring) that).$startingPosition()) &&
+                StringUtils.equals($length(), ((Substring) that).$length())
             ;
         }
         else

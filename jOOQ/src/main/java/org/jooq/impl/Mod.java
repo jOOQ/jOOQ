@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,22 +68,24 @@ import java.util.stream.*;
 final class Mod<T extends Number>
 extends
     AbstractField<T>
+implements
+    MMod<T>
 {
 
-    final Field<T>                arg1;
-    final Field<? extends Number> arg2;
+    final Field<T>                dividend;
+    final Field<? extends Number> divisor;
 
     Mod(
-        Field<T> arg1,
-        Field<? extends Number> arg2
+        Field<T> dividend,
+        Field<? extends Number> divisor
     ) {
         super(
             N_MOD,
-            allNotNull((DataType) dataType(INTEGER, arg1, false), arg1, arg2)
+            allNotNull((DataType) dataType(INTEGER, dividend, false), dividend, divisor)
         );
 
-        this.arg1 = nullSafeNotNull(arg1, INTEGER);
-        this.arg2 = nullSafeNotNull(arg2, INTEGER);
+        this.dividend = nullSafeNotNull(dividend, INTEGER);
+        this.divisor = nullSafeNotNull(divisor, INTEGER);
     }
 
     // -------------------------------------------------------------------------
@@ -110,12 +114,12 @@ extends
 
 
             case SQLITE: {
-                ctx.sql('(').visit(arg1).sql(" % ").visit(arg2).sql(')');
+                ctx.sql('(').visit(dividend).sql(" % ").visit(divisor).sql(')');
                 break;
             }
 
             default:
-                ctx.visit(function(N_MOD, getDataType(), arg1, arg2));
+                ctx.visit(function(N_MOD, getDataType(), dividend, divisor));
                 break;
         }
     }
@@ -130,15 +134,44 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $arg1() {
+        return dividend;
+    }
+
+    @Override
+    public final Field<? extends Number> $arg2() {
+        return divisor;
+    }
+
+    @Override
+    public final MMod<T> $arg1(MField<T> newValue) {
+        return constructor().apply(newValue, $arg2());
+    }
+
+    @Override
+    public final MMod<T> $arg2(MField<? extends Number> newValue) {
+        return constructor().apply($arg1(), newValue);
+    }
+
+    @Override
+    public final Function2<? super MField<T>, ? super MField<? extends Number>, ? extends MMod<T>> constructor() {
+        return (a1, a2) -> new Mod<>((Field<T>) a1, (Field<? extends Number>) a2);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Mod) {
             return
-                StringUtils.equals(arg1, ((Mod) that).arg1) &&
-                StringUtils.equals(arg2, ((Mod) that).arg2)
+                StringUtils.equals($dividend(), ((Mod) that).$dividend()) &&
+                StringUtils.equals($divisor(), ((Mod) that).$divisor())
             ;
         }
         else

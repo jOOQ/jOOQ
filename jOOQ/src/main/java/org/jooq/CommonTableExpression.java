@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+// ...
 
 /**
  * A common table expression.
@@ -61,6 +62,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface CommonTableExpression<R extends Record> extends Table<R> {
+public interface CommonTableExpression<R extends Record> extends Table<R>, MCommonTableExpression<R> {
 
 }

@@ -43,11 +43,12 @@ import static org.jooq.Clause.CONDITION_COMPARISON;
 
 import org.jooq.Clause;
 import org.jooq.Context;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class NoCondition extends AbstractCondition {
+final class NoCondition extends AbstractCondition implements UEmptyCondition {
 
     private static final Clause[] CLAUSES  = { CONDITION, CONDITION_COMPARISON };
     static final NoCondition      INSTANCE = new NoCondition();

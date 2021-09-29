@@ -340,21 +340,18 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     // -------------------------------------------------------------------------
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition eq(T arg2) {
-        return new Eq(this, Tools.field(arg2, this));
+        return new Eq<>(this, Tools.field(arg2, this));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition eq(Select<? extends Record1<T>> arg2) {
-        return new Eq(this, DSL.field(arg2));
+        return new Eq<>(this, DSL.field(arg2));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition eq(Field<T> arg2) {
-        return new Eq(this, nullSafe(arg2, getDataType()));
+        return new Eq<>(this, nullSafe(arg2, getDataType()));
     }
 
     @Override
@@ -373,21 +370,18 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition ge(T arg2) {
-        return new Ge(this, Tools.field(arg2, this));
+        return new Ge<>(this, Tools.field(arg2, this));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition ge(Select<? extends Record1<T>> arg2) {
-        return new Ge(this, DSL.field(arg2));
+        return new Ge<>(this, DSL.field(arg2));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition ge(Field<T> arg2) {
-        return new Ge(this, nullSafe(arg2, getDataType()));
+        return new Ge<>(this, nullSafe(arg2, getDataType()));
     }
 
     @Override
@@ -421,45 +415,38 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition gt(T arg2) {
-        return new Gt(this, Tools.field(arg2, this));
+        return new Gt<>(this, Tools.field(arg2, this));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition gt(Select<? extends Record1<T>> arg2) {
-        return new Gt(this, DSL.field(arg2));
+        return new Gt<>(this, DSL.field(arg2));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition gt(Field<T> arg2) {
-        return new Gt(this, nullSafe(arg2, getDataType()));
+        return new Gt<>(this, nullSafe(arg2, getDataType()));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition in(Select<? extends Record1<T>> arg2) {
-        return new In(this, arg2);
+        return new In<>(this, arg2);
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isDistinctFrom(T arg2) {
-        return new IsDistinctFrom(this, Tools.field(arg2, this));
+        return new IsDistinctFrom<>(this, Tools.field(arg2, this));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isDistinctFrom(Select<? extends Record1<T>> arg2) {
-        return new IsDistinctFrom(this, DSL.field(arg2));
+        return new IsDistinctFrom<>(this, DSL.field(arg2));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isDistinctFrom(Field<T> arg2) {
-        return new IsDistinctFrom(this, nullSafe(arg2, getDataType()));
+        return new IsDistinctFrom<>(this, nullSafe(arg2, getDataType()));
     }
 
     @Override
@@ -468,21 +455,18 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isNotDistinctFrom(T arg2) {
-        return new IsNotDistinctFrom(this, Tools.field(arg2, this));
+        return new IsNotDistinctFrom<>(this, Tools.field(arg2, this));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isNotDistinctFrom(Select<? extends Record1<T>> arg2) {
-        return new IsNotDistinctFrom(this, DSL.field(arg2));
+        return new IsNotDistinctFrom<>(this, DSL.field(arg2));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition isNotDistinctFrom(Field<T> arg2) {
-        return new IsNotDistinctFrom(this, nullSafe(arg2, getDataType()));
+        return new IsNotDistinctFrom<>(this, nullSafe(arg2, getDataType()));
     }
 
     @Override
@@ -491,21 +475,18 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition le(T arg2) {
-        return new Le(this, Tools.field(arg2, this));
+        return new Le<>(this, Tools.field(arg2, this));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition le(Select<? extends Record1<T>> arg2) {
-        return new Le(this, DSL.field(arg2));
+        return new Le<>(this, DSL.field(arg2));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition le(Field<T> arg2) {
-        return new Le(this, nullSafe(arg2, getDataType()));
+        return new Le<>(this, nullSafe(arg2, getDataType()));
     }
 
     @Override
@@ -539,63 +520,53 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final LikeEscapeStep like(String pattern) {
         return new Like(this, Tools.field(pattern));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final LikeEscapeStep like(Field<String> pattern) {
         return new Like(this, nullSafe(pattern, getDataType()));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final LikeEscapeStep likeIgnoreCase(String pattern) {
         return new LikeIgnoreCase(this, Tools.field(pattern));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final LikeEscapeStep likeIgnoreCase(Field<String> pattern) {
         return new LikeIgnoreCase(this, nullSafe(pattern, getDataType()));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition lt(T arg2) {
-        return new Lt(this, Tools.field(arg2, this));
+        return new Lt<>(this, Tools.field(arg2, this));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition lt(Select<? extends Record1<T>> arg2) {
-        return new Lt(this, DSL.field(arg2));
+        return new Lt<>(this, DSL.field(arg2));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition lt(Field<T> arg2) {
-        return new Lt(this, nullSafe(arg2, getDataType()));
+        return new Lt<>(this, nullSafe(arg2, getDataType()));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition ne(T arg2) {
-        return new Ne(this, Tools.field(arg2, this));
+        return new Ne<>(this, Tools.field(arg2, this));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition ne(Select<? extends Record1<T>> arg2) {
-        return new Ne(this, DSL.field(arg2));
+        return new Ne<>(this, DSL.field(arg2));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition ne(Field<T> arg2) {
-        return new Ne(this, nullSafe(arg2, getDataType()));
+        return new Ne<>(this, nullSafe(arg2, getDataType()));
     }
 
     @Override
@@ -614,55 +585,46 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition notIn(Select<? extends Record1<T>> arg2) {
-        return new NotIn(this, arg2);
+        return new NotIn<>(this, arg2);
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final LikeEscapeStep notLike(String pattern) {
         return new NotLike(this, Tools.field(pattern));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final LikeEscapeStep notLike(Field<String> pattern) {
         return new NotLike(this, nullSafe(pattern, getDataType()));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final LikeEscapeStep notLikeIgnoreCase(String pattern) {
         return new NotLikeIgnoreCase(this, Tools.field(pattern));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final LikeEscapeStep notLikeIgnoreCase(Field<String> pattern) {
         return new NotLikeIgnoreCase(this, nullSafe(pattern, getDataType()));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final LikeEscapeStep notSimilarTo(String pattern) {
         return new NotSimilarTo(this, Tools.field(pattern));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final LikeEscapeStep notSimilarTo(Field<String> pattern) {
         return new NotSimilarTo(this, nullSafe(pattern, getDataType()));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final LikeEscapeStep similarTo(String pattern) {
         return new SimilarTo(this, Tools.field(pattern));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final LikeEscapeStep similarTo(Field<String> pattern) {
         return new SimilarTo(this, nullSafe(pattern, getDataType()));
     }
@@ -778,44 +740,42 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public final Field<T> mod(Number arg2) {
-        return new Mod(this, Tools.field(arg2));
+    public final Field<T> mod(Number divisor) {
+        return new Mod(this, Tools.field(divisor));
     }
 
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public final Field<T> mod(Field<? extends Number> arg2) {
-        return new Mod(this, nullSafe(arg2, getDataType()));
+    public final Field<T> mod(Field<? extends Number> divisor) {
+        return new Mod(this, nullSafe(divisor, getDataType()));
     }
 
     @Override
-    public final Field<T> modulo(Number arg2) {
-        return mod(arg2);
+    public final Field<T> modulo(Number divisor) {
+        return mod(divisor);
     }
 
     @Override
-    public final Field<T> modulo(Field<? extends Number> arg2) {
-        return mod(arg2);
+    public final Field<T> modulo(Field<? extends Number> divisor) {
+        return mod(divisor);
     }
 
     @Override
-    public final Field<T> rem(Number arg2) {
-        return mod(arg2);
+    public final Field<T> rem(Number divisor) {
+        return mod(divisor);
     }
 
     @Override
-    public final Field<T> rem(Field<? extends Number> arg2) {
-        return mod(arg2);
+    public final Field<T> rem(Field<? extends Number> divisor) {
+        return mod(divisor);
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Field<BigDecimal> power(Number exponent) {
         return DSL.power((Field) this, exponent);
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Field<BigDecimal> power(Field<? extends Number> exponent) {
         return DSL.power((Field) this, exponent);
     }
@@ -859,75 +819,63 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     // -------------------------------------------------------------------------
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition contains(T content) {
-        return new Contains(this, Tools.field(content, this));
+        return new Contains<>(this, Tools.field(content, this));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition contains(Field<T> content) {
-        return new Contains(this, nullSafe(content, getDataType()));
+        return new Contains<>(this, nullSafe(content, getDataType()));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition containsIgnoreCase(T content) {
-        return new ContainsIgnoreCase(this, Tools.field(content, this));
+        return new ContainsIgnoreCase<>(this, Tools.field(content, this));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition containsIgnoreCase(Field<T> content) {
-        return new ContainsIgnoreCase(this, nullSafe(content, getDataType()));
+        return new ContainsIgnoreCase<>(this, nullSafe(content, getDataType()));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition endsWith(T suffix) {
-        return new EndsWith(this, Tools.field(suffix, this));
+        return new EndsWith<>(this, Tools.field(suffix, this));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition endsWith(Field<T> suffix) {
-        return new EndsWith(this, nullSafe(suffix, getDataType()));
+        return new EndsWith<>(this, nullSafe(suffix, getDataType()));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition endsWithIgnoreCase(T suffix) {
-        return new EndsWithIgnoreCase(this, Tools.field(suffix, this));
+        return new EndsWithIgnoreCase<>(this, Tools.field(suffix, this));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition endsWithIgnoreCase(Field<T> suffix) {
-        return new EndsWithIgnoreCase(this, nullSafe(suffix, getDataType()));
+        return new EndsWithIgnoreCase<>(this, nullSafe(suffix, getDataType()));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition startsWith(T prefix) {
-        return new StartsWith(this, Tools.field(prefix, this));
+        return new StartsWith<>(this, Tools.field(prefix, this));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition startsWith(Field<T> prefix) {
-        return new StartsWith(this, nullSafe(prefix, getDataType()));
+        return new StartsWith<>(this, nullSafe(prefix, getDataType()));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition startsWithIgnoreCase(T prefix) {
-        return new StartsWithIgnoreCase(this, Tools.field(prefix, this));
+        return new StartsWithIgnoreCase<>(this, Tools.field(prefix, this));
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Condition startsWithIgnoreCase(Field<T> prefix) {
-        return new StartsWithIgnoreCase(this, nullSafe(prefix, getDataType()));
+        return new StartsWithIgnoreCase<>(this, nullSafe(prefix, getDataType()));
     }
 
 
@@ -952,7 +900,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final Field<T> neg() {
-        return new Neg<>(this, false, ExpressionOperator.SUBTRACT);
+        return new Neg<>(this, false);
     }
 
     @Override
@@ -1241,12 +1189,12 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         if (isAccidentalCollection(values))
             return in((Collection<?>) values[0]);
 
-        return new InCondition<>(this, Tools.fields(values, this), IN);
+        return new InList<>(this, Tools.fields(values, this));
     }
 
     @Override
     public final Condition in(Field<?>... values) {
-        return new InCondition<>(this, nullSafeList(values, getDataType()), IN);
+        return new InList<>(this, nullSafeList(values, getDataType()));
     }
 
     @Override
@@ -1271,12 +1219,12 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         if (isAccidentalCollection(values))
             return notIn((Collection<?>) values[0]);
 
-        return new InCondition<>(this, Tools.fields(values, this), NOT_IN);
+        return new NotInList<>(this, Tools.fields(values, this));
     }
 
     @Override
     public final Condition notIn(Field<?>... values) {
-        return new InCondition<>(this, nullSafeList(values, getDataType()), NOT_IN);
+        return new NotInList<>(this, nullSafeList(values, getDataType()));
     }
 
     @Override

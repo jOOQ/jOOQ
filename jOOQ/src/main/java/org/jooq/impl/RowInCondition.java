@@ -61,7 +61,6 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.trueCondition;
-import static org.jooq.impl.InCondition.padded;
 import static org.jooq.impl.Tools.map;
 
 import java.util.ArrayList;
@@ -76,13 +75,14 @@ import org.jooq.Context;
 import org.jooq.QueryPartInternal;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class RowInCondition extends AbstractCondition {
-    private static final Clause[]              CLAUSES_IN       = { CONDITION, CONDITION_IN };
-    private static final Clause[]              CLAUSES_IN_NOT   = { CONDITION, CONDITION_NOT_IN };
+final class RowInCondition extends AbstractCondition implements UNotYetImplemented {
+    private static final Clause[]              CLAUSES_IN     = { CONDITION, CONDITION_IN };
+    private static final Clause[]              CLAUSES_IN_NOT = { CONDITION, CONDITION_NOT_IN };
 
     // Currently not yet supported in SQLite:
     // https://www.sqlite.org/rowvalue.html
@@ -131,7 +131,7 @@ final class RowInCondition extends AbstractCondition {
                 ctx.visit(left)
                    .sql(' ')
                    .visit((not ? NOT_IN : IN).toKeyword())
-                   .sql(" (").visit(new QueryPartListView<>(padded(ctx, right))).sql(')');
+                   .sql(" (").visit(new QueryPartListView<>(AbstractInList.padded(ctx, right))).sql(')');
             }
         }
     }

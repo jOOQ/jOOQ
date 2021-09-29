@@ -66,6 +66,7 @@ import org.jooq.UpdateResultStep;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
+// ...
 
 /**
  * A wrapped DML query ({@link Insert}, {@link Update}, {@link Delete}) that
@@ -74,12 +75,15 @@ import org.jooq.exception.DataTypeException;
  * @author Lukas Eder
  */
 final class DMLQueryAsResultQuery<R extends Record, Q extends AbstractDMLQuery<R>>
-extends AbstractQueryPart
+extends
+    AbstractQueryPart
 implements
     ResultQueryTrait<R>,
     DeleteResultStep<R>,
     UpdateResultStep<R>,
-    InsertResultStep<R> {
+    InsertResultStep<R>,
+    UNotYetImplemented
+{
     private final Q                        delegate;
     private final boolean                  returningResult;
     private Table<?>                       coerceTable;

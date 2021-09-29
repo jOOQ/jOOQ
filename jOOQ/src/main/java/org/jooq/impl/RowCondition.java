@@ -82,12 +82,13 @@ import org.jooq.Field;
 import org.jooq.QueryPartInternal;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
+// ...
 
 /**
  * @author Lukas Eder
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
-final class RowCondition extends AbstractCondition {
+final class RowCondition extends AbstractCondition implements UNotYetImplemented {
     private static final Clause[]        CLAUSES            = { CONDITION, CONDITION_COMPARISON };
 
 

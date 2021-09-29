@@ -37,5 +37,22 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Names.N_LEAD;
 
-enum XMLPassingMechanism { BY_REF, BY_VALUE, DEFAULT }
+import org.jooq.Field;
+// ...
+
+/**
+ * @author Lukas Eder
+ */
+final class Lead<T> extends AbstractLeadLag<T> implements MLead<T> {
+
+    Lead(Field<T> field, Field<Integer> offset, Field<T> defaultValue) {
+        super(N_LEAD, field, offset, defaultValue);
+    }
+
+    @Override
+    final AbstractLeadLag<T> constructor(Field<T> f, Field<Integer> o, Field<T> def) {
+        return new Lead<>(f, o, def);
+    }
+}

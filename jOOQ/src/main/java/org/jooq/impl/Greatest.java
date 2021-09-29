@@ -41,21 +41,27 @@ import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.Names.N_GREATEST;
 import static org.jooq.impl.Names.N_MAX;
 import static org.jooq.impl.Names.N_MAXVALUE;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function1;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Greatest<T> extends AbstractField<T> {
-    private final Field<?>[]  args;
+final class Greatest<T> extends AbstractField<T> implements MGreatest<T> {
 
-    Greatest(DataType<T> type, Field<?>... args) {
-        super(N_GREATEST, type);
+    private final QueryPartListView<? extends Field<?>> args;
 
-        this.args = args;
+    Greatest(Field<?>... args) {
+        super(N_GREATEST, (DataType<T>) Tools.nullSafeDataType(args[0]));
+
+        this.args = QueryPartListView.wrap(args);
     }
 
     @SuppressWarnings("unchecked")
@@ -63,8 +69,8 @@ final class Greatest<T> extends AbstractField<T> {
     public final void accept(Context<?> ctx) {
 
         // In any dialect, a single argument is always the greatest
-        if (args.length == 1) {
-            ctx.visit(args[0]);
+        if (args.size() == 1) {
+            ctx.visit(args.get(0));
             return;
         }
 
@@ -80,37 +86,50 @@ final class Greatest<T> extends AbstractField<T> {
 
 
             case DERBY: {
-                Field<T> first = (Field<T>) args[0];
-                Field<T> other = (Field<T>) args[1];
+                Field<T> first = (Field<T>) args.get(0);
+                Field<T> other = (Field<T>) args.get(1);
 
-                if (args.length > 2) {
-                    Field<?>[] remaining = new Field[args.length - 2];
+                if (args.size() > 2) {
+                    Field<?>[] remaining = new Field[args.size() - 2];
                     System.arraycopy(args, 2, remaining, 0, remaining.length);
 
                     ctx.visit(DSL
-                        .when(first.gt(other), DSL.greatest(first, remaining))
-                        .otherwise(DSL.greatest(other, remaining)));
+                       .when(first.gt(other), DSL.greatest(first, remaining))
+                       .otherwise(DSL.greatest(other, remaining)));
                 }
-                else {
+                else
                     ctx.visit(DSL
-                        .when(first.gt(other), first)
-                        .otherwise(other));
-                }
+                       .when(first.gt(other), first)
+                       .otherwise(other));
 
                 return;
             }
 
             case FIREBIRD:
-                ctx.visit(function(N_MAXVALUE, getDataType(), args));
+                ctx.visit(function(N_MAXVALUE, getDataType(), args.toArray(EMPTY_FIELD)));
                 return;
 
             case SQLITE:
-                ctx.visit(function(N_MAX, getDataType(), args));
+                ctx.visit(function(N_MAX, getDataType(), args.toArray(EMPTY_FIELD)));
                 return;
 
             default:
-                ctx.visit(function(N_GREATEST, getDataType(), args));
+                ctx.visit(function(N_GREATEST, getDataType(), args.toArray(EMPTY_FIELD)));
                 return;
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MList<? extends Field<T>> $arg1() {
+        return (MList<? extends Field<T>>) args;
+    }
+
+    @Override
+    public final Function1<? super MList<? extends MField<T>>, ? extends MField<T>> constructor() {
+        return a -> new Greatest<>(a.toArray(EMPTY_FIELD));
     }
 }

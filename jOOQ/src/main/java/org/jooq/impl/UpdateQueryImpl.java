@@ -158,11 +158,12 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.UpdateQuery;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements UpdateQuery<R> {
+final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements UpdateQuery<R>, UNotYetImplemented {
 
     private static final Clause[]        CLAUSES                   = { UPDATE };
 

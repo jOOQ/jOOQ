@@ -46,12 +46,14 @@ import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_NULL;
 
 import org.jooq.Context;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class NullStatement extends AbstractStatement {
-    static final NullStatement INSTANCE         = new NullStatement();
+final class NullStatement extends AbstractStatement implements MNull, UEmpty {
+    static final NullStatement INSTANCE = new NullStatement();
 
     @Override
     public final void accept(Context<?> ctx) {

@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,25 +69,26 @@ final class DropIndexImpl
 extends
     AbstractDDLQuery
 implements
+    MDropIndex,
     DropIndexOnStep,
     DropIndexCascadeStep,
     DropIndexFinalStep
 {
 
     final Index    index;
-    final boolean  dropIndexIfExists;
+    final boolean  ifExists;
           Table<?> on;
           Cascade  cascade;
 
     DropIndexImpl(
         Configuration configuration,
         Index index,
-        boolean dropIndexIfExists
+        boolean ifExists
     ) {
         this(
             configuration,
             index,
-            dropIndexIfExists,
+            ifExists,
             null,
             null
         );
@@ -94,22 +97,17 @@ implements
     DropIndexImpl(
         Configuration configuration,
         Index index,
-        boolean dropIndexIfExists,
+        boolean ifExists,
         Table<?> on,
         Cascade cascade
     ) {
         super(configuration);
 
         this.index = index;
-        this.dropIndexIfExists = dropIndexIfExists;
+        this.ifExists = ifExists;
         this.on = on;
         this.cascade = cascade;
     }
-
-    final Index    $index()             { return index; }
-    final boolean  $dropIndexIfExists() { return dropIndexIfExists; }
-    final Table<?> $on()                { return on; }
-    final Cascade  $cascade()           { return cascade; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -159,7 +157,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (dropIndexIfExists && !supportsIfExists(ctx))
+        if (ifExists && !supportsIfExists(ctx))
             tryCatch(ctx, DDLStatementType.DROP_INDEX, c -> accept0(c));
         else
             accept0(ctx);
@@ -168,7 +166,7 @@ implements
     private void accept0(Context<?> ctx) {
         ctx.visit(K_DROP_INDEX).sql(' ');
 
-        if (dropIndexIfExists && supportsIfExists(ctx))
+        if (ifExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');
 
 
@@ -193,4 +191,79 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Index $index() {
+        return index;
+    }
+
+    @Override
+    public final boolean $ifExists() {
+        return ifExists;
+    }
+
+    @Override
+    public final Table<?> $on() {
+        return on;
+    }
+
+    @Override
+    public final Cascade $cascade() {
+        return cascade;
+    }
+
+    @Override
+    public final MDropIndex $index(MIndex newValue) {
+        return constructor().apply(newValue, $ifExists(), $on(), $cascade());
+    }
+
+    @Override
+    public final MDropIndex $ifExists(boolean newValue) {
+        return constructor().apply($index(), newValue, $on(), $cascade());
+    }
+
+    @Override
+    public final MDropIndex $on(MTable<?> newValue) {
+        return constructor().apply($index(), $ifExists(), newValue, $cascade());
+    }
+
+    @Override
+    public final MDropIndex $cascade(Cascade newValue) {
+        return constructor().apply($index(), $ifExists(), $on(), newValue);
+    }
+
+    public final Function4<? super MIndex, ? super Boolean, ? super MTable<?>, ? super Cascade, ? extends MDropIndex> constructor() {
+        return (a1, a2, a3, a4) -> new DropIndexImpl(configuration(), (Index) a1, a2, (Table<?>) a3, a4);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $index(),
+            $ifExists(),
+            $on(),
+            $cascade(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $index(),
+            $on()
+        );
+    }
 }

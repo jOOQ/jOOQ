@@ -40,8 +40,8 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.impl.JSONOnNull.ABSENT_ON_NULL;
-import static org.jooq.impl.JSONOnNull.NULL_ON_NULL;
+// ...
+// ...
 import static org.jooq.impl.Keywords.K_ABSENT;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_ON;
@@ -50,11 +50,13 @@ import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.SQLDialect;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class JSONNull extends AbstractQueryPart implements SimpleQueryPart {
+final class JSONNull extends AbstractQueryPart implements SimpleQueryPart, UTransient {
     static final Set<SQLDialect> NO_SUPPORT_ABSENT_ON_NULL = SQLDialect.supportedBy(MARIADB, MYSQL, SQLITE);
 
     final JSONOnNull             type;

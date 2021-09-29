@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+// ...
 
 /**
  * A statement that can be placed inside of a {@link Block}, but not executed on
@@ -46,6 +47,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Statement extends QueryPart {
+public interface Statement extends QueryPart, MStatement {
 
 }

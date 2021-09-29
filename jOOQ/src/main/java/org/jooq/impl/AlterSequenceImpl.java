@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,13 +69,14 @@ final class AlterSequenceImpl<T extends Number>
 extends
     AbstractDDLQuery
 implements
+    MAlterSequence<T>,
     AlterSequenceStep<T>,
     AlterSequenceFlagsStep<T>,
     AlterSequenceFinalStep
 {
 
     final Sequence<T> sequence;
-    final boolean     alterSequenceIfExists;
+    final boolean     ifExists;
           Sequence<?> renameTo;
           boolean     restart;
           Field<T>    restartWith;
@@ -90,12 +93,12 @@ implements
     AlterSequenceImpl(
         Configuration configuration,
         Sequence<T> sequence,
-        boolean alterSequenceIfExists
+        boolean ifExists
     ) {
         this(
             configuration,
             sequence,
-            alterSequenceIfExists,
+            ifExists,
             null,
             false,
             null,
@@ -114,7 +117,7 @@ implements
     AlterSequenceImpl(
         Configuration configuration,
         Sequence<T> sequence,
-        boolean alterSequenceIfExists,
+        boolean ifExists,
         Sequence<?> renameTo,
         boolean restart,
         Field<T> restartWith,
@@ -131,7 +134,7 @@ implements
         super(configuration);
 
         this.sequence = sequence;
-        this.alterSequenceIfExists = alterSequenceIfExists;
+        this.ifExists = ifExists;
         this.renameTo = renameTo;
         this.restart = restart;
         this.restartWith = restartWith;
@@ -145,21 +148,6 @@ implements
         this.cache = cache;
         this.noCache = noCache;
     }
-
-    final Sequence<T> $sequence()              { return sequence; }
-    final boolean     $alterSequenceIfExists() { return alterSequenceIfExists; }
-    final Sequence<?> $renameTo()              { return renameTo; }
-    final boolean     $restart()               { return restart; }
-    final Field<T>    $restartWith()           { return restartWith; }
-    final Field<T>    $startWith()             { return startWith; }
-    final Field<T>    $incrementBy()           { return incrementBy; }
-    final Field<T>    $minvalue()              { return minvalue; }
-    final boolean     $noMinvalue()            { return noMinvalue; }
-    final Field<T>    $maxvalue()              { return maxvalue; }
-    final boolean     $noMaxvalue()            { return noMaxvalue; }
-    final Boolean     $cycle()                 { return cycle; }
-    final Field<T>    $cache()                 { return cache; }
-    final boolean     $noCache()               { return noCache; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -305,7 +293,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (alterSequenceIfExists && !supportsIfExists(ctx))
+        if (ifExists && !supportsIfExists(ctx))
             tryCatch(ctx, DDLStatementType.ALTER_SEQUENCE, c -> accept0(c));
         else
             accept0(ctx);
@@ -377,7 +365,7 @@ implements
            .sql(' ')
            .visit(ctx.family() == CUBRID ? K_SERIAL : K_SEQUENCE);
 
-        if (alterSequenceIfExists && supportsIfExists(ctx))
+        if (ifExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
 
         switch (ctx.family()) {
@@ -474,4 +462,195 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Sequence<T> $sequence() {
+        return sequence;
+    }
+
+    @Override
+    public final boolean $ifExists() {
+        return ifExists;
+    }
+
+    @Override
+    public final Sequence<?> $renameTo() {
+        return renameTo;
+    }
+
+    @Override
+    public final boolean $restart() {
+        return restart;
+    }
+
+    @Override
+    public final Field<T> $restartWith() {
+        return restartWith;
+    }
+
+    @Override
+    public final Field<T> $startWith() {
+        return startWith;
+    }
+
+    @Override
+    public final Field<T> $incrementBy() {
+        return incrementBy;
+    }
+
+    @Override
+    public final Field<T> $minvalue() {
+        return minvalue;
+    }
+
+    @Override
+    public final boolean $noMinvalue() {
+        return noMinvalue;
+    }
+
+    @Override
+    public final Field<T> $maxvalue() {
+        return maxvalue;
+    }
+
+    @Override
+    public final boolean $noMaxvalue() {
+        return noMaxvalue;
+    }
+
+    @Override
+    public final Boolean $cycle() {
+        return cycle;
+    }
+
+    @Override
+    public final Field<T> $cache() {
+        return cache;
+    }
+
+    @Override
+    public final boolean $noCache() {
+        return noCache;
+    }
+
+    @Override
+    public final MAlterSequence<T> $sequence(MSequence<T> newValue) {
+        return constructor().apply(newValue, $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MAlterSequence<T> $ifExists(boolean newValue) {
+        return constructor().apply($sequence(), newValue, $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MAlterSequence<T> $renameTo(MSequence<?> newValue) {
+        return constructor().apply($sequence(), $ifExists(), newValue, $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MAlterSequence<T> $restart(boolean newValue) {
+        return constructor().apply($sequence(), $ifExists(), $renameTo(), newValue, $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MAlterSequence<T> $restartWith(MField<T> newValue) {
+        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), newValue, $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MAlterSequence<T> $startWith(MField<T> newValue) {
+        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), newValue, $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MAlterSequence<T> $incrementBy(MField<T> newValue) {
+        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), newValue, $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MAlterSequence<T> $minvalue(MField<T> newValue) {
+        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), newValue, $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MAlterSequence<T> $noMinvalue(boolean newValue) {
+        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), newValue, $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MAlterSequence<T> $maxvalue(MField<T> newValue) {
+        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), newValue, $noMaxvalue(), $cycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MAlterSequence<T> $noMaxvalue(boolean newValue) {
+        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), newValue, $cycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MAlterSequence<T> $cycle(Boolean newValue) {
+        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), newValue, $cache(), $noCache());
+    }
+
+    @Override
+    public final MAlterSequence<T> $cache(MField<T> newValue) {
+        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), newValue, $noCache());
+    }
+
+    @Override
+    public final MAlterSequence<T> $noCache(boolean newValue) {
+        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), newValue);
+    }
+
+    public final Function14<? super MSequence<T>, ? super Boolean, ? super MSequence<?>, ? super Boolean, ? super MField<T>, ? super MField<T>, ? super MField<T>, ? super MField<T>, ? super Boolean, ? super MField<T>, ? super Boolean, ? super Boolean, ? super MField<T>, ? super Boolean, ? extends MAlterSequence<T>> constructor() {
+        return (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) -> new AlterSequenceImpl(configuration(), (Sequence<T>) a1, a2, (Sequence<?>) a3, a4, (Field<T>) a5, (Field<T>) a6, (Field<T>) a7, (Field<T>) a8, a9, (Field<T>) a10, a11, a12, (Field<T>) a13, a14);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $sequence(),
+            $ifExists(),
+            $renameTo(),
+            $restart(),
+            $restartWith(),
+            $startWith(),
+            $incrementBy(),
+            $minvalue(),
+            $noMinvalue(),
+            $maxvalue(),
+            $noMaxvalue(),
+            $cycle(),
+            $cache(),
+            $noCache(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $sequence(),
+            $renameTo(),
+            $restartWith(),
+            $startWith(),
+            $incrementBy(),
+            $minvalue(),
+            $maxvalue(),
+            $cache()
+        );
+    }
 }

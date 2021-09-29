@@ -59,13 +59,14 @@ import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.RenderContext.CastMode;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 
 /**
  * @author Lukas Eder
  */
-final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
+final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> implements UNotYetImplemented {
     private static final Set<SQLDialect> CASTS_NEEDED       = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
     private static final Set<SQLDialect> NO_SUPPORT_QUALIFY = SQLDialect.supportedBy(POSTGRES, SQLITE, YUGABYTE);
 

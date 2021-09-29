@@ -66,11 +66,12 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.SQLDialect;
 import org.jooq.True;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class TrueCondition extends AbstractCondition implements True {
+final class TrueCondition extends AbstractCondition implements True, MTrue {
 
     private static final Clause[] CLAUSES            = { CONDITION, CONDITION_COMPARISON };
     static final TrueCondition    INSTANCE           = new TrueCondition();

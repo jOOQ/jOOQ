@@ -62,6 +62,8 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.Arrays;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.jooq.Clause;
@@ -69,6 +71,7 @@ import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function1;
 import org.jooq.Name;
 // ...
 import org.jooq.Record;
@@ -78,7 +81,12 @@ import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
+// ...
+// ...
+// ...
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A common base type for tables
@@ -88,7 +96,7 @@ import org.jooq.tools.StringUtils;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-public class TableImpl<R extends Record> extends AbstractTable<R> implements ScopeMappable, ScopeNestable, SimpleQueryPart {
+public class TableImpl<R extends Record> extends AbstractTable<R> implements ScopeMappable, ScopeNestable, SimpleQueryPart, MTableRef<R> {
 
     private static final Clause[]        CLAUSES_TABLE_REFERENCE           = { TABLE, TABLE_REFERENCE };
     private static final Clause[]        CLAUSES_TABLE_ALIAS               = { TABLE, TABLE_ALIAS };
@@ -425,6 +433,25 @@ public class TableImpl<R extends Record> extends AbstractTable<R> implements Sco
     @Override
     public boolean declaresTables() {
         return true;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final <X> X traverse(
+        X init,
+        Predicate<? super X> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super X, ? super MQueryPart, ? extends X> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, getSchema());
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, getSchema(), s -> new TableImpl<>(getQualifiedName(), s), replacement);
     }
 
     // ------------------------------------------------------------------------

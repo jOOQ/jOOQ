@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class Translate
 extends
     AbstractField<String>
+implements
+    MTranslate
 {
 
     final Field<String> string;
@@ -131,16 +135,81 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<String> $string() {
+        return string;
+    }
+
+    @Override
+    public final Field<String> $from() {
+        return from;
+    }
+
+    @Override
+    public final Field<String> $to() {
+        return to;
+    }
+
+    @Override
+    public final MTranslate $string(MField<String> newValue) {
+        return constructor().apply(newValue, $from(), $to());
+    }
+
+    @Override
+    public final MTranslate $from(MField<String> newValue) {
+        return constructor().apply($string(), newValue, $to());
+    }
+
+    @Override
+    public final MTranslate $to(MField<String> newValue) {
+        return constructor().apply($string(), $from(), newValue);
+    }
+
+    public final Function3<? super MField<String>, ? super MField<String>, ? super MField<String>, ? extends MTranslate> constructor() {
+        return (a1, a2, a3) -> new Translate((Field<String>) a1, (Field<String>) a2, (Field<String>) a3);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $string(),
+            $from(),
+            $to(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $string(),
+            $from(),
+            $to()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Translate) {
             return
-                StringUtils.equals(string, ((Translate) that).string) &&
-                StringUtils.equals(from, ((Translate) that).from) &&
-                StringUtils.equals(to, ((Translate) that).to)
+                StringUtils.equals($string(), ((Translate) that).$string()) &&
+                StringUtils.equals($from(), ((Translate) that).$from()) &&
+                StringUtils.equals($to(), ((Translate) that).$to())
             ;
         }
         else

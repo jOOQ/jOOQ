@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,25 +69,23 @@ final class CreateSchemaImpl
 extends
     AbstractDDLQuery
 implements
+    MCreateSchema,
     CreateSchemaFinalStep
 {
 
     final Schema  schema;
-    final boolean createSchemaIfNotExists;
+    final boolean ifNotExists;
 
     CreateSchemaImpl(
         Configuration configuration,
         Schema schema,
-        boolean createSchemaIfNotExists
+        boolean ifNotExists
     ) {
         super(configuration);
 
         this.schema = schema;
-        this.createSchemaIfNotExists = createSchemaIfNotExists;
+        this.ifNotExists = ifNotExists;
     }
-
-    final Schema  $schema()                  { return schema; }
-    final boolean $createSchemaIfNotExists() { return createSchemaIfNotExists; }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
@@ -125,7 +125,7 @@ implements
     }
 
     private final void accept0(Context<?> ctx) {
-        if (createSchemaIfNotExists && !supportsIfNotExists(ctx))
+        if (ifNotExists && !supportsIfNotExists(ctx))
             tryCatch(ctx, DDLStatementType.CREATE_SCHEMA, c -> accept1(c));
         else
             accept1(ctx);
@@ -159,7 +159,7 @@ implements
 
             ctx.sql(' ').visit(K_SCHEMA);
 
-        if (createSchemaIfNotExists && supportsIfNotExists(ctx))
+        if (ifNotExists && supportsIfNotExists(ctx))
             ctx.sql(' ').visit(K_IF_NOT_EXISTS);
 
         ctx.sql(' ').visit(schema)
@@ -172,4 +172,56 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Schema $schema() {
+        return schema;
+    }
+
+    @Override
+    public final boolean $ifNotExists() {
+        return ifNotExists;
+    }
+
+    @Override
+    public final MCreateSchema $schema(MSchema newValue) {
+        return constructor().apply(newValue, $ifNotExists());
+    }
+
+    @Override
+    public final MCreateSchema $ifNotExists(boolean newValue) {
+        return constructor().apply($schema(), newValue);
+    }
+
+    public final Function2<? super MSchema, ? super Boolean, ? extends MCreateSchema> constructor() {
+        return (a1, a2) -> new CreateSchemaImpl(configuration(), (Schema) a1, a2);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $schema(),
+            $ifNotExists(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $schema()
+        );
+    }
 }

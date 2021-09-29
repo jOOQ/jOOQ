@@ -41,8 +41,10 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
+// ...
+// ...
 
-final class SQLCondition extends AbstractCondition {
+final class SQLCondition extends AbstractCondition implements UEmptyCondition {
 
     private final SQL delegate;
 

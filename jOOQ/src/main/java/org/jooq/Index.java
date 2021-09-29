@@ -40,6 +40,7 @@ package org.jooq;
 import java.util.List;
 
 import org.jooq.impl.DSL;
+// ...
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -51,7 +52,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-public interface Index extends Named {
+public interface Index extends Named, MIndex {
 
     /**
      * The table on which this index is defined.

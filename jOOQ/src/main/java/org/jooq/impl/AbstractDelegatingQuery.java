@@ -48,13 +48,17 @@ import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.conf.ParamType;
+// ...
 
 /**
  * @author Lukas Eder
  */
 abstract class AbstractDelegatingQuery<R extends Record, Q extends Query>
-    extends AbstractQueryPart
-    implements Query {
+extends
+    AbstractQueryPart
+implements
+    Query, UProxy<Q>
+{
     private final Q           delegate;
 
     AbstractDelegatingQuery(Q delegate) {
@@ -168,5 +172,13 @@ abstract class AbstractDelegatingQuery<R extends Record, Q extends Query>
 
     final Q getDelegate() {
         return delegate;
+    }
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Q $delegate() {
+        return getDelegate();
     }
 }

@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,23 +69,24 @@ final class DropSchemaImpl
 extends
     AbstractDDLQuery
 implements
+    MDropSchema,
     DropSchemaStep,
     DropSchemaFinalStep
 {
 
     final Schema  schema;
-    final boolean dropSchemaIfExists;
+    final boolean ifExists;
           Cascade cascade;
 
     DropSchemaImpl(
         Configuration configuration,
         Schema schema,
-        boolean dropSchemaIfExists
+        boolean ifExists
     ) {
         this(
             configuration,
             schema,
-            dropSchemaIfExists,
+            ifExists,
             null
         );
     }
@@ -91,19 +94,15 @@ implements
     DropSchemaImpl(
         Configuration configuration,
         Schema schema,
-        boolean dropSchemaIfExists,
+        boolean ifExists,
         Cascade cascade
     ) {
         super(configuration);
 
         this.schema = schema;
-        this.dropSchemaIfExists = dropSchemaIfExists;
+        this.ifExists = ifExists;
         this.cascade = cascade;
     }
-
-    final Schema  $schema()             { return schema; }
-    final boolean $dropSchemaIfExists() { return dropSchemaIfExists; }
-    final Cascade $cascade()            { return cascade; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -160,7 +159,7 @@ implements
     }
 
     private void accept0(Context<?> ctx) {
-        if (dropSchemaIfExists && !supportsIfExists(ctx))
+        if (ifExists && !supportsIfExists(ctx))
             tryCatch(ctx, DDLStatementType.DROP_SCHEMA, c -> accept1(c));
         else
             accept1(ctx);
@@ -177,7 +176,7 @@ implements
 
             ctx.sql(' ').visit(K_SCHEMA);
 
-        if (dropSchemaIfExists && supportsIfExists(ctx))
+        if (ifExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(schema);
@@ -197,4 +196,67 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Schema $schema() {
+        return schema;
+    }
+
+    @Override
+    public final boolean $ifExists() {
+        return ifExists;
+    }
+
+    @Override
+    public final Cascade $cascade() {
+        return cascade;
+    }
+
+    @Override
+    public final MDropSchema $schema(MSchema newValue) {
+        return constructor().apply(newValue, $ifExists(), $cascade());
+    }
+
+    @Override
+    public final MDropSchema $ifExists(boolean newValue) {
+        return constructor().apply($schema(), newValue, $cascade());
+    }
+
+    @Override
+    public final MDropSchema $cascade(Cascade newValue) {
+        return constructor().apply($schema(), $ifExists(), newValue);
+    }
+
+    public final Function3<? super MSchema, ? super Boolean, ? super Cascade, ? extends MDropSchema> constructor() {
+        return (a1, a2, a3) -> new DropSchemaImpl(configuration(), (Schema) a1, a2, a3);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $schema(),
+            $ifExists(),
+            $cascade(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $schema()
+        );
+    }
 }

@@ -43,11 +43,13 @@ import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.SQL;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class SQLQuery extends AbstractRowCountQuery {
+final class SQLQuery extends AbstractRowCountQuery implements UEmptyQuery {
 
     private final SQL delegate;
 

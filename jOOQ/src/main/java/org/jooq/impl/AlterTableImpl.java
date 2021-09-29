@@ -76,8 +76,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTE;
-import static org.jooq.impl.Cascade.CASCADE;
-import static org.jooq.impl.Cascade.RESTRICT;
+// ...
+// ...
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.ConstraintType.UNIQUE;
@@ -199,14 +199,17 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 // ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-final class AlterTableImpl extends AbstractDDLQuery implements
-
-    // Cascading interface implementations for ALTER TABLE behaviour
+final class AlterTableImpl
+extends
+    AbstractDDLQuery
+implements
     AlterTableStep,
     AlterTableAddStep,
     AlterTableDropStep,
@@ -215,7 +218,10 @@ final class AlterTableImpl extends AbstractDDLQuery implements
     AlterTableUsingIndexStep,
     AlterTableRenameColumnToStep,
     AlterTableRenameIndexToStep,
-    AlterTableRenameConstraintToStep {
+    AlterTableRenameConstraintToStep,
+    UNotYetImplemented
+{
+
     private static final Clause[]            CLAUSES                               = { ALTER_TABLE };
     private static final Set<SQLDialect>     NO_SUPPORT_IF_EXISTS                  = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, MARIADB);
     private static final Set<SQLDialect>     NO_SUPPORT_IF_EXISTS_COLUMN           = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);

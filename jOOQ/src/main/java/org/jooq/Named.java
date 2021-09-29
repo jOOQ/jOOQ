@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+// ...
+
 import org.jetbrains.annotations.NotNull;
 
 
@@ -47,7 +49,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface Named extends QueryPart {
+public interface Named extends QueryPart, MNamed {
 
     /**
      * The unqualified name of this object.

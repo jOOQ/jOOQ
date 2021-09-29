@@ -44,25 +44,35 @@ import static org.jooq.impl.Keywords.K_RESTRICT;
 import static org.jooq.impl.Keywords.K_TYPE;
 
 import java.util.Collection;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DropTypeFinalStep;
 import org.jooq.DropTypeStep;
+import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Name;
+// ...
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class DropTypeImpl extends AbstractDDLQuery implements
-
-    // Cascading interface implementations for CREATE TYPE behaviour
-    DropTypeStep {
+final class DropTypeImpl
+extends
+    AbstractDDLQuery
+implements
+    DropTypeStep,
+    MDropType
+{
 
     private final QueryPartList<Name> type;
     private final boolean             ifExists;
-    private boolean                   cascade;
-    private boolean                   restrict;
+    private Cascade                   cascade;
 
     DropTypeImpl(Configuration configuration, Collection<?> type, boolean ifExists) {
         super(configuration);
@@ -77,13 +87,13 @@ final class DropTypeImpl extends AbstractDDLQuery implements
 
     @Override
     public final DropTypeFinalStep cascade() {
-        this.cascade = true;
+        this.cascade = Cascade.CASCADE;
         return this;
     }
 
     @Override
     public final DropTypeFinalStep restrict() {
-        this.restrict = true;
+        this.cascade = Cascade.RESTRICT;
         return this;
     }
 
@@ -100,9 +110,46 @@ final class DropTypeImpl extends AbstractDDLQuery implements
 
         ctx.sql(' ').visit(type);
 
-        if (cascade)
+        if (cascade == Cascade.CASCADE)
             ctx.sql(' ').visit(K_CASCADE);
-        else if (restrict)
+        else if (cascade == Cascade.RESTRICT)
             ctx.sql(' ').visit(K_RESTRICT);
+    }
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MList<? extends Name> $names() {
+        return type;
+    }
+
+    @Override
+    public final boolean $ifExists() {
+        return ifExists;
+    }
+
+    @Override
+    public final Cascade $cascade() {
+        return cascade;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, type);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, type, t -> {
+            DropTypeImpl r = new DropTypeImpl(configuration(), t, ifExists);
+            r.cascade = cascade;
+            return r;
+        }, replacement);
     }
 }

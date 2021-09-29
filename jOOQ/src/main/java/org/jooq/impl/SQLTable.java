@@ -42,11 +42,13 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.TableOptions;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class SQLTable extends AbstractTable<Record> {
+final class SQLTable extends AbstractTable<Record> implements UEmptyTable<Record> {
 
     private final SQL delegate;
 

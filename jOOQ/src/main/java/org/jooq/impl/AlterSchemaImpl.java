@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,23 +69,24 @@ final class AlterSchemaImpl
 extends
     AbstractDDLQuery
 implements
+    MAlterSchema,
     AlterSchemaStep,
     AlterSchemaFinalStep
 {
 
     final Schema  schema;
-    final boolean alterSchemaIfExists;
+    final boolean ifExists;
           Schema  renameTo;
 
     AlterSchemaImpl(
         Configuration configuration,
         Schema schema,
-        boolean alterSchemaIfExists
+        boolean ifExists
     ) {
         this(
             configuration,
             schema,
-            alterSchemaIfExists,
+            ifExists,
             null
         );
     }
@@ -91,19 +94,15 @@ implements
     AlterSchemaImpl(
         Configuration configuration,
         Schema schema,
-        boolean alterSchemaIfExists,
+        boolean ifExists,
         Schema renameTo
     ) {
         super(configuration);
 
         this.schema = schema;
-        this.alterSchemaIfExists = alterSchemaIfExists;
+        this.ifExists = ifExists;
         this.renameTo = renameTo;
     }
-
-    final Schema  $schema()              { return schema; }
-    final boolean $alterSchemaIfExists() { return alterSchemaIfExists; }
-    final Schema  $renameTo()            { return renameTo; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -166,7 +165,7 @@ implements
         else
             ctx.visit(K_ALTER_SCHEMA);
 
-        if (alterSchemaIfExists)
+        if (ifExists)
 
 
 
@@ -192,4 +191,68 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Schema $schema() {
+        return schema;
+    }
+
+    @Override
+    public final boolean $ifExists() {
+        return ifExists;
+    }
+
+    @Override
+    public final Schema $renameTo() {
+        return renameTo;
+    }
+
+    @Override
+    public final MAlterSchema $schema(MSchema newValue) {
+        return constructor().apply(newValue, $ifExists(), $renameTo());
+    }
+
+    @Override
+    public final MAlterSchema $ifExists(boolean newValue) {
+        return constructor().apply($schema(), newValue, $renameTo());
+    }
+
+    @Override
+    public final MAlterSchema $renameTo(MSchema newValue) {
+        return constructor().apply($schema(), $ifExists(), newValue);
+    }
+
+    public final Function3<? super MSchema, ? super Boolean, ? super MSchema, ? extends MAlterSchema> constructor() {
+        return (a1, a2, a3) -> new AlterSchemaImpl(configuration(), (Schema) a1, a2, (Schema) a3);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $schema(),
+            $ifExists(),
+            $renameTo(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $schema(),
+            $renameTo()
+        );
+    }
 }

@@ -156,7 +156,7 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
     }
 
     static final <N extends Named> N find(String name, Iterable<? extends N> in) {
-        return findAny(in, n -> n.getName().equals(name));
+        return Tools.findAny(in, n -> n.getName().equals(name));
     }
 
     static final <N extends Named> N find(Name name, Iterable<? extends N> in) {
@@ -172,7 +172,7 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
     }
 
     static final <N extends Named> N findIgnoreCase(String name, Iterable<? extends N> in) {
-        return findAny(in, n -> n.getName().equalsIgnoreCase(name));
+        return Tools.findAny(in, n -> n.getName().equalsIgnoreCase(name));
     }
 
     static final <N extends Named> N findIgnoreCase(Name name, Iterable<? extends N> in) {
@@ -185,5 +185,14 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
                 unqualified = n;
 
         return unqualified;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Name $name() {
+        return getQualifiedName();
     }
 }

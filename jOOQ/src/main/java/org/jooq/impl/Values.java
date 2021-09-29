@@ -67,6 +67,7 @@ import static org.jooq.impl.Keywords.K_UNNEST;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Names.N_VALUES;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.Tools.EMPTY_ROW;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
@@ -74,6 +75,7 @@ import java.util.Set;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row;
@@ -82,6 +84,11 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.conf.ParamType;
+// ...
+// ...
+// ...
+// ...
+// ...
 
 import org.jetbrains.annotations.Nullable;
 
@@ -90,13 +97,14 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-final class Values<R extends Record> extends AbstractTable<R> {
-    static final Set<SQLDialect>    NO_SUPPORT_VALUES      = SQLDialect.supportedUntil(FIREBIRD, MARIADB);
-    static final Set<SQLDialect>    REQUIRE_ROWTYPE_CAST   = SQLDialect.supportedBy(FIREBIRD);
-    static final Set<SQLDialect>    NO_SUPPORT_PARENTHESES = SQLDialect.supportedBy();
+final class Values<R extends Record> extends AbstractTable<R> implements MValues<R> {
 
-    private final Row[]             rows;
-    private transient DataType<?>[] types;
+    static final Set<SQLDialect>         NO_SUPPORT_VALUES      = SQLDialect.supportedUntil(FIREBIRD, MARIADB);
+    static final Set<SQLDialect>         REQUIRE_ROWTYPE_CAST   = SQLDialect.supportedBy(FIREBIRD);
+    static final Set<SQLDialect>         NO_SUPPORT_PARENTHESES = SQLDialect.supportedBy();
+
+    private final QueryPartListView<Row> rows;
+    private transient DataType<?>[]      types;
 
     Values(Row[] rows) {
         super(TableOptions.expression(), N_VALUES);
@@ -104,24 +112,24 @@ final class Values<R extends Record> extends AbstractTable<R> {
         this.rows = assertNotEmpty(rows);
     }
 
-    static final Row[] assertNotEmpty(Row[] rows) {
+    static final QueryPartListView<Row> assertNotEmpty(Row[] rows) {
         if (rows == null || rows.length == 0)
             throw new IllegalArgumentException("Cannot create a VALUES() constructor with an empty set of rows");
 
-        return rows;
+        return QueryPartListView.wrap(rows);
     }
 
     private final DataType<?>[] rowType() {
         if (types == null) {
-            types = new DataType[rows[0].size()];
+            types = new DataType[rows.get(0).size()];
 
             typeLoop:
             for (int i = 0; i < types.length; i++) {
-                types[i] = rows[0].dataType(i);
+                types[i] = rows.get(0).dataType(i);
 
                 if (types[i].getType() == Object.class) {
-                    for (int j = 1; j < rows.length; j++) {
-                        DataType<?> type = rows[j].dataType(i);
+                    for (int j = 1; j < rows.size(); j++) {
+                        DataType<?> type = rows.get(j).dataType(i);
 
                         if (type.getType() != Object.class) {
                             types[i] = type;
@@ -209,13 +217,13 @@ final class Values<R extends Record> extends AbstractTable<R> {
 
             ctx.visit(K_VALUES);
 
-            if (rows.length > 1)
+            if (rows.size() > 1)
                 ctx.formatIndentStart()
                    .formatSeparator();
             else
                 ctx.sql(' ');
 
-            for (int i = 0; i < rows.length; i++) {
+            for (int i = 0; i < rows.size(); i++) {
                 if (i > 0)
                     ctx.sql(',')
                        .formatSeparator();
@@ -227,10 +235,10 @@ final class Values<R extends Record> extends AbstractTable<R> {
 
 
 
-                ctx.visit(rows[i]);
+                ctx.visit(rows.get(i));
             }
 
-            if (rows.length > 1)
+            if (rows.size() > 1)
                 ctx.formatIndentEnd()
                    .formatNewLine();
 
@@ -249,6 +257,20 @@ final class Values<R extends Record> extends AbstractTable<R> {
 
     @Override
     final FieldsImpl<R> fields0() {
-        return new FieldsImpl<>(rows[0].fields());
+        return new FieldsImpl<>(rows.get(0).fields());
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Function1<? super MList<? extends MRow>, ? extends MTable<R>> constructor() {
+        return r -> new Values<>(r.toArray(EMPTY_ROW));
+    }
+
+    @Override
+    public final MList<? extends Row> $arg1() {
+        return rows;
     }
 }

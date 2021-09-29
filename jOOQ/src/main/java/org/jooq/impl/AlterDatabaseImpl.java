@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,23 +69,24 @@ final class AlterDatabaseImpl
 extends
     AbstractDDLQuery
 implements
+    MAlterDatabase,
     AlterDatabaseStep,
     AlterDatabaseFinalStep
 {
 
     final Catalog database;
-    final boolean alterDatabaseIfExists;
+    final boolean ifExists;
           Catalog renameTo;
 
     AlterDatabaseImpl(
         Configuration configuration,
         Catalog database,
-        boolean alterDatabaseIfExists
+        boolean ifExists
     ) {
         this(
             configuration,
             database,
-            alterDatabaseIfExists,
+            ifExists,
             null
         );
     }
@@ -91,19 +94,15 @@ implements
     AlterDatabaseImpl(
         Configuration configuration,
         Catalog database,
-        boolean alterDatabaseIfExists,
+        boolean ifExists,
         Catalog renameTo
     ) {
         super(configuration);
 
         this.database = database;
-        this.alterDatabaseIfExists = alterDatabaseIfExists;
+        this.ifExists = ifExists;
         this.renameTo = renameTo;
     }
-
-    final Catalog $database()              { return database; }
-    final boolean $alterDatabaseIfExists() { return alterDatabaseIfExists; }
-    final Catalog $renameTo()              { return renameTo; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -143,7 +142,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (alterDatabaseIfExists && !supportsIfExists(ctx))
+        if (ifExists && !supportsIfExists(ctx))
             tryCatch(ctx, DDLStatementType.ALTER_DATABASE, c -> accept0(c));
         else
             accept0(ctx);
@@ -159,7 +158,7 @@ implements
 
         ctx.sql(' ').visit(K_DATABASE);
 
-        if (alterDatabaseIfExists && supportsIfExists(ctx))
+        if (ifExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(database);
@@ -170,4 +169,68 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Catalog $database() {
+        return database;
+    }
+
+    @Override
+    public final boolean $ifExists() {
+        return ifExists;
+    }
+
+    @Override
+    public final Catalog $renameTo() {
+        return renameTo;
+    }
+
+    @Override
+    public final MAlterDatabase $database(MCatalog newValue) {
+        return constructor().apply(newValue, $ifExists(), $renameTo());
+    }
+
+    @Override
+    public final MAlterDatabase $ifExists(boolean newValue) {
+        return constructor().apply($database(), newValue, $renameTo());
+    }
+
+    @Override
+    public final MAlterDatabase $renameTo(MCatalog newValue) {
+        return constructor().apply($database(), $ifExists(), newValue);
+    }
+
+    public final Function3<? super MCatalog, ? super Boolean, ? super MCatalog, ? extends MAlterDatabase> constructor() {
+        return (a1, a2, a3) -> new AlterDatabaseImpl(configuration(), (Catalog) a1, a2, (Catalog) a3);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $database(),
+            $ifExists(),
+            $renameTo(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $database(),
+            $renameTo()
+        );
+    }
 }

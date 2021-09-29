@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+// ...
+
 import org.jetbrains.annotations.NotNull;
 
 
@@ -48,7 +50,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface Typed<T> extends QueryPart {
+public interface Typed<T> extends QueryPart, MTyped<T> {
 
     /**
      * The object's underlying {@link Converter}.

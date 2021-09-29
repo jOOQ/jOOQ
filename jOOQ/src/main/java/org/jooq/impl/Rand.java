@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,6 +69,8 @@ import java.math.BigDecimal;
 final class Rand
 extends
     AbstractField<BigDecimal>
+implements
+    MRand
 {
 
     Rand() {
@@ -136,7 +140,7 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override

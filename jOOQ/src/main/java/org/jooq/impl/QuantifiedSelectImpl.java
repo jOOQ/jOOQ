@@ -54,12 +54,13 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Select;
+// ...
 import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
  * @author Lukas Eder
  */
-final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implements QuantifiedSelect<R> {
+final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implements QuantifiedSelect<R>, UNotYetImplemented {
 
     final Quantifier                quantifier;
     final Select<R>                 query;

@@ -62,8 +62,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Keywords.K_IS_NULL;
+import static org.jooq.impl.Tools.allNull;
 import static org.jooq.impl.Tools.map;
 
 import java.util.Set;
@@ -72,24 +72,26 @@ import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class RowIsNull extends AbstractCondition {
+final class RowIsNull extends AbstractCondition implements MRowIsNull {
 
     // Currently not yet supported in SQLite:
     // https://www.sqlite.org/rowvalue.html
-    private static final Set<SQLDialect> EMULATE_NULL_ROW   = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
+    static final Set<SQLDialect> EMULATE_NULL_ROW   = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
 
-    private final Row                    row;
-    private final boolean                isNull;
+    private final Row            row;
 
-    RowIsNull(Row row, boolean isNull) {
+    RowIsNull(Row row) {
         this.row = row;
-        this.isNull = isNull;
     }
 
     @Override
@@ -106,13 +108,9 @@ final class RowIsNull extends AbstractCondition {
 
 
         if (EMULATE_NULL_ROW.contains(ctx.dialect()))
-            ctx.visit(condition(row.fields()));
+            ctx.visit(allNull(row.fields()));
         else
             acceptStandard(ctx);
-    }
-
-    private final Condition condition(Field<?>[] fields) {
-        return DSL.and(map(fields, f -> isNull ? f.isNull() : f.isNotNull()));
     }
 
     private final void acceptStandard(Context<?> ctx) {
@@ -127,7 +125,7 @@ final class RowIsNull extends AbstractCondition {
 
             default:
                 ctx.sql(' ')
-                   .visit(isNull ? K_IS_NULL : K_IS_NOT_NULL);
+                   .visit(K_IS_NULL);
                 break;
         }
     }
@@ -135,5 +133,19 @@ final class RowIsNull extends AbstractCondition {
     @Override // Avoid AbstractCondition implementation
     public final Clause[] clauses(Context<?> ctx) {
         return null;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Row $arg1() {
+        return row;
+    }
+
+    @Override
+    public final Function1<? super MRow, ? extends MCondition> constructor() {
+        return r -> new RowIsNull((Row) r);
     }
 }

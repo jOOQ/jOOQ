@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,27 +69,28 @@ final class CreateDomainImpl<T>
 extends
     AbstractDDLQuery
 implements
+    MCreateDomain<T>,
     CreateDomainAsStep,
     CreateDomainDefaultStep<T>,
     CreateDomainConstraintStep,
     CreateDomainFinalStep
 {
 
-    final Domain<?>                        domain;
-    final boolean                          createDomainIfNotExists;
-          DataType<T>                      dataType;
-          Field<T>                         default_;
-          Collection<? extends Constraint> constraints;
+    final Domain<?>                               domain;
+    final boolean                                 ifNotExists;
+          DataType<T>                             dataType;
+          Field<T>                                default_;
+          QueryPartListView<? extends Constraint> constraints;
 
     CreateDomainImpl(
         Configuration configuration,
         Domain<?> domain,
-        boolean createDomainIfNotExists
+        boolean ifNotExists
     ) {
         this(
             configuration,
             domain,
-            createDomainIfNotExists,
+            ifNotExists,
             null,
             null,
             null
@@ -97,7 +100,7 @@ implements
     CreateDomainImpl(
         Configuration configuration,
         Domain<?> domain,
-        boolean createDomainIfNotExists,
+        boolean ifNotExists,
         DataType<T> dataType,
         Field<T> default_,
         Collection<? extends Constraint> constraints
@@ -105,17 +108,11 @@ implements
         super(configuration);
 
         this.domain = domain;
-        this.createDomainIfNotExists = createDomainIfNotExists;
+        this.ifNotExists = ifNotExists;
         this.dataType = dataType;
         this.default_ = default_;
-        this.constraints = constraints;
+        this.constraints = new QueryPartList<>(constraints);
     }
-
-    final Domain<?>                        $domain()                  { return domain; }
-    final boolean                          $createDomainIfNotExists() { return createDomainIfNotExists; }
-    final DataType<T>                      $dataType()                { return dataType; }
-    final Field<T>                         $default_()                { return default_; }
-    final Collection<? extends Constraint> $constraints()             { return constraints; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -150,7 +147,7 @@ implements
 
     @Override
     public final CreateDomainImpl<T> constraints(Collection<? extends Constraint> constraints) {
-        this.constraints = constraints;
+        this.constraints = new QueryPartList<>(constraints);
         return this;
     }
 
@@ -168,7 +165,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (createDomainIfNotExists && !supportsIfNotExists(ctx))
+        if (ifNotExists && !supportsIfNotExists(ctx))
             tryCatch(ctx, DDLStatementType.CREATE_DOMAIN, c -> accept0(c));
         else
             accept0(ctx);
@@ -185,7 +182,7 @@ implements
             default:
                 ctx.visit(K_CREATE).sql(' ').visit(K_DOMAIN);
 
-                if (createDomainIfNotExists && supportsIfNotExists(ctx))
+                if (ifNotExists && supportsIfNotExists(ctx))
                     ctx.sql(' ').visit(K_IF_NOT_EXISTS);
 
                 ctx.sql(' ').visit(domain).sql(' ').visit(K_AS).sql(' ');
@@ -204,4 +201,92 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Domain<?> $domain() {
+        return domain;
+    }
+
+    @Override
+    public final boolean $ifNotExists() {
+        return ifNotExists;
+    }
+
+    @Override
+    public final DataType<T> $dataType() {
+        return dataType;
+    }
+
+    @Override
+    public final Field<T> $default_() {
+        return default_;
+    }
+
+    @Override
+    public final MList<? extends Constraint> $constraints() {
+        return constraints;
+    }
+
+    @Override
+    public final MCreateDomain<T> $domain(MDomain<?> newValue) {
+        return constructor().apply(newValue, $ifNotExists(), $dataType(), $default_(), $constraints());
+    }
+
+    @Override
+    public final MCreateDomain<T> $ifNotExists(boolean newValue) {
+        return constructor().apply($domain(), newValue, $dataType(), $default_(), $constraints());
+    }
+
+    @Override
+    public final MCreateDomain<T> $dataType(MDataType<T> newValue) {
+        return constructor().apply($domain(), $ifNotExists(), newValue, $default_(), $constraints());
+    }
+
+    @Override
+    public final MCreateDomain<T> $default_(MField<T> newValue) {
+        return constructor().apply($domain(), $ifNotExists(), $dataType(), newValue, $constraints());
+    }
+
+    @Override
+    public final MCreateDomain<T> $constraints(MList<? extends Constraint> newValue) {
+        return constructor().apply($domain(), $ifNotExists(), $dataType(), $default_(), newValue);
+    }
+
+    public final Function5<? super MDomain<?>, ? super Boolean, ? super MDataType<T>, ? super MField<T>, ? super MList<? extends Constraint>, ? extends MCreateDomain<T>> constructor() {
+        return (a1, a2, a3, a4, a5) -> new CreateDomainImpl(configuration(), (Domain<?>) a1, a2, (DataType<T>) a3, (Field<T>) a4, (Collection<? extends Constraint>) a5);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $domain(),
+            $ifNotExists(),
+            $dataType(),
+            $default_(),
+            $constraints(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $domain(),
+            $dataType(),
+            $default_(),
+            $constraints()
+        );
+    }
 }

@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class BitXNor<T extends Number>
 extends
     AbstractField<T>
+implements
+    MBitXNor<T>
 {
 
     final Field<T> arg1;
@@ -113,15 +117,44 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $arg1() {
+        return arg1;
+    }
+
+    @Override
+    public final Field<T> $arg2() {
+        return arg2;
+    }
+
+    @Override
+    public final MBitXNor<T> $arg1(MField<T> newValue) {
+        return constructor().apply(newValue, $arg2());
+    }
+
+    @Override
+    public final MBitXNor<T> $arg2(MField<T> newValue) {
+        return constructor().apply($arg1(), newValue);
+    }
+
+    @Override
+    public final Function2<? super MField<T>, ? super MField<T>, ? extends MBitXNor<T>> constructor() {
+        return (a1, a2) -> new BitXNor<>((Field<T>) a1, (Field<T>) a2);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof BitXNor) {
             return
-                StringUtils.equals(arg1, ((BitXNor) that).arg1) &&
-                StringUtils.equals(arg2, ((BitXNor) that).arg2)
+                StringUtils.equals($arg1(), ((BitXNor) that).$arg1()) &&
+                StringUtils.equals($arg2(), ((BitXNor) that).$arg2())
             ;
         }
         else

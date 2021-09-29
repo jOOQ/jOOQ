@@ -124,6 +124,9 @@ package org.jooq.impl;
 
 
 
+
+
+
             case POSTGRES:
             case YUGABYTE:
                 acceptPostgres(ctx);
@@ -191,15 +194,68 @@ package org.jooq.impl;
     }
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<?> $value() {
+        return value;
+    }
+
+    @Override
+    public final Field<String> $messageText() {
+        return messageText;
+    }
+
+    @Override
+    public final MSignal $value(MField<?> newValue) {
+        return constructor().apply(newValue, $messageText());
+    }
+
+    @Override
+    public final MSignal $messageText(MField<String> newValue) {
+        return constructor().apply($value(), newValue);
+    }
+
+    public final Function2<? super MField<?>, ? super MField<String>, ? extends MSignal> constructor() {
+        return (a1, a2) -> new Signal((Field<?>) a1, (Field<String>) a2);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $value(),
+            $messageText(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $value(),
+            $messageText()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Signal) {
             return
-                StringUtils.equals(value, ((Signal) that).value) &&
-                StringUtils.equals(messageText, ((Signal) that).messageText)
+                StringUtils.equals($value(), ((Signal) that).$value()) &&
+                StringUtils.equals($messageText(), ((Signal) that).$messageText())
             ;
         }
         else

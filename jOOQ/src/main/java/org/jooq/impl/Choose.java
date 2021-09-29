@@ -40,19 +40,23 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.Names.N_CHOOSE;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function2;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Choose<T> extends AbstractField<T> {
+final class Choose<T> extends AbstractField<T> implements MChoose<T> {
 
     private Field<Integer> index;
     private Field<T>[]     values;
@@ -92,5 +96,24 @@ final class Choose<T> extends AbstractField<T> {
                 break;
             }
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<Integer> $arg1() {
+        return index;
+    }
+
+    @Override
+    public final MList<? extends Field<T>> $arg2() {
+        return QueryPartListView.wrap(values);
+    }
+
+    @Override
+    public final Function2<? super MField<Integer>, ? super MList<? extends MField<T>>, ? extends MField<T>> constructor() {
+        return (i, v) -> new Choose<T>((Field<Integer>) i, (Field<T>[]) v.toArray(EMPTY_FIELD));
     }
 }

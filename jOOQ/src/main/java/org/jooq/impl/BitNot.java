@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,19 +68,21 @@ import java.util.stream.*;
 final class BitNot<T extends Number>
 extends
     AbstractField<T>
+implements
+    MBitNot<T>
 {
 
-    final Field<T> value;
+    final Field<T> arg1;
 
     BitNot(
-        Field<T> value
+        Field<T> arg1
     ) {
         super(
             N_BIT_NOT,
-            allNotNull((DataType) dataType(INTEGER, value, false), value)
+            allNotNull((DataType) dataType(INTEGER, arg1, false), arg1)
         );
 
-        this.value = nullSafeNotNull(value, INTEGER);
+        this.arg1 = nullSafeNotNull(arg1, INTEGER);
     }
 
     // -------------------------------------------------------------------------
@@ -97,7 +101,7 @@ extends
 
 
             case HSQLDB:
-                ctx.visit(isub(isub(zero(), value), one()));
+                ctx.visit(isub(isub(zero(), arg1), one()));
                 break;
 
 
@@ -105,15 +109,15 @@ extends
 
 
             case H2:
-                ctx.visit(function(N_BITNOT, getDataType(), value));
+                ctx.visit(function(N_BITNOT, getDataType(), arg1));
                 break;
 
             case FIREBIRD:
-                ctx.visit(function(N_BIN_NOT, getDataType(), value));
+                ctx.visit(function(N_BIN_NOT, getDataType(), arg1));
                 break;
 
             default:
-                ctx.sql("~(").visit(value).sql(')');
+                ctx.sql("~(").visit(arg1).sql(')');
                 break;
         }
     }
@@ -128,14 +132,33 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $arg1() {
+        return arg1;
+    }
+
+    @Override
+    public final MBitNot<T> $arg1(MField<T> newValue) {
+        return constructor().apply(newValue);
+    }
+
+    @Override
+    public final Function1<? super MField<T>, ? extends MBitNot<T>> constructor() {
+        return (a1) -> new BitNot<>((Field<T>) a1);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof BitNot) {
             return
-                StringUtils.equals(value, ((BitNot) that).value)
+                StringUtils.equals($arg1(), ((BitNot) that).$arg1())
             ;
         }
         else

@@ -74,6 +74,12 @@ import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Sequence;
 import org.jooq.exception.SQLDialectNotSupportedException;
+// ...
+// ...
+// ...
+// ...
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A common base class for sequences
@@ -83,7 +89,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implements Sequence<T> {
+public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implements Sequence<T>, UNotYetImplemented {
     private static final Clause[]     CLAUSES          = { SEQUENCE, SEQUENCE_REFERENCE };
 
     private final boolean             nameIsPlainSQL;
@@ -205,7 +211,7 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
         }
     }
 
-    private static class SequenceFunction<T extends Number> extends AbstractField<T> {
+    private static class SequenceFunction<T extends Number> extends AbstractField<T> implements UNotYetImplemented {
         private final SequenceMethod  method;
         private final SequenceImpl<T> sequence;
 
@@ -345,6 +351,15 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Schema $schema() {
+        return schema;
     }
 
     // -------------------------------------------------------------------------

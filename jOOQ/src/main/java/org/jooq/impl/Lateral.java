@@ -40,16 +40,20 @@ package org.jooq.impl;
 import static org.jooq.impl.Keywords.K_LATERAL;
 
 import org.jooq.Context;
+import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableOptions;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Lateral<R extends Record> extends AbstractTable<R> {
-    private final Table<R>    table;
+final class Lateral<R extends Record> extends AbstractTable<R> implements MLateral<R> {
+
+    private final Table<R> table;
 
     Lateral(Table<R> table) {
         super(TableOptions.expression(), table.getQualifiedName(), table.getSchema());
@@ -85,5 +89,19 @@ final class Lateral<R extends Record> extends AbstractTable<R> {
     @Override
     final FieldsImpl<R> fields0() {
         return new FieldsImpl<>(table.fields());
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Function1<? super MTable<R>, ? extends MTable<R>> constructor() {
+        return t -> new Lateral<>((Table<R>) t);
+    }
+
+    @Override
+    public final MTable<R> $arg1() {
+        return table;
     }
 }

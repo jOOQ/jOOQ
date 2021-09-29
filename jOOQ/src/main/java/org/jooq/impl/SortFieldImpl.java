@@ -61,23 +61,28 @@ import static org.jooq.impl.Keywords.K_NULLS_FIRST;
 import static org.jooq.impl.Keywords.K_NULLS_LAST;
 
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
 // ...
 import org.jooq.SQLDialect;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
+// ...
+// ...
+
 
 final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T>, SimpleQueryPart {
 
     // DB2 supports NULLS FIRST/LAST only in OLAP (window) functions
     private static final Set<SQLDialect> NO_SUPPORT_NULLS = SQLDialect.supportedUntil(CUBRID, MARIADB, MYSQL);
 
-    private final Field<T>               field;
-    private final SortOrder              order;
-    private boolean                      nullsFirst;
-    private boolean                      nullsLast;
+    final Field<T>                       field;
+    final SortOrder                      order;
+    NullOrdering                         nullOrdering;
 
     SortFieldImpl(Field<T> field, SortOrder order) {
         this.field = field;
@@ -86,7 +91,7 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T>, 
 
     @Override
     public boolean isSimple() {
-        return !nullsFirst && !nullsLast && Tools.isSimple(field);
+        return nullOrdering == null && Tools.isSimple(field);
     }
 
     @Override
@@ -103,34 +108,28 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T>, 
         return field;
     }
 
-    final boolean getNullsFirst() {
-        return nullsFirst;
-    }
-
-    final boolean getNullsLast() {
-        return nullsLast;
-    }
-
     @SuppressWarnings("unchecked")
     final <U> SortField<U> transform(Field<U> newField) {
         if (newField == field)
             return (SortFieldImpl<U>) this;
 
         SortField<U> r = newField.sort(order);
-        return nullsFirst ? r.nullsFirst() : nullsLast ? r.nullsLast() : r;
+        return nullOrdering == NullOrdering.NULLS_FIRST
+             ? r.nullsFirst()
+             : nullOrdering == NullOrdering.NULLS_LAST
+             ? r.nullsLast()
+             : r;
     }
 
     @Override
     public final SortField<T> nullsFirst() {
-        nullsFirst = true;
-        nullsLast = false;
+        nullOrdering = NullOrdering.NULLS_FIRST;
         return this;
     }
 
     @Override
     public final SortField<T> nullsLast() {
-        nullsFirst = false;
-        nullsLast = true;
+        nullOrdering = NullOrdering.NULLS_LAST;
         return this;
     }
 
@@ -143,10 +142,10 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T>, 
 
 
 
-        if (nullsFirst || nullsLast) {
+        if (nullOrdering != null) {
             if (NO_SUPPORT_NULLS.contains(ctx.dialect())) {
-                Field<Integer> ifNull = nullsFirst ? zero() : one();
-                Field<Integer> ifNotNull = nullsFirst ? one() : zero();
+                Field<Integer> ifNull = nullOrdering == NullOrdering.NULLS_FIRST ? zero() : one();
+                Field<Integer> ifNotNull = nullOrdering == NullOrdering.NULLS_FIRST ? one() : zero();
 
                 ctx.visit(nvl2(field, ifNotNull, ifNull))
                    .sql(", ");
@@ -188,12 +187,55 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T>, 
                   .visit(order.toKeyword());
 
             if (includeNulls)
-                if (nullsFirst)
+                if (nullOrdering == NullOrdering.NULLS_FIRST)
                     ctx.sql(' ').visit(K_NULLS_FIRST);
                 else
                     ctx.sql(' ').visit(K_NULLS_LAST);
 
             separator = ", ";
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $field() {
+        return field;
+    }
+
+    @Override
+    public final SortOrder $sortOrder() {
+        return order;
+    }
+
+    @Override
+    public final NullOrdering $nullOrdering() {
+        return nullOrdering;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, field);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            field, order, nullOrdering,
+            (f, o, n) -> {
+                SortFieldImpl<T> r = new SortFieldImpl<>(f, o);
+                r.nullOrdering = n;
+                return r;
+            },
+            replacement
+        );
     }
 }

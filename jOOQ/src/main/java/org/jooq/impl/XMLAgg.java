@@ -42,14 +42,18 @@ import static org.jooq.impl.Names.N_XMLAGG;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
+// ...
+// ...
+// ...
 
 
 /**
  * @author Lukas Eder
  */
-final class XMLAgg extends AbstractAggregateFunction<XML> implements XMLAggOrderByStep<XML> {
+final class XMLAgg extends AbstractAggregateFunction<XML> implements XMLAggOrderByStep<XML>, MXMLAgg {
 
     XMLAgg(Field<XML> arg) {
         super(false, N_XMLAGG, SQLDataType.XML, arg);
@@ -75,5 +79,20 @@ final class XMLAgg extends AbstractAggregateFunction<XML> implements XMLAggOrder
 
         acceptFilterClause(ctx);
         acceptOverClause(ctx);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final MField<XML> $arg1() {
+        return (MField<XML>) getArguments().get(0);
+    }
+
+    @Override
+    public final Function1<? super MField<XML>, ? extends MAggregateFunction<XML>> constructor() {
+        return f -> new XMLAgg((Field<XML>) f);
     }
 }

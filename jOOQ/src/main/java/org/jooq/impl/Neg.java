@@ -38,27 +38,29 @@
 package org.jooq.impl;
 
 // ...
+import static org.jooq.impl.Names.N_NEG;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Param;
 import org.jooq.conf.TransformUnneededArithmeticExpressions;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Neg<T> extends AbstractTransformable<T> {
+final class Neg<T> extends AbstractTransformable<T> implements MNeg<T> {
 
-    private final Field<T>               field;
-    private final boolean                internal;
-    private final ExpressionOperator     operator;
+    private final Field<T> field;
+    private final boolean  internal;
 
-    Neg(Field<T> field, boolean internal, ExpressionOperator operator) {
-        super(operator.toName(), field.getDataType());
+    Neg(Field<T> field, boolean internal) {
+        super(N_NEG, field.getDataType());
 
         this.field = field;
         this.internal = internal;
-        this.operator = operator;
     }
 
     @Override
@@ -94,9 +96,22 @@ final class Neg<T> extends AbstractTransformable<T> {
 
 
 
-        ctx.sql(operator.toSQL())
-           .sql('(')
+        ctx.sql("-(")
            .visit(field)
            .sql(')');
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MField<T> $arg1() {
+        return field;
+    }
+
+    @Override
+    public final Function1<? super MField<T>, ? extends MField<T>> constructor() {
+        return f -> new Neg<>((Field<T>) f, internal);
     }
 }

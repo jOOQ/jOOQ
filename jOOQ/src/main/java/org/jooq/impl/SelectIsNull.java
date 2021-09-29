@@ -68,8 +68,8 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.selectCount;
-import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Keywords.K_IS_NULL;
+import static org.jooq.impl.Tools.allNull;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 
@@ -79,24 +79,25 @@ import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Row;
+import org.jooq.Function1;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class SelectIsNull extends AbstractCondition {
+final class SelectIsNull extends AbstractCondition implements MSelectIsNull {
 
-    private static final Set<SQLDialect> EMULATE_NULL_QUERY = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE);
+    static final Set<SQLDialect> EMULATE_NULL_QUERY = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE);
 
-    private final Select<?>              select;
-    private final boolean                isNull;
+    final Select<?>              select;
 
-    SelectIsNull(Select<?> select, boolean isNull) {
+    SelectIsNull(Select<?> select) {
         this.select = select;
-        this.isNull = isNull;
     }
 
     @Override
@@ -120,15 +121,11 @@ final class SelectIsNull extends AbstractCondition {
             }
             else {
                 Table<?> t = new AliasedSelect<>(select, true, true).as("t");
-                ctx.visit(inline(1).eq(selectCount().from(t).where(condition(t.fields()))));
+                ctx.visit(inline(1).eq(selectCount().from(t).where(allNull(t.fields()))));
             }
         }
         else
             acceptStandard(ctx);
-    }
-
-    private final Condition condition(Field<?>[] fields) {
-        return DSL.and(map(fields, f -> isNull ? f.isNull() : f.isNotNull()));
     }
 
     private final void acceptStandard(Context<?> ctx) {
@@ -143,7 +140,7 @@ final class SelectIsNull extends AbstractCondition {
 
             default:
                 ctx.sql(' ')
-                   .visit(isNull ? K_IS_NULL : K_IS_NOT_NULL);
+                   .visit(K_IS_NULL);
                 break;
         }
     }
@@ -151,5 +148,19 @@ final class SelectIsNull extends AbstractCondition {
     @Override // Avoid AbstractCondition implementation
     public final Clause[] clauses(Context<?> ctx) {
         return null;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Select<?> $arg1() {
+        return select;
+    }
+
+    @Override
+    public final Function1<? super MSelect<?>, ? extends MCondition> constructor() {
+        return r -> new SelectIsNull((Select<?>) r);
     }
 }

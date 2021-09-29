@@ -46,8 +46,9 @@ import org.jooq.Context;
  * @author Lukas Eder
  */
 final class CommentImpl extends AbstractQueryPart implements Comment {
-    static final CommentImpl  NO_COMMENT       = new CommentImpl("");
-    private final String      comment;
+
+    static final CommentImpl NO_COMMENT = new CommentImpl("");
+    private final String     comment;
 
     CommentImpl(String comment) {
         this.comment = comment == null ? "" : comment;
@@ -60,6 +61,15 @@ final class CommentImpl extends AbstractQueryPart implements Comment {
 
     @Override
     public final String getComment() {
+        return comment;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final String $comment() {
         return comment;
     }
 }

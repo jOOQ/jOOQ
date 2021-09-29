@@ -72,12 +72,14 @@ import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectOrderByStep;
+// ...
+// ...
 import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
  * @author Lukas Eder
  */
-final class RowSubqueryCondition extends AbstractCondition {
+final class RowSubqueryCondition extends AbstractCondition implements UNotYetImplemented {
     private static final Clause[]        CLAUSES                                    = { CONDITION, CONDITION_COMPARISON };
     private static final Set<SQLDialect> NO_SUPPORT_NATIVE                          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect> NO_SUPPORT_QUANTIFIED                      = SQLDialect.supportedBy(DERBY, FIREBIRD, SQLITE);
@@ -194,7 +196,7 @@ final class RowSubqueryCondition extends AbstractCondition {
                   : new RowCondition(l, row(fieldsByName(table, names)), c));
     }
 
-    private class Native extends AbstractCondition {
+    private class Native extends AbstractCondition implements UTransient {
 
         @Override
         public final void accept(Context<?> ctx) {

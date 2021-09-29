@@ -37,8 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CONDITION;
-import static org.jooq.Clause.CONDITION_OVERLAPS;
 // ...
 // ...
 // ...
@@ -73,14 +71,19 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Record2;
+import org.jooq.Function2;
+import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.SQLDialect;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
+final class RowOverlapsCondition<T1, T2> extends AbstractCondition implements MOverlaps {
+
     private static final Set<SQLDialect> EMULATE_NON_STANDARD_OVERLAPS = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> EMULATE_INTERVAL_OVERLAPS     = SQLDialect.supportedBy(HSQLDB);
 
@@ -141,5 +144,25 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
     @Override // Avoid AbstractCondition implementation
     public final Clause[] clauses(Context<?> ctx) {
         return null;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Row $arg1() {
+        return left;
+    }
+
+    @Override
+    public final Row $arg2() {
+        return right;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Function2<? super MRow, ? super MRow, ? extends MCondition> constructor() {
+        return (r1, r2) -> new RowOverlapsCondition<>((Row2<T1, T2>) r1, (Row2<T1, T2>) r2);
     }
 }

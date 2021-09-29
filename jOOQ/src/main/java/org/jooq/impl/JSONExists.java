@@ -57,6 +57,7 @@ import org.jooq.Field;
 import org.jooq.JSONExistsOnStep;
 import org.jooq.Keyword;
 import org.jooq.conf.ParamType;
+// ...
 
 
 /**
@@ -64,7 +65,7 @@ import org.jooq.conf.ParamType;
  *
  * @author Lukas Eder
  */
-final class JSONExists extends AbstractCondition implements JSONExistsOnStep {
+final class JSONExists extends AbstractCondition implements JSONExistsOnStep, UNotYetImplemented {
 
     private final Field<?>      json;
     private final Field<String> path;

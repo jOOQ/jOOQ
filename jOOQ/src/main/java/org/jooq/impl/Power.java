@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,21 +69,23 @@ import java.math.BigDecimal;
 final class Power
 extends
     AbstractField<BigDecimal>
+implements
+    MPower
 {
 
-    final Field<? extends Number> value;
+    final Field<? extends Number> base;
     final Field<? extends Number> exponent;
 
     Power(
-        Field<? extends Number> value,
+        Field<? extends Number> base,
         Field<? extends Number> exponent
     ) {
         super(
             N_POWER,
-            allNotNull(NUMERIC, value, exponent)
+            allNotNull(NUMERIC, base, exponent)
         );
 
-        this.value = nullSafeNotNull(value, INTEGER);
+        this.base = nullSafeNotNull(base, INTEGER);
         this.exponent = nullSafeNotNull(exponent, INTEGER);
     }
 
@@ -107,11 +111,11 @@ extends
 
             case DERBY:
             case SQLITE:
-                ctx.visit(DSL.exp(imul(DSL.ln(value), exponent)));
+                ctx.visit(DSL.exp(imul(DSL.ln(base), exponent)));
                 break;
 
             default:
-                ctx.visit(function(N_POWER, getDataType(), value, exponent));
+                ctx.visit(function(N_POWER, getDataType(), base, exponent));
                 break;
         }
     }
@@ -126,15 +130,44 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<? extends Number> $arg1() {
+        return base;
+    }
+
+    @Override
+    public final Field<? extends Number> $arg2() {
+        return exponent;
+    }
+
+    @Override
+    public final MPower $arg1(MField<? extends Number> newValue) {
+        return constructor().apply(newValue, $arg2());
+    }
+
+    @Override
+    public final MPower $arg2(MField<? extends Number> newValue) {
+        return constructor().apply($arg1(), newValue);
+    }
+
+    @Override
+    public final Function2<? super MField<? extends Number>, ? super MField<? extends Number>, ? extends MPower> constructor() {
+        return (a1, a2) -> new Power((Field<? extends Number>) a1, (Field<? extends Number>) a2);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Power) {
             return
-                StringUtils.equals(value, ((Power) that).value) &&
-                StringUtils.equals(exponent, ((Power) that).exponent)
+                StringUtils.equals($base(), ((Power) that).$base()) &&
+                StringUtils.equals($exponent(), ((Power) that).$exponent())
             ;
         }
         else

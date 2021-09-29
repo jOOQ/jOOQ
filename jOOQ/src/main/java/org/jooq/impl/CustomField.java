@@ -47,6 +47,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
+// ...
 
 /**
  * A base class for custom {@link Field} implementations in client code.
@@ -61,8 +62,9 @@ import org.jooq.Name;
  *
  * @author Lukas Eder
  */
-public abstract class CustomField<T> extends AbstractField<T> {
-    private static final Clause[] CLAUSES          = { CUSTOM };
+public abstract class CustomField<T> extends AbstractField<T> implements UEmptyField<T> {
+
+    private static final Clause[] CLAUSES = { CUSTOM };
 
     protected CustomField(String name, DataType<T> type) {
         this(DSL.name(name), type);

@@ -43,7 +43,6 @@ import static org.jooq.impl.Tools.first;
 import static org.jooq.impl.Tools.list;
 import static org.jooq.impl.Tools.map;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -60,11 +59,12 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DetachedException;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> implements ForeignKey<R, O> {
+final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> implements ForeignKey<R, O>, UEmpty {
 
     private final UniqueKey<O>       uk;
     private final TableField<O, ?>[] ukFields;

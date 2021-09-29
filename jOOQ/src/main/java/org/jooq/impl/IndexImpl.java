@@ -64,11 +64,15 @@ import org.jooq.OrderField;
 import org.jooq.SQLDialect;
 import org.jooq.SortField;
 import org.jooq.Table;
+// ...
+// ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
  */
-class IndexImpl extends AbstractNamed implements Index {
+class IndexImpl extends AbstractNamed implements Index, UNotYetImplemented {
     private static final Set<SQLDialect>     NO_SUPPORT_INDEX_QUALIFICATION = SQLDialect.supportedBy(MARIADB, MYSQL, POSTGRES, YUGABYTE);
 
     private final Table<?>                   table;
@@ -120,5 +124,14 @@ class IndexImpl extends AbstractNamed implements Index {
     @Override
     public boolean getUnique() {
         return unique;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MTableRef<?> $table() {
+        return (MTableRef<?>) table;
     }
 }

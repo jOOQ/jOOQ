@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+// ...
+
 /**
  * A container for stored procedures and functions
  * <p>
@@ -47,6 +49,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Package extends Qualified {
+public interface Package extends Qualified, MPackage {
 
 }

@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class SetSchema
 extends
     AbstractDDLQuery
+implements
+    MSetSchema
 {
 
     final Schema schema;
@@ -78,8 +82,6 @@ extends
 
         this.schema = schema;
     }
-
-    final Schema $schema() { return schema; }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
@@ -130,4 +132,45 @@ extends
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Schema $schema() {
+        return schema;
+    }
+
+    @Override
+    public final MSetSchema $schema(MSchema newValue) {
+        return constructor().apply(newValue);
+    }
+
+    public final Function1<? super MSchema, ? extends MSetSchema> constructor() {
+        return (a1) -> new SetSchema(configuration(), (Schema) a1);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $schema(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $schema()
+        );
+    }
 }

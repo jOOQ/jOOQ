@@ -82,17 +82,21 @@ import java.util.Set;
 import org.jooq.BetweenAndStep;
 import org.jooq.Clause;
 import org.jooq.Condition;
-import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.QueryPartInternal;
+import org.jooq.Function1;
+import org.jooq.Function3;
 import org.jooq.RowN;
 import org.jooq.SQLDialect;
+// ...
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T> {
+final class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>, MBetween<T> {
 
     private static final Clause[]        CLAUSES_BETWEEN               = { CONDITION, CONDITION_BETWEEN };
     private static final Clause[]        CLAUSES_BETWEEN_SYMMETRIC     = { CONDITION, CONDITION_BETWEEN_SYMMETRIC };
@@ -178,5 +182,52 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
                            ctx.sql(' ').visit(K_AND);
                            ctx.sql(' ').visit(maxValue);
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            field,
+            minValue,
+            maxValue,
+            not
+                ? symmetric
+                    ? Field::notBetweenSymmetric
+                    : Field::notBetween
+                : symmetric
+                    ? Field::betweenSymmetric
+                    : Field::between,
+            replacement
+        );
+    }
+
+    @Override
+    public final Function3<? super MField<T>, ? super MField<T>, ? super MField<T>, ? extends MCondition> constructor() {
+        return (f, min, max) -> new BetweenCondition<>((Field<T>) f, (Field<T>) min, not, symmetric).and((Field<T>) max);
+    }
+
+    @Override
+    public final MField<T> $arg1() {
+        return field;
+    }
+
+    @Override
+    public final MField<T> $arg2() {
+        return minValue;
+    }
+
+    @Override
+    public final MField<T> $arg3() {
+        return maxValue;
+    }
+
+    @Override
+    public final boolean $symmetric() {
+        return symmetric;
     }
 }

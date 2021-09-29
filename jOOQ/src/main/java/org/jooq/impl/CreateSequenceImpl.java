@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,12 +69,13 @@ final class CreateSequenceImpl
 extends
     AbstractDDLQuery
 implements
+    MCreateSequence,
     CreateSequenceFlagsStep,
     CreateSequenceFinalStep
 {
 
     final Sequence<?>             sequence;
-    final boolean                 createSequenceIfNotExists;
+    final boolean                 ifNotExists;
           Field<? extends Number> startWith;
           Field<? extends Number> incrementBy;
           Field<? extends Number> minvalue;
@@ -87,12 +90,12 @@ implements
     CreateSequenceImpl(
         Configuration configuration,
         Sequence<?> sequence,
-        boolean createSequenceIfNotExists
+        boolean ifNotExists
     ) {
         this(
             configuration,
             sequence,
-            createSequenceIfNotExists,
+            ifNotExists,
             null,
             null,
             null,
@@ -109,7 +112,7 @@ implements
     CreateSequenceImpl(
         Configuration configuration,
         Sequence<?> sequence,
-        boolean createSequenceIfNotExists,
+        boolean ifNotExists,
         Field<? extends Number> startWith,
         Field<? extends Number> incrementBy,
         Field<? extends Number> minvalue,
@@ -124,7 +127,7 @@ implements
         super(configuration);
 
         this.sequence = sequence;
-        this.createSequenceIfNotExists = createSequenceIfNotExists;
+        this.ifNotExists = ifNotExists;
         this.startWith = startWith;
         this.incrementBy = incrementBy;
         this.minvalue = minvalue;
@@ -136,19 +139,6 @@ implements
         this.cache = cache;
         this.noCache = noCache;
     }
-
-    final Sequence<?>             $sequence()                  { return sequence; }
-    final boolean                 $createSequenceIfNotExists() { return createSequenceIfNotExists; }
-    final Field<? extends Number> $startWith()                 { return startWith; }
-    final Field<? extends Number> $incrementBy()               { return incrementBy; }
-    final Field<? extends Number> $minvalue()                  { return minvalue; }
-    final boolean                 $noMinvalue()                { return noMinvalue; }
-    final Field<? extends Number> $maxvalue()                  { return maxvalue; }
-    final boolean                 $noMaxvalue()                { return noMaxvalue; }
-    final boolean                 $cycle()                     { return cycle; }
-    final boolean                 $noCycle()                   { return noCycle; }
-    final Field<? extends Number> $cache()                     { return cache; }
-    final boolean                 $noCache()                   { return noCache; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -261,7 +251,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (createSequenceIfNotExists && !supportsIfNotExists(ctx))
+        if (ifNotExists && !supportsIfNotExists(ctx))
             tryCatch(ctx, DDLStatementType.CREATE_SEQUENCE, c -> accept0(c));
         else
             accept0(ctx);
@@ -274,7 +264,7 @@ implements
            .visit(ctx.family() == CUBRID ? K_SERIAL : K_SEQUENCE)
            .sql(' ');
 
-        if (createSequenceIfNotExists && supportsIfNotExists(ctx))
+        if (ifNotExists && supportsIfNotExists(ctx))
             ctx.visit(K_IF_NOT_EXISTS)
                .sql(' ');
 
@@ -320,4 +310,171 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Sequence<?> $sequence() {
+        return sequence;
+    }
+
+    @Override
+    public final boolean $ifNotExists() {
+        return ifNotExists;
+    }
+
+    @Override
+    public final Field<? extends Number> $startWith() {
+        return startWith;
+    }
+
+    @Override
+    public final Field<? extends Number> $incrementBy() {
+        return incrementBy;
+    }
+
+    @Override
+    public final Field<? extends Number> $minvalue() {
+        return minvalue;
+    }
+
+    @Override
+    public final boolean $noMinvalue() {
+        return noMinvalue;
+    }
+
+    @Override
+    public final Field<? extends Number> $maxvalue() {
+        return maxvalue;
+    }
+
+    @Override
+    public final boolean $noMaxvalue() {
+        return noMaxvalue;
+    }
+
+    @Override
+    public final boolean $cycle() {
+        return cycle;
+    }
+
+    @Override
+    public final boolean $noCycle() {
+        return noCycle;
+    }
+
+    @Override
+    public final Field<? extends Number> $cache() {
+        return cache;
+    }
+
+    @Override
+    public final boolean $noCache() {
+        return noCache;
+    }
+
+    @Override
+    public final MCreateSequence $sequence(MSequence<?> newValue) {
+        return constructor().apply(newValue, $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $noCycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MCreateSequence $ifNotExists(boolean newValue) {
+        return constructor().apply($sequence(), newValue, $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $noCycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MCreateSequence $startWith(MField<? extends Number> newValue) {
+        return constructor().apply($sequence(), $ifNotExists(), newValue, $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $noCycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MCreateSequence $incrementBy(MField<? extends Number> newValue) {
+        return constructor().apply($sequence(), $ifNotExists(), $startWith(), newValue, $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $noCycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MCreateSequence $minvalue(MField<? extends Number> newValue) {
+        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), newValue, $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $noCycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MCreateSequence $noMinvalue(boolean newValue) {
+        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), newValue, $maxvalue(), $noMaxvalue(), $cycle(), $noCycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MCreateSequence $maxvalue(MField<? extends Number> newValue) {
+        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), newValue, $noMaxvalue(), $cycle(), $noCycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MCreateSequence $noMaxvalue(boolean newValue) {
+        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), newValue, $cycle(), $noCycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MCreateSequence $cycle(boolean newValue) {
+        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), newValue, $noCycle(), $cache(), $noCache());
+    }
+
+    @Override
+    public final MCreateSequence $noCycle(boolean newValue) {
+        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), newValue, $cache(), $noCache());
+    }
+
+    @Override
+    public final MCreateSequence $cache(MField<? extends Number> newValue) {
+        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $noCycle(), newValue, $noCache());
+    }
+
+    @Override
+    public final MCreateSequence $noCache(boolean newValue) {
+        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $noCycle(), $cache(), newValue);
+    }
+
+    public final Function12<? super MSequence<?>, ? super Boolean, ? super MField<? extends Number>, ? super MField<? extends Number>, ? super MField<? extends Number>, ? super Boolean, ? super MField<? extends Number>, ? super Boolean, ? super Boolean, ? super Boolean, ? super MField<? extends Number>, ? super Boolean, ? extends MCreateSequence> constructor() {
+        return (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12) -> new CreateSequenceImpl(configuration(), (Sequence<?>) a1, a2, (Field<? extends Number>) a3, (Field<? extends Number>) a4, (Field<? extends Number>) a5, a6, (Field<? extends Number>) a7, a8, a9, a10, (Field<? extends Number>) a11, a12);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $sequence(),
+            $ifNotExists(),
+            $startWith(),
+            $incrementBy(),
+            $minvalue(),
+            $noMinvalue(),
+            $maxvalue(),
+            $noMaxvalue(),
+            $cycle(),
+            $noCycle(),
+            $cache(),
+            $noCache(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $sequence(),
+            $startWith(),
+            $incrementBy(),
+            $minvalue(),
+            $maxvalue(),
+            $cache()
+        );
+    }
 }

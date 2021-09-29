@@ -37,11 +37,16 @@
  */
 package org.jooq.impl;
 
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
 import org.jooq.Catalog;
 import org.jooq.Context;
+import org.jooq.Function1;
 import org.jooq.Package;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+// ...
 
 /**
  * A default implementation for packages (containers of stored procedures and
@@ -56,7 +61,7 @@ import org.jooq.Schema;
 @org.jooq.Internal
 public class PackageImpl extends AbstractNamed implements Package {
 
-    private Schema            schema;
+    private Schema schema;
 
     public PackageImpl(String name, Schema schema) {
         super(qualify(schema, DSL.name(name)), CommentImpl.NO_COMMENT);
@@ -82,5 +87,29 @@ public class PackageImpl extends AbstractNamed implements Package {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(getUnqualifiedName());
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Schema $schema() {
+        return schema;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, schema);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, schema, s -> new PackageImpl(getName(), s), replacement);
     }
 }

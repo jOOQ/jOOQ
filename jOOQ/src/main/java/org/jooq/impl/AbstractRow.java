@@ -41,10 +41,12 @@ import static org.jooq.Clause.FIELD_ROW;
 // ...
 // ...
 import static org.jooq.impl.Keywords.K_ROW;
+import static org.jooq.impl.Names.N_ROW;
 import static org.jooq.impl.QueryPartListView.wrap;
 
 import java.util.Collection;
-import java.util.function.Function;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.jooq.Binding;
@@ -56,12 +58,19 @@ import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.Row2;
 import org.jooq.SelectField;
+// ...
+// ...
+// ...
+// ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A common base class for the various degrees of {@link Row1}, {@link Row2},
@@ -393,12 +402,46 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
 
     @Override
     public final Condition isNull() {
-        return new RowIsNull(this, true);
+        return new RowIsNull(this);
     }
 
     @Override
     public final Condition isNotNull() {
-        return new RowIsNull(this, false);
+        return new RowIsNotNull(this);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Name $name() {
+        return N_ROW;
+    }
+
+    @Override
+    public final DataType<R> $dataType() {
+        return getDataType();
+    }
+
+    @Override
+    public final MList<? extends Field<?>> $fields() {
+        return QueryPartListView.wrap(fields());
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, $fields());
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, fields(), Tools::row0, replacement);
     }
 
 }

@@ -37,16 +37,25 @@
  */
 package org.jooq.impl;
 
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
 import org.jooq.Context;
+import org.jooq.Function1;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
+// ...
+// ...
+// ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
  */
-final class CountTable extends AbstractAggregateFunction<Integer> {
+final class CountTable extends AbstractAggregateFunction<Integer> implements MCountTable {
 
-    private final Table<?>    table;
+    private final Table<?> table;
 
     CountTable(Table<?> table, boolean distinct) {
         super(distinct, "count", SQLDataType.INTEGER, DSL.field(DSL.name(table.getName())));
@@ -79,5 +88,40 @@ final class CountTable extends AbstractAggregateFunction<Integer> {
                 break;
             }
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Table<?> $table() {
+        return table;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return super.traverse(
+            QOM.traverse(
+                init, abort, recurse, accumulate, this,
+                $table()
+            ), abort, recurse, accumulate
+        );
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $table(),
+            distinct,
+            CountTable::new,
+            replacement
+        );
     }
 }

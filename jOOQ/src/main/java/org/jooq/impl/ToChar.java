@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class ToChar
 extends
     AbstractField<String>
+implements
+    MToChar
 {
 
     final Field<?>      value;
@@ -148,15 +152,68 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<?> $value() {
+        return value;
+    }
+
+    @Override
+    public final Field<String> $formatMask() {
+        return formatMask;
+    }
+
+    @Override
+    public final MToChar $value(MField<?> newValue) {
+        return constructor().apply(newValue, $formatMask());
+    }
+
+    @Override
+    public final MToChar $formatMask(MField<String> newValue) {
+        return constructor().apply($value(), newValue);
+    }
+
+    public final Function2<? super MField<?>, ? super MField<String>, ? extends MToChar> constructor() {
+        return (a1, a2) -> new ToChar((Field<?>) a1, (Field<String>) a2);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $value(),
+            $formatMask(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $value(),
+            $formatMask()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof ToChar) {
             return
-                StringUtils.equals(value, ((ToChar) that).value) &&
-                StringUtils.equals(formatMask, ((ToChar) that).formatMask)
+                StringUtils.equals($value(), ((ToChar) that).$value()) &&
+                StringUtils.equals($formatMask(), ((ToChar) that).$formatMask())
             ;
         }
         else

@@ -41,11 +41,15 @@ import static org.jooq.impl.Names.N_ARRAY_AGG;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class ArrayAgg<T> extends AbstractAggregateFunction<T[]> {
+final class ArrayAgg<T> extends AbstractAggregateFunction<T[]> implements MArrayAgg<T> {
 
     ArrayAgg(boolean distinct, Field<T> arg) {
         super(distinct, N_ARRAY_AGG, arg.getDataType().getArrayDataType(), arg);
@@ -73,5 +77,20 @@ final class ArrayAgg<T> extends AbstractAggregateFunction<T[]> {
 
         acceptFilterClause(ctx);
         acceptOverClause(ctx);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final MField<T> $arg1() {
+        return (MField<T>) getArguments().get(0);
+    }
+
+    @Override
+    public final Function1<? super MField<T>, ? extends MAggregateFunction<T[]>> constructor() {
+        return f -> new ArrayAgg<>(distinct, (Field<T>) f);
     }
 }

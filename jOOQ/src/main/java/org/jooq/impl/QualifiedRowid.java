@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,19 +68,21 @@ import java.util.stream.*;
 final class QualifiedRowid
 extends
     AbstractField<RowId>
+implements
+    MQualifiedRowid
 {
 
-    final Table<?> arg1;
+    final Table<?> table;
 
     QualifiedRowid(
-        Table<?> arg1
+        Table<?> table
     ) {
         super(
             N_ROWID,
             allNotNull(ROWID)
         );
 
-        this.arg1 = arg1;
+        this.table = table;
     }
 
     // -------------------------------------------------------------------------
@@ -95,11 +99,11 @@ extends
 
 
             case H2:
-                ctx.visit(arg1.getQualifiedName().append(unquotedName("_rowid_")));
+                ctx.visit(table.getQualifiedName().append(unquotedName("_rowid_")));
                 break;
 
             case POSTGRES:
-                ctx.visit(arg1.getQualifiedName().append(unquotedName("ctid")));
+                ctx.visit(table.getQualifiedName().append(unquotedName("ctid")));
                 break;
 
 
@@ -109,7 +113,7 @@ extends
 
 
             default:
-                ctx.visit(arg1.getQualifiedName().append(unquotedName("rowid")));
+                ctx.visit(table.getQualifiedName().append(unquotedName("rowid")));
                 break;
         }
     }
@@ -124,14 +128,33 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Table<?> $arg1() {
+        return table;
+    }
+
+    @Override
+    public final MQualifiedRowid $arg1(MTable<?> newValue) {
+        return constructor().apply(newValue);
+    }
+
+    @Override
+    public final Function1<? super MTable<?>, ? extends MQualifiedRowid> constructor() {
+        return (a1) -> new QualifiedRowid((Table<?>) a1);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof QualifiedRowid) {
             return
-                StringUtils.equals(arg1, ((QualifiedRowid) that).arg1)
+                StringUtils.equals($table(), ((QualifiedRowid) that).$table())
             ;
         }
         else

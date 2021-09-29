@@ -37,16 +37,21 @@
  */
 package org.jooq.impl;
 
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Coerce<T> extends AbstractField<T> {
+final class Coerce<T> extends AbstractField<T> implements MCoerce<T> {
 
     final AbstractField<?> field;
 
@@ -113,5 +118,43 @@ final class Coerce<T> extends AbstractField<T> {
     @Override
     public final boolean generatesCast() {
         return field.generatesCast();
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<?> $field() {
+        return field;
+    }
+
+    @Override
+    public final MQueryPart replace(org.jooq.Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $field(),
+            $dataType(),
+            Coerce::new,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init,
+            abort,
+            recurse,
+            accumulate,
+            this,
+            $field(),
+            $dataType()
+        );
     }
 }

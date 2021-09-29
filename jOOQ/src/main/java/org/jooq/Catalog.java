@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.jooq.impl.DSL;
+// ...
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -81,7 +82,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-public interface Catalog extends Named {
+public interface Catalog extends Named, MCatalog {
 
     /**
      * List all schemas contained in this catalog.

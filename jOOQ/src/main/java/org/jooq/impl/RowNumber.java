@@ -41,12 +41,18 @@ import static org.jooq.impl.Names.N_ROWNUM;
 import static org.jooq.impl.Names.N_ROW_NUMBER;
 import static org.jooq.impl.SQLDataType.INTEGER;
 
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
 import org.jooq.Context;
+import org.jooq.Function1;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class RowNumber extends AbstractWindowFunction<Integer> {
+final class RowNumber extends AbstractWindowFunction<Integer> implements MRowNumber {
 
     RowNumber() {
         super(N_ROW_NUMBER, INTEGER.notNull());
@@ -72,5 +78,29 @@ final class RowNumber extends AbstractWindowFunction<Integer> {
                 ctx.visit(N_ROW_NUMBER).sql("()");
                 acceptOverClause(ctx);
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, $windowSpecification() != null ? $windowSpecification() : $windowDefinition());
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $windowSpecification(), $windowDefinition(),
+            (s, d) -> new RowNumber().$windowSpecification(s).$windowDefinition(d),
+            replacement
+        );
     }
 }

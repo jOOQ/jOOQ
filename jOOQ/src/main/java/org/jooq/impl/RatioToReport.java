@@ -44,15 +44,23 @@ import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.math.BigDecimal;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function1;
+// ...
+// ...
+// ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
  */
-final class RatioToReport extends AbstractAggregateFunction<BigDecimal> {
+final class RatioToReport extends AbstractAggregateFunction<BigDecimal> implements MRatioToReport {
     private final Field<? extends Number> field;
 
     RatioToReport(Field<? extends Number> field) {
@@ -105,5 +113,29 @@ final class RatioToReport extends AbstractAggregateFunction<BigDecimal> {
                 acceptOverClause(ctx);
                 break;
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<? extends Number> $field() {
+        return field;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, field);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, field, RatioToReport::new, replacement);
     }
 }

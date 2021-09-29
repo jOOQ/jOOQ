@@ -175,7 +175,7 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
         boolean not = false;
 
         while (c instanceof Not) {
-            c = ((Not) c).$arg1();
+            c = ((Not) c).condition;
             not = !not;
         }
 
@@ -202,7 +202,6 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
     public final Condition or(Condition arg2) {
         return DSL.condition(OR, this, arg2);
     }
-
 
 
 }

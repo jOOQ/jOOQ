@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+// ...
+
 import org.jetbrains.annotations.NotNull;
 
 
@@ -68,7 +70,7 @@ import org.jetbrains.annotations.NotNull;
  * @see Field#asc()
  * @see Field#desc()
  */
-public interface SortField<T> extends OrderField<T> {
+public interface SortField<T> extends OrderField<T>, MSortField<T> {
 
     /**
      * The name of this sort field

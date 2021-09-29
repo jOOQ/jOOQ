@@ -38,6 +38,7 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
+// ...
 
 /**
  * A privilege for use in <code>GRANT</code> and <code>REVOKE</code> statements.
@@ -58,4 +59,4 @@ import org.jooq.impl.DSL;
  *
  * @author Timur Shaidullin
  */
-public interface User extends Named {}
+public interface User extends Named, MUser {}

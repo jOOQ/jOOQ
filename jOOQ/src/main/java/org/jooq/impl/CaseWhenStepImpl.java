@@ -60,8 +60,9 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 // ...
+// ...
 
-final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V, T> {
+final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V, T>, UNotYetImplemented {
 
     private final Field<V>       value;
     private final List<Field<V>> compareValues;

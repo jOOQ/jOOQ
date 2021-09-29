@@ -42,6 +42,7 @@ import org.jetbrains.annotations.*;
 
 
 import org.jooq.impl.DSL;
+// ...
 
 
 /**
@@ -82,7 +83,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface Condition extends QueryPart {
+public interface Condition extends QueryPart, MCondition {
 
     /**
      * Combine this condition with another one using the {@link Operator#AND}

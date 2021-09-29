@@ -43,15 +43,25 @@ import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.Keywords.K_LIKE_REGEX;
 import static org.jooq.impl.Keywords.K_REGEXP;
 
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
 import org.jooq.Clause;
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
+// ...
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class RegexpLike extends AbstractCondition {
-    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
+final class RegexpLike extends AbstractCondition implements MRegexpLike {
+
+    private static final Clause[] CLAUSES = { CONDITION, CONDITION_COMPARISON };
 
     private final Field<?>        search;
     private final Field<String>   pattern;
@@ -127,5 +137,34 @@ final class RegexpLike extends AbstractCondition {
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<?> $search() {
+        return search;
+    }
+
+    @Override
+    public final Field<String> pattern() {
+        return pattern;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, search, pattern);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, search, pattern, RegexpLike::new, replacement);
     }
 }

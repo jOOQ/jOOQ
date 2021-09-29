@@ -116,7 +116,10 @@ import org.jooq.TablePartitionByStep;
 import org.jooq.UniqueKey;
 // ...
 // ...
+// ...
 import org.jooq.tools.JooqLogger;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -1593,5 +1596,14 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     @Override
     public final TableOptionalOnStep<Record> straightJoin(Name name) {
         return straightJoin(table(name));
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Schema $schema() {
+        return getSchema();
     }
 }

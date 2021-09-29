@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class SetCatalog
 extends
     AbstractDDLQuery
+implements
+    MSetCatalog
 {
 
     final Catalog catalog;
@@ -78,8 +82,6 @@ extends
 
         this.catalog = catalog;
     }
-
-    final Catalog $catalog() { return catalog; }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
@@ -125,4 +127,45 @@ extends
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Catalog $catalog() {
+        return catalog;
+    }
+
+    @Override
+    public final MSetCatalog $catalog(MCatalog newValue) {
+        return constructor().apply(newValue);
+    }
+
+    public final Function1<? super MCatalog, ? extends MSetCatalog> constructor() {
+        return (a1) -> new SetCatalog(configuration(), (Catalog) a1);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $catalog(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $catalog()
+        );
+    }
 }

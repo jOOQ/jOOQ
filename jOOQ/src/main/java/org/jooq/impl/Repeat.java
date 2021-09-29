@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class Repeat
 extends
     AbstractField<String>
+implements
+    MRepeat
 {
 
     final Field<String>           string;
@@ -144,15 +148,68 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<String> $string() {
+        return string;
+    }
+
+    @Override
+    public final Field<? extends Number> $count() {
+        return count;
+    }
+
+    @Override
+    public final MRepeat $string(MField<String> newValue) {
+        return constructor().apply(newValue, $count());
+    }
+
+    @Override
+    public final MRepeat $count(MField<? extends Number> newValue) {
+        return constructor().apply($string(), newValue);
+    }
+
+    public final Function2<? super MField<String>, ? super MField<? extends Number>, ? extends MRepeat> constructor() {
+        return (a1, a2) -> new Repeat((Field<String>) a1, (Field<? extends Number>) a2);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $string(),
+            $count(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $string(),
+            $count()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Repeat) {
             return
-                StringUtils.equals(string, ((Repeat) that).string) &&
-                StringUtils.equals(count, ((Repeat) that).count)
+                StringUtils.equals($string(), ((Repeat) that).$string()) &&
+                StringUtils.equals($count(), ((Repeat) that).$count())
             ;
         }
         else

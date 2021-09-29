@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class Round<T extends Number>
 extends
     AbstractField<T>
+implements
+    MRound<T>
 {
 
     final Field<T>       value;
@@ -193,15 +197,68 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $value() {
+        return value;
+    }
+
+    @Override
+    public final Field<Integer> $decimals() {
+        return decimals;
+    }
+
+    @Override
+    public final MRound<T> $value(MField<T> newValue) {
+        return constructor().apply(newValue, $decimals());
+    }
+
+    @Override
+    public final MRound<T> $decimals(MField<Integer> newValue) {
+        return constructor().apply($value(), newValue);
+    }
+
+    public final Function2<? super MField<T>, ? super MField<Integer>, ? extends MRound<T>> constructor() {
+        return (a1, a2) -> new Round<>((Field<T>) a1, (Field<Integer>) a2);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $value(),
+            $decimals(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $value(),
+            $decimals()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Round) {
             return
-                StringUtils.equals(value, ((Round) that).value) &&
-                StringUtils.equals(decimals, ((Round) that).decimals)
+                StringUtils.equals($value(), ((Round) that).$value()) &&
+                StringUtils.equals($decimals(), ((Round) that).$decimals())
             ;
         }
         else

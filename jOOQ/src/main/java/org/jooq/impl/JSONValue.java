@@ -62,6 +62,7 @@ import org.jooq.JSONValueOnStep;
 import org.jooq.Keyword;
 // ...
 import org.jooq.SQLDialect;
+// ...
 
 
 /**
@@ -73,7 +74,8 @@ final class JSONValue<J>
 extends AbstractField<J>
 implements
     JSONValueOnStep<J>,
-    JSONValueDefaultStep<J> {
+    JSONValueDefaultStep<J>,
+    UNotYetImplemented {
 
 
 

@@ -61,13 +61,14 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Statement;
 // ...
+// ...
 
 /**
  * A common base class for stored procedure parameters
  *
  * @author Lukas Eder
  */
-final class ParameterImpl<T> extends AbstractField<T> implements Parameter<T> {
+final class ParameterImpl<T> extends AbstractField<T> implements Parameter<T>, UEmpty {
 
     private final ParamMode   paramMode;
     private final boolean     isDefaulted;

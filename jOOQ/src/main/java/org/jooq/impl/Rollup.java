@@ -40,14 +40,21 @@ package org.jooq.impl;
 import static org.jooq.impl.Keywords.K_WITH_ROLLUP;
 import static org.jooq.impl.Names.N_ROLLUP;
 import static org.jooq.impl.SQLDataType.OTHER;
+import static org.jooq.impl.Tools.EMPTY_FIELD_OR_ROW;
 
 import org.jooq.Context;
 import org.jooq.FieldOrRow;
+import org.jooq.Function1;
+// ...
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Rollup extends AbstractField<Object> {
+final class Rollup extends AbstractField<Object> implements MRollup {
+
     private QueryPartList<FieldOrRow> arguments;
 
     Rollup(FieldOrRow... arguments) {
@@ -63,7 +70,9 @@ final class Rollup extends AbstractField<Object> {
             case CUBRID:
             case MARIADB:
             case MYSQL:
-                ctx.visit(new MySQLWithRollup());
+                ctx.visit(arguments)
+                   .formatSeparator()
+                   .visit(K_WITH_ROLLUP);
                 break;
 
             default:
@@ -72,13 +81,17 @@ final class Rollup extends AbstractField<Object> {
         }
     }
 
-    final class MySQLWithRollup extends AbstractQueryPart {
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
 
-        @Override
-        public final void accept(Context<?> ctx) {
-            ctx.visit(arguments)
-               .formatSeparator()
-               .visit(K_WITH_ROLLUP);
-        }
+    @Override
+    public final MList<? extends FieldOrRow> $arg1() {
+        return arguments;
+    }
+
+    @Override
+    public final Function1<? super MList<? extends MFieldOrRow>, ? extends MGroupField> constructor() {
+        return l -> new Rollup(l.toArray(EMPTY_FIELD_OR_ROW));
     }
 }

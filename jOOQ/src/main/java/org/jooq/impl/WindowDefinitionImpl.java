@@ -43,21 +43,26 @@ import static org.jooq.impl.SelectQueryImpl.NO_SUPPORT_WINDOW_CLAUSE;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
 
 import java.util.Collection;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.Context;
+import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.OrderField;
-// ...
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
 import org.jooq.WindowSpecificationExcludeStep;
 import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.WindowSpecificationRowsStep;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefinition {
+final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefinition, MWindowDefinition {
 
     private final Name                name;
     private final WindowSpecification window;
@@ -296,5 +301,34 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
     @Override
     public final WindowSpecificationRowsAndStep groupsBetweenFollowing(int number) {
         return new WindowSpecificationImpl(this).groupsBetweenFollowing(number);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Name $name() {
+        return name;
+    }
+
+    @Override
+    public final MWindowSpecification $windowSpecification() {
+        return (MWindowSpecification) window;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, $name(), $windowSpecification());
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, name, window, WindowDefinitionImpl::new, replacement);
     }
 }

@@ -54,17 +54,20 @@ import java.sql.Timestamp;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function2;
+// ...
+// ...
 import org.jooq.types.DayToSecond;
 
 /**
  * @author Lukas Eder
  */
-final class TimestampDiff extends AbstractField<DayToSecond> {
+final class TimestampDiff<T> extends AbstractField<DayToSecond> implements MTimestampDiff<T> {
 
-    private final Field<?>    timestamp1;
-    private final Field<?>    timestamp2;
+    private final Field<T> timestamp1;
+    private final Field<T> timestamp2;
 
-    TimestampDiff(Field<?> timestamp1, Field<?> timestamp2) {
+    TimestampDiff(Field<T> timestamp1, Field<T> timestamp2) {
         super(N_TIMESTAMPDIFF, INTERVALDAYTOSECOND);
 
         this.timestamp1 = timestamp1;
@@ -168,5 +171,24 @@ final class TimestampDiff extends AbstractField<DayToSecond> {
                 ctx.visit(castIfNeeded(timestamp1.sub(timestamp2), DayToSecond.class));
                 break;
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $arg1() {
+        return timestamp1;
+    }
+
+    @Override
+    public final Field<T> $arg2() {
+        return timestamp2;
+    }
+
+    @Override
+    public final Function2<? super MField<T>, ? super MField<T>, ? extends MField<DayToSecond>> constructor() {
+        return (t1, t2) -> new TimestampDiff<>((Field<T>) t1, (Field<T>) t2);
     }
 }

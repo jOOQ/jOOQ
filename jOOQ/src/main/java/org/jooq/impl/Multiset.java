@@ -81,11 +81,14 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.AggregateFilterStep;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Fields;
+import org.jooq.Function1;
 import org.jooq.JSON;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONArrayAggReturningStep;
@@ -102,11 +105,14 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class Multiset<R extends Record> extends AbstractField<Result<R>> {
+final class Multiset<R extends Record> extends AbstractField<Result<R>> implements MMultiset<R> {
 
     static final Set<SQLDialect> NO_SUPPORT_JSON_COMPARE  = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
     static final Set<SQLDialect> NO_SUPPORT_JSONB_COMPARE = SQLDialect.supportedBy();
@@ -395,6 +401,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
             )
             : field;
     }
+
     static final XMLAggOrderByStep<XML> xmlaggEmulation(Fields fields, boolean agg) {
         return xmlagg(
             xmlelement(N_RECORD,
@@ -404,5 +411,29 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
                 ))
             )
         );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final <Q> Q traverse(
+        Q init,
+        Predicate<? super Q> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super Q, ? super MQueryPart, ? extends Q> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, select);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, select, Multiset::new, replacement);
+    }
+
+    @Override
+    public final MSelect<R> $select() {
+        return select;
     }
 }

@@ -37,10 +37,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.map;
 
-import java.util.List;
 import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.CommonTableExpression;
 import org.jooq.Context;
@@ -68,8 +69,13 @@ import org.jooq.DerivedColumnList7;
 import org.jooq.DerivedColumnList8;
 import org.jooq.DerivedColumnList9;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.ResultQuery;
+// ...
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
@@ -122,7 +128,7 @@ implements
         this.fieldNameFunction = fieldNameFunction;
     }
 
-    final CommonTableExpression as0(ResultQuery query, Boolean materialized) {
+    final CommonTableExpression as0(ResultQuery query, Materialized materialized) {
         ResultQuery<?> q = query;
 
         if (fieldNameFunction != null)
@@ -146,12 +152,12 @@ implements
 
     @Override
     public final CommonTableExpression asMaterialized(ResultQuery query) {
-        return as0(query, true);
+        return as0(query, Materialized.MATERIALIZED);
     }
 
     @Override
     public final CommonTableExpression asNotMaterialized(ResultQuery query) {
-        return as0(query, false);
+        return as0(query, Materialized.NOT_MATERIALIZED);
     }
 
     @Override
@@ -170,5 +176,34 @@ implements
 
             ctx.sql(')');
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MName $tableName() {
+        return name;
+    }
+
+    @Override
+    public final MList<? extends Name> $columnNames() {
+        return QueryPartListView.wrap(fieldNames != null ? fieldNames : EMPTY_NAME);
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, name, fieldNames);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, name, fieldNames, DerivedColumnListImpl::new, replacement);
     }
 }

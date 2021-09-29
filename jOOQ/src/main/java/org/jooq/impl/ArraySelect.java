@@ -42,17 +42,23 @@ import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Names.N_ARRAY;
 import static org.jooq.impl.Tools.visitSubquery;
 
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Record1;
 import org.jooq.Select;
 import org.jooq.Table;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class ArraySelect<T> extends AbstractField<T[]> {
+final class ArraySelect<T> extends AbstractField<T[]> implements MArrayQuery<T> {
 
     private final Select<? extends Record1<T>> select;
 
@@ -88,5 +94,29 @@ final class ArraySelect<T> extends AbstractField<T[]> {
 
                 break;
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Select<? extends Record1<T>> $select() {
+        return select;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, select);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, select, ArraySelect::new, replacement);
     }
 }

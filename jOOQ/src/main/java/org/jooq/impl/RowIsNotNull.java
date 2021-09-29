@@ -37,39 +37,63 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
+import static org.jooq.impl.Tools.allNotNull;
+import static org.jooq.impl.Tools.map;
 
 import org.jooq.Clause;
-import org.jooq.Comparator;
+import org.jooq.Condition;
 import org.jooq.Context;
-import org.jooq.Record;
-import org.jooq.Table;
+import org.jooq.Field;
+import org.jooq.Function1;
+import org.jooq.Row;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class TableComparison<R extends Record> extends AbstractCondition {
-    private final Table<R>    lhs;
-    private final Table<R>    rhs;
-    private final Comparator  comparator;
+final class RowIsNotNull extends AbstractCondition implements MRowIsNotNull {
 
-    TableComparison(Table<R> lhs, Table<R> rhs, Comparator comparator) {
-        this.lhs = lhs;
-        this.rhs = rhs;
-        this.comparator = comparator;
+    final Row row;
+
+    RowIsNotNull(Row row) {
+        this.row = row;
+    }
+
+    @Override
+    final boolean isNullable() {
+        return false;
     }
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+        if (RowIsNull.EMULATE_NULL_ROW.contains(ctx.dialect()))
+            ctx.visit(allNotNull(row.fields()));
+        else
+            acceptStandard(ctx);
+    }
+
+    private final void acceptStandard(Context<?> ctx) {
+        ctx.visit(row);
+
         switch (ctx.family()) {
 
-            case POSTGRES:
-            case YUGABYTE:
-                ctx.sql('(').visit(lhs).sql(' ').sql(comparator.toSQL()).sql(' ').visit(rhs).sql(')');
-                break;
+
+
+
+
 
             default:
-                ctx.visit(row(lhs.fields()).compare(comparator, row(rhs.fields())));
+                ctx.sql(' ')
+                   .visit(K_IS_NOT_NULL);
                 break;
         }
     }
@@ -77,5 +101,19 @@ final class TableComparison<R extends Record> extends AbstractCondition {
     @Override // Avoid AbstractCondition implementation
     public final Clause[] clauses(Context<?> ctx) {
         return null;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Row $arg1() {
+        return row;
+    }
+
+    @Override
+    public final Function1<? super MRow, ? extends MCondition> constructor() {
+        return r -> new RowIsNotNull((Row) r);
     }
 }

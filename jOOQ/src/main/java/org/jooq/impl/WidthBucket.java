@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class WidthBucket<T extends Number>
 extends
     AbstractField<T>
+implements
+    MWidthBucket<T>
 {
 
     final Field<T>       field;
@@ -143,17 +147,94 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $field() {
+        return field;
+    }
+
+    @Override
+    public final Field<T> $low() {
+        return low;
+    }
+
+    @Override
+    public final Field<T> $high() {
+        return high;
+    }
+
+    @Override
+    public final Field<Integer> $buckets() {
+        return buckets;
+    }
+
+    @Override
+    public final MWidthBucket<T> $field(MField<T> newValue) {
+        return constructor().apply(newValue, $low(), $high(), $buckets());
+    }
+
+    @Override
+    public final MWidthBucket<T> $low(MField<T> newValue) {
+        return constructor().apply($field(), newValue, $high(), $buckets());
+    }
+
+    @Override
+    public final MWidthBucket<T> $high(MField<T> newValue) {
+        return constructor().apply($field(), $low(), newValue, $buckets());
+    }
+
+    @Override
+    public final MWidthBucket<T> $buckets(MField<Integer> newValue) {
+        return constructor().apply($field(), $low(), $high(), newValue);
+    }
+
+    public final Function4<? super MField<T>, ? super MField<T>, ? super MField<T>, ? super MField<Integer>, ? extends MWidthBucket<T>> constructor() {
+        return (a1, a2, a3, a4) -> new WidthBucket<>((Field<T>) a1, (Field<T>) a2, (Field<T>) a3, (Field<Integer>) a4);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $field(),
+            $low(),
+            $high(),
+            $buckets(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $field(),
+            $low(),
+            $high(),
+            $buckets()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof WidthBucket) {
             return
-                StringUtils.equals(field, ((WidthBucket) that).field) &&
-                StringUtils.equals(low, ((WidthBucket) that).low) &&
-                StringUtils.equals(high, ((WidthBucket) that).high) &&
-                StringUtils.equals(buckets, ((WidthBucket) that).buckets)
+                StringUtils.equals($field(), ((WidthBucket) that).$field()) &&
+                StringUtils.equals($low(), ((WidthBucket) that).$low()) &&
+                StringUtils.equals($high(), ((WidthBucket) that).$high()) &&
+                StringUtils.equals($buckets(), ((WidthBucket) that).$buckets())
             ;
         }
         else

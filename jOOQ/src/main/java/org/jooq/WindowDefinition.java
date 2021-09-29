@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+// ...
 
 /**
  * A window definition.
@@ -68,6 +69,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface WindowDefinition extends WindowSpecificationOrderByStep {
+public interface WindowDefinition extends WindowSpecificationOrderByStep, MWindowDefinition {
 
 }

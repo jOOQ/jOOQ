@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class Position
 extends
     AbstractField<Integer>
+implements
+    MPosition
 {
 
     final Field<String>           in;
@@ -206,16 +210,81 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<String> $in() {
+        return in;
+    }
+
+    @Override
+    public final Field<String> $search() {
+        return search;
+    }
+
+    @Override
+    public final Field<? extends Number> $startIndex() {
+        return startIndex;
+    }
+
+    @Override
+    public final MPosition $in(MField<String> newValue) {
+        return constructor().apply(newValue, $search(), $startIndex());
+    }
+
+    @Override
+    public final MPosition $search(MField<String> newValue) {
+        return constructor().apply($in(), newValue, $startIndex());
+    }
+
+    @Override
+    public final MPosition $startIndex(MField<? extends Number> newValue) {
+        return constructor().apply($in(), $search(), newValue);
+    }
+
+    public final Function3<? super MField<String>, ? super MField<String>, ? super MField<? extends Number>, ? extends MPosition> constructor() {
+        return (a1, a2, a3) -> new Position((Field<String>) a1, (Field<String>) a2, (Field<? extends Number>) a3);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $in(),
+            $search(),
+            $startIndex(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $in(),
+            $search(),
+            $startIndex()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof Position) {
             return
-                StringUtils.equals(in, ((Position) that).in) &&
-                StringUtils.equals(search, ((Position) that).search) &&
-                StringUtils.equals(startIndex, ((Position) that).startIndex)
+                StringUtils.equals($in(), ((Position) that).$in()) &&
+                StringUtils.equals($search(), ((Position) that).$search()) &&
+                StringUtils.equals($startIndex(), ((Position) that).$startIndex())
             ;
         }
         else

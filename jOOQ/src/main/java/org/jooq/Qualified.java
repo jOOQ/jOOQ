@@ -37,12 +37,14 @@
  */
 package org.jooq;
 
+// ...
+
 import org.jetbrains.annotations.Nullable;
 
 /**
  * A {@link QueryPart} that is {@link Named} and located in a {@link Schema}.
  */
-public interface Qualified extends Named {
+public interface Qualified extends Named, MQualified {
 
     /**
      * Get the object's catalog.

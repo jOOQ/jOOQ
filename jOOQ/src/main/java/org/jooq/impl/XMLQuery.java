@@ -45,29 +45,36 @@ import static org.jooq.impl.Keywords.K_CONTENT;
 import static org.jooq.impl.Keywords.K_RETURNING;
 import static org.jooq.impl.Names.N_XMLQUERY;
 import static org.jooq.impl.SQLDataType.XML;
-import static org.jooq.impl.XMLPassingMechanism.BY_REF;
-import static org.jooq.impl.XMLPassingMechanism.BY_VALUE;
+// ...
+// ...
 import static org.jooq.impl.XMLTable.acceptPassing;
 import static org.jooq.impl.XMLTable.acceptXPath;
 
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.XML;
 import org.jooq.XMLQueryPassingStep;
+// ...
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep {
+final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep, MXmlquery {
     private final Field<String>       xpath;
     private final Field<XML>          passing;
-    private final XMLPassingMechanism passingMechanism;
+    private final XmlPassingMechanism passingMechanism;
 
     XMLQuery(Field<String> xpath) {
         this(xpath, null, null);
     }
 
-    private XMLQuery(Field<String> xpath, Field<XML> passing, XMLPassingMechanism passingMechanism) {
+    private XMLQuery(Field<String> xpath, Field<XML> passing, XmlPassingMechanism passingMechanism) {
         super(N_XMLQUERY, SQLDataType.XML);
 
         this.xpath = xpath;
@@ -144,5 +151,39 @@ final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep {
                 ctx.sqlIndentEnd(')');
                 break;
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<String> $xpath() {
+        return xpath;
+    }
+
+    @Override
+    public final Field<XML> $passing() {
+        return passing;
+    }
+
+    @Override
+    public final XmlPassingMechanism $passingMechanism() {
+        return passingMechanism;
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, xpath, passing);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, xpath, passing, (x, p) -> new XMLQuery(x, passing, passingMechanism), replacement);
     }
 }

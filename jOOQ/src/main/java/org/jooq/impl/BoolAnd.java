@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class BoolAnd
 extends
     AbstractAggregateFunction<Boolean>
+implements
+    MBoolAnd
 {
 
     BoolAnd(
@@ -124,4 +128,62 @@ extends
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Condition $condition() {
+        return DSL.condition((Field<Boolean>) getArguments().get(0));
+    }
+
+    @Override
+    public final MBoolAnd $condition(MCondition newValue) {
+        return constructor().apply(newValue);
+    }
+
+    public final Function1<? super MCondition, ? extends MBoolAnd> constructor() {
+        return (a1) -> new BoolAnd((Condition) a1);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $condition(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return super.traverse(
+            QOM.traverse(
+                init, abort, recurse, accumulate, this,
+                $condition()
+            ), abort, recurse, accumulate
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof BoolAnd) {
+            return
+                StringUtils.equals($condition(), ((BoolAnd) that).$condition())
+            ;
+        }
+        else
+            return super.equals(that);
+    }
 }

@@ -69,6 +69,7 @@ import java.util.List;
 
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
+// ...
 
 import org.jetbrains.annotations.NotNull;
 
@@ -92,7 +93,7 @@ import org.jetbrains.annotations.NotNull;
  * @param <R> The record type being returned by this query
  * @author Lukas Eder
  */
-public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, FieldLike {
+public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, FieldLike, MSelect<R> {
 
     /**
      * Apply the <code>UNION</code> set operation.

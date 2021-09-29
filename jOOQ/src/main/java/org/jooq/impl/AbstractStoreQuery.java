@@ -46,6 +46,8 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.StoreQuery;
 import org.jooq.Table;
+// ...
+// ...
 
 /**
  * A default implementation for store queries.
@@ -98,8 +100,8 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> 
             getValues().put(field, Tools.field(value, field));
     }
 
-    static class UnknownField<T> extends AbstractField<T> {
-        private final int         index;
+    static class UnknownField<T> extends AbstractField<T> implements UTransient {
+        private final int index;
 
         @SuppressWarnings({ "rawtypes", "unchecked" })
         UnknownField(int index) {

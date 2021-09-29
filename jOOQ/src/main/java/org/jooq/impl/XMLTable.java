@@ -59,8 +59,8 @@ import static org.jooq.impl.Names.N_XMLTABLE;
 import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
-import static org.jooq.impl.XMLPassingMechanism.BY_REF;
-import static org.jooq.impl.XMLPassingMechanism.BY_VALUE;
+// ...
+// ...
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,18 +76,23 @@ import org.jooq.XML;
 import org.jooq.XMLTableColumnPathStep;
 import org.jooq.XMLTablePassingStep;
 import org.jooq.conf.ParamType;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
 final class XMLTable
-extends AbstractTable<Record>
+extends
+    AbstractTable<Record>
 implements
     XMLTablePassingStep,
-    XMLTableColumnPathStep {
+    XMLTableColumnPathStep,
+    UNotYetImplemented
+{
     private final Field<String>                 xpath;
     private final Field<XML>                    passing;
-    private final XMLPassingMechanism           passingMechanism;
+    private final XmlPassingMechanism           passingMechanism;
     private final QueryPartList<XMLTableColumn> columns;
     private final boolean                       hasOrdinality;
     private transient FieldsImpl<Record>        fields;
@@ -99,7 +104,7 @@ implements
     private XMLTable(
         Field<String> xpath,
         Field<XML> passing,
-        XMLPassingMechanism passingMechanism,
+        XmlPassingMechanism passingMechanism,
         QueryPartList<XMLTableColumn> columns,
         boolean hasOrdinality
     ) {
@@ -284,7 +289,7 @@ implements
         ctx.visit(xpath);
     }
 
-    static final void acceptPassing(Context<?> ctx, Field<XML> passing, XMLPassingMechanism passingMechanism) {
+    static final void acceptPassing(Context<?> ctx, Field<XML> passing, XmlPassingMechanism passingMechanism) {
         ctx.formatSeparator()
            .visit(K_PASSING);
 
@@ -302,12 +307,12 @@ implements
         ctx.sql(' ').visit(passing);
     }
 
-    private static class XMLTableColumn extends AbstractQueryPart {
+    private static class XMLTableColumn extends AbstractQueryPart implements UNotYetImplemented {
 
-        final Field<?>            field;
-        final DataType<?>         type;
-        final boolean             forOrdinality;
-        final String              path;
+        final Field<?>    field;
+        final DataType<?> type;
+        final boolean     forOrdinality;
+        final String      path;
 
         XMLTableColumn(Field<?> field, DataType<?> type, boolean forOrdinality, String path) {
             this.field = field;

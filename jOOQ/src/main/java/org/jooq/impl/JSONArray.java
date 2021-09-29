@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,14 +69,15 @@ final class JSONArray<T>
 extends
     AbstractField<T>
 implements
+    MJSONArray<T>,
     JSONArrayNullStep<T>,
     JSONArrayReturningStep<T>
 {
 
-    final DataType<T>                    type;
-    final Collection<? extends Field<?>> fields;
-          JSONOnNull                     onNull;
-          DataType<?>                    returning;
+    final DataType<T>                           type;
+    final QueryPartListView<? extends Field<?>> fields;
+          JSONOnNull                            onNull;
+          DataType<?>                           returning;
 
     JSONArray(
         DataType<T> type,
@@ -100,7 +103,7 @@ implements
         );
 
         this.type = type;
-        this.fields = fields;
+        this.fields = new QueryPartList<>(fields);
         this.onNull = onNull;
         this.returning = returning;
     }
@@ -220,17 +223,93 @@ implements
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final DataType<T> $type() {
+        return type;
+    }
+
+    @Override
+    public final MList<? extends Field<?>> $fields() {
+        return fields;
+    }
+
+    @Override
+    public final JSONOnNull $onNull() {
+        return onNull;
+    }
+
+    @Override
+    public final DataType<?> $returning() {
+        return returning;
+    }
+
+    @Override
+    public final MJSONArray<T> $type(MDataType<T> newValue) {
+        return constructor().apply(newValue, $fields(), $onNull(), $returning());
+    }
+
+    @Override
+    public final MJSONArray<T> $fields(MList<? extends Field<?>> newValue) {
+        return constructor().apply($type(), newValue, $onNull(), $returning());
+    }
+
+    @Override
+    public final MJSONArray<T> $onNull(JSONOnNull newValue) {
+        return constructor().apply($type(), $fields(), newValue, $returning());
+    }
+
+    @Override
+    public final MJSONArray<T> $returning(MDataType<?> newValue) {
+        return constructor().apply($type(), $fields(), $onNull(), newValue);
+    }
+
+    public final Function4<? super MDataType<T>, ? super MList<? extends Field<?>>, ? super JSONOnNull, ? super MDataType<?>, ? extends MJSONArray<T>> constructor() {
+        return (a1, a2, a3, a4) -> new JSONArray((DataType<T>) a1, (Collection<? extends Field<?>>) a2, a3, (DataType<?>) a4);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $type(),
+            $fields(),
+            $onNull(),
+            $returning(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $type(),
+            $fields(),
+            $returning()
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof JSONArray) {
             return
-                StringUtils.equals(type, ((JSONArray) that).type) &&
-                StringUtils.equals(fields, ((JSONArray) that).fields) &&
-                StringUtils.equals(onNull, ((JSONArray) that).onNull) &&
-                StringUtils.equals(returning, ((JSONArray) that).returning)
+                StringUtils.equals($type(), ((JSONArray) that).$type()) &&
+                StringUtils.equals($fields(), ((JSONArray) that).$fields()) &&
+                StringUtils.equals($onNull(), ((JSONArray) that).$onNull()) &&
+                StringUtils.equals($returning(), ((JSONArray) that).$returning())
             ;
         }
         else

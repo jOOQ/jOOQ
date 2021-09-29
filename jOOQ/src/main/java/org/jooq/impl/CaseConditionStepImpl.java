@@ -63,11 +63,12 @@ import org.jooq.Field;
 // ...
 import org.jooq.Record1;
 import org.jooq.Select;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseConditionStep<T> {
+final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseConditionStep<T>, UNotYetImplemented {
 
     private final List<Condition> conditions;
     private final List<Field<T>>  results;

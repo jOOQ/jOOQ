@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -66,6 +68,8 @@ import java.util.stream.*;
 final class EndsWithIgnoreCase<T>
 extends
     AbstractCondition
+implements
+    MEndsWithIgnoreCase<T>
 {
 
     final Field<T> string;
@@ -109,15 +113,44 @@ extends
 
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $arg1() {
+        return string;
+    }
+
+    @Override
+    public final Field<T> $arg2() {
+        return suffix;
+    }
+
+    @Override
+    public final MEndsWithIgnoreCase<T> $arg1(MField<T> newValue) {
+        return constructor().apply(newValue, $arg2());
+    }
+
+    @Override
+    public final MEndsWithIgnoreCase<T> $arg2(MField<T> newValue) {
+        return constructor().apply($arg1(), newValue);
+    }
+
+    @Override
+    public final Function2<? super MField<T>, ? super MField<T>, ? extends MEndsWithIgnoreCase<T>> constructor() {
+        return (a1, a2) -> new EndsWithIgnoreCase<>((Field<T>) a1, (Field<T>) a2);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
     // -------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object that) {
         if (that instanceof EndsWithIgnoreCase) {
             return
-                StringUtils.equals(string, ((EndsWithIgnoreCase) that).string) &&
-                StringUtils.equals(suffix, ((EndsWithIgnoreCase) that).suffix)
+                StringUtils.equals($string(), ((EndsWithIgnoreCase) that).$string()) &&
+                StringUtils.equals($suffix(), ((EndsWithIgnoreCase) that).$suffix())
             ;
         }
         else

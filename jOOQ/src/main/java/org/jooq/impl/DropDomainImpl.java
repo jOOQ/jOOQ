@@ -49,9 +49,11 @@ import static org.jooq.impl.Tools.DataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
+// ...
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -67,23 +69,24 @@ final class DropDomainImpl
 extends
     AbstractDDLQuery
 implements
+    MDropDomain,
     DropDomainCascadeStep,
     DropDomainFinalStep
 {
 
     final Domain<?> domain;
-    final boolean   dropDomainIfExists;
+    final boolean   ifExists;
           Cascade   cascade;
 
     DropDomainImpl(
         Configuration configuration,
         Domain<?> domain,
-        boolean dropDomainIfExists
+        boolean ifExists
     ) {
         this(
             configuration,
             domain,
-            dropDomainIfExists,
+            ifExists,
             null
         );
     }
@@ -91,19 +94,15 @@ implements
     DropDomainImpl(
         Configuration configuration,
         Domain<?> domain,
-        boolean dropDomainIfExists,
+        boolean ifExists,
         Cascade cascade
     ) {
         super(configuration);
 
         this.domain = domain;
-        this.dropDomainIfExists = dropDomainIfExists;
+        this.ifExists = ifExists;
         this.cascade = cascade;
     }
-
-    final Domain<?> $domain()             { return domain; }
-    final boolean   $dropDomainIfExists() { return dropDomainIfExists; }
-    final Cascade   $cascade()            { return cascade; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -135,7 +134,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (dropDomainIfExists && !supportsIfExists(ctx))
+        if (ifExists && !supportsIfExists(ctx))
             tryCatch(ctx, DDLStatementType.DROP_DOMAIN, c -> accept0(c));
         else
             accept0(ctx);
@@ -154,7 +153,7 @@ implements
                 break;
         }
 
-        if (dropDomainIfExists && supportsIfExists(ctx))
+        if (ifExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(domain);
@@ -162,4 +161,67 @@ implements
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Domain<?> $domain() {
+        return domain;
+    }
+
+    @Override
+    public final boolean $ifExists() {
+        return ifExists;
+    }
+
+    @Override
+    public final Cascade $cascade() {
+        return cascade;
+    }
+
+    @Override
+    public final MDropDomain $domain(MDomain<?> newValue) {
+        return constructor().apply(newValue, $ifExists(), $cascade());
+    }
+
+    @Override
+    public final MDropDomain $ifExists(boolean newValue) {
+        return constructor().apply($domain(), newValue, $cascade());
+    }
+
+    @Override
+    public final MDropDomain $cascade(Cascade newValue) {
+        return constructor().apply($domain(), $ifExists(), newValue);
+    }
+
+    public final Function3<? super MDomain<?>, ? super Boolean, ? super Cascade, ? extends MDropDomain> constructor() {
+        return (a1, a2, a3) -> new DropDomainImpl(configuration(), (Domain<?>) a1, a2, a3);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(
+            this,
+            $domain(),
+            $ifExists(),
+            $cascade(),
+            constructor()::apply,
+            replacement
+        );
+    }
+
+    @Override
+    public final <R> R traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+    ) {
+        return QOM.traverse(
+            init, abort, recurse, accumulate, this,
+            $domain()
+        );
+    }
 }

@@ -45,6 +45,8 @@ import static org.jooq.Clause.FIELD_REFERENCE;
 import static org.jooq.impl.DefaultMetaProvider.meta;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.jooq.Binding;
@@ -52,18 +54,24 @@ import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
+// ...
+// ...
+// ...
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A common base type for table fields.
  *
  * @author Lukas Eder
  */
-class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements TableField<R, T>, SimpleQueryPart {
+class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements TableField<R, T>, SimpleQueryPart, MFieldRef<T> {
 
     private static final Clause[] CLAUSES = { FIELD, FIELD_REFERENCE };
 
@@ -119,6 +127,30 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
 
             c.visit(getUnqualifiedName());
         });
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final <X> X traverse(
+        X init,
+        Predicate<? super X> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super X, ? super MQueryPart, ? extends X> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, table);
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, table, t -> new TableFieldImpl<R, T>(getQualifiedName(), getDataType(), t, getCommentPart(), getBinding()), replacement);
+    }
+
+    @Override
+    public final MTableRef<?> $table() {
+        return (MTableRef<?>) table;
     }
 
     // ------------------------------------------------------------------------

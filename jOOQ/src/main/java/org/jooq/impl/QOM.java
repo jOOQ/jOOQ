@@ -396,8 +396,7 @@ public final class QOM {
     public interface MBlock extends MQueryPart {
         @NotNull MList<? extends MStatement> $statements();
     }
-
-
+    public interface MNull extends MStatement {}
 
 
 

@@ -46,7 +46,7 @@ import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_NULL;
 
 import org.jooq.Context;
-// ...
+import org.jooq.impl.QOM.MNull;
 import org.jooq.impl.QOM.UEmpty;
 
 /**

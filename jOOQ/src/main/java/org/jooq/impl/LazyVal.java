@@ -155,6 +155,11 @@ final class LazyVal<T> extends AbstractParamX<T> implements MVal<T> {
     }
 
     @Override
+    public final MParam<T> $value(T value) {
+        return delegate.$value(value);
+    }
+
+    @Override
     public final <R> R traverse(
         R init,
         Predicate<? super R> abort,

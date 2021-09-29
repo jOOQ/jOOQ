@@ -675,6 +675,7 @@ public final class QOM {
 
     public interface MParam<T> extends MField<T>, UEmpty {
         T $value();
+        MParam<T> $value(T value);
     }
     public interface MInline<T> extends MParam<T> {}
     public interface MVal<T> extends MParam<T> {}
@@ -2889,10 +2890,21 @@ public final class QOM {
      * A marker interface for {@link QueryPart} implementations whose
      * {@link MQueryPart} semantics has not yet been implemented.
      *
-     * @deprecated - [#12425] - 3.16.0 - Missing implementations should be added as soon as possible!
+     * @deprecated - [#12425] - 3.16.0 - Missing implementations should be added
+     *             as soon as possible!
      */
     @Deprecated(forRemoval = true)
     interface UNotYetImplemented extends UEmpty {}
+
+    /**
+     * A marker interface for {@link MQueryPart} methods that have not yet been
+     * implemented.
+     *
+     * @deprecated - [#12425] - 3.16.0 - Missing implementations should be added
+     *             as soon as possible!
+     */
+    @Deprecated(forRemoval = true)
+    static class UNotYetImplementedException extends RuntimeException {}
 
     interface UProxy<Q extends MQueryPart> extends MQueryPart {
         Q $delegate();
@@ -2932,7 +2944,7 @@ public final class QOM {
 
         @Override
         default MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-            return this;
+            return replacement.apply(this);
         }
 
         @Override

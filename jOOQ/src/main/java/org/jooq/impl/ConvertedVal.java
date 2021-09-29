@@ -43,6 +43,7 @@ import org.jooq.Param;
 import org.jooq.ParamMode;
 import org.jooq.conf.ParamType;
 // ...
+// ...
 
 /**
  * A {@link Param} wrapper object that allows for lazily initialising the value
@@ -121,6 +122,11 @@ final class ConvertedVal<T> extends AbstractParamX<T> implements UNotYetImplemen
     @Override
     public final T $value() {
         return getValue();
+    }
+
+    @Override
+    public final MParam<T> $value(T value) {
+        return ((AbstractParamX) delegate).$value(delegate.getDataType().convert(value));
     }
 
     // -------------------------------------------------------------------------

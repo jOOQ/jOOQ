@@ -102,9 +102,11 @@ final class ConditionProviderImpl extends AbstractQueryPart implements Condition
     @Override
     public final void addConditions(Operator operator, Condition conditions) {
         if (hasWhere())
-            condition = DSL.condition(operator, getWhere(), conditions);
+            setWhere(DSL.condition(operator, getWhere(), conditions));
+        else if (conditions instanceof ConditionProviderImpl)
+            setWhere(((ConditionProviderImpl) conditions).getWhere());
         else
-            condition = conditions;
+            setWhere(conditions);
     }
 
     @Override

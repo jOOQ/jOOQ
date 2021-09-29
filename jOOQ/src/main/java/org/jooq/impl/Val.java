@@ -76,6 +76,7 @@ import org.jooq.JSONB;
 import org.jooq.RenderContext;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
+// ...
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.types.DayToSecond;
@@ -338,5 +339,14 @@ final class Val<T> extends AbstractParam<T> {
         else {
             return "?";
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MParam<T> $value(T newValue) {
+        return copy(newValue);
     }
 }

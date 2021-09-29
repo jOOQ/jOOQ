@@ -178,5 +178,6 @@ public class PostgresDataType {
     public static final DataType<String>     ACLITEM                    = new DefaultDataType<>(FAMILY, SQLDataType.VARCHAR, "aclitem");
     public static final DataType<String>     NAME                       = new DefaultDataType<>(FAMILY, SQLDataType.VARCHAR, "name");
     public static final DataType<String>     REGPROC                    = new DefaultDataType<>(FAMILY, SQLDataType.VARCHAR, "regproc");
+    public static final DataType<String>     REGCLASS                   = new DefaultDataType<>(FAMILY, SQLDataType.VARCHAR, "regclass");
     public static final DataType<Object>     VOID                       = new DefaultDataType<>(FAMILY, SQLDataType.OTHER, "void");
 }

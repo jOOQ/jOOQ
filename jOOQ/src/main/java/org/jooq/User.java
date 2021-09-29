@@ -38,7 +38,7 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
-// ...
+import org.jooq.impl.QOM.MUser;
 
 /**
  * A privilege for use in <code>GRANT</code> and <code>REVOKE</code> statements.

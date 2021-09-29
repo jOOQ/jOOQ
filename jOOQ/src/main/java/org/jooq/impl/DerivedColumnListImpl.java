@@ -72,10 +72,10 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.ResultQuery;
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.MName;
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.Materialized;
 
 /**
  * @author Lukas Eder

@@ -48,7 +48,7 @@ import org.jooq.Function1;
 import org.jooq.Internal;
 import org.jooq.Name;
 import org.jooq.Schema;
-// ...
+import org.jooq.impl.QOM.MQueryPart;
 
 /**
  * A schema that references a lazy initialisable {@link Catalog} singleton, for

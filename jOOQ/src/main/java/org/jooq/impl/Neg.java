@@ -45,8 +45,8 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Param;
 import org.jooq.conf.TransformUnneededArithmeticExpressions;
-// ...
-// ...
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MNeg;
 
 /**
  * @author Lukas Eder

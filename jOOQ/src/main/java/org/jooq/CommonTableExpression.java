@@ -37,7 +37,7 @@
  */
 package org.jooq;
 
-// ...
+import org.jooq.impl.QOM.MCommonTableExpression;
 
 /**
  * A common table expression.

@@ -51,7 +51,7 @@ import java.sql.Date;
 import org.jooq.Context;
 import org.jooq.DatePart;
 import org.jooq.Field;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder

@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.jooq.impl.DSL;
-// ...
+import org.jooq.impl.QOM.MCatalog;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

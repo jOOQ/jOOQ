@@ -59,8 +59,8 @@ import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.UDTRecord;
 import org.jooq.exception.DataTypeException;
-// ...
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.UTransient;
 import org.jooq.util.h2.H2DataType;
 
 /**

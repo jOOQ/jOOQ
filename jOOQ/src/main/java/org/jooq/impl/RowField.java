@@ -99,9 +99,9 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MRow;
+import org.jooq.impl.QOM.MRowField;
 
 /**
  * @author Lukas Eder

@@ -65,10 +65,10 @@ import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.Row2;
 import org.jooq.SelectField;
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MDataType;
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.MQueryPart;
 
 import org.jetbrains.annotations.NotNull;
 

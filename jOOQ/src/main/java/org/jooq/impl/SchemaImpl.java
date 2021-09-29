@@ -67,7 +67,7 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UDT;
 import org.jooq.UniqueKey;
-// ...
+import org.jooq.impl.QOM.MQueryPart;
 import org.jooq.tools.StringUtils;
 
 /**

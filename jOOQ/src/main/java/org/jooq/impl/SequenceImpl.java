@@ -74,10 +74,10 @@ import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Sequence;
 import org.jooq.exception.SQLDialectNotSupportedException;
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MSchema;
+import org.jooq.impl.QOM.UEmpty;
+import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.UTransient;
 
 import org.jetbrains.annotations.Nullable;
 

@@ -59,9 +59,9 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MFieldRef;
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MTableRef;
 import org.jooq.tools.StringUtils;
 
 import org.jetbrains.annotations.NotNull;

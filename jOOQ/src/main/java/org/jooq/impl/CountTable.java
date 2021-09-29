@@ -44,9 +44,9 @@ import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MCountTable;
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MTable;
 
 import org.jetbrains.annotations.NotNull;
 

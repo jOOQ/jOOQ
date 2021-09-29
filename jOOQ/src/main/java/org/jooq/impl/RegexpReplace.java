@@ -46,7 +46,7 @@ import static org.jooq.impl.Names.N_REPLACE_REGEXPR;
 
 import org.jooq.Context;
 import org.jooq.Field;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder

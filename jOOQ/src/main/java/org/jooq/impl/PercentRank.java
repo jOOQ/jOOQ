@@ -57,8 +57,8 @@ import org.jooq.Function1;
 // ...
 import org.jooq.SQLDialect;
 import org.jooq.WindowSpecification;
-// ...
-// ...
+import org.jooq.impl.QOM.MPercentRank;
+import org.jooq.impl.QOM.MQueryPart;
 
 /**
  * @author Lukas Eder

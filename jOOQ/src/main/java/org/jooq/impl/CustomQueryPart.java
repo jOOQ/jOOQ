@@ -45,7 +45,7 @@ import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.QueryPart;
-// ...
+import org.jooq.impl.QOM.UEmpty;
 
 /**
  * A base class for custom {@link QueryPart} implementations in client code.

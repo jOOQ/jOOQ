@@ -88,10 +88,10 @@ import org.jooq.Function1;
 import org.jooq.Function3;
 import org.jooq.RowN;
 import org.jooq.SQLDialect;
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MBetween;
+import org.jooq.impl.QOM.MCondition;
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MQueryPart;
 
 /**
  * @author Lukas Eder

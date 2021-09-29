@@ -77,7 +77,7 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.TableOptions;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder

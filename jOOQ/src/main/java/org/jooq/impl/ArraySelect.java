@@ -52,8 +52,8 @@ import org.jooq.Function1;
 import org.jooq.Record1;
 import org.jooq.Select;
 import org.jooq.Table;
-// ...
-// ...
+import org.jooq.impl.QOM.MArrayQuery;
+import org.jooq.impl.QOM.MQueryPart;
 
 /**
  * @author Lukas Eder

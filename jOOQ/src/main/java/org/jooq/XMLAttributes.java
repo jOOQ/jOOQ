@@ -38,7 +38,7 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
-// ...
+import org.jooq.impl.QOM.MXmlAttributes;
 
 /**
  * A type modelling XML attributes for use in

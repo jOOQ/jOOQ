@@ -60,8 +60,8 @@ import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
-// ...
-// ...
+import org.jooq.impl.QOM.MCollection;
+import org.jooq.impl.QOM.MQueryPart;
 
 /**
  * A {@link List} view, delegating all calls to a wrapped list, but acting like

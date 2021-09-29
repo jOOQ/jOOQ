@@ -45,7 +45,7 @@ import java.util.Map.Entry;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
-// ...
+import org.jooq.impl.QOM.UEmpty;
 
 /**
  * @author Lukas Eder

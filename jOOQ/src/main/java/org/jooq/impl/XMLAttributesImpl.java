@@ -52,9 +52,9 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.XMLAttributes;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MXmlAttributes;
 
 /**
  * @author Lukas Eder

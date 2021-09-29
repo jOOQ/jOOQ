@@ -59,7 +59,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DetachedException;
-// ...
+import org.jooq.impl.QOM.UEmpty;
 
 /**
  * @author Lukas Eder

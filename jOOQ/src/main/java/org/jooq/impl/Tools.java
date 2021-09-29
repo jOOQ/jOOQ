@@ -314,8 +314,8 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TemplatingException;
 import org.jooq.exception.TooManyRowsException;
-// ...
-// ...
+import org.jooq.impl.QOM.MCombinedCondition;
+import org.jooq.impl.QOM.MCompareCondition;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;

@@ -37,7 +37,7 @@
  */
 package org.jooq;
 
-// ...
+import org.jooq.impl.QOM.MPackage;
 
 /**
  * A container for stored procedures and functions

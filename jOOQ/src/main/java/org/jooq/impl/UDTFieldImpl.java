@@ -46,7 +46,7 @@ import org.jooq.Name;
 import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * A common base type for UDT attributes / fields

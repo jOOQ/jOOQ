@@ -48,9 +48,9 @@ import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.UProxy;
 
 /**
  * A {@link Field} that acts as another field, allowing for the proxied field to

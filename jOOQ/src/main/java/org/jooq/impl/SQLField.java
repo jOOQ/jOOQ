@@ -41,8 +41,8 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
-// ...
-// ...
+import org.jooq.impl.QOM.UEmpty;
+import org.jooq.impl.QOM.UEmptyField;
 
 final class SQLField<T> extends AbstractField<T> implements UEmptyField<T> {
 

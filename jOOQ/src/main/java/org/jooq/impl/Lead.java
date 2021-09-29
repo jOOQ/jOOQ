@@ -40,7 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.Names.N_LEAD;
 
 import org.jooq.Field;
-// ...
+import org.jooq.impl.QOM.MLead;
 
 /**
  * @author Lukas Eder

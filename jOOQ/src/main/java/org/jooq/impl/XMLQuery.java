@@ -45,8 +45,8 @@ import static org.jooq.impl.Keywords.K_CONTENT;
 import static org.jooq.impl.Keywords.K_RETURNING;
 import static org.jooq.impl.Names.N_XMLQUERY;
 import static org.jooq.impl.SQLDataType.XML;
-// ...
-// ...
+import static org.jooq.impl.QOM.XmlPassingMechanism.BY_REF;
+import static org.jooq.impl.QOM.XmlPassingMechanism.BY_VALUE;
 import static org.jooq.impl.XMLTable.acceptPassing;
 import static org.jooq.impl.XMLTable.acceptXPath;
 
@@ -58,9 +58,9 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.XML;
 import org.jooq.XMLQueryPassingStep;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MXmlquery;
+import org.jooq.impl.QOM.XmlPassingMechanism;
 
 /**
  * @author Lukas Eder

@@ -81,9 +81,9 @@ import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MSchema;
+import org.jooq.impl.QOM.MTableRef;
 import org.jooq.tools.StringUtils;
 
 import org.jetbrains.annotations.Nullable;

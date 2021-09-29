@@ -75,9 +75,9 @@ import org.jooq.Function2;
 import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.SQLDialect;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MCondition;
+import org.jooq.impl.QOM.MOverlaps;
+import org.jooq.impl.QOM.MRow;
 
 /**
  * @author Lukas Eder

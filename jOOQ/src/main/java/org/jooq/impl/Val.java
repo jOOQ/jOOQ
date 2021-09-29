@@ -76,7 +76,7 @@ import org.jooq.JSONB;
 import org.jooq.RenderContext;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
-// ...
+import org.jooq.impl.QOM.MParam;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.types.DayToSecond;

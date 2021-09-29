@@ -48,10 +48,10 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function1;
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MCollated;
+import org.jooq.impl.QOM.MCollation;
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MQueryPart;
 
 /**
  * @author Lukas Eder

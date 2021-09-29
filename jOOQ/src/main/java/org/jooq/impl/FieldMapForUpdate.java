@@ -59,7 +59,7 @@ import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.RenderContext.CastMode;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 

@@ -64,7 +64,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
-// ...
+import org.jooq.impl.QOM.MCurrentTimestamp;
 
 /**
  * @author Lukas Eder

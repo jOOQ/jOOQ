@@ -57,10 +57,10 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.conf.ParamType;
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MCreateType;
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.MQueryPart;
 
 /**
  * @author Lukas Eder

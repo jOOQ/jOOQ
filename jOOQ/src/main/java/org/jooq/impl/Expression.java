@@ -104,8 +104,8 @@ import org.jooq.SQLDialect;
 import org.jooq.Typed;
 import org.jooq.conf.TransformUnneededArithmeticExpressions;
 import org.jooq.exception.DataTypeException;
-// ...
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.UTransient;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;

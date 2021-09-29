@@ -59,8 +59,8 @@ import static org.jooq.impl.Names.N_XMLTABLE;
 import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
-// ...
-// ...
+import static org.jooq.impl.QOM.XmlPassingMechanism.BY_REF;
+import static org.jooq.impl.QOM.XmlPassingMechanism.BY_VALUE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,8 +76,8 @@ import org.jooq.XML;
 import org.jooq.XMLTableColumnPathStep;
 import org.jooq.XMLTablePassingStep;
 import org.jooq.conf.ParamType;
-// ...
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.XmlPassingMechanism;
 
 /**
  * @author Lukas Eder

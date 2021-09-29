@@ -39,7 +39,7 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.*;
 
-// ...
+import org.jooq.impl.QOM.MDerivedColumnList;
 
 import org.jetbrains.annotations.NotNull;
 

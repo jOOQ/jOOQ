@@ -46,7 +46,7 @@ import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
-// ...
+import org.jooq.impl.QOM.MQuery;
 
 import org.jetbrains.annotations.NotNull;
 

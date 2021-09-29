@@ -62,7 +62,7 @@ import org.jooq.JSONValueOnStep;
 import org.jooq.Keyword;
 // ...
 import org.jooq.SQLDialect;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 
 /**

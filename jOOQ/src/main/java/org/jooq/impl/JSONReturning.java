@@ -52,7 +52,7 @@ import java.util.Set;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.SQLDialect;
-// ...
+import org.jooq.impl.QOM.UTransient;
 
 /**
  * @author Lukas Eder

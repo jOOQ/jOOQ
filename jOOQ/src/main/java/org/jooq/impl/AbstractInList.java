@@ -98,9 +98,9 @@ import org.jooq.Field;
 import org.jooq.Function2;
 import org.jooq.RowN;
 import org.jooq.SQLDialect;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MInList;
+import org.jooq.impl.QOM.MList;
 
 /**
  * @author Lukas Eder

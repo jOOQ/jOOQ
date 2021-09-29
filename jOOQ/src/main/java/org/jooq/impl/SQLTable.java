@@ -42,8 +42,8 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.TableOptions;
-// ...
-// ...
+import org.jooq.impl.QOM.UEmpty;
+import org.jooq.impl.QOM.UEmptyTable;
 
 /**
  * @author Lukas Eder

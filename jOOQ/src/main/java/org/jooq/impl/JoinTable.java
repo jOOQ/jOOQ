@@ -140,7 +140,7 @@ import org.jooq.TableOuterJoinStep;
 import org.jooq.TablePartitionByStep;
 import org.jooq.conf.RenderOptionalKeyword;
 import org.jooq.exception.DataAccessException;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * A table consisting of two joined tables and possibly a join condition

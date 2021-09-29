@@ -85,8 +85,8 @@ import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.conf.NestedCollectionEmulation;
-// ...
-// ...
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MQueryPart;
 
 import org.jetbrains.annotations.NotNull;
 

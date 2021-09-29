@@ -47,7 +47,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Keyword;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 
 /**

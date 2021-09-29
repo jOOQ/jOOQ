@@ -52,11 +52,11 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
-// ...
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MName;
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MTable;
+import org.jooq.impl.QOM.MTableAlias;
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 import org.jetbrains.annotations.NotNull;
 

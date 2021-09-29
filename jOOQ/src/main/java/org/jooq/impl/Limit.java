@@ -69,7 +69,7 @@ import org.jooq.Param;
 import org.jooq.RenderContext.CastMode;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
-// ...
+import org.jooq.impl.QOM.UTransient;
 import org.jooq.impl.Tools.BooleanDataKey;
 
 /**

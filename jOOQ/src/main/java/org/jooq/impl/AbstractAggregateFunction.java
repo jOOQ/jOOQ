@@ -92,8 +92,8 @@ import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.WindowBeforeOverStep;
-// ...
-// ...
+import org.jooq.impl.QOM.MAggregateFunction;
+import org.jooq.impl.QOM.MQueryPart;
 
 /**
  * @author Lukas Eder

@@ -43,8 +43,8 @@ import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.SQL;
-// ...
-// ...
+import org.jooq.impl.QOM.UEmpty;
+import org.jooq.impl.QOM.UEmptyQuery;
 
 /**
  * @author Lukas Eder

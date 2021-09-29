@@ -68,7 +68,7 @@ import org.jooq.Row;
 import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
-// ...
+import org.jooq.impl.QOM.UTransient;
 import org.jooq.tools.JooqLogger;
 
 

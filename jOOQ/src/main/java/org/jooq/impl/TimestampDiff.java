@@ -55,8 +55,8 @@ import java.sql.Timestamp;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function2;
-// ...
-// ...
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MTimestampDiff;
 import org.jooq.types.DayToSecond;
 
 /**

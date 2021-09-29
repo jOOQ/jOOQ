@@ -129,7 +129,7 @@ import org.jooq.Row21;
 import org.jooq.Row22;
 import org.jooq.RowN;
 import org.jooq.SQLDialect;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder

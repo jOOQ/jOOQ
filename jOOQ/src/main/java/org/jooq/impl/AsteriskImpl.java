@@ -55,10 +55,10 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.SQLDialect;
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MAsterisk;
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.MQueryPart;
 
 import org.jetbrains.annotations.NotNull;
 

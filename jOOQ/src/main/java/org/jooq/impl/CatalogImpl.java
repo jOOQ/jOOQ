@@ -54,8 +54,8 @@ import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.Schema;
-// ...
-// ...
+import org.jooq.impl.QOM.MCondition;
+import org.jooq.impl.QOM.MQueryPart;
 import org.jooq.tools.StringUtils;
 
 /**

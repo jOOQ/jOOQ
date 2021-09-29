@@ -50,9 +50,9 @@ import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MDerivedTable;
+import org.jooq.impl.QOM.MSelect;
+import org.jooq.impl.QOM.MTable;
 
 /**
  * @author Lukas Eder

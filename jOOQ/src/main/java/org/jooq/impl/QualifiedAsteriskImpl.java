@@ -49,11 +49,11 @@ import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QualifiedAsterisk;
 import org.jooq.Table;
-// ...
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.MQualifiedAsterisk;
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MTable;
 
 import org.jetbrains.annotations.NotNull;
 

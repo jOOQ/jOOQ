@@ -56,7 +56,7 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UDT;
 import org.jooq.UniqueKey;
-// ...
+import org.jooq.impl.QOM.MQueryPart;
 
 /**
  * A schema that references a lazy initialisable {@link Schema} singleton, for

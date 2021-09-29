@@ -43,7 +43,7 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Keyword;
 import org.jooq.Privilege;
-// ...
+import org.jooq.impl.QOM.UEmpty;
 
 /**
  * @author Timur Shaidullin

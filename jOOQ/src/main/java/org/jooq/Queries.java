@@ -42,7 +42,7 @@ import java.util.stream.Stream;
 
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DSL;
-// ...
+import org.jooq.impl.QOM.MQueries;
 
 import org.jetbrains.annotations.NotNull;
 

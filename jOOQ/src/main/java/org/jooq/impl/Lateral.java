@@ -45,8 +45,8 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableOptions;
-// ...
-// ...
+import org.jooq.impl.QOM.MLateral;
+import org.jooq.impl.QOM.MTable;
 
 /**
  * @author Lukas Eder

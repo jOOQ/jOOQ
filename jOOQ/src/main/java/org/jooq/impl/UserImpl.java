@@ -48,7 +48,7 @@ import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.User;
-// ...
+import org.jooq.impl.QOM.MQueryPart;
 
 /**
  * A common implementation of the User type.

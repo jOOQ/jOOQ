@@ -54,7 +54,7 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Select;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.Tools.BooleanDataKey;
 
 /**

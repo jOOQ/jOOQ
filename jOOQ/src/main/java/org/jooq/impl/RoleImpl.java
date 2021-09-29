@@ -48,9 +48,9 @@ import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.Role;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MName;
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MRole;
 
 import org.jetbrains.annotations.NotNull;
 

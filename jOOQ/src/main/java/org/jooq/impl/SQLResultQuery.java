@@ -51,8 +51,8 @@ import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.SQL;
-// ...
-// ...
+import org.jooq.impl.QOM.UEmpty;
+import org.jooq.impl.QOM.UEmptyQuery;
 
 /**
  * A plain SQL query that returns results

@@ -46,7 +46,7 @@ import org.jooq.Function1;
 import org.jooq.Package;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
-// ...
+import org.jooq.impl.QOM.MQueryPart;
 
 /**
  * A default implementation for packages (containers of stored procedures and

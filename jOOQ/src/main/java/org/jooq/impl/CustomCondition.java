@@ -44,7 +44,7 @@ import java.util.function.Consumer;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
-// ...
+import org.jooq.impl.QOM.UEmptyCondition;
 
 /**
  * A base class for custom {@link Condition} implementations in client code.

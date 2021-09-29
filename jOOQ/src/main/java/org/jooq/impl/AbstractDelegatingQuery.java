@@ -48,7 +48,7 @@ import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.conf.ParamType;
-// ...
+import org.jooq.impl.QOM.UProxy;
 
 /**
  * @author Lukas Eder

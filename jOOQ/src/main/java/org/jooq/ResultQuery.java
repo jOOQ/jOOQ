@@ -65,7 +65,7 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.DefaultRecordMapper;
-// ...
+import org.jooq.impl.QOM.MResultQuery;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

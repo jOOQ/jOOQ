@@ -45,7 +45,7 @@ import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder

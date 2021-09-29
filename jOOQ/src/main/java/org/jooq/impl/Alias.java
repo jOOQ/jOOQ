@@ -106,7 +106,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.conf.RenderOptionalKeyword;
-// ...
+import org.jooq.impl.QOM.UEmpty;
 
 /**
  * @author Lukas Eder

@@ -128,10 +128,10 @@ import org.jooq.WithAsStep7;
 import org.jooq.WithAsStep8;
 import org.jooq.WithAsStep9;
 import org.jooq.WithStep;
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MCommonTableExpression;
+import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MWith;
 
 import org.jetbrains.annotations.NotNull;
 

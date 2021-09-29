@@ -41,7 +41,7 @@ import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
-// ...
+import org.jooq.impl.QOM.MParam;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

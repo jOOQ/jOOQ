@@ -40,7 +40,7 @@ package org.jooq;
 import java.util.List;
 
 import org.jooq.impl.DSL;
-// ...
+import org.jooq.impl.QOM.MIndex;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

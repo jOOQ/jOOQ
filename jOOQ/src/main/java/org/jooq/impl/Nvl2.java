@@ -45,8 +45,8 @@ import static org.jooq.impl.Names.N_NVL2;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function3;
-// ...
-// ...
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MNvl2;
 
 /**
  * @author Lukas Eder

@@ -46,9 +46,9 @@ import org.jooq.Function1;
 import org.jooq.Param;
 import org.jooq.ParamMode;
 import org.jooq.conf.ParamType;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MParam;
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MVal;
 
 /**
  * A {@link Param} wrapper object that allows for lazily initialising the value

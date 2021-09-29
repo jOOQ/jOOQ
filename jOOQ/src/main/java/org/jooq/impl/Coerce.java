@@ -45,8 +45,8 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
-// ...
-// ...
+import org.jooq.impl.QOM.MCoerce;
+import org.jooq.impl.QOM.MQueryPart;
 
 /**
  * @author Lukas Eder

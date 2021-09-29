@@ -55,9 +55,9 @@ import org.jooq.WindowSpecification;
 import org.jooq.WindowSpecificationExcludeStep;
 import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.WindowSpecificationRowsStep;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MWindowDefinition;
+import org.jooq.impl.QOM.MWindowSpecification;
 
 /**
  * @author Lukas Eder

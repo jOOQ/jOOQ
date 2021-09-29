@@ -118,7 +118,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.tools.StringUtils;
 

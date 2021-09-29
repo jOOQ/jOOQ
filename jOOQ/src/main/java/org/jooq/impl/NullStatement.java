@@ -47,7 +47,7 @@ import static org.jooq.impl.Keywords.K_NULL;
 
 import org.jooq.Context;
 // ...
-// ...
+import org.jooq.impl.QOM.UEmpty;
 
 /**
  * @author Lukas Eder

@@ -84,7 +84,7 @@ import java.util.function.Function;
 import org.jooq.TableOptions.TableType;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
-// ...
+import org.jooq.impl.QOM.MTable;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

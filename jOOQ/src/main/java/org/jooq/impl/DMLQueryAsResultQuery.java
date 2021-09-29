@@ -66,7 +66,7 @@ import org.jooq.UpdateResultStep;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * A wrapped DML query ({@link Insert}, {@link Update}, {@link Delete}) that

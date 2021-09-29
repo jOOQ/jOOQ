@@ -66,7 +66,7 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.SQLDialect;
 import org.jooq.True;
-// ...
+import org.jooq.impl.QOM.MTrue;
 
 /**
  * @author Lukas Eder

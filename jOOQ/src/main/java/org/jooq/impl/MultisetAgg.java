@@ -69,9 +69,9 @@ import org.jooq.Result;
 import org.jooq.SelectField;
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MMultisetAgg;
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MRow;
 
 /**
  * @author Lukas Eder

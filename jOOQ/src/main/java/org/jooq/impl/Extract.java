@@ -80,8 +80,8 @@ import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Keyword;
-// ...
-// ...
+import org.jooq.impl.QOM.MExtract;
+import org.jooq.impl.QOM.MQueryPart;
 
 /**
  * @author Lukas Eder

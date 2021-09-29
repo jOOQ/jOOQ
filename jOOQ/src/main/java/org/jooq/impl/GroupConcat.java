@@ -49,7 +49,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.OrderField;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder

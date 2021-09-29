@@ -63,7 +63,7 @@ import org.jooq.Field;
 // ...
 import org.jooq.Record1;
 import org.jooq.Select;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder

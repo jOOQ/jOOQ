@@ -90,9 +90,9 @@ import org.jooq.Record1;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableOptions;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MGenerateSeries;
+import org.jooq.impl.QOM.MTable;
 
 /**
  * @author Lukas Eder

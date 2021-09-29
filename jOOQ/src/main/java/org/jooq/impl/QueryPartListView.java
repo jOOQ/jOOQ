@@ -47,7 +47,7 @@ import java.util.function.Function;
 
 import org.jooq.Context;
 import org.jooq.QueryPart;
-// ...
+import org.jooq.impl.QOM.MList;
 
 /**
  * A {@link List} view, delegating all calls to a wrapped list, but acting like

@@ -53,8 +53,8 @@ import org.jooq.Schema;
 import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
-// ...
-// ...
+import org.jooq.impl.QOM.MSchema;
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 import org.jetbrains.annotations.Nullable;
 

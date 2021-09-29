@@ -158,7 +158,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.UpdateQuery;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder

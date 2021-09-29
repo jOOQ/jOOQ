@@ -41,8 +41,8 @@ import org.jooq.Context;
 import org.jooq.Keyword;
 import org.jooq.conf.RenderKeywordCase;
 import org.jooq.conf.SettingsTools;
-// ...
-// ...
+import org.jooq.impl.QOM.UEmpty;
+import org.jooq.impl.QOM.UTransient;
 
 /**
  * A default {@link Keyword} implementation.

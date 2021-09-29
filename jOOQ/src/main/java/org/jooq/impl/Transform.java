@@ -42,8 +42,8 @@ import java.util.function.Function;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.QueryPart;
-// ...
-// ...
+import org.jooq.impl.QOM.MCombinedCondition;
+import org.jooq.impl.QOM.MCompareCondition;
 
 /**
  * A simple, preliminary pattern matching implementation for {@link Condition}

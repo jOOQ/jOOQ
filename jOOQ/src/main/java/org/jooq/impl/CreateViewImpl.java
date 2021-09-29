@@ -92,11 +92,11 @@ import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
-// ...
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MCreateView;
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MResultQuery;
 
 /**
  * @author Lukas Eder

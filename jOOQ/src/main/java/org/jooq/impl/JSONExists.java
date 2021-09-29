@@ -57,7 +57,7 @@ import org.jooq.Field;
 import org.jooq.JSONExistsOnStep;
 import org.jooq.Keyword;
 import org.jooq.conf.ParamType;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 
 /**

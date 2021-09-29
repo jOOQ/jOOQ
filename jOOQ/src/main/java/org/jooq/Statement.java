@@ -37,7 +37,7 @@
  */
 package org.jooq;
 
-// ...
+import org.jooq.impl.QOM.MStatement;
 
 /**
  * A statement that can be placed inside of a {@link Block}, but not executed on

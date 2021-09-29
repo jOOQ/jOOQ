@@ -58,7 +58,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTE;
 
 import org.jooq.impl.DSL;
-// ...
+import org.jooq.impl.QOM.MSequence;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

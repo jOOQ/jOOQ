@@ -83,7 +83,7 @@ import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataExtendedKey;
 

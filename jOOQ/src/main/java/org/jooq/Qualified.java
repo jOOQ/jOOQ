@@ -37,7 +37,7 @@
  */
 package org.jooq;
 
-// ...
+import org.jooq.impl.QOM.MQualified;
 
 import org.jetbrains.annotations.Nullable;
 

@@ -45,9 +45,9 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function3;
 import org.jooq.Name;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MCondition;
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MIif;
 
 /**
  * @author Lukas Eder

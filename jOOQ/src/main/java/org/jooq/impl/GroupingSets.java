@@ -48,10 +48,10 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
 import org.jooq.Function1;
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MFieldOrRow;
+import org.jooq.impl.QOM.MGroupField;
+import org.jooq.impl.QOM.MGroupingSets;
+import org.jooq.impl.QOM.MList;
 
 /**
  * @author Lukas Eder

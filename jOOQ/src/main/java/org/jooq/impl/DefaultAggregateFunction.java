@@ -44,7 +44,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Name;
-// ...
+import org.jooq.impl.QOM.MQueryPart;
 
 /**
  * A field that handles built-in functions, aggregate functions, and window

@@ -69,9 +69,9 @@ import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.Update;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MDataChangeDeltaTable;
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.ResultOption;
 
 
 /**

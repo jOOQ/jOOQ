@@ -51,7 +51,7 @@ import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
-// ...
+import org.jooq.impl.QOM.UTransient;
 
 /**
  * A {@link Select} query that re-aliases its projection, or produces a derived

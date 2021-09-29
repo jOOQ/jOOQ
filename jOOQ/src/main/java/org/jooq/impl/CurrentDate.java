@@ -49,7 +49,7 @@ import java.sql.Date;
 
 import org.jooq.Context;
 import org.jooq.DataType;
-// ...
+import org.jooq.impl.QOM.MCurrentDate;
 
 /**
  * @author Lukas Eder

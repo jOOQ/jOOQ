@@ -37,7 +37,7 @@
  */
 package org.jooq;
 
-// ...
+import org.jooq.impl.QOM.MFieldOrRow;
 
 /**
  * A common base type for {@link Field} and {@link Row} where DSL API accepts

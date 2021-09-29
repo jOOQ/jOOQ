@@ -43,7 +43,7 @@ import static org.jooq.Clause.CONDITION_COMPARISON;
 
 import org.jooq.Clause;
 import org.jooq.Context;
-// ...
+import org.jooq.impl.QOM.UEmptyCondition;
 
 /**
  * @author Lukas Eder

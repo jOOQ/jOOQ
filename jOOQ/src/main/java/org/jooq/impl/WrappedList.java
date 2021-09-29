@@ -38,7 +38,7 @@
 package org.jooq.impl;
 
 import org.jooq.Context;
-// ...
+import org.jooq.impl.QOM.UTransient;
 
 /**
  * @author Lukas Eder

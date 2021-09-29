@@ -84,11 +84,11 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.conf.ParamType;
-// ...
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.MRow;
+import org.jooq.impl.QOM.MSelect;
+import org.jooq.impl.QOM.MTable;
+import org.jooq.impl.QOM.MValues;
 
 import org.jetbrains.annotations.Nullable;
 

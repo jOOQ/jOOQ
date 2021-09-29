@@ -368,6 +368,7 @@ public final class QOM {
 
 
 
+
     public interface MSequence<T extends Number> extends MQualified {}
     public interface MConstraint extends MNamed {}
     public interface MPrimaryKey extends MConstraint {

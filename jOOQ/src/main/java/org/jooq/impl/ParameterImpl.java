@@ -61,7 +61,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Statement;
 // ...
-// ...
+import org.jooq.impl.QOM.UEmpty;
 
 /**
  * A common base class for stored procedure parameters

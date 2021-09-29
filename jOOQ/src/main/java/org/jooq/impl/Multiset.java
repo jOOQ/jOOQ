@@ -105,9 +105,9 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MMultiset;
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MSelect;
 
 /**
  * @author Lukas Eder

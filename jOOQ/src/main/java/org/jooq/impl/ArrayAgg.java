@@ -42,9 +42,9 @@ import static org.jooq.impl.Names.N_ARRAY_AGG;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MAggregateFunction;
+import org.jooq.impl.QOM.MArrayAgg;
+import org.jooq.impl.QOM.MField;
 
 /**
  * @author Lukas Eder

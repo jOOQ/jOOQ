@@ -49,10 +49,10 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function2;
 import org.jooq.RowN;
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MCondition;
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.MNotInList;
 
 /**
  * @author Lukas Eder

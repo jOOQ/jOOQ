@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.jooq.impl.DSL;
-// ...
+import org.jooq.impl.QOM.MSchema;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

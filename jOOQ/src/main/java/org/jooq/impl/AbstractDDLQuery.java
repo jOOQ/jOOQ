@@ -39,13 +39,13 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_RESTRICT;
-// ...
-// ...
+import static org.jooq.impl.QOM.Cascade.CASCADE;
+import static org.jooq.impl.QOM.Cascade.RESTRICT;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DDLQuery;
-// ...
+import org.jooq.impl.QOM.Cascade;
 
 /**
  * @author Lukas Eder

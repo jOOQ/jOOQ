@@ -71,8 +71,8 @@ import org.jooq.Function1;
 import org.jooq.SQLDialect;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
-// ...
-// ...
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.NullOrdering;
 
 
 final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T>, SimpleQueryPart {

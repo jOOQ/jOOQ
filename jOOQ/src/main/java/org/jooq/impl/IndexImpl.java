@@ -64,8 +64,8 @@ import org.jooq.OrderField;
 import org.jooq.SQLDialect;
 import org.jooq.SortField;
 import org.jooq.Table;
-// ...
-// ...
+import org.jooq.impl.QOM.MTableRef;
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 import org.jetbrains.annotations.NotNull;
 

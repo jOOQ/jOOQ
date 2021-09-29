@@ -45,9 +45,9 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MAggregateFunction;
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MXMLAgg;
 
 
 /**

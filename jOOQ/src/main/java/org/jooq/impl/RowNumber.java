@@ -46,8 +46,8 @@ import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.Function1;
-// ...
-// ...
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MRowNumber;
 
 /**
  * @author Lukas Eder

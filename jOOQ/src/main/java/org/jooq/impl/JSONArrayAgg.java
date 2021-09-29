@@ -53,8 +53,8 @@ import static org.jooq.impl.Names.N_JSON_AGG;
 import static org.jooq.impl.Names.N_JSON_ARRAYAGG;
 import static org.jooq.impl.Names.N_JSON_GROUP_ARRAY;
 import static org.jooq.impl.Names.N_JSON_QUOTE;
-// ...
-// ...
+import static org.jooq.impl.QOM.JSONOnNull.ABSENT_ON_NULL;
+import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
@@ -74,11 +74,11 @@ import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.SelectHavingStep;
-// ...
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.JSONOnNull;
+import org.jooq.impl.QOM.MAggregateFunction;
+import org.jooq.impl.QOM.MDataType;
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MJSONArrayAgg;
 
 
 /**

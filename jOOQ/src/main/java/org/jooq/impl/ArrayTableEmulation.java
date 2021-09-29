@@ -52,7 +52,7 @@ import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
-// ...
+import org.jooq.impl.QOM.UTransient;
 
 /**
  * Essentially, this is the same as <code>ArrayTable</code>, except that it

@@ -53,8 +53,8 @@ import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.Select;
-// ...
-// ...
+import org.jooq.impl.QOM.MCondition;
+import org.jooq.impl.QOM.UProxy;
 
 /**
  * @author Lukas Eder

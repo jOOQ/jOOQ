@@ -47,7 +47,7 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.exception.SQLDialectNotSupportedException;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder

@@ -106,7 +106,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.conf.ParamType;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder

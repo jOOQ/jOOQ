@@ -38,7 +38,7 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
-// ...
+import org.jooq.impl.QOM.MComment;
 
 /**
  * A comment.

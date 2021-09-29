@@ -46,8 +46,8 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.StoreQuery;
 import org.jooq.Table;
-// ...
-// ...
+import org.jooq.impl.QOM.UEmpty;
+import org.jooq.impl.QOM.UTransient;
 
 /**
  * A default implementation for store queries.

@@ -141,7 +141,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions.OnCommit;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 
 /**

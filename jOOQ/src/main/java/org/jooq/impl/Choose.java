@@ -49,9 +49,9 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function2;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MChoose;
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MList;
 
 /**
  * @author Lukas Eder

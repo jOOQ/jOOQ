@@ -75,7 +75,7 @@ import org.jooq.Context;
 import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.Name;
-// ...
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder

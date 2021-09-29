@@ -59,7 +59,7 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableOptions;
-// ...
+import org.jooq.impl.QOM.MDual;
 
 /**
  * @author Lukas Eder

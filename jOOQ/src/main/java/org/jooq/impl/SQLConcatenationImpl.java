@@ -43,7 +43,7 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
-// ...
+import org.jooq.impl.QOM.UEmpty;
 
 final class SQLConcatenationImpl extends AbstractQueryPart implements SQL, UEmpty {
 

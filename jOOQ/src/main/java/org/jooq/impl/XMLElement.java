@@ -60,9 +60,9 @@ import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.XML;
 import org.jooq.XMLAttributes;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MXmlelement;
 
 /**
  * @author Lukas Eder

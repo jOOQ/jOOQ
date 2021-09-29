@@ -62,10 +62,10 @@ import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.TableOptions;
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MDerivedColumnList;
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MResultQuery;
+import org.jooq.impl.QOM.Materialized;
 import org.jooq.impl.Tools.DataKey;
 
 /**

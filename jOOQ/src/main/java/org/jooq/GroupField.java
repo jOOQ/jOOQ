@@ -38,7 +38,7 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
-// ...
+import org.jooq.impl.QOM.MGroupField;
 
 /**
  * An expression to be used exclusively in <code>GROUP BY</code> clauses.

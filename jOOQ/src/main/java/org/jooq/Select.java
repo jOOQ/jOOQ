@@ -69,7 +69,7 @@ import java.util.List;
 
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
-// ...
+import org.jooq.impl.QOM.MSelect;
 
 import org.jetbrains.annotations.NotNull;
 

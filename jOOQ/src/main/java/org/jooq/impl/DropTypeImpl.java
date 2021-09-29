@@ -54,10 +54,10 @@ import org.jooq.DropTypeStep;
 import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Name;
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.Cascade;
+import org.jooq.impl.QOM.MDropType;
+import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.MQueryPart;
 
 /**
  * @author Lukas Eder

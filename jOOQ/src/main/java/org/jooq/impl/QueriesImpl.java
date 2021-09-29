@@ -57,10 +57,10 @@ import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.ResultQuery;
 import org.jooq.Results;
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.MQueries;
+import org.jooq.impl.QOM.MQuery;
+import org.jooq.impl.QOM.MQueryPart;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 
 /**

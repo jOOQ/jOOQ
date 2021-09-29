@@ -47,7 +47,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
-// ...
+import org.jooq.impl.QOM.UEmptyField;
 
 /**
  * A base class for custom {@link Field} implementations in client code.

@@ -51,9 +51,9 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Select;
 import org.jooq.Table;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MCondition;
+import org.jooq.impl.QOM.MSelect;
+import org.jooq.impl.QOM.MSelectIsNotNull;
 
 /**
  * @author Lukas Eder

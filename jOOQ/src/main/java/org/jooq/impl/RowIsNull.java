@@ -75,9 +75,9 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MCondition;
+import org.jooq.impl.QOM.MRow;
+import org.jooq.impl.QOM.MRowIsNull;
 
 /**
  * @author Lukas Eder

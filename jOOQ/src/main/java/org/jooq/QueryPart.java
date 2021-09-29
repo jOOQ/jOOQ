@@ -40,7 +40,7 @@ package org.jooq;
 import java.io.Serializable;
 
 import org.jooq.conf.Settings;
-// ...
+import org.jooq.impl.QOM.MQueryPart;
 
 /**
  * The common base type for all objects that can be used for query composition.

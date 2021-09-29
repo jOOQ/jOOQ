@@ -37,7 +37,7 @@
  */
 package org.jooq;
 
-// ...
+import org.jooq.impl.QOM.MJSONEntry;
 
 import org.jetbrains.annotations.NotNull;
 

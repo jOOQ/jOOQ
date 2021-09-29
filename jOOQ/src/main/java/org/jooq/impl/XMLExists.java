@@ -38,8 +38,8 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.K_XMLEXISTS;
-// ...
-// ...
+import static org.jooq.impl.QOM.XmlPassingMechanism.BY_REF;
+import static org.jooq.impl.QOM.XmlPassingMechanism.BY_VALUE;
 import static org.jooq.impl.XMLTable.acceptPassing;
 import static org.jooq.impl.XMLTable.acceptXPath;
 
@@ -52,10 +52,10 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.XML;
 import org.jooq.XMLExistsPassingStep;
-// ...
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MXmlexists;
+import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.XmlPassingMechanism;
 
 
 /**

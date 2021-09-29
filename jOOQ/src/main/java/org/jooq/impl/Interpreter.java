@@ -42,8 +42,8 @@ import static java.util.Arrays.asList;
 import static org.jooq.Name.Quoted.QUOTED;
 import static org.jooq.conf.SettingsTools.interpreterLocale;
 import static org.jooq.impl.AbstractName.NO_NAME;
-// ...
-// ...
+import static org.jooq.impl.QOM.Cascade.CASCADE;
+import static org.jooq.impl.QOM.Cascade.RESTRICT;
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.DSL.name;
@@ -110,7 +110,7 @@ import org.jooq.conf.InterpreterSearchSchema;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.ConstraintImpl.Action;
-// ...
+import org.jooq.impl.QOM.Cascade;
 import org.jooq.tools.JooqLogger;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })

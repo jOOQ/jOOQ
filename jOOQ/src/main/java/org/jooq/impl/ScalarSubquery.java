@@ -54,9 +54,9 @@ import org.jooq.Function1;
 import org.jooq.Record1;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.MScalarSubquery;
+import org.jooq.impl.QOM.MSelect;
 
 /**
  * @author Lukas Eder

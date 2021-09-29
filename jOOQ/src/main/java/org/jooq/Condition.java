@@ -42,7 +42,7 @@ import org.jetbrains.annotations.*;
 
 
 import org.jooq.impl.DSL;
-// ...
+import org.jooq.impl.QOM.MCondition;
 
 
 /**

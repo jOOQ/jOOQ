@@ -52,7 +52,7 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
-// ...
+import org.jooq.impl.QOM.UEmpty;
 
 /**
  * Common base class for <code>Key</code>'s

@@ -39,7 +39,7 @@ package org.jooq;
 
 import java.util.List;
 
-// ...
+import org.jooq.impl.QOM.MDomain;
 
 import org.jetbrains.annotations.NotNull;
 

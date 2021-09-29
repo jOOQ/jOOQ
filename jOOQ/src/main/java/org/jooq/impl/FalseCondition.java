@@ -46,7 +46,7 @@ import static org.jooq.impl.TrueCondition.NO_SUPPORT_BOOLEAN;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.False;
-// ...
+import org.jooq.impl.QOM.MFalse;
 
 /**
  * @author Lukas Eder

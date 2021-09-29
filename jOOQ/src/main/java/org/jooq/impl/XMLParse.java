@@ -51,15 +51,15 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
-// ...
+import static org.jooq.impl.QOM.DocumentOrContent.DOCUMENT;
 
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.XML;
-// ...
-// ...
-// ...
+import org.jooq.impl.QOM.DocumentOrContent;
+import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.MXmlparse;
 
 
 /**

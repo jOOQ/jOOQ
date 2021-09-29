@@ -48,7 +48,7 @@ import java.sql.Time;
 
 import org.jooq.Context;
 import org.jooq.DataType;
-// ...
+import org.jooq.impl.QOM.MCurrentTime;
 
 /**
  * @author Lukas Eder

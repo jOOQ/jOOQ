@@ -11988,6 +11988,10 @@ public class DSL {
      * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_SEQUENCE]
      * </pre></code>
+     *
+     * @param name The sequence name
+     * @param type The sequence type (a type that is supported by
+     *            {@link SQLDataType})
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
@@ -12241,6 +12245,10 @@ public class DSL {
      * // ... will execute this SQL on SQL Server:
      * select length([TITLE]) from [T_BOOK]
      * </pre></code>
+     *
+     * @param name The field name
+     * @param type The field type (a type that is supported by
+     *            {@link SQLDataType})
      */
     @NotNull
     @Support
@@ -12312,6 +12320,10 @@ public class DSL {
     public static Index index(Name name) {
         return new IndexImpl(name);
     }
+
+
+
+
 
 
 
@@ -13657,8 +13669,9 @@ public class DSL {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @param sql The SQL
-     * @param type The field type
+     * @param sql The sequence name
+     * @param type The sequence type (a type that is supported by
+     *            {@link SQLDataType})
      * @return A field wrapping the plain SQL
      * @see SQL
      * @deprecated - 3.10 - [#6162] - Use {@link #sequence(Name, Class)} instead.
@@ -13848,7 +13861,8 @@ public class DSL {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @param type The field type
+     * @param type The field type (a type that is supported by
+     *            {@link SQLDataType})
      * @return A field wrapping the plain SQL
      * @see SQL
      */
@@ -13879,7 +13893,8 @@ public class DSL {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @param type The field type
+     * @param type The field type (a type that is supported by
+     *            {@link SQLDataType})
      * @return A field wrapping the plain SQL
      * @see SQL
      */
@@ -13910,7 +13925,8 @@ public class DSL {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @param type The field type
+     * @param type The field type (a type that is supported by
+     *            {@link SQLDataType})
      * @param bindings The bindings for the field
      * @return A field wrapping the plain SQL
      * @see SQL
@@ -14119,7 +14135,8 @@ public class DSL {
      *
      * @param sql The SQL clause, containing {numbered placeholders} where query
      *            parts can be injected
-     * @param type The field type
+     * @param type The field type (a type that is supported by
+     *            {@link SQLDataType})
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
      * @return A field wrapping the plain SQL
@@ -14143,7 +14160,8 @@ public class DSL {
      * escape literals when concatenated into SQL clauses!
      *
      * @param name The function name (without parentheses)
-     * @param type The function return type
+     * @param type The function return type (a type that is supported by
+     *            {@link SQLDataType})
      * @param arguments The function arguments
      * @see SQL
      */
@@ -14180,7 +14198,8 @@ public class DSL {
      * functions that are not yet or insufficiently supported by jOOQ.
      *
      * @param name The function name (possibly qualified)
-     * @param type The function return type
+     * @param type The function return type (a type that is supported by
+     *            {@link SQLDataType})
      * @param arguments The function arguments
      */
     @NotNull
@@ -14218,9 +14237,8 @@ public class DSL {
     }
 
     /**
-     * <code>aggregate()</code> can be used to access native or
-     * user-defined aggregate functions that are not yet or insufficiently
-     * supported by jOOQ.
+     * <code>aggregate()</code> can be used to access native or user-defined
+     * aggregate functions that are not yet or insufficiently supported by jOOQ.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -14228,7 +14246,8 @@ public class DSL {
      * escape literals when concatenated into SQL clauses!
      *
      * @param name The aggregate function name (possibly qualified)
-     * @param type The aggregate function return type
+     * @param type The aggregate function return type (a type that is supported
+     *            by {@link SQLDataType})
      * @param arguments The aggregate function arguments
      * @see SQL
      */
@@ -14262,12 +14281,12 @@ public class DSL {
     }
 
     /**
-     * <code>aggregate()</code> can be used to access native or
-     * user-defined aggregate functions that are not yet or insufficiently
-     * supported by jOOQ.
+     * <code>aggregate()</code> can be used to access native or user-defined
+     * aggregate functions that are not yet or insufficiently supported by jOOQ.
      *
      * @param name The aggregate function name (possibly qualified)
-     * @param type The aggregate function return type
+     * @param type The aggregate function return type (a type that is supported
+     *            by {@link SQLDataType})
      * @param arguments The aggregate function arguments
      */
     @NotNull
@@ -14302,7 +14321,8 @@ public class DSL {
      * escape literals when concatenated into SQL clauses!
      *
      * @param name The aggregate function name (possibly qualified)
-     * @param type The aggregate function return type
+     * @param type The aggregate function return type (a type that is supported
+     *            by {@link SQLDataType})
      * @param arguments The aggregate function arguments
      * @see SQL
      */
@@ -14341,7 +14361,8 @@ public class DSL {
      * supported by jOOQ.
      *
      * @param name The aggregate function name (possibly qualified)
-     * @param type The aggregate function return type
+     * @param type The aggregate function return type (a type that is supported
+     *            by {@link SQLDataType})
      * @param arguments The aggregate function arguments
      */
     @NotNull
@@ -15439,6 +15460,9 @@ public class DSL {
     /**
      * Coerce this field to another type.
      *
+     * @param value The value to be coerced
+     * @param as The field type (a type that is supported by
+     *            {@link SQLDataType})
      * @see #coerce(Field, Class)
      */
     @NotNull
@@ -15516,8 +15540,9 @@ public class DSL {
      * </pre></code>
      *
      * @param <T> The generic type of the coerced field
-     * @param field The field to be coerced
-     * @param as The type that is used for the coercion
+     * @param value The value to be coerced
+     * @param as The field type (a type that is supported by
+     *            {@link SQLDataType})
      * @return The coerced field
      * @see Field#coerce(DataType)
      * @see Field#cast(Class)
@@ -15647,7 +15672,8 @@ public class DSL {
      *
      * @param <T> The generic type of the cast field
      * @param value The value to cast
-     * @param type The type that is used for the cast
+     * @param type The type that is used for the cast (a type that is supported
+     *            by {@link SQLDataType})
      * @return The cast field
      */
     @NotNull
@@ -15661,7 +15687,8 @@ public class DSL {
      *
      * @param <T> The generic type of the cast field
      * @param field The field to cast
-     * @param type The type that is used for the cast
+     * @param type The type that is used for the cast (a type that is supported
+     *            by {@link SQLDataType})
      * @return The cast field
      */
     @NotNull
@@ -26259,6 +26286,9 @@ public class DSL {
     /**
      * Create a named parameter with a defined type and no initial value.
      *
+     * @param name The parameter name
+     * @param type The type that is used for the parameter (a type that is
+     *            supported by {@link SQLDataType})
      * @see #param(String, Object)
      */
     @NotNull
@@ -26746,9 +26776,12 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object, Class)} to be used in Scala and Groovy, where
-     * <code>val</code> is a reserved keyword.
+     * A synonym for {@link #val(Object, Class)} to be used in Scala and Groovy,
+     * where <code>val</code> is a reserved keyword.
      *
+     * @param value The bind value
+     * @param type The type that is used for the bind value (a type that is
+     *            supported by {@link SQLDataType})
      * @see #val(Object, Class)
      */
     @NotNull
@@ -27674,6 +27707,9 @@ public class DSL {
      * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
      * </ul>
      *
+     * @param value The inline value
+     * @param type The data type to enforce upon the value (a type that is
+     *            supported by {@link SQLDataType})
      * @see #val(Object, Class)
      */
     @NotNull
@@ -28151,7 +28187,8 @@ public class DSL {
      *
      * @param <T> The generic value type
      * @param value The constant value
-     * @param type The data type to enforce upon the value
+     * @param type The data type to enforce upon the value (a type that is
+     *            supported by {@link SQLDataType})
      * @return A field representing the constant value
      * @see #val(Object, DataType)
      */
@@ -30048,7 +30085,8 @@ public class DSL {
      * {@link SQLDialect} and a given Java type.
      *
      * @param <T> The generic type
-     * @param type The Java type
+     * @param type The Java type. This must be a type supported by
+     *            {@link SQLDataType}.
      * @return The <code>DSL</code>'s underlying default data type.
      * @deprecated - 3.11.0 - [#7483] - The (indirect) use of the internal
      *             static data type registry is not recommended.

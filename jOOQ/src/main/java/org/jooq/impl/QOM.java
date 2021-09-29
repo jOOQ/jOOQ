@@ -446,7 +446,7 @@ public final class QOM {
     // -------------------------------------------------------------------------
 
     public interface MTable<R extends Record> extends MQueryPart {}
-    public interface MTableRef<R extends Record> extends MTable<R>, MQualified {}
+    public interface MTableRef<R extends Record> extends UEmptyTable<R>, MQualified {}
     public interface MDual extends MTable<Record>, UEmpty {}
     public interface MLateral<R extends Record> extends MTable<R>, UOperator1<MTable<R>, MTable<R>> {}
     public interface MDerivedTable<R extends Record> extends MTable<R>, UOperator1<MSelect<R>, MTable<R>> {}
@@ -678,7 +678,7 @@ public final class QOM {
     }
     public interface MInline<T> extends MParam<T> {}
     public interface MVal<T> extends MParam<T> {}
-    public interface MFieldRef<T> extends MField<T>, MNamed {
+    public interface MFieldRef<T> extends UEmptyField<T>, MNamed {
         @NotNull MTableRef<?> $table();
     }
     public interface MDefault<T> extends MField<T>, UEmpty {}

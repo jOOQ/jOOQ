@@ -134,21 +134,6 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
     // -------------------------------------------------------------------------
 
     @Override
-    public final <X> X traverse(
-        X init,
-        Predicate<? super X> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super X, ? super MQueryPart, ? extends X> accumulate
-    ) {
-        return QOM.traverse(init, abort, recurse, accumulate, this, table);
-    }
-
-    @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, table, t -> new TableFieldImpl<R, T>(getQualifiedName(), getDataType(), t, getCommentPart(), getBinding()), replacement);
-    }
-
-    @Override
     public final MTableRef<?> $table() {
         return (MTableRef<?>) table;
     }

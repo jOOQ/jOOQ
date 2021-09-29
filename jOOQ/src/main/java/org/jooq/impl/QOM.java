@@ -446,6 +446,11 @@ public final class QOM {
     // -------------------------------------------------------------------------
 
     public interface MTable<R extends Record> extends MQueryPart {}
+    public interface MTableAlias<R extends Record> extends MTable<R> {
+        @NotNull MTable<R> $table();
+        @NotNull MName $alias();
+        // TODO [#12425] Reuse MDerivedColumnList
+    }
     public interface MTableRef<R extends Record> extends UEmptyTable<R>, MQualified {}
     public interface MDual extends MTable<Record>, UEmpty {}
     public interface MLateral<R extends Record> extends MTable<R>, UOperator1<MTable<R>, MTable<R>> {}
@@ -659,7 +664,7 @@ public final class QOM {
     // -------------------------------------------------------------------------
 
     public interface MField<T> extends MFieldOrRow, MTyped<T> {}
-    public interface MAliasedField<T> extends MField<T> {
+    public interface MFieldAlias<T> extends MField<T> {
         @NotNull MField<T> $field();
         @NotNull MName $alias();
     }
@@ -675,7 +680,7 @@ public final class QOM {
 
     public interface MParam<T> extends MField<T>, UEmpty {
         T $value();
-        MParam<T> $value(T value);
+        @NotNull MParam<T> $value(T value);
     }
     public interface MInline<T> extends MParam<T> {}
     public interface MVal<T> extends MParam<T> {}

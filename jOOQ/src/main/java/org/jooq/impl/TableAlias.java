@@ -39,23 +39,31 @@
 package org.jooq.impl;
 
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 // ...
+// ...
+// ...
+// ...
+// ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
  */
-final class TableAlias<R extends Record> extends AbstractTable<R> implements UNotYetImplemented {
+final class TableAlias<R extends Record> extends AbstractTable<R> implements MTableAlias<R> {
 
     final Alias<Table<R>> alias;
     final FieldsImpl<R>   aliasedFields;
@@ -166,6 +174,35 @@ final class TableAlias<R extends Record> extends AbstractTable<R> implements UNo
     @Override
     public Class<? extends R> getRecordType() {
         return alias.wrapped().getRecordType();
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MTable<R> $table() {
+        return alias.wrapped();
+    }
+
+    @Override
+    public final MName $alias() {
+        return getUnqualifiedName();
+    }
+
+    @Override
+    public final <T> T traverse(
+        T init,
+        Predicate<? super T> abort,
+        Predicate<? super MQueryPart> recurse,
+        BiFunction<? super T, ? super MQueryPart, ? extends T> accumulate
+    ) {
+        return QOM.traverse(init, abort, recurse, accumulate, this, $table(), $alias());
+    }
+
+    @Override
+    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+        return QOM.replace(this, $table(), $alias(), (t, n) -> new TableAlias<>((Table<R>) t, (Name) n, alias.fieldAliases, alias.wrapInParentheses), replacement);
     }
 
     // ------------------------------------------------------------------------

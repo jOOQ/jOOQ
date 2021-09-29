@@ -56,7 +56,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Lukas Eder
  */
-final class FieldAlias<T> extends AbstractField<T> implements MAliasedField<T> {
+final class FieldAlias<T> extends AbstractField<T> implements MFieldAlias<T> {
 
     private final Alias<Field<T>> alias;
 

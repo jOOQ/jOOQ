@@ -4611,15 +4611,26 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 SelectQueryImpl<?> r = new SelectQueryImpl<>(configuration(), cte, d);
                 r.select.addAll(s);
                 r.from.addAll(f);
-                r.condition.addConditions(c);
+                r.condition.addConditions(extractCondition(c));
                 r.groupBy = g;
-                r.having.addConditions(h);
+                r.having.addConditions(extractCondition(h));
                 r.addWindow(w);
-                r.qualify.addConditions(q);
+                r.qualify.addConditions(extractCondition(q));
                 r.orderBy.addAll(o);
                 return r;
             },
             replacement
         );
+    }
+
+    private final Condition extractCondition(Condition c) {
+
+        // join(..).on(..).and(..) uses some identity tricks to keep the right
+        // reference to the mutable ConditionProviderImpl instance, which we
+        // must take into account here.
+        if (c instanceof ConditionProviderImpl)
+            return ((ConditionProviderImpl) c).getWhere();
+        else
+            return c;
     }
 }

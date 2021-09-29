@@ -39,6 +39,8 @@ package org.jooq.codegen;
 
 
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 // ...
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -5933,12 +5935,19 @@ public class JavaGenerator extends AbstractGenerator {
                         }
                     }
 
+                    Map<TableDefinition, Long> pathCounts = foreignKeys.stream().collect(groupingBy(ForeignKeyDefinition::getReferencedTable, counting()));
                     for (ForeignKeyDefinition foreignKey : foreignKeys) {
                         final String keyFullId = kotlin
                             ? out.ref(getStrategy().getFullJavaIdentifier(foreignKey))
                             : out.ref(getStrategy().getFullJavaIdentifier(foreignKey), 2);
                         final String referencedTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable()));
                         final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
+
+                        out.javadoc(
+                            "Get the implicit join path to the <code>" + foreignKey.getReferencedTable().getQualifiedName() + "</code> table"
+                          + (pathCounts.get(foreignKey.getReferencedTable()) > 1 ? ", via the <code>" + foreignKey.getInputName() + "</code> key" : "")
+                          + "."
+                        );
 
                         if (scala) {
                             out.println("%slazy val %s: %s = { new %s(this, %s) }", visibility(), scalaWhitespaceSuffix(keyMethodName), referencedTableClassName, referencedTableClassName, keyFullId);
@@ -5952,7 +5961,6 @@ public class JavaGenerator extends AbstractGenerator {
                             out.println("}");
                         }
                         else {
-                            out.println();
                             out.println("%s%s %s() {", visibility(), referencedTableClassName, keyMethodName);
                             out.println("if (_%s == null)", keyMethodName);
                             out.println("_%s = new %s(this, %s);", keyMethodName, referencedTableClassName, keyFullId);

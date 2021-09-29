@@ -944,6 +944,26 @@ public final class QOM {
 
 
 
+    public interface MCreateIndex
+        extends
+            MDDLQuery {
+                @NotNull  Boolean $unique();
+                @Nullable MIndex $index();
+                          boolean $ifNotExists();
+                @Nullable MTable<?> $table();
+                @NotNull  MList<? extends OrderField<?>> $on();
+                @NotNull  MList<? extends Field<?>> $include();
+                @Nullable MCondition $where();
+                          boolean $excludeNullKeys();
+                @NotNull  MCreateIndex $unique(Boolean unique);
+                @NotNull  MCreateIndex $index(MIndex index);
+                @NotNull  MCreateIndex $ifNotExists(boolean ifNotExists);
+                @NotNull  MCreateIndex $table(MTable<?> table);
+                @NotNull  MCreateIndex $on(MList<? extends OrderField<?>> on);
+                @NotNull  MCreateIndex $include(MList<? extends Field<?>> include);
+                @NotNull  MCreateIndex $where(MCondition where);
+                @NotNull  MCreateIndex $excludeNullKeys(boolean excludeNullKeys);
+            }
 
 
 
@@ -1001,81 +1021,63 @@ public final class QOM {
 
 
 
+    public interface MCreateSchema
+        extends
+            MDDLQuery {
+                @NotNull  MSchema $schema();
+                          boolean $ifNotExists();
+                @NotNull  MCreateSchema $schema(MSchema schema);
+                @NotNull  MCreateSchema $ifNotExists(boolean ifNotExists);
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public interface MCreateSequence
+        extends
+            MDDLQuery {
+                @NotNull  MSequence<?> $sequence();
+                          boolean $ifNotExists();
+                @Nullable MField<? extends Number> $startWith();
+                @Nullable MField<? extends Number> $incrementBy();
+                @Nullable MField<? extends Number> $minvalue();
+                          boolean $noMinvalue();
+                @Nullable MField<? extends Number> $maxvalue();
+                          boolean $noMaxvalue();
+                          boolean $cycle();
+                          boolean $noCycle();
+                @Nullable MField<? extends Number> $cache();
+                          boolean $noCache();
+                @NotNull  MCreateSequence $sequence(MSequence<?> sequence);
+                @NotNull  MCreateSequence $ifNotExists(boolean ifNotExists);
+                @NotNull  MCreateSequence $startWith(MField<? extends Number> startWith);
+                @NotNull  MCreateSequence $incrementBy(MField<? extends Number> incrementBy);
+                @NotNull  MCreateSequence $minvalue(MField<? extends Number> minvalue);
+                @NotNull  MCreateSequence $noMinvalue(boolean noMinvalue);
+                @NotNull  MCreateSequence $maxvalue(MField<? extends Number> maxvalue);
+                @NotNull  MCreateSequence $noMaxvalue(boolean noMaxvalue);
+                @NotNull  MCreateSequence $cycle(boolean cycle);
+                @NotNull  MCreateSequence $noCycle(boolean noCycle);
+                @NotNull  MCreateSequence $cache(MField<? extends Number> cache);
+                @NotNull  MCreateSequence $noCache(boolean noCache);
+            }
+
+    public interface MDropDatabase
+        extends
+            MDDLQuery {
+                @NotNull  MCatalog $database();
+                          boolean $ifExists();
+                @NotNull  MDropDatabase $database(MCatalog database);
+                @NotNull  MDropDatabase $ifExists(boolean ifExists);
+            }
+
+    public interface MDropDomain
+        extends
+            MDDLQuery {
+                @NotNull  MDomain<?> $domain();
+                          boolean $ifExists();
+                @Nullable Cascade $cascade();
+                @NotNull  MDropDomain $domain(MDomain<?> domain);
+                @NotNull  MDropDomain $ifExists(boolean ifExists);
+                @NotNull  MDropDomain $cascade(Cascade cascade);
+            }
 
 
 

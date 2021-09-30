@@ -126,7 +126,10 @@ final class FieldAlias<T> extends AbstractField<T> implements MFieldAlias<T> {
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, $field(), $alias(), FieldAlias::new, replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, $field(), $alias(), FieldAlias::new, recurse, replacement);
     }
 }

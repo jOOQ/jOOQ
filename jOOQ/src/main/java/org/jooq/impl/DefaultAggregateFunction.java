@@ -40,6 +40,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 
+import java.util.function.Predicate;
+
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function1;
@@ -79,7 +81,10 @@ final class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
     // -------------------------------------------------------------------------
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, arguments, a -> new DefaultAggregateFunction<>(distinct, getQualifiedName(), getDataType(), a.toArray(EMPTY_FIELD)), replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, arguments, a -> new DefaultAggregateFunction<>(distinct, getQualifiedName(), getDataType(), a.toArray(EMPTY_FIELD)), recurse, replacement);
     }
 }

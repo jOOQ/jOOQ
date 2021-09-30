@@ -116,7 +116,10 @@ final class ArraySelect<T> extends AbstractField<T[]> implements MArrayQuery<T> 
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, select, ArraySelect::new, replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, select, ArraySelect::new, recurse, replacement);
     }
 }

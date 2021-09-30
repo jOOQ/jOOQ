@@ -148,7 +148,10 @@ final class CreateTypeImpl extends AbstractDDLQuery implements
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, type, values, (t, v) -> new CreateTypeImpl(configuration(), t).asEnum(v), replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, type, values, (t, v) -> new CreateTypeImpl(configuration(), t).asEnum(v), recurse, replacement);
     }
 }

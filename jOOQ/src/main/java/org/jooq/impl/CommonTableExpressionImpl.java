@@ -204,7 +204,10 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, name, query, materialized, CommonTableExpressionImpl::new, replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, name, query, materialized, CommonTableExpressionImpl::new, recurse, replacement);
     }
 }

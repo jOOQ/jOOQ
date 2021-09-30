@@ -192,7 +192,10 @@ final class XMLElement extends AbstractField<XML> implements MXmlelement {
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, $elementName(), $attributes(), $content(), XMLElement::new, replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, $elementName(), $attributes(), $content(), XMLElement::new, recurse, replacement);
     }
 }

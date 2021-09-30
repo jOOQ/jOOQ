@@ -170,7 +170,10 @@ final class LazyVal<T> extends AbstractParamX<T> implements MVal<T> {
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return delegate.replace(replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return delegate.replace(recurse, replacement);
     }
 }

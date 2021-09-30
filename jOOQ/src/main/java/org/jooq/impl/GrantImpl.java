@@ -255,7 +255,10 @@ implements
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
         return QOM.replace(
             this,
             $privileges(),
@@ -264,6 +267,7 @@ implements
             $toPublic(),
             $withGrantOption(),
             constructor()::apply,
+            recurse,
             replacement
         );
     }

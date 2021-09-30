@@ -191,7 +191,10 @@ final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Resu
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, distinct, row, MultisetAgg::new, replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, distinct, row, MultisetAgg::new, recurse, replacement);
     }
 }

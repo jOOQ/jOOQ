@@ -353,13 +353,16 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
         return QOM.replace(this, wrapped, l -> {
             QueryPartList<T> r = new QueryPartList<>(l);
             if (qualify != null)
                 r = r.qualify(qualify);
             return r.map(mapper).separator(separator);
-        }, replacement);
+        }, recurse, replacement);
     }
 
     // -------------------------------------------------------------------------

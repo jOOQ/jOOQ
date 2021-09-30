@@ -133,7 +133,10 @@ final class Array<T> extends AbstractField<T[]> implements MArray<T> {
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, fields, f -> new Array<>(asList((Field<T>[]) f.fields)), replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, fields, f -> new Array<>(asList((Field<T>[]) f.fields)), recurse, replacement);
     }
 }

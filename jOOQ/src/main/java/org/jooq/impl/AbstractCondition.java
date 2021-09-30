@@ -171,17 +171,6 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
         return or(notExists(select));
     }
 
-    static final Condition unwrapNot(Condition c, BiFunction<? super Condition, ? super Boolean, ? extends Condition> function) {
-        boolean not = false;
-
-        while (c instanceof Not) {
-            c = ((Not) c).condition;
-            not = !not;
-        }
-
-        return function.apply(c, not);
-    }
-
 
 
     // -------------------------------------------------------------------------

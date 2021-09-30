@@ -44,6 +44,7 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.impl.QOM.MCoerce;
 import org.jooq.impl.QOM.MQueryPart;
@@ -130,12 +131,16 @@ final class Coerce<T> extends AbstractField<T> implements MCoerce<T> {
     }
 
     @Override
-    public final MQueryPart replace(org.jooq.Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
         return QOM.replace(
             this,
             $field(),
             $dataType(),
             Coerce::new,
+            recurse,
             replacement
         );
     }

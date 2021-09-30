@@ -612,7 +612,10 @@ final class BlockImpl extends AbstractRowCountQuery implements Block, MBlock {
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, statements, s -> new BlockImpl(configuration(), statements, alwaysWrapInBeginEnd), replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, statements, s -> new BlockImpl(configuration(), statements, alwaysWrapInBeginEnd), recurse, replacement);
     }
 }

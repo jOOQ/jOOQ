@@ -87,11 +87,15 @@ final class Function1<T> extends AbstractField<T> implements MFunction<T> {
     }
 
     @Override
-    public final MQueryPart replace(org.jooq.Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        org.jooq.Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
         return QOM.replace(
             this,
             argument,
             a -> new Function1<>(getQualifiedName(), getDataType(), a),
+            recurse,
             replacement
         );
     }

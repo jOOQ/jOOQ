@@ -63,6 +63,7 @@ import org.jooq.Field;
 // ...
 import org.jooq.Record1;
 import org.jooq.Select;
+import org.jooq.impl.QOM.MSelect;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
@@ -218,6 +219,12 @@ final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCon
         int size = conditions.size();
         for (int i = 0; i < size; i++) {
             Condition c = conditions.get(i);
+
+
+
+
+
+
 
 
 

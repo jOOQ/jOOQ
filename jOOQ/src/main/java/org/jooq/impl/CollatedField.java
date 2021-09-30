@@ -103,8 +103,11 @@ final class CollatedField extends AbstractField<String> implements MCollated {
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, field, collation, CollatedField::new, replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, field, collation, CollatedField::new, recurse, replacement);
     }
 
     @Override

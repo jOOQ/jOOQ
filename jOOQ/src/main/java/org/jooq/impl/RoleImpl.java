@@ -96,7 +96,10 @@ final class RoleImpl extends AbstractNamed implements Role {
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, $name(), RoleImpl::new, replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, $name(), RoleImpl::new, recurse, replacement);
     }
 }

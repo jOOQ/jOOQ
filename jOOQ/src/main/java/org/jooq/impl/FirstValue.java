@@ -106,11 +106,15 @@ final class FirstValue<T> extends AbstractWindowFunction<T> implements MFirstVal
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
         return QOM.replace(
             this,
             field, $windowSpecification(), $windowDefinition(),
             (f, s, d) -> new FirstValue<>(f).$windowSpecification(s).$windowDefinition(d).$nullTreatment(nullTreatment),
+            recurse,
             replacement
         );
     }

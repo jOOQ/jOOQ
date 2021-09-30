@@ -185,11 +185,15 @@ abstract class AbstractLeadLag<T> extends AbstractWindowFunction<T> {
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
         return QOM.replace(
             this,
             field, offset, defaultValue, $windowSpecification(), $windowDefinition(),
             (f, o, def, s, d) -> constructor(f, o, def).$windowSpecification(s).$windowDefinition(d).$nullTreatment(nullTreatment),
+            recurse,
             replacement
         );
     }

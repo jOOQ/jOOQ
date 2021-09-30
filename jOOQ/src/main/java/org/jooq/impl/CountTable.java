@@ -115,12 +115,16 @@ final class CountTable extends AbstractAggregateFunction<Integer> implements MCo
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
         return QOM.replace(
             this,
             $table(),
             distinct,
             CountTable::new,
+            recurse,
             replacement
         );
     }

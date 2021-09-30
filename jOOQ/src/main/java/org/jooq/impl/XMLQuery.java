@@ -183,7 +183,10 @@ final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep, 
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, xpath, passing, (x, p) -> new XMLQuery(x, passing, passingMechanism), replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, xpath, passing, (x, p) -> new XMLQuery(x, passing, passingMechanism), recurse, replacement);
     }
 }

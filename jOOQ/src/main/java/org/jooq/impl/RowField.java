@@ -299,7 +299,10 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, row, RowField::new, replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, row, RowField::new, recurse, replacement);
     }
 }

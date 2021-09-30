@@ -226,7 +226,10 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T>, 
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
         return QOM.replace(
             this,
             field, order, nullOrdering,
@@ -235,6 +238,7 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T>, 
                 r.nullOrdering = n;
                 return r;
             },
+            recurse,
             replacement
         );
     }

@@ -95,11 +95,15 @@ final class Function<T> extends AbstractField<T> implements MFunction<T> {
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
         return QOM.replace(
             this,
             $args(),
             a -> new Function<>(getQualifiedName(), getDataType(), a.toArray(EMPTY_FIELD)),
+            recurse,
             replacement
         );
     }

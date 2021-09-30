@@ -428,8 +428,11 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, select, Multiset::new, replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, select, Multiset::new, recurse, replacement);
     }
 
     @Override

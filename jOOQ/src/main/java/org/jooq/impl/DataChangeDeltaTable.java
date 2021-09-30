@@ -210,7 +210,10 @@ final class DataChangeDeltaTable<R extends Record> extends AbstractTable<R> impl
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, resultOption, query, DataChangeDeltaTable::new, replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, resultOption, query, DataChangeDeltaTable::new, recurse, replacement);
     }
 }

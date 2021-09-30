@@ -149,7 +149,10 @@ final class XMLParse extends AbstractField<XML> implements MXmlparse {
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, content, c -> new XMLParse(c, documentOrContent), replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, content, c -> new XMLParse(c, documentOrContent), recurse, replacement);
     }
 }

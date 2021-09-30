@@ -63,6 +63,7 @@ import java.util.function.Predicate;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Keyword;
 import org.jooq.LanguageContext;
 // ...
@@ -360,12 +361,16 @@ final class Cast<T> extends AbstractField<T> implements MCast<T> {
     }
 
     @Override
-    public final MQueryPart replace(org.jooq.Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
         return QOM.replace(
             this,
             $field(),
             $dataType(),
             Cast::new,
+            recurse,
             replacement
         );
     }

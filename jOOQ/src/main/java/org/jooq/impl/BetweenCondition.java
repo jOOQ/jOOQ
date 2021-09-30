@@ -78,6 +78,7 @@ import static org.jooq.impl.Tools.nullSafe;
 import static org.jooq.impl.Tools.nullableIf;
 
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.jooq.BetweenAndStep;
 import org.jooq.Clause;
@@ -189,7 +190,10 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
     // -------------------------------------------------------------------------
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
         return QOM.replace(
             this,
             field,
@@ -202,6 +206,7 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
                 : symmetric
                     ? Field::betweenSymmetric
                     : Field::between,
+            recurse,
             replacement
         );
     }

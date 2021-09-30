@@ -323,11 +323,14 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
         return QOM.replace(this, view, fields, select, (v, f, s) -> {
             CreateViewImpl<Record> r = new CreateViewImpl<>(configuration(), v, f, ifNotExists, orReplace);
             r.select = s;
             return r;
-        }, replacement);
+        }, recurse, replacement);
     }
 }

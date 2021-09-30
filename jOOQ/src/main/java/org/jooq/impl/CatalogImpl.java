@@ -137,8 +137,11 @@ public class CatalogImpl extends AbstractNamed implements Catalog {
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, getQualifiedName(), getCommentPart(), CatalogImpl::new, replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, getQualifiedName(), getCommentPart(), CatalogImpl::new, recurse, replacement);
     }
 
     // ------------------------------------------------------------------------

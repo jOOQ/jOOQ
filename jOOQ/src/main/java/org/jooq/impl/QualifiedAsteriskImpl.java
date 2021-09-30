@@ -149,7 +149,10 @@ final class QualifiedAsteriskImpl extends AbstractQueryPart implements Qualified
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, table, fields, QualifiedAsteriskImpl::new, replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, table, fields, QualifiedAsteriskImpl::new, recurse, replacement);
     }
 }

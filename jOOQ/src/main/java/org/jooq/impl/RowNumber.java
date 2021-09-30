@@ -95,11 +95,15 @@ final class RowNumber extends AbstractWindowFunction<Integer> implements MRowNum
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
         return QOM.replace(
             this,
             $windowSpecification(), $windowDefinition(),
             (s, d) -> new RowNumber().$windowSpecification(s).$windowDefinition(d),
+            recurse,
             replacement
         );
     }

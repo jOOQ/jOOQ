@@ -201,8 +201,11 @@ final class TableAlias<R extends Record> extends AbstractTable<R> implements MTa
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return QOM.replace(this, $table(), $alias(), (t, n) -> new TableAlias<>((Table<R>) t, (Name) n, alias.fieldAliases, alias.wrapInParentheses), replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return QOM.replace(this, $table(), $alias(), (t, n) -> new TableAlias<>((Table<R>) t, (Name) n, alias.fieldAliases, alias.wrapInParentheses), recurse, replacement);
     }
 
     // ------------------------------------------------------------------------

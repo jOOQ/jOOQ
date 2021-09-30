@@ -282,7 +282,10 @@ public final class LazySchema extends AbstractNamed implements Schema {
     }
 
     @Override
-    public final MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-        return schema().replace(replacement);
+    public final MQueryPart replace(
+        Predicate<? super MQueryPart> recurse,
+        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    ) {
+        return schema().replace(recurse, replacement);
     }
 }

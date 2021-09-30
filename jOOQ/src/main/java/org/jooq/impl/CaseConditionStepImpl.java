@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 // ...
-import static org.jooq.impl.AbstractCondition.unwrapNot;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_CASE;

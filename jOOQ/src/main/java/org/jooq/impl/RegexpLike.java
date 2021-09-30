@@ -149,7 +149,7 @@ final class RegexpLike extends AbstractCondition implements MRegexpLike {
     }
 
     @Override
-    public final Field<String> pattern() {
+    public final Field<String> $pattern() {
         return pattern;
     }
 

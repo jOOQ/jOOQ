@@ -460,7 +460,7 @@ public final class QOM {
     }
     public interface MRegexpLike extends MCondition {
         @NotNull MField<?> $search();
-        @NotNull MField<String> pattern();
+        @NotNull MField<String> $pattern();
     }
     public interface MExtract extends MField<Integer> {
         @NotNull MField<?> $field();

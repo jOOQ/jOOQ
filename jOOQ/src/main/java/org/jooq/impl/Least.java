@@ -89,8 +89,7 @@ final class Least<T> extends AbstractField<T> implements MLeast<T> {
                 Field<T> other = (Field<T>) args.get(1);
 
                 if (args.size() > 2) {
-                    Field<?>[] remaining = new Field<?>[args.size() - 2];
-                    System.arraycopy(args, 2, remaining, 0, remaining.length);
+                    Field<?>[] remaining = args.subList(2, args.size()).toArray(Tools.EMPTY_FIELD);
 
                     ctx.visit(DSL
                        .when(first.lt(other), DSL.least(first, remaining))

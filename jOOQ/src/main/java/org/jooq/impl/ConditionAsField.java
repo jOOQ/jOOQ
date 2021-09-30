@@ -149,11 +149,11 @@ implements
 
     @Override
     public final MConditionAsField $condition(MCondition newValue) {
-        return constructor().apply(newValue);
+        return new ConditionAsField((Condition) newValue);
     }
 
-    public final Function1<? super MCondition, ? extends MConditionAsField> constructor() {
-        return (a1) -> new ConditionAsField((Condition) a1);
+    public final Function1<? super MCondition, ? extends Field<Boolean>> constructor() {
+        return (a1) -> DSL.field((Condition) a1);
     }
 
     @Override

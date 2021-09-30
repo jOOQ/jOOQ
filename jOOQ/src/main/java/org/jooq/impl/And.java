@@ -179,17 +179,17 @@ implements
 
     @Override
     public final MAnd $arg1(MCondition newValue) {
-        return constructor().apply(newValue, $arg2());
+        return new And((Condition) newValue, $arg2());
     }
 
     @Override
     public final MAnd $arg2(MCondition newValue) {
-        return constructor().apply($arg1(), newValue);
+        return new And($arg1(), (Condition) newValue);
     }
 
     @Override
-    public final Function2<? super MCondition, ? super MCondition, ? extends MAnd> constructor() {
-        return (a1, a2) -> new And((Condition) a1, (Condition) a2);
+    public final Function2<? super MCondition, ? super MCondition, ? extends Condition> constructor() {
+        return (a1, a2) -> DSL.and((Condition) a1, (Condition) a2);
     }
 
     // -------------------------------------------------------------------------

@@ -136,11 +136,11 @@ implements
 
     @Override
     public final MFieldCondition $field(MField<Boolean> newValue) {
-        return constructor().apply(newValue);
+        return new FieldCondition((Field<Boolean>) newValue);
     }
 
-    public final Function1<? super MField<Boolean>, ? extends MFieldCondition> constructor() {
-        return (a1) -> new FieldCondition((Field<Boolean>) a1);
+    public final Function1<? super MField<Boolean>, ? extends Condition> constructor() {
+        return (a1) -> DSL.condition((Field<Boolean>) a1);
     }
 
     @Override

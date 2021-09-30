@@ -79,8 +79,8 @@ implements
     final QueryPartListView<? extends Privilege> privileges;
           Table<?>                               on;
           Role                                   to;
-          Boolean                                toPublic;
-          Boolean                                withGrantOption;
+          boolean                                toPublic;
+          boolean                                withGrantOption;
 
     GrantImpl(
         Configuration configuration,
@@ -91,8 +91,8 @@ implements
             privileges,
             null,
             null,
-            null,
-            null
+            false,
+            false
         );
     }
 
@@ -101,8 +101,8 @@ implements
         Collection<? extends Privilege> privileges,
         Table<?> on,
         Role to,
-        Boolean toPublic,
-        Boolean withGrantOption
+        boolean toPublic,
+        boolean withGrantOption
     ) {
         super(configuration);
 
@@ -179,10 +179,10 @@ implements
 
         if (to != null)
             ctx.visit(to);
-        else if (Boolean.TRUE.equals(toPublic))
+        else if (toPublic)
             ctx.visit(K_PUBLIC);
 
-        if (Boolean.TRUE.equals(withGrantOption))
+        if (withGrantOption)
             ctx.sql(' ')
                .visit(K_WITH_GRANT_OPTION);
 
@@ -216,12 +216,12 @@ implements
     }
 
     @Override
-    public final Boolean $toPublic() {
+    public final boolean $toPublic() {
         return toPublic;
     }
 
     @Override
-    public final Boolean $withGrantOption() {
+    public final boolean $withGrantOption() {
         return withGrantOption;
     }
 
@@ -241,12 +241,12 @@ implements
     }
 
     @Override
-    public final MGrant $toPublic(Boolean newValue) {
+    public final MGrant $toPublic(boolean newValue) {
         return constructor().apply($privileges(), $on(), $to(), newValue, $withGrantOption());
     }
 
     @Override
-    public final MGrant $withGrantOption(Boolean newValue) {
+    public final MGrant $withGrantOption(boolean newValue) {
         return constructor().apply($privileges(), $on(), $to(), $toPublic(), newValue);
     }
 

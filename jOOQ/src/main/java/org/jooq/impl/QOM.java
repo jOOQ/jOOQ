@@ -37,48 +37,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.impl.DSL.count;
-import static org.jooq.impl.DSL.falseCondition;
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.not;
-import static org.jooq.impl.DSL.partitionBy;
-import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.DSL.sum;
-import static org.jooq.impl.DSL.trueCondition;
-import static org.jooq.impl.Keywords.K_ABSENT_ON_NULL;
-import static org.jooq.impl.Keywords.K_BY_REF;
-import static org.jooq.impl.Keywords.K_BY_VALUE;
-import static org.jooq.impl.Keywords.K_CASCADE;
-import static org.jooq.impl.Keywords.K_CONTAINS_SQL;
-import static org.jooq.impl.Keywords.K_CONTENT;
-import static org.jooq.impl.Keywords.K_CURRENT_ROW;
-import static org.jooq.impl.Keywords.K_DEFAULT;
-import static org.jooq.impl.Keywords.K_DOCUMENT;
-import static org.jooq.impl.Keywords.K_FINAL;
-import static org.jooq.impl.Keywords.K_FROM_FIRST;
-import static org.jooq.impl.Keywords.K_FROM_LAST;
-import static org.jooq.impl.Keywords.K_GROUP;
-import static org.jooq.impl.Keywords.K_GROUPS;
-import static org.jooq.impl.Keywords.K_IGNORE_NULLS;
-import static org.jooq.impl.Keywords.K_MATERIALIZED;
-import static org.jooq.impl.Keywords.K_MODIFIES_SQL_DATA;
-import static org.jooq.impl.Keywords.K_NEW;
-import static org.jooq.impl.Keywords.K_NOT_MATERIALIZED;
-import static org.jooq.impl.Keywords.K_NO_OTHERS;
-import static org.jooq.impl.Keywords.K_NO_SQL;
-import static org.jooq.impl.Keywords.K_NULLS_FIRST;
-import static org.jooq.impl.Keywords.K_NULLS_LAST;
-import static org.jooq.impl.Keywords.K_NULL_ON_NULL;
-import static org.jooq.impl.Keywords.K_OLD;
-import static org.jooq.impl.Keywords.K_RANGE;
-import static org.jooq.impl.Keywords.K_READS_SQL_DATA;
-import static org.jooq.impl.Keywords.K_RESPECT_NULLS;
-import static org.jooq.impl.Keywords.K_RESTRICT;
-import static org.jooq.impl.Keywords.K_ROWS;
-import static org.jooq.impl.Keywords.K_TIES;
+import static org.jooq.impl.DSL.keyword;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
@@ -87,7 +46,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
@@ -96,7 +54,6 @@ import java.util.function.Predicate;
 import org.jooq.Condition;
 import org.jooq.Constraint;
 import org.jooq.DMLQuery;
-import org.jooq.DSLContext;
 import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.Function1;
@@ -134,11 +91,8 @@ import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Result;
 import org.jooq.RowId;
-import org.jooq.Select;
 import org.jooq.SortOrder;
-import org.jooq.Table;
 import org.jooq.XML;
-import org.jooq.impl.QOM.MQueryPart;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
 
@@ -847,7 +801,7 @@ public final class QOM {
                           boolean $noMinvalue();
                 @Nullable MField<T> $maxvalue();
                           boolean $noMaxvalue();
-                @Nullable Boolean $cycle();
+                @Nullable CycleOption $cycle();
                 @Nullable MField<T> $cache();
                           boolean $noCache();
                 @NotNull  MAlterSequence<T> $sequence(MSequence<T> sequence);
@@ -861,7 +815,7 @@ public final class QOM {
                 @NotNull  MAlterSequence<T> $noMinvalue(boolean noMinvalue);
                 @NotNull  MAlterSequence<T> $maxvalue(MField<T> maxvalue);
                 @NotNull  MAlterSequence<T> $noMaxvalue(boolean noMaxvalue);
-                @NotNull  MAlterSequence<T> $cycle(Boolean cycle);
+                @NotNull  MAlterSequence<T> $cycle(CycleOption cycle);
                 @NotNull  MAlterSequence<T> $cache(MField<T> cache);
                 @NotNull  MAlterSequence<T> $noCache(boolean noCache);
             }
@@ -962,7 +916,7 @@ public final class QOM {
     public interface MCreateIndex
         extends
             MDDLQuery {
-                @NotNull  Boolean $unique();
+                          boolean $unique();
                 @Nullable MIndex $index();
                           boolean $ifNotExists();
                 @Nullable MTable<?> $table();
@@ -970,7 +924,7 @@ public final class QOM {
                 @NotNull  MList<? extends Field<?>> $include();
                 @Nullable MCondition $where();
                           boolean $excludeNullKeys();
-                @NotNull  MCreateIndex $unique(Boolean unique);
+                @NotNull  MCreateIndex $unique(boolean unique);
                 @NotNull  MCreateIndex $index(MIndex index);
                 @NotNull  MCreateIndex $ifNotExists(boolean ifNotExists);
                 @NotNull  MCreateIndex $table(MTable<?> table);
@@ -1056,8 +1010,7 @@ public final class QOM {
                           boolean $noMinvalue();
                 @Nullable MField<? extends Number> $maxvalue();
                           boolean $noMaxvalue();
-                          boolean $cycle();
-                          boolean $noCycle();
+                @Nullable CycleOption $cycle();
                 @Nullable MField<? extends Number> $cache();
                           boolean $noCache();
                 @NotNull  MCreateSequence $sequence(MSequence<?> sequence);
@@ -1068,8 +1021,7 @@ public final class QOM {
                 @NotNull  MCreateSequence $noMinvalue(boolean noMinvalue);
                 @NotNull  MCreateSequence $maxvalue(MField<? extends Number> maxvalue);
                 @NotNull  MCreateSequence $noMaxvalue(boolean noMaxvalue);
-                @NotNull  MCreateSequence $cycle(boolean cycle);
-                @NotNull  MCreateSequence $noCycle(boolean noCycle);
+                @NotNull  MCreateSequence $cycle(CycleOption cycle);
                 @NotNull  MCreateSequence $cache(MField<? extends Number> cache);
                 @NotNull  MCreateSequence $noCache(boolean noCache);
             }
@@ -1154,11 +1106,11 @@ public final class QOM {
     public interface MDropTable
         extends
             MDDLQuery {
-                @NotNull  Boolean $temporary();
+                          boolean $temporary();
                 @NotNull  MTable<?> $table();
                           boolean $ifExists();
                 @Nullable Cascade $cascade();
-                @NotNull  MDropTable $temporary(Boolean temporary);
+                @NotNull  MDropTable $temporary(boolean temporary);
                 @NotNull  MDropTable $table(MTable<?> table);
                 @NotNull  MDropTable $ifExists(boolean ifExists);
                 @NotNull  MDropTable $cascade(Cascade cascade);
@@ -1191,13 +1143,13 @@ public final class QOM {
                 @NotNull  MList<? extends Privilege> $privileges();
                 @NotNull  MTable<?> $on();
                 @Nullable MRole $to();
-                @Nullable Boolean $toPublic();
-                @Nullable Boolean $withGrantOption();
+                          boolean $toPublic();
+                          boolean $withGrantOption();
                 @NotNull  MGrant $privileges(MList<? extends Privilege> privileges);
                 @NotNull  MGrant $on(MTable<?> on);
                 @NotNull  MGrant $to(MRole to);
-                @NotNull  MGrant $toPublic(Boolean toPublic);
-                @NotNull  MGrant $withGrantOption(Boolean withGrantOption);
+                @NotNull  MGrant $toPublic(boolean toPublic);
+                @NotNull  MGrant $withGrantOption(boolean withGrantOption);
             }
 
     public interface MRevoke
@@ -1207,12 +1159,12 @@ public final class QOM {
                           boolean $grantOptionFor();
                 @NotNull  MTable<?> $on();
                 @Nullable MRole $from();
-                @Nullable Boolean $fromPublic();
+                          boolean $fromPublic();
                 @NotNull  MRevoke $privileges(MList<? extends Privilege> privileges);
                 @NotNull  MRevoke $grantOptionFor(boolean grantOptionFor);
                 @NotNull  MRevoke $on(MTable<?> on);
                 @NotNull  MRevoke $from(MRole from);
-                @NotNull  MRevoke $fromPublic(Boolean fromPublic);
+                @NotNull  MRevoke $fromPublic(boolean fromPublic);
             }
 
     public interface MSetCommand
@@ -1244,10 +1196,10 @@ public final class QOM {
         extends
             MDDLQuery {
                 @NotNull  MTable<R> $table();
-                @Nullable Boolean $restartIdentity();
+                @Nullable IdentityRestartOption $restartIdentity();
                 @Nullable Cascade $cascade();
                 @NotNull  MTruncate<R> $table(MTable<R> table);
-                @NotNull  MTruncate<R> $restartIdentity(Boolean restartIdentity);
+                @NotNull  MTruncate<R> $restartIdentity(IdentityRestartOption restartIdentity);
                 @NotNull  MTruncate<R> $cascade(Cascade cascade);
             }
 
@@ -2572,8 +2524,8 @@ public final class QOM {
      * Cascade a DDL operation to all dependent objects, or restrict it to this object only.
      */
     public enum Cascade {
-        CASCADE(K_CASCADE),
-        RESTRICT(K_RESTRICT),
+        CASCADE(keyword("cascade")),
+        RESTRICT(keyword("restrict")),
         ;
 
         final Keyword keyword;
@@ -2582,6 +2534,76 @@ public final class QOM {
             this.keyword = keyword;
         }
     }
+
+    /**
+     * The <code>CycleOption</code> type.
+     * <p>
+     * Specify whether a sequence cycles to its minvalue once it reaches its maxvalue.
+     */
+    public enum CycleOption {
+        CYCLE(keyword("cycle")),
+        NO_CYCLE(keyword("no cycle")),
+        ;
+
+        final Keyword keyword;
+
+        private CycleOption(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
+
+    /**
+     * The <code>IdentityRestartOption</code> type.
+     * <p>
+     * Specify whether an identity column should be restarted upon truncation.
+     */
+    public enum IdentityRestartOption {
+        CONTINUE_IDENTITY(keyword("continue identity")),
+        RESTART_IDENTITY(keyword("restart identity")),
+        ;
+
+        final Keyword keyword;
+
+        private IdentityRestartOption(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2614,8 +2636,8 @@ public final class QOM {
      * is implementation defined.
      */
     public enum NullOrdering {
-        NULLS_FIRST(K_NULLS_FIRST),
-        NULLS_LAST(K_NULLS_LAST),
+        NULLS_FIRST(keyword("nulls first")),
+        NULLS_LAST(keyword("nulls last")),
         ;
 
         final Keyword keyword;
@@ -2631,8 +2653,8 @@ public final class QOM {
      * Specify whether to include NULL values or ignore NULL values in certain window functions.
      */
     public enum NullTreatment {
-        RESPECT_NULLS(K_RESPECT_NULLS),
-        IGNORE_NULLS(K_IGNORE_NULLS),
+        RESPECT_NULLS(keyword("respect nulls")),
+        IGNORE_NULLS(keyword("ignore nulls")),
         ;
 
         final Keyword keyword;
@@ -2649,8 +2671,8 @@ public final class QOM {
      * or last value in the window.
      */
     public enum FromFirstOrLast {
-        FROM_FIRST(K_FROM_FIRST),
-        FROM_LAST(K_FROM_LAST),
+        FROM_FIRST(keyword("from first")),
+        FROM_LAST(keyword("from last")),
         ;
 
         final Keyword keyword;
@@ -2666,9 +2688,9 @@ public final class QOM {
      * The window frame unit specification.
      */
     public enum FrameUnits {
-        ROWS(K_ROWS),
-        RANGE(K_RANGE),
-        GROUPS(K_GROUPS),
+        ROWS(keyword("rows")),
+        RANGE(keyword("range")),
+        GROUPS(keyword("groups")),
         ;
 
         final Keyword keyword;
@@ -2684,10 +2706,10 @@ public final class QOM {
      * Specify which values within the window frame should be excluded.
      */
     public enum FrameExclude {
-        CURRENT_ROW(K_CURRENT_ROW),
-        TIES(K_TIES),
-        GROUP(K_GROUP),
-        NO_OTHERS(K_NO_OTHERS),
+        CURRENT_ROW(keyword("current row")),
+        TIES(keyword("ties")),
+        GROUP(keyword("group")),
+        NO_OTHERS(keyword("no others")),
         ;
 
         final Keyword keyword;
@@ -2703,8 +2725,8 @@ public final class QOM {
      * Specify whether a JSON array or object should include NULL values in the output.
      */
     public enum JSONOnNull {
-        NULL_ON_NULL(K_NULL_ON_NULL),
-        ABSENT_ON_NULL(K_ABSENT_ON_NULL),
+        NULL_ON_NULL(keyword("null on null")),
+        ABSENT_ON_NULL(keyword("absent on null")),
         ;
 
         final Keyword keyword;
@@ -2720,9 +2742,9 @@ public final class QOM {
      * Specify how XML contents should be passed to certain XML functions.
      */
     public enum XmlPassingMechanism {
-        BY_REF(K_BY_REF),
-        BY_VALUE(K_BY_VALUE),
-        DEFAULT(K_DEFAULT),
+        BY_REF(keyword("by ref")),
+        BY_VALUE(keyword("by value")),
+        DEFAULT(keyword("default")),
         ;
 
         final Keyword keyword;
@@ -2738,8 +2760,8 @@ public final class QOM {
      * Specify whether XML content is a DOM document or a document fragment (content).
      */
     public enum DocumentOrContent {
-        DOCUMENT(K_DOCUMENT),
-        CONTENT(K_CONTENT),
+        DOCUMENT(keyword("document")),
+        CONTENT(keyword("content")),
         ;
 
         final Keyword keyword;
@@ -2756,8 +2778,8 @@ public final class QOM {
      * may produce implementation defined behaviour.
      */
     public enum Materialized {
-        MATERIALIZED(K_MATERIALIZED),
-        NOT_MATERIALIZED(K_NOT_MATERIALIZED),
+        MATERIALIZED(keyword("materialized")),
+        NOT_MATERIALIZED(keyword("not materialized")),
         ;
 
         final Keyword keyword;
@@ -2773,9 +2795,9 @@ public final class QOM {
      * The data change delta table result semantics.
      */
     public enum ResultOption {
-        OLD(K_OLD),
-        NEW(K_NEW),
-        FINAL(K_FINAL),
+        OLD(keyword("old")),
+        NEW(keyword("new")),
+        FINAL(keyword("final")),
         ;
 
         final Keyword keyword;

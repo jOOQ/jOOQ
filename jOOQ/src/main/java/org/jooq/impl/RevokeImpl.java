@@ -79,7 +79,7 @@ implements
     final boolean                                grantOptionFor;
           Table<?>                               on;
           Role                                   from;
-          Boolean                                fromPublic;
+          boolean                                fromPublic;
 
     RevokeImpl(
         Configuration configuration,
@@ -92,7 +92,7 @@ implements
             grantOptionFor,
             null,
             null,
-            null
+            false
         );
     }
 
@@ -102,7 +102,7 @@ implements
         boolean grantOptionFor,
         Table<?> on,
         Role from,
-        Boolean fromPublic
+        boolean fromPublic
     ) {
         super(configuration);
 
@@ -178,7 +178,7 @@ implements
 
         if (from != null)
             ctx.visit(from);
-        else if (Boolean.TRUE.equals(fromPublic))
+        else if (fromPublic)
             ctx.visit(K_PUBLIC);
 
         if (ctx.family() == HSQLDB)
@@ -219,7 +219,7 @@ implements
     }
 
     @Override
-    public final Boolean $fromPublic() {
+    public final boolean $fromPublic() {
         return fromPublic;
     }
 
@@ -244,7 +244,7 @@ implements
     }
 
     @Override
-    public final MRevoke $fromPublic(Boolean newValue) {
+    public final MRevoke $fromPublic(boolean newValue) {
         return constructor().apply($privileges(), $grantOptionFor(), $on(), $from(), newValue);
     }
 

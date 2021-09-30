@@ -82,8 +82,7 @@ implements
           boolean                 noMinvalue;
           Field<? extends Number> maxvalue;
           boolean                 noMaxvalue;
-          boolean                 cycle;
-          boolean                 noCycle;
+          CycleOption             cycle;
           Field<? extends Number> cache;
           boolean                 noCache;
 
@@ -102,8 +101,7 @@ implements
             false,
             null,
             false,
-            false,
-            false,
+            null,
             null,
             false
         );
@@ -119,8 +117,7 @@ implements
         boolean noMinvalue,
         Field<? extends Number> maxvalue,
         boolean noMaxvalue,
-        boolean cycle,
-        boolean noCycle,
+        CycleOption cycle,
         Field<? extends Number> cache,
         boolean noCache
     ) {
@@ -135,7 +132,6 @@ implements
         this.maxvalue = maxvalue;
         this.noMaxvalue = noMaxvalue;
         this.cycle = cycle;
-        this.noCycle = noCycle;
         this.cache = cache;
         this.noCache = noCache;
     }
@@ -202,13 +198,13 @@ implements
 
     @Override
     public final CreateSequenceImpl cycle() {
-        this.cycle = true;
+        this.cycle = CycleOption.CYCLE;
         return this;
     }
 
     @Override
     public final CreateSequenceImpl noCycle() {
-        this.noCycle = true;
+        this.cycle = CycleOption.NO_CYCLE;
         return this;
     }
 
@@ -290,9 +286,9 @@ implements
         else if (noMaxvalue && !OMIT_NO_MAXVALUE.contains(ctx.dialect()))
             ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_MAXVALUE);
 
-        if (cycle)
+        if (cycle == CycleOption.CYCLE)
             ctx.sql(' ').visit(K_CYCLE);
-        else if (noCycle && !OMIT_NO_CYCLE.contains(ctx.dialect()))
+        else if (cycle == CycleOption.NO_CYCLE && !OMIT_NO_CYCLE.contains(ctx.dialect()))
             ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_CYCLE);
 
         if (!NO_SUPPORT_CACHE.contains(ctx.dialect()))
@@ -356,13 +352,8 @@ implements
     }
 
     @Override
-    public final boolean $cycle() {
+    public final CycleOption $cycle() {
         return cycle;
-    }
-
-    @Override
-    public final boolean $noCycle() {
-        return noCycle;
     }
 
     @Override
@@ -377,66 +368,61 @@ implements
 
     @Override
     public final MCreateSequence $sequence(MSequence<?> newValue) {
-        return constructor().apply(newValue, $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $noCycle(), $cache(), $noCache());
+        return constructor().apply(newValue, $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final MCreateSequence $ifNotExists(boolean newValue) {
-        return constructor().apply($sequence(), newValue, $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $noCycle(), $cache(), $noCache());
+        return constructor().apply($sequence(), newValue, $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final MCreateSequence $startWith(MField<? extends Number> newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), newValue, $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $noCycle(), $cache(), $noCache());
+        return constructor().apply($sequence(), $ifNotExists(), newValue, $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final MCreateSequence $incrementBy(MField<? extends Number> newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), $startWith(), newValue, $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $noCycle(), $cache(), $noCache());
+        return constructor().apply($sequence(), $ifNotExists(), $startWith(), newValue, $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final MCreateSequence $minvalue(MField<? extends Number> newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), newValue, $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $noCycle(), $cache(), $noCache());
+        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), newValue, $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final MCreateSequence $noMinvalue(boolean newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), newValue, $maxvalue(), $noMaxvalue(), $cycle(), $noCycle(), $cache(), $noCache());
+        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), newValue, $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final MCreateSequence $maxvalue(MField<? extends Number> newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), newValue, $noMaxvalue(), $cycle(), $noCycle(), $cache(), $noCache());
+        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), newValue, $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final MCreateSequence $noMaxvalue(boolean newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), newValue, $cycle(), $noCycle(), $cache(), $noCache());
+        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), newValue, $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final MCreateSequence $cycle(boolean newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), newValue, $noCycle(), $cache(), $noCache());
-    }
-
-    @Override
-    public final MCreateSequence $noCycle(boolean newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), newValue, $cache(), $noCache());
+    public final MCreateSequence $cycle(CycleOption newValue) {
+        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), newValue, $cache(), $noCache());
     }
 
     @Override
     public final MCreateSequence $cache(MField<? extends Number> newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $noCycle(), newValue, $noCache());
+        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), newValue, $noCache());
     }
 
     @Override
     public final MCreateSequence $noCache(boolean newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $noCycle(), $cache(), newValue);
+        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), newValue);
     }
 
-    public final Function12<? super MSequence<?>, ? super Boolean, ? super MField<? extends Number>, ? super MField<? extends Number>, ? super MField<? extends Number>, ? super Boolean, ? super MField<? extends Number>, ? super Boolean, ? super Boolean, ? super Boolean, ? super MField<? extends Number>, ? super Boolean, ? extends MCreateSequence> constructor() {
-        return (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12) -> new CreateSequenceImpl(configuration(), (Sequence<?>) a1, a2, (Field<? extends Number>) a3, (Field<? extends Number>) a4, (Field<? extends Number>) a5, a6, (Field<? extends Number>) a7, a8, a9, a10, (Field<? extends Number>) a11, a12);
+    public final Function11<? super MSequence<?>, ? super Boolean, ? super MField<? extends Number>, ? super MField<? extends Number>, ? super MField<? extends Number>, ? super Boolean, ? super MField<? extends Number>, ? super Boolean, ? super CycleOption, ? super MField<? extends Number>, ? super Boolean, ? extends MCreateSequence> constructor() {
+        return (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11) -> new CreateSequenceImpl(configuration(), (Sequence<?>) a1, a2, (Field<? extends Number>) a3, (Field<? extends Number>) a4, (Field<? extends Number>) a5, a6, (Field<? extends Number>) a7, a8, a9, (Field<? extends Number>) a10, a11);
     }
 
     @Override
@@ -455,7 +441,6 @@ implements
             $maxvalue(),
             $noMaxvalue(),
             $cycle(),
-            $noCycle(),
             $cache(),
             $noCache(),
             constructor()::apply,

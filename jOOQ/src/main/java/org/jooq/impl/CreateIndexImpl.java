@@ -76,7 +76,7 @@ implements
     CreateIndexFinalStep
 {
 
-    final Boolean                                    unique;
+    final boolean                                    unique;
     final Index                                      index;
     final boolean                                    ifNotExists;
           Table<?>                                   table;
@@ -87,7 +87,7 @@ implements
 
     CreateIndexImpl(
         Configuration configuration,
-        Boolean unique,
+        boolean unique,
         Index index,
         boolean ifNotExists
     ) {
@@ -106,7 +106,7 @@ implements
 
     CreateIndexImpl(
         Configuration configuration,
-        Boolean unique,
+        boolean unique,
         boolean ifNotExists
     ) {
         this(
@@ -119,7 +119,7 @@ implements
 
     CreateIndexImpl(
         Configuration configuration,
-        Boolean unique,
+        boolean unique,
         Index index,
         boolean ifNotExists,
         Table<?> table,
@@ -378,7 +378,7 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Boolean $unique() {
+    public final boolean $unique() {
         return unique;
     }
 
@@ -418,7 +418,7 @@ implements
     }
 
     @Override
-    public final MCreateIndex $unique(Boolean newValue) {
+    public final MCreateIndex $unique(boolean newValue) {
         return constructor().apply(newValue, $index(), $ifNotExists(), $table(), $on(), $include(), $where(), $excludeNullKeys());
     }
 

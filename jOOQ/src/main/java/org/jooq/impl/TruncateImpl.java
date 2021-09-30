@@ -76,9 +76,9 @@ implements
     Truncate<R>
 {
 
-    final Table<R> table;
-          Boolean  restartIdentity;
-          Cascade  cascade;
+    final Table<R>              table;
+          IdentityRestartOption restartIdentity;
+          Cascade               cascade;
 
     TruncateImpl(
         Configuration configuration,
@@ -95,7 +95,7 @@ implements
     TruncateImpl(
         Configuration configuration,
         Table<R> table,
-        Boolean restartIdentity,
+        IdentityRestartOption restartIdentity,
         Cascade cascade
     ) {
         super(configuration);
@@ -111,13 +111,13 @@ implements
 
     @Override
     public final TruncateImpl<R> restartIdentity() {
-        this.restartIdentity = true;
+        this.restartIdentity = IdentityRestartOption.RESTART_IDENTITY;
         return this;
     }
 
     @Override
     public final TruncateImpl<R> continueIdentity() {
-        this.restartIdentity = false;
+        this.restartIdentity = IdentityRestartOption.CONTINUE_IDENTITY;
         return this;
     }
 
@@ -169,7 +169,7 @@ implements
 
                 if (restartIdentity != null)
                     ctx.formatSeparator()
-                       .visit(restartIdentity ? K_RESTART_IDENTITY : K_CONTINUE_IDENTITY);
+                       .visit(restartIdentity.keyword);
 
                 if (cascade != null)
 
@@ -207,7 +207,7 @@ implements
     }
 
     @Override
-    public final Boolean $restartIdentity() {
+    public final IdentityRestartOption $restartIdentity() {
         return restartIdentity;
     }
 
@@ -222,7 +222,7 @@ implements
     }
 
     @Override
-    public final MTruncate<R> $restartIdentity(Boolean newValue) {
+    public final MTruncate<R> $restartIdentity(IdentityRestartOption newValue) {
         return constructor().apply($table(), newValue, $cascade());
     }
 
@@ -231,7 +231,7 @@ implements
         return constructor().apply($table(), $restartIdentity(), newValue);
     }
 
-    public final Function3<? super MTable<R>, ? super Boolean, ? super Cascade, ? extends MTruncate<R>> constructor() {
+    public final Function3<? super MTable<R>, ? super IdentityRestartOption, ? super Cascade, ? extends MTruncate<R>> constructor() {
         return (a1, a2, a3) -> new TruncateImpl(configuration(), (Table<R>) a1, a2, a3);
     }
 

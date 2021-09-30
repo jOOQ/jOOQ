@@ -74,14 +74,14 @@ implements
     DropTableFinalStep
 {
 
-    final Boolean  temporary;
+    final boolean  temporary;
     final Table<?> table;
     final boolean  ifExists;
           Cascade  cascade;
 
     DropTableImpl(
         Configuration configuration,
-        Boolean temporary,
+        boolean temporary,
         Table<?> table,
         boolean ifExists
     ) {
@@ -96,7 +96,7 @@ implements
 
     DropTableImpl(
         Configuration configuration,
-        Boolean temporary,
+        boolean temporary,
         Table<?> table,
         boolean ifExists,
         Cascade cascade
@@ -180,7 +180,7 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Boolean $temporary() {
+    public final boolean $temporary() {
         return temporary;
     }
 
@@ -200,7 +200,7 @@ implements
     }
 
     @Override
-    public final MDropTable $temporary(Boolean newValue) {
+    public final MDropTable $temporary(boolean newValue) {
         return constructor().apply(newValue, $table(), $ifExists(), $cascade());
     }
 

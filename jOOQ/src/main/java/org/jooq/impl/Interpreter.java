@@ -111,6 +111,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.ConstraintImpl.Action;
 import org.jooq.impl.QOM.Cascade;
+import org.jooq.impl.QOM.CycleOption;
 import org.jooq.tools.JooqLogger;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -865,7 +866,7 @@ final class Interpreter {
         ms.incrementBy = query.$incrementBy();
         ms.minvalue = query.$noMinvalue() ? null : query.$minvalue();
         ms.maxvalue = query.$noMaxvalue() ? null : query.$maxvalue();
-        ms.cycle = query.$cycle();
+        ms.cycle = query.$cycle() == CycleOption.CYCLE;
         ms.cache = query.$noCache() ? null : query.$cache();
     }
 
@@ -910,9 +911,9 @@ final class Interpreter {
             else if (query.$noMaxvalue() && (seen |= true))
                 existing.maxvalue = null;
 
-            Boolean cycle = query.$cycle();
+            CycleOption cycle = query.$cycle();
             if (cycle != null && (seen |= true))
-                existing.cycle = cycle;
+                existing.cycle = cycle == CycleOption.CYCLE;
 
             Field<? extends Number> cache = query.$cache();
             if (cache != null && (seen |= true))

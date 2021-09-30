@@ -86,7 +86,7 @@ implements
           boolean     noMinvalue;
           Field<T>    maxvalue;
           boolean     noMaxvalue;
-          Boolean     cycle;
+          CycleOption cycle;
           Field<T>    cache;
           boolean     noCache;
 
@@ -127,7 +127,7 @@ implements
         boolean noMinvalue,
         Field<T> maxvalue,
         boolean noMaxvalue,
-        Boolean cycle,
+        CycleOption cycle,
         Field<T> cache,
         boolean noCache
     ) {
@@ -244,13 +244,13 @@ implements
 
     @Override
     public final AlterSequenceImpl<T> cycle() {
-        this.cycle = true;
+        this.cycle = CycleOption.CYCLE;
         return this;
     }
 
     @Override
     public final AlterSequenceImpl<T> noCycle() {
-        this.cycle = false;
+        this.cycle = CycleOption.NO_CYCLE;
         return this;
     }
 
@@ -523,7 +523,7 @@ implements
     }
 
     @Override
-    public final Boolean $cycle() {
+    public final CycleOption $cycle() {
         return cycle;
     }
 
@@ -593,7 +593,7 @@ implements
     }
 
     @Override
-    public final MAlterSequence<T> $cycle(Boolean newValue) {
+    public final MAlterSequence<T> $cycle(CycleOption newValue) {
         return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), newValue, $cache(), $noCache());
     }
 
@@ -607,7 +607,7 @@ implements
         return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), newValue);
     }
 
-    public final Function14<? super MSequence<T>, ? super Boolean, ? super MSequence<?>, ? super Boolean, ? super MField<T>, ? super MField<T>, ? super MField<T>, ? super MField<T>, ? super Boolean, ? super MField<T>, ? super Boolean, ? super Boolean, ? super MField<T>, ? super Boolean, ? extends MAlterSequence<T>> constructor() {
+    public final Function14<? super MSequence<T>, ? super Boolean, ? super MSequence<?>, ? super Boolean, ? super MField<T>, ? super MField<T>, ? super MField<T>, ? super MField<T>, ? super Boolean, ? super MField<T>, ? super Boolean, ? super CycleOption, ? super MField<T>, ? super Boolean, ? extends MAlterSequence<T>> constructor() {
         return (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) -> new AlterSequenceImpl(configuration(), (Sequence<T>) a1, a2, (Sequence<?>) a3, a4, (Field<T>) a5, (Field<T>) a6, (Field<T>) a7, (Field<T>) a8, a9, (Field<T>) a10, a11, a12, (Field<T>) a13, a14);
     }
 

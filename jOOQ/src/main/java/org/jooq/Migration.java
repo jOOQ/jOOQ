@@ -40,6 +40,8 @@ package org.jooq;
 import org.jooq.exception.DataMigrationException;
 import org.jooq.exception.DataMigrationValidationException;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * An executable migration between two {@link Commit} instances.
  * <p>
@@ -64,6 +66,7 @@ public interface Migration extends Scope {
     /**
      * The queries that are executed by the migration.
      */
+    @NotNull
     Queries queries();
 
     /**

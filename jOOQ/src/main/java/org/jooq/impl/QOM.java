@@ -264,7 +264,9 @@ public final class QOM {
     public interface MWith
         extends
             MQueryPart
-        {
+
+
+    {
         @NotNull MList<? extends MCommonTableExpression<?>> $commonTableExpressions();
         boolean $recursive();
     }
@@ -302,7 +304,9 @@ public final class QOM {
     public interface MCreateType
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull MName $name();
         @NotNull MList<? extends MField<String>> $values();
     }
@@ -310,7 +314,9 @@ public final class QOM {
     public interface MDropType
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull MList<? extends MName> $names();
         boolean $ifExists();
         @Nullable Cascade $cascade();
@@ -319,7 +325,9 @@ public final class QOM {
     public interface MCreateView<R extends Record>
         extends
             MDDLQuery
-        {
+
+
+    {
         boolean $ifNotExists();
         boolean $orReplace();
         @NotNull MTable<?> $view();
@@ -464,25 +472,47 @@ public final class QOM {
         extends
             MCondition,
             UOperator2<MCondition, MCondition, MCondition>
-        {}
+
+
+
+    {}
 
     public interface MCompareCondition<T>
         extends
             MCondition,
             UOperator2<MField<T>, MField<T>, MCondition>
-        {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {}
 
     public interface MTrue
         extends
             MCondition,
             UEmpty
-        {}
+
+
+    {}
 
     public interface MFalse
         extends
             MCondition,
             UEmpty
-        {}
+
+
+    {}
 
     public interface MBetween<T> extends UOperator3<MField<T>, MField<T>, MField<T>, MCondition> {
         boolean $symmetric();
@@ -492,7 +522,9 @@ public final class QOM {
         extends
             MCondition,
             UOperator2<MField<T>, MList<? extends MField<T>>, MCondition>
-        {
+
+
+    {
         @NotNull default MField<T> $field() { return $arg1(); }
         @NotNull default MList<? extends MField<T>> $list() { return $arg2(); }
     }
@@ -501,7 +533,9 @@ public final class QOM {
         extends
             MCondition,
             UOperator2<MField<T>, MList<? extends MField<T>>, MCondition>
-        {
+
+
+    {
         @NotNull default MField<T> $field() { return $arg1(); }
         @NotNull default MList<? extends MField<T>> $list() { return $arg2(); }
     }
@@ -509,7 +543,9 @@ public final class QOM {
     public interface MRegexpLike
         extends
             MCondition
-        {
+
+
+    {
         @NotNull MField<?> $search();
         @NotNull MField<String> $pattern();
     }
@@ -517,7 +553,9 @@ public final class QOM {
     public interface MExtract
         extends
             MField<Integer>
-        {
+
+
+    {
         @NotNull MField<?> $field();
         @NotNull DatePart $datePart();
     }
@@ -526,7 +564,9 @@ public final class QOM {
         extends
             MCondition,
             UOperator1<MRow, MCondition>
-        {
+
+
+    {
         @NotNull default MRow $field() { return $arg1(); }
     }
 
@@ -534,7 +574,9 @@ public final class QOM {
         extends
             MCondition,
             UOperator1<MRow, MCondition>
-        {
+
+
+    {
         @NotNull default MRow $field() { return $arg1(); }
     }
 
@@ -542,13 +584,17 @@ public final class QOM {
         extends
             MCondition,
             UOperator2<MRow, MRow, MCondition>
-        {}
+
+
+    {}
 
     public interface MSelectIsNull
         extends
             MCondition,
             UOperator1<MSelect<?>, MCondition>
-        {
+
+
+    {
         @NotNull default MSelect<?> $field() { return $arg1(); }
     }
 
@@ -556,7 +602,9 @@ public final class QOM {
         extends
             MCondition,
             UOperator1<MSelect<?>, MCondition>
-        {
+
+
+    {
         @NotNull default MSelect<?> $field() { return $arg1(); }
     }
 
@@ -574,7 +622,9 @@ public final class QOM {
     public interface MRowField<R extends Record>
         extends
             MField<R>
-        {
+
+
+    {
         @NotNull MRow $row();
     }
 
@@ -597,19 +647,25 @@ public final class QOM {
         extends
             MGroupField,
             UOperator1<MList<? extends MFieldOrRow>, MGroupField>
-        {}
+
+
+    {}
 
     public interface MCube
         extends
             MGroupField,
             UOperator1<MList<? extends MFieldOrRow>, MGroupField>
-        {}
+
+
+    {}
 
     public interface MGroupingSets
         extends
             MGroupField,
             UOperator1<MList<? extends MList<? extends MFieldOrRow>>, MGroupField>
-        {}
+
+
+    {}
 
     public interface MSortField<T> extends MQueryPart {
         @NotNull MField<T> $field();
@@ -628,7 +684,9 @@ public final class QOM {
     public interface MRatioToReport
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull MField<? extends Number> $field();
     }
 
@@ -636,14 +694,18 @@ public final class QOM {
         extends
             MAggregateFunction<T>,
             UOperator1<MField<T>, MAggregateFunction<T>>
-        {
+
+
+    {
         @NotNull default MField<T> $field() { return $arg1(); }
     }
 
     public interface MMultisetAgg<R extends Record>
         extends
             MAggregateFunction<Result<R>>
-        {
+
+
+    {
         @NotNull MRow $row();
     }
 
@@ -651,7 +713,9 @@ public final class QOM {
         extends
             MAggregateFunction<T[]>,
             UOperator1<MField<T>, MAggregateFunction<T[]>>
-        {
+
+
+    {
         @NotNull default MField<T> $field() { return $arg1(); }
         boolean $distinct();
     }
@@ -660,7 +724,9 @@ public final class QOM {
         extends
             MAggregateFunction<XML>,
             UOperator1<MField<XML>, MAggregateFunction<XML>>
-        {
+
+
+    {
         @NotNull default MField<XML> $field() { return $arg1(); }
     }
 
@@ -673,7 +739,9 @@ public final class QOM {
         extends
             MAggregateFunction<J>,
             UOperator1<MField<?>, MAggregateFunction<J>>
-        {
+
+
+    {
         @NotNull default MField<?> $field() { return $arg1(); }
         @NotNull JSONOnNull $onNull();
         @NotNull MDataType<?> $returning();
@@ -683,7 +751,8 @@ public final class QOM {
         extends
             MAggregateFunction<J>,
             UOperator1<MJSONEntry<?>, MAggregateFunction<J>>
-        {
+
+    {
         @NotNull default MJSONEntry<?> $entry() { return $arg1(); }
         @NotNull JSONOnNull $onNull();
         @NotNull MDataType<?> $returning();
@@ -692,7 +761,9 @@ public final class QOM {
     public interface MCountTable
         extends
             MAggregateFunction<Integer>
-        {
+
+
+    {
         @NotNull MTable<?> $table();
         boolean $distinct();
     }
@@ -731,39 +802,52 @@ public final class QOM {
     public interface MRowNumber
         extends
             MWindowFunction<Integer>
-        {}
+
+
+    {}
 
     public interface MRank
         extends
             MWindowFunction<Integer>
-        {}
+
+
+    {}
 
     public interface MDenseRank
         extends
             MWindowFunction<Integer>
-        {}
+
+
+    {}
 
     public interface MPercentRank
         extends
             MWindowFunction<BigDecimal>
-        {}
+
+
+    {}
 
     public interface MCumeDist
         extends
             MWindowFunction<BigDecimal>
-        {}
+
+
+    {}
 
     public interface MNtile
         extends
             MWindowFunction<Integer>
-        {
+
+    {
         @NotNull MField<Integer> $tiles();
     }
 
     public interface MLead<T>
         extends
             MWindowFunction<T>
-        {
+
+
+    {
         @NotNull MField<T> $field();
         @Nullable MField<Integer> $offset();
         @Nullable MField<T> $defaultValue();
@@ -773,7 +857,9 @@ public final class QOM {
     public interface MLag<T>
         extends
             MWindowFunction<T>
-        {
+
+
+    {
         @NotNull MField<T> $field();
         @Nullable MField<Integer> $offset();
         @Nullable MField<T> $defaultValue();
@@ -783,7 +869,9 @@ public final class QOM {
     public interface MFirstValue<T>
         extends
             MWindowFunction<T>
-        {
+
+
+    {
         @NotNull MField<T> $field();
         @Nullable NullTreatment $nullTreatment();
     }
@@ -791,7 +879,9 @@ public final class QOM {
     public interface MLastValue<T>
         extends
             MWindowFunction<T>
-        {
+
+
+    {
         @NotNull MField<T> $field();
         @Nullable NullTreatment $nullTreatment();
     }
@@ -799,7 +889,9 @@ public final class QOM {
     public interface MNthValue<T>
         extends
             MWindowFunction<T>
-        {
+
+
+    {
         @NotNull MField<T> $field();
         @Nullable FromFirstOrLast $fromFirstOrLast();
         @Nullable NullTreatment $nullTreatment();
@@ -814,7 +906,9 @@ public final class QOM {
     public interface MFieldAlias<T>
         extends
             MField<T>
-        {
+
+
+    {
         @NotNull MField<T> $field();
         @NotNull MName $alias();
     }
@@ -833,14 +927,18 @@ public final class QOM {
     public interface MCast<T>
         extends
             MField<T>
-        {
+
+
+    {
         @NotNull MField<?> $field();
     }
 
     public interface MCoerce<T>
         extends
             MField<T>
-        {
+
+
+    {
         @NotNull MField<?> $field();
     }
 
@@ -860,12 +958,16 @@ public final class QOM {
         extends
             MField<T>,
             UEmpty
-        {}
+
+
+    {}
 
     public interface MCollated
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull MField<?> $field();
         @NotNull MCollation $collation();
     }
@@ -882,14 +984,18 @@ public final class QOM {
     public interface MArrayQuery<T>
         extends
             MField<T[]>
-        {
+
+
+    {
         @NotNull MSelect<? extends Record1<T>> $select();
     }
 
     public interface MMultiset<R extends Record>
         extends
             MField<Result<R>>
-        {
+
+
+    {
         @NotNull MSelect<R> $select();
     }
 
@@ -897,43 +1003,57 @@ public final class QOM {
         extends
             MField<T>,
             UOperator1<MSelect<? extends Record1<T>>, MField<T>>
-        {}
+
+
+    {}
 
     public interface MNeg<T>
         extends
             MField<T>,
             UOperator1<MField<T>, MField<T>>
-        {}
+
+
+    {}
 
     public interface MGreatest<T>
         extends
             MField<T>,
             UOperator1<MList<? extends MField<T>>, MField<T>>
-        {}
+
+
+    {}
 
     public interface MLeast<T>
         extends
             MField<T>,
             UOperator1<MList<? extends MField<T>>, MField<T>>
-        {}
+
+
+    {}
 
     public interface MChoose<T>
         extends
             MField<T>,
             UOperator2<MField<Integer>, MList<? extends MField<T>>, MField<T>>
-        {}
+
+
+    {}
 
     public interface MFieldFunction<T>
         extends
             MField<Integer>,
             UOperator2<MField<T>, MList<? extends MField<T>>, MField<Integer>>
-        {}
+
+
+    {}
 
     public interface MNvl2<T>
         extends
             MField<T>,
             UOperator3<MField<?>, MField<T>, MField<T>, MField<T>>
-        {
+
+
+    {
         @NotNull default MField<?> $value() { return $arg1(); }
         @NotNull default MField<T> $ifNotNull() { return $arg2(); }
         @NotNull default MField<T> $ifIfNull() { return $arg3(); }
@@ -943,7 +1063,9 @@ public final class QOM {
         extends
             MField<T>,
             UOperator3<MCondition, MField<T>, MField<T>, MField<T>>
-        {
+
+
+    {
         @NotNull default MCondition $condition() { return $arg1(); }
         @NotNull default MField<T> $ifTrue() { return $arg2(); }
         @NotNull default MField<T> $ifFalse() { return $arg3(); }
@@ -953,19 +1075,25 @@ public final class QOM {
         extends
             MField<T>,
             UOperator1<MList<? extends MField<T>>, MField<T>>
-        {}
+
+
+    {}
 
     public interface MConcat
         extends
             MField<String>,
             UOperator1<MList<? extends MField<?>>, MField<String>>
-        {}
+
+
+    {}
 
     public interface MTimestampDiff<T>
         extends
             MField<DayToSecond>,
             UOperator2<MField<T>, MField<T>, MField<DayToSecond>>
-        {
+
+
+    {
         @NotNull default MField<T> $minuend() { return $arg1(); }
         @NotNull default MField<T> $subtrahend() { return $arg2(); }
     }
@@ -973,7 +1101,9 @@ public final class QOM {
     public interface MConvert<T>
         extends
             MField<T>
-        {
+
+
+    {
         @NotNull MField<?> $field();
         int $style();
     }
@@ -982,24 +1112,32 @@ public final class QOM {
         extends
             MField<T>,
             UEmpty
-        {}
+
+
+    {}
 
     public interface MCurrentTime<T>
         extends
             MField<T>,
             UEmpty
-        {}
+
+
+    {}
 
     public interface MCurrentTimestamp<T>
         extends
             MField<T>,
             UEmpty
-        {}
+
+
+    {}
 
     public interface MXMLQuery
         extends
             MField<XML>
-        {
+
+
+    {
         @NotNull Field<String> $xpath();
         @NotNull Field<XML> $passing();
         @Nullable XmlPassingMechanism $passingMechanism();
@@ -1012,7 +1150,9 @@ public final class QOM {
     public interface MXMLElement
         extends
             MField<XML>
-        {
+
+
+    {
         @NotNull MName $elementName();
         @NotNull MXMLAttributes $attributes();
         @NotNull MList<? extends Field<?>> $content();
@@ -1021,7 +1161,9 @@ public final class QOM {
     public interface MXMLExists
         extends
             MCondition
-        {
+
+
+    {
         @NotNull Field<String> $xpath();
         @NotNull Field<XML> $passing();
         @Nullable XmlPassingMechanism $passingMechanism();
@@ -1030,7 +1172,9 @@ public final class QOM {
     public interface MXMLParse
         extends
             MField<XML>
-        {
+
+
+    {
         @NotNull Field<String> $content();
         @NotNull DocumentOrContent $documentOrContent();
     }
@@ -1040,7 +1184,9 @@ public final class QOM {
     public interface MAlterDatabase
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MCatalog $database();
                   boolean $ifExists();
         @NotNull  MCatalog $renameTo();
@@ -1052,7 +1198,9 @@ public final class QOM {
     public interface MAlterDomain<T>
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MDomain<T> $domain();
                   boolean $ifExists();
         @Nullable MConstraint $addConstraint();
@@ -1086,7 +1234,9 @@ public final class QOM {
     public interface MAlterIndex
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MIndex $index();
                   boolean $ifExists();
         @Nullable MTable<?> $on();
@@ -1100,7 +1250,9 @@ public final class QOM {
     public interface MAlterSchema
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MSchema $schema();
                   boolean $ifExists();
         @NotNull  MSchema $renameTo();
@@ -1112,7 +1264,9 @@ public final class QOM {
     public interface MAlterSequence<T extends Number>
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MSequence<T> $sequence();
                   boolean $ifExists();
         @Nullable MSequence<?> $renameTo();
@@ -1146,7 +1300,9 @@ public final class QOM {
     public interface MAlterType
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MName $type();
         @Nullable MName $renameTo();
         @Nullable MSchema $setSchema();
@@ -1164,7 +1320,9 @@ public final class QOM {
     public interface MAlterView
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MTable<?> $view();
                   boolean $ifExists();
         @Nullable MComment $comment();
@@ -1178,7 +1336,9 @@ public final class QOM {
     public interface MCommentOn
         extends
             MDDLQuery
-        {
+
+
+    {
         @Nullable MTable<?> $table();
                   boolean $isView();
         @Nullable MField<?> $field();
@@ -1192,7 +1352,9 @@ public final class QOM {
     public interface MCreateDatabase
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MCatalog $database();
                   boolean $ifNotExists();
         @NotNull  MCreateDatabase $database(MCatalog database);
@@ -1202,7 +1364,9 @@ public final class QOM {
     public interface MCreateDomain<T>
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MDomain<?> $domain();
                   boolean $ifNotExists();
         @NotNull  MDataType<T> $dataType();
@@ -1247,7 +1411,9 @@ public final class QOM {
     public interface MCreateIndex
         extends
             MDDLQuery
-        {
+
+
+    {
                   boolean $unique();
         @Nullable MIndex $index();
                   boolean $ifNotExists();
@@ -1331,7 +1497,9 @@ public final class QOM {
     public interface MCreateSchema
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MSchema $schema();
                   boolean $ifNotExists();
         @NotNull  MCreateSchema $schema(MSchema schema);
@@ -1341,7 +1509,9 @@ public final class QOM {
     public interface MCreateSequence
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MSequence<?> $sequence();
                   boolean $ifNotExists();
         @Nullable MField<? extends Number> $startWith();
@@ -1369,7 +1539,9 @@ public final class QOM {
     public interface MDropDatabase
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MCatalog $database();
                   boolean $ifExists();
         @NotNull  MDropDatabase $database(MCatalog database);
@@ -1379,7 +1551,9 @@ public final class QOM {
     public interface MDropDomain
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MDomain<?> $domain();
                   boolean $ifExists();
         @Nullable Cascade $cascade();
@@ -1406,7 +1580,9 @@ public final class QOM {
     public interface MDropIndex
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MIndex $index();
                   boolean $ifExists();
         @Nullable MTable<?> $on();
@@ -1435,7 +1611,9 @@ public final class QOM {
     public interface MDropSchema
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MSchema $schema();
                   boolean $ifExists();
         @Nullable Cascade $cascade();
@@ -1447,7 +1625,9 @@ public final class QOM {
     public interface MDropSequence
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MSequence<?> $sequence();
                   boolean $ifExists();
         @NotNull  MDropSequence $sequence(MSequence<?> sequence);
@@ -1457,7 +1637,9 @@ public final class QOM {
     public interface MDropTable
         extends
             MDDLQuery
-        {
+
+
+    {
                   boolean $temporary();
         @NotNull  MTable<?> $table();
                   boolean $ifExists();
@@ -1486,7 +1668,9 @@ public final class QOM {
     public interface MDropView
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MTable<?> $view();
                   boolean $ifExists();
         @NotNull  MDropView $view(MTable<?> view);
@@ -1496,7 +1680,9 @@ public final class QOM {
     public interface MGrant
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MList<? extends Privilege> $privileges();
         @NotNull  MTable<?> $on();
         @Nullable MRole $to();
@@ -1512,7 +1698,9 @@ public final class QOM {
     public interface MRevoke
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MList<? extends Privilege> $privileges();
                   boolean $grantOptionFor();
         @NotNull  MTable<?> $on();
@@ -1528,7 +1716,9 @@ public final class QOM {
     public interface MSetCommand
         extends
             MRowCountQuery
-        {
+
+
+    {
         @NotNull  MName $name();
         @NotNull  MParam<?> $value();
                   boolean $local();
@@ -1540,7 +1730,9 @@ public final class QOM {
     public interface MSetCatalog
         extends
             MRowCountQuery
-        {
+
+
+    {
         @NotNull  MCatalog $catalog();
         @NotNull  MSetCatalog $catalog(MCatalog catalog);
     }
@@ -1548,7 +1740,9 @@ public final class QOM {
     public interface MSetSchema
         extends
             MRowCountQuery
-        {
+
+
+    {
         @NotNull  MSchema $schema();
         @NotNull  MSetSchema $schema(MSchema schema);
     }
@@ -1556,7 +1750,9 @@ public final class QOM {
     public interface MTruncate<R extends Record>
         extends
             MDDLQuery
-        {
+
+
+    {
         @NotNull  MTable<R> $table();
         @Nullable IdentityRestartOption $restartIdentity();
         @Nullable Cascade $cascade();
@@ -1583,23 +1779,31 @@ public final class QOM {
     public interface MAnd
         extends
             MCombinedCondition
-        {}
+
+
+    {}
 
     public interface MTableEq<R extends Record>
         extends
             MCondition,
             UOperator2<MTable<R>, MTable<R>, MCondition>
-        {}
+
+
+    {}
 
     public interface MEq<T>
         extends
             MCompareCondition<T>
-        {}
+
+
+    {}
 
     public interface MExists
         extends
             MCondition
-        {
+
+
+    {
         @NotNull  MSelect<?> $query();
         @NotNull  MExists $query(MSelect<?> query);
     }
@@ -1607,55 +1811,73 @@ public final class QOM {
     public interface MGe<T>
         extends
             MCompareCondition<T>
-        {}
+
+
+    {}
 
     public interface MGt<T>
         extends
             MCompareCondition<T>
-        {}
+
+
+    {}
 
     public interface MIn<T>
         extends
             MCondition,
             UOperator2<MField<T>, MSelect<? extends Record1<T>>, MCondition>
-        {}
+
+
+    {}
 
     public interface MIsDistinctFrom<T>
         extends
             MCompareCondition<T>
-        {}
+
+
+    {}
 
     public interface MIsNull
         extends
             MCondition,
             UOperator1<MField<?>, MCondition>
-        {
+
+
+    {
         @NotNull  default MField<?> $field() { return $arg1(); }
     }
 
     public interface MIsNotDistinctFrom<T>
         extends
             MCompareCondition<T>
-        {}
+
+
+    {}
 
     public interface MIsNotNull
         extends
             MCondition,
             UOperator1<MField<?>, MCondition>
-        {
+
+
+    {
         @NotNull  default MField<?> $field() { return $arg1(); }
     }
 
     public interface MLe<T>
         extends
             MCompareCondition<T>
-        {}
+
+
+    {}
 
     public interface MLike
         extends
             MCondition,
             UOperator3<MField<?>, MField<String>, Character, MCondition>
-        {
+
+
+    {
         @NotNull  default MField<?> $value() { return $arg1(); }
         @NotNull  default MField<String> $pattern() { return $arg2(); }
         @Nullable default Character $escape() { return $arg3(); }
@@ -1665,7 +1887,9 @@ public final class QOM {
         extends
             MCondition,
             UOperator3<MField<?>, MField<String>, Character, MCondition>
-        {
+
+
+    {
         @NotNull  default MField<?> $value() { return $arg1(); }
         @NotNull  default MField<String> $pattern() { return $arg2(); }
         @Nullable default Character $escape() { return $arg3(); }
@@ -1674,24 +1898,32 @@ public final class QOM {
     public interface MLt<T>
         extends
             MCompareCondition<T>
-        {}
+
+
+    {}
 
     public interface MTableNe<R extends Record>
         extends
             MCondition,
             UOperator2<MTable<R>, MTable<R>, MCondition>
-        {}
+
+
+    {}
 
     public interface MNe<T>
         extends
             MCompareCondition<T>
-        {}
+
+
+    {}
 
     public interface MNot
         extends
             MCondition,
             UOperator1<MCondition, MCondition>
-        {
+
+
+    {
         @NotNull  default MCondition $condition() { return $arg1(); }
     }
 
@@ -1699,7 +1931,9 @@ public final class QOM {
         extends
             MField<Boolean>,
             UOperator1<MField<Boolean>, MField<Boolean>>
-        {
+
+
+    {
         @NotNull  default MField<Boolean> $field() { return $arg1(); }
     }
 
@@ -1707,13 +1941,17 @@ public final class QOM {
         extends
             MCondition,
             UOperator2<MField<T>, MSelect<? extends Record1<T>>, MCondition>
-        {}
+
+
+    {}
 
     public interface MNotLike
         extends
             MCondition,
             UOperator3<MField<?>, MField<String>, Character, MCondition>
-        {
+
+
+    {
         @NotNull  default MField<?> $value() { return $arg1(); }
         @NotNull  default MField<String> $pattern() { return $arg2(); }
         @Nullable default Character $escape() { return $arg3(); }
@@ -1723,7 +1961,9 @@ public final class QOM {
         extends
             MCondition,
             UOperator3<MField<?>, MField<String>, Character, MCondition>
-        {
+
+
+    {
         @NotNull  default MField<?> $value() { return $arg1(); }
         @NotNull  default MField<String> $pattern() { return $arg2(); }
         @Nullable default Character $escape() { return $arg3(); }
@@ -1733,7 +1973,9 @@ public final class QOM {
         extends
             MCondition,
             UOperator3<MField<?>, MField<String>, Character, MCondition>
-        {
+
+
+    {
         @NotNull  default MField<?> $value() { return $arg1(); }
         @NotNull  default MField<String> $pattern() { return $arg2(); }
         @Nullable default Character $escape() { return $arg3(); }
@@ -1742,13 +1984,17 @@ public final class QOM {
     public interface MOr
         extends
             MCombinedCondition
-        {}
+
+
+    {}
 
     public interface MSimilarTo
         extends
             MCondition,
             UOperator3<MField<?>, MField<String>, Character, MCondition>
-        {
+
+
+    {
         @NotNull  default MField<?> $value() { return $arg1(); }
         @NotNull  default MField<String> $pattern() { return $arg2(); }
         @Nullable default Character $escape() { return $arg3(); }
@@ -1757,7 +2003,9 @@ public final class QOM {
     public interface MUnique
         extends
             MCondition
-        {
+
+
+    {
         @NotNull  MSelect<?> $query();
         @NotNull  MUnique $query(MSelect<?> query);
     }
@@ -1766,7 +2014,9 @@ public final class QOM {
         extends
             MCondition,
             UOperator1<MField<?>, MCondition>
-        {
+
+
+    {
         @NotNull  default MField<?> $field() { return $arg1(); }
     }
 
@@ -1774,7 +2024,9 @@ public final class QOM {
         extends
             MCondition,
             UOperator1<MField<?>, MCondition>
-        {
+
+
+    {
         @NotNull  default MField<?> $field() { return $arg1(); }
     }
 
@@ -1782,7 +2034,9 @@ public final class QOM {
         extends
             MCondition,
             UOperator1<MField<?>, MCondition>
-        {
+
+
+    {
         @NotNull  default MField<?> $field() { return $arg1(); }
     }
 
@@ -1790,7 +2044,9 @@ public final class QOM {
         extends
             MCondition,
             UOperator1<MField<?>, MCondition>
-        {
+
+
+    {
         @NotNull  default MField<?> $field() { return $arg1(); }
     }
 
@@ -1798,14 +2054,18 @@ public final class QOM {
         extends
             MField<RowId>,
             UOperator1<MTable<?>, MField<RowId>>
-        {
+
+
+    {
         @NotNull  default MTable<?> $table() { return $arg1(); }
     }
 
     public interface MAbs<T extends Number>
         extends
             MField<T>
-        {
+
+
+    {
         @NotNull  MField<T> $number();
         @NotNull  MAbs<T> $number(MField<T> number);
     }
@@ -1813,7 +2073,9 @@ public final class QOM {
     public interface MAcos
         extends
             MField<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $number();
         @NotNull  MAcos $number(MField<? extends Number> number);
     }
@@ -1821,7 +2083,9 @@ public final class QOM {
     public interface MAsin
         extends
             MField<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $number();
         @NotNull  MAsin $number(MField<? extends Number> number);
     }
@@ -1829,7 +2093,9 @@ public final class QOM {
     public interface MAtan
         extends
             MField<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $number();
         @NotNull  MAtan $number(MField<? extends Number> number);
     }
@@ -1837,7 +2103,9 @@ public final class QOM {
     public interface MAtan2
         extends
             MField<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $x();
         @NotNull  MField<? extends Number> $y();
         @NotNull  MAtan2 $x(MField<? extends Number> x);
@@ -1848,12 +2116,16 @@ public final class QOM {
         extends
             MField<T>,
             UOperator2<MField<T>, MField<T>, MField<T>>
-        {}
+
+
+    {}
 
     public interface MBitCount
         extends
             MField<Integer>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $number();
         @NotNull  MBitCount $number(MField<? extends Number> number);
     }
@@ -1862,42 +2134,56 @@ public final class QOM {
         extends
             MField<T>,
             UOperator2<MField<T>, MField<T>, MField<T>>
-        {}
+
+
+    {}
 
     public interface MBitNor<T extends Number>
         extends
             MField<T>,
             UOperator2<MField<T>, MField<T>, MField<T>>
-        {}
+
+
+    {}
 
     public interface MBitNot<T extends Number>
         extends
             MField<T>,
             UOperator1<MField<T>, MField<T>>
-        {}
+
+
+    {}
 
     public interface MBitOr<T extends Number>
         extends
             MField<T>,
             UOperator2<MField<T>, MField<T>, MField<T>>
-        {}
+
+
+    {}
 
     public interface MBitXNor<T extends Number>
         extends
             MField<T>,
             UOperator2<MField<T>, MField<T>, MField<T>>
-        {}
+
+
+    {}
 
     public interface MBitXor<T extends Number>
         extends
             MField<T>,
             UOperator2<MField<T>, MField<T>, MField<T>>
-        {}
+
+
+    {}
 
     public interface MCeil<T extends Number>
         extends
             MField<T>
-        {
+
+
+    {
         @NotNull  MField<T> $value();
         @NotNull  MCeil<T> $value(MField<T> value);
     }
@@ -1905,7 +2191,9 @@ public final class QOM {
     public interface MCos
         extends
             MField<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $number();
         @NotNull  MCos $number(MField<? extends Number> number);
     }
@@ -1913,7 +2201,9 @@ public final class QOM {
     public interface MCosh
         extends
             MField<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $number();
         @NotNull  MCosh $number(MField<? extends Number> number);
     }
@@ -1921,7 +2211,9 @@ public final class QOM {
     public interface MCot
         extends
             MField<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $number();
         @NotNull  MCot $number(MField<? extends Number> number);
     }
@@ -1929,7 +2221,9 @@ public final class QOM {
     public interface MCoth
         extends
             MField<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $number();
         @NotNull  MCoth $number(MField<? extends Number> number);
     }
@@ -1937,7 +2231,9 @@ public final class QOM {
     public interface MDegrees
         extends
             MField<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $radians();
         @NotNull  MDegrees $radians(MField<? extends Number> radians);
     }
@@ -1946,12 +2242,16 @@ public final class QOM {
         extends
             MField<BigDecimal>,
             UEmpty
-        {}
+
+
+    {}
 
     public interface MExp
         extends
             MField<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $value();
         @NotNull  MExp $value(MField<? extends Number> value);
     }
@@ -1959,7 +2259,9 @@ public final class QOM {
     public interface MFloor<T extends Number>
         extends
             MField<T>
-        {
+
+
+    {
         @NotNull  MField<T> $value();
         @NotNull  MFloor<T> $value(MField<T> value);
     }
@@ -1967,7 +2269,9 @@ public final class QOM {
     public interface MLog
         extends
             MField<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $value();
         @Nullable MField<? extends Number> $base();
         @NotNull  MLog $value(MField<? extends Number> value);
@@ -1977,7 +2281,9 @@ public final class QOM {
     public interface MLog10
         extends
             MField<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $value();
         @NotNull  MLog10 $value(MField<? extends Number> value);
     }
@@ -1986,7 +2292,9 @@ public final class QOM {
         extends
             MField<T>,
             UOperator2<MField<T>, MField<? extends Number>, MField<T>>
-        {
+
+
+    {
         @NotNull  default MField<T> $dividend() { return $arg1(); }
         @NotNull  default MField<? extends Number> $divisor() { return $arg2(); }
     }
@@ -1995,13 +2303,17 @@ public final class QOM {
         extends
             MField<BigDecimal>,
             UEmpty
-        {}
+
+
+    {}
 
     public interface MPower
         extends
             MField<BigDecimal>,
             UOperator2<MField<? extends Number>, MField<? extends Number>, MField<BigDecimal>>
-        {
+
+
+    {
         @NotNull  default MField<? extends Number> $base() { return $arg1(); }
         @NotNull  default MField<? extends Number> $exponent() { return $arg2(); }
     }
@@ -2009,7 +2321,9 @@ public final class QOM {
     public interface MRadians
         extends
             MField<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $degrees();
         @NotNull  MRadians $degrees(MField<? extends Number> degrees);
     }
@@ -2018,12 +2332,16 @@ public final class QOM {
         extends
             MField<BigDecimal>,
             UEmpty
-        {}
+
+
+    {}
 
     public interface MRound<T extends Number>
         extends
             MField<T>
-        {
+
+
+    {
         @NotNull  MField<T> $value();
         @Nullable MField<Integer> $decimals();
         @NotNull  MRound<T> $value(MField<T> value);
@@ -2034,7 +2352,9 @@ public final class QOM {
         extends
             MField<T>,
             UOperator2<MField<T>, MField<? extends Number>, MField<T>>
-        {
+
+
+    {
         @NotNull  default MField<T> $value() { return $arg1(); }
         @NotNull  default MField<? extends Number> $count() { return $arg2(); }
     }
@@ -2043,7 +2363,9 @@ public final class QOM {
         extends
             MField<T>,
             UOperator2<MField<T>, MField<? extends Number>, MField<T>>
-        {
+
+
+    {
         @NotNull  default MField<T> $value() { return $arg1(); }
         @NotNull  default MField<? extends Number> $count() { return $arg2(); }
     }
@@ -2051,7 +2373,9 @@ public final class QOM {
     public interface MSign
         extends
             MField<Integer>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $number();
         @NotNull  MSign $number(MField<? extends Number> number);
     }
@@ -2059,7 +2383,9 @@ public final class QOM {
     public interface MSin
         extends
             MField<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $number();
         @NotNull  MSin $number(MField<? extends Number> number);
     }
@@ -2067,7 +2393,9 @@ public final class QOM {
     public interface MSinh
         extends
             MField<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $number();
         @NotNull  MSinh $number(MField<? extends Number> number);
     }
@@ -2075,7 +2403,9 @@ public final class QOM {
     public interface MSqrt
         extends
             MField<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $value();
         @NotNull  MSqrt $value(MField<? extends Number> value);
     }
@@ -2083,7 +2413,9 @@ public final class QOM {
     public interface MSquare<T extends Number>
         extends
             MField<T>
-        {
+
+
+    {
         @NotNull  MField<T> $value();
         @NotNull  MSquare<T> $value(MField<T> value);
     }
@@ -2091,7 +2423,9 @@ public final class QOM {
     public interface MTan
         extends
             MField<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $number();
         @NotNull  MTan $number(MField<? extends Number> number);
     }
@@ -2099,7 +2433,9 @@ public final class QOM {
     public interface MTanh
         extends
             MField<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $number();
         @NotNull  MTanh $number(MField<? extends Number> number);
     }
@@ -2108,12 +2444,16 @@ public final class QOM {
         extends
             MField<BigDecimal>,
             UEmpty
-        {}
+
+
+    {}
 
     public interface MTrunc<T extends Number>
         extends
             MField<T>
-        {
+
+
+    {
         @NotNull  MField<T> $value();
         @NotNull  MField<Integer> $decimals();
         @NotNull  MTrunc<T> $value(MField<T> value);
@@ -2123,7 +2463,9 @@ public final class QOM {
     public interface MWidthBucket<T extends Number>
         extends
             MField<T>
-        {
+
+
+    {
         @NotNull  MField<T> $field();
         @NotNull  MField<T> $low();
         @NotNull  MField<T> $high();
@@ -2137,7 +2479,9 @@ public final class QOM {
     public interface MAscii
         extends
             MField<Integer>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @NotNull  MAscii $string(MField<String> string);
     }
@@ -2145,7 +2489,9 @@ public final class QOM {
     public interface MBitLength
         extends
             MField<Integer>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @NotNull  MBitLength $string(MField<String> string);
     }
@@ -2153,7 +2499,9 @@ public final class QOM {
     public interface MCharLength
         extends
             MField<Integer>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @NotNull  MCharLength $string(MField<String> string);
     }
@@ -2161,7 +2509,9 @@ public final class QOM {
     public interface MChr
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $number();
         @NotNull  MChr $number(MField<? extends Number> number);
     }
@@ -2169,7 +2519,9 @@ public final class QOM {
     public interface MContains<T>
         extends
             MCompareCondition<T>
-        {
+
+
+    {
         @NotNull  default MField<T> $value() { return $arg1(); }
         @NotNull  default MField<T> $content() { return $arg2(); }
     }
@@ -2177,7 +2529,9 @@ public final class QOM {
     public interface MContainsIgnoreCase<T>
         extends
             MCompareCondition<T>
-        {
+
+
+    {
         @NotNull  default MField<T> $value() { return $arg1(); }
         @NotNull  default MField<T> $content() { return $arg2(); }
     }
@@ -2185,7 +2539,9 @@ public final class QOM {
     public interface MDigits
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $value();
         @NotNull  MDigits $value(MField<? extends Number> value);
     }
@@ -2193,7 +2549,9 @@ public final class QOM {
     public interface MEndsWith<T>
         extends
             MCompareCondition<T>
-        {
+
+
+    {
         @NotNull  default MField<T> $string() { return $arg1(); }
         @NotNull  default MField<T> $suffix() { return $arg2(); }
     }
@@ -2201,7 +2559,9 @@ public final class QOM {
     public interface MEndsWithIgnoreCase<T>
         extends
             MCompareCondition<T>
-        {
+
+
+    {
         @NotNull  default MField<T> $string() { return $arg1(); }
         @NotNull  default MField<T> $suffix() { return $arg2(); }
     }
@@ -2209,7 +2569,9 @@ public final class QOM {
     public interface MLeft
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @NotNull  MField<? extends Number> $length();
         @NotNull  MLeft $string(MField<String> string);
@@ -2219,7 +2581,9 @@ public final class QOM {
     public interface MLower
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @NotNull  MLower $string(MField<String> string);
     }
@@ -2227,7 +2591,9 @@ public final class QOM {
     public interface MLpad
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @NotNull  MField<? extends Number> $length();
         @Nullable MField<String> $character();
@@ -2239,7 +2605,9 @@ public final class QOM {
     public interface MLtrim
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @Nullable MField<String> $characters();
         @NotNull  MLtrim $string(MField<String> string);
@@ -2249,7 +2617,9 @@ public final class QOM {
     public interface MMd5
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @NotNull  MMd5 $string(MField<String> string);
     }
@@ -2257,7 +2627,9 @@ public final class QOM {
     public interface MOctetLength
         extends
             MField<Integer>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @NotNull  MOctetLength $string(MField<String> string);
     }
@@ -2265,7 +2637,9 @@ public final class QOM {
     public interface MOverlay
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<String> $in();
         @NotNull  MField<String> $placing();
         @NotNull  MField<? extends Number> $startIndex();
@@ -2279,7 +2653,9 @@ public final class QOM {
     public interface MPosition
         extends
             MField<Integer>
-        {
+
+
+    {
         @NotNull  MField<String> $in();
         @NotNull  MField<String> $search();
         @Nullable MField<? extends Number> $startIndex();
@@ -2291,7 +2667,9 @@ public final class QOM {
     public interface MRepeat
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @NotNull  MField<? extends Number> $count();
         @NotNull  MRepeat $string(MField<String> string);
@@ -2301,7 +2679,9 @@ public final class QOM {
     public interface MReplace
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @NotNull  MField<String> $search();
         @Nullable MField<String> $replace();
@@ -2313,7 +2693,9 @@ public final class QOM {
     public interface MReverse
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @NotNull  MReverse $string(MField<String> string);
     }
@@ -2321,7 +2703,9 @@ public final class QOM {
     public interface MRight
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @NotNull  MField<? extends Number> $length();
         @NotNull  MRight $string(MField<String> string);
@@ -2331,7 +2715,9 @@ public final class QOM {
     public interface MRpad
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @NotNull  MField<? extends Number> $length();
         @Nullable MField<String> $character();
@@ -2343,7 +2729,9 @@ public final class QOM {
     public interface MRtrim
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @Nullable MField<String> $characters();
         @NotNull  MRtrim $string(MField<String> string);
@@ -2353,7 +2741,9 @@ public final class QOM {
     public interface MSpace
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $count();
         @NotNull  MSpace $count(MField<? extends Number> count);
     }
@@ -2361,7 +2751,9 @@ public final class QOM {
     public interface MSplitPart
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @NotNull  MField<String> $delimiter();
         @NotNull  MField<? extends Number> $n();
@@ -2373,7 +2765,9 @@ public final class QOM {
     public interface MStartsWith<T>
         extends
             MCompareCondition<T>
-        {
+
+
+    {
         @NotNull  default MField<T> $string() { return $arg1(); }
         @NotNull  default MField<T> $prefix() { return $arg2(); }
     }
@@ -2381,7 +2775,9 @@ public final class QOM {
     public interface MStartsWithIgnoreCase<T>
         extends
             MCompareCondition<T>
-        {
+
+
+    {
         @NotNull  default MField<T> $string() { return $arg1(); }
         @NotNull  default MField<T> $prefix() { return $arg2(); }
     }
@@ -2389,7 +2785,9 @@ public final class QOM {
     public interface MSubstring
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @NotNull  MField<? extends Number> $startingPosition();
         @Nullable MField<? extends Number> $length();
@@ -2401,7 +2799,9 @@ public final class QOM {
     public interface MSubstringIndex
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @NotNull  MField<String> $delimiter();
         @NotNull  MField<? extends Number> $n();
@@ -2413,7 +2813,9 @@ public final class QOM {
     public interface MToChar
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<?> $value();
         @Nullable MField<String> $formatMask();
         @NotNull  MToChar $value(MField<?> value);
@@ -2423,7 +2825,9 @@ public final class QOM {
     public interface MToDate
         extends
             MField<Date>
-        {
+
+
+    {
         @NotNull  MField<String> $value();
         @NotNull  MField<String> $formatMask();
         @NotNull  MToDate $value(MField<String> value);
@@ -2433,7 +2837,9 @@ public final class QOM {
     public interface MToHex
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $value();
         @NotNull  MToHex $value(MField<? extends Number> value);
     }
@@ -2441,7 +2847,9 @@ public final class QOM {
     public interface MToTimestamp
         extends
             MField<Timestamp>
-        {
+
+
+    {
         @NotNull  MField<String> $value();
         @NotNull  MField<String> $formatMask();
         @NotNull  MToTimestamp $value(MField<String> value);
@@ -2451,7 +2859,9 @@ public final class QOM {
     public interface MTranslate
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @NotNull  MField<String> $from();
         @NotNull  MField<String> $to();
@@ -2463,7 +2873,9 @@ public final class QOM {
     public interface MTrim
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @Nullable MField<String> $characters();
         @NotNull  MTrim $string(MField<String> string);
@@ -2473,7 +2885,9 @@ public final class QOM {
     public interface MUpper
         extends
             MField<String>
-        {
+
+
+    {
         @NotNull  MField<String> $string();
         @NotNull  MUpper $string(MField<String> string);
     }
@@ -2482,12 +2896,16 @@ public final class QOM {
         extends
             MField<UUID>,
             UEmpty
-        {}
+
+
+    {}
 
     public interface MDateAdd<T>
         extends
             MField<T>
-        {
+
+
+    {
         @NotNull  MField<T> $date();
         @NotNull  MField<? extends Number> $interval();
         @Nullable DatePart $datePart();
@@ -2499,7 +2917,9 @@ public final class QOM {
     public interface MCardinality
         extends
             MField<Integer>
-        {
+
+
+    {
         @NotNull  MField<? extends Object[]> $array();
         @NotNull  MCardinality $array(MField<? extends Object[]> array);
     }
@@ -2507,7 +2927,9 @@ public final class QOM {
     public interface MArrayGet<T>
         extends
             MField<T>
-        {
+
+
+    {
         @NotNull  MField<T[]> $array();
         @NotNull  MField<Integer> $index();
         @NotNull  MArrayGet<T> $array(MField<T[]> array);
@@ -2517,7 +2939,9 @@ public final class QOM {
     public interface MNvl<T>
         extends
             MField<T>
-        {
+
+
+    {
         @NotNull  MField<T> $value();
         @NotNull  MField<T> $defaultValue();
         @NotNull  MNvl<T> $value(MField<T> value);
@@ -2527,7 +2951,9 @@ public final class QOM {
     public interface MNullif<T>
         extends
             MField<T>
-        {
+
+
+    {
         @NotNull  MField<T> $value();
         @NotNull  MField<T> $other();
         @NotNull  MNullif<T> $value(MField<T> value);
@@ -2538,19 +2964,25 @@ public final class QOM {
         extends
             MField<String>,
             UEmpty
-        {}
+
+
+    {}
 
     public interface MCurrentSchema
         extends
             MField<String>,
             UEmpty
-        {}
+
+
+    {}
 
     public interface MCurrentUser
         extends
             MField<String>,
             UEmpty
-        {}
+
+
+    {}
 
 
 
@@ -2639,7 +3071,9 @@ public final class QOM {
     public interface MXmlcomment
         extends
             MField<XML>
-        {
+
+
+    {
         @NotNull  MField<String> $comment();
         @NotNull  MXmlcomment $comment(MField<String> comment);
     }
@@ -2647,7 +3081,9 @@ public final class QOM {
     public interface MXmlconcat
         extends
             MField<XML>
-        {
+
+
+    {
         @NotNull  MList<? extends Field<?>> $args();
         @NotNull  MXmlconcat $args(MList<? extends Field<?>> args);
     }
@@ -2668,7 +3104,9 @@ public final class QOM {
     public interface MXmlforest
         extends
             MField<XML>
-        {
+
+
+    {
         @NotNull  MList<? extends Field<?>> $fields();
         @NotNull  MXmlforest $fields(MList<? extends Field<?>> fields);
     }
@@ -2676,7 +3114,9 @@ public final class QOM {
     public interface MXmlpi
         extends
             MField<XML>
-        {
+
+
+    {
         @NotNull  MName $target();
         @Nullable MField<?> $content();
         @NotNull  MXmlpi $target(MName target);
@@ -2686,7 +3126,9 @@ public final class QOM {
     public interface MXmlserialize<T>
         extends
             MField<T>
-        {
+
+
+    {
                   boolean $content();
         @NotNull  MField<XML> $value();
         @NotNull  MDataType<T> $type();
@@ -2698,7 +3140,9 @@ public final class QOM {
     public interface MJSONArray<T>
         extends
             MField<T>
-        {
+
+
+    {
         @NotNull  MDataType<T> $type();
         @NotNull  MList<? extends Field<?>> $fields();
         @Nullable JSONOnNull $onNull();
@@ -2712,7 +3156,9 @@ public final class QOM {
     public interface MJSONObject<T>
         extends
             MField<T>
-        {
+
+
+    {
         @NotNull  MDataType<T> $type();
         @NotNull  MList<? extends JSONEntry<?>> $entries();
         @Nullable JSONOnNull $onNull();
@@ -2755,7 +3201,9 @@ public final class QOM {
     public interface MConditionAsField
         extends
             MField<Boolean>
-        {
+
+
+    {
         @NotNull  MCondition $condition();
         @NotNull  MConditionAsField $condition(MCondition condition);
     }
@@ -2763,7 +3211,9 @@ public final class QOM {
     public interface MFieldCondition
         extends
             MCondition
-        {
+
+
+    {
         @NotNull  MField<Boolean> $field();
         @NotNull  MFieldCondition $field(MField<Boolean> field);
     }
@@ -2771,7 +3221,9 @@ public final class QOM {
     public interface MAnyValue<T>
         extends
             MAggregateFunction<T>
-        {
+
+
+    {
         @NotNull  MField<T> $field();
         @NotNull  MAnyValue<T> $field(MField<T> field);
     }
@@ -2779,7 +3231,9 @@ public final class QOM {
     public interface MAvg
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $field();
                   boolean $distinct();
         @NotNull  MAvg $field(MField<? extends Number> field);
@@ -2789,7 +3243,9 @@ public final class QOM {
     public interface MBitAndAgg<T extends Number>
         extends
             MAggregateFunction<T>
-        {
+
+
+    {
         @NotNull  MField<T> $value();
         @NotNull  MBitAndAgg<T> $value(MField<T> value);
     }
@@ -2797,7 +3253,9 @@ public final class QOM {
     public interface MBitOrAgg<T extends Number>
         extends
             MAggregateFunction<T>
-        {
+
+
+    {
         @NotNull  MField<T> $value();
         @NotNull  MBitOrAgg<T> $value(MField<T> value);
     }
@@ -2805,7 +3263,9 @@ public final class QOM {
     public interface MBitXorAgg<T extends Number>
         extends
             MAggregateFunction<T>
-        {
+
+
+    {
         @NotNull  MField<T> $value();
         @NotNull  MBitXorAgg<T> $value(MField<T> value);
     }
@@ -2813,7 +3273,9 @@ public final class QOM {
     public interface MBoolAnd
         extends
             MAggregateFunction<Boolean>
-        {
+
+
+    {
         @NotNull  MCondition $condition();
         @NotNull  MBoolAnd $condition(MCondition condition);
     }
@@ -2821,7 +3283,9 @@ public final class QOM {
     public interface MBoolOr
         extends
             MAggregateFunction<Boolean>
-        {
+
+
+    {
         @NotNull  MCondition $condition();
         @NotNull  MBoolOr $condition(MCondition condition);
     }
@@ -2829,7 +3293,9 @@ public final class QOM {
     public interface MCorr
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $y();
         @NotNull  MField<? extends Number> $x();
         @NotNull  MCorr $y(MField<? extends Number> y);
@@ -2839,7 +3305,9 @@ public final class QOM {
     public interface MCount
         extends
             MAggregateFunction<Integer>
-        {
+
+
+    {
         @NotNull  MField<?> $field();
                   boolean $distinct();
         @NotNull  MCount $field(MField<?> field);
@@ -2849,7 +3317,9 @@ public final class QOM {
     public interface MCovarSamp
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $y();
         @NotNull  MField<? extends Number> $x();
         @NotNull  MCovarSamp $y(MField<? extends Number> y);
@@ -2859,7 +3329,9 @@ public final class QOM {
     public interface MCovarPop
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $y();
         @NotNull  MField<? extends Number> $x();
         @NotNull  MCovarPop $y(MField<? extends Number> y);
@@ -2869,7 +3341,9 @@ public final class QOM {
     public interface MMax<T>
         extends
             MAggregateFunction<T>
-        {
+
+
+    {
         @NotNull  MField<T> $field();
                   boolean $distinct();
         @NotNull  MMax<T> $field(MField<T> field);
@@ -2879,7 +3353,9 @@ public final class QOM {
     public interface MMedian
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $field();
         @NotNull  MMedian $field(MField<? extends Number> field);
     }
@@ -2887,7 +3363,9 @@ public final class QOM {
     public interface MMin<T>
         extends
             MAggregateFunction<T>
-        {
+
+
+    {
         @NotNull  MField<T> $field();
                   boolean $distinct();
         @NotNull  MMin<T> $field(MField<T> field);
@@ -2897,7 +3375,9 @@ public final class QOM {
     public interface MProduct
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $field();
                   boolean $distinct();
         @NotNull  MProduct $field(MField<? extends Number> field);
@@ -2907,7 +3387,9 @@ public final class QOM {
     public interface MRegrAvgx
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $y();
         @NotNull  MField<? extends Number> $x();
         @NotNull  MRegrAvgx $y(MField<? extends Number> y);
@@ -2917,7 +3399,9 @@ public final class QOM {
     public interface MRegrAvgy
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $y();
         @NotNull  MField<? extends Number> $x();
         @NotNull  MRegrAvgy $y(MField<? extends Number> y);
@@ -2927,7 +3411,9 @@ public final class QOM {
     public interface MRegrCount
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $y();
         @NotNull  MField<? extends Number> $x();
         @NotNull  MRegrCount $y(MField<? extends Number> y);
@@ -2937,7 +3423,9 @@ public final class QOM {
     public interface MRegrIntercept
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $y();
         @NotNull  MField<? extends Number> $x();
         @NotNull  MRegrIntercept $y(MField<? extends Number> y);
@@ -2947,7 +3435,9 @@ public final class QOM {
     public interface MRegrR2
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $y();
         @NotNull  MField<? extends Number> $x();
         @NotNull  MRegrR2 $y(MField<? extends Number> y);
@@ -2957,7 +3447,9 @@ public final class QOM {
     public interface MRegrSlope
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $y();
         @NotNull  MField<? extends Number> $x();
         @NotNull  MRegrSlope $y(MField<? extends Number> y);
@@ -2967,7 +3459,9 @@ public final class QOM {
     public interface MRegrSxx
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $y();
         @NotNull  MField<? extends Number> $x();
         @NotNull  MRegrSxx $y(MField<? extends Number> y);
@@ -2977,7 +3471,9 @@ public final class QOM {
     public interface MRegrSxy
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $y();
         @NotNull  MField<? extends Number> $x();
         @NotNull  MRegrSxy $y(MField<? extends Number> y);
@@ -2987,7 +3483,9 @@ public final class QOM {
     public interface MRegrSyy
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $y();
         @NotNull  MField<? extends Number> $x();
         @NotNull  MRegrSyy $y(MField<? extends Number> y);
@@ -2997,7 +3495,9 @@ public final class QOM {
     public interface MStddevPop
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $field();
         @NotNull  MStddevPop $field(MField<? extends Number> field);
     }
@@ -3005,7 +3505,9 @@ public final class QOM {
     public interface MStddevSamp
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $field();
         @NotNull  MStddevSamp $field(MField<? extends Number> field);
     }
@@ -3013,7 +3515,9 @@ public final class QOM {
     public interface MSum
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $field();
                   boolean $distinct();
         @NotNull  MSum $field(MField<? extends Number> field);
@@ -3023,7 +3527,9 @@ public final class QOM {
     public interface MVarPop
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $field();
         @NotNull  MVarPop $field(MField<? extends Number> field);
     }
@@ -3031,7 +3537,9 @@ public final class QOM {
     public interface MVarSamp
         extends
             MAggregateFunction<BigDecimal>
-        {
+
+
+    {
         @NotNull  MField<? extends Number> $field();
         @NotNull  MVarSamp $field(MField<? extends Number> field);
     }

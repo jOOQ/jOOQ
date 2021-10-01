@@ -917,9 +917,9 @@ public final class QOM {
         extends
             MNamed,
             MField<T>
-        permits
-            org.jooq.impl.Function,
-            org.jooq.impl.Function1
+
+
+
     {
         @NotNull MList<? extends MField<?>> $args();
     }
@@ -975,8 +975,8 @@ public final class QOM {
     public interface MArray<T>
         extends
             MField<T[]>
-        permits
-            org.jooq.impl.Array
+
+
     {
         @NotNull MList<? extends MField<?>> $elements();
     }

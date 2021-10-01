@@ -23715,7 +23715,7 @@ public class DSL {
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
     public static <T> Field<T[]> array(Select<? extends Record1<T>> select) {
-        return new ArraySelect<>(select);
+        return new ArrayQuery<>(select);
     }
 
     /**

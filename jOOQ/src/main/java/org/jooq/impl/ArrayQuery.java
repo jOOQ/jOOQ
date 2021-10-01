@@ -58,12 +58,12 @@ import org.jooq.impl.QOM.MQueryPart;
 /**
  * @author Lukas Eder
  */
-final class ArraySelect<T> extends AbstractField<T[]> implements MArrayQuery<T> {
+final class ArrayQuery<T> extends AbstractField<T[]> implements MArrayQuery<T> {
 
     private final Select<? extends Record1<T>> select;
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    ArraySelect(Select<? extends Record1<T>> select) {
+    ArrayQuery(Select<? extends Record1<T>> select) {
         super(N_ARRAY, (DataType) select.getSelect().get(0).getDataType().getArrayDataType());
 
         this.select = select;
@@ -120,6 +120,6 @@ final class ArraySelect<T> extends AbstractField<T[]> implements MArrayQuery<T> 
         Predicate<? super MQueryPart> recurse,
         Function1<? super MQueryPart, ? extends MQueryPart> replacement
     ) {
-        return QOM.replace(this, select, ArraySelect::new, recurse, replacement);
+        return QOM.replace(this, select, ArrayQuery::new, recurse, replacement);
     }
 }

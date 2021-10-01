@@ -38,7 +38,7 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MXmlAttributes;
+import org.jooq.impl.QOM.MXMLAttributes;
 
 /**
  * A type modelling XML attributes for use in
@@ -46,6 +46,6 @@ import org.jooq.impl.QOM.MXmlAttributes;
  *
  * @author Lukas Eder
  */
-public interface XMLAttributes extends QueryPart, MXmlAttributes {
+public interface XMLAttributes extends QueryPart, MXMLAttributes {
 
 }

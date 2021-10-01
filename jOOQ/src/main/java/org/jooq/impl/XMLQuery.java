@@ -59,13 +59,13 @@ import org.jooq.Function1;
 import org.jooq.XML;
 import org.jooq.XMLQueryPassingStep;
 import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MXmlquery;
+import org.jooq.impl.QOM.MXMLQuery;
 import org.jooq.impl.QOM.XmlPassingMechanism;
 
 /**
  * @author Lukas Eder
  */
-final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep, MXmlquery {
+final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep, MXMLQuery {
     private final Field<String>       xpath;
     private final Field<XML>          passing;
     private final XmlPassingMechanism passingMechanism;

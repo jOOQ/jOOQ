@@ -62,12 +62,12 @@ import org.jooq.XML;
 import org.jooq.XMLAttributes;
 import org.jooq.impl.QOM.MList;
 import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MXmlelement;
+import org.jooq.impl.QOM.MXMLElement;
 
 /**
  * @author Lukas Eder
  */
-final class XMLElement extends AbstractField<XML> implements MXmlelement {
+final class XMLElement extends AbstractField<XML> implements MXMLElement {
 
     private final Name                    elementName;
     private final XMLAttributes           attributes;

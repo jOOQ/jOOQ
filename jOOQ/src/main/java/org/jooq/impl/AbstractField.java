@@ -1972,7 +1972,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final Field<String> collate(Collation collation) {
-        return new CollatedField(this, collation);
+        return new Collated(this, collation);
     }
 
     @Override

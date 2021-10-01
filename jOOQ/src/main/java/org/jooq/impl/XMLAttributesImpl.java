@@ -54,7 +54,7 @@ import org.jooq.Name;
 import org.jooq.XMLAttributes;
 import org.jooq.impl.QOM.MList;
 import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MXmlAttributes;
+import org.jooq.impl.QOM.MXMLAttributes;
 
 /**
  * @author Lukas Eder

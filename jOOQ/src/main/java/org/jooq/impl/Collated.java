@@ -56,12 +56,12 @@ import org.jooq.impl.QOM.MQueryPart;
 /**
  * @author Lukas Eder
  */
-final class CollatedField extends AbstractField<String> implements MCollated {
+final class Collated extends AbstractField<String> implements MCollated {
 
     private final Field<?>  field;
     private final Collation collation;
 
-    CollatedField(Field<?> field, Collation collation) {
+    Collated(Field<?> field, Collation collation) {
         super(field.getQualifiedName(), type(field), field.getCommentPart(), binding(field));
 
         this.field = field;
@@ -107,7 +107,7 @@ final class CollatedField extends AbstractField<String> implements MCollated {
         Predicate<? super MQueryPart> recurse,
         Function1<? super MQueryPart, ? extends MQueryPart> replacement
     ) {
-        return QOM.replace(this, field, collation, CollatedField::new, recurse, replacement);
+        return QOM.replace(this, field, collation, Collated::new, recurse, replacement);
     }
 
     @Override

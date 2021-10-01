@@ -40,12 +40,13 @@ package org.jooq.impl;
 import static org.jooq.impl.Names.N_LAG;
 
 import org.jooq.Field;
+import org.jooq.impl.QOM.MLag;
 import org.jooq.impl.QOM.MLead;
 
 /**
  * @author Lukas Eder
  */
-final class Lag<T> extends AbstractLeadLag<T> implements MLead<T> {
+final class Lag<T> extends AbstractLeadLag<T> implements MLag<T> {
 
     Lag(Field<T> field, Field<Integer> offset, Field<T> defaultValue) {
         super(N_LAG, field, offset, defaultValue);

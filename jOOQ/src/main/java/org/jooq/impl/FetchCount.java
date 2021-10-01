@@ -52,7 +52,7 @@ import org.jooq.impl.QOM.UTransient;
 /**
  * @author Lukas Eder
  */
-final class FetchCount extends AbstractResultQuery<Record1<Integer>> implements UTransient {
+final class FetchCount extends AbstractResultQuery<Record1<Integer>> implements UEmpty {
 
     private final Field<?>[] count = { count().as("c") };
     private final Select<?>  query;

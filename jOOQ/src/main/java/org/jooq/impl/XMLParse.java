@@ -59,13 +59,13 @@ import org.jooq.Function1;
 import org.jooq.XML;
 import org.jooq.impl.QOM.DocumentOrContent;
 import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MXmlparse;
+import org.jooq.impl.QOM.MXMLParse;
 
 
 /**
  * @author Lukas Eder
  */
-final class XMLParse extends AbstractField<XML> implements MXmlparse {
+final class XMLParse extends AbstractField<XML> implements MXMLParse {
     private final Field<String>     content;
     private final DocumentOrContent documentOrContent;
 

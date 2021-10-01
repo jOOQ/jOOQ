@@ -53,7 +53,7 @@ import org.jooq.Function1;
 import org.jooq.XML;
 import org.jooq.XMLExistsPassingStep;
 import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MXmlexists;
+import org.jooq.impl.QOM.MXMLExists;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.QOM.XmlPassingMechanism;
 
@@ -61,7 +61,7 @@ import org.jooq.impl.QOM.XmlPassingMechanism;
 /**
  * @author Lukas Eder
  */
-final class XMLExists extends AbstractCondition implements XMLExistsPassingStep, MXmlexists, UNotYetImplemented {
+final class XMLExists extends AbstractCondition implements XMLExistsPassingStep, MXMLExists, UNotYetImplemented {
     private final Field<String>       xpath;
     private final Field<XML>          passing;
     private final XmlPassingMechanism passingMechanism;

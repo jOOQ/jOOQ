@@ -45,13 +45,13 @@ import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.Function1;
+import org.jooq.impl.QOM.MDenseRank;
 import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MRank;
 
 /**
  * @author Lukas Eder
  */
-final class DenseRank extends AbstractWindowFunction<Integer> implements MRank {
+final class DenseRank extends AbstractWindowFunction<Integer> implements MDenseRank {
 
     DenseRank() {
         super(N_DENSE_RANK, INTEGER.notNull());

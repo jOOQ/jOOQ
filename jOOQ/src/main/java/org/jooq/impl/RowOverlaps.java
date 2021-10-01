@@ -76,13 +76,13 @@ import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.MCondition;
-import org.jooq.impl.QOM.MOverlaps;
+import org.jooq.impl.QOM.MRowOverlaps;
 import org.jooq.impl.QOM.MRow;
 
 /**
  * @author Lukas Eder
  */
-final class RowOverlapsCondition<T1, T2> extends AbstractCondition implements MOverlaps {
+final class RowOverlaps<T1, T2> extends AbstractCondition implements MRowOverlaps {
 
     private static final Set<SQLDialect> EMULATE_NON_STANDARD_OVERLAPS = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> EMULATE_INTERVAL_OVERLAPS     = SQLDialect.supportedBy(HSQLDB);
@@ -91,7 +91,7 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition implements MO
     private final Row2<T1, T2>           right;
 
     @SuppressWarnings("unchecked")
-    RowOverlapsCondition(Row2<T1, T2> left, Row2<T1, T2> right) {
+    RowOverlaps(Row2<T1, T2> left, Row2<T1, T2> right) {
         this.left = (Row2<T1, T2>) ((AbstractRow<?>) left).convertTo(right);
         this.right = (Row2<T1, T2>) ((AbstractRow<?>) right).convertTo(left);
     }
@@ -163,6 +163,6 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition implements MO
     @SuppressWarnings("unchecked")
     @Override
     public final Function2<? super MRow, ? super MRow, ? extends MCondition> constructor() {
-        return (r1, r2) -> new RowOverlapsCondition<>((Row2<T1, T2>) r1, (Row2<T1, T2>) r2);
+        return (r1, r2) -> new RowOverlaps<>((Row2<T1, T2>) r1, (Row2<T1, T2>) r2);
     }
 }

@@ -765,7 +765,7 @@ final class RowImpl2<T1, T2> extends AbstractRow<Record2<T1, T2>> implements Row
 
     @Override
     public final Condition overlaps(Row2<T1, T2> row) {
-        return new RowOverlapsCondition<>(this, row);
+        return new RowOverlaps<>(this, row);
     }
 
 

@@ -97,7 +97,7 @@ final class ArrayGet<T> extends AbstractField<T> {
 
         @Override
         public void accept(Context<?> ctx) {
-            ctx.visit(field).sql('[').visit(index).sql(']');
+            ctx.sql('(').visit(field).sql(')').sql('[').visit(index).sql(']');
         }
     }
 }

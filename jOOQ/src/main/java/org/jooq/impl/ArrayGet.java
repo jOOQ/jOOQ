@@ -125,7 +125,7 @@ implements
 
         @Override
         public void accept(Context<?> ctx) {
-            ctx.visit(array).sql('[').visit(index).sql(']');
+            ctx.sql('(').visit(array).sql(')').sql('[').visit(index).sql(']');
         }
     }
 

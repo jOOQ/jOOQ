@@ -39,8 +39,6 @@ package org.jooq;
 
 import java.util.List;
 
-import org.jooq.impl.QOM.MDomain;
-
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -48,7 +46,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface Domain<T> extends Qualified, Typed<T>, MDomain<T> {
+public interface Domain<T> extends Qualified, Typed<T> {
 
     /**
      * The <code>DOMAIN</code>'s condition.

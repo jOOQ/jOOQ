@@ -96,6 +96,7 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.OrderField;
 // ...
+import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.SortField;
 import org.jooq.WindowSpecificationExcludeStep;
@@ -106,11 +107,7 @@ import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.conf.RenderImplicitWindowRange;
 import org.jooq.impl.QOM.FrameExclude;
 import org.jooq.impl.QOM.FrameUnits;
-import org.jooq.impl.QOM.MField;
 import org.jooq.impl.QOM.MList;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MSortField;
-import org.jooq.impl.QOM.MWindowSpecification;
 
 /**
  * @author Lukas Eder
@@ -122,8 +119,7 @@ implements
     // Cascading interface implementations for window specification behaviour
     WindowSpecificationPartitionByStep,
     WindowSpecificationRowsAndStep,
-    WindowSpecificationExcludeStep,
-    MWindowSpecification
+    WindowSpecificationExcludeStep
 {
 
     private static final Set<SQLDialect>  OMIT_PARTITION_BY_ONE                       = SQLDialect.supportedBy(CUBRID, MYSQL, SQLITE);
@@ -730,19 +726,19 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, $windowDefinition(), $partitionBy(), $orderBy());
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,

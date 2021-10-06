@@ -49,7 +49,6 @@ import static org.jooq.impl.RowField.acceptMultisetContent;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.embeddedFields;
-import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.row0;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
@@ -72,11 +71,12 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.JSONB;
+import org.jooq.Param;
 // ...
 import org.jooq.RenderContext;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.QOM.MParam;
+import org.jooq.impl.QOM.UEmpty;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.types.DayToSecond;
@@ -89,7 +89,7 @@ import org.jooq.types.YearToMonth;
 /**
  * @author Lukas Eder
  */
-final class Val<T> extends AbstractParam<T> {
+final class Val<T> extends AbstractParam<T> implements QOM.Val<T>, UEmpty {
 
     private static final JooqLogger                          log              = JooqLogger.getLogger(Val.class);
     private static final ConcurrentHashMap<Class<?>, Object> legacyWarnings   = new ConcurrentHashMap<>();
@@ -346,7 +346,7 @@ final class Val<T> extends AbstractParam<T> {
     // -------------------------------------------------------------------------
 
     @Override
-    public final MParam<T> $value(T newValue) {
+    public final Param<T> $value(T newValue) {
         return copy(newValue);
     }
 }

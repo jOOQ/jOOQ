@@ -116,7 +116,6 @@ import org.jooq.TablePartitionByStep;
 import org.jooq.UniqueKey;
 // ...
 // ...
-import org.jooq.impl.QOM.MSchema;
 import org.jooq.tools.JooqLogger;
 
 import org.jetbrains.annotations.Nullable;

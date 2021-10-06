@@ -51,16 +51,20 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function1;
-import org.jooq.impl.QOM.MField;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MRatioToReport;
+import org.jooq.QueryPart;
 
 import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
  */
-final class RatioToReport extends AbstractAggregateFunction<BigDecimal> implements MRatioToReport {
+final class RatioToReport
+extends
+    AbstractAggregateFunction<BigDecimal>
+implements
+    QOM.RatioToReport
+{
+
     private final Field<? extends Number> field;
 
     RatioToReport(Field<? extends Number> field) {
@@ -125,19 +129,19 @@ final class RatioToReport extends AbstractAggregateFunction<BigDecimal> implemen
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, field);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(this, field, RatioToReport::new, recurse, replacement);
     }

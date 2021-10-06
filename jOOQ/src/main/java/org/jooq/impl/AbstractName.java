@@ -48,13 +48,22 @@ import org.jooq.Record;
 import org.jooq.ResultQuery;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
+import org.jooq.impl.QOM.UEmpty;
 
 /**
  * The default implementation for a qualified SQL identifier.
  *
  * @author Lukas Eder
  */
-abstract class AbstractName extends AbstractQueryPart implements Name, SimpleQueryPart {
+abstract class AbstractName
+extends
+    AbstractQueryPart
+implements
+    Name,
+    SimpleQueryPart,
+    UEmpty
+{
+
     static final UnqualifiedName NO_NAME          = new UnqualifiedName("");
 
     @Override

@@ -39,7 +39,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static org.jooq.impl.Tools.EMPTY_MQUERYPART;
+import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.isRendersSeparator;
 import static org.jooq.impl.Tools.last;
@@ -61,7 +61,7 @@ import org.jooq.Function1;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.impl.QOM.MCollection;
-import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.QueryPart;
 
 /**
  * A {@link List} view, delegating all calls to a wrapped list, but acting like
@@ -343,19 +343,19 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
     // -------------------------------------------------------------------------
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
-        return QOM.traverse(init, abort, recurse, accumulate, this, wrapped.toArray(EMPTY_MQUERYPART));
+        return QOM.traverse(init, abort, recurse, accumulate, this, wrapped.toArray(EMPTY_QUERYPART));
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(this, wrapped, l -> {
             QueryPartList<T> r = new QueryPartList<>(l);

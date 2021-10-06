@@ -45,10 +45,8 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Param;
 import org.jooq.ParamMode;
+import org.jooq.QueryPart;
 import org.jooq.conf.ParamType;
-import org.jooq.impl.QOM.MParam;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MVal;
 
 /**
  * A {@link Param} wrapper object that allows for lazily initialising the value
@@ -58,7 +56,7 @@ import org.jooq.impl.QOM.MVal;
  *
  * @author Lukas Eder
  */
-final class LazyVal<T> extends AbstractParamX<T> implements MVal<T> {
+final class LazyVal<T> extends AbstractParamX<T> implements QOM.Val<T> {
 
     private final Field<T>              field;
     private transient AbstractParamX<T> delegate;
@@ -155,25 +153,25 @@ final class LazyVal<T> extends AbstractParamX<T> implements MVal<T> {
     }
 
     @Override
-    public final MParam<T> $value(T value) {
+    public final Param<T> $value(T value) {
         return delegate.$value(value);
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
-        return delegate.traverse(init, abort, recurse, accumulate);
+        return delegate.$traverse(init, abort, recurse, accumulate);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
-        return delegate.replace(recurse, replacement);
+        return delegate.$replace(recurse, replacement);
     }
 }

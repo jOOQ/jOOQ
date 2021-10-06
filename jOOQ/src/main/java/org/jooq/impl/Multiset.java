@@ -96,6 +96,7 @@ import org.jooq.JSONArrayReturningStep;
 import org.jooq.JSONB;
 import org.jooq.JSONObjectReturningStep;
 import org.jooq.Name;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Result;
@@ -105,14 +106,11 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
-import org.jooq.impl.QOM.MMultiset;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MSelect;
 
 /**
  * @author Lukas Eder
  */
-final class Multiset<R extends Record> extends AbstractField<Result<R>> implements MMultiset<R> {
+final class Multiset<R extends Record> extends AbstractField<Result<R>> implements QOM.Multiset<R> {
 
     static final Set<SQLDialect> NO_SUPPORT_JSON_COMPARE  = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
     static final Set<SQLDialect> NO_SUPPORT_JSONB_COMPARE = SQLDialect.supportedBy();
@@ -418,25 +416,25 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
     // -------------------------------------------------------------------------
 
     @Override
-    public final <Q> Q traverse(
+    public final <Q> Q $traverse(
         Q init,
         Predicate<? super Q> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super Q, ? super MQueryPart, ? extends Q> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super Q, ? super QueryPart, ? extends Q> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, select);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(this, select, Multiset::new, recurse, replacement);
     }
 
     @Override
-    public final MSelect<R> $select() {
+    public final Select<R> $select() {
         return select;
     }
 }

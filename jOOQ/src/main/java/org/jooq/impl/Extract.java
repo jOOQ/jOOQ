@@ -80,13 +80,12 @@ import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Keyword;
-import org.jooq.impl.QOM.MExtract;
-import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-final class Extract extends AbstractField<Integer> implements MExtract {
+final class Extract extends AbstractField<Integer> implements QOM.Extract {
 
     private final Field<?> field;
     private final DatePart datePart;
@@ -506,19 +505,19 @@ final class Extract extends AbstractField<Integer> implements MExtract {
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, field);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(this, field, datePart, Extract::new, recurse, replacement);
     }

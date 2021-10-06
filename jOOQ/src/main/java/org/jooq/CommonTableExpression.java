@@ -37,7 +37,9 @@
  */
 package org.jooq;
 
-import org.jooq.impl.QOM.MCommonTableExpression;
+import org.jooq.impl.QOM.Materialized;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A common table expression.
@@ -62,6 +64,13 @@ import org.jooq.impl.QOM.MCommonTableExpression;
  *
  * @author Lukas Eder
  */
-public interface CommonTableExpression<R extends Record> extends Table<R>, MCommonTableExpression<R> {
+public interface CommonTableExpression<R extends Record> extends Table<R> {
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @NotNull DerivedColumnList $derivedColumnList();
+    @NotNull ResultQuery<R> $query();
+    @NotNull Materialized $materialized();
 }

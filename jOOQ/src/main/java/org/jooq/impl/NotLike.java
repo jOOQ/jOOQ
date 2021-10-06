@@ -69,7 +69,7 @@ final class NotLike
 extends
     AbstractCondition
 implements
-    MNotLike,
+    QOM.NotLike,
     LikeEscapeStep
 {
 
@@ -158,23 +158,23 @@ implements
     }
 
     @Override
-    public final MNotLike $arg1(MField<?> newValue) {
+    public final QOM.NotLike $arg1(Field<?> newValue) {
         return constructor().apply(newValue, $arg2(), $arg3());
     }
 
     @Override
-    public final MNotLike $arg2(MField<String> newValue) {
+    public final QOM.NotLike $arg2(Field<String> newValue) {
         return constructor().apply($arg1(), newValue, $arg3());
     }
 
     @Override
-    public final MNotLike $arg3(Character newValue) {
+    public final QOM.NotLike $arg3(Character newValue) {
         return constructor().apply($arg1(), $arg2(), newValue);
     }
 
     @Override
-    public final Function3<? super MField<?>, ? super MField<String>, ? super Character, ? extends MNotLike> constructor() {
-        return (a1, a2, a3) -> new NotLike((Field<?>) a1, (Field<String>) a2, a3);
+    public final Function3<? super Field<?>, ? super Field<String>, ? super Character, ? extends QOM.NotLike> constructor() {
+        return (a1, a2, a3) -> new NotLike(a1, a2, a3);
     }
 
     // -------------------------------------------------------------------------

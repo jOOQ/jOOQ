@@ -38,6 +38,12 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM.FrameExclude;
+import org.jooq.impl.QOM.FrameUnits;
+import org.jooq.impl.QOM.MList;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A window specification.
@@ -63,4 +69,15 @@ import org.jooq.impl.DSL;
  */
 public interface WindowSpecification extends QueryPart {
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Nullable WindowDefinition $windowDefinition();
+    @NotNull MList<? extends Field<?>> $partitionBy();
+    @NotNull MList<? extends SortField<?>> $orderBy();
+    @Nullable FrameUnits $frameUnits();
+    @Nullable Integer $frameStart();
+    @Nullable Integer $frameEnd();
+    @Nullable FrameExclude $exclude();
 }

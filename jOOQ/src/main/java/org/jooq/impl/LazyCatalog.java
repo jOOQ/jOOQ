@@ -48,7 +48,7 @@ import org.jooq.Function1;
 import org.jooq.Internal;
 import org.jooq.Name;
 import org.jooq.Schema;
-import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.QueryPart;
 
 /**
  * A schema that references a lazy initialisable {@link Catalog} singleton, for
@@ -119,20 +119,20 @@ public final class LazyCatalog extends AbstractNamed implements Catalog {
     // -------------------------------------------------------------------------
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
-        return catalog().traverse(init, abort, recurse, accumulate);
+        return catalog().$traverse(init, abort, recurse, accumulate);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
-        return catalog().replace(recurse, replacement);
+        return catalog().$replace(recurse, replacement);
     }
 }

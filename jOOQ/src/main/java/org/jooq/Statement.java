@@ -37,8 +37,6 @@
  */
 package org.jooq;
 
-import org.jooq.impl.QOM.MStatement;
-
 /**
  * A statement that can be placed inside of a {@link Block}, but not executed on
  * its own.
@@ -47,6 +45,6 @@ import org.jooq.impl.QOM.MStatement;
  *
  * @author Lukas Eder
  */
-public interface Statement extends QueryPart, MStatement {
+public interface Statement extends QueryPart {
 
 }

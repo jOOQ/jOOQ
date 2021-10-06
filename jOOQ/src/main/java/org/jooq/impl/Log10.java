@@ -70,7 +70,7 @@ final class Log10
 extends
     AbstractField<BigDecimal>
 implements
-    MLog10
+    QOM.Log10
 {
 
     final Field<? extends Number> value;
@@ -153,18 +153,18 @@ implements
     }
 
     @Override
-    public final MLog10 $value(MField<? extends Number> newValue) {
+    public final QOM.Log10 $value(Field<? extends Number> newValue) {
         return constructor().apply(newValue);
     }
 
-    public final Function1<? super MField<? extends Number>, ? extends MLog10> constructor() {
-        return (a1) -> new Log10((Field<? extends Number>) a1);
+    public final Function1<? super Field<? extends Number>, ? extends QOM.Log10> constructor() {
+        return (a1) -> new Log10(a1);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -176,11 +176,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

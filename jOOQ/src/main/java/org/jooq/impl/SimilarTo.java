@@ -69,7 +69,7 @@ final class SimilarTo
 extends
     AbstractCondition
 implements
-    MSimilarTo,
+    QOM.SimilarTo,
     LikeEscapeStep
 {
 
@@ -157,23 +157,23 @@ implements
     }
 
     @Override
-    public final MSimilarTo $arg1(MField<?> newValue) {
+    public final QOM.SimilarTo $arg1(Field<?> newValue) {
         return constructor().apply(newValue, $arg2(), $arg3());
     }
 
     @Override
-    public final MSimilarTo $arg2(MField<String> newValue) {
+    public final QOM.SimilarTo $arg2(Field<String> newValue) {
         return constructor().apply($arg1(), newValue, $arg3());
     }
 
     @Override
-    public final MSimilarTo $arg3(Character newValue) {
+    public final QOM.SimilarTo $arg3(Character newValue) {
         return constructor().apply($arg1(), $arg2(), newValue);
     }
 
     @Override
-    public final Function3<? super MField<?>, ? super MField<String>, ? super Character, ? extends MSimilarTo> constructor() {
-        return (a1, a2, a3) -> new SimilarTo((Field<?>) a1, (Field<String>) a2, a3);
+    public final Function3<? super Field<?>, ? super Field<String>, ? super Character, ? extends QOM.SimilarTo> constructor() {
+        return (a1, a2, a3) -> new SimilarTo(a1, a2, a3);
     }
 
     // -------------------------------------------------------------------------

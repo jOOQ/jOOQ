@@ -69,7 +69,7 @@ final class Floor<T extends Number>
 extends
     AbstractField<T>
 implements
-    MFloor<T>
+    QOM.Floor<T>
 {
 
     final Field<T> value;
@@ -132,18 +132,18 @@ implements
     }
 
     @Override
-    public final MFloor<T> $value(MField<T> newValue) {
+    public final QOM.Floor<T> $value(Field<T> newValue) {
         return constructor().apply(newValue);
     }
 
-    public final Function1<? super MField<T>, ? extends MFloor<T>> constructor() {
-        return (a1) -> new Floor<>((Field<T>) a1);
+    public final Function1<? super Field<T>, ? extends QOM.Floor<T>> constructor() {
+        return (a1) -> new Floor<>(a1);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -155,11 +155,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

@@ -69,7 +69,7 @@ final class IsDocument
 extends
     AbstractCondition
 implements
-    MIsDocument
+    QOM.IsDocument
 {
 
     final Field<?> field;
@@ -119,13 +119,13 @@ implements
     }
 
     @Override
-    public final MIsDocument $arg1(MField<?> newValue) {
+    public final QOM.IsDocument $arg1(Field<?> newValue) {
         return constructor().apply(newValue);
     }
 
     @Override
-    public final Function1<? super MField<?>, ? extends MIsDocument> constructor() {
-        return (a1) -> new IsDocument((Field<?>) a1);
+    public final Function1<? super Field<?>, ? extends QOM.IsDocument> constructor() {
+        return (a1) -> new IsDocument(a1);
     }
 
     // -------------------------------------------------------------------------

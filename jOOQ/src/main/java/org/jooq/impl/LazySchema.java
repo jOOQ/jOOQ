@@ -56,7 +56,7 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UDT;
 import org.jooq.UniqueKey;
-import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.QueryPart;
 
 /**
  * A schema that references a lazy initialisable {@link Schema} singleton, for
@@ -272,20 +272,20 @@ public final class LazySchema extends AbstractNamed implements Schema {
     // -------------------------------------------------------------------------
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
-        return schema().traverse(init, abort, recurse, accumulate);
+        return schema().$traverse(init, abort, recurse, accumulate);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
-        return schema().replace(recurse, replacement);
+        return schema().$replace(recurse, replacement);
     }
 }

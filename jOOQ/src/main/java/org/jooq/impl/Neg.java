@@ -45,13 +45,11 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Param;
 import org.jooq.conf.TransformUnneededArithmeticExpressions;
-import org.jooq.impl.QOM.MField;
-import org.jooq.impl.QOM.MNeg;
 
 /**
  * @author Lukas Eder
  */
-final class Neg<T> extends AbstractTransformable<T> implements MNeg<T> {
+final class Neg<T> extends AbstractTransformable<T> implements QOM.Neg<T> {
 
     private final Field<T> field;
     private final boolean  internal;
@@ -106,12 +104,12 @@ final class Neg<T> extends AbstractTransformable<T> implements MNeg<T> {
     // -------------------------------------------------------------------------
 
     @Override
-    public final MField<T> $arg1() {
+    public final Field<T> $arg1() {
         return field;
     }
 
     @Override
-    public final Function1<? super MField<T>, ? extends MField<T>> constructor() {
-        return f -> new Neg<>((Field<T>) f, internal);
+    public final Function1<? super Field<T>, ? extends Field<T>> constructor() {
+        return f -> new Neg<>(f, internal);
     }
 }

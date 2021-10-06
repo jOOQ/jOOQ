@@ -69,7 +69,7 @@ final class CurrentUser
 extends
     AbstractField<String>
 implements
-    MCurrentUser
+    QOM.CurrentUser
 {
 
     CurrentUser() {

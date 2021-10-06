@@ -42,8 +42,8 @@ import java.util.function.Function;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.QueryPart;
-import org.jooq.impl.QOM.MCombinedCondition;
-import org.jooq.impl.QOM.MCompareCondition;
+import org.jooq.impl.QOM.CombinedCondition;
+import org.jooq.impl.QOM.CompareCondition;
 
 /**
  * A simple, preliminary pattern matching implementation for {@link Condition}
@@ -71,10 +71,10 @@ final class Transform {
     Condition transform(Condition condition) {
         if (condition instanceof ConditionProviderImpl)
             return transform(((ConditionProviderImpl) condition).getWhere());
-        else if (condition instanceof MCombinedCondition)
-            return transform((Condition) ((MCombinedCondition) condition).$arg1()).and(transform((Condition) ((MCombinedCondition) condition).$arg2()));
-        else if (condition instanceof MCompareCondition)
-            return fieldTransformer.apply((Field) ((MCompareCondition<?>) condition).$arg1()).eq((Field) fieldTransformer.apply((Field) ((MCompareCondition<?>) condition).$arg2()));
+        else if (condition instanceof CombinedCondition)
+            return transform((Condition) ((CombinedCondition) condition).$arg1()).and(transform((Condition) ((CombinedCondition) condition).$arg2()));
+        else if (condition instanceof CompareCondition)
+            return fieldTransformer.apply((Field) ((CompareCondition<?>) condition).$arg1()).eq((Field) fieldTransformer.apply((Field) ((CompareCondition<?>) condition).$arg2()));
         else
             return condition;
     }

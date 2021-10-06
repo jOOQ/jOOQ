@@ -69,7 +69,7 @@ final class SetCatalog
 extends
     AbstractDDLQuery
 implements
-    MSetCatalog
+    QOM.SetCatalog
 {
 
     final Catalog catalog;
@@ -138,18 +138,18 @@ implements
     }
 
     @Override
-    public final MSetCatalog $catalog(MCatalog newValue) {
+    public final QOM.SetCatalog $catalog(Catalog newValue) {
         return constructor().apply(newValue);
     }
 
-    public final Function1<? super MCatalog, ? extends MSetCatalog> constructor() {
-        return (a1) -> new SetCatalog(configuration(), (Catalog) a1);
+    public final Function1<? super Catalog, ? extends QOM.SetCatalog> constructor() {
+        return (a1) -> new SetCatalog(configuration(), a1);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -161,11 +161,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

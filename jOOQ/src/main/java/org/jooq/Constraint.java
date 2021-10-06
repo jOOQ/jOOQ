@@ -38,7 +38,6 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MConstraint;
 
 /**
  * A DDL constraint.
@@ -62,6 +61,6 @@ import org.jooq.impl.QOM.MConstraint;
  *
  * @author Lukas Eder
  */
-public interface Constraint extends FieldOrConstraint, MConstraint {
+public interface Constraint extends FieldOrConstraint {
 
 }

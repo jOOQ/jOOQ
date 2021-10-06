@@ -69,7 +69,7 @@ final class IsNotNull
 extends
     AbstractCondition
 implements
-    MIsNotNull
+    QOM.IsNotNull
 {
 
     final Field<?> field;
@@ -133,13 +133,13 @@ implements
     }
 
     @Override
-    public final MIsNotNull $arg1(MField<?> newValue) {
+    public final QOM.IsNotNull $arg1(Field<?> newValue) {
         return constructor().apply(newValue);
     }
 
     @Override
-    public final Function1<? super MField<?>, ? extends MIsNotNull> constructor() {
-        return (a1) -> new IsNotNull((Field<?>) a1);
+    public final Function1<? super Field<?>, ? extends QOM.IsNotNull> constructor() {
+        return (a1) -> new IsNotNull(a1);
     }
 
     // -------------------------------------------------------------------------

@@ -69,7 +69,7 @@ final class Contains<T>
 extends
     AbstractCondition
 implements
-    MContains<T>
+    QOM.Contains<T>
 {
 
     final Field<T> value;
@@ -144,18 +144,18 @@ implements
     }
 
     @Override
-    public final MContains<T> $arg1(MField<T> newValue) {
+    public final QOM.Contains<T> $arg1(Field<T> newValue) {
         return constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final MContains<T> $arg2(MField<T> newValue) {
+    public final QOM.Contains<T> $arg2(Field<T> newValue) {
         return constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super MField<T>, ? super MField<T>, ? extends MContains<T>> constructor() {
-        return (a1, a2) -> new Contains<>((Field<T>) a1, (Field<T>) a2);
+    public final Function2<? super Field<T>, ? super Field<T>, ? extends QOM.Contains<T>> constructor() {
+        return (a1, a2) -> new Contains<>(a1, a2);
     }
 
     // -------------------------------------------------------------------------

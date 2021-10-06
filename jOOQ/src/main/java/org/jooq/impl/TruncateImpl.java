@@ -69,11 +69,11 @@ final class TruncateImpl<R extends Record>
 extends
     AbstractDDLQuery
 implements
-    MTruncate<R>,
+    QOM.Truncate<R>,
     TruncateIdentityStep<R>,
     TruncateCascadeStep<R>,
     TruncateFinalStep<R>,
-    Truncate<R>
+    org.jooq.Truncate<R>
 {
 
     final Table<R>              table;
@@ -217,28 +217,28 @@ implements
     }
 
     @Override
-    public final MTruncate<R> $table(MTable<R> newValue) {
+    public final QOM.Truncate<R> $table(Table<R> newValue) {
         return constructor().apply(newValue, $restartIdentity(), $cascade());
     }
 
     @Override
-    public final MTruncate<R> $restartIdentity(IdentityRestartOption newValue) {
+    public final QOM.Truncate<R> $restartIdentity(IdentityRestartOption newValue) {
         return constructor().apply($table(), newValue, $cascade());
     }
 
     @Override
-    public final MTruncate<R> $cascade(Cascade newValue) {
+    public final QOM.Truncate<R> $cascade(Cascade newValue) {
         return constructor().apply($table(), $restartIdentity(), newValue);
     }
 
-    public final Function3<? super MTable<R>, ? super IdentityRestartOption, ? super Cascade, ? extends MTruncate<R>> constructor() {
-        return (a1, a2, a3) -> new TruncateImpl(configuration(), (Table<R>) a1, a2, a3);
+    public final Function3<? super Table<R>, ? super IdentityRestartOption, ? super Cascade, ? extends QOM.Truncate<R>> constructor() {
+        return (a1, a2, a3) -> new TruncateImpl(configuration(), a1, a2, a3);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -252,11 +252,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

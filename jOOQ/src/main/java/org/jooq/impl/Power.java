@@ -70,7 +70,7 @@ final class Power
 extends
     AbstractField<BigDecimal>
 implements
-    MPower
+    QOM.Power
 {
 
     final Field<? extends Number> base;
@@ -144,18 +144,18 @@ implements
     }
 
     @Override
-    public final MPower $arg1(MField<? extends Number> newValue) {
+    public final QOM.Power $arg1(Field<? extends Number> newValue) {
         return constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final MPower $arg2(MField<? extends Number> newValue) {
+    public final QOM.Power $arg2(Field<? extends Number> newValue) {
         return constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super MField<? extends Number>, ? super MField<? extends Number>, ? extends MPower> constructor() {
-        return (a1, a2) -> new Power((Field<? extends Number>) a1, (Field<? extends Number>) a2);
+    public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Power> constructor() {
+        return (a1, a2) -> new Power(a1, a2);
     }
 
     // -------------------------------------------------------------------------

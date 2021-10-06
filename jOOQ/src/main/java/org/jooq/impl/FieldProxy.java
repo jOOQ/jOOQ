@@ -48,8 +48,7 @@ import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
-import org.jooq.impl.QOM.MField;
-import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.QueryPart;
 import org.jooq.impl.QOM.UProxy;
 
 /**
@@ -59,7 +58,7 @@ import org.jooq.impl.QOM.UProxy;
  * @author Lukas Eder
  */
 @SuppressWarnings("unchecked")
-final class FieldProxy<T> extends AbstractField<T> implements TableField<Record, T>, UProxy<MField<T>> {
+final class FieldProxy<T> extends AbstractField<T> implements TableField<Record, T>, UProxy<Field<T>> {
 
     /**
      * The resolved field after a successful meta lookup.
@@ -187,7 +186,7 @@ final class FieldProxy<T> extends AbstractField<T> implements TableField<Record,
     // -------------------------------------------------------------------------
 
     @Override
-    public final MField<T> $delegate() {
+    public final Field<T> $delegate() {
         return delegate;
     }
 }

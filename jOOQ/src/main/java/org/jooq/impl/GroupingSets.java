@@ -48,15 +48,13 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
 import org.jooq.Function1;
-import org.jooq.impl.QOM.MFieldOrRow;
-import org.jooq.impl.QOM.MGroupField;
-import org.jooq.impl.QOM.MGroupingSets;
+import org.jooq.GroupField;
 import org.jooq.impl.QOM.MList;
 
 /**
  * @author Lukas Eder
  */
-final class GroupingSets extends AbstractField<Object> implements MGroupingSets {
+final class GroupingSets extends AbstractField<Object> implements QOM.GroupingSets {
 
     private final QueryPartList<QueryPartList<Field<?>>> fieldSets;
 
@@ -90,7 +88,7 @@ final class GroupingSets extends AbstractField<Object> implements MGroupingSets 
     }
 
     @Override
-    public final Function1<? super MList<? extends MList<? extends MFieldOrRow>>, ? extends MGroupField> constructor() {
+    public final Function1<? super MList<? extends MList<? extends FieldOrRow>>, ? extends GroupField> constructor() {
         return l -> new GroupingSets((Collection[]) l.toArray(EMPTY_COLLECTION));
     }
 }

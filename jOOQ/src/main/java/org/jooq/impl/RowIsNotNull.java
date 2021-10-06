@@ -39,22 +39,17 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Tools.allNotNull;
-import static org.jooq.impl.Tools.map;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
-import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Row;
-import org.jooq.impl.QOM.MCondition;
-import org.jooq.impl.QOM.MRow;
-import org.jooq.impl.QOM.MRowIsNotNull;
 
 /**
  * @author Lukas Eder
  */
-final class RowIsNotNull extends AbstractCondition implements MRowIsNotNull {
+final class RowIsNotNull extends AbstractCondition implements QOM.RowIsNotNull {
 
     final Row row;
 
@@ -113,7 +108,7 @@ final class RowIsNotNull extends AbstractCondition implements MRowIsNotNull {
     }
 
     @Override
-    public final Function1<? super MRow, ? extends MCondition> constructor() {
-        return r -> new RowIsNotNull((Row) r);
+    public final Function1<? super Row, ? extends Condition> constructor() {
+        return r -> new RowIsNotNull(r);
     }
 }

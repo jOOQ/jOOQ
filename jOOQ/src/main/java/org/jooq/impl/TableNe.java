@@ -69,7 +69,7 @@ final class TableNe<R extends Record>
 extends
     AbstractCondition
 implements
-    MTableNe<R>
+    QOM.TableNe<R>
 {
 
     final Table<R> arg1;
@@ -134,18 +134,18 @@ implements
     }
 
     @Override
-    public final MTableNe<R> $arg1(MTable<R> newValue) {
+    public final QOM.TableNe<R> $arg1(Table<R> newValue) {
         return constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final MTableNe<R> $arg2(MTable<R> newValue) {
+    public final QOM.TableNe<R> $arg2(Table<R> newValue) {
         return constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super MTable<R>, ? super MTable<R>, ? extends MTableNe<R>> constructor() {
-        return (a1, a2) -> new TableNe<>((Table<R>) a1, (Table<R>) a2);
+    public final Function2<? super Table<R>, ? super Table<R>, ? extends QOM.TableNe<R>> constructor() {
+        return (a1, a2) -> new TableNe<>(a1, a2);
     }
 
     // -------------------------------------------------------------------------

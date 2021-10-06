@@ -47,22 +47,25 @@ import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
 import org.jooq.Context;
+import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.OrderField;
+import org.jooq.QueryPart;
+import org.jooq.SortField;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
 import org.jooq.WindowSpecificationExcludeStep;
 import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.WindowSpecificationRowsStep;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MWindowDefinition;
-import org.jooq.impl.QOM.MWindowSpecification;
+import org.jooq.impl.QOM.FrameExclude;
+import org.jooq.impl.QOM.FrameUnits;
+import org.jooq.impl.QOM.MList;
 
 /**
  * @author Lukas Eder
  */
-final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefinition, MWindowDefinition {
+final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefinition {
 
     private final Name                name;
     private final WindowSpecification window;
@@ -313,24 +316,59 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
     }
 
     @Override
-    public final MWindowSpecification $windowSpecification() {
-        return (MWindowSpecification) window;
+    public final WindowSpecification $windowSpecification() {
+        return window;
     }
 
     @Override
-    public final <R> R traverse(
+    public final WindowDefinition $windowDefinition() {
+        return this;
+    }
+
+    @Override
+    public final MList<? extends Field<?>> $partitionBy() {
+        return $windowSpecification().$partitionBy();
+    }
+
+    @Override
+    public final MList<? extends SortField<?>> $orderBy() {
+        return $windowSpecification().$orderBy();
+    }
+
+    @Override
+    public final FrameUnits $frameUnits() {
+        return $windowSpecification().$frameUnits();
+    }
+
+    @Override
+    public final Integer $frameStart() {
+        return $windowSpecification().$frameStart();
+    }
+
+    @Override
+    public final Integer $frameEnd() {
+        return $windowSpecification().$frameEnd();
+    }
+
+    @Override
+    public final FrameExclude $exclude() {
+        return $windowSpecification().$exclude();
+    }
+
+    @Override
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, $name(), $windowSpecification());
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(this, name, window, WindowDefinitionImpl::new, recurse, replacement);
     }

@@ -46,13 +46,19 @@ import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_NULL;
 
 import org.jooq.Context;
-import org.jooq.impl.QOM.MNull;
 import org.jooq.impl.QOM.UEmpty;
 
 /**
  * @author Lukas Eder
  */
-final class NullStatement extends AbstractStatement implements MNull, UEmpty {
+final class NullStatement
+extends
+    AbstractStatement
+implements
+    QOM.NullStatement,
+    UEmpty
+{
+
     static final NullStatement INSTANCE = new NullStatement();
 
     @Override

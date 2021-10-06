@@ -69,7 +69,7 @@ final class TableEq<R extends Record>
 extends
     AbstractCondition
 implements
-    MTableEq<R>
+    QOM.TableEq<R>
 {
 
     final Table<R> arg1;
@@ -134,18 +134,18 @@ implements
     }
 
     @Override
-    public final MTableEq<R> $arg1(MTable<R> newValue) {
+    public final QOM.TableEq<R> $arg1(Table<R> newValue) {
         return constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final MTableEq<R> $arg2(MTable<R> newValue) {
+    public final QOM.TableEq<R> $arg2(Table<R> newValue) {
         return constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super MTable<R>, ? super MTable<R>, ? extends MTableEq<R>> constructor() {
-        return (a1, a2) -> new TableEq<>((Table<R>) a1, (Table<R>) a2);
+    public final Function2<? super Table<R>, ? super Table<R>, ? extends QOM.TableEq<R>> constructor() {
+        return (a1, a2) -> new TableEq<>(a1, a2);
     }
 
     // -------------------------------------------------------------------------

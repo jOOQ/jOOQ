@@ -92,11 +92,8 @@ import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.impl.QOM.MCreateView;
-import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.CreateView;
 import org.jooq.impl.QOM.MList;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MResultQuery;
 
 /**
  * @author Lukas Eder
@@ -106,7 +103,7 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
     // Cascading interface implementations for CREATE VIEW behaviour
     CreateViewAsStep<R>,
     CreateViewFinalStep,
-    MCreateView
+    CreateView<R>
 
 {
 
@@ -304,8 +301,8 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
     }
 
     @Override
-    public final MResultQuery<?> $query() {
-        return select;
+    public final ResultQuery<R> $query() {
+        return (ResultQuery<R>) select;
     }
 
     final Select<?> $select() {
@@ -313,19 +310,19 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
     }
 
     @Override
-    public final <T> T traverse(
+    public final <T> T $traverse(
         T init,
         Predicate<? super T> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super T, ? super MQueryPart, ? extends T> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super T, ? super QueryPart, ? extends T> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, $view(), $fields(), $query());
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(this, view, fields, select, (v, f, s) -> {
             CreateViewImpl<Record> r = new CreateViewImpl<>(configuration(), v, f, ifNotExists, orReplace);

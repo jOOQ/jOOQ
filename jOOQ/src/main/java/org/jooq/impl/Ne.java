@@ -69,7 +69,7 @@ final class Ne<T>
 extends
     AbstractCondition
 implements
-    MNe<T>
+    QOM.Ne<T>
 {
 
     final Field<T> arg1;
@@ -133,18 +133,18 @@ implements
     }
 
     @Override
-    public final MNe<T> $arg1(MField<T> newValue) {
+    public final QOM.Ne<T> $arg1(Field<T> newValue) {
         return constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final MNe<T> $arg2(MField<T> newValue) {
+    public final QOM.Ne<T> $arg2(Field<T> newValue) {
         return constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super MField<T>, ? super MField<T>, ? extends MNe<T>> constructor() {
-        return (a1, a2) -> new Ne<>((Field<T>) a1, (Field<T>) a2);
+    public final Function2<? super Field<T>, ? super Field<T>, ? extends QOM.Ne<T>> constructor() {
+        return (a1, a2) -> new Ne<>(a1, a2);
     }
 
     // -------------------------------------------------------------------------

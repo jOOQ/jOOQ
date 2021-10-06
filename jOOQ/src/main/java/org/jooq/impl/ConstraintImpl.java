@@ -110,7 +110,7 @@ import org.jooq.Name;
 // ...
 import org.jooq.SQLDialect;
 import org.jooq.Table;
-import org.jooq.impl.QOM.MTableRef;
+import org.jooq.impl.QOM.TableRef;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
 import org.jetbrains.annotations.NotNull;

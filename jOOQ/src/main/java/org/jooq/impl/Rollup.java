@@ -45,15 +45,13 @@ import static org.jooq.impl.Tools.EMPTY_FIELD_OR_ROW;
 import org.jooq.Context;
 import org.jooq.FieldOrRow;
 import org.jooq.Function1;
-import org.jooq.impl.QOM.MFieldOrRow;
-import org.jooq.impl.QOM.MGroupField;
+import org.jooq.GroupField;
 import org.jooq.impl.QOM.MList;
-import org.jooq.impl.QOM.MRollup;
 
 /**
  * @author Lukas Eder
  */
-final class Rollup extends AbstractField<Object> implements MRollup {
+final class Rollup extends AbstractField<Object> implements QOM.Rollup {
 
     private QueryPartList<FieldOrRow> arguments;
 
@@ -91,7 +89,7 @@ final class Rollup extends AbstractField<Object> implements MRollup {
     }
 
     @Override
-    public final Function1<? super MList<? extends MFieldOrRow>, ? extends MGroupField> constructor() {
+    public final Function1<? super MList<? extends FieldOrRow>, ? extends GroupField> constructor() {
         return l -> new Rollup(l.toArray(EMPTY_FIELD_OR_ROW));
     }
 }

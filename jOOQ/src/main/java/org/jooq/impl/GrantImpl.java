@@ -69,7 +69,7 @@ final class GrantImpl
 extends
     AbstractDDLQuery
 implements
-    MGrant,
+    QOM.Grant,
     GrantOnStep,
     GrantToStep,
     GrantWithGrantOptionStep,
@@ -226,38 +226,38 @@ implements
     }
 
     @Override
-    public final MGrant $privileges(MList<? extends Privilege> newValue) {
+    public final QOM.Grant $privileges(MList<? extends Privilege> newValue) {
         return constructor().apply(newValue, $on(), $to(), $toPublic(), $withGrantOption());
     }
 
     @Override
-    public final MGrant $on(MTable<?> newValue) {
+    public final QOM.Grant $on(Table<?> newValue) {
         return constructor().apply($privileges(), newValue, $to(), $toPublic(), $withGrantOption());
     }
 
     @Override
-    public final MGrant $to(MRole newValue) {
+    public final QOM.Grant $to(Role newValue) {
         return constructor().apply($privileges(), $on(), newValue, $toPublic(), $withGrantOption());
     }
 
     @Override
-    public final MGrant $toPublic(boolean newValue) {
+    public final QOM.Grant $toPublic(boolean newValue) {
         return constructor().apply($privileges(), $on(), $to(), newValue, $withGrantOption());
     }
 
     @Override
-    public final MGrant $withGrantOption(boolean newValue) {
+    public final QOM.Grant $withGrantOption(boolean newValue) {
         return constructor().apply($privileges(), $on(), $to(), $toPublic(), newValue);
     }
 
-    public final Function5<? super MList<? extends Privilege>, ? super MTable<?>, ? super MRole, ? super Boolean, ? super Boolean, ? extends MGrant> constructor() {
-        return (a1, a2, a3, a4, a5) -> new GrantImpl(configuration(), (Collection<? extends Privilege>) a1, (Table<?>) a2, (Role) a3, a4, a5);
+    public final Function5<? super MList<? extends Privilege>, ? super Table<?>, ? super Role, ? super Boolean, ? super Boolean, ? extends QOM.Grant> constructor() {
+        return (a1, a2, a3, a4, a5) -> new GrantImpl(configuration(), (Collection<? extends Privilege>) a1, a2, a3, a4, a5);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -273,11 +273,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

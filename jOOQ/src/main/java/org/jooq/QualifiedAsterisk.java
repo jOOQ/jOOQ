@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import org.jooq.impl.QOM.MList;
+
 import org.jetbrains.annotations.NotNull;
 
 
@@ -109,4 +111,10 @@ public interface QualifiedAsterisk extends SelectFieldOrAsterisk {
     @Support
     QualifiedAsterisk except(Field<?>... fields);
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @NotNull Table<?> $table();
+    @NotNull MList<? extends Field<?>> $except();
 }

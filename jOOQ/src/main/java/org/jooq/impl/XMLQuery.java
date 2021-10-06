@@ -44,9 +44,9 @@ import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.Keywords.K_CONTENT;
 import static org.jooq.impl.Keywords.K_RETURNING;
 import static org.jooq.impl.Names.N_XMLQUERY;
-import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.QOM.XmlPassingMechanism.BY_REF;
 import static org.jooq.impl.QOM.XmlPassingMechanism.BY_VALUE;
+import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.XMLTable.acceptPassing;
 import static org.jooq.impl.XMLTable.acceptXPath;
 
@@ -56,16 +56,15 @@ import java.util.function.Predicate;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
+import org.jooq.QueryPart;
 import org.jooq.XML;
 import org.jooq.XMLQueryPassingStep;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MXMLQuery;
 import org.jooq.impl.QOM.XmlPassingMechanism;
 
 /**
  * @author Lukas Eder
  */
-final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep, MXMLQuery {
+final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep, QOM.XMLQuery {
     private final Field<String>       xpath;
     private final Field<XML>          passing;
     private final XmlPassingMechanism passingMechanism;
@@ -173,19 +172,19 @@ final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep, 
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, xpath, passing);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(this, xpath, passing, (x, p) -> new XMLQuery(x, passing, passingMechanism), recurse, replacement);
     }

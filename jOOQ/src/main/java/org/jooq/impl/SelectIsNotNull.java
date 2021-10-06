@@ -41,24 +41,19 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.selectCount;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Tools.allNotNull;
-import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
-import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.impl.QOM.MCondition;
-import org.jooq.impl.QOM.MSelect;
-import org.jooq.impl.QOM.MSelectIsNotNull;
 
 /**
  * @author Lukas Eder
  */
-final class SelectIsNotNull extends AbstractCondition implements MSelectIsNotNull {
+final class SelectIsNotNull extends AbstractCondition implements QOM.SelectIsNotNull {
 
     private final Select<?> select;
 
@@ -126,7 +121,7 @@ final class SelectIsNotNull extends AbstractCondition implements MSelectIsNotNul
     }
 
     @Override
-    public final Function1<? super MSelect<?>, ? extends MCondition> constructor() {
-        return r -> new SelectIsNotNull((Select<?>) r);
+    public final Function1<? super Select<?>, ? extends Condition> constructor() {
+        return r -> new SelectIsNotNull(r);
     }
 }

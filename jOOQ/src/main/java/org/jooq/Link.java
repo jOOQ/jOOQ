@@ -69,3 +69,11 @@ package org.jooq;
 
 
 
+
+
+
+
+
+
+
+

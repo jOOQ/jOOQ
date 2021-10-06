@@ -85,19 +85,14 @@ import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.conf.ParamType;
 import org.jooq.impl.QOM.MList;
-import org.jooq.impl.QOM.MRow;
-import org.jooq.impl.QOM.MSelect;
-import org.jooq.impl.QOM.MTable;
-import org.jooq.impl.QOM.MValues;
 
-import org.jetbrains.annotations.Nullable;
 
 /**
  * An implementation for the <code>VALUES(...)</code> table constructor
  *
  * @author Lukas Eder
  */
-final class Values<R extends Record> extends AbstractTable<R> implements MValues<R> {
+final class Values<R extends Record> extends AbstractTable<R> implements QOM.Values<R> {
 
     static final Set<SQLDialect>         NO_SUPPORT_VALUES      = SQLDialect.supportedUntil(FIREBIRD, MARIADB);
     static final Set<SQLDialect>         REQUIRE_ROWTYPE_CAST   = SQLDialect.supportedBy(FIREBIRD);
@@ -265,7 +260,7 @@ final class Values<R extends Record> extends AbstractTable<R> implements MValues
     // -------------------------------------------------------------------------
 
     @Override
-    public final Function1<? super MList<? extends MRow>, ? extends MTable<R>> constructor() {
+    public final Function1<? super MList<? extends Row>, ? extends Table<R>> constructor() {
         return r -> new Values<>(r.toArray(EMPTY_ROW));
     }
 

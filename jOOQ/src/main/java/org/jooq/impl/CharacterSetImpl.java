@@ -40,11 +40,12 @@ package org.jooq.impl;
 import org.jooq.CharacterSet;
 import org.jooq.Context;
 import org.jooq.Name;
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder
  */
-final class CharacterSetImpl extends AbstractQueryPart implements CharacterSet {
+final class CharacterSetImpl extends AbstractQueryPart implements CharacterSet, UNotYetImplemented {
 
     private final Name name;
 

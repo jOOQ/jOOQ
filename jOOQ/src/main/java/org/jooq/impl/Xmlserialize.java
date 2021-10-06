@@ -69,7 +69,7 @@ final class Xmlserialize<T>
 extends
     AbstractField<T>
 implements
-    MXmlserialize<T>
+    QOM.Xmlserialize<T>
 {
 
     final boolean     content;
@@ -158,28 +158,28 @@ implements
     }
 
     @Override
-    public final MXmlserialize<T> $content(boolean newValue) {
+    public final QOM.Xmlserialize<T> $content(boolean newValue) {
         return constructor().apply(newValue, $value(), $type());
     }
 
     @Override
-    public final MXmlserialize<T> $value(MField<XML> newValue) {
+    public final QOM.Xmlserialize<T> $value(Field<XML> newValue) {
         return constructor().apply($content(), newValue, $type());
     }
 
     @Override
-    public final MXmlserialize<T> $type(MDataType<T> newValue) {
+    public final QOM.Xmlserialize<T> $type(DataType<T> newValue) {
         return constructor().apply($content(), $value(), newValue);
     }
 
-    public final Function3<? super Boolean, ? super MField<XML>, ? super MDataType<T>, ? extends MXmlserialize<T>> constructor() {
-        return (a1, a2, a3) -> new Xmlserialize<>(a1, (Field<XML>) a2, (DataType<T>) a3);
+    public final Function3<? super Boolean, ? super Field<XML>, ? super DataType<T>, ? extends QOM.Xmlserialize<T>> constructor() {
+        return (a1, a2, a3) -> new Xmlserialize<>(a1, a2, a3);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -193,11 +193,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

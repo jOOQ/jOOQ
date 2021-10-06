@@ -37,14 +37,12 @@
  */
 package org.jooq;
 
-import org.jooq.impl.QOM.MQualified;
-
 import org.jetbrains.annotations.Nullable;
 
 /**
  * A {@link QueryPart} that is {@link Named} and located in a {@link Schema}.
  */
-public interface Qualified extends Named, MQualified {
+public interface Qualified extends Named {
 
     /**
      * Get the object's catalog.
@@ -57,5 +55,11 @@ public interface Qualified extends Named, MQualified {
      */
     @Nullable
     Schema getSchema();
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Nullable Schema $schema();
 
 }

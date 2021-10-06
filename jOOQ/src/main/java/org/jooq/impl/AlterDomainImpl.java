@@ -69,7 +69,7 @@ final class AlterDomainImpl<T>
 extends
     AbstractDDLQuery
 implements
-    MAlterDomain<T>,
+    QOM.AlterDomain<T>,
     AlterDomainStep<T>,
     AlterDomainDropConstraintCascadeStep,
     AlterDomainRenameConstraintStep,
@@ -454,83 +454,83 @@ implements
     }
 
     @Override
-    public final MAlterDomain<T> $domain(MDomain<T> newValue) {
+    public final QOM.AlterDomain<T> $domain(Domain<T> newValue) {
         return constructor().apply(newValue, $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
     }
 
     @Override
-    public final MAlterDomain<T> $ifExists(boolean newValue) {
+    public final QOM.AlterDomain<T> $ifExists(boolean newValue) {
         return constructor().apply($domain(), newValue, $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
     }
 
     @Override
-    public final MAlterDomain<T> $addConstraint(MConstraint newValue) {
+    public final QOM.AlterDomain<T> $addConstraint(Constraint newValue) {
         return constructor().apply($domain(), $ifExists(), newValue, $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
     }
 
     @Override
-    public final MAlterDomain<T> $dropConstraint(MConstraint newValue) {
+    public final QOM.AlterDomain<T> $dropConstraint(Constraint newValue) {
         return constructor().apply($domain(), $ifExists(), $addConstraint(), newValue, $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
     }
 
     @Override
-    public final MAlterDomain<T> $dropConstraintIfExists(boolean newValue) {
+    public final QOM.AlterDomain<T> $dropConstraintIfExists(boolean newValue) {
         return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), newValue, $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
     }
 
     @Override
-    public final MAlterDomain<T> $renameTo(MDomain<?> newValue) {
+    public final QOM.AlterDomain<T> $renameTo(Domain<?> newValue) {
         return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), newValue, $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
     }
 
     @Override
-    public final MAlterDomain<T> $renameConstraint(MConstraint newValue) {
+    public final QOM.AlterDomain<T> $renameConstraint(Constraint newValue) {
         return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), newValue, $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
     }
 
     @Override
-    public final MAlterDomain<T> $renameConstraintIfExists(boolean newValue) {
+    public final QOM.AlterDomain<T> $renameConstraintIfExists(boolean newValue) {
         return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), newValue, $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
     }
 
     @Override
-    public final MAlterDomain<T> $setDefault(MField<T> newValue) {
+    public final QOM.AlterDomain<T> $setDefault(Field<T> newValue) {
         return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), newValue, $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
     }
 
     @Override
-    public final MAlterDomain<T> $dropDefault(boolean newValue) {
+    public final QOM.AlterDomain<T> $dropDefault(boolean newValue) {
         return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), newValue, $setNotNull(), $dropNotNull(), $cascade(), $renameConstraintTo());
     }
 
     @Override
-    public final MAlterDomain<T> $setNotNull(boolean newValue) {
+    public final QOM.AlterDomain<T> $setNotNull(boolean newValue) {
         return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), newValue, $dropNotNull(), $cascade(), $renameConstraintTo());
     }
 
     @Override
-    public final MAlterDomain<T> $dropNotNull(boolean newValue) {
+    public final QOM.AlterDomain<T> $dropNotNull(boolean newValue) {
         return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), newValue, $cascade(), $renameConstraintTo());
     }
 
     @Override
-    public final MAlterDomain<T> $cascade(Cascade newValue) {
+    public final QOM.AlterDomain<T> $cascade(Cascade newValue) {
         return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), newValue, $renameConstraintTo());
     }
 
     @Override
-    public final MAlterDomain<T> $renameConstraintTo(MConstraint newValue) {
+    public final QOM.AlterDomain<T> $renameConstraintTo(Constraint newValue) {
         return constructor().apply($domain(), $ifExists(), $addConstraint(), $dropConstraint(), $dropConstraintIfExists(), $renameTo(), $renameConstraint(), $renameConstraintIfExists(), $setDefault(), $dropDefault(), $setNotNull(), $dropNotNull(), $cascade(), newValue);
     }
 
-    public final Function14<? super MDomain<T>, ? super Boolean, ? super MConstraint, ? super MConstraint, ? super Boolean, ? super MDomain<?>, ? super MConstraint, ? super Boolean, ? super MField<T>, ? super Boolean, ? super Boolean, ? super Boolean, ? super Cascade, ? super MConstraint, ? extends MAlterDomain<T>> constructor() {
-        return (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) -> new AlterDomainImpl(configuration(), (Domain<T>) a1, a2, (Constraint) a3, (Constraint) a4, a5, (Domain<?>) a6, (Constraint) a7, a8, (Field<T>) a9, a10, a11, a12, a13, (Constraint) a14);
+    public final Function14<? super Domain<T>, ? super Boolean, ? super Constraint, ? super Constraint, ? super Boolean, ? super Domain<?>, ? super Constraint, ? super Boolean, ? super Field<T>, ? super Boolean, ? super Boolean, ? super Boolean, ? super Cascade, ? super Constraint, ? extends QOM.AlterDomain<T>> constructor() {
+        return (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) -> new AlterDomainImpl(configuration(), a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -555,11 +555,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

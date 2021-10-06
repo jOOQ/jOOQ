@@ -69,7 +69,7 @@ final class IsNotJson
 extends
     AbstractCondition
 implements
-    MIsNotJson
+    QOM.IsNotJson
 {
 
     final Field<?> field;
@@ -131,13 +131,13 @@ implements
     }
 
     @Override
-    public final MIsNotJson $arg1(MField<?> newValue) {
+    public final QOM.IsNotJson $arg1(Field<?> newValue) {
         return constructor().apply(newValue);
     }
 
     @Override
-    public final Function1<? super MField<?>, ? extends MIsNotJson> constructor() {
-        return (a1) -> new IsNotJson((Field<?>) a1);
+    public final Function1<? super Field<?>, ? extends QOM.IsNotJson> constructor() {
+        return (a1) -> new IsNotJson(a1);
     }
 
     // -------------------------------------------------------------------------

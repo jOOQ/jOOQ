@@ -65,10 +65,8 @@ import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.Row2;
 import org.jooq.SelectField;
-import org.jooq.impl.QOM.MDataType;
-import org.jooq.impl.QOM.MField;
 import org.jooq.impl.QOM.MList;
-import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.QueryPart;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -430,19 +428,19 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, $fields());
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(this, fields(), Tools::row0, recurse, replacement);
     }

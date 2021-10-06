@@ -70,7 +70,7 @@ final class Euler
 extends
     AbstractField<BigDecimal>
 implements
-    MEuler
+    QOM.Euler
 {
 
     Euler() {

@@ -69,7 +69,7 @@ final class AlterTypeImpl
 extends
     AbstractDDLQuery
 implements
-    MAlterType,
+    QOM.AlterType,
     AlterTypeStep,
     AlterTypeRenameValueToStep,
     AlterTypeFinalStep
@@ -238,43 +238,43 @@ implements
     }
 
     @Override
-    public final MAlterType $type(MName newValue) {
+    public final QOM.AlterType $type(Name newValue) {
         return constructor().apply(newValue, $renameTo(), $setSchema(), $addValue(), $renameValue(), $renameValueTo());
     }
 
     @Override
-    public final MAlterType $renameTo(MName newValue) {
+    public final QOM.AlterType $renameTo(Name newValue) {
         return constructor().apply($type(), newValue, $setSchema(), $addValue(), $renameValue(), $renameValueTo());
     }
 
     @Override
-    public final MAlterType $setSchema(MSchema newValue) {
+    public final QOM.AlterType $setSchema(Schema newValue) {
         return constructor().apply($type(), $renameTo(), newValue, $addValue(), $renameValue(), $renameValueTo());
     }
 
     @Override
-    public final MAlterType $addValue(MField<String> newValue) {
+    public final QOM.AlterType $addValue(Field<String> newValue) {
         return constructor().apply($type(), $renameTo(), $setSchema(), newValue, $renameValue(), $renameValueTo());
     }
 
     @Override
-    public final MAlterType $renameValue(MField<String> newValue) {
+    public final QOM.AlterType $renameValue(Field<String> newValue) {
         return constructor().apply($type(), $renameTo(), $setSchema(), $addValue(), newValue, $renameValueTo());
     }
 
     @Override
-    public final MAlterType $renameValueTo(MField<String> newValue) {
+    public final QOM.AlterType $renameValueTo(Field<String> newValue) {
         return constructor().apply($type(), $renameTo(), $setSchema(), $addValue(), $renameValue(), newValue);
     }
 
-    public final Function6<? super MName, ? super MName, ? super MSchema, ? super MField<String>, ? super MField<String>, ? super MField<String>, ? extends MAlterType> constructor() {
-        return (a1, a2, a3, a4, a5, a6) -> new AlterTypeImpl(configuration(), (Name) a1, (Name) a2, (Schema) a3, (Field<String>) a4, (Field<String>) a5, (Field<String>) a6);
+    public final Function6<? super Name, ? super Name, ? super Schema, ? super Field<String>, ? super Field<String>, ? super Field<String>, ? extends QOM.AlterType> constructor() {
+        return (a1, a2, a3, a4, a5, a6) -> new AlterTypeImpl(configuration(), a1, a2, a3, a4, a5, a6);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -291,11 +291,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

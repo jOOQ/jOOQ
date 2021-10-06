@@ -78,7 +78,6 @@ import org.jooq.Converters.UnknownType;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
-import org.jooq.impl.QOM.MDataType;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
@@ -100,7 +99,7 @@ import org.jetbrains.annotations.Nullable;
  * @param <T> The Java type associated with this SQL data type
  * @author Lukas Eder
  */
-public interface DataType<T> extends Named, MDataType<T> {
+public interface DataType<T> extends Named {
 
     /**
      * Get the standard SQL data type of this (dialect-specific) data type if

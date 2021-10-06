@@ -68,6 +68,7 @@ import static org.jooq.impl.Tools.castIfNeeded;
 import java.util.Set;
 
 import org.jooq.Clause;
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -75,14 +76,11 @@ import org.jooq.Function2;
 import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.SQLDialect;
-import org.jooq.impl.QOM.MCondition;
-import org.jooq.impl.QOM.MRowOverlaps;
-import org.jooq.impl.QOM.MRow;
 
 /**
  * @author Lukas Eder
  */
-final class RowOverlaps<T1, T2> extends AbstractCondition implements MRowOverlaps {
+final class RowOverlaps<T1, T2> extends AbstractCondition implements QOM.RowOverlaps {
 
     private static final Set<SQLDialect> EMULATE_NON_STANDARD_OVERLAPS = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> EMULATE_INTERVAL_OVERLAPS     = SQLDialect.supportedBy(HSQLDB);
@@ -162,7 +160,7 @@ final class RowOverlaps<T1, T2> extends AbstractCondition implements MRowOverlap
 
     @SuppressWarnings("unchecked")
     @Override
-    public final Function2<? super MRow, ? super MRow, ? extends MCondition> constructor() {
+    public final Function2<? super Row, ? super Row, ? extends Condition> constructor() {
         return (r1, r2) -> new RowOverlaps<>((Row2<T1, T2>) r1, (Row2<T1, T2>) r2);
     }
 }

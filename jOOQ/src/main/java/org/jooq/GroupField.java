@@ -38,7 +38,6 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MGroupField;
 
 /**
  * An expression to be used exclusively in <code>GROUP BY</code> clauses.
@@ -65,6 +64,6 @@ import org.jooq.impl.QOM.MGroupField;
  *
  * @author Lukas Eder
  */
-public interface GroupField extends QueryPart, MGroupField {
+public interface GroupField extends QueryPart {
 
 }

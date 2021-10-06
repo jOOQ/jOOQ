@@ -69,7 +69,7 @@ final class BitAndAgg<T extends Number>
 extends
     AbstractAggregateFunction<T>
 implements
-    MBitAndAgg<T>
+    QOM.BitAndAgg<T>
 {
 
     BitAndAgg(
@@ -293,18 +293,18 @@ implements
     }
 
     @Override
-    public final MBitAndAgg<T> $value(MField<T> newValue) {
+    public final QOM.BitAndAgg<T> $value(Field<T> newValue) {
         return constructor().apply(newValue);
     }
 
-    public final Function1<? super MField<T>, ? extends MBitAndAgg<T>> constructor() {
-        return (a1) -> new BitAndAgg<>((Field<T>) a1);
+    public final Function1<? super Field<T>, ? extends QOM.BitAndAgg<T>> constructor() {
+        return (a1) -> new BitAndAgg<>(a1);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -316,13 +316,13 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
-        return super.traverse(
+        return super.$traverse(
             QOM.traverse(
                 init, abort, recurse, accumulate, this,
                 $value()

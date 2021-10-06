@@ -70,7 +70,7 @@ final class Uuid
 extends
     AbstractField<UUID>
 implements
-    MUuid
+    QOM.Uuid
 {
 
     Uuid() {

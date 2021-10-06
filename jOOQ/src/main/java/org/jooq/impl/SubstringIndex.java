@@ -69,7 +69,7 @@ final class SubstringIndex
 extends
     AbstractField<String>
 implements
-    MSubstringIndex
+    QOM.SubstringIndex
 {
 
     final Field<String>           string;
@@ -159,28 +159,28 @@ implements
     }
 
     @Override
-    public final MSubstringIndex $string(MField<String> newValue) {
+    public final QOM.SubstringIndex $string(Field<String> newValue) {
         return constructor().apply(newValue, $delimiter(), $n());
     }
 
     @Override
-    public final MSubstringIndex $delimiter(MField<String> newValue) {
+    public final QOM.SubstringIndex $delimiter(Field<String> newValue) {
         return constructor().apply($string(), newValue, $n());
     }
 
     @Override
-    public final MSubstringIndex $n(MField<? extends Number> newValue) {
+    public final QOM.SubstringIndex $n(Field<? extends Number> newValue) {
         return constructor().apply($string(), $delimiter(), newValue);
     }
 
-    public final Function3<? super MField<String>, ? super MField<String>, ? super MField<? extends Number>, ? extends MSubstringIndex> constructor() {
-        return (a1, a2, a3) -> new SubstringIndex((Field<String>) a1, (Field<String>) a2, (Field<? extends Number>) a3);
+    public final Function3<? super Field<String>, ? super Field<String>, ? super Field<? extends Number>, ? extends QOM.SubstringIndex> constructor() {
+        return (a1, a2, a3) -> new SubstringIndex(a1, a2, a3);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -194,11 +194,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

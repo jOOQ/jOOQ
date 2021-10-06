@@ -50,14 +50,11 @@ import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
-import org.jooq.impl.QOM.MDerivedTable;
-import org.jooq.impl.QOM.MSelect;
-import org.jooq.impl.QOM.MTable;
 
 /**
  * @author Lukas Eder
  */
-class DerivedTable<R extends Record> extends AbstractTable<R> implements MDerivedTable<R> {
+class DerivedTable<R extends Record> extends AbstractTable<R> implements QOM.DerivedTable<R> {
 
     private final Select<R> query;
 
@@ -110,8 +107,8 @@ class DerivedTable<R extends Record> extends AbstractTable<R> implements MDerive
     // -------------------------------------------------------------------------
 
     @Override
-    public final Function1<? super MSelect<R>, ? extends MTable<R>> constructor() {
-        return t -> new DerivedTable<>((Select<R>) t);
+    public final Function1<? super Select<R>, ? extends Table<R>> constructor() {
+        return t -> new DerivedTable<>(t);
     }
 
     @Override

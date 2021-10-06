@@ -51,14 +51,12 @@ import java.util.List;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function2;
-import org.jooq.impl.QOM.MField;
-import org.jooq.impl.QOM.MFieldFunction;
 import org.jooq.impl.QOM.MList;
 
 /**
  * @author Lukas Eder
  */
-final class FieldFunction<T> extends AbstractField<Integer> implements MFieldFunction<T> {
+final class FieldFunction<T> extends AbstractField<Integer> implements QOM.FieldFunction<T> {
 
     private final Field<T>                    field;
     private final QueryPartListView<Field<T>> arguments;
@@ -131,7 +129,7 @@ final class FieldFunction<T> extends AbstractField<Integer> implements MFieldFun
     }
 
     @Override
-    public final Function2<? super MField<T>, ? super MList<? extends MField<T>>, ? extends MField<Integer>> constructor() {
-        return (f, a) -> new FieldFunction<T>((Field<T>) f, (Field<T>[]) a.toArray(EMPTY_FIELD));
+    public final Function2<? super Field<T>, ? super MList<? extends Field<T>>, ? extends Field<Integer>> constructor() {
+        return (f, a) -> new FieldFunction<T>(f, (Field<T>[]) a.toArray(EMPTY_FIELD));
     }
 }

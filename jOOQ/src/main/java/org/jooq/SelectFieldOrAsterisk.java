@@ -37,7 +37,6 @@
  */
 package org.jooq;
 
-import org.jooq.impl.QOM.MSelectFieldOrAsterisk;
 
 /**
  * A <code>QueryPart</code> to be used exclusively in <code>SELECT</code>
@@ -47,6 +46,6 @@ import org.jooq.impl.QOM.MSelectFieldOrAsterisk;
  *
  * @author Lukas Eder
  */
-public interface SelectFieldOrAsterisk extends QueryPart, MSelectFieldOrAsterisk {
+public interface SelectFieldOrAsterisk extends QueryPart {
 
 }

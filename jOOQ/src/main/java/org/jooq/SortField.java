@@ -37,7 +37,7 @@
  */
 package org.jooq;
 
-import org.jooq.impl.QOM.MSortField;
+import org.jooq.impl.QOM.NullOrdering;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -70,7 +70,7 @@ import org.jetbrains.annotations.NotNull;
  * @see Field#asc()
  * @see Field#desc()
  */
-public interface SortField<T> extends OrderField<T>, MSortField<T> {
+public interface SortField<T> extends OrderField<T> {
 
     /**
      * The name of this sort field
@@ -98,4 +98,11 @@ public interface SortField<T> extends OrderField<T>, MSortField<T> {
     @Support
     SortField<T> nullsLast();
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @NotNull Field<T> $field();
+    @NotNull SortOrder $sortOrder();
+    @NotNull NullOrdering $nullOrdering();
 }

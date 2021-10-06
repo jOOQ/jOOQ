@@ -38,7 +38,6 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MRole;
 
 /**
  * A privilege for use in <code>GRANT</code> and <code>REVOKE</code> statements.
@@ -59,4 +58,4 @@ import org.jooq.impl.QOM.MRole;
  *
  * @author Timur Shaidullin
  */
-public interface Role extends Named, MRole {}
+public interface Role extends Named {}

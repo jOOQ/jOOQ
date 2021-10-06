@@ -49,15 +49,12 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function2;
 import org.jooq.RowN;
-import org.jooq.impl.QOM.MCondition;
-import org.jooq.impl.QOM.MField;
 import org.jooq.impl.QOM.MList;
-import org.jooq.impl.QOM.MNotInList;
 
 /**
  * @author Lukas Eder
  */
-final class NotInList<T> extends AbstractInList<T> implements MNotInList<T> {
+final class NotInList<T> extends AbstractInList<T> implements QOM.NotInList<T> {
 
     static final Clause[] CLAUSES = { CONDITION, CONDITION_NOT_IN };
 
@@ -81,7 +78,7 @@ final class NotInList<T> extends AbstractInList<T> implements MNotInList<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public final Function2<? super MField<T>, ? super MList<? extends MField<T>>, ? extends MCondition> constructor() {
-        return (a1, a2) -> new NotInList<T>((Field<T>) a1, (List<? extends Field<?>>) a2);
+    public final Function2<? super Field<T>, ? super MList<? extends Field<T>>, ? extends Condition> constructor() {
+        return (a1, a2) -> new NotInList<T>(a1, a2);
     }
 }

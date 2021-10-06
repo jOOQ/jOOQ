@@ -37,7 +37,8 @@
  */
 package org.jooq;
 
-import org.jooq.impl.QOM.MWindowDefinition;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A window definition.
@@ -69,6 +70,12 @@ import org.jooq.impl.QOM.MWindowDefinition;
  *
  * @author Lukas Eder
  */
-public interface WindowDefinition extends WindowSpecificationOrderByStep, MWindowDefinition {
+public interface WindowDefinition extends WindowSpecificationOrderByStep {
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @NotNull Name $name();
+    @Nullable WindowSpecification $windowSpecification();
 }

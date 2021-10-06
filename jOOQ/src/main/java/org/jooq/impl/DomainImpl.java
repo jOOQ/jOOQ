@@ -55,9 +55,7 @@ import org.jooq.Function1;
 import org.jooq.Function2;
 import org.jooq.Name;
 import org.jooq.Schema;
-import org.jooq.impl.QOM.MDataType;
-import org.jooq.impl.QOM.MField;
-import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.QueryPart;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
 import org.jetbrains.annotations.NotNull;

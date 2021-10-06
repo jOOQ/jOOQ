@@ -69,7 +69,7 @@ final class Digits
 extends
     AbstractField<String>
 implements
-    MDigits
+    QOM.Digits
 {
 
     final Field<? extends Number> value;
@@ -142,18 +142,18 @@ implements
     }
 
     @Override
-    public final MDigits $value(MField<? extends Number> newValue) {
+    public final QOM.Digits $value(Field<? extends Number> newValue) {
         return constructor().apply(newValue);
     }
 
-    public final Function1<? super MField<? extends Number>, ? extends MDigits> constructor() {
-        return (a1) -> new Digits((Field<? extends Number>) a1);
+    public final Function1<? super Field<? extends Number>, ? extends QOM.Digits> constructor() {
+        return (a1) -> new Digits(a1);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -165,11 +165,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

@@ -53,6 +53,7 @@ import java.util.function.Predicate;
 import org.jooq.CommonTableExpression;
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.DerivedColumnList;
 import org.jooq.Field;
 import org.jooq.Function1;
 // ...
@@ -62,9 +63,6 @@ import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.TableOptions;
-import org.jooq.impl.QOM.MDerivedColumnList;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MResultQuery;
 import org.jooq.impl.QOM.Materialized;
 import org.jooq.impl.Tools.DataKey;
 
@@ -179,12 +177,12 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
     // -------------------------------------------------------------------------
 
     @Override
-    public final MDerivedColumnList $derivedColumnList() {
+    public final DerivedColumnList $derivedColumnList() {
         return name;
     }
 
     @Override
-    public final MResultQuery<R> $query() {
+    public final ResultQuery<R> $query() {
         return query;
     }
 
@@ -194,19 +192,19 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
     }
 
     @Override
-    public final <T> T traverse(
+    public final <T> T $traverse(
         T init,
         Predicate<? super T> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super T, ? super MQueryPart, ? extends T> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super T, ? super QueryPart, ? extends T> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, name, query);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(this, name, query, materialized, CommonTableExpressionImpl::new, recurse, replacement);
     }

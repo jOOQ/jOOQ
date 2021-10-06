@@ -52,7 +52,6 @@ import java.util.List;
 import java.util.concurrent.Flow;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 import org.jooq.BetweenAndStep;
 import org.jooq.BetweenAndStepR;
@@ -63,7 +62,6 @@ import org.jooq.Cursor;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Function1;
 import org.jooq.GroupField;
 import org.jooq.JoinType;
 import org.jooq.Name;
@@ -128,25 +126,14 @@ import org.jooq.SelectSeekStep8;
 import org.jooq.SelectSeekStep9;
 import org.jooq.SelectSeekStepN;
 import org.jooq.SelectSelectStep;
+import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 // ...
 import org.jooq.WindowDefinition;
-import org.jooq.impl.QOM.MCondition;
-import org.jooq.impl.QOM.MGroupField;
 import org.jooq.impl.QOM.MList;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MSelect;
-import org.jooq.impl.QOM.MSelectFieldOrAsterisk;
-import org.jooq.impl.QOM.MSortField;
-import org.jooq.impl.QOM.MTable;
-import org.jooq.impl.QOM.MWindowDefinition;
-import org.jooq.impl.QOM.MWith;
-import org.jooq.impl.QOM.UProxy;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jooq.impl.QOM.With;
 
 /**
  * A wrapper for a {@link SelectQuery}
@@ -3369,17 +3356,17 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final MWith $with() {
+    public final With $with() {
         return getDelegate().$with();
     }
 
     @Override
-    public final MList<? extends MSelectFieldOrAsterisk> $select() {
+    public final MList<? extends SelectFieldOrAsterisk> $select() {
         return getDelegate().$select();
     }
 
     @Override
-    public final MSelect<?> $select(MList<? extends MSelectFieldOrAsterisk> select) {
+    public final Select<?> $select(MList<? extends SelectFieldOrAsterisk> select) {
         return getDelegate().$select(select);
     }
 
@@ -3389,42 +3376,42 @@ implements
     }
 
     @Override
-    public final MList<? extends MTable<?>> $from() {
+    public final MList<? extends Table<?>> $from() {
         return getDelegate().$from();
     }
 
     @Override
-    public final MSelect<?> $from(MList<? extends MTable<?>> from) {
+    public final Select<?> $from(MList<? extends Table<?>> from) {
         return getDelegate().$from(from);
     }
 
     @Override
-    public final MCondition $where() {
+    public final Condition $where() {
         return getDelegate().$where();
     }
 
     @Override
-    public final MList<? extends MGroupField> $groupBy() {
+    public final MList<? extends GroupField> $groupBy() {
         return getDelegate().$groupBy();
     }
 
     @Override
-    public final MCondition $having() {
+    public final Condition $having() {
         return getDelegate().$having();
     }
 
     @Override
-    public final MList<? extends MWindowDefinition> $window() {
+    public final MList<? extends WindowDefinition> $window() {
         return getDelegate().$window();
     }
 
     @Override
-    public final MCondition $qualify() {
+    public final Condition $qualify() {
         return getDelegate().$qualify();
     }
 
     @Override
-    public MList<? extends MSortField<?>> $orderBy() {
+    public MList<? extends SortField<?>> $orderBy() {
         return getDelegate().$orderBy();
     }
 }

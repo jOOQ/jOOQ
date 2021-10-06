@@ -41,11 +41,12 @@ import static org.jooq.impl.DSL.inline;
 
 import org.jooq.Comment;
 import org.jooq.Context;
+import org.jooq.impl.QOM.UEmpty;
 
 /**
  * @author Lukas Eder
  */
-final class CommentImpl extends AbstractQueryPart implements Comment {
+final class CommentImpl extends AbstractQueryPart implements Comment, UEmpty {
 
     static final CommentImpl NO_COMMENT = new CommentImpl("");
     private final String     comment;

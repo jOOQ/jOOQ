@@ -69,7 +69,7 @@ final class AlterSequenceImpl<T extends Number>
 extends
     AbstractDDLQuery
 implements
-    MAlterSequence<T>,
+    QOM.AlterSequence<T>,
     AlterSequenceStep<T>,
     AlterSequenceFlagsStep<T>,
     AlterSequenceFinalStep
@@ -538,83 +538,83 @@ implements
     }
 
     @Override
-    public final MAlterSequence<T> $sequence(MSequence<T> newValue) {
+    public final QOM.AlterSequence<T> $sequence(Sequence<T> newValue) {
         return constructor().apply(newValue, $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final MAlterSequence<T> $ifExists(boolean newValue) {
+    public final QOM.AlterSequence<T> $ifExists(boolean newValue) {
         return constructor().apply($sequence(), newValue, $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final MAlterSequence<T> $renameTo(MSequence<?> newValue) {
+    public final QOM.AlterSequence<T> $renameTo(Sequence<?> newValue) {
         return constructor().apply($sequence(), $ifExists(), newValue, $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final MAlterSequence<T> $restart(boolean newValue) {
+    public final QOM.AlterSequence<T> $restart(boolean newValue) {
         return constructor().apply($sequence(), $ifExists(), $renameTo(), newValue, $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final MAlterSequence<T> $restartWith(MField<T> newValue) {
+    public final QOM.AlterSequence<T> $restartWith(Field<T> newValue) {
         return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), newValue, $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final MAlterSequence<T> $startWith(MField<T> newValue) {
+    public final QOM.AlterSequence<T> $startWith(Field<T> newValue) {
         return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), newValue, $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final MAlterSequence<T> $incrementBy(MField<T> newValue) {
+    public final QOM.AlterSequence<T> $incrementBy(Field<T> newValue) {
         return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), newValue, $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final MAlterSequence<T> $minvalue(MField<T> newValue) {
+    public final QOM.AlterSequence<T> $minvalue(Field<T> newValue) {
         return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), newValue, $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final MAlterSequence<T> $noMinvalue(boolean newValue) {
+    public final QOM.AlterSequence<T> $noMinvalue(boolean newValue) {
         return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), newValue, $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final MAlterSequence<T> $maxvalue(MField<T> newValue) {
+    public final QOM.AlterSequence<T> $maxvalue(Field<T> newValue) {
         return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), newValue, $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final MAlterSequence<T> $noMaxvalue(boolean newValue) {
+    public final QOM.AlterSequence<T> $noMaxvalue(boolean newValue) {
         return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), newValue, $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final MAlterSequence<T> $cycle(CycleOption newValue) {
+    public final QOM.AlterSequence<T> $cycle(CycleOption newValue) {
         return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), newValue, $cache(), $noCache());
     }
 
     @Override
-    public final MAlterSequence<T> $cache(MField<T> newValue) {
+    public final QOM.AlterSequence<T> $cache(Field<T> newValue) {
         return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), newValue, $noCache());
     }
 
     @Override
-    public final MAlterSequence<T> $noCache(boolean newValue) {
+    public final QOM.AlterSequence<T> $noCache(boolean newValue) {
         return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), newValue);
     }
 
-    public final Function14<? super MSequence<T>, ? super Boolean, ? super MSequence<?>, ? super Boolean, ? super MField<T>, ? super MField<T>, ? super MField<T>, ? super MField<T>, ? super Boolean, ? super MField<T>, ? super Boolean, ? super CycleOption, ? super MField<T>, ? super Boolean, ? extends MAlterSequence<T>> constructor() {
-        return (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) -> new AlterSequenceImpl(configuration(), (Sequence<T>) a1, a2, (Sequence<?>) a3, a4, (Field<T>) a5, (Field<T>) a6, (Field<T>) a7, (Field<T>) a8, a9, (Field<T>) a10, a11, a12, (Field<T>) a13, a14);
+    public final Function14<? super Sequence<T>, ? super Boolean, ? super Sequence<?>, ? super Boolean, ? super Field<T>, ? super Field<T>, ? super Field<T>, ? super Field<T>, ? super Boolean, ? super Field<T>, ? super Boolean, ? super CycleOption, ? super Field<T>, ? super Boolean, ? extends QOM.AlterSequence<T>> constructor() {
+        return (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) -> new AlterSequenceImpl(configuration(), a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -639,11 +639,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

@@ -89,15 +89,13 @@ import org.jooq.Function1;
 import org.jooq.Function3;
 import org.jooq.RowN;
 import org.jooq.SQLDialect;
-import org.jooq.impl.QOM.MBetween;
-import org.jooq.impl.QOM.MCondition;
-import org.jooq.impl.QOM.MField;
-import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.impl.QOM.Between;
+import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-final class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>, MBetween<T> {
+final class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>, Between<T> {
 
     private static final Clause[]        CLAUSES_BETWEEN               = { CONDITION, CONDITION_BETWEEN };
     private static final Clause[]        CLAUSES_BETWEEN_SYMMETRIC     = { CONDITION, CONDITION_BETWEEN_SYMMETRIC };
@@ -190,9 +188,9 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
     // -------------------------------------------------------------------------
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -212,22 +210,22 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
     }
 
     @Override
-    public final Function3<? super MField<T>, ? super MField<T>, ? super MField<T>, ? extends MCondition> constructor() {
-        return (f, min, max) -> new BetweenCondition<>((Field<T>) f, (Field<T>) min, not, symmetric).and((Field<T>) max);
+    public final Function3<? super Field<T>, ? super Field<T>, ? super Field<T>, ? extends Condition> constructor() {
+        return (f, min, max) -> new BetweenCondition<>(f, min, not, symmetric).and(max);
     }
 
     @Override
-    public final MField<T> $arg1() {
+    public final Field<T> $arg1() {
         return field;
     }
 
     @Override
-    public final MField<T> $arg2() {
+    public final Field<T> $arg2() {
         return minValue;
     }
 
     @Override
-    public final MField<T> $arg3() {
+    public final Field<T> $arg3() {
         return maxValue;
     }
 

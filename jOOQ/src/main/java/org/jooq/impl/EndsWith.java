@@ -69,7 +69,7 @@ final class EndsWith<T>
 extends
     AbstractCondition
 implements
-    MEndsWith<T>
+    QOM.EndsWith<T>
 {
 
     final Field<T> string;
@@ -127,18 +127,18 @@ implements
     }
 
     @Override
-    public final MEndsWith<T> $arg1(MField<T> newValue) {
+    public final QOM.EndsWith<T> $arg1(Field<T> newValue) {
         return constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final MEndsWith<T> $arg2(MField<T> newValue) {
+    public final QOM.EndsWith<T> $arg2(Field<T> newValue) {
         return constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super MField<T>, ? super MField<T>, ? extends MEndsWith<T>> constructor() {
-        return (a1, a2) -> new EndsWith<>((Field<T>) a1, (Field<T>) a2);
+    public final Function2<? super Field<T>, ? super Field<T>, ? extends QOM.EndsWith<T>> constructor() {
+        return (a1, a2) -> new EndsWith<>(a1, a2);
     }
 
     // -------------------------------------------------------------------------

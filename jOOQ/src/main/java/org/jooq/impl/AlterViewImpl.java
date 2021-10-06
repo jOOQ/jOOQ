@@ -69,7 +69,7 @@ final class AlterViewImpl
 extends
     AbstractDDLQuery
 implements
-    MAlterView,
+    QOM.AlterView,
     AlterViewStep,
     AlterViewFinalStep
 {
@@ -291,33 +291,33 @@ implements
     }
 
     @Override
-    public final MAlterView $view(MTable<?> newValue) {
+    public final QOM.AlterView $view(Table<?> newValue) {
         return constructor().apply(newValue, $ifExists(), $comment(), $renameTo());
     }
 
     @Override
-    public final MAlterView $ifExists(boolean newValue) {
+    public final QOM.AlterView $ifExists(boolean newValue) {
         return constructor().apply($view(), newValue, $comment(), $renameTo());
     }
 
     @Override
-    public final MAlterView $comment(MComment newValue) {
+    public final QOM.AlterView $comment(Comment newValue) {
         return constructor().apply($view(), $ifExists(), newValue, $renameTo());
     }
 
     @Override
-    public final MAlterView $renameTo(MTable<?> newValue) {
+    public final QOM.AlterView $renameTo(Table<?> newValue) {
         return constructor().apply($view(), $ifExists(), $comment(), newValue);
     }
 
-    public final Function4<? super MTable<?>, ? super Boolean, ? super MComment, ? super MTable<?>, ? extends MAlterView> constructor() {
-        return (a1, a2, a3, a4) -> new AlterViewImpl(configuration(), (Table<?>) a1, a2, (Comment) a3, (Table<?>) a4);
+    public final Function4<? super Table<?>, ? super Boolean, ? super Comment, ? super Table<?>, ? extends QOM.AlterView> constructor() {
+        return (a1, a2, a3, a4) -> new AlterViewImpl(configuration(), a1, a2, a3, a4);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -332,11 +332,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

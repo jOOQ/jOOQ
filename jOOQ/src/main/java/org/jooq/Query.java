@@ -46,7 +46,6 @@ import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MQuery;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -58,7 +57,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface Query extends Statement, AttachableQueryPart, AutoCloseable, MQuery {
+public interface Query extends Statement, AttachableQueryPart, AutoCloseable {
 
     /**
      * Execute the query, if it has been created with a proper configuration.

@@ -69,7 +69,7 @@ final class CreateDatabaseImpl
 extends
     AbstractDDLQuery
 implements
-    MCreateDatabase,
+    QOM.CreateDatabase,
     CreateDatabaseFinalStep
 {
 
@@ -133,23 +133,23 @@ implements
     }
 
     @Override
-    public final MCreateDatabase $database(MCatalog newValue) {
+    public final QOM.CreateDatabase $database(Catalog newValue) {
         return constructor().apply(newValue, $ifNotExists());
     }
 
     @Override
-    public final MCreateDatabase $ifNotExists(boolean newValue) {
+    public final QOM.CreateDatabase $ifNotExists(boolean newValue) {
         return constructor().apply($database(), newValue);
     }
 
-    public final Function2<? super MCatalog, ? super Boolean, ? extends MCreateDatabase> constructor() {
-        return (a1, a2) -> new CreateDatabaseImpl(configuration(), (Catalog) a1, a2);
+    public final Function2<? super Catalog, ? super Boolean, ? extends QOM.CreateDatabase> constructor() {
+        return (a1, a2) -> new CreateDatabaseImpl(configuration(), a1, a2);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -162,11 +162,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

@@ -69,7 +69,7 @@ final class EndsWithIgnoreCase<T>
 extends
     AbstractCondition
 implements
-    MEndsWithIgnoreCase<T>
+    QOM.EndsWithIgnoreCase<T>
 {
 
     final Field<T> string;
@@ -127,18 +127,18 @@ implements
     }
 
     @Override
-    public final MEndsWithIgnoreCase<T> $arg1(MField<T> newValue) {
+    public final QOM.EndsWithIgnoreCase<T> $arg1(Field<T> newValue) {
         return constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final MEndsWithIgnoreCase<T> $arg2(MField<T> newValue) {
+    public final QOM.EndsWithIgnoreCase<T> $arg2(Field<T> newValue) {
         return constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super MField<T>, ? super MField<T>, ? extends MEndsWithIgnoreCase<T>> constructor() {
-        return (a1, a2) -> new EndsWithIgnoreCase<>((Field<T>) a1, (Field<T>) a2);
+    public final Function2<? super Field<T>, ? super Field<T>, ? extends QOM.EndsWithIgnoreCase<T>> constructor() {
+        return (a1, a2) -> new EndsWithIgnoreCase<>(a1, a2);
     }
 
     // -------------------------------------------------------------------------

@@ -69,7 +69,7 @@ final class DropViewImpl
 extends
     AbstractDDLQuery
 implements
-    MDropView,
+    QOM.DropView,
     DropViewFinalStep
 {
 
@@ -147,23 +147,23 @@ implements
     }
 
     @Override
-    public final MDropView $view(MTable<?> newValue) {
+    public final QOM.DropView $view(Table<?> newValue) {
         return constructor().apply(newValue, $ifExists());
     }
 
     @Override
-    public final MDropView $ifExists(boolean newValue) {
+    public final QOM.DropView $ifExists(boolean newValue) {
         return constructor().apply($view(), newValue);
     }
 
-    public final Function2<? super MTable<?>, ? super Boolean, ? extends MDropView> constructor() {
-        return (a1, a2) -> new DropViewImpl(configuration(), (Table<?>) a1, a2);
+    public final Function2<? super Table<?>, ? super Boolean, ? extends QOM.DropView> constructor() {
+        return (a1, a2) -> new DropViewImpl(configuration(), a1, a2);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -176,11 +176,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

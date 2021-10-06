@@ -53,6 +53,7 @@ import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
+import org.jooq.AggregateFunction;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -62,10 +63,6 @@ import org.jooq.JSONEntry;
 import org.jooq.JSONObjectAggNullStep;
 // ...
 import org.jooq.impl.QOM.JSONOnNull;
-import org.jooq.impl.QOM.MAggregateFunction;
-import org.jooq.impl.QOM.MDataType;
-import org.jooq.impl.QOM.MJSONEntry;
-import org.jooq.impl.QOM.MJSONObjectAgg;
 
 
 /**
@@ -78,7 +75,7 @@ extends
     AbstractAggregateFunction<J>
 implements
     JSONObjectAggNullStep<J>,
-    MJSONObjectAgg<J> {
+    QOM.JSONObjectAgg<J> {
 
     private final JSONEntry<?> entry;
     private JSONOnNull         onNull;
@@ -237,7 +234,7 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final MJSONEntry<?> $arg1() {
+    public final JSONEntry<?> $arg1() {
         return entry;
     }
 
@@ -247,14 +244,14 @@ implements
     }
 
     @Override
-    public final MDataType<?> $returning() {
+    public final DataType<?> $returning() {
         return returning;
     }
 
     @Override
-    public final Function1<? super MJSONEntry<?>, ? extends MAggregateFunction<J>> constructor() {
+    public final Function1<? super JSONEntry<?>, ? extends AggregateFunction<J>> constructor() {
         return e -> {
-            JSONObjectAgg<J> r = new JSONObjectAgg<J>(getDataType(), (JSONEntry<?>) e);
+            JSONObjectAgg<J> r = new JSONObjectAgg<J>(getDataType(), e);
             r.onNull = onNull;
             r.returning = returning;
             return r;

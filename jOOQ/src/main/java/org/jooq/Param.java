@@ -41,7 +41,6 @@ import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MParam;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -93,7 +92,7 @@ import org.jetbrains.annotations.Nullable;
  * @author Lukas Eder
  * @see DSL#param(String, Object)
  */
-public interface Param<T> extends ParamOrVariable<T>, MParam<T> {
+public interface Param<T> extends ParamOrVariable<T> {
 
     /**
      * The parameter name. This name is useful for two things:
@@ -165,4 +164,11 @@ public interface Param<T> extends ParamOrVariable<T>, MParam<T> {
      */
     @NotNull
     ParamMode getParamMode();
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    T $value();
+    @NotNull Param<T> $value(T value);
 }

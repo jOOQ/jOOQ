@@ -53,13 +53,12 @@ import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.Select;
-import org.jooq.impl.QOM.MCondition;
 import org.jooq.impl.QOM.UProxy;
 
 /**
  * @author Lukas Eder
  */
-final class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvider, Condition, UProxy<MCondition> {
+final class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvider, Condition, UProxy<Condition> {
 
     private Condition condition;
 
@@ -245,7 +244,7 @@ final class ConditionProviderImpl extends AbstractQueryPart implements Condition
     // -------------------------------------------------------------------------
 
     @Override
-    public final MCondition $delegate() {
+    public final Condition $delegate() {
         return getWhere();
     }
 }

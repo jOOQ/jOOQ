@@ -67,11 +67,12 @@ import static org.jooq.SQLDialect.YUGABYTE;
 
 import java.util.List;
 
-import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MSelect;
+import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.With;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A <code>SELECT</code> statement.
@@ -93,7 +94,7 @@ import org.jetbrains.annotations.NotNull;
  * @param <R> The record type being returned by this query
  * @author Lukas Eder
  */
-public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, FieldLike, MSelect<R> {
+public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, FieldLike {
 
     /**
      * Apply the <code>UNION</code> set operation.
@@ -178,4 +179,21 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
      */
     @NotNull @CheckReturnValue
     List<Field<?>> getSelect();
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Nullable With $with();
+    @NotNull MList<? extends SelectFieldOrAsterisk> $select();
+    @NotNull Select<?> $select(MList<? extends SelectFieldOrAsterisk> select);
+    boolean $distinct();
+    @NotNull MList<? extends Table<?>> $from();
+    @NotNull Select<?> $from(MList<? extends Table<?>> from);
+    @Nullable Condition $where();
+    @NotNull MList<? extends GroupField> $groupBy();
+    @Nullable Condition $having();
+    @NotNull MList<? extends WindowDefinition> $window();
+    @Nullable Condition $qualify();
+    @NotNull MList<? extends SortField<?>> $orderBy();
 }

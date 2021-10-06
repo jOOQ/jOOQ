@@ -70,7 +70,7 @@ final class RegrSlope
 extends
     AbstractAggregateFunction<BigDecimal>
 implements
-    MRegrSlope
+    QOM.RegrSlope
 {
 
     RegrSlope(
@@ -137,23 +137,23 @@ implements
     }
 
     @Override
-    public final MRegrSlope $y(MField<? extends Number> newValue) {
+    public final QOM.RegrSlope $y(Field<? extends Number> newValue) {
         return constructor().apply(newValue, $x());
     }
 
     @Override
-    public final MRegrSlope $x(MField<? extends Number> newValue) {
+    public final QOM.RegrSlope $x(Field<? extends Number> newValue) {
         return constructor().apply($y(), newValue);
     }
 
-    public final Function2<? super MField<? extends Number>, ? super MField<? extends Number>, ? extends MRegrSlope> constructor() {
-        return (a1, a2) -> new RegrSlope((Field<? extends Number>) a1, (Field<? extends Number>) a2);
+    public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.RegrSlope> constructor() {
+        return (a1, a2) -> new RegrSlope(a1, a2);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -166,13 +166,13 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
-        return super.traverse(
+        return super.$traverse(
             QOM.traverse(
                 init, abort, recurse, accumulate, this,
                 $y(),

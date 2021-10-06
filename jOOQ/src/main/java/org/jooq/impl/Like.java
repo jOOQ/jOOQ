@@ -69,7 +69,7 @@ final class Like
 extends
     AbstractCondition
 implements
-    MLike,
+    QOM.Like,
     LikeEscapeStep
 {
 
@@ -224,23 +224,23 @@ implements
     }
 
     @Override
-    public final MLike $arg1(MField<?> newValue) {
+    public final QOM.Like $arg1(Field<?> newValue) {
         return constructor().apply(newValue, $arg2(), $arg3());
     }
 
     @Override
-    public final MLike $arg2(MField<String> newValue) {
+    public final QOM.Like $arg2(Field<String> newValue) {
         return constructor().apply($arg1(), newValue, $arg3());
     }
 
     @Override
-    public final MLike $arg3(Character newValue) {
+    public final QOM.Like $arg3(Character newValue) {
         return constructor().apply($arg1(), $arg2(), newValue);
     }
 
     @Override
-    public final Function3<? super MField<?>, ? super MField<String>, ? super Character, ? extends MLike> constructor() {
-        return (a1, a2, a3) -> new Like((Field<?>) a1, (Field<String>) a2, a3);
+    public final Function3<? super Field<?>, ? super Field<String>, ? super Character, ? extends QOM.Like> constructor() {
+        return (a1, a2, a3) -> new Like(a1, a2, a3);
     }
 
     // -------------------------------------------------------------------------

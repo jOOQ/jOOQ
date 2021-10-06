@@ -69,7 +69,7 @@ final class CommentOnImpl
 extends
     AbstractDDLQuery
 implements
-    MCommentOn,
+    QOM.CommentOn,
     CommentOnIsStep,
     CommentOnFinalStep
 {
@@ -286,33 +286,33 @@ implements
     }
 
     @Override
-    public final MCommentOn $table(MTable<?> newValue) {
+    public final QOM.CommentOn $table(Table<?> newValue) {
         return constructor().apply(newValue, $isView(), $field(), $comment());
     }
 
     @Override
-    public final MCommentOn $isView(boolean newValue) {
+    public final QOM.CommentOn $isView(boolean newValue) {
         return constructor().apply($table(), newValue, $field(), $comment());
     }
 
     @Override
-    public final MCommentOn $field(MField<?> newValue) {
+    public final QOM.CommentOn $field(Field<?> newValue) {
         return constructor().apply($table(), $isView(), newValue, $comment());
     }
 
     @Override
-    public final MCommentOn $comment(MComment newValue) {
+    public final QOM.CommentOn $comment(Comment newValue) {
         return constructor().apply($table(), $isView(), $field(), newValue);
     }
 
-    public final Function4<? super MTable<?>, ? super Boolean, ? super MField<?>, ? super MComment, ? extends MCommentOn> constructor() {
-        return (a1, a2, a3, a4) -> new CommentOnImpl(configuration(), (Table<?>) a1, a2, (Field<?>) a3, (Comment) a4);
+    public final Function4<? super Table<?>, ? super Boolean, ? super Field<?>, ? super Comment, ? extends QOM.CommentOn> constructor() {
+        return (a1, a2, a3, a4) -> new CommentOnImpl(configuration(), a1, a2, a3, a4);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -327,11 +327,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

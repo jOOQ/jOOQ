@@ -47,13 +47,14 @@ import org.jooq.DataType;
 import org.jooq.Name;
 import org.jooq.Named;
 import org.jooq.Package;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.Schema;
 import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
-import org.jooq.impl.QOM.MSchema;
+import org.jooq.QueryPart;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
 import org.jetbrains.annotations.Nullable;
@@ -66,7 +67,14 @@ import org.jetbrains.annotations.Nullable;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UDT<R>, FieldsTrait, UNotYetImplemented {
+public class UDTImpl<R extends UDTRecord<R>>
+extends
+    AbstractNamed
+implements
+    UDT<R>,
+    FieldsTrait,
+    UNotYetImplemented
+{
 
     private final Schema          schema;
     private final FieldsImpl<R>   fields;
@@ -312,7 +320,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
     // -------------------------------------------------------------------------
 
     @Override
-    public final MSchema $schema() {
+    public final Schema $schema() {
         return schema;
     }
 }

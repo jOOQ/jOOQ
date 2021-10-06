@@ -69,7 +69,7 @@ final class CharLength
 extends
     AbstractField<Integer>
 implements
-    MCharLength
+    QOM.CharLength
 {
 
     final Field<String> string;
@@ -145,18 +145,18 @@ implements
     }
 
     @Override
-    public final MCharLength $string(MField<String> newValue) {
+    public final QOM.CharLength $string(Field<String> newValue) {
         return constructor().apply(newValue);
     }
 
-    public final Function1<? super MField<String>, ? extends MCharLength> constructor() {
-        return (a1) -> new CharLength((Field<String>) a1);
+    public final Function1<? super Field<String>, ? extends QOM.CharLength> constructor() {
+        return (a1) -> new CharLength(a1);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -168,11 +168,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

@@ -58,7 +58,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTE;
 
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MSequence;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -70,7 +69,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-public interface Sequence<T extends Number> extends Qualified, Typed<T>, MSequence<T> {
+public interface Sequence<T extends Number> extends Qualified, Typed<T> {
 
     /**
      * Get the start value for this sequence or <code>null</code>, if no such

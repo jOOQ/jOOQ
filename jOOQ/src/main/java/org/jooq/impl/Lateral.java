@@ -45,13 +45,11 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableOptions;
-import org.jooq.impl.QOM.MLateral;
-import org.jooq.impl.QOM.MTable;
 
 /**
  * @author Lukas Eder
  */
-final class Lateral<R extends Record> extends AbstractTable<R> implements MLateral<R> {
+final class Lateral<R extends Record> extends AbstractTable<R> implements QOM.Lateral<R> {
 
     private final Table<R> table;
 
@@ -96,12 +94,12 @@ final class Lateral<R extends Record> extends AbstractTable<R> implements MLater
     // -------------------------------------------------------------------------
 
     @Override
-    public final Function1<? super MTable<R>, ? extends MTable<R>> constructor() {
-        return t -> new Lateral<>((Table<R>) t);
+    public final Function1<? super Table<R>, ? extends Table<R>> constructor() {
+        return t -> new Lateral<>(t);
     }
 
     @Override
-    public final MTable<R> $arg1() {
+    public final Table<R> $arg1() {
         return table;
     }
 }

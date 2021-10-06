@@ -69,7 +69,7 @@ final class CurrentCatalog
 extends
     AbstractField<String>
 implements
-    MCurrentCatalog
+    QOM.CurrentCatalog
 {
 
     CurrentCatalog() {

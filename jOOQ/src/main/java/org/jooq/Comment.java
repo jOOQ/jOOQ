@@ -38,7 +38,8 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MComment;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A comment.
@@ -63,10 +64,16 @@ import org.jooq.impl.QOM.MComment;
  *
  * @author Lukas Eder
  */
-public interface Comment extends QueryPart, MComment {
+public interface Comment extends QueryPart {
 
     /**
      * Get the comment.
      */
     String getComment();
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @NotNull String $comment();
 }

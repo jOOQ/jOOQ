@@ -69,7 +69,7 @@ final class DropDomainImpl
 extends
     AbstractDDLQuery
 implements
-    MDropDomain,
+    QOM.DropDomain,
     DropDomainCascadeStep,
     DropDomainFinalStep
 {
@@ -182,28 +182,28 @@ implements
     }
 
     @Override
-    public final MDropDomain $domain(MDomain<?> newValue) {
+    public final QOM.DropDomain $domain(Domain<?> newValue) {
         return constructor().apply(newValue, $ifExists(), $cascade());
     }
 
     @Override
-    public final MDropDomain $ifExists(boolean newValue) {
+    public final QOM.DropDomain $ifExists(boolean newValue) {
         return constructor().apply($domain(), newValue, $cascade());
     }
 
     @Override
-    public final MDropDomain $cascade(Cascade newValue) {
+    public final QOM.DropDomain $cascade(Cascade newValue) {
         return constructor().apply($domain(), $ifExists(), newValue);
     }
 
-    public final Function3<? super MDomain<?>, ? super Boolean, ? super Cascade, ? extends MDropDomain> constructor() {
-        return (a1, a2, a3) -> new DropDomainImpl(configuration(), (Domain<?>) a1, a2, a3);
+    public final Function3<? super Domain<?>, ? super Boolean, ? super Cascade, ? extends QOM.DropDomain> constructor() {
+        return (a1, a2, a3) -> new DropDomainImpl(configuration(), a1, a2, a3);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -217,11 +217,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

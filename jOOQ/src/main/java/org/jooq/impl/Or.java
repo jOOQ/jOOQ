@@ -69,7 +69,7 @@ final class Or
 extends
     AbstractCondition
 implements
-    MOr
+    QOM.Or
 {
 
     final Condition arg1;
@@ -178,18 +178,18 @@ implements
     }
 
     @Override
-    public final MOr $arg1(MCondition newValue) {
-        return new Or((Condition) newValue, $arg2());
+    public final QOM.Or $arg1(Condition newValue) {
+        return new Or(newValue, $arg2());
     }
 
     @Override
-    public final MOr $arg2(MCondition newValue) {
-        return new Or($arg1(), (Condition) newValue);
+    public final QOM.Or $arg2(Condition newValue) {
+        return new Or($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super MCondition, ? super MCondition, ? extends Condition> constructor() {
-        return (a1, a2) -> DSL.or((Condition) a1, (Condition) a2);
+    public final Function2<? super Condition, ? super Condition, ? extends Condition> constructor() {
+        return (a1, a2) -> DSL.or(a1, a2);
     }
 
     // -------------------------------------------------------------------------

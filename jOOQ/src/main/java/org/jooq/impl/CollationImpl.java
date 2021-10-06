@@ -47,11 +47,12 @@ import org.jooq.Context;
 import org.jooq.Name;
 // ...
 import org.jooq.SQLDialect;
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder
  */
-final class CollationImpl extends AbstractQueryPart implements Collation {
+final class CollationImpl extends AbstractQueryPart implements Collation, UNotYetImplemented {
 
 
 

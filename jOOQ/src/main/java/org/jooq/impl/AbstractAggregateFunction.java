@@ -63,7 +63,9 @@ import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Keywords.K_WITHIN_GROUP;
-import static org.jooq.impl.Names.*;
+import static org.jooq.impl.Names.N_COUNT;
+import static org.jooq.impl.Names.N_COUNTIF;
+import static org.jooq.impl.Names.N_COUNT_IF;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.NUMERIC;
@@ -92,19 +94,18 @@ import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.WindowBeforeOverStep;
-import org.jooq.impl.QOM.MAggregateFunction;
-import org.jooq.impl.QOM.MQueryPart;
 
 /**
  * @author Lukas Eder
  */
 abstract class AbstractAggregateFunction<T>
-extends AbstractWindowFunction<T>
+extends
+    AbstractWindowFunction<T>
 implements
     AggregateFunction<T>,
     OrderedAggregateFunction<T>,
-    ArrayAggOrderByStep<T>,
-    MAggregateFunction<T> {
+    ArrayAggOrderByStep<T>
+{
 
 
 
@@ -551,13 +552,13 @@ implements
     }
 
     @Override
-    public /* non-final */ <R> R traverse(
+    public /* non-final */ <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
-        return super.traverse(
+        return super.$traverse(
             QOM.traverse(init, abort, recurse, accumulate, this, filter),
             abort, recurse, accumulate
         );

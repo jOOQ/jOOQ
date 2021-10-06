@@ -69,7 +69,7 @@ final class WidthBucket<T extends Number>
 extends
     AbstractField<T>
 implements
-    MWidthBucket<T>
+    QOM.WidthBucket<T>
 {
 
     final Field<T>       field;
@@ -171,33 +171,33 @@ implements
     }
 
     @Override
-    public final MWidthBucket<T> $field(MField<T> newValue) {
+    public final QOM.WidthBucket<T> $field(Field<T> newValue) {
         return constructor().apply(newValue, $low(), $high(), $buckets());
     }
 
     @Override
-    public final MWidthBucket<T> $low(MField<T> newValue) {
+    public final QOM.WidthBucket<T> $low(Field<T> newValue) {
         return constructor().apply($field(), newValue, $high(), $buckets());
     }
 
     @Override
-    public final MWidthBucket<T> $high(MField<T> newValue) {
+    public final QOM.WidthBucket<T> $high(Field<T> newValue) {
         return constructor().apply($field(), $low(), newValue, $buckets());
     }
 
     @Override
-    public final MWidthBucket<T> $buckets(MField<Integer> newValue) {
+    public final QOM.WidthBucket<T> $buckets(Field<Integer> newValue) {
         return constructor().apply($field(), $low(), $high(), newValue);
     }
 
-    public final Function4<? super MField<T>, ? super MField<T>, ? super MField<T>, ? super MField<Integer>, ? extends MWidthBucket<T>> constructor() {
-        return (a1, a2, a3, a4) -> new WidthBucket<>((Field<T>) a1, (Field<T>) a2, (Field<T>) a3, (Field<Integer>) a4);
+    public final Function4<? super Field<T>, ? super Field<T>, ? super Field<T>, ? super Field<Integer>, ? extends QOM.WidthBucket<T>> constructor() {
+        return (a1, a2, a3, a4) -> new WidthBucket<>(a1, a2, a3, a4);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -212,11 +212,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

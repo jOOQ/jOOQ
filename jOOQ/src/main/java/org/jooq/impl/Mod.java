@@ -69,7 +69,7 @@ final class Mod<T extends Number>
 extends
     AbstractField<T>
 implements
-    MMod<T>
+    QOM.Mod<T>
 {
 
     final Field<T>                dividend;
@@ -148,18 +148,18 @@ implements
     }
 
     @Override
-    public final MMod<T> $arg1(MField<T> newValue) {
+    public final QOM.Mod<T> $arg1(Field<T> newValue) {
         return constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final MMod<T> $arg2(MField<? extends Number> newValue) {
+    public final QOM.Mod<T> $arg2(Field<? extends Number> newValue) {
         return constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super MField<T>, ? super MField<? extends Number>, ? extends MMod<T>> constructor() {
-        return (a1, a2) -> new Mod<>((Field<T>) a1, (Field<? extends Number>) a2);
+    public final Function2<? super Field<T>, ? super Field<? extends Number>, ? extends QOM.Mod<T>> constructor() {
+        return (a1, a2) -> new Mod<>(a1, a2);
     }
 
     // -------------------------------------------------------------------------

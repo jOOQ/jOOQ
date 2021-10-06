@@ -46,7 +46,7 @@ import org.jooq.Function1;
 import org.jooq.Package;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
-import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.QueryPart;
 
 /**
  * A default implementation for packages (containers of stored procedures and
@@ -99,19 +99,19 @@ public class PackageImpl extends AbstractNamed implements Package {
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, schema);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(this, schema, s -> new PackageImpl(getName(), s), recurse, replacement);
     }

@@ -69,7 +69,7 @@ final class Abs<T extends Number>
 extends
     AbstractField<T>
 implements
-    MAbs<T>
+    QOM.Abs<T>
 {
 
     final Field<T> number;
@@ -125,18 +125,18 @@ implements
     }
 
     @Override
-    public final MAbs<T> $number(MField<T> newValue) {
+    public final QOM.Abs<T> $number(Field<T> newValue) {
         return constructor().apply(newValue);
     }
 
-    public final Function1<? super MField<T>, ? extends MAbs<T>> constructor() {
-        return (a1) -> new Abs<>((Field<T>) a1);
+    public final Function1<? super Field<T>, ? extends QOM.Abs<T>> constructor() {
+        return (a1) -> new Abs<>(a1);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -148,11 +148,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

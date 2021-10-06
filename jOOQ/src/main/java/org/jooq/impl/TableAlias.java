@@ -48,22 +48,16 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function1;
 import org.jooq.Name;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
-import org.jooq.impl.QOM.MName;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MTable;
-import org.jooq.impl.QOM.MTableAlias;
-import org.jooq.impl.QOM.UNotYetImplemented;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
  */
-final class TableAlias<R extends Record> extends AbstractTable<R> implements MTableAlias<R> {
+final class TableAlias<R extends Record> extends AbstractTable<R> implements QOM.TableAlias<R> {
 
     final Alias<Table<R>> alias;
     final FieldsImpl<R>   aliasedFields;
@@ -181,31 +175,31 @@ final class TableAlias<R extends Record> extends AbstractTable<R> implements MTa
     // -------------------------------------------------------------------------
 
     @Override
-    public final MTable<R> $table() {
+    public final Table<R> $table() {
         return alias.wrapped();
     }
 
     @Override
-    public final MName $alias() {
+    public final Name $alias() {
         return getUnqualifiedName();
     }
 
     @Override
-    public final <T> T traverse(
+    public final <T> T $traverse(
         T init,
         Predicate<? super T> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super T, ? super MQueryPart, ? extends T> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super T, ? super QueryPart, ? extends T> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, $table(), $alias());
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
-        return QOM.replace(this, $table(), $alias(), (t, n) -> new TableAlias<>((Table<R>) t, (Name) n, alias.fieldAliases, alias.wrapInParentheses), recurse, replacement);
+        return QOM.replace(this, $table(), $alias(), (t, n) -> new TableAlias<>(t, n, alias.fieldAliases, alias.wrapInParentheses), recurse, replacement);
     }
 
     // ------------------------------------------------------------------------

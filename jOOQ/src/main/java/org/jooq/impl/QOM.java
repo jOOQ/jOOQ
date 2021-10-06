@@ -39,23 +39,30 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.keyword;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
+import org.jooq.AggregateFunction;
 // ...
+import org.jooq.Catalog;
+import org.jooq.Collation;
+import org.jooq.Comment;
+import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Constraint;
+import org.jooq.DDLQuery;
 import org.jooq.DMLQuery;
+import org.jooq.DataType;
 import org.jooq.DatePart;
+import org.jooq.Domain;
 import org.jooq.Field;
+import org.jooq.FieldOrRow;
 import org.jooq.Function1;
 import org.jooq.Function10;
 import org.jooq.Function11;
@@ -78,21 +85,43 @@ import org.jooq.Function6;
 import org.jooq.Function7;
 import org.jooq.Function8;
 import org.jooq.Function9;
+import org.jooq.GroupField;
+import org.jooq.Index;
 import org.jooq.Internal;
 import org.jooq.JSONEntry;
 import org.jooq.Keyword;
 // ...
+// ...
+import org.jooq.Name;
+import org.jooq.Named;
 import org.jooq.OrderField;
+import org.jooq.Param;
 import org.jooq.Parameter;
 import org.jooq.Privilege;
 // ...
+import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Result;
+import org.jooq.ResultQuery;
+import org.jooq.Role;
+import org.jooq.Row;
+import org.jooq.RowCountQuery;
 import org.jooq.RowId;
+import org.jooq.Schema;
+import org.jooq.Select;
+import org.jooq.SelectFieldOrAsterisk;
+import org.jooq.Sequence;
+import org.jooq.SortField;
 import org.jooq.SortOrder;
+import org.jooq.Statement;
+import org.jooq.Table;
+// ...
+import org.jooq.WindowDefinition;
+import org.jooq.WindowSpecification;
 import org.jooq.XML;
+import org.jooq.XMLAttributes;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
 
@@ -108,7 +137,7 @@ import org.jetbrains.annotations.Nullable;
  * <h3>Purpose</h3>
  * <p>
  * This class provides a single namespace for jOOQ's query object model API.
- * Every {@link QueryPart} from the DSL API has a matching {@link MQueryPart}
+ * Every {@link QueryPart} from the DSL API has a matching {@link QueryPart}
  * representation in this API, and an internal implementation in the
  * <code>org.jooq.impl</code> package, that covers both the DSL and model API
  * functionality.
@@ -123,25 +152,25 @@ import org.jetbrains.annotations.Nullable;
  * API in this class follows these naming conventions:
  * <ul>
  * <li>All public model API types are named <code>MXyz</code>, e.g.
- * {@link MQueryPart}</li>
+ * {@link QueryPart}</li>
  * <li>All private model API utility types are named <code>UXyz</code>, e.g.
  * {@link UEmpty}</li>
  * <li>All accessor methods are named <code>$property()</code>, e.g.
- * {@link MNot#$arg1()}</li>
+ * {@link Not#$arg1()}</li>
  * </ul>
  * <p>
  * Furthermore, the current draft design lets each {@link QueryPart} publicly
- * extend its matching {@link MQueryPart}. <strong>This may not be the case in
+ * extend its matching {@link QueryPart}. <strong>This may not be the case in
  * the future, as long as this API is experimental, a backwards incompatible
  * change may revert this</strong>. Alternative possible designs include:
  * <ul>
  * <li>There's no public relationship between the two types (though accessor
  * methods might be provided)</li>
- * <li>The relationship might be inversed to let {@link MQueryPart} extend
+ * <li>The relationship might be inversed to let {@link QueryPart} extend
  * {@link QueryPart}.</li>
  * <li>The publicly available {@link QueryPart} types don't have an
- * {@link MQueryPart} equivalence, but they <em>are</em> the
- * {@link MQueryPart}.</li>
+ * {@link QueryPart} equivalence, but they <em>are</em> the
+ * {@link QueryPart}.</li>
  * </ul>
  * <p>
  * <h3>Limitations</h3>
@@ -150,15 +179,15 @@ import org.jetbrains.annotations.Nullable;
  * is prone to incompatible changes between minor releases, in addition to the
  * incompatible changes that may arise due to this API being experimental. In
  * this experimental stage, not all {@link QueryPart} implementations have a
- * corresponding public {@link MQueryPart} type, but may just implement the API
+ * corresponding public {@link QueryPart} type, but may just implement the API
  * via a {@link UEmpty} or {@link UNotYetImplemented} subtype, and may not
  * provide access to contents via accessor methods.
  * <p>
  * <h3>Mutability</h3>
  * <p>
  * While some elements of this API are historically mutable (either mutable
- * objects are returned from {@link MQueryPart} subtypes, or argument objects
- * when constructing an {@link MQueryPart} remains mutable, rather than copied),
+ * objects are returned from {@link QueryPart} subtypes, or argument objects
+ * when constructing an {@link QueryPart} remains mutable, rather than copied),
  * users must not rely on this mutable behaviour. Once this API stabilises, all
  * mutability will be gone, accidental remaining mutability will be considered a
  * bug.
@@ -182,92 +211,16 @@ public final class QOM {
     // XXX: Model
     // -------------------------------------------------------------------------
 
-    public interface MQueryPart {
-        <R> R traverse(
-            R init,
-            Predicate<? super R> abort,
-            Predicate<? super MQueryPart> recurse,
-            BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
-        );
+    public interface MCollection<Q extends QueryPart> extends QueryPart, Collection<Q> {}
+    public interface MList<Q extends QueryPart> extends MCollection<Q>, List<Q> {}
 
-        default <R> R traverse(
-            R init,
-            BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
-        ) {
-            return traverse(init, b -> false, p -> true, accumulate);
-        }
-
-        @NotNull
-        default MQueryPart replace(Function1<? super MQueryPart, ? extends MQueryPart> replacement) {
-            return replace(p -> true, replacement);
-        }
-
-        @NotNull
-        MQueryPart replace(
-            Predicate<? super MQueryPart> recurse,
-            Function1<? super MQueryPart, ? extends MQueryPart> replacement
-        );
-
-        /**
-         * @deprecated - [#12425] - 3.16.0 - The name "contains" conflicts with
-         *             {@link Field#contains(Object)} and
-         *             {@link List#contains(Object)} and will be replaced.
-         *             There's no definitive naming strategy for these
-         *             {@link MQueryPart} method names yet. Must be fixed prior
-         *             to releasing the API!
-         */
-        @Deprecated
-        default boolean $contains(MQueryPart part) {
-            return traverse(equals(part), b -> b, p -> true, (b, p) -> b || p.equals(part));
-        }
-
-        @Nullable
-        default MQueryPart findAny(Predicate<? super MQueryPart> predicate) {
-            return traverse((MQueryPart) null, p -> p != null, p -> true, (r, p) -> predicate.test(p) ? p : r);
-        }
-
-        @NotNull
-        default List<MQueryPart> find(Predicate<? super MQueryPart> predicate) {
-            return traverse(new ArrayList<>(), (l, p) -> {
-                if (predicate.test(p))
-                    l.add(p);
-
-                return l;
-            });
-        }
-    }
-
-    public interface MName extends UEmpty {}
-    public interface MNamed extends MQueryPart {
-        @NotNull MName $name();
-    }
-    public interface MTyped<T> extends MQueryPart {
-        @NotNull MDataType<T> $dataType();
-    }
-    public interface MComment extends UEmpty {
-        @NotNull String $comment();
-    }
-    public interface MRole extends MNamed {}
-    public interface MUser extends MNamed {}
-    public interface MCollection<Q extends MQueryPart> extends MQueryPart, Collection<Q> {}
-    public interface MList<Q extends MQueryPart> extends MCollection<Q>, List<Q> {}
-    public interface MDataType<T> extends MQueryPart {}
-    public interface MCharacterSet extends UEmpty {}
-    public interface MCollation extends UEmpty {}
-    public interface MDomain<T> extends MQueryPart {}
-
-    public interface MDerivedColumnList extends MQueryPart {
-        @NotNull MName $tableName();
-        @NotNull MList<? extends MName> $columnNames();
-    }
-
-    public /* sealed */ interface MWith
+    public /*sealed*/ interface With
         extends
-            MQueryPart
-        /* permits
-            WithImpl */ 
+            QueryPart
+        /*permits
+            WithImpl*/
     {
-        @NotNull MList<? extends MCommonTableExpression<?>> $commonTableExpressions();
+        @NotNull MList<? extends CommonTableExpression<?>> $commonTableExpressions();
         boolean $recursive();
     }
 
@@ -275,120 +228,71 @@ public final class QOM {
     // XXX: Queries
     // -------------------------------------------------------------------------
 
-    public interface MQueries extends MQueryPart {
-        @NotNull MList<? extends MQuery> $queries();
-    }
-    public interface MQuery extends MQueryPart {}
-    public interface MDDLQuery extends MQuery {}
-    public interface MRowCountQuery extends MQuery {}
-    public interface MResultQuery<R extends Record> extends MQuery {}
-    public interface MSelect<R extends Record> extends MResultQuery<R> {
-        @Nullable MWith $with();
-        @NotNull MList<? extends MSelectFieldOrAsterisk> $select();
-        @NotNull MSelect<?> $select(MList<? extends MSelectFieldOrAsterisk> select);
-        boolean $distinct();
-        @NotNull MList<? extends MTable<?>> $from();
-        @NotNull MSelect<?> $from(MList<? extends MTable<?>> from);
-        @Nullable MCondition $where();
-        @NotNull MList<? extends MGroupField> $groupBy();
-        @Nullable MCondition $having();
-        @NotNull MList<? extends MWindowDefinition> $window();
-        @Nullable MCondition $qualify();
-        @NotNull MList<? extends MSortField<?>> $orderBy();
-    }
-    public interface MDelete<R extends Record> extends MRowCountQuery {
-        @NotNull MTable<?> $table();
-        @Nullable MCondition $condition();
+    public /*sealed*/ interface CreateType
+        extends
+            DDLQuery
+        /*permits
+            CreateTypeImpl*/
+    {
+        @NotNull Name $name();
+        @NotNull MList<? extends Field<String>> $values();
     }
 
-    public /* sealed */ interface MCreateType
+    public /*sealed*/ interface DropType
         extends
-            MDDLQuery
-        /* permits
-            CreateTypeImpl */ 
+            DDLQuery
+        /*permits
+            DropTypeImpl*/
     {
-        @NotNull MName $name();
-        @NotNull MList<? extends MField<String>> $values();
-    }
-
-    public /* sealed */ interface MDropType
-        extends
-            MDDLQuery
-        /* permits
-            DropTypeImpl */ 
-    {
-        @NotNull MList<? extends MName> $names();
+        @NotNull MList<? extends Name> $names();
         boolean $ifExists();
         @Nullable Cascade $cascade();
     }
 
-    public /* sealed */ interface MCreateView<R extends Record>
+    public /*sealed*/ interface CreateView<R extends Record>
         extends
-            MDDLQuery
-        /* permits
-            CreateViewImpl */ 
+            DDLQuery
+        /*permits
+            CreateViewImpl*/
     {
         boolean $ifNotExists();
         boolean $orReplace();
-        @NotNull MTable<?> $view();
-        @NotNull MList<? extends MField<?>> $fields();
-        @NotNull MResultQuery<R> $query();
+        @NotNull Table<?> $view();
+        @NotNull MList<? extends Field<?>> $fields();
+        @NotNull ResultQuery<R> $query();
     }
 
     // -------------------------------------------------------------------------
     // XXX: Schema
     // -------------------------------------------------------------------------
 
-    public interface MCatalog extends MNamed {}
-    public interface MSchema extends MNamed {}
-    public interface MQualified extends MNamed {
-        @Nullable MSchema $schema();
+
+
+
+
+
+
+
+
+    public interface PrimaryKey extends Constraint {
+        @NotNull MList<? extends Field<?>> $fields();
     }
-    public interface MPackage extends MQualified {}
-    public interface MUDT extends MQualified {}
-
-
-
-
-
-
-
-
-
-
-
-    public interface MSequence<T extends Number> extends MQualified {}
-    public interface MConstraint extends MNamed {}
-    public interface MPrimaryKey extends MConstraint {
-        @NotNull MList<? extends MField<?>> $fields();
+    public interface UniqueKey extends Constraint {
+        @NotNull MList<? extends Field<?>> $fields();
     }
-    public interface MUniqueKey extends MConstraint {
-        @NotNull MList<? extends MField<?>> $fields();
+    public interface ForeignKey extends Constraint {
+        @NotNull MList<? extends Field<?>> $fields();
+        @NotNull Constraint $references();
     }
-    public interface MForeignKey extends MConstraint {
-        @NotNull MList<? extends MField<?>> $fields();
-        @NotNull MConstraint $references();
-    }
-    public interface MCheck extends MConstraint {
-        @NotNull MCondition $condition();
-    }
-    public interface MIndex extends MNamed {
-        @NotNull MTableRef<?> $table();
+    public interface Check extends Constraint {
+        @NotNull Condition $condition();
     }
 
     // -------------------------------------------------------------------------
     // XXX: Statements
     // -------------------------------------------------------------------------
 
-    public interface MStatement extends MQueryPart {}
-    public interface MBlock extends MQueryPart {
-        @NotNull MList<? extends MStatement> $statements();
-    }
-    public interface MNull extends MStatement {}
-
-
-
-
+    public interface NullStatement extends Statement {}
 
 
 
@@ -433,55 +337,47 @@ public final class QOM {
     // XXX: Tables
     // -------------------------------------------------------------------------
 
-    public interface MTable<R extends Record> extends MQueryPart {}
-    public interface MTableAlias<R extends Record> extends MTable<R> {
-        @NotNull MTable<R> $table();
-        @NotNull MName $alias();
+    public interface TableAlias<R extends Record> extends Table<R> {
+        @NotNull Table<R> $table();
+        @NotNull Name $alias();
         // TODO [#12425] Reuse MDerivedColumnList
     }
-    public interface MTableRef<R extends Record> extends UEmptyTable<R>, MQualified {}
-    public interface MDual extends MTable<Record>, UEmpty {}
-    public interface MLateral<R extends Record> extends MTable<R>, UOperator1<MTable<R>, MTable<R>> {}
-    public interface MDerivedTable<R extends Record> extends MTable<R>, UOperator1<MSelect<R>, MTable<R>> {}
-    public interface MValues<R extends Record> extends MTable<R>, UOperator1<MList<? extends MRow>, MTable<R>> {}
-    public interface MCommonTableExpression<R extends Record> extends MTable<R> {
-        @NotNull MDerivedColumnList $derivedColumnList();
-        @NotNull MResultQuery<R> $query();
-        @NotNull Materialized $materialized();
-    }
-    public interface MDataChangeDeltaTable<R extends Record> extends MTable<R> {
+    public interface TableRef<R extends Record> extends UEmptyTable<R> {}
+    public interface Dual extends Table<Record>, UEmpty {}
+    public interface Lateral<R extends Record> extends Table<R>, UOperator1<Table<R>, Table<R>> {}
+    public interface DerivedTable<R extends Record> extends Table<R>, UOperator1<Select<R>, Table<R>> {}
+    public interface Values<R extends Record> extends Table<R>, UOperator1<MList<? extends Row>, Table<R>> {}
+    public interface DataChangeDeltaTable<R extends Record> extends Table<R> {
         @NotNull ResultOption $resultOption();
         @NotNull DMLQuery<R> $query();
     }
-    public interface MRowsFrom extends MTable<Record> {
-        @NotNull MList<? extends MTable<?>> $tables();
+    public interface RowsFrom extends Table<Record> {
+        @NotNull MList<? extends Table<?>> $tables();
     }
-    public interface MGenerateSeries<T> extends MTable<Record1<T>>, UOperator3<MField<T>, MField<T>, MField<T>, MTable<Record1<T>>> {
-        @NotNull default MField<T> $from() { return $arg1(); }
-        @NotNull default MField<T> $to() { return $arg2(); }
-        @Nullable default MField<T> $step() { return $arg3(); }
+    public interface GenerateSeries<T> extends Table<Record1<T>>, UOperator3<Field<T>, Field<T>, Field<T>, Table<Record1<T>>> {
+        @NotNull default Field<T> $from() { return $arg1(); }
+        @NotNull default Field<T> $to() { return $arg2(); }
+        @Nullable default Field<T> $step() { return $arg3(); }
     }
 
     // -------------------------------------------------------------------------
     // XXX: Conditions
     // -------------------------------------------------------------------------
 
-    public interface MCondition extends MQueryPart {}
-
-    public /* sealed */ interface MCombinedCondition
+    public /*sealed*/ interface CombinedCondition
         extends
-            MCondition,
-            UOperator2<MCondition, MCondition, MCondition>
-        /* permits
+            Condition,
+            UOperator2<Condition, Condition, Condition>
+        /*permits
             MAnd,
-            MOr */ 
+            MOr*/
     {}
 
-    public /* sealed */ interface MCompareCondition<T>
+    public /*sealed*/ interface CompareCondition<T>
         extends
-            MCondition,
-            UOperator2<MField<T>, MField<T>, MCondition>
-        /* permits
+            Condition,
+            UOperator2<Field<T>, Field<T>, Condition>
+        /*permits
             MEq,
             MNe,
             MLt,
@@ -495,117 +391,101 @@ public final class QOM {
             MStartsWith,
             MStartsWithIgnoreCase,
             MEndsWith,
-            MEndsWithIgnoreCase */ 
+            MEndsWithIgnoreCase*/
     {}
 
-    public /* sealed */ interface MTrue
-        extends
-            MCondition,
-            UEmpty
-        /* permits
-            TrueCondition */ 
-    {}
-
-    public /* sealed */ interface MFalse
-        extends
-            MCondition,
-            UEmpty
-        /* permits
-            FalseCondition */ 
-    {}
-
-    public interface MBetween<T> extends UOperator3<MField<T>, MField<T>, MField<T>, MCondition> {
+    public interface Between<T> extends UOperator3<Field<T>, Field<T>, Field<T>, Condition> {
         boolean $symmetric();
     }
 
-    public /* sealed */ interface MInList<T>
+    public /*sealed*/ interface InList<T>
         extends
-            MCondition,
-            UOperator2<MField<T>, MList<? extends MField<T>>, MCondition>
-        /* permits
-            InList */ 
+            Condition,
+            UOperator2<Field<T>, MList<? extends Field<T>>, Condition>
+        /*permits
+            InList*/
     {
-        @NotNull default MField<T> $field() { return $arg1(); }
-        @NotNull default MList<? extends MField<T>> $list() { return $arg2(); }
+        @NotNull default Field<T> $field() { return $arg1(); }
+        @NotNull default MList<? extends Field<T>> $list() { return $arg2(); }
     }
 
-    public /* sealed */ interface MNotInList<T>
+    public /*sealed*/ interface NotInList<T>
         extends
-            MCondition,
-            UOperator2<MField<T>, MList<? extends MField<T>>, MCondition>
-        /* permits
-            NotInList */ 
+            Condition,
+            UOperator2<Field<T>, MList<? extends Field<T>>, Condition>
+        /*permits
+            NotInList*/
     {
-        @NotNull default MField<T> $field() { return $arg1(); }
-        @NotNull default MList<? extends MField<T>> $list() { return $arg2(); }
+        @NotNull default Field<T> $field() { return $arg1(); }
+        @NotNull default MList<? extends Field<T>> $list() { return $arg2(); }
     }
 
-    public /* sealed */ interface MRegexpLike
+    public /*sealed*/ interface RegexpLike
         extends
-            MCondition
-        /* permits
-            RegexpLike */ 
+            Condition
+        /*permits
+            RegexpLike*/
     {
-        @NotNull MField<?> $search();
-        @NotNull MField<String> $pattern();
+        @NotNull Field<?> $search();
+        @NotNull Field<String> $pattern();
     }
 
-    public /* sealed */ interface MExtract
+    public /*sealed*/ interface Extract
         extends
-            MField<Integer>
-        /* permits
-            Extract */ 
+            Field<Integer>
+        /*permits
+            Extract*/
     {
-        @NotNull MField<?> $field();
+        @NotNull Field<?> $field();
         @NotNull DatePart $datePart();
     }
 
-    public /* sealed */ interface MRowIsNull
+    public /*sealed*/ interface RowIsNull
         extends
-            MCondition,
-            UOperator1<MRow, MCondition>
-        /* permits
-            RowIsNull */ 
+            Condition,
+            UOperator1<Row, Condition>
+        /*permits
+            RowIsNull*/
     {
-        @NotNull default MRow $field() { return $arg1(); }
+        @NotNull default Row $field() { return $arg1(); }
     }
 
-    public /* sealed */ interface MRowIsNotNull
+    public /*sealed*/ interface RowIsNotNull
         extends
-            MCondition,
-            UOperator1<MRow, MCondition>
-        /* permits
-            RowIsNotNull */ 
+            Condition,
+            UOperator1<Row, Condition>
+        /*permits
+            RowIsNotNull*/
     {
-        @NotNull default MRow $field() { return $arg1(); }
+        @NotNull default Row $field() { return $arg1(); }
     }
 
-    public /* sealed */ interface MRowOverlaps
+    public /*sealed*/ interface RowOverlaps
         extends
-            MCondition,
-            UOperator2<MRow, MRow, MCondition>
-        /* permits
-            RowOverlaps */ 
+            Condition,
+            UOperator2<Row, Row, Condition>
+        /*permits
+            RowOverlaps*/
     {}
 
-    public /* sealed */ interface MSelectIsNull
+    public /*sealed*/ interface SelectIsNull
         extends
-            MCondition,
-            UOperator1<MSelect<?>, MCondition>
-        /* permits
-            SelectIsNull */ 
+            Condition,
+            UOperator1<Select<?>, Condition>
+        /*permits
+            SelectIsNull*/
     {
-        @NotNull default MSelect<?> $field() { return $arg1(); }
+        @NotNull default Select<?> $field() { return $arg1(); }
     }
 
-    public /* sealed */ interface MSelectIsNotNull
+    public /*sealed*/ interface SelectIsNotNull
         extends
-            MCondition,
-            UOperator1<MSelect<?>, MCondition>
-        /* permits
-            SelectIsNotNull */ 
+            Condition,
+            UOperator1<Select<?>, Condition>
+        /*permits
+            SelectIsNotNull*/
     {
-        @NotNull default MSelect<?> $field() { return $arg1(); }
+        @NotNull default Select<?> $field() { return $arg1(); }
     }
 
 
@@ -613,158 +493,126 @@ public final class QOM {
     // XXX: Rows
     // -------------------------------------------------------------------------
 
-    public interface MFieldOrRow extends MQueryPart {}
-
-    public interface MRow extends MFieldOrRow {
-        @NotNull MList<? extends MField<?>> $fields();
-    }
-
-    public /* sealed */ interface MRowField<R extends Record>
+    public /*sealed*/ interface RowField<R extends Record>
         extends
-            MField<R>
-        /* permits
-            RowField */ 
+            Field<R>
+        /*permits
+            RowField*/
     {
-        @NotNull MRow $row();
+        @NotNull Row $row();
     }
 
     // -------------------------------------------------------------------------
     // XXX: SelectFields, GroupFields and SortFields
     // -------------------------------------------------------------------------
 
-    public interface MSelectFieldOrAsterisk extends MQueryPart {}
-    public interface MAsterisk extends MSelectFieldOrAsterisk {
-        @NotNull MList<? extends MField<?>> $except();
-    }
-    public interface MQualifiedAsterisk extends MSelectFieldOrAsterisk {
-        @NotNull MTable<?> $table();
-        @NotNull MList<? extends MField<?>> $except();
-    }
-
-    public interface MGroupField extends MQueryPart {}
-
-    public /* sealed */ interface MRollup
+    public /*sealed*/ interface Rollup
         extends
-            MGroupField,
-            UOperator1<MList<? extends MFieldOrRow>, MGroupField>
-        /* permits
-            Rollup */ 
+            GroupField,
+            UOperator1<MList<? extends FieldOrRow>, GroupField>
+        /*permits
+            Rollup*/
     {}
 
-    public /* sealed */ interface MCube
+    public /*sealed*/ interface Cube
         extends
-            MGroupField,
-            UOperator1<MList<? extends MFieldOrRow>, MGroupField>
-        /* permits
-            Cube */ 
+            GroupField,
+            UOperator1<MList<? extends FieldOrRow>, GroupField>
+        /*permits
+            Cube*/
     {}
 
-    public /* sealed */ interface MGroupingSets
+    public /*sealed*/ interface GroupingSets
         extends
-            MGroupField,
-            UOperator1<MList<? extends MList<? extends MFieldOrRow>>, MGroupField>
-        /* permits
-            GroupingSets */ 
+            GroupField,
+            UOperator1<MList<? extends MList<? extends FieldOrRow>>, GroupField>
+        /*permits
+            GroupingSets*/
     {}
-
-    public interface MSortField<T> extends MQueryPart {
-        @NotNull MField<T> $field();
-        @NotNull SortOrder $sortOrder();
-        @NotNull NullOrdering $nullOrdering();
-    }
 
     // -------------------------------------------------------------------------
     // XXX: Aggregate functions and window functions
     // -------------------------------------------------------------------------
 
-    public interface MAggregateFunction<T> extends MField<T> {
-        @Nullable MCondition $filterWhere();
+    public /*sealed*/ interface RatioToReport
+        extends
+            AggregateFunction<BigDecimal>
+        /*permits
+            RatioToReport*/
+    {
+        @NotNull Field<? extends Number> $field();
     }
 
-    public /* sealed */ interface MRatioToReport
+    public /*sealed*/ interface Mode<T>
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            RatioToReport */ 
+            AggregateFunction<T>,
+            UOperator1<Field<T>, AggregateFunction<T>>
+        /*permits
+            Mode*/
     {
-        @NotNull MField<? extends Number> $field();
+        @NotNull default Field<T> $field() { return $arg1(); }
     }
 
-    public /* sealed */ interface MMode<T>
+    public /*sealed*/ interface MultisetAgg<R extends Record>
         extends
-            MAggregateFunction<T>,
-            UOperator1<MField<T>, MAggregateFunction<T>>
-        /* permits
-            Mode */ 
+            AggregateFunction<Result<R>>
+        /*permits
+            MultisetAgg*/
     {
-        @NotNull default MField<T> $field() { return $arg1(); }
+        @NotNull Row $row();
     }
 
-    public /* sealed */ interface MMultisetAgg<R extends Record>
+    public /*sealed*/ interface ArrayAgg<T>
         extends
-            MAggregateFunction<Result<R>>
-        /* permits
-            MultisetAgg */ 
+            AggregateFunction<T[]>,
+            UOperator1<Field<T>, AggregateFunction<T[]>>
+        /*permits
+            ArrayAgg*/
     {
-        @NotNull MRow $row();
-    }
-
-    public /* sealed */ interface MArrayAgg<T>
-        extends
-            MAggregateFunction<T[]>,
-            UOperator1<MField<T>, MAggregateFunction<T[]>>
-        /* permits
-            ArrayAgg */ 
-    {
-        @NotNull default MField<T> $field() { return $arg1(); }
+        @NotNull default Field<T> $field() { return $arg1(); }
         boolean $distinct();
     }
 
-    public /* sealed */ interface MXMLAgg
+    public /*sealed*/ interface XMLAgg
         extends
-            MAggregateFunction<XML>,
-            UOperator1<MField<XML>, MAggregateFunction<XML>>
-        /* permits
-            XMLAgg */ 
+            AggregateFunction<XML>,
+            UOperator1<Field<XML>, AggregateFunction<XML>>
+        /*permits
+            XMLAgg*/
     {
-        @NotNull default MField<XML> $field() { return $arg1(); }
+        @NotNull default Field<XML> $field() { return $arg1(); }
     }
 
-    public interface MJSONEntry<T> extends MQueryPart {
-        @NotNull MField<String> $key();
-        @NotNull MField<?> $value();
-    }
-
-    public /* sealed */ interface MJSONArrayAgg<J>
+    public /*sealed*/ interface JSONArrayAgg<J>
         extends
-            MAggregateFunction<J>,
-            UOperator1<MField<?>, MAggregateFunction<J>>
-        /* permits
-            JSONArrayAgg */ 
+            AggregateFunction<J>,
+            UOperator1<Field<?>, AggregateFunction<J>>
+        /*permits
+            JSONArrayAgg*/
     {
-        @NotNull default MField<?> $field() { return $arg1(); }
+        @NotNull default Field<?> $field() { return $arg1(); }
         @NotNull JSONOnNull $onNull();
-        @NotNull MDataType<?> $returning();
+        @NotNull DataType<?> $returning();
     }
 
-    public /* sealed */ interface MJSONObjectAgg<J>
+    public /*sealed*/ interface JSONObjectAgg<J>
         extends
-            MAggregateFunction<J>,
-            UOperator1<MJSONEntry<?>, MAggregateFunction<J>>
-        /* permits JSONObjectAgg */ 
+            AggregateFunction<J>,
+            UOperator1<JSONEntry<?>, AggregateFunction<J>>
+        /*permits JSONObjectAgg*/
     {
-        @NotNull default MJSONEntry<?> $entry() { return $arg1(); }
+        @NotNull default JSONEntry<?> $entry() { return $arg1(); }
         @NotNull JSONOnNull $onNull();
-        @NotNull MDataType<?> $returning();
+        @NotNull DataType<?> $returning();
     }
 
-    public /* sealed */ interface MCountTable
+    public /*sealed*/ interface CountTable
         extends
-            MAggregateFunction<Integer>
-        /* permits
-            CountTable */ 
+            AggregateFunction<Integer>
+        /*permits
+            CountTable*/
     {
-        @NotNull MTable<?> $table();
+        @NotNull Table<?> $table();
         boolean $distinct();
     }
 
@@ -778,121 +626,105 @@ public final class QOM {
 
 
 
-    public interface MWindowSpecification extends MQueryPart {
-        @Nullable MWindowDefinition $windowDefinition();
-        @NotNull MList<? extends MField<?>> $partitionBy();
-        @NotNull MList<? extends MSortField<?>> $orderBy();
-        @Nullable FrameUnits $frameUnits();
-        @Nullable Integer $frameStart();
-        @Nullable Integer $frameEnd();
-        @Nullable FrameExclude $exclude();
-
+    public interface WindowFunction<T> extends Field<T> {
+        @Nullable WindowSpecification $windowSpecification();
+        @Nullable WindowDefinition $windowDefinition();
     }
 
-    public interface MWindowDefinition extends MQueryPart {
-        @NotNull MName $name();
-        @Nullable MWindowSpecification $windowSpecification();
-    }
-
-    public interface MWindowFunction<T> extends MField<T> {
-        @Nullable MWindowSpecification $windowSpecification();
-        @Nullable MWindowDefinition $windowDefinition();
-    }
-
-    public /* sealed */ interface MRowNumber
+    public /*sealed*/ interface RowNumber
         extends
-            MWindowFunction<Integer>
-        /* permits
-            RowNumber */ 
+            WindowFunction<Integer>
+        /*permits
+            RowNumber*/
     {}
 
-    public /* sealed */ interface MRank
+    public /*sealed*/ interface Rank
         extends
-            MWindowFunction<Integer>
-        /* permits
-            Rank */ 
+            WindowFunction<Integer>
+        /*permits
+            Rank*/
     {}
 
-    public /* sealed */ interface MDenseRank
+    public /*sealed*/ interface DenseRank
         extends
-            MWindowFunction<Integer>
-        /* permits
-            DenseRank */ 
+            WindowFunction<Integer>
+        /*permits
+            DenseRank*/
     {}
 
-    public /* sealed */ interface MPercentRank
+    public /*sealed*/ interface PercentRank
         extends
-            MWindowFunction<BigDecimal>
-        /* permits
-            PercentRank */ 
+            WindowFunction<BigDecimal>
+        /*permits
+            PercentRank*/
     {}
 
-    public /* sealed */ interface MCumeDist
+    public /*sealed*/ interface CumeDist
         extends
-            MWindowFunction<BigDecimal>
-        /* permits
-            CumeDist */ 
+            WindowFunction<BigDecimal>
+        /*permits
+            CumeDist*/
     {}
 
-    public /* sealed */ interface MNtile
+    public /*sealed*/ interface Ntile
         extends
-            MWindowFunction<Integer>
-        /* permits Ntile */ 
+            WindowFunction<Integer>
+        /*permits Ntile*/
     {
-        @NotNull MField<Integer> $tiles();
+        @NotNull Field<Integer> $tiles();
     }
 
-    public /* sealed */ interface MLead<T>
+    public /*sealed*/ interface Lead<T>
         extends
-            MWindowFunction<T>
-        /* permits
-            Lead */ 
+            WindowFunction<T>
+        /*permits
+            Lead*/
     {
-        @NotNull MField<T> $field();
-        @Nullable MField<Integer> $offset();
-        @Nullable MField<T> $defaultValue();
+        @NotNull Field<T> $field();
+        @Nullable Field<Integer> $offset();
+        @Nullable Field<T> $defaultValue();
         @Nullable NullTreatment $nullTreatment();
     }
 
-    public /* sealed */ interface MLag<T>
+    public /*sealed*/ interface Lag<T>
         extends
-            MWindowFunction<T>
-        /* permits
-            Lag */ 
+            WindowFunction<T>
+        /*permits
+            Lag*/
     {
-        @NotNull MField<T> $field();
-        @Nullable MField<Integer> $offset();
-        @Nullable MField<T> $defaultValue();
+        @NotNull Field<T> $field();
+        @Nullable Field<Integer> $offset();
+        @Nullable Field<T> $defaultValue();
         @Nullable NullTreatment $nullTreatment();
     }
 
-    public /* sealed */ interface MFirstValue<T>
+    public /*sealed*/ interface FirstValue<T>
         extends
-            MWindowFunction<T>
-        /* permits
-            FirstValue */ 
+            WindowFunction<T>
+        /*permits
+            FirstValue*/
     {
-        @NotNull MField<T> $field();
+        @NotNull Field<T> $field();
         @Nullable NullTreatment $nullTreatment();
     }
 
-    public /* sealed */ interface MLastValue<T>
+    public /*sealed*/ interface LastValue<T>
         extends
-            MWindowFunction<T>
-        /* permits
-            LastValue */ 
+            WindowFunction<T>
+        /*permits
+            LastValue*/
     {
-        @NotNull MField<T> $field();
+        @NotNull Field<T> $field();
         @Nullable NullTreatment $nullTreatment();
     }
 
-    public /* sealed */ interface MNthValue<T>
+    public /*sealed*/ interface NthValue<T>
         extends
-            MWindowFunction<T>
-        /* permits
-            NthValue */ 
+            WindowFunction<T>
+        /*permits
+            NthValue*/
     {
-        @NotNull MField<T> $field();
+        @NotNull Field<T> $field();
         @Nullable FromFirstOrLast $fromFirstOrLast();
         @Nullable NullTreatment $nullTreatment();
     }
@@ -901,279 +733,267 @@ public final class QOM {
     // XXX: Fields
     // -------------------------------------------------------------------------
 
-    public interface MField<T> extends MFieldOrRow, MTyped<T>, MGroupField {}
-
-    public /* sealed */ interface MFieldAlias<T>
+    public /*sealed*/ interface FieldAlias<T>
         extends
-            MField<T>
-        /* permits
-            FieldAlias */ 
+            Field<T>
+        /*permits
+            FieldAlias*/
     {
-        @NotNull MField<T> $field();
-        @NotNull MName $alias();
+        @NotNull Field<T> $field();
+        @NotNull Name $alias();
     }
 
-    public /* sealed */ interface MFunction<T>
+    public /*sealed*/ interface Function<T>
         extends
-            MNamed,
-            MField<T>
-        /* permits
+            Field<T>
+        /*permits
             org.jooq.impl.Function,
-            org.jooq.impl.Function1 */ 
+            org.jooq.impl.Function1*/
     {
-        @NotNull MList<? extends MField<?>> $args();
+        @NotNull MList<? extends Field<?>> $args();
     }
 
-    public /* sealed */ interface MCast<T>
+    public /*sealed*/ interface Cast<T>
         extends
-            MField<T>
-        /* permits
-            Cast */ 
+            Field<T>
+        /*permits
+            Cast*/
     {
-        @NotNull MField<?> $field();
+        @NotNull Field<?> $field();
     }
 
-    public /* sealed */ interface MCoerce<T>
+    public /*sealed*/ interface Coerce<T>
         extends
-            MField<T>
-        /* permits
-            Coerce */ 
+            Field<T>
+        /*permits
+            Coerce*/
     {
-        @NotNull MField<?> $field();
+        @NotNull Field<?> $field();
     }
 
-    public interface MParam<T> extends MField<T>, UEmpty {
-        T $value();
-        @NotNull MParam<T> $value(T value);
+    public interface Inline<T> extends Param<T> {}
+    public interface Val<T> extends Param<T> {}
+
+    public interface FieldRef<T> extends UEmptyField<T> {
+        @NotNull TableRef<?> $table();
     }
 
-    public interface MInline<T> extends MParam<T> {}
-    public interface MVal<T> extends MParam<T> {}
-
-    public interface MFieldRef<T> extends UEmptyField<T>, MNamed {
-        @NotNull MTableRef<?> $table();
-    }
-
-    public /* sealed */ interface MDefault<T>
+    public /*sealed*/ interface Default<T>
         extends
-            MField<T>,
+            Field<T>,
             UEmpty
-        /* permits
-            Default */ 
+        /*permits
+            Default*/
     {}
 
-    public /* sealed */ interface MCollated
+    public /*sealed*/ interface Collated
         extends
-            MField<String>
-        /* permits
-            Collated */ 
+            Field<String>
+        /*permits
+            Collated*/
     {
-        @NotNull MField<?> $field();
-        @NotNull MCollation $collation();
+        @NotNull Field<?> $field();
+        @NotNull Collation $collation();
     }
 
-    public /* sealed */ interface MArray<T>
+    public /*sealed*/ interface Array<T>
         extends
-            MField<T[]>
-        /* permits
-            org.jooq.impl.Array */ 
+            Field<T[]>
+        /*permits
+            org.jooq.impl.Array*/
     {
-        @NotNull MList<? extends MField<?>> $elements();
+        @NotNull MList<? extends Field<?>> $elements();
     }
 
-    public /* sealed */ interface MArrayQuery<T>
+    public /*sealed*/ interface ArrayQuery<T>
         extends
-            MField<T[]>
-        /* permits
-            ArrayQuery */ 
+            Field<T[]>
+        /*permits
+            ArrayQuery*/
     {
-        @NotNull MSelect<? extends Record1<T>> $select();
+        @NotNull Select<? extends Record1<T>> $select();
     }
 
-    public /* sealed */ interface MMultiset<R extends Record>
+    public /*sealed*/ interface Multiset<R extends Record>
         extends
-            MField<Result<R>>
-        /* permits
-            Multiset */ 
+            Field<Result<R>>
+        /*permits
+            Multiset*/
     {
-        @NotNull MSelect<R> $select();
+        @NotNull Select<R> $select();
     }
 
-    public /* sealed */ interface MScalarSubquery<T>
+    public /*sealed*/ interface ScalarSubquery<T>
         extends
-            MField<T>,
-            UOperator1<MSelect<? extends Record1<T>>, MField<T>>
-        /* permits
-            ScalarSubquery */ 
+            Field<T>,
+            UOperator1<Select<? extends Record1<T>>, Field<T>>
+        /*permits
+            ScalarSubquery*/
     {}
 
-    public /* sealed */ interface MNeg<T>
+    public /*sealed*/ interface Neg<T>
         extends
-            MField<T>,
-            UOperator1<MField<T>, MField<T>>
-        /* permits
-            Neg */ 
+            Field<T>,
+            UOperator1<Field<T>, Field<T>>
+        /*permits
+            Neg*/
     {}
 
-    public /* sealed */ interface MGreatest<T>
+    public /*sealed*/ interface Greatest<T>
         extends
-            MField<T>,
-            UOperator1<MList<? extends MField<T>>, MField<T>>
-        /* permits
-            Greatest */ 
+            Field<T>,
+            UOperator1<MList<? extends Field<T>>, Field<T>>
+        /*permits
+            Greatest*/
     {}
 
-    public /* sealed */ interface MLeast<T>
+    public /*sealed*/ interface Least<T>
         extends
-            MField<T>,
-            UOperator1<MList<? extends MField<T>>, MField<T>>
-        /* permits
-            Least */ 
+            Field<T>,
+            UOperator1<MList<? extends Field<T>>, Field<T>>
+        /*permits
+            Least*/
     {}
 
-    public /* sealed */ interface MChoose<T>
+    public /*sealed*/ interface Choose<T>
         extends
-            MField<T>,
-            UOperator2<MField<Integer>, MList<? extends MField<T>>, MField<T>>
-        /* permits
-            Choose */ 
+            Field<T>,
+            UOperator2<Field<Integer>, MList<? extends Field<T>>, Field<T>>
+        /*permits
+            Choose*/
     {}
 
-    public /* sealed */ interface MFieldFunction<T>
+    public /*sealed*/ interface FieldFunction<T>
         extends
-            MField<Integer>,
-            UOperator2<MField<T>, MList<? extends MField<T>>, MField<Integer>>
-        /* permits
-            FieldFunction */ 
+            Field<Integer>,
+            UOperator2<Field<T>, MList<? extends Field<T>>, Field<Integer>>
+        /*permits
+            FieldFunction*/
     {}
 
-    public /* sealed */ interface MNvl2<T>
+    public /*sealed*/ interface Nvl2<T>
         extends
-            MField<T>,
-            UOperator3<MField<?>, MField<T>, MField<T>, MField<T>>
-        /* permits
-            Nvl2 */ 
+            Field<T>,
+            UOperator3<Field<?>, Field<T>, Field<T>, Field<T>>
+        /*permits
+            Nvl2*/
     {
-        @NotNull default MField<?> $value() { return $arg1(); }
-        @NotNull default MField<T> $ifNotNull() { return $arg2(); }
-        @NotNull default MField<T> $ifIfNull() { return $arg3(); }
+        @NotNull default Field<?> $value() { return $arg1(); }
+        @NotNull default Field<T> $ifNotNull() { return $arg2(); }
+        @NotNull default Field<T> $ifIfNull() { return $arg3(); }
     }
 
-    public /* sealed */ interface MIif<T>
+    public /*sealed*/ interface Iif<T>
         extends
-            MField<T>,
-            UOperator3<MCondition, MField<T>, MField<T>, MField<T>>
-        /* permits
-            Iif */ 
+            Field<T>,
+            UOperator3<Condition, Field<T>, Field<T>, Field<T>>
+        /*permits
+            Iif*/
     {
-        @NotNull default MCondition $condition() { return $arg1(); }
-        @NotNull default MField<T> $ifTrue() { return $arg2(); }
-        @NotNull default MField<T> $ifFalse() { return $arg3(); }
+        @NotNull default Condition $condition() { return $arg1(); }
+        @NotNull default Field<T> $ifTrue() { return $arg2(); }
+        @NotNull default Field<T> $ifFalse() { return $arg3(); }
     }
 
-    public /* sealed */ interface MCoalesce<T>
+    public /*sealed*/ interface Coalesce<T>
         extends
-            MField<T>,
-            UOperator1<MList<? extends MField<T>>, MField<T>>
-        /* permits
-            Coalesce */ 
+            Field<T>,
+            UOperator1<MList<? extends Field<T>>, Field<T>>
+        /*permits
+            Coalesce*/
     {}
 
-    public /* sealed */ interface MConcat
+    public /*sealed*/ interface Concat
         extends
-            MField<String>,
-            UOperator1<MList<? extends MField<?>>, MField<String>>
-        /* permits
-            Concat */ 
+            Field<String>,
+            UOperator1<MList<? extends Field<?>>, Field<String>>
+        /*permits
+            Concat*/
     {}
 
-    public /* sealed */ interface MTimestampDiff<T>
+    public /*sealed*/ interface TimestampDiff<T>
         extends
-            MField<DayToSecond>,
-            UOperator2<MField<T>, MField<T>, MField<DayToSecond>>
-        /* permits
-            TimestampDiff */ 
+            Field<DayToSecond>,
+            UOperator2<Field<T>, Field<T>, Field<DayToSecond>>
+        /*permits
+            TimestampDiff*/
     {
-        @NotNull default MField<T> $minuend() { return $arg1(); }
-        @NotNull default MField<T> $subtrahend() { return $arg2(); }
+        @NotNull default Field<T> $minuend() { return $arg1(); }
+        @NotNull default Field<T> $subtrahend() { return $arg2(); }
     }
 
-    public /* sealed */ interface MConvert<T>
+    public /*sealed*/ interface Convert<T>
         extends
-            MField<T>
-        /* permits
-            ConvertDateTime */ 
+            Field<T>
+        /*permits
+            ConvertDateTime*/
     {
-        @NotNull MField<?> $field();
+        @NotNull Field<?> $field();
         int $style();
     }
 
-    public /* sealed */ interface MCurrentDate<T>
+    public /*sealed*/ interface CurrentDate<T>
         extends
-            MField<T>,
+            Field<T>,
             UEmpty
-        /* permits
-            CurrentDate */ 
+        /*permits
+            CurrentDate*/
     {}
 
-    public /* sealed */ interface MCurrentTime<T>
+    public /*sealed*/ interface CurrentTime<T>
         extends
-            MField<T>,
+            Field<T>,
             UEmpty
-        /* permits
-            CurrentTime */ 
+        /*permits
+            CurrentTime*/
     {}
 
-    public /* sealed */ interface MCurrentTimestamp<T>
+    public /*sealed*/ interface CurrentTimestamp<T>
         extends
-            MField<T>,
+            Field<T>,
             UEmpty
-        /* permits
-            CurrentTimestamp */ 
+        /*permits
+            CurrentTimestamp*/
     {}
 
-    public /* sealed */ interface MXMLQuery
+    public /*sealed*/ interface XMLQuery
         extends
-            MField<XML>
-        /* permits
-            XMLQuery */ 
+            Field<XML>
+        /*permits
+            XMLQuery*/
     {
         @NotNull Field<String> $xpath();
         @NotNull Field<XML> $passing();
         @Nullable XmlPassingMechanism $passingMechanism();
     }
 
-    public interface MXMLAttributes extends MQueryPart {
-        @NotNull MList<? extends Field<?>> $attributes();
-    }
-
-    public /* sealed */ interface MXMLElement
+    public /*sealed*/ interface XMLElement
         extends
-            MField<XML>
-        /* permits
-            XMLElement */ 
+            Field<XML>
+        /*permits
+            XMLElement*/
     {
-        @NotNull MName $elementName();
-        @NotNull MXMLAttributes $attributes();
+        @NotNull Name $elementName();
+        @NotNull XMLAttributes $attributes();
         @NotNull MList<? extends Field<?>> $content();
     }
 
-    public /* sealed */ interface MXMLExists
+    public /*sealed*/ interface XMLExists
         extends
-            MCondition
-        /* permits
-            XMLExists */ 
+            Condition
+        /*permits
+            XMLExists*/
     {
         @NotNull Field<String> $xpath();
         @NotNull Field<XML> $passing();
         @Nullable XmlPassingMechanism $passingMechanism();
     }
 
-    public /* sealed */ interface MXMLParse
+    public /*sealed*/ interface XMLParse
         extends
-            MField<XML>
-        /* permits
-            XMLParse */ 
+            Field<XML>
+        /*permits
+            XMLParse*/
     {
         @NotNull Field<String> $content();
         @NotNull DocumentOrContent $documentOrContent();
@@ -1181,202 +1001,202 @@ public final class QOM {
 
 
 
-    public /* sealed */ interface MAlterDatabase
+    public /*sealed*/ interface AlterDatabase
         extends
-            MDDLQuery
-        /* permits
-            AlterDatabaseImpl */ 
+            DDLQuery
+        //permits
+        //    AlterDatabaseImpl
     {
-        @NotNull  MCatalog $database();
+        @NotNull  Catalog $database();
                   boolean $ifExists();
-        @NotNull  MCatalog $renameTo();
-        @NotNull  MAlterDatabase $database(MCatalog database);
-        @NotNull  MAlterDatabase $ifExists(boolean ifExists);
-        @NotNull  MAlterDatabase $renameTo(MCatalog renameTo);
+        @NotNull  Catalog $renameTo();
+        @NotNull  AlterDatabase $database(Catalog database);
+        @NotNull  AlterDatabase $ifExists(boolean ifExists);
+        @NotNull  AlterDatabase $renameTo(Catalog renameTo);
     }
 
-    public /* sealed */ interface MAlterDomain<T>
+    public /*sealed*/ interface AlterDomain<T>
         extends
-            MDDLQuery
-        /* permits
-            AlterDomainImpl */ 
+            DDLQuery
+        //permits
+        //    AlterDomainImpl
     {
-        @NotNull  MDomain<T> $domain();
+        @NotNull  Domain<T> $domain();
                   boolean $ifExists();
-        @Nullable MConstraint $addConstraint();
-        @Nullable MConstraint $dropConstraint();
+        @Nullable Constraint $addConstraint();
+        @Nullable Constraint $dropConstraint();
                   boolean $dropConstraintIfExists();
-        @Nullable MDomain<?> $renameTo();
-        @Nullable MConstraint $renameConstraint();
+        @Nullable Domain<?> $renameTo();
+        @Nullable Constraint $renameConstraint();
                   boolean $renameConstraintIfExists();
-        @Nullable MField<T> $setDefault();
+        @Nullable Field<T> $setDefault();
                   boolean $dropDefault();
                   boolean $setNotNull();
                   boolean $dropNotNull();
         @Nullable Cascade $cascade();
-        @Nullable MConstraint $renameConstraintTo();
-        @NotNull  MAlterDomain<T> $domain(MDomain<T> domain);
-        @NotNull  MAlterDomain<T> $ifExists(boolean ifExists);
-        @NotNull  MAlterDomain<T> $addConstraint(MConstraint addConstraint);
-        @NotNull  MAlterDomain<T> $dropConstraint(MConstraint dropConstraint);
-        @NotNull  MAlterDomain<T> $dropConstraintIfExists(boolean dropConstraintIfExists);
-        @NotNull  MAlterDomain<T> $renameTo(MDomain<?> renameTo);
-        @NotNull  MAlterDomain<T> $renameConstraint(MConstraint renameConstraint);
-        @NotNull  MAlterDomain<T> $renameConstraintIfExists(boolean renameConstraintIfExists);
-        @NotNull  MAlterDomain<T> $setDefault(MField<T> setDefault);
-        @NotNull  MAlterDomain<T> $dropDefault(boolean dropDefault);
-        @NotNull  MAlterDomain<T> $setNotNull(boolean setNotNull);
-        @NotNull  MAlterDomain<T> $dropNotNull(boolean dropNotNull);
-        @NotNull  MAlterDomain<T> $cascade(Cascade cascade);
-        @NotNull  MAlterDomain<T> $renameConstraintTo(MConstraint renameConstraintTo);
+        @Nullable Constraint $renameConstraintTo();
+        @NotNull  AlterDomain<T> $domain(Domain<T> domain);
+        @NotNull  AlterDomain<T> $ifExists(boolean ifExists);
+        @NotNull  AlterDomain<T> $addConstraint(Constraint addConstraint);
+        @NotNull  AlterDomain<T> $dropConstraint(Constraint dropConstraint);
+        @NotNull  AlterDomain<T> $dropConstraintIfExists(boolean dropConstraintIfExists);
+        @NotNull  AlterDomain<T> $renameTo(Domain<?> renameTo);
+        @NotNull  AlterDomain<T> $renameConstraint(Constraint renameConstraint);
+        @NotNull  AlterDomain<T> $renameConstraintIfExists(boolean renameConstraintIfExists);
+        @NotNull  AlterDomain<T> $setDefault(Field<T> setDefault);
+        @NotNull  AlterDomain<T> $dropDefault(boolean dropDefault);
+        @NotNull  AlterDomain<T> $setNotNull(boolean setNotNull);
+        @NotNull  AlterDomain<T> $dropNotNull(boolean dropNotNull);
+        @NotNull  AlterDomain<T> $cascade(Cascade cascade);
+        @NotNull  AlterDomain<T> $renameConstraintTo(Constraint renameConstraintTo);
     }
 
-    public /* sealed */ interface MAlterIndex
+    public /*sealed*/ interface AlterIndex
         extends
-            MDDLQuery
-        /* permits
-            AlterIndexImpl */ 
+            DDLQuery
+        //permits
+        //    AlterIndexImpl
     {
-        @NotNull  MIndex $index();
+        @NotNull  Index $index();
                   boolean $ifExists();
-        @Nullable MTable<?> $on();
-        @NotNull  MIndex $renameTo();
-        @NotNull  MAlterIndex $index(MIndex index);
-        @NotNull  MAlterIndex $ifExists(boolean ifExists);
-        @NotNull  MAlterIndex $on(MTable<?> on);
-        @NotNull  MAlterIndex $renameTo(MIndex renameTo);
+        @Nullable Table<?> $on();
+        @NotNull  Index $renameTo();
+        @NotNull  AlterIndex $index(Index index);
+        @NotNull  AlterIndex $ifExists(boolean ifExists);
+        @NotNull  AlterIndex $on(Table<?> on);
+        @NotNull  AlterIndex $renameTo(Index renameTo);
     }
 
-    public /* sealed */ interface MAlterSchema
+    public /*sealed*/ interface AlterSchema
         extends
-            MDDLQuery
-        /* permits
-            AlterSchemaImpl */ 
+            DDLQuery
+        //permits
+        //    AlterSchemaImpl
     {
-        @NotNull  MSchema $schema();
+        @NotNull  Schema $schema();
                   boolean $ifExists();
-        @NotNull  MSchema $renameTo();
-        @NotNull  MAlterSchema $schema(MSchema schema);
-        @NotNull  MAlterSchema $ifExists(boolean ifExists);
-        @NotNull  MAlterSchema $renameTo(MSchema renameTo);
+        @NotNull  Schema $renameTo();
+        @NotNull  AlterSchema $schema(Schema schema);
+        @NotNull  AlterSchema $ifExists(boolean ifExists);
+        @NotNull  AlterSchema $renameTo(Schema renameTo);
     }
 
-    public /* sealed */ interface MAlterSequence<T extends Number>
+    public /*sealed*/ interface AlterSequence<T extends Number>
         extends
-            MDDLQuery
-        /* permits
-            AlterSequenceImpl */ 
+            DDLQuery
+        //permits
+        //    AlterSequenceImpl
     {
-        @NotNull  MSequence<T> $sequence();
+        @NotNull  Sequence<T> $sequence();
                   boolean $ifExists();
-        @Nullable MSequence<?> $renameTo();
+        @Nullable Sequence<?> $renameTo();
                   boolean $restart();
-        @Nullable MField<T> $restartWith();
-        @Nullable MField<T> $startWith();
-        @Nullable MField<T> $incrementBy();
-        @Nullable MField<T> $minvalue();
+        @Nullable Field<T> $restartWith();
+        @Nullable Field<T> $startWith();
+        @Nullable Field<T> $incrementBy();
+        @Nullable Field<T> $minvalue();
                   boolean $noMinvalue();
-        @Nullable MField<T> $maxvalue();
+        @Nullable Field<T> $maxvalue();
                   boolean $noMaxvalue();
         @Nullable CycleOption $cycle();
-        @Nullable MField<T> $cache();
+        @Nullable Field<T> $cache();
                   boolean $noCache();
-        @NotNull  MAlterSequence<T> $sequence(MSequence<T> sequence);
-        @NotNull  MAlterSequence<T> $ifExists(boolean ifExists);
-        @NotNull  MAlterSequence<T> $renameTo(MSequence<?> renameTo);
-        @NotNull  MAlterSequence<T> $restart(boolean restart);
-        @NotNull  MAlterSequence<T> $restartWith(MField<T> restartWith);
-        @NotNull  MAlterSequence<T> $startWith(MField<T> startWith);
-        @NotNull  MAlterSequence<T> $incrementBy(MField<T> incrementBy);
-        @NotNull  MAlterSequence<T> $minvalue(MField<T> minvalue);
-        @NotNull  MAlterSequence<T> $noMinvalue(boolean noMinvalue);
-        @NotNull  MAlterSequence<T> $maxvalue(MField<T> maxvalue);
-        @NotNull  MAlterSequence<T> $noMaxvalue(boolean noMaxvalue);
-        @NotNull  MAlterSequence<T> $cycle(CycleOption cycle);
-        @NotNull  MAlterSequence<T> $cache(MField<T> cache);
-        @NotNull  MAlterSequence<T> $noCache(boolean noCache);
+        @NotNull  AlterSequence<T> $sequence(Sequence<T> sequence);
+        @NotNull  AlterSequence<T> $ifExists(boolean ifExists);
+        @NotNull  AlterSequence<T> $renameTo(Sequence<?> renameTo);
+        @NotNull  AlterSequence<T> $restart(boolean restart);
+        @NotNull  AlterSequence<T> $restartWith(Field<T> restartWith);
+        @NotNull  AlterSequence<T> $startWith(Field<T> startWith);
+        @NotNull  AlterSequence<T> $incrementBy(Field<T> incrementBy);
+        @NotNull  AlterSequence<T> $minvalue(Field<T> minvalue);
+        @NotNull  AlterSequence<T> $noMinvalue(boolean noMinvalue);
+        @NotNull  AlterSequence<T> $maxvalue(Field<T> maxvalue);
+        @NotNull  AlterSequence<T> $noMaxvalue(boolean noMaxvalue);
+        @NotNull  AlterSequence<T> $cycle(CycleOption cycle);
+        @NotNull  AlterSequence<T> $cache(Field<T> cache);
+        @NotNull  AlterSequence<T> $noCache(boolean noCache);
     }
 
-    public /* sealed */ interface MAlterType
+    public /*sealed*/ interface AlterType
         extends
-            MDDLQuery
-        /* permits
-            AlterTypeImpl */ 
+            DDLQuery
+        //permits
+        //    AlterTypeImpl
     {
-        @NotNull  MName $type();
-        @Nullable MName $renameTo();
-        @Nullable MSchema $setSchema();
-        @Nullable MField<String> $addValue();
-        @Nullable MField<String> $renameValue();
-        @Nullable MField<String> $renameValueTo();
-        @NotNull  MAlterType $type(MName type);
-        @NotNull  MAlterType $renameTo(MName renameTo);
-        @NotNull  MAlterType $setSchema(MSchema setSchema);
-        @NotNull  MAlterType $addValue(MField<String> addValue);
-        @NotNull  MAlterType $renameValue(MField<String> renameValue);
-        @NotNull  MAlterType $renameValueTo(MField<String> renameValueTo);
+        @NotNull  Name $type();
+        @Nullable Name $renameTo();
+        @Nullable Schema $setSchema();
+        @Nullable Field<String> $addValue();
+        @Nullable Field<String> $renameValue();
+        @Nullable Field<String> $renameValueTo();
+        @NotNull  AlterType $type(Name type);
+        @NotNull  AlterType $renameTo(Name renameTo);
+        @NotNull  AlterType $setSchema(Schema setSchema);
+        @NotNull  AlterType $addValue(Field<String> addValue);
+        @NotNull  AlterType $renameValue(Field<String> renameValue);
+        @NotNull  AlterType $renameValueTo(Field<String> renameValueTo);
     }
 
-    public /* sealed */ interface MAlterView
+    public /*sealed*/ interface AlterView
         extends
-            MDDLQuery
-        /* permits
-            AlterViewImpl */ 
+            DDLQuery
+        //permits
+        //    AlterViewImpl
     {
-        @NotNull  MTable<?> $view();
+        @NotNull  Table<?> $view();
                   boolean $ifExists();
-        @Nullable MComment $comment();
-        @Nullable MTable<?> $renameTo();
-        @NotNull  MAlterView $view(MTable<?> view);
-        @NotNull  MAlterView $ifExists(boolean ifExists);
-        @NotNull  MAlterView $comment(MComment comment);
-        @NotNull  MAlterView $renameTo(MTable<?> renameTo);
+        @Nullable Comment $comment();
+        @Nullable Table<?> $renameTo();
+        @NotNull  AlterView $view(Table<?> view);
+        @NotNull  AlterView $ifExists(boolean ifExists);
+        @NotNull  AlterView $comment(Comment comment);
+        @NotNull  AlterView $renameTo(Table<?> renameTo);
     }
 
-    public /* sealed */ interface MCommentOn
+    public /*sealed*/ interface CommentOn
         extends
-            MDDLQuery
-        /* permits
-            CommentOnImpl */ 
+            DDLQuery
+        //permits
+        //    CommentOnImpl
     {
-        @Nullable MTable<?> $table();
+        @Nullable Table<?> $table();
                   boolean $isView();
-        @Nullable MField<?> $field();
-        @NotNull  MComment $comment();
-        @NotNull  MCommentOn $table(MTable<?> table);
-        @NotNull  MCommentOn $isView(boolean isView);
-        @NotNull  MCommentOn $field(MField<?> field);
-        @NotNull  MCommentOn $comment(MComment comment);
+        @Nullable Field<?> $field();
+        @NotNull  Comment $comment();
+        @NotNull  CommentOn $table(Table<?> table);
+        @NotNull  CommentOn $isView(boolean isView);
+        @NotNull  CommentOn $field(Field<?> field);
+        @NotNull  CommentOn $comment(Comment comment);
     }
 
-    public /* sealed */ interface MCreateDatabase
+    public /*sealed*/ interface CreateDatabase
         extends
-            MDDLQuery
-        /* permits
-            CreateDatabaseImpl */ 
+            DDLQuery
+        //permits
+        //    CreateDatabaseImpl
     {
-        @NotNull  MCatalog $database();
+        @NotNull  Catalog $database();
                   boolean $ifNotExists();
-        @NotNull  MCreateDatabase $database(MCatalog database);
-        @NotNull  MCreateDatabase $ifNotExists(boolean ifNotExists);
+        @NotNull  CreateDatabase $database(Catalog database);
+        @NotNull  CreateDatabase $ifNotExists(boolean ifNotExists);
     }
 
-    public /* sealed */ interface MCreateDomain<T>
+    public /*sealed*/ interface CreateDomain<T>
         extends
-            MDDLQuery
-        /* permits
-            CreateDomainImpl */ 
+            DDLQuery
+        //permits
+        //    CreateDomainImpl
     {
-        @NotNull  MDomain<?> $domain();
+        @NotNull  Domain<?> $domain();
                   boolean $ifNotExists();
-        @NotNull  MDataType<T> $dataType();
-        @Nullable MField<T> $default_();
+        @NotNull  DataType<T> $dataType();
+        @Nullable Field<T> $default_();
         @NotNull  MList<? extends Constraint> $constraints();
-        @NotNull  MCreateDomain<T> $domain(MDomain<?> domain);
-        @NotNull  MCreateDomain<T> $ifNotExists(boolean ifNotExists);
-        @NotNull  MCreateDomain<T> $dataType(MDataType<T> dataType);
-        @NotNull  MCreateDomain<T> $default_(MField<T> default_);
-        @NotNull  MCreateDomain<T> $constraints(MList<? extends Constraint> constraints);
+        @NotNull  CreateDomain<T> $domain(Domain<?> domain);
+        @NotNull  CreateDomain<T> $ifNotExists(boolean ifNotExists);
+        @NotNull  CreateDomain<T> $dataType(DataType<T> dataType);
+        @NotNull  CreateDomain<T> $default_(Field<T> default_);
+        @NotNull  CreateDomain<T> $constraints(MList<? extends Constraint> constraints);
     }
 
 
@@ -1408,28 +1228,28 @@ public final class QOM {
 
 
 
-    public /* sealed */ interface MCreateIndex
+    public /*sealed*/ interface CreateIndex
         extends
-            MDDLQuery
-        /* permits
-            CreateIndexImpl */ 
+            DDLQuery
+        //permits
+        //    CreateIndexImpl
     {
                   boolean $unique();
-        @Nullable MIndex $index();
+        @Nullable Index $index();
                   boolean $ifNotExists();
-        @Nullable MTable<?> $table();
+        @Nullable Table<?> $table();
         @NotNull  MList<? extends OrderField<?>> $on();
         @NotNull  MList<? extends Field<?>> $include();
-        @Nullable MCondition $where();
+        @Nullable Condition $where();
                   boolean $excludeNullKeys();
-        @NotNull  MCreateIndex $unique(boolean unique);
-        @NotNull  MCreateIndex $index(MIndex index);
-        @NotNull  MCreateIndex $ifNotExists(boolean ifNotExists);
-        @NotNull  MCreateIndex $table(MTable<?> table);
-        @NotNull  MCreateIndex $on(MList<? extends OrderField<?>> on);
-        @NotNull  MCreateIndex $include(MList<? extends Field<?>> include);
-        @NotNull  MCreateIndex $where(MCondition where);
-        @NotNull  MCreateIndex $excludeNullKeys(boolean excludeNullKeys);
+        @NotNull  CreateIndex $unique(boolean unique);
+        @NotNull  CreateIndex $index(Index index);
+        @NotNull  CreateIndex $ifNotExists(boolean ifNotExists);
+        @NotNull  CreateIndex $table(Table<?> table);
+        @NotNull  CreateIndex $on(MList<? extends OrderField<?>> on);
+        @NotNull  CreateIndex $include(MList<? extends Field<?>> include);
+        @NotNull  CreateIndex $where(Condition where);
+        @NotNull  CreateIndex $excludeNullKeys(boolean excludeNullKeys);
     }
 
 
@@ -1494,160 +1314,160 @@ public final class QOM {
 
 
 
-    public /* sealed */ interface MCreateSchema
+    public /*sealed*/ interface CreateSchema
         extends
-            MDDLQuery
-        /* permits
-            CreateSchemaImpl */ 
+            DDLQuery
+        //permits
+        //    CreateSchemaImpl
     {
-        @NotNull  MSchema $schema();
+        @NotNull  Schema $schema();
                   boolean $ifNotExists();
-        @NotNull  MCreateSchema $schema(MSchema schema);
-        @NotNull  MCreateSchema $ifNotExists(boolean ifNotExists);
+        @NotNull  CreateSchema $schema(Schema schema);
+        @NotNull  CreateSchema $ifNotExists(boolean ifNotExists);
     }
 
-    public /* sealed */ interface MCreateSequence
+    public /*sealed*/ interface CreateSequence
         extends
-            MDDLQuery
-        /* permits
-            CreateSequenceImpl */ 
+            DDLQuery
+        //permits
+        //    CreateSequenceImpl
     {
-        @NotNull  MSequence<?> $sequence();
+        @NotNull  Sequence<?> $sequence();
                   boolean $ifNotExists();
-        @Nullable MField<? extends Number> $startWith();
-        @Nullable MField<? extends Number> $incrementBy();
-        @Nullable MField<? extends Number> $minvalue();
+        @Nullable Field<? extends Number> $startWith();
+        @Nullable Field<? extends Number> $incrementBy();
+        @Nullable Field<? extends Number> $minvalue();
                   boolean $noMinvalue();
-        @Nullable MField<? extends Number> $maxvalue();
+        @Nullable Field<? extends Number> $maxvalue();
                   boolean $noMaxvalue();
         @Nullable CycleOption $cycle();
-        @Nullable MField<? extends Number> $cache();
+        @Nullable Field<? extends Number> $cache();
                   boolean $noCache();
-        @NotNull  MCreateSequence $sequence(MSequence<?> sequence);
-        @NotNull  MCreateSequence $ifNotExists(boolean ifNotExists);
-        @NotNull  MCreateSequence $startWith(MField<? extends Number> startWith);
-        @NotNull  MCreateSequence $incrementBy(MField<? extends Number> incrementBy);
-        @NotNull  MCreateSequence $minvalue(MField<? extends Number> minvalue);
-        @NotNull  MCreateSequence $noMinvalue(boolean noMinvalue);
-        @NotNull  MCreateSequence $maxvalue(MField<? extends Number> maxvalue);
-        @NotNull  MCreateSequence $noMaxvalue(boolean noMaxvalue);
-        @NotNull  MCreateSequence $cycle(CycleOption cycle);
-        @NotNull  MCreateSequence $cache(MField<? extends Number> cache);
-        @NotNull  MCreateSequence $noCache(boolean noCache);
+        @NotNull  CreateSequence $sequence(Sequence<?> sequence);
+        @NotNull  CreateSequence $ifNotExists(boolean ifNotExists);
+        @NotNull  CreateSequence $startWith(Field<? extends Number> startWith);
+        @NotNull  CreateSequence $incrementBy(Field<? extends Number> incrementBy);
+        @NotNull  CreateSequence $minvalue(Field<? extends Number> minvalue);
+        @NotNull  CreateSequence $noMinvalue(boolean noMinvalue);
+        @NotNull  CreateSequence $maxvalue(Field<? extends Number> maxvalue);
+        @NotNull  CreateSequence $noMaxvalue(boolean noMaxvalue);
+        @NotNull  CreateSequence $cycle(CycleOption cycle);
+        @NotNull  CreateSequence $cache(Field<? extends Number> cache);
+        @NotNull  CreateSequence $noCache(boolean noCache);
     }
 
-    public /* sealed */ interface MDropDatabase
+    public /*sealed*/ interface DropDatabase
         extends
-            MDDLQuery
-        /* permits
-            DropDatabaseImpl */ 
+            DDLQuery
+        //permits
+        //    DropDatabaseImpl
     {
-        @NotNull  MCatalog $database();
+        @NotNull  Catalog $database();
                   boolean $ifExists();
-        @NotNull  MDropDatabase $database(MCatalog database);
-        @NotNull  MDropDatabase $ifExists(boolean ifExists);
+        @NotNull  DropDatabase $database(Catalog database);
+        @NotNull  DropDatabase $ifExists(boolean ifExists);
     }
 
-    public /* sealed */ interface MDropDomain
+    public /*sealed*/ interface DropDomain
         extends
-            MDDLQuery
-        /* permits
-            DropDomainImpl */ 
+            DDLQuery
+        //permits
+        //    DropDomainImpl
     {
-        @NotNull  MDomain<?> $domain();
-                  boolean $ifExists();
-        @Nullable Cascade $cascade();
-        @NotNull  MDropDomain $domain(MDomain<?> domain);
-        @NotNull  MDropDomain $ifExists(boolean ifExists);
-        @NotNull  MDropDomain $cascade(Cascade cascade);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public /* sealed */ interface MDropIndex
-        extends
-            MDDLQuery
-        /* permits
-            DropIndexImpl */ 
-    {
-        @NotNull  MIndex $index();
-                  boolean $ifExists();
-        @Nullable MTable<?> $on();
-        @Nullable Cascade $cascade();
-        @NotNull  MDropIndex $index(MIndex index);
-        @NotNull  MDropIndex $ifExists(boolean ifExists);
-        @NotNull  MDropIndex $on(MTable<?> on);
-        @NotNull  MDropIndex $cascade(Cascade cascade);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public /* sealed */ interface MDropSchema
-        extends
-            MDDLQuery
-        /* permits
-            DropSchemaImpl */ 
-    {
-        @NotNull  MSchema $schema();
+        @NotNull  Domain<?> $domain();
                   boolean $ifExists();
         @Nullable Cascade $cascade();
-        @NotNull  MDropSchema $schema(MSchema schema);
-        @NotNull  MDropSchema $ifExists(boolean ifExists);
-        @NotNull  MDropSchema $cascade(Cascade cascade);
+        @NotNull  DropDomain $domain(Domain<?> domain);
+        @NotNull  DropDomain $ifExists(boolean ifExists);
+        @NotNull  DropDomain $cascade(Cascade cascade);
     }
 
-    public /* sealed */ interface MDropSequence
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public /*sealed*/ interface DropIndex
         extends
-            MDDLQuery
-        /* permits
-            DropSequenceImpl */ 
+            DDLQuery
+        //permits
+        //    DropIndexImpl
     {
-        @NotNull  MSequence<?> $sequence();
+        @NotNull  Index $index();
                   boolean $ifExists();
-        @NotNull  MDropSequence $sequence(MSequence<?> sequence);
-        @NotNull  MDropSequence $ifExists(boolean ifExists);
+        @Nullable Table<?> $on();
+        @Nullable Cascade $cascade();
+        @NotNull  DropIndex $index(Index index);
+        @NotNull  DropIndex $ifExists(boolean ifExists);
+        @NotNull  DropIndex $on(Table<?> on);
+        @NotNull  DropIndex $cascade(Cascade cascade);
     }
 
-    public /* sealed */ interface MDropTable
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public /*sealed*/ interface DropSchema
         extends
-            MDDLQuery
-        /* permits
-            DropTableImpl */ 
+            DDLQuery
+        //permits
+        //    DropSchemaImpl
+    {
+        @NotNull  Schema $schema();
+                  boolean $ifExists();
+        @Nullable Cascade $cascade();
+        @NotNull  DropSchema $schema(Schema schema);
+        @NotNull  DropSchema $ifExists(boolean ifExists);
+        @NotNull  DropSchema $cascade(Cascade cascade);
+    }
+
+    public /*sealed*/ interface DropSequence
+        extends
+            DDLQuery
+        //permits
+        //    DropSequenceImpl
+    {
+        @NotNull  Sequence<?> $sequence();
+                  boolean $ifExists();
+        @NotNull  DropSequence $sequence(Sequence<?> sequence);
+        @NotNull  DropSequence $ifExists(boolean ifExists);
+    }
+
+    public /*sealed*/ interface DropTable
+        extends
+            DDLQuery
+        //permits
+        //    DropTableImpl
     {
                   boolean $temporary();
-        @NotNull  MTable<?> $table();
+        @NotNull  Table<?> $table();
                   boolean $ifExists();
         @Nullable Cascade $cascade();
-        @NotNull  MDropTable $temporary(boolean temporary);
-        @NotNull  MDropTable $table(MTable<?> table);
-        @NotNull  MDropTable $ifExists(boolean ifExists);
-        @NotNull  MDropTable $cascade(Cascade cascade);
+        @NotNull  DropTable $temporary(boolean temporary);
+        @NotNull  DropTable $table(Table<?> table);
+        @NotNull  DropTable $ifExists(boolean ifExists);
+        @NotNull  DropTable $cascade(Cascade cascade);
     }
 
 
@@ -1665,100 +1485,100 @@ public final class QOM {
 
 
 
-    public /* sealed */ interface MDropView
+    public /*sealed*/ interface DropView
         extends
-            MDDLQuery
-        /* permits
-            DropViewImpl */ 
+            DDLQuery
+        //permits
+        //    DropViewImpl
     {
-        @NotNull  MTable<?> $view();
+        @NotNull  Table<?> $view();
                   boolean $ifExists();
-        @NotNull  MDropView $view(MTable<?> view);
-        @NotNull  MDropView $ifExists(boolean ifExists);
+        @NotNull  DropView $view(Table<?> view);
+        @NotNull  DropView $ifExists(boolean ifExists);
     }
 
-    public /* sealed */ interface MGrant
+    public /*sealed*/ interface Grant
         extends
-            MDDLQuery
-        /* permits
-            GrantImpl */ 
+            DDLQuery
+        //permits
+        //    GrantImpl
     {
         @NotNull  MList<? extends Privilege> $privileges();
-        @NotNull  MTable<?> $on();
-        @Nullable MRole $to();
+        @NotNull  Table<?> $on();
+        @Nullable Role $to();
                   boolean $toPublic();
                   boolean $withGrantOption();
-        @NotNull  MGrant $privileges(MList<? extends Privilege> privileges);
-        @NotNull  MGrant $on(MTable<?> on);
-        @NotNull  MGrant $to(MRole to);
-        @NotNull  MGrant $toPublic(boolean toPublic);
-        @NotNull  MGrant $withGrantOption(boolean withGrantOption);
+        @NotNull  Grant $privileges(MList<? extends Privilege> privileges);
+        @NotNull  Grant $on(Table<?> on);
+        @NotNull  Grant $to(Role to);
+        @NotNull  Grant $toPublic(boolean toPublic);
+        @NotNull  Grant $withGrantOption(boolean withGrantOption);
     }
 
-    public /* sealed */ interface MRevoke
+    public /*sealed*/ interface Revoke
         extends
-            MDDLQuery
-        /* permits
-            RevokeImpl */ 
+            DDLQuery
+        //permits
+        //    RevokeImpl
     {
         @NotNull  MList<? extends Privilege> $privileges();
                   boolean $grantOptionFor();
-        @NotNull  MTable<?> $on();
-        @Nullable MRole $from();
+        @NotNull  Table<?> $on();
+        @Nullable Role $from();
                   boolean $fromPublic();
-        @NotNull  MRevoke $privileges(MList<? extends Privilege> privileges);
-        @NotNull  MRevoke $grantOptionFor(boolean grantOptionFor);
-        @NotNull  MRevoke $on(MTable<?> on);
-        @NotNull  MRevoke $from(MRole from);
-        @NotNull  MRevoke $fromPublic(boolean fromPublic);
+        @NotNull  Revoke $privileges(MList<? extends Privilege> privileges);
+        @NotNull  Revoke $grantOptionFor(boolean grantOptionFor);
+        @NotNull  Revoke $on(Table<?> on);
+        @NotNull  Revoke $from(Role from);
+        @NotNull  Revoke $fromPublic(boolean fromPublic);
     }
 
-    public /* sealed */ interface MSetCommand
+    public /*sealed*/ interface SetCommand
         extends
-            MRowCountQuery
-        /* permits
-            SetCommand */ 
+            RowCountQuery
+        //permits
+        //    SetCommand
     {
-        @NotNull  MName $name();
-        @NotNull  MParam<?> $value();
+        @NotNull  Name $name();
+        @NotNull  Param<?> $value();
                   boolean $local();
-        @NotNull  MSetCommand $name(MName name);
-        @NotNull  MSetCommand $value(MParam<?> value);
-        @NotNull  MSetCommand $local(boolean local);
+        @NotNull  SetCommand $name(Name name);
+        @NotNull  SetCommand $value(Param<?> value);
+        @NotNull  SetCommand $local(boolean local);
     }
 
-    public /* sealed */ interface MSetCatalog
+    public /*sealed*/ interface SetCatalog
         extends
-            MRowCountQuery
-        /* permits
-            SetCatalog */ 
+            RowCountQuery
+        //permits
+        //    SetCatalog
     {
-        @NotNull  MCatalog $catalog();
-        @NotNull  MSetCatalog $catalog(MCatalog catalog);
+        @NotNull  Catalog $catalog();
+        @NotNull  SetCatalog $catalog(Catalog catalog);
     }
 
-    public /* sealed */ interface MSetSchema
+    public /*sealed*/ interface SetSchema
         extends
-            MRowCountQuery
-        /* permits
-            SetSchema */ 
+            RowCountQuery
+        //permits
+        //    SetSchema
     {
-        @NotNull  MSchema $schema();
-        @NotNull  MSetSchema $schema(MSchema schema);
+        @NotNull  Schema $schema();
+        @NotNull  SetSchema $schema(Schema schema);
     }
 
-    public /* sealed */ interface MTruncate<R extends Record>
+    public /*sealed*/ interface Truncate<R extends Record>
         extends
-            MDDLQuery
-        /* permits
-            TruncateImpl */ 
+            DDLQuery
+        //permits
+        //    TruncateImpl
     {
-        @NotNull  MTable<R> $table();
+        @NotNull  Table<R> $table();
         @Nullable IdentityRestartOption $restartIdentity();
         @Nullable Cascade $cascade();
-        @NotNull  MTruncate<R> $table(MTable<R> table);
-        @NotNull  MTruncate<R> $restartIdentity(IdentityRestartOption restartIdentity);
-        @NotNull  MTruncate<R> $cascade(Cascade cascade);
+        @NotNull  Truncate<R> $table(Table<R> table);
+        @NotNull  Truncate<R> $restartIdentity(IdentityRestartOption restartIdentity);
+        @NotNull  Truncate<R> $cascade(Cascade cascade);
     }
 
 
@@ -1776,1212 +1596,1212 @@ public final class QOM {
 
 
 
-    public /* sealed */ interface MAnd
+    public /*sealed*/ interface And
         extends
-            MCombinedCondition
-        /* permits
-            And */ 
+            CombinedCondition
+        //permits
+        //    And
     {}
 
-    public /* sealed */ interface MTableEq<R extends Record>
+    public /*sealed*/ interface TableEq<R extends Record>
         extends
-            MCondition,
-            UOperator2<MTable<R>, MTable<R>, MCondition>
-        /* permits
-            TableEq */ 
+            Condition,
+            UOperator2<Table<R>, Table<R>, Condition>
+        //permits
+        //    TableEq
     {}
 
-    public /* sealed */ interface MEq<T>
+    public /*sealed*/ interface Eq<T>
         extends
-            MCompareCondition<T>
-        /* permits
-            Eq */ 
+            CompareCondition<T>
+        //permits
+        //    Eq
     {}
 
-    public /* sealed */ interface MExists
+    public /*sealed*/ interface Exists
         extends
-            MCondition
-        /* permits
-            Exists */ 
+            Condition
+        //permits
+        //    Exists
     {
-        @NotNull  MSelect<?> $query();
-        @NotNull  MExists $query(MSelect<?> query);
+        @NotNull  Select<?> $query();
+        @NotNull  Exists $query(Select<?> query);
     }
 
-    public /* sealed */ interface MGe<T>
+    public /*sealed*/ interface Ge<T>
         extends
-            MCompareCondition<T>
-        /* permits
-            Ge */ 
+            CompareCondition<T>
+        //permits
+        //    Ge
     {}
 
-    public /* sealed */ interface MGt<T>
+    public /*sealed*/ interface Gt<T>
         extends
-            MCompareCondition<T>
-        /* permits
-            Gt */ 
+            CompareCondition<T>
+        //permits
+        //    Gt
     {}
 
-    public /* sealed */ interface MIn<T>
+    public /*sealed*/ interface In<T>
         extends
-            MCondition,
-            UOperator2<MField<T>, MSelect<? extends Record1<T>>, MCondition>
-        /* permits
-            In */ 
+            Condition,
+            UOperator2<Field<T>, Select<? extends Record1<T>>, Condition>
+        //permits
+        //    In
     {}
 
-    public /* sealed */ interface MIsDistinctFrom<T>
+    public /*sealed*/ interface IsDistinctFrom<T>
         extends
-            MCompareCondition<T>
-        /* permits
-            IsDistinctFrom */ 
+            CompareCondition<T>
+        //permits
+        //    IsDistinctFrom
     {}
 
-    public /* sealed */ interface MIsNull
+    public /*sealed*/ interface IsNull
         extends
-            MCondition,
-            UOperator1<MField<?>, MCondition>
-        /* permits
-            IsNull */ 
+            Condition,
+            UOperator1<Field<?>, Condition>
+        //permits
+        //    IsNull
     {
-        @NotNull  default MField<?> $field() { return $arg1(); }
+        @NotNull  default Field<?> $field() { return $arg1(); }
     }
 
-    public /* sealed */ interface MIsNotDistinctFrom<T>
+    public /*sealed*/ interface IsNotDistinctFrom<T>
         extends
-            MCompareCondition<T>
-        /* permits
-            IsNotDistinctFrom */ 
+            CompareCondition<T>
+        //permits
+        //    IsNotDistinctFrom
     {}
 
-    public /* sealed */ interface MIsNotNull
+    public /*sealed*/ interface IsNotNull
         extends
-            MCondition,
-            UOperator1<MField<?>, MCondition>
-        /* permits
-            IsNotNull */ 
+            Condition,
+            UOperator1<Field<?>, Condition>
+        //permits
+        //    IsNotNull
     {
-        @NotNull  default MField<?> $field() { return $arg1(); }
+        @NotNull  default Field<?> $field() { return $arg1(); }
     }
 
-    public /* sealed */ interface MLe<T>
+    public /*sealed*/ interface Le<T>
         extends
-            MCompareCondition<T>
-        /* permits
-            Le */ 
+            CompareCondition<T>
+        //permits
+        //    Le
     {}
 
-    public /* sealed */ interface MLike
+    public /*sealed*/ interface Like
         extends
-            MCondition,
-            UOperator3<MField<?>, MField<String>, Character, MCondition>
-        /* permits
-            Like */ 
+            Condition,
+            UOperator3<Field<?>, Field<String>, Character, Condition>
+        //permits
+        //    Like
     {
-        @NotNull  default MField<?> $value() { return $arg1(); }
-        @NotNull  default MField<String> $pattern() { return $arg2(); }
+        @NotNull  default Field<?> $value() { return $arg1(); }
+        @NotNull  default Field<String> $pattern() { return $arg2(); }
         @Nullable default Character $escape() { return $arg3(); }
     }
 
-    public /* sealed */ interface MLikeIgnoreCase
+    public /*sealed*/ interface LikeIgnoreCase
         extends
-            MCondition,
-            UOperator3<MField<?>, MField<String>, Character, MCondition>
-        /* permits
-            LikeIgnoreCase */ 
+            Condition,
+            UOperator3<Field<?>, Field<String>, Character, Condition>
+        //permits
+        //    LikeIgnoreCase
     {
-        @NotNull  default MField<?> $value() { return $arg1(); }
-        @NotNull  default MField<String> $pattern() { return $arg2(); }
+        @NotNull  default Field<?> $value() { return $arg1(); }
+        @NotNull  default Field<String> $pattern() { return $arg2(); }
         @Nullable default Character $escape() { return $arg3(); }
     }
 
-    public /* sealed */ interface MLt<T>
+    public /*sealed*/ interface Lt<T>
         extends
-            MCompareCondition<T>
-        /* permits
-            Lt */ 
+            CompareCondition<T>
+        //permits
+        //    Lt
     {}
 
-    public /* sealed */ interface MTableNe<R extends Record>
+    public /*sealed*/ interface TableNe<R extends Record>
         extends
-            MCondition,
-            UOperator2<MTable<R>, MTable<R>, MCondition>
-        /* permits
-            TableNe */ 
+            Condition,
+            UOperator2<Table<R>, Table<R>, Condition>
+        //permits
+        //    TableNe
     {}
 
-    public /* sealed */ interface MNe<T>
+    public /*sealed*/ interface Ne<T>
         extends
-            MCompareCondition<T>
-        /* permits
-            Ne */ 
+            CompareCondition<T>
+        //permits
+        //    Ne
     {}
 
-    public /* sealed */ interface MNot
+    public /*sealed*/ interface Not
         extends
-            MCondition,
-            UOperator1<MCondition, MCondition>
-        /* permits
-            Not */ 
+            Condition,
+            UOperator1<Condition, Condition>
+        //permits
+        //    Not
     {
-        @NotNull  default MCondition $condition() { return $arg1(); }
+        @NotNull  default Condition $condition() { return $arg1(); }
     }
 
-    public /* sealed */ interface MNotField
+    public /*sealed*/ interface NotField
         extends
-            MField<Boolean>,
-            UOperator1<MField<Boolean>, MField<Boolean>>
-        /* permits
-            NotField */ 
+            Field<Boolean>,
+            UOperator1<Field<Boolean>, Field<Boolean>>
+        //permits
+        //    NotField
     {
-        @NotNull  default MField<Boolean> $field() { return $arg1(); }
+        @NotNull  default Field<Boolean> $field() { return $arg1(); }
     }
 
-    public /* sealed */ interface MNotIn<T>
+    public /*sealed*/ interface NotIn<T>
         extends
-            MCondition,
-            UOperator2<MField<T>, MSelect<? extends Record1<T>>, MCondition>
-        /* permits
-            NotIn */ 
+            Condition,
+            UOperator2<Field<T>, Select<? extends Record1<T>>, Condition>
+        //permits
+        //    NotIn
     {}
 
-    public /* sealed */ interface MNotLike
+    public /*sealed*/ interface NotLike
         extends
-            MCondition,
-            UOperator3<MField<?>, MField<String>, Character, MCondition>
-        /* permits
-            NotLike */ 
+            Condition,
+            UOperator3<Field<?>, Field<String>, Character, Condition>
+        //permits
+        //    NotLike
     {
-        @NotNull  default MField<?> $value() { return $arg1(); }
-        @NotNull  default MField<String> $pattern() { return $arg2(); }
+        @NotNull  default Field<?> $value() { return $arg1(); }
+        @NotNull  default Field<String> $pattern() { return $arg2(); }
         @Nullable default Character $escape() { return $arg3(); }
     }
 
-    public /* sealed */ interface MNotLikeIgnoreCase
+    public /*sealed*/ interface NotLikeIgnoreCase
         extends
-            MCondition,
-            UOperator3<MField<?>, MField<String>, Character, MCondition>
-        /* permits
-            NotLikeIgnoreCase */ 
+            Condition,
+            UOperator3<Field<?>, Field<String>, Character, Condition>
+        //permits
+        //    NotLikeIgnoreCase
     {
-        @NotNull  default MField<?> $value() { return $arg1(); }
-        @NotNull  default MField<String> $pattern() { return $arg2(); }
+        @NotNull  default Field<?> $value() { return $arg1(); }
+        @NotNull  default Field<String> $pattern() { return $arg2(); }
         @Nullable default Character $escape() { return $arg3(); }
     }
 
-    public /* sealed */ interface MNotSimilarTo
+    public /*sealed*/ interface NotSimilarTo
         extends
-            MCondition,
-            UOperator3<MField<?>, MField<String>, Character, MCondition>
-        /* permits
-            NotSimilarTo */ 
+            Condition,
+            UOperator3<Field<?>, Field<String>, Character, Condition>
+        //permits
+        //    NotSimilarTo
     {
-        @NotNull  default MField<?> $value() { return $arg1(); }
-        @NotNull  default MField<String> $pattern() { return $arg2(); }
+        @NotNull  default Field<?> $value() { return $arg1(); }
+        @NotNull  default Field<String> $pattern() { return $arg2(); }
         @Nullable default Character $escape() { return $arg3(); }
     }
 
-    public /* sealed */ interface MOr
+    public /*sealed*/ interface Or
         extends
-            MCombinedCondition
-        /* permits
-            Or */ 
+            CombinedCondition
+        //permits
+        //    Or
     {}
 
-    public /* sealed */ interface MSimilarTo
+    public /*sealed*/ interface SimilarTo
         extends
-            MCondition,
-            UOperator3<MField<?>, MField<String>, Character, MCondition>
-        /* permits
-            SimilarTo */ 
+            Condition,
+            UOperator3<Field<?>, Field<String>, Character, Condition>
+        //permits
+        //    SimilarTo
     {
-        @NotNull  default MField<?> $value() { return $arg1(); }
-        @NotNull  default MField<String> $pattern() { return $arg2(); }
+        @NotNull  default Field<?> $value() { return $arg1(); }
+        @NotNull  default Field<String> $pattern() { return $arg2(); }
         @Nullable default Character $escape() { return $arg3(); }
     }
 
-    public /* sealed */ interface MUnique
+    public /*sealed*/ interface Unique
         extends
-            MCondition
-        /* permits
-            Unique */ 
+            Condition
+        //permits
+        //    Unique
     {
-        @NotNull  MSelect<?> $query();
-        @NotNull  MUnique $query(MSelect<?> query);
+        @NotNull  Select<?> $query();
+        @NotNull  Unique $query(Select<?> query);
     }
 
-    public /* sealed */ interface MIsDocument
+    public /*sealed*/ interface IsDocument
         extends
-            MCondition,
-            UOperator1<MField<?>, MCondition>
-        /* permits
-            IsDocument */ 
+            Condition,
+            UOperator1<Field<?>, Condition>
+        //permits
+        //    IsDocument
     {
-        @NotNull  default MField<?> $field() { return $arg1(); }
+        @NotNull  default Field<?> $field() { return $arg1(); }
     }
 
-    public /* sealed */ interface MIsNotDocument
+    public /*sealed*/ interface IsNotDocument
         extends
-            MCondition,
-            UOperator1<MField<?>, MCondition>
-        /* permits
-            IsNotDocument */ 
+            Condition,
+            UOperator1<Field<?>, Condition>
+        //permits
+        //    IsNotDocument
     {
-        @NotNull  default MField<?> $field() { return $arg1(); }
+        @NotNull  default Field<?> $field() { return $arg1(); }
     }
 
-    public /* sealed */ interface MIsJson
+    public /*sealed*/ interface IsJson
         extends
-            MCondition,
-            UOperator1<MField<?>, MCondition>
-        /* permits
-            IsJson */ 
+            Condition,
+            UOperator1<Field<?>, Condition>
+        //permits
+        //    IsJson
     {
-        @NotNull  default MField<?> $field() { return $arg1(); }
+        @NotNull  default Field<?> $field() { return $arg1(); }
     }
 
-    public /* sealed */ interface MIsNotJson
+    public /*sealed*/ interface IsNotJson
         extends
-            MCondition,
-            UOperator1<MField<?>, MCondition>
-        /* permits
-            IsNotJson */ 
+            Condition,
+            UOperator1<Field<?>, Condition>
+        //permits
+        //    IsNotJson
     {
-        @NotNull  default MField<?> $field() { return $arg1(); }
+        @NotNull  default Field<?> $field() { return $arg1(); }
     }
 
-    public /* sealed */ interface MQualifiedRowid
+    public /*sealed*/ interface QualifiedRowid
         extends
-            MField<RowId>,
-            UOperator1<MTable<?>, MField<RowId>>
-        /* permits
-            QualifiedRowid */ 
+            Field<RowId>,
+            UOperator1<Table<?>, Field<RowId>>
+        //permits
+        //    QualifiedRowid
     {
-        @NotNull  default MTable<?> $table() { return $arg1(); }
+        @NotNull  default Table<?> $table() { return $arg1(); }
     }
 
-    public /* sealed */ interface MAbs<T extends Number>
+    public /*sealed*/ interface Abs<T extends Number>
         extends
-            MField<T>
-        /* permits
-            Abs */ 
+            Field<T>
+        //permits
+        //    Abs
     {
-        @NotNull  MField<T> $number();
-        @NotNull  MAbs<T> $number(MField<T> number);
+        @NotNull  Field<T> $number();
+        @NotNull  Abs<T> $number(Field<T> number);
     }
 
-    public /* sealed */ interface MAcos
+    public /*sealed*/ interface Acos
         extends
-            MField<BigDecimal>
-        /* permits
-            Acos */ 
+            Field<BigDecimal>
+        //permits
+        //    Acos
     {
-        @NotNull  MField<? extends Number> $number();
-        @NotNull  MAcos $number(MField<? extends Number> number);
+        @NotNull  Field<? extends Number> $number();
+        @NotNull  Acos $number(Field<? extends Number> number);
     }
 
-    public /* sealed */ interface MAsin
+    public /*sealed*/ interface Asin
         extends
-            MField<BigDecimal>
-        /* permits
-            Asin */ 
+            Field<BigDecimal>
+        //permits
+        //    Asin
     {
-        @NotNull  MField<? extends Number> $number();
-        @NotNull  MAsin $number(MField<? extends Number> number);
+        @NotNull  Field<? extends Number> $number();
+        @NotNull  Asin $number(Field<? extends Number> number);
     }
 
-    public /* sealed */ interface MAtan
+    public /*sealed*/ interface Atan
         extends
-            MField<BigDecimal>
-        /* permits
-            Atan */ 
+            Field<BigDecimal>
+        //permits
+        //    Atan
     {
-        @NotNull  MField<? extends Number> $number();
-        @NotNull  MAtan $number(MField<? extends Number> number);
+        @NotNull  Field<? extends Number> $number();
+        @NotNull  Atan $number(Field<? extends Number> number);
     }
 
-    public /* sealed */ interface MAtan2
+    public /*sealed*/ interface Atan2
         extends
-            MField<BigDecimal>
-        /* permits
-            Atan2 */ 
+            Field<BigDecimal>
+        //permits
+        //    Atan2
     {
-        @NotNull  MField<? extends Number> $x();
-        @NotNull  MField<? extends Number> $y();
-        @NotNull  MAtan2 $x(MField<? extends Number> x);
-        @NotNull  MAtan2 $y(MField<? extends Number> y);
+        @NotNull  Field<? extends Number> $x();
+        @NotNull  Field<? extends Number> $y();
+        @NotNull  Atan2 $x(Field<? extends Number> x);
+        @NotNull  Atan2 $y(Field<? extends Number> y);
     }
 
-    public /* sealed */ interface MBitAnd<T extends Number>
+    public /*sealed*/ interface BitAnd<T extends Number>
         extends
-            MField<T>,
-            UOperator2<MField<T>, MField<T>, MField<T>>
-        /* permits
-            BitAnd */ 
+            Field<T>,
+            UOperator2<Field<T>, Field<T>, Field<T>>
+        //permits
+        //    BitAnd
     {}
 
-    public /* sealed */ interface MBitCount
+    public /*sealed*/ interface BitCount
         extends
-            MField<Integer>
-        /* permits
-            BitCount */ 
+            Field<Integer>
+        //permits
+        //    BitCount
     {
-        @NotNull  MField<? extends Number> $number();
-        @NotNull  MBitCount $number(MField<? extends Number> number);
+        @NotNull  Field<? extends Number> $number();
+        @NotNull  BitCount $number(Field<? extends Number> number);
     }
 
-    public /* sealed */ interface MBitNand<T extends Number>
+    public /*sealed*/ interface BitNand<T extends Number>
         extends
-            MField<T>,
-            UOperator2<MField<T>, MField<T>, MField<T>>
-        /* permits
-            BitNand */ 
+            Field<T>,
+            UOperator2<Field<T>, Field<T>, Field<T>>
+        //permits
+        //    BitNand
     {}
 
-    public /* sealed */ interface MBitNor<T extends Number>
+    public /*sealed*/ interface BitNor<T extends Number>
         extends
-            MField<T>,
-            UOperator2<MField<T>, MField<T>, MField<T>>
-        /* permits
-            BitNor */ 
+            Field<T>,
+            UOperator2<Field<T>, Field<T>, Field<T>>
+        //permits
+        //    BitNor
     {}
 
-    public /* sealed */ interface MBitNot<T extends Number>
+    public /*sealed*/ interface BitNot<T extends Number>
         extends
-            MField<T>,
-            UOperator1<MField<T>, MField<T>>
-        /* permits
-            BitNot */ 
+            Field<T>,
+            UOperator1<Field<T>, Field<T>>
+        //permits
+        //    BitNot
     {}
 
-    public /* sealed */ interface MBitOr<T extends Number>
+    public /*sealed*/ interface BitOr<T extends Number>
         extends
-            MField<T>,
-            UOperator2<MField<T>, MField<T>, MField<T>>
-        /* permits
-            BitOr */ 
+            Field<T>,
+            UOperator2<Field<T>, Field<T>, Field<T>>
+        //permits
+        //    BitOr
     {}
 
-    public /* sealed */ interface MBitXNor<T extends Number>
+    public /*sealed*/ interface BitXNor<T extends Number>
         extends
-            MField<T>,
-            UOperator2<MField<T>, MField<T>, MField<T>>
-        /* permits
-            BitXNor */ 
+            Field<T>,
+            UOperator2<Field<T>, Field<T>, Field<T>>
+        //permits
+        //    BitXNor
     {}
 
-    public /* sealed */ interface MBitXor<T extends Number>
+    public /*sealed*/ interface BitXor<T extends Number>
         extends
-            MField<T>,
-            UOperator2<MField<T>, MField<T>, MField<T>>
-        /* permits
-            BitXor */ 
+            Field<T>,
+            UOperator2<Field<T>, Field<T>, Field<T>>
+        //permits
+        //    BitXor
     {}
 
-    public /* sealed */ interface MCeil<T extends Number>
+    public /*sealed*/ interface Ceil<T extends Number>
         extends
-            MField<T>
-        /* permits
-            Ceil */ 
+            Field<T>
+        //permits
+        //    Ceil
     {
-        @NotNull  MField<T> $value();
-        @NotNull  MCeil<T> $value(MField<T> value);
+        @NotNull  Field<T> $value();
+        @NotNull  Ceil<T> $value(Field<T> value);
     }
 
-    public /* sealed */ interface MCos
+    public /*sealed*/ interface Cos
         extends
-            MField<BigDecimal>
-        /* permits
-            Cos */ 
+            Field<BigDecimal>
+        //permits
+        //    Cos
     {
-        @NotNull  MField<? extends Number> $number();
-        @NotNull  MCos $number(MField<? extends Number> number);
+        @NotNull  Field<? extends Number> $number();
+        @NotNull  Cos $number(Field<? extends Number> number);
     }
 
-    public /* sealed */ interface MCosh
+    public /*sealed*/ interface Cosh
         extends
-            MField<BigDecimal>
-        /* permits
-            Cosh */ 
+            Field<BigDecimal>
+        //permits
+        //    Cosh
     {
-        @NotNull  MField<? extends Number> $number();
-        @NotNull  MCosh $number(MField<? extends Number> number);
+        @NotNull  Field<? extends Number> $number();
+        @NotNull  Cosh $number(Field<? extends Number> number);
     }
 
-    public /* sealed */ interface MCot
+    public /*sealed*/ interface Cot
         extends
-            MField<BigDecimal>
-        /* permits
-            Cot */ 
+            Field<BigDecimal>
+        //permits
+        //    Cot
     {
-        @NotNull  MField<? extends Number> $number();
-        @NotNull  MCot $number(MField<? extends Number> number);
+        @NotNull  Field<? extends Number> $number();
+        @NotNull  Cot $number(Field<? extends Number> number);
     }
 
-    public /* sealed */ interface MCoth
+    public /*sealed*/ interface Coth
         extends
-            MField<BigDecimal>
-        /* permits
-            Coth */ 
+            Field<BigDecimal>
+        //permits
+        //    Coth
     {
-        @NotNull  MField<? extends Number> $number();
-        @NotNull  MCoth $number(MField<? extends Number> number);
+        @NotNull  Field<? extends Number> $number();
+        @NotNull  Coth $number(Field<? extends Number> number);
     }
 
-    public /* sealed */ interface MDegrees
+    public /*sealed*/ interface Degrees
         extends
-            MField<BigDecimal>
-        /* permits
-            Degrees */ 
+            Field<BigDecimal>
+        //permits
+        //    Degrees
     {
-        @NotNull  MField<? extends Number> $radians();
-        @NotNull  MDegrees $radians(MField<? extends Number> radians);
+        @NotNull  Field<? extends Number> $radians();
+        @NotNull  Degrees $radians(Field<? extends Number> radians);
     }
 
-    public /* sealed */ interface MEuler
+    public /*sealed*/ interface Euler
         extends
-            MField<BigDecimal>,
+            Field<BigDecimal>,
             UEmpty
-        /* permits
-            Euler */ 
+        //permits
+        //    Euler
     {}
 
-    public /* sealed */ interface MExp
+    public /*sealed*/ interface Exp
         extends
-            MField<BigDecimal>
-        /* permits
-            Exp */ 
+            Field<BigDecimal>
+        //permits
+        //    Exp
     {
-        @NotNull  MField<? extends Number> $value();
-        @NotNull  MExp $value(MField<? extends Number> value);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Exp $value(Field<? extends Number> value);
     }
 
-    public /* sealed */ interface MFloor<T extends Number>
+    public /*sealed*/ interface Floor<T extends Number>
         extends
-            MField<T>
-        /* permits
-            Floor */ 
+            Field<T>
+        //permits
+        //    Floor
     {
-        @NotNull  MField<T> $value();
-        @NotNull  MFloor<T> $value(MField<T> value);
+        @NotNull  Field<T> $value();
+        @NotNull  Floor<T> $value(Field<T> value);
     }
 
-    public /* sealed */ interface MLog
+    public /*sealed*/ interface Log
         extends
-            MField<BigDecimal>
-        /* permits
-            Log */ 
+            Field<BigDecimal>
+        //permits
+        //    Log
     {
-        @NotNull  MField<? extends Number> $value();
-        @Nullable MField<? extends Number> $base();
-        @NotNull  MLog $value(MField<? extends Number> value);
-        @NotNull  MLog $base(MField<? extends Number> base);
+        @NotNull  Field<? extends Number> $value();
+        @Nullable Field<? extends Number> $base();
+        @NotNull  Log $value(Field<? extends Number> value);
+        @NotNull  Log $base(Field<? extends Number> base);
     }
 
-    public /* sealed */ interface MLog10
+    public /*sealed*/ interface Log10
         extends
-            MField<BigDecimal>
-        /* permits
-            Log10 */ 
+            Field<BigDecimal>
+        //permits
+        //    Log10
     {
-        @NotNull  MField<? extends Number> $value();
-        @NotNull  MLog10 $value(MField<? extends Number> value);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Log10 $value(Field<? extends Number> value);
     }
 
-    public /* sealed */ interface MMod<T extends Number>
+    public /*sealed*/ interface Mod<T extends Number>
         extends
-            MField<T>,
-            UOperator2<MField<T>, MField<? extends Number>, MField<T>>
-        /* permits
-            Mod */ 
+            Field<T>,
+            UOperator2<Field<T>, Field<? extends Number>, Field<T>>
+        //permits
+        //    Mod
     {
-        @NotNull  default MField<T> $dividend() { return $arg1(); }
-        @NotNull  default MField<? extends Number> $divisor() { return $arg2(); }
+        @NotNull  default Field<T> $dividend() { return $arg1(); }
+        @NotNull  default Field<? extends Number> $divisor() { return $arg2(); }
     }
 
-    public /* sealed */ interface MPi
+    public /*sealed*/ interface Pi
         extends
-            MField<BigDecimal>,
+            Field<BigDecimal>,
             UEmpty
-        /* permits
-            Pi */ 
+        //permits
+        //    Pi
     {}
 
-    public /* sealed */ interface MPower
+    public /*sealed*/ interface Power
         extends
-            MField<BigDecimal>,
-            UOperator2<MField<? extends Number>, MField<? extends Number>, MField<BigDecimal>>
-        /* permits
-            Power */ 
+            Field<BigDecimal>,
+            UOperator2<Field<? extends Number>, Field<? extends Number>, Field<BigDecimal>>
+        //permits
+        //    Power
     {
-        @NotNull  default MField<? extends Number> $base() { return $arg1(); }
-        @NotNull  default MField<? extends Number> $exponent() { return $arg2(); }
+        @NotNull  default Field<? extends Number> $base() { return $arg1(); }
+        @NotNull  default Field<? extends Number> $exponent() { return $arg2(); }
     }
 
-    public /* sealed */ interface MRadians
+    public /*sealed*/ interface Radians
         extends
-            MField<BigDecimal>
-        /* permits
-            Radians */ 
+            Field<BigDecimal>
+        //permits
+        //    Radians
     {
-        @NotNull  MField<? extends Number> $degrees();
-        @NotNull  MRadians $degrees(MField<? extends Number> degrees);
+        @NotNull  Field<? extends Number> $degrees();
+        @NotNull  Radians $degrees(Field<? extends Number> degrees);
     }
 
-    public /* sealed */ interface MRand
+    public /*sealed*/ interface Rand
         extends
-            MField<BigDecimal>,
+            Field<BigDecimal>,
             UEmpty
-        /* permits
-            Rand */ 
+        //permits
+        //    Rand
     {}
 
-    public /* sealed */ interface MRound<T extends Number>
+    public /*sealed*/ interface Round<T extends Number>
         extends
-            MField<T>
-        /* permits
-            Round */ 
+            Field<T>
+        //permits
+        //    Round
     {
-        @NotNull  MField<T> $value();
-        @Nullable MField<Integer> $decimals();
-        @NotNull  MRound<T> $value(MField<T> value);
-        @NotNull  MRound<T> $decimals(MField<Integer> decimals);
+        @NotNull  Field<T> $value();
+        @Nullable Field<Integer> $decimals();
+        @NotNull  Round<T> $value(Field<T> value);
+        @NotNull  Round<T> $decimals(Field<Integer> decimals);
     }
 
-    public /* sealed */ interface MShl<T extends Number>
+    public /*sealed*/ interface Shl<T extends Number>
         extends
-            MField<T>,
-            UOperator2<MField<T>, MField<? extends Number>, MField<T>>
-        /* permits
-            Shl */ 
+            Field<T>,
+            UOperator2<Field<T>, Field<? extends Number>, Field<T>>
+        //permits
+        //    Shl
     {
-        @NotNull  default MField<T> $value() { return $arg1(); }
-        @NotNull  default MField<? extends Number> $count() { return $arg2(); }
+        @NotNull  default Field<T> $value() { return $arg1(); }
+        @NotNull  default Field<? extends Number> $count() { return $arg2(); }
     }
 
-    public /* sealed */ interface MShr<T extends Number>
+    public /*sealed*/ interface Shr<T extends Number>
         extends
-            MField<T>,
-            UOperator2<MField<T>, MField<? extends Number>, MField<T>>
-        /* permits
-            Shr */ 
+            Field<T>,
+            UOperator2<Field<T>, Field<? extends Number>, Field<T>>
+        //permits
+        //    Shr
     {
-        @NotNull  default MField<T> $value() { return $arg1(); }
-        @NotNull  default MField<? extends Number> $count() { return $arg2(); }
+        @NotNull  default Field<T> $value() { return $arg1(); }
+        @NotNull  default Field<? extends Number> $count() { return $arg2(); }
     }
 
-    public /* sealed */ interface MSign
+    public /*sealed*/ interface Sign
         extends
-            MField<Integer>
-        /* permits
-            Sign */ 
+            Field<Integer>
+        //permits
+        //    Sign
     {
-        @NotNull  MField<? extends Number> $number();
-        @NotNull  MSign $number(MField<? extends Number> number);
+        @NotNull  Field<? extends Number> $number();
+        @NotNull  Sign $number(Field<? extends Number> number);
     }
 
-    public /* sealed */ interface MSin
+    public /*sealed*/ interface Sin
         extends
-            MField<BigDecimal>
-        /* permits
-            Sin */ 
+            Field<BigDecimal>
+        //permits
+        //    Sin
     {
-        @NotNull  MField<? extends Number> $number();
-        @NotNull  MSin $number(MField<? extends Number> number);
+        @NotNull  Field<? extends Number> $number();
+        @NotNull  Sin $number(Field<? extends Number> number);
     }
 
-    public /* sealed */ interface MSinh
+    public /*sealed*/ interface Sinh
         extends
-            MField<BigDecimal>
-        /* permits
-            Sinh */ 
+            Field<BigDecimal>
+        //permits
+        //    Sinh
     {
-        @NotNull  MField<? extends Number> $number();
-        @NotNull  MSinh $number(MField<? extends Number> number);
+        @NotNull  Field<? extends Number> $number();
+        @NotNull  Sinh $number(Field<? extends Number> number);
     }
 
-    public /* sealed */ interface MSqrt
+    public /*sealed*/ interface Sqrt
         extends
-            MField<BigDecimal>
-        /* permits
-            Sqrt */ 
+            Field<BigDecimal>
+        //permits
+        //    Sqrt
     {
-        @NotNull  MField<? extends Number> $value();
-        @NotNull  MSqrt $value(MField<? extends Number> value);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Sqrt $value(Field<? extends Number> value);
     }
 
-    public /* sealed */ interface MSquare<T extends Number>
+    public /*sealed*/ interface Square<T extends Number>
         extends
-            MField<T>
-        /* permits
-            Square */ 
+            Field<T>
+        //permits
+        //    Square
     {
-        @NotNull  MField<T> $value();
-        @NotNull  MSquare<T> $value(MField<T> value);
+        @NotNull  Field<T> $value();
+        @NotNull  Square<T> $value(Field<T> value);
     }
 
-    public /* sealed */ interface MTan
+    public /*sealed*/ interface Tan
         extends
-            MField<BigDecimal>
-        /* permits
-            Tan */ 
+            Field<BigDecimal>
+        //permits
+        //    Tan
     {
-        @NotNull  MField<? extends Number> $number();
-        @NotNull  MTan $number(MField<? extends Number> number);
+        @NotNull  Field<? extends Number> $number();
+        @NotNull  Tan $number(Field<? extends Number> number);
     }
 
-    public /* sealed */ interface MTanh
+    public /*sealed*/ interface Tanh
         extends
-            MField<BigDecimal>
-        /* permits
-            Tanh */ 
+            Field<BigDecimal>
+        //permits
+        //    Tanh
     {
-        @NotNull  MField<? extends Number> $number();
-        @NotNull  MTanh $number(MField<? extends Number> number);
+        @NotNull  Field<? extends Number> $number();
+        @NotNull  Tanh $number(Field<? extends Number> number);
     }
 
-    public /* sealed */ interface MTau
+    public /*sealed*/ interface Tau
         extends
-            MField<BigDecimal>,
+            Field<BigDecimal>,
             UEmpty
-        /* permits
-            Tau */ 
+        //permits
+        //    Tau
     {}
 
-    public /* sealed */ interface MTrunc<T extends Number>
+    public /*sealed*/ interface Trunc<T extends Number>
         extends
-            MField<T>
-        /* permits
-            Trunc */ 
+            Field<T>
+        //permits
+        //    Trunc
     {
-        @NotNull  MField<T> $value();
-        @NotNull  MField<Integer> $decimals();
-        @NotNull  MTrunc<T> $value(MField<T> value);
-        @NotNull  MTrunc<T> $decimals(MField<Integer> decimals);
+        @NotNull  Field<T> $value();
+        @NotNull  Field<Integer> $decimals();
+        @NotNull  Trunc<T> $value(Field<T> value);
+        @NotNull  Trunc<T> $decimals(Field<Integer> decimals);
     }
 
-    public /* sealed */ interface MWidthBucket<T extends Number>
+    public /*sealed*/ interface WidthBucket<T extends Number>
         extends
-            MField<T>
-        /* permits
-            WidthBucket */ 
+            Field<T>
+        //permits
+        //    WidthBucket
     {
-        @NotNull  MField<T> $field();
-        @NotNull  MField<T> $low();
-        @NotNull  MField<T> $high();
-        @NotNull  MField<Integer> $buckets();
-        @NotNull  MWidthBucket<T> $field(MField<T> field);
-        @NotNull  MWidthBucket<T> $low(MField<T> low);
-        @NotNull  MWidthBucket<T> $high(MField<T> high);
-        @NotNull  MWidthBucket<T> $buckets(MField<Integer> buckets);
+        @NotNull  Field<T> $field();
+        @NotNull  Field<T> $low();
+        @NotNull  Field<T> $high();
+        @NotNull  Field<Integer> $buckets();
+        @NotNull  WidthBucket<T> $field(Field<T> field);
+        @NotNull  WidthBucket<T> $low(Field<T> low);
+        @NotNull  WidthBucket<T> $high(Field<T> high);
+        @NotNull  WidthBucket<T> $buckets(Field<Integer> buckets);
     }
 
-    public /* sealed */ interface MAscii
+    public /*sealed*/ interface Ascii
         extends
-            MField<Integer>
-        /* permits
-            Ascii */ 
+            Field<Integer>
+        //permits
+        //    Ascii
     {
-        @NotNull  MField<String> $string();
-        @NotNull  MAscii $string(MField<String> string);
+        @NotNull  Field<String> $string();
+        @NotNull  Ascii $string(Field<String> string);
     }
 
-    public /* sealed */ interface MBitLength
+    public /*sealed*/ interface BitLength
         extends
-            MField<Integer>
-        /* permits
-            BitLength */ 
+            Field<Integer>
+        //permits
+        //    BitLength
     {
-        @NotNull  MField<String> $string();
-        @NotNull  MBitLength $string(MField<String> string);
+        @NotNull  Field<String> $string();
+        @NotNull  BitLength $string(Field<String> string);
     }
 
-    public /* sealed */ interface MCharLength
+    public /*sealed*/ interface CharLength
         extends
-            MField<Integer>
-        /* permits
-            CharLength */ 
+            Field<Integer>
+        //permits
+        //    CharLength
     {
-        @NotNull  MField<String> $string();
-        @NotNull  MCharLength $string(MField<String> string);
+        @NotNull  Field<String> $string();
+        @NotNull  CharLength $string(Field<String> string);
     }
 
-    public /* sealed */ interface MChr
+    public /*sealed*/ interface Chr
         extends
-            MField<String>
-        /* permits
-            Chr */ 
+            Field<String>
+        //permits
+        //    Chr
     {
-        @NotNull  MField<? extends Number> $number();
-        @NotNull  MChr $number(MField<? extends Number> number);
+        @NotNull  Field<? extends Number> $number();
+        @NotNull  Chr $number(Field<? extends Number> number);
     }
 
-    public /* sealed */ interface MContains<T>
+    public /*sealed*/ interface Contains<T>
         extends
-            MCompareCondition<T>
-        /* permits
-            Contains */ 
+            CompareCondition<T>
+        //permits
+        //    Contains
     {
-        @NotNull  default MField<T> $value() { return $arg1(); }
-        @NotNull  default MField<T> $content() { return $arg2(); }
+        @NotNull  default Field<T> $value() { return $arg1(); }
+        @NotNull  default Field<T> $content() { return $arg2(); }
     }
 
-    public /* sealed */ interface MContainsIgnoreCase<T>
+    public /*sealed*/ interface ContainsIgnoreCase<T>
         extends
-            MCompareCondition<T>
-        /* permits
-            ContainsIgnoreCase */ 
+            CompareCondition<T>
+        //permits
+        //    ContainsIgnoreCase
     {
-        @NotNull  default MField<T> $value() { return $arg1(); }
-        @NotNull  default MField<T> $content() { return $arg2(); }
+        @NotNull  default Field<T> $value() { return $arg1(); }
+        @NotNull  default Field<T> $content() { return $arg2(); }
     }
 
-    public /* sealed */ interface MDigits
+    public /*sealed*/ interface Digits
         extends
-            MField<String>
-        /* permits
-            Digits */ 
+            Field<String>
+        //permits
+        //    Digits
     {
-        @NotNull  MField<? extends Number> $value();
-        @NotNull  MDigits $value(MField<? extends Number> value);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Digits $value(Field<? extends Number> value);
     }
 
-    public /* sealed */ interface MEndsWith<T>
+    public /*sealed*/ interface EndsWith<T>
         extends
-            MCompareCondition<T>
-        /* permits
-            EndsWith */ 
+            CompareCondition<T>
+        //permits
+        //    EndsWith
     {
-        @NotNull  default MField<T> $string() { return $arg1(); }
-        @NotNull  default MField<T> $suffix() { return $arg2(); }
+        @NotNull  default Field<T> $string() { return $arg1(); }
+        @NotNull  default Field<T> $suffix() { return $arg2(); }
     }
 
-    public /* sealed */ interface MEndsWithIgnoreCase<T>
+    public /*sealed*/ interface EndsWithIgnoreCase<T>
         extends
-            MCompareCondition<T>
-        /* permits
-            EndsWithIgnoreCase */ 
+            CompareCondition<T>
+        //permits
+        //    EndsWithIgnoreCase
     {
-        @NotNull  default MField<T> $string() { return $arg1(); }
-        @NotNull  default MField<T> $suffix() { return $arg2(); }
+        @NotNull  default Field<T> $string() { return $arg1(); }
+        @NotNull  default Field<T> $suffix() { return $arg2(); }
     }
 
-    public /* sealed */ interface MLeft
+    public /*sealed*/ interface Left
         extends
-            MField<String>
-        /* permits
-            Left */ 
+            Field<String>
+        //permits
+        //    Left
     {
-        @NotNull  MField<String> $string();
-        @NotNull  MField<? extends Number> $length();
-        @NotNull  MLeft $string(MField<String> string);
-        @NotNull  MLeft $length(MField<? extends Number> length);
+        @NotNull  Field<String> $string();
+        @NotNull  Field<? extends Number> $length();
+        @NotNull  Left $string(Field<String> string);
+        @NotNull  Left $length(Field<? extends Number> length);
     }
 
-    public /* sealed */ interface MLower
+    public /*sealed*/ interface Lower
         extends
-            MField<String>
-        /* permits
-            Lower */ 
+            Field<String>
+        //permits
+        //    Lower
     {
-        @NotNull  MField<String> $string();
-        @NotNull  MLower $string(MField<String> string);
+        @NotNull  Field<String> $string();
+        @NotNull  Lower $string(Field<String> string);
     }
 
-    public /* sealed */ interface MLpad
+    public /*sealed*/ interface Lpad
         extends
-            MField<String>
-        /* permits
-            Lpad */ 
+            Field<String>
+        //permits
+        //    Lpad
     {
-        @NotNull  MField<String> $string();
-        @NotNull  MField<? extends Number> $length();
-        @Nullable MField<String> $character();
-        @NotNull  MLpad $string(MField<String> string);
-        @NotNull  MLpad $length(MField<? extends Number> length);
-        @NotNull  MLpad $character(MField<String> character);
+        @NotNull  Field<String> $string();
+        @NotNull  Field<? extends Number> $length();
+        @Nullable Field<String> $character();
+        @NotNull  Lpad $string(Field<String> string);
+        @NotNull  Lpad $length(Field<? extends Number> length);
+        @NotNull  Lpad $character(Field<String> character);
     }
 
-    public /* sealed */ interface MLtrim
+    public /*sealed*/ interface Ltrim
         extends
-            MField<String>
-        /* permits
-            Ltrim */ 
+            Field<String>
+        //permits
+        //    Ltrim
     {
-        @NotNull  MField<String> $string();
-        @Nullable MField<String> $characters();
-        @NotNull  MLtrim $string(MField<String> string);
-        @NotNull  MLtrim $characters(MField<String> characters);
+        @NotNull  Field<String> $string();
+        @Nullable Field<String> $characters();
+        @NotNull  Ltrim $string(Field<String> string);
+        @NotNull  Ltrim $characters(Field<String> characters);
     }
 
-    public /* sealed */ interface MMd5
+    public /*sealed*/ interface Md5
         extends
-            MField<String>
-        /* permits
-            Md5 */ 
+            Field<String>
+        //permits
+        //    Md5
     {
-        @NotNull  MField<String> $string();
-        @NotNull  MMd5 $string(MField<String> string);
+        @NotNull  Field<String> $string();
+        @NotNull  Md5 $string(Field<String> string);
     }
 
-    public /* sealed */ interface MOctetLength
+    public /*sealed*/ interface OctetLength
         extends
-            MField<Integer>
-        /* permits
-            OctetLength */ 
+            Field<Integer>
+        //permits
+        //    OctetLength
     {
-        @NotNull  MField<String> $string();
-        @NotNull  MOctetLength $string(MField<String> string);
+        @NotNull  Field<String> $string();
+        @NotNull  OctetLength $string(Field<String> string);
     }
 
-    public /* sealed */ interface MOverlay
+    public /*sealed*/ interface Overlay
         extends
-            MField<String>
-        /* permits
-            Overlay */ 
+            Field<String>
+        //permits
+        //    Overlay
     {
-        @NotNull  MField<String> $in();
-        @NotNull  MField<String> $placing();
-        @NotNull  MField<? extends Number> $startIndex();
-        @Nullable MField<? extends Number> $length();
-        @NotNull  MOverlay $in(MField<String> in);
-        @NotNull  MOverlay $placing(MField<String> placing);
-        @NotNull  MOverlay $startIndex(MField<? extends Number> startIndex);
-        @NotNull  MOverlay $length(MField<? extends Number> length);
+        @NotNull  Field<String> $in();
+        @NotNull  Field<String> $placing();
+        @NotNull  Field<? extends Number> $startIndex();
+        @Nullable Field<? extends Number> $length();
+        @NotNull  Overlay $in(Field<String> in);
+        @NotNull  Overlay $placing(Field<String> placing);
+        @NotNull  Overlay $startIndex(Field<? extends Number> startIndex);
+        @NotNull  Overlay $length(Field<? extends Number> length);
     }
 
-    public /* sealed */ interface MPosition
+    public /*sealed*/ interface Position
         extends
-            MField<Integer>
-        /* permits
-            Position */ 
+            Field<Integer>
+        //permits
+        //    Position
     {
-        @NotNull  MField<String> $in();
-        @NotNull  MField<String> $search();
-        @Nullable MField<? extends Number> $startIndex();
-        @NotNull  MPosition $in(MField<String> in);
-        @NotNull  MPosition $search(MField<String> search);
-        @NotNull  MPosition $startIndex(MField<? extends Number> startIndex);
+        @NotNull  Field<String> $in();
+        @NotNull  Field<String> $search();
+        @Nullable Field<? extends Number> $startIndex();
+        @NotNull  Position $in(Field<String> in);
+        @NotNull  Position $search(Field<String> search);
+        @NotNull  Position $startIndex(Field<? extends Number> startIndex);
     }
 
-    public /* sealed */ interface MRepeat
+    public /*sealed*/ interface Repeat
         extends
-            MField<String>
-        /* permits
-            Repeat */ 
+            Field<String>
+        //permits
+        //    Repeat
     {
-        @NotNull  MField<String> $string();
-        @NotNull  MField<? extends Number> $count();
-        @NotNull  MRepeat $string(MField<String> string);
-        @NotNull  MRepeat $count(MField<? extends Number> count);
+        @NotNull  Field<String> $string();
+        @NotNull  Field<? extends Number> $count();
+        @NotNull  Repeat $string(Field<String> string);
+        @NotNull  Repeat $count(Field<? extends Number> count);
     }
 
-    public /* sealed */ interface MReplace
+    public /*sealed*/ interface Replace
         extends
-            MField<String>
-        /* permits
-            Replace */ 
+            Field<String>
+        //permits
+        //    Replace
     {
-        @NotNull  MField<String> $string();
-        @NotNull  MField<String> $search();
-        @Nullable MField<String> $replace();
-        @NotNull  MReplace $string(MField<String> string);
-        @NotNull  MReplace $search(MField<String> search);
-        @NotNull  MReplace $replace(MField<String> replace);
+        @NotNull  Field<String> $string();
+        @NotNull  Field<String> $search();
+        @Nullable Field<String> $replace();
+        @NotNull  Replace $string(Field<String> string);
+        @NotNull  Replace $search(Field<String> search);
+        @NotNull  Replace $replace(Field<String> replace);
     }
 
-    public /* sealed */ interface MReverse
+    public /*sealed*/ interface Reverse
         extends
-            MField<String>
-        /* permits
-            Reverse */ 
+            Field<String>
+        //permits
+        //    Reverse
     {
-        @NotNull  MField<String> $string();
-        @NotNull  MReverse $string(MField<String> string);
+        @NotNull  Field<String> $string();
+        @NotNull  Reverse $string(Field<String> string);
     }
 
-    public /* sealed */ interface MRight
+    public /*sealed*/ interface Right
         extends
-            MField<String>
-        /* permits
-            Right */ 
+            Field<String>
+        //permits
+        //    Right
     {
-        @NotNull  MField<String> $string();
-        @NotNull  MField<? extends Number> $length();
-        @NotNull  MRight $string(MField<String> string);
-        @NotNull  MRight $length(MField<? extends Number> length);
+        @NotNull  Field<String> $string();
+        @NotNull  Field<? extends Number> $length();
+        @NotNull  Right $string(Field<String> string);
+        @NotNull  Right $length(Field<? extends Number> length);
     }
 
-    public /* sealed */ interface MRpad
+    public /*sealed*/ interface Rpad
         extends
-            MField<String>
-        /* permits
-            Rpad */ 
+            Field<String>
+        //permits
+        //    Rpad
     {
-        @NotNull  MField<String> $string();
-        @NotNull  MField<? extends Number> $length();
-        @Nullable MField<String> $character();
-        @NotNull  MRpad $string(MField<String> string);
-        @NotNull  MRpad $length(MField<? extends Number> length);
-        @NotNull  MRpad $character(MField<String> character);
+        @NotNull  Field<String> $string();
+        @NotNull  Field<? extends Number> $length();
+        @Nullable Field<String> $character();
+        @NotNull  Rpad $string(Field<String> string);
+        @NotNull  Rpad $length(Field<? extends Number> length);
+        @NotNull  Rpad $character(Field<String> character);
     }
 
-    public /* sealed */ interface MRtrim
+    public /*sealed*/ interface Rtrim
         extends
-            MField<String>
-        /* permits
-            Rtrim */ 
+            Field<String>
+        //permits
+        //    Rtrim
     {
-        @NotNull  MField<String> $string();
-        @Nullable MField<String> $characters();
-        @NotNull  MRtrim $string(MField<String> string);
-        @NotNull  MRtrim $characters(MField<String> characters);
+        @NotNull  Field<String> $string();
+        @Nullable Field<String> $characters();
+        @NotNull  Rtrim $string(Field<String> string);
+        @NotNull  Rtrim $characters(Field<String> characters);
     }
 
-    public /* sealed */ interface MSpace
+    public /*sealed*/ interface Space
         extends
-            MField<String>
-        /* permits
-            Space */ 
+            Field<String>
+        //permits
+        //    Space
     {
-        @NotNull  MField<? extends Number> $count();
-        @NotNull  MSpace $count(MField<? extends Number> count);
+        @NotNull  Field<? extends Number> $count();
+        @NotNull  Space $count(Field<? extends Number> count);
     }
 
-    public /* sealed */ interface MSplitPart
+    public /*sealed*/ interface SplitPart
         extends
-            MField<String>
-        /* permits
-            SplitPart */ 
+            Field<String>
+        //permits
+        //    SplitPart
     {
-        @NotNull  MField<String> $string();
-        @NotNull  MField<String> $delimiter();
-        @NotNull  MField<? extends Number> $n();
-        @NotNull  MSplitPart $string(MField<String> string);
-        @NotNull  MSplitPart $delimiter(MField<String> delimiter);
-        @NotNull  MSplitPart $n(MField<? extends Number> n);
+        @NotNull  Field<String> $string();
+        @NotNull  Field<String> $delimiter();
+        @NotNull  Field<? extends Number> $n();
+        @NotNull  SplitPart $string(Field<String> string);
+        @NotNull  SplitPart $delimiter(Field<String> delimiter);
+        @NotNull  SplitPart $n(Field<? extends Number> n);
     }
 
-    public /* sealed */ interface MStartsWith<T>
+    public /*sealed*/ interface StartsWith<T>
         extends
-            MCompareCondition<T>
-        /* permits
-            StartsWith */ 
+            CompareCondition<T>
+        //permits
+        //    StartsWith
     {
-        @NotNull  default MField<T> $string() { return $arg1(); }
-        @NotNull  default MField<T> $prefix() { return $arg2(); }
+        @NotNull  default Field<T> $string() { return $arg1(); }
+        @NotNull  default Field<T> $prefix() { return $arg2(); }
     }
 
-    public /* sealed */ interface MStartsWithIgnoreCase<T>
+    public /*sealed*/ interface StartsWithIgnoreCase<T>
         extends
-            MCompareCondition<T>
-        /* permits
-            StartsWithIgnoreCase */ 
+            CompareCondition<T>
+        //permits
+        //    StartsWithIgnoreCase
     {
-        @NotNull  default MField<T> $string() { return $arg1(); }
-        @NotNull  default MField<T> $prefix() { return $arg2(); }
+        @NotNull  default Field<T> $string() { return $arg1(); }
+        @NotNull  default Field<T> $prefix() { return $arg2(); }
     }
 
-    public /* sealed */ interface MSubstring
+    public /*sealed*/ interface Substring
         extends
-            MField<String>
-        /* permits
-            Substring */ 
+            Field<String>
+        //permits
+        //    Substring
     {
-        @NotNull  MField<String> $string();
-        @NotNull  MField<? extends Number> $startingPosition();
-        @Nullable MField<? extends Number> $length();
-        @NotNull  MSubstring $string(MField<String> string);
-        @NotNull  MSubstring $startingPosition(MField<? extends Number> startingPosition);
-        @NotNull  MSubstring $length(MField<? extends Number> length);
+        @NotNull  Field<String> $string();
+        @NotNull  Field<? extends Number> $startingPosition();
+        @Nullable Field<? extends Number> $length();
+        @NotNull  Substring $string(Field<String> string);
+        @NotNull  Substring $startingPosition(Field<? extends Number> startingPosition);
+        @NotNull  Substring $length(Field<? extends Number> length);
     }
 
-    public /* sealed */ interface MSubstringIndex
+    public /*sealed*/ interface SubstringIndex
         extends
-            MField<String>
-        /* permits
-            SubstringIndex */ 
+            Field<String>
+        //permits
+        //    SubstringIndex
     {
-        @NotNull  MField<String> $string();
-        @NotNull  MField<String> $delimiter();
-        @NotNull  MField<? extends Number> $n();
-        @NotNull  MSubstringIndex $string(MField<String> string);
-        @NotNull  MSubstringIndex $delimiter(MField<String> delimiter);
-        @NotNull  MSubstringIndex $n(MField<? extends Number> n);
+        @NotNull  Field<String> $string();
+        @NotNull  Field<String> $delimiter();
+        @NotNull  Field<? extends Number> $n();
+        @NotNull  SubstringIndex $string(Field<String> string);
+        @NotNull  SubstringIndex $delimiter(Field<String> delimiter);
+        @NotNull  SubstringIndex $n(Field<? extends Number> n);
     }
 
-    public /* sealed */ interface MToChar
+    public /*sealed*/ interface ToChar
         extends
-            MField<String>
-        /* permits
-            ToChar */ 
+            Field<String>
+        //permits
+        //    ToChar
     {
-        @NotNull  MField<?> $value();
-        @Nullable MField<String> $formatMask();
-        @NotNull  MToChar $value(MField<?> value);
-        @NotNull  MToChar $formatMask(MField<String> formatMask);
+        @NotNull  Field<?> $value();
+        @Nullable Field<String> $formatMask();
+        @NotNull  ToChar $value(Field<?> value);
+        @NotNull  ToChar $formatMask(Field<String> formatMask);
     }
 
-    public /* sealed */ interface MToDate
+    public /*sealed*/ interface ToDate
         extends
-            MField<Date>
-        /* permits
-            ToDate */ 
+            Field<Date>
+        //permits
+        //    ToDate
     {
-        @NotNull  MField<String> $value();
-        @NotNull  MField<String> $formatMask();
-        @NotNull  MToDate $value(MField<String> value);
-        @NotNull  MToDate $formatMask(MField<String> formatMask);
+        @NotNull  Field<String> $value();
+        @NotNull  Field<String> $formatMask();
+        @NotNull  ToDate $value(Field<String> value);
+        @NotNull  ToDate $formatMask(Field<String> formatMask);
     }
 
-    public /* sealed */ interface MToHex
+    public /*sealed*/ interface ToHex
         extends
-            MField<String>
-        /* permits
-            ToHex */ 
+            Field<String>
+        //permits
+        //    ToHex
     {
-        @NotNull  MField<? extends Number> $value();
-        @NotNull  MToHex $value(MField<? extends Number> value);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  ToHex $value(Field<? extends Number> value);
     }
 
-    public /* sealed */ interface MToTimestamp
+    public /*sealed*/ interface ToTimestamp
         extends
-            MField<Timestamp>
-        /* permits
-            ToTimestamp */ 
+            Field<Timestamp>
+        //permits
+        //    ToTimestamp
     {
-        @NotNull  MField<String> $value();
-        @NotNull  MField<String> $formatMask();
-        @NotNull  MToTimestamp $value(MField<String> value);
-        @NotNull  MToTimestamp $formatMask(MField<String> formatMask);
+        @NotNull  Field<String> $value();
+        @NotNull  Field<String> $formatMask();
+        @NotNull  ToTimestamp $value(Field<String> value);
+        @NotNull  ToTimestamp $formatMask(Field<String> formatMask);
     }
 
-    public /* sealed */ interface MTranslate
+    public /*sealed*/ interface Translate
         extends
-            MField<String>
-        /* permits
-            Translate */ 
+            Field<String>
+        //permits
+        //    Translate
     {
-        @NotNull  MField<String> $string();
-        @NotNull  MField<String> $from();
-        @NotNull  MField<String> $to();
-        @NotNull  MTranslate $string(MField<String> string);
-        @NotNull  MTranslate $from(MField<String> from);
-        @NotNull  MTranslate $to(MField<String> to);
+        @NotNull  Field<String> $string();
+        @NotNull  Field<String> $from();
+        @NotNull  Field<String> $to();
+        @NotNull  Translate $string(Field<String> string);
+        @NotNull  Translate $from(Field<String> from);
+        @NotNull  Translate $to(Field<String> to);
     }
 
-    public /* sealed */ interface MTrim
+    public /*sealed*/ interface Trim
         extends
-            MField<String>
-        /* permits
-            Trim */ 
+            Field<String>
+        //permits
+        //    Trim
     {
-        @NotNull  MField<String> $string();
-        @Nullable MField<String> $characters();
-        @NotNull  MTrim $string(MField<String> string);
-        @NotNull  MTrim $characters(MField<String> characters);
+        @NotNull  Field<String> $string();
+        @Nullable Field<String> $characters();
+        @NotNull  Trim $string(Field<String> string);
+        @NotNull  Trim $characters(Field<String> characters);
     }
 
-    public /* sealed */ interface MUpper
+    public /*sealed*/ interface Upper
         extends
-            MField<String>
-        /* permits
-            Upper */ 
+            Field<String>
+        //permits
+        //    Upper
     {
-        @NotNull  MField<String> $string();
-        @NotNull  MUpper $string(MField<String> string);
+        @NotNull  Field<String> $string();
+        @NotNull  Upper $string(Field<String> string);
     }
 
-    public /* sealed */ interface MUuid
+    public /*sealed*/ interface Uuid
         extends
-            MField<UUID>,
+            Field<UUID>,
             UEmpty
-        /* permits
-            Uuid */ 
+        //permits
+        //    Uuid
     {}
 
-    public /* sealed */ interface MDateAdd<T>
+    public /*sealed*/ interface DateAdd<T>
         extends
-            MField<T>
-        /* permits
-            DateAdd */ 
+            Field<T>
+        //permits
+        //    DateAdd
     {
-        @NotNull  MField<T> $date();
-        @NotNull  MField<? extends Number> $interval();
+        @NotNull  Field<T> $date();
+        @NotNull  Field<? extends Number> $interval();
         @Nullable DatePart $datePart();
-        @NotNull  MDateAdd<T> $date(MField<T> date);
-        @NotNull  MDateAdd<T> $interval(MField<? extends Number> interval);
-        @NotNull  MDateAdd<T> $datePart(DatePart datePart);
+        @NotNull  DateAdd<T> $date(Field<T> date);
+        @NotNull  DateAdd<T> $interval(Field<? extends Number> interval);
+        @NotNull  DateAdd<T> $datePart(DatePart datePart);
     }
 
-    public /* sealed */ interface MCardinality
+    public /*sealed*/ interface Cardinality
         extends
-            MField<Integer>
-        /* permits
-            Cardinality */ 
+            Field<Integer>
+        //permits
+        //    Cardinality
     {
-        @NotNull  MField<? extends Object[]> $array();
-        @NotNull  MCardinality $array(MField<? extends Object[]> array);
+        @NotNull  Field<? extends Object[]> $array();
+        @NotNull  Cardinality $array(Field<? extends Object[]> array);
     }
 
-    public /* sealed */ interface MArrayGet<T>
+    public /*sealed*/ interface ArrayGet<T>
         extends
-            MField<T>
-        /* permits
-            ArrayGet */ 
+            Field<T>
+        //permits
+        //    ArrayGet
     {
-        @NotNull  MField<T[]> $array();
-        @NotNull  MField<Integer> $index();
-        @NotNull  MArrayGet<T> $array(MField<T[]> array);
-        @NotNull  MArrayGet<T> $index(MField<Integer> index);
+        @NotNull  Field<T[]> $array();
+        @NotNull  Field<Integer> $index();
+        @NotNull  ArrayGet<T> $array(Field<T[]> array);
+        @NotNull  ArrayGet<T> $index(Field<Integer> index);
     }
 
-    public /* sealed */ interface MNvl<T>
+    public /*sealed*/ interface Nvl<T>
         extends
-            MField<T>
-        /* permits
-            Nvl */ 
+            Field<T>
+        //permits
+        //    Nvl
     {
-        @NotNull  MField<T> $value();
-        @NotNull  MField<T> $defaultValue();
-        @NotNull  MNvl<T> $value(MField<T> value);
-        @NotNull  MNvl<T> $defaultValue(MField<T> defaultValue);
+        @NotNull  Field<T> $value();
+        @NotNull  Field<T> $defaultValue();
+        @NotNull  Nvl<T> $value(Field<T> value);
+        @NotNull  Nvl<T> $defaultValue(Field<T> defaultValue);
     }
 
-    public /* sealed */ interface MNullif<T>
+    public /*sealed*/ interface Nullif<T>
         extends
-            MField<T>
-        /* permits
-            Nullif */ 
+            Field<T>
+        //permits
+        //    Nullif
     {
-        @NotNull  MField<T> $value();
-        @NotNull  MField<T> $other();
-        @NotNull  MNullif<T> $value(MField<T> value);
-        @NotNull  MNullif<T> $other(MField<T> other);
+        @NotNull  Field<T> $value();
+        @NotNull  Field<T> $other();
+        @NotNull  Nullif<T> $value(Field<T> value);
+        @NotNull  Nullif<T> $other(Field<T> other);
     }
 
-    public /* sealed */ interface MCurrentCatalog
+    public /*sealed*/ interface CurrentCatalog
         extends
-            MField<String>,
+            Field<String>,
             UEmpty
-        /* permits
-            CurrentCatalog */ 
+        //permits
+        //    CurrentCatalog
     {}
 
-    public /* sealed */ interface MCurrentSchema
+    public /*sealed*/ interface CurrentSchema
         extends
-            MField<String>,
+            Field<String>,
             UEmpty
-        /* permits
-            CurrentSchema */ 
+        //permits
+        //    CurrentSchema
     {}
 
-    public /* sealed */ interface MCurrentUser
+    public /*sealed*/ interface CurrentUser
         extends
-            MField<String>,
+            Field<String>,
             UEmpty
-        /* permits
-            CurrentUser */ 
+        //permits
+        //    CurrentUser
     {}
 
 
@@ -3068,24 +2888,24 @@ public final class QOM {
 
 
 
-    public /* sealed */ interface MXmlcomment
+    public /*sealed*/ interface Xmlcomment
         extends
-            MField<XML>
-        /* permits
-            Xmlcomment */ 
+            Field<XML>
+        //permits
+        //    Xmlcomment
     {
-        @NotNull  MField<String> $comment();
-        @NotNull  MXmlcomment $comment(MField<String> comment);
+        @NotNull  Field<String> $comment();
+        @NotNull  Xmlcomment $comment(Field<String> comment);
     }
 
-    public /* sealed */ interface MXmlconcat
+    public /*sealed*/ interface Xmlconcat
         extends
-            MField<XML>
-        /* permits
-            Xmlconcat */ 
+            Field<XML>
+        //permits
+        //    Xmlconcat
     {
         @NotNull  MList<? extends Field<?>> $args();
-        @NotNull  MXmlconcat $args(MList<? extends Field<?>> args);
+        @NotNull  Xmlconcat $args(MList<? extends Field<?>> args);
     }
 
 
@@ -3101,72 +2921,72 @@ public final class QOM {
 
 
 
-    public /* sealed */ interface MXmlforest
+    public /*sealed*/ interface Xmlforest
         extends
-            MField<XML>
-        /* permits
-            Xmlforest */ 
+            Field<XML>
+        //permits
+        //    Xmlforest
     {
         @NotNull  MList<? extends Field<?>> $fields();
-        @NotNull  MXmlforest $fields(MList<? extends Field<?>> fields);
+        @NotNull  Xmlforest $fields(MList<? extends Field<?>> fields);
     }
 
-    public /* sealed */ interface MXmlpi
+    public /*sealed*/ interface Xmlpi
         extends
-            MField<XML>
-        /* permits
-            Xmlpi */ 
+            Field<XML>
+        //permits
+        //    Xmlpi
     {
-        @NotNull  MName $target();
-        @Nullable MField<?> $content();
-        @NotNull  MXmlpi $target(MName target);
-        @NotNull  MXmlpi $content(MField<?> content);
+        @NotNull  Name $target();
+        @Nullable Field<?> $content();
+        @NotNull  Xmlpi $target(Name target);
+        @NotNull  Xmlpi $content(Field<?> content);
     }
 
-    public /* sealed */ interface MXmlserialize<T>
+    public /*sealed*/ interface Xmlserialize<T>
         extends
-            MField<T>
-        /* permits
-            Xmlserialize */ 
+            Field<T>
+        //permits
+        //    Xmlserialize
     {
                   boolean $content();
-        @NotNull  MField<XML> $value();
-        @NotNull  MDataType<T> $type();
-        @NotNull  MXmlserialize<T> $content(boolean content);
-        @NotNull  MXmlserialize<T> $value(MField<XML> value);
-        @NotNull  MXmlserialize<T> $type(MDataType<T> type);
+        @NotNull  Field<XML> $value();
+        @NotNull  DataType<T> $type();
+        @NotNull  Xmlserialize<T> $content(boolean content);
+        @NotNull  Xmlserialize<T> $value(Field<XML> value);
+        @NotNull  Xmlserialize<T> $type(DataType<T> type);
     }
 
-    public /* sealed */ interface MJSONArray<T>
+    public /*sealed*/ interface JSONArray<T>
         extends
-            MField<T>
-        /* permits
-            JSONArray */ 
+            Field<T>
+        //permits
+        //    JSONArray
     {
-        @NotNull  MDataType<T> $type();
+        @NotNull  DataType<T> $type();
         @NotNull  MList<? extends Field<?>> $fields();
         @Nullable JSONOnNull $onNull();
-        @Nullable MDataType<?> $returning();
-        @NotNull  MJSONArray<T> $type(MDataType<T> type);
-        @NotNull  MJSONArray<T> $fields(MList<? extends Field<?>> fields);
-        @NotNull  MJSONArray<T> $onNull(JSONOnNull onNull);
-        @NotNull  MJSONArray<T> $returning(MDataType<?> returning);
+        @Nullable DataType<?> $returning();
+        @NotNull  JSONArray<T> $type(DataType<T> type);
+        @NotNull  JSONArray<T> $fields(MList<? extends Field<?>> fields);
+        @NotNull  JSONArray<T> $onNull(JSONOnNull onNull);
+        @NotNull  JSONArray<T> $returning(DataType<?> returning);
     }
 
-    public /* sealed */ interface MJSONObject<T>
+    public /*sealed*/ interface JSONObject<T>
         extends
-            MField<T>
-        /* permits
-            JSONObject */ 
+            Field<T>
+        //permits
+        //    JSONObject
     {
-        @NotNull  MDataType<T> $type();
+        @NotNull  DataType<T> $type();
         @NotNull  MList<? extends JSONEntry<?>> $entries();
         @Nullable JSONOnNull $onNull();
-        @Nullable MDataType<?> $returning();
-        @NotNull  MJSONObject<T> $type(MDataType<T> type);
-        @NotNull  MJSONObject<T> $entries(MList<? extends JSONEntry<?>> entries);
-        @NotNull  MJSONObject<T> $onNull(JSONOnNull onNull);
-        @NotNull  MJSONObject<T> $returning(MDataType<?> returning);
+        @Nullable DataType<?> $returning();
+        @NotNull  JSONObject<T> $type(DataType<T> type);
+        @NotNull  JSONObject<T> $entries(MList<? extends JSONEntry<?>> entries);
+        @NotNull  JSONObject<T> $onNull(JSONOnNull onNull);
+        @NotNull  JSONObject<T> $returning(DataType<?> returning);
     }
 
 
@@ -3198,350 +3018,350 @@ public final class QOM {
 
 
 
-    public /* sealed */ interface MConditionAsField
+    public /*sealed*/ interface ConditionAsField
         extends
-            MField<Boolean>
-        /* permits
-            ConditionAsField */ 
+            Field<Boolean>
+        //permits
+        //    ConditionAsField
     {
-        @NotNull  MCondition $condition();
-        @NotNull  MConditionAsField $condition(MCondition condition);
+        @NotNull  Condition $condition();
+        @NotNull  ConditionAsField $condition(Condition condition);
     }
 
-    public /* sealed */ interface MFieldCondition
+    public /*sealed*/ interface FieldCondition
         extends
-            MCondition
-        /* permits
-            FieldCondition */ 
+            Condition
+        //permits
+        //    FieldCondition
     {
-        @NotNull  MField<Boolean> $field();
-        @NotNull  MFieldCondition $field(MField<Boolean> field);
+        @NotNull  Field<Boolean> $field();
+        @NotNull  FieldCondition $field(Field<Boolean> field);
     }
 
-    public /* sealed */ interface MAnyValue<T>
+    public /*sealed*/ interface AnyValue<T>
         extends
-            MAggregateFunction<T>
-        /* permits
-            AnyValue */ 
+            AggregateFunction<T>
+        //permits
+        //    AnyValue
     {
-        @NotNull  MField<T> $field();
-        @NotNull  MAnyValue<T> $field(MField<T> field);
+        @NotNull  Field<T> $field();
+        @NotNull  AnyValue<T> $field(Field<T> field);
     }
 
-    public /* sealed */ interface MAvg
+    public /*sealed*/ interface Avg
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            Avg */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    Avg
     {
-        @NotNull  MField<? extends Number> $field();
+        @NotNull  Field<? extends Number> $field();
                   boolean $distinct();
-        @NotNull  MAvg $field(MField<? extends Number> field);
-        @NotNull  MAvg $distinct(boolean distinct);
+        @NotNull  Avg $field(Field<? extends Number> field);
+        @NotNull  Avg $distinct(boolean distinct);
     }
 
-    public /* sealed */ interface MBitAndAgg<T extends Number>
+    public /*sealed*/ interface BitAndAgg<T extends Number>
         extends
-            MAggregateFunction<T>
-        /* permits
-            BitAndAgg */ 
+            AggregateFunction<T>
+        //permits
+        //    BitAndAgg
     {
-        @NotNull  MField<T> $value();
-        @NotNull  MBitAndAgg<T> $value(MField<T> value);
+        @NotNull  Field<T> $value();
+        @NotNull  BitAndAgg<T> $value(Field<T> value);
     }
 
-    public /* sealed */ interface MBitOrAgg<T extends Number>
+    public /*sealed*/ interface BitOrAgg<T extends Number>
         extends
-            MAggregateFunction<T>
-        /* permits
-            BitOrAgg */ 
+            AggregateFunction<T>
+        //permits
+        //    BitOrAgg
     {
-        @NotNull  MField<T> $value();
-        @NotNull  MBitOrAgg<T> $value(MField<T> value);
+        @NotNull  Field<T> $value();
+        @NotNull  BitOrAgg<T> $value(Field<T> value);
     }
 
-    public /* sealed */ interface MBitXorAgg<T extends Number>
+    public /*sealed*/ interface BitXorAgg<T extends Number>
         extends
-            MAggregateFunction<T>
-        /* permits
-            BitXorAgg */ 
+            AggregateFunction<T>
+        //permits
+        //    BitXorAgg
     {
-        @NotNull  MField<T> $value();
-        @NotNull  MBitXorAgg<T> $value(MField<T> value);
+        @NotNull  Field<T> $value();
+        @NotNull  BitXorAgg<T> $value(Field<T> value);
     }
 
-    public /* sealed */ interface MBoolAnd
+    public /*sealed*/ interface BoolAnd
         extends
-            MAggregateFunction<Boolean>
-        /* permits
-            BoolAnd */ 
+            AggregateFunction<Boolean>
+        //permits
+        //    BoolAnd
     {
-        @NotNull  MCondition $condition();
-        @NotNull  MBoolAnd $condition(MCondition condition);
+        @NotNull  Condition $condition();
+        @NotNull  BoolAnd $condition(Condition condition);
     }
 
-    public /* sealed */ interface MBoolOr
+    public /*sealed*/ interface BoolOr
         extends
-            MAggregateFunction<Boolean>
-        /* permits
-            BoolOr */ 
+            AggregateFunction<Boolean>
+        //permits
+        //    BoolOr
     {
-        @NotNull  MCondition $condition();
-        @NotNull  MBoolOr $condition(MCondition condition);
+        @NotNull  Condition $condition();
+        @NotNull  BoolOr $condition(Condition condition);
     }
 
-    public /* sealed */ interface MCorr
+    public /*sealed*/ interface Corr
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            Corr */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    Corr
     {
-        @NotNull  MField<? extends Number> $y();
-        @NotNull  MField<? extends Number> $x();
-        @NotNull  MCorr $y(MField<? extends Number> y);
-        @NotNull  MCorr $x(MField<? extends Number> x);
+        @NotNull  Field<? extends Number> $y();
+        @NotNull  Field<? extends Number> $x();
+        @NotNull  Corr $y(Field<? extends Number> y);
+        @NotNull  Corr $x(Field<? extends Number> x);
     }
 
-    public /* sealed */ interface MCount
+    public /*sealed*/ interface Count
         extends
-            MAggregateFunction<Integer>
-        /* permits
-            Count */ 
+            AggregateFunction<Integer>
+        //permits
+        //    Count
     {
-        @NotNull  MField<?> $field();
+        @NotNull  Field<?> $field();
                   boolean $distinct();
-        @NotNull  MCount $field(MField<?> field);
-        @NotNull  MCount $distinct(boolean distinct);
+        @NotNull  Count $field(Field<?> field);
+        @NotNull  Count $distinct(boolean distinct);
     }
 
-    public /* sealed */ interface MCovarSamp
+    public /*sealed*/ interface CovarSamp
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            CovarSamp */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    CovarSamp
     {
-        @NotNull  MField<? extends Number> $y();
-        @NotNull  MField<? extends Number> $x();
-        @NotNull  MCovarSamp $y(MField<? extends Number> y);
-        @NotNull  MCovarSamp $x(MField<? extends Number> x);
+        @NotNull  Field<? extends Number> $y();
+        @NotNull  Field<? extends Number> $x();
+        @NotNull  CovarSamp $y(Field<? extends Number> y);
+        @NotNull  CovarSamp $x(Field<? extends Number> x);
     }
 
-    public /* sealed */ interface MCovarPop
+    public /*sealed*/ interface CovarPop
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            CovarPop */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    CovarPop
     {
-        @NotNull  MField<? extends Number> $y();
-        @NotNull  MField<? extends Number> $x();
-        @NotNull  MCovarPop $y(MField<? extends Number> y);
-        @NotNull  MCovarPop $x(MField<? extends Number> x);
+        @NotNull  Field<? extends Number> $y();
+        @NotNull  Field<? extends Number> $x();
+        @NotNull  CovarPop $y(Field<? extends Number> y);
+        @NotNull  CovarPop $x(Field<? extends Number> x);
     }
 
-    public /* sealed */ interface MMax<T>
+    public /*sealed*/ interface Max<T>
         extends
-            MAggregateFunction<T>
-        /* permits
-            Max */ 
+            AggregateFunction<T>
+        //permits
+        //    Max
     {
-        @NotNull  MField<T> $field();
+        @NotNull  Field<T> $field();
                   boolean $distinct();
-        @NotNull  MMax<T> $field(MField<T> field);
-        @NotNull  MMax<T> $distinct(boolean distinct);
+        @NotNull  Max<T> $field(Field<T> field);
+        @NotNull  Max<T> $distinct(boolean distinct);
     }
 
-    public /* sealed */ interface MMedian
+    public /*sealed*/ interface Median
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            Median */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    Median
     {
-        @NotNull  MField<? extends Number> $field();
-        @NotNull  MMedian $field(MField<? extends Number> field);
+        @NotNull  Field<? extends Number> $field();
+        @NotNull  Median $field(Field<? extends Number> field);
     }
 
-    public /* sealed */ interface MMin<T>
+    public /*sealed*/ interface Min<T>
         extends
-            MAggregateFunction<T>
-        /* permits
-            Min */ 
+            AggregateFunction<T>
+        //permits
+        //    Min
     {
-        @NotNull  MField<T> $field();
+        @NotNull  Field<T> $field();
                   boolean $distinct();
-        @NotNull  MMin<T> $field(MField<T> field);
-        @NotNull  MMin<T> $distinct(boolean distinct);
+        @NotNull  Min<T> $field(Field<T> field);
+        @NotNull  Min<T> $distinct(boolean distinct);
     }
 
-    public /* sealed */ interface MProduct
+    public /*sealed*/ interface Product
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            Product */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    Product
     {
-        @NotNull  MField<? extends Number> $field();
+        @NotNull  Field<? extends Number> $field();
                   boolean $distinct();
-        @NotNull  MProduct $field(MField<? extends Number> field);
-        @NotNull  MProduct $distinct(boolean distinct);
+        @NotNull  Product $field(Field<? extends Number> field);
+        @NotNull  Product $distinct(boolean distinct);
     }
 
-    public /* sealed */ interface MRegrAvgx
+    public /*sealed*/ interface RegrAvgx
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            RegrAvgx */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    RegrAvgx
     {
-        @NotNull  MField<? extends Number> $y();
-        @NotNull  MField<? extends Number> $x();
-        @NotNull  MRegrAvgx $y(MField<? extends Number> y);
-        @NotNull  MRegrAvgx $x(MField<? extends Number> x);
+        @NotNull  Field<? extends Number> $y();
+        @NotNull  Field<? extends Number> $x();
+        @NotNull  RegrAvgx $y(Field<? extends Number> y);
+        @NotNull  RegrAvgx $x(Field<? extends Number> x);
     }
 
-    public /* sealed */ interface MRegrAvgy
+    public /*sealed*/ interface RegrAvgy
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            RegrAvgy */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    RegrAvgy
     {
-        @NotNull  MField<? extends Number> $y();
-        @NotNull  MField<? extends Number> $x();
-        @NotNull  MRegrAvgy $y(MField<? extends Number> y);
-        @NotNull  MRegrAvgy $x(MField<? extends Number> x);
+        @NotNull  Field<? extends Number> $y();
+        @NotNull  Field<? extends Number> $x();
+        @NotNull  RegrAvgy $y(Field<? extends Number> y);
+        @NotNull  RegrAvgy $x(Field<? extends Number> x);
     }
 
-    public /* sealed */ interface MRegrCount
+    public /*sealed*/ interface RegrCount
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            RegrCount */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    RegrCount
     {
-        @NotNull  MField<? extends Number> $y();
-        @NotNull  MField<? extends Number> $x();
-        @NotNull  MRegrCount $y(MField<? extends Number> y);
-        @NotNull  MRegrCount $x(MField<? extends Number> x);
+        @NotNull  Field<? extends Number> $y();
+        @NotNull  Field<? extends Number> $x();
+        @NotNull  RegrCount $y(Field<? extends Number> y);
+        @NotNull  RegrCount $x(Field<? extends Number> x);
     }
 
-    public /* sealed */ interface MRegrIntercept
+    public /*sealed*/ interface RegrIntercept
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            RegrIntercept */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    RegrIntercept
     {
-        @NotNull  MField<? extends Number> $y();
-        @NotNull  MField<? extends Number> $x();
-        @NotNull  MRegrIntercept $y(MField<? extends Number> y);
-        @NotNull  MRegrIntercept $x(MField<? extends Number> x);
+        @NotNull  Field<? extends Number> $y();
+        @NotNull  Field<? extends Number> $x();
+        @NotNull  RegrIntercept $y(Field<? extends Number> y);
+        @NotNull  RegrIntercept $x(Field<? extends Number> x);
     }
 
-    public /* sealed */ interface MRegrR2
+    public /*sealed*/ interface RegrR2
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            RegrR2 */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    RegrR2
     {
-        @NotNull  MField<? extends Number> $y();
-        @NotNull  MField<? extends Number> $x();
-        @NotNull  MRegrR2 $y(MField<? extends Number> y);
-        @NotNull  MRegrR2 $x(MField<? extends Number> x);
+        @NotNull  Field<? extends Number> $y();
+        @NotNull  Field<? extends Number> $x();
+        @NotNull  RegrR2 $y(Field<? extends Number> y);
+        @NotNull  RegrR2 $x(Field<? extends Number> x);
     }
 
-    public /* sealed */ interface MRegrSlope
+    public /*sealed*/ interface RegrSlope
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            RegrSlope */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    RegrSlope
     {
-        @NotNull  MField<? extends Number> $y();
-        @NotNull  MField<? extends Number> $x();
-        @NotNull  MRegrSlope $y(MField<? extends Number> y);
-        @NotNull  MRegrSlope $x(MField<? extends Number> x);
+        @NotNull  Field<? extends Number> $y();
+        @NotNull  Field<? extends Number> $x();
+        @NotNull  RegrSlope $y(Field<? extends Number> y);
+        @NotNull  RegrSlope $x(Field<? extends Number> x);
     }
 
-    public /* sealed */ interface MRegrSxx
+    public /*sealed*/ interface RegrSxx
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            RegrSxx */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    RegrSxx
     {
-        @NotNull  MField<? extends Number> $y();
-        @NotNull  MField<? extends Number> $x();
-        @NotNull  MRegrSxx $y(MField<? extends Number> y);
-        @NotNull  MRegrSxx $x(MField<? extends Number> x);
+        @NotNull  Field<? extends Number> $y();
+        @NotNull  Field<? extends Number> $x();
+        @NotNull  RegrSxx $y(Field<? extends Number> y);
+        @NotNull  RegrSxx $x(Field<? extends Number> x);
     }
 
-    public /* sealed */ interface MRegrSxy
+    public /*sealed*/ interface RegrSxy
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            RegrSxy */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    RegrSxy
     {
-        @NotNull  MField<? extends Number> $y();
-        @NotNull  MField<? extends Number> $x();
-        @NotNull  MRegrSxy $y(MField<? extends Number> y);
-        @NotNull  MRegrSxy $x(MField<? extends Number> x);
+        @NotNull  Field<? extends Number> $y();
+        @NotNull  Field<? extends Number> $x();
+        @NotNull  RegrSxy $y(Field<? extends Number> y);
+        @NotNull  RegrSxy $x(Field<? extends Number> x);
     }
 
-    public /* sealed */ interface MRegrSyy
+    public /*sealed*/ interface RegrSyy
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            RegrSyy */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    RegrSyy
     {
-        @NotNull  MField<? extends Number> $y();
-        @NotNull  MField<? extends Number> $x();
-        @NotNull  MRegrSyy $y(MField<? extends Number> y);
-        @NotNull  MRegrSyy $x(MField<? extends Number> x);
+        @NotNull  Field<? extends Number> $y();
+        @NotNull  Field<? extends Number> $x();
+        @NotNull  RegrSyy $y(Field<? extends Number> y);
+        @NotNull  RegrSyy $x(Field<? extends Number> x);
     }
 
-    public /* sealed */ interface MStddevPop
+    public /*sealed*/ interface StddevPop
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            StddevPop */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    StddevPop
     {
-        @NotNull  MField<? extends Number> $field();
-        @NotNull  MStddevPop $field(MField<? extends Number> field);
+        @NotNull  Field<? extends Number> $field();
+        @NotNull  StddevPop $field(Field<? extends Number> field);
     }
 
-    public /* sealed */ interface MStddevSamp
+    public /*sealed*/ interface StddevSamp
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            StddevSamp */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    StddevSamp
     {
-        @NotNull  MField<? extends Number> $field();
-        @NotNull  MStddevSamp $field(MField<? extends Number> field);
+        @NotNull  Field<? extends Number> $field();
+        @NotNull  StddevSamp $field(Field<? extends Number> field);
     }
 
-    public /* sealed */ interface MSum
+    public /*sealed*/ interface Sum
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            Sum */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    Sum
     {
-        @NotNull  MField<? extends Number> $field();
+        @NotNull  Field<? extends Number> $field();
                   boolean $distinct();
-        @NotNull  MSum $field(MField<? extends Number> field);
-        @NotNull  MSum $distinct(boolean distinct);
+        @NotNull  Sum $field(Field<? extends Number> field);
+        @NotNull  Sum $distinct(boolean distinct);
     }
 
-    public /* sealed */ interface MVarPop
+    public /*sealed*/ interface VarPop
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            VarPop */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    VarPop
     {
-        @NotNull  MField<? extends Number> $field();
-        @NotNull  MVarPop $field(MField<? extends Number> field);
+        @NotNull  Field<? extends Number> $field();
+        @NotNull  VarPop $field(Field<? extends Number> field);
     }
 
-    public /* sealed */ interface MVarSamp
+    public /*sealed*/ interface VarSamp
         extends
-            MAggregateFunction<BigDecimal>
-        /* permits
-            VarSamp */ 
+            AggregateFunction<BigDecimal>
+        //permits
+        //    VarSamp
     {
-        @NotNull  MField<? extends Number> $field();
-        @NotNull  MVarSamp $field(MField<? extends Number> field);
+        @NotNull  Field<? extends Number> $field();
+        @NotNull  VarSamp $field(Field<? extends Number> field);
     }
 
 
@@ -3890,7 +3710,7 @@ public final class QOM {
     // XXX: Utility API
     // -------------------------------------------------------------------------
 
-    interface UOperator1<Q1, R extends MQueryPart> extends MQueryPart {
+    interface UOperator1<Q1, R extends QueryPart> extends QueryPart {
         Q1 $arg1();
 
         @NotNull default R $arg1(Q1 newArg1) { return constructor().apply(newArg1); }
@@ -3903,20 +3723,20 @@ public final class QOM {
         }
 
         @Override
-        default <T> T traverse(
+        default <T> T $traverse(
             T current,
             Predicate<? super T> abort,
-            Predicate<? super MQueryPart> recurse,
-            BiFunction<? super T, ? super MQueryPart, ? extends T> accumulate
+            Predicate<? super QueryPart> recurse,
+            BiFunction<? super T, ? super QueryPart, ? extends T> accumulate
         ) {
             return QOM.traverse(current, abort, recurse, accumulate, this, $arg1());
         };
 
         @NotNull
         @Override
-        default MQueryPart replace(
-            Predicate<? super MQueryPart> recurse,
-            Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        default QueryPart $replace(
+            Predicate<? super QueryPart> recurse,
+            Function1<? super QueryPart, ? extends QueryPart> replacement
         ) {
             return QOM.replace(
                 this,
@@ -3928,7 +3748,7 @@ public final class QOM {
         }
     }
 
-    interface UOperator2<Q1, Q2, R extends MQueryPart> extends MQueryPart {
+    interface UOperator2<Q1, Q2, R extends QueryPart> extends QueryPart {
         Q1 $arg1();
         Q2 $arg2();
 
@@ -3943,20 +3763,20 @@ public final class QOM {
         }
 
         @Override
-        default <T> T traverse(
+        default <T> T $traverse(
             T current,
             Predicate<? super T> abort,
-            Predicate<? super MQueryPart> recurse,
-            BiFunction<? super T, ? super MQueryPart, ? extends T> accumulate
+            Predicate<? super QueryPart> recurse,
+            BiFunction<? super T, ? super QueryPart, ? extends T> accumulate
         ) {
             return QOM.traverse(current, abort, recurse, accumulate, this, $arg1(), $arg2());
         };
 
         @NotNull
         @Override
-        default MQueryPart replace(
-            Predicate<? super MQueryPart> recurse,
-            Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        default QueryPart $replace(
+            Predicate<? super QueryPart> recurse,
+            Function1<? super QueryPart, ? extends QueryPart> replacement
         ) {
             return QOM.replace(
                 this,
@@ -3969,7 +3789,7 @@ public final class QOM {
         }
     }
 
-    interface UOperator3<Q1, Q2, Q3, R extends MQueryPart> extends MQueryPart {
+    interface UOperator3<Q1, Q2, Q3, R extends QueryPart> extends QueryPart {
         Q1 $arg1();
         Q2 $arg2();
         Q3 $arg3();
@@ -3985,20 +3805,20 @@ public final class QOM {
         }
 
         @Override
-        default <T> T traverse(
+        default <T> T $traverse(
             T current,
             Predicate<? super T> abort,
-            Predicate<? super MQueryPart> recurse,
-            BiFunction<? super T, ? super MQueryPart, ? extends T> accumulate
+            Predicate<? super QueryPart> recurse,
+            BiFunction<? super T, ? super QueryPart, ? extends T> accumulate
         ) {
             return QOM.traverse(current, abort, recurse, accumulate, this, $arg1(), $arg2(), $arg3());
         };
 
         @NotNull
         @Override
-        default MQueryPart replace(
-            Predicate<? super MQueryPart> recurse,
-            Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        default QueryPart $replace(
+            Predicate<? super QueryPart> recurse,
+            Function1<? super QueryPart, ? extends QueryPart> replacement
         ) {
             return QOM.replace(
                 this,
@@ -4021,7 +3841,7 @@ public final class QOM {
 
     /**
      * A marker interface for {@link QueryPart} implementations whose
-     * {@link MQueryPart} semantics has not yet been implemented.
+     * {@link QueryPart} semantics has not yet been implemented.
      *
      * @deprecated - [#12425] - 3.16.0 - Missing implementations should be added
      *             as soon as possible!
@@ -4030,7 +3850,7 @@ public final class QOM {
     interface UNotYetImplemented extends UEmpty {}
 
     /**
-     * A marker interface for {@link MQueryPart} methods that have not yet been
+     * A marker interface for {@link QueryPart} methods that have not yet been
      * implemented.
      *
      * @deprecated - [#12425] - 3.16.0 - Missing implementations should be added
@@ -4039,50 +3859,50 @@ public final class QOM {
     @Deprecated(forRemoval = true)
     static class UNotYetImplementedException extends RuntimeException {}
 
-    interface UProxy<Q extends MQueryPart> extends MQueryPart {
+    interface UProxy<Q extends QueryPart> extends QueryPart {
         Q $delegate();
 
         @Override
-        default <R> R traverse(
+        default <R> R $traverse(
             R init,
             Predicate<? super R> abort,
-            Predicate<? super MQueryPart> recurse,
-            BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+            Predicate<? super QueryPart> recurse,
+            BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
         ) {
-            return $delegate().traverse(init, abort, recurse, accumulate);
+            return $delegate().$traverse(init, abort, recurse, accumulate);
         }
 
         @Override
-        default MQueryPart replace(
-            Predicate<? super MQueryPart> recurse,
-            Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        default QueryPart $replace(
+            Predicate<? super QueryPart> recurse,
+            Function1<? super QueryPart, ? extends QueryPart> replacement
         ) {
-            MQueryPart r = $delegate().replace(recurse, replacement);
+            QueryPart r = $delegate().$replace(recurse, replacement);
             return $delegate() == r ? this : r;
         }
 
         @Override
-        default boolean $contains(MQueryPart part) {
+        default boolean $contains(QueryPart part) {
             return $delegate().$contains(part);
         }
     }
 
-    interface UEmpty extends MQueryPart {
+    interface UEmpty extends QueryPart {
 
         @Override
-        default <R> R traverse(
+        default <R> R $traverse(
             R init,
             Predicate<? super R> abort,
-            Predicate<? super MQueryPart> recurse,
-            BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+            Predicate<? super QueryPart> recurse,
+            BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
         ) {
             return QOM.traverse(init, abort, recurse, accumulate, this);
         }
 
         @Override
-        default MQueryPart replace(
-            Predicate<? super MQueryPart> recurse,
-            Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        default QueryPart $replace(
+            Predicate<? super QueryPart> recurse,
+            Function1<? super QueryPart, ? extends QueryPart> replacement
         ) {
             if (recurse.test(this))
                 return replacement.apply(this);
@@ -4091,7 +3911,7 @@ public final class QOM {
         }
 
         @Override
-        default boolean $contains(MQueryPart part) {
+        default boolean $contains(QueryPart part) {
             return equals(part);
         }
     }
@@ -4100,11 +3920,11 @@ public final class QOM {
     // XXX: Undisclosed, internal query parts
     // -------------------------------------------------------------------------
 
-    interface UEmptyCondition extends MCondition, UEmpty {}
-    interface UEmptyField<T> extends MField<T>, UEmpty {}
-    interface UEmptyTable<R extends Record> extends MTable<R>, UEmpty {}
-    interface UEmptyStatement extends MStatement, UEmpty {}
-    interface UEmptyQuery extends MQuery, UEmpty {}
+    interface UEmptyCondition extends Condition, UEmpty {}
+    interface UEmptyField<T> extends Field<T>, UEmpty {}
+    interface UEmptyTable<R extends Record> extends Table<R>, UEmpty {}
+    interface UEmptyStatement extends Statement, UEmpty {}
+    interface UEmptyQuery extends Query, UEmpty {}
 
     // -------------------------------------------------------------------------
     // XXX: Utilities
@@ -4113,8 +3933,8 @@ public final class QOM {
     @SuppressWarnings("unchecked")
     static final <Q> Q replace(
         Q q,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
 
         // TODO: Support also arrays, sets, etc.
@@ -4144,8 +3964,8 @@ public final class QOM {
         }
 
 
-        return q instanceof MQueryPart && recurse.test((MQueryPart) q)
-             ? (Q) ((MQueryPart) q).replace(recurse, replacement)
+        return q instanceof QueryPart && recurse.test((QueryPart) q)
+             ? (Q) ((QueryPart) q).$replace(recurse, replacement)
              : q;
     }
 
@@ -4156,22 +3976,22 @@ public final class QOM {
     static final <T> T traverse(
         T current,
         Predicate<? super T> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super T, ? super MQueryPart, ? extends T> accumulate,
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super T, ? super QueryPart, ? extends T> accumulate,
         Object part,
         Object... parts
     ) {
         if (test(abort, current)) return current;
-        if (part instanceof MQueryPart)
-            current = accumulate.apply(current, (MQueryPart) part);
+        if (part instanceof QueryPart)
+            current = accumulate.apply(current, (QueryPart) part);
         if (test(abort, current)) return current;
 
         for (int i = 0; i < parts.length; i++) {
-            if (parts[i] instanceof MQueryPart) {
-                MQueryPart p = (MQueryPart) parts[i];
+            if (parts[i] instanceof QueryPart) {
+                QueryPart p = (QueryPart) parts[i];
 
                 if (test(recurse, p)) {
-                    current = p.traverse(current, abort, recurse, accumulate);
+                    current = p.$traverse(current, abort, recurse, accumulate);
                     if (test(abort, current)) return current;
                 }
             }
@@ -4181,14 +4001,14 @@ public final class QOM {
     };
 
     @SuppressWarnings("unchecked")
-    static final <QR extends MQueryPart, Q> QR replace(
+    static final <QR extends QueryPart, Q> QR replace(
         QR wrapper,
         Q[] q,
         Function1<? super Q[], ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
-        Q[] r = (Q[]) Array.newInstance(q.getClass().getComponentType(), q.length);
+        Q[] r = (Q[]) java.lang.reflect.Array.newInstance(q.getClass().getComponentType(), q.length);
 
         for (int i = 0; i < r.length; i++)
             r[i] = replace(q[i], recurse, replacement);
@@ -4207,12 +4027,12 @@ public final class QOM {
 
 
 
-    static final <QR extends MQueryPart, Q1> QR replace(
+    static final <QR extends QueryPart, Q1> QR replace(
         QR wrapper,
         Q1 q1,
         Function1<? super Q1, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
 
@@ -4222,13 +4042,13 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2> QR replace(
+    static final <QR extends QueryPart, Q1, Q2> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
         Function2<? super Q1, ? super Q2, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4239,14 +4059,14 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
         Q3 q3,
         Function3<? super Q1, ? super Q2, ? super Q3, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4258,15 +4078,15 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
         Q3 q3,
         Q4 q4,
         Function4<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4279,7 +4099,7 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4, Q5> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
@@ -4287,8 +4107,8 @@ public final class QOM {
         Q4 q4,
         Q5 q5,
         Function5<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4302,7 +4122,7 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4, Q5, Q6> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
@@ -4311,8 +4131,8 @@ public final class QOM {
         Q5 q5,
         Q6 q6,
         Function6<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4327,7 +4147,7 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
@@ -4337,8 +4157,8 @@ public final class QOM {
         Q6 q6,
         Q7 q7,
         Function7<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4354,7 +4174,7 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
@@ -4365,8 +4185,8 @@ public final class QOM {
         Q7 q7,
         Q8 q8,
         Function8<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4383,7 +4203,7 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
@@ -4395,8 +4215,8 @@ public final class QOM {
         Q8 q8,
         Q9 q9,
         Function9<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4414,7 +4234,7 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
@@ -4427,8 +4247,8 @@ public final class QOM {
         Q9 q9,
         Q10 q10,
         Function10<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4447,7 +4267,7 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
@@ -4461,8 +4281,8 @@ public final class QOM {
         Q10 q10,
         Q11 q11,
         Function11<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4482,7 +4302,7 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
@@ -4497,8 +4317,8 @@ public final class QOM {
         Q11 q11,
         Q12 q12,
         Function12<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4519,7 +4339,7 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
@@ -4535,8 +4355,8 @@ public final class QOM {
         Q12 q12,
         Q13 q13,
         Function13<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4558,7 +4378,7 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
@@ -4575,8 +4395,8 @@ public final class QOM {
         Q13 q13,
         Q14 q14,
         Function14<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? super Q14, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4599,7 +4419,7 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
@@ -4617,8 +4437,8 @@ public final class QOM {
         Q14 q14,
         Q15 q15,
         Function15<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? super Q14, ? super Q15, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4642,7 +4462,7 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
@@ -4661,8 +4481,8 @@ public final class QOM {
         Q15 q15,
         Q16 q16,
         Function16<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? super Q14, ? super Q15, ? super Q16, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4687,7 +4507,7 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
@@ -4707,8 +4527,8 @@ public final class QOM {
         Q16 q16,
         Q17 q17,
         Function17<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? super Q14, ? super Q15, ? super Q16, ? super Q17, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4734,7 +4554,7 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
@@ -4755,8 +4575,8 @@ public final class QOM {
         Q17 q17,
         Q18 q18,
         Function18<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? super Q14, ? super Q15, ? super Q16, ? super Q17, ? super Q18, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4783,7 +4603,7 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18, Q19> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18, Q19> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
@@ -4805,8 +4625,8 @@ public final class QOM {
         Q18 q18,
         Q19 q19,
         Function19<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? super Q14, ? super Q15, ? super Q16, ? super Q17, ? super Q18, ? super Q19, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4834,7 +4654,7 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18, Q19, Q20> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18, Q19, Q20> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
@@ -4857,8 +4677,8 @@ public final class QOM {
         Q19 q19,
         Q20 q20,
         Function20<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? super Q14, ? super Q15, ? super Q16, ? super Q17, ? super Q18, ? super Q19, ? super Q20, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4887,7 +4707,7 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18, Q19, Q20, Q21> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18, Q19, Q20, Q21> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
@@ -4911,8 +4731,8 @@ public final class QOM {
         Q20 q20,
         Q21 q21,
         Function21<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? super Q14, ? super Q15, ? super Q16, ? super Q17, ? super Q18, ? super Q19, ? super Q20, ? super Q21, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -4942,7 +4762,7 @@ public final class QOM {
         return replaceUntilStable(wrapper, recurse, replacement);
     }
 
-    static final <QR extends MQueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18, Q19, Q20, Q21, Q22> QR replace(
+    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18, Q19, Q20, Q21, Q22> QR replace(
         QR wrapper,
         Q1 q1,
         Q2 q2,
@@ -4967,8 +4787,8 @@ public final class QOM {
         Q21 q21,
         Q22 q22,
         Function22<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? super Q14, ? super Q15, ? super Q16, ? super Q17, ? super Q18, ? super Q19, ? super Q20, ? super Q21, ? super Q22, ? extends QR> wrap,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         Q1 r1 = replace(q1, recurse, replacement);
         Q2 r2 = replace(q2, recurse, replacement);
@@ -5001,10 +4821,10 @@ public final class QOM {
 
 
 
-    private static <QR extends MQueryPart> QR replaceUntilStable(
+    private static <QR extends QueryPart> QR replaceUntilStable(
         QR wrapper,
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         QR q = wrapper;
         QR r = wrapper;
@@ -5013,7 +4833,7 @@ public final class QOM {
             if (recurse.test(q))
                 r = (QR) replacement.apply(q);
         }
-        while (r != null && r != q && (q = (QR) r.replace(recurse, replacement)) != null);
+        while (r != null && r != q && (q = (QR) r.$replace(recurse, replacement)) != null);
         return r;
     }
 }

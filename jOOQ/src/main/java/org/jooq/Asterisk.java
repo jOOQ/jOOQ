@@ -41,6 +41,7 @@ import org.jetbrains.annotations.*;
 
 
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM.MList;
 
 /**
  * An unqualified asterisk.
@@ -103,4 +104,10 @@ public interface Asterisk extends SelectFieldOrAsterisk {
     @NotNull
     @Support
     Asterisk except(Field<?>... fields);
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @NotNull MList<? extends Field<?>> $except();
 }

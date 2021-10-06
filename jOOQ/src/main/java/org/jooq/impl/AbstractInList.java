@@ -98,8 +98,7 @@ import org.jooq.Field;
 import org.jooq.Function2;
 import org.jooq.RowN;
 import org.jooq.SQLDialect;
-import org.jooq.impl.QOM.MField;
-import org.jooq.impl.QOM.MInList;
+import org.jooq.impl.QOM.InList;
 import org.jooq.impl.QOM.MList;
 
 /**
@@ -268,11 +267,11 @@ abstract class AbstractInList<T> extends AbstractCondition {
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
-    public final MField<T> $arg1() {
+    public final Field<T> $arg1() {
         return field;
     }
 
-    public final MList<? extends MField<T>> $arg2() {
+    public final MList<? extends Field<T>> $arg2() {
         return values;
     }
 }

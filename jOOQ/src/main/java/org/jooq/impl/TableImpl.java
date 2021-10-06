@@ -81,9 +81,8 @@ import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MSchema;
-import org.jooq.impl.QOM.MTableRef;
+import org.jooq.QueryPart;
+import org.jooq.impl.QOM.TableRef;
 import org.jooq.tools.StringUtils;
 
 import org.jetbrains.annotations.Nullable;
@@ -96,7 +95,7 @@ import org.jetbrains.annotations.Nullable;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-public class TableImpl<R extends Record> extends AbstractTable<R> implements ScopeMappable, ScopeNestable, SimpleQueryPart, MTableRef<R> {
+public class TableImpl<R extends Record> extends AbstractTable<R> implements ScopeMappable, ScopeNestable, SimpleQueryPart, TableRef<R> {
 
     private static final Clause[]        CLAUSES_TABLE_REFERENCE           = { TABLE, TABLE_REFERENCE };
     private static final Clause[]        CLAUSES_TABLE_ALIAS               = { TABLE, TABLE_ALIAS };
@@ -440,19 +439,19 @@ public class TableImpl<R extends Record> extends AbstractTable<R> implements Sco
     // -------------------------------------------------------------------------
 
     @Override
-    public final <X> X traverse(
+    public final <X> X $traverse(
         X init,
         Predicate<? super X> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super X, ? super MQueryPart, ? extends X> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super X, ? super QueryPart, ? extends X> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, getSchema());
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(this, getSchema(), s -> new TableImpl<>(getQualifiedName(), s), recurse, replacement);
     }

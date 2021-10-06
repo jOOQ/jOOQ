@@ -45,13 +45,11 @@ import static org.jooq.impl.Names.N_NVL2;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function3;
-import org.jooq.impl.QOM.MField;
-import org.jooq.impl.QOM.MNvl2;
 
 /**
  * @author Lukas Eder
  */
-final class Nvl2<T> extends AbstractField<T> implements MNvl2<T >{
+final class Nvl2<T> extends AbstractField<T> implements QOM.Nvl2<T> {
 
     private final Field<?> arg1;
     private final Field<T> arg2;
@@ -137,7 +135,7 @@ final class Nvl2<T> extends AbstractField<T> implements MNvl2<T >{
     }
 
     @Override
-    public final Function3<? super MField<?>, ? super MField<T>, ? super MField<T>, ? extends MField<T>> constructor() {
-        return (a1, a2, a3) -> new Nvl2<>((Field<?>) a1, (Field<T>) a2, (Field<T>) a3);
+    public final Function3<? super Field<?>, ? super Field<T>, ? super Field<T>, ? extends Field<T>> constructor() {
+        return (a1, a2, a3) -> new Nvl2<>(a1, a2, a3);
     }
 }

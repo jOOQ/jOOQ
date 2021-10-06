@@ -189,7 +189,6 @@ import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.camelCase;
 import static org.jooq.impl.Tools.containsUnaliasedTable;
 import static org.jooq.impl.Tools.fieldArray;
-import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.isNotEmpty;
@@ -287,22 +286,10 @@ import org.jooq.TablePartitionByStep;
 import org.jooq.WindowDefinition;
 import org.jooq.XML;
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.Expression.Expr;
 import org.jooq.impl.ForLock.ForLockMode;
 import org.jooq.impl.ForLock.ForLockWaitMode;
-import org.jooq.impl.QOM.MCompareCondition;
-import org.jooq.impl.QOM.MCondition;
-import org.jooq.impl.QOM.MField;
-import org.jooq.impl.QOM.MGroupField;
-import org.jooq.impl.QOM.MGt;
+import org.jooq.impl.QOM.CompareCondition;
 import org.jooq.impl.QOM.MList;
-import org.jooq.impl.QOM.MLt;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MSelectFieldOrAsterisk;
-import org.jooq.impl.QOM.MSortField;
-import org.jooq.impl.QOM.MTable;
-import org.jooq.impl.QOM.MWindowDefinition;
-import org.jooq.impl.QOM.MWith;
 import org.jooq.impl.QOM.Materialized;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataExtendedKey;
@@ -311,7 +298,6 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 
 /**
@@ -4504,13 +4490,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final SelectQueryImpl<?> $select(MList<? extends MSelectFieldOrAsterisk> select) {
+    public final SelectQueryImpl<?> $select(MList<? extends SelectFieldOrAsterisk> select) {
         if ($select() == select)
             return this;
         else
             return copy(s -> {
                 s.select.clear();
-                s.select.addAll((List<SelectFieldOrAsterisk>) select);
+                s.select.addAll(select);
                 return s;
             });
     }
@@ -4526,13 +4512,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final SelectQueryImpl<?> $from(MList<? extends MTable<?>> from) {
+    public final SelectQueryImpl<?> $from(MList<? extends Table<?>> from) {
         if ($from() == from)
             return this;
         else
             return copy(s -> {
                 s.from.clear();
-                s.from.addAll((List<Table<?>>) from);
+                s.from.addAll(from);
                 return s;
             });
     }
@@ -4553,8 +4539,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final QueryPartList<WindowDefinition> $window() {
-        return window == null ? new QueryPartList<>() : window;
+    public final MList<? extends WindowDefinition> $window() {
+        return window == null ? QueryPartList.emptyList() : window;
     }
 
     @Override
@@ -4568,11 +4554,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final <T> T traverse(
+    public final <T> T $traverse(
         T init,
         Predicate<? super T> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super T, ? super MQueryPart, ? extends T> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super T, ? super QueryPart, ? extends T> accumulate
     ) {
         return QOM.traverse(
             init,
@@ -4594,9 +4580,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,

@@ -69,7 +69,7 @@ final class CreateDomainImpl<T>
 extends
     AbstractDDLQuery
 implements
-    MCreateDomain<T>,
+    QOM.CreateDomain<T>,
     CreateDomainAsStep,
     CreateDomainDefaultStep<T>,
     CreateDomainConstraintStep,
@@ -232,38 +232,38 @@ implements
     }
 
     @Override
-    public final MCreateDomain<T> $domain(MDomain<?> newValue) {
+    public final QOM.CreateDomain<T> $domain(Domain<?> newValue) {
         return constructor().apply(newValue, $ifNotExists(), $dataType(), $default_(), $constraints());
     }
 
     @Override
-    public final MCreateDomain<T> $ifNotExists(boolean newValue) {
+    public final QOM.CreateDomain<T> $ifNotExists(boolean newValue) {
         return constructor().apply($domain(), newValue, $dataType(), $default_(), $constraints());
     }
 
     @Override
-    public final MCreateDomain<T> $dataType(MDataType<T> newValue) {
+    public final QOM.CreateDomain<T> $dataType(DataType<T> newValue) {
         return constructor().apply($domain(), $ifNotExists(), newValue, $default_(), $constraints());
     }
 
     @Override
-    public final MCreateDomain<T> $default_(MField<T> newValue) {
+    public final QOM.CreateDomain<T> $default_(Field<T> newValue) {
         return constructor().apply($domain(), $ifNotExists(), $dataType(), newValue, $constraints());
     }
 
     @Override
-    public final MCreateDomain<T> $constraints(MList<? extends Constraint> newValue) {
+    public final QOM.CreateDomain<T> $constraints(MList<? extends Constraint> newValue) {
         return constructor().apply($domain(), $ifNotExists(), $dataType(), $default_(), newValue);
     }
 
-    public final Function5<? super MDomain<?>, ? super Boolean, ? super MDataType<T>, ? super MField<T>, ? super MList<? extends Constraint>, ? extends MCreateDomain<T>> constructor() {
-        return (a1, a2, a3, a4, a5) -> new CreateDomainImpl(configuration(), (Domain<?>) a1, a2, (DataType<T>) a3, (Field<T>) a4, (Collection<? extends Constraint>) a5);
+    public final Function5<? super Domain<?>, ? super Boolean, ? super DataType<T>, ? super Field<T>, ? super MList<? extends Constraint>, ? extends QOM.CreateDomain<T>> constructor() {
+        return (a1, a2, a3, a4, a5) -> new CreateDomainImpl(configuration(), a1, a2, a3, a4, (Collection<? extends Constraint>) a5);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -279,11 +279,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

@@ -96,17 +96,15 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Name;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MRow;
-import org.jooq.impl.QOM.MRowField;
 
 /**
  * @author Lukas Eder
  */
-final class RowField<ROW extends Row, REC extends Record> extends AbstractField<REC> implements MRowField<REC> {
+final class RowField<ROW extends Row, REC extends Record> extends AbstractField<REC> implements QOM.RowField<REC> {
 
     static final Set<SQLDialect> NO_NATIVE_SUPPORT = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
 
@@ -284,24 +282,24 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
     // -------------------------------------------------------------------------
 
     @Override
-    public final MRow $row() {
+    public final Row $row() {
         return row;
     }
 
     @Override
-    public final <T> T traverse(
+    public final <T> T $traverse(
         T init,
         Predicate<? super T> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super T, ? super MQueryPart, ? extends T> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super T, ? super QueryPart, ? extends T> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, row);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(this, row, RowField::new, recurse, replacement);
     }

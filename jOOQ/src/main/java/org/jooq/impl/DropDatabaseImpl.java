@@ -69,7 +69,7 @@ final class DropDatabaseImpl
 extends
     AbstractDDLQuery
 implements
-    MDropDatabase,
+    QOM.DropDatabase,
     DropDatabaseFinalStep
 {
 
@@ -133,23 +133,23 @@ implements
     }
 
     @Override
-    public final MDropDatabase $database(MCatalog newValue) {
+    public final QOM.DropDatabase $database(Catalog newValue) {
         return constructor().apply(newValue, $ifExists());
     }
 
     @Override
-    public final MDropDatabase $ifExists(boolean newValue) {
+    public final QOM.DropDatabase $ifExists(boolean newValue) {
         return constructor().apply($database(), newValue);
     }
 
-    public final Function2<? super MCatalog, ? super Boolean, ? extends MDropDatabase> constructor() {
-        return (a1, a2) -> new DropDatabaseImpl(configuration(), (Catalog) a1, a2);
+    public final Function2<? super Catalog, ? super Boolean, ? extends QOM.DropDatabase> constructor() {
+        return (a1, a2) -> new DropDatabaseImpl(configuration(), a1, a2);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -162,11 +162,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

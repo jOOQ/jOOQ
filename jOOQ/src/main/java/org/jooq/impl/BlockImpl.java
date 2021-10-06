@@ -71,7 +71,6 @@ import static org.jooq.impl.Keywords.K_EXECUTE_IMMEDIATE;
 import static org.jooq.impl.Keywords.K_EXECUTE_STATEMENT;
 import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_NOT;
-import static org.jooq.impl.Keywords.K_PROCEDURE;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Tools.decrement;
@@ -99,23 +98,19 @@ import org.jooq.LanguageContext;
 import org.jooq.Name;
 // ...
 import org.jooq.Query;
+import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.Statement;
 // ...
 import org.jooq.conf.ParamType;
-import org.jooq.impl.QOM.MBlock;
 import org.jooq.impl.QOM.MList;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MStatement;
 import org.jooq.impl.ScopeMarker.ScopeContent;
 import org.jooq.impl.Tools.DataExtendedKey;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
  */
-final class BlockImpl extends AbstractRowCountQuery implements Block, MBlock {
+final class BlockImpl extends AbstractRowCountQuery implements Block {
     private static final Set<SQLDialect>  REQUIRES_EXECUTE_IMMEDIATE_ON_DDL = SQLDialect.supportedBy(FIREBIRD);
     private static final Set<SQLDialect>  SUPPORTS_NULL_STATEMENT           = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
@@ -602,19 +597,19 @@ final class BlockImpl extends AbstractRowCountQuery implements Block, MBlock {
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, $statements());
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(this, statements, s -> new BlockImpl(configuration(), statements, alwaysWrapInBeginEnd), recurse, replacement);
     }

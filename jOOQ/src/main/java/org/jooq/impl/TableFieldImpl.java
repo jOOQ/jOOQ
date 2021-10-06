@@ -59,9 +59,9 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
-import org.jooq.impl.QOM.MFieldRef;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MTableRef;
+import org.jooq.impl.QOM.FieldRef;
+import org.jooq.QueryPart;
+import org.jooq.impl.QOM.TableRef;
 import org.jooq.tools.StringUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -71,7 +71,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements TableField<R, T>, SimpleQueryPart, MFieldRef<T> {
+class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements TableField<R, T>, SimpleQueryPart, FieldRef<T> {
 
     private static final Clause[] CLAUSES = { FIELD, FIELD_REFERENCE };
 
@@ -134,8 +134,8 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
     // -------------------------------------------------------------------------
 
     @Override
-    public final MTableRef<?> $table() {
-        return (MTableRef<?>) table;
+    public final TableRef<?> $table() {
+        return (TableRef<?>) table;
     }
 
     // ------------------------------------------------------------------------

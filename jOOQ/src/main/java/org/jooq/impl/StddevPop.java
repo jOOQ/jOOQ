@@ -70,7 +70,7 @@ final class StddevPop
 extends
     AbstractAggregateFunction<BigDecimal>
 implements
-    MStddevPop
+    QOM.StddevPop
 {
 
     StddevPop(
@@ -127,18 +127,18 @@ implements
     }
 
     @Override
-    public final MStddevPop $field(MField<? extends Number> newValue) {
+    public final QOM.StddevPop $field(Field<? extends Number> newValue) {
         return constructor().apply(newValue);
     }
 
-    public final Function1<? super MField<? extends Number>, ? extends MStddevPop> constructor() {
-        return (a1) -> new StddevPop((Field<? extends Number>) a1);
+    public final Function1<? super Field<? extends Number>, ? extends QOM.StddevPop> constructor() {
+        return (a1) -> new StddevPop(a1);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -150,13 +150,13 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
-        return super.traverse(
+        return super.$traverse(
             QOM.traverse(
                 init, abort, recurse, accumulate, this,
                 $field()

@@ -57,7 +57,6 @@ import org.jooq.Param;
 import org.jooq.ParamMode;
 import org.jooq.QualifiedRecord;
 import org.jooq.conf.ParamType;
-import org.jooq.impl.QOM.MParam;
 import org.jooq.impl.QOM.UNotYetImplementedException;
 import org.jooq.tools.StringUtils;
 
@@ -199,7 +198,7 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
     }
 
     @Override
-    public /* non-final */ MParam<T> $value(T newValue) {
+    public /* non-final */ Param<T> $value(T newValue) {
         // TODO [#12425] Only Val implements this, so far.
         throw new UNotYetImplementedException();
     }

@@ -37,8 +37,6 @@
  */
 package org.jooq;
 
-import org.jooq.impl.QOM.MTyped;
-
 import org.jetbrains.annotations.NotNull;
 
 
@@ -50,7 +48,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface Typed<T> extends QueryPart, MTyped<T> {
+public interface Typed<T> extends QueryPart {
 
     /**
      * The object's underlying {@link Converter}.
@@ -87,4 +85,9 @@ public interface Typed<T> extends QueryPart, MTyped<T> {
     @NotNull
     DataType<T> getDataType(Configuration configuration);
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @NotNull DataType<T> $dataType();
 }

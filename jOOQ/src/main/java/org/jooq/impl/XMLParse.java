@@ -46,26 +46,24 @@ import static org.jooq.impl.Keywords.K_DOCUMENT;
 import static org.jooq.impl.Keywords.K_PRESERVE;
 import static org.jooq.impl.Keywords.K_WHITESPACE;
 import static org.jooq.impl.Names.N_XMLPARSE;
+import static org.jooq.impl.QOM.DocumentOrContent.DOCUMENT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
-import static org.jooq.impl.QOM.DocumentOrContent.DOCUMENT;
-
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
+import org.jooq.QueryPart;
 import org.jooq.XML;
 import org.jooq.impl.QOM.DocumentOrContent;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MXMLParse;
 
 
 /**
  * @author Lukas Eder
  */
-final class XMLParse extends AbstractField<XML> implements MXMLParse {
+final class XMLParse extends AbstractField<XML> implements QOM.XMLParse {
     private final Field<String>     content;
     private final DocumentOrContent documentOrContent;
 
@@ -139,19 +137,19 @@ final class XMLParse extends AbstractField<XML> implements MXMLParse {
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, content);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(this, content, c -> new XMLParse(c, documentOrContent), recurse, replacement);
     }

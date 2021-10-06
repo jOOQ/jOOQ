@@ -38,11 +38,9 @@
 
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MCondition;
+
+import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -83,7 +81,7 @@ import org.jooq.impl.QOM.MCondition;
  *
  * @author Lukas Eder
  */
-public interface Condition extends QueryPart, MCondition {
+public interface Condition extends QueryPart {
 
     /**
      * Combine this condition with another one using the {@link Operator#AND}

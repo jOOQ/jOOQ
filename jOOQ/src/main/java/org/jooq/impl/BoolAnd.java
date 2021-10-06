@@ -69,7 +69,7 @@ final class BoolAnd
 extends
     AbstractAggregateFunction<Boolean>
 implements
-    MBoolAnd
+    QOM.BoolAnd
 {
 
     BoolAnd(
@@ -139,18 +139,18 @@ implements
     }
 
     @Override
-    public final MBoolAnd $condition(MCondition newValue) {
+    public final QOM.BoolAnd $condition(Condition newValue) {
         return constructor().apply(newValue);
     }
 
-    public final Function1<? super MCondition, ? extends MBoolAnd> constructor() {
-        return (a1) -> new BoolAnd((Condition) a1);
+    public final Function1<? super Condition, ? extends QOM.BoolAnd> constructor() {
+        return (a1) -> new BoolAnd(a1);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -162,13 +162,13 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
-        return super.traverse(
+        return super.$traverse(
             QOM.traverse(
                 init, abort, recurse, accumulate, this,
                 $condition()

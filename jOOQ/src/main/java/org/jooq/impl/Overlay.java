@@ -69,7 +69,7 @@ final class Overlay
 extends
     AbstractField<String>
 implements
-    MOverlay
+    QOM.Overlay
 {
 
     final Field<String>           in;
@@ -206,33 +206,33 @@ implements
     }
 
     @Override
-    public final MOverlay $in(MField<String> newValue) {
+    public final QOM.Overlay $in(Field<String> newValue) {
         return constructor().apply(newValue, $placing(), $startIndex(), $length());
     }
 
     @Override
-    public final MOverlay $placing(MField<String> newValue) {
+    public final QOM.Overlay $placing(Field<String> newValue) {
         return constructor().apply($in(), newValue, $startIndex(), $length());
     }
 
     @Override
-    public final MOverlay $startIndex(MField<? extends Number> newValue) {
+    public final QOM.Overlay $startIndex(Field<? extends Number> newValue) {
         return constructor().apply($in(), $placing(), newValue, $length());
     }
 
     @Override
-    public final MOverlay $length(MField<? extends Number> newValue) {
+    public final QOM.Overlay $length(Field<? extends Number> newValue) {
         return constructor().apply($in(), $placing(), $startIndex(), newValue);
     }
 
-    public final Function4<? super MField<String>, ? super MField<String>, ? super MField<? extends Number>, ? super MField<? extends Number>, ? extends MOverlay> constructor() {
-        return (a1, a2, a3, a4) -> new Overlay((Field<String>) a1, (Field<String>) a2, (Field<? extends Number>) a3, (Field<? extends Number>) a4);
+    public final Function4<? super Field<String>, ? super Field<String>, ? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Overlay> constructor() {
+        return (a1, a2, a3, a4) -> new Overlay(a1, a2, a3, a4);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -247,11 +247,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

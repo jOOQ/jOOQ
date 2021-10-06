@@ -37,8 +37,6 @@
  */
 package org.jooq;
 
-import org.jooq.impl.QOM.MJSONEntry;
-
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -46,7 +44,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface JSONEntry<T> extends QueryPart, MJSONEntry<T> {
+public interface JSONEntry<T> extends QueryPart {
 
     /**
      * The JSON entry key.
@@ -59,4 +57,11 @@ public interface JSONEntry<T> extends QueryPart, MJSONEntry<T> {
      */
     @NotNull
     Field<T> value();
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @NotNull Field<String> $key();
+    @NotNull Field<?> $value();
 }

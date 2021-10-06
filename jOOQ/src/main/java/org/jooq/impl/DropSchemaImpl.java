@@ -69,7 +69,7 @@ final class DropSchemaImpl
 extends
     AbstractDDLQuery
 implements
-    MDropSchema,
+    QOM.DropSchema,
     DropSchemaStep,
     DropSchemaFinalStep
 {
@@ -217,28 +217,28 @@ implements
     }
 
     @Override
-    public final MDropSchema $schema(MSchema newValue) {
+    public final QOM.DropSchema $schema(Schema newValue) {
         return constructor().apply(newValue, $ifExists(), $cascade());
     }
 
     @Override
-    public final MDropSchema $ifExists(boolean newValue) {
+    public final QOM.DropSchema $ifExists(boolean newValue) {
         return constructor().apply($schema(), newValue, $cascade());
     }
 
     @Override
-    public final MDropSchema $cascade(Cascade newValue) {
+    public final QOM.DropSchema $cascade(Cascade newValue) {
         return constructor().apply($schema(), $ifExists(), newValue);
     }
 
-    public final Function3<? super MSchema, ? super Boolean, ? super Cascade, ? extends MDropSchema> constructor() {
-        return (a1, a2, a3) -> new DropSchemaImpl(configuration(), (Schema) a1, a2, a3);
+    public final Function3<? super Schema, ? super Boolean, ? super Cascade, ? extends QOM.DropSchema> constructor() {
+        return (a1, a2, a3) -> new DropSchemaImpl(configuration(), a1, a2, a3);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -252,11 +252,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

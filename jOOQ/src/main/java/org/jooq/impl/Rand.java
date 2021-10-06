@@ -70,7 +70,7 @@ final class Rand
 extends
     AbstractField<BigDecimal>
 implements
-    MRand
+    QOM.Rand
 {
 
     Rand() {

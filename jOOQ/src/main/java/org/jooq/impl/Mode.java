@@ -49,18 +49,16 @@ import static org.jooq.impl.Names.N_STATS_MODE;
 
 import java.util.Set;
 
+import org.jooq.AggregateFunction;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.SQLDialect;
-import org.jooq.impl.QOM.MAggregateFunction;
-import org.jooq.impl.QOM.MField;
-import org.jooq.impl.QOM.MMode;
 
 /**
  * @author Lukas Eder
  */
-final class Mode<T> extends AbstractAggregateFunction<T> implements MMode<T> {
+final class Mode<T> extends AbstractAggregateFunction<T> implements QOM.Mode<T> {
     private static final Set<SQLDialect> EMULATE_AS_ORDERED_SET_AGG = SQLDialect.supportedBy(H2, POSTGRES, YUGABYTE);
 
     Mode(Field<T> arg) {
@@ -87,12 +85,12 @@ final class Mode<T> extends AbstractAggregateFunction<T> implements MMode<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public final MField<T> $arg1() {
-        return (MField<T>) getArguments().get(0);
+    public final Field<T> $arg1() {
+        return (Field<T>) getArguments().get(0);
     }
 
     @Override
-    public final Function1<? super MField<T>, ? extends MAggregateFunction<T>> constructor() {
-        return f -> new Mode<>((Field<T>) f);
+    public final Function1<? super Field<T>, ? extends AggregateFunction<T>> constructor() {
+        return f -> new Mode<>(f);
     }
 }

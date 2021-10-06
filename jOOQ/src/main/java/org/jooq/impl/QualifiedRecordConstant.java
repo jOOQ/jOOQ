@@ -50,11 +50,12 @@ import org.jooq.QualifiedRecord;
 import org.jooq.RenderContext;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder
  */
-final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends AbstractParam<R> {
+final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends AbstractParam<R> implements UNotYetImplemented {
 
     QualifiedRecordConstant(R value) {
         super(value, value.getQualifier().getDataType());

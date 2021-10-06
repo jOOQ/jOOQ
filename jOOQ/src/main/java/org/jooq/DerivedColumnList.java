@@ -37,9 +37,28 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.*;
+// ...
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
-import org.jooq.impl.QOM.MDerivedColumnList;
+import org.jooq.impl.QOM.MList;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -68,7 +87,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface DerivedColumnList extends QueryPart, MDerivedColumnList {
+public interface DerivedColumnList extends QueryPart {
 
     /**
      * Specify a subselect to refer to by the <code>DerivedColumnList</code> to
@@ -102,4 +121,10 @@ public interface DerivedColumnList extends QueryPart, MDerivedColumnList {
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     <R extends Record> CommonTableExpression<R> asNotMaterialized(ResultQuery<R> query);
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @NotNull Name $tableName();
+    @NotNull MList<? extends Name> $columnNames();
 }

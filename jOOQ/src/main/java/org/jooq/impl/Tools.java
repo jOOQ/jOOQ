@@ -314,8 +314,8 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TemplatingException;
 import org.jooq.exception.TooManyRowsException;
-import org.jooq.impl.QOM.MCombinedCondition;
-import org.jooq.impl.QOM.MCompareCondition;
+import org.jooq.impl.QOM.CombinedCondition;
+import org.jooq.impl.QOM.CompareCondition;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
@@ -370,8 +370,6 @@ final class Tools {
     static final TableField<?, ?>[]         EMPTY_TABLE_FIELD             = {};
     static final TableRecord<?>[]           EMPTY_TABLE_RECORD            = {};
     static final UpdatableRecord<?>[]       EMPTY_UPDATABLE_RECORD        = {};
-
-    static final QOM.MQueryPart[]           EMPTY_MQUERYPART              = {};
 
     // ------------------------------------------------------------------------
     // Some constants for use with Context.data()
@@ -1897,6 +1895,10 @@ final class Tools {
 
     private static final <T> List<T> newListWithCapacity(Iterable<?> it) {
         return it instanceof Collection ? new ArrayList<>(((Collection<?>) it).size()) : new ArrayList<>();
+    }
+
+    static final <T, R> R apply(T t, Function<? super T, ? extends R> f) {
+        return t == null ? null : f.apply(t);
     }
 
     static final <T, E extends Exception> boolean anyMatch(T[] array, ThrowingPredicate<? super T, E> test) throws E {

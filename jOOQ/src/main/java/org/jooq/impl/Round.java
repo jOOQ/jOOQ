@@ -69,7 +69,7 @@ final class Round<T extends Number>
 extends
     AbstractField<T>
 implements
-    MRound<T>
+    QOM.Round<T>
 {
 
     final Field<T>       value;
@@ -211,23 +211,23 @@ implements
     }
 
     @Override
-    public final MRound<T> $value(MField<T> newValue) {
+    public final QOM.Round<T> $value(Field<T> newValue) {
         return constructor().apply(newValue, $decimals());
     }
 
     @Override
-    public final MRound<T> $decimals(MField<Integer> newValue) {
+    public final QOM.Round<T> $decimals(Field<Integer> newValue) {
         return constructor().apply($value(), newValue);
     }
 
-    public final Function2<? super MField<T>, ? super MField<Integer>, ? extends MRound<T>> constructor() {
-        return (a1, a2) -> new Round<>((Field<T>) a1, (Field<Integer>) a2);
+    public final Function2<? super Field<T>, ? super Field<Integer>, ? extends QOM.Round<T>> constructor() {
+        return (a1, a2) -> new Round<>(a1, a2);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -240,11 +240,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

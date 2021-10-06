@@ -44,15 +44,13 @@ import static org.jooq.impl.Tools.EMPTY_FIELD_OR_ROW;
 import org.jooq.Context;
 import org.jooq.FieldOrRow;
 import org.jooq.Function1;
-import org.jooq.impl.QOM.MCube;
-import org.jooq.impl.QOM.MFieldOrRow;
-import org.jooq.impl.QOM.MGroupField;
+import org.jooq.GroupField;
 import org.jooq.impl.QOM.MList;
 
 /**
  * @author Lukas Eder
  */
-final class Cube extends AbstractField<Object> implements MCube {
+final class Cube extends AbstractField<Object> implements QOM.Cube {
 
     private QueryPartList<FieldOrRow> arguments;
 
@@ -77,7 +75,7 @@ final class Cube extends AbstractField<Object> implements MCube {
     }
 
     @Override
-    public final Function1<? super MList<? extends MFieldOrRow>, ? extends MGroupField> constructor() {
+    public final Function1<? super MList<? extends FieldOrRow>, ? extends GroupField> constructor() {
         return l -> new Cube(l.toArray(EMPTY_FIELD_OR_ROW));
     }
 }

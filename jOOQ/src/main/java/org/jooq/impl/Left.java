@@ -69,7 +69,7 @@ final class Left
 extends
     AbstractField<String>
 implements
-    MLeft
+    QOM.Left
 {
 
     final Field<String>           string;
@@ -141,23 +141,23 @@ implements
     }
 
     @Override
-    public final MLeft $string(MField<String> newValue) {
+    public final QOM.Left $string(Field<String> newValue) {
         return constructor().apply(newValue, $length());
     }
 
     @Override
-    public final MLeft $length(MField<? extends Number> newValue) {
+    public final QOM.Left $length(Field<? extends Number> newValue) {
         return constructor().apply($string(), newValue);
     }
 
-    public final Function2<? super MField<String>, ? super MField<? extends Number>, ? extends MLeft> constructor() {
-        return (a1, a2) -> new Left((Field<String>) a1, (Field<? extends Number>) a2);
+    public final Function2<? super Field<String>, ? super Field<? extends Number>, ? extends QOM.Left> constructor() {
+        return (a1, a2) -> new Left(a1, a2);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -170,11 +170,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

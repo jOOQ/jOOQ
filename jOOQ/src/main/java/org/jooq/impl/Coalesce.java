@@ -46,14 +46,12 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function1;
-import org.jooq.impl.QOM.MCoalesce;
-import org.jooq.impl.QOM.MField;
 import org.jooq.impl.QOM.MList;
 
 /**
  * @author Lukas Eder
  */
-final class Coalesce<T> extends AbstractField<T> implements MCoalesce<T> {
+final class Coalesce<T> extends AbstractField<T> implements QOM.Coalesce<T> {
 
     private final Field<T>[] fields;
 
@@ -97,7 +95,7 @@ final class Coalesce<T> extends AbstractField<T> implements MCoalesce<T> {
     }
 
     @Override
-    public final Function1<? super MList<? extends MField<T>>, ? extends MField<T>> constructor() {
+    public final Function1<? super MList<? extends Field<T>>, ? extends Field<T>> constructor() {
         return l -> new Coalesce<>(l.toArray(EMPTY_FIELD));
     }
 }

@@ -69,7 +69,7 @@ final class And
 extends
     AbstractCondition
 implements
-    MAnd
+    QOM.And
 {
 
     final Condition arg1;
@@ -178,18 +178,18 @@ implements
     }
 
     @Override
-    public final MAnd $arg1(MCondition newValue) {
-        return new And((Condition) newValue, $arg2());
+    public final QOM.And $arg1(Condition newValue) {
+        return new And(newValue, $arg2());
     }
 
     @Override
-    public final MAnd $arg2(MCondition newValue) {
-        return new And($arg1(), (Condition) newValue);
+    public final QOM.And $arg2(Condition newValue) {
+        return new And($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super MCondition, ? super MCondition, ? extends Condition> constructor() {
-        return (a1, a2) -> DSL.and((Condition) a1, (Condition) a2);
+    public final Function2<? super Condition, ? super Condition, ? extends Condition> constructor() {
+        return (a1, a2) -> DSL.and(a1, a2);
     }
 
     // -------------------------------------------------------------------------

@@ -38,7 +38,6 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MCollation;
 
 /**
  * A collation.
@@ -65,7 +64,7 @@ import org.jooq.impl.QOM.MCollation;
  *
  * @author Lukas Eder
  */
-public interface Collation extends QueryPart, MCollation {
+public interface Collation extends QueryPart {
 
     /**
      * The name of the collation.

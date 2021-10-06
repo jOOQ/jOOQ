@@ -69,7 +69,7 @@ final class CreateIndexImpl
 extends
     AbstractDDLQuery
 implements
-    MCreateIndex,
+    QOM.CreateIndex,
     CreateIndexStep,
     CreateIndexIncludeStep,
     CreateIndexWhereStep,
@@ -418,53 +418,53 @@ implements
     }
 
     @Override
-    public final MCreateIndex $unique(boolean newValue) {
+    public final QOM.CreateIndex $unique(boolean newValue) {
         return constructor().apply(newValue, $index(), $ifNotExists(), $table(), $on(), $include(), $where(), $excludeNullKeys());
     }
 
     @Override
-    public final MCreateIndex $index(MIndex newValue) {
+    public final QOM.CreateIndex $index(Index newValue) {
         return constructor().apply($unique(), newValue, $ifNotExists(), $table(), $on(), $include(), $where(), $excludeNullKeys());
     }
 
     @Override
-    public final MCreateIndex $ifNotExists(boolean newValue) {
+    public final QOM.CreateIndex $ifNotExists(boolean newValue) {
         return constructor().apply($unique(), $index(), newValue, $table(), $on(), $include(), $where(), $excludeNullKeys());
     }
 
     @Override
-    public final MCreateIndex $table(MTable<?> newValue) {
+    public final QOM.CreateIndex $table(Table<?> newValue) {
         return constructor().apply($unique(), $index(), $ifNotExists(), newValue, $on(), $include(), $where(), $excludeNullKeys());
     }
 
     @Override
-    public final MCreateIndex $on(MList<? extends OrderField<?>> newValue) {
+    public final QOM.CreateIndex $on(MList<? extends OrderField<?>> newValue) {
         return constructor().apply($unique(), $index(), $ifNotExists(), $table(), newValue, $include(), $where(), $excludeNullKeys());
     }
 
     @Override
-    public final MCreateIndex $include(MList<? extends Field<?>> newValue) {
+    public final QOM.CreateIndex $include(MList<? extends Field<?>> newValue) {
         return constructor().apply($unique(), $index(), $ifNotExists(), $table(), $on(), newValue, $where(), $excludeNullKeys());
     }
 
     @Override
-    public final MCreateIndex $where(MCondition newValue) {
+    public final QOM.CreateIndex $where(Condition newValue) {
         return constructor().apply($unique(), $index(), $ifNotExists(), $table(), $on(), $include(), newValue, $excludeNullKeys());
     }
 
     @Override
-    public final MCreateIndex $excludeNullKeys(boolean newValue) {
+    public final QOM.CreateIndex $excludeNullKeys(boolean newValue) {
         return constructor().apply($unique(), $index(), $ifNotExists(), $table(), $on(), $include(), $where(), newValue);
     }
 
-    public final Function8<? super Boolean, ? super MIndex, ? super Boolean, ? super MTable<?>, ? super MList<? extends OrderField<?>>, ? super MList<? extends Field<?>>, ? super MCondition, ? super Boolean, ? extends MCreateIndex> constructor() {
-        return (a1, a2, a3, a4, a5, a6, a7, a8) -> new CreateIndexImpl(configuration(), a1, (Index) a2, a3, (Table<?>) a4, (Collection<? extends OrderField<?>>) a5, (Collection<? extends Field<?>>) a6, (Condition) a7, a8);
+    public final Function8<? super Boolean, ? super Index, ? super Boolean, ? super Table<?>, ? super MList<? extends OrderField<?>>, ? super MList<? extends Field<?>>, ? super Condition, ? super Boolean, ? extends QOM.CreateIndex> constructor() {
+        return (a1, a2, a3, a4, a5, a6, a7, a8) -> new CreateIndexImpl(configuration(), a1, a2, a3, a4, (Collection<? extends OrderField<?>>) a5, (Collection<? extends Field<?>>) a6, a7, a8);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -483,11 +483,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

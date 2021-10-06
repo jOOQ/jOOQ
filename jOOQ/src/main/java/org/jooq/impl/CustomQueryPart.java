@@ -62,7 +62,8 @@ import org.jooq.impl.QOM.UEmpty;
  * these scenarios:
  * <ul>
  * <li>When reusing a custom <code>QueryPart</code> in other custom
- * <code>QueryPart</code>s, e.g. in {@link CustomCondition}, {@link CustomField}, {@link CustomTable}, etc.</li>
+ * <code>QueryPart</code>s, e.g. in {@link CustomCondition}, {@link CustomField},
+ * {@link CustomTable}, etc.</li>
  * <li>When inlining a custom <code>QueryPart</code> in plain SQL methods, such
  * as {@link DSL#condition(String, QueryPart...)},
  * {@link DSL#field(String, QueryPart...)},

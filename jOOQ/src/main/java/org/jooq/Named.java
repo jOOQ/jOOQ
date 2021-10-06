@@ -37,7 +37,6 @@
  */
 package org.jooq;
 
-import org.jooq.impl.QOM.MNamed;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -49,7 +48,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface Named extends QueryPart, MNamed {
+public interface Named extends QueryPart {
 
     /**
      * The unqualified name of this object.
@@ -83,4 +82,10 @@ public interface Named extends QueryPart, MNamed {
      */
     @NotNull
     Comment getCommentPart();
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @NotNull Name $name();
 }

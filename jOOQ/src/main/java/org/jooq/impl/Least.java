@@ -47,14 +47,12 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function1;
-import org.jooq.impl.QOM.MField;
-import org.jooq.impl.QOM.MLeast;
 import org.jooq.impl.QOM.MList;
 
 /**
  * @author Lukas Eder
  */
-final class Least<T> extends AbstractField<T> implements MLeast<T> {
+final class Least<T> extends AbstractField<T> implements QOM.Least<T> {
 
     private final QueryPartListView<? extends Field<?>> args;
 
@@ -127,7 +125,7 @@ final class Least<T> extends AbstractField<T> implements MLeast<T> {
     }
 
     @Override
-    public final Function1<? super MList<? extends MField<T>>, ? extends MField<T>> constructor() {
+    public final Function1<? super MList<? extends Field<T>>, ? extends Field<T>> constructor() {
         return a -> new Least<>(a.toArray(EMPTY_FIELD));
     }
 }

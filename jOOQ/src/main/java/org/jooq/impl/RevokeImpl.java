@@ -69,7 +69,7 @@ final class RevokeImpl
 extends
     AbstractDDLQuery
 implements
-    MRevoke,
+    QOM.Revoke,
     RevokeOnStep,
     RevokeFromStep,
     RevokeFinalStep
@@ -224,38 +224,38 @@ implements
     }
 
     @Override
-    public final MRevoke $privileges(MList<? extends Privilege> newValue) {
+    public final QOM.Revoke $privileges(MList<? extends Privilege> newValue) {
         return constructor().apply(newValue, $grantOptionFor(), $on(), $from(), $fromPublic());
     }
 
     @Override
-    public final MRevoke $grantOptionFor(boolean newValue) {
+    public final QOM.Revoke $grantOptionFor(boolean newValue) {
         return constructor().apply($privileges(), newValue, $on(), $from(), $fromPublic());
     }
 
     @Override
-    public final MRevoke $on(MTable<?> newValue) {
+    public final QOM.Revoke $on(Table<?> newValue) {
         return constructor().apply($privileges(), $grantOptionFor(), newValue, $from(), $fromPublic());
     }
 
     @Override
-    public final MRevoke $from(MRole newValue) {
+    public final QOM.Revoke $from(Role newValue) {
         return constructor().apply($privileges(), $grantOptionFor(), $on(), newValue, $fromPublic());
     }
 
     @Override
-    public final MRevoke $fromPublic(boolean newValue) {
+    public final QOM.Revoke $fromPublic(boolean newValue) {
         return constructor().apply($privileges(), $grantOptionFor(), $on(), $from(), newValue);
     }
 
-    public final Function5<? super MList<? extends Privilege>, ? super Boolean, ? super MTable<?>, ? super MRole, ? super Boolean, ? extends MRevoke> constructor() {
-        return (a1, a2, a3, a4, a5) -> new RevokeImpl(configuration(), (Collection<? extends Privilege>) a1, a2, (Table<?>) a3, (Role) a4, a5);
+    public final Function5<? super MList<? extends Privilege>, ? super Boolean, ? super Table<?>, ? super Role, ? super Boolean, ? extends QOM.Revoke> constructor() {
+        return (a1, a2, a3, a4, a5) -> new RevokeImpl(configuration(), (Collection<? extends Privilege>) a1, a2, a3, a4, a5);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -271,11 +271,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

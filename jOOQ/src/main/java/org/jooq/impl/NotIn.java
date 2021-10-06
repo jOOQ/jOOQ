@@ -69,7 +69,7 @@ final class NotIn<T>
 extends
     AbstractCondition
 implements
-    MNotIn<T>
+    QOM.NotIn<T>
 {
 
     final Field<T>                     arg1;
@@ -129,18 +129,18 @@ implements
     }
 
     @Override
-    public final MNotIn<T> $arg1(MField<T> newValue) {
+    public final QOM.NotIn<T> $arg1(Field<T> newValue) {
         return constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final MNotIn<T> $arg2(MSelect<? extends Record1<T>> newValue) {
+    public final QOM.NotIn<T> $arg2(Select<? extends Record1<T>> newValue) {
         return constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super MField<T>, ? super MSelect<? extends Record1<T>>, ? extends MNotIn<T>> constructor() {
-        return (a1, a2) -> new NotIn<>((Field<T>) a1, (Select<? extends Record1<T>>) a2);
+    public final Function2<? super Field<T>, ? super Select<? extends Record1<T>>, ? extends QOM.NotIn<T>> constructor() {
+        return (a1, a2) -> new NotIn<>(a1, a2);
     }
 
     // -------------------------------------------------------------------------

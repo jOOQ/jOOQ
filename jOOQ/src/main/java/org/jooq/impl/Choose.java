@@ -49,14 +49,12 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function2;
-import org.jooq.impl.QOM.MChoose;
-import org.jooq.impl.QOM.MField;
 import org.jooq.impl.QOM.MList;
 
 /**
  * @author Lukas Eder
  */
-final class Choose<T> extends AbstractField<T> implements MChoose<T> {
+final class Choose<T> extends AbstractField<T> implements QOM.Choose<T> {
 
     private Field<Integer> index;
     private Field<T>[]     values;
@@ -113,7 +111,7 @@ final class Choose<T> extends AbstractField<T> implements MChoose<T> {
     }
 
     @Override
-    public final Function2<? super MField<Integer>, ? super MList<? extends MField<T>>, ? extends MField<T>> constructor() {
-        return (i, v) -> new Choose<T>((Field<Integer>) i, (Field<T>[]) v.toArray(EMPTY_FIELD));
+    public final Function2<? super Field<Integer>, ? super MList<? extends Field<T>>, ? extends Field<T>> constructor() {
+        return (i, v) -> new Choose<T>(i, (Field<T>[]) v.toArray(EMPTY_FIELD));
     }
 }

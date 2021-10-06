@@ -64,20 +64,25 @@ import org.jooq.Function1;
 import org.jooq.Insert;
 import org.jooq.Merge;
 import org.jooq.Name;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.Update;
-import org.jooq.impl.QOM.MDataChangeDeltaTable;
-import org.jooq.impl.QOM.MQueryPart;
 import org.jooq.impl.QOM.ResultOption;
 
 
 /**
  * @author Lukas Eder
  */
-final class DataChangeDeltaTable<R extends Record> extends AbstractTable<R> implements AutoAliasTable<R>, MDataChangeDeltaTable<R> {
+final class DataChangeDeltaTable<R extends Record>
+extends
+    AbstractTable<R>
+implements
+    AutoAliasTable<R>,
+    QOM.DataChangeDeltaTable<R>
+{
 
     private final Set<SQLDialect> EMULATE_USING_CTE = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
@@ -200,19 +205,19 @@ final class DataChangeDeltaTable<R extends Record> extends AbstractTable<R> impl
     }
 
     @Override
-    public final <T> T traverse(
+    public final <T> T $traverse(
         T init,
         Predicate<? super T> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super T, ? super MQueryPart, ? extends T> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super T, ? super QueryPart, ? extends T> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, query);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(this, resultOption, query, DataChangeDeltaTable::new, recurse, replacement);
     }

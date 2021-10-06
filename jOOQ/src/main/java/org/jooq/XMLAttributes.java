@@ -38,7 +38,9 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MXMLAttributes;
+import org.jooq.impl.QOM.MList;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A type modelling XML attributes for use in
@@ -46,6 +48,11 @@ import org.jooq.impl.QOM.MXMLAttributes;
  *
  * @author Lukas Eder
  */
-public interface XMLAttributes extends QueryPart, MXMLAttributes {
+public interface XMLAttributes extends QueryPart {
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @NotNull MList<? extends Field<?>> $attributes();
 }

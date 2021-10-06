@@ -70,7 +70,7 @@ final class Pi
 extends
     AbstractField<BigDecimal>
 implements
-    MPi
+    QOM.Pi
 {
 
     Pi() {

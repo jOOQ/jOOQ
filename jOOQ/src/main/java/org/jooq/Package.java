@@ -37,8 +37,6 @@
  */
 package org.jooq;
 
-import org.jooq.impl.QOM.MPackage;
-
 /**
  * A container for stored procedures and functions
  * <p>
@@ -49,6 +47,6 @@ import org.jooq.impl.QOM.MPackage;
  *
  * @author Lukas Eder
  */
-public interface Package extends Qualified, MPackage {
+public interface Package extends Qualified {
 
 }

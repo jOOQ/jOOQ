@@ -69,7 +69,7 @@ final class SetCommand
 extends
     AbstractDDLQuery
 implements
-    MSetCommand
+    QOM.SetCommand
 {
 
     final Name     name;
@@ -129,28 +129,28 @@ implements
     }
 
     @Override
-    public final MSetCommand $name(MName newValue) {
+    public final QOM.SetCommand $name(Name newValue) {
         return constructor().apply(newValue, $value(), $local());
     }
 
     @Override
-    public final MSetCommand $value(MParam<?> newValue) {
+    public final QOM.SetCommand $value(Param<?> newValue) {
         return constructor().apply($name(), newValue, $local());
     }
 
     @Override
-    public final MSetCommand $local(boolean newValue) {
+    public final QOM.SetCommand $local(boolean newValue) {
         return constructor().apply($name(), $value(), newValue);
     }
 
-    public final Function3<? super MName, ? super MParam<?>, ? super Boolean, ? extends MSetCommand> constructor() {
-        return (a1, a2, a3) -> new SetCommand(configuration(), (Name) a1, (Param<?>) a2, a3);
+    public final Function3<? super Name, ? super Param<?>, ? super Boolean, ? extends QOM.SetCommand> constructor() {
+        return (a1, a2, a3) -> new SetCommand(configuration(), a1, a2, a3);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -164,11 +164,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

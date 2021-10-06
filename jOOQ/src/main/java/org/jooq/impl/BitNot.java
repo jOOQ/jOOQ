@@ -69,7 +69,7 @@ final class BitNot<T extends Number>
 extends
     AbstractField<T>
 implements
-    MBitNot<T>
+    QOM.BitNot<T>
 {
 
     final Field<T> arg1;
@@ -141,13 +141,13 @@ implements
     }
 
     @Override
-    public final MBitNot<T> $arg1(MField<T> newValue) {
+    public final QOM.BitNot<T> $arg1(Field<T> newValue) {
         return constructor().apply(newValue);
     }
 
     @Override
-    public final Function1<? super MField<T>, ? extends MBitNot<T>> constructor() {
-        return (a1) -> new BitNot<>((Field<T>) a1);
+    public final Function1<? super Field<T>, ? extends QOM.BitNot<T>> constructor() {
+        return (a1) -> new BitNot<>(a1);
     }
 
     // -------------------------------------------------------------------------

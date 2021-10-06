@@ -64,19 +64,18 @@ import org.jooq.Function1;
 import org.jooq.JSON;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONB;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.Row;
 import org.jooq.SelectField;
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
-import org.jooq.impl.QOM.MMultisetAgg;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MRow;
 
 /**
  * @author Lukas Eder
  */
-final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Result<R>> implements MMultisetAgg<R> {
+final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Result<R>> implements QOM.MultisetAgg<R> {
 
     private final AbstractRow<R> row;
 
@@ -176,24 +175,24 @@ final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Resu
     // -------------------------------------------------------------------------
 
     @Override
-    public final MRow $row() {
+    public final Row $row() {
         return row;
     }
 
     @Override
-    public final <T> T traverse(
+    public final <T> T $traverse(
         T init,
         Predicate<? super T> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super T, ? super MQueryPart, ? extends T> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super T, ? super QueryPart, ? extends T> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, row);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(this, distinct, row, MultisetAgg::new, recurse, replacement);
     }

@@ -69,7 +69,7 @@ final class Not
 extends
     AbstractCondition
 implements
-    MNot
+    QOM.Not
 {
 
     final Condition condition;
@@ -135,13 +135,13 @@ implements
     }
 
     @Override
-    public final MNot $arg1(MCondition newValue) {
+    public final QOM.Not $arg1(Condition newValue) {
         return constructor().apply(newValue);
     }
 
     @Override
-    public final Function1<? super MCondition, ? extends MNot> constructor() {
-        return (a1) -> new Not((Condition) a1);
+    public final Function1<? super Condition, ? extends QOM.Not> constructor() {
+        return (a1) -> new Not(a1);
     }
 
     // -------------------------------------------------------------------------

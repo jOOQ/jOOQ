@@ -51,6 +51,7 @@ import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.dataTypes;
 import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.map;
@@ -269,7 +270,6 @@ final class Interpreter {
 
     private final void accept0(AlterSchemaImpl query) {
         Schema schema = query.$schema();
-        Schema renameTo = query.$renameTo();
 
         MutableSchema oldSchema = getSchema(schema);
         if (oldSchema == null) {
@@ -279,7 +279,9 @@ final class Interpreter {
             return;
         }
 
-        if (renameTo != null) {
+        if (query.$renameTo()  != null) {
+            Schema renameTo = query.$renameTo();
+
             if (getSchema(renameTo, false) != null)
                 throw alreadyExists(renameTo);
 
@@ -824,9 +826,8 @@ final class Interpreter {
         else if (!existing.options.type().isView())
             throw objectNotView(table);
 
-        Table<?> renameTo = query.$renameTo();
-        if (renameTo != null && checkNotExists(schema, renameTo))
-            existing.name((UnqualifiedName) renameTo.getUnqualifiedName());
+        if (query.$renameTo() != null && checkNotExists(schema, query.$renameTo()))
+            existing.name((UnqualifiedName) query.$renameTo().getUnqualifiedName());
         else
             throw unsupportedQuery(query);
     }
@@ -882,32 +883,30 @@ final class Interpreter {
             return;
         }
 
-        Sequence<?> renameTo = query.$renameTo();
-        if (renameTo != null) {
+        if (query.$renameTo() != null) {
+            Sequence<?> renameTo = query.$renameTo();
+
             if (schema.sequence(renameTo) != null)
                 throw alreadyExists(renameTo);
 
             existing.name((UnqualifiedName) renameTo.getUnqualifiedName());
         }
         else {
-            Field<? extends Number> startWith = query.$startWith();
             boolean seen = false;
-            if (startWith != null && (seen |= true))
-                existing.startWith = startWith;
 
-            Field<? extends Number> incrementBy = query.$incrementBy();
-            if (incrementBy != null && (seen |= true))
-                existing.incrementBy = incrementBy;
+            if (query.$startWith() != null && (seen |= true))
+                existing.startWith = query.$startWith();
 
-            Field<? extends Number> minvalue = query.$minvalue();
-            if (minvalue != null && (seen |= true))
-                existing.minvalue = minvalue;
+            if (query.$incrementBy() != null && (seen |= true))
+                existing.incrementBy = query.$incrementBy();
+
+            if (query.$minvalue() != null && (seen |= true))
+                existing.minvalue = query.$minvalue();
             else if (query.$noMinvalue() && (seen |= true))
                 existing.minvalue = null;
 
-            Field<? extends Number> maxvalue = query.$maxvalue();
-            if (maxvalue != null && (seen |= true))
-                existing.maxvalue = maxvalue;
+            if (query.$maxvalue() != null && (seen |= true))
+                existing.maxvalue = query.$maxvalue();
             else if (query.$noMaxvalue() && (seen |= true))
                 existing.maxvalue = null;
 
@@ -915,9 +914,8 @@ final class Interpreter {
             if (cycle != null && (seen |= true))
                 existing.cycle = cycle == CycleOption.CYCLE;
 
-            Field<? extends Number> cache = query.$cache();
-            if (cache != null && (seen |= true))
-                existing.cache = cache;
+            if (query.$cache() != null && (seen |= true))
+                existing.cache = query.$cache();
             else if (query.$noCache() && (seen |= true))
                 existing.cache = null;
 
@@ -1029,17 +1027,20 @@ final class Interpreter {
         }
 
         if (query.$addConstraint() != null) {
-            if (find(existing.checks, query.$addConstraint()) != null)
-                throw alreadyExists(query.$addConstraint());
+            Constraint addConstraint = query.$addConstraint();
 
-            existing.checks.add(new MutableCheck(query.$addConstraint()));
+            if (find(existing.checks, addConstraint) != null)
+                throw alreadyExists(addConstraint);
+
+            existing.checks.add(new MutableCheck(addConstraint));
         }
         else if (query.$dropConstraint() != null) {
-            MutableCheck mc = find(existing.checks, query.$dropConstraint());
+            Constraint dropConstraint = query.$dropConstraint();
+            MutableCheck mc = find(existing.checks, dropConstraint);
 
             if (mc == null) {
                 if (!query.$dropConstraintIfExists())
-                    throw notExists(query.$dropConstraint());
+                    throw notExists(dropConstraint);
 
                 return;
             }
@@ -1047,24 +1048,29 @@ final class Interpreter {
             existing.checks.remove(mc);
         }
         else if (query.$renameTo() != null) {
-            if (schema.domain(query.$renameTo()) != null)
-                throw alreadyExists(query.$renameTo());
+            Domain<?> renameTo = query.$renameTo();
 
-            existing.name((UnqualifiedName) query.$renameTo().getUnqualifiedName());
+            if (schema.domain(renameTo) != null)
+                throw alreadyExists(renameTo);
+
+            existing.name((UnqualifiedName) renameTo.getUnqualifiedName());
         }
         else if (query.$renameConstraint() != null) {
-            MutableCheck mc = find(existing.checks, query.$renameConstraint());
+            Constraint renameConstraint = query.$renameConstraint();
+            Constraint renameConstraintTo = query.$renameConstraintTo();
+
+            MutableCheck mc = find(existing.checks, renameConstraint);
 
             if (mc == null) {
                 if (!query.$renameConstraintIfExists())
-                    throw notExists(query.$renameConstraint());
+                    throw notExists(renameConstraint);
 
                 return;
             }
-            else if (find(existing.checks, query.$renameConstraintTo()) != null)
-                throw alreadyExists(query.$renameConstraintTo());
+            else if (find(existing.checks, renameConstraintTo) != null)
+                throw alreadyExists(renameConstraintTo);
 
-            mc.name((UnqualifiedName) query.$renameConstraintTo().getUnqualifiedName());
+            mc.name((UnqualifiedName) renameConstraintTo.getUnqualifiedName());
         }
         else if (query.$setDefault() != null) {
             existing.dataType = existing.dataType.defaultValue((Field) query.$setDefault());
@@ -1103,13 +1109,10 @@ final class Interpreter {
     }
 
     private final void accept0(CommentOnImpl query) {
-        Table<?> table = query.$table();
-        Field<?> field = query.$field();
-
-        if (table != null)
-            table(table).comment(query.$comment());
-        else if (field != null)
-            field(field).comment(query.$comment());
+        if (query.$table() != null)
+            table(query.$table()).comment(query.$comment());
+        else if (query.$field() != null)
+            field(query.$field()).comment(query.$comment());
         else
             throw unsupportedQuery(query);
     }

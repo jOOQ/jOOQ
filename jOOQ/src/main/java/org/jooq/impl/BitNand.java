@@ -69,7 +69,7 @@ final class BitNand<T extends Number>
 extends
     AbstractField<T>
 implements
-    MBitNand<T>
+    QOM.BitNand<T>
 {
 
     final Field<T> arg1;
@@ -131,18 +131,18 @@ implements
     }
 
     @Override
-    public final MBitNand<T> $arg1(MField<T> newValue) {
+    public final QOM.BitNand<T> $arg1(Field<T> newValue) {
         return constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final MBitNand<T> $arg2(MField<T> newValue) {
+    public final QOM.BitNand<T> $arg2(Field<T> newValue) {
         return constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super MField<T>, ? super MField<T>, ? extends MBitNand<T>> constructor() {
-        return (a1, a2) -> new BitNand<>((Field<T>) a1, (Field<T>) a2);
+    public final Function2<? super Field<T>, ? super Field<T>, ? extends QOM.BitNand<T>> constructor() {
+        return (a1, a2) -> new BitNand<>(a1, a2);
     }
 
     // -------------------------------------------------------------------------

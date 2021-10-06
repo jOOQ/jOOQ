@@ -45,14 +45,11 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function3;
 import org.jooq.Name;
-import org.jooq.impl.QOM.MCondition;
-import org.jooq.impl.QOM.MField;
-import org.jooq.impl.QOM.MIif;
 
 /**
  * @author Lukas Eder
  */
-final class Iif<T> extends AbstractField<T> implements MIif<T> {
+final class Iif<T> extends AbstractField<T> implements QOM.Iif<T> {
 
     private final Condition condition;
     private final Field<T>  ifTrue;
@@ -109,7 +106,7 @@ final class Iif<T> extends AbstractField<T> implements MIif<T> {
     }
 
     @Override
-    public final Function3<? super MCondition, ? super MField<T>, ? super MField<T>, ? extends MField<T>> constructor() {
-        return (c, f1, f2) -> new Iif<>(getQualifiedName(), (Condition) c, (Field<T>) f1, (Field<T>) f2);
+    public final Function3<? super Condition, ? super Field<T>, ? super Field<T>, ? extends Field<T>> constructor() {
+        return (c, f1, f2) -> new Iif<>(getQualifiedName(), c, f1, f2);
     }
 }

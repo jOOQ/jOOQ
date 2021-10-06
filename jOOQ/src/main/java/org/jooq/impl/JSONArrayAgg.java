@@ -62,6 +62,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
 import java.util.Collection;
 import java.util.Set;
 
+import org.jooq.AggregateFunction;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -75,10 +76,6 @@ import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.SelectHavingStep;
 import org.jooq.impl.QOM.JSONOnNull;
-import org.jooq.impl.QOM.MAggregateFunction;
-import org.jooq.impl.QOM.MDataType;
-import org.jooq.impl.QOM.MField;
-import org.jooq.impl.QOM.MJSONArrayAgg;
 
 
 /**
@@ -91,7 +88,7 @@ extends
     AbstractAggregateFunction<J>
 implements
     JSONArrayAggOrderByStep<J>,
-    MJSONArrayAgg<J>
+    QOM.JSONArrayAgg<J>
 {
 
     static final Set<SQLDialect> EMULATE_WITH_GROUP_CONCAT   = SQLDialect.supportedBy(MARIADB, MYSQL);
@@ -308,14 +305,14 @@ implements
     }
 
     @Override
-    public final MDataType<?> $returning() {
+    public final DataType<?> $returning() {
         return returning;
     }
 
     @Override
-    public final Function1<? super MField<?>, ? extends MAggregateFunction<J>> constructor() {
+    public final Function1<? super Field<?>, ? extends AggregateFunction<J>> constructor() {
         return f -> {
-            JSONArrayAgg<J> r = new JSONArrayAgg<J>(getDataType(), (Field<?>) f);
+            JSONArrayAgg<J> r = new JSONArrayAgg<J>(getDataType(), f);
             r.onNull = onNull;
             r.returning = returning;
             return r;

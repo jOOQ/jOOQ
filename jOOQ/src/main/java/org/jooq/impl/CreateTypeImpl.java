@@ -57,10 +57,9 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.conf.ParamType;
-import org.jooq.impl.QOM.MCreateType;
-import org.jooq.impl.QOM.MField;
+import org.jooq.impl.QOM.CreateType;
 import org.jooq.impl.QOM.MList;
-import org.jooq.impl.QOM.MQueryPart;
+import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
@@ -70,7 +69,7 @@ final class CreateTypeImpl extends AbstractDDLQuery implements
     // Cascading interface implementations for CREATE TYPE behaviour
     CreateTypeStep,
     CreateTypeFinalStep,
-    MCreateType
+    CreateType
 
 {
 
@@ -138,19 +137,19 @@ final class CreateTypeImpl extends AbstractDDLQuery implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, type, values);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(this, type, values, (t, v) -> new CreateTypeImpl(configuration(), t).asEnum(v), recurse, replacement);
     }

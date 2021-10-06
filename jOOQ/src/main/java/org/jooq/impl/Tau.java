@@ -70,7 +70,7 @@ final class Tau
 extends
     AbstractField<BigDecimal>
 implements
-    MTau
+    QOM.Tau
 {
 
     Tau() {

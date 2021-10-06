@@ -69,7 +69,7 @@ final class DropTableImpl
 extends
     AbstractDDLQuery
 implements
-    MDropTable,
+    QOM.DropTable,
     DropTableStep,
     DropTableFinalStep
 {
@@ -200,33 +200,33 @@ implements
     }
 
     @Override
-    public final MDropTable $temporary(boolean newValue) {
+    public final QOM.DropTable $temporary(boolean newValue) {
         return constructor().apply(newValue, $table(), $ifExists(), $cascade());
     }
 
     @Override
-    public final MDropTable $table(MTable<?> newValue) {
+    public final QOM.DropTable $table(Table<?> newValue) {
         return constructor().apply($temporary(), newValue, $ifExists(), $cascade());
     }
 
     @Override
-    public final MDropTable $ifExists(boolean newValue) {
+    public final QOM.DropTable $ifExists(boolean newValue) {
         return constructor().apply($temporary(), $table(), newValue, $cascade());
     }
 
     @Override
-    public final MDropTable $cascade(Cascade newValue) {
+    public final QOM.DropTable $cascade(Cascade newValue) {
         return constructor().apply($temporary(), $table(), $ifExists(), newValue);
     }
 
-    public final Function4<? super Boolean, ? super MTable<?>, ? super Boolean, ? super Cascade, ? extends MDropTable> constructor() {
-        return (a1, a2, a3, a4) -> new DropTableImpl(configuration(), a1, (Table<?>) a2, a3, a4);
+    public final Function4<? super Boolean, ? super Table<?>, ? super Boolean, ? super Cascade, ? extends QOM.DropTable> constructor() {
+        return (a1, a2, a3, a4) -> new DropTableImpl(configuration(), a1, a2, a3, a4);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -241,11 +241,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

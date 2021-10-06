@@ -47,7 +47,6 @@ import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Keywords.K_INT;
 import static org.jooq.impl.Names.N_ARRAY;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -57,19 +56,15 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function1;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
-import org.jooq.impl.QOM.MArray;
-import org.jooq.impl.QOM.MField;
 import org.jooq.impl.QOM.MList;
-import org.jooq.impl.QOM.MQueryPart;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
  */
-final class Array<T> extends AbstractField<T[]> implements MArray<T> {
+final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
 
     private static final Set<SQLDialect> REQUIRES_CAST = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
@@ -123,19 +118,19 @@ final class Array<T> extends AbstractField<T[]> implements MArray<T> {
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, $elements());
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(this, fields, f -> new Array<>(asList((Field<T>[]) f.fields)), recurse, replacement);
     }

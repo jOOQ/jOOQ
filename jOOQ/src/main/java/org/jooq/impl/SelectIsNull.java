@@ -70,7 +70,6 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.selectCount;
 import static org.jooq.impl.Keywords.K_IS_NULL;
 import static org.jooq.impl.Tools.allNull;
-import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
@@ -78,19 +77,15 @@ import java.util.Set;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
-import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.impl.QOM.MCondition;
-import org.jooq.impl.QOM.MSelect;
-import org.jooq.impl.QOM.MSelectIsNull;
 
 /**
  * @author Lukas Eder
  */
-final class SelectIsNull extends AbstractCondition implements MSelectIsNull {
+final class SelectIsNull extends AbstractCondition implements QOM.SelectIsNull {
 
     static final Set<SQLDialect> EMULATE_NULL_QUERY = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE);
 
@@ -160,7 +155,7 @@ final class SelectIsNull extends AbstractCondition implements MSelectIsNull {
     }
 
     @Override
-    public final Function1<? super MSelect<?>, ? extends MCondition> constructor() {
-        return r -> new SelectIsNull((Select<?>) r);
+    public final Function1<? super Select<?>, ? extends Condition> constructor() {
+        return r -> new SelectIsNull(r);
     }
 }

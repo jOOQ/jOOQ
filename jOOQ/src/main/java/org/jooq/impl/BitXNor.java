@@ -69,7 +69,7 @@ final class BitXNor<T extends Number>
 extends
     AbstractField<T>
 implements
-    MBitXNor<T>
+    QOM.BitXNor<T>
 {
 
     final Field<T> arg1;
@@ -131,18 +131,18 @@ implements
     }
 
     @Override
-    public final MBitXNor<T> $arg1(MField<T> newValue) {
+    public final QOM.BitXNor<T> $arg1(Field<T> newValue) {
         return constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final MBitXNor<T> $arg2(MField<T> newValue) {
+    public final QOM.BitXNor<T> $arg2(Field<T> newValue) {
         return constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super MField<T>, ? super MField<T>, ? extends MBitXNor<T>> constructor() {
-        return (a1, a2) -> new BitXNor<>((Field<T>) a1, (Field<T>) a2);
+    public final Function2<? super Field<T>, ? super Field<T>, ? extends QOM.BitXNor<T>> constructor() {
+        return (a1, a2) -> new BitXNor<>(a1, a2);
     }
 
     // -------------------------------------------------------------------------

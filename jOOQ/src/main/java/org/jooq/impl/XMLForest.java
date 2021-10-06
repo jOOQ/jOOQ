@@ -69,7 +69,7 @@ final class Xmlforest
 extends
     AbstractField<XML>
 implements
-    MXmlforest
+    QOM.Xmlforest
 {
 
     final QueryPartListView<? extends Field<?>> fields;
@@ -128,18 +128,18 @@ implements
     }
 
     @Override
-    public final MXmlforest $fields(MList<? extends Field<?>> newValue) {
+    public final QOM.Xmlforest $fields(MList<? extends Field<?>> newValue) {
         return constructor().apply(newValue);
     }
 
-    public final Function1<? super MList<? extends Field<?>>, ? extends MXmlforest> constructor() {
+    public final Function1<? super MList<? extends Field<?>>, ? extends QOM.Xmlforest> constructor() {
         return (a1) -> new Xmlforest((Collection<? extends Field<?>>) a1);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -151,11 +151,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

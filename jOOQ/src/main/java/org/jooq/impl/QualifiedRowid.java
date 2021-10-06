@@ -69,7 +69,7 @@ final class QualifiedRowid
 extends
     AbstractField<RowId>
 implements
-    MQualifiedRowid
+    QOM.QualifiedRowid
 {
 
     final Table<?> table;
@@ -137,13 +137,13 @@ implements
     }
 
     @Override
-    public final MQualifiedRowid $arg1(MTable<?> newValue) {
+    public final QOM.QualifiedRowid $arg1(Table<?> newValue) {
         return constructor().apply(newValue);
     }
 
     @Override
-    public final Function1<? super MTable<?>, ? extends MQualifiedRowid> constructor() {
-        return (a1) -> new QualifiedRowid((Table<?>) a1);
+    public final Function1<? super Table<?>, ? extends QOM.QualifiedRowid> constructor() {
+        return (a1) -> new QualifiedRowid(a1);
     }
 
     // -------------------------------------------------------------------------

@@ -69,7 +69,7 @@ final class Xmlpi
 extends
     AbstractField<XML>
 implements
-    MXmlpi
+    QOM.Xmlpi
 {
 
     final Name     target;
@@ -153,23 +153,23 @@ implements
     }
 
     @Override
-    public final MXmlpi $target(MName newValue) {
+    public final QOM.Xmlpi $target(Name newValue) {
         return constructor().apply(newValue, $content());
     }
 
     @Override
-    public final MXmlpi $content(MField<?> newValue) {
+    public final QOM.Xmlpi $content(Field<?> newValue) {
         return constructor().apply($target(), newValue);
     }
 
-    public final Function2<? super MName, ? super MField<?>, ? extends MXmlpi> constructor() {
-        return (a1, a2) -> new Xmlpi((Name) a1, (Field<?>) a2);
+    public final Function2<? super Name, ? super Field<?>, ? extends QOM.Xmlpi> constructor() {
+        return (a1, a2) -> new Xmlpi(a1, a2);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -182,11 +182,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

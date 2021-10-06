@@ -69,7 +69,7 @@ final class NotSimilarTo
 extends
     AbstractCondition
 implements
-    MNotSimilarTo,
+    QOM.NotSimilarTo,
     LikeEscapeStep
 {
 
@@ -157,23 +157,23 @@ implements
     }
 
     @Override
-    public final MNotSimilarTo $arg1(MField<?> newValue) {
+    public final QOM.NotSimilarTo $arg1(Field<?> newValue) {
         return constructor().apply(newValue, $arg2(), $arg3());
     }
 
     @Override
-    public final MNotSimilarTo $arg2(MField<String> newValue) {
+    public final QOM.NotSimilarTo $arg2(Field<String> newValue) {
         return constructor().apply($arg1(), newValue, $arg3());
     }
 
     @Override
-    public final MNotSimilarTo $arg3(Character newValue) {
+    public final QOM.NotSimilarTo $arg3(Character newValue) {
         return constructor().apply($arg1(), $arg2(), newValue);
     }
 
     @Override
-    public final Function3<? super MField<?>, ? super MField<String>, ? super Character, ? extends MNotSimilarTo> constructor() {
-        return (a1, a2, a3) -> new NotSimilarTo((Field<?>) a1, (Field<String>) a2, a3);
+    public final Function3<? super Field<?>, ? super Field<String>, ? super Character, ? extends QOM.NotSimilarTo> constructor() {
+        return (a1, a2, a3) -> new NotSimilarTo(a1, a2, a3);
     }
 
     // -------------------------------------------------------------------------

@@ -74,7 +74,6 @@ import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Sequence;
 import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.impl.QOM.MSchema;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.QOM.UTransient;
@@ -89,7 +88,14 @@ import org.jetbrains.annotations.Nullable;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implements Sequence<T>, UNotYetImplemented {
+public class SequenceImpl<T extends Number>
+extends
+    AbstractTypedNamed<T>
+implements
+    Sequence<T>,
+    UNotYetImplemented
+{
+
     private static final Clause[]     CLAUSES          = { SEQUENCE, SEQUENCE_REFERENCE };
 
     private final boolean             nameIsPlainSQL;

@@ -69,7 +69,7 @@ final class Ge<T>
 extends
     AbstractCondition
 implements
-    MGe<T>
+    QOM.Ge<T>
 {
 
     final Field<T> arg1;
@@ -133,18 +133,18 @@ implements
     }
 
     @Override
-    public final MGe<T> $arg1(MField<T> newValue) {
+    public final QOM.Ge<T> $arg1(Field<T> newValue) {
         return constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final MGe<T> $arg2(MField<T> newValue) {
+    public final QOM.Ge<T> $arg2(Field<T> newValue) {
         return constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super MField<T>, ? super MField<T>, ? extends MGe<T>> constructor() {
-        return (a1, a2) -> new Ge<>((Field<T>) a1, (Field<T>) a2);
+    public final Function2<? super Field<T>, ? super Field<T>, ? extends QOM.Ge<T>> constructor() {
+        return (a1, a2) -> new Ge<>(a1, a2);
     }
 
     // -------------------------------------------------------------------------

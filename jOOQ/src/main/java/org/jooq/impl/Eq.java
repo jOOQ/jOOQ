@@ -69,7 +69,7 @@ final class Eq<T>
 extends
     AbstractCondition
 implements
-    MEq<T>
+    QOM.Eq<T>
 {
 
     final Field<T> arg1;
@@ -192,18 +192,18 @@ implements
     }
 
     @Override
-    public final MEq<T> $arg1(MField<T> newValue) {
+    public final QOM.Eq<T> $arg1(Field<T> newValue) {
         return constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final MEq<T> $arg2(MField<T> newValue) {
+    public final QOM.Eq<T> $arg2(Field<T> newValue) {
         return constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super MField<T>, ? super MField<T>, ? extends MEq<T>> constructor() {
-        return (a1, a2) -> new Eq<>((Field<T>) a1, (Field<T>) a2);
+    public final Function2<? super Field<T>, ? super Field<T>, ? extends QOM.Eq<T>> constructor() {
+        return (a1, a2) -> new Eq<>(a1, a2);
     }
 
     // -------------------------------------------------------------------------

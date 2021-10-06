@@ -37,8 +37,6 @@
  */
 package org.jooq.impl;
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 // ...
 // ...
 // ...
@@ -61,7 +59,6 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
-import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -82,11 +79,8 @@ import org.jooq.WindowRowsAndStep;
 import org.jooq.WindowRowsStep;
 import org.jooq.WindowSpecification;
 import org.jooq.impl.QOM.FromFirstOrLast;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MWindowDefinition;
-import org.jooq.impl.QOM.MWindowFunction;
-import org.jooq.impl.QOM.MWindowSpecification;
 import org.jooq.impl.QOM.NullTreatment;
+import org.jooq.impl.QOM.WindowFunction;
 import org.jooq.impl.Tools.DataExtendedKey;
 
 /**
@@ -100,7 +94,7 @@ implements
     WindowRowsStep<T>,
     WindowRowsAndStep<T>,
     WindowExcludeStep<T>,
-    MWindowFunction<T>
+    WindowFunction<T>
 {
     private static final Set<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE          = SQLDialect.supportedBy(MYSQL, POSTGRES, SQLITE, YUGABYTE);
 
@@ -601,21 +595,21 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final MWindowSpecification $windowSpecification() {
+    public final WindowSpecification $windowSpecification() {
         return windowSpecification;
     }
 
-    final AbstractWindowFunction<T> $windowSpecification(MWindowSpecification s) {
+    final AbstractWindowFunction<T> $windowSpecification(WindowSpecification s) {
         windowSpecification = (WindowSpecificationImpl) s;
         return this;
     }
 
     @Override
-    public final MWindowDefinition $windowDefinition() {
+    public final WindowDefinition $windowDefinition() {
         return windowDefinition;
     }
 
-    final AbstractWindowFunction<T> $windowDefinition(MWindowDefinition d) {
+    final AbstractWindowFunction<T> $windowDefinition(WindowDefinition d) {
         windowDefinition = (WindowDefinitionImpl) d;
         return this;
     }
@@ -643,11 +637,11 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public /* non-final */ <R> R traverse(
+    public /* non-final */ <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(init, abort, recurse, accumulate, this, $windowDefinition(), $windowSpecification());
     }

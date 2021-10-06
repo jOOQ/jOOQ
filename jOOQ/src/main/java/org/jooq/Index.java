@@ -40,7 +40,6 @@ package org.jooq;
 import java.util.List;
 
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MIndex;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -52,7 +51,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-public interface Index extends Named, MIndex {
+public interface Index extends Named {
 
     /**
      * The table on which this index is defined.
@@ -78,4 +77,9 @@ public interface Index extends Named, MIndex {
      */
     boolean getUnique();
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @NotNull Table<?> $table();
 }

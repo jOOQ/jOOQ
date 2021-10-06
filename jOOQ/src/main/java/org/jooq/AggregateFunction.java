@@ -44,6 +44,7 @@ import java.util.Collection;
 import org.jooq.impl.DSL;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 
 /**
@@ -123,4 +124,10 @@ public interface AggregateFunction<T> extends AggregateFilterStep<T> {
 
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Nullable Condition $filterWhere();
 }

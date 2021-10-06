@@ -70,7 +70,7 @@ final class Product
 extends
     AbstractAggregateFunction<BigDecimal>
 implements
-    MProduct
+    QOM.Product
 {
 
     Product(
@@ -186,23 +186,23 @@ implements
     }
 
     @Override
-    public final MProduct $field(MField<? extends Number> newValue) {
+    public final QOM.Product $field(Field<? extends Number> newValue) {
         return constructor().apply(newValue, $distinct());
     }
 
     @Override
-    public final MProduct $distinct(boolean newValue) {
+    public final QOM.Product $distinct(boolean newValue) {
         return constructor().apply($field(), newValue);
     }
 
-    public final Function2<? super MField<? extends Number>, ? super Boolean, ? extends MProduct> constructor() {
-        return (a1, a2) -> new Product((Field<? extends Number>) a1, a2);
+    public final Function2<? super Field<? extends Number>, ? super Boolean, ? extends QOM.Product> constructor() {
+        return (a1, a2) -> new Product(a1, a2);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -215,13 +215,13 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
-        return super.traverse(
+        return super.$traverse(
             QOM.traverse(
                 init, abort, recurse, accumulate, this,
                 $field()

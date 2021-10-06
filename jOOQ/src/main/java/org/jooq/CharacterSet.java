@@ -38,7 +38,6 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MCharacterSet;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -49,7 +48,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface CharacterSet extends QueryPart, MCharacterSet {
+public interface CharacterSet extends QueryPart {
 
     /**
      * The name of the collation.

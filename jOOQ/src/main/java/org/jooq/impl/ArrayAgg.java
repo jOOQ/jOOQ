@@ -39,17 +39,15 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Names.N_ARRAY_AGG;
 
+import org.jooq.AggregateFunction;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
-import org.jooq.impl.QOM.MAggregateFunction;
-import org.jooq.impl.QOM.MArrayAgg;
-import org.jooq.impl.QOM.MField;
 
 /**
  * @author Lukas Eder
  */
-final class ArrayAgg<T> extends AbstractAggregateFunction<T[]> implements MArrayAgg<T> {
+final class ArrayAgg<T> extends AbstractAggregateFunction<T[]> implements QOM.ArrayAgg<T> {
 
     ArrayAgg(boolean distinct, Field<T> arg) {
         super(distinct, N_ARRAY_AGG, arg.getDataType().getArrayDataType(), arg);
@@ -85,12 +83,12 @@ final class ArrayAgg<T> extends AbstractAggregateFunction<T[]> implements MArray
 
     @SuppressWarnings("unchecked")
     @Override
-    public final MField<T> $arg1() {
-        return (MField<T>) getArguments().get(0);
+    public final Field<T> $arg1() {
+        return (Field<T>) getArguments().get(0);
     }
 
     @Override
-    public final Function1<? super MField<T>, ? extends MAggregateFunction<T[]>> constructor() {
-        return f -> new ArrayAgg<>(distinct, (Field<T>) f);
+    public final Function1<? super Field<T>, ? extends AggregateFunction<T[]>> constructor() {
+        return f -> new ArrayAgg<>(distinct, f);
     }
 }

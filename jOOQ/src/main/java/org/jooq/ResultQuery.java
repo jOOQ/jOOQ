@@ -65,7 +65,6 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.DefaultRecordMapper;
-import org.jooq.impl.QOM.MResultQuery;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -136,7 +135,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R>, Publisher<R>, MResultQuery<R> {
+public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R>, Publisher<R> {
 
     /**
      * Execute the query and return the generated result.

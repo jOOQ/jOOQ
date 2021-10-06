@@ -37,8 +37,6 @@
  */
 package org.jooq;
 
-import org.jooq.impl.QOM.MFieldOrRow;
-
 /**
  * A common base type for {@link Field} and {@link Row} where DSL API accepts
  * both types alike.
@@ -57,6 +55,6 @@ import org.jooq.impl.QOM.MFieldOrRow;
  *
  * @author Lukas Eder
  */
-public interface FieldOrRow extends QueryPart, MFieldOrRow {
+public interface FieldOrRow extends QueryPart {
 
 }

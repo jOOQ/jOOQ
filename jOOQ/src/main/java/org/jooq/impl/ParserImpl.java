@@ -628,7 +628,6 @@ import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.impl.QOM.DocumentOrContent;
 import org.jooq.impl.QOM.JSONOnNull;
-import org.jooq.impl.QOM.MQuery;
 // ...
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UTransient;

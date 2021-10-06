@@ -81,7 +81,6 @@ import java.util.function.Function;
 
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MField;
 import org.jooq.types.Interval;
 // ...
 
@@ -151,8 +150,8 @@ extends
     GroupField,
     OrderField<T>,
     FieldOrRow,
-    FieldOrConstraint,
-    MField<T> {
+    FieldOrConstraint
+{
 
     // ------------------------------------------------------------------------
     // API

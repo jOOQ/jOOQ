@@ -63,15 +63,19 @@ import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_BOOLEAN;
 import static org.jooq.impl.Keywords.K_CASE;
 import static org.jooq.impl.Keywords.K_COLUMNS;
-import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Keywords.K_DECLARE;
 import static org.jooq.impl.Keywords.K_ELSE;
 import static org.jooq.impl.Keywords.K_END;
+import static org.jooq.impl.Keywords.K_END_LOOP;
 import static org.jooq.impl.Keywords.K_FALSE;
 import static org.jooq.impl.Keywords.K_FIRST;
 import static org.jooq.impl.Keywords.K_FOR;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_FUNCTION;
 import static org.jooq.impl.Keywords.K_IS;
+import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
+import static org.jooq.impl.Keywords.K_LOOP;
+import static org.jooq.impl.Keywords.K_NEXT;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_OPEN;
@@ -79,7 +83,6 @@ import static org.jooq.impl.Keywords.K_PASSING;
 import static org.jooq.impl.Keywords.K_RECORD;
 import static org.jooq.impl.Keywords.K_RETURN;
 import static org.jooq.impl.Keywords.K_SELECT;
-import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_TYPE;
@@ -88,7 +91,6 @@ import static org.jooq.impl.Keywords.K_WHILE;
 import static org.jooq.impl.Keywords.K_XMLTABLE;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NUMERIC;
-import static org.jooq.impl.SQLDataType.RESULT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.configurationOrThrow;
@@ -102,7 +104,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -110,8 +111,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
 import java.util.Set;
 
 import org.jooq.AggregateFunction;
@@ -129,7 +128,6 @@ import org.jooq.DataType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.Package;
 import org.jooq.Param;
@@ -147,23 +145,13 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.UDT;
 import org.jooq.UDTField;
-import org.jooq.XMLFormat;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.MappingException;
-import org.jooq.impl.QOM.MField;
-import org.jooq.impl.QOM.MFunction;
-import org.jooq.impl.QOM.MList;
-import org.jooq.impl.QOM.MQueryPart;
-import org.jooq.impl.QOM.MSchema;
-import org.jooq.impl.QOM.UEmptyStatement;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.QOM.UTransient;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.reflect.Reflect;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A common base class for stored procedures
@@ -173,7 +161,14 @@ import org.jetbrains.annotations.Nullable;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-public abstract class AbstractRoutine<T> extends AbstractNamed implements Routine<T>, UNotYetImplemented {
+public abstract class AbstractRoutine<T>
+extends
+    AbstractNamed
+implements
+    Routine<T>,
+    UNotYetImplemented
+{
+
     private static final Clause[]             CLAUSES                            = { FIELD, FIELD_FUNCTION };
 
 
@@ -2200,7 +2195,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     // -------------------------------------------------------------------------
 
     @Override
-    public final MSchema $schema() {
+    public final Schema $schema() {
         return schema;
     }
 }

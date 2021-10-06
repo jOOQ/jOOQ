@@ -76,6 +76,7 @@ import static org.jooq.impl.Names.N_GENERATOR;
 import static org.jooq.impl.Names.N_SYSTEM_RANGE;
 import static org.jooq.impl.Names.N_UNNEST;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
@@ -90,14 +91,18 @@ import org.jooq.Record1;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableOptions;
-import org.jooq.impl.QOM.MField;
-import org.jooq.impl.QOM.MGenerateSeries;
-import org.jooq.impl.QOM.MTable;
 
 /**
  * @author Lukas Eder
  */
-final class GenerateSeries extends AbstractTable<Record1<Integer>> implements AutoAliasTable<Record1<Integer>>, MGenerateSeries<Integer> {
+final class GenerateSeries
+extends
+    AbstractTable<Record1<Integer>>
+implements
+    AutoAliasTable<Record1<Integer>>,
+    QOM.GenerateSeries<Integer>
+{
+
     private static final Set<SQLDialect> EMULATE_WITH_RECURSIVE = SQLDialect.supportedBy(FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> EMULATE_SYSTEM_RANGE   = SQLDialect.supportedBy(H2);
 
@@ -255,17 +260,17 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> implements Au
     }
 
     @Override
-    public final MField<Integer> $arg2() {
+    public final Field<Integer> $arg2() {
         return to;
     }
 
     @Override
-    public final MField<Integer> $arg3() {
+    public final Field<Integer> $arg3() {
         return step;
     }
 
     @Override
-    public final Function3<? super MField<Integer>, ? super MField<Integer>, ? super MField<Integer>, ? extends MTable<Record1<Integer>>> constructor() {
-        return (f1, f2, f3) -> new GenerateSeries((Field<Integer>) f1, (Field<Integer>) f2, (Field<Integer>) f3, name);
+    public final Function3<? super Field<Integer>, ? super Field<Integer>, ? super Field<Integer>, ? extends Table<Record1<Integer>>> constructor() {
+        return (f1, f2, f3) -> new GenerateSeries(f1, f2, f3, name);
     }
 }

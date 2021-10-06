@@ -49,12 +49,11 @@ import java.sql.Date;
 
 import org.jooq.Context;
 import org.jooq.DataType;
-import org.jooq.impl.QOM.MCurrentDate;
 
 /**
  * @author Lukas Eder
  */
-final class CurrentDate<T> extends AbstractField<T> implements MCurrentDate<T> {
+final class CurrentDate<T> extends AbstractField<T> implements QOM.CurrentDate<T> {
 
     CurrentDate(DataType<T> type) {
         super(N_CURRENT_DATE, type);

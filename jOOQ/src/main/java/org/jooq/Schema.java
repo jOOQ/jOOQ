@@ -42,7 +42,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MSchema;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -80,7 +79,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-public interface Schema extends Named, MSchema {
+public interface Schema extends Named {
 
     /**
      * The catalog of this schema.

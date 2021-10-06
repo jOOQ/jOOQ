@@ -69,7 +69,7 @@ final class Max<T>
 extends
     AbstractAggregateFunction<T>
 implements
-    MMax<T>
+    QOM.Max<T>
 {
 
     Max(
@@ -104,23 +104,23 @@ implements
     }
 
     @Override
-    public final MMax<T> $field(MField<T> newValue) {
+    public final QOM.Max<T> $field(Field<T> newValue) {
         return constructor().apply(newValue, $distinct());
     }
 
     @Override
-    public final MMax<T> $distinct(boolean newValue) {
+    public final QOM.Max<T> $distinct(boolean newValue) {
         return constructor().apply($field(), newValue);
     }
 
-    public final Function2<? super MField<T>, ? super Boolean, ? extends MMax<T>> constructor() {
-        return (a1, a2) -> new Max<>((Field<T>) a1, a2);
+    public final Function2<? super Field<T>, ? super Boolean, ? extends QOM.Max<T>> constructor() {
+        return (a1, a2) -> new Max<>(a1, a2);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -133,13 +133,13 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
-        return super.traverse(
+        return super.$traverse(
             QOM.traverse(
                 init, abort, recurse, accumulate, this,
                 $field()

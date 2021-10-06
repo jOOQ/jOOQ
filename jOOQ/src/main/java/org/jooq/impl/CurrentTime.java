@@ -48,12 +48,11 @@ import java.sql.Time;
 
 import org.jooq.Context;
 import org.jooq.DataType;
-import org.jooq.impl.QOM.MCurrentTime;
 
 /**
  * @author Lukas Eder
  */
-final class CurrentTime<T> extends AbstractField<T> implements MCurrentTime<T> {
+final class CurrentTime<T> extends AbstractField<T> implements QOM.CurrentTime<T> {
 
     CurrentTime(DataType<T> type) {
         super(N_CURRENT_TIME, type);

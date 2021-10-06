@@ -69,7 +69,7 @@ final class LikeIgnoreCase
 extends
     AbstractCondition
 implements
-    MLikeIgnoreCase,
+    QOM.LikeIgnoreCase,
     LikeEscapeStep
 {
 
@@ -157,23 +157,23 @@ implements
     }
 
     @Override
-    public final MLikeIgnoreCase $arg1(MField<?> newValue) {
+    public final QOM.LikeIgnoreCase $arg1(Field<?> newValue) {
         return constructor().apply(newValue, $arg2(), $arg3());
     }
 
     @Override
-    public final MLikeIgnoreCase $arg2(MField<String> newValue) {
+    public final QOM.LikeIgnoreCase $arg2(Field<String> newValue) {
         return constructor().apply($arg1(), newValue, $arg3());
     }
 
     @Override
-    public final MLikeIgnoreCase $arg3(Character newValue) {
+    public final QOM.LikeIgnoreCase $arg3(Character newValue) {
         return constructor().apply($arg1(), $arg2(), newValue);
     }
 
     @Override
-    public final Function3<? super MField<?>, ? super MField<String>, ? super Character, ? extends MLikeIgnoreCase> constructor() {
-        return (a1, a2, a3) -> new LikeIgnoreCase((Field<?>) a1, (Field<String>) a2, a3);
+    public final Function3<? super Field<?>, ? super Field<String>, ? super Character, ? extends QOM.LikeIgnoreCase> constructor() {
+        return (a1, a2, a3) -> new LikeIgnoreCase(a1, a2, a3);
     }
 
     // -------------------------------------------------------------------------

@@ -69,7 +69,7 @@ final class NotField
 extends
     AbstractField<Boolean>
 implements
-    MNotField
+    QOM.NotField
 {
 
     final Field<Boolean> field;
@@ -142,13 +142,13 @@ implements
     }
 
     @Override
-    public final MNotField $arg1(MField<Boolean> newValue) {
+    public final QOM.NotField $arg1(Field<Boolean> newValue) {
         return constructor().apply(newValue);
     }
 
     @Override
-    public final Function1<? super MField<Boolean>, ? extends MNotField> constructor() {
-        return (a1) -> new NotField((Field<Boolean>) a1);
+    public final Function1<? super Field<Boolean>, ? extends QOM.NotField> constructor() {
+        return (a1) -> new NotField(a1);
     }
 
     // -------------------------------------------------------------------------

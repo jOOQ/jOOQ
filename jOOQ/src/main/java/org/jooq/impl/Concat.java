@@ -48,14 +48,12 @@ import static org.jooq.impl.Tools.castAllIfNeeded;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
-import org.jooq.impl.QOM.MConcat;
-import org.jooq.impl.QOM.MField;
 import org.jooq.impl.QOM.MList;
 
 /**
  * @author Lukas Eder
  */
-final class Concat extends AbstractField<String> implements MConcat {
+final class Concat extends AbstractField<String> implements QOM.Concat {
 
     private final Field<?>[] arguments;
 
@@ -126,7 +124,7 @@ final class Concat extends AbstractField<String> implements MConcat {
     }
 
     @Override
-    public final Function1<? super MList<? extends MField<?>>, ? extends MField<String>> constructor() {
+    public final Function1<? super MList<? extends Field<?>>, ? extends Field<String>> constructor() {
         return l -> new Concat(l.toArray(EMPTY_FIELD));
     }
 }

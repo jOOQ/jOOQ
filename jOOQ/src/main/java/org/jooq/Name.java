@@ -70,7 +70,6 @@ import java.util.function.Function;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MName;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -100,7 +99,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-public interface Name extends QueryPart, Comparable<Name>, MName {
+public interface Name extends QueryPart, Comparable<Name> {
 
     /**
      * A flag indicating whether the name is quoted or not.

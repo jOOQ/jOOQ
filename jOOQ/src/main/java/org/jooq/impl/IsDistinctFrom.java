@@ -69,7 +69,7 @@ final class IsDistinctFrom<T>
 extends
     AbstractCondition
 implements
-    MIsDistinctFrom<T>
+    QOM.IsDistinctFrom<T>
 {
 
     final Field<T> arg1;
@@ -161,18 +161,18 @@ implements
     }
 
     @Override
-    public final MIsDistinctFrom<T> $arg1(MField<T> newValue) {
+    public final QOM.IsDistinctFrom<T> $arg1(Field<T> newValue) {
         return constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final MIsDistinctFrom<T> $arg2(MField<T> newValue) {
+    public final QOM.IsDistinctFrom<T> $arg2(Field<T> newValue) {
         return constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super MField<T>, ? super MField<T>, ? extends MIsDistinctFrom<T>> constructor() {
-        return (a1, a2) -> new IsDistinctFrom<>((Field<T>) a1, (Field<T>) a2);
+    public final Function2<? super Field<T>, ? super Field<T>, ? extends QOM.IsDistinctFrom<T>> constructor() {
+        return (a1, a2) -> new IsDistinctFrom<>(a1, a2);
     }
 
     // -------------------------------------------------------------------------

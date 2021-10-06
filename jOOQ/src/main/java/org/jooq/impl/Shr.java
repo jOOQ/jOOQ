@@ -69,7 +69,7 @@ final class Shr<T extends Number>
 extends
     AbstractField<T>
 implements
-    MShr<T>
+    QOM.Shr<T>
 {
 
     final Field<T>                value;
@@ -161,18 +161,18 @@ implements
     }
 
     @Override
-    public final MShr<T> $arg1(MField<T> newValue) {
+    public final QOM.Shr<T> $arg1(Field<T> newValue) {
         return constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final MShr<T> $arg2(MField<? extends Number> newValue) {
+    public final QOM.Shr<T> $arg2(Field<? extends Number> newValue) {
         return constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super MField<T>, ? super MField<? extends Number>, ? extends MShr<T>> constructor() {
-        return (a1, a2) -> new Shr<>((Field<T>) a1, (Field<? extends Number>) a2);
+    public final Function2<? super Field<T>, ? super Field<? extends Number>, ? extends QOM.Shr<T>> constructor() {
+        return (a1, a2) -> new Shr<>(a1, a2);
     }
 
     // -------------------------------------------------------------------------

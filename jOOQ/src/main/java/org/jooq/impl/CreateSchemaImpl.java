@@ -69,7 +69,7 @@ final class CreateSchemaImpl
 extends
     AbstractDDLQuery
 implements
-    MCreateSchema,
+    QOM.CreateSchema,
     CreateSchemaFinalStep
 {
 
@@ -188,23 +188,23 @@ implements
     }
 
     @Override
-    public final MCreateSchema $schema(MSchema newValue) {
+    public final QOM.CreateSchema $schema(Schema newValue) {
         return constructor().apply(newValue, $ifNotExists());
     }
 
     @Override
-    public final MCreateSchema $ifNotExists(boolean newValue) {
+    public final QOM.CreateSchema $ifNotExists(boolean newValue) {
         return constructor().apply($schema(), newValue);
     }
 
-    public final Function2<? super MSchema, ? super Boolean, ? extends MCreateSchema> constructor() {
-        return (a1, a2) -> new CreateSchemaImpl(configuration(), (Schema) a1, a2);
+    public final Function2<? super Schema, ? super Boolean, ? extends QOM.CreateSchema> constructor() {
+        return (a1, a2) -> new CreateSchemaImpl(configuration(), a1, a2);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -217,11 +217,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

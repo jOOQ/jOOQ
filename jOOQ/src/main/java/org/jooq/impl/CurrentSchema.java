@@ -69,7 +69,7 @@ final class CurrentSchema
 extends
     AbstractField<String>
 implements
-    MCurrentSchema
+    QOM.CurrentSchema
 {
 
     CurrentSchema() {

@@ -64,12 +64,11 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
-import org.jooq.impl.QOM.MCurrentTimestamp;
 
 /**
  * @author Lukas Eder
  */
-final class CurrentTimestamp<T> extends AbstractField<T> implements MCurrentTimestamp<T> {
+final class CurrentTimestamp<T> extends AbstractField<T> implements QOM.CurrentTimestamp<T> {
 
     private static final Set<SQLDialect> NO_SUPPORT_PRECISION = SQLDialect.supportedBy(CUBRID, DERBY, SQLITE);
 

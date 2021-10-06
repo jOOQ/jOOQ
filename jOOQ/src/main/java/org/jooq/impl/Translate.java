@@ -69,7 +69,7 @@ final class Translate
 extends
     AbstractField<String>
 implements
-    MTranslate
+    QOM.Translate
 {
 
     final Field<String> string;
@@ -154,28 +154,28 @@ implements
     }
 
     @Override
-    public final MTranslate $string(MField<String> newValue) {
+    public final QOM.Translate $string(Field<String> newValue) {
         return constructor().apply(newValue, $from(), $to());
     }
 
     @Override
-    public final MTranslate $from(MField<String> newValue) {
+    public final QOM.Translate $from(Field<String> newValue) {
         return constructor().apply($string(), newValue, $to());
     }
 
     @Override
-    public final MTranslate $to(MField<String> newValue) {
+    public final QOM.Translate $to(Field<String> newValue) {
         return constructor().apply($string(), $from(), newValue);
     }
 
-    public final Function3<? super MField<String>, ? super MField<String>, ? super MField<String>, ? extends MTranslate> constructor() {
-        return (a1, a2, a3) -> new Translate((Field<String>) a1, (Field<String>) a2, (Field<String>) a3);
+    public final Function3<? super Field<String>, ? super Field<String>, ? super Field<String>, ? extends QOM.Translate> constructor() {
+        return (a1, a2, a3) -> new Translate(a1, a2, a3);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -189,11 +189,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

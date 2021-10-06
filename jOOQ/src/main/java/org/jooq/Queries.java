@@ -42,7 +42,7 @@ import java.util.stream.Stream;
 
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MQueries;
+import org.jooq.impl.QOM.MList;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -53,7 +53,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface Queries extends AttachableQueryPart, Iterable<Query>, MQueries {
+public interface Queries extends AttachableQueryPart, Iterable<Query> {
 
     // ------------------------------------------------------------------------
     // Access API
@@ -128,4 +128,10 @@ public interface Queries extends AttachableQueryPart, Iterable<Query>, MQueries 
      */
     @NotNull
     int[] executeBatch();
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @NotNull MList<? extends Query> $queries();
 }

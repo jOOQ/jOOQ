@@ -38,16 +38,22 @@
 package org.jooq;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 import org.jooq.conf.Settings;
-import org.jooq.impl.QOM.MQueryPart;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * The common base type for all objects that can be used for query composition.
  *
  * @author Lukas Eder
  */
-public interface QueryPart extends Serializable, MQueryPart {
+public interface QueryPart extends Serializable {
 
     /**
      * Render a SQL string representation of this <code>QueryPart</code>.
@@ -101,4 +107,52 @@ public interface QueryPart extends Serializable, MQueryPart {
      */
     @Override
     int hashCode();
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    <R> R $traverse(
+        R init,
+        Predicate<? super R> abort,
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
+    );
+
+    default <R> R $traverse(
+        R init,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
+    ) {
+        return $traverse(init, b -> false, p -> true, accumulate);
+    }
+
+    @NotNull
+    default QueryPart $replace(Function1<? super QueryPart, ? extends QueryPart> replacement) {
+        return $replace(p -> true, replacement);
+    }
+
+    @NotNull
+    QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
+    );
+
+    default boolean $contains(QueryPart part) {
+        return $traverse(equals(part), b -> b, p -> true, (b, p) -> b || p.equals(part));
+    }
+
+    @Nullable
+    default QueryPart $findAny(Predicate<? super QueryPart> predicate) {
+        return $traverse((QueryPart) null, p -> p != null, p -> true, (r, p) -> predicate.test(p) ? p : r);
+    }
+
+    @NotNull
+    default List<QueryPart> $find(Predicate<? super QueryPart> predicate) {
+        return $traverse(new ArrayList<>(), (l, p) -> {
+            if (predicate.test(p))
+                l.add(p);
+
+            return l;
+        });
+    }
 }

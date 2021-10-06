@@ -38,7 +38,7 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MRow;
+import org.jooq.impl.QOM.MList;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -78,7 +78,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface Row extends Fields, FieldOrRow, MRow {
+public interface Row extends Fields, FieldOrRow {
 
     /**
      * Get the degree of this row value expression.
@@ -120,4 +120,9 @@ public interface Row extends Fields, FieldOrRow, MRow {
     @Support
     Condition isNotNull();
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @NotNull MList<? extends Field<?>> $fields();
 }

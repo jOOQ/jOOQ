@@ -69,7 +69,7 @@ final class JSONArray<T>
 extends
     AbstractField<T>
 implements
-    MJSONArray<T>,
+    QOM.JSONArray<T>,
     JSONArrayNullStep<T>,
     JSONArrayReturningStep<T>
 {
@@ -247,33 +247,33 @@ implements
     }
 
     @Override
-    public final MJSONArray<T> $type(MDataType<T> newValue) {
+    public final QOM.JSONArray<T> $type(DataType<T> newValue) {
         return constructor().apply(newValue, $fields(), $onNull(), $returning());
     }
 
     @Override
-    public final MJSONArray<T> $fields(MList<? extends Field<?>> newValue) {
+    public final QOM.JSONArray<T> $fields(MList<? extends Field<?>> newValue) {
         return constructor().apply($type(), newValue, $onNull(), $returning());
     }
 
     @Override
-    public final MJSONArray<T> $onNull(JSONOnNull newValue) {
+    public final QOM.JSONArray<T> $onNull(JSONOnNull newValue) {
         return constructor().apply($type(), $fields(), newValue, $returning());
     }
 
     @Override
-    public final MJSONArray<T> $returning(MDataType<?> newValue) {
+    public final QOM.JSONArray<T> $returning(DataType<?> newValue) {
         return constructor().apply($type(), $fields(), $onNull(), newValue);
     }
 
-    public final Function4<? super MDataType<T>, ? super MList<? extends Field<?>>, ? super JSONOnNull, ? super MDataType<?>, ? extends MJSONArray<T>> constructor() {
-        return (a1, a2, a3, a4) -> new JSONArray((DataType<T>) a1, (Collection<? extends Field<?>>) a2, a3, (DataType<?>) a4);
+    public final Function4<? super DataType<T>, ? super MList<? extends Field<?>>, ? super JSONOnNull, ? super DataType<?>, ? extends QOM.JSONArray<T>> constructor() {
+        return (a1, a2, a3, a4) -> new JSONArray(a1, (Collection<? extends Field<?>>) a2, a3, a4);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -288,11 +288,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

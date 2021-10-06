@@ -38,6 +38,9 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM.MList;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A procedural block.
@@ -80,4 +83,9 @@ import org.jooq.impl.DSL;
  */
 public interface Block extends RowCountQuery {
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @NotNull MList<? extends Statement> $statements();
 }

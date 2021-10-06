@@ -69,7 +69,7 @@ final class IsJson
 extends
     AbstractCondition
 implements
-    MIsJson
+    QOM.IsJson
 {
 
     final Field<?> field;
@@ -131,13 +131,13 @@ implements
     }
 
     @Override
-    public final MIsJson $arg1(MField<?> newValue) {
+    public final QOM.IsJson $arg1(Field<?> newValue) {
         return constructor().apply(newValue);
     }
 
     @Override
-    public final Function1<? super MField<?>, ? extends MIsJson> constructor() {
-        return (a1) -> new IsJson((Field<?>) a1);
+    public final Function1<? super Field<?>, ? extends QOM.IsJson> constructor() {
+        return (a1) -> new IsJson(a1);
     }
 
     // -------------------------------------------------------------------------

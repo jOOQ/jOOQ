@@ -69,7 +69,7 @@ final class ArrayGet<T>
 extends
     AbstractField<T>
 implements
-    MArrayGet<T>
+    QOM.ArrayGet<T>
 {
 
     final Field<T[]>     array;
@@ -159,23 +159,23 @@ implements
     }
 
     @Override
-    public final MArrayGet<T> $array(MField<T[]> newValue) {
+    public final QOM.ArrayGet<T> $array(Field<T[]> newValue) {
         return constructor().apply(newValue, $index());
     }
 
     @Override
-    public final MArrayGet<T> $index(MField<Integer> newValue) {
+    public final QOM.ArrayGet<T> $index(Field<Integer> newValue) {
         return constructor().apply($array(), newValue);
     }
 
-    public final Function2<? super MField<T[]>, ? super MField<Integer>, ? extends MArrayGet<T>> constructor() {
-        return (a1, a2) -> new ArrayGet<>((Field<T[]>) a1, (Field<Integer>) a2);
+    public final Function2<? super Field<T[]>, ? super Field<Integer>, ? extends QOM.ArrayGet<T>> constructor() {
+        return (a1, a2) -> new ArrayGet<>(a1, a2);
     }
 
     @Override
-    public final MQueryPart replace(
-        Predicate<? super MQueryPart> recurse,
-        Function1<? super MQueryPart, ? extends MQueryPart> replacement
+    public final QueryPart $replace(
+        Predicate<? super QueryPart> recurse,
+        Function1<? super QueryPart, ? extends QueryPart> replacement
     ) {
         return QOM.replace(
             this,
@@ -188,11 +188,11 @@ implements
     }
 
     @Override
-    public final <R> R traverse(
+    public final <R> R $traverse(
         R init,
         Predicate<? super R> abort,
-        Predicate<? super MQueryPart> recurse,
-        BiFunction<? super R, ? super MQueryPart, ? extends R> accumulate
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
     ) {
         return QOM.traverse(
             init, abort, recurse, accumulate, this,

@@ -120,28 +120,6 @@ implements
         }
     }
 
-    /**
-     * @deprecated - This will be implemented using QOM.replace, instead.
-     */
-    @Deprecated
-    final Condition transform(java.util.function.Function<? super Condition, ? extends Condition> function) {
-        Condition t1 = arg1 instanceof And
-            ? ((And) arg1).transform(function)
-            : arg1 instanceof Or
-            ? ((And) arg1).transform(function)
-            : function.apply(arg1);
-        Condition t2 = arg2 instanceof And
-            ? ((And) arg2).transform(function)
-            : arg2 instanceof Or
-            ? ((Or) arg2).transform(function)
-            : function.apply(arg2);
-
-        if (t1 == arg1 && t2 == arg2)
-            return this;
-        else
-            return DSL.and(t1, t2);
-    }
-
     @Override
     final boolean isNullable() {
         return ((AbstractCondition) arg1).isNullable() || ((AbstractCondition) arg2).isNullable();

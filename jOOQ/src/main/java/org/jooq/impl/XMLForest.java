@@ -65,16 +65,16 @@ import java.util.stream.*;
  * The <code>XMLFOREST</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unused" })
-final class Xmlforest
+final class XMLForest
 extends
     AbstractField<XML>
 implements
-    QOM.Xmlforest
+    QOM.XMLForest
 {
 
     final QueryPartListView<? extends Field<?>> fields;
 
-    Xmlforest(
+    XMLForest(
         Collection<? extends Field<?>> fields
     ) {
         super(
@@ -128,12 +128,12 @@ implements
     }
 
     @Override
-    public final QOM.Xmlforest $fields(MList<? extends Field<?>> newValue) {
+    public final QOM.XMLForest $fields(MList<? extends Field<?>> newValue) {
         return constructor().apply(newValue);
     }
 
-    public final Function1<? super MList<? extends Field<?>>, ? extends QOM.Xmlforest> constructor() {
-        return (a1) -> new Xmlforest((Collection<? extends Field<?>>) a1);
+    public final Function1<? super MList<? extends Field<?>>, ? extends QOM.XMLForest> constructor() {
+        return (a1) -> new XMLForest(a1);
     }
 
     @Override
@@ -169,9 +169,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Xmlforest) {
+        if (that instanceof XMLForest) {
             return
-                StringUtils.equals($fields(), ((Xmlforest) that).$fields())
+                StringUtils.equals($fields(), ((XMLForest) that).$fields())
             ;
         }
         else

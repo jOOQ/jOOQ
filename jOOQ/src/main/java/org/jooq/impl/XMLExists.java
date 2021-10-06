@@ -38,8 +38,8 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.K_XMLEXISTS;
-import static org.jooq.impl.QOM.XmlPassingMechanism.BY_REF;
-import static org.jooq.impl.QOM.XmlPassingMechanism.BY_VALUE;
+import static org.jooq.impl.QOM.XMLPassingMechanism.BY_REF;
+import static org.jooq.impl.QOM.XMLPassingMechanism.BY_VALUE;
 import static org.jooq.impl.XMLTable.acceptPassing;
 import static org.jooq.impl.XMLTable.acceptXPath;
 
@@ -54,7 +54,7 @@ import org.jooq.QueryPart;
 import org.jooq.XML;
 import org.jooq.XMLExistsPassingStep;
 import org.jooq.impl.QOM.UNotYetImplemented;
-import org.jooq.impl.QOM.XmlPassingMechanism;
+import org.jooq.impl.QOM.XMLPassingMechanism;
 
 
 /**
@@ -63,13 +63,13 @@ import org.jooq.impl.QOM.XmlPassingMechanism;
 final class XMLExists extends AbstractCondition implements XMLExistsPassingStep, QOM.XMLExists, UNotYetImplemented {
     private final Field<String>       xpath;
     private final Field<XML>          passing;
-    private final XmlPassingMechanism passingMechanism;
+    private final XMLPassingMechanism passingMechanism;
 
     XMLExists(Field<String> xpath) {
         this(xpath, null, null);
     }
 
-    private XMLExists(Field<String> xpath, Field<XML> passing, XmlPassingMechanism passingMechanism) {
+    private XMLExists(Field<String> xpath, Field<XML> passing, XMLPassingMechanism passingMechanism) {
         this.xpath = xpath;
         this.passing = passing;
         this.passingMechanism = passingMechanism;
@@ -135,7 +135,7 @@ final class XMLExists extends AbstractCondition implements XMLExistsPassingStep,
     }
 
     @Override
-    public final XmlPassingMechanism $passingMechanism() {
+    public final XMLPassingMechanism $passingMechanism() {
         return passingMechanism;
     }
 

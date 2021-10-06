@@ -65,18 +65,18 @@ import java.util.stream.*;
  * The <code>XMLSERIALIZE</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class Xmlserialize<T>
+final class XMLSerialize<T>
 extends
     AbstractField<T>
 implements
-    QOM.Xmlserialize<T>
+    QOM.XMLSerialize<T>
 {
 
     final boolean     content;
     final Field<XML>  value;
     final DataType<T> type;
 
-    Xmlserialize(
+    XMLSerialize(
         boolean content,
         Field<XML> value,
         DataType<T> type
@@ -158,22 +158,22 @@ implements
     }
 
     @Override
-    public final QOM.Xmlserialize<T> $content(boolean newValue) {
+    public final QOM.XMLSerialize<T> $content(boolean newValue) {
         return constructor().apply(newValue, $value(), $type());
     }
 
     @Override
-    public final QOM.Xmlserialize<T> $value(Field<XML> newValue) {
+    public final QOM.XMLSerialize<T> $value(Field<XML> newValue) {
         return constructor().apply($content(), newValue, $type());
     }
 
     @Override
-    public final QOM.Xmlserialize<T> $type(DataType<T> newValue) {
+    public final QOM.XMLSerialize<T> $type(DataType<T> newValue) {
         return constructor().apply($content(), $value(), newValue);
     }
 
-    public final Function3<? super Boolean, ? super Field<XML>, ? super DataType<T>, ? extends QOM.Xmlserialize<T>> constructor() {
-        return (a1, a2, a3) -> new Xmlserialize<>(a1, a2, a3);
+    public final Function3<? super Boolean, ? super Field<XML>, ? super DataType<T>, ? extends QOM.XMLSerialize<T>> constructor() {
+        return (a1, a2, a3) -> new XMLSerialize<>(a1, a2, a3);
     }
 
     @Override
@@ -212,11 +212,11 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Xmlserialize) {
+        if (that instanceof XMLSerialize) {
             return
-                $content() == ((Xmlserialize) that).$content() &&
-                StringUtils.equals($value(), ((Xmlserialize) that).$value()) &&
-                StringUtils.equals($type(), ((Xmlserialize) that).$type())
+                $content() == ((XMLSerialize) that).$content() &&
+                StringUtils.equals($value(), ((XMLSerialize) that).$value()) &&
+                StringUtils.equals($type(), ((XMLSerialize) that).$type())
             ;
         }
         else

@@ -371,8 +371,8 @@ import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
 // ...
 // ...
 // ...
-import static org.jooq.impl.QOM.XmlPassingMechanism.BY_REF;
-import static org.jooq.impl.QOM.XmlPassingMechanism.BY_VALUE;
+import static org.jooq.impl.QOM.XMLPassingMechanism.BY_REF;
+import static org.jooq.impl.QOM.XMLPassingMechanism.BY_VALUE;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NVARCHAR;
@@ -631,7 +631,7 @@ import org.jooq.impl.QOM.JSONOnNull;
 // ...
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UTransient;
-import org.jooq.impl.QOM.XmlPassingMechanism;
+import org.jooq.impl.QOM.XMLPassingMechanism;
 import org.jooq.impl.ScopeStack.Value;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
@@ -6161,7 +6161,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         else if (parseKeywordIf("XMLEXISTS")) {
             parse('(');
             Field<String> xpath = (Field<String>) parseField();
-            XmlPassingMechanism m = parseXMLPassingMechanism();
+            XMLPassingMechanism m = parseXMLPassingMechanism();
             Field<XML> xml = (Field<XML>) parseField();
             parse(')');
 
@@ -6586,7 +6586,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse('(');
 
             XMLTablePassingStep s1 = xmltable((Field) toField(parseConcat()));
-            XmlPassingMechanism m = parseXMLPassingMechanismIf();
+            XMLPassingMechanism m = parseXMLPassingMechanismIf();
             Field<XML> passing = m == null ? null : (Field<XML>) parseField();
 
             XMLTableColumnsStep s2 = (XMLTableColumnsStep) (
@@ -6594,7 +6594,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 ? s1.passingByRef(passing)
                 : m == BY_VALUE
                 ? s1.passingByValue(passing)
-                : m == XmlPassingMechanism.DEFAULT
+                : m == XMLPassingMechanism.DEFAULT
                 ? s1.passing(passing)
                 : s1
             );
@@ -8658,7 +8658,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (parseFunctionNameIf("XMLQUERY")) {
             parse('(');
             Field<String> xpath = (Field<String>) parseField();
-            XmlPassingMechanism m = parseXMLPassingMechanism();
+            XMLPassingMechanism m = parseXMLPassingMechanism();
             Field<XML> xml = (Field<XML>) parseField();
             parseKeywordIf("RETURNING CONTENT");
             parse(')');
@@ -8678,8 +8678,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return null;
     }
 
-    private final XmlPassingMechanism parseXMLPassingMechanism() {
-        XmlPassingMechanism result = parseXMLPassingMechanismIf();
+    private final XMLPassingMechanism parseXMLPassingMechanism() {
+        XMLPassingMechanism result = parseXMLPassingMechanismIf();
 
         if (result == null)
             throw expected("PASSING");
@@ -8687,11 +8687,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return result;
     }
 
-    private final XmlPassingMechanism parseXMLPassingMechanismIf() {
+    private final XMLPassingMechanism parseXMLPassingMechanismIf() {
         if (!parseKeywordIf("PASSING"))
             return null;
         else if (!parseKeywordIf("BY"))
-            return XmlPassingMechanism.DEFAULT;
+            return XMLPassingMechanism.DEFAULT;
         else if (parseKeywordIf("REF"))
             return BY_REF;
         else if (parseKeywordIf("VALUE"))

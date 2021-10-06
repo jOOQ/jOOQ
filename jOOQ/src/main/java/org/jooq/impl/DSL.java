@@ -19506,7 +19506,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlcomment(@Stringly.Param String comment) {
-        return new Xmlcomment(Tools.field(comment));
+        return new XMLComment(Tools.field(comment));
     }
 
     /**
@@ -19515,7 +19515,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlcomment(Field<String> comment) {
-        return new Xmlcomment(comment);
+        return new XMLComment(comment);
     }
 
     /**
@@ -19524,7 +19524,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlconcat(Field<?>... args) {
-        return new Xmlconcat(Arrays.asList(args));
+        return new XMLConcat(Arrays.asList(args));
     }
 
     /**
@@ -19533,7 +19533,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlconcat(Collection<? extends Field<?>> args) {
-        return new Xmlconcat(new QueryPartList<>(args));
+        return new XMLConcat(new QueryPartList<>(args));
     }
 
 
@@ -19556,7 +19556,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlforest(Field<?>... fields) {
-        return new Xmlforest(Arrays.asList(fields));
+        return new XMLForest(Arrays.asList(fields));
     }
 
     /**
@@ -19565,7 +19565,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlforest(Collection<? extends Field<?>> fields) {
-        return new Xmlforest(new QueryPartList<>(fields));
+        return new XMLForest(new QueryPartList<>(fields));
     }
 
     /**
@@ -19574,7 +19574,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlpi(@Stringly.Name String target, Field<?> content) {
-        return new Xmlpi(DSL.name(target), content);
+        return new XMLPi(DSL.name(target), content);
     }
 
     /**
@@ -19583,7 +19583,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlpi(Name target, Field<?> content) {
-        return new Xmlpi(target, content);
+        return new XMLPi(target, content);
     }
 
     /**
@@ -19592,7 +19592,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlpi(@Stringly.Name String target) {
-        return new Xmlpi(DSL.name(target));
+        return new XMLPi(DSL.name(target));
     }
 
     /**
@@ -19601,7 +19601,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlpi(Name target) {
-        return new Xmlpi(target);
+        return new XMLPi(target);
     }
 
     /**
@@ -19612,7 +19612,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static <T> Field<T> xmlserializeDocument(XML value, DataType<T> type) {
-        return new Xmlserialize<>(false, Tools.field(value), type);
+        return new XMLSerialize<>(false, Tools.field(value), type);
     }
 
     /**
@@ -19621,7 +19621,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static <T> Field<T> xmlserializeDocument(Field<XML> value, DataType<T> type) {
-        return new Xmlserialize<>(false, value, type);
+        return new XMLSerialize<>(false, value, type);
     }
 
     /**
@@ -19632,7 +19632,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static <T> Field<T> xmlserializeContent(XML value, DataType<T> type) {
-        return new Xmlserialize<>(true, Tools.field(value), type);
+        return new XMLSerialize<>(true, Tools.field(value), type);
     }
 
     /**
@@ -19641,7 +19641,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static <T> Field<T> xmlserializeContent(Field<XML> value, DataType<T> type) {
-        return new Xmlserialize<>(true, value, type);
+        return new XMLSerialize<>(true, value, type);
     }
 
     // -------------------------------------------------------------------------

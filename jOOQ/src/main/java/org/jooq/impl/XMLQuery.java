@@ -44,8 +44,8 @@ import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.Keywords.K_CONTENT;
 import static org.jooq.impl.Keywords.K_RETURNING;
 import static org.jooq.impl.Names.N_XMLQUERY;
-import static org.jooq.impl.QOM.XmlPassingMechanism.BY_REF;
-import static org.jooq.impl.QOM.XmlPassingMechanism.BY_VALUE;
+import static org.jooq.impl.QOM.XMLPassingMechanism.BY_REF;
+import static org.jooq.impl.QOM.XMLPassingMechanism.BY_VALUE;
 import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.XMLTable.acceptPassing;
 import static org.jooq.impl.XMLTable.acceptXPath;
@@ -59,7 +59,7 @@ import org.jooq.Function1;
 import org.jooq.QueryPart;
 import org.jooq.XML;
 import org.jooq.XMLQueryPassingStep;
-import org.jooq.impl.QOM.XmlPassingMechanism;
+import org.jooq.impl.QOM.XMLPassingMechanism;
 
 /**
  * @author Lukas Eder
@@ -67,13 +67,13 @@ import org.jooq.impl.QOM.XmlPassingMechanism;
 final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep, QOM.XMLQuery {
     private final Field<String>       xpath;
     private final Field<XML>          passing;
-    private final XmlPassingMechanism passingMechanism;
+    private final XMLPassingMechanism passingMechanism;
 
     XMLQuery(Field<String> xpath) {
         this(xpath, null, null);
     }
 
-    private XMLQuery(Field<String> xpath, Field<XML> passing, XmlPassingMechanism passingMechanism) {
+    private XMLQuery(Field<String> xpath, Field<XML> passing, XMLPassingMechanism passingMechanism) {
         super(N_XMLQUERY, SQLDataType.XML);
 
         this.xpath = xpath;
@@ -167,7 +167,7 @@ final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep, 
     }
 
     @Override
-    public final XmlPassingMechanism $passingMechanism() {
+    public final XMLPassingMechanism $passingMechanism() {
         return passingMechanism;
     }
 

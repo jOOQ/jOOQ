@@ -65,17 +65,17 @@ import java.util.stream.*;
  * The <code>XMLPI</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unused" })
-final class Xmlpi
+final class XMLPi
 extends
     AbstractField<XML>
 implements
-    QOM.Xmlpi
+    QOM.XMLPi
 {
 
     final Name     target;
     final Field<?> content;
 
-    Xmlpi(
+    XMLPi(
         Name target
     ) {
         super(
@@ -87,7 +87,7 @@ implements
         this.content = null;
     }
 
-    Xmlpi(
+    XMLPi(
         Name target,
         Field<?> content
     ) {
@@ -153,17 +153,17 @@ implements
     }
 
     @Override
-    public final QOM.Xmlpi $target(Name newValue) {
+    public final QOM.XMLPi $target(Name newValue) {
         return constructor().apply(newValue, $content());
     }
 
     @Override
-    public final QOM.Xmlpi $content(Field<?> newValue) {
+    public final QOM.XMLPi $content(Field<?> newValue) {
         return constructor().apply($target(), newValue);
     }
 
-    public final Function2<? super Name, ? super Field<?>, ? extends QOM.Xmlpi> constructor() {
-        return (a1, a2) -> new Xmlpi(a1, a2);
+    public final Function2<? super Name, ? super Field<?>, ? extends QOM.XMLPi> constructor() {
+        return (a1, a2) -> new XMLPi(a1, a2);
     }
 
     @Override
@@ -201,10 +201,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Xmlpi) {
+        if (that instanceof XMLPi) {
             return
-                StringUtils.equals($target(), ((Xmlpi) that).$target()) &&
-                StringUtils.equals($content(), ((Xmlpi) that).$content())
+                StringUtils.equals($target(), ((XMLPi) that).$target()) &&
+                StringUtils.equals($content(), ((XMLPi) that).$content())
             ;
         }
         else

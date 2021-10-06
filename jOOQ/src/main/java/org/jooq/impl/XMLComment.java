@@ -65,16 +65,16 @@ import java.util.stream.*;
  * The <code>XMLCOMMENT</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class Xmlcomment
+final class XMLComment
 extends
     AbstractField<XML>
 implements
-    QOM.Xmlcomment
+    QOM.XMLComment
 {
 
     final Field<String> comment;
 
-    Xmlcomment(
+    XMLComment(
         Field<String> comment
     ) {
         super(
@@ -124,12 +124,12 @@ implements
     }
 
     @Override
-    public final QOM.Xmlcomment $comment(Field<String> newValue) {
+    public final QOM.XMLComment $comment(Field<String> newValue) {
         return constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<String>, ? extends QOM.Xmlcomment> constructor() {
-        return (a1) -> new Xmlcomment(a1);
+    public final Function1<? super Field<String>, ? extends QOM.XMLComment> constructor() {
+        return (a1) -> new XMLComment(a1);
     }
 
     @Override
@@ -165,9 +165,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Xmlcomment) {
+        if (that instanceof XMLComment) {
             return
-                StringUtils.equals($comment(), ((Xmlcomment) that).$comment())
+                StringUtils.equals($comment(), ((XMLComment) that).$comment())
             ;
         }
         else

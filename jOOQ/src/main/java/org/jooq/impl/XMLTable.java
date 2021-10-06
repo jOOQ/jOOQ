@@ -56,14 +56,11 @@ import static org.jooq.impl.Keywords.K_REF;
 import static org.jooq.impl.Keywords.K_VALUE;
 import static org.jooq.impl.Keywords.K_XMLTABLE;
 import static org.jooq.impl.Names.N_XMLTABLE;
+import static org.jooq.impl.QOM.XMLPassingMechanism.BY_REF;
+import static org.jooq.impl.QOM.XMLPassingMechanism.BY_VALUE;
 import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
-import static org.jooq.impl.QOM.XmlPassingMechanism.BY_REF;
-import static org.jooq.impl.QOM.XmlPassingMechanism.BY_VALUE;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -75,9 +72,8 @@ import org.jooq.TableOptions;
 import org.jooq.XML;
 import org.jooq.XMLTableColumnPathStep;
 import org.jooq.XMLTablePassingStep;
-import org.jooq.conf.ParamType;
 import org.jooq.impl.QOM.UNotYetImplemented;
-import org.jooq.impl.QOM.XmlPassingMechanism;
+import org.jooq.impl.QOM.XMLPassingMechanism;
 
 /**
  * @author Lukas Eder
@@ -92,7 +88,7 @@ implements
 {
     private final Field<String>                 xpath;
     private final Field<XML>                    passing;
-    private final XmlPassingMechanism           passingMechanism;
+    private final XMLPassingMechanism           passingMechanism;
     private final QueryPartList<XMLTableColumn> columns;
     private final boolean                       hasOrdinality;
     private transient FieldsImpl<Record>        fields;
@@ -104,7 +100,7 @@ implements
     private XMLTable(
         Field<String> xpath,
         Field<XML> passing,
-        XmlPassingMechanism passingMechanism,
+        XMLPassingMechanism passingMechanism,
         QueryPartList<XMLTableColumn> columns,
         boolean hasOrdinality
     ) {
@@ -289,7 +285,7 @@ implements
         ctx.visit(xpath);
     }
 
-    static final void acceptPassing(Context<?> ctx, Field<XML> passing, XmlPassingMechanism passingMechanism) {
+    static final void acceptPassing(Context<?> ctx, Field<XML> passing, XMLPassingMechanism passingMechanism) {
         ctx.formatSeparator()
            .visit(K_PASSING);
 

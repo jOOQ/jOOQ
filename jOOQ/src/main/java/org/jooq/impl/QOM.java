@@ -964,7 +964,7 @@ public final class QOM {
     {
         @NotNull Field<String> $xpath();
         @NotNull Field<XML> $passing();
-        @Nullable XmlPassingMechanism $passingMechanism();
+        @Nullable XMLPassingMechanism $passingMechanism();
     }
 
     public /*sealed*/ interface XMLElement
@@ -986,7 +986,7 @@ public final class QOM {
     {
         @NotNull Field<String> $xpath();
         @NotNull Field<XML> $passing();
-        @Nullable XmlPassingMechanism $passingMechanism();
+        @Nullable XMLPassingMechanism $passingMechanism();
     }
 
     public /*sealed*/ interface XMLParse
@@ -2888,24 +2888,24 @@ public final class QOM {
 
 
 
-    public /*sealed*/ interface Xmlcomment
+    public /*sealed*/ interface XMLComment
         extends
             Field<XML>
         //permits
-        //    Xmlcomment
+        //    XMLComment
     {
         @NotNull  Field<String> $comment();
-        @NotNull  Xmlcomment $comment(Field<String> comment);
+        @NotNull  XMLComment $comment(Field<String> comment);
     }
 
-    public /*sealed*/ interface Xmlconcat
+    public /*sealed*/ interface XMLConcat
         extends
             Field<XML>
         //permits
-        //    Xmlconcat
+        //    XMLConcat
     {
         @NotNull  MList<? extends Field<?>> $args();
-        @NotNull  Xmlconcat $args(MList<? extends Field<?>> args);
+        @NotNull  XMLConcat $args(MList<? extends Field<?>> args);
     }
 
 
@@ -2921,40 +2921,40 @@ public final class QOM {
 
 
 
-    public /*sealed*/ interface Xmlforest
+    public /*sealed*/ interface XMLForest
         extends
             Field<XML>
         //permits
-        //    Xmlforest
+        //    XMLForest
     {
         @NotNull  MList<? extends Field<?>> $fields();
-        @NotNull  Xmlforest $fields(MList<? extends Field<?>> fields);
+        @NotNull  XMLForest $fields(MList<? extends Field<?>> fields);
     }
 
-    public /*sealed*/ interface Xmlpi
+    public /*sealed*/ interface XMLPi
         extends
             Field<XML>
         //permits
-        //    Xmlpi
+        //    XMLPi
     {
         @NotNull  Name $target();
         @Nullable Field<?> $content();
-        @NotNull  Xmlpi $target(Name target);
-        @NotNull  Xmlpi $content(Field<?> content);
+        @NotNull  XMLPi $target(Name target);
+        @NotNull  XMLPi $content(Field<?> content);
     }
 
-    public /*sealed*/ interface Xmlserialize<T>
+    public /*sealed*/ interface XMLSerialize<T>
         extends
             Field<T>
         //permits
-        //    Xmlserialize
+        //    XMLSerialize
     {
                   boolean $content();
         @NotNull  Field<XML> $value();
         @NotNull  DataType<T> $type();
-        @NotNull  Xmlserialize<T> $content(boolean content);
-        @NotNull  Xmlserialize<T> $value(Field<XML> value);
-        @NotNull  Xmlserialize<T> $type(DataType<T> type);
+        @NotNull  XMLSerialize<T> $content(boolean content);
+        @NotNull  XMLSerialize<T> $value(Field<XML> value);
+        @NotNull  XMLSerialize<T> $type(DataType<T> type);
     }
 
     public /*sealed*/ interface JSONArray<T>
@@ -3634,11 +3634,11 @@ public final class QOM {
     }
 
     /**
-     * The <code>XmlPassingMechanism</code> type.
+     * The <code>XMLPassingMechanism</code> type.
      * <p>
      * Specify how XML contents should be passed to certain XML functions.
      */
-    public enum XmlPassingMechanism {
+    public enum XMLPassingMechanism {
         BY_REF(keyword("by ref")),
         BY_VALUE(keyword("by value")),
         DEFAULT(keyword("default")),
@@ -3646,7 +3646,7 @@ public final class QOM {
 
         final Keyword keyword;
 
-        private XmlPassingMechanism(Keyword keyword) {
+        private XMLPassingMechanism(Keyword keyword) {
             this.keyword = keyword;
         }
     }

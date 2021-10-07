@@ -46,6 +46,11 @@ package org.jooq;
 public final class Constants {
 
     /**
+     * The Maven groupId used for this edition / distribution
+     */
+    public static final String GROUP_ID       = "org.jooq";
+
+    /**
      * The latest jOOQ minor version.
      */
     public static final String MINOR_VERSION  = "3.15";

@@ -81,5 +81,5 @@ public interface Index extends Named {
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
-    @NotNull Table<?> $table();
+    @Nullable Table<?> $table();
 }

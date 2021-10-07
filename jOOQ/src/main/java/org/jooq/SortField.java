@@ -40,6 +40,7 @@ package org.jooq;
 import org.jooq.impl.QOM.NullOrdering;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 
 
@@ -104,5 +105,5 @@ public interface SortField<T> extends OrderField<T> {
 
     @NotNull Field<T> $field();
     @NotNull SortOrder $sortOrder();
-    @NotNull NullOrdering $nullOrdering();
+    @Nullable NullOrdering $nullOrdering();
 }

@@ -40,6 +40,7 @@ package org.jooq;
 import org.jooq.impl.QOM.Materialized;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A common table expression.
@@ -72,5 +73,5 @@ public interface CommonTableExpression<R extends Record> extends Table<R> {
 
     @NotNull DerivedColumnList $derivedColumnList();
     @NotNull ResultQuery<R> $query();
-    @NotNull Materialized $materialized();
+    @Nullable Materialized $materialized();
 }

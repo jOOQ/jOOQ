@@ -342,7 +342,6 @@ public final class QOM {
         @NotNull Name $alias();
         // TODO [#12425] Reuse MDerivedColumnList
     }
-    public interface TableRef<R extends Record> extends UEmptyTable<R> {}
     public interface Dual extends Table<Record>, UEmpty {}
     public interface Lateral<R extends Record> extends Table<R>, UOperator1<Table<R>, Table<R>> {}
     public interface DerivedTable<R extends Record> extends Table<R>, UOperator1<Select<R>, Table<R>> {}
@@ -591,8 +590,8 @@ public final class QOM {
             JSONArrayAgg*/
     {
         @NotNull default Field<?> $field() { return $arg1(); }
-        @NotNull JSONOnNull $onNull();
-        @NotNull DataType<?> $returning();
+        @Nullable JSONOnNull $onNull();
+        @Nullable DataType<?> $returning();
     }
 
     public /*sealed*/ interface JSONObjectAgg<J>
@@ -602,8 +601,8 @@ public final class QOM {
         /*permits JSONObjectAgg*/
     {
         @NotNull default JSONEntry<?> $entry() { return $arg1(); }
-        @NotNull JSONOnNull $onNull();
-        @NotNull DataType<?> $returning();
+        @Nullable JSONOnNull $onNull();
+        @Nullable DataType<?> $returning();
     }
 
     public /*sealed*/ interface CountTable
@@ -773,10 +772,6 @@ public final class QOM {
 
     public interface Inline<T> extends Param<T> {}
     public interface Val<T> extends Param<T> {}
-
-    public interface FieldRef<T> extends UEmptyField<T> {
-        @NotNull TableRef<?> $table();
-    }
 
     public /*sealed*/ interface Default<T>
         extends

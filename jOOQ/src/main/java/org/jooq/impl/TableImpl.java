@@ -74,6 +74,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Function1;
 import org.jooq.Name;
 // ...
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
@@ -81,11 +82,8 @@ import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
-import org.jooq.QueryPart;
-import org.jooq.impl.QOM.TableRef;
+import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A common base type for tables
@@ -95,7 +93,15 @@ import org.jetbrains.annotations.Nullable;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-public class TableImpl<R extends Record> extends AbstractTable<R> implements ScopeMappable, ScopeNestable, SimpleQueryPart, TableRef<R> {
+public class TableImpl<R extends Record>
+extends
+    AbstractTable<R>
+implements
+    ScopeMappable,
+    ScopeNestable,
+    SimpleQueryPart,
+    UNotYetImplemented
+{
 
     private static final Clause[]        CLAUSES_TABLE_REFERENCE           = { TABLE, TABLE_REFERENCE };
     private static final Clause[]        CLAUSES_TABLE_ALIAS               = { TABLE, TABLE_ALIAS };

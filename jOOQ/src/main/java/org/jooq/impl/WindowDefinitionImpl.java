@@ -40,6 +40,7 @@ package org.jooq.impl;
 // ...
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.SelectQueryImpl.NO_SUPPORT_WINDOW_CLAUSE;
+import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
 
 import java.util.Collection;
@@ -327,32 +328,32 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
 
     @Override
     public final MList<? extends Field<?>> $partitionBy() {
-        return $windowSpecification().$partitionBy();
+        return $windowSpecification() == null ? new QueryPartList<>() : $windowSpecification().$partitionBy();
     }
 
     @Override
     public final MList<? extends SortField<?>> $orderBy() {
-        return $windowSpecification().$orderBy();
+        return $windowSpecification() == null ? new QueryPartList<>() : $windowSpecification().$orderBy();
     }
 
     @Override
     public final FrameUnits $frameUnits() {
-        return $windowSpecification().$frameUnits();
+        return apply($windowSpecification(), WindowSpecification::$frameUnits);
     }
 
     @Override
     public final Integer $frameStart() {
-        return $windowSpecification().$frameStart();
+        return apply($windowSpecification(), WindowSpecification::$frameStart);
     }
 
     @Override
     public final Integer $frameEnd() {
-        return $windowSpecification().$frameEnd();
+        return apply($windowSpecification(), WindowSpecification::$frameEnd);
     }
 
     @Override
     public final FrameExclude $exclude() {
-        return $windowSpecification().$exclude();
+        return apply($windowSpecification(), WindowSpecification::$exclude);
     }
 
     @Override

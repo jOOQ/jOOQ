@@ -39,6 +39,7 @@ package org.jooq.codegen;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static java.util.Comparator.comparing;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.defaultString;
@@ -51,6 +52,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
@@ -58,6 +60,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -871,6 +874,7 @@ public class GenerationTool {
             strategy.setInstanceFields(generator.generateInstanceFields());
             strategy.setJavaBeansGettersAndSetters(generator.generateJavaBeansGettersAndSetters());
 
+            verifyVersions();
             generator.generate(database);
 
             logUnused("forced type", "forced types", database.getUnusedForcedTypes());
@@ -904,6 +908,43 @@ public class GenerationTool {
                 else if (autoCommit != null) {
                     connection.setAutoCommit(autoCommit);
                 }
+            }
+        }
+    }
+
+    private void verifyVersions() {
+
+        // [#12488] Check if all of jOOQ, jOOQ-meta, jOOQ-codegen are using the same versions and editions
+        Field[] f1 = org.jooq.Constants.class.getFields();
+        Field[] f2 = org.jooq.meta.Constants.class.getFields();
+        Field[] f3 = org.jooq.codegen.Constants.class.getFields();
+
+        Arrays.sort(f1, comparing(Field::getName));
+        Arrays.sort(f2, comparing(Field::getName));
+        Arrays.sort(f3, comparing(Field::getName));
+
+        if (f1.length != f2.length)
+            log.warn("Version check", "org.jooq.Constants and org.jooq.meta.Constants contents mismatch. Check if you're using the same versions for org.jooq and org.jooq.meta");
+        if (f1.length != f3.length)
+            log.warn("Version check", "org.jooq.Constants and org.jooq.codegen.Constants contents mismatch. Check if you're using the same versions for org.jooq and org.jooq.meta");
+
+        String v1 = org.jooq.Constants.FULL_VERSION;
+        String v2 = org.jooq.meta.Constants.FULL_VERSION;
+        String v3 = org.jooq.codegen.Constants.FULL_VERSION;
+
+        for (int i = 0; i < f1.length && i < f2.length && i < f3.length; i++) {
+            try {
+                Object c1 = f1[i].get(org.jooq.Constants.class);
+                Object c2 = f2[i].get(org.jooq.meta.Constants.class);
+                Object c3 = f3[i].get(org.jooq.codegen.Constants.class);
+
+                if (!Objects.equals(c1, c2))
+                    log.warn("Version check", "org.jooq.Constants." + f1[i].getName() + " contents mismatch: " + c1 + " vs " + c2 + ". Check if you're using the same versions for org.jooq (" + v1 + ") and org.jooq.meta (" + v2 + ")");
+                if (!Objects.equals(c1, c3))
+                    log.warn("Version check", "org.jooq.Constants." + f1[i].getName() + " contents mismatch: " + c1 + " vs " + c3 + ". Check if you're using the same versions for org.jooq (" + v1 + ") and org.jooq.codegen (" + v3 + ")");
+            }
+            catch (Exception e) {
+                log.warn("Version check", e);
             }
         }
     }

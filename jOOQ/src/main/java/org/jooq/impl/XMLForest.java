@@ -133,7 +133,7 @@ implements
     }
 
     public final Function1<? super MList<? extends Field<?>>, ? extends QOM.XMLForest> constructor() {
-        return (a1) -> new XMLForest(a1);
+        return (a1) -> new XMLForest((Collection<? extends Field<?>>) a1);
     }
 
     @Override

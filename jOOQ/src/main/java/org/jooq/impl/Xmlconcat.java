@@ -131,7 +131,7 @@ implements
     }
 
     public final Function1<? super MList<? extends Field<?>>, ? extends QOM.XMLConcat> constructor() {
-        return (a1) -> new XMLConcat(a1);
+        return (a1) -> new XMLConcat((Collection<? extends Field<?>>) a1);
     }
 
     @Override

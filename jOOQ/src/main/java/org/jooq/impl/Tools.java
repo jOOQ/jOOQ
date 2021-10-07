@@ -3427,8 +3427,8 @@ final class Tools {
             || field instanceof ConvertedVal && ((ConvertedVal<?>) field).delegate instanceof Val;
     }
 
-    static final boolean isWindow(Field<?> f) {
-        return f instanceof AbstractWindowFunction && ((AbstractWindowFunction<?>) f).isWindow();
+    static final boolean isWindow(QueryPart part) {
+        return part instanceof AbstractWindowFunction && ((AbstractWindowFunction<?>) part).isWindow();
     }
 
     static final boolean isSimple(QueryPart part) {
@@ -6401,42 +6401,6 @@ final class Tools {
 
         return result;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

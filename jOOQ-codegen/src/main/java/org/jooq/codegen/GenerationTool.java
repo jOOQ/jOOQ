@@ -915,25 +915,25 @@ public class GenerationTool {
     private void verifyVersions() {
 
         // [#12488] Check if all of jOOQ, jOOQ-meta, jOOQ-codegen are using the same versions and editions
-        Field[] f1 = org.jooq.Constants.class.getFields();
-        Field[] f2 = org.jooq.meta.Constants.class.getFields();
-        Field[] f3 = org.jooq.codegen.Constants.class.getFields();
+        try {
+            Field[] f1 = org.jooq.Constants.class.getFields();
+            Field[] f2 = org.jooq.meta.Constants.class.getFields();
+            Field[] f3 = org.jooq.codegen.Constants.class.getFields();
 
-        Arrays.sort(f1, comparing(Field::getName));
-        Arrays.sort(f2, comparing(Field::getName));
-        Arrays.sort(f3, comparing(Field::getName));
+            Arrays.sort(f1, comparing(Field::getName));
+            Arrays.sort(f2, comparing(Field::getName));
+            Arrays.sort(f3, comparing(Field::getName));
 
-        if (f1.length != f2.length)
-            log.warn("Version check", "org.jooq.Constants and org.jooq.meta.Constants contents mismatch. Check if you're using the same versions for org.jooq and org.jooq.meta");
-        if (f1.length != f3.length)
-            log.warn("Version check", "org.jooq.Constants and org.jooq.codegen.Constants contents mismatch. Check if you're using the same versions for org.jooq and org.jooq.meta");
+            if (f1.length != f2.length)
+                log.warn("Version check", "org.jooq.Constants and org.jooq.meta.Constants contents mismatch. Check if you're using the same versions for org.jooq and org.jooq.meta");
+            if (f1.length != f3.length)
+                log.warn("Version check", "org.jooq.Constants and org.jooq.codegen.Constants contents mismatch. Check if you're using the same versions for org.jooq and org.jooq.meta");
 
-        String v1 = org.jooq.Constants.FULL_VERSION;
-        String v2 = org.jooq.meta.Constants.FULL_VERSION;
-        String v3 = org.jooq.codegen.Constants.FULL_VERSION;
+            String v1 = org.jooq.Constants.FULL_VERSION;
+            String v2 = org.jooq.meta.Constants.FULL_VERSION;
+            String v3 = org.jooq.codegen.Constants.FULL_VERSION;
 
-        for (int i = 0; i < f1.length && i < f2.length && i < f3.length; i++) {
-            try {
+            for (int i = 0; i < f1.length && i < f2.length && i < f3.length; i++) {
                 Object c1 = f1[i].get(org.jooq.Constants.class);
                 Object c2 = f2[i].get(org.jooq.meta.Constants.class);
                 Object c3 = f3[i].get(org.jooq.codegen.Constants.class);
@@ -943,9 +943,9 @@ public class GenerationTool {
                 if (!Objects.equals(c1, c3))
                     log.warn("Version check", "org.jooq.Constants." + f1[i].getName() + " contents mismatch: " + c1 + " vs " + c3 + ". Check if you're using the same versions for org.jooq (" + v1 + ") and org.jooq.codegen (" + v3 + ")");
             }
-            catch (Exception e) {
-                log.warn("Version check", e);
-            }
+        }
+        catch (Throwable e) {
+            log.warn("Version check", "Something went wrong when comparing versions of org.jooq, org.jooq.meta, and org.jooq.codegen", e);
         }
     }
 

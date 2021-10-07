@@ -3933,8 +3933,7 @@ public final class QOM {
     ) {
 
         // TODO: Support also arrays, sets, etc.
-        if (q instanceof List) {
-            List<?> l = (List<?>) q;
+        if (q instanceof List) { List<?> l = (List<?>) q;
             List<Object> r = null;
 
             for (int i = 0; i < l.size(); i++) {
@@ -3982,9 +3981,7 @@ public final class QOM {
         if (test(abort, current)) return current;
 
         for (int i = 0; i < parts.length; i++) {
-            if (parts[i] instanceof QueryPart) {
-                QueryPart p = (QueryPart) parts[i];
-
+            if (parts[i] instanceof QueryPart) { QueryPart p = (QueryPart) parts[i];
                 if (test(recurse, p)) {
                     current = p.$traverse(current, abort, recurse, accumulate);
                     if (test(abort, current)) return current;

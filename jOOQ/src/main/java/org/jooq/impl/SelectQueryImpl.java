@@ -1237,16 +1237,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private final Select<?> distinctOnEmulation() {
 
         // [#3564] TODO: Extract and merge this with getSelectResolveSomeAsterisks0()
         List<Field<?>> partitionBy = new ArrayList<>(distinctOn.size());
 
-        for (SelectFieldOrAsterisk f : distinctOn)
-            if (f instanceof Field)
-                partitionBy.add((Field<?>) f);
+        for (SelectFieldOrAsterisk s : distinctOn)
+            if (s instanceof Field)
+                partitionBy.add((Field<?>) s);
 
         Field<Integer> rn = rowNumber().over(partitionBy(partitionBy).orderBy(orderBy)).as("rn");
 
@@ -2592,9 +2591,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final void transformInlineDerivedTable0(Table<?> table, TableList result, ConditionProviderImpl where) {
-        if (table instanceof InlineDerivedTable) {
-            InlineDerivedTable<?> t = (InlineDerivedTable<?>) table;
-
+        if (table instanceof InlineDerivedTable) { InlineDerivedTable<?> t = (InlineDerivedTable<?>) table;
             result.add(t.table());
             where.addConditions(t.condition());
         }
@@ -2605,9 +2602,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final Table<?> transformInlineDerivedTables0(Table<?> table, ConditionProviderImpl where) {
-        if (table instanceof InlineDerivedTable) {
-            InlineDerivedTable<?> t = (InlineDerivedTable<?>) table;
-
+        if (table instanceof InlineDerivedTable) { InlineDerivedTable<?> t = (InlineDerivedTable<?>) table;
             where.addConditions(t.condition());
             return t.table();
         }
@@ -2619,8 +2614,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         else
             return table;
     }
-
-
 
 
 
@@ -3706,33 +3699,35 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#7921] TODO Find a better, more efficient way to resolve asterisks
         SelectFieldList<SelectFieldOrAsterisk> list = getSelectResolveImplicitAsterisks();
 
-        for (SelectFieldOrAsterisk f : list)
-            if (f instanceof Field<?>)
-                result.add(getResolveProjection(c, (Field<?>) f));
-            else if (f instanceof QualifiedAsterisk)
-                if (((QualifiedAsteriskImpl) f).fields.isEmpty())
+        for (SelectFieldOrAsterisk s : list)
+            if (s instanceof Field)
+                result.add(getResolveProjection(c, (Field<?>) s));
+            else if (s instanceof QualifiedAsteriskImpl) { QualifiedAsteriskImpl q = (QualifiedAsteriskImpl) s;
+                if (q.fields.isEmpty())
                     if (resolveSupported)
-                        result.addAll(Arrays.asList(((QualifiedAsterisk) f).qualifier().fields()));
+                        result.addAll(Arrays.asList(q.qualifier().fields()));
                     else
-                        result.add(f);
+                        result.add(s);
                 else if (resolveExcept)
-                    result.addAll(subtract(Arrays.asList(((QualifiedAsterisk) f).qualifier().fields()), (((QualifiedAsteriskImpl) f).fields)));
+                    result.addAll(subtract(Arrays.asList(((QualifiedAsterisk) s).qualifier().fields()), (((QualifiedAsteriskImpl) s).fields)));
                 else
-                    result.add(f);
-            else if (f instanceof Asterisk)
-                if (((AsteriskImpl) f).fields.isEmpty())
+                    result.add(s);
+            }
+            else if (s instanceof AsteriskImpl) { AsteriskImpl a = (AsteriskImpl) s;
+                if (a.fields.isEmpty())
                     if (resolveSupported || resolveUnqualifiedCombined && list.size() > 1)
                         result.addAll(resolveAsterisk(new QueryPartList<>()));
                     else
-                        result.add(f);
+                        result.add(s);
                 else if (resolveExcept)
-                    result.addAll(resolveAsterisk(new QueryPartList<>(), ((AsteriskImpl) f).fields));
+                    result.addAll(resolveAsterisk(new QueryPartList<>(), a.fields));
                 else
-                    result.add(f);
-            else if (f instanceof Row)
-                result.add(getResolveProjection(c, new RowField<Row, Record>((Row) f)));
+                    result.add(s);
+            }
+            else if (s instanceof Row)
+                result.add(getResolveProjection(c, new RowField<Row, Record>((Row) s)));
             else
-                throw new AssertionError("Type not supported: " + f);
+                throw new AssertionError("Type not supported: " + s);
 
         return result;
     }

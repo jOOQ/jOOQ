@@ -150,8 +150,7 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
             if (source == null)
                 return null;
 
-            if (source instanceof Object[]) {
-                Object[] array = (Object[]) source;
+            if (source instanceof Object[]) { Object[] array = (Object[]) source;
                 int size = rowType.size();
                 Record record = newRecord();
 
@@ -177,8 +176,8 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
             if (source == null)
                 return null;
 
-            if (source instanceof Iterable) {
-                Iterator<?> it = ((Iterable<?>) source).iterator();
+            if (source instanceof Iterable) { Iterable<?> iterable = (Iterable<?>) source;
+                Iterator<?> it = iterable.iterator();
                 int size = rowType.size();
                 Record record = newRecord();
 
@@ -206,8 +205,7 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
 
             // [#1987] Distinguish between various types to load data from
             // Maps are loaded using a {field-name -> value} convention
-            if (source instanceof Map) {
-                Map<?, ?> map = (Map<?, ?>) source;
+            if (source instanceof Map) { Map<?, ?> map = (Map<?, ?>) source;
                 Record record = newRecord();
 
                 for (int i = 0; i < fields.length; i++) {

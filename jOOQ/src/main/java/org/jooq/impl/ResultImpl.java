@@ -1136,14 +1136,11 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+        if (this == obj)
             return true;
-        }
 
-        if (obj instanceof ResultImpl) {
-            ResultImpl<R> other = (ResultImpl<R>) obj;
-            return records.equals(other.records);
-        }
+        if (obj instanceof ResultImpl)
+            return records.equals(((ResultImpl<?>) obj).records);
 
         return false;
     }

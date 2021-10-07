@@ -1371,7 +1371,7 @@ final class Tools {
     }
 
     static final SortField<?>[] sortFields(OrderField<?>[] fields) {
-        if (fields instanceof SortField<?>[])
+        if (fields instanceof SortField[])
             return (SortField<?>[]) fields;
         else
             return map(fields, o -> sortField(o), SortField[]::new);
@@ -2481,8 +2481,7 @@ final class Tools {
     private static final RuntimeException exception(Cursor<?> cursor, RuntimeException e) {
 
         // [#8877] Make sure these exceptions pass through ExecuteListeners as well
-        if (cursor instanceof CursorImpl) {
-            CursorImpl<?> c = (CursorImpl<?>) cursor;
+        if (cursor instanceof CursorImpl) { CursorImpl<?> c = (CursorImpl<?>) cursor;
             c.ctx.exception(e);
             c.listener.exception(c.ctx);
             return c.ctx.exception();
@@ -2553,8 +2552,8 @@ final class Tools {
      */
     @SuppressWarnings("null")
     static final void renderAndBind(Context<?> ctx, String sql, List<QueryPart> substitutes) {
-        RenderContext render = (RenderContext) ((ctx instanceof RenderContext) ? ctx : null);
-        BindContext   bind   = (BindContext)   ((ctx instanceof BindContext)   ? ctx : null);
+        RenderContext render = ctx instanceof RenderContext ? (RenderContext) ctx : null;
+        BindContext   bind   = ctx instanceof BindContext   ? (BindContext) ctx : null;
 
         int substituteIndex = 0;
         char[] sqlChars = sql.toCharArray();
@@ -2958,8 +2957,8 @@ final class Tools {
             for (Object substitute : substitutes) {
 
                 // [#1432] Distinguish between QueryParts and other objects
-                if (substitute instanceof QueryPart) {
-                    result.add((QueryPart) substitute);
+                if (substitute instanceof QueryPart) { QueryPart q = (QueryPart) substitute;
+                    result.add(q);
                 }
                 else {
                     @SuppressWarnings("unchecked")
@@ -3498,7 +3497,7 @@ final class Tools {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     static final <R extends Record> SelectQueryImpl<R> selectQueryImpl(QueryPart part) {
         if (part instanceof SelectQueryImpl)
-            return (SelectQueryImpl<R>) part;
+            return (SelectQueryImpl) part;
         else if (part instanceof SelectImpl)
             return (SelectQueryImpl<R>) ((SelectImpl) part).getDelegate();
         else if (part instanceof ScalarSubquery)
@@ -4029,8 +4028,8 @@ final class Tools {
 
         @Override
         public boolean equals(Object obj) {
-            if (obj instanceof SourceMethod) {
-                Method other = ((SourceMethod) obj).method;
+            if (obj instanceof SourceMethod) { SourceMethod s = (SourceMethod) obj;
+                Method other = s.method;
 
                 if (method.getName().equals(other.getName())) {
                     Class<?>[] p1 = method.getParameterTypes();
@@ -5168,7 +5167,7 @@ final class Tools {
     static final void toSQLDDLTypeDeclaration(Context<?> ctx, DataType<?> type) {
         // [#10376] TODO: Move some of this logic into DataType
 
-        DataType<?> elementType = (type instanceof ArrayDataType)
+        DataType<?> elementType = type instanceof ArrayDataType
             ? ((ArrayDataType<?>) type).elementType
             : type;
 
@@ -5638,18 +5637,20 @@ final class Tools {
      * Look up a field in a table, or create a new qualified field from the table.
      */
     static final Field<?> tableField(Table<?> table, Object field) {
-        if (field instanceof Field<?>)
+        if (field instanceof Field)
             return (Field<?>) field;
-        else if (field instanceof Name)
+        else if (field instanceof Name) { Name n = (Name) field;
             if (table.fieldsRow().size() == 0)
-                return DSL.field(table.getQualifiedName().append(((Name) field).unqualifiedName())) ;
+                return DSL.field(table.getQualifiedName().append(n.unqualifiedName())) ;
             else
-                return table.field((Name) field);
-        else if (field instanceof String)
+                return table.field(n);
+        }
+        else if (field instanceof String) { String s = (String) field;
             if (table.fieldsRow().size() == 0)
-                return DSL.field(table.getQualifiedName().append((String) field));
+                return DSL.field(table.getQualifiedName().append(s));
             else
-                return table.field((String) field);
+                return table.field(s);
+        }
         else
             throw new IllegalArgumentException("Field type not supported: " + field);
     }
@@ -6377,9 +6378,7 @@ final class Tools {
         if (abort != null && abort.test(result))
             return result;
 
-        if (t instanceof JoinTable) {
-            JoinTable j = (JoinTable) t;
-
+        if (t instanceof JoinTable) { JoinTable j = (JoinTable) t;
             if (recurseLhs == null || recurseLhs.test(j)) {
                 result = traverseJoins(j.lhs, result, abort, recurseLhs, recurseRhs, joinTypeFunction, tableFunction);
 

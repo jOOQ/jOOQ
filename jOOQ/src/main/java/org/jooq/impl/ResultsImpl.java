@@ -123,14 +123,11 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results 
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+        if (this == obj)
             return true;
-        }
 
-        if (obj instanceof ResultsImpl) {
-            ResultsImpl other = (ResultsImpl) obj;
-            return resultsOrRows.equals(other.resultsOrRows);
-        }
+        if (obj instanceof ResultsImpl)
+            return resultsOrRows.equals(((ResultsImpl) obj).resultsOrRows);
 
         return false;
     }

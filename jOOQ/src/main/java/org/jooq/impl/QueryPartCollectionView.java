@@ -83,9 +83,7 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
     QueryPartCollectionView(Collection<T> wrapped) {
         this.wrapped = wrapped != null ? wrapped : Collections.emptyList();
 
-        if (wrapped instanceof QueryPartCollectionView) {
-            QueryPartCollectionView<T> v = (QueryPartCollectionView<T>) wrapped;
-
+        if (wrapped instanceof QueryPartCollectionView) { QueryPartCollectionView<T> v = (QueryPartCollectionView<T>) wrapped;
             this.qualify = v.qualify;
             this.separator = v.separator;
             this.mapper = v.mapper;

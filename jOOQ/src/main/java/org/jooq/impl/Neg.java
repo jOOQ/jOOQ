@@ -81,8 +81,6 @@ final class Neg<T> extends AbstractTransformable<T> implements QOM.Neg<T> {
 
 
 
-
-
         return this;
     }
 

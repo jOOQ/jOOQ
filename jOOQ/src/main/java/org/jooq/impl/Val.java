@@ -118,11 +118,11 @@ final class Val<T> extends AbstractParam<T> implements QOM.Val<T>, UEmpty {
 
         // [#10438] A user defined data type could was not provided explicitly,
         //          when wrapping a bind value in DSL::val or DSL::inline
-        if (getDataType() instanceof DataTypeProxy) {
+        if (getDataType() instanceof DataTypeProxy) { DataTypeProxy<?> p = (DataTypeProxy<?>) getDataType();
 
             // [#9492] Maintain legacy static type registry behaviour for now
-            if (((DataTypeProxy<?>) getDataType()).type() instanceof LegacyConvertedDataType && type == SQLDataType.OTHER) {
-                type = (DataType) ((DataTypeProxy<?>) getDataType()).type();
+            if (p.type() instanceof LegacyConvertedDataType && type == SQLDataType.OTHER) {
+                type = (DataType) p.type();
 
                 if (legacyWarnings.size() < 8 && legacyWarnings.put(type.getType(), "") == null)
                     log.warn("Deprecation", "User-defined, converted data type " + type.getType() + " was registered statically, which will be unsupported in the future, see https://github.com/jOOQ/jOOQ/issues/9492. Please use explicit data types in generated code, or e.g. with DSL.val(Object, DataType), or DSL.inline(Object, DataType).", new SQLWarning("Static type registry usage"));
@@ -166,7 +166,7 @@ final class Val<T> extends AbstractParam<T> implements QOM.Val<T>, UEmpty {
             else
                 acceptDefaultEmbeddable(ctx);
         }
-        else if (ctx instanceof RenderContext) {
+        else if (ctx instanceof RenderContext) { RenderContext r = (RenderContext) ctx;
             ParamType paramType = ctx.paramType();
 
             if (isInline(ctx))
@@ -180,7 +180,7 @@ final class Val<T> extends AbstractParam<T> implements QOM.Val<T>, UEmpty {
 
 
             try {
-                getBinding().sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), (RenderContext) ctx, value, getBindVariable(ctx)));
+                getBinding().sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), r, value, getBindVariable(ctx)));
             }
             catch (SQLException e) {
                 throw new DataAccessException("Error while generating SQL for Binding", e);

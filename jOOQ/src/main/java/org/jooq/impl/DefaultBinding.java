@@ -1322,7 +1322,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (array instanceof Object[])
                 return Convert.convert(array, type);
             else if (array instanceof Array)
-                return convertArray(((Array) array), type);
+                return convertArray((Array) array, type);
 
             return null;
         }
@@ -3451,9 +3451,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * LOB, if the argument is a lob.
          */
         private static final Object unlob(Object object) throws SQLException {
-            if (object instanceof Blob) {
-                Blob blob = (Blob) object;
-
+            if (object instanceof Blob) { Blob blob = (Blob) object;
                 try {
                     return blob.getBytes(1, (int) blob.length());
                 }
@@ -3461,9 +3459,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     JDBCUtils.safeFree(blob);
                 }
             }
-            else if (object instanceof Clob) {
-                Clob clob = (Clob) object;
-
+            else if (object instanceof Clob) { Clob clob = (Clob) object;
                 try {
                     return clob.getSubString(1, (int) clob.length());
                 }

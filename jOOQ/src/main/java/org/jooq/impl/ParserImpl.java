@@ -6264,9 +6264,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         : ((Field) left).isDocument();
 
                 not = parseKeywordIf("DISTINCT FROM") == not;
-                if (left instanceof Field) {
+                if (left instanceof Field) { Field f = (Field) left;
                     Field right = toField(parseConcat());
-                    return not ? ((Field) left).isNotDistinctFrom(right) : ((Field) left).isDistinctFrom(right);
+                    return not ? f.isNotDistinctFrom(right) : f.isDistinctFrom(right);
                 }
                 else {
                     Row right = parseRow(((Row) left).size(), true);
@@ -7210,22 +7210,20 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Condition toCondition(QueryPart part) {
-        if (part == null) {
+        if (part == null)
             return null;
-        }
-        else if (part instanceof Condition) {
+        else if (part instanceof Condition)
             return (Condition) part;
-        }
-        else if (part instanceof Field) {
-            DataType dataType = ((Field) part).getDataType();
+        else if (part instanceof Field) { Field f = (Field) part;
+            DataType dataType = f.getDataType();
             Class<?> type = dataType.getType();
 
             if (type == Boolean.class)
-                return condition((Field) part);
+                return condition(f);
 
             // [#11631] [#12394] Numeric expressions are booleans in MySQL
             else if (dataType.isNumeric())
-                return ((Field) part).ne(zero());
+                return f.ne(zero());
 
             // [#7266] Support parsing column references as predicates
             else if (type == Object.class && (part instanceof TableFieldImpl || part instanceof Val))
@@ -7241,7 +7239,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (part == null)
             return null;
         else if (part instanceof Field)
-            return (Field) part;
+            return (Field<?>) part;
         else if (part instanceof Condition)
             return field((Condition) part);
         else if (part instanceof Row)
@@ -7254,7 +7252,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (part == null)
             return null;
         else if (part instanceof Field)
-            return (Field) part;
+            return (Field<?>) part;
         else if (part instanceof Condition)
             return field((Condition) part);
         else
@@ -8238,11 +8236,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     FieldOrRow r = parseFieldOrRow();
                     List<Field<?>> list = null;
 
-                    if (r instanceof Field) {
+                    if (r instanceof Field) { Field<?> f = (Field<?>) r;
                         while (parseIf(',')) {
                             if (list == null) {
                                 list = new ArrayList<>();
-                                list.add((Field) r);
+                                list.add(f);
                             }
 
                             // TODO Allow for nesting ROWs
@@ -11093,9 +11091,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Object nameOrSpecification = parseWindowNameOrSpecification(true);
 
         // https://bugs.eclipse.org/bugs/show_bug.cgi?id=494897
-        Field<?> result = (nameOrSpecification instanceof Name)
+        Field<?> result = nameOrSpecification instanceof Name
             ? s3.over((Name) nameOrSpecification)
-            : (nameOrSpecification instanceof WindowSpecification)
+            : nameOrSpecification instanceof WindowSpecification
             ? s3.over((WindowSpecification) nameOrSpecification)
             : s3.over();
 
@@ -14099,12 +14097,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             // [#11054] Use a VisitListener to find actual Params in the expression tree,
             //          which may have more refined DataTypes attached to them, from context
             dsl.configuration().deriveAppending(onVisitStart(ctx -> {
-                if (ctx.queryPart() instanceof Param) {
-                    Param<?> p = (Param<?>) ctx.queryPart();
-
-                    if (!params.containsKey(p.getParamName()))
-                        params.put(p.getParamName(), p);
-                }
+                if (ctx.queryPart() instanceof Param)
+                    if (!params.containsKey(((Param<?>) ctx.queryPart()).getParamName()))
+                        params.put(((Param<?>) ctx.queryPart()).getParamName(), (Param<?>) ctx.queryPart());
             })).dsl().render(result);
 
             for (String name : bindParams.keySet())
@@ -14186,11 +14181,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         for (Value<Table<?>> t : tables) {
             Value<Field<?>> f;
 
-            if (t.value() instanceof JoinTable) {
+            if (t.value() instanceof JoinTable) { JoinTable j = (JoinTable) t.value();
                 found = resolveInTableScope(
                     asList(
-                        new Value<>(t.scopeLevel(), ((JoinTable) t.value()).lhs),
-                        new Value<>(t.scopeLevel(), ((JoinTable) t.value()).rhs)
+                        new Value<>(t.scopeLevel(), j.lhs),
+                        new Value<>(t.scopeLevel(), j.rhs)
                     ),
                     lookupName, lookup, found
                 );

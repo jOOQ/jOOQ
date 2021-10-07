@@ -138,10 +138,10 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
     public Result<R> convert(Object object) {
 
         // [#3884] TODO: Move this logic into JSONReader to make it more generally useful
-        if (object instanceof List) {
+        if (object instanceof List) { List l = (List) object;
             ResultImpl<R> result = new ResultImpl<>(CTX.configuration(), row);
 
-            for (Object record : (List) object)
+            for (Object record : l)
                 result.add(newRecord(true, recordType, row, CTX.configuration())
                     .operate(r -> {
 

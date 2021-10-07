@@ -503,25 +503,25 @@ final class Interpreter {
             // TODO: ReverseIterable is not a viable approach if we also allow constraints to be added this way
             if (query.$addFirst()) {
                 for (Field<?> f : assertFields(query, reverseIterable(query.$add())))
-                    addField(existing, 0, (UnqualifiedName) f.getUnqualifiedName(), ((Field<?>) f).getDataType());
+                    addField(existing, 0, (UnqualifiedName) f.getUnqualifiedName(), f.getDataType());
             }
             else if (query.$addBefore() != null) {
                 int index = indexOrFail(existing.fields, query.$addBefore());
 
                 for (Field<?> f : assertFields(query, reverseIterable(query.$add())))
-                    addField(existing, index, (UnqualifiedName) f.getUnqualifiedName(), ((Field<?>) f).getDataType());
+                    addField(existing, index, (UnqualifiedName) f.getUnqualifiedName(), f.getDataType());
             }
             else if (query.$addAfter() != null) {
                 int index = indexOrFail(existing.fields, query.$addAfter()) + 1;
 
                 for (Field<?> f : assertFields(query, reverseIterable(query.$add())))
-                    addField(existing, index, (UnqualifiedName) f.getUnqualifiedName(), ((Field<?>) f).getDataType());
+                    addField(existing, index, (UnqualifiedName) f.getUnqualifiedName(), f.getDataType());
             }
             else {
                 for (FieldOrConstraint fc : query.$add())
                     if (fc instanceof Field)
                         addField(existing, Integer.MAX_VALUE, (UnqualifiedName) fc.getUnqualifiedName(), ((Field<?>) fc).getDataType());
-                    else if (fc instanceof Constraint)
+                    else if (fc instanceof ConstraintImpl)
                         addConstraint(query, (ConstraintImpl) fc, existing);
                     else
                         throw unsupportedQuery(query);

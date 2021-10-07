@@ -278,8 +278,8 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     }
 
     private final String tableName(Field<?> field) {
-        if (field instanceof TableField) {
-            Table<?> table = ((TableField<?, ?>) field).getTable();
+        if (field instanceof TableField) { TableField<?, ?> f = (TableField<?, ?>) field;
+            Table<?> table = f.getTable();
 
             if (table != null)
                 return table.getName();

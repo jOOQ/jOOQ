@@ -1455,8 +1455,8 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
     }
 
     default boolean hasLimit1() {
-        if (this instanceof Select) {
-            SelectQueryImpl<?> s = Tools.selectQueryImpl((Select<?>) this);
+        if (this instanceof Select) { Select<?> q = (Select<?>) this;
+            SelectQueryImpl<?> s = Tools.selectQueryImpl(q);
 
             if (s != null) {
                 Limit l = s.getLimit();

@@ -162,8 +162,8 @@ public class MockResultSetMetaData implements ResultSetMetaData, Serializable {
         rs.checkNotClosed();
 
         Field<?> field = rs.result.field(column - 1);
-        if (field instanceof TableField) {
-            Table<?> table = ((TableField<?, ?>) field).getTable();
+        if (field instanceof TableField) { TableField<?, ?> f = (TableField<?, ?>) field;
+            Table<?> table = f.getTable();
 
             if (table != null) {
                 Schema schema = table.getSchema();
@@ -208,12 +208,11 @@ public class MockResultSetMetaData implements ResultSetMetaData, Serializable {
         rs.checkNotClosed();
 
         Field<?> field = rs.result.field(column - 1);
-        if (field instanceof TableField) {
-            Table<?> table = ((TableField<?, ?>) field).getTable();
+        if (field instanceof TableField) { TableField<?, ?> f = (TableField<?, ?>) field;
+            Table<?> table = f.getTable();
 
-            if (table != null) {
+            if (table != null)
                 return table.getName();
-            }
         }
 
         // By default, no table is available

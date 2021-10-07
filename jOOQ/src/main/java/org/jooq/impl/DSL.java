@@ -29916,7 +29916,7 @@ public class DSL {
         DataType t = DefaultDataType.getDataType(DEFAULT, type, (DataType) SQLDataType.OTHER);
 
         if (t instanceof LegacyConvertedDataType)
-            return new DataTypeProxy((AbstractDataType) t);
+            return new DataTypeProxy((LegacyConvertedDataType) t);
         else if (t != SQLDataType.OTHER)
             return t;
         else

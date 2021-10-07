@@ -249,11 +249,11 @@ public final class Internal {
     public static final Name createPathAlias(Table<?> child, ForeignKey<?, ?> path) {
         Name name = DSL.name(path.getName());
 
-        if (child instanceof TableImpl) {
-            Table<?> ancestor = ((TableImpl<?>) child).child;
+        if (child instanceof TableImpl) { TableImpl<?> t = (TableImpl<?>) child;
+            Table<?> ancestor = t.child;
 
             if (ancestor != null)
-                name = createPathAlias(ancestor, ((TableImpl<?>) child).childPath).append(name);
+                name = createPathAlias(ancestor, t.childPath).append(name);
             else
                 name = child.getQualifiedName().append(name);
         }

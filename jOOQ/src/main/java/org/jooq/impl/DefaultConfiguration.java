@@ -1229,9 +1229,8 @@ public class DefaultConfiguration extends AbstractConfiguration {
             if (newTransactionProvider instanceof ThreadLocalTransactionProvider)
                 this.connectionProvider = ((ThreadLocalTransactionProvider) newTransactionProvider).localConnectionProvider;
         }
-        else {
+        else
             this.transactionProvider = new NoTransactionProvider();
-        }
 
         return this;
     }

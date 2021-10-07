@@ -90,9 +90,8 @@ final class SQLResultQuery extends AbstractResultQuery<Record> implements UEmpty
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        if (delegate instanceof QueryPartInternal) {
+        if (delegate instanceof QueryPartInternal)
             return ((QueryPartInternal) delegate).clauses(ctx);
-        }
 
         return null;
     }

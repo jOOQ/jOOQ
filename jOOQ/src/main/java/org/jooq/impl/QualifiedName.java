@@ -84,8 +84,7 @@ final class QualifiedName extends AbstractName {
         UnqualifiedName[] result = new UnqualifiedName[qualifiedName.length];
 
         for (int i = 0; i < qualifiedName.length; i++)
-            if (qualifiedName[i] instanceof QualifiedName) {
-                QualifiedName q = (QualifiedName) qualifiedName[i];
+            if (qualifiedName[i] instanceof QualifiedName) { QualifiedName q = (QualifiedName) qualifiedName[i];
                 result[i] = q.qualifiedName[q.qualifiedName.length - 1];
             }
             else if (qualifiedName[i] instanceof UnqualifiedName)

@@ -214,9 +214,9 @@ implements
             this.child = child;
             this.childPath = path == null ? null : Tools.aliasedKey((ForeignKey) path, child, this);
         }
-        else if (aliased instanceof TableImpl) {
-            this.child = ((TableImpl<?>) aliased).child;
-            this.childPath = ((TableImpl) aliased).childPath;
+        else if (aliased instanceof TableImpl) { TableImpl t = (TableImpl) aliased;
+            this.child = t.child;
+            this.childPath = t.childPath;
         }
         else {
             this.child = null;
@@ -473,8 +473,7 @@ implements
 
         // [#2144] TableImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof TableImpl) {
-            TableImpl<?> other = (TableImpl<?>) that;
+        if (that instanceof TableImpl) { TableImpl<?> other = (TableImpl<?>) that;
             return
 
                 // [#7172] [#10274] Cannot use getQualifiedName() yet here

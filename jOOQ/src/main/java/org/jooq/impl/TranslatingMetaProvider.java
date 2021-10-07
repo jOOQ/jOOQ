@@ -119,8 +119,8 @@ final class TranslatingMetaProvider implements MetaProvider {
                 final Locale locale = SettingsTools.interpreterLocale(ctx.settings());
                 if (nameCase != null && nameCase != RenderNameCase.AS_IS) {
                     ctx.configuration().set(onVisitStart(c -> {
-                        if (c.queryPart() instanceof Name) {
-                            Name[] parts = ((Name) c.queryPart()).parts();
+                        if (c.queryPart() instanceof Name) { Name n = (Name) c.queryPart();
+                            Name[] parts = n.parts();
                             boolean changed = false;
 
                             for (int i = 0; i < parts.length; i++) {

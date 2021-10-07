@@ -147,10 +147,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof ContainsIgnoreCase) {
+        if (that instanceof ContainsIgnoreCase) { ContainsIgnoreCase o = (ContainsIgnoreCase) that;
             return
-                StringUtils.equals($value(), ((ContainsIgnoreCase) that).$value()) &&
-                StringUtils.equals($content(), ((ContainsIgnoreCase) that).$content())
+                StringUtils.equals($value(), o.$value()) &&
+                StringUtils.equals($content(), o.$content())
             ;
         }
         else

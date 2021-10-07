@@ -214,10 +214,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof ToChar) {
+        if (that instanceof ToChar) { ToChar o = (ToChar) that;
             return
-                StringUtils.equals($value(), ((ToChar) that).$value()) &&
-                StringUtils.equals($formatMask(), ((ToChar) that).$formatMask())
+                StringUtils.equals($value(), o.$value()) &&
+                StringUtils.equals($formatMask(), o.$formatMask())
             ;
         }
         else

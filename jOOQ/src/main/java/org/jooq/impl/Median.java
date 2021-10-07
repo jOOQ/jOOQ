@@ -156,9 +156,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Median) {
+        if (that instanceof Median) { Median o = (Median) that;
             return
-                StringUtils.equals($field(), ((Median) that).$field())
+                StringUtils.equals($field(), o.$field())
             ;
         }
         else

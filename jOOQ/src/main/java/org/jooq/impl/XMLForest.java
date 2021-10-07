@@ -169,9 +169,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof XMLForest) {
+        if (that instanceof XMLForest) { XMLForest o = (XMLForest) that;
             return
-                StringUtils.equals($fields(), ((XMLForest) that).$fields())
+                StringUtils.equals($fields(), o.$fields())
             ;
         }
         else

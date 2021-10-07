@@ -153,10 +153,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Max) {
+        if (that instanceof Max) { Max o = (Max) that;
             return
-                StringUtils.equals($field(), ((Max) that).$field()) &&
-                $distinct() == ((Max) that).$distinct()
+                StringUtils.equals($field(), o.$field()) &&
+                $distinct() == o.$distinct()
             ;
         }
         else

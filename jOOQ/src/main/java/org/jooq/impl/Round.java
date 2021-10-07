@@ -259,10 +259,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Round) {
+        if (that instanceof Round) { Round o = (Round) that;
             return
-                StringUtils.equals($value(), ((Round) that).$value()) &&
-                StringUtils.equals($decimals(), ((Round) that).$decimals())
+                StringUtils.equals($value(), o.$value()) &&
+                StringUtils.equals($decimals(), o.$decimals())
             ;
         }
         else

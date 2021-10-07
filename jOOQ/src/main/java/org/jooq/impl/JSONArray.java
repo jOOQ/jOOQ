@@ -308,12 +308,12 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof JSONArray) {
+        if (that instanceof JSONArray) { JSONArray o = (JSONArray) that;
             return
-                StringUtils.equals($type(), ((JSONArray) that).$type()) &&
-                StringUtils.equals($fields(), ((JSONArray) that).$fields()) &&
-                StringUtils.equals($onNull(), ((JSONArray) that).$onNull()) &&
-                StringUtils.equals($returning(), ((JSONArray) that).$returning())
+                StringUtils.equals($type(), o.$type()) &&
+                StringUtils.equals($fields(), o.$fields()) &&
+                StringUtils.equals($onNull(), o.$onNull()) &&
+                StringUtils.equals($returning(), o.$returning())
             ;
         }
         else

@@ -176,9 +176,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Ascii) {
+        if (that instanceof Ascii) { Ascii o = (Ascii) that;
             return
-                StringUtils.equals($string(), ((Ascii) that).$string())
+                StringUtils.equals($string(), o.$string())
             ;
         }
         else

@@ -241,11 +241,11 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Rpad) {
+        if (that instanceof Rpad) { Rpad o = (Rpad) that;
             return
-                StringUtils.equals($string(), ((Rpad) that).$string()) &&
-                StringUtils.equals($length(), ((Rpad) that).$length()) &&
-                StringUtils.equals($character(), ((Rpad) that).$character())
+                StringUtils.equals($string(), o.$string()) &&
+                StringUtils.equals($length(), o.$length()) &&
+                StringUtils.equals($character(), o.$character())
             ;
         }
         else

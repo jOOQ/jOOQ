@@ -284,11 +284,11 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Position) {
+        if (that instanceof Position) { Position o = (Position) that;
             return
-                StringUtils.equals($in(), ((Position) that).$in()) &&
-                StringUtils.equals($search(), ((Position) that).$search()) &&
-                StringUtils.equals($startIndex(), ((Position) that).$startIndex())
+                StringUtils.equals($in(), o.$in()) &&
+                StringUtils.equals($search(), o.$search()) &&
+                StringUtils.equals($startIndex(), o.$startIndex())
             ;
         }
         else

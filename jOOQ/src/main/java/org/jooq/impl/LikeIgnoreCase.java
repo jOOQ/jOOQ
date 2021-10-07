@@ -182,11 +182,11 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof LikeIgnoreCase) {
+        if (that instanceof LikeIgnoreCase) { LikeIgnoreCase o = (LikeIgnoreCase) that;
             return
-                StringUtils.equals($value(), ((LikeIgnoreCase) that).$value()) &&
-                StringUtils.equals($pattern(), ((LikeIgnoreCase) that).$pattern()) &&
-                StringUtils.equals($escape(), ((LikeIgnoreCase) that).$escape())
+                StringUtils.equals($value(), o.$value()) &&
+                StringUtils.equals($pattern(), o.$pattern()) &&
+                StringUtils.equals($escape(), o.$escape())
             ;
         }
         else

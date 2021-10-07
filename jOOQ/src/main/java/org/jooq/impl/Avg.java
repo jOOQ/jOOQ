@@ -154,10 +154,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Avg) {
+        if (that instanceof Avg) { Avg o = (Avg) that;
             return
-                StringUtils.equals($field(), ((Avg) that).$field()) &&
-                $distinct() == ((Avg) that).$distinct()
+                StringUtils.equals($field(), o.$field()) &&
+                $distinct() == o.$distinct()
             ;
         }
         else

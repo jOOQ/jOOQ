@@ -150,9 +150,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Not) {
+        if (that instanceof Not) { Not o = (Not) that;
             return
-                StringUtils.equals($condition(), ((Not) that).$condition())
+                StringUtils.equals($condition(), o.$condition())
             ;
         }
         else

@@ -164,10 +164,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Power) {
+        if (that instanceof Power) { Power o = (Power) that;
             return
-                StringUtils.equals($base(), ((Power) that).$base()) &&
-                StringUtils.equals($exponent(), ((Power) that).$exponent())
+                StringUtils.equals($base(), o.$base()) &&
+                StringUtils.equals($exponent(), o.$exponent())
             ;
         }
         else

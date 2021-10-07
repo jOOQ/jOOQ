@@ -156,9 +156,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof BitNot) {
+        if (that instanceof BitNot) { BitNot o = (BitNot) that;
             return
-                StringUtils.equals($arg1(), ((BitNot) that).$arg1())
+                StringUtils.equals($arg1(), o.$arg1())
             ;
         }
         else

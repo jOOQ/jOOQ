@@ -1297,9 +1297,9 @@ implements
                 FieldOrConstraint part = add.get(i);
                 ctx.qualify(false, c -> c.visit(part));
 
-                if (part instanceof Field) {
+                if (part instanceof Field) { Field<?> f = (Field<?>) part;
                     ctx.sql(' ');
-                    toSQLDDLTypeDeclarationForAddition(ctx, ((Field<?>) part).getDataType());
+                    toSQLDDLTypeDeclarationForAddition(ctx, f.getDataType());
                 }
             }
 

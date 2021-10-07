@@ -187,10 +187,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof RegrSlope) {
+        if (that instanceof RegrSlope) { RegrSlope o = (RegrSlope) that;
             return
-                StringUtils.equals($y(), ((RegrSlope) that).$y()) &&
-                StringUtils.equals($x(), ((RegrSlope) that).$x())
+                StringUtils.equals($y(), o.$y()) &&
+                StringUtils.equals($x(), o.$x())
             ;
         }
         else

@@ -199,10 +199,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof ToTimestamp) {
+        if (that instanceof ToTimestamp) { ToTimestamp o = (ToTimestamp) that;
             return
-                StringUtils.equals($value(), ((ToTimestamp) that).$value()) &&
-                StringUtils.equals($formatMask(), ((ToTimestamp) that).$formatMask())
+                StringUtils.equals($value(), o.$value()) &&
+                StringUtils.equals($formatMask(), o.$formatMask())
             ;
         }
         else

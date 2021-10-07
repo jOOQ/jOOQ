@@ -207,10 +207,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof ArrayGet) {
+        if (that instanceof ArrayGet) { ArrayGet o = (ArrayGet) that;
             return
-                StringUtils.equals($array(), ((ArrayGet) that).$array()) &&
-                StringUtils.equals($index(), ((ArrayGet) that).$index())
+                StringUtils.equals($array(), o.$array()) &&
+                StringUtils.equals($index(), o.$index())
             ;
         }
         else

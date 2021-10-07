@@ -176,9 +176,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof FieldCondition) {
+        if (that instanceof FieldCondition) { FieldCondition o = (FieldCondition) that;
             return
-                StringUtils.equals($field(), ((FieldCondition) that).$field())
+                StringUtils.equals($field(), o.$field())
             ;
         }
         else

@@ -513,9 +513,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof BitCount) {
+        if (that instanceof BitCount) { BitCount o = (BitCount) that;
             return
-                StringUtils.equals($number(), ((BitCount) that).$number())
+                StringUtils.equals($number(), o.$number())
             ;
         }
         else

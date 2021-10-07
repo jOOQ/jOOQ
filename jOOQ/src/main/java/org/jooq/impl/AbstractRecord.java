@@ -158,11 +158,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
         int size = size();
         for (int i = 0; i < size; i++) {
-            if (values[i] instanceof Attachable) {
+            if (values[i] instanceof Attachable) { Attachable a = (Attachable) values[i];
                 if (result == null)
                     result = new ArrayList<>();
 
-                result.add((Attachable) values[i]);
+                result.add(a);
             }
         }
 
@@ -855,8 +855,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             try {
 
                 // [#1522] [#2989] If possible the complete state of this record should be copied onto the other record
-                if (target instanceof AbstractRecord) {
-                    AbstractRecord t = (AbstractRecord) target;
+                if (target instanceof AbstractRecord) { AbstractRecord t = (AbstractRecord) target;
 
                     // Iterate over target fields, to avoid ambiguities when two source fields share the same name.
                     // [#3634] If external targetFields are provided, use those instead of the target record's fields.
@@ -916,9 +915,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     private final Object prepareArrayForUnmap(Object source, FieldsImpl f) {
-        if (source instanceof Object[]) {
-            Object[] array = (Object[]) source;
-
+        if (source instanceof Object[]) { Object[] array = (Object[]) source;
             if (array.length != f.size()) {
                 Object[] result = new Object[f.size()];
 

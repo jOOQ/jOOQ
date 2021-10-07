@@ -268,11 +268,11 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Substring) {
+        if (that instanceof Substring) { Substring o = (Substring) that;
             return
-                StringUtils.equals($string(), ((Substring) that).$string()) &&
-                StringUtils.equals($startingPosition(), ((Substring) that).$startingPosition()) &&
-                StringUtils.equals($length(), ((Substring) that).$length())
+                StringUtils.equals($string(), o.$string()) &&
+                StringUtils.equals($startingPosition(), o.$startingPosition()) &&
+                StringUtils.equals($length(), o.$length())
             ;
         }
         else

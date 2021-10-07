@@ -341,9 +341,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof BitXorAgg) {
+        if (that instanceof BitXorAgg) { BitXorAgg o = (BitXorAgg) that;
             return
-                StringUtils.equals($value(), ((BitXorAgg) that).$value())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

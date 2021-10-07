@@ -189,9 +189,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof ConditionAsField) {
+        if (that instanceof ConditionAsField) { ConditionAsField o = (ConditionAsField) that;
             return
-                StringUtils.equals($condition(), ((ConditionAsField) that).$condition())
+                StringUtils.equals($condition(), o.$condition())
             ;
         }
         else

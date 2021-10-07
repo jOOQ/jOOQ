@@ -491,11 +491,11 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof DateAdd) {
+        if (that instanceof DateAdd) { DateAdd o = (DateAdd) that;
             return
-                StringUtils.equals($date(), ((DateAdd) that).$date()) &&
-                StringUtils.equals($interval(), ((DateAdd) that).$interval()) &&
-                StringUtils.equals($datePart(), ((DateAdd) that).$datePart())
+                StringUtils.equals($date(), o.$date()) &&
+                StringUtils.equals($interval(), o.$interval()) &&
+                StringUtils.equals($datePart(), o.$datePart())
             ;
         }
         else

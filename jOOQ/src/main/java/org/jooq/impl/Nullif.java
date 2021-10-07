@@ -190,10 +190,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Nullif) {
+        if (that instanceof Nullif) { Nullif o = (Nullif) that;
             return
-                StringUtils.equals($value(), ((Nullif) that).$value()) &&
-                StringUtils.equals($other(), ((Nullif) that).$other())
+                StringUtils.equals($value(), o.$value()) &&
+                StringUtils.equals($other(), o.$other())
             ;
         }
         else

@@ -233,12 +233,12 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof WidthBucket) {
+        if (that instanceof WidthBucket) { WidthBucket o = (WidthBucket) that;
             return
-                StringUtils.equals($field(), ((WidthBucket) that).$field()) &&
-                StringUtils.equals($low(), ((WidthBucket) that).$low()) &&
-                StringUtils.equals($high(), ((WidthBucket) that).$high()) &&
-                StringUtils.equals($buckets(), ((WidthBucket) that).$buckets())
+                StringUtils.equals($field(), o.$field()) &&
+                StringUtils.equals($low(), o.$low()) &&
+                StringUtils.equals($high(), o.$high()) &&
+                StringUtils.equals($buckets(), o.$buckets())
             ;
         }
         else

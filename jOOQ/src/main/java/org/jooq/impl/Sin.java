@@ -167,9 +167,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Sin) {
+        if (that instanceof Sin) { Sin o = (Sin) that;
             return
-                StringUtils.equals($number(), ((Sin) that).$number())
+                StringUtils.equals($number(), o.$number())
             ;
         }
         else

@@ -214,11 +214,11 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof SubstringIndex) {
+        if (that instanceof SubstringIndex) { SubstringIndex o = (SubstringIndex) that;
             return
-                StringUtils.equals($string(), ((SubstringIndex) that).$string()) &&
-                StringUtils.equals($delimiter(), ((SubstringIndex) that).$delimiter()) &&
-                StringUtils.equals($n(), ((SubstringIndex) that).$n())
+                StringUtils.equals($string(), o.$string()) &&
+                StringUtils.equals($delimiter(), o.$delimiter()) &&
+                StringUtils.equals($n(), o.$n())
             ;
         }
         else

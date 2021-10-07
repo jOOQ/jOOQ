@@ -186,9 +186,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof ToHex) {
+        if (that instanceof ToHex) { ToHex o = (ToHex) that;
             return
-                StringUtils.equals($value(), ((ToHex) that).$value())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

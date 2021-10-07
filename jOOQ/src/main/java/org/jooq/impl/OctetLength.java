@@ -188,9 +188,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof OctetLength) {
+        if (that instanceof OctetLength) { OctetLength o = (OctetLength) that;
             return
-                StringUtils.equals($string(), ((OctetLength) that).$string())
+                StringUtils.equals($string(), o.$string())
             ;
         }
         else

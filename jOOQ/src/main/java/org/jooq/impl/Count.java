@@ -152,10 +152,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Count) {
+        if (that instanceof Count) { Count o = (Count) that;
             return
-                StringUtils.equals($field(), ((Count) that).$field()) &&
-                $distinct() == ((Count) that).$distinct()
+                StringUtils.equals($field(), o.$field()) &&
+                $distinct() == o.$distinct()
             ;
         }
         else

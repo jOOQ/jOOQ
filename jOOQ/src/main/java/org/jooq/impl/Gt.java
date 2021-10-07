@@ -153,10 +153,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Gt) {
+        if (that instanceof Gt) { Gt o = (Gt) that;
             return
-                StringUtils.equals($arg1(), ((Gt) that).$arg1()) &&
-                StringUtils.equals($arg2(), ((Gt) that).$arg2())
+                StringUtils.equals($arg1(), o.$arg1()) &&
+                StringUtils.equals($arg2(), o.$arg2())
             ;
         }
         else

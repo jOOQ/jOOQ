@@ -374,13 +374,13 @@ implements
 
         // [#1626] [#11126] NameImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof AbstractName) {
+        if (that instanceof AbstractName) { AbstractName n = (AbstractName) that;
 
             // [#11126] No need to access name arrays if not both names are equally qualified
-            if (qualified() != ((AbstractName) that).qualified())
+            if (qualified() != n.qualified())
                 return false;
             else
-                return Arrays.equals(getName(), (((AbstractName) that).getName()));
+                return Arrays.equals(getName(), n.getName());
         }
 
         return super.equals(that);

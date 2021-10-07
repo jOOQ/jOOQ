@@ -173,9 +173,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Floor) {
+        if (that instanceof Floor) { Floor o = (Floor) that;
             return
-                StringUtils.equals($value(), ((Floor) that).$value())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

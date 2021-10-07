@@ -183,9 +183,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof BoolOr) {
+        if (that instanceof BoolOr) { BoolOr o = (BoolOr) that;
             return
-                StringUtils.equals($condition(), ((BoolOr) that).$condition())
+                StringUtils.equals($condition(), o.$condition())
             ;
         }
         else

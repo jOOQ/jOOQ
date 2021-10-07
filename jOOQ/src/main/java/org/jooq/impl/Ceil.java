@@ -185,9 +185,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Ceil) {
+        if (that instanceof Ceil) { Ceil o = (Ceil) that;
             return
-                StringUtils.equals($value(), ((Ceil) that).$value())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

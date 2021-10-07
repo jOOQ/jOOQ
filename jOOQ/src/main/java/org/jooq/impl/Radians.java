@@ -183,9 +183,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Radians) {
+        if (that instanceof Radians) { Radians o = (Radians) that;
             return
-                StringUtils.equals($degrees(), ((Radians) that).$degrees())
+                StringUtils.equals($degrees(), o.$degrees())
             ;
         }
         else

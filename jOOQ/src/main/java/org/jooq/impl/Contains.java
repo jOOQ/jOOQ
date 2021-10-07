@@ -164,10 +164,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Contains) {
+        if (that instanceof Contains) { Contains o = (Contains) that;
             return
-                StringUtils.equals($value(), ((Contains) that).$value()) &&
-                StringUtils.equals($content(), ((Contains) that).$content())
+                StringUtils.equals($value(), o.$value()) &&
+                StringUtils.equals($content(), o.$content())
             ;
         }
         else

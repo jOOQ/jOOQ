@@ -201,10 +201,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof XMLPi) {
+        if (that instanceof XMLPi) { XMLPi o = (XMLPi) that;
             return
-                StringUtils.equals($target(), ((XMLPi) that).$target()) &&
-                StringUtils.equals($content(), ((XMLPi) that).$content())
+                StringUtils.equals($target(), o.$target()) &&
+                StringUtils.equals($content(), o.$content())
             ;
         }
         else

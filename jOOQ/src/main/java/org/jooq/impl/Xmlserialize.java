@@ -212,11 +212,11 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof XMLSerialize) {
+        if (that instanceof XMLSerialize) { XMLSerialize o = (XMLSerialize) that;
             return
-                $content() == ((XMLSerialize) that).$content() &&
-                StringUtils.equals($value(), ((XMLSerialize) that).$value()) &&
-                StringUtils.equals($type(), ((XMLSerialize) that).$type())
+                $content() == o.$content() &&
+                StringUtils.equals($value(), o.$value()) &&
+                StringUtils.equals($type(), o.$type())
             ;
         }
         else

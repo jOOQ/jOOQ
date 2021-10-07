@@ -197,9 +197,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof BitLength) {
+        if (that instanceof BitLength) { BitLength o = (BitLength) that;
             return
-                StringUtils.equals($string(), ((BitLength) that).$string())
+                StringUtils.equals($string(), o.$string())
             ;
         }
         else

@@ -160,7 +160,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof CurrentSchema) {
+        if (that instanceof CurrentSchema) { CurrentSchema o = (CurrentSchema) that;
             return true;
         }
         else

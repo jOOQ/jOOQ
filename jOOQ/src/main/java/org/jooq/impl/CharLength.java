@@ -186,9 +186,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof CharLength) {
+        if (that instanceof CharLength) { CharLength o = (CharLength) that;
             return
-                StringUtils.equals($string(), ((CharLength) that).$string())
+                StringUtils.equals($string(), o.$string())
             ;
         }
         else

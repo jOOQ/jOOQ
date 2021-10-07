@@ -684,10 +684,10 @@ final class Convert {
                 else if (toClass == byte[].class) {
 
                     // [#5824] UUID's most significant bits in byte[] are first
-                    if (from instanceof UUID) {
+                    if (from instanceof UUID) { UUID u = (UUID) from;
                         ByteBuffer b = ByteBuffer.wrap(new byte[16]);
-                        b.putLong(((UUID) from).getMostSignificantBits());
-                        b.putLong(((UUID) from).getLeastSignificantBits());
+                        b.putLong(u.getMostSignificantBits());
+                        b.putLong(u.getLeastSignificantBits());
                         return (U) b.array();
                     }
                     else if (from instanceof ByteBuffer)
@@ -1069,7 +1069,7 @@ final class Convert {
                     try {
                         String fromString =
                             (fromClass == String.class) ? (String) from
-                          : (from instanceof EnumType)  ? ((EnumType) from).getLiteral()
+                          : from instanceof EnumType ? ((EnumType) from).getLiteral()
                           : ((Enum) from).name();
 
                         if (fromString == null)

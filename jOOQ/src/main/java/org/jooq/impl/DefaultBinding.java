@@ -1322,7 +1322,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (array instanceof Object[])
                 return Convert.convert(array, type);
             else if (array instanceof Array)
-                return convertArray((Array) array, type);
+                return convertArray(((Array) array), type);
 
             return null;
         }

@@ -268,12 +268,12 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Overlay) {
+        if (that instanceof Overlay) { Overlay o = (Overlay) that;
             return
-                StringUtils.equals($in(), ((Overlay) that).$in()) &&
-                StringUtils.equals($placing(), ((Overlay) that).$placing()) &&
-                StringUtils.equals($startIndex(), ((Overlay) that).$startIndex()) &&
-                StringUtils.equals($length(), ((Overlay) that).$length())
+                StringUtils.equals($in(), o.$in()) &&
+                StringUtils.equals($placing(), o.$placing()) &&
+                StringUtils.equals($startIndex(), o.$startIndex()) &&
+                StringUtils.equals($length(), o.$length())
             ;
         }
         else

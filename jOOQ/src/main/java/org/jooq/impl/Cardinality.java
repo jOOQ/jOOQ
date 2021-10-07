@@ -166,9 +166,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Cardinality) {
+        if (that instanceof Cardinality) { Cardinality o = (Cardinality) that;
             return
-                StringUtils.equals($array(), ((Cardinality) that).$array())
+                StringUtils.equals($array(), o.$array())
             ;
         }
         else

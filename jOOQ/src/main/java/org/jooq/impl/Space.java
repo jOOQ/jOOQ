@@ -190,9 +190,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Space) {
+        if (that instanceof Space) { Space o = (Space) that;
             return
-                StringUtils.equals($count(), ((Space) that).$count())
+                StringUtils.equals($count(), o.$count())
             ;
         }
         else

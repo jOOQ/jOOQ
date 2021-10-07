@@ -179,9 +179,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Exists) {
+        if (that instanceof Exists) { Exists o = (Exists) that;
             return
-                StringUtils.equals($query(), ((Exists) that).$query())
+                StringUtils.equals($query(), o.$query())
             ;
         }
         else

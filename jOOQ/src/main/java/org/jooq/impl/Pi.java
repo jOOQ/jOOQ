@@ -130,7 +130,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Pi) {
+        if (that instanceof Pi) { Pi o = (Pi) that;
             return true;
         }
         else

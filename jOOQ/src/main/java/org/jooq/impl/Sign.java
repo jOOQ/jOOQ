@@ -178,9 +178,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Sign) {
+        if (that instanceof Sign) { Sign o = (Sign) that;
             return
-                StringUtils.equals($number(), ((Sign) that).$number())
+                StringUtils.equals($number(), o.$number())
             ;
         }
         else

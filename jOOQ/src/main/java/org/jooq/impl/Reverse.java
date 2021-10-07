@@ -172,9 +172,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Reverse) {
+        if (that instanceof Reverse) { Reverse o = (Reverse) that;
             return
-                StringUtils.equals($string(), ((Reverse) that).$string())
+                StringUtils.equals($string(), o.$string())
             ;
         }
         else

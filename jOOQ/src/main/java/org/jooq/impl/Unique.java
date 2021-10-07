@@ -185,9 +185,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Unique) {
+        if (that instanceof Unique) { Unique o = (Unique) that;
             return
-                StringUtils.equals($query(), ((Unique) that).$query())
+                StringUtils.equals($query(), o.$query())
             ;
         }
         else

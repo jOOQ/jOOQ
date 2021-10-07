@@ -173,10 +173,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof BitAnd) {
+        if (that instanceof BitAnd) { BitAnd o = (BitAnd) that;
             return
-                StringUtils.equals($arg1(), ((BitAnd) that).$arg1()) &&
-                StringUtils.equals($arg2(), ((BitAnd) that).$arg2())
+                StringUtils.equals($arg1(), o.$arg1()) &&
+                StringUtils.equals($arg2(), o.$arg2())
             ;
         }
         else

@@ -424,7 +424,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             return format.emptyString();
 
         // [#7802] Nested records should generate nested CSV data structures
-        String result = (value instanceof Formattable)
+        String result = value instanceof Formattable
             ? ((Formattable) value).formatCSV(format)
             : format0(value, false, false);
 
@@ -481,8 +481,8 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     if (format.format())
                         writer.append(format.newline()).append(format.indentString(3));
 
-                    if (field instanceof TableField) {
-                        Table<?> table = ((TableField<?, ?>) field).getTable();
+                    if (field instanceof TableField) { TableField<?, ?> f = (TableField<?, ?>) field;
+                        Table<?> table = f.getTable();
 
                         if (table != null) {
                             Schema schema = table.getSchema();
@@ -607,13 +607,12 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
     private static final void formatJSON0(Object value, Writer writer, JSONFormat format) throws java.io.IOException {
 
         // [#2741] TODO: This logic will be externalised in new SPI
-        if (value instanceof byte[]) {
-            JSONValue.writeJSONString(DatatypeConverter.printBase64Binary((byte[]) value), writer);
+        if (value instanceof byte[]) { byte[] a = (byte[]) value;
+            JSONValue.writeJSONString(DatatypeConverter.printBase64Binary(a), writer);
         }
 
         // [#6563] Arrays can be serialised natively in JSON
-        else if (value instanceof Object[]) {
-            Object[] array = (Object[]) value;
+        else if (value instanceof Object[]) { Object[] array = (Object[]) value;
             writer.append('[');
 
             for (int i = 0; i < array.length; i++) {
@@ -627,8 +626,8 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         }
 
         // [#7782] Nested records should generate nested JSON data structures
-        else if (value instanceof Formattable) {
-            ((Formattable) value).formatJSON(writer, format);
+        else if (value instanceof Formattable) { Formattable f = (Formattable) value;
+            f.formatJSON(writer, format);
         }
 
         else if (value instanceof JSON && !format.quoteNested()) {
@@ -757,8 +756,8 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 for (Field<?> field : fields.fields.fields) {
                     writer.append(newline).append(format.indentString(2)).append("<field");
 
-                    if (field instanceof TableField) {
-                        Table<?> table = ((TableField<?, ?>) field).getTable();
+                    if (field instanceof TableField) { TableField<?, ?> f = (TableField<?, ?>) field;
+                        Table<?> table = f.getTable();
 
                         if (table != null) {
                             Schema schema = table.getSchema();
@@ -842,9 +841,9 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             else {
                 writer.append(">");
 
-                if (value instanceof Formattable) {
+                if (value instanceof Formattable) { Formattable f = (Formattable) value;
                     writer.append(newline).append(format.indentString(recordLevel + 2));
-                    ((Formattable) value).formatXML(writer, format.globalIndent(format.globalIndent() + format.indent() * (recordLevel + 2)));
+                    f.formatXML(writer, format.globalIndent(format.globalIndent() + format.indent() * (recordLevel + 2)));
                     writer.append(newline).append(format.indentString(recordLevel + 1));
                 }
                 else if (value instanceof XML && !format.quoteNested())
@@ -1140,8 +1139,8 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 for (Field<?> field : fields.fields.fields) {
                     Element eField = document.createElement("field");
 
-                    if (field instanceof TableField<?, ?>) {
-                        Table<?> table = ((TableField<?, ?>) field).getTable();
+                    if (field instanceof TableField) { TableField<?, ?> f = (TableField<?, ?>) field;
+                        Table<?> table = f.getTable();
 
                         if (table != null) {
                             Schema schema = table.getSchema();
@@ -1269,8 +1268,8 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             for (Field<?> field : fields.fields.fields) {
                 AttributesImpl attrs = new AttributesImpl();
 
-                if (field instanceof TableField<?, ?>) {
-                    Table<?> table = ((TableField<?, ?>) field).getTable();
+                if (field instanceof TableField) { TableField<?, ?> f = (TableField<?, ?>) field;
+                    Table<?> table = f.getTable();
 
                     if (table != null) {
                         Schema schema = table.getSchema();
@@ -1354,15 +1353,15 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             // [#6545] Nested arrays are handled recursively
             formatted += Arrays.stream((Object[]) value).map(f -> format0(f, false, visual)).collect(joining(", ", "[", "]"));
         }
-        else if (value instanceof EnumType) {
-            formatted += ((EnumType) value).getLiteral();
+        else if (value instanceof EnumType) { EnumType e = (EnumType) value;
+            formatted += e.getLiteral();
         }
-        else if (value instanceof List) {
-            formatted += ((List<?>) value).stream().map(f -> format0(f, false, visual)).collect(joining(", ", "[", "]"));
+        else if (value instanceof List) { List<?> l = (List<?>) value;
+            formatted += l.stream().map(f -> format0(f, false, visual)).collect(joining(", ", "[", "]"));
         }
-        else if (value instanceof Record) {
+        else if (value instanceof Record) { Record r = (Record) value;
             formatted += Arrays
-                .stream(((Record) value).valuesRow().fields())
+                .stream(r.valuesRow().fields())
                 .map(f -> format0(f, false, visual))
                 .collect(joining(", ", "(", ")"));
         }
@@ -1372,13 +1371,13 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         }
 
         // [#5238] Oracle DATE is really a TIMESTAMP(0)...
-        else if (value instanceof Date) {
+        else if (value instanceof Date) { Date d = (Date) value;
             String date = value.toString();
 
             if (Date.valueOf(date).equals(value))
                 formatted += date;
             else
-                formatted += new Timestamp(((Date) value).getTime());
+                formatted += new Timestamp(d.getTime());
         }
         else {
             formatted += value.toString();

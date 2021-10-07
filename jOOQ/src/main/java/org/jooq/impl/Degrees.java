@@ -194,9 +194,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Degrees) {
+        if (that instanceof Degrees) { Degrees o = (Degrees) that;
             return
-                StringUtils.equals($radians(), ((Degrees) that).$radians())
+                StringUtils.equals($radians(), o.$radians())
             ;
         }
         else

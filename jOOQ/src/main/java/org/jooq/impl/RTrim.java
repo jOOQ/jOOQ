@@ -220,10 +220,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Rtrim) {
+        if (that instanceof Rtrim) { Rtrim o = (Rtrim) that;
             return
-                StringUtils.equals($string(), ((Rtrim) that).$string()) &&
-                StringUtils.equals($characters(), ((Rtrim) that).$characters())
+                StringUtils.equals($string(), o.$string()) &&
+                StringUtils.equals($characters(), o.$characters())
             ;
         }
         else

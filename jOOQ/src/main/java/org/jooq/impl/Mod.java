@@ -168,10 +168,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Mod) {
+        if (that instanceof Mod) { Mod o = (Mod) that;
             return
-                StringUtils.equals($dividend(), ((Mod) that).$dividend()) &&
-                StringUtils.equals($divisor(), ((Mod) that).$divisor())
+                StringUtils.equals($dividend(), o.$dividend()) &&
+                StringUtils.equals($divisor(), o.$divisor())
             ;
         }
         else

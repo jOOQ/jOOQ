@@ -183,11 +183,11 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof NotLike) {
+        if (that instanceof NotLike) { NotLike o = (NotLike) that;
             return
-                StringUtils.equals($value(), ((NotLike) that).$value()) &&
-                StringUtils.equals($pattern(), ((NotLike) that).$pattern()) &&
-                StringUtils.equals($escape(), ((NotLike) that).$escape())
+                StringUtils.equals($value(), o.$value()) &&
+                StringUtils.equals($pattern(), o.$pattern()) &&
+                StringUtils.equals($escape(), o.$escape())
             ;
         }
         else

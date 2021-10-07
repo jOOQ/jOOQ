@@ -197,10 +197,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof RegrSyy) {
+        if (that instanceof RegrSyy) { RegrSyy o = (RegrSyy) that;
             return
-                StringUtils.equals($y(), ((RegrSyy) that).$y()) &&
-                StringUtils.equals($x(), ((RegrSyy) that).$x())
+                StringUtils.equals($y(), o.$y()) &&
+                StringUtils.equals($x(), o.$x())
             ;
         }
         else

@@ -191,9 +191,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Sinh) {
+        if (that instanceof Sinh) { Sinh o = (Sinh) that;
             return
-                StringUtils.equals($number(), ((Sinh) that).$number())
+                StringUtils.equals($number(), o.$number())
             ;
         }
         else

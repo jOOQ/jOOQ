@@ -243,10 +243,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Trunc) {
+        if (that instanceof Trunc) { Trunc o = (Trunc) that;
             return
-                StringUtils.equals($value(), ((Trunc) that).$value()) &&
-                StringUtils.equals($decimals(), ((Trunc) that).$decimals())
+                StringUtils.equals($value(), o.$value()) &&
+                StringUtils.equals($decimals(), o.$decimals())
             ;
         }
         else

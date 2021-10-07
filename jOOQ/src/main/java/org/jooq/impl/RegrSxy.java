@@ -201,10 +201,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof RegrSxy) {
+        if (that instanceof RegrSxy) { RegrSxy o = (RegrSxy) that;
             return
-                StringUtils.equals($y(), ((RegrSxy) that).$y()) &&
-                StringUtils.equals($x(), ((RegrSxy) that).$x())
+                StringUtils.equals($y(), o.$y()) &&
+                StringUtils.equals($x(), o.$x())
             ;
         }
         else

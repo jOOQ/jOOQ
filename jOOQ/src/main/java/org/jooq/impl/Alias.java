@@ -228,7 +228,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
 
                 // [#3156] Do not SELECT * from derived tables to prevent ambiguously defined columns
                 // in those derived tables
-                Select<? extends Record> wrappedAsSelect =
+                Select<?> wrappedAsSelect =
                     wrapped instanceof Select
                   ? (Select<?>) wrapped
                   : wrapped instanceof DerivedTable

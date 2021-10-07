@@ -186,9 +186,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Sqrt) {
+        if (that instanceof Sqrt) { Sqrt o = (Sqrt) that;
             return
-                StringUtils.equals($value(), ((Sqrt) that).$value())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

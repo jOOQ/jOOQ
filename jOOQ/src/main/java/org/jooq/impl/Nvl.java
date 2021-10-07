@@ -231,10 +231,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Nvl) {
+        if (that instanceof Nvl) { Nvl o = (Nvl) that;
             return
-                StringUtils.equals($value(), ((Nvl) that).$value()) &&
-                StringUtils.equals($defaultValue(), ((Nvl) that).$defaultValue())
+                StringUtils.equals($value(), o.$value()) &&
+                StringUtils.equals($defaultValue(), o.$defaultValue())
             ;
         }
         else

@@ -153,10 +153,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Min) {
+        if (that instanceof Min) { Min o = (Min) that;
             return
-                StringUtils.equals($field(), ((Min) that).$field()) &&
-                $distinct() == ((Min) that).$distinct()
+                StringUtils.equals($field(), o.$field()) &&
+                $distinct() == o.$distinct()
             ;
         }
         else

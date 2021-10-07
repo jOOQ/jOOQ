@@ -169,9 +169,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof VarSamp) {
+        if (that instanceof VarSamp) { VarSamp o = (VarSamp) that;
             return
-                StringUtils.equals($field(), ((VarSamp) that).$field())
+                StringUtils.equals($field(), o.$field())
             ;
         }
         else

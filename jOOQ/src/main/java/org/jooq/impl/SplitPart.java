@@ -275,11 +275,11 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof SplitPart) {
+        if (that instanceof SplitPart) { SplitPart o = (SplitPart) that;
             return
-                StringUtils.equals($string(), ((SplitPart) that).$string()) &&
-                StringUtils.equals($delimiter(), ((SplitPart) that).$delimiter()) &&
-                StringUtils.equals($n(), ((SplitPart) that).$n())
+                StringUtils.equals($string(), o.$string()) &&
+                StringUtils.equals($delimiter(), o.$delimiter()) &&
+                StringUtils.equals($n(), o.$n())
             ;
         }
         else

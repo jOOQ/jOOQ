@@ -210,10 +210,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Repeat) {
+        if (that instanceof Repeat) { Repeat o = (Repeat) that;
             return
-                StringUtils.equals($string(), ((Repeat) that).$string()) &&
-                StringUtils.equals($count(), ((Repeat) that).$count())
+                StringUtils.equals($string(), o.$string()) &&
+                StringUtils.equals($count(), o.$count())
             ;
         }
         else

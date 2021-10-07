@@ -137,9 +137,7 @@ abstract class AbstractStore extends AbstractFormattable {
             return true;
 
         // Note: keep this implementation in-sync with AbstractRecord.compareTo()!
-        if (obj instanceof AbstractStore) {
-            final AbstractStore that = (AbstractStore) obj;
-
+        if (obj instanceof AbstractStore) { AbstractStore that = (AbstractStore) obj;
             if (size() == that.size()) {
                 for (int i = 0; i < size(); i++) {
                     final Object thisValue = get(i);

@@ -187,10 +187,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Corr) {
+        if (that instanceof Corr) { Corr o = (Corr) that;
             return
-                StringUtils.equals($y(), ((Corr) that).$y()) &&
-                StringUtils.equals($x(), ((Corr) that).$x())
+                StringUtils.equals($y(), o.$y()) &&
+                StringUtils.equals($x(), o.$x())
             ;
         }
         else

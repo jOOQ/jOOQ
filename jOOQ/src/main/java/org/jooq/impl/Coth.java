@@ -170,9 +170,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Coth) {
+        if (that instanceof Coth) { Coth o = (Coth) that;
             return
-                StringUtils.equals($number(), ((Coth) that).$number())
+                StringUtils.equals($number(), o.$number())
             ;
         }
         else

@@ -164,14 +164,14 @@ abstract class AbstractQueryPart implements QueryPartInternal {
 
         // This is a working default implementation. It should be overridden by
         // concrete subclasses, to improve performance
-        if (that instanceof QueryPart) {
+        if (that instanceof QueryPart) { QueryPart q = (QueryPart) that;
 
             // [#10635] The two QueryParts may have different Settings attached.
             DSLContext dsl1 = configuration().dsl();
             DSLContext dsl2 = that instanceof AbstractQueryPart ? ((AbstractQueryPart) that).configuration().dsl() : dsl1;
 
             String sql1 = dsl1.renderInlined(this);
-            String sql2 = dsl2.renderInlined((QueryPart) that);
+            String sql2 = dsl2.renderInlined(q);
 
             return sql1.equals(sql2);
         }

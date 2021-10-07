@@ -147,10 +147,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof StartsWith) {
+        if (that instanceof StartsWith) { StartsWith o = (StartsWith) that;
             return
-                StringUtils.equals($string(), ((StartsWith) that).$string()) &&
-                StringUtils.equals($prefix(), ((StartsWith) that).$prefix())
+                StringUtils.equals($string(), o.$string()) &&
+                StringUtils.equals($prefix(), o.$prefix())
             ;
         }
         else

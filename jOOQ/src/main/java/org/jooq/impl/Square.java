@@ -204,9 +204,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Square) {
+        if (that instanceof Square) { Square o = (Square) that;
             return
-                StringUtils.equals($value(), ((Square) that).$value())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

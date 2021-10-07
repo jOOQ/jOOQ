@@ -263,11 +263,11 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Replace) {
+        if (that instanceof Replace) { Replace o = (Replace) that;
             return
-                StringUtils.equals($string(), ((Replace) that).$string()) &&
-                StringUtils.equals($search(), ((Replace) that).$search()) &&
-                StringUtils.equals($replace(), ((Replace) that).$replace())
+                StringUtils.equals($string(), o.$string()) &&
+                StringUtils.equals($search(), o.$search()) &&
+                StringUtils.equals($replace(), o.$replace())
             ;
         }
         else

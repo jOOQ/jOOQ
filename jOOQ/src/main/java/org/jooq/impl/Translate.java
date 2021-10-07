@@ -209,11 +209,11 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Translate) {
+        if (that instanceof Translate) { Translate o = (Translate) that;
             return
-                StringUtils.equals($string(), ((Translate) that).$string()) &&
-                StringUtils.equals($from(), ((Translate) that).$from()) &&
-                StringUtils.equals($to(), ((Translate) that).$to())
+                StringUtils.equals($string(), o.$string()) &&
+                StringUtils.equals($from(), o.$from()) &&
+                StringUtils.equals($to(), o.$to())
             ;
         }
         else

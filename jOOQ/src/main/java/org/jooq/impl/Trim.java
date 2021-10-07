@@ -226,10 +226,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Trim) {
+        if (that instanceof Trim) { Trim o = (Trim) that;
             return
-                StringUtils.equals($string(), ((Trim) that).$string()) &&
-                StringUtils.equals($characters(), ((Trim) that).$characters())
+                StringUtils.equals($string(), o.$string()) &&
+                StringUtils.equals($characters(), o.$characters())
             ;
         }
         else

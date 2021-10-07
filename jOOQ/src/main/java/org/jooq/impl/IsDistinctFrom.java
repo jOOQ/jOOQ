@@ -181,10 +181,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof IsDistinctFrom) {
+        if (that instanceof IsDistinctFrom) { IsDistinctFrom o = (IsDistinctFrom) that;
             return
-                StringUtils.equals($arg1(), ((IsDistinctFrom) that).$arg1()) &&
-                StringUtils.equals($arg2(), ((IsDistinctFrom) that).$arg2())
+                StringUtils.equals($arg1(), o.$arg1()) &&
+                StringUtils.equals($arg2(), o.$arg2())
             ;
         }
         else

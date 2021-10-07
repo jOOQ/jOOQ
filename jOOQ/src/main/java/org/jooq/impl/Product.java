@@ -235,10 +235,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Product) {
+        if (that instanceof Product) { Product o = (Product) that;
             return
-                StringUtils.equals($field(), ((Product) that).$field()) &&
-                $distinct() == ((Product) that).$distinct()
+                StringUtils.equals($field(), o.$field()) &&
+                $distinct() == o.$distinct()
             ;
         }
         else

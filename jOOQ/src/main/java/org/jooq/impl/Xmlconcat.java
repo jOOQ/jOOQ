@@ -167,9 +167,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof XMLConcat) {
+        if (that instanceof XMLConcat) { XMLConcat o = (XMLConcat) that;
             return
-                StringUtils.equals($args(), ((XMLConcat) that).$args())
+                StringUtils.equals($args(), o.$args())
             ;
         }
         else

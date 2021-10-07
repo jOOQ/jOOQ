@@ -148,9 +148,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof IsNull) {
+        if (that instanceof IsNull) { IsNull o = (IsNull) that;
             return
-                StringUtils.equals($field(), ((IsNull) that).$field())
+                StringUtils.equals($field(), o.$field())
             ;
         }
         else

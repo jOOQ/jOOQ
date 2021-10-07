@@ -212,8 +212,8 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
         if (this == that)
             return true;
 
-        if (that instanceof Param) {
-            Object thatValue = ((Param<?>) that).getValue();
+        if (that instanceof Param) { Param<?> p = (Param<?>) that;
+            Object thatValue = p.getValue();
 
             if (value == null)
                 return thatValue == null;

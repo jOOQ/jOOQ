@@ -340,12 +340,12 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof JSONObject) {
+        if (that instanceof JSONObject) { JSONObject o = (JSONObject) that;
             return
-                StringUtils.equals($type(), ((JSONObject) that).$type()) &&
-                StringUtils.equals($entries(), ((JSONObject) that).$entries()) &&
-                StringUtils.equals($onNull(), ((JSONObject) that).$onNull()) &&
-                StringUtils.equals($returning(), ((JSONObject) that).$returning())
+                StringUtils.equals($type(), o.$type()) &&
+                StringUtils.equals($entries(), o.$entries()) &&
+                StringUtils.equals($onNull(), o.$onNull()) &&
+                StringUtils.equals($returning(), o.$returning())
             ;
         }
         else

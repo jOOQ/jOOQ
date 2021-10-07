@@ -210,7 +210,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Uuid) {
+        if (that instanceof Uuid) { Uuid o = (Uuid) that;
             return true;
         }
         else

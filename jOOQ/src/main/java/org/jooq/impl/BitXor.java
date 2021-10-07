@@ -182,10 +182,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof BitXor) {
+        if (that instanceof BitXor) { BitXor o = (BitXor) that;
             return
-                StringUtils.equals($arg1(), ((BitXor) that).$arg1()) &&
-                StringUtils.equals($arg2(), ((BitXor) that).$arg2())
+                StringUtils.equals($arg1(), o.$arg1()) &&
+                StringUtils.equals($arg2(), o.$arg2())
             ;
         }
         else

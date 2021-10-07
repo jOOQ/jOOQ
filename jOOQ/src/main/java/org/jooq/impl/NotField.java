@@ -157,9 +157,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof NotField) {
+        if (that instanceof NotField) { NotField o = (NotField) that;
             return
-                StringUtils.equals($field(), ((NotField) that).$field())
+                StringUtils.equals($field(), o.$field())
             ;
         }
         else

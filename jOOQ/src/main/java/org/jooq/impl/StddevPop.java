@@ -170,9 +170,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof StddevPop) {
+        if (that instanceof StddevPop) { StddevPop o = (StddevPop) that;
             return
-                StringUtils.equals($field(), ((StddevPop) that).$field())
+                StringUtils.equals($field(), o.$field())
             ;
         }
         else

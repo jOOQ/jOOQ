@@ -154,10 +154,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Sum) {
+        if (that instanceof Sum) { Sum o = (Sum) that;
             return
-                StringUtils.equals($field(), ((Sum) that).$field()) &&
-                $distinct() == ((Sum) that).$distinct()
+                StringUtils.equals($field(), o.$field()) &&
+                $distinct() == o.$distinct()
             ;
         }
         else

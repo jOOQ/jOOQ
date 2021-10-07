@@ -181,9 +181,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof VarPop) {
+        if (that instanceof VarPop) { VarPop o = (VarPop) that;
             return
-                StringUtils.equals($field(), ((VarPop) that).$field())
+                StringUtils.equals($field(), o.$field())
             ;
         }
         else

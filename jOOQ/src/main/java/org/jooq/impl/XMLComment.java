@@ -165,9 +165,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof XMLComment) {
+        if (that instanceof XMLComment) { XMLComment o = (XMLComment) that;
             return
-                StringUtils.equals($comment(), ((XMLComment) that).$comment())
+                StringUtils.equals($comment(), o.$comment())
             ;
         }
         else

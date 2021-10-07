@@ -249,11 +249,11 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Like) {
+        if (that instanceof Like) { Like o = (Like) that;
             return
-                StringUtils.equals($value(), ((Like) that).$value()) &&
-                StringUtils.equals($pattern(), ((Like) that).$pattern()) &&
-                StringUtils.equals($escape(), ((Like) that).$escape())
+                StringUtils.equals($value(), o.$value()) &&
+                StringUtils.equals($pattern(), o.$pattern()) &&
+                StringUtils.equals($escape(), o.$escape())
             ;
         }
         else

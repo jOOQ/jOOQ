@@ -172,9 +172,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Upper) {
+        if (that instanceof Upper) { Upper o = (Upper) that;
             return
-                StringUtils.equals($string(), ((Upper) that).$string())
+                StringUtils.equals($string(), o.$string())
             ;
         }
         else

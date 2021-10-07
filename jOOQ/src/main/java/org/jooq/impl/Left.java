@@ -189,10 +189,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Left) {
+        if (that instanceof Left) { Left o = (Left) that;
             return
-                StringUtils.equals($string(), ((Left) that).$string()) &&
-                StringUtils.equals($length(), ((Left) that).$length())
+                StringUtils.equals($string(), o.$string()) &&
+                StringUtils.equals($length(), o.$length())
             ;
         }
         else

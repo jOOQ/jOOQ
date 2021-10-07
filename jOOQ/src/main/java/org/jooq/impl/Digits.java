@@ -183,9 +183,9 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Digits) {
+        if (that instanceof Digits) { Digits o = (Digits) that;
             return
-                StringUtils.equals($value(), ((Digits) that).$value())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

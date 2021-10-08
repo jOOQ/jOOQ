@@ -2246,7 +2246,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parseIdentifier();
             parseKeyword("ON");
             parseKeywordIf("DOMAIN");
-            parseIdentifier();
+            parseName();
             parseKeyword("IS");
             parseStringLiteral();
             return IGNORE;

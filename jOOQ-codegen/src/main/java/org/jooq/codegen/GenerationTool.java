@@ -923,9 +923,16 @@ public class GenerationTool {
             Field[] f2 = org.jooq.meta.Constants.class.getFields();
             Field[] f3 = org.jooq.codegen.Constants.class.getFields();
 
-            Arrays.sort(f1, comparing(Field::getName));
-            Arrays.sort(f2, comparing(Field::getName));
-            Arrays.sort(f3, comparing(Field::getName));
+            Comparator<Field> c = new Comparator<Field>() {
+                @Override
+                public int compare(Field o1, Field o2) {
+                    return o1.getName().compareTo(o2.getName());
+                }
+            };
+
+            Arrays.sort(f1, c);
+            Arrays.sort(f2, c);
+            Arrays.sort(f3, c);
 
             if (f1.length != f2.length)
                 log.warn("Version check", "org.jooq.Constants and org.jooq.meta.Constants contents mismatch. Check if you're using the same versions for org.jooq and org.jooq.meta");

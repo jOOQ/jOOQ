@@ -2392,7 +2392,7 @@ final class ParserImpl implements Parser {
             parseIdentifier(ctx);
             parseKeyword(ctx, "ON");
             parseKeywordIf(ctx, "DOMAIN");
-            parseIdentifier(ctx);
+            parseName(ctx);
             parseKeyword(ctx, "IS");
             parseStringLiteral(ctx);
             return IGNORE;

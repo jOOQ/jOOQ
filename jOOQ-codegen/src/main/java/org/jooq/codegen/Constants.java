@@ -53,7 +53,7 @@ public final class Constants {
     /**
      * The latest jOOQ minor version.
      */
-    public static final String MINOR_VERSION  = "3.15";
+    public static final String MINOR_VERSION  = "3.14";
 
     /**
      * The latest jOOQ version.
@@ -61,7 +61,7 @@ public final class Constants {
      * This is the same as {@link #MINOR_VERSION}, but it may include patch
      * version suffixes.
      */
-    public static final String VERSION        = "3.15.4-SNAPSHOT";
+    public static final String VERSION        = "3.14.16-SNAPSHOT";
 
     /**
      * The latest jOOQ full version.
@@ -69,12 +69,12 @@ public final class Constants {
      * This is the same as {@link #VERSION}, but it may include release
      * candidate and other suffixes.
      */
-    public static final String FULL_VERSION   = "3.15.4-SNAPSHOT";
+    public static final String FULL_VERSION   = "3.14.16-SNAPSHOT";
 
     /**
      * The current jooq-runtime XSD file name.
      */
-    public static final String XSD_RUNTIME    = "jooq-runtime-3.15.0.xsd";
+    public static final String XSD_RUNTIME    = "jooq-runtime-3.14.9.xsd";
 
     /**
      * The current jooq-runtime XML namespace.
@@ -117,24 +117,9 @@ public final class Constants {
     public static final String CP_META        = "/xsd/" + XSD_META;
 
     /**
-     * The current jooq-migrations XSD file name.
-     */
-    public static final String XSD_MIGRATIONS = "jooq-migrations-3.15.0.xsd";
-
-    /**
-     * The current jooq-migrations XML namespace.
-     */
-    public static final String NS_MIGRATIONS  = "http://www.jooq.org/xsd/" + XSD_META;
-
-    /**
-     * The current jooq-migrations XSD classpath location.
-     */
-    public static final String CP_MIGRATIONS  = "/xsd/" + XSD_META;
-
-    /**
      * The current jooq-codegen XSD file name.
      */
-    public static final String XSD_CODEGEN    = "jooq-codegen-3.15.0.xsd";
+    public static final String XSD_CODEGEN    = "jooq-codegen-3.14.0.xsd";
 
     /**
      * The current jooq-codegen XML namespace.

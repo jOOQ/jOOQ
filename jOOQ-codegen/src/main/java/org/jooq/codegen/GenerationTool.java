@@ -948,9 +948,9 @@ public class GenerationTool {
                 Object c2 = f2[i].get(org.jooq.meta.Constants.class);
                 Object c3 = f3[i].get(org.jooq.codegen.Constants.class);
 
-                if (!Objects.equals(c1, c2))
+                if (!StringUtils.equals(c1, c2))
                     log.warn("Version check", "org.jooq.Constants." + f1[i].getName() + " contents mismatch: " + c1 + " vs " + c2 + ". Check if you're using the same versions for org.jooq (" + v1 + ") and org.jooq.meta (" + v2 + ")");
-                if (!Objects.equals(c1, c3))
+                if (!StringUtils.equals(c1, c3))
                     log.warn("Version check", "org.jooq.Constants." + f1[i].getName() + " contents mismatch: " + c1 + " vs " + c3 + ". Check if you're using the same versions for org.jooq (" + v1 + ") and org.jooq.codegen (" + v3 + ")");
             }
         }

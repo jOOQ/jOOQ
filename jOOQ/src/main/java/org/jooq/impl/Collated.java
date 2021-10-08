@@ -94,9 +94,10 @@ final class Collated extends AbstractField<String> implements QOM.Collated {
         R init,
         Predicate<? super R> abort,
         Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
+        BiFunction<? super R, ? super QueryPart, ? extends R> before,
+        BiFunction<? super R, ? super QueryPart, ? extends R> after
     ) {
-        return QOM.traverse(init, abort, recurse, accumulate, this, field, collation);
+        return QOM.traverse(init, abort, recurse, before, after, this, field, collation);
     }
 
     @Override

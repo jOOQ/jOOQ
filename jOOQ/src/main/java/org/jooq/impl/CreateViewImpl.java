@@ -314,9 +314,10 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
         T init,
         Predicate<? super T> abort,
         Predicate<? super QueryPart> recurse,
-        BiFunction<? super T, ? super QueryPart, ? extends T> accumulate
+        BiFunction<? super T, ? super QueryPart, ? extends T> before,
+        BiFunction<? super T, ? super QueryPart, ? extends T> after
     ) {
-        return QOM.traverse(init, abort, recurse, accumulate, this, $view(), $fields(), $query());
+        return QOM.traverse(init, abort, recurse, before, after, this, $view(), $fields(), $query());
     }
 
     @Override

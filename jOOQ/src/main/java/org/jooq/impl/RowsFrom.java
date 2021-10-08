@@ -119,8 +119,9 @@ final class RowsFrom extends AbstractTable<Record> implements QOM.RowsFrom {
         R init,
         Predicate<? super R> abort,
         Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
+        BiFunction<? super R, ? super QueryPart, ? extends R> before,
+        BiFunction<? super R, ? super QueryPart, ? extends R> after
     ) {
-        return QOM.traverse(init, abort, recurse, accumulate, this, $tables());
+        return QOM.traverse(init, abort, recurse, before, after, this, $tables());
     }
 }

@@ -345,9 +345,10 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
         R init,
         Predicate<? super R> abort,
         Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
+        BiFunction<? super R, ? super QueryPart, ? extends R> before,
+        BiFunction<? super R, ? super QueryPart, ? extends R> after
     ) {
-        return QOM.traverse(init, abort, recurse, accumulate, this, wrapped.toArray(EMPTY_QUERYPART));
+        return QOM.traverse(init, abort, recurse, before, after, this, wrapped.toArray(EMPTY_QUERYPART));
     }
 
     @Override

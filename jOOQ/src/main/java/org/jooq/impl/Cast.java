@@ -377,13 +377,15 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
         R init,
         Predicate<? super R> abort,
         Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
+        BiFunction<? super R, ? super QueryPart, ? extends R> before,
+        BiFunction<? super R, ? super QueryPart, ? extends R> after
     ) {
         return QOM.traverse(
             init,
             abort,
             recurse,
-            accumulate,
+            before,
+            after,
             this,
             $field(),
             $dataType()

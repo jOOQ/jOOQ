@@ -276,9 +276,10 @@ public final class LazySchema extends AbstractNamed implements Schema {
         R init,
         Predicate<? super R> abort,
         Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
+        BiFunction<? super R, ? super QueryPart, ? extends R> before,
+        BiFunction<? super R, ? super QueryPart, ? extends R> after
     ) {
-        return schema().$traverse(init, abort, recurse, accumulate);
+        return schema().$traverse(init, abort, recurse, before, after);
     }
 
     @Override

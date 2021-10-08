@@ -447,9 +447,9 @@ implements
                     else
                         ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_CACHE);
 
-            if (Boolean.TRUE.equals(cycle))
+            if (cycle == CycleOption.CYCLE)
                 ctx.sql(' ').visit(K_CYCLE);
-            else if (Boolean.FALSE.equals(cycle))
+            else if (cycle == CycleOption.NO_CYCLE)
                 ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_CYCLE);
 
             ctx.end(Clause.ALTER_SEQUENCE_RESTART);
@@ -643,10 +643,11 @@ implements
         R init,
         Predicate<? super R> abort,
         Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
+        BiFunction<? super R, ? super QueryPart, ? extends R> before,
+        BiFunction<? super R, ? super QueryPart, ? extends R> after
     ) {
         return QOM.traverse(
-            init, abort, recurse, accumulate, this,
+            init, abort, recurse, before, after, this,
             $sequence(),
             $renameTo(),
             $restartWith(),

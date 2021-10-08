@@ -198,8 +198,6 @@ import static org.jooq.impl.Tools.qualify;
 import static org.jooq.impl.Tools.recordType;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.traverseJoins;
-// ...
-// ...
 import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.unqualified;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
@@ -1269,6 +1267,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         else
             return limit.offset != null ? s1.offset((Param) limit.offset) : s1;
     }
+
+
+
+
+
+
+
+
 
 
 
@@ -4561,13 +4567,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         T init,
         Predicate<? super T> abort,
         Predicate<? super QueryPart> recurse,
-        BiFunction<? super T, ? super QueryPart, ? extends T> accumulate
+        BiFunction<? super T, ? super QueryPart, ? extends T> before,
+        BiFunction<? super T, ? super QueryPart, ? extends T> after
     ) {
         return QOM.traverse(
             init,
             abort,
             recurse,
-            accumulate,
+            before,
+            after,
             this,
             $with(),
             $select(),

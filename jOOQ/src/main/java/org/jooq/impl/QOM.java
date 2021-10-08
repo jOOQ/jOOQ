@@ -3722,9 +3722,10 @@ public final class QOM {
             T current,
             Predicate<? super T> abort,
             Predicate<? super QueryPart> recurse,
-            BiFunction<? super T, ? super QueryPart, ? extends T> accumulate
+            BiFunction<? super T, ? super QueryPart, ? extends T> before,
+            BiFunction<? super T, ? super QueryPart, ? extends T> after
         ) {
-            return QOM.traverse(current, abort, recurse, accumulate, this, $arg1());
+            return QOM.traverse(current, abort, recurse, before, after, this, $arg1());
         };
 
         @NotNull
@@ -3762,9 +3763,10 @@ public final class QOM {
             T current,
             Predicate<? super T> abort,
             Predicate<? super QueryPart> recurse,
-            BiFunction<? super T, ? super QueryPart, ? extends T> accumulate
+            BiFunction<? super T, ? super QueryPart, ? extends T> before,
+            BiFunction<? super T, ? super QueryPart, ? extends T> after
         ) {
-            return QOM.traverse(current, abort, recurse, accumulate, this, $arg1(), $arg2());
+            return QOM.traverse(current, abort, recurse, before, after, this, $arg1(), $arg2());
         };
 
         @NotNull
@@ -3804,9 +3806,10 @@ public final class QOM {
             T current,
             Predicate<? super T> abort,
             Predicate<? super QueryPart> recurse,
-            BiFunction<? super T, ? super QueryPart, ? extends T> accumulate
+            BiFunction<? super T, ? super QueryPart, ? extends T> before,
+            BiFunction<? super T, ? super QueryPart, ? extends T> after
         ) {
-            return QOM.traverse(current, abort, recurse, accumulate, this, $arg1(), $arg2(), $arg3());
+            return QOM.traverse(current, abort, recurse, before, after, this, $arg1(), $arg2(), $arg3());
         };
 
         @NotNull
@@ -3862,9 +3865,10 @@ public final class QOM {
             R init,
             Predicate<? super R> abort,
             Predicate<? super QueryPart> recurse,
-            BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
+            BiFunction<? super R, ? super QueryPart, ? extends R> before,
+            BiFunction<? super R, ? super QueryPart, ? extends R> after
         ) {
-            return $delegate().$traverse(init, abort, recurse, accumulate);
+            return $delegate().$traverse(init, abort, recurse, before, after);
         }
 
         @Override
@@ -3889,9 +3893,10 @@ public final class QOM {
             R init,
             Predicate<? super R> abort,
             Predicate<? super QueryPart> recurse,
-            BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
+            BiFunction<? super R, ? super QueryPart, ? extends R> before,
+            BiFunction<? super R, ? super QueryPart, ? extends R> after
         ) {
-            return QOM.traverse(init, abort, recurse, accumulate, this);
+            return QOM.traverse(init, abort, recurse, before, after, this);
         }
 
         @Override
@@ -3971,22 +3976,30 @@ public final class QOM {
         T current,
         Predicate<? super T> abort,
         Predicate<? super QueryPart> recurse,
-        BiFunction<? super T, ? super QueryPart, ? extends T> accumulate,
+        BiFunction<? super T, ? super QueryPart, ? extends T> before,
+        BiFunction<? super T, ? super QueryPart, ? extends T> after,
         Object part,
         Object... parts
     ) {
         if (test(abort, current)) return current;
-        if (part instanceof QueryPart)
-            current = accumulate.apply(current, (QueryPart) part);
-        if (test(abort, current)) return current;
 
-        for (int i = 0; i < parts.length; i++) {
-            if (parts[i] instanceof QueryPart) { QueryPart p = (QueryPart) parts[i];
-                if (test(recurse, p)) {
-                    current = p.$traverse(current, abort, recurse, accumulate);
-                    if (test(abort, current)) return current;
+        try {
+            if (part instanceof QueryPart)
+                current = before.apply(current, (QueryPart) part);
+            if (test(abort, current)) return current;
+
+            for (int i = 0; i < parts.length; i++) {
+                if (parts[i] instanceof QueryPart) { QueryPart p = (QueryPart) parts[i];
+                    if (test(recurse, p)) {
+                        current = p.$traverse(current, abort, recurse, before, after);
+                        if (test(abort, current)) return current;
+                    }
                 }
             }
+        }
+        finally {
+            if (part instanceof QueryPart)
+                current = after.apply(current, (QueryPart) part);
         }
 
         return current;

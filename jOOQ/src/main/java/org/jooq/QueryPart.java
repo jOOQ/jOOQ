@@ -116,14 +116,32 @@ public interface QueryPart extends Serializable {
         R init,
         Predicate<? super R> abort,
         Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
+        BiFunction<? super R, ? super QueryPart, ? extends R> before,
+        BiFunction<? super R, ? super QueryPart, ? extends R> after
     );
 
     default <R> R $traverse(
         R init,
-        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
+        Predicate<? super R> abort,
+        Predicate<? super QueryPart> recurse,
+        BiFunction<? super R, ? super QueryPart, ? extends R> before
     ) {
-        return $traverse(init, b -> false, p -> true, accumulate);
+        return $traverse(init, abort, recurse, before, (r, p) -> r);
+    }
+
+    default <R> R $traverse(
+        R init,
+        BiFunction<? super R, ? super QueryPart, ? extends R> before,
+        BiFunction<? super R, ? super QueryPart, ? extends R> after
+    ) {
+        return $traverse(init, b -> false, p -> true, before, after);
+    }
+
+    default <R> R $traverse(
+        R init,
+        BiFunction<? super R, ? super QueryPart, ? extends R> before
+    ) {
+        return $traverse(init, b -> false, p -> true, before, (r, p) -> r);
     }
 
     @NotNull
@@ -138,21 +156,25 @@ public interface QueryPart extends Serializable {
     );
 
     default boolean $contains(QueryPart part) {
-        return $traverse(equals(part), b -> b, p -> true, (b, p) -> b || p.equals(part));
+        return $traverse(equals(part), b -> b, p -> true, (b, p) -> b || p.equals(part), (b, p) -> b);
     }
 
     @Nullable
     default QueryPart $findAny(Predicate<? super QueryPart> predicate) {
-        return $traverse((QueryPart) null, p -> p != null, p -> true, (r, p) -> predicate.test(p) ? p : r);
+        return $traverse((QueryPart) null, p -> p != null, p -> true, (r, p) -> predicate.test(p) ? p : r, (r, p) -> r);
     }
 
     @NotNull
     default List<QueryPart> $find(Predicate<? super QueryPart> predicate) {
-        return $traverse(new ArrayList<>(), (l, p) -> {
-            if (predicate.test(p))
-                l.add(p);
+        return $traverse(
+            new ArrayList<>(),
+            (l, p) -> {
+                if (predicate.test(p))
+                    l.add(p);
 
-            return l;
-        });
+                return l;
+            },
+            (l, p) -> l
+        );
     }
 }

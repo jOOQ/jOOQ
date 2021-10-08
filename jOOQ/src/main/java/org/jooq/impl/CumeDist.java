@@ -100,9 +100,10 @@ final class CumeDist extends AbstractWindowFunction<BigDecimal> implements QOM.C
         R init,
         Predicate<? super R> abort,
         Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
+        BiFunction<? super R, ? super QueryPart, ? extends R> before,
+        BiFunction<? super R, ? super QueryPart, ? extends R> after
     ) {
-        return QOM.traverse(init, abort, recurse, accumulate, this, $windowSpecification() != null ? $windowSpecification() : $windowDefinition());
+        return QOM.traverse(init, abort, recurse, before, after, this, $windowSpecification() != null ? $windowSpecification() : $windowDefinition());
     }
 
     @Override

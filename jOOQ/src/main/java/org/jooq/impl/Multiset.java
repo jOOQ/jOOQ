@@ -420,9 +420,10 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
         Q init,
         Predicate<? super Q> abort,
         Predicate<? super QueryPart> recurse,
-        BiFunction<? super Q, ? super QueryPart, ? extends Q> accumulate
+        BiFunction<? super Q, ? super QueryPart, ? extends Q> before,
+        BiFunction<? super Q, ? super QueryPart, ? extends Q> after
     ) {
-        return QOM.traverse(init, abort, recurse, accumulate, select);
+        return QOM.traverse(init, abort, recurse, before, after, select);
     }
 
     @Override

@@ -184,9 +184,10 @@ final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Resu
         T init,
         Predicate<? super T> abort,
         Predicate<? super QueryPart> recurse,
-        BiFunction<? super T, ? super QueryPart, ? extends T> accumulate
+        BiFunction<? super T, ? super QueryPart, ? extends T> before,
+        BiFunction<? super T, ? super QueryPart, ? extends T> after
     ) {
-        return QOM.traverse(init, abort, recurse, accumulate, this, row);
+        return QOM.traverse(init, abort, recurse, before, after, this, row);
     }
 
     @Override

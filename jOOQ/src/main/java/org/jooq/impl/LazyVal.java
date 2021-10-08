@@ -162,9 +162,10 @@ final class LazyVal<T> extends AbstractParamX<T> implements QOM.Val<T> {
         R init,
         Predicate<? super R> abort,
         Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
+        BiFunction<? super R, ? super QueryPart, ? extends R> before,
+        BiFunction<? super R, ? super QueryPart, ? extends R> after
     ) {
-        return delegate.$traverse(init, abort, recurse, accumulate);
+        return delegate.$traverse(init, abort, recurse, before, after);
     }
 
     @Override

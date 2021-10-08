@@ -354,9 +354,10 @@ public class SchemaImpl extends AbstractNamed implements Schema {
         R init,
         Predicate<? super R> abort,
         Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> accumulate
+        BiFunction<? super R, ? super QueryPart, ? extends R> before,
+        BiFunction<? super R, ? super QueryPart, ? extends R> after
     ) {
-        return QOM.traverse(init, abort, recurse, accumulate, this, getQualifiedName(), getCatalog());
+        return QOM.traverse(init, abort, recurse, before, after, this, getQualifiedName(), getCatalog());
     }
 
     @Override

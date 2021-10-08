@@ -449,9 +449,10 @@ implements
         X init,
         Predicate<? super X> abort,
         Predicate<? super QueryPart> recurse,
-        BiFunction<? super X, ? super QueryPart, ? extends X> accumulate
+        BiFunction<? super X, ? super QueryPart, ? extends X> before,
+        BiFunction<? super X, ? super QueryPart, ? extends X> after
     ) {
-        return QOM.traverse(init, abort, recurse, accumulate, this, getSchema());
+        return QOM.traverse(init, abort, recurse, before, after, this, getSchema());
     }
 
     @Override

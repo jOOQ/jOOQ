@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.*;
 import org.jooq.*;
 import org.jooq.Function1;
 import org.jooq.Record;
+import org.jooq.Traverser;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
 import org.jooq.impl.QOM.*;
@@ -160,15 +161,8 @@ implements
     }
 
     @Override
-    public final <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return QOM.traverse(
-            init, abort, recurse, before, after, this,
+    public final <R> R $traverse(Traverser<?, R> traverser) {
+        return QOM.traverse(traverser, this,
             $number()
         );
     }

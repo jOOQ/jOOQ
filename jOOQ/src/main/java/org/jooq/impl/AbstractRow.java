@@ -65,6 +65,7 @@ import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.Row2;
 import org.jooq.SelectField;
+import org.jooq.Traverser;
 import org.jooq.impl.QOM.MList;
 import org.jooq.QueryPart;
 
@@ -428,14 +429,8 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
     }
 
     @Override
-    public final <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return QOM.traverse(init, abort, recurse, before, after, this, $fields());
+    public final <R> R $traverse(Traverser<?, R> traverser) {
+        return QOM.traverse(traverser, this, $fields());
     }
 
     @Override

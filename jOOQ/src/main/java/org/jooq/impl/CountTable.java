@@ -44,6 +44,7 @@ import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.QueryPart;
 import org.jooq.Table;
+import org.jooq.Traverser;
 import org.jooq.UniqueKey;
 
 /**
@@ -96,19 +97,12 @@ final class CountTable extends AbstractAggregateFunction<Integer> implements QOM
     }
 
     @Override
-    public final <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return super.$traverse(
-            QOM.traverse(
-                init, abort, recurse, before, after, this,
-                $table()
-            ), abort, recurse, before, after
+    public final <R> R $traverse(Traverser<?, R> traverser) {
+        QOM.traverse(
+            traverser, this,
+            $table()
         );
+        return super.$traverse(traverser);
     }
 
     @Override

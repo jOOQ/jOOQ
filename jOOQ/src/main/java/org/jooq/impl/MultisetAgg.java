@@ -69,6 +69,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SelectField;
+import org.jooq.Traverser;
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
 
@@ -180,14 +181,8 @@ final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Resu
     }
 
     @Override
-    public final <T> T $traverse(
-        T init,
-        Predicate<? super T> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super T, ? super QueryPart, ? extends T> before,
-        BiFunction<? super T, ? super QueryPart, ? extends T> after
-    ) {
-        return QOM.traverse(init, abort, recurse, before, after, this, row);
+    public final <T> T $traverse(Traverser<?, T> traverser) {
+        return QOM.traverse(traverser, this, row);
     }
 
     @Override

@@ -100,6 +100,7 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
+import org.jooq.Traverser;
 
 /**
  * @author Lukas Eder
@@ -287,14 +288,8 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
     }
 
     @Override
-    public final <T> T $traverse(
-        T init,
-        Predicate<? super T> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super T, ? super QueryPart, ? extends T> before,
-        BiFunction<? super T, ? super QueryPart, ? extends T> after
-    ) {
-        return QOM.traverse(init, abort, recurse, before, after, this, row);
+    public final <T> T $traverse(Traverser<?, T> traverser) {
+        return QOM.traverse(traverser, this, row);
     }
 
     @Override

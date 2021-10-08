@@ -69,6 +69,7 @@ import org.jooq.LanguageContext;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.RenderContext.CastMode;
+import org.jooq.Traverser;
 import org.jooq.impl.QOM.UTransient;
 
 /**
@@ -373,19 +374,9 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
     }
 
     @Override
-    public final <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
+    public final <R> R $traverse(Traverser<?, R> traverser) {
         return QOM.traverse(
-            init,
-            abort,
-            recurse,
-            before,
-            after,
+            traverser,
             this,
             $field(),
             $dataType()

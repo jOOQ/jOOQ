@@ -52,6 +52,7 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.Traverser;
 import org.jooq.UniqueKey;
 
 /**
@@ -185,14 +186,8 @@ final class TableAlias<R extends Record> extends AbstractTable<R> implements QOM
     }
 
     @Override
-    public final <T> T $traverse(
-        T init,
-        Predicate<? super T> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super T, ? super QueryPart, ? extends T> before,
-        BiFunction<? super T, ? super QueryPart, ? extends T> after
-    ) {
-        return QOM.traverse(init, abort, recurse, before, after, this, $table(), $alias());
+    public final <T> T $traverse(Traverser<?, T> traverser) {
+        return QOM.traverse(traverser, this, $table(), $alias());
     }
 
     @Override

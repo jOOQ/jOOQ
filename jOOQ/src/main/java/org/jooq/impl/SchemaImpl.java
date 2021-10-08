@@ -65,6 +65,7 @@ import org.jooq.Name;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
+import org.jooq.Traverser;
 import org.jooq.UDT;
 import org.jooq.UniqueKey;
 import org.jooq.QueryPart;
@@ -350,14 +351,8 @@ public class SchemaImpl extends AbstractNamed implements Schema {
     // -------------------------------------------------------------------------
 
     @Override
-    public final <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return QOM.traverse(init, abort, recurse, before, after, this, getQualifiedName(), getCatalog());
+    public final <R> R $traverse(Traverser<?, R> traverser) {
+        return QOM.traverse(traverser, this, getQualifiedName(), getCatalog());
     }
 
     @Override

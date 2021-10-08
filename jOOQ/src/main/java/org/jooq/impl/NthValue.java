@@ -46,6 +46,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.QueryPart;
+import org.jooq.Traverser;
 
 /**
  * @author Lukas Eder
@@ -99,14 +100,8 @@ final class NthValue<T> extends AbstractWindowFunction<T> implements QOM.NthValu
     }
 
     @Override
-    public final <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return QOM.traverse(init, abort, recurse, before, after, this, field, $windowSpecification() != null ? $windowSpecification() : $windowDefinition());
+    public final <R> R $traverse(Traverser<?, R> traverser) {
+        return QOM.traverse(traverser, this, field, $windowSpecification() != null ? $windowSpecification() : $windowDefinition());
     }
 
     @Override

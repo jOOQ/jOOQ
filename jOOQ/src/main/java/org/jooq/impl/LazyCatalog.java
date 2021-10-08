@@ -48,6 +48,7 @@ import org.jooq.Function1;
 import org.jooq.Internal;
 import org.jooq.Name;
 import org.jooq.Schema;
+import org.jooq.Traverser;
 import org.jooq.QueryPart;
 
 /**
@@ -119,14 +120,8 @@ public final class LazyCatalog extends AbstractNamed implements Catalog {
     // -------------------------------------------------------------------------
 
     @Override
-    public final <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return catalog().$traverse(init, abort, recurse, before, after);
+    public final <R> R $traverse(Traverser<?, R> traverser) {
+        return catalog().$traverse(traverser);
     }
 
     @Override

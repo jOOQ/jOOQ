@@ -46,6 +46,7 @@ import org.jooq.Function1;
 import org.jooq.Param;
 import org.jooq.ParamMode;
 import org.jooq.QueryPart;
+import org.jooq.Traverser;
 import org.jooq.conf.ParamType;
 
 /**
@@ -158,14 +159,8 @@ final class LazyVal<T> extends AbstractParamX<T> implements QOM.Val<T> {
     }
 
     @Override
-    public final <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return delegate.$traverse(init, abort, recurse, before, after);
+    public final <R> R $traverse(Traverser<?, R> traverser) {
+        return delegate.$traverse(traverser);
     }
 
     @Override

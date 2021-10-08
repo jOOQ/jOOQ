@@ -75,9 +75,7 @@ import static org.jooq.impl.Tools.isEmpty;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
-import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 import org.jooq.AggregateFilterStep;
 import org.jooq.AggregateFunction;
@@ -93,6 +91,7 @@ import org.jooq.OrderedAggregateFunction;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
+import org.jooq.Traverser;
 import org.jooq.WindowBeforeOverStep;
 
 /**
@@ -552,16 +551,8 @@ implements
     }
 
     @Override
-    public /* non-final */ <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return super.$traverse(
-            QOM.traverse(init, abort, recurse, before, after, this, filter),
-            abort, recurse, before, after
-        );
+    public /* non-final */ <R> R $traverse(Traverser<?, R> traverser) {
+        QOM.traverse(traverser, this, filter);
+        return super.$traverse(traverser);
     }
 }

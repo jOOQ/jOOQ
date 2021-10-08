@@ -47,6 +47,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.QueryPart;
+import org.jooq.Traverser;
 import org.jooq.impl.QOM.MList;
 
 /**
@@ -99,19 +100,9 @@ final class Function1<T> extends AbstractField<T> implements QOM.Function<T> {
     }
 
     @Override
-    public final <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
+    public final <R> R $traverse(Traverser<?, R> traverser) {
         return QOM.traverse(
-            init,
-            abort,
-            recurse,
-            before,
-            after,
+            traverser,
             this,
             argument
         );

@@ -69,6 +69,7 @@ import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableOptions;
+import org.jooq.Traverser;
 import org.jooq.Update;
 import org.jooq.impl.QOM.ResultOption;
 
@@ -205,14 +206,8 @@ implements
     }
 
     @Override
-    public final <T> T $traverse(
-        T init,
-        Predicate<? super T> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super T, ? super QueryPart, ? extends T> before,
-        BiFunction<? super T, ? super QueryPart, ? extends T> after
-    ) {
-        return QOM.traverse(init, abort, recurse, before, after, this, query);
+    public final <T> T $traverse(Traverser<?, T> traverser) {
+        return QOM.traverse(traverser, this, query);
     }
 
     @Override

@@ -54,6 +54,7 @@ import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.QueryPart;
 import org.jooq.SortField;
+import org.jooq.Traverser;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
 import org.jooq.WindowSpecificationExcludeStep;
@@ -357,14 +358,8 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
     }
 
     @Override
-    public final <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return QOM.traverse(init, abort, recurse, before, after, this, $name(), $windowSpecification());
+    public final <R> R $traverse(Traverser<?, R> traverser) {
+        return QOM.traverse(traverser, this, $name(), $windowSpecification());
     }
 
     @Override

@@ -49,6 +49,7 @@ import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Role;
+import org.jooq.Traverser;
 
 /**
  * A common implementation of the Role type.
@@ -82,14 +83,8 @@ final class RoleImpl extends AbstractNamed implements Role {
     // -------------------------------------------------------------------------
 
     @Override
-    public final <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return QOM.traverse(init, abort, recurse, before, after, this, $name());
+    public final <R> R $traverse(Traverser<?, R> traverser) {
+        return QOM.traverse(traverser, this, $name());
     }
 
     @Override

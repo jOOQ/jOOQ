@@ -82,6 +82,7 @@ import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
+import org.jooq.Traverser;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.tools.StringUtils;
 
@@ -445,14 +446,8 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final <X> X $traverse(
-        X init,
-        Predicate<? super X> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super X, ? super QueryPart, ? extends X> before,
-        BiFunction<? super X, ? super QueryPart, ? extends X> after
-    ) {
-        return QOM.traverse(init, abort, recurse, before, after, this, getSchema());
+    public final <X> X $traverse(Traverser<?, X> traverser) {
+        return QOM.traverse(traverser, this, getSchema());
     }
 
     @Override

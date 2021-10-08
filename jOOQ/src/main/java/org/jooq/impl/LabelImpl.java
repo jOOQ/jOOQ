@@ -106,8 +106,3 @@ package org.jooq.impl;
 
 
 
-
-
-
-
-

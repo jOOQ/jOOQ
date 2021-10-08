@@ -279,6 +279,7 @@ import org.jooq.TableLike;
 import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
+import org.jooq.Traverser;
 // ...
 import org.jooq.WindowDefinition;
 import org.jooq.XML;
@@ -4563,19 +4564,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final <T> T $traverse(
-        T init,
-        Predicate<? super T> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super T, ? super QueryPart, ? extends T> before,
-        BiFunction<? super T, ? super QueryPart, ? extends T> after
-    ) {
+    public final <T> T $traverse(Traverser<?, T> traverser) {
         return QOM.traverse(
-            init,
-            abort,
-            recurse,
-            before,
-            after,
+            traverser,
             this,
             $with(),
             $select(),

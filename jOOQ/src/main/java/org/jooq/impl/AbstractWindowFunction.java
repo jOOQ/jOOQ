@@ -56,8 +56,6 @@ import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
 
 import java.util.Collection;
 import java.util.Set;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -67,6 +65,7 @@ import org.jooq.OrderField;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
+import org.jooq.Traverser;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowExcludeStep;
 import org.jooq.WindowFinalStep;
@@ -637,13 +636,7 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public /* non-final */ <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return QOM.traverse(init, abort, recurse, before, after, this, $windowDefinition(), $windowSpecification());
+    public /* non-final */ <R> R $traverse(Traverser<?, R> traverser) {
+        return QOM.traverse(traverser, this, $windowDefinition(), $windowSpecification());
     }
 }

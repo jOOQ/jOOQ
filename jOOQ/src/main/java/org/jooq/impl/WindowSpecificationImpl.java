@@ -99,6 +99,7 @@ import org.jooq.OrderField;
 import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.SortField;
+import org.jooq.Traverser;
 import org.jooq.WindowSpecificationExcludeStep;
 import org.jooq.WindowSpecificationFinalStep;
 import org.jooq.WindowSpecificationOrderByStep;
@@ -726,14 +727,8 @@ implements
     }
 
     @Override
-    public final <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return QOM.traverse(init, abort, recurse, before, after, this, $windowDefinition(), $partitionBy(), $orderBy());
+    public final <R> R $traverse(Traverser<?, R> traverser) {
+        return QOM.traverse(traverser, this, $windowDefinition(), $partitionBy(), $orderBy());
     }
 
     @Override

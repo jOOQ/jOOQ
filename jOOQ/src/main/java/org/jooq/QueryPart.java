@@ -112,13 +112,32 @@ public interface QueryPart extends Serializable {
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
-    <R> R $traverse(
+    <R> R $traverse(Traverser<?, R> traverser);
+
+    default <R> R $traverse(
+        R init,
+        BiFunction<? super R, ? super QueryPart, ? extends R> before,
+        BiFunction<? super R, ? super QueryPart, ? extends R> after
+    ) {
+        return $traverse(Traverser.of(() -> init, before, after));
+    }
+
+    default <R> R $traverse(
+        R init,
+        BiFunction<? super R, ? super QueryPart, ? extends R> before
+    ) {
+        return $traverse(Traverser.of(() -> init, before));
+    }
+
+    default <R> R $traverse(
         R init,
         Predicate<? super R> abort,
         Predicate<? super QueryPart> recurse,
         BiFunction<? super R, ? super QueryPart, ? extends R> before,
         BiFunction<? super R, ? super QueryPart, ? extends R> after
-    );
+    ) {
+        return $traverse(Traverser.of(() -> init, abort, recurse, before, after));
+    }
 
     default <R> R $traverse(
         R init,
@@ -126,22 +145,7 @@ public interface QueryPart extends Serializable {
         Predicate<? super QueryPart> recurse,
         BiFunction<? super R, ? super QueryPart, ? extends R> before
     ) {
-        return $traverse(init, abort, recurse, before, (r, p) -> r);
-    }
-
-    default <R> R $traverse(
-        R init,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return $traverse(init, b -> false, p -> true, before, after);
-    }
-
-    default <R> R $traverse(
-        R init,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before
-    ) {
-        return $traverse(init, b -> false, p -> true, before, (r, p) -> r);
+        return $traverse(Traverser.of(() -> init, abort, recurse, before));
     }
 
     @NotNull

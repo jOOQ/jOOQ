@@ -60,6 +60,7 @@ import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
+import org.jooq.Traverser;
 import org.jooq.impl.QOM.MCollection;
 import org.jooq.QueryPart;
 
@@ -341,14 +342,8 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
     // -------------------------------------------------------------------------
 
     @Override
-    public final <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return QOM.traverse(init, abort, recurse, before, after, this, wrapped.toArray(EMPTY_QUERYPART));
+    public final <R> R $traverse(Traverser<?, R> traverser) {
+        return QOM.traverse(traverser, this, wrapped.toArray(EMPTY_QUERYPART));
     }
 
     @Override

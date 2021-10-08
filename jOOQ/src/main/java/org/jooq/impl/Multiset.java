@@ -104,6 +104,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.Traverser;
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
 
@@ -416,14 +417,8 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
     // -------------------------------------------------------------------------
 
     @Override
-    public final <Q> Q $traverse(
-        Q init,
-        Predicate<? super Q> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super Q, ? super QueryPart, ? extends Q> before,
-        BiFunction<? super Q, ? super QueryPart, ? extends Q> after
-    ) {
-        return QOM.traverse(init, abort, recurse, before, after, select);
+    public final <Q> Q $traverse(Traverser<?, Q> traverser) {
+        return QOM.traverse(traverser, select);
     }
 
     @Override

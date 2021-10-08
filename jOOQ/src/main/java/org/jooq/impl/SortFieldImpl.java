@@ -71,6 +71,7 @@ import org.jooq.Function1;
 import org.jooq.SQLDialect;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
+import org.jooq.Traverser;
 import org.jooq.QueryPart;
 import org.jooq.impl.QOM.NullOrdering;
 
@@ -216,14 +217,8 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T>, 
     }
 
     @Override
-    public final <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return QOM.traverse(init, abort, recurse, before, after, this, field);
+    public final <R> R $traverse(Traverser<?, R> traverser) {
+        return QOM.traverse(traverser, this, field);
     }
 
     @Override

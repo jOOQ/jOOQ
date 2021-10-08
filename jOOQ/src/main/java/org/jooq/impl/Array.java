@@ -49,7 +49,6 @@ import static org.jooq.impl.Names.N_ARRAY;
 
 import java.util.Collection;
 import java.util.Set;
-import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
 import org.jooq.Context;
@@ -59,6 +58,7 @@ import org.jooq.Function1;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
+import org.jooq.Traverser;
 import org.jooq.impl.QOM.MList;
 
 /**
@@ -118,14 +118,8 @@ final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
     }
 
     @Override
-    public final <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return QOM.traverse(init, abort, recurse, before, after, this, $elements());
+    public final <R> R $traverse(Traverser<?, R> traverser) {
+        return QOM.traverse(traverser, this, $elements());
     }
 
     @Override

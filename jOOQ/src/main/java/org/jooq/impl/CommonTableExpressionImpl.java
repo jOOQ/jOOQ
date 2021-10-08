@@ -63,6 +63,7 @@ import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.TableOptions;
+import org.jooq.Traverser;
 import org.jooq.impl.QOM.Materialized;
 import org.jooq.impl.Tools.DataKey;
 
@@ -192,14 +193,8 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
     }
 
     @Override
-    public final <T> T $traverse(
-        T init,
-        Predicate<? super T> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super T, ? super QueryPart, ? extends T> before,
-        BiFunction<? super T, ? super QueryPart, ? extends T> after
-    ) {
-        return QOM.traverse(init, abort, recurse, before, after, this, name, query);
+    public final <T> T $traverse(Traverser<?, T> traverser) {
+        return QOM.traverse(traverser, this, name, query);
     }
 
     @Override

@@ -58,6 +58,7 @@ import org.jooq.impl.QOM.Cascade;
 import org.jooq.impl.QOM.DropType;
 import org.jooq.impl.QOM.MList;
 import org.jooq.QueryPart;
+import org.jooq.Traverser;
 
 /**
  * @author Lukas Eder
@@ -135,14 +136,8 @@ implements
     }
 
     @Override
-    public final <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return QOM.traverse(init, abort, recurse, before, after, this, type);
+    public final <R> R $traverse(Traverser<?, R> traverser) {
+        return QOM.traverse(traverser, this, type);
     }
 
     @Override

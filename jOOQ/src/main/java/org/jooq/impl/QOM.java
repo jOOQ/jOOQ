@@ -117,6 +117,7 @@ import org.jooq.SortField;
 import org.jooq.SortOrder;
 import org.jooq.Statement;
 import org.jooq.Table;
+import org.jooq.Traverser;
 // ...
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
@@ -3718,14 +3719,8 @@ public final class QOM {
         }
 
         @Override
-        default <T> T $traverse(
-            T current,
-            Predicate<? super T> abort,
-            Predicate<? super QueryPart> recurse,
-            BiFunction<? super T, ? super QueryPart, ? extends T> before,
-            BiFunction<? super T, ? super QueryPart, ? extends T> after
-        ) {
-            return QOM.traverse(current, abort, recurse, before, after, this, $arg1());
+        default <T> T $traverse(Traverser<?, T> traverser) {
+            return QOM.traverse(traverser, this, $arg1());
         };
 
         @NotNull
@@ -3759,14 +3754,8 @@ public final class QOM {
         }
 
         @Override
-        default <T> T $traverse(
-            T current,
-            Predicate<? super T> abort,
-            Predicate<? super QueryPart> recurse,
-            BiFunction<? super T, ? super QueryPart, ? extends T> before,
-            BiFunction<? super T, ? super QueryPart, ? extends T> after
-        ) {
-            return QOM.traverse(current, abort, recurse, before, after, this, $arg1(), $arg2());
+        default <T> T $traverse(Traverser<?, T> traverser) {
+            return QOM.traverse(traverser, this, $arg1(), $arg2());
         };
 
         @NotNull
@@ -3802,14 +3791,8 @@ public final class QOM {
         }
 
         @Override
-        default <T> T $traverse(
-            T current,
-            Predicate<? super T> abort,
-            Predicate<? super QueryPart> recurse,
-            BiFunction<? super T, ? super QueryPart, ? extends T> before,
-            BiFunction<? super T, ? super QueryPart, ? extends T> after
-        ) {
-            return QOM.traverse(current, abort, recurse, before, after, this, $arg1(), $arg2(), $arg3());
+        default <T> T $traverse(Traverser<?, T> traverser) {
+            return QOM.traverse(traverser, this, $arg1(), $arg2(), $arg3());
         };
 
         @NotNull
@@ -3861,14 +3844,8 @@ public final class QOM {
         Q $delegate();
 
         @Override
-        default <R> R $traverse(
-            R init,
-            Predicate<? super R> abort,
-            Predicate<? super QueryPart> recurse,
-            BiFunction<? super R, ? super QueryPart, ? extends R> before,
-            BiFunction<? super R, ? super QueryPart, ? extends R> after
-        ) {
-            return $delegate().$traverse(init, abort, recurse, before, after);
+        default <R> R $traverse(Traverser<?, R> traverser) {
+            return $delegate().$traverse(traverser);
         }
 
         @Override
@@ -3889,14 +3866,8 @@ public final class QOM {
     interface UEmpty extends QueryPart {
 
         @Override
-        default <R> R $traverse(
-            R init,
-            Predicate<? super R> abort,
-            Predicate<? super QueryPart> recurse,
-            BiFunction<? super R, ? super QueryPart, ? extends R> before,
-            BiFunction<? super R, ? super QueryPart, ? extends R> after
-        ) {
-            return QOM.traverse(init, abort, recurse, before, after, this);
+        default <R> R $traverse(Traverser<?, R> traverser) {
+            return QOM.traverse(traverser, this);
         }
 
         @Override
@@ -3972,37 +3943,32 @@ public final class QOM {
         return predicate != null && predicate.test(value);
     }
 
-    static final <T> T traverse(
-        T current,
-        Predicate<? super T> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super T, ? super QueryPart, ? extends T> before,
-        BiFunction<? super T, ? super QueryPart, ? extends T> after,
-        Object part,
-        Object... parts
-    ) {
-        if (test(abort, current)) return current;
+    static final <A, T> T traverse(Traverser<A, T> t, Object part, Object... parts) {
+        if (test(t.abort(), t.supplied()))
+            return t.finished();
 
         try {
             if (part instanceof QueryPart)
-                current = before.apply(current, (QueryPart) part);
-            if (test(abort, current)) return current;
+                t.before().apply(t.supplied(), (QueryPart) part);
+            if (test(t.abort(), t.supplied()))
+                return t.finished();
 
             for (int i = 0; i < parts.length; i++) {
                 if (parts[i] instanceof QueryPart) { QueryPart p = (QueryPart) parts[i];
-                    if (test(recurse, p)) {
-                        current = p.$traverse(current, abort, recurse, before, after);
-                        if (test(abort, current)) return current;
+                    if (test(t.recurse(), p)) {
+                        p.$traverse(t);
+                        if (test(t.abort(), t.supplied()))
+                            return t.finished();
                     }
                 }
             }
         }
         finally {
             if (part instanceof QueryPart)
-                current = after.apply(current, (QueryPart) part);
+                t.after().apply(t.supplied(), (QueryPart) part);
         }
 
-        return current;
+        return t.finished();
     };
 
     @SuppressWarnings("unchecked")

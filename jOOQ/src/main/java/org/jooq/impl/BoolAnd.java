@@ -51,7 +51,6 @@ import static org.jooq.SQLDialect.*;
 import org.jooq.*;
 import org.jooq.Function1;
 import org.jooq.Record;
-import org.jooq.Traverser;
 import org.jooq.conf.*;
 import org.jooq.impl.*;
 import org.jooq.impl.QOM.*;

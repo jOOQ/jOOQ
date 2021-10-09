@@ -61,6 +61,10 @@ import java.util.stream.Stream;
  */
 public interface Traverser<A, R> {
 
+    /**
+     * Convenience method to create a {@link Traverser} with a
+     * {@link #supplier()} and {@link #before()}.
+     */
     static <R> Traverser<R, R> of(
         Supplier<R> supplier,
         BiFunction<? super R, ? super QueryPart, ? extends R> before
@@ -68,6 +72,10 @@ public interface Traverser<A, R> {
        return of(supplier, a -> false, q -> true, before, (a, q) -> a, a -> a);
     }
 
+    /**
+     * Convenience method to create a {@link Traverser} with a
+     * {@link #supplier()}, {@link #before()}, and {@link #after()}.
+     */
     static <R> Traverser<R, R> of(
         Supplier<R> supplier,
         BiFunction<? super R, ? super QueryPart, ? extends R> before,
@@ -76,6 +84,11 @@ public interface Traverser<A, R> {
        return of(supplier, a -> false, q -> true, before, after, a -> a);
     }
 
+    /**
+     * Convenience method to create a {@link Traverser} with a
+     * {@link #supplier()}, {@link #abort()}, {@link #recurse()}, and
+     * {@link #before()}.
+     */
     static <R> Traverser<R, R> of(
         Supplier<R> supplier,
         Predicate<? super R> abort,
@@ -85,6 +98,11 @@ public interface Traverser<A, R> {
        return of(supplier, abort, recurse, before, (a, q) -> a, a -> a);
     }
 
+    /**
+     * Convenience method to create a {@link Traverser} with a
+     * {@link #supplier()}, {@link #abort()}, {@link #recurse()},
+     * {@link #before()}, and {@link #after()}
+     */
     static <R> Traverser<R, R> of(
         Supplier<R> supplier,
         Predicate<? super R> abort,
@@ -95,6 +113,11 @@ public interface Traverser<A, R> {
        return of(supplier, abort, recurse, before, after, a -> a);
     }
 
+    /**
+     * Convenience method to create a {@link Traverser} with a
+     * {@link #supplier()}, {@link #abort()}, {@link #recurse()},
+     * {@link #before()}, {@link #after()}, and {@link #finisher()}.
+     */
     static <A, R> Traverser<A, R> of(
         Supplier<A> supplier,
         Predicate<? super A> abort,

@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
+import java.util.stream.Collector;
 
 import org.jooq.conf.Settings;
 
@@ -112,8 +113,49 @@ public interface QueryPart extends Serializable {
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
+    /**
+     * Traverser this {@link QueryPart} expression tree using a composable
+     * {@link Traverser}, producing a result.
+     * <p>
+     * This offers a generic way to traverse expression trees to translate the
+     * tree to arbitrary other data structures. The simplest traversal would
+     * just count all the tree elements:
+     * <p>
+     * <code><pre>
+     * int count = CUSTOMER.NAME.eq(1).$traverse(0, (i, p) -> i + 1);
+     * </pre></code>
+     * <p>
+     * The same can be achieved by translating the JDK {@link Collector} API to
+     * the {@link Traverser} API using {@link Traversers#collecting(Collector)}.
+     * <p>
+     * <code><pre>
+     * CUSTOMER.NAME.eq(1).$traverse(Traversers.collecting(Collectors.counting()));
+     * </pre></code>
+     * <p>
+     * Unlike a {@link Collector}, a {@link Traverser} is optimised for tree
+     * traversal, not stream traversal:
+     * <ul>
+     * <li>Is not designed for parallelism</li>
+     * <li>It can {@link Traverser#abort()} traversal early when the result can
+     * be produced early (e.g. when running
+     * {@link Traversers#containing(QueryPart)}, and a result has been
+     * found).</li>
+     * <li>It can decide whether to {@link Traverser#recurse()} into a
+     * {@link QueryPart} subtree, or whether that is not necessary or even
+     * undesirable, e.g. to prevent entering new subquery scopes.</li>
+     * <li>Unlike a Collector, which can use its {@link Collector#accumulator()}
+     * to accumulate each element only once, in tree traversal, it's desirable
+     * to be able to distinguish between accumulating an item
+     * {@link Traverser#before()} or {@link Traverser#after()} recursing into
+     * it. This is useful e.g. to wrap each tree node in XML opening and closing
+     * tags.</li>
+     * </ul>
+     */
     <R> R $traverse(Traverser<?, R> traverser);
 
+    /**
+     * Convenience method for {@link #$traverse(Traverser)}.
+     */
     default <R> R $traverse(
         R init,
         BiFunction<? super R, ? super QueryPart, ? extends R> before,
@@ -122,6 +164,9 @@ public interface QueryPart extends Serializable {
         return $traverse(Traverser.of(() -> init, before, after));
     }
 
+    /**
+     * Convenience method for {@link #$traverse(Traverser)}.
+     */
     default <R> R $traverse(
         R init,
         BiFunction<? super R, ? super QueryPart, ? extends R> before
@@ -129,6 +174,9 @@ public interface QueryPart extends Serializable {
         return $traverse(Traverser.of(() -> init, before));
     }
 
+    /**
+     * Convenience method for {@link #$traverse(Traverser)}.
+     */
     default <R> R $traverse(
         R init,
         Predicate<? super R> abort,
@@ -139,6 +187,9 @@ public interface QueryPart extends Serializable {
         return $traverse(Traverser.of(() -> init, abort, recurse, before, after));
     }
 
+    /**
+     * Convenience method for {@link #$traverse(Traverser)}.
+     */
     default <R> R $traverse(
         R init,
         Predicate<? super R> abort,
@@ -148,37 +199,27 @@ public interface QueryPart extends Serializable {
         return $traverse(Traverser.of(() -> init, abort, recurse, before));
     }
 
-    @NotNull
-    default QueryPart $replace(Function1<? super QueryPart, ? extends QueryPart> replacement) {
-        return $replace(p -> true, replacement);
-    }
-
+    /**
+     * Traverse a {@link QueryPart} hierarchy and recursively replace its
+     * elements by alternatives.
+     *
+     * @param recurse A predicate to decide whether to recurse into a
+     *            {@link QueryPart} subtree.
+     * @param replacement The replacement function. Replacement continues
+     *            recursively until the function returns null or its input for
+     *            any given input.
+     */
     @NotNull
     QueryPart $replace(
         Predicate<? super QueryPart> recurse,
         Function1<? super QueryPart, ? extends QueryPart> replacement
     );
 
-    default boolean $contains(QueryPart part) {
-        return $traverse(equals(part), b -> b, p -> true, (b, p) -> b || p.equals(part), (b, p) -> b);
-    }
-
-    @Nullable
-    default QueryPart $findAny(Predicate<? super QueryPart> predicate) {
-        return $traverse((QueryPart) null, p -> p != null, p -> true, (r, p) -> predicate.test(p) ? p : r, (r, p) -> r);
-    }
-
+    /**
+     * Convenience method for {@link #$replace(Predicate, Function1)}.
+     */
     @NotNull
-    default List<QueryPart> $find(Predicate<? super QueryPart> predicate) {
-        return $traverse(
-            new ArrayList<>(),
-            (l, p) -> {
-                if (predicate.test(p))
-                    l.add(p);
-
-                return l;
-            },
-            (l, p) -> l
-        );
+    default QueryPart $replace(Function1<? super QueryPart, ? extends QueryPart> replacement) {
+        return $replace(p -> true, replacement);
     }
 }

@@ -3856,11 +3856,6 @@ public final class QOM {
             QueryPart r = $delegate().$replace(recurse, replacement);
             return $delegate() == r ? this : r;
         }
-
-        @Override
-        default boolean $contains(QueryPart part) {
-            return $delegate().$contains(part);
-        }
     }
 
     interface UEmpty extends QueryPart {
@@ -3879,11 +3874,6 @@ public final class QOM {
                 return replacement.apply(this);
             else
                 return this;
-        }
-
-        @Override
-        default boolean $contains(QueryPart part) {
-            return equals(part);
         }
     }
 

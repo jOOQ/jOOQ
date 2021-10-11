@@ -167,8 +167,8 @@ abstract class AbstractQueryPart implements QueryPartInternal {
         if (that instanceof QueryPart) { QueryPart q = (QueryPart) that;
 
             // [#10635] The two QueryParts may have different Settings attached.
-            DSLContext dsl1 = configuration().dsl();
-            DSLContext dsl2 = that instanceof AbstractQueryPart ? ((AbstractQueryPart) that).configuration().dsl() : dsl1;
+            DSLContext dsl1 = Tools.configuration(configuration()).dsl();
+            DSLContext dsl2 = that instanceof AbstractQueryPart ? Tools.configuration(((AbstractQueryPart) that).configuration()).dsl() : dsl1;
 
             String sql1 = dsl1.renderInlined(this);
             String sql2 = dsl2.renderInlined(q);

@@ -55,7 +55,7 @@ public final class Traversers {
     /**
      * A traverser constructed from a {@link Collector}.
      */
-    public static <T, R> Traverser<T, R> collecting(Collector<QueryPart, T, R> collector) {
+    public static <T, R> Traverser<?, R> collecting(Collector<QueryPart, T, R> collector) {
         return Traverser.of(
             collector.supplier(),
             t -> false,
@@ -76,7 +76,7 @@ public final class Traversers {
      * @param part The part to find within the traversed {@link QueryPart} tree.
      */
     @NotNull
-    public static Traverser<Boolean, Boolean> containing(QueryPart part) {
+    public static Traverser<?, Boolean> containing(QueryPart part) {
         return Traverser.of(
             () -> false,
             b -> b,
@@ -93,8 +93,8 @@ public final class Traversers {
      *            {@link QueryPart} to find.
      */
     @NotNull
-    public static Traverser<QueryPart, Optional<QueryPart>> findingAny(Predicate<? super QueryPart> predicate) {
-        return Traverser.of(
+    public static Traverser<?, Optional<QueryPart>> findingAny(Predicate<? super QueryPart> predicate) {
+        return Traverser.<QueryPart, Optional<QueryPart>>of(
             () -> null,
             p -> p != null,
             p -> true,
@@ -112,7 +112,7 @@ public final class Traversers {
      *            {@link QueryPart}s to find.
      */
     @NotNull
-    public static Traverser<List<QueryPart>, List<QueryPart>> findingAll(Predicate<? super QueryPart> predicate) {
+    public static Traverser<?, List<QueryPart>> findingAll(Predicate<? super QueryPart> predicate) {
         return Traverser.of(
             () -> new ArrayList<>(),
             (l, p) -> {
@@ -124,6 +124,5 @@ public final class Traversers {
             (l, p) -> l
         );
     }
-
     private Traversers() {}
 }

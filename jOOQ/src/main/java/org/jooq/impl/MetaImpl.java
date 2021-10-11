@@ -1046,7 +1046,7 @@ final class MetaImpl extends AbstractMeta {
 
 
                 // TODO: Exception handling should be moved inside SQLDataType
-                DataType type = null;
+                DataType type;
                 try {
                     type = DefaultDataType.getDataType(
                         family(),
@@ -1055,59 +1055,59 @@ final class MetaImpl extends AbstractMeta {
                         scale,
                         !FALSE.equals(settings().isForceIntegerTypesOnZeroScaleDecimals())
                     );
-
-                    // [#10207] Ignore secondary identity columns, as allowed e.g. in PostgreSQL
-                    if (isAutoIncrement)
-                        if (!hasAutoIncrement)
-                            type = type.identity(hasAutoIncrement = isAutoIncrement);
-                        else
-                            log.info("Multiple identities", "jOOQ does not support tables with multiple identities. Identity is ignored on column: " + columnName);
-
-                    if (nullable == DatabaseMetaData.columnNoNulls)
-                        type = type.nullable(false);
-
-                    // [#6883] Default values may be present
-                    if (!isAutoIncrement && !StringUtils.isEmpty(defaultValue)) {
-                        try {
-
-                            // [#7194] [#8469] Some databases report all default values as expressions, not as values
-                            if (EXPRESSION_COLUMN_DEFAULT.contains(dialect())) {
-                                if (FALSE.equals(settings().isParseMetaDefaultExpressions())) {
-                                    type = type.defaultValue(DSL.field(defaultValue, type));
-                                }
-                                else {
-                                    try {
-                                        type = type.defaultValue(dsl()
-                                            .configuration()
-                                            .deriveSettings(s -> s.withParseUnknownFunctions(ParseUnknownFunctions.IGNORE))
-                                            .dsl()
-                                            .parser()
-                                            .parseField(defaultValue)
-                                        );
-                                    }
-                                    catch (ParserException e) {
-                                        log.info("Cannot parse default expression: " + defaultValue, e);
-                                        type = type.defaultValue(DSL.field(defaultValue, type));
-                                    }
-                                }
-                            }
-
-                            // [#5574] MySQL mixes constant value expressions with other column expressions here
-                            else if (CURRENT_TIMESTAMP_COLUMN_DEFAULT.contains(dialect()) && "CURRENT_TIMESTAMP".equalsIgnoreCase(defaultValue))
-                                type = type.defaultValue(DSL.field(defaultValue, type));
-                            else
-                                type = type.defaultValue(DSL.inline(defaultValue, type));
-                        }
-
-                        // [#8469] Rather than catching exceptions after conversions, we should use the
-                        //         parser to parse default values, if they're expressions
-                        catch (DataTypeException e) {
-                            log.warn("Default value", "Could not load default value: " + defaultValue + " for type: " + type, e);
-                        }
-                    }
                 }
                 catch (SQLDialectNotSupportedException e) {
                     type = SQLDataType.OTHER;
+                }
+
+                // [#10207] Ignore secondary identity columns, as allowed e.g. in PostgreSQL
+                if (isAutoIncrement)
+                    if (!hasAutoIncrement)
+                        type = type.identity(hasAutoIncrement = isAutoIncrement);
+                    else
+                        log.info("Multiple identities", "jOOQ does not support tables with multiple identities. Identity is ignored on column: " + columnName);
+
+                if (nullable == DatabaseMetaData.columnNoNulls)
+                    type = type.nullable(false);
+
+                // [#6883] Default values may be present
+                if (!isAutoIncrement && !StringUtils.isEmpty(defaultValue)) {
+                    try {
+
+                        // [#7194] [#8469] Some databases report all default values as expressions, not as values
+                        if (EXPRESSION_COLUMN_DEFAULT.contains(dialect())) {
+                            if (FALSE.equals(settings().isParseMetaDefaultExpressions())) {
+                                type = type.defaultValue(DSL.field(defaultValue, type));
+                            }
+                            else {
+                                try {
+                                    type = type.defaultValue(dsl()
+                                        .configuration()
+                                        .deriveSettings(s -> s.withParseUnknownFunctions(ParseUnknownFunctions.IGNORE))
+                                        .dsl()
+                                        .parser()
+                                        .parseField(defaultValue)
+                                    );
+                                }
+                                catch (ParserException e) {
+                                    log.info("Cannot parse default expression: " + defaultValue, e);
+                                    type = type.defaultValue(DSL.field(defaultValue, type));
+                                }
+                            }
+                        }
+
+                        // [#5574] MySQL mixes constant value expressions with other column expressions here
+                        else if (CURRENT_TIMESTAMP_COLUMN_DEFAULT.contains(dialect()) && "CURRENT_TIMESTAMP".equalsIgnoreCase(defaultValue))
+                            type = type.defaultValue(DSL.field(defaultValue, type));
+                        else
+                            type = type.defaultValue(DSL.inline(defaultValue, type));
+                    }
+
+                    // [#8469] Rather than catching exceptions after conversions, we should use the
+                    //         parser to parse default values, if they're expressions
+                    catch (DataTypeException e) {
+                        log.warn("Default value", "Could not load default value: " + defaultValue + " for type: " + type, e);
+                    }
                 }
 
                 createField(name(columnName), type, this, remarks);

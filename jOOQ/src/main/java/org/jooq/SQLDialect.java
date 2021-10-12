@@ -866,7 +866,8 @@ public enum SQLDialect {
      * Get a set of dialects preceding a given set of dialects.
      * <p>
      * The resulting set of dialects contain all the families and dialect
-     * versions that precede the argument dialects.
+     * versions that precede the argument dialects, including the argument
+     * dialects.
      */
     @NotNull
     public static final Set<SQLDialect> predecessors(SQLDialect... dialects) {
@@ -883,7 +884,8 @@ public enum SQLDialect {
      * version.
      * <p>
      * The resulting set of dialects contain all the families and dialect
-     * versions that precede the argument dialect.
+     * versions that precede the argument dialect, including the argument
+     * dialect.
      */
     @NotNull
     public static final Set<SQLDialect> supportedUntil(SQLDialect dialect) {
@@ -895,7 +897,8 @@ public enum SQLDialect {
      * version.
      * <p>
      * The resulting set of dialects contain all the families and dialect
-     * versions that precede the argument dialect.
+     * versions that precede the argument dialect, including the argument
+     * dialects.
      */
     @NotNull
     public static final Set<SQLDialect> supportedUntil(SQLDialect... dialects) {
@@ -907,7 +910,8 @@ public enum SQLDialect {
      * version.
      * <p>
      * The resulting set of dialects contain all the families and dialect
-     * versions that support the argument dialect, i.e. that succeed it.
+     * versions that support the argument dialect, i.e. that succeed it,
+     * including the argument dialect.
      */
     @NotNull
     public static final Set<SQLDialect> supportedBy(SQLDialect dialect) {
@@ -921,7 +925,8 @@ public enum SQLDialect {
      * dialect versions.
      * <p>
      * The resulting set of dialects contain all the families and dialect
-     * versions that support the argument dialects, i.e. that succeed them.
+     * versions that support the argument dialects, i.e. that succeed them,
+     * including the argument dialects.
      */
     @NotNull
     public static final Set<SQLDialect> supportedBy(SQLDialect... dialects) {

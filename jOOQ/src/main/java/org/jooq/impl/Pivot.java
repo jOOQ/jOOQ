@@ -358,8 +358,3 @@ package org.jooq.impl;
 
 
 
-
-
-
-
-

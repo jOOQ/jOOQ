@@ -84,8 +84,7 @@ public interface ParseContext extends Scope {
     /**
      * Get access to the underlying SQL string.
      */
-    @NotNull
-    char[] characters();
+    char @NotNull [] characters();
 
     /**
      * Update the underlying SQL string.

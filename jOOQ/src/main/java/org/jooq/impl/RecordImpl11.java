@@ -42,6 +42,8 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record11;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A general purpose record, typically used for ad-hoc types.
  * <p>
@@ -74,57 +76,57 @@ final class RecordImpl11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends A
 
     @Override
     public final Field<T1> field1() {
-        return (Field<T1>) fields.field(0);
+        return (@NotNull Field<T1>) fields.field(0);
     }
 
     @Override
     public final Field<T2> field2() {
-        return (Field<T2>) fields.field(1);
+        return (@NotNull Field<T2>) fields.field(1);
     }
 
     @Override
     public final Field<T3> field3() {
-        return (Field<T3>) fields.field(2);
+        return (@NotNull Field<T3>) fields.field(2);
     }
 
     @Override
     public final Field<T4> field4() {
-        return (Field<T4>) fields.field(3);
+        return (@NotNull Field<T4>) fields.field(3);
     }
 
     @Override
     public final Field<T5> field5() {
-        return (Field<T5>) fields.field(4);
+        return (@NotNull Field<T5>) fields.field(4);
     }
 
     @Override
     public final Field<T6> field6() {
-        return (Field<T6>) fields.field(5);
+        return (@NotNull Field<T6>) fields.field(5);
     }
 
     @Override
     public final Field<T7> field7() {
-        return (Field<T7>) fields.field(6);
+        return (@NotNull Field<T7>) fields.field(6);
     }
 
     @Override
     public final Field<T8> field8() {
-        return (Field<T8>) fields.field(7);
+        return (@NotNull Field<T8>) fields.field(7);
     }
 
     @Override
     public final Field<T9> field9() {
-        return (Field<T9>) fields.field(8);
+        return (@NotNull Field<T9>) fields.field(8);
     }
 
     @Override
     public final Field<T10> field10() {
-        return (Field<T10>) fields.field(9);
+        return (@NotNull Field<T10>) fields.field(9);
     }
 
     @Override
     public final Field<T11> field11() {
-        return (Field<T11>) fields.field(10);
+        return (@NotNull Field<T11>) fields.field(10);
     }
 
     @Override

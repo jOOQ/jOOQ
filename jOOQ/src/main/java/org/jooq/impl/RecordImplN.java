@@ -42,6 +42,8 @@ import java.util.Collection;
 import org.jooq.Field;
 import org.jooq.Record;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A general purpose record, typically used for ad-hoc types.
  * <p>

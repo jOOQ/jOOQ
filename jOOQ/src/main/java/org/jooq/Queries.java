@@ -126,8 +126,7 @@ public interface Queries extends AttachableQueryPart, Iterable<Query> {
      *             unattached.
      * @see DSLContext#batch(Queries)
      */
-    @NotNull
-    int[] executeBatch();
+    int @NotNull [] executeBatch();
 
     // -------------------------------------------------------------------------
     // XXX: Query Object Model

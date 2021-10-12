@@ -59,6 +59,8 @@ import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.Statement;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Lukas Eder
  */
@@ -93,7 +95,7 @@ final class RowImpl1<T1> extends AbstractRow<Record1<T1>> implements Row1<T1> {
 
     @Override
     public final Field<T1> field1() {
-        return (Field<T1>) fields.field(0);
+        return (@NotNull Field<T1>) fields.field(0);
     }
 
     // ------------------------------------------------------------------------

@@ -267,8 +267,7 @@ public interface ExecuteContext extends Scope {
      * @see #rows()
      * @return The affected rows. This is never <code>null</code>
      */
-    @NotNull
-    int[] batchRows();
+    int @NotNull [] batchRows();
 
     /**
      * The last result that was fetched from the result set, or

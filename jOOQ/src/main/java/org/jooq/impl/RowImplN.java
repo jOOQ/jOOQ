@@ -56,6 +56,8 @@ import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.Statement;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Lukas Eder
  */

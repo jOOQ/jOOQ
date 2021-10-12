@@ -75,8 +75,7 @@ public interface Batch extends Serializable, Publisher<Integer> {
      * @see Statement#executeBatch()
      * @throws DataAccessException if something went wrong executing the query
      */
-    @NotNull
-    int[] execute() throws DataAccessException;
+    int @NotNull [] execute() throws DataAccessException;
 
     /**
      * Execute the batch operation in a new {@link CompletionStage}.

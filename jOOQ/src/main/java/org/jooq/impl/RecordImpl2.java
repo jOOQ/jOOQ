@@ -42,6 +42,8 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record2;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A general purpose record, typically used for ad-hoc types.
  * <p>
@@ -74,12 +76,12 @@ final class RecordImpl2<T1, T2> extends AbstractRecord implements InternalRecord
 
     @Override
     public final Field<T1> field1() {
-        return (Field<T1>) fields.field(0);
+        return (@NotNull Field<T1>) fields.field(0);
     }
 
     @Override
     public final Field<T2> field2() {
-        return (Field<T2>) fields.field(1);
+        return (@NotNull Field<T2>) fields.field(1);
     }
 
     @Override

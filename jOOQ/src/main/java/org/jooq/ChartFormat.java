@@ -348,8 +348,7 @@ public final class ChartFormat {
     /**
      * The value source column numbers.
      */
-    @NotNull
-    public int[] values() {
+    public int @NotNull [] values() {
         return values;
     }
 
@@ -379,8 +378,7 @@ public final class ChartFormat {
     /**
      * The value column shades.
      */
-    @NotNull
-    public char[] shades() {
+    public char @NotNull [] shades() {
         return shades;
     }
 

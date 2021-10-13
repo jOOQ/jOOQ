@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import java.util.List;
+
 import org.jooq.Binding;
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
@@ -217,6 +219,11 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
 
         // [#12155] Avoid double conversion passes between Result and custom List<UserType>
         else if (delegate.isMultiset() && !(object instanceof Result))
+            return (U) object;
+
+        // [#12413] Avoid double conversion passes between Record and custom object types
+        //          (List is what we produce when reading XML or JSON nested data)
+        else if (delegate.isRecord() && !(object instanceof Record || object instanceof List))
             return (U) object;
 
         // [#3200] Try to convert arbitrary objects to T

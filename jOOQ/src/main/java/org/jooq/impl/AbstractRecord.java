@@ -1013,11 +1013,16 @@ abstract class AbstractRecord extends AbstractStore implements Record {
      * public for broader use...?
      */
     protected final void from(Record source) {
-        for (Field<?> field : fields.fields.fields) {
-            Field<?> sourceField = source.field(field);
+        if (source instanceof AbstractRecord) { AbstractRecord a = (AbstractRecord) source;
+            a.new TransferRecordState<>(fields.fields.fields).apply(this);
+        }
+        else {
+            for (Field<?> field : fields.fields.fields) {
+                Field<?> sourceField = source.field(field);
 
-            if (sourceField != null && source.changed(sourceField))
-                Tools.setValue(this, field, source, sourceField);
+                if (sourceField != null && source.changed(sourceField))
+                    Tools.setValue(this, field, source, sourceField);
+            }
         }
     }
 

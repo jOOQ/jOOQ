@@ -100,6 +100,10 @@ public interface Row1<T1> extends Row, SelectField<Record1<T1>> {
      * work. Please report any bugs here:
      * <a href="https://github.com/jOOQ/jOOQ/issues/new/choose">https://github.com/jOOQ/jOOQ/issues/new/choose</a>
      * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function1)} or
+     * {@link Functions#nullOnAnyNull(Function1)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
+     * <p>
      * Known issues include:
      * <p>
      * <ul>
@@ -114,6 +118,10 @@ public interface Row1<T1> extends Row, SelectField<Record1<T1>> {
      * A convenience method to define a local {@link Record1} to custom type
      * {@link RecordMapper} that can be used when projecting {@link Row} types in
      * <code>SELECT</code> or <code>RETURNING</code> clauses.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function1)} or
+     * {@link Functions#nullOnAnyNull(Function1)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     @NotNull
     <U> SelectField<U> mapping(Class<U> uType, Function1<? super T1, ? extends U> function);

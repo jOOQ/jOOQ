@@ -100,6 +100,10 @@ public interface Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * work. Please report any bugs here:
      * <a href="https://github.com/jOOQ/jOOQ/issues/new/choose">https://github.com/jOOQ/jOOQ/issues/new/choose</a>
      * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function14)} or
+     * {@link Functions#nullOnAnyNull(Function14)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
+     * <p>
      * Known issues include:
      * <p>
      * <ul>
@@ -114,6 +118,10 @@ public interface Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * A convenience method to define a local {@link Record14} to custom type
      * {@link RecordMapper} that can be used when projecting {@link Row} types in
      * <code>SELECT</code> or <code>RETURNING</code> clauses.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function14)} or
+     * {@link Functions#nullOnAnyNull(Function14)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     @NotNull
     <U> SelectField<U> mapping(Class<U> uType, Function14<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? extends U> function);

@@ -578,6 +578,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record1} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function1)} or
+     * {@link Functions#nullOnAnyNull(Function1)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, R extends Record1<T1>, U> RecordMapper<R, U> mapping(
         Function1<? super T1, ? extends U> function
@@ -588,6 +592,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record2} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function2)} or
+     * {@link Functions#nullOnAnyNull(Function2)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, R extends Record2<T1, T2>, U> RecordMapper<R, U> mapping(
         Function2<? super T1, ? super T2, ? extends U> function
@@ -598,6 +606,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record3} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function3)} or
+     * {@link Functions#nullOnAnyNull(Function3)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, R extends Record3<T1, T2, T3>, U> RecordMapper<R, U> mapping(
         Function3<? super T1, ? super T2, ? super T3, ? extends U> function
@@ -608,6 +620,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record4} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function4)} or
+     * {@link Functions#nullOnAnyNull(Function4)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, R extends Record4<T1, T2, T3, T4>, U> RecordMapper<R, U> mapping(
         Function4<? super T1, ? super T2, ? super T3, ? super T4, ? extends U> function
@@ -618,6 +634,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record5} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function5)} or
+     * {@link Functions#nullOnAnyNull(Function5)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, T5, R extends Record5<T1, T2, T3, T4, T5>, U> RecordMapper<R, U> mapping(
         Function5<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? extends U> function
@@ -628,6 +648,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record6} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function6)} or
+     * {@link Functions#nullOnAnyNull(Function6)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, T5, T6, R extends Record6<T1, T2, T3, T4, T5, T6>, U> RecordMapper<R, U> mapping(
         Function6<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? extends U> function
@@ -638,6 +662,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record7} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function7)} or
+     * {@link Functions#nullOnAnyNull(Function7)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, T5, T6, T7, R extends Record7<T1, T2, T3, T4, T5, T6, T7>, U> RecordMapper<R, U> mapping(
         Function7<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? extends U> function
@@ -648,6 +676,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record8} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function8)} or
+     * {@link Functions#nullOnAnyNull(Function8)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, R extends Record8<T1, T2, T3, T4, T5, T6, T7, T8>, U> RecordMapper<R, U> mapping(
         Function8<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? extends U> function
@@ -658,6 +690,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record9} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function9)} or
+     * {@link Functions#nullOnAnyNull(Function9)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, R extends Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>, U> RecordMapper<R, U> mapping(
         Function9<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? extends U> function
@@ -668,6 +704,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record10} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function10)} or
+     * {@link Functions#nullOnAnyNull(Function10)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, R extends Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>, U> RecordMapper<R, U> mapping(
         Function10<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? extends U> function
@@ -678,6 +718,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record11} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function11)} or
+     * {@link Functions#nullOnAnyNull(Function11)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, R extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>, U> RecordMapper<R, U> mapping(
         Function11<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? extends U> function
@@ -688,6 +732,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record12} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function12)} or
+     * {@link Functions#nullOnAnyNull(Function12)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, R extends Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>, U> RecordMapper<R, U> mapping(
         Function12<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? extends U> function
@@ -698,6 +746,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record13} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function13)} or
+     * {@link Functions#nullOnAnyNull(Function13)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, R extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>, U> RecordMapper<R, U> mapping(
         Function13<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? extends U> function
@@ -708,6 +760,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record14} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function14)} or
+     * {@link Functions#nullOnAnyNull(Function14)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, R extends Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>, U> RecordMapper<R, U> mapping(
         Function14<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? extends U> function
@@ -718,6 +774,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record15} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function15)} or
+     * {@link Functions#nullOnAnyNull(Function15)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, R extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>, U> RecordMapper<R, U> mapping(
         Function15<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? extends U> function
@@ -728,6 +788,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record16} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function16)} or
+     * {@link Functions#nullOnAnyNull(Function16)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, R extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>, U> RecordMapper<R, U> mapping(
         Function16<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? extends U> function
@@ -738,6 +802,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record17} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function17)} or
+     * {@link Functions#nullOnAnyNull(Function17)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, R extends Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>, U> RecordMapper<R, U> mapping(
         Function17<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? extends U> function
@@ -748,6 +816,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record18} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function18)} or
+     * {@link Functions#nullOnAnyNull(Function18)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, R extends Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>, U> RecordMapper<R, U> mapping(
         Function18<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? super T18, ? extends U> function
@@ -758,6 +830,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record19} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function19)} or
+     * {@link Functions#nullOnAnyNull(Function19)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, R extends Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>, U> RecordMapper<R, U> mapping(
         Function19<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? super T18, ? super T19, ? extends U> function
@@ -768,6 +844,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record20} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function20)} or
+     * {@link Functions#nullOnAnyNull(Function20)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, R extends Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>, U> RecordMapper<R, U> mapping(
         Function20<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? super T18, ? super T19, ? super T20, ? extends U> function
@@ -778,6 +858,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record21} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function21)} or
+     * {@link Functions#nullOnAnyNull(Function21)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, R extends Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>, U> RecordMapper<R, U> mapping(
         Function21<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? super T18, ? super T19, ? super T20, ? super T21, ? extends U> function
@@ -788,6 +872,10 @@ public final class Records {
     /**
      * Create a {@link RecordMapper} that can map from {@link Record22} to a user type
      * in a type safe way.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function22)} or
+     * {@link Functions#nullOnAnyNull(Function22)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, R extends Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>, U> RecordMapper<R, U> mapping(
         Function22<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? super T18, ? super T19, ? super T20, ? super T21, ? super T22, ? extends U> function

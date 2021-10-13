@@ -100,6 +100,10 @@ public interface Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends Row, Sel
      * work. Please report any bugs here:
      * <a href="https://github.com/jOOQ/jOOQ/issues/new/choose">https://github.com/jOOQ/jOOQ/issues/new/choose</a>
      * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function10)} or
+     * {@link Functions#nullOnAnyNull(Function10)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
+     * <p>
      * Known issues include:
      * <p>
      * <ul>
@@ -114,6 +118,10 @@ public interface Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends Row, Sel
      * A convenience method to define a local {@link Record10} to custom type
      * {@link RecordMapper} that can be used when projecting {@link Row} types in
      * <code>SELECT</code> or <code>RETURNING</code> clauses.
+     * <p>
+     * Combine this with e.g. {@link Functions#nullOnAllNull(Function10)} or
+     * {@link Functions#nullOnAnyNull(Function10)} to achieve <code>null</code>
+     * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
      */
     @NotNull
     <U> SelectField<U> mapping(Class<U> uType, Function10<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? extends U> function);

@@ -80,6 +80,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -110,6 +111,11 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.Longs;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
+import org.jooq.tools.json.ContainerFactory;
+import org.jooq.tools.json.JSONArray;
+import org.jooq.tools.json.JSONObject;
+import org.jooq.tools.json.JSONParser;
+import org.jooq.tools.json.ParseException;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -1112,6 +1118,66 @@ final class Convert {
                     return (U) JSONB.valueOf((String) from);
                 }
 
+                // [#12509] JSON data types can be read from Maps
+                else if (Map.class.isAssignableFrom(fromClass) && toClass == JSON.class) {
+                    return (U) JSON.valueOf(JSONObject.toJSONString((Map) from));
+                }
+
+                // [#12509] JSONB data types can be read from Maps
+                else if (Map.class.isAssignableFrom(fromClass) && toClass == JSONB.class) {
+                    return (U) JSONB.valueOf(JSONObject.toJSONString((Map) from));
+                }
+
+                // [#12509] JSON data types can be read from Lists
+                else if (List.class.isAssignableFrom(fromClass) && toClass == JSON.class) {
+                    return (U) JSON.valueOf(JSONArray.toJSONString((List) from));
+                }
+
+                // [#12509] JSONB data types can be read from Lists
+                else if (List.class.isAssignableFrom(fromClass) && toClass == JSONB.class) {
+                    return (U) JSONB.valueOf(JSONArray.toJSONString((List) from));
+                }
+
+                // [#12509] JSON data types can be written to Maps
+                else if (fromClass == JSON.class && Map.class.isAssignableFrom(toClass)) {
+                    try {
+                        return require(toClass, new JSONParser().parse(((JSON) from).data(), containerFactoryForMaps(toClass)));
+                    }
+                    catch (ParseException e) {
+                        throw new DataTypeException("Error while mapping JSON to Map", e);
+                    }
+                }
+
+                // [#12509] JSON data types can be written to Maps
+                else if (fromClass == JSONB.class && Map.class.isAssignableFrom(toClass)) {
+                    try {
+                        return require(toClass, new JSONParser().parse(((JSONB) from).data(), containerFactoryForMaps(toClass)));
+                    }
+                    catch (ParseException e) {
+                        throw new DataTypeException("Error while mapping JSONB to Map", e);
+                    }
+                }
+
+                // [#12509] JSON data types can be written to Lists
+                else if (fromClass == JSON.class && List.class.isAssignableFrom(toClass)) {
+                    try {
+                        return require(toClass, new JSONParser().parse(((JSON) from).data(), containerFactoryForLists(toClass)));
+                    }
+                    catch (ParseException e) {
+                        throw new DataTypeException("Error while mapping JSON to List", e);
+                    }
+                }
+
+                // [#12509] JSON data types can be written to Lists
+                else if (fromClass == JSONB.class && List.class.isAssignableFrom(toClass)) {
+                    try {
+                        return require(toClass, new JSONParser().parse(((JSONB) from).data(), containerFactoryForLists(toClass)));
+                    }
+                    catch (ParseException e) {
+                        throw new DataTypeException("Error while mapping JSONB to List", e);
+                    }
+                }
+
                 // [#10072] Out of the box Jackson JSON mapping support
                 else if (fromClass == JSON.class && _JSON.JSON_MAPPER != null) {
                     try {
@@ -1245,6 +1311,60 @@ final class Convert {
             }
 
             throw fail(from, toClass);
+        }
+
+        @SuppressWarnings("unchecked")
+        private static final <T> T require(Class<? extends T> type, Object o) {
+            if (o == null || type.isInstance(o))
+                return (T) o;
+            else
+                throw new DataTypeException("Type " + type + " expected. Got: " + o.getClass());
+        }
+
+        @SuppressWarnings("rawtypes")
+        private static final ContainerFactory containerFactoryForMaps(Class<?> mapClass) {
+            return new ContainerFactory() {
+                @Override
+                public Map createObjectContainer() {
+                    try {
+                        if (mapClass == Map.class)
+                            return new LinkedHashMap<>();
+                        else
+                            return (Map) mapClass.getConstructor().newInstance();
+                    }
+                    catch (Exception e) {
+                        throw new DataTypeException("Error while mapping JSON to Map", e);
+                    }
+                }
+
+                @Override
+                public List createArrayContainer() {
+                    return new ArrayList<>();
+                }
+            };
+        }
+
+        @SuppressWarnings("rawtypes")
+        private static final ContainerFactory containerFactoryForLists(Class<?> listClass) {
+            return new ContainerFactory() {
+                @Override
+                public Map createObjectContainer() {
+                    return new LinkedHashMap<>();
+                }
+
+                @Override
+                public List createArrayContainer() {
+                    try {
+                        if (listClass == List.class)
+                            return new ArrayList<>();
+                        else
+                            return (List) listClass.getConstructor().newInstance();
+                    }
+                    catch (Exception e) {
+                        throw new DataTypeException("Error while mapping JSON to List", e);
+                    }
+                }
+            };
         }
 
         private static final String patchIso8601Time(String string) {

@@ -79,7 +79,7 @@ implements
     ) {
         super(
             N_NOT,
-            allNotNull(BOOLEAN, field)
+            BOOLEAN
         );
 
         this.field = nullSafeNotNull(field, BOOLEAN);

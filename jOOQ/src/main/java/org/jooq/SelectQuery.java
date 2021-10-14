@@ -684,7 +684,9 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addSeekBefore(Collection<? extends Field<?>> fields);
 
     /**
-     * Add an <code>OFFSET</code> clause to the query.
+     * Add a 0-based <code>OFFSET</code> clause to the query.
+     * <p>
+     * Offsets are 0-based as they describe the number of rows to <em>skip</em>.
      * <p>
      * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
      * your RDBMS, or if your RDBMS does not natively support offsets, this is
@@ -695,7 +697,9 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addOffset(int offset);
 
     /**
-     * Add an <code>OFFSET</code> clause to the query.
+     * Add a 0-based <code>OFFSET</code> clause to the query.
+     * <p>
+     * Offsets are 0-based as they describe the number of rows to <em>skip</em>.
      * <p>
      * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
      * your RDBMS, or if your RDBMS does not natively support offsets, this is
@@ -706,7 +710,10 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addOffset(Number offset);
 
     /**
-     * Add an <code>OFFSET</code> clause to the query using a named parameter.
+     * Add a 0-based <code>OFFSET</code> clause to the query using a named
+     * parameter.
+     * <p>
+     * Offsets are 0-based as they describe the number of rows to <em>skip</em>.
      * <p>
      * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
      * your RDBMS, or if your RDBMS does not natively support offsets, this is

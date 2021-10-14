@@ -290,7 +290,9 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
     SelectLimitPercentAfterOffsetStep<R> limit(Param<? extends Number> offset, Param<? extends Number> numberOfRows);
 
     /**
-     * Add an <code>OFFSET</code> clause to the query
+     * Add a 0-based <code>OFFSET</code> clause to the query.
+     * <p>
+     * Offsets are 0-based as they describe the number of rows to <em>skip</em>.
      * <p>
      * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
      * your RDBMS, or if your RDBMS does not natively support offsets, this is
@@ -302,7 +304,9 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
     SelectLimitAfterOffsetStep<R> offset(int offset);
 
     /**
-     * Add an <code>OFFSET</code> clause to the query
+     * Add a 0-based <code>OFFSET</code> clause to the query.
+     * <p>
+     * Offsets are 0-based as they describe the number of rows to <em>skip</em>.
      * <p>
      * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
      * your RDBMS, or if your RDBMS does not natively support offsets, this is
@@ -314,7 +318,10 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
     SelectLimitAfterOffsetStep<R> offset(Number offset);
 
     /**
-     * Add an <code>OFFSET</code> clause to the query using a named parameter
+     * Add a 0-based <code>OFFSET</code> clause to the query using a named
+     * parameter
+     * <p>
+     * Offsets are 0-based as they describe the number of rows to <em>skip</em>.
      * <p>
      * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
      * your RDBMS, or if your RDBMS does not natively support offsets, this is

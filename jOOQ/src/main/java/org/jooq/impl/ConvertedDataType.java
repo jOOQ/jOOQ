@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.jooq.Binding;
 import org.jooq.CharacterSet;
@@ -222,8 +223,9 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
             return (U) object;
 
         // [#12413] Avoid double conversion passes between Record and custom object types
-        //          (List is what we produce when reading XML or JSON nested data)
-        else if (delegate.isRecord() && !(object instanceof Record || object instanceof List))
+        //          - List is what we produce when reading XML or JSON nested data in standard SQL
+        //          - Map is what we produce in SQL Server (which doesn't support JSON_ARRAY)
+        else if (delegate.isRecord() && !(object instanceof Record || object instanceof List || object instanceof Map))
             return (U) object;
 
         // [#3200] Try to convert arbitrary objects to T

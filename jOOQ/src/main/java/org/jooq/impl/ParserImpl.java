@@ -10900,12 +10900,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         if (parseFunctionNameIf("PERCENTILE_CONT")) {
             parse('(');
-            ordered = percentileCont(parseFieldUnsignedNumericLiteral(Sign.NONE));
+            ordered = percentileCont((Field) parseField());
             parse(')');
         }
         else if (parseFunctionNameIf("PERCENTILE_DISC")) {
             parse('(');
-            ordered = percentileDisc(parseFieldUnsignedNumericLiteral(Sign.NONE));
+            ordered = percentileDisc((Field) parseField());
             parse(')');
         }
         else

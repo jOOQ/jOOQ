@@ -1046,7 +1046,7 @@ final class Convert {
                     }
                     catch (IllegalArgumentException e1) {
                         try {
-                            return (U) OffsetDateTime.parse((String) from);
+                            return (U) OffsetDateTime.parse(patchIso8601Timestamp((String) from, true));
                         }
                         catch (DateTimeParseException e2) {
                             return null;
@@ -1062,7 +1062,7 @@ final class Convert {
                     }
                     catch (IllegalArgumentException e1) {
                         try {
-                            return (U) Instant.parse((String) from);
+                            return (U) Instant.parse(patchIso8601Timestamp((String) from, true));
                         }
                         catch (DateTimeParseException e2) {
                             return null;

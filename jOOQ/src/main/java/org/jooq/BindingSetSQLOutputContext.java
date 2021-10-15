@@ -39,6 +39,8 @@ package org.jooq;
 
 import java.sql.SQLOutput;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A container type for {@link Binding#set(BindingSetSQLOutputContext)}
  * arguments.
@@ -50,6 +52,7 @@ public interface BindingSetSQLOutputContext<U> extends ResourceManagingScope, Ex
     /**
      * The {@link SQLOutput} to which a bind variable should be bound.
      */
+    @NotNull
     SQLOutput output();
 
     /**
@@ -60,5 +63,6 @@ public interface BindingSetSQLOutputContext<U> extends ResourceManagingScope, Ex
     /**
      * Create a new context from this one using a converter.
      */
+    @NotNull
     <T> BindingSetSQLOutputContext<T> convert(Converter<? extends T, ? super U> converter);
 }

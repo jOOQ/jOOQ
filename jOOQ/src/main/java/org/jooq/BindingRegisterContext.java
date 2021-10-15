@@ -39,6 +39,8 @@ package org.jooq;
 
 import java.sql.CallableStatement;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A container type for {@link Binding#register(BindingRegisterContext)}
  * arguments.
@@ -51,6 +53,7 @@ public interface BindingRegisterContext<U> extends ExecuteScope {
      * The {@link CallableStatement} on which a bind variable should be
      * registered.
      */
+    @NotNull
     CallableStatement statement();
 
     /**
@@ -61,5 +64,6 @@ public interface BindingRegisterContext<U> extends ExecuteScope {
     /**
      * Create a new context from this one using a converter.
      */
+    @NotNull
     <T> BindingRegisterContext<T> convert(Converter<? super T, ? extends U> converter);
 }

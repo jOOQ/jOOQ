@@ -39,6 +39,8 @@ package org.jooq;
 
 import java.sql.PreparedStatement;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A container type for {@link Binding#set(BindingSetStatementContext)}
  * arguments.
@@ -50,6 +52,7 @@ public interface BindingSetStatementContext<U> extends ResourceManagingScope, Ex
     /**
      * The {@link PreparedStatement} to which a bind variable should be bound.
      */
+    @NotNull
     PreparedStatement statement();
 
     /**
@@ -65,5 +68,6 @@ public interface BindingSetStatementContext<U> extends ResourceManagingScope, Ex
     /**
      * Create a new context from this one using a converter.
      */
+    @NotNull
     <T> BindingSetStatementContext<T> convert(Converter<? extends T, ? super U> converter);
 }

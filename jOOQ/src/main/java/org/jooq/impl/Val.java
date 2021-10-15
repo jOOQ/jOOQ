@@ -86,6 +86,8 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Lukas Eder
  */
@@ -326,6 +328,7 @@ final class Val<T> extends AbstractParam<T> implements QOM.Val<T>, UEmpty {
      * Get a bind variable, depending on value of
      * {@link RenderContext#namedParams()}
      */
+    @NotNull
     final String getBindVariable(Context<?> ctx) {
         if (ctx.paramType() == NAMED || ctx.paramType() == NAMED_OR_INLINED) {
             int index = ctx.nextIndex();

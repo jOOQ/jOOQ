@@ -39,6 +39,8 @@ package org.jooq;
 
 import java.sql.CallableStatement;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A container type for {@link Binding#get(BindingGetStatementContext)}
  * arguments.
@@ -50,6 +52,7 @@ public interface BindingGetStatementContext<U> extends ExecuteScope {
     /**
      * The {@link CallableStatement} from which a value is retrieved.
      */
+    @NotNull
     CallableStatement statement();
 
     /**
@@ -65,5 +68,6 @@ public interface BindingGetStatementContext<U> extends ExecuteScope {
     /**
      * Create a new context from this one using a converter.
      */
+    @NotNull
     <T> BindingGetStatementContext<T> convert(Converter<? super T, ? extends U> converter);
 }

@@ -39,6 +39,8 @@ package org.jooq;
 
 import java.sql.ResultSet;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A container type for {@link Binding#get(BindingGetResultSetContext)}
  * arguments.
@@ -50,6 +52,7 @@ public interface BindingGetResultSetContext<U> extends ExecuteScope {
     /**
      * The {@link ResultSet} from which a value is retrieved.
      */
+    @NotNull
     ResultSet resultSet();
 
     /**
@@ -61,6 +64,7 @@ public interface BindingGetResultSetContext<U> extends ExecuteScope {
      * The {@link Field} at column index {@link #index()} whose value is
      * retrieved.
      */
+    @NotNull
     Field<U> field();
 
     /**
@@ -71,5 +75,6 @@ public interface BindingGetResultSetContext<U> extends ExecuteScope {
     /**
      * Create a new context from this one using a converter.
      */
+    @NotNull
     <T> BindingGetResultSetContext<T> convert(Converter<? super T, ? extends U> converter);
 }

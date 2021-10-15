@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A container type for {@link Binding#sql(BindingSQLContext)} arguments.
@@ -49,6 +50,7 @@ public interface BindingSQLContext<U> extends Scope {
      * The {@link RenderContext} that contains the generated SQL and the current
      * SQL generation state.
      */
+    @NotNull
     RenderContext render();
 
     /**
@@ -59,10 +61,12 @@ public interface BindingSQLContext<U> extends Scope {
     /**
      * The variable string - mostly just a <code>?</code>, or a named bind variable, such as <code>:var</code>.
      */
+    @NotNull
     String variable();
 
     /**
      * Create a new context from this one using a converter.
      */
+    @NotNull
     <T> BindingSQLContext<T> convert(Converter<? extends T, ? super U> converter);
 }

@@ -39,6 +39,8 @@ package org.jooq;
 
 import java.sql.SQLInput;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A container type for {@link Binding#get(BindingGetSQLInputContext)}
  * arguments.
@@ -50,6 +52,7 @@ public interface BindingGetSQLInputContext<U> extends ExecuteScope {
     /**
      * The {@link SQLInput} from which a value is retrieved.
      */
+    @NotNull
     SQLInput input();
 
     /**
@@ -60,5 +63,6 @@ public interface BindingGetSQLInputContext<U> extends ExecuteScope {
     /**
      * Create a new context from this one using a converter.
      */
+    @NotNull
     <T> BindingGetSQLInputContext<T> convert(Converter<? super T, ? extends U> converter);
 }

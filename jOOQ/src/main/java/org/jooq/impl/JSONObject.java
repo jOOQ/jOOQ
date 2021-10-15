@@ -313,7 +313,7 @@ implements
             $entries(),
             $onNull(),
             $returning(),
-            constructor()::apply,
+            (a1, a2, a3, a4) -> constructor().apply(a1, a2, a3, a4),
             recurse,
             replacement
         );

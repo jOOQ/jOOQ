@@ -476,7 +476,7 @@ implements
             $include(),
             $where(),
             $excludeNullKeys(),
-            constructor()::apply,
+            (a1, a2, a3, a4, a5, a6, a7, a8) -> constructor().apply(a1, a2, a3, a4, a5, a6, a7, a8),
             recurse,
             replacement
         );

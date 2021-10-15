@@ -156,7 +156,7 @@ implements
         return QOM.replace(
             this,
             $condition(),
-            constructor()::apply,
+            (a1) -> constructor().apply(a1),
             recurse,
             replacement
         );

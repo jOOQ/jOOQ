@@ -169,7 +169,7 @@ implements
         return QOM.replace(
             this,
             $radians(),
-            constructor()::apply,
+            (a1) -> constructor().apply(a1),
             recurse,
             replacement
         );

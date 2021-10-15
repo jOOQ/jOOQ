@@ -231,7 +231,7 @@ implements
             this,
             $value(),
             $base(),
-            constructor()::apply,
+            (a1, a2) -> constructor().apply(a1, a2),
             recurse,
             replacement
         );

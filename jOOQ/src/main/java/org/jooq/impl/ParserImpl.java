@@ -630,7 +630,6 @@ import org.jooq.impl.QOM.DocumentOrContent;
 import org.jooq.impl.QOM.JSONOnNull;
 // ...
 import org.jooq.impl.QOM.UEmpty;
-import org.jooq.impl.QOM.UTransient;
 import org.jooq.impl.QOM.XMLPassingMechanism;
 import org.jooq.impl.ScopeStack.Value;
 import org.jooq.tools.StringUtils;
@@ -639,6 +638,8 @@ import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -1271,7 +1272,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             }
             else if (parseKeywordIf("BY"))
-                result.addOrderBy(orderBy = parseList(',', ParseContext::parseSortField));
+                result.addOrderBy(orderBy = parseList(',', c -> c.parseSortField()));
             else
                 throw expected("SIBLINGS BY", "BY");
         }
@@ -1281,7 +1282,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             if (!before)
                 parseKeywordIf("AFTER");
 
-            List<Field<?>> seek = parseList(',', ParseContext::parseField);
+            List<Field<?>> seek = parseList(',', c -> c.parseField());
             if (seek.size() != orderBy.size())
                 throw exception("ORDER BY size (" + orderBy.size() + ") and SEEK size (" + seek.size() + ") must match");
 
@@ -1390,7 +1391,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (NO_SUPPORT_FOR_UPDATE_OF_FIELDS.contains(parseDialect()))
                     result.setForUpdateOf(parseList(',', ParseContext::parseTable).toArray(EMPTY_TABLE));
                 else
-                    result.setForUpdateOf(parseList(',', ParseContext::parseField));
+                    result.setForUpdateOf(parseList(',', c -> c.parseField()));
 
             if (parseKeywordIf("NOWAIT"))
                 result.setForUpdateNoWait();
@@ -1583,7 +1584,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (distinct) {
             if (parseKeywordIf("ON")) {
                 parse('(');
-                distinctOn = parseList(',', ParseContext::parseField);
+                distinctOn = parseList(',', c -> c.parseField());
                 parse(')');
             }
         }
@@ -1770,12 +1771,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             }
             else if (parseKeywordIf("ROLLUP")) {
                 parse('(');
-                result.addGroupBy(rollup(parseList(',', ParseContext::parseField).toArray(EMPTY_FIELD)));
+                result.addGroupBy(rollup(parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD)));
                 parse(')');
             }
             else if (parseKeywordIf("CUBE")) {
                 parse('(');
-                result.addGroupBy(cube(parseList(',', ParseContext::parseField).toArray(EMPTY_FIELD)));
+                result.addGroupBy(cube(parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD)));
                 parse(')');
             }
             else if (parseKeywordIf("GROUPING SETS")) {
@@ -1785,7 +1786,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 result.addGroupBy(groupingSets(fieldSets.toArray((Collection[]) EMPTY_COLLECTION)));
             }
             else {
-                groupBy = (List) parseList(',', ParseContext::parseField);
+                groupBy = (List) parseList(',', c -> c.parseField());
 
                 if (parseKeywordIf("WITH ROLLUP"))
                     result.addGroupBy(rollup(groupBy.toArray(EMPTY_FIELD)));
@@ -1846,14 +1847,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         s1 = windowName != null
             ? windowName.as()
             : parseKeywordIf("PARTITION BY")
-            ? partitionBy(parseList(',', ParseContext::parseField))
+            ? partitionBy(parseList(',', c -> c.parseField()))
             : null;
 
         if (parseKeywordIf("ORDER BY"))
             if (orderByAllowed)
                 s2 = s1 == null
-                    ? orderBy(parseList(',', ParseContext::parseSortField))
-                    : s1.orderBy(parseList(',', ParseContext::parseSortField));
+                    ? orderBy(parseList(',', c -> c.parseSortField()))
+                    : s1.orderBy(parseList(',', c -> c.parseSortField()));
             else
                 throw exception("ORDER BY not allowed");
         else
@@ -2076,7 +2077,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         DeleteUsingStep<?> s1 = with == null ? dsl.delete(table) : with.delete(table);
         DeleteWhereStep<?> s2 = parseKeywordIf("USING", "FROM") ? s1.using(parseList(',', t -> parseTable(() -> peekKeyword(KEYWORDS_IN_DELETE_FROM)))) : s1;
         DeleteOrderByStep<?> s3 = parseKeywordIf("WHERE") ? s2.where(parseCondition()) : s2;
-        DeleteLimitStep<?> s4 = parseKeywordIf("ORDER BY") ? s3.orderBy(parseList(',', ParseContext::parseSortField)) : s3;
+        DeleteLimitStep<?> s4 = parseKeywordIf("ORDER BY") ? s3.orderBy(parseList(',', c -> c.parseSortField())) : s3;
         DeleteReturningStep<?> s5 = (limit != null || parseKeywordIf("LIMIT"))
             ? s4.limit(limit != null ? limit : requireParam(parseParenthesisedUnsignedIntegerOrBindVariable()))
             : s4;
@@ -2288,7 +2289,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             ? s2.from(parseList(',', t -> parseTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM))))
             : s2;
         UpdateOrderByStep<?> s4 = parseKeywordIf("WHERE") ? s3.where(parseCondition()) : s3;
-        UpdateLimitStep<?> s5 = parseKeywordIf("ORDER BY") ? s4.orderBy(parseList(',', ParseContext::parseSortField)) : s4;
+        UpdateLimitStep<?> s5 = parseKeywordIf("ORDER BY") ? s4.orderBy(parseList(',', c -> c.parseSortField())) : s4;
         UpdateReturningStep<?> s6 = (limit != null || parseKeywordIf("LIMIT"))
             ? s5.limit(limit != null ? limit : requireParam(parseParenthesisedUnsignedIntegerOrBindVariable()))
             : s5;
@@ -6010,7 +6011,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private SortField<?>[] parseParenthesisedSortSpecification() {
         parse('(');
-        SortField<?>[] fields = parseList(',', ParseContext::parseSortField).toArray(EMPTY_SORTFIELD);
+        SortField<?>[] fields = parseList(',', c -> c.parseSortField()).toArray(EMPTY_SORTFIELD);
         parse(')');
 
         return fields;
@@ -6220,7 +6221,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     ? left instanceof Field
                         ? peekSelectOrWith(true)
                             ? ((Field) left).compare(comp, DSL.all(parseWithOrSelect(1)))
-                            : ((Field) left).compare(comp, DSL.all(parseList(',', ParseContext::parseField).toArray(EMPTY_FIELD)))
+                            : ((Field) left).compare(comp, DSL.all(parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD)))
 
                         // TODO: Support quantifiers also for rows
                         : new RowSubqueryCondition((Row) left, DSL.all(parseWithOrSelect(((Row) left).size())), comp)
@@ -6229,7 +6230,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     ? left instanceof Field
                         ? peekSelectOrWith(true)
                             ? ((Field) left).compare(comp, DSL.any(parseWithOrSelect(1)))
-                            : ((Field) left).compare(comp, DSL.any(parseList(',', ParseContext::parseField).toArray(EMPTY_FIELD)))
+                            : ((Field) left).compare(comp, DSL.any(parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD)))
 
                         // TODO: Support quantifiers also for rows
                         : new RowSubqueryCondition((Row) left, DSL.any(parseWithOrSelect(((Row) left).size())), comp)
@@ -6298,10 +6299,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else
                     result = not
                         ? left instanceof Field
-                            ? ((Field) left).notIn(parseList(',', ParseContext::parseField))
+                            ? ((Field) left).notIn(parseList(',', c -> c.parseField()))
                             : new RowInCondition((Row) left, new QueryPartList<>(parseList(',', c -> parseRow(((Row) left).size()))), true)
                         : left instanceof Field
-                            ? ((Field) left).in(parseList(',', ParseContext::parseField))
+                            ? ((Field) left).in(parseList(',', c -> c.parseField()))
                             : new RowInCondition((Row) left, new QueryPartList<>(parseList(',', c -> parseRow(((Row) left).size()))), false);
 
                 parse(')');
@@ -6932,7 +6933,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (allowDoubleParens)
             fieldsOrRows = parseList(',', c -> parseFieldOrRow());
         else
-            fieldsOrRows = parseList(',', ParseContext::parseField);
+            fieldsOrRows = parseList(',', c -> c.parseField());
 
         Row row;
 
@@ -7132,7 +7133,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return emptyList();
         }
         else {
-            List<Field<?>> result = parseList(',', ParseContext::parseField);
+            List<Field<?>> result = parseList(',', c -> c.parseField());
             parse(')');
             return result;
         }
@@ -8548,7 +8549,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldXMLConcatIf() {
         if (parseFunctionNameIf("XMLCONCAT")) {
             parse('(');
-            List<Field<?>> fields = parseList(',', ParseContext::parseField);
+            List<Field<?>> fields = parseList(',', c -> c.parseField());
             parse(')');
 
             return xmlconcat(fields);
@@ -8722,7 +8723,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             s2 = s1 = xmlagg((Field<XML>) parseField());
 
             if (parseKeywordIf("ORDER BY"))
-                s2 = s1.orderBy(parseList(',', ParseContext::parseSortField));
+                s2 = s1.orderBy(parseList(',', c -> c.parseSortField()));
 
             parse(')');
             return s2;
@@ -8851,7 +8852,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             DataType<?> returning = parseJSONReturningIf();
 
             if (onNull == null && returning == null) {
-                result = parseList(',', ParseContext::parseField);
+                result = parseList(',', c -> c.parseField());
                 onNull = parseJSONNullTypeIf();
                 returning = parseJSONReturningIf();
             }
@@ -8887,7 +8888,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             result = s3 = s2 = s1 = jsonb ? jsonbArrayAgg(parseField()) : jsonArrayAgg(parseField());
 
             if (parseKeywordIf("ORDER BY"))
-                result = s3 = s2 = s1.orderBy(parseList(',', ParseContext::parseSortField));
+                result = s3 = s2 = s1.orderBy(parseList(',', c -> c.parseSortField()));
 
             if ((onNull = parseJSONNullTypeIf()) != null)
                 result = s3 = onNull == ABSENT_ON_NULL ? s2.absentOnNull() : s2.nullOnNull();
@@ -8994,7 +8995,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     fields = emptyList();
                 }
                 else {
-                    fields = parseList(',', ParseContext::parseField);
+                    fields = parseList(',', c -> c.parseField());
                     parse(']');
                 }
 
@@ -9208,7 +9209,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldLeastIf() {
         if (parseFunctionNameIf("LEAST", "MINVALUE")) {
             parse('(');
-            List<Field<?>> fields = parseList(',', ParseContext::parseField);
+            List<Field<?>> fields = parseList(',', c -> c.parseField());
             parse(')');
 
             return least(fields.get(0), fields.size() > 1 ? fields.subList(1, fields.size()).toArray(EMPTY_FIELD) : EMPTY_FIELD);
@@ -9220,7 +9221,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldGreatestIf() {
         if (parseFunctionNameIf("GREATEST", "MAXVALUE")) {
             parse('(');
-            List<Field<?>> fields = parseList(',', ParseContext::parseField);
+            List<Field<?>> fields = parseList(',', c -> c.parseField());
             parse(')');
 
             return greatest(fields.get(0), fields.size() > 1 ? fields.subList(1, fields.size()).toArray(EMPTY_FIELD) : EMPTY_FIELD);
@@ -9997,7 +9998,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldConcatIf() {
         if (parseFunctionNameIf("CONCAT")) {
             parse('(');
-            Field<String> result = concat(parseList(',', ParseContext::parseField).toArray(EMPTY_FIELD));
+            Field<String> result = concat(parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD));
             parse(')');
             return result;
         }
@@ -10505,7 +10506,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldDecodeIf() {
         if (parseFunctionNameIf("DECODE", "MAP")) {
             parse('(');
-            List<Field<?>> fields = parseList(',', ParseContext::parseField);
+            List<Field<?>> fields = parseList(',', c -> c.parseField());
             int size = fields.size();
             if (size < 3)
                 throw expected("At least three arguments to DECODE()");
@@ -10527,7 +10528,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse('(');
             Field<Integer> index = (Field<Integer>) parseField();
             parse(',');
-            List<Field<?>> fields = parseList(',', ParseContext::parseField);
+            List<Field<?>> fields = parseList(',', c -> c.parseField());
             parse(')');
 
             return DSL.choose(index, fields.toArray(EMPTY_FIELD));
@@ -10626,7 +10627,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldCoalesceIf() {
         if (parseFunctionNameIf("COALESCE")) {
             parse('(');
-            List<Field<?>> fields = parseList(',', ParseContext::parseField);
+            List<Field<?>> fields = parseList(',', c -> c.parseField());
             parse(')');
 
             Field[] a = EMPTY_FIELD;
@@ -10641,7 +10642,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse('(');
             Field<?> f1 = parseField();
             parse(',');
-            List<Field<?>> f2 = parseList(',', ParseContext::parseField);
+            List<Field<?>> f2 = parseList(',', c -> c.parseField());
             parse(')');
 
             return DSL.field((Field<T>) f1, (Field<T>[]) f2.toArray(EMPTY_FIELD));
@@ -10868,7 +10869,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 s1 = DSL.groupConcat(parseField());
 
             if (parseKeywordIf("ORDER BY"))
-                s2 = s1.orderBy(parseList(',', ParseContext::parseSortField));
+                s2 = s1.orderBy(parseList(',', c -> c.parseSortField()));
             else
                 s2 = s1;
 
@@ -10906,7 +10907,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return parseWindowFunction(null, null, rank());
 
             // Hypothetical set function
-            List<Field<?>> args = parseList(',', ParseContext::parseField);
+            List<Field<?>> args = parseList(',', c -> c.parseField());
             parse(')');
             return rank(args).withinGroupOrderBy(parseWithinGroupN());
         }
@@ -10922,7 +10923,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return parseWindowFunction(null, null, denseRank());
 
             // Hypothetical set function
-            List<Field<?>> args = parseList(',', ParseContext::parseField);
+            List<Field<?>> args = parseList(',', c -> c.parseField());
             parse(')');
             return denseRank(args).withinGroupOrderBy(parseWithinGroupN());
         }
@@ -10938,7 +10939,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return parseWindowFunction(null, null, percentRank());
 
             // Hypothetical set function
-            List<Field<?>> args = parseList(',', ParseContext::parseField);
+            List<Field<?>> args = parseList(',', c -> c.parseField());
             parse(')');
             return percentRank(args).withinGroupOrderBy(parseWithinGroupN());
         }
@@ -10954,7 +10955,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return parseWindowFunction(null, null, cumeDist());
 
             // Hypothetical set function
-            List<Field<?>> args = parseList(',', ParseContext::parseField);
+            List<Field<?>> args = parseList(',', c -> c.parseField());
             parse(')');
             return cumeDist(args).withinGroupOrderBy(parseWithinGroupN());
         }
@@ -11202,7 +11203,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             List<SortField<?>> sort = null;
 
             if (parseKeywordIf("ORDER BY"))
-                sort = parseList(',', ParseContext::parseSortField);
+                sort = parseList(',', c -> c.parseSortField());
 
             parse(')');
 
@@ -11220,11 +11221,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (parseKeywordIf("MULTISET_AGG")) {
             parse('(');
 
-            List<Field<?>> fields = parseList(',', ParseContext::parseField);
+            List<Field<?>> fields = parseList(',', c -> c.parseField());
             List<SortField<?>> sort = null;
 
             if (parseKeywordIf("ORDER BY"))
-                sort = parseList(',', ParseContext::parseSortField);
+                sort = parseList(',', c -> c.parseSortField());
 
             parse(')');
             ArrayAggOrderByStep<?> s1 = multisetAgg(fields);
@@ -11248,7 +11249,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         parse('(');
         parseKeyword("ORDER BY");
-        List<SortField<?>> result = parseList(',', ParseContext::parseSortField);
+        List<SortField<?>> result = parseList(',', c -> c.parseSortField());
         parse(')');
         return result;
     }
@@ -11270,22 +11271,22 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         if (parseFunctionNameIf("RANK")) {
             parse('(');
-            ordered = rank(parseList(',', ParseContext::parseField));
+            ordered = rank(parseList(',', c -> c.parseField()));
             parse(')');
         }
         else if (parseFunctionNameIf("DENSE_RANK")) {
             parse('(');
-            ordered = denseRank(parseList(',', ParseContext::parseField));
+            ordered = denseRank(parseList(',', c -> c.parseField()));
             parse(')');
         }
         else if (parseFunctionNameIf("PERCENT_RANK")) {
             parse('(');
-            ordered = percentRank(parseList(',', ParseContext::parseField));
+            ordered = percentRank(parseList(',', c -> c.parseField()));
             parse(')');
         }
         else if (parseFunctionNameIf("CUME_DIST")) {
             parse('(');
-            ordered = cumeDist(parseList(',', ParseContext::parseField));
+            ordered = cumeDist(parseList(',', c -> c.parseField()));
             parse(')');
         }
         else
@@ -11376,7 +11377,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case MAX:
             case MIN: {
                 if (!distinct && parseIf(',')) {
-                    List<Field<?>> fields = parseList(',', ParseContext::parseField);
+                    List<Field<?>> fields = parseList(',', c -> c.parseField());
                     parse(')');
 
                     return operation == ComputationalOperation.MAX ? greatest(arg, fields.toArray(EMPTY_FIELD)) : least(arg, fields.toArray(EMPTY_FIELD));
@@ -11437,7 +11438,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 fields = row.fields();
             else if ((asterisk = parseQualifiedAsteriskIf()) == null)
                 fields = distinct
-                        ? parseList(',', ParseContext::parseField).toArray(EMPTY_FIELD)
+                        ? parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD)
                         : new Field[] { parseField() };
 
             parse(')');
@@ -11539,7 +11540,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
-                arguments = parseList(',', ParseContext::parseField);
+                arguments = parseList(',', c -> c.parseField());
                 parse(')');
             }
             else
@@ -12028,7 +12029,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final void parseDataTypeIdentityArgsIf() {
         if (parseIf('(')) {
-            parseList(',', ParseContext::parseField);
+            parseList(',', c -> c.parseField());
             parse(')');
         }
     }

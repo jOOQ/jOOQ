@@ -396,8 +396,7 @@ public interface ParseContext extends Scope {
      * Convenience method to parse a list of at least 1 elements.
      */
     @NotNull
-    <T> List<T> parseList(Predicate<? super ParseContext> separator,
-        Function<? super ParseContext, ? extends T> element);
+    <T> List<T> parseList(Predicate<? super ParseContext> separator, Function<? super ParseContext, ? extends T> element);
 
     /**
      * Convenience method to parse parenthesised content.

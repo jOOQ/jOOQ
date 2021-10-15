@@ -284,7 +284,7 @@ implements
             $addValue(),
             $renameValue(),
             $renameValueTo(),
-            constructor()::apply,
+            (a1, a2, a3, a4, a5, a6) -> constructor().apply(a1, a2, a3, a4, a5, a6),
             recurse,
             replacement
         );

@@ -165,7 +165,7 @@ implements
         return QOM.replace(
             this,
             $count(),
-            constructor()::apply,
+            (a1) -> constructor().apply(a1),
             recurse,
             replacement
         );

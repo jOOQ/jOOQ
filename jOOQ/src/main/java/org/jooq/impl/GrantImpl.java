@@ -266,7 +266,7 @@ implements
             $to(),
             $toPublic(),
             $withGrantOption(),
-            constructor()::apply,
+            (a1, a2, a3, a4, a5) -> constructor().apply(a1, a2, a3, a4, a5),
             recurse,
             replacement
         );

@@ -157,7 +157,7 @@ implements
             $name(),
             $value(),
             $local(),
-            constructor()::apply,
+            (a1, a2, a3) -> constructor().apply(a1, a2, a3),
             recurse,
             replacement
         );

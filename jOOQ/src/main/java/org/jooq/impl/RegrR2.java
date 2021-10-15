@@ -163,7 +163,7 @@ implements
             this,
             $y(),
             $x(),
-            constructor()::apply,
+            (a1, a2) -> constructor().apply(a1, a2),
             recurse,
             replacement
         );

@@ -153,7 +153,7 @@ implements
         return QOM.replace(
             this,
             $value(),
-            constructor()::apply,
+            (a1) -> constructor().apply(a1),
             recurse,
             replacement
         );

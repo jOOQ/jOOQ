@@ -147,7 +147,7 @@ implements
         return QOM.replace(
             this,
             $string(),
-            constructor()::apply,
+            (a1) -> constructor().apply(a1),
             recurse,
             replacement
         );

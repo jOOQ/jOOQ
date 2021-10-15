@@ -441,7 +441,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         else if (onDuplicateKeyIgnore) {
             switch (ctx.dialect()) {
 
-                // MySQL has a nice, native syntax for this
+                // The default emulation
 
 
 
@@ -451,14 +451,18 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
+                case FIREBIRD:
 
 
 
-                case MYSQL:
-                case MARIADB: {
-                    toSQLInsert(ctx);
-                    ctx.start(INSERT_ON_DUPLICATE_KEY_UPDATE)
-                       .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
+                case IGNITE:
+
+
+
+
+
+{
+                    ctx.visit(toInsertSelect(ctx.configuration()));
                     break;
                 }
 
@@ -578,8 +582,11 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     break;
                 }
 
+                // MySQL has a nice, native syntax for this
                 default: {
-                    ctx.visit(toInsertSelect(ctx.configuration()));
+                    toSQLInsert(ctx);
+                    ctx.start(INSERT_ON_DUPLICATE_KEY_UPDATE)
+                       .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
                     break;
                 }
             }

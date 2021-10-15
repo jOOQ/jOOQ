@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import java.util.function.Function;
+
 /**
  * A function of degree 1.
  * <p>
@@ -47,10 +49,11 @@ package org.jooq;
  */
 @Internal
 @FunctionalInterface
-public interface Function1<T1, R> {
+public interface Function1<T1, R> extends Function<T1, R> {
 
     /**
      * Applies this function to the given arguments.
      */
+    @Override
     R apply(T1 t1);
 }

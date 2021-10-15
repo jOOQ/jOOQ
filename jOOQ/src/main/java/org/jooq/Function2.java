@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import java.util.function.BiFunction;
+
 /**
  * A function of degree 2.
  * <p>
@@ -47,10 +49,11 @@ package org.jooq;
  */
 @Internal
 @FunctionalInterface
-public interface Function2<T1, T2, R> {
+public interface Function2<T1, T2, R> extends BiFunction<T1, T2, R> {
 
     /**
      * Applies this function to the given arguments.
      */
+    @Override
     R apply(T1 t1, T2 t2);
 }

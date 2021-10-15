@@ -1,7 +1,7 @@
 /**
  * The jOOQ postgres extensions module.
  */
-module org.jooq.codegen {
+module org.jooq.postgres.extensions {
 
     // Other jOOQ modules
     requires transitive org.jooq;
@@ -12,4 +12,7 @@ module org.jooq.codegen {
     // Vendor specific JDBC drivers
     requires static org.postgresql.jdbc;
 
+    opens org.jooq.postgres.extensions.bindings;
+    opens org.jooq.postgres.extensions.converters;
+    opens org.jooq.postgres.extensions.types;
 }

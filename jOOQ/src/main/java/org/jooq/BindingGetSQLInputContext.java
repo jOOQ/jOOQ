@@ -45,7 +45,7 @@ import java.sql.SQLInput;
  *
  * @author Lukas Eder
  */
-public interface BindingGetSQLInputContext<U> extends Scope {
+public interface BindingGetSQLInputContext<U> extends ExecuteScope {
 
     /**
      * The {@link SQLInput} from which a value is retrieved.

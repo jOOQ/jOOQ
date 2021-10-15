@@ -38,23 +38,22 @@
 package org.jooq.impl;
 
 import java.sql.CallableStatement;
-import java.util.Map;
 
 import org.jooq.BindingGetStatementContext;
-import org.jooq.Configuration;
 import org.jooq.Converter;
+import org.jooq.ExecuteContext;
 
 /**
  * @author Lukas Eder
  */
-class DefaultBindingGetStatementContext<U> extends AbstractScope implements BindingGetStatementContext<U> {
+class DefaultBindingGetStatementContext<U> extends AbstractExecuteScope implements BindingGetStatementContext<U> {
 
     private final CallableStatement statement;
     private final int               index;
     private U                       value;
 
-    DefaultBindingGetStatementContext(Configuration configuration, Map<Object, Object> data, CallableStatement statement, int index) {
-        super(configuration, data);
+    DefaultBindingGetStatementContext(ExecuteContext ctx, CallableStatement statement, int index) {
+        super(ctx);
 
         this.statement = statement;
         this.index = index;
@@ -83,7 +82,7 @@ class DefaultBindingGetStatementContext<U> extends AbstractScope implements Bind
     public final <T> BindingGetStatementContext<T> convert(final Converter<? super T, ? extends U> converter) {
         final DefaultBindingGetStatementContext<U> outer = this;
 
-        return new DefaultBindingGetStatementContext<T>(configuration, data, statement, index) {
+        return new DefaultBindingGetStatementContext<T>(ctx, statement, index) {
             @Override
             public void value(T v) {
                 outer.value(converter.from(v));

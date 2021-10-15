@@ -1317,10 +1317,6 @@ implements
 
 
 
-
-
-
-
     private final void toSQLAssign(RenderContext context) {
 
 
@@ -1463,8 +1459,7 @@ implements
 
         {
             DefaultBindingGetStatementContext<U> out = new DefaultBindingGetStatementContext<>(
-                ctx.configuration(),
-                ctx.data(),
+                ctx,
                 (CallableStatement) ctx.statement(),
                 resultIndexes.get(parameter)
             );
@@ -1476,17 +1471,16 @@ implements
 
     private final void registerOutParameters(ExecuteContext ctx) throws SQLException {
         Configuration c = ctx.configuration();
-        Map<Object, Object> data = ctx.data();
         CallableStatement statement = (CallableStatement) ctx.statement();
 
         // Register all out / inout parameters according to their position
         // Note that some RDBMS do not support binding by name very well
         for (Parameter<?> parameter : getParameters0(ctx.configuration()))
             if (resultParameter(c, parameter))
-                registerOutParameter(c, data, statement, parameter);
+                registerOutParameter(ctx, statement, parameter);
     }
 
-    private final <U> void registerOutParameter(Configuration c, Map<Object, Object> data, CallableStatement statement, Parameter<U> parameter) throws SQLException {
+    private final <U> void registerOutParameter(ExecuteContext ctx, CallableStatement statement, Parameter<U> parameter) throws SQLException {
 
 
 
@@ -1495,7 +1489,7 @@ implements
 
 
 
-        parameter.getBinding().register(new DefaultBindingRegisterContext<>(c, data, statement, resultIndexes.get(parameter)));
+        parameter.getBinding().register(new DefaultBindingRegisterContext<>(ctx, statement, resultIndexes.get(parameter)));
     }
 
     // ------------------------------------------------------------------------

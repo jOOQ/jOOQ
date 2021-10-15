@@ -45,7 +45,7 @@ import java.sql.CallableStatement;
  *
  * @author Lukas Eder
  */
-public interface BindingGetStatementContext<U> extends Scope {
+public interface BindingGetStatementContext<U> extends ExecuteScope {
 
     /**
      * The {@link CallableStatement} from which a value is retrieved.

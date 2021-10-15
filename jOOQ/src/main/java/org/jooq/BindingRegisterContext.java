@@ -45,7 +45,7 @@ import java.sql.CallableStatement;
  *
  * @author Lukas Eder
  */
-public interface BindingRegisterContext<U> extends Scope {
+public interface BindingRegisterContext<U> extends ExecuteScope {
 
     /**
      * The {@link CallableStatement} on which a bind variable should be

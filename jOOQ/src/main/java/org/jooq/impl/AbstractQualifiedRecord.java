@@ -37,7 +37,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DefaultExecuteContext.localScope;
+import static org.jooq.impl.DefaultExecuteContext.localExecuteContext;
 import static org.jooq.impl.Tools.fieldsArray;
 import static org.jooq.impl.Tools.getMappedUDTName;
 import static org.jooq.impl.Tools.row0;
@@ -47,6 +47,7 @@ import java.sql.SQLInput;
 import java.sql.SQLOutput;
 
 import org.jooq.Converter;
+import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.QualifiedRecord;
 import org.jooq.RecordQualifier;
@@ -112,18 +113,18 @@ abstract class AbstractQualifiedRecord<R extends QualifiedRecord<R>> extends Abs
 
         // [#1693] This needs to return the fully qualified SQL type name, in
         // case the connected user is not the owner of the UDT
-        return getMappedUDTName(localScope(), this);
+        return getMappedUDTName(localExecuteContext(), this);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final void readSQL(SQLInput stream, String typeName) throws SQLException {
-        Scope scope = localScope();
+        ExecuteContext ctx = localExecuteContext();
         Field<?>[] f = getQualifier().fields();
 
         for (int i = 0; i < f.length; i++) {
             Field field = f[i];
-            DefaultBindingGetSQLInputContext out = new DefaultBindingGetSQLInputContext(scope.configuration(), scope.data(), stream);
+            DefaultBindingGetSQLInputContext out = new DefaultBindingGetSQLInputContext(ctx, stream);
             field.getBinding().get(out);
             set(i, field, out.value());
         }
@@ -132,10 +133,10 @@ abstract class AbstractQualifiedRecord<R extends QualifiedRecord<R>> extends Abs
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final void writeSQL(SQLOutput stream) throws SQLException {
-        Scope scope = localScope();
+        ExecuteContext ctx = localExecuteContext();
         Field<?>[] f = getQualifier().fields();
 
         for (int i = 0; i < f.length; i++)
-            f[i].getBinding().set(new DefaultBindingSetSQLOutputContext(scope.configuration(), scope.data(), stream, get(i)));
+            f[i].getBinding().set(new DefaultBindingSetSQLOutputContext(ctx, stream, get(i)));
     }
 }

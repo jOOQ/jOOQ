@@ -129,7 +129,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
         this.keepStatement = keepStatement;
         this.keepResultSet = keepResultSet;
         this.rs = new CursorResultSet();
-        this.rsContext = new DefaultBindingGetResultSetContext<>(ctx.configuration(), ctx.data(), rs, 0);
+        this.rsContext = new DefaultBindingGetResultSetContext<>(ctx, rs, 0);
 
 
 

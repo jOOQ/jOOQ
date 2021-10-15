@@ -38,23 +38,22 @@
 package org.jooq.impl;
 
 import java.sql.PreparedStatement;
-import java.util.Map;
 
 import org.jooq.BindingSetStatementContext;
-import org.jooq.Configuration;
 import org.jooq.Converter;
+import org.jooq.ExecuteContext;
 
 /**
  * @author Lukas Eder
  */
-class DefaultBindingSetStatementContext<U> extends AbstractResourceManagingScope implements BindingSetStatementContext<U> {
+class DefaultBindingSetStatementContext<U> extends AbstractExecuteScope implements BindingSetStatementContext<U>, ResourceManagingScopeTrait {
 
     private final PreparedStatement statement;
     private final int               index;
     private final U                 value;
 
-    DefaultBindingSetStatementContext(Configuration configuration, Map<Object, Object> data, PreparedStatement statement, int index, U value) {
-        super(configuration, data);
+    DefaultBindingSetStatementContext(ExecuteContext ctx, PreparedStatement statement, int index, U value) {
+        super(ctx);
 
         this.statement = statement;
         this.index = index;
@@ -78,7 +77,7 @@ class DefaultBindingSetStatementContext<U> extends AbstractResourceManagingScope
 
     @Override
     public final <T> BindingSetStatementContext<T> convert(Converter<? extends T, ? super U> converter) {
-        return new DefaultBindingSetStatementContext<>(configuration, data, statement, index, converter.to(value));
+        return new DefaultBindingSetStatementContext<>(ctx, statement, index, converter.to(value));
     }
 
     @Override

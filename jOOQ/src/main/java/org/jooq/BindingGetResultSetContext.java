@@ -45,7 +45,7 @@ import java.sql.ResultSet;
  *
  * @author Lukas Eder
  */
-public interface BindingGetResultSetContext<U> extends Scope {
+public interface BindingGetResultSetContext<U> extends ExecuteScope {
 
     /**
      * The {@link ResultSet} from which a value is retrieved.

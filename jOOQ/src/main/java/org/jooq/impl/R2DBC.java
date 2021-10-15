@@ -313,9 +313,8 @@ final class R2DBC {
                     return (R) delegate.operate(record -> {
 
                         // TODO: What data to pass here?
-                        DefaultBindingGetResultSetContext<?> ctx = new DefaultBindingGetResultSetContext<>(
-                            query.configuration(),
-                            query.configuration().data(),
+                        DefaultBindingGetResultSetContext<?> ctx = new DefaultBindingGetResultSetContext(
+                            new SimpleExecuteContext(query.configuration(), query.configuration().data()),
                             new R2DBCResultSet(query.configuration(), row, meta),
                             0
                         );

@@ -42,60 +42,50 @@ import java.sql.Array;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.SQLXML;
-import java.util.Map;
 
-import org.jooq.Configuration;
 import org.jooq.ResourceManagingScope;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractResourceManagingScope extends AbstractScope implements ResourceManagingScope {
-
-    AbstractResourceManagingScope(Configuration configuration) {
-        super(configuration);
-    }
-
-    AbstractResourceManagingScope(Configuration configuration, Map<Object, Object> data) {
-        super(configuration, data);
-    }
+interface ResourceManagingScopeTrait extends ResourceManagingScope {
 
     // ------------------------------------------------------------------------
     // XXX ResourceManagingScope API
     // ------------------------------------------------------------------------
 
     @Override
-    public final Array autoFree(Array array) {
+    default Array autoFree(Array array) {
         DefaultExecuteContext.register(array);
         return array;
     }
 
     @Override
-    public final Blob autoFree(Blob blob) {
+    default Blob autoFree(Blob blob) {
         DefaultExecuteContext.register(blob);
         return blob;
     }
 
     @Override
-    public final Clob autoFree(Clob clob) {
+    default Clob autoFree(Clob clob) {
         DefaultExecuteContext.register(clob);
         return clob;
     }
 
     @Override
-    public final SQLXML autoFree(SQLXML xml) {
+    default SQLXML autoFree(SQLXML xml) {
         DefaultExecuteContext.register(xml);
         return xml;
     }
 
     @Override
-    public final <R extends Closeable> R autoClose(R closeable) {
+    default <R extends Closeable> R autoClose(R closeable) {
         DefaultExecuteContext.register(closeable);
         return closeable;
     }
 
     @Override
-    public final <R extends AutoCloseable> R autoClose(R closeable) {
+    default <R extends AutoCloseable> R autoClose(R closeable) {
         DefaultExecuteContext.register(closeable);
         return closeable;
     }

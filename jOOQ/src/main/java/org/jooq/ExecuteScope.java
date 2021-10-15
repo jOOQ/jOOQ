@@ -37,33 +37,19 @@
  */
 package org.jooq;
 
-import java.sql.PreparedStatement;
+import org.jetbrains.annotations.Nullable;
 
 /**
- * A container type for {@link Binding#set(BindingSetStatementContext)}
- * arguments.
- *
- * @author Lukas Eder
+ * A {@link Scope} that knows its {@link ExecuteContext}.
  */
-public interface BindingSetStatementContext<U> extends ResourceManagingScope, ExecuteScope {
+public interface ExecuteScope extends Scope {
 
     /**
-     * The {@link PreparedStatement} to which a bind variable should be bound.
+     * The {@link ExecuteContext} that created this scope.
+     *
+     * @return The execute context. Can be <code>null</code> e.g. when running
+     *         in an R2DBC context, see [#11717].
      */
-    PreparedStatement statement();
-
-    /**
-     * The bind variable index at which a bind variable should be bound.
-     */
-    int index();
-
-    /**
-     * The bind value that is being bound.
-     */
-    U value();
-
-    /**
-     * Create a new context from this one using a converter.
-     */
-    <T> BindingSetStatementContext<T> convert(Converter<? extends T, ? super U> converter);
+    @Nullable
+    ExecuteContext executeContext();
 }

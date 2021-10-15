@@ -38,22 +38,21 @@
 package org.jooq.impl;
 
 import java.sql.SQLOutput;
-import java.util.Map;
 
 import org.jooq.BindingSetSQLOutputContext;
-import org.jooq.Configuration;
 import org.jooq.Converter;
+import org.jooq.ExecuteContext;
 
 /**
  * @author Lukas Eder
  */
-class DefaultBindingSetSQLOutputContext<U> extends AbstractResourceManagingScope implements BindingSetSQLOutputContext<U> {
+class DefaultBindingSetSQLOutputContext<U> extends AbstractExecuteScope implements BindingSetSQLOutputContext<U>, ResourceManagingScopeTrait {
 
     private final SQLOutput output;
     private final U         value;
 
-    DefaultBindingSetSQLOutputContext(Configuration configuration, Map<Object, Object> data, SQLOutput output, U value) {
-        super(configuration, data);
+    DefaultBindingSetSQLOutputContext(ExecuteContext ctx, SQLOutput output, U value) {
+        super(ctx);
 
         this.output = output;
         this.value = value;
@@ -71,7 +70,7 @@ class DefaultBindingSetSQLOutputContext<U> extends AbstractResourceManagingScope
 
     @Override
     public final <T> BindingSetSQLOutputContext<T> convert(Converter<? extends T, ? super U> converter) {
-        return new DefaultBindingSetSQLOutputContext<>(configuration, data, output, converter.to(value));
+        return new DefaultBindingSetSQLOutputContext<>(ctx, output, converter.to(value));
     }
 
     @Override

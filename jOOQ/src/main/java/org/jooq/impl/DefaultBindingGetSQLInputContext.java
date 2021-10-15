@@ -38,22 +38,21 @@
 package org.jooq.impl;
 
 import java.sql.SQLInput;
-import java.util.Map;
 
 import org.jooq.BindingGetSQLInputContext;
-import org.jooq.Configuration;
 import org.jooq.Converter;
+import org.jooq.ExecuteContext;
 
 /**
  * @author Lukas Eder
  */
-class DefaultBindingGetSQLInputContext<U> extends AbstractScope implements BindingGetSQLInputContext<U> {
+class DefaultBindingGetSQLInputContext<U> extends AbstractExecuteScope implements BindingGetSQLInputContext<U> {
 
     private final SQLInput input;
     private U              value;
 
-    DefaultBindingGetSQLInputContext(Configuration configuration, Map<Object, Object> data, SQLInput input) {
-        super(configuration, data);
+    DefaultBindingGetSQLInputContext(ExecuteContext ctx, SQLInput input) {
+        super(ctx);
 
         this.input = input;
     }
@@ -76,7 +75,7 @@ class DefaultBindingGetSQLInputContext<U> extends AbstractScope implements Bindi
     public final <T> BindingGetSQLInputContext<T> convert(final Converter<? super T, ? extends U> converter) {
         final DefaultBindingGetSQLInputContext<U> outer = this;
 
-        return new DefaultBindingGetSQLInputContext<T>(configuration, data, input) {
+        return new DefaultBindingGetSQLInputContext<T>(ctx, input) {
             @Override
             public void value(T v) {
                 outer.value(converter.from(v));

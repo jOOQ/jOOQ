@@ -60,7 +60,7 @@ final class DefaultBindContext extends AbstractBindContext {
 
         try {
             ((Field<Object>) field).getBinding().set(
-                new DefaultBindingSetStatementContext<>(configuration(), data(), stmt, nextIndex, value)
+                new DefaultBindingSetStatementContext<>(new SimpleExecuteContext(configuration(), data()), stmt, nextIndex, value)
             );
         }
         catch (Exception e) {

@@ -35,35 +35,28 @@
  *
  *
  */
-package org.jooq;
+package org.jooq.impl;
 
-import java.sql.PreparedStatement;
+import org.jooq.ExecuteContext;
+import org.jooq.ExecuteScope;
 
 /**
- * A container type for {@link Binding#set(BindingSetStatementContext)}
- * arguments.
+ * Base class for {@link ExecuteScope}.
  *
  * @author Lukas Eder
  */
-public interface BindingSetStatementContext<U> extends ResourceManagingScope, ExecuteScope {
+abstract class AbstractExecuteScope extends AbstractScope implements ExecuteScope {
 
-    /**
-     * The {@link PreparedStatement} to which a bind variable should be bound.
-     */
-    PreparedStatement statement();
+    final ExecuteContext ctx;
 
-    /**
-     * The bind variable index at which a bind variable should be bound.
-     */
-    int index();
+    AbstractExecuteScope(ExecuteContext ctx) {
+        super(ctx.configuration(), ctx.data());
 
-    /**
-     * The bind value that is being bound.
-     */
-    U value();
+        this.ctx = ctx;
+    }
 
-    /**
-     * Create a new context from this one using a converter.
-     */
-    <T> BindingSetStatementContext<T> convert(Converter<? extends T, ? super U> converter);
+    @Override
+    public ExecuteContext executeContext() {
+        return ctx;
+    }
 }

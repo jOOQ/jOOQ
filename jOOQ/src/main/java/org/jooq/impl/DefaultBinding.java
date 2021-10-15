@@ -88,6 +88,7 @@ import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.REQUIRES_LITERAL
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.infinity;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.nan;
 import static org.jooq.impl.DefaultBinding.DefaultJSONBBinding.EMULATE_AS_BLOB;
+import static org.jooq.impl.DefaultExecuteContext.localExecuteContext;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.impl.Keywords.K_ARRAY;
@@ -203,6 +204,7 @@ import org.jooq.Converter;
 import org.jooq.Converters;
 import org.jooq.DataType;
 import org.jooq.EnumType;
+import org.jooq.ExecuteScope;
 import org.jooq.Field;
 import org.jooq.JSON;
 import org.jooq.JSONB;
@@ -1261,7 +1263,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Workarounds for the unimplemented Postgres JDBC driver features
          */
         @SuppressWarnings("unchecked")
-        private static final <T> T pgGetArray(Scope ctx, ResultSet rs, DataType<T> dataType, int index) throws SQLException {
+        private static final <T> T pgGetArray(ExecuteScope ctx, ResultSet rs, DataType<T> dataType, int index) throws SQLException {
 
             // Get the JDBC Array and check for null. If null, that's OK
             Array array = null;
@@ -1289,7 +1291,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     // Try fetching the array as a JDBC ResultSet
                     try (ResultSet arrayRs = array.getResultSet()) {
                         Binding<T, T> binding = binding((DataType<T>) dataType.getArrayComponentDataType());
-                        DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<>(ctx.configuration(), ctx.data(), arrayRs, 2);
+                        DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<>(ctx.executeContext(), arrayRs, 2);
 
                         while (arrayRs.next()) {
                             binding.get(out);
@@ -1334,7 +1336,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return null;
         }
     }
-
 
 
 
@@ -3552,7 +3553,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (REQUIRE_RECORD_CAST.contains(ctx.dialect()) && value != null)
                 ctx.statement().setString(ctx.index(), PostgresUtils.toPGString(value));
             else
-                ctx.statement().setObject(ctx.index(), value);
+                localExecuteContext(ctx.executeContext(), () -> { ctx.statement().setObject(ctx.index(), value); return null; });
         }
 
         @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -3587,7 +3588,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     return pgNewRecord(dataType.getType(), null, ctx.resultSet().getObject(ctx.index()));
 
                 default:
-                    return (Record) ctx.resultSet().getObject(ctx.index(), typeMap(dataType.getType(), ctx));
+                    return localExecuteContext(ctx.executeContext(), () -> (Record) ctx.resultSet().getObject(ctx.index(), typeMap(dataType.getType(), ctx)));
             }
         }
 
@@ -3601,7 +3602,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     return pgNewRecord(dataType.getType(), null, ctx.statement().getObject(ctx.index()));
 
                 default:
-                    return (Record) ctx.statement().getObject(ctx.index(), typeMap(dataType.getType(), ctx));
+                    return localExecuteContext(ctx.executeContext(), () -> (Record) ctx.statement().getObject(ctx.index(), typeMap(dataType.getType(), ctx)));
             }
         }
 

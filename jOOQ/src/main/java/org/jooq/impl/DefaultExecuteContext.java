@@ -169,7 +169,6 @@ class DefaultExecuteContext implements ExecuteContext {
             RESOURCES.remove();
         }
 
-        LOCAL_SCOPE.remove();
         LOCAL_CONNECTION.remove();
     }
 
@@ -219,17 +218,39 @@ class DefaultExecuteContext implements ExecuteContext {
     // XXX: Static utility methods for handling Configuration lifecycle
     // ------------------------------------------------------------------------
 
-    private static final ThreadLocal<Scope> LOCAL_SCOPE = new ThreadLocal<>();
+    private static final ThreadLocal<ExecuteContext> LOCAL_EXECUTE_CONTEXT = new ThreadLocal<>();
 
     /**
-     * Get the registered scope.
+     * Get the registered {@link ExecuteContext}.
      * <p>
      * It can be safely assumed that such a configuration is available once the
      * {@link ExecuteContext} has been established, until the statement is
      * closed.
      */
-    static final Scope localScope() {
-        return LOCAL_SCOPE.get();
+    static final ExecuteContext localExecuteContext() {
+        return LOCAL_EXECUTE_CONTEXT.get();
+    }
+
+    /**
+     * Run a runnable with a new {@link #localExecuteContext()}.
+     */
+    static final <E extends Exception> void localExecuteContext(ExecuteContext ctx, ThrowingRunnable<E> runnable) throws E {
+        localExecuteContext(ctx, () -> { runnable.run(); return null; });
+    }
+
+    /**
+     * Run a supplier with a new {@link #localExecuteContext()}.
+     */
+    static final <T, E extends Exception> T localExecuteContext(ExecuteContext ctx, ThrowingSupplier<T, E> supplier) throws E {
+        ExecuteContext old = localExecuteContext();
+
+        try {
+            LOCAL_EXECUTE_CONTEXT.set(ctx);
+            return supplier.get();
+        }
+        finally {
+            LOCAL_EXECUTE_CONTEXT.set(old);
+        }
     }
 
     // ------------------------------------------------------------------------
@@ -339,7 +360,6 @@ class DefaultExecuteContext implements ExecuteContext {
         }
 
         clean();
-        LOCAL_SCOPE.set(this);
     }
 
     @Override

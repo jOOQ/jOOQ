@@ -604,7 +604,7 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
 
     @Override
     default <E> E fetchSingle(RecordMapper<? super R, E> mapper) {
-        return mapper.map(fetchSingle());
+        return (@NotNull E) mapper.map(fetchSingle());
     }
 
     @Override
@@ -1259,13 +1259,15 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
     }
 
     @Override
-    default Object[][] fetchArrays() {
+    @Nullable
+    default Object @NotNull [] @NotNull [] fetchArrays() {
         return collect(intoArray(new Object[0][], R::intoArray));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    default R[] fetchArray() {
+    @NotNull
+    default R @NotNull [] fetchArray() {
         // [#9288] TODO: Create a delayed Collector that can delay the array type lookup until it's available
         Result<R> r = fetch();
 
@@ -1287,7 +1289,8 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
 
     @SuppressWarnings("unchecked")
     @Override
-    default Object[] fetchArray(int fieldIndex) {
+    @Nullable
+    default Object @NotNull [] fetchArray(int fieldIndex) {
         return collect(new DelayedArrayCollector<>(
             fields -> (Object[]) Array.newInstance(fields.field(indexOrFail(fields, fieldIndex)).getType(), 0),
             (RecordMapper<R, Object>) mapper(fieldIndex)
@@ -1295,18 +1298,19 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
     }
 
     @Override
-    default <U> U[] fetchArray(int fieldIndex, Class<? extends U> type) {
+    default <U> U @NotNull [] fetchArray(int fieldIndex, Class<? extends U> type) {
         return collect(Records.intoArray(type, mapper(fieldIndex, Tools.configuration(this), type)));
     }
 
     @Override
-    default <U> U[] fetchArray(int fieldIndex, Converter<?, ? extends U> converter) {
+    default <U> U @NotNull [] fetchArray(int fieldIndex, Converter<?, ? extends U> converter) {
         return collect(Records.intoArray(converter.toType(), mapper(fieldIndex, converter)));
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    default Object[] fetchArray(String fieldName) {
+    @Nullable
+    default Object @NotNull [] fetchArray(String fieldName) {
         return collect(new DelayedArrayCollector<>(
             fields -> (Object[]) Array.newInstance(fields.field(indexOrFail(fields, fieldName)).getType(), 0),
             (RecordMapper<R, Object>) mapper(fieldName)
@@ -1314,18 +1318,19 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
     }
 
     @Override
-    default <U> U[] fetchArray(String fieldName, Class<? extends U> type) {
+    default <U> U @NotNull [] fetchArray(String fieldName, Class<? extends U> type) {
         return collect(Records.intoArray(type, mapper(fieldName, Tools.configuration(this), type)));
     }
 
     @Override
-    default <U> U[] fetchArray(String fieldName, Converter<?, ? extends U> converter) {
+    default <U> U @NotNull [] fetchArray(String fieldName, Converter<?, ? extends U> converter) {
         return collect(Records.intoArray(converter.toType(), mapper(fieldName, converter)));
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    default Object[] fetchArray(Name fieldName) {
+    @Nullable
+    default Object @NotNull [] fetchArray(Name fieldName) {
         return collect(new DelayedArrayCollector<>(
             fields -> (Object[]) Array.newInstance(fields.field(indexOrFail(fields, fieldName)).getType(), 0),
             (RecordMapper<R, Object>) mapper(fieldName)
@@ -1333,27 +1338,27 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
     }
 
     @Override
-    default <U> U[] fetchArray(Name fieldName, Class<? extends U> type) {
+    default <U> U @NotNull [] fetchArray(Name fieldName, Class<? extends U> type) {
         return collect(Records.intoArray(type, mapper(fieldName, Tools.configuration(this), type)));
     }
 
     @Override
-    default <U> U[] fetchArray(Name fieldName, Converter<?, ? extends U> converter) {
+    default <U> U @NotNull [] fetchArray(Name fieldName, Converter<?, ? extends U> converter) {
         return collect(Records.intoArray(converter.toType(), mapper(fieldName, converter)));
     }
 
     @Override
-    default <T> T[] fetchArray(Field<T> field) {
+    default <T> T @NotNull [] fetchArray(Field<T> field) {
         return collect(Records.intoArray(field.getType(), mapper(field)));
     }
 
     @Override
-    default <U> U[] fetchArray(Field<?> field, Class<? extends U> type) {
+    default <U> U @NotNull [] fetchArray(Field<?> field, Class<? extends U> type) {
         return collect(Records.intoArray(type, mapper(field, Tools.configuration(this), type)));
     }
 
     @Override
-    default <T, U> U[] fetchArray(Field<T> field, Converter<? super T, ? extends U> converter) {
+    default <T, U> U @NotNull [] fetchArray(Field<T> field, Converter<? super T, ? extends U> converter) {
         return collect(Records.intoArray(converter.toType(), mapper(field, converter)));
     }
 

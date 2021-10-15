@@ -172,7 +172,6 @@ import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
-import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -251,7 +250,6 @@ import org.jooq.Converter;
 import org.jooq.ConverterProvider;
 import org.jooq.Converters;
 import org.jooq.Cursor;
-import org.jooq.DMLQuery;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.EmbeddableRecord;
@@ -314,8 +312,6 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TemplatingException;
 import org.jooq.exception.TooManyRowsException;
-import org.jooq.impl.QOM.CombinedCondition;
-import org.jooq.impl.QOM.CompareCondition;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
@@ -327,6 +323,9 @@ import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import io.r2dbc.spi.R2dbcException;
 
@@ -1897,7 +1896,7 @@ final class Tools {
         return it instanceof Collection ? new ArrayList<>(((Collection<?>) it).size()) : new ArrayList<>();
     }
 
-    static final <T, R> R apply(T t, Function<? super T, ? extends R> f) {
+    static final <T, R> R apply(@Nullable T t, Function<? super @NotNull T, ? extends R> f) {
         return t == null ? null : f.apply(t);
     }
 

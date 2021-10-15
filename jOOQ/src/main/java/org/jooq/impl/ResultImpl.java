@@ -933,7 +933,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <E> List<E> map(RecordMapper<? super R, E> mapper) {
-        return Tools.map(this, mapper::map);
+        return Tools.map(this, t -> mapper.map(t));
     }
 
     @Override

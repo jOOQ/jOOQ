@@ -104,6 +104,7 @@ import org.jooq.exception.MappingException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
+import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Document;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
@@ -817,7 +818,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         Class<E> type = (Class<E>) object.getClass();
 
         try {
-            return new DefaultRecordMapper<Record, E>((FieldsImpl) fields.fields, type, object, configuration()).map(this);
+            return (@NotNull E) new DefaultRecordMapper<Record, E>((FieldsImpl) fields.fields, type, object, configuration()).map(this);
         }
 
         // Pass MappingExceptions on to client code
@@ -900,7 +901,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <E> E map(RecordMapper<Record, E> mapper) {
-        return mapper.map(this);
+        return (@NotNull E) mapper.map(this);
     }
 
     private final void from0(Object source, FieldsImpl f) {

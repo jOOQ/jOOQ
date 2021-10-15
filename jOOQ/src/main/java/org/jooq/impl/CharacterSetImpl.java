@@ -42,6 +42,8 @@ import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Lukas Eder
  */
@@ -60,6 +62,6 @@ final class CharacterSetImpl extends AbstractQueryPart implements CharacterSet, 
 
     @Override
     public final String getName() {
-        return name.last();
+        return (@NotNull String) name.last();
     }
 }

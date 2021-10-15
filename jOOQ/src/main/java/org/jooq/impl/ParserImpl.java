@@ -1389,7 +1389,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             if (parseKeywordIf("OF"))
                 if (NO_SUPPORT_FOR_UPDATE_OF_FIELDS.contains(parseDialect()))
-                    result.setForUpdateOf(parseList(',', ParseContext::parseTable).toArray(EMPTY_TABLE));
+                    result.setForUpdateOf(parseList(',', t -> t.parseTable()).toArray(EMPTY_TABLE));
                 else
                     result.setForUpdateOf(parseList(',', c -> c.parseField()));
 

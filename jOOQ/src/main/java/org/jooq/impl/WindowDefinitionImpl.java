@@ -339,22 +339,22 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
 
     @Override
     public final FrameUnits $frameUnits() {
-        return apply($windowSpecification(), WindowSpecification::$frameUnits);
+        return apply($windowSpecification(), t -> t.$frameUnits());
     }
 
     @Override
     public final Integer $frameStart() {
-        return apply($windowSpecification(), WindowSpecification::$frameStart);
+        return apply($windowSpecification(), t -> t.$frameStart());
     }
 
     @Override
     public final Integer $frameEnd() {
-        return apply($windowSpecification(), WindowSpecification::$frameEnd);
+        return apply($windowSpecification(), t -> t.$frameEnd());
     }
 
     @Override
     public final FrameExclude $exclude() {
-        return apply($windowSpecification(), WindowSpecification::$exclude);
+        return apply($windowSpecification(), t -> t.$exclude());
     }
 
     @Override

@@ -56,7 +56,6 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.meta.AbstractTypedElementDefinition.getDataType;
 import static org.jooq.tools.StringUtils.isBlank;
 
-import java.beans.ConstructorProperties;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -2075,7 +2074,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 if (generateConstructorPropertiesAnnotationOnRecords())
-                    out.println("@%s({ [[%s]] })", ConstructorProperties.class, properties);
+                    out.println("@%s({ [[%s]] })", out.ref("java.beans.ConstructorProperties"), properties);
 
                 if (pojoArgument)
                     out.println("%s%s(%s value) {", visibility(), className, out.ref(pojoNameFull));
@@ -4664,7 +4663,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
 
             if (generateConstructorPropertiesAnnotationOnPojos())
-                out.println("@%s({ [[%s]] })", ConstructorProperties.class, properties);
+                out.println("@%s({ [[%s]] })", out.ref("java.beans.ConstructorProperties"), properties);
 
             out.print("%s%s(", visibility(), className);
 

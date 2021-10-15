@@ -38,7 +38,7 @@ module org.jooq {
     requires transitive org.reactivestreams;
     requires transitive r2dbc.spi;
 
-
+    // [#11738] optional vendor specific JDBC drivers
 
 
 

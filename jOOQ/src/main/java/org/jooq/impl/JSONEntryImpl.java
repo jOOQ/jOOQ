@@ -173,7 +173,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
             // [#10769] [#12141] Some dialects don't support auto conversions from X to JSON
             case H2:
-                if (type.getType() == UUID.class)
+                if (isType(type, UUID.class))
                     return field.cast(VARCHAR(36));
                 else if (type.isTemporal())
                     return field.cast(VARCHAR);
@@ -183,7 +183,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
             // [#11025] These don't have boolean support outside of JSON
             case MARIADB:
             case MYSQL:
-                if (type.getType() == Boolean.class)
+                if (isType(type, Boolean.class))
                     return inlined(field);
 
                 break;
@@ -228,6 +228,13 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
             JSONEntryImpl.isJSON(ctx, value.getDataType())
           ? DSL.function(N_JSON_QUERY, value.getDataType(), value)
           : value;
+    }
+
+    static final boolean isType(DataType<?> t, Class<?> type) {
+        if (t instanceof ConvertedDataType)
+            t = ((ConvertedDataType<?, ?>) t).delegate();
+
+        return t.getType() == type;
     }
 
     static final boolean isJSON(Scope scope, DataType<?> t) {

@@ -3176,112 +3176,112 @@ implements
 
     @Override
     public final Condition isDistinctFrom(R record) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final Condition isDistinctFrom(Select<? extends R> select) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final Condition isDistinctFrom(QuantifiedSelect<? extends R> select) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final Condition isNotDistinctFrom(R record) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final Condition isNotDistinctFrom(Select<? extends R> select) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final Condition isNotDistinctFrom(QuantifiedSelect<? extends R> select) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final BetweenAndStep<R> between(R minValue) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final Condition between(R minValue, R maxValue) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final BetweenAndStep<R> between(Select<? extends R> minValue) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final Condition between(Select<? extends R> minValue, Select<? extends R> maxValue) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final BetweenAndStepR<R> betweenSymmetric(R minValue) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final Condition betweenSymmetric(R minValue, R maxValue) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final BetweenAndStepR<R> betweenSymmetric(Select<? extends R> minValue) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final Condition betweenSymmetric(Select<? extends R> minValue, Select<? extends R> maxValue) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final BetweenAndStepR<R> notBetween(R minValue) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final Condition notBetween(R minValue, R maxValue) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final BetweenAndStepR<R> notBetween(Select<? extends R> minValue) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final Condition notBetween(Select<? extends R> minValue, Select<? extends R> maxValue) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final BetweenAndStepR<R> notBetweenSymmetric(R minValue) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final Condition notBetweenSymmetric(R minValue, R maxValue) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final BetweenAndStepR<R> notBetweenSymmetric(Select<? extends R> minValue) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final Condition notBetweenSymmetric(Select<? extends R> minValue, Select<? extends R> maxValue) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override

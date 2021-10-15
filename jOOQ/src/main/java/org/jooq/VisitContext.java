@@ -54,7 +54,6 @@ public interface VisitContext extends Scope {
      * {@link Context#start(Clause)}.
      */
     @NotNull
-    @SuppressWarnings("javadoc")
     Clause clause();
 
     /**
@@ -66,8 +65,7 @@ public interface VisitContext extends Scope {
      * contains a stack of clauses.
      */
     @NotNull
-    @SuppressWarnings("javadoc")
-    Clause[] clauses();
+    Clause @NotNull [] clauses();
 
     /**
      * This is the same as calling {@link #clauses()}<code>.length</code>.
@@ -100,7 +98,7 @@ public interface VisitContext extends Scope {
      * <code>VisitContext</code> contains a stack of <code>QueryParts</code>.
      */
     @NotNull
-    QueryPart[] queryParts();
+    QueryPart @NotNull [] queryParts();
 
     /**
      * This is the same as calling {@link #queryParts()}<code>.length</code>.

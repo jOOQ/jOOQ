@@ -858,7 +858,7 @@ public enum SQLDialect {
      * Get a list of all {@link SQLDialect#family()} values.
      */
     @NotNull
-    public static final SQLDialect[] families() {
+    public static final SQLDialect @NotNull [] families() {
         return FAMILIES.clone();
     }
 

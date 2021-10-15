@@ -102,7 +102,7 @@ public interface RecordContext extends Scope {
      *         <code>null</code>
      */
     @NotNull
-    Record[] batchRecords();
+    Record @NotNull [] batchRecords();
 
     /**
      * The {@link Exception} being thrown or <code>null</code>.

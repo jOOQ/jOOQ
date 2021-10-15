@@ -210,7 +210,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * Get the individual, unqualified name parts of this name.
      */
     @NotNull
-    Name[] parts();
+    Name @NotNull [] parts();
 
     /**
      * Appends <code>name</code> to this name.
@@ -228,7 +228,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * The qualified name of this SQL identifier.
      */
     @NotNull
-    String[] getName();
+    String @NotNull [] getName();
 
     /**
      * Create an empty {@link WindowDefinition} from this name.

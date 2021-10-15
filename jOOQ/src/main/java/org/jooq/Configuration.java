@@ -394,14 +394,14 @@ public interface Configuration extends Serializable {
      * configuration.
      */
     @NotNull
-    TransactionListenerProvider[] transactionListenerProviders();
+    TransactionListenerProvider @NotNull [] transactionListenerProviders();
 
     /**
      * Get the configured <code>DiagnosticsListenerProvider</code>s from this
      * configuration.
      */
     @NotNull
-    DiagnosticsListenerProvider[] diagnosticsListenerProviders();
+    DiagnosticsListenerProvider @NotNull [] diagnosticsListenerProviders();
 
     /**
      * Get the configured <code>UnwrapperProvider</code> from this
@@ -452,7 +452,7 @@ public interface Configuration extends Serializable {
      * @see RecordContext
      */
     @NotNull
-    RecordListenerProvider[] recordListenerProviders();
+    RecordListenerProvider @NotNull [] recordListenerProviders();
 
     /**
      * Get the configured <code>ExecuteListenerProvider</code>s from this
@@ -482,7 +482,7 @@ public interface Configuration extends Serializable {
      * @see ExecuteContext
      */
     @NotNull
-    ExecuteListenerProvider[] executeListenerProviders();
+    ExecuteListenerProvider @NotNull [] executeListenerProviders();
 
     /**
      * Get the configured <code>MigrationListenerProvider</code>s from this
@@ -508,7 +508,7 @@ public interface Configuration extends Serializable {
      * @see MigrationContext
      */
     @NotNull
-    MigrationListenerProvider[] migrationListenerProviders();
+    MigrationListenerProvider @NotNull [] migrationListenerProviders();
 
     /**
      * Get the configured <code>VisitListenerProvider</code> instances from this
@@ -534,7 +534,7 @@ public interface Configuration extends Serializable {
      * @see VisitContext
      */
     @NotNull
-    VisitListenerProvider[] visitListenerProviders();
+    VisitListenerProvider @NotNull [] visitListenerProviders();
 
     /**
      * Get the configured <code>ConverterProvider</code> from this

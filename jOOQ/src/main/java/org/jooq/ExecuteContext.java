@@ -108,7 +108,7 @@ public interface ExecuteContext extends Scope {
      *         <code>null</code>
      */
     @NotNull
-    Query[] batchQueries();
+    Query @NotNull [] batchQueries();
 
     /**
      * The jOOQ {@link Routine} that is being executed or <code>null</code> if
@@ -149,7 +149,7 @@ public interface ExecuteContext extends Scope {
      * @return The generated SQL statement(s). This is never <code>null</code>
      */
     @NotNull
-    String[] batchSQL();
+    String @NotNull [] batchSQL();
 
     /**
      * Override the {@link Connection} that is being used for execution.
@@ -341,7 +341,7 @@ public interface ExecuteContext extends Scope {
      * @return The server output. This is never <code>null</code>.
      */
     @NotNull
-    String[] serverOutput();
+    String @NotNull [] serverOutput();
 
     /**
      * Any server output collected from this statement when

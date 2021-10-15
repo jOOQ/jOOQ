@@ -606,8 +606,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * @return This record as an array
      * @see #fromArray(Object...)
      */
-    @NotNull
-    Object[] intoArray();
+    @Nullable
+    Object @NotNull [] intoArray();
 
     /**
      * Convert this record into a list.

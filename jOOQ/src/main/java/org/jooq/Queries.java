@@ -69,7 +69,7 @@ public interface Queries extends AttachableQueryPart, Iterable<Query> {
      * The wrapped collection of queries.
      */
     @NotNull
-    Query[] queries();
+    Query @NotNull [] queries();
 
     /**
      * The wrapped collection of queries as a {@link Block}.

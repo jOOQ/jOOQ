@@ -2198,8 +2198,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @return This result as an array of arrays
      * @see Record#intoArray()
      */
-    @NotNull
-    Object[][] intoArrays();
+    @Nullable
+    Object @NotNull [] @NotNull [] intoArrays();
 
     /**
      * Return all values for a field index from the result.
@@ -2215,8 +2215,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @throws IllegalArgumentException If the argument fieldIndex is not
      *             contained in {@link #fieldsRow()}
      */
-    @NotNull
-    Object[] intoArray(int fieldIndex) throws IllegalArgumentException;
+    @Nullable
+    Object @NotNull [] intoArray(int fieldIndex) throws IllegalArgumentException;
 
     /**
      * Return all values for a field index from the result.
@@ -2232,8 +2232,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    @NotNull
-    <U> U[] intoArray(int fieldIndex, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
+    <U> U @NotNull [] intoArray(int fieldIndex, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field index from the result.
@@ -2249,8 +2248,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    @NotNull
-    <U> U[] intoArray(int fieldIndex, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
+    <U> U @NotNull [] intoArray(int fieldIndex, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field name from the result.
@@ -2265,8 +2263,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}
      */
-    @NotNull
-    Object[] intoArray(String fieldName) throws IllegalArgumentException;
+    @Nullable
+    Object @NotNull [] intoArray(String fieldName) throws IllegalArgumentException;
 
     /**
      * Return all values for a field name from the result.
@@ -2281,8 +2279,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    @NotNull
-    <U> U[] intoArray(String fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
+    <U> U @NotNull [] intoArray(String fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field name from the result.
@@ -2297,8 +2294,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    @NotNull
-    <U> U[] intoArray(String fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
+    <U> U @NotNull [] intoArray(String fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field name from the result.
@@ -2313,8 +2309,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}
      */
-    @NotNull
-    Object[] intoArray(Name fieldName) throws IllegalArgumentException;
+    @Nullable
+    Object @NotNull [] intoArray(Name fieldName) throws IllegalArgumentException;
 
     /**
      * Return all values for a field name from the result.
@@ -2329,8 +2325,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    @NotNull
-    <U> U[] intoArray(Name fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
+    <U> U @NotNull [] intoArray(Name fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field name from the result.
@@ -2345,8 +2340,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    @NotNull
-    <U> U[] intoArray(Name fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
+    <U> U @NotNull [] intoArray(Name fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field from the result.
@@ -2359,8 +2353,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
-    @NotNull
-    <T> T[] intoArray(Field<T> field) throws IllegalArgumentException;
+    <T> T @NotNull [] intoArray(Field<T> field) throws IllegalArgumentException;
 
     /**
      * Return all values for a field from the result.
@@ -2375,8 +2368,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    @NotNull
-    <U> U[] intoArray(Field<?> field, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
+    <U> U @NotNull [] intoArray(Field<?> field, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field from the result.
@@ -2391,8 +2383,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    @NotNull
-    <T, U> U[] intoArray(Field<T> field, Converter<? super T, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
+    <T, U> U @NotNull [] intoArray(Field<T> field, Converter<? super T, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Map results into a custom mapper callback.

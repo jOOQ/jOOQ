@@ -362,8 +362,7 @@ public interface DataType<T> extends Named {
      * @return The converted objects
      * @throws DataTypeException If conversion fails.
      */
-    @NotNull
-    T[] convert(Object... objects);
+    T @NotNull [] convert(Object... objects);
 
     /**
      * Convert an arbitrary set of objects into <code>&lt;T&gt;</code>.

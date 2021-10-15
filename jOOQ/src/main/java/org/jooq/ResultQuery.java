@@ -946,7 +946,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
-    Object[] fetchOneArray() throws DataAccessException, TooManyRowsException;
+    Object @Nullable [] fetchOneArray() throws DataAccessException, TooManyRowsException;
 
     /**
      * Map resulting records onto a custom type.
@@ -1297,8 +1297,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
-    @NotNull
-    Object[] fetchSingleArray() throws DataAccessException, NoDataFoundException, TooManyRowsException;
+    @Nullable
+    Object @NotNull [] fetchSingleArray() throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Map resulting records onto a custom type.
@@ -1912,7 +1912,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @Nullable
-    Object[] fetchAnyArray() throws DataAccessException;
+    Object @Nullable [] fetchAnyArray() throws DataAccessException;
 
     /**
      * Map resulting records onto a custom type.
@@ -4370,8 +4370,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArrays()
      */
-    @NotNull
-    Object[][] fetchArrays() throws DataAccessException;
+    @Nullable
+    Object @NotNull [] @NotNull [] fetchArrays() throws DataAccessException;
 
     /**
      * Execute the query and return the generated result as an array of records.
@@ -4381,7 +4381,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#toArray(Object[])
      */
     @NotNull
-    R[] fetchArray() throws DataAccessException;
+    R @NotNull [] fetchArray() throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field index from the
@@ -4397,8 +4397,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int)
      */
-    @NotNull
-    Object[] fetchArray(int fieldIndex) throws DataAccessException;
+    @Nullable
+    Object @NotNull [] fetchArray(int fieldIndex) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field index from the
@@ -4446,8 +4446,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String)
      */
-    @NotNull
-    Object[] fetchArray(String fieldName) throws DataAccessException;
+    @Nullable
+    Object @NotNull [] fetchArray(String fieldName) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -4495,8 +4495,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name)
      */
-    @NotNull
-    Object[] fetchArray(Name fieldName) throws DataAccessException;
+    @Nullable
+    Object @NotNull [] fetchArray(Name fieldName) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the

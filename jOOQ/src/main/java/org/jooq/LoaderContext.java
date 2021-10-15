@@ -40,6 +40,7 @@ package org.jooq;
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A context object that provides information about a loader's current state to
@@ -59,8 +60,8 @@ public interface LoaderContext {
     /**
      * The row that will be or has been processed.
      */
-    @NotNull @CheckReturnValue
-    Object[] row();
+    @Nullable @CheckReturnValue
+    Object @NotNull [] row();
 
     /**
      * A list of errors that might have happened during the load.

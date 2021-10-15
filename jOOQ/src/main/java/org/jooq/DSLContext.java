@@ -12502,7 +12502,6 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    @Nullable
     @Support
     <T> T fetchValue(Table<? extends Record1<T>> table) throws DataAccessException, TooManyRowsException;
 
@@ -12515,7 +12514,6 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    @Nullable
     @Support
     <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query) throws DataAccessException, TooManyRowsException;
 
@@ -12528,7 +12526,6 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    @Nullable
     @Support
     <T> T fetchValue(TableField<?, T> field) throws DataAccessException, TooManyRowsException;
 
@@ -12540,7 +12537,6 @@ public interface DSLContext extends Scope {
      * @return The value or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Nullable
     @Support
     <T> T fetchValue(SelectField<T> field) throws DataAccessException;
 

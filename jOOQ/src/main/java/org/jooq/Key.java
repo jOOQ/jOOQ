@@ -72,7 +72,7 @@ public interface Key<R extends Record> extends Named {
      * @see #getFields()
      */
     @NotNull
-    TableField<R, ?>[] getFieldsArray();
+    TableField<R, ?> @NotNull [] getFieldsArray();
 
     /**
      * Get this <code>KEY</code> as a formal {@link Constraint} specification.

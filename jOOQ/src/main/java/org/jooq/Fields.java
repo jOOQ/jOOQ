@@ -61,7 +61,7 @@ public interface Fields {
      * Get all fields known to this type.
      */
     @NotNull
-    Field<?>[] fields();
+    Field<?> @NotNull [] fields();
 
     /**
      * Get all fields known to this type as a {@link Row}.
@@ -193,8 +193,8 @@ public interface Fields {
      *            {@link #field(Field)}.
      * @see #field(Field)
      */
-    @NotNull
-    Field<?>[] fields(Field<?>... fields);
+    @Nullable
+    Field<?> @NotNull [] fields(Field<?>... fields);
 
     /**
      * Get all fields known to this type, filtering by some unqualified field
@@ -204,8 +204,8 @@ public interface Fields {
      *            via {@link #field(String)}.
      * @see #field(String)
      */
-    @NotNull
-    Field<?>[] fields(String... names);
+    @Nullable
+    Field<?> @NotNull [] fields(String... names);
 
     /**
      * Get all fields known to this type, filtering by some qualified field
@@ -215,8 +215,8 @@ public interface Fields {
      *            via {@link #field(Name)}.
      * @see #field(Name)
      */
-    @NotNull
-    Field<?>[] fields(Name... names);
+    @Nullable
+    Field<?> @NotNull [] fields(Name... names);
 
     /**
      * Get all fields known to this type, filtering by some field indexes.
@@ -225,8 +225,8 @@ public interface Fields {
      *            via {@link #field(int)}.
      * @see #field(int)
      */
-    @NotNull
-    Field<?>[] fields(int... indexes);
+    @Nullable
+    Field<?> @NotNull [] fields(int... indexes);
 
     /**
      * Get a field's index from this type.
@@ -262,7 +262,7 @@ public interface Fields {
      * the corresponding <code>Field</code> in {@link #fields()}
      */
     @NotNull
-    Class<?>[] types();
+    Class<?> @NotNull [] types();
 
     /**
      * Get the field type for a given field index, or <code>null</code> if no
@@ -298,7 +298,7 @@ public interface Fields {
      * for the corresponding <code>Field</code> in {@link #fields()}
      */
     @NotNull
-    DataType<?>[] dataTypes();
+    DataType<?> @NotNull [] dataTypes();
 
     /**
      * Get the field data type for a given field index, or <code>null</code> if

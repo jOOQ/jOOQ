@@ -83,22 +83,22 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
 
     @Override
     public final String peekAlias() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final String nextAlias() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final String render() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final String render(QueryPart part) {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override

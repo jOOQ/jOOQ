@@ -4415,8 +4415,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int, Class)
      */
-    @NotNull
-    <U> U[] fetchArray(int fieldIndex, Class<? extends U> type) throws DataAccessException;
+    <U> U @NotNull [] fetchArray(int fieldIndex, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field index from the
@@ -4429,8 +4428,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int, Converter)
      */
-    @NotNull
-    <U> U[] fetchArray(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException;
+    <U> U @NotNull [] fetchArray(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -4464,8 +4462,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String, Converter)
      */
-    @NotNull
-    <U> U[] fetchArray(String fieldName, Class<? extends U> type) throws DataAccessException;
+    <U> U @NotNull [] fetchArray(String fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -4478,8 +4475,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String, Class)
      */
-    @NotNull
-    <U> U[] fetchArray(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
+    <U> U @NotNull [] fetchArray(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -4513,8 +4509,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name, Converter)
      */
-    @NotNull
-    <U> U[] fetchArray(Name fieldName, Class<? extends U> type) throws DataAccessException;
+    <U> U @NotNull [] fetchArray(Name fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -4527,8 +4522,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name, Class)
      */
-    @NotNull
-    <U> U[] fetchArray(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
+    <U> U @NotNull [] fetchArray(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field from the generated
@@ -4541,8 +4535,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field)
      */
-    @NotNull
-    <T> T[] fetchArray(Field<T> field) throws DataAccessException;
+    <T> T @NotNull [] fetchArray(Field<T> field) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field from the generated
@@ -4559,8 +4552,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field, Class)
      */
-    @NotNull
-    <U> U[] fetchArray(Field<?> field, Class<? extends U> type) throws DataAccessException;
+    <U> U @NotNull [] fetchArray(Field<?> field, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field from the generated
@@ -4573,8 +4565,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field, Converter)
      */
-    @NotNull
-    <T, U> U[] fetchArray(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException;
+    <T, U> U @NotNull [] fetchArray(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException;
 
     /**
      * Fetch results into a custom mapper callback.

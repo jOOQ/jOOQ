@@ -68,6 +68,8 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A wrapped DML query ({@link Insert}, {@link Update}, {@link Delete}) that
  * works like a {@link ResultQuery}.
@@ -139,7 +141,7 @@ implements
     @Override
     public final Result<R> fetch() {
         delegate.execute();
-        return getResult();
+        return (@NotNull Result<R>) getResult();
     }
 
     @Override

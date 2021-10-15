@@ -386,7 +386,7 @@ public final class Internal {
     @NotNull
     @Deprecated(since = "3.16", forRemoval = true)
     public static final <R extends Record, ER extends EmbeddableRecord<ER>> Row fieldsRow(TableField<R, ER> embeddableField) {
-        return embeddableField.getDataType().getRow();
+        return (@NotNull Row) embeddableField.getDataType().getRow();
     }
 
     @Support

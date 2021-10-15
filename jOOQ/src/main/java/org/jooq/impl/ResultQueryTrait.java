@@ -292,7 +292,7 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
         if (fetchIntermediateResult(Tools.configuration(this)))
             return fetch().intoResultSet();
         else
-            return fetchLazy().resultSet();
+            return (@NotNull ResultSet) fetchLazy().resultSet();
     }
 
     @Override
@@ -519,7 +519,8 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
     }
 
     @Override
-    default Object[] fetchOneArray() {
+    @Nullable
+    default Object @Nullable [] fetchOneArray() {
         R record = fetchOne();
         return record == null ? null : record.intoArray();
     }
@@ -612,7 +613,8 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
     }
 
     @Override
-    default Object[] fetchSingleArray() {
+    @Nullable
+    default Object @NotNull [] fetchSingleArray() {
         return fetchSingle().intoArray();
     }
 
@@ -808,7 +810,8 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
     }
 
     @Override
-    default Object[] fetchAnyArray() {
+    @Nullable
+    default Object @Nullable [] fetchAnyArray() {
         R record = fetchAny();
         return record == null ? null : record.intoArray();
     }

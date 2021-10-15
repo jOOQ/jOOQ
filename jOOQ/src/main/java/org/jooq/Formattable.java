@@ -653,7 +653,6 @@ public interface Formattable {
      * @see <a
      *      href="http://www.jooq.org/xsd/jooq-export-3.10.0.xsd">http://www.jooq.org/xsd/jooq-export-3.10.0.xsd</a>
      */
-    @NotNull
     <H extends ContentHandler> H intoXML(H handler) throws SAXException;
 
     /**
@@ -665,7 +664,6 @@ public interface Formattable {
      * @see <a
      *      href="http://www.jooq.org/xsd/jooq-export-3.10.0.xsd">http://www.jooq.org/xsd/jooq-export-3.10.0.xsd</a>
      */
-    @NotNull
     <H extends ContentHandler> H intoXML(H handler, XMLFormat format) throws SAXException;
 
 }

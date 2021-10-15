@@ -85,7 +85,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * @see #getKeyFields()
      */
     @NotNull
-    TableField<O, ?>[] getKeyFieldsArray();
+    TableField<O, ?> @NotNull [] getKeyFieldsArray();
 
     /**
      * Fetch a parent record of a given record through this foreign key

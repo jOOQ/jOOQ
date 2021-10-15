@@ -54,14 +54,14 @@ import org.jooq.Result;
 class DefaultRecordContext extends AbstractScope implements RecordContext {
 
     private final ExecuteType type;
-    private final Record[]    records;
+    private final Record      record;
     Exception                 exception;
 
-    DefaultRecordContext(Configuration configuration, ExecuteType type, Record... records) {
+    DefaultRecordContext(Configuration configuration, ExecuteType type, Record record) {
         super(configuration);
 
         this.type = type;
-        this.records = records;
+        this.record = record;
     }
 
     @Override
@@ -71,18 +71,17 @@ class DefaultRecordContext extends AbstractScope implements RecordContext {
 
     @Override
     public final Record record() {
-        return records != null && records.length > 0 ? records[0] : null;
+        return record;
     }
 
     @Override
     public final Record[] batchRecords() {
-        return records;
+        return new Record[] { record };
     }
 
     @Override
     public final RecordType<?> recordType() {
-        Record record = record();
-        return record != null ? new FieldsImpl<>(record.fields()) : null;
+        return new FieldsImpl<>(record.fields());
     }
 
     @Override
@@ -92,13 +91,8 @@ class DefaultRecordContext extends AbstractScope implements RecordContext {
 
     @Override
     public String toString() {
-        if (records != null && records.length > 0) {
-            Result<Record> result = DSL.using(configuration).newResult(records[0].fields());
-            result.addAll(Arrays.asList(records));
-            return result.toString();
-        }
-        else {
-            return "No Records";
-        }
+        Result<Record> result = DSL.using(configuration).newResult(record.fields());
+        result.add(record);
+        return result.toString();
     }
 }

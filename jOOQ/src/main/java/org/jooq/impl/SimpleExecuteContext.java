@@ -74,135 +74,146 @@ final class SimpleExecuteContext extends AbstractScope implements ExecuteContext
 
     @Override
     public final Connection connection() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final ExecuteType type() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final Query query() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final Query[] batchQueries() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final Routine<?> routine() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final String sql() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final void sql(String sql) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final String[] batchSQL() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final void connectionProvider(ConnectionProvider connectionProvider) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final PreparedStatement statement() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final void statement(PreparedStatement statement) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final int statementExecutionCount() {
-        return 0;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final ResultSet resultSet() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final void resultSet(ResultSet resultSet) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final Record record() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final void record(Record record) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final int rows() {
-        return 0;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final void rows(int rows) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
-    public final int [] batchRows() {
-        return null;
+    public final int[] batchRows() {
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final Result<?> result() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final void result(Result<?> result) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final RuntimeException exception() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final void exception(RuntimeException e) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final SQLException sqlException() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final void sqlException(SQLException e) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final SQLWarning sqlWarning() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final void sqlWarning(SQLWarning e) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final String[] serverOutput() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public final void serverOutput(String[] output) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 }

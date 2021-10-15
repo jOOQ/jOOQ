@@ -147,9 +147,6 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
         @SuppressWarnings({ "unchecked", "rawtypes" })
         @Override
         public final R unmap(E source) {
-            if (source == null)
-                return null;
-
             if (source instanceof Object[]) { Object[] array = (Object[]) source;
                 int size = rowType.size();
                 Record record = newRecord();
@@ -164,7 +161,7 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
                 return (R) record;
             }
 
-            throw new MappingException("Object[] expected. Got: " + source.getClass());
+            throw new MappingException("Object[] expected. Got: " + klass(source));
         }
     }
 
@@ -173,9 +170,6 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
         @SuppressWarnings({ "unchecked", "rawtypes" })
         @Override
         public final R unmap(E source) {
-            if (source == null)
-                return null;
-
             if (source instanceof Iterable) { Iterable<?> iterable = (Iterable<?>) source;
                 Iterator<?> it = iterable.iterator();
                 int size = rowType.size();
@@ -191,7 +185,7 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
                 return (R) record;
             }
 
-            throw new MappingException("Iterable expected. Got: " + source.getClass());
+            throw new MappingException("Iterable expected. Got: " + klass(source));
         }
     }
 
@@ -200,8 +194,6 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
         @SuppressWarnings("unchecked")
         @Override
         public R unmap(E source) {
-            if (source == null)
-                return null;
 
             // [#1987] Distinguish between various types to load data from
             // Maps are loaded using a {field-name -> value} convention
@@ -219,7 +211,7 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
                 return (R) record;
             }
 
-            throw new MappingException("Map expected. Got: " + source.getClass());
+            throw new MappingException("Map expected. Got: " + klass(source));
         }
     }
 
@@ -228,9 +220,6 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
         @SuppressWarnings("unchecked")
         @Override
         public R unmap(E source) {
-            if (source == null)
-                return null;
-
             Record record = newRecord();
 
             try {
@@ -267,5 +256,9 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
                 throw new MappingException("An error ocurred when mapping record from " + type, e);
             }
         }
+    }
+
+    private static final String klass(Object o) {
+        return o == null ? "null" : o.getClass().toString();
     }
 }

@@ -4257,8 +4257,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T extends Number> T nextval(Sequence<T> sequence) {
-        Field<T> nextval = sequence.nextval();
-        return select(nextval).fetchOne(nextval);
+        return fetchValue(sequence.nextval());
     }
 
     @Override
@@ -4278,8 +4277,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T extends Number> T currval(Sequence<T> sequence) {
-        Field<T> currval = sequence.currval();
-        return select(currval).fetchOne(currval);
+        return fetchValue(sequence.currval());
     }
 
     // -------------------------------------------------------------------------

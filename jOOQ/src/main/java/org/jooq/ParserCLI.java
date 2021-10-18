@@ -102,6 +102,10 @@ public final class ParserCLI {
             settings.setRenderQuotedNames(a.quoted);
         if (a.fromDialect != null)
             settings.setParseDialect(a.fromDialect);
+        if (a.parseDateFormat != null)
+            settings.setParseDateFormat(a.parseDateFormat);
+        if (a.parseTimestampFormat != null)
+            settings.setParseTimestampFormat(a.parseTimestampFormat);
         if (a.renderCoalesceToEmptyStringInConcat)
             settings.setRenderCoalesceToEmptyStringInConcat(true);
         if (a.renderOptionalInnerKeyword != null)
@@ -184,6 +188,18 @@ public final class ParserCLI {
                                     a.renderCoalesceToEmptyStringInConcat = Boolean.parseBoolean(arg.toLowerCase());
 
                                 displayRenderCoalesceToEmptyStringInConcat(a);
+                            }
+                            else if ("parse-date-format".equals(flag)) {
+                                if (arg != null)
+                                    a.parseDateFormat = arg;
+
+                                displayParseDateFormat(a);
+                            }
+                            else if ("parse-timestamp-format".equals(flag)) {
+                                if (arg != null)
+                                    a.parseTimestampFormat = arg;
+
+                                displayParseTimestampFormat(a);
                             }
                             else if ("render-optional-inner-keyword".equals(flag))
                                 parseInteractive(RenderOptionalKeyword.class, arg, e -> { a.renderOptionalInnerKeyword = e; displayRenderOptionalInnerKeyword(a); });
@@ -281,6 +297,14 @@ public final class ParserCLI {
 
     private static void displayFormatted(Args a) {
         System.out.println("Formatted                          : " + a.formatted);
+    }
+
+    private static void displayParseDateFormat(Args a) {
+        System.out.println("Parse date format                  : " + a.parseDateFormat);
+    }
+
+    private static void displayParseTimestampFormat(Args a) {
+        System.out.println("Parse timestamp format             : " + a.parseTimestampFormat);
     }
 
     private static void displayRenderCoalesceToEmptyStringInConcat(Args a) {
@@ -384,6 +408,10 @@ public final class ParserCLI {
                 // [#9144] -t maintained for backwards compatibility
                 else if ("-t".equals(args[i]) || "-T".equals(args[i]) || "--to-dialect".equals(args[i]))
                     result.toDialect = parse((Class<SQLDialect>) (enumArgument = SQLDialect.class), args[++i]);
+                else if ("--parse-date-format".equals(args[i]))
+                    result.parseDateFormat = args[++i];
+                else if ("--parse-timestamp-format".equals(args[i]))
+                    result.parseTimestampFormat = args[++i];
                 else if ("--render-coalesce-to-empty-string-in-concat".equals(args[i]))
                     result.renderCoalesceToEmptyStringInConcat = true;
                 else if ("--render-optional-inner-keyword".equals(args[i]))
@@ -445,12 +473,16 @@ public final class ParserCLI {
         System.out.println("  -T / --to-dialect                               <SQLDialect>        Specify the output dialect (org.jooq.SQLDialect)");
         System.out.println("  -s / --sql                                      <String>            Specify the input SQL string");
         System.out.println("");
-        System.out.println("Commercial distribution only features:");
-        System.out.println("  --render-coalesce-to-empty-string-in-concat     <boolean>");
+        System.out.println("Additional flags:");
+        System.out.println("  --parse-date-format                             <String>");
+        System.out.println("  --parse-timestamp-format                        <String>");
         System.out.println("  --render-optional-inner-keyword                 <RenderOptionalKeyword>");
         System.out.println("  --render-optional-outer-keyword                 <RenderOptionalKeyword>");
         System.out.println("  --render-optional-as-keyword-for-field-aliases  <RenderOptionalKeyword>");
         System.out.println("  --render-optional-as-keyword-for-table-aliases  <RenderOptionalKeyword>");
+        System.out.println("");
+        System.out.println("Commercial distribution only features:");
+        System.out.println("  --render-coalesce-to-empty-string-in-concat     <boolean>");
         System.out.println("  --transform-ansi-join-to-table-lists            <boolean>");
         System.out.println("  --transform-qualify                             <Transformation>");
         System.out.println("  --transform-rownum                              <Transformation>");
@@ -472,12 +504,16 @@ public final class ParserCLI {
         System.out.println("  /T  or  /to-dialect                            <SQLDialect>        Specify the output dialect (org.jooq.SQLDialect)");
         System.out.println("                                                 <String>            Specify the input SQL string");
         System.out.println("");
-        System.out.println("Commercial distribution only features:");
-        System.out.println("  /render-coalesce-to-empty-string-in-concat     <boolean>");
+        System.out.println("Additional flags:");
+        System.out.println("  /parse-date-format                             <String>");
+        System.out.println("  /parse-timestamp-format                        <String>");
         System.out.println("  /render-optional-inner-keyword                 <RenderOptionalKeyword>");
         System.out.println("  /render-optional-outer-keyword                 <RenderOptionalKeyword>");
         System.out.println("  /render-optional-as-keyword-for-field-aliases  <RenderOptionalKeyword>");
         System.out.println("  /render-optional-as-keyword-for-table-aliases  <RenderOptionalKeyword>");
+        System.out.println("");
+        System.out.println("Commercial distribution only features:");
+        System.out.println("  /render-coalesce-to-empty-string-in-concat     <boolean>");
         System.out.println("  /transform-ansi-join-to-table-lists            <boolean>");
         System.out.println("  /transform-qualify                             <Transformation>");
         System.out.println("  /transform-rownum                              <Transformation>");
@@ -489,21 +525,24 @@ public final class ParserCLI {
     }
 
     public static final class Args {
-        List<String>                           history                     = new ArrayList<>();
+        Settings                               d                                      = new Settings();
+        List<String>                           history                                = new ArrayList<>();
         String                                 sql;
-        RenderKeywordCase                      keywords                    = RenderKeywordCase.LOWER;
-        RenderNameCase                         name                        = RenderNameCase.LOWER;
-        RenderQuotedNames                      quoted                      = RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED;
-        SQLDialect                             toDialect                   = SQLDialect.DEFAULT;
-        SQLDialect                             fromDialect                 = SQLDialect.DEFAULT;
+        RenderKeywordCase                      keywords                               = RenderKeywordCase.LOWER;
+        RenderNameCase                         name                                   = RenderNameCase.LOWER;
+        RenderQuotedNames                      quoted                                 = RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED;
+        SQLDialect                             toDialect                              = SQLDialect.DEFAULT;
+        SQLDialect                             fromDialect                            = SQLDialect.DEFAULT;
         boolean                                formatted;
         boolean                                interactive;
         boolean                                done;
         boolean                                renderCoalesceToEmptyStringInConcat;
-        RenderOptionalKeyword                  renderOptionalInnerKeyword                     = RenderOptionalKeyword.DEFAULT;
-        RenderOptionalKeyword                  renderOptionalOuterKeyword                     = RenderOptionalKeyword.DEFAULT;
-        RenderOptionalKeyword                  renderOptionalAsKeywordForFieldAliases                     = RenderOptionalKeyword.DEFAULT;
-        RenderOptionalKeyword                  renderOptionalAsKeywordForTableAliases                     = RenderOptionalKeyword.DEFAULT;
+        RenderOptionalKeyword                  renderOptionalInnerKeyword             = RenderOptionalKeyword.DEFAULT;
+        RenderOptionalKeyword                  renderOptionalOuterKeyword             = RenderOptionalKeyword.DEFAULT;
+        RenderOptionalKeyword                  renderOptionalAsKeywordForFieldAliases = RenderOptionalKeyword.DEFAULT;
+        RenderOptionalKeyword                  renderOptionalAsKeywordForTableAliases = RenderOptionalKeyword.DEFAULT;
+        String                                 parseDateFormat                        = d.getParseDateFormat();
+        String                                 parseTimestampFormat                   = d.getParseTimestampFormat();
         boolean                                transformAnsiJoinToTableLists;
         Transformation                         transformQualify;
         Transformation                         transformRownum;

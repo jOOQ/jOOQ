@@ -1786,7 +1786,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 result.addGroupBy(groupingSets(fieldSets.toArray((Collection[]) EMPTY_COLLECTION)));
             }
             else {
-                groupBy = (List) parseList(',', c -> c.parseField());
+                groupBy = parseList(',', c -> c.parseField());
 
                 if (parseKeywordIf("WITH ROLLUP"))
                     result.addGroupBy(rollup(groupBy.toArray(EMPTY_FIELD)));
@@ -2345,7 +2345,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Field<?>[] insertColumns = null;
         List<Field<?>> insertValues = null;
         Condition insertWhere = null;
-        Map<Field<?>, Object> updateSet = null;
+        Map<Field<?>, Object> updateSet;
         Condition updateAnd = null;
         Condition updateWhere = null;
         Condition deleteWhere = null;
@@ -2972,14 +2972,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             ? step1.restartIdentity()
             : step1;
 
-        Truncate<?> step3 =
-              cascade
+        return cascade
             ? step2.cascade()
             : restrict
             ? step2.restrict()
             : step2;
-
-        return step3;
     }
 
     private final DDLQuery parseGrant() {
@@ -4684,10 +4681,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     if (!parseIf('='))
                         parseKeywordIf("IS");
                     fieldComment = parseComment();
+                    comment = true;
                     continue;
                 }
                 else if (peekKeyword("OPTIONS")) {
                     fieldComment = parseOptionsDescription();
+                    comment = true;
                     continue;
                 }
             }
@@ -4728,7 +4727,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final DDLQuery parseCreateType() {
         Name name = parseName();
         parseKeyword("AS ENUM");
-        List<String> values = new ArrayList<>();
+        List<String> values;
         parse('(');
 
         if (!parseIf(')')) {
@@ -4829,7 +4828,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Constraint parseForeignKeySpecification(ConstraintTypeStep constraint) {
-        Name constraintName = null;
+        Name constraintName;
         if ((constraintName = parseIdentifierIf()) != null)
             if (constraint == null)
                 constraint = constraint(constraintName);
@@ -6344,7 +6343,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return parseEscapeClauseIf(result);
                     }
                     else {
-                        List<Field<?>> fields = null;
+                        List<Field<?>> fields;
                         if (parseIf(')')) {
                             fields = emptyList();
                         }
@@ -6366,7 +6365,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return parseEscapeClauseIf(result);
                     }
                     else {
-                        List<Field<?>> fields = null;
+                        List<Field<?>> fields;
                         if (parseIf(')')) {
                             fields = emptyList();
                         }
@@ -6464,7 +6463,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Table<?> parseTableFactor(BooleanSupplier forbiddenKeywords) {
 
         // [#7982] Postpone turning Select into a Table in case there is an alias
-        TableLike<?> result = null;
+        TableLike<?> result;
 
 
 
@@ -7496,7 +7495,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return sign;
     }
 
-    private static enum Sign {
+    private enum Sign {
         NONE,
         PLUS,
         MINUS;
@@ -8472,7 +8471,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse('(');
             Long l = parseSignedIntegerLiteralIf();
 
-            if (l != null && l.longValue() != -1L)
+            if (l != null && l != -1L)
                 throw expected("No argument or -1 expected");
 
             parse(')');
@@ -8511,9 +8510,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return null;
     }
 
-    private static enum SequenceMethod {
+    private enum SequenceMethod {
         NEXTVAL,
-        CURRVAL;
+        CURRVAL
     }
 
     private final Field<?> parseFieldXMLCommentIf() {
@@ -9148,7 +9147,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final Field<?> parseFieldRoundIf() {
         if (parseFunctionNameIf("ROUND")) {
-            Field arg1 = null;
+            Field arg1;
             Field arg2 = null;
 
             parse('(');
@@ -10767,12 +10766,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseAggregateFunctionIf(boolean basic, AggregateFunction<?> f) {
-        AggregateFunction<?> agg = null;
-        AggregateFilterStep<?> filter = null;
-        WindowBeforeOverStep<?> over = null;
-        Object keep = null;
-        Field<?> result = null;
-        Condition condition = null;
+        AggregateFunction<?> agg;
+        AggregateFilterStep<?> filter;
+        WindowBeforeOverStep<?> over;
+        Object keep;
+        Field<?> result;
+        Condition condition;
 
         keep = over = filter = agg = f != null ? f : parseCountIf();
         if (filter == null) {
@@ -11091,14 +11090,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         parseKeyword("OVER");
         Object nameOrSpecification = parseWindowNameOrSpecification(true);
 
-        // https://bugs.eclipse.org/bugs/show_bug.cgi?id=494897
-        Field<?> result = nameOrSpecification instanceof Name
+        return nameOrSpecification instanceof Name
             ? s3.over((Name) nameOrSpecification)
             : nameOrSpecification instanceof WindowSpecification
             ? s3.over((WindowSpecification) nameOrSpecification)
             : s3.over();
-
-        return result;
     }
 
     private final WindowOverStep<?> parseWindowRespectIgnoreNulls(WindowIgnoreNullsStep s2, WindowOverStep<?> s3) {
@@ -11756,10 +11752,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         DataType<?> result = parseDataTypePrefixIf(parseUnknownTypes);
 
         if (result != null) {
-            boolean array = false;
-
-            if (parseKeywordIf("ARRAY"))
-                array = true;
+            boolean array = parseKeywordIf("ARRAY");
 
             if (parseIf('[')) {
                 parseUnsignedIntegerLiteralIf();
@@ -12173,10 +12166,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         do {
             String literal = parseStringLiteral();
-
-            if (literal != null)
-                length = Math.max(length, literal.length());
-
+            length = Math.max(length, literal.length());
             literals.add(literal);
         }
         while (parseIf(','));
@@ -12316,10 +12306,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final Boolean parseBitLiteralIf() {
         if (parseIf("B'", false) || parseIf("b'", false)) {
-            boolean result = false;
-
-            if (!parseIf('0') && parseIf('1'))
-                result = true;
+            boolean result = !parseIf('0') && parseIf('1');
 
             if (parseIf('0') || parseIf('1'))
                 throw exception("Currently, only BIT(1) literals are supported");
@@ -12338,7 +12325,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             char c1 = 0;
-            char c2 = 0;
+            char c2;
 
             do {
                 while (hasMore()) {
@@ -13004,7 +12991,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return null;
     }
 
-    private static enum TSQLOuterJoinComparator {
+    private enum TSQLOuterJoinComparator {
         LEFT, RIGHT
     }
 
@@ -13292,10 +13279,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final boolean peek(char c) {
-        if (character() != c)
-            return false;
-
-        return true;
+        return character() == c;
     }
 
     @Override
@@ -13543,13 +13527,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return c >= 'a' && c <= 'z' ? (char) (c - ('a' - 'A')) : c;
     }
 
-    private static enum TruthValue {
+    private enum TruthValue {
         T_TRUE,
         T_FALSE,
-        T_NULL;
+        T_NULL
     }
 
-    private static enum ComputationalOperation {
+    private enum ComputationalOperation {
         ANY_VALUE,
         AVG,
         MAX,
@@ -13691,7 +13675,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         ));
 
         KEYWORDS_IN_SELECT_FROM = set.toArray(EMPTY_STRING);
-    };
+    }
 
     private static final String[] KEYWORDS_IN_UPDATE_FROM;
 
@@ -13699,7 +13683,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Set<String> set = new TreeSet<>(asList(KEYWORDS_IN_FROM));
         set.addAll(asList("FROM", "SET", "WHERE", "ORDER BY", "LIMIT", "RETURNING"));
         KEYWORDS_IN_UPDATE_FROM = set.toArray(EMPTY_STRING);
-    };
+    }
 
     private static final String[] KEYWORDS_IN_DELETE_FROM;
 
@@ -13708,7 +13692,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         set.addAll(asList("FROM", "USING", "WHERE", "ORDER BY", "LIMIT", "RETURNING"));
         set.addAll(asList(KEYWORDS_IN_STATEMENTS));
         KEYWORDS_IN_DELETE_FROM = set.toArray(EMPTY_STRING);
-    };
+    }
 
     private static final String[] PIVOT_KEYWORDS      = {
         "FOR"

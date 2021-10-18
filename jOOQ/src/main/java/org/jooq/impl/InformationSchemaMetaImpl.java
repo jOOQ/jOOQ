@@ -256,7 +256,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             Integer p1 = o1.getOrdinalPosition();
             Integer p2 = o2.getOrdinalPosition();
 
-            if (p1 == p2)
+            if (Objects.equals(p1, p2))
                 return 0;
             if (p1 == null)
                 return -1;

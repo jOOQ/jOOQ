@@ -112,6 +112,8 @@ public final class ParserCLI {
             settings.setParseLocale(a.parseLocale);
         if (a.parseNameCase != null)
             settings.setParseNameCase(a.parseNameCase);
+        if (a.parseSetCommands)
+            settings.setParseSetCommands(true);
         if (a.parseTimestampFormat != null)
             settings.setParseTimestampFormat(a.parseTimestampFormat);
         if (a.parseUnknownFunctions != null)
@@ -220,6 +222,12 @@ public final class ParserCLI {
                             }
                             else if ("parse-name-case".equals(flag))
                                 parseInteractive(ParseNameCase.class, arg, e -> { a.parseNameCase = e; }, () -> displayParseNameCase(a));
+                            else if ("parse-set-commands".equals(flag)) {
+                                if (arg != null)
+                                    a.parseSetCommands = Boolean.parseBoolean(arg.toLowerCase());
+
+                                displayParseSetCommands(a);
+                            }
                             else if ("parse-timestamp-format".equals(flag)) {
                                 if (arg != null)
                                     a.parseTimestampFormat = arg;
@@ -334,6 +342,10 @@ public final class ParserCLI {
 
     private static void displayParseNameCase(Args a) {
         System.out.println("Parse name case                    : " + a.parseNameCase);
+    }
+
+    private static void displayParseSetCommands(Args a) {
+        System.out.println("Parse set commands                 : " + a.parseSetCommands);
     }
 
     private static void displayParseLocale(Args a) {
@@ -459,6 +471,8 @@ public final class ParserCLI {
                     result.parseLocale = Locale.forLanguageTag(args[++i]);
                 else if ("--parse-name-case".equals(args[i]))
                     result.parseNameCase = parse((Class<ParseNameCase>) (enumArgument = ParseNameCase.class), args[++i]);
+                else if ("--parse-set-commands".equals(args[i]))
+                    result.parseSetCommands = true;
                 else if ("--parse-timestamp-format".equals(args[i]))
                     result.parseTimestampFormat = args[++i];
                 else if ("--parse-unknown-functions".equals(args[i]))
@@ -530,6 +544,7 @@ public final class ParserCLI {
         System.out.println("  --parse-date-format                             <String>");
         System.out.println("  --parse-locale                                  <Locale>");
         System.out.println("  --parse-name-case                               <ParseNameCase>");
+        System.out.println("  --parse-set-commands                            <boolean>");
         System.out.println("  --parse-timestamp-format                        <String>");
         System.out.println("  --parse-unknown-functions                       <ParseUnknownFunctions>");
         System.out.println("  --parse-unsupported-syntax                      <ParseUnsupportedSyntax>");
@@ -565,6 +580,7 @@ public final class ParserCLI {
         System.out.println("  /parse-date-format                             <String>");
         System.out.println("  /parse-locale                                  <Locale>");
         System.out.println("  /parse-name-case                               <ParseNameCase>");
+        System.out.println("  /parse-set-commands                            <boolean>");
         System.out.println("  /parse-timestamp-format                        <String>");
         System.out.println("  /parse-unknown-functions                       <ParseUnknownFunctions>");
         System.out.println("  /parse-unsupported-syntax                      <ParseUnsupportedSyntax>");
@@ -605,6 +621,7 @@ public final class ParserCLI {
         String                                 parseDateFormat                        = d.getParseDateFormat();
         Locale                                 parseLocale                            = d.getParseLocale();
         ParseNameCase                          parseNameCase                          = d.getParseNameCase();
+        boolean                                parseSetCommands                       = d.isParseSetCommands();
         String                                 parseTimestampFormat                   = d.getParseTimestampFormat();
         ParseUnknownFunctions                  parseUnknownFunctions                  = d.getParseUnknownFunctions();
         ParseUnsupportedSyntax                 parseUnsupportedSyntax                 = d.getParseUnsupportedSyntax();

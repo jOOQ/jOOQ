@@ -96,8 +96,8 @@ public final class ParserCLI {
     }
 
     private static final void settings(Args a, Settings settings) {
-        if (a.formatted)
-            settings.setRenderFormatted(true);
+        if (a.formatted != null)
+            settings.setRenderFormatted(a.formatted);
         if (a.keywords != null)
             settings.setRenderKeywordCase(a.keywords);
         if (a.name != null)
@@ -112,14 +112,14 @@ public final class ParserCLI {
             settings.setParseLocale(a.parseLocale);
         if (a.parseNameCase != null)
             settings.setParseNameCase(a.parseNameCase);
-        if (a.parseSetCommands)
-            settings.setParseSetCommands(true);
+        if (a.parseSetCommands != null)
+            settings.setParseSetCommands(a.parseSetCommands);
         if (a.parseTimestampFormat != null)
             settings.setParseTimestampFormat(a.parseTimestampFormat);
         if (a.parseUnknownFunctions != null)
             settings.setParseUnknownFunctions(a.parseUnknownFunctions);
-        if (a.renderCoalesceToEmptyStringInConcat)
-            settings.setRenderCoalesceToEmptyStringInConcat(true);
+        if (a.renderCoalesceToEmptyStringInConcat != null)
+            settings.setRenderCoalesceToEmptyStringInConcat(a.renderCoalesceToEmptyStringInConcat);
         if (a.renderOptionalInnerKeyword != null)
             settings.setRenderOptionalInnerKeyword(a.renderOptionalInnerKeyword);
         if (a.renderOptionalOuterKeyword != null)
@@ -128,10 +128,10 @@ public final class ParserCLI {
             settings.setRenderOptionalAsKeywordForFieldAliases(a.renderOptionalAsKeywordForFieldAliases);
         if (a.renderOptionalAsKeywordForTableAliases != null)
             settings.setRenderOptionalAsKeywordForTableAliases(a.renderOptionalAsKeywordForTableAliases);
-        if (a.transformAnsiJoinToTableLists)
-            settings.setTransformAnsiJoinToTableLists(true);
-        if (a.transformTableListsToAnsiJoin)
-            settings.setTransformTableListsToAnsiJoin(true);
+        if (a.transformAnsiJoinToTableLists != null)
+            settings.setTransformAnsiJoinToTableLists(a.transformAnsiJoinToTableLists);
+        if (a.transformTableListsToAnsiJoin != null)
+            settings.setTransformTableListsToAnsiJoin(a.transformTableListsToAnsiJoin);
         if (a.transformUnneededArithmetic != null)
             settings.setTransformUnneededArithmeticExpressions(a.transformUnneededArithmetic);
         if (a.transformQualify != null)
@@ -544,7 +544,7 @@ public final class ParserCLI {
         System.out.println("  --parse-date-format                             <String>");
         System.out.println("  --parse-locale                                  <Locale>");
         System.out.println("  --parse-name-case                               <ParseNameCase>");
-        System.out.println("  --parse-set-commands                            <boolean>");
+        System.out.println("  --parse-set-commands");
         System.out.println("  --parse-timestamp-format                        <String>");
         System.out.println("  --parse-unknown-functions                       <ParseUnknownFunctions>");
         System.out.println("  --parse-unsupported-syntax                      <ParseUnsupportedSyntax>");
@@ -554,11 +554,11 @@ public final class ParserCLI {
         System.out.println("  --render-optional-as-keyword-for-table-aliases  <RenderOptionalKeyword>");
         System.out.println("");
         System.out.println("Commercial distribution only features:");
-        System.out.println("  --render-coalesce-to-empty-string-in-concat     <boolean>");
-        System.out.println("  --transform-ansi-join-to-table-lists            <boolean>");
+        System.out.println("  --render-coalesce-to-empty-string-in-concat");
+        System.out.println("  --transform-ansi-join-to-table-lists");
         System.out.println("  --transform-qualify                             <Transformation>");
         System.out.println("  --transform-rownum                              <Transformation>");
-        System.out.println("  --transform-table-lists-to-ansi-join            <boolean>");
+        System.out.println("  --transform-table-lists-to-ansi-join");
         System.out.println("  --transform-unneeded-arithmetic                 <TransformUnneededArithmeticExpressions>");
         System.out.println("");
         System.out.println("  -I / --interactive                                               Start interactive mode");
@@ -604,16 +604,17 @@ public final class ParserCLI {
     public static final class Args {
         Settings                               d                                      = new Settings();
         List<String>                           history                                = new ArrayList<>();
+        boolean                                interactive;
+        boolean                                done;
+
         String                                 sql;
         RenderKeywordCase                      keywords                               = RenderKeywordCase.LOWER;
         RenderNameCase                         name                                   = RenderNameCase.LOWER;
         RenderQuotedNames                      quoted                                 = RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED;
         SQLDialect                             toDialect                              = SQLDialect.DEFAULT;
         SQLDialect                             fromDialect                            = SQLDialect.DEFAULT;
-        boolean                                formatted;
-        boolean                                interactive;
-        boolean                                done;
-        boolean                                renderCoalesceToEmptyStringInConcat;
+        Boolean                                formatted;
+        Boolean                                renderCoalesceToEmptyStringInConcat;
         RenderOptionalKeyword                  renderOptionalInnerKeyword             = RenderOptionalKeyword.DEFAULT;
         RenderOptionalKeyword                  renderOptionalOuterKeyword             = RenderOptionalKeyword.DEFAULT;
         RenderOptionalKeyword                  renderOptionalAsKeywordForFieldAliases = RenderOptionalKeyword.DEFAULT;
@@ -621,14 +622,14 @@ public final class ParserCLI {
         String                                 parseDateFormat                        = d.getParseDateFormat();
         Locale                                 parseLocale                            = d.getParseLocale();
         ParseNameCase                          parseNameCase                          = d.getParseNameCase();
-        boolean                                parseSetCommands                       = d.isParseSetCommands();
+        Boolean                                parseSetCommands                       = d.isParseSetCommands();
         String                                 parseTimestampFormat                   = d.getParseTimestampFormat();
         ParseUnknownFunctions                  parseUnknownFunctions                  = d.getParseUnknownFunctions();
         ParseUnsupportedSyntax                 parseUnsupportedSyntax                 = d.getParseUnsupportedSyntax();
-        boolean                                transformAnsiJoinToTableLists;
+        Boolean                                transformAnsiJoinToTableLists;
         Transformation                         transformQualify;
         Transformation                         transformRownum;
-        boolean                                transformTableListsToAnsiJoin;
-        TransformUnneededArithmeticExpressions transformUnneededArithmetic = TransformUnneededArithmeticExpressions.NEVER;
+        Boolean                                transformTableListsToAnsiJoin;
+        TransformUnneededArithmeticExpressions transformUnneededArithmetic            = TransformUnneededArithmeticExpressions.NEVER;
     }
 }

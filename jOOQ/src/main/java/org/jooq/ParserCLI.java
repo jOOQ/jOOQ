@@ -45,6 +45,9 @@ import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jooq.conf.ParseNameCase;
+import org.jooq.conf.ParseUnknownFunctions;
+import org.jooq.conf.ParseUnsupportedSyntax;
 import org.jooq.conf.RenderKeywordCase;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderOptionalKeyword;
@@ -103,12 +106,16 @@ public final class ParserCLI {
             settings.setRenderQuotedNames(a.quoted);
         if (a.fromDialect != null)
             settings.setParseDialect(a.fromDialect);
-        if (a.parseLocale != null)
-            settings.setParseLocale(a.parseLocale);
         if (a.parseDateFormat != null)
             settings.setParseDateFormat(a.parseDateFormat);
+        if (a.parseLocale != null)
+            settings.setParseLocale(a.parseLocale);
+        if (a.parseNameCase != null)
+            settings.setParseNameCase(a.parseNameCase);
         if (a.parseTimestampFormat != null)
             settings.setParseTimestampFormat(a.parseTimestampFormat);
+        if (a.parseUnknownFunctions != null)
+            settings.setParseUnknownFunctions(a.parseUnknownFunctions);
         if (a.renderCoalesceToEmptyStringInConcat)
             settings.setRenderCoalesceToEmptyStringInConcat(true);
         if (a.renderOptionalInnerKeyword != null)
@@ -131,10 +138,17 @@ public final class ParserCLI {
             settings.setTransformRownum(a.transformRownum);
     }
 
-    private static final <E extends Enum<E>> void parseInteractive(Class<E> type, String arg, Consumer<? super E> onSuccess) {
+    private static final <E extends Enum<E>> void parseInteractive(
+        Class<E> type,
+        String arg,
+        Consumer<? super E> onSuccess,
+        Runnable display
+    ) {
         try {
             if (arg != null)
                 onSuccess.accept(Enum.valueOf(type, arg.toUpperCase()));
+
+            display.run();
         }
         catch (IllegalArgumentException e) {
             invalid(arg, type);
@@ -179,24 +193,18 @@ public final class ParserCLI {
                                 displayFormatted(a);
                             }
                             else if ("k".equals(flag) || "keyword".equals(flag))
-                                parseInteractive(RenderKeywordCase.class, arg, e -> { a.keywords = e; displayKeywords(a); });
+                                parseInteractive(RenderKeywordCase.class, arg, e -> { a.keywords = e; }, () -> displayKeywords(a));
                             else if ("i".equals(flag) || "identifier".equals(flag))
-                                parseInteractive(RenderNameCase.class, arg, e -> { a.name = e; displayIdentifiers(a); });
+                                parseInteractive(RenderNameCase.class, arg, e -> { a.name = e; }, () -> displayIdentifiers(a));
                             else if ("Q".equals(flag) || "quoted".equals(flag))
-                                parseInteractive(RenderQuotedNames.class, arg, e -> { a.quoted = e; displayQuoted(a); });
+                                parseInteractive(RenderQuotedNames.class, arg, e -> { a.quoted = e; }, () -> displayQuoted(a));
                             else if ("F".equals(flag) || "from-dialect".equals(flag))
-                                parseInteractive(SQLDialect.class, arg, e -> { a.fromDialect = e; displayFromDialect(a); });
+                                parseInteractive(SQLDialect.class, arg, e -> { a.fromDialect = e; }, () -> displayFromDialect(a));
                             else if ("render-coalesce-to-empty-string-in-concat".equals(flag)) {
                                 if (arg != null)
                                     a.renderCoalesceToEmptyStringInConcat = Boolean.parseBoolean(arg.toLowerCase());
 
                                 displayRenderCoalesceToEmptyStringInConcat(a);
-                            }
-                            else if ("parse-locale".equals(flag)) {
-                                if (arg != null)
-                                    a.parseLocale = Locale.forLanguageTag(arg);
-
-                                displayParseLocale(a);
                             }
                             else if ("parse-date-format".equals(flag)) {
                                 if (arg != null)
@@ -204,20 +212,32 @@ public final class ParserCLI {
 
                                 displayParseDateFormat(a);
                             }
+                            else if ("parse-locale".equals(flag)) {
+                                if (arg != null)
+                                    a.parseLocale = Locale.forLanguageTag(arg);
+
+                                displayParseLocale(a);
+                            }
+                            else if ("parse-name-case".equals(flag))
+                                parseInteractive(ParseNameCase.class, arg, e -> { a.parseNameCase = e; }, () -> displayParseNameCase(a));
                             else if ("parse-timestamp-format".equals(flag)) {
                                 if (arg != null)
                                     a.parseTimestampFormat = arg;
 
                                 displayParseTimestampFormat(a);
                             }
+                            else if ("parse-unknown-functions".equals(flag))
+                                parseInteractive(ParseUnknownFunctions.class, arg, e -> { a.parseUnknownFunctions = e; }, () -> displayParseUnknownFunctions(a));
+                            else if ("parse-unsupported-syntax".equals(flag))
+                                parseInteractive(ParseUnsupportedSyntax.class, arg, e -> { a.parseUnsupportedSyntax = e; }, () -> displayParseUnsupportedSyntax(a));
                             else if ("render-optional-inner-keyword".equals(flag))
-                                parseInteractive(RenderOptionalKeyword.class, arg, e -> { a.renderOptionalInnerKeyword = e; displayRenderOptionalInnerKeyword(a); });
+                                parseInteractive(RenderOptionalKeyword.class, arg, e -> { a.renderOptionalInnerKeyword = e; }, () -> displayRenderOptionalInnerKeyword(a));
                             else if ("render-optional-outer-keyword".equals(flag))
-                                parseInteractive(RenderOptionalKeyword.class, arg, e -> { a.renderOptionalOuterKeyword = e; displayRenderOptionalOuterKeyword(a); });
+                                parseInteractive(RenderOptionalKeyword.class, arg, e -> { a.renderOptionalOuterKeyword = e; }, () -> displayRenderOptionalOuterKeyword(a));
                             else if ("render-optional-as-keyword-for-field-aliases".equals(flag))
-                                parseInteractive(RenderOptionalKeyword.class, arg, e -> { a.renderOptionalAsKeywordForFieldAliases = e; displayRenderOptionalAsKeywordForFieldAliases(a); });
+                                parseInteractive(RenderOptionalKeyword.class, arg, e -> { a.renderOptionalAsKeywordForFieldAliases = e; }, () -> displayRenderOptionalAsKeywordForFieldAliases(a));
                             else if ("render-optional-as-keyword-for-table-aliases".equals(flag))
-                                parseInteractive(RenderOptionalKeyword.class, arg, e -> { a.renderOptionalAsKeywordForTableAliases = e; displayRenderOptionalAsKeywordForTableAliases(a); });
+                                parseInteractive(RenderOptionalKeyword.class, arg, e -> { a.renderOptionalAsKeywordForTableAliases = e; }, () -> displayRenderOptionalAsKeywordForTableAliases(a));
                             else if ("transform-ansi-join-to-table-lists".equals(flag)) {
                                 if (arg != null)
                                     a.transformAnsiJoinToTableLists = Boolean.parseBoolean(arg.toLowerCase());
@@ -225,9 +245,9 @@ public final class ParserCLI {
                                 displayTransformAnsiJoinToTablesLists(a);
                             }
                             else if ("transform-qualify".equals(flag))
-                                parseInteractive(Transformation.class, arg, e -> { a.transformQualify = e; displayTransformQualify(a); });
+                                parseInteractive(Transformation.class, arg, e -> { a.transformQualify = e; }, () -> displayTransformQualify(a));
                             else if ("transform-rownum".equals(flag))
-                                parseInteractive(Transformation.class, arg, e -> { a.transformRownum = e; displayTransformRownum(a); });
+                                parseInteractive(Transformation.class, arg, e -> { a.transformRownum = e; }, () -> displayTransformRownum(a));
                             else if ("transform-table-lists-to-ansi-join".equals(flag)) {
                                 if (arg != null)
                                     a.transformTableListsToAnsiJoin = Boolean.parseBoolean(arg.toLowerCase());
@@ -235,11 +255,11 @@ public final class ParserCLI {
                                 displayTransformTableListsToAnsiJoin(a);
                             }
                             else if ("transform-unneeded-arithmetic".equals(flag))
-                                parseInteractive(TransformUnneededArithmeticExpressions.class, arg, e -> { a.transformUnneededArithmetic = e; displayTransformUnneededArithmetic(a); });
+                                parseInteractive(TransformUnneededArithmeticExpressions.class, arg, e -> { a.transformUnneededArithmetic = e; }, () -> { displayTransformUnneededArithmetic(a); });
 
                             // [#9144] /t maintained for backwards compatibility
                             else if ("t".equals(flag) || "T".equals(flag) || "to-dialect".equals(flag))
-                                parseInteractive(SQLDialect.class, arg, e -> { a.toDialect = e; displayToDialect(a); });
+                                parseInteractive(SQLDialect.class, arg, e -> { a.toDialect = e; }, () -> displayToDialect(a));
                         }
                     }
                     else {
@@ -308,16 +328,28 @@ public final class ParserCLI {
         System.out.println("Formatted                          : " + a.formatted);
     }
 
-    private static void displayParseLocale(Args a) {
-        System.out.println("Parse locale                       : " + a.parseLocale);
-    }
-
     private static void displayParseDateFormat(Args a) {
         System.out.println("Parse date format                  : " + a.parseDateFormat);
     }
 
+    private static void displayParseNameCase(Args a) {
+        System.out.println("Parse name case                    : " + a.parseNameCase);
+    }
+
+    private static void displayParseLocale(Args a) {
+        System.out.println("Parse locale                       : " + a.parseLocale);
+    }
+
     private static void displayParseTimestampFormat(Args a) {
         System.out.println("Parse timestamp format             : " + a.parseTimestampFormat);
+    }
+
+    private static void displayParseUnknownFunctions(Args a) {
+        System.out.println("Parse unknown functions            : " + a.parseUnknownFunctions);
+    }
+
+    private static void displayParseUnsupportedSyntax(Args a) {
+        System.out.println("Parse unsupported syntax           : " + a.parseUnsupportedSyntax);
     }
 
     private static void displayRenderCoalesceToEmptyStringInConcat(Args a) {
@@ -421,12 +453,18 @@ public final class ParserCLI {
                 // [#9144] -t maintained for backwards compatibility
                 else if ("-t".equals(args[i]) || "-T".equals(args[i]) || "--to-dialect".equals(args[i]))
                     result.toDialect = parse((Class<SQLDialect>) (enumArgument = SQLDialect.class), args[++i]);
-                else if ("--parse-locale".equals(args[i]))
-                    result.parseLocale = Locale.forLanguageTag(args[++i]);
                 else if ("--parse-date-format".equals(args[i]))
                     result.parseDateFormat = args[++i];
+                else if ("--parse-locale".equals(args[i]))
+                    result.parseLocale = Locale.forLanguageTag(args[++i]);
+                else if ("--parse-name-case".equals(args[i]))
+                    result.parseNameCase = parse((Class<ParseNameCase>) (enumArgument = ParseNameCase.class), args[++i]);
                 else if ("--parse-timestamp-format".equals(args[i]))
                     result.parseTimestampFormat = args[++i];
+                else if ("--parse-unknown-functions".equals(args[i]))
+                    result.parseUnknownFunctions = parse((Class<ParseUnknownFunctions>) (enumArgument = ParseUnknownFunctions.class), args[++i]);
+                else if ("--parse-unsupported-syntax".equals(args[i]))
+                    result.parseUnsupportedSyntax = parse((Class<ParseUnsupportedSyntax>) (enumArgument = ParseUnsupportedSyntax.class), args[++i]);
                 else if ("--render-coalesce-to-empty-string-in-concat".equals(args[i]))
                     result.renderCoalesceToEmptyStringInConcat = true;
                 else if ("--render-optional-inner-keyword".equals(args[i]))
@@ -491,7 +529,10 @@ public final class ParserCLI {
         System.out.println("Additional flags:");
         System.out.println("  --parse-date-format                             <String>");
         System.out.println("  --parse-locale                                  <Locale>");
+        System.out.println("  --parse-name-case                               <ParseNameCase>");
         System.out.println("  --parse-timestamp-format                        <String>");
+        System.out.println("  --parse-unknown-functions                       <ParseUnknownFunctions>");
+        System.out.println("  --parse-unsupported-syntax                      <ParseUnsupportedSyntax>");
         System.out.println("  --render-optional-inner-keyword                 <RenderOptionalKeyword>");
         System.out.println("  --render-optional-outer-keyword                 <RenderOptionalKeyword>");
         System.out.println("  --render-optional-as-keyword-for-field-aliases  <RenderOptionalKeyword>");
@@ -523,7 +564,10 @@ public final class ParserCLI {
         System.out.println("Additional flags:");
         System.out.println("  /parse-date-format                             <String>");
         System.out.println("  /parse-locale                                  <Locale>");
+        System.out.println("  /parse-name-case                               <ParseNameCase>");
         System.out.println("  /parse-timestamp-format                        <String>");
+        System.out.println("  /parse-unknown-functions                       <ParseUnknownFunctions>");
+        System.out.println("  /parse-unsupported-syntax                      <ParseUnsupportedSyntax>");
         System.out.println("  /render-optional-inner-keyword                 <RenderOptionalKeyword>");
         System.out.println("  /render-optional-outer-keyword                 <RenderOptionalKeyword>");
         System.out.println("  /render-optional-as-keyword-for-field-aliases  <RenderOptionalKeyword>");
@@ -558,9 +602,12 @@ public final class ParserCLI {
         RenderOptionalKeyword                  renderOptionalOuterKeyword             = RenderOptionalKeyword.DEFAULT;
         RenderOptionalKeyword                  renderOptionalAsKeywordForFieldAliases = RenderOptionalKeyword.DEFAULT;
         RenderOptionalKeyword                  renderOptionalAsKeywordForTableAliases = RenderOptionalKeyword.DEFAULT;
-        Locale                                 parseLocale                            = d.getParseLocale();
         String                                 parseDateFormat                        = d.getParseDateFormat();
+        Locale                                 parseLocale                            = d.getParseLocale();
+        ParseNameCase                          parseNameCase                          = d.getParseNameCase();
         String                                 parseTimestampFormat                   = d.getParseTimestampFormat();
+        ParseUnknownFunctions                  parseUnknownFunctions                  = d.getParseUnknownFunctions();
+        ParseUnsupportedSyntax                 parseUnsupportedSyntax                 = d.getParseUnsupportedSyntax();
         boolean                                transformAnsiJoinToTableLists;
         Transformation                         transformQualify;
         Transformation                         transformRownum;

@@ -39,6 +39,7 @@ package org.jooq;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
@@ -102,6 +103,8 @@ public final class ParserCLI {
             settings.setRenderQuotedNames(a.quoted);
         if (a.fromDialect != null)
             settings.setParseDialect(a.fromDialect);
+        if (a.parseLocale != null)
+            settings.setParseLocale(a.parseLocale);
         if (a.parseDateFormat != null)
             settings.setParseDateFormat(a.parseDateFormat);
         if (a.parseTimestampFormat != null)
@@ -188,6 +191,12 @@ public final class ParserCLI {
                                     a.renderCoalesceToEmptyStringInConcat = Boolean.parseBoolean(arg.toLowerCase());
 
                                 displayRenderCoalesceToEmptyStringInConcat(a);
+                            }
+                            else if ("parse-locale".equals(flag)) {
+                                if (arg != null)
+                                    a.parseLocale = Locale.forLanguageTag(arg);
+
+                                displayParseLocale(a);
                             }
                             else if ("parse-date-format".equals(flag)) {
                                 if (arg != null)
@@ -299,6 +308,10 @@ public final class ParserCLI {
         System.out.println("Formatted                          : " + a.formatted);
     }
 
+    private static void displayParseLocale(Args a) {
+        System.out.println("Parse locale                       : " + a.parseLocale);
+    }
+
     private static void displayParseDateFormat(Args a) {
         System.out.println("Parse date format                  : " + a.parseDateFormat);
     }
@@ -408,6 +421,8 @@ public final class ParserCLI {
                 // [#9144] -t maintained for backwards compatibility
                 else if ("-t".equals(args[i]) || "-T".equals(args[i]) || "--to-dialect".equals(args[i]))
                     result.toDialect = parse((Class<SQLDialect>) (enumArgument = SQLDialect.class), args[++i]);
+                else if ("--parse-locale".equals(args[i]))
+                    result.parseLocale = Locale.forLanguageTag(args[++i]);
                 else if ("--parse-date-format".equals(args[i]))
                     result.parseDateFormat = args[++i];
                 else if ("--parse-timestamp-format".equals(args[i]))
@@ -475,6 +490,7 @@ public final class ParserCLI {
         System.out.println("");
         System.out.println("Additional flags:");
         System.out.println("  --parse-date-format                             <String>");
+        System.out.println("  --parse-locale                                  <Locale>");
         System.out.println("  --parse-timestamp-format                        <String>");
         System.out.println("  --render-optional-inner-keyword                 <RenderOptionalKeyword>");
         System.out.println("  --render-optional-outer-keyword                 <RenderOptionalKeyword>");
@@ -506,6 +522,7 @@ public final class ParserCLI {
         System.out.println("");
         System.out.println("Additional flags:");
         System.out.println("  /parse-date-format                             <String>");
+        System.out.println("  /parse-locale                                  <Locale>");
         System.out.println("  /parse-timestamp-format                        <String>");
         System.out.println("  /render-optional-inner-keyword                 <RenderOptionalKeyword>");
         System.out.println("  /render-optional-outer-keyword                 <RenderOptionalKeyword>");
@@ -541,6 +558,7 @@ public final class ParserCLI {
         RenderOptionalKeyword                  renderOptionalOuterKeyword             = RenderOptionalKeyword.DEFAULT;
         RenderOptionalKeyword                  renderOptionalAsKeywordForFieldAliases = RenderOptionalKeyword.DEFAULT;
         RenderOptionalKeyword                  renderOptionalAsKeywordForTableAliases = RenderOptionalKeyword.DEFAULT;
+        Locale                                 parseLocale                            = d.getParseLocale();
         String                                 parseDateFormat                        = d.getParseDateFormat();
         String                                 parseTimestampFormat                   = d.getParseTimestampFormat();
         boolean                                transformAnsiJoinToTableLists;

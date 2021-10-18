@@ -3434,6 +3434,14 @@ final class Tools {
         return part instanceof SimpleQueryPart && ((SimpleQueryPart) part).isSimple();
     }
 
+    static final boolean isSimple(QueryPart... parts) {
+        for (QueryPart part : parts)
+            if (!isSimple(part))
+                return false;
+
+        return true;
+    }
+
     static final boolean isRendersSeparator(QueryPart part) {
         return part instanceof SeparatedQueryPart && ((SeparatedQueryPart) part).rendersSeparator();
     }

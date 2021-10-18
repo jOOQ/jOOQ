@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 // ...
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inlined;
 import static org.jooq.impl.JSONValue.Behaviour.DEFAULT;
 import static org.jooq.impl.JSONValue.Behaviour.ERROR;
@@ -51,6 +52,7 @@ import static org.jooq.impl.Names.N_JSON_EXTRACT;
 import static org.jooq.impl.Names.N_JSON_VALUE;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.Tools.castIfNeeded;
+import static org.jooq.impl.Tools.isSimple;
 
 import java.util.Set;
 
@@ -176,17 +178,29 @@ implements
 
             case MYSQL:
             case SQLITE:
-                ctx.visit(N_JSON_EXTRACT).sql('(').visit(json).sql(", ").visit(path).sql(')');
+                ctx.visit(function(N_JSON_EXTRACT, json.getDataType(), json, path));
                 break;
 
 
             case POSTGRES:
             case YUGABYTE:
-                ctx.visit(N_JSONB_PATH_QUERY_FIRST).sql('(').visit(castIfNeeded(json, JSONB)).sql(", ").visit(path).sql("::jsonpath)");
+                ctx.visit(function(N_JSONB_PATH_QUERY_FIRST, json.getDataType(), castIfNeeded(json, JSONB), DSL.field("{0}::jsonpath", path)));
                 break;
 
-            default:
-                ctx.visit(N_JSON_VALUE).sql('(').visit(json).sql(", ");
+            default: {
+                boolean format = !isSimple(json, path);
+
+                ctx.visit(N_JSON_VALUE).sql('(');
+
+                if (format)
+                    ctx.sqlIndentStart();
+
+                ctx.visit(json).sql(",");
+
+                if (format)
+                    ctx.formatSeparator();
+                else
+                    ctx.sql(' ');
 
 
 
@@ -205,13 +219,31 @@ implements
 
 
 
-                if (returning != null)
-                    ctx.separatorRequired(true).visit(new JSONReturning(returning));
+                if (returning != null) {
+                    JSONReturning r = new JSONReturning(returning);
+
+                    if (r.rendersContent(ctx)) {
+                        if (format)
+                            ctx.formatNewLine();
+
+                        ctx.separatorRequired(true).visit(r);
+                    }
+                }
+
+                if (format)
+                    ctx.sqlIndentEnd();
 
                 ctx.sql(')');
                 break;
+            }
         }
     }
+
+
+
+
+
+
 
 
 

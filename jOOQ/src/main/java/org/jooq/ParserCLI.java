@@ -108,6 +108,12 @@ public final class ParserCLI {
             settings.setParseDialect(a.fromDialect);
         if (a.parseDateFormat != null)
             settings.setParseDateFormat(a.parseDateFormat);
+        if (a.parseIgnoreComments != null)
+            settings.setParseIgnoreComments(a.parseIgnoreComments);
+        if (a.parseIgnoreCommentStart != null)
+            settings.setParseIgnoreCommentStart(a.parseIgnoreCommentStart);
+        if (a.parseIgnoreCommentStop != null)
+            settings.setParseIgnoreCommentStop(a.parseIgnoreCommentStop);
         if (a.parseLocale != null)
             settings.setParseLocale(a.parseLocale);
         if (a.parseNameCase != null)
@@ -215,6 +221,24 @@ public final class ParserCLI {
                                     a.parseDateFormat = arg;
 
                                 displayParseDateFormat(a);
+                            }
+                            else if ("parse-ignore-comments".equals(flag)) {
+                                if (arg != null)
+                                    a.parseIgnoreComments = Boolean.parseBoolean(arg.toLowerCase());
+
+                                displayParseIgnoreComments(a);
+                            }
+                            else if ("parse-ignore-comment-start".equals(flag)) {
+                                if (arg != null)
+                                    a.parseIgnoreCommentStart = arg;
+
+                                displayParseIgnoreCommentStart(a);
+                            }
+                            else if ("parse-ignore-comment-stop".equals(flag)) {
+                                if (arg != null)
+                                    a.parseIgnoreCommentStop = arg;
+
+                                displayParseIgnoreCommentStop(a);
                             }
                             else if ("parse-locale".equals(flag)) {
                                 if (arg != null)
@@ -348,6 +372,22 @@ public final class ParserCLI {
         System.out.println("Parse date format                  : " + a.parseDateFormat);
     }
 
+    private static void displayParseIgnoreComments(Args a) {
+        System.out.println("Parse ignore comments              : " + a.parseIgnoreComments);
+    }
+
+    private static void displayParseIgnoreCommentStart(Args a) {
+        System.out.println("Parse ignore comment start         : " + a.parseIgnoreCommentStart);
+    }
+
+    private static void displayParseIgnoreCommentStop(Args a) {
+        System.out.println("Parse ignore comment stop          : " + a.parseIgnoreCommentStop);
+    }
+
+    private static void displayParseLocale(Args a) {
+        System.out.println("Parse locale                       : " + a.parseLocale);
+    }
+
     private static void displayParseNameCase(Args a) {
         System.out.println("Parse name case                    : " + a.parseNameCase);
     }
@@ -358,10 +398,6 @@ public final class ParserCLI {
 
     private static void displayParseSetCommands(Args a) {
         System.out.println("Parse set commands                 : " + a.parseSetCommands);
-    }
-
-    private static void displayParseLocale(Args a) {
-        System.out.println("Parse locale                       : " + a.parseLocale);
     }
 
     private static void displayParseTimestampFormat(Args a) {
@@ -479,6 +515,12 @@ public final class ParserCLI {
                     result.toDialect = parse((Class<SQLDialect>) (enumArgument = SQLDialect.class), args[++i]);
                 else if ("--parse-date-format".equals(args[i]))
                     result.parseDateFormat = args[++i];
+                else if ("--parse-ignore-comments".equals(args[i]))
+                    result.parseIgnoreComments = true;
+                else if ("--parse-ignore-comment-start".equals(args[i]))
+                    result.parseIgnoreCommentStart = args[++i];
+                else if ("--parse-ignore-comment-stop".equals(args[i]))
+                    result.parseIgnoreCommentStop = args[++i];
                 else if ("--parse-locale".equals(args[i]))
                     result.parseLocale = Locale.forLanguageTag(args[++i]);
                 else if ("--parse-name-case".equals(args[i]))
@@ -636,6 +678,9 @@ public final class ParserCLI {
         RenderOptionalKeyword                  renderOptionalAsKeywordForFieldAliases = RenderOptionalKeyword.DEFAULT;
         RenderOptionalKeyword                  renderOptionalAsKeywordForTableAliases = RenderOptionalKeyword.DEFAULT;
         String                                 parseDateFormat                        = d.getParseDateFormat();
+        Boolean                                parseIgnoreComments                    = d.isParseIgnoreComments();
+        String                                 parseIgnoreCommentStart                = d.getParseIgnoreCommentStart();
+        String                                 parseIgnoreCommentStop                 = d.getParseIgnoreCommentStop();
         Locale                                 parseLocale                            = d.getParseLocale();
         ParseNameCase                          parseNameCase                          = d.getParseNameCase();
         String                                 parseNamedParamPrefix                  = d.getParseNamedParamPrefix();

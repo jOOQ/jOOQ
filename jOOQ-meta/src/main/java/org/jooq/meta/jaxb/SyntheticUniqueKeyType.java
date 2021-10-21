@@ -47,7 +47,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class SyntheticUniqueKeyType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31500L;
+    private final static long serialVersionUID = 31600L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
     @XmlJavaTypeAdapter(StringAdapter.class)

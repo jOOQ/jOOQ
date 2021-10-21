@@ -27,7 +27,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class MatchersTableType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31500L;
+    private final static long serialVersionUID = 31600L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String expression;
     protected MatcherRule tableClass;

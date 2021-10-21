@@ -33,7 +33,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Database implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31500L;
+    private final static long serialVersionUID = 31600L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
     @XmlList
@@ -207,6 +207,7 @@ public class Database implements Serializable, XMLAppendable
      * <li>{@link org.jooq.meta.sqlserver.SQLServerDatabase}</li>
      * <li>{@link org.jooq.meta.sybase.SybaseDatabase}</li>
      * <li>{@link org.jooq.meta.vertica.VerticaDatabase}</li>
+     * <li>{@link org.jooq.meta.yugabyte.YugabyteDatabase}</li>
      * </ul>
      * <p>
      * This value can be used to reverse-engineer generic JDBC DatabaseMetaData (e.g. for MS Access).
@@ -257,6 +258,7 @@ public class Database implements Serializable, XMLAppendable
      * <li>{@link org.jooq.meta.sqlserver.SQLServerDatabase}</li>
      * <li>{@link org.jooq.meta.sybase.SybaseDatabase}</li>
      * <li>{@link org.jooq.meta.vertica.VerticaDatabase}</li>
+     * <li>{@link org.jooq.meta.yugabyte.YugabyteDatabase}</li>
      * </ul>
      * <p>
      * This value can be used to reverse-engineer generic JDBC DatabaseMetaData (e.g. for MS Access).
@@ -1776,6 +1778,7 @@ public class Database implements Serializable, XMLAppendable
      * <li>{@link org.jooq.meta.sqlserver.SQLServerDatabase}</li>
      * <li>{@link org.jooq.meta.sybase.SybaseDatabase}</li>
      * <li>{@link org.jooq.meta.vertica.VerticaDatabase}</li>
+     * <li>{@link org.jooq.meta.yugabyte.YugabyteDatabase}</li>
      * </ul>
      * <p>
      * This value can be used to reverse-engineer generic JDBC DatabaseMetaData (e.g. for MS Access).

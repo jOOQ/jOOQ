@@ -58,6 +58,7 @@ import org.jooq.Query;
 import org.jooq.ResultQuery;
 import org.jooq.Results;
 import org.jooq.Traverser;
+import org.jooq.impl.DefaultParseContext.IgnoreQuery;
 import org.jooq.impl.QOM.MList;
 import org.jooq.QueryPart;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
@@ -151,7 +152,10 @@ final class QueriesImpl extends AbstractAttachableQueryPart implements Queries {
             else
                 ctx.formatSeparator();
 
-            ctx.visit(query).sql(';');
+            ctx.visit(query);
+
+            if (!(query instanceof IgnoreQuery))
+                ctx.sql(';');
         }
     }
 

@@ -120,6 +120,8 @@ public final class ParserCLI {
             settings.setParseNameCase(a.parseNameCase);
         if (a.parseNamedParamPrefix != null)
             settings.setParseNamedParamPrefix(a.parseNamedParamPrefix);
+        if (a.parseRetainCommentsBetweenQueries != null)
+            settings.setParseRetainCommentsBetweenQueries(a.parseRetainCommentsBetweenQueries);
         if (a.parseSetCommands != null)
             settings.setParseSetCommands(a.parseSetCommands);
         if (a.parseTimestampFormat != null)
@@ -253,6 +255,12 @@ public final class ParserCLI {
                                     a.parseNamedParamPrefix = arg;
 
                                 displayParseNamedParamPrefix(a);
+                            }
+                            else if ("parse-retain-comments-between-queries".equals(flag)) {
+                                if (arg != null)
+                                    a.parseRetainCommentsBetweenQueries = Boolean.parseBoolean(arg.toLowerCase());
+
+                                displayParseRetainCommentsBetweenQueries(a);
                             }
                             else if ("parse-set-commands".equals(flag)) {
                                 if (arg != null)
@@ -396,6 +404,10 @@ public final class ParserCLI {
         System.out.println("Parse named param prefix           : " + a.parseNamedParamPrefix);
     }
 
+    private static void displayParseRetainCommentsBetweenQueries(Args a) {
+        System.out.println("Retain comments between queries    : " + a.parseRetainCommentsBetweenQueries);
+    }
+
     private static void displayParseSetCommands(Args a) {
         System.out.println("Parse set commands                 : " + a.parseSetCommands);
     }
@@ -529,6 +541,8 @@ public final class ParserCLI {
                     result.parseNamedParamPrefix = args[++i];
                 else if ("--parse-set-commands".equals(args[i]))
                     result.parseSetCommands = true;
+                else if ("--parse-retain-comments-between-queries".equals(args[i]))
+                    result.parseRetainCommentsBetweenQueries = true;
                 else if ("--parse-timestamp-format".equals(args[i]))
                     result.parseTimestampFormat = args[++i];
                 else if ("--parse-unknown-functions".equals(args[i]))
@@ -601,6 +615,7 @@ public final class ParserCLI {
         System.out.println("  --parse-locale                                  <Locale>");
         System.out.println("  --parse-name-case                               <ParseNameCase>");
         System.out.println("  --parse-named-param-prefix                      <String>");
+        System.out.println("  --parse-retain-comments-between-queries");
         System.out.println("  --parse-set-commands");
         System.out.println("  --parse-timestamp-format                        <String>");
         System.out.println("  --parse-unknown-functions                       <ParseUnknownFunctions>");
@@ -638,6 +653,7 @@ public final class ParserCLI {
         System.out.println("  /parse-locale                                  <Locale>");
         System.out.println("  /parse-name-case                               <ParseNameCase>");
         System.out.println("  /parse-named-param-prefix                      <String>");
+        System.out.println("  /parse-retain-comments-between-queries         <boolean>");
         System.out.println("  /parse-set-commands                            <boolean>");
         System.out.println("  /parse-timestamp-format                        <String>");
         System.out.println("  /parse-unknown-functions                       <ParseUnknownFunctions>");
@@ -684,6 +700,7 @@ public final class ParserCLI {
         Locale                                 parseLocale                            = d.getParseLocale();
         ParseNameCase                          parseNameCase                          = d.getParseNameCase();
         String                                 parseNamedParamPrefix                  = d.getParseNamedParamPrefix();
+        Boolean                                parseRetainCommentsBetweenQueries      = d.isParseRetainCommentsBetweenQueries();
         Boolean                                parseSetCommands                       = d.isParseSetCommands();
         String                                 parseTimestampFormat                   = d.getParseTimestampFormat();
         ParseUnknownFunctions                  parseUnknownFunctions                  = d.getParseUnknownFunctions();

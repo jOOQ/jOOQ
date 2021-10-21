@@ -791,15 +791,33 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
     static final Set<SQLDialect>         SUPPORTS_HASH_COMMENT_SYNTAX  = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Pattern                 P_TRIM                        = Pattern.compile("^ *\\r?\\n?(.*?) *$");
 
     final Queries parse() {
         return wrap(() -> {
             List<Query> result = new ArrayList<>();
             Query query;
+            int p = positionBeforeWhitespace;
 
             do {
                 parseDelimiterSpecifications();
-                while (parseDelimiterIf(false));
+
+                while (parseDelimiterIf(false))
+                    p = positionBeforeWhitespace;
+
+                skipWhitespace:
+                if (TRUE.equals(settings().isParseRetainCommentsBetweenQueries()) && p < position) {
+
+                    retainWhitespace: {
+                        for (int i = p; i < position; i++)
+                            if (character(i) != ' ')
+                                break retainWhitespace;
+
+                        break skipWhitespace;
+                    }
+
+                    result.add(new IgnoreQuery(P_TRIM.matcher(substring(p, position)).replaceFirst("$1")));
+                }
 
                 query = patchParsedQuery(parseQuery(false, false));
                 if (query == IGNORE || query == IGNORE_NO_DELIMITER)
@@ -807,7 +825,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (query != null)
                     result.add(query);
             }
-            while (parseDelimiterIf(true) && !done());
+            while (parseDelimiterIf(true) && (p = positionBeforeWhitespace) >= 0 && !done());
 
             return done("Unexpected token or missing query delimiter", dsl.queries(result));
         });
@@ -13366,9 +13384,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final boolean parseWhitespaceIf() {
-        int p = position();
-        position(afterWhitespace(p));
-        return p != position();
+        positionBeforeWhitespace = position();
+        position(afterWhitespace(positionBeforeWhitespace));
+        return positionBeforeWhitespace != position();
     }
 
     private final int afterWhitespace(int p) {
@@ -13698,17 +13716,25 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         "FOR"
     };
 
-    private static final DDLQuery                 IGNORE                 = new IgnoreQuery();
-    private static final Query                    IGNORE_NO_DELIMITER    = new IgnoreQuery();
+    private static final DDLQuery IGNORE              = new IgnoreQuery();
+    private static final Query    IGNORE_NO_DELIMITER = new IgnoreQuery();
 
-    private static final class IgnoreQuery extends AbstractDDLQuery implements UEmpty {
+    static final class IgnoreQuery extends AbstractDDLQuery implements UEmpty {
+        private final String sql;
+
         IgnoreQuery() {
+            this("/* ignored */");
+        }
+
+        IgnoreQuery(String sql) {
             super(CTX.configuration());
+
+            this.sql = sql;
         }
 
         @Override
         public void accept(Context<?> ctx) {
-            ctx.sql("/* ignored */");
+            ctx.sql(sql);
         }
     }
 
@@ -13719,6 +13745,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final ParseWithMetaLookups            metaLookups;
     private boolean                               metaLookupsForceIgnore;
     private final Consumer<Param<?>>              bindParamListener;
+    private int                                   positionBeforeWhitespace;
     private int                                   position               = 0;
     private boolean                               ignoreHints            = true;
     private final Object[]                        bindings;

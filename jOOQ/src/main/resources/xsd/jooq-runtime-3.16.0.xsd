@@ -705,6 +705,16 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       <element name="parseIgnoreCommentStop" type="string" minOccurs="0" maxOccurs="1" default="[jooq ignore stop]">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8325] The ignore comment stop token]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="parseRetainCommentsBetweenQueries" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#12538] Whether the parser should retain comments and whitespace between queries when parsing multiple queries through {@link org.jooq.Parser#parse(String)}.
+<p>
+jOOQ's query object model doesn't have a way to represent comments
+or other whitespace, and as such, the parser simply skips them by default.
+However, it may be desirable to retain comments before or in between top
+level queries, when parsing multiple such queries in a script. Comments
+inside of queries (including procedural statements) are still not supported.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="parseMetaDefaultExpressions" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8469] Whether to parse default expressions retrieved from {@link java.sql.DatabaseMetaData}.]]></jxb:javadoc></jxb:property></appinfo></annotation>

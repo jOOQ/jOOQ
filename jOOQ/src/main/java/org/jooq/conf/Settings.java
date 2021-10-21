@@ -316,6 +316,8 @@ public class Settings
     protected String parseIgnoreCommentStart = "[jooq ignore start]";
     @XmlElement(defaultValue = "[jooq ignore stop]")
     protected String parseIgnoreCommentStop = "[jooq ignore stop]";
+    @XmlElement(defaultValue = "false")
+    protected Boolean parseRetainCommentsBetweenQueries = false;
     @XmlElement(defaultValue = "true")
     protected Boolean parseMetaDefaultExpressions = true;
     @XmlElement(defaultValue = "true")
@@ -2882,6 +2884,36 @@ public class Settings
     }
 
     /**
+     * [#12538] Whether the parser should retain comments and whitespace between queries when parsing multiple queries through {@link org.jooq.Parser#parse(String)}.
+     * <p>
+     * jOOQ's query object model doesn't have a way to represent comments
+     * or other whitespace, and as such, the parser simply skips them by default.
+     * However, it may be desirable to retain comments before or in between top
+     * level queries, when parsing multiple such queries in a script. Comments
+     * inside of queries (including procedural statements) are still not supported.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isParseRetainCommentsBetweenQueries() {
+        return parseRetainCommentsBetweenQueries;
+    }
+
+    /**
+     * Sets the value of the parseRetainCommentsBetweenQueries property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setParseRetainCommentsBetweenQueries(Boolean value) {
+        this.parseRetainCommentsBetweenQueries = value;
+    }
+
+    /**
      * [#8469] Whether to parse default expressions retrieved from {@link java.sql.DatabaseMetaData}.
      * 
      * @return
@@ -3911,6 +3943,11 @@ public class Settings
         return this;
     }
 
+    public Settings withParseRetainCommentsBetweenQueries(Boolean value) {
+        setParseRetainCommentsBetweenQueries(value);
+        return this;
+    }
+
     public Settings withParseMetaDefaultExpressions(Boolean value) {
         setParseMetaDefaultExpressions(value);
         return this;
@@ -4102,6 +4139,7 @@ public class Settings
         builder.append("parseIgnoreComments", parseIgnoreComments);
         builder.append("parseIgnoreCommentStart", parseIgnoreCommentStart);
         builder.append("parseIgnoreCommentStop", parseIgnoreCommentStop);
+        builder.append("parseRetainCommentsBetweenQueries", parseRetainCommentsBetweenQueries);
         builder.append("parseMetaDefaultExpressions", parseMetaDefaultExpressions);
         builder.append("applyWorkaroundFor7962", applyWorkaroundFor7962);
         builder.append("interpreterSearchPath", "schema", interpreterSearchPath);
@@ -5172,6 +5210,15 @@ public class Settings
                 return false;
             }
         }
+        if (parseRetainCommentsBetweenQueries == null) {
+            if (other.parseRetainCommentsBetweenQueries!= null) {
+                return false;
+            }
+        } else {
+            if (!parseRetainCommentsBetweenQueries.equals(other.parseRetainCommentsBetweenQueries)) {
+                return false;
+            }
+        }
         if (parseMetaDefaultExpressions == null) {
             if (other.parseMetaDefaultExpressions!= null) {
                 return false;
@@ -5340,6 +5387,7 @@ public class Settings
         result = ((prime*result)+((parseIgnoreComments == null)? 0 :parseIgnoreComments.hashCode()));
         result = ((prime*result)+((parseIgnoreCommentStart == null)? 0 :parseIgnoreCommentStart.hashCode()));
         result = ((prime*result)+((parseIgnoreCommentStop == null)? 0 :parseIgnoreCommentStop.hashCode()));
+        result = ((prime*result)+((parseRetainCommentsBetweenQueries == null)? 0 :parseRetainCommentsBetweenQueries.hashCode()));
         result = ((prime*result)+((parseMetaDefaultExpressions == null)? 0 :parseMetaDefaultExpressions.hashCode()));
         result = ((prime*result)+((applyWorkaroundFor7962 == null)? 0 :applyWorkaroundFor7962 .hashCode()));
         result = ((prime*result)+((interpreterSearchPath == null)? 0 :interpreterSearchPath.hashCode()));

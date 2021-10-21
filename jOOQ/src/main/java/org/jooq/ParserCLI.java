@@ -180,7 +180,10 @@ public final class ParserCLI {
             // https://stackoverflow.com/q/572001/521799
             a.history.add(line);
 
-            if (a.sql == null && line.startsWith("/")) {
+            // [#12543] Avoid interpreting comments as commands
+            boolean leadingSlash = line.matches("^/[^/*].*$");
+
+            if (a.sql == null && leadingSlash) {
                 if ("/q".equals(line) || "/quit".equals(line) ||
                     "/e".equals(line) || "/exit".equals(line)) {
                     System.out.println("Bye");
@@ -320,7 +323,7 @@ public final class ParserCLI {
                 ctx = ctx(a, ctx.settings());
             }
 
-            if (a.sql != null || !line.startsWith("/")) {
+            if (a.sql != null || !leadingSlash) {
                 if (a.sql == null)
                     a.sql = line;
                 else

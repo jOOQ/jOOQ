@@ -12,7 +12,7 @@ module org.jooq.postgres.extensions {
     // Vendor specific JDBC drivers
     requires static org.postgresql.jdbc;
 
-    opens org.jooq.postgres.extensions.bindings;
-    opens org.jooq.postgres.extensions.converters;
-    opens org.jooq.postgres.extensions.types;
+    exports org.jooq.postgres.extensions.bindings;
+    exports org.jooq.postgres.extensions.converters;
+    exports org.jooq.postgres.extensions.types;
 }

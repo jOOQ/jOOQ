@@ -11,6 +11,6 @@ module org.jooq.codegen {
     // - InformationSchema (org.jooq.util.xml.jaxb)
     requires static java.xml.bind;
 
-    opens org.jooq.codegen;
-    opens org.jooq.codegen.example;
+    exports org.jooq.codegen;
+    exports org.jooq.codegen.example;
 }

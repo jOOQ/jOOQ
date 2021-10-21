@@ -10784,12 +10784,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseAggregateFunctionIf(boolean basic, AggregateFunction<?> f) {
-        AggregateFunction<?> agg;
-        AggregateFilterStep<?> filter;
-        WindowBeforeOverStep<?> over;
-        Object keep;
-        Field<?> result;
-        Condition condition;
+        AggregateFunction<?> agg = null;
+        AggregateFilterStep<?> filter = null;
+        WindowBeforeOverStep<?> over = null;
+        Object keep = null;
+        Field<?> result = null;
+        Condition condition = null;
 
         keep = over = filter = agg = f != null ? f : parseCountIf();
         if (filter == null) {

@@ -44,8 +44,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.function.BiFunction;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import org.jooq.Block;
@@ -55,12 +55,12 @@ import org.jooq.DSLContext;
 import org.jooq.Function1;
 import org.jooq.Queries;
 import org.jooq.Query;
+import org.jooq.QueryPart;
 import org.jooq.ResultQuery;
 import org.jooq.Results;
 import org.jooq.Traverser;
 import org.jooq.impl.DefaultParseContext.IgnoreQuery;
 import org.jooq.impl.QOM.MList;
-import org.jooq.QueryPart;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 
 /**
@@ -142,6 +142,9 @@ final class QueriesImpl extends AbstractAttachableQueryPart implements Queries {
     // QueryPart API
     // ------------------------------------------------------------------------
 
+    private static final Pattern P_IGNORE_FORMATTED   = Pattern.compile("^(?sm:\\n? *(.*?) *\\n?)$");
+    private static final Pattern P_IGNORE_UNFORMATTED = Pattern.compile("^(?sm: *(.*?) *)$");
+
     @Override
     public final void accept(Context<?> ctx) {
         boolean first = true;
@@ -157,9 +160,9 @@ final class QueriesImpl extends AbstractAttachableQueryPart implements Queries {
 
             if (i)
                 if (ctx.format())
-                    query = new IgnoreQuery(((IgnoreQuery) query).sql.replaceFirst("^(?sm:\\n? *(.*?) *\\n?)$", "$1"));
+                    query = new IgnoreQuery(P_IGNORE_FORMATTED.matcher(((IgnoreQuery) query).sql).replaceFirst("$1"));
                 else
-                    query = new IgnoreQuery(((IgnoreQuery) query).sql.replaceFirst("^(?sm: *(.*?) *)$", "$1"));
+                    query = new IgnoreQuery(P_IGNORE_UNFORMATTED.matcher(((IgnoreQuery) query).sql).replaceFirst("$1"));
 
             ctx.visit(query);
 

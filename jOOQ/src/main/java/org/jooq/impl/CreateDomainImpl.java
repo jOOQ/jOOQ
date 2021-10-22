@@ -192,7 +192,7 @@ implements
         if (default_ != null)
             ctx.formatSeparator().visit(K_DEFAULT).sql(' ').visit(default_);
 
-        if (constraints != null)
+        if (!Tools.isEmpty(constraints))
             if (ctx.family() == FIREBIRD)
                 ctx.formatSeparator().visit(DSL.check(DSL.and(Tools.map(constraints, c -> ((ConstraintImpl) c).$check()))));
             else

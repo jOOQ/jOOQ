@@ -383,7 +383,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final Field<T> mul(Field<? extends Number> value) {
-        return new Expression<>(MULTIPLY, false, this, nullSafe(value, getDataType()));
+        return new Expression<>(MULTIPLY, false, this, getDataType().isTemporal() ? nullSafe(value) : nullSafe(value, getDataType()));
     }
 
     @Override
@@ -393,7 +393,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final Field<T> div(Field<? extends Number> value) {
-        return new Expression<>(DIVIDE, false, this, nullSafe(value, getDataType()));
+        return new Expression<>(DIVIDE, false, this, getDataType().isTemporal() ? nullSafe(value) : nullSafe(value, getDataType()));
     }
 
     @Override

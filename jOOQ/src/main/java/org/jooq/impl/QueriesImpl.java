@@ -145,17 +145,28 @@ final class QueriesImpl extends AbstractAttachableQueryPart implements Queries {
     @Override
     public final void accept(Context<?> ctx) {
         boolean first = true;
+        boolean separatorRequired = false;
 
         for (Query query : this) {
+            boolean i = query instanceof IgnoreQuery;
+
             if (first)
                 first = false;
-            else
+            else if (separatorRequired)
                 ctx.formatSeparator();
+
+            if (i)
+                if (ctx.format())
+                    query = new IgnoreQuery(((IgnoreQuery) query).sql.replaceFirst("^(?sm:\\n? *(.*?) *\\n?)$", "$1"));
+                else
+                    query = new IgnoreQuery(((IgnoreQuery) query).sql.replaceFirst("^(?sm: *(.*?) *)$", "$1"));
 
             ctx.visit(query);
 
-            if (!(query instanceof IgnoreQuery))
+            if (!i)
                 ctx.sql(';');
+
+            separatorRequired = !i || !((IgnoreQuery) query).sql.endsWith("\n");
         }
     }
 

@@ -639,8 +639,6 @@ import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * @author Lukas Eder
  */
@@ -791,7 +789,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
     static final Set<SQLDialect>         SUPPORTS_HASH_COMMENT_SYNTAX  = SQLDialect.supportedBy(MARIADB, MYSQL);
-    static final Pattern                 P_TRIM                        = Pattern.compile("^ *\\r?\\n?(.*?) *$");
 
     final Queries parse() {
         return wrap(() -> {
@@ -816,7 +813,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         break skipWhitespace;
                     }
 
-                    result.add(new IgnoreQuery(P_TRIM.matcher(substring(p, position)).replaceFirst("$1")));
+                    result.add(new IgnoreQuery(substring(p, position)));
                 }
 
                 query = patchParsedQuery(parseQuery(false, false));
@@ -13720,7 +13717,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private static final Query    IGNORE_NO_DELIMITER = new IgnoreQuery();
 
     static final class IgnoreQuery extends AbstractDDLQuery implements UEmpty {
-        private final String sql;
+        private static final Pattern P_LEADING = Pattern.compile("^(?sm:)$");
+        final String sql;
 
         IgnoreQuery() {
             this("/* ignored */");
@@ -13734,9 +13732,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         @Override
         public void accept(Context<?> ctx) {
+            var o = new Object() {
+                static final Pattern P = Pattern.compile("");
+            };
+
+            o.P.matcher(sql);
             ctx.sql(sql);
         }
     }
+
+
 
     private final DSLContext                      dsl;
     private final Locale                          locale;

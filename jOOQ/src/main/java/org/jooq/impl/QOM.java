@@ -42,13 +42,10 @@ import static org.jooq.impl.DSL.keyword;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
-import org.jooq.AggregateFunction;
 // ...
 import org.jooq.Catalog;
 import org.jooq.Collation;
@@ -91,14 +88,11 @@ import org.jooq.Internal;
 import org.jooq.JSONEntry;
 import org.jooq.Keyword;
 // ...
-// ...
 import org.jooq.Name;
-import org.jooq.Named;
 import org.jooq.OrderField;
 import org.jooq.Param;
 import org.jooq.Parameter;
 import org.jooq.Privilege;
-// ...
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -111,10 +105,7 @@ import org.jooq.RowCountQuery;
 import org.jooq.RowId;
 import org.jooq.Schema;
 import org.jooq.Select;
-import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Sequence;
-import org.jooq.SortField;
-import org.jooq.SortOrder;
 import org.jooq.Statement;
 import org.jooq.Table;
 import org.jooq.Traverser;
@@ -203,8 +194,6 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-// Work around https://bugs.eclipse.org/bugs/show_bug.cgi?id=576378
-@SuppressWarnings("rawtypes")
 @Internal
 public final class QOM {
 
@@ -212,12 +201,17 @@ public final class QOM {
     // XXX: Model
     // -------------------------------------------------------------------------
 
-    public interface MCollection<Q extends QueryPart> extends QueryPart, Collection<Q> {}
-    public interface MList<Q extends QueryPart> extends MCollection<Q>, List<Q> {}
+    // This class uses a lot of fully qualified types, because of some javac bug
+    // In Java 1.8.0_302, which hasn't been analysed and reproduced yet in a more
+    // minimal example. Without the qualification, the types cannot be found
+    // despite being imported
+
+    public interface MCollection<Q extends org.jooq.QueryPart> extends org.jooq.QueryPart, java.util.Collection<Q> {}
+    public interface MList<Q extends org.jooq.QueryPart> extends MCollection<Q>, java.util.List<Q> {}
 
     public /*sealed*/ interface With
         extends
-            QueryPart
+            org.jooq.QueryPart
         /*permits
             WithImpl*/
     {
@@ -536,7 +530,7 @@ public final class QOM {
 
     public /*sealed*/ interface RatioToReport
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         /*permits
             RatioToReport*/
     {
@@ -545,8 +539,8 @@ public final class QOM {
 
     public /*sealed*/ interface Mode<T>
         extends
-            AggregateFunction<T>,
-            UOperator1<Field<T>, AggregateFunction<T>>
+            org.jooq.AggregateFunction<T>,
+            UOperator1<Field<T>, org.jooq.AggregateFunction<T>>
         /*permits
             Mode*/
     {
@@ -555,7 +549,7 @@ public final class QOM {
 
     public /*sealed*/ interface MultisetAgg<R extends Record>
         extends
-            AggregateFunction<Result<R>>
+            org.jooq.AggregateFunction<Result<R>>
         /*permits
             MultisetAgg*/
     {
@@ -564,8 +558,8 @@ public final class QOM {
 
     public /*sealed*/ interface ArrayAgg<T>
         extends
-            AggregateFunction<T[]>,
-            UOperator1<Field<T>, AggregateFunction<T[]>>
+            org.jooq.AggregateFunction<T[]>,
+            UOperator1<Field<T>, org.jooq.AggregateFunction<T[]>>
         /*permits
             ArrayAgg*/
     {
@@ -575,8 +569,8 @@ public final class QOM {
 
     public /*sealed*/ interface XMLAgg
         extends
-            AggregateFunction<XML>,
-            UOperator1<Field<XML>, AggregateFunction<XML>>
+            org.jooq.AggregateFunction<XML>,
+            UOperator1<Field<XML>, org.jooq.AggregateFunction<XML>>
         /*permits
             XMLAgg*/
     {
@@ -585,8 +579,8 @@ public final class QOM {
 
     public /*sealed*/ interface JSONArrayAgg<J>
         extends
-            AggregateFunction<J>,
-            UOperator1<Field<?>, AggregateFunction<J>>
+            org.jooq.AggregateFunction<J>,
+            UOperator1<org.jooq.Field<?>, org.jooq.AggregateFunction<J>>
         /*permits
             JSONArrayAgg*/
     {
@@ -597,8 +591,8 @@ public final class QOM {
 
     public /*sealed*/ interface JSONObjectAgg<J>
         extends
-            AggregateFunction<J>,
-            UOperator1<JSONEntry<?>, AggregateFunction<J>>
+            org.jooq.AggregateFunction<J>,
+            UOperator1<JSONEntry<?>, org.jooq.AggregateFunction<J>>
         /*permits JSONObjectAgg*/
     {
         @NotNull default JSONEntry<?> $entry() { return $arg1(); }
@@ -608,7 +602,7 @@ public final class QOM {
 
     public /*sealed*/ interface CountTable
         extends
-            AggregateFunction<Integer>
+            org.jooq.AggregateFunction<Integer>
         /*permits
             CountTable*/
     {
@@ -626,7 +620,7 @@ public final class QOM {
 
 
 
-    public interface WindowFunction<T> extends Field<T> {
+    public interface WindowFunction<T> extends org.jooq.Field<T> {
         @Nullable WindowSpecification $windowSpecification();
         @Nullable WindowDefinition $windowDefinition();
     }
@@ -810,9 +804,9 @@ public final class QOM {
         @NotNull Select<? extends Record1<T>> $select();
     }
 
-    public /*sealed*/ interface Multiset<R extends Record>
+    public /*sealed*/ interface Multiset<R extends org.jooq.Record>
         extends
-            Field<Result<R>>
+            org.jooq.Field<org.jooq.Result<R>>
         /*permits
             Multiset*/
     {
@@ -1531,7 +1525,7 @@ public final class QOM {
 
     public /*sealed*/ interface SetCommand
         extends
-            RowCountQuery
+            org.jooq.RowCountQuery
         //permits
         //    SetCommand
     {
@@ -1545,7 +1539,7 @@ public final class QOM {
 
     public /*sealed*/ interface SetCatalog
         extends
-            RowCountQuery
+            org.jooq.RowCountQuery
         //permits
         //    SetCatalog
     {
@@ -1555,7 +1549,7 @@ public final class QOM {
 
     public /*sealed*/ interface SetSchema
         extends
-            RowCountQuery
+            org.jooq.RowCountQuery
         //permits
         //    SetSchema
     {
@@ -1601,7 +1595,7 @@ public final class QOM {
 
     public /*sealed*/ interface TableEq<R extends Record>
         extends
-            Condition,
+            org.jooq.Condition,
             UOperator2<Table<R>, Table<R>, Condition>
         //permits
         //    TableEq
@@ -1616,7 +1610,7 @@ public final class QOM {
 
     public /*sealed*/ interface Exists
         extends
-            Condition
+            org.jooq.Condition
         //permits
         //    Exists
     {
@@ -1640,7 +1634,7 @@ public final class QOM {
 
     public /*sealed*/ interface In<T>
         extends
-            Condition,
+            org.jooq.Condition,
             UOperator2<Field<T>, Select<? extends Record1<T>>, Condition>
         //permits
         //    In
@@ -1655,7 +1649,7 @@ public final class QOM {
 
     public /*sealed*/ interface IsNull
         extends
-            Condition,
+            org.jooq.Condition,
             UOperator1<Field<?>, Condition>
         //permits
         //    IsNull
@@ -1672,7 +1666,7 @@ public final class QOM {
 
     public /*sealed*/ interface IsNotNull
         extends
-            Condition,
+            org.jooq.Condition,
             UOperator1<Field<?>, Condition>
         //permits
         //    IsNotNull
@@ -1720,7 +1714,7 @@ public final class QOM {
 
     public /*sealed*/ interface TableNe<R extends Record>
         extends
-            Condition,
+            org.jooq.Condition,
             UOperator2<Table<R>, Table<R>, Condition>
         //permits
         //    TableNe
@@ -1735,7 +1729,7 @@ public final class QOM {
 
     public /*sealed*/ interface Not
         extends
-            Condition,
+            org.jooq.Condition,
             UOperator1<Condition, Condition>
         //permits
         //    Not
@@ -1745,7 +1739,7 @@ public final class QOM {
 
     public /*sealed*/ interface NotField
         extends
-            Field<Boolean>,
+            org.jooq.Field<Boolean>,
             UOperator1<Field<Boolean>, Field<Boolean>>
         //permits
         //    NotField
@@ -1755,7 +1749,7 @@ public final class QOM {
 
     public /*sealed*/ interface NotIn<T>
         extends
-            Condition,
+            org.jooq.Condition,
             UOperator2<Field<T>, Select<? extends Record1<T>>, Condition>
         //permits
         //    NotIn
@@ -1818,7 +1812,7 @@ public final class QOM {
 
     public /*sealed*/ interface Unique
         extends
-            Condition
+            org.jooq.Condition
         //permits
         //    Unique
     {
@@ -1828,7 +1822,7 @@ public final class QOM {
 
     public /*sealed*/ interface IsDocument
         extends
-            Condition,
+            org.jooq.Condition,
             UOperator1<Field<?>, Condition>
         //permits
         //    IsDocument
@@ -1838,7 +1832,7 @@ public final class QOM {
 
     public /*sealed*/ interface IsNotDocument
         extends
-            Condition,
+            org.jooq.Condition,
             UOperator1<Field<?>, Condition>
         //permits
         //    IsNotDocument
@@ -1848,7 +1842,7 @@ public final class QOM {
 
     public /*sealed*/ interface IsJson
         extends
-            Condition,
+            org.jooq.Condition,
             UOperator1<Field<?>, Condition>
         //permits
         //    IsJson
@@ -1858,7 +1852,7 @@ public final class QOM {
 
     public /*sealed*/ interface IsNotJson
         extends
-            Condition,
+            org.jooq.Condition,
             UOperator1<Field<?>, Condition>
         //permits
         //    IsNotJson
@@ -1868,7 +1862,7 @@ public final class QOM {
 
     public /*sealed*/ interface QualifiedRowid
         extends
-            Field<RowId>,
+            org.jooq.Field<RowId>,
             UOperator1<Table<?>, Field<RowId>>
         //permits
         //    QualifiedRowid
@@ -1878,7 +1872,7 @@ public final class QOM {
 
     public /*sealed*/ interface Abs<T extends Number>
         extends
-            Field<T>
+            org.jooq.Field<T>
         //permits
         //    Abs
     {
@@ -1888,7 +1882,7 @@ public final class QOM {
 
     public /*sealed*/ interface Acos
         extends
-            Field<BigDecimal>
+            org.jooq.Field<BigDecimal>
         //permits
         //    Acos
     {
@@ -1898,7 +1892,7 @@ public final class QOM {
 
     public /*sealed*/ interface Asin
         extends
-            Field<BigDecimal>
+            org.jooq.Field<BigDecimal>
         //permits
         //    Asin
     {
@@ -1908,7 +1902,7 @@ public final class QOM {
 
     public /*sealed*/ interface Atan
         extends
-            Field<BigDecimal>
+            org.jooq.Field<BigDecimal>
         //permits
         //    Atan
     {
@@ -1918,7 +1912,7 @@ public final class QOM {
 
     public /*sealed*/ interface Atan2
         extends
-            Field<BigDecimal>
+            org.jooq.Field<BigDecimal>
         //permits
         //    Atan2
     {
@@ -1930,7 +1924,7 @@ public final class QOM {
 
     public /*sealed*/ interface BitAnd<T extends Number>
         extends
-            Field<T>,
+            org.jooq.Field<T>,
             UOperator2<Field<T>, Field<T>, Field<T>>
         //permits
         //    BitAnd
@@ -1938,7 +1932,7 @@ public final class QOM {
 
     public /*sealed*/ interface BitCount
         extends
-            Field<Integer>
+            org.jooq.Field<Integer>
         //permits
         //    BitCount
     {
@@ -1948,7 +1942,7 @@ public final class QOM {
 
     public /*sealed*/ interface BitNand<T extends Number>
         extends
-            Field<T>,
+            org.jooq.Field<T>,
             UOperator2<Field<T>, Field<T>, Field<T>>
         //permits
         //    BitNand
@@ -1956,7 +1950,7 @@ public final class QOM {
 
     public /*sealed*/ interface BitNor<T extends Number>
         extends
-            Field<T>,
+            org.jooq.Field<T>,
             UOperator2<Field<T>, Field<T>, Field<T>>
         //permits
         //    BitNor
@@ -1964,7 +1958,7 @@ public final class QOM {
 
     public /*sealed*/ interface BitNot<T extends Number>
         extends
-            Field<T>,
+            org.jooq.Field<T>,
             UOperator1<Field<T>, Field<T>>
         //permits
         //    BitNot
@@ -1972,7 +1966,7 @@ public final class QOM {
 
     public /*sealed*/ interface BitOr<T extends Number>
         extends
-            Field<T>,
+            org.jooq.Field<T>,
             UOperator2<Field<T>, Field<T>, Field<T>>
         //permits
         //    BitOr
@@ -1980,7 +1974,7 @@ public final class QOM {
 
     public /*sealed*/ interface BitXNor<T extends Number>
         extends
-            Field<T>,
+            org.jooq.Field<T>,
             UOperator2<Field<T>, Field<T>, Field<T>>
         //permits
         //    BitXNor
@@ -1988,7 +1982,7 @@ public final class QOM {
 
     public /*sealed*/ interface BitXor<T extends Number>
         extends
-            Field<T>,
+            org.jooq.Field<T>,
             UOperator2<Field<T>, Field<T>, Field<T>>
         //permits
         //    BitXor
@@ -1996,7 +1990,7 @@ public final class QOM {
 
     public /*sealed*/ interface Ceil<T extends Number>
         extends
-            Field<T>
+            org.jooq.Field<T>
         //permits
         //    Ceil
     {
@@ -2006,7 +2000,7 @@ public final class QOM {
 
     public /*sealed*/ interface Cos
         extends
-            Field<BigDecimal>
+            org.jooq.Field<BigDecimal>
         //permits
         //    Cos
     {
@@ -2016,7 +2010,7 @@ public final class QOM {
 
     public /*sealed*/ interface Cosh
         extends
-            Field<BigDecimal>
+            org.jooq.Field<BigDecimal>
         //permits
         //    Cosh
     {
@@ -2026,7 +2020,7 @@ public final class QOM {
 
     public /*sealed*/ interface Cot
         extends
-            Field<BigDecimal>
+            org.jooq.Field<BigDecimal>
         //permits
         //    Cot
     {
@@ -2036,7 +2030,7 @@ public final class QOM {
 
     public /*sealed*/ interface Coth
         extends
-            Field<BigDecimal>
+            org.jooq.Field<BigDecimal>
         //permits
         //    Coth
     {
@@ -2046,7 +2040,7 @@ public final class QOM {
 
     public /*sealed*/ interface Degrees
         extends
-            Field<BigDecimal>
+            org.jooq.Field<BigDecimal>
         //permits
         //    Degrees
     {
@@ -2056,7 +2050,7 @@ public final class QOM {
 
     public /*sealed*/ interface Euler
         extends
-            Field<BigDecimal>,
+            org.jooq.Field<BigDecimal>,
             UEmpty
         //permits
         //    Euler
@@ -2064,7 +2058,7 @@ public final class QOM {
 
     public /*sealed*/ interface Exp
         extends
-            Field<BigDecimal>
+            org.jooq.Field<BigDecimal>
         //permits
         //    Exp
     {
@@ -2074,7 +2068,7 @@ public final class QOM {
 
     public /*sealed*/ interface Floor<T extends Number>
         extends
-            Field<T>
+            org.jooq.Field<T>
         //permits
         //    Floor
     {
@@ -2084,7 +2078,7 @@ public final class QOM {
 
     public /*sealed*/ interface Log
         extends
-            Field<BigDecimal>
+            org.jooq.Field<BigDecimal>
         //permits
         //    Log
     {
@@ -2096,7 +2090,7 @@ public final class QOM {
 
     public /*sealed*/ interface Log10
         extends
-            Field<BigDecimal>
+            org.jooq.Field<BigDecimal>
         //permits
         //    Log10
     {
@@ -2106,7 +2100,7 @@ public final class QOM {
 
     public /*sealed*/ interface Mod<T extends Number>
         extends
-            Field<T>,
+            org.jooq.Field<T>,
             UOperator2<Field<T>, Field<? extends Number>, Field<T>>
         //permits
         //    Mod
@@ -2117,7 +2111,7 @@ public final class QOM {
 
     public /*sealed*/ interface Pi
         extends
-            Field<BigDecimal>,
+            org.jooq.Field<BigDecimal>,
             UEmpty
         //permits
         //    Pi
@@ -2125,7 +2119,7 @@ public final class QOM {
 
     public /*sealed*/ interface Power
         extends
-            Field<BigDecimal>,
+            org.jooq.Field<BigDecimal>,
             UOperator2<Field<? extends Number>, Field<? extends Number>, Field<BigDecimal>>
         //permits
         //    Power
@@ -2136,7 +2130,7 @@ public final class QOM {
 
     public /*sealed*/ interface Radians
         extends
-            Field<BigDecimal>
+            org.jooq.Field<BigDecimal>
         //permits
         //    Radians
     {
@@ -2146,7 +2140,7 @@ public final class QOM {
 
     public /*sealed*/ interface Rand
         extends
-            Field<BigDecimal>,
+            org.jooq.Field<BigDecimal>,
             UEmpty
         //permits
         //    Rand
@@ -2154,7 +2148,7 @@ public final class QOM {
 
     public /*sealed*/ interface Round<T extends Number>
         extends
-            Field<T>
+            org.jooq.Field<T>
         //permits
         //    Round
     {
@@ -2166,7 +2160,7 @@ public final class QOM {
 
     public /*sealed*/ interface Shl<T extends Number>
         extends
-            Field<T>,
+            org.jooq.Field<T>,
             UOperator2<Field<T>, Field<? extends Number>, Field<T>>
         //permits
         //    Shl
@@ -2177,7 +2171,7 @@ public final class QOM {
 
     public /*sealed*/ interface Shr<T extends Number>
         extends
-            Field<T>,
+            org.jooq.Field<T>,
             UOperator2<Field<T>, Field<? extends Number>, Field<T>>
         //permits
         //    Shr
@@ -2188,7 +2182,7 @@ public final class QOM {
 
     public /*sealed*/ interface Sign
         extends
-            Field<Integer>
+            org.jooq.Field<Integer>
         //permits
         //    Sign
     {
@@ -2198,7 +2192,7 @@ public final class QOM {
 
     public /*sealed*/ interface Sin
         extends
-            Field<BigDecimal>
+            org.jooq.Field<BigDecimal>
         //permits
         //    Sin
     {
@@ -2208,7 +2202,7 @@ public final class QOM {
 
     public /*sealed*/ interface Sinh
         extends
-            Field<BigDecimal>
+            org.jooq.Field<BigDecimal>
         //permits
         //    Sinh
     {
@@ -2218,7 +2212,7 @@ public final class QOM {
 
     public /*sealed*/ interface Sqrt
         extends
-            Field<BigDecimal>
+            org.jooq.Field<BigDecimal>
         //permits
         //    Sqrt
     {
@@ -2228,7 +2222,7 @@ public final class QOM {
 
     public /*sealed*/ interface Square<T extends Number>
         extends
-            Field<T>
+            org.jooq.Field<T>
         //permits
         //    Square
     {
@@ -2238,7 +2232,7 @@ public final class QOM {
 
     public /*sealed*/ interface Tan
         extends
-            Field<BigDecimal>
+            org.jooq.Field<BigDecimal>
         //permits
         //    Tan
     {
@@ -2248,7 +2242,7 @@ public final class QOM {
 
     public /*sealed*/ interface Tanh
         extends
-            Field<BigDecimal>
+            org.jooq.Field<BigDecimal>
         //permits
         //    Tanh
     {
@@ -2258,7 +2252,7 @@ public final class QOM {
 
     public /*sealed*/ interface Tau
         extends
-            Field<BigDecimal>,
+            org.jooq.Field<BigDecimal>,
             UEmpty
         //permits
         //    Tau
@@ -2266,7 +2260,7 @@ public final class QOM {
 
     public /*sealed*/ interface Trunc<T extends Number>
         extends
-            Field<T>
+            org.jooq.Field<T>
         //permits
         //    Trunc
     {
@@ -2278,7 +2272,7 @@ public final class QOM {
 
     public /*sealed*/ interface WidthBucket<T extends Number>
         extends
-            Field<T>
+            org.jooq.Field<T>
         //permits
         //    WidthBucket
     {
@@ -2294,7 +2288,7 @@ public final class QOM {
 
     public /*sealed*/ interface Ascii
         extends
-            Field<Integer>
+            org.jooq.Field<Integer>
         //permits
         //    Ascii
     {
@@ -2304,7 +2298,7 @@ public final class QOM {
 
     public /*sealed*/ interface BitLength
         extends
-            Field<Integer>
+            org.jooq.Field<Integer>
         //permits
         //    BitLength
     {
@@ -2314,7 +2308,7 @@ public final class QOM {
 
     public /*sealed*/ interface CharLength
         extends
-            Field<Integer>
+            org.jooq.Field<Integer>
         //permits
         //    CharLength
     {
@@ -2324,7 +2318,7 @@ public final class QOM {
 
     public /*sealed*/ interface Chr
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Chr
     {
@@ -2354,7 +2348,7 @@ public final class QOM {
 
     public /*sealed*/ interface Digits
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Digits
     {
@@ -2384,7 +2378,7 @@ public final class QOM {
 
     public /*sealed*/ interface Left
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Left
     {
@@ -2396,7 +2390,7 @@ public final class QOM {
 
     public /*sealed*/ interface Lower
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Lower
     {
@@ -2406,7 +2400,7 @@ public final class QOM {
 
     public /*sealed*/ interface Lpad
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Lpad
     {
@@ -2420,7 +2414,7 @@ public final class QOM {
 
     public /*sealed*/ interface Ltrim
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Ltrim
     {
@@ -2432,7 +2426,7 @@ public final class QOM {
 
     public /*sealed*/ interface Md5
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Md5
     {
@@ -2442,7 +2436,7 @@ public final class QOM {
 
     public /*sealed*/ interface OctetLength
         extends
-            Field<Integer>
+            org.jooq.Field<Integer>
         //permits
         //    OctetLength
     {
@@ -2452,7 +2446,7 @@ public final class QOM {
 
     public /*sealed*/ interface Overlay
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Overlay
     {
@@ -2468,7 +2462,7 @@ public final class QOM {
 
     public /*sealed*/ interface Position
         extends
-            Field<Integer>
+            org.jooq.Field<Integer>
         //permits
         //    Position
     {
@@ -2482,7 +2476,7 @@ public final class QOM {
 
     public /*sealed*/ interface Repeat
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Repeat
     {
@@ -2494,7 +2488,7 @@ public final class QOM {
 
     public /*sealed*/ interface Replace
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Replace
     {
@@ -2508,7 +2502,7 @@ public final class QOM {
 
     public /*sealed*/ interface Reverse
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Reverse
     {
@@ -2518,7 +2512,7 @@ public final class QOM {
 
     public /*sealed*/ interface Right
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Right
     {
@@ -2530,7 +2524,7 @@ public final class QOM {
 
     public /*sealed*/ interface Rpad
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Rpad
     {
@@ -2544,7 +2538,7 @@ public final class QOM {
 
     public /*sealed*/ interface Rtrim
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Rtrim
     {
@@ -2556,7 +2550,7 @@ public final class QOM {
 
     public /*sealed*/ interface Space
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Space
     {
@@ -2566,7 +2560,7 @@ public final class QOM {
 
     public /*sealed*/ interface SplitPart
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    SplitPart
     {
@@ -2600,7 +2594,7 @@ public final class QOM {
 
     public /*sealed*/ interface Substring
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Substring
     {
@@ -2614,7 +2608,7 @@ public final class QOM {
 
     public /*sealed*/ interface SubstringIndex
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    SubstringIndex
     {
@@ -2628,7 +2622,7 @@ public final class QOM {
 
     public /*sealed*/ interface ToChar
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    ToChar
     {
@@ -2640,7 +2634,7 @@ public final class QOM {
 
     public /*sealed*/ interface ToDate
         extends
-            Field<Date>
+            org.jooq.Field<Date>
         //permits
         //    ToDate
     {
@@ -2652,7 +2646,7 @@ public final class QOM {
 
     public /*sealed*/ interface ToHex
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    ToHex
     {
@@ -2662,7 +2656,7 @@ public final class QOM {
 
     public /*sealed*/ interface ToTimestamp
         extends
-            Field<Timestamp>
+            org.jooq.Field<Timestamp>
         //permits
         //    ToTimestamp
     {
@@ -2674,7 +2668,7 @@ public final class QOM {
 
     public /*sealed*/ interface Translate
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Translate
     {
@@ -2688,7 +2682,7 @@ public final class QOM {
 
     public /*sealed*/ interface Trim
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Trim
     {
@@ -2700,7 +2694,7 @@ public final class QOM {
 
     public /*sealed*/ interface Upper
         extends
-            Field<String>
+            org.jooq.Field<String>
         //permits
         //    Upper
     {
@@ -2710,7 +2704,7 @@ public final class QOM {
 
     public /*sealed*/ interface Uuid
         extends
-            Field<UUID>,
+            org.jooq.Field<UUID>,
             UEmpty
         //permits
         //    Uuid
@@ -2718,7 +2712,7 @@ public final class QOM {
 
     public /*sealed*/ interface DateAdd<T>
         extends
-            Field<T>
+            org.jooq.Field<T>
         //permits
         //    DateAdd
     {
@@ -2732,7 +2726,7 @@ public final class QOM {
 
     public /*sealed*/ interface Cardinality
         extends
-            Field<Integer>
+            org.jooq.Field<Integer>
         //permits
         //    Cardinality
     {
@@ -2742,7 +2736,7 @@ public final class QOM {
 
     public /*sealed*/ interface ArrayGet<T>
         extends
-            Field<T>
+            org.jooq.Field<T>
         //permits
         //    ArrayGet
     {
@@ -2754,7 +2748,7 @@ public final class QOM {
 
     public /*sealed*/ interface Nvl<T>
         extends
-            Field<T>
+            org.jooq.Field<T>
         //permits
         //    Nvl
     {
@@ -2766,7 +2760,7 @@ public final class QOM {
 
     public /*sealed*/ interface Nullif<T>
         extends
-            Field<T>
+            org.jooq.Field<T>
         //permits
         //    Nullif
     {
@@ -2778,7 +2772,7 @@ public final class QOM {
 
     public /*sealed*/ interface CurrentCatalog
         extends
-            Field<String>,
+            org.jooq.Field<String>,
             UEmpty
         //permits
         //    CurrentCatalog
@@ -2786,7 +2780,7 @@ public final class QOM {
 
     public /*sealed*/ interface CurrentSchema
         extends
-            Field<String>,
+            org.jooq.Field<String>,
             UEmpty
         //permits
         //    CurrentSchema
@@ -2794,7 +2788,7 @@ public final class QOM {
 
     public /*sealed*/ interface CurrentUser
         extends
-            Field<String>,
+            org.jooq.Field<String>,
             UEmpty
         //permits
         //    CurrentUser
@@ -2886,7 +2880,7 @@ public final class QOM {
 
     public /*sealed*/ interface XMLComment
         extends
-            Field<XML>
+            org.jooq.Field<XML>
         //permits
         //    XMLComment
     {
@@ -2896,7 +2890,7 @@ public final class QOM {
 
     public /*sealed*/ interface XMLConcat
         extends
-            Field<XML>
+            org.jooq.Field<XML>
         //permits
         //    XMLConcat
     {
@@ -2919,7 +2913,7 @@ public final class QOM {
 
     public /*sealed*/ interface XMLForest
         extends
-            Field<XML>
+            org.jooq.Field<XML>
         //permits
         //    XMLForest
     {
@@ -2929,7 +2923,7 @@ public final class QOM {
 
     public /*sealed*/ interface XMLPi
         extends
-            Field<XML>
+            org.jooq.Field<XML>
         //permits
         //    XMLPi
     {
@@ -2941,7 +2935,7 @@ public final class QOM {
 
     public /*sealed*/ interface XMLSerialize<T>
         extends
-            Field<T>
+            org.jooq.Field<T>
         //permits
         //    XMLSerialize
     {
@@ -3016,7 +3010,7 @@ public final class QOM {
 
     public /*sealed*/ interface ConditionAsField
         extends
-            Field<Boolean>
+            org.jooq.Field<Boolean>
         //permits
         //    ConditionAsField
     {
@@ -3026,7 +3020,7 @@ public final class QOM {
 
     public /*sealed*/ interface FieldCondition
         extends
-            Condition
+            org.jooq.Condition
         //permits
         //    FieldCondition
     {
@@ -3036,7 +3030,7 @@ public final class QOM {
 
     public /*sealed*/ interface AnyValue<T>
         extends
-            AggregateFunction<T>
+            org.jooq.AggregateFunction<T>
         //permits
         //    AnyValue
     {
@@ -3046,7 +3040,7 @@ public final class QOM {
 
     public /*sealed*/ interface Avg
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    Avg
     {
@@ -3058,7 +3052,7 @@ public final class QOM {
 
     public /*sealed*/ interface BitAndAgg<T extends Number>
         extends
-            AggregateFunction<T>
+            org.jooq.AggregateFunction<T>
         //permits
         //    BitAndAgg
     {
@@ -3068,7 +3062,7 @@ public final class QOM {
 
     public /*sealed*/ interface BitOrAgg<T extends Number>
         extends
-            AggregateFunction<T>
+            org.jooq.AggregateFunction<T>
         //permits
         //    BitOrAgg
     {
@@ -3078,7 +3072,7 @@ public final class QOM {
 
     public /*sealed*/ interface BitXorAgg<T extends Number>
         extends
-            AggregateFunction<T>
+            org.jooq.AggregateFunction<T>
         //permits
         //    BitXorAgg
     {
@@ -3088,7 +3082,7 @@ public final class QOM {
 
     public /*sealed*/ interface BoolAnd
         extends
-            AggregateFunction<Boolean>
+            org.jooq.AggregateFunction<Boolean>
         //permits
         //    BoolAnd
     {
@@ -3098,7 +3092,7 @@ public final class QOM {
 
     public /*sealed*/ interface BoolOr
         extends
-            AggregateFunction<Boolean>
+            org.jooq.AggregateFunction<Boolean>
         //permits
         //    BoolOr
     {
@@ -3108,7 +3102,7 @@ public final class QOM {
 
     public /*sealed*/ interface Corr
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    Corr
     {
@@ -3120,7 +3114,7 @@ public final class QOM {
 
     public /*sealed*/ interface Count
         extends
-            AggregateFunction<Integer>
+            org.jooq.AggregateFunction<Integer>
         //permits
         //    Count
     {
@@ -3132,7 +3126,7 @@ public final class QOM {
 
     public /*sealed*/ interface CovarSamp
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    CovarSamp
     {
@@ -3144,7 +3138,7 @@ public final class QOM {
 
     public /*sealed*/ interface CovarPop
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    CovarPop
     {
@@ -3156,7 +3150,7 @@ public final class QOM {
 
     public /*sealed*/ interface Max<T>
         extends
-            AggregateFunction<T>
+            org.jooq.AggregateFunction<T>
         //permits
         //    Max
     {
@@ -3168,7 +3162,7 @@ public final class QOM {
 
     public /*sealed*/ interface Median
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    Median
     {
@@ -3178,7 +3172,7 @@ public final class QOM {
 
     public /*sealed*/ interface Min<T>
         extends
-            AggregateFunction<T>
+            org.jooq.AggregateFunction<T>
         //permits
         //    Min
     {
@@ -3190,7 +3184,7 @@ public final class QOM {
 
     public /*sealed*/ interface Product
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    Product
     {
@@ -3202,7 +3196,7 @@ public final class QOM {
 
     public /*sealed*/ interface RegrAvgx
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    RegrAvgx
     {
@@ -3214,7 +3208,7 @@ public final class QOM {
 
     public /*sealed*/ interface RegrAvgy
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    RegrAvgy
     {
@@ -3226,7 +3220,7 @@ public final class QOM {
 
     public /*sealed*/ interface RegrCount
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    RegrCount
     {
@@ -3238,7 +3232,7 @@ public final class QOM {
 
     public /*sealed*/ interface RegrIntercept
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    RegrIntercept
     {
@@ -3250,7 +3244,7 @@ public final class QOM {
 
     public /*sealed*/ interface RegrR2
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    RegrR2
     {
@@ -3262,7 +3256,7 @@ public final class QOM {
 
     public /*sealed*/ interface RegrSlope
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    RegrSlope
     {
@@ -3274,7 +3268,7 @@ public final class QOM {
 
     public /*sealed*/ interface RegrSxx
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    RegrSxx
     {
@@ -3286,7 +3280,7 @@ public final class QOM {
 
     public /*sealed*/ interface RegrSxy
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    RegrSxy
     {
@@ -3298,7 +3292,7 @@ public final class QOM {
 
     public /*sealed*/ interface RegrSyy
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    RegrSyy
     {
@@ -3310,7 +3304,7 @@ public final class QOM {
 
     public /*sealed*/ interface StddevPop
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    StddevPop
     {
@@ -3320,7 +3314,7 @@ public final class QOM {
 
     public /*sealed*/ interface StddevSamp
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    StddevSamp
     {
@@ -3330,7 +3324,7 @@ public final class QOM {
 
     public /*sealed*/ interface Sum
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    Sum
     {
@@ -3342,7 +3336,7 @@ public final class QOM {
 
     public /*sealed*/ interface VarPop
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    VarPop
     {
@@ -3352,7 +3346,7 @@ public final class QOM {
 
     public /*sealed*/ interface VarSamp
         extends
-            AggregateFunction<BigDecimal>
+            org.jooq.AggregateFunction<BigDecimal>
         //permits
         //    VarSamp
     {
@@ -3706,7 +3700,7 @@ public final class QOM {
     // XXX: Utility API
     // -------------------------------------------------------------------------
 
-    interface UOperator1<Q1, R extends QueryPart> extends QueryPart {
+    interface UOperator1<Q1, R extends org.jooq.QueryPart> extends org.jooq.QueryPart {
         Q1 $arg1();
 
         @NotNull default R $arg1(Q1 newArg1) { return constructor().apply(newArg1); }
@@ -3725,9 +3719,9 @@ public final class QOM {
 
         @NotNull
         @Override
-        default QueryPart $replace(
-            Predicate<? super QueryPart> recurse,
-            Function1<? super QueryPart, ? extends QueryPart> replacement
+        default org.jooq.QueryPart $replace(
+            Predicate<? super org.jooq.QueryPart> recurse,
+            Function1<? super org.jooq.QueryPart, ? extends org.jooq.QueryPart> replacement
         ) {
             return QOM.replace(
                 this,
@@ -3739,7 +3733,7 @@ public final class QOM {
         }
     }
 
-    interface UOperator2<Q1, Q2, R extends QueryPart> extends QueryPart {
+    interface UOperator2<Q1, Q2, R extends org.jooq.QueryPart> extends org.jooq.QueryPart {
         Q1 $arg1();
         Q2 $arg2();
 
@@ -3760,9 +3754,9 @@ public final class QOM {
 
         @NotNull
         @Override
-        default QueryPart $replace(
-            Predicate<? super QueryPart> recurse,
-            Function1<? super QueryPart, ? extends QueryPart> replacement
+        default org.jooq.QueryPart $replace(
+            Predicate<? super org.jooq.QueryPart> recurse,
+            Function1<? super org.jooq.QueryPart, ? extends org.jooq.QueryPart> replacement
         ) {
             return QOM.replace(
                 this,
@@ -3775,7 +3769,7 @@ public final class QOM {
         }
     }
 
-    interface UOperator3<Q1, Q2, Q3, R extends QueryPart> extends QueryPart {
+    interface UOperator3<Q1, Q2, Q3, R extends org.jooq.QueryPart> extends org.jooq.QueryPart {
         Q1 $arg1();
         Q2 $arg2();
         Q3 $arg3();
@@ -3797,9 +3791,9 @@ public final class QOM {
 
         @NotNull
         @Override
-        default QueryPart $replace(
-            Predicate<? super QueryPart> recurse,
-            Function1<? super QueryPart, ? extends QueryPart> replacement
+        default org.jooq.QueryPart $replace(
+            Predicate<? super org.jooq.QueryPart> recurse,
+            Function1<? super org.jooq.QueryPart, ? extends org.jooq.QueryPart> replacement
         ) {
             return QOM.replace(
                 this,
@@ -3840,7 +3834,7 @@ public final class QOM {
     @Deprecated(forRemoval = true)
     static class UNotYetImplementedException extends RuntimeException {}
 
-    interface UProxy<Q extends QueryPart> extends QueryPart {
+    interface UProxy<Q extends org.jooq.QueryPart> extends org.jooq.QueryPart {
         Q $delegate();
 
         @Override
@@ -3849,16 +3843,16 @@ public final class QOM {
         }
 
         @Override
-        default QueryPart $replace(
-            Predicate<? super QueryPart> recurse,
-            Function1<? super QueryPart, ? extends QueryPart> replacement
+        default org.jooq.QueryPart $replace(
+            Predicate<? super org.jooq.QueryPart> recurse,
+            Function1<? super org.jooq.QueryPart, ? extends org.jooq.QueryPart> replacement
         ) {
-            QueryPart r = $delegate().$replace(recurse, replacement);
+            org.jooq.QueryPart r = $delegate().$replace(recurse, replacement);
             return $delegate() == r ? this : r;
         }
     }
 
-    interface UEmpty extends QueryPart {
+    interface UEmpty extends org.jooq.QueryPart {
 
         @Override
         default <R> R $traverse(Traverser<?, R> traverser) {
@@ -3866,9 +3860,9 @@ public final class QOM {
         }
 
         @Override
-        default QueryPart $replace(
-            Predicate<? super QueryPart> recurse,
-            Function1<? super QueryPart, ? extends QueryPart> replacement
+        default org.jooq.QueryPart $replace(
+            Predicate<? super org.jooq.QueryPart> recurse,
+            Function1<? super org.jooq.QueryPart, ? extends org.jooq.QueryPart> replacement
         ) {
             if (recurse.test(this))
                 return replacement.apply(this);
@@ -3894,8 +3888,8 @@ public final class QOM {
     @SuppressWarnings("unchecked")
     static final <Q> Q replace(
         Q q,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
+        Predicate<? super org.jooq.QueryPart> recurse,
+        Function1<? super org.jooq.QueryPart, ? extends org.jooq.QueryPart> replacement
     ) {
 
         // TODO: Support also arrays, sets, etc.
@@ -3908,7 +3902,7 @@ public final class QOM {
 
                 if (o != x) {
 
-                    // TODO: What about other lists, e.g. QueryPartList?
+                    // TODO: What about other lists, e.g. org.jooq.QueryPartList?
                     if (r == null) {
                         r = Reflect.onClass(q.getClass()).create().get();
                         r.addAll(l.subList(0, i));
@@ -3924,8 +3918,8 @@ public final class QOM {
         }
 
 
-        return q instanceof QueryPart && recurse.test((QueryPart) q)
-             ? (Q) ((QueryPart) q).$replace(recurse, replacement)
+        return q instanceof org.jooq.QueryPart && recurse.test((org.jooq.QueryPart) q)
+             ? (Q) ((org.jooq.QueryPart) q).$replace(recurse, replacement)
              : q;
     }
 
@@ -3962,12 +3956,12 @@ public final class QOM {
     };
 
     @SuppressWarnings("unchecked")
-    static final <QR extends QueryPart, Q> QR replace(
+    static final <QR extends org.jooq.QueryPart, Q> QR replace(
         QR wrapper,
         Q[] q,
         Function1<? super Q[], ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
+        Predicate<? super org.jooq.QueryPart> recurse,
+        Function1<? super org.jooq.QueryPart, ? extends org.jooq.QueryPart> replacement
     ) {
         Q[] r = (Q[]) java.lang.reflect.Array.newInstance(q.getClass().getComponentType(), q.length);
 
@@ -4782,10 +4776,10 @@ public final class QOM {
 
 
 
-    private static <QR extends QueryPart> QR replaceUntilStable(
+    private static <QR extends org.jooq.QueryPart> QR replaceUntilStable(
         QR wrapper,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
+        Predicate<? super org.jooq.QueryPart> recurse,
+        Function1<? super org.jooq.QueryPart, ? extends org.jooq.QueryPart> replacement
     ) {
         QR q = wrapper;
         QR r = wrapper;

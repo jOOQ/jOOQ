@@ -111,6 +111,7 @@ import org.jooq.conf.InterpreterSearchSchema;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.ConstraintImpl.Action;
+import org.jooq.impl.DefaultParseContext.IgnoreQuery;
 import org.jooq.impl.QOM.Cascade;
 import org.jooq.impl.QOM.CycleOption;
 import org.jooq.tools.JooqLogger;
@@ -240,6 +241,10 @@ final class Interpreter {
 
         else if (query instanceof SetCommand)
             accept0((SetCommand) query);
+
+        // [#12538] E.g. if comments are retained, or SET commands are ignored
+        else if (query instanceof IgnoreQuery)
+            ;
 
         else
             throw unsupportedQuery(query);

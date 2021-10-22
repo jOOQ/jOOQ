@@ -13717,7 +13717,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private static final Query    IGNORE_NO_DELIMITER = new IgnoreQuery();
 
     static final class IgnoreQuery extends AbstractDDLQuery implements UEmpty {
-        private static final Pattern P_LEADING = Pattern.compile("^(?sm:)$");
         final String sql;
 
         IgnoreQuery() {
@@ -13732,11 +13731,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         @Override
         public void accept(Context<?> ctx) {
-            var o = new Object() {
-                static final Pattern P = Pattern.compile("");
-            };
-
-            o.P.matcher(sql);
             ctx.sql(sql);
         }
     }

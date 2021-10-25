@@ -802,18 +802,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 while (parseDelimiterIf(false))
                     p = positionBeforeWhitespace;
 
-                skipWhitespace:
                 if (TRUE.equals(settings().isParseRetainCommentsBetweenQueries()) && p < position) {
-
-                    retainWhitespace: {
-                        for (int i = p; i < position; i++)
-                            if (character(i) != ' ')
-                                break retainWhitespace;
-
-                        break skipWhitespace;
+                    for (int i = p; i < position; i++) {
+                        if (character(i) != ' ') {
+                            result.add(new IgnoreQuery(substring(p, position)));
+                            break;
+                        }
                     }
-
-                    result.add(new IgnoreQuery(substring(p, position)));
                 }
 
                 query = patchParsedQuery(parseQuery(false, false));

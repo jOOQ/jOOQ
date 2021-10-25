@@ -35,7 +35,7 @@ BEGIN
   SET r = 0;
 
   REPEAT
-    SET v_ts = ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000);
+    SET v_ts = ROUND(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(4)) * 1000);
     SET c = 0;
     REPEAT
       OPEN cur1;
@@ -51,9 +51,9 @@ BEGIN
       SET c = c + 1;
     UNTIL c >= v_repeat END REPEAT;
 
-    INSERT INTO print_relative VALUES (r, 1, ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000) - v_ts);
+    INSERT INTO print_relative VALUES (r, 1, ROUND(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(4)) * 1000) - v_ts);
 
-    SET v_ts = ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000);
+    SET v_ts = ROUND(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(4)) * 1000);
     SET c = 0;
     REPEAT
       OPEN cur2;
@@ -69,7 +69,7 @@ BEGIN
       SET c = c + 1;
     UNTIL c >= v_repeat END REPEAT;
 
-    INSERT INTO print_relative VALUES (r, 2, ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000) - v_ts);
+    INSERT INTO print_relative VALUES (r, 2, ROUND(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(4)) * 1000) - v_ts);
 
     SET r = r + 1;
   UNTIL r >= 5 END REPEAT;

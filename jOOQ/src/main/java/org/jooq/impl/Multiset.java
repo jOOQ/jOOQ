@@ -43,8 +43,6 @@ import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTE;
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonArrayAgg;
 import static org.jooq.impl.DSL.jsonEntry;
@@ -58,10 +56,7 @@ import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlelement;
 import static org.jooq.impl.DSL.xmlserializeContent;
 import static org.jooq.impl.JSONArrayAgg.patchOracleArrayAggBug;
-import static org.jooq.impl.JSONEntryImpl.REQUIRE_JSON_MERGE;
-import static org.jooq.impl.JSONEntryImpl.isJSON;
 import static org.jooq.impl.Keywords.K_MULTISET;
-import static org.jooq.impl.Names.N_JSON_EXTRACT;
 import static org.jooq.impl.Names.N_MULTISET;
 import static org.jooq.impl.Names.N_RECORD;
 import static org.jooq.impl.Names.N_RESULT;
@@ -355,7 +350,9 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
             default:
                 return jsonArrayAgg(
                     returningClob(ctx, jsonArray(
-                        map(fields.fields(), (f, i) -> jsonMerge(ctx, "[]", agg ? f : DSL.field(fieldName(i), f.getDataType())))
+                        map(fields.fields(), (f, i) -> JSONEntryImpl.unescapeNestedJSON(ctx,
+                            (Field<?>) (agg ? f : DSL.field(fieldName(i), f.getDataType()))
+                        ))
                     ).nullOnNull())
                 );
         }
@@ -379,24 +376,12 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
             default:
                 return jsonbArrayAgg(
                     returningClob(ctx, jsonbArray(
-                        map(fields.fields(), (f, i) -> jsonMerge(ctx, "[]", agg ? f : DSL.field(fieldName(i), f.getDataType())))
+                        map(fields.fields(), (f, i) -> JSONEntryImpl.unescapeNestedJSON(ctx,
+                            (Field<?>) (agg ? f : DSL.field(fieldName(i), f.getDataType()))
+                        ))
                     ).nullOnNull())
                 );
         }
-    }
-
-    private static final Field<?> jsonMerge(Scope scope, String empty, Field<?> field) {
-
-        // [#12168] Yet another MariaDB JSON un-escaping workaround https://jira.mariadb.org/browse/MDEV-26134
-        // [#12549] Using JSON_MERGE_PRESERVE doesn't work here, as we might not know the user content
-        return REQUIRE_JSON_MERGE.contains(scope.dialect()) && isJSON(scope, field.getDataType())
-            ? function(
-                N_JSON_EXTRACT,
-                field.getDataType(),
-                field,
-                inline("$")
-            )
-            : field;
     }
 
     static final XMLAggOrderByStep<XML> xmlaggEmulation(Fields fields, boolean agg) {

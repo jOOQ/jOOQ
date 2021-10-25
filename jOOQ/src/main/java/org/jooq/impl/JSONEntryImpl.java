@@ -57,6 +57,7 @@ import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_KEY;
 import static org.jooq.impl.Keywords.K_VALUE;
 import static org.jooq.impl.Names.N_JSON;
+import static org.jooq.impl.Names.N_JSON_EXTRACT;
 import static org.jooq.impl.Names.N_JSON_MERGE;
 import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
 import static org.jooq.impl.Names.N_JSON_QUERY;
@@ -98,7 +99,6 @@ import org.jetbrains.annotations.NotNull;
  */
 final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, JSONEntryValueStep {
 
-    static final Set<SQLDialect> REQUIRE_JSON_MERGE          = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect> SUPPORT_JSON_MERGE_PRESERVE = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     private final Field<String>  key;
@@ -241,13 +241,32 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
         return field;
     }
 
-    static final <T> Field<T> unescapeNestedJSON(Context<?> ctx, Field<T> value) {
+    static final <T> Field<T> unescapeNestedJSON(Scope ctx, Field<T> value) {
 
         // [#12086] Avoid escaping nested JSON
-        return
-            JSONEntryImpl.isJSON(ctx, value.getDataType())
-          ? DSL.function(N_JSON_QUERY, value.getDataType(), value)
-          : value;
+        // [#12168] Yet another MariaDB JSON un-escaping workaround https://jira.mariadb.org/browse/MDEV-26134
+        // [#12549] Using JSON_MERGE_PRESERVE doesn't work here, as we might not know the user content
+        if (isJSON(ctx, value.getDataType())) {
+            switch (ctx.family()) {
+
+
+
+
+
+
+
+                case MARIADB:
+                case MYSQL:
+                    return function(
+                        N_JSON_EXTRACT,
+                        value.getDataType(),
+                        value,
+                        inline("$")
+                    );
+            }
+        }
+
+        return value;
     }
 
     static final boolean isType(DataType<?> t, Class<?> type) {

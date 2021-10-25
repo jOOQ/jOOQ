@@ -59,12 +59,9 @@ import static org.jooq.impl.DSL.xmlelement;
 import static org.jooq.impl.DSL.xmlserializeContent;
 import static org.jooq.impl.JSONArrayAgg.patchOracleArrayAggBug;
 import static org.jooq.impl.JSONEntryImpl.REQUIRE_JSON_MERGE;
-import static org.jooq.impl.JSONEntryImpl.SUPPORT_JSON_MERGE_PRESERVE;
 import static org.jooq.impl.JSONEntryImpl.isJSON;
 import static org.jooq.impl.Keywords.K_MULTISET;
-import static org.jooq.impl.Names.N_JSON_MERGE;
-import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
-import static org.jooq.impl.Names.N_JSON_QUERY;
+import static org.jooq.impl.Names.N_JSON_EXTRACT;
 import static org.jooq.impl.Names.N_MULTISET;
 import static org.jooq.impl.Names.N_RECORD;
 import static org.jooq.impl.Names.N_RESULT;
@@ -82,7 +79,6 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
 import java.util.List;
 import java.util.Set;
-import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
 import org.jooq.AggregateFilterStep;
@@ -395,7 +391,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
         // [#12549] Using JSON_MERGE_PRESERVE doesn't work here, as we might not know the user content
         return REQUIRE_JSON_MERGE.contains(scope.dialect()) && isJSON(scope, field.getDataType())
             ? function(
-                N_JSON_QUERY,
+                N_JSON_EXTRACT,
                 field.getDataType(),
                 field,
                 inline("$")

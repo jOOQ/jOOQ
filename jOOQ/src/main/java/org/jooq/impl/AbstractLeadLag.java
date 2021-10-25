@@ -151,8 +151,8 @@ abstract class AbstractLeadLag<T> extends AbstractWindowFunction<T> {
 
 
 
-                acceptNullTreatment(ctx);
                 ctx.sql(')');
+                acceptNullTreatment(ctx);
                 break;
         }
 

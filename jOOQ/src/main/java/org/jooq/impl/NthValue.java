@@ -81,9 +81,9 @@ final class NthValue<T> extends AbstractWindowFunction<T> implements QOM.NthValu
 
 
 
+                ctx.sql(')');
                 acceptFromFirstOrLast(ctx);
                 acceptNullTreatment(ctx);
-                ctx.sql(')');
                 break;
         }
 

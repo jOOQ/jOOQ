@@ -78,7 +78,7 @@ class DerivedTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    final FieldsImpl<R> fields0() {
+    /* non-final */ FieldsImpl<R> fields0() {
         return new FieldsImpl<>(query.getSelect());
     }
 

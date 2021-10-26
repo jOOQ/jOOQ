@@ -2538,24 +2538,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         ));
     }
 
-    private final boolean hasOuterJoins(TableList tablelist) {
-        return anyMatch(tablelist, t -> t instanceof JoinTable && hasOuterJoins((JoinTable) t));
-    }
-
-    private final boolean hasOuterJoins(JoinTable join) {
-        switch (join.type) {
-            case CROSS_JOIN:
-            case JOIN:
-            case NATURAL_JOIN:
-            case STRAIGHT_JOIN:
-                return join.lhs instanceof JoinTable && hasOuterJoins((JoinTable) join.lhs)
-                    || join.rhs instanceof JoinTable && hasOuterJoins((JoinTable) join.rhs);
-
-            default:
-                return true;
-        }
-    }
-
     private final boolean hasInlineDerivedTables(TableList tablelist) {
         return anyMatch(tablelist, t ->
                t instanceof InlineDerivedTable
@@ -2571,9 +2553,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final TableList transformInlineDerivedTables(TableList tablelist, ConditionProviderImpl where) {
-
-        // [#10353] A first implementation supports this feature only when there are no outer joins
-        if (hasOuterJoins(tablelist) || !hasInlineDerivedTables(tablelist))
+        if (!hasInlineDerivedTables(tablelist))
             return tablelist;
 
         TableList result = new TableList();
@@ -2592,23 +2572,58 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             where.addConditions(t.condition());
         }
         else if (table instanceof JoinTable)
-            result.add(transformInlineDerivedTables0(table, where));
+            result.add(transformInlineDerivedTables0(table, where, false));
         else
             result.add(table);
     }
 
-    private final Table<?> transformInlineDerivedTables0(Table<?> table, ConditionProviderImpl where) {
+    private final Table<?> transformInlineDerivedTables0(Table<?> table, ConditionProviderImpl where, boolean keepDerivedTable) {
         if (table instanceof InlineDerivedTable) {
             InlineDerivedTable<?> t = (InlineDerivedTable<?>) table;
+
+            if (keepDerivedTable)
+                return t.query().asTable(t.table());
 
             where.addConditions(t.condition());
             return t.table();
         }
-        else if (table instanceof JoinTable)
-            return ((JoinTable) table).transform(
-                transformInlineDerivedTables0(((JoinTable) table).lhs, where),
-                transformInlineDerivedTables0(((JoinTable) table).rhs, where)
-            );
+        else if (table instanceof JoinTable) {
+            JoinTable j = (JoinTable) table;
+            Table<?> lhs;
+            Table<?> rhs;
+
+            switch (j.type) {
+                case LEFT_OUTER_JOIN:
+                case LEFT_ANTI_JOIN:
+                case LEFT_SEMI_JOIN:
+                case STRAIGHT_JOIN:
+                case CROSS_APPLY:
+                case OUTER_APPLY:
+                case NATURAL_LEFT_OUTER_JOIN:
+                    lhs = transformInlineDerivedTables0(j.lhs, where, keepDerivedTable);
+                    rhs = transformInlineDerivedTables0(j.rhs, where, true);
+                    break;
+
+                case RIGHT_OUTER_JOIN:
+                case NATURAL_RIGHT_OUTER_JOIN:
+                    lhs = transformInlineDerivedTables0(j.lhs, where, true);
+                    rhs = transformInlineDerivedTables0(j.rhs, where, keepDerivedTable);
+                    break;
+
+                case FULL_OUTER_JOIN:
+                case NATURAL_FULL_OUTER_JOIN:
+                    lhs = transformInlineDerivedTables0(j.lhs, where, true);
+                    rhs = transformInlineDerivedTables0(j.rhs, where, true);
+                    break;
+
+                default:
+                    lhs = transformInlineDerivedTables0(j.lhs, where, keepDerivedTable);
+                    rhs = transformInlineDerivedTables0(j.rhs, where, keepDerivedTable);
+                    break;
+            }
+
+            return j.transform(lhs, rhs);
+        }
         else
             return table;
     }
@@ -3821,7 +3836,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             // [#12328] Don't recurse into the RHS if the join does not affect the projection
             j -> j.type != JoinType.LEFT_ANTI_JOIN && j.type != JoinType.LEFT_SEMI_JOIN,
             null,
-            
+
             // TODO: PostgreSQL supports tables without columns, see e.g.
             // https://blog.jooq.org/creating-tables-dum-and-dee-in-postgresql/
             (r, t) -> r && t.fieldsRow().size() > 0

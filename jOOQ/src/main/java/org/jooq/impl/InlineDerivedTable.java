@@ -66,4 +66,9 @@ final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
     final Condition condition() {
         return where;
     }
+
+    @Override
+    final FieldsImpl<R> fields0() {
+        return new FieldsImpl<>(table.as(table).fields());
+    }
 }

@@ -1775,6 +1775,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         List<GroupField> groupBy;
 
         if (parseKeywordIf("GROUP BY")) {
+            if (!parseKeywordIf("ALL") && parseKeywordIf("DISTINCT"))
+                result.setGroupByDistinct(true);
+
             if (parseIf('(')) {
                 parse(')');
                 result.addGroupBy();

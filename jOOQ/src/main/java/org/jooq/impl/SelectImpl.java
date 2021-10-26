@@ -702,6 +702,20 @@ implements
         return this;
     }
 
+    @Override
+    public final SelectImpl groupByDistinct(GroupField... fields) {
+        getQuery().addGroupBy(fields);
+        getQuery().setGroupByDistinct(true);
+        return this;
+    }
+
+    @Override
+    public final SelectImpl groupByDistinct(Collection<? extends GroupField> fields) {
+        getQuery().addGroupBy(fields);
+        getQuery().setGroupByDistinct(true);
+        return this;
+    }
+
 
 
     @Override
@@ -3393,6 +3407,11 @@ implements
     @Override
     public final MList<? extends GroupField> $groupBy() {
         return getDelegate().$groupBy();
+    }
+
+    @Override
+    public final boolean $groupByDistinct() {
+        return getDelegate().$groupByDistinct();
     }
 
     @Override

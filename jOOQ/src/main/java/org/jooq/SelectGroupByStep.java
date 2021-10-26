@@ -37,8 +37,11 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
+
 import org.jetbrains.annotations.*;
 
+import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Collection;
 
@@ -123,4 +126,26 @@ public interface SelectGroupByStep<R extends Record> extends SelectHavingStep<R>
     @NotNull @CheckReturnValue
     @Support
     SelectHavingStep<R> groupBy(Collection<? extends GroupField> fields);
+
+    /**
+     * Add a <code>GROUP BY DISTINCT</code> clause to the query
+     * <p>
+     * This is mostly useful when combined with
+     * {@link DSL#groupingSets(Field[]...)} to remove duplicate grouping set
+     * results prior to aggregation and projection.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    SelectHavingStep<R> groupByDistinct(GroupField... fields);
+
+    /**
+     * Add a <code>GROUP BY DISTINCT</code> clause to the query
+     * <p>
+     * This is mostly useful when combined with
+     * {@link DSL#groupingSets(Field[]...)} to remove duplicate grouping set
+     * results prior to aggregation and projection.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    SelectHavingStep<R> groupByDistinct(Collection<? extends GroupField> fields);
 }

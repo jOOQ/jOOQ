@@ -71,6 +71,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -340,6 +341,16 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      */
     @Support
     void addGroupBy(Collection<? extends GroupField> fields);
+
+    /**
+     * Specifies the <code>GROUP BY DISTINCT</code> clause.
+     * <p>
+     * This is mostly useful when combined with
+     * {@link DSL#groupingSets(Field[]...)} to remove duplicate grouping set
+     * results prior to aggregation and projection.
+     */
+    @Support({ POSTGRES })
+    void setGroupByDistinct(boolean groupByDistinct);
 
     /**
      * Adds a new condition to the having clause of the query, connecting it

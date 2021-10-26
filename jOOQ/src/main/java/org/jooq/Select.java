@@ -192,6 +192,7 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
     @NotNull Select<?> $from(MList<? extends Table<?>> from);
     @Nullable Condition $where();
     @NotNull MList<? extends GroupField> $groupBy();
+    boolean $groupByDistinct();
     @Nullable Condition $having();
     @NotNull MList<? extends WindowDefinition> $window();
     @Nullable Condition $qualify();

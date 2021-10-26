@@ -389,6 +389,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private final ConditionProviderImpl                  condition;
     private boolean                                      grouping;
     private QueryPartList<GroupField>                    groupBy;
+    private boolean                                      groupByDistinct;
     private final ConditionProviderImpl                  having;
     private WindowList                                   window;
     private final ConditionProviderImpl                  qualify;
@@ -526,6 +527,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
     private final SelectQueryImpl<R> copyTo(CopyClause clause, boolean scalarSelect, SelectQueryImpl<R> result) {
         return copyBetween(CopyClause.START, clause, scalarSelect, result);
     }
@@ -552,6 +554,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             result.grouping = grouping;
             result.groupBy = groupBy;
+            result.groupByDistinct = groupByDistinct;
             result.having.setWhere(having.getWhere());
             if (window != null)
                 result.addWindow(window);
@@ -2402,8 +2405,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         if (grouping) {
             context.formatSeparator()
-                   .visit(K_GROUP_BY)
-                   .separatorRequired(true);
+                   .visit(K_GROUP_BY);
+
+            if (groupByDistinct)
+                context.sql(' ').visit(K_DISTINCT);
+
+            context.separatorRequired(true);
 
             // [#1665] Empty GROUP BY () clauses need parentheses
             if (Tools.isEmpty(groupBy)) {
@@ -3854,6 +3861,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     final void setGrouping() {
         grouping = true;
+
+        if (groupBy == null)
+            groupBy = new QueryPartList<>();
     }
 
     final ConditionProviderImpl getWhere(Context<?> ctx) {
@@ -4149,11 +4159,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final void addGroupBy(Collection<? extends GroupField> fields) {
         setGrouping();
-
-        if (groupBy == null)
-            groupBy = new QueryPartList<>();
-
         groupBy.addAll(fields);
+    }
+
+    @Override
+    public final void setGroupByDistinct(boolean groupByDistinct) {
+        setGrouping();
+        this.groupByDistinct = groupByDistinct;
     }
 
     @Override
@@ -4544,6 +4556,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
+    public final boolean $groupByDistinct() {
+        return groupByDistinct;
+    }
+
+    @Override
     public final Condition $having() {
         return having;
     }
@@ -4594,16 +4611,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             $from(),
             $where(),
             $groupBy(),
+            $groupByDistinct(),
             $having(),
             $window(),
             $qualify(),
             $orderBy(),
-            (cte, s, d, f, c, g, h, w, q, o) -> {
+            (cte, s, d, f, c, g, gd, h, w, q, o) -> {
                 SelectQueryImpl<?> r = new SelectQueryImpl<>(configuration(), cte, d);
                 r.select.addAll(s);
                 r.from.addAll(f);
                 r.condition.addConditions(extractCondition(c));
                 r.groupBy = g;
+                r.groupByDistinct = gd;
                 r.having.addConditions(extractCondition(h));
                 r.addWindow(w);
                 r.qualify.addConditions(extractCondition(q));

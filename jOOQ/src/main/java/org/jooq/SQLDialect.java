@@ -59,6 +59,8 @@ import org.jetbrains.annotations.Nullable;
  * <li>{@link #POSTGRES_10}</li>
  * <li>{@link #POSTGRES_11}</li>
  * <li>{@link #POSTGRES_12}</li>
+ * <li>{@link #POSTGRES_13}</li>
+ * <li>{@link #POSTGRES_14}</li>
  * </ul>
  * <p>
  * The open source jOOQ distributions only support the dialect family, which
@@ -288,6 +290,18 @@ public enum SQLDialect {
      * official {@link #REDSHIFT} support, instead.
      */
     POSTGRES("Postgres", false, true),
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

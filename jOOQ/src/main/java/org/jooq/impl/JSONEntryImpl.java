@@ -257,6 +257,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
                 case MARIADB:
                 case MYSQL:
+                case SQLITE:
                     return function(
                         N_JSON_EXTRACT,
                         value.getDataType(),

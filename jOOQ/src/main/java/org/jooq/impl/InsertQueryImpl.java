@@ -476,6 +476,9 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
+
+
+
                 case POSTGRES:
                 case SQLITE:
                 case YUGABYTE: {

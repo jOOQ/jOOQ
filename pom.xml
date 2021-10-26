@@ -39,7 +39,7 @@
         <redshift.version>2.0.0.6</redshift.version>
 
         <!-- R2DBC SPI version and some matching driver versions -->
-        <io.r2dbc.version>0.9.0.BUILD-SNAPSHOT</io.r2dbc.version>
+        <io.r2dbc.version>0.9.0.M2</io.r2dbc.version>
 
         <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->
         <jaxb.version>2.3.1</jaxb.version>

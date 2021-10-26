@@ -79,7 +79,7 @@ class DerivedTable<R extends Record> extends AbstractTable<R> implements QOM.Der
     }
 
     @Override
-    final FieldsImpl<R> fields0() {
+    /* non-final */ FieldsImpl<R> fields0() {
         return new FieldsImpl<>(query.getSelect());
     }
 

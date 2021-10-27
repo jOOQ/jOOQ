@@ -22897,6 +22897,7 @@ public class DSL {
      */
     @NotNull
     @Support({ POSTGRES })
+    @SafeVarargs
     public static GroupField groupingSets(Collection<? extends Field<?>>... fieldSets) {
         return new GroupingSets(fieldSets);
     }

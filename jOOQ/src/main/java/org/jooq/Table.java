@@ -124,7 +124,12 @@ import org.jetbrains.annotations.Nullable;
  * @param <R> The record type associated with this table
  * @author Lukas Eder
  */
-public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R> {
+public interface Table<R extends Record>
+extends
+    TableLike<R>,
+    RecordQualifier<R>,
+    GroupField
+{
 
     /**
      * Get the table type.
@@ -2441,7 +2446,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      * <code><pre>
      * -- Emulating this MySQL statement...
      * DELETE FROM x ORDER BY x.y LIMIT 1
-     * 
+     *
      * -- ... in other databases
      * DELETE FROM x
      * WHERE x.rowid IN (

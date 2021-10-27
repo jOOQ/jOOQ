@@ -52,7 +52,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -62,7 +61,6 @@ import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.Traverser;
 import org.jooq.impl.QOM.MCollection;
-import org.jooq.QueryPart;
 
 /**
  * A {@link List} view, delegating all calls to a wrapped list, but acting like

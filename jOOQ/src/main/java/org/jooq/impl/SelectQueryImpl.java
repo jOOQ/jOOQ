@@ -316,10 +316,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     static final Set<SQLDialect>         NO_SUPPORT_WINDOW_CLAUSE        = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, HSQLDB, IGNITE, MARIADB);
     private static final Set<SQLDialect> OPTIONAL_FROM_CLAUSE            = SQLDialect.supportedBy(DEFAULT, H2, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE);
     private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_CONSTANT = SQLDialect.supportedUntil(DERBY, HSQLDB, IGNITE);
-    private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedUntil(FIREBIRD, MARIADB, MYSQL, SQLITE, YUGABYTE);
-
-
 
 
 
@@ -334,16 +330,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2, MARIADB, POSTGRES);
     private static final Set<SQLDialect> EMULATE_DISTINCT_ON             = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
     static final Set<SQLDialect>         NO_SUPPORT_FOR_UPDATE_OF_FIELDS = SQLDialect.supportedBy(MYSQL, POSTGRES, YUGABYTE);
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -388,7 +374,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private final TableList                              from;
     private final ConditionProviderImpl                  condition;
     private boolean                                      grouping;
-    private QueryPartList<GroupField>                    groupBy;
+    private GroupFieldList                               groupBy;
     private boolean                                      groupByDistinct;
     private final ConditionProviderImpl                  having;
     private WindowList                                   window;
@@ -2411,41 +2397,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 context.sql(' ').visit(K_DISTINCT);
 
             context.separatorRequired(true);
-
-            // [#1665] Empty GROUP BY () clauses need parentheses
-            if (Tools.isEmpty(groupBy)) {
-                context.sql(' ');
-
-                // [#4292] Some dialects accept constant expressions in GROUP BY
-                // Note that dialects may consider constants as indexed field
-                // references, as in the ORDER BY clause!
-                if (EMULATE_EMPTY_GROUP_BY_CONSTANT.contains(context.dialect()))
-                    context.sql('0');
-
-                // [#4447] CUBRID can't handle subqueries in GROUP BY
-                else if (family == CUBRID)
-                    context.sql("1 + 0");
-
-
-
-
-
-
-
-
-
-
-
-                // [#4292] Some dialects don't support empty GROUP BY () clauses
-                else if (EMULATE_EMPTY_GROUP_BY_OTHER.contains(context.dialect()))
-                    context.sql('(').visit(DSL.select(one())).sql(')');
-
-                // Few dialects support the SQL standard "grand total" (i.e. empty grouping set)
-                else
-                    context.sql("()");
-            }
-            else
-                context.visit(groupBy);
+            context.visit(groupBy);
         }
 
         context.end(SELECT_GROUP_BY);
@@ -3886,7 +3838,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         grouping = true;
 
         if (groupBy == null)
-            groupBy = new QueryPartList<>();
+            groupBy = new GroupFieldList();
     }
 
     final ConditionProviderImpl getWhere(Context<?> ctx) {
@@ -4574,8 +4526,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final QueryPartList<GroupField> $groupBy() {
-        return groupBy == null ? QueryPartList.emptyList() : groupBy;
+    public final GroupFieldList $groupBy() {
+        return groupBy == null ? new GroupFieldList() : groupBy;
     }
 
     @Override

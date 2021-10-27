@@ -108,6 +108,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.SortOrder.DESC;
+import static org.jooq.Traversers.containing;
+import static org.jooq.Traversers.findingAny;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.AsteriskImpl.NO_SUPPORT_UNQUALIFIED_COMBINED;
 import static org.jooq.impl.AsteriskImpl.SUPPORT_NATIVE_EXCEPT;
@@ -233,11 +235,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import org.jooq.Asterisk;
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -280,8 +280,10 @@ import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
 import org.jooq.Traverser;
+import org.jooq.Traversers;
 // ...
 import org.jooq.WindowDefinition;
+import org.jooq.WindowFinalStep;
 import org.jooq.XML;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.ForLock.ForLockMode;
@@ -294,8 +296,6 @@ import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -3760,6 +3760,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final Field<?> getResolveProjection(Configuration c, Field<?> f) {
+
+
+
+
+
+
+
+
+
 
 
 

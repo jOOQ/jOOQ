@@ -62,6 +62,7 @@ final class Operators {
     static final SQL OP_PERCNT = sql("%");
     static final SQL OP_PLUS   = sql("+");
     static final SQL OP_QUEST  = sql("?");
+    static final SQL OP_SOL    = sql("/");
     static final SQL OP_VERBAR = sql("|");
 
 }

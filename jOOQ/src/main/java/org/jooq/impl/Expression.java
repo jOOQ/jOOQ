@@ -97,6 +97,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
+import org.jooq.Function2;
 import org.jooq.Param;
 // ...
 import org.jooq.QueryPart;
@@ -104,14 +105,14 @@ import org.jooq.SQLDialect;
 import org.jooq.Typed;
 import org.jooq.conf.TransformUnneededArithmeticExpressions;
 import org.jooq.exception.DataTypeException;
-import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.UOperator2;
 import org.jooq.impl.QOM.UTransient;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 
-final class Expression<T> extends AbstractTransformable<T> implements UNotYetImplemented {
+final class Expression<T> extends AbstractTransformable<T> implements UOperator2<Field<T>, Field<?>, Field<T>> {
     static final Set<SQLDialect>     HASH_OP_FOR_BIT_XOR    = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
     static final Set<SQLDialect>     SUPPORT_YEAR_TO_SECOND = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
@@ -179,7 +180,7 @@ final class Expression<T> extends AbstractTransformable<T> implements UNotYetImp
 
         // Use the default operator expression for all other cases
         else
-            ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
+            ctx.sql('(').visit(lhs).sql(' ').sql(operator.toSQL()).sql(' ').visit(rhs).sql(')');
     }
 
 
@@ -202,8 +203,18 @@ final class Expression<T> extends AbstractTransformable<T> implements UNotYetImp
 
 
     @Override
-    @SuppressWarnings("null")
-    public final Field<?> transform(TransformUnneededArithmeticExpressions transform) {
+    public final Field<T> transform(TransformUnneededArithmeticExpressions transform) {
+        return transform((UOperator2<Field<T>, Field<T>, Field<T>>) (UOperator2) this, lhs, operator, (Field<T>) rhs, internal, transform);
+    }
+
+    static final <T> Field<T> transform(
+        UOperator2<Field<T>, Field<T>, Field<T>> expression,
+        Field<T> lhs,
+        ExpressionOperator operator,
+        Field<T> rhs,
+        boolean internal,
+        TransformUnneededArithmeticExpressions transform
+    ) {
 
 
 
@@ -258,7 +269,7 @@ final class Expression<T> extends AbstractTransformable<T> implements UNotYetImp
 
 
 
-        return this;
+        return (Field<T>) expression;
     }
 
 
@@ -641,7 +652,7 @@ final class Expression<T> extends AbstractTransformable<T> implements UNotYetImp
 
 
                 default:
-                    ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
+                    ctx.sql('(').visit(lhs).sql(' ').sql(operator.toSQL()).sql(' ').visit(rhs).sql(')');
                     break;
             }
         }
@@ -794,7 +805,7 @@ final class Expression<T> extends AbstractTransformable<T> implements UNotYetImp
 
                 // These dialects can add / subtract days using +/- operators
                 default:
-                    ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
+                    ctx.sql('(').visit(lhs).sql(' ').sql(operator.toSQL()).sql(' ').visit(rhs).sql(')');
                     break;
             }
         }
@@ -848,54 +859,6 @@ final class Expression<T> extends AbstractTransformable<T> implements UNotYetImp
         }
     }
 
-    private static class DefaultExpression<T> extends AbstractField<T> implements UTransient {
-
-        private final Field<T>           lhs;
-        private final ExpressionOperator operator;
-        private final Field<?>           rhs;
-
-        DefaultExpression(Field<T> lhs, ExpressionOperator operator, Field<?> rhs) {
-            super(operator.toName(), lhs.getDataType());
-
-            this.lhs = lhs;
-            this.operator = operator;
-            this.rhs = rhs;
-        }
-
-        @Override
-        public final void accept(Context<?> ctx) {
-            ctx.sql('(');
-            accept0(ctx, operator, lhs, rhs);
-            ctx.sql(')');
-        }
-
-        static final void accept0(Context<?> ctx, ExpressionOperator operator, Field<?> lhs, Field<?> rhs) {
-            String op = operator.toSQL();
-
-            // [#10665] Associativity is only given for two operands of the same data type
-            boolean associativity = operator.associative() && lhs.getDataType().equals(rhs.getDataType());
-
-            accept1(ctx, operator, lhs, associativity);
-            ctx.sql(' ')
-               .sql(op)
-               .sql(' ');
-            accept1(ctx, operator, rhs, associativity);
-        }
-
-        static final void accept1(Context<?> ctx, ExpressionOperator operator, Field<?> field, boolean associativity) {
-            if (associativity && field instanceof Expression) {
-                Expression<?> expr = (Expression<?>) field;
-
-                if (operator == expr.operator) {
-                    accept0(ctx, expr.operator, expr.lhs, expr.rhs);
-                    return;
-                }
-            }
-
-            ctx.visit(field);
-        }
-    }
-
     static final /* record */ class Expr<Q extends QueryPart> { private final Q lhs; private final QueryPart op; private final Q rhs; public Expr(Q lhs, QueryPart op, Q rhs) { this.lhs = lhs; this.op = op; this.rhs = rhs; } public Q lhs() { return lhs; } public QueryPart op() { return op; } public Q rhs() { return rhs; } @Override public boolean equals(Object o) { if (!(o instanceof Expr)) return false; Expr other = (Expr) o; if (!java.util.Objects.equals(this.lhs, other.lhs)) return false; if (!java.util.Objects.equals(this.op, other.op)) return false; if (!java.util.Objects.equals(this.rhs, other.rhs)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.lhs, this.op, this.rhs); } @Override public String toString() { return new StringBuilder("Expr[").append("lhs=").append(this.lhs).append(", op=").append(this.op).append(", rhs=").append(this.rhs).append("]").toString(); } }
 
     @SuppressWarnings("unchecked")
@@ -940,5 +903,34 @@ final class Expression<T> extends AbstractTransformable<T> implements UNotYetImp
         }
 
         ctx.visit(q);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> $arg1() {
+        return lhs;
+    }
+
+    @Override
+    public final Field<?> $arg2() {
+        return rhs;
+    }
+
+    @Override
+    public final Expression<T> $arg1(Field<T> newValue) {
+        return constructor().apply(newValue, $arg2());
+    }
+
+    @Override
+    public final Expression<T> $arg2(Field<?> newValue) {
+        return constructor().apply($arg1(), newValue);
+    }
+
+    @Override
+    public final Function2<? super Field<T>, ? super Field<?>, ? extends Expression<T>> constructor() {
+        return (a1, a2) -> new Expression<>(operator, internal, a1, a2);
     }
 }

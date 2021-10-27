@@ -55,6 +55,7 @@ final class Names {
 
     static final Name N_ABS                    = unquotedName("abs");
     static final Name N_ACOS                   = unquotedName("acos");
+    static final Name N_ADD                    = unquotedName("add");
     static final Name N_ADD_DAYS               = unquotedName("add_days");
     static final Name N_ADD_HOURS              = unquotedName("add_hours");
     static final Name N_ADD_MINUTES            = unquotedName("add_minutes");
@@ -167,6 +168,7 @@ final class Names {
     static final Name N_DELETING               = unquotedName("deleting");
     static final Name N_DENSE_RANK             = unquotedName("dense_rank");
     static final Name N_DIGITS                 = unquotedName("digits");
+    static final Name N_DIV                    = unquotedName("div");
     static final Name N_DUAL                   = unquotedName("dual");
     static final Name N_E                      = unquotedName("e");
     static final Name N_EULER                  = unquotedName("e");
@@ -288,6 +290,7 @@ final class Names {
     static final Name N_PI                     = unquotedName("pi");
     static final Name N_PIVOT                  = unquotedName("pivot");
     static final Name N_PLPGSQL                = unquotedName("plpgsql");
+    static final Name N_PLUS                   = unquotedName("plus");
     static final Name N_PLUS_JOIN              = unquotedName("plus_join");
     static final Name N_POSITION               = unquotedName("position");
     static final Name N_POWER                  = unquotedName("power");
@@ -375,6 +378,7 @@ final class Names {
     static final Name N_STRING_AGG             = unquotedName("string_agg");
     static final Name N_STRREVERSE             = unquotedName("strreverse");
     static final Name N_STR_REPLACE            = unquotedName("str_replace");
+    static final Name N_SUB                    = unquotedName("sub");
     static final Name N_SUBSTR                 = unquotedName("substr");
     static final Name N_SUBSTRING              = unquotedName("substring");
     static final Name N_SUBSTRING_INDEX        = unquotedName("substring_index");

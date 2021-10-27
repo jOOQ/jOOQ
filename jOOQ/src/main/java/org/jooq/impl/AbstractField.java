@@ -918,9 +918,15 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return add(Tools.field(value));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final Field<T> add(Field<?> value) {
-        return new Expression<>(ADD, false, this, nullSafe(value, getDataType()));
+        Field<?> rhs = nullSafe(value, getDataType());
+
+        if (getDataType().isDateTime() && (rhs.getDataType().isNumeric() || rhs.getDataType().isInterval()))
+            return new Expression<>(ADD, false, this, rhs);
+        else
+            return new Add<T>(this, (Field<T>) rhs);
     }
 
     @Override
@@ -928,9 +934,15 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return sub(Tools.field(value));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final Field<T> sub(Field<?> value) {
-        return new Expression<>(SUBTRACT, false, this, nullSafe(value, getDataType()));
+        Field<?> rhs = nullSafe(value, getDataType());
+
+        if (getDataType().isDateTime() && (rhs.getDataType().isNumeric() || rhs.getDataType().isInterval()))
+            return new Expression<>(SUBTRACT, false, this, rhs);
+        else
+            return new Sub<T>(this, (Field<T>) rhs);
     }
 
     @Override
@@ -938,9 +950,10 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return mul(Tools.field(value));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final Field<T> mul(Field<? extends Number> value) {
-        return new Expression<>(MULTIPLY, false, this, getDataType().isTemporal() ? nullSafe(value) : nullSafe(value, getDataType()));
+        return new Mul<T>(this, (Field<T>) (getDataType().isTemporal() ? nullSafe(value) : nullSafe(value, getDataType())));
     }
 
     @Override
@@ -948,9 +961,10 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return div(Tools.field(value));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final Field<T> div(Field<? extends Number> value) {
-        return new Expression<>(DIVIDE, false, this, getDataType().isTemporal() ? nullSafe(value) : nullSafe(value, getDataType()));
+        return new Div<T>(this, (Field<T>) (getDataType().isTemporal() ? nullSafe(value) : nullSafe(value, getDataType())));
     }
 
     // ------------------------------------------------------------------------

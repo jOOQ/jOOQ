@@ -394,24 +394,28 @@ public final class Internal {
         return new Neg<>(field, true);
     }
 
+    @SuppressWarnings("unchecked")
     @Support
     static final <T> Field<T> iadd(Field<T> lhs, Field<?> rhs) {
-        return new Expression<>(ADD, true, lhs, nullSafe(rhs, lhs.getDataType()));
+        return new IAdd<>(lhs, (Field<T>) nullSafe(rhs, lhs.getDataType()));
     }
 
+    @SuppressWarnings("unchecked")
     @Support
     static final <T> Field<T> isub(Field<T> lhs, Field<?> rhs) {
-        return new Expression<>(SUBTRACT, true, lhs, nullSafe(rhs, lhs.getDataType()));
+        return new ISub<>(lhs, (Field<T>) nullSafe(rhs, lhs.getDataType()));
     }
 
+    @SuppressWarnings("unchecked")
     @Support
     static final <T> Field<T> imul(Field<T> lhs, Field<?> rhs) {
-        return new Expression<>(MULTIPLY, true, lhs, nullSafe(rhs, lhs.getDataType()));
+        return new IMul<>(lhs, (Field<T>) nullSafe(rhs, lhs.getDataType()));
     }
 
+    @SuppressWarnings("unchecked")
     @Support
     static final <T> Field<T> idiv(Field<T> lhs, Field<?> rhs) {
-        return new Expression<>(DIVIDE, true, lhs, nullSafe(rhs, lhs.getDataType()));
+        return new IDiv<>(lhs, (Field<T>) nullSafe(rhs, lhs.getDataType()));
     }
 
     /**

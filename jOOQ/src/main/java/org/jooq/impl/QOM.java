@@ -1890,6 +1890,14 @@ public final class QOM {
         @NotNull  Acos $number(Field<? extends Number> number);
     }
 
+    public /*sealed*/ interface Add<T>
+        extends
+            org.jooq.Field<T>,
+            UOperator2<Field<T>, Field<T>, Field<T>>
+        //permits
+        //    Add
+    {}
+
     public /*sealed*/ interface Asin
         extends
             org.jooq.Field<BigDecimal>
@@ -2048,6 +2056,14 @@ public final class QOM {
         @NotNull  Degrees $radians(Field<? extends Number> radians);
     }
 
+    public /*sealed*/ interface Div<T>
+        extends
+            org.jooq.Field<T>,
+            UOperator2<Field<T>, Field<T>, Field<T>>
+        //permits
+        //    Div
+    {}
+
     public /*sealed*/ interface Euler
         extends
             org.jooq.Field<BigDecimal>,
@@ -2108,6 +2124,14 @@ public final class QOM {
         @NotNull  default Field<T> $dividend() { return $arg1(); }
         @NotNull  default Field<? extends Number> $divisor() { return $arg2(); }
     }
+
+    public /*sealed*/ interface Mul<T>
+        extends
+            org.jooq.Field<T>,
+            UOperator2<Field<T>, Field<T>, Field<T>>
+        //permits
+        //    Mul
+    {}
 
     public /*sealed*/ interface Pi
         extends
@@ -2229,6 +2253,14 @@ public final class QOM {
         @NotNull  Field<T> $value();
         @NotNull  Square<T> $value(Field<T> value);
     }
+
+    public /*sealed*/ interface Sub<T>
+        extends
+            org.jooq.Field<T>,
+            UOperator2<Field<T>, Field<T>, Field<T>>
+        //permits
+        //    Sub
+    {}
 
     public /*sealed*/ interface Tan
         extends

@@ -288,7 +288,7 @@ final class Names {
     static final Name N_PI                     = unquotedName("pi");
     static final Name N_PIVOT                  = unquotedName("pivot");
     static final Name N_PLPGSQL                = unquotedName("plpgsql");
-    static final Name N_PLUS                   = unquotedName("plus");
+    static final Name N_PLUS_JOIN              = unquotedName("plus_join");
     static final Name N_POSITION               = unquotedName("position");
     static final Name N_POWER                  = unquotedName("power");
     static final Name N_PRINTF                 = unquotedName("printf");

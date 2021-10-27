@@ -151,7 +151,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof BitNand) { BitNand o = (BitNand) that;
+        if (that instanceof QOM.BitNand) { QOM.BitNand<?> o = (QOM.BitNand<?>) that;
             return
                 StringUtils.equals($arg1(), o.$arg1()) &&
                 StringUtils.equals($arg2(), o.$arg2())

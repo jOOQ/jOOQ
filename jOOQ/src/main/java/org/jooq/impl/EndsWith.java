@@ -147,7 +147,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof EndsWith) { EndsWith o = (EndsWith) that;
+        if (that instanceof QOM.EndsWith) { QOM.EndsWith<?> o = (QOM.EndsWith<?>) that;
             return
                 StringUtils.equals($string(), o.$string()) &&
                 StringUtils.equals($suffix(), o.$suffix())

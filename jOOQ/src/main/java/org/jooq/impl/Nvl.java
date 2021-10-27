@@ -225,7 +225,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Nvl) { Nvl o = (Nvl) that;
+        if (that instanceof QOM.Nvl) { QOM.Nvl<?> o = (QOM.Nvl<?>) that;
             return
                 StringUtils.equals($value(), o.$value()) &&
                 StringUtils.equals($defaultValue(), o.$defaultValue())

@@ -227,7 +227,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof WidthBucket) { WidthBucket o = (WidthBucket) that;
+        if (that instanceof QOM.WidthBucket) { QOM.WidthBucket<?> o = (QOM.WidthBucket<?>) that;
             return
                 StringUtils.equals($field(), o.$field()) &&
                 StringUtils.equals($low(), o.$low()) &&

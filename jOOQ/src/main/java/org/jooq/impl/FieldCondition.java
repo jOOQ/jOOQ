@@ -170,7 +170,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof FieldCondition) { FieldCondition o = (FieldCondition) that;
+        if (that instanceof QOM.FieldCondition) { QOM.FieldCondition o = (QOM.FieldCondition) that;
             return
                 StringUtils.equals($field(), o.$field())
             ;

@@ -131,7 +131,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof CurrentCatalog) { CurrentCatalog o = (CurrentCatalog) that;
+        if (that instanceof QOM.CurrentCatalog) { QOM.CurrentCatalog o = (QOM.CurrentCatalog) that;
             return true;
         }
         else

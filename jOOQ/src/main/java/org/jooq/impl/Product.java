@@ -228,7 +228,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Product) { Product o = (Product) that;
+        if (that instanceof QOM.Product) { QOM.Product o = (QOM.Product) that;
             return
                 StringUtils.equals($field(), o.$field()) &&
                 $distinct() == o.$distinct()

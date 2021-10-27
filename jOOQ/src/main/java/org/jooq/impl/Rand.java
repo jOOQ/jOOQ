@@ -145,7 +145,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Rand) { Rand o = (Rand) that;
+        if (that instanceof QOM.Rand) { QOM.Rand o = (QOM.Rand) that;
             return true;
         }
         else

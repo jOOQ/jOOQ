@@ -329,7 +329,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof BitOrAgg) { BitOrAgg o = (BitOrAgg) that;
+        if (that instanceof QOM.BitOrAgg) { QOM.BitOrAgg<?> o = (QOM.BitOrAgg<?>) that;
             return
                 StringUtils.equals($value(), o.$value())
             ;

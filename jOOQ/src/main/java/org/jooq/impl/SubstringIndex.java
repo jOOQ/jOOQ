@@ -208,7 +208,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof SubstringIndex) { SubstringIndex o = (SubstringIndex) that;
+        if (that instanceof QOM.SubstringIndex) { QOM.SubstringIndex o = (QOM.SubstringIndex) that;
             return
                 StringUtils.equals($string(), o.$string()) &&
                 StringUtils.equals($delimiter(), o.$delimiter()) &&

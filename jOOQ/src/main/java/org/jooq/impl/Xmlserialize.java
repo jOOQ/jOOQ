@@ -206,7 +206,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof XMLSerialize) { XMLSerialize o = (XMLSerialize) that;
+        if (that instanceof QOM.XMLSerialize) { QOM.XMLSerialize<?> o = (QOM.XMLSerialize<?>) that;
             return
                 $content() == o.$content() &&
                 StringUtils.equals($value(), o.$value()) &&

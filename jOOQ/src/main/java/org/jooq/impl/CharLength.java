@@ -180,7 +180,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof CharLength) { CharLength o = (CharLength) that;
+        if (that instanceof QOM.CharLength) { QOM.CharLength o = (QOM.CharLength) that;
             return
                 StringUtils.equals($string(), o.$string())
             ;

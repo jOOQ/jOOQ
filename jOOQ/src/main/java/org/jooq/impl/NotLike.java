@@ -183,7 +183,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof NotLike) { NotLike o = (NotLike) that;
+        if (that instanceof QOM.NotLike) { QOM.NotLike o = (QOM.NotLike) that;
             return
                 StringUtils.equals($value(), o.$value()) &&
                 StringUtils.equals($pattern(), o.$pattern()) &&

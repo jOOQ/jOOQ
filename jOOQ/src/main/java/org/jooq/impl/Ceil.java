@@ -179,7 +179,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Ceil) { Ceil o = (Ceil) that;
+        if (that instanceof QOM.Ceil) { QOM.Ceil<?> o = (QOM.Ceil<?>) that;
             return
                 StringUtils.equals($value(), o.$value())
             ;

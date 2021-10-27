@@ -188,7 +188,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Degrees) { Degrees o = (Degrees) that;
+        if (that instanceof QOM.Degrees) { QOM.Degrees o = (QOM.Degrees) that;
             return
                 StringUtils.equals($radians(), o.$radians())
             ;

@@ -147,7 +147,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Sum) { Sum o = (Sum) that;
+        if (that instanceof QOM.Sum) { QOM.Sum o = (QOM.Sum) that;
             return
                 StringUtils.equals($field(), o.$field()) &&
                 $distinct() == o.$distinct()

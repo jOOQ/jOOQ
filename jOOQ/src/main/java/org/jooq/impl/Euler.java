@@ -151,7 +151,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Euler) { Euler o = (Euler) that;
+        if (that instanceof QOM.Euler) { QOM.Euler o = (QOM.Euler) that;
             return true;
         }
         else

@@ -204,7 +204,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Repeat) { Repeat o = (Repeat) that;
+        if (that instanceof QOM.Repeat) { QOM.Repeat o = (QOM.Repeat) that;
             return
                 StringUtils.equals($string(), o.$string()) &&
                 StringUtils.equals($count(), o.$count())

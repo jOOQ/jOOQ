@@ -180,7 +180,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof RegrIntercept) { RegrIntercept o = (RegrIntercept) that;
+        if (that instanceof QOM.RegrIntercept) { QOM.RegrIntercept o = (QOM.RegrIntercept) that;
             return
                 StringUtils.equals($y(), o.$y()) &&
                 StringUtils.equals($x(), o.$x())

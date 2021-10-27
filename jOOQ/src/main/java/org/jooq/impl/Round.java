@@ -253,7 +253,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Round) { Round o = (Round) that;
+        if (that instanceof QOM.Round) { QOM.Round<?> o = (QOM.Round<?>) that;
             return
                 StringUtils.equals($value(), o.$value()) &&
                 StringUtils.equals($decimals(), o.$decimals())

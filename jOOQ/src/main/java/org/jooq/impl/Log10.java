@@ -188,7 +188,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Log10) { Log10 o = (Log10) that;
+        if (that instanceof QOM.Log10) { QOM.Log10 o = (QOM.Log10) that;
             return
                 StringUtils.equals($value(), o.$value())
             ;

@@ -146,7 +146,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Min) { Min o = (Min) that;
+        if (that instanceof QOM.Min) { QOM.Min<?> o = (QOM.Min<?>) that;
             return
                 StringUtils.equals($field(), o.$field()) &&
                 $distinct() == o.$distinct()

@@ -237,7 +237,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Trunc) { Trunc o = (Trunc) that;
+        if (that instanceof QOM.Trunc) { QOM.Trunc<?> o = (QOM.Trunc<?>) that;
             return
                 StringUtils.equals($value(), o.$value()) &&
                 StringUtils.equals($decimals(), o.$decimals())

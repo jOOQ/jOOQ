@@ -184,7 +184,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof AnyValue) { AnyValue o = (AnyValue) that;
+        if (that instanceof QOM.AnyValue) { QOM.AnyValue<?> o = (QOM.AnyValue<?>) that;
             return
                 StringUtils.equals($field(), o.$field())
             ;

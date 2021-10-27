@@ -249,7 +249,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Like) { Like o = (Like) that;
+        if (that instanceof QOM.Like) { QOM.Like o = (QOM.Like) that;
             return
                 StringUtils.equals($value(), o.$value()) &&
                 StringUtils.equals($pattern(), o.$pattern()) &&

@@ -170,7 +170,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Ascii) { Ascii o = (Ascii) that;
+        if (that instanceof QOM.Ascii) { QOM.Ascii o = (QOM.Ascii) that;
             return
                 StringUtils.equals($string(), o.$string())
             ;

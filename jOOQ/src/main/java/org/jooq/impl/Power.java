@@ -164,7 +164,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Power) { Power o = (Power) that;
+        if (that instanceof QOM.Power) { QOM.Power o = (QOM.Power) that;
             return
                 StringUtils.equals($base(), o.$base()) &&
                 StringUtils.equals($exponent(), o.$exponent())

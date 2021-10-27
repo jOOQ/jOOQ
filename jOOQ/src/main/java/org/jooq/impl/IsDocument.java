@@ -134,7 +134,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof IsDocument) { IsDocument o = (IsDocument) that;
+        if (that instanceof QOM.IsDocument) { QOM.IsDocument o = (QOM.IsDocument) that;
             return
                 StringUtils.equals($field(), o.$field())
             ;

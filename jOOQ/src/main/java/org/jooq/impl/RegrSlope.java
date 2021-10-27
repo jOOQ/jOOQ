@@ -180,7 +180,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof RegrSlope) { RegrSlope o = (RegrSlope) that;
+        if (that instanceof QOM.RegrSlope) { QOM.RegrSlope o = (QOM.RegrSlope) that;
             return
                 StringUtils.equals($y(), o.$y()) &&
                 StringUtils.equals($x(), o.$x())

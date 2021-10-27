@@ -174,7 +174,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof VarPop) { VarPop o = (VarPop) that;
+        if (that instanceof QOM.VarPop) { QOM.VarPop o = (QOM.VarPop) that;
             return
                 StringUtils.equals($field(), o.$field())
             ;

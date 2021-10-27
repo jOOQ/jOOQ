@@ -153,7 +153,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Gt) { Gt o = (Gt) that;
+        if (that instanceof QOM.Gt) { QOM.Gt<?> o = (QOM.Gt<?>) that;
             return
                 StringUtils.equals($arg1(), o.$arg1()) &&
                 StringUtils.equals($arg2(), o.$arg2())

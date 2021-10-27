@@ -182,7 +182,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof SimilarTo) { SimilarTo o = (SimilarTo) that;
+        if (that instanceof QOM.SimilarTo) { QOM.SimilarTo o = (QOM.SimilarTo) that;
             return
                 StringUtils.equals($value(), o.$value()) &&
                 StringUtils.equals($pattern(), o.$pattern()) &&

@@ -181,7 +181,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Shr) { Shr o = (Shr) that;
+        if (that instanceof QOM.Shr) { QOM.Shr<?> o = (QOM.Shr<?>) that;
             return
                 StringUtils.equals($value(), o.$value()) &&
                 StringUtils.equals($count(), o.$count())

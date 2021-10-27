@@ -147,7 +147,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Avg) { Avg o = (Avg) that;
+        if (that instanceof QOM.Avg) { QOM.Avg o = (QOM.Avg) that;
             return
                 StringUtils.equals($field(), o.$field()) &&
                 $distinct() == o.$distinct()

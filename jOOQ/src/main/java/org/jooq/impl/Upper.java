@@ -166,7 +166,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Upper) { Upper o = (Upper) that;
+        if (that instanceof QOM.Upper) { QOM.Upper o = (QOM.Upper) that;
             return
                 StringUtils.equals($string(), o.$string())
             ;

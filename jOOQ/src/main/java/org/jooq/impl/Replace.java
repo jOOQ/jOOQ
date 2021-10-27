@@ -257,7 +257,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Replace) { Replace o = (Replace) that;
+        if (that instanceof QOM.Replace) { QOM.Replace o = (QOM.Replace) that;
             return
                 StringUtils.equals($string(), o.$string()) &&
                 StringUtils.equals($search(), o.$search()) &&

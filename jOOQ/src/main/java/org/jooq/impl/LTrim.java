@@ -214,7 +214,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Ltrim) { Ltrim o = (Ltrim) that;
+        if (that instanceof QOM.Ltrim) { QOM.Ltrim o = (QOM.Ltrim) that;
             return
                 StringUtils.equals($string(), o.$string()) &&
                 StringUtils.equals($characters(), o.$characters())

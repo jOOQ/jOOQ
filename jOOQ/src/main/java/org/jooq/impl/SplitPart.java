@@ -269,7 +269,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof SplitPart) { SplitPart o = (SplitPart) that;
+        if (that instanceof QOM.SplitPart) { QOM.SplitPart o = (QOM.SplitPart) that;
             return
                 StringUtils.equals($string(), o.$string()) &&
                 StringUtils.equals($delimiter(), o.$delimiter()) &&

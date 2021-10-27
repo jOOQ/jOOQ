@@ -160,7 +160,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof CurrentSchema) { CurrentSchema o = (CurrentSchema) that;
+        if (that instanceof QOM.CurrentSchema) { QOM.CurrentSchema o = (QOM.CurrentSchema) that;
             return true;
         }
         else

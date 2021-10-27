@@ -152,7 +152,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QualifiedRowid) { QualifiedRowid o = (QualifiedRowid) that;
+        if (that instanceof QOM.QualifiedRowid) { QOM.QualifiedRowid o = (QOM.QualifiedRowid) that;
             return
                 StringUtils.equals($table(), o.$table())
             ;

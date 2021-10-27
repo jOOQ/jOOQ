@@ -167,7 +167,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Floor) { Floor o = (Floor) that;
+        if (that instanceof QOM.Floor) { QOM.Floor<?> o = (QOM.Floor<?>) that;
             return
                 StringUtils.equals($value(), o.$value())
             ;

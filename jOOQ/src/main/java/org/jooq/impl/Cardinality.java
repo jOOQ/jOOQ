@@ -160,7 +160,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Cardinality) { Cardinality o = (Cardinality) that;
+        if (that instanceof QOM.Cardinality) { QOM.Cardinality o = (QOM.Cardinality) that;
             return
                 StringUtils.equals($array(), o.$array())
             ;

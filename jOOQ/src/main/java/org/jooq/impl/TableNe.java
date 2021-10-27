@@ -154,7 +154,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof TableNe) { TableNe o = (TableNe) that;
+        if (that instanceof QOM.TableNe) { QOM.TableNe<?> o = (QOM.TableNe<?>) that;
             return
                 StringUtils.equals($arg1(), o.$arg1()) &&
                 StringUtils.equals($arg2(), o.$arg2())

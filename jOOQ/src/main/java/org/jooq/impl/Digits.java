@@ -177,7 +177,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Digits) { Digits o = (Digits) that;
+        if (that instanceof QOM.Digits) { QOM.Digits o = (QOM.Digits) that;
             return
                 StringUtils.equals($value(), o.$value())
             ;

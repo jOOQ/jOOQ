@@ -146,7 +146,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof IsJson) { IsJson o = (IsJson) that;
+        if (that instanceof QOM.IsJson) { QOM.IsJson o = (QOM.IsJson) that;
             return
                 StringUtils.equals($field(), o.$field())
             ;

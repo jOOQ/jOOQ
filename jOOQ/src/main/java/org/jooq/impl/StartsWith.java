@@ -147,7 +147,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof StartsWith) { StartsWith o = (StartsWith) that;
+        if (that instanceof QOM.StartsWith) { QOM.StartsWith<?> o = (QOM.StartsWith<?>) that;
             return
                 StringUtils.equals($string(), o.$string()) &&
                 StringUtils.equals($prefix(), o.$prefix())

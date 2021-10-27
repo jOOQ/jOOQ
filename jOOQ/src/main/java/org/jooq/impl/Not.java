@@ -150,7 +150,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Not) { Not o = (Not) that;
+        if (that instanceof QOM.Not) { QOM.Not o = (QOM.Not) that;
             return
                 StringUtils.equals($condition(), o.$condition())
             ;

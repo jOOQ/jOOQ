@@ -160,7 +160,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Abs) { Abs o = (Abs) that;
+        if (that instanceof QOM.Abs) { QOM.Abs<?> o = (QOM.Abs<?>) that;
             return
                 StringUtils.equals($number(), o.$number())
             ;

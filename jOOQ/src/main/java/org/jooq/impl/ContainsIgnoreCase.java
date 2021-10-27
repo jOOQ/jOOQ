@@ -147,7 +147,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof ContainsIgnoreCase) { ContainsIgnoreCase o = (ContainsIgnoreCase) that;
+        if (that instanceof QOM.ContainsIgnoreCase) { QOM.ContainsIgnoreCase<?> o = (QOM.ContainsIgnoreCase<?>) that;
             return
                 StringUtils.equals($value(), o.$value()) &&
                 StringUtils.equals($content(), o.$content())

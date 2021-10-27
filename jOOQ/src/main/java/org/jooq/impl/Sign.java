@@ -172,7 +172,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Sign) { Sign o = (Sign) that;
+        if (that instanceof QOM.Sign) { QOM.Sign o = (QOM.Sign) that;
             return
                 StringUtils.equals($number(), o.$number())
             ;

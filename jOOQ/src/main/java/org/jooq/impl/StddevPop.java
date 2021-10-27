@@ -163,7 +163,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof StddevPop) { StddevPop o = (StddevPop) that;
+        if (that instanceof QOM.StddevPop) { QOM.StddevPop o = (QOM.StddevPop) that;
             return
                 StringUtils.equals($field(), o.$field())
             ;

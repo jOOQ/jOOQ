@@ -262,7 +262,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Overlay) { Overlay o = (Overlay) that;
+        if (that instanceof QOM.Overlay) { QOM.Overlay o = (QOM.Overlay) that;
             return
                 StringUtils.equals($in(), o.$in()) &&
                 StringUtils.equals($placing(), o.$placing()) &&

@@ -161,7 +161,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Cos) { Cos o = (Cos) that;
+        if (that instanceof QOM.Cos) { QOM.Cos o = (QOM.Cos) that;
             return
                 StringUtils.equals($number(), o.$number())
             ;

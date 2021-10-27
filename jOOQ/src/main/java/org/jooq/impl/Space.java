@@ -184,7 +184,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Space) { Space o = (Space) that;
+        if (that instanceof QOM.Space) { QOM.Space o = (QOM.Space) that;
             return
                 StringUtils.equals($count(), o.$count())
             ;

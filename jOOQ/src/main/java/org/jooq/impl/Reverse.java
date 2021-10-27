@@ -166,7 +166,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Reverse) { Reverse o = (Reverse) that;
+        if (that instanceof QOM.Reverse) { QOM.Reverse o = (QOM.Reverse) that;
             return
                 StringUtils.equals($string(), o.$string())
             ;

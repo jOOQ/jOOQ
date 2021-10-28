@@ -3430,13 +3430,13 @@ final class Tools {
         return part instanceof AbstractWindowFunction && ((AbstractWindowFunction<?>) part).isWindow();
     }
 
-    static final boolean isSimple(QueryPart part) {
-        return part instanceof SimpleQueryPart && ((SimpleQueryPart) part).isSimple();
+    static final boolean isSimple(Context<?> ctx, QueryPart part) {
+        return part instanceof SimpleQueryPart && ((SimpleQueryPart) part).isSimple(ctx);
     }
 
-    static final boolean isSimple(QueryPart... parts) {
+    static final boolean isSimple(Context<?> ctx, QueryPart... parts) {
         for (QueryPart part : parts)
-            if (!isSimple(part))
+            if (!isSimple(ctx, part))
                 return false;
 
         return true;

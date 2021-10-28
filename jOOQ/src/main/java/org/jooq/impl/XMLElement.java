@@ -101,7 +101,7 @@ final class XMLElement extends AbstractField<XML> implements QOM.XMLElement {
 
 
 
-        boolean format = hasAttributes || !content.isSimple();
+        boolean format = hasAttributes || !content.isSimple(ctx);
 
         Consumer<Context<?>> accept0 = c -> {
             c.visit(K_NAME).sql(' ').visit(elementName);

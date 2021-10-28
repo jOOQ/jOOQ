@@ -48,6 +48,7 @@ import java.util.EnumSet;
 import java.util.Set;
 
 import org.jooq.Context;
+import org.jooq.Field;
 import org.jooq.GroupField;
 // ...
 import org.jooq.SQLDialect;
@@ -134,22 +135,28 @@ final class GroupFieldList extends QueryPartList<GroupField> {
     protected final void acceptElement(Context<?> ctx, GroupField part) {
         if (part instanceof Table) { Table<?> t = (Table<?>) part;
             if (NO_SUPPORT_GROUP_BY_TABLE.contains(ctx.dialect())) {
-                UniqueKey<?> pk = t.getPrimaryKey();
+                Field<?>[] f = fields(ctx, t);
 
-                if (pk == null || NO_SUPPORT_GROUP_FUNCTIONAL_DEP.contains(ctx.dialect()))
-                    if (t.fields().length > 0)
-                        ctx.visit(QueryPartListView.wrap(t.fields()));
-                    else
-                        super.acceptElement(ctx, part);
-                else if (pk.getFields().size() == 1)
-                    ctx.visit(pk.getFields().get(0));
+                if (f.length > 1)
+                    ctx.visit(QueryPartListView.wrap(f));
+                else if (f.length == 1)
+                    ctx.visit(f[0]);
                 else
-                    ctx.visit(QueryPartListView.wrap(pk.getFields()));
+                    super.acceptElement(ctx, part);
             }
             else
                 super.acceptElement(ctx, part);
         }
         else
             super.acceptElement(ctx, part);
+    }
+
+    private final Field<?>[] fields(Context<?> ctx, Table<?> t) {
+        UniqueKey<?> pk = t.getPrimaryKey();
+
+        if (pk == null || NO_SUPPORT_GROUP_FUNCTIONAL_DEP.contains(ctx.dialect()))
+            return t.fields();
+        else
+            return pk.getFieldsArray();
     }
 }

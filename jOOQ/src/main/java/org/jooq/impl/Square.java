@@ -129,7 +129,7 @@ implements
             case MYSQL:
             case POSTGRES:
             case YUGABYTE: {
-                if (isSimple(value))
+                if (isSimple(ctx, value))
                     ctx.visit(imul(value, value));
                 else
                     ctx.visit(DSL.power(value, inline(2)));

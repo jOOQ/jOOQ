@@ -111,8 +111,8 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
     }
 
     @Override
-    public boolean isSimple() {
-        return !anyMatch(this, e -> !Tools.isSimple(e));
+    public boolean isSimple(Context<?> ctx) {
+        return !anyMatch(this, e -> !Tools.isSimple(ctx, e));
     }
 
     @Override
@@ -137,7 +137,7 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
             rendersContent.set(i++, ((QueryPartInternal) e).rendersContent(ctx));
 
         int size = rendersContent.cardinality();
-        boolean format = ctx.format() && (size >= 2 && !isSimple() || size > 4);
+        boolean format = ctx.format() && (size >= 2 && !isSimple(ctx) || size > 4);
         boolean previousQualify = ctx.qualify();
         boolean previousAlreadyIndented = TRUE.equals(ctx.data(DATA_LIST_ALREADY_INDENTED));
         boolean indent = format && !previousAlreadyIndented;
@@ -195,7 +195,7 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
                         ctx.data(
                             DATA_LIST_ALREADY_INDENTED,
                             t instanceof QueryPartCollectionView && ((QueryPartCollectionView<?>) t).size() > 1,
-                            c -> c.visit(t)
+                            c -> acceptElement(c, t)
                         );
                     }
                     else
@@ -267,9 +267,8 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
 
     @Override
     public final boolean add(T e) {
-        if (e != null) {
+        if (e != null)
             return wrapped.add(e);
-        }
 
         return false;
     }

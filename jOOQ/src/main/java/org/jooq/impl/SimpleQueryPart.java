@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Context;
 import org.jooq.OrderField;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
@@ -54,7 +55,7 @@ interface SimpleQueryPart extends QueryPartInternal {
      * <p>
      * e.g. an {@link OrderField} can be simple if its contents are also simple.
      */
-    default boolean isSimple() {
+    default boolean isSimple(Context<?> ctx) {
         return true;
     }
 }

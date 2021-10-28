@@ -91,8 +91,8 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T>, 
     }
 
     @Override
-    public boolean isSimple() {
-        return nullOrdering == null && Tools.isSimple(field);
+    public boolean isSimple(Context<?> ctx) {
+        return nullOrdering == null && Tools.isSimple(ctx, field);
     }
 
     @Override

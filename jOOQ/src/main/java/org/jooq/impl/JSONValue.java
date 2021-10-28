@@ -188,7 +188,7 @@ implements
                 break;
 
             default: {
-                boolean format = !isSimple(json, path);
+                boolean format = !isSimple(ctx, json, path);
 
                 ctx.visit(N_JSON_VALUE).sql('(');
 

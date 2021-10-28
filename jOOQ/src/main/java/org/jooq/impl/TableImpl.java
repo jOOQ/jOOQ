@@ -275,7 +275,7 @@ implements
 
     @Override
     @org.jooq.Internal
-    public final boolean isSimple() {
+    public final boolean isSimple(Context<?> ctx) {
         return alias == null && (parameters == null || parameters.length < 2);
     }
 

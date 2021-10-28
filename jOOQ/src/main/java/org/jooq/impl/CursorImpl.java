@@ -589,12 +589,19 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
         @Override
         public final void close() throws SQLException {
             ctx.rows(rows);
-            listener.fetchEnd(ctx);
+
+            // [#12568] Make sure exceptions thrown in fetchEnd() don't produce
+            //          connection leaks
+            try {
+                listener.fetchEnd(ctx);
+            }
 
             // [#1868] If this Result / Cursor was "kept" through a lazy
             // execution, we must assure that the ExecuteListener lifecycle is
             // correctly terminated.
-            Tools.safeClose(listener, ctx, keepStatement, keepResultSet);
+            finally {
+                Tools.safeClose(listener, ctx, keepStatement, keepResultSet);
+            }
         }
 
         @Override

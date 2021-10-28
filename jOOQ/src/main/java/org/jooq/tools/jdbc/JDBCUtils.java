@@ -629,7 +629,9 @@ public class JDBCUtils {
             try {
                 connection.close();
             }
-            catch (Exception ignore) {}
+            catch (Exception ignore) {
+                log.debug("Error when closing connection", ignore);
+            }
         }
     }
 
@@ -644,7 +646,9 @@ public class JDBCUtils {
             try {
                 statement.close();
             }
-            catch (Exception ignore) {}
+            catch (Exception ignore) {
+                log.debug("Error when closing statement", ignore);
+            }
         }
     }
 
@@ -659,7 +663,9 @@ public class JDBCUtils {
             try {
                 resultSet.close();
             }
-            catch (Exception ignore) {}
+            catch (Exception ignore) {
+                log.debug("Error when closing result set", ignore);
+            }
         }
     }
 
@@ -687,7 +693,9 @@ public class JDBCUtils {
             try {
                 closeable.close();
             }
-            catch (Exception ignore) {}
+            catch (Exception ignore) {
+                log.debug("Error when closing closeable", ignore);
+            }
         }
     }
 
@@ -702,7 +710,9 @@ public class JDBCUtils {
             try {
                 closeable.close();
             }
-            catch (Exception ignore) {}
+            catch (Exception ignore) {
+                log.debug("Error when closing closeable", ignore);
+            }
         }
     }
 

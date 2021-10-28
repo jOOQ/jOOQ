@@ -61,7 +61,7 @@ final class GroupFieldList extends QueryPartList<GroupField> {
 
     static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_CONSTANT = SQLDialect.supportedUntil(DERBY, HSQLDB, IGNITE);
     static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedUntil(FIREBIRD, MARIADB, MYSQL, SQLITE, YUGABYTE);
-    static final Set<SQLDialect> NO_SUPPORT_GROUP_BY_TABLE       = SQLDialect.supportedBy(AURORA_MYSQL, AURORA_POSTGRES, COCKROACHDB, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, MARIADB, MEMSQL, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLDATAWAREHOUSE, SQLITE, SQLSERVER, VERTICA);
+    static final Set<SQLDialect> NO_SUPPORT_GROUP_BY_TABLE       = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
     static final Set<SQLDialect> NO_SUPPORT_GROUP_FUNCTIONAL_DEP = SQLDialect.supportedBy(DERBY, FIREBIRD);
 
 
@@ -131,7 +131,7 @@ final class GroupFieldList extends QueryPartList<GroupField> {
     }
 
     @Override
-    protected void acceptElement(Context<?> ctx, GroupField part) {
+    protected final void acceptElement(Context<?> ctx, GroupField part) {
         if (part instanceof Table) { Table<?> t = (Table<?>) part;
             if (NO_SUPPORT_GROUP_BY_TABLE.contains(ctx.dialect())) {
                 UniqueKey<?> pk = t.getPrimaryKey();

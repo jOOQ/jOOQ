@@ -66,8 +66,6 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.DefaultVisitListener;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A default {@link ExecuteListener} that just logs events to java.util.logging,
@@ -133,9 +131,21 @@ public class LoggerListener extends DefaultExecuteListener {
         }
     }
 
+    // [#12564] Make sure we don't log any nested-level results or records
+    int recordLevel = 0;
+    int resultLevel = 0;
+
+    @Override
+    public void recordStart(ExecuteContext ctx) {
+        recordLevel++;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public void recordEnd(ExecuteContext ctx) {
+        if (--recordLevel > 0)
+            return;
+
         if (log.isTraceEnabled() && ctx.record() != null)
             logMultiline("Record fetched", ctx.record().toString(), Level.FINER);
 
@@ -153,6 +163,7 @@ public class LoggerListener extends DefaultExecuteListener {
 
     @Override
     public void resultStart(ExecuteContext ctx) {
+        resultLevel++;
 
         // [#10019] Don't buffer any records if it isn't needed
         ctx.data(DO_BUFFER, false);
@@ -160,6 +171,9 @@ public class LoggerListener extends DefaultExecuteListener {
 
     @Override
     public void resultEnd(ExecuteContext ctx) {
+        if (--resultLevel > 0)
+            return;
+
         if (ctx.result() != null && log.isDebugEnabled()) {
             log(ctx.result());
             log.debug("Fetched row(s)", ctx.result().size());
@@ -289,11 +303,8 @@ public class LoggerListener extends DefaultExecuteListener {
 
         @Override
         public void visitEnd(VisitContext context) {
-            if (anyAbbreviations) {
-                if (context.queryPartsLength() == 1) {
-                    context.renderContext().sql(" -- Bind values may have been abbreviated for DEBUG logging. Use TRACE logging for very large bind variables.");
-                }
-            }
+            if (anyAbbreviations && context.queryPartsLength() == 1)
+                context.renderContext().sql(" -- Bind values may have been abbreviated for DEBUG logging. Use TRACE logging for very large bind variables.");
         }
     }
 }

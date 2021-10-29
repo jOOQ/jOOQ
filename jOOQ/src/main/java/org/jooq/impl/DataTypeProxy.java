@@ -157,30 +157,26 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
         );
     }
 
+    @Override
+    public final boolean readonly() {
+        return defaultIfNull(overrideReadonly, type.readonly());
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public final DataType<T> readonly(boolean r) {
+        return new DataTypeProxy<>(
+            this,
+            overridePrecision,
+            overrideScale,
+            overrideLength,
+            overrideNullability,
+            r,
+            overrideCollation,
+            overrideCharacterSet,
+            overrideIdentity,
+            overrideDefaultValue
+        );
+    }
 
     @Override
     public final Collation collation() {

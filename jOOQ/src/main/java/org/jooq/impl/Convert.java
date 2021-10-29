@@ -605,6 +605,10 @@ final class Convert {
                 else if ((wrapperTo = wrapper(toClass)) == (wrapperFrom = wrapper(fromClass)))
                     return (U) from;
 
+                // [#12557] Anything can be unwrapped from Optional
+                else if (fromClass == Optional.class)
+                    return from(((Optional) from).orElse(null));
+
                 // Regular checks
                 else if (fromClass == byte[].class) {
 

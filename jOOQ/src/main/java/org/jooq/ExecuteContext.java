@@ -48,6 +48,7 @@ import java.util.stream.Collector;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.DSL;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -223,6 +224,15 @@ public interface ExecuteContext extends Scope {
     void resultSet(ResultSet resultSet);
 
     /**
+     * The 0-based record nesting level for {@link #record()}, relevant when nested
+     * result events are triggered via
+     * {@link ExecuteListener#resultStart(ExecuteContext)} and
+     * {@link ExecuteListener#resultEnd(ExecuteContext)}, e.g. in the presence
+     * of {@link DSL#multiset(Select)}.
+     */
+    int recordLevel();
+
+    /**
      * The last record that was fetched from the result set, or
      * <code>null</code> if no record has been fetched.
      */
@@ -268,6 +278,15 @@ public interface ExecuteContext extends Scope {
      * @return The affected rows. This is never <code>null</code>
      */
     int @NotNull [] batchRows();
+
+    /**
+     * The 0-based result nesting level for {@link #result()}, relevant when nested
+     * result events are triggered via
+     * {@link ExecuteListener#resultStart(ExecuteContext)} and
+     * {@link ExecuteListener#resultEnd(ExecuteContext)}, e.g. in the presence
+     * of {@link DSL#multiset(Select)}.
+     */
+    int resultLevel();
 
     /**
      * The last result that was fetched from the result set, or

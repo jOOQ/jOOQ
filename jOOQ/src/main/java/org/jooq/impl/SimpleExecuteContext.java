@@ -143,6 +143,11 @@ final class SimpleExecuteContext extends AbstractScope implements ExecuteContext
     }
 
     @Override
+    public final int recordLevel() {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @Override
     public final Record record() {
         throw new UnsupportedOperationException("Not implemented");
     }
@@ -164,6 +169,11 @@ final class SimpleExecuteContext extends AbstractScope implements ExecuteContext
 
     @Override
     public final int[] batchRows() {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @Override
+    public final int resultLevel() {
         throw new UnsupportedOperationException("Not implemented");
     }
 

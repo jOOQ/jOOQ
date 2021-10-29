@@ -813,6 +813,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * is about to be fetched.</li>
      * <li>{@link ExecuteContext#result()}: The set of records that are about to
      * be fetched.</li>
+     * <li>{@link ExecuteContext#resultLevel()}: The result nesting level, in
+     * case the upcoming {@link ExecuteContext#result()} is a
+     * {@link DSL#multiset(Select)} or other type of nested result.</li>
      * <li>{@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
      * emitted by the database or <code>null</code> if no warning was
      * emitted.</li>
@@ -878,6 +881,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * is about to be fetched.</li>
      * <li>{@link ExecuteContext#record()}: The <code>Record</code> that is
      * about to be fetched.</li>
+     * <li>{@link ExecuteContext#recordLevel()}: The record nesting level, in
+     * case the upcoming {@link ExecuteContext#record()} is a {@link Row} or
+     * other type of nested record. The level is also increased if a record is
+     * contained in a nested {@link ExecuteContext#result()}.</li>
      * <li>{@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
      * emitted by the database or <code>null</code> if no warning was
      * emitted.</li>
@@ -924,6 +931,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * is about to be fetched.</li>
      * <li>{@link ExecuteContext#record()}: The last <code>Record</code> that
      * was fetched.</li>
+     * <li>{@link ExecuteContext#recordLevel()}: The record nesting level, in
+     * case the upcoming {@link ExecuteContext#record()} is a {@link Row} or
+     * other type of nested record. The level is also increased if a record is
+     * contained in a nested {@link ExecuteContext#result()}.</li>
      * <li>{@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
      * emitted by the database or <code>null</code> if no warning was
      * emitted.</li>
@@ -972,6 +983,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * was fetched.</li>
      * <li>{@link ExecuteContext#result()}: The set of records that were
      * fetched.</li>
+     * <li>{@link ExecuteContext#resultLevel()}: The result nesting level, in
+     * case the upcoming {@link ExecuteContext#result()} is a
+     * {@link DSL#multiset(Select)} or other type of nested result.</li>
      * <li>{@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
      * emitted by the database or <code>null</code> if no warning was
      * emitted.</li>

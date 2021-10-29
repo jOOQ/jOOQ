@@ -105,20 +105,21 @@ class DefaultExecuteContext implements ExecuteContext {
     private final String[]                                batchSQL;
     private final int[]                                   batchRows;
 
-    // Transient attributes (created afresh per execution)
-    transient ConnectionProvider                          connectionProvider;
-    private transient Connection                          connection;
-    private transient SettingsEnabledConnection           wrappedConnection;
-    private transient PreparedStatement                   statement;
-    private transient int                                 statementExecutionCount;
-    private transient ResultSet                           resultSet;
-    private transient Record                              record;
-    private transient Result<?>                           result;
-    private transient int                                 rows      = -1;
-    private transient RuntimeException                    exception;
-    private transient SQLException                        sqlException;
-    private transient SQLWarning                          sqlWarning;
-    private transient String[]                            serverOutput;
+    ConnectionProvider                                    connectionProvider;
+    private Connection                                    connection;
+    private SettingsEnabledConnection                     wrappedConnection;
+    private PreparedStatement                             statement;
+    private int                                           statementExecutionCount;
+    private ResultSet                                     resultSet;
+    private Record                                        record;
+    private Result<?>                                     result;
+    int                                                   recordLevel;
+    int                                                   resultLevel;
+    private int                                           rows      = -1;
+    private RuntimeException                              exception;
+    private SQLException                                  sqlException;
+    private SQLWarning                                    sqlWarning;
+    private String[]                                      serverOutput;
 
     // ------------------------------------------------------------------------
     // XXX: Static utility methods for handling blob / clob lifecycle
@@ -592,6 +593,11 @@ class DefaultExecuteContext implements ExecuteContext {
     }
 
     @Override
+    public final int recordLevel() {
+        return recordLevel;
+    }
+
+    @Override
     public final int rows() {
         return rows;
     }
@@ -620,6 +626,11 @@ class DefaultExecuteContext implements ExecuteContext {
     @Override
     public final Result<?> result() {
         return result;
+    }
+
+    @Override
+    public final int resultLevel() {
+        return resultLevel;
     }
 
     @Override

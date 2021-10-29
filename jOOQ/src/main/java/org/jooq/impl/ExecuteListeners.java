@@ -223,22 +223,29 @@ final class ExecuteListeners implements ExecuteListener {
 
         for (ExecuteListener listener : listeners[0])
             listener.resultStart(ctx);
+
+        ((DefaultExecuteContext) ctx).resultLevel++;
     }
 
     @Override
     public final void recordStart(ExecuteContext ctx) {
         for (ExecuteListener listener : listeners[0])
             listener.recordStart(ctx);
+
+        ((DefaultExecuteContext) ctx).recordLevel++;
     }
 
     @Override
     public final void recordEnd(ExecuteContext ctx) {
+        ((DefaultExecuteContext) ctx).recordLevel--;
+
         for (ExecuteListener listener : listeners[1])
             listener.recordEnd(ctx);
     }
 
     @Override
     public final void resultEnd(ExecuteContext ctx) {
+        ((DefaultExecuteContext) ctx).resultLevel--;
         resultStart = false;
 
         for (ExecuteListener listener : listeners[1])

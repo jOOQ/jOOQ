@@ -65,8 +65,6 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.DefaultVisitListener;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * A default {@link ExecuteListener} that just logs events to java.util.logging,
  * log4j, or slf4j using the {@link JooqLogger}
@@ -131,19 +129,13 @@ public class LoggerListener extends DefaultExecuteListener {
         }
     }
 
-    // [#12564] Make sure we don't log any nested-level results or records
-    int recordLevel = 0;
-    int resultLevel = 0;
-
-    @Override
-    public void recordStart(ExecuteContext ctx) {
-        recordLevel++;
-    }
 
     @SuppressWarnings("unchecked")
     @Override
     public void recordEnd(ExecuteContext ctx) {
-        if (--recordLevel > 0)
+
+        // [#12564] Make sure we don't log any nested-level results or records
+        if (ctx.recordLevel() > 0)
             return;
 
         if (log.isTraceEnabled() && ctx.record() != null)
@@ -163,7 +155,6 @@ public class LoggerListener extends DefaultExecuteListener {
 
     @Override
     public void resultStart(ExecuteContext ctx) {
-        resultLevel++;
 
         // [#10019] Don't buffer any records if it isn't needed
         ctx.data(DO_BUFFER, false);
@@ -171,7 +162,9 @@ public class LoggerListener extends DefaultExecuteListener {
 
     @Override
     public void resultEnd(ExecuteContext ctx) {
-        if (--resultLevel > 0)
+
+        // [#12564] Make sure we don't log any nested-level results or records
+        if (ctx.resultLevel() > 0)
             return;
 
         if (ctx.result() != null && log.isDebugEnabled()) {

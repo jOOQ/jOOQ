@@ -115,7 +115,7 @@ final class RowOverlaps<T1, T2> extends AbstractCondition implements QOM.RowOver
 
             // Interval OVERLAPS predicates need some additional arithmetic
             if (intervalOverlaps)
-                ctx.visit(right1.le(iadd(left1, left2)).and(left1.le(iadd(right1, right2))));
+                ctx.visit(right1.le(left1.plus(left2)).and(left1.le(right1.plus(right2))));
 
             // All other OVERLAPS predicates can be emulated simply
             else
@@ -124,7 +124,7 @@ final class RowOverlaps<T1, T2> extends AbstractCondition implements QOM.RowOver
 
         // These dialects seem to have trouble with INTERVAL OVERLAPS predicates
         else if (intervalOverlaps && EMULATE_INTERVAL_OVERLAPS.contains(ctx.dialect()))
-            ctx.visit(right1.le(iadd(left1, left2)).and(left1.le(iadd(right1, right2))));
+            ctx.visit(right1.le(left1.plus(left2)).and(left1.le(right1.plus(right2))));
 
 
 

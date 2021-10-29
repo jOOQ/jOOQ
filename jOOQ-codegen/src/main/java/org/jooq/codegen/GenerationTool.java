@@ -41,6 +41,7 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Comparator.comparing;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.tools.StringUtils.isBlank;
@@ -255,6 +256,9 @@ public class GenerationTool {
 
     @SuppressWarnings({ "unchecked", "unused" })
     private void run0(Configuration configuration) throws Exception {
+        // Trigger logging of jOOQ logo eagerly already here
+        selectOne().toString();
+
         if (configuration.getLogging() != null) {
             setGlobalLoggingThreshold(configuration);
         }

@@ -112,34 +112,25 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
         Class<?> mType = member.getType();
 
         if (mType.isPrimitive()) {
-            if (mType == byte.class) {
+            if (mType == byte.class)
                 Tools.setValue(record, field, member.getByte(source));
-            }
-            else if (mType == short.class) {
+            else if (mType == short.class)
                 Tools.setValue(record, field, member.getShort(source));
-            }
-            else if (mType == int.class) {
+            else if (mType == int.class)
                 Tools.setValue(record, field, member.getInt(source));
-            }
-            else if (mType == long.class) {
+            else if (mType == long.class)
                 Tools.setValue(record, field, member.getLong(source));
-            }
-            else if (mType == float.class) {
+            else if (mType == float.class)
                 Tools.setValue(record, field, member.getFloat(source));
-            }
-            else if (mType == double.class) {
+            else if (mType == double.class)
                 Tools.setValue(record, field, member.getDouble(source));
-            }
-            else if (mType == boolean.class) {
+            else if (mType == boolean.class)
                 Tools.setValue(record, field, member.getBoolean(source));
-            }
-            else if (mType == char.class) {
+            else if (mType == char.class)
                 Tools.setValue(record, field, member.getChar(source));
-            }
         }
-        else {
+        else
             Tools.setValue(record, field, member.get(source));
-        }
     }
 
     private final class ArrayUnmapper implements RecordUnmapper<E, R> {

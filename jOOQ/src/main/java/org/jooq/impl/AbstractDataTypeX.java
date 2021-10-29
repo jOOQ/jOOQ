@@ -47,6 +47,8 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Nullability;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Lukas Eder
  */
@@ -64,6 +66,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
         Integer newScale,
         Integer newLength,
         Nullability newNullability,
+        boolean newReadonly,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -72,41 +75,46 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
 
     @Override
     public final DataType<T> nullability(Nullability n) {
-        return construct(precision0(), scale0(), length0(), n, collation(), characterSet(), !n.nullable() && identity(), defaultValue());
+        return construct(precision0(), scale0(), length0(), n, readonly(), collation(), characterSet(), !n.nullable() && identity(), defaultValue());
+    }
+
+    @Override
+    public final DataType<T> readonly(boolean r) {
+        return construct(precision0(), scale0(), length0(), nullability(), r, collation(), characterSet(), identity(), defaultValue());
     }
 
     @Override
     public final DataType<T> collation(Collation c) {
-        return construct(precision0(), scale0(), length0(), nullability(), c, characterSet(), identity(), defaultValue());
+        return construct(precision0(), scale0(), length0(), nullability(), readonly(), c, characterSet(), identity(), defaultValue());
     }
 
     @Override
     public final DataType<T> characterSet(CharacterSet c) {
-        return construct(precision0(), scale0(), length0(), nullability(), collation(), c, identity(), defaultValue());
+        return construct(precision0(), scale0(), length0(), nullability(), readonly(), collation(), c, identity(), defaultValue());
     }
 
     @Override
     public final DataType<T> identity(boolean i) {
-        return construct(precision0(), scale0(), length0(), i ? NOT_NULL : nullability(), collation(), characterSet(), i, defaultValue());
+        return construct(precision0(), scale0(), length0(), i ? NOT_NULL : nullability(), readonly(), collation(), characterSet(), i, defaultValue());
     }
 
     @Override
     public final DataType<T> default_(Field<T> d) {
-        return construct(precision0(), scale0(), length0(), nullability(), collation(), characterSet(), identity(), d);
+        return construct(precision0(), scale0(), length0(), nullability(), readonly(), collation(), characterSet(), identity(), d);
     }
 
     @Override
     final AbstractDataTypeX<T> precision1(Integer p, Integer s) {
-        return construct(p, s, length0(), nullability(), collation(), characterSet(), identity(), defaultValue());
+        return construct(p, s, length0(), nullability(), readonly(), collation(), characterSet(), identity(), defaultValue());
     }
 
     @Override
     final AbstractDataTypeX<T> scale1(Integer s) {
-        return construct(precision0(), s, length0(), nullability(), collation(), characterSet(), identity(), defaultValue());
+        return construct(precision0(), s, length0(), nullability(), readonly(), collation(), characterSet(), identity(), defaultValue());
     }
 
     @Override
     final AbstractDataTypeX<T> length1(Integer l) {
-        return construct(precision0(), scale0(), l, nullability(), collation(), characterSet(), identity(), defaultValue());
+        return construct(precision0(), scale0(), l, nullability(), readonly(), collation(), characterSet(), identity(), defaultValue());
     }
 }

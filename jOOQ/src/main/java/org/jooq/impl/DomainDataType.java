@@ -64,6 +64,7 @@ final class DomainDataType<T> extends DefaultDataType<T> {
             baseType.scaleDefined() ? baseType.scale() : null,
             baseType.lengthDefined() ? baseType.length() : null,
             baseType.nullability(),
+            baseType.readonly(),
             null, // TODO: Collation
             null, // TODO: CharacterSet (?)
             false,

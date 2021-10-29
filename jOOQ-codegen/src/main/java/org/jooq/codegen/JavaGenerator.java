@@ -8426,6 +8426,7 @@ public class JavaGenerator extends AbstractGenerator {
                 type.getLength(),
                 true,
                 false,
+                false,
                 null,
                 baseType
             ) + ".getArrayDataType()";
@@ -8441,6 +8442,7 @@ public class JavaGenerator extends AbstractGenerator {
                 type.getLength(),
                 type.isNullable(),
                 type.isIdentity(),
+                type.isReadonly(),
                 type.getDefaultValue(),
                 type.getQualifiedUserType()
             );
@@ -8686,7 +8688,7 @@ public class JavaGenerator extends AbstractGenerator {
         return type;
     }
 
-    protected String getTypeReference(Database db, SchemaDefinition schema, JavaWriter out, String t, int p, int s, int l, boolean n, boolean i, String d, Name u) {
+    protected String getTypeReference(Database db, SchemaDefinition schema, JavaWriter out, String t, int p, int s, int l, boolean n, boolean i, boolean r, String d, Name u) {
         StringBuilder sb = new StringBuilder();
 
         if (db.getArray(schema, u) != null) {
@@ -8739,9 +8741,11 @@ public class JavaGenerator extends AbstractGenerator {
                 sb.append("\")");
             }
 
-            dataType = dataType
-                .nullable(n)
-                .identity(i);
+            dataType = dataType.nullable(n).identity(i);
+
+
+
+
 
             if (d != null)
                 dataType = dataType.defaultValue((Field) DSL.field(d, dataType));
@@ -8792,6 +8796,11 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (dataType.identity())
                 sb.append(".identity(true)");
+
+
+
+
+
 
             // [#5291] Some dialects report valid SQL expresions (e.g. PostgreSQL), others
             //         report actual values (e.g. MySQL).

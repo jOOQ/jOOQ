@@ -425,6 +425,25 @@ public interface DataType<T> extends Named {
     boolean nullable();
 
     /**
+     * Return a new data type like this, with a new readonly attribute.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     *
+     * @param readonly The new readonly attribute value.
+     * @return The new data type
+     */
+    @NotNull
+    @Support
+    DataType<T> readonly(boolean readonly);
+
+    /**
+     * Get the readonly attribute of this data type.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    boolean readonly();
+
+    /**
      * Synonym for {@link #nullable(boolean)}, passing <code>true</code> as an
      * argument.
      */

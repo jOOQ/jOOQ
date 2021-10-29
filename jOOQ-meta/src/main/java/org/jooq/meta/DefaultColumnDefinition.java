@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.meta.jaxb.SyntheticIdentityType;
+import org.jooq.meta.jaxb.SyntheticReadonlyColumnType;
 import org.jooq.tools.JooqLogger;
 
 /**
@@ -57,20 +58,41 @@ public class DefaultColumnDefinition
 
     private static final JooqLogger              log = JooqLogger.getLogger(DefaultColumnDefinition.class);
     private final int                            position;
-    private final boolean                        isIdentity;
+    private final boolean                        identity;
+    private final boolean                        readonly;
     private transient List<EmbeddableDefinition> replacedByEmbeddables;
 
-    public DefaultColumnDefinition(TableDefinition table, String name, int position, DataTypeDefinition type,
-        boolean isIdentity, String comment) {
+    public DefaultColumnDefinition(
+        TableDefinition table,
+        String name,
+        int position,
+        DataTypeDefinition type,
+        boolean identity,
+        String comment
+    ) {
+        this(table, name, position, type, identity, false, comment);
+    }
 
+    public DefaultColumnDefinition(
+        TableDefinition table,
+        String name,
+        int position,
+        DataTypeDefinition type,
+        boolean identity,
+        boolean readonly,
+        String comment
+    ) {
         super(table, name, position, type, comment);
 
         this.position = position;
-        this.isIdentity = isIdentity || isSyntheticIdentity(this);
+        this.identity = identity || isSyntheticIdentity(this);
+        this.readonly = readonly || isSyntheticReadonlyColumn(this);
 
         // [#6222] Copy the column's identity flag to the data type definition
-        if (type instanceof DefaultDataTypeDefinition)
-            ((DefaultDataTypeDefinition) type).identity(this.isIdentity);
+        if (type instanceof DefaultDataTypeDefinition) { DefaultDataTypeDefinition dd = (DefaultDataTypeDefinition) type;
+            dd.identity(this.identity);
+            dd.readonly(this.readonly);
+        }
     }
 
     @SuppressWarnings("unused")
@@ -86,6 +108,24 @@ public class DefaultColumnDefinition
                 }
             }
         }
+
+        return false;
+    }
+
+    private static boolean isSyntheticReadonlyColumn(DefaultColumnDefinition column) {
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         return false;
     }
@@ -117,7 +157,7 @@ public class DefaultColumnDefinition
 
     @Override
     public final boolean isIdentity() {
-        return isIdentity;
+        return identity;
     }
 
 

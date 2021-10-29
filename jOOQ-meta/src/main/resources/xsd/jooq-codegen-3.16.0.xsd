@@ -976,6 +976,10 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
   <complexType name="SyntheticObjectsType">
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Synthetic objects configuration.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
+      <element name="readonlyColumns" type="tns:SyntheticReadonlyColumnsType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic read only columns configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="identities" type="tns:SyntheticIdentitiesType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic identity configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -998,6 +1002,25 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 
       <element name="views" type="tns:SyntheticViewsType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic view configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+  
+  <complexType name="SyntheticReadonlyColumnsType">
+    <sequence>
+      <element name="readonlyColumn" type="tns:SyntheticReadonlyColumnType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  
+  <complexType name="SyntheticReadonlyColumnType">
+    <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic readonly column configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
+    <all>
+      <element name="tables" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all tables on which to apply this synthetic readonly column.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="fields" type="string" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all fields on which to apply this synthetic readonly column.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>

@@ -174,6 +174,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SyntheticReadonlyColumnType }
+     * 
+     */
+    public SyntheticReadonlyColumnType createSyntheticReadonlyColumnType() {
+        return new SyntheticReadonlyColumnType();
+    }
+
+    /**
      * Create an instance of {@link SyntheticIdentityType }
      * 
      */

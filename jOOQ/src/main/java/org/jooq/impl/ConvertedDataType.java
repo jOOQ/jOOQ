@@ -81,6 +81,7 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
         Integer newScale,
         Integer newLength,
         Nullability newNullability,
+        boolean newReadonly,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -91,6 +92,7 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
             newScale,
             newLength,
             newNullability,
+            newReadonly,
             newCollation,
             newCharacterSet,
             newIdentity,
@@ -146,6 +148,11 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     @Override
     public final Nullability nullability() {
         return delegate.nullability();
+    }
+
+    @Override
+    public final boolean readonly() {
+        return delegate.readonly();
     }
 
     @Override

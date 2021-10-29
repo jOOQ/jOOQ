@@ -62,6 +62,7 @@ import org.jooq.meta.jaxb.SyntheticForeignKeyType;
 import org.jooq.meta.jaxb.SyntheticIdentityType;
 import org.jooq.meta.jaxb.SyntheticObjectsType;
 import org.jooq.meta.jaxb.SyntheticPrimaryKeyType;
+import org.jooq.meta.jaxb.SyntheticReadonlyColumnType;
 import org.jooq.meta.jaxb.SyntheticUniqueKeyType;
 import org.jooq.meta.jaxb.SyntheticViewType;
 
@@ -1081,6 +1082,11 @@ public interface Database extends AutoCloseable {
     void setConfiguredSyntheticObjects(SyntheticObjectsType configuredSyntheticObjects);
 
     /**
+     * Get the configured synthetic readonly columns.
+     */
+    List<SyntheticReadonlyColumnType> getConfiguredSyntheticReadonlyColumns();
+
+    /**
      * Get the configured synthetic identities.
      */
     List<SyntheticIdentityType> getConfiguredSyntheticIdentities();
@@ -1104,6 +1110,16 @@ public interface Database extends AutoCloseable {
      * Get the configured synthetic views.
      */
     List<SyntheticViewType> getConfiguredSyntheticViews();
+
+    /**
+     * Mark a synthetic readonly column as used.
+     */
+    void markUsed(SyntheticReadonlyColumnType readonlyColumn);
+
+    /**
+     * Retrieve the not-yet used synthetic readonly columns.
+     */
+    List<SyntheticReadonlyColumnType> getUnusedSyntheticReadonlyColumns();
 
     /**
      * Mark a synthetic identity as used.

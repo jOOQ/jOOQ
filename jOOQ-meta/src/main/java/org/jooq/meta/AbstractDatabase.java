@@ -126,6 +126,7 @@ import org.jooq.meta.jaxb.SyntheticForeignKeyType;
 import org.jooq.meta.jaxb.SyntheticIdentityType;
 import org.jooq.meta.jaxb.SyntheticObjectsType;
 import org.jooq.meta.jaxb.SyntheticPrimaryKeyType;
+import org.jooq.meta.jaxb.SyntheticReadonlyColumnType;
 import org.jooq.meta.jaxb.SyntheticUniqueKeyType;
 import org.jooq.meta.jaxb.SyntheticViewType;
 // ...
@@ -204,6 +205,8 @@ public abstract class AbstractDatabase implements Database {
     private Set<EmbeddableDefinitionType>                                    unusedEmbeddables                    = new HashSet<>();
     private List<CommentType>                                                configuredComments                   = new ArrayList<>();
     private Set<CommentType>                                                 unusedComments                       = new HashSet<>();
+    private List<SyntheticReadonlyColumnType>                                configuredSyntheticReadonlyColumns   = new ArrayList<>();
+    private Set<SyntheticReadonlyColumnType>                                 unusedSyntheticReadonlyColumns       = new HashSet<>();
     private List<SyntheticIdentityType>                                      configuredSyntheticIdentities        = new ArrayList<>();
     private Set<SyntheticIdentityType>                                       unusedSyntheticIdentities            = new HashSet<>();
     private List<SyntheticPrimaryKeyType>                                    configuredSyntheticPrimaryKeys       = new ArrayList<>();
@@ -2816,6 +2819,7 @@ public abstract class AbstractDatabase implements Database {
             // configured things programmatically, so we must not set the
             // list but append it.
 
+            getConfiguredSyntheticReadonlyColumns().addAll(configuredSyntheticObjects.getReadonlyColumns());
             getConfiguredSyntheticIdentities().addAll(configuredSyntheticObjects.getIdentities());
             getConfiguredSyntheticPrimaryKeys().addAll(configuredSyntheticObjects.getPrimaryKeys());
             getConfiguredSyntheticUniqueKeys().addAll(configuredSyntheticObjects.getUniqueKeys());
@@ -2833,11 +2837,21 @@ public abstract class AbstractDatabase implements Database {
 
 
 
+            if (!configuredSyntheticObjects.getReadonlyColumns().isEmpty())
+                log.info("Commercial feature", "Synthetic read only columns are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
             if (!configuredSyntheticObjects.getUniqueKeys().isEmpty())
                 log.info("Commercial feature", "Synthetic unique keys are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
             if (!configuredSyntheticObjects.getForeignKeys().isEmpty())
                 log.info("Commercial feature", "Synthetic foreign keys are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
         }
+    }
+
+    @Override
+    public List<SyntheticReadonlyColumnType> getConfiguredSyntheticReadonlyColumns() {
+        if (configuredSyntheticReadonlyColumns == null)
+            configuredSyntheticReadonlyColumns = new ArrayList<>();
+
+        return configuredSyntheticReadonlyColumns;
     }
 
     @Override
@@ -2881,6 +2895,11 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public void markUsed(SyntheticReadonlyColumnType readonlyColumn) {
+        unusedSyntheticReadonlyColumns.remove(readonlyColumn);
+    }
+
+    @Override
     public void markUsed(SyntheticIdentityType identity) {
         unusedSyntheticIdentities.remove(identity);
     }
@@ -2903,6 +2922,11 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public void markUsed(SyntheticViewType view) {
         unusedSyntheticViews.remove(view);
+    }
+
+    @Override
+    public List<SyntheticReadonlyColumnType> getUnusedSyntheticReadonlyColumns() {
+        return new ArrayList<>(unusedSyntheticReadonlyColumns);
     }
 
     @Override

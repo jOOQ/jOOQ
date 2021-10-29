@@ -72,7 +72,8 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     private final String           converter;
     private final String           binding;
     private final boolean          nullable;
-    private boolean                isIdentity;
+    private boolean                readonly;
+    private boolean                identity;
     private final String           defaultValue;
     private final int              length;
     private final int              precision;
@@ -187,6 +188,10 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     }
 
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, boolean isIdentity, Name userType, String converter, String binding, String javaType) {
+        this(database, schema, typeName, length, precision, scale, nullable, false, defaultValue, isIdentity, userType, converter, binding, javaType);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean readonly, String defaultValue, boolean identity, Name userType, String converter, String binding, String javaType) {
         this.database = database;
         this.schema = schema;
 
@@ -215,8 +220,9 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this.precision = precision == null ? 0 : precision.intValue();
         this.scale = scale == null ? 0 : scale.intValue();
         this.nullable = nullable == null ? true : nullable.booleanValue();
+        this.readonly = readonly;
         this.defaultValue = defaultValue;
-        this.isIdentity = isIdentity;
+        this.identity = identity;
     }
 
     @Override
@@ -238,14 +244,24 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         return nullable;
     }
 
-    public final DefaultDataTypeDefinition identity(boolean identity) {
-        this.isIdentity = identity;
+    public final DefaultDataTypeDefinition readonly(boolean r) {
+        this.readonly = r;
+        return this;
+    }
+
+    @Override
+    public final boolean isReadonly() {
+        return readonly;
+    }
+
+    public final DefaultDataTypeDefinition identity(boolean i) {
+        this.identity = i;
         return this;
     }
 
     @Override
     public final boolean isIdentity() {
-        return isIdentity;
+        return identity;
     }
 
     @Override

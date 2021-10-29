@@ -111,6 +111,11 @@ public interface DataTypeDefinition {
     boolean isNullable();
 
     /**
+     * Whether this data type is readonly.
+     */
+    boolean isReadonly();
+
+    /**
      * Whether this data type is an identity.
      */
     boolean isIdentity();

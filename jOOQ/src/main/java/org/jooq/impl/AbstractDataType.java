@@ -102,7 +102,14 @@ import org.jooq.types.UNumber;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T>, UEmpty {
+abstract class AbstractDataType<T>
+extends
+    AbstractNamed
+implements
+    DataType<T>,
+    UEmpty
+{
+
     static final Set<SQLDialect> NO_SUPPORT_TIMESTAMP_PRECISION = SQLDialect.supportedBy(DERBY, FIREBIRD);
 
     AbstractDataType(Name name, Comment comment) {
@@ -131,6 +138,12 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T>,
     public final DataType<T> notNull() {
         return nullable(false);
     }
+
+    @Override
+    public abstract boolean readonly();
+
+    @Override
+    public abstract DataType<T> readonly(boolean r);
 
     @Override
     public abstract DataType<T> collation(Collation c);

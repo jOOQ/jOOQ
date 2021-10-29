@@ -48,7 +48,6 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Nullability;
 import org.jooq.SQLDialect;
-import org.jooq.tools.StringUtils;
 
 /**
  * A mutable proxy for a temporary {@link DataType}, which can be replaced by a
@@ -57,18 +56,20 @@ import org.jooq.tools.StringUtils;
  * @author Lukas Eder
  */
 final class DataTypeProxy<T> extends AbstractDataType<T> {
+
     private AbstractDataType<T> type;
     private final Integer       overridePrecision;
     private final Integer       overrideScale;
     private final Integer       overrideLength;
     private final Nullability   overrideNullability;
+    private final Boolean       overrideReadonly;
     private final Collation     overrideCollation;
     private final CharacterSet  overrideCharacterSet;
     private final Boolean       overrideIdentity;
     private final Field<T>      overrideDefaultValue;
 
     DataTypeProxy(AbstractDataType<T> type) {
-        this(type, null, null, null, null, null, null, null, null);
+        this(type, null, null, null, null, null, null, null, null, null);
     }
 
     private DataTypeProxy(
@@ -77,6 +78,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
         Integer overrideScale,
         Integer overrideLength,
         Nullability overrideNullability,
+        Boolean overrideReadonly,
         Collation overrideCollation,
         CharacterSet overrideCharacterSet,
         Boolean overrideIdentity,
@@ -89,6 +91,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
         this.overrideScale = overrideScale;
         this.overrideLength = overrideLength;
         this.overrideNullability = overrideNullability;
+        this.overrideReadonly = overrideReadonly;
         this.overrideCollation = overrideCollation;
         this.overrideCharacterSet = overrideCharacterSet;
         this.overrideIdentity = overrideIdentity;
@@ -146,12 +149,38 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overrideScale,
             overrideLength,
             n,
+            overrideReadonly,
             overrideCollation,
             overrideCharacterSet,
             overrideIdentity,
             overrideDefaultValue
         );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final Collation collation() {
@@ -166,6 +195,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overrideScale,
             overrideLength,
             overrideNullability,
+            overrideReadonly,
             c,
             overrideCharacterSet,
             overrideIdentity,
@@ -186,6 +216,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overrideScale,
             overrideLength,
             overrideNullability,
+            overrideReadonly,
             overrideCollation,
             c,
             overrideIdentity,
@@ -206,6 +237,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overrideScale,
             overrideLength,
             overrideNullability,
+            overrideReadonly,
             overrideCollation,
             overrideCharacterSet,
             i,
@@ -226,6 +258,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overrideScale,
             overrideLength,
             overrideNullability,
+            overrideReadonly,
             overrideCollation,
             overrideCharacterSet,
             overrideIdentity,
@@ -276,6 +309,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             s,
             overrideLength,
             overrideNullability,
+            overrideReadonly,
             overrideCollation,
             overrideCharacterSet,
             overrideIdentity,
@@ -296,6 +330,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             s,
             overrideLength,
             overrideNullability,
+            overrideReadonly,
             overrideCollation,
             overrideCharacterSet,
             overrideIdentity,
@@ -316,6 +351,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overrideScale,
             l,
             overrideNullability,
+            overrideReadonly,
             overrideCollation,
             overrideCharacterSet,
             overrideIdentity,

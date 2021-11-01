@@ -130,13 +130,7 @@ final class Expression<T> extends AbstractTransformable<T> implements UOperator2
         this.rhs = rhs;
     }
 
-    @Override
-    final DataType<?> getExpressionDataType() {
-
-        // [#11959] Workaround for lack of proper data type information for interval based expressions
-        AbstractField<?> l = (AbstractField<?>) lhs;
-        AbstractField<?> r = (AbstractField<?>) rhs;
-
+    static final DataType<?> getExpressionDataType(AbstractField<?> l, ExpressionOperator operator, AbstractField<?> r) {
         DataType<?> lt = l.getExpressionDataType();
         DataType<?> rt = r.getExpressionDataType();
 
@@ -150,6 +144,13 @@ final class Expression<T> extends AbstractTransformable<T> implements UOperator2
         }
 
         return lt;
+    }
+
+    @Override
+    final DataType<?> getExpressionDataType() {
+
+        // [#11959] Workaround for lack of proper data type information for interval based expressions
+        return getExpressionDataType((AbstractField<?>) lhs, operator, (AbstractField<?>) rhs);
     }
 
     @Override

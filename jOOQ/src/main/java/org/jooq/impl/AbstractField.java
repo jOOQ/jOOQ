@@ -953,7 +953,10 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @SuppressWarnings("unchecked")
     @Override
     public final Field<T> mul(Field<? extends Number> value) {
-        return new Mul<T>(this, (Field<T>) (getDataType().isTemporal() ? nullSafe(value) : nullSafe(value, getDataType())));
+        return new Mul<T>(this, (Field<T>) (getDataType().isTemporal() || nullSafe(value).getDataType().isTemporal()
+            ? nullSafe(value)
+            : nullSafe(value, getDataType())
+        ));
     }
 
     @Override
@@ -964,7 +967,10 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @SuppressWarnings("unchecked")
     @Override
     public final Field<T> div(Field<? extends Number> value) {
-        return new Div<T>(this, (Field<T>) (getDataType().isTemporal() ? nullSafe(value) : nullSafe(value, getDataType())));
+        return new Div<T>(this, (Field<T>) (getDataType().isTemporal() || nullSafe(value).getDataType().isTemporal()
+            ? nullSafe(value)
+            : nullSafe(value, getDataType())
+        ));
     }
 
     // ------------------------------------------------------------------------

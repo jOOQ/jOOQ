@@ -118,6 +118,13 @@ implements
         return Expression.transform(this, arg1, ExpressionOperator.MULTIPLY, arg2, false, transform);
     }
 
+    @Override
+    final DataType<?> getExpressionDataType() {
+
+        // [#11959] Workaround for lack of proper data type information for interval based expressions
+        return Expression.getExpressionDataType((AbstractField<?>) arg1, ExpressionOperator.MULTIPLY, (AbstractField<?>) arg2);
+    }
+
 
 
 

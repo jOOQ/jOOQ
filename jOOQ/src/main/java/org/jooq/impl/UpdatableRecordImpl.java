@@ -57,6 +57,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import org.jooq.ConditionProvider;
 import org.jooq.Configuration;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
@@ -270,8 +271,13 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private final <Q extends StoreQuery<R> & org.jooq.ConditionProvider> int storeMergeOrUpdate0(Field<?>[] storeFields, TableField<R, ?>[] keys, Q query, boolean merge) {
-        addChangedValues(storeFields, query, merge);
+    private final <Q extends StoreQuery<R> & ConditionProvider> int storeMergeOrUpdate0(
+        Field<?>[] storeFields,
+        TableField<R, ?>[] keys,
+        Q query,
+        boolean merge
+    ) {
+        List<Field<?>> changedFields = addChangedValues(storeFields, query, merge);
         Tools.addConditions(query, this, keys);
 
         if (!query.isExecutable()) {
@@ -332,8 +338,8 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         checkIfChanged(result, version, timestamp);
 
         if (result > 0) {
-            for (Field<?> storeField : storeFields)
-                changed(storeField, false);
+            for (Field<?> changedField : changedFields)
+                changed(changedField, false);
 
             // [#1859] If an update was successful try fetching the generated
             getReturningIfNeeded(query, key);

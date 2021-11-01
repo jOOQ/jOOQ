@@ -58,7 +58,6 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.impl.DSL.constraint;
-import static org.jooq.impl.DSL.dual;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
@@ -80,9 +79,11 @@ import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.anyMatch;
-import static org.jooq.impl.Tools.findAny;
+import static org.jooq.impl.Tools.collect;
+import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT;
@@ -118,6 +119,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+import org.jooq.conf.WriteIfReadonly;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.tools.StringUtils;
@@ -299,6 +301,10 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     @Override
     final void accept0(Context<?> ctx) {
 
+
+
+
+
         // ON DUPLICATE KEY UPDATE clause
         // ------------------------------
         if (onDuplicateKeyUpdate) {
@@ -396,7 +402,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 case FIREBIRD:
                 case H2:
                 case HSQLDB: {
-                    ctx.visit(toMerge(ctx.configuration()));
+                    ctx.visit(toMerge(ctx));
                     break;
                 }
 
@@ -462,7 +468,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 {
-                    ctx.visit(toInsertSelect(ctx.configuration()));
+                    ctx.visit(toInsertSelect(ctx));
                     break;
                 }
 
@@ -570,7 +576,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
                 case H2:
                 case HSQLDB: {
-                    ctx.visit(toMerge(ctx.configuration()));
+                    ctx.visit(toMerge(ctx));
                     break;
                 }
 
@@ -578,9 +584,9 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
                     // [#10989] Cannot use MERGE with SELECT: [42XAL]: The source table of a MERGE statement must be a base table or table function.
                     if (select != null)
-                        ctx.visit(toInsertSelect(ctx.configuration()));
+                        ctx.visit(toInsertSelect(ctx));
                     else
-                        ctx.visit(toMerge(ctx.configuration()));
+                        ctx.visit(toMerge(ctx));
 
                     break;
                 }
@@ -629,7 +635,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
            .sql(' ')
            .declareTables(true, c -> c.visit(table(c)));
 
-        insertMaps.toSQLReferenceKeys(ctx);
+        List<Field<?>> fields = insertMaps.toSQLReferenceKeys(ctx);
         ctx.end(INSERT_INSERT_INTO);
 
 
@@ -657,10 +663,18 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
             ctx.data(DATA_INSERT_SELECT, true);
 
+            Select<?> s = select;
+
+
+
+
+
+
+
             // [#8353] TODO: Support overlapping embeddables
             ctx.formatSeparator()
                .start(INSERT_SELECT)
-               .visit(select)
+               .visit(s)
                .end(INSERT_SELECT);
 
             ctx.data().remove(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST);
@@ -738,7 +752,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
-    private final List<List<? extends Field<?>>> conflictingKeys(Configuration configuration) {
+    private final List<List<? extends Field<?>>> conflictingKeys(Context<?> ctx) {
 
         // [#7365] PostgreSQL ON CONFLICT (conflict columns) clause
         if (onConflict != null && onConflict.size() > 0)
@@ -750,7 +764,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
         // [#6462] MySQL ON DUPLICATE KEY UPDATE clause
         //         Flag for backwards compatibility considers only PRIMARY KEY
-        else if (TRUE.equals(Tools.settings(configuration).isEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly()))
+        else if (TRUE.equals(Tools.settings(ctx.configuration()).isEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly()))
             return singletonList(table().getPrimaryKey().getFields());
 
         // [#6462] MySQL ON DUPLICATE KEY UPDATE clause
@@ -760,8 +774,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     }
 
     @SuppressWarnings("unchecked")
-    private final QueryPart toInsertSelect(Configuration configuration) {
-        List<List<? extends Field<?>>> keys = conflictingKeys(configuration);
+    private final QueryPart toInsertSelect(Context<?> ctx) {
+        List<List<? extends Field<?>>> keys = conflictingKeys(ctx);
 
         if (!keys.isEmpty()) {
             Select<Record> rows = null;
@@ -778,7 +792,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     .whereNotExists(
                         selectOne()
                         .from(table())
-                        .where(matchByConflictingKeys(configuration, map))
+                        .where(matchByConflictingKeys(ctx, map))
                     );
             }
 
@@ -793,7 +807,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                         .whereNotExists(
                             selectOne()
                             .from(table())
-                            .where(matchByConflictingKeys(configuration, map))
+                            .where(matchByConflictingKeys(ctx, map))
                         );
 
                     if (rows == null)
@@ -803,7 +817,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 }
             }
 
-            return configuration.dsl()
+            return ctx.dsl()
                 .insertInto(table())
                 .columns(insertMaps.fields())
                 .select(selectFrom(rows.asTable("t")));
@@ -813,7 +827,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         }
     }
 
-    private final Merge<R> toMerge(Configuration configuration) {
+    private final Merge<R> toMerge(Context<?> ctx) {
         if ((onConflict != null && onConflict.size() > 0)
             || onConstraint != null
             || !table().getKeys().isEmpty()) {
@@ -821,7 +835,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             Table<?> t = null;
             Collection<Field<?>> f = null;
 
-            if (!NO_SUPPORT_SUBQUERY_IN_MERGE_USING.contains(configuration.dialect())) {
+            if (!NO_SUPPORT_SUBQUERY_IN_MERGE_USING.contains(ctx.dialect())) {
                 f = insertMaps.fields().isEmpty()
                     ? asList(table().fields())
                     : insertMaps.fields();
@@ -830,7 +844,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 // [#11770] [#11880] Single row inserts also do, in some dialects
                 Select<?> s = select != null
                     ? select
-                    : insertMaps.insertSelect();
+                    : insertMaps.insertSelect(ctx);
 
                 // [#8937] With DEFAULT VALUES, there is no SELECT. Create one from
                 //         known DEFAULT expressions, or use NULL.
@@ -840,17 +854,17 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 // [#6375]  INSERT .. VALUES and INSERT .. SELECT distinction also in MERGE
                 t = s.asTable("t", map(f, Field::getName, String[]::new));
 
-                if (NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING.contains(configuration.dialect()))
+                if (NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING.contains(ctx.dialect()))
                     t = selectFrom(t).asTable("t");
             }
 
             MergeOnConditionStep<R> on = t != null
-                ? configuration.dsl().mergeInto(table())
-                                     .using(t)
-                                     .on(matchByConflictingKeys(configuration, t))
-                : configuration.dsl().mergeInto(table())
-                                     .usingDual()
-                                     .on(matchByConflictingKeys(configuration, insertMaps.lastMap()));
+                ? ctx.dsl().mergeInto(table())
+                           .using(t)
+                           .on(matchByConflictingKeys(ctx, t))
+                : ctx.dsl().mergeInto(table())
+                           .usingDual()
+                           .on(matchByConflictingKeys(ctx, insertMaps.lastMap()));
 
             // [#1295] Use UPDATE clause only when with ON DUPLICATE KEY UPDATE,
             //         not with ON DUPLICATE KEY IGNORE
@@ -873,7 +887,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
      * updated primary key values.
      */
     @SuppressWarnings("unchecked")
-    private final Condition matchByConflictingKeys(Configuration configuration, Map<Field<?>, Field<?>> map) {
+    private final Condition matchByConflictingKeys(Context<?> ctx, Map<Field<?>, Field<?>> map) {
         Condition or = null;
 
         // [#7365] The ON CONFLICT clause can be emulated using MERGE by joining
@@ -885,7 +899,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         if (onConstraint != null && onConstraintUniqueKey == null)
             return DSL.condition("[ cannot create predicate from constraint with unknown columns ]");
 
-        for (List<? extends Field<?>> fields : conflictingKeys(configuration)) {
+        for (List<? extends Field<?>> fields : conflictingKeys(ctx)) {
             Condition and = null;
 
             for (Field<?> field : fields) {
@@ -915,7 +929,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
      * updated primary key values.
      */
     @SuppressWarnings("unchecked")
-    private final Condition matchByConflictingKeys(Configuration configuration, Table<?> s) {
+    private final Condition matchByConflictingKeys(Context<?> ctx, Table<?> s) {
         Condition or = null;
 
         // [#7365] The ON CONFLICT (column list) clause can be emulated using MERGE by
@@ -927,7 +941,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         if (onConstraint != null && onConstraintUniqueKey == null)
             return DSL.condition("[ cannot create predicate from constraint with unknown columns ]");
 
-        for (List<? extends Field<?>> fields : conflictingKeys(configuration)) {
+        for (List<? extends Field<?>> fields : conflictingKeys(ctx)) {
             Condition and = null;
 
             for (Field<?> field : fields) {

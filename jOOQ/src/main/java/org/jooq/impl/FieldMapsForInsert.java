@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Collections.emptyList;
 import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.Clause.INSERT_VALUES;
@@ -45,11 +46,14 @@ import static org.jooq.Clause.INSERT_VALUES;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.conf.WriteIfReadonly.THROW;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.collect;
+import static org.jooq.impl.Tools.filter;
+import static org.jooq.impl.Tools.filterIf;
 import static org.jooq.impl.Tools.flatten;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.lazy;
@@ -67,6 +71,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -78,6 +83,8 @@ import org.jooq.RenderContext.CastMode;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.conf.WriteIfReadonly;
+import org.jooq.exception.DataTypeException;
 import org.jooq.impl.AbstractStoreQuery.UnknownField;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
@@ -180,7 +187,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
                 case FIREBIRD: {
                     ctx.formatSeparator()
                        .start(INSERT_SELECT)
-                       .visit(insertSelect())
+                       .visit(insertSelect(ctx))
                        .end(INSERT_SELECT);
 
                     break;
@@ -227,10 +234,17 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
-    final Select<Record> insertSelect() {
+
+
+
+
+
+
+
+    final Select<Record> insertSelect(Context<?> ctx) {
         Select<Record> select = null;
 
-        Map<Field<?>, List<Field<?>>> v = valuesFlattened();
+        Map<Field<?>, List<Field<?>>> v = valuesFlattened(ctx);
         for (int i = 0; i < rows; i++) {
             int row = i;
             Select<Record> iteration = DSL.select(Tools.map(v.values(), l -> l.get(row)));
@@ -271,7 +285,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
             String separator = "";
             int i = 0;
 
-            for (List<Field<?>> list : valuesFlattened().values()) {
+            for (List<Field<?>> list : valuesFlattened(ctx).values()) {
                 ctx.sql(separator);
 
                 if (indent)
@@ -495,15 +509,15 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         return rows > 0;
     }
 
-    final void toSQLReferenceKeys(Context<?> ctx) {
+    final List<Field<?>> toSQLReferenceKeys(Context<?> ctx) {
 
         // [#1506] with DEFAULT VALUES, we might not have any columns to render
         if (!isExecutable())
-            return;
+            return emptyList();
 
         // [#2995] Do not generate empty column lists.
         if (values.isEmpty())
-            return;
+            return emptyList();
 
         // [#4629] Do not generate column lists for unknown columns
         unknownFields: {
@@ -511,19 +525,29 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
                 if (!(field instanceof UnknownField))
                     break unknownFields;
 
-            return;
+            return emptyList();
         }
 
         // [#989] Avoid qualifying fields in INSERT field declaration
-        ctx.sql(" (").visit(new QueryPartCollectionView<>(collect(flattenCollection(values.keySet(), true, true))).qualify(false)).sql(')');
+        List<Field<?>> fields = collect(removeReadonly(ctx, flattenCollection(values.keySet(), true, true), e -> e));
+        ctx.sql(" (").visit(new QueryPartCollectionView<>(fields).qualify(false)).sql(')');
+        return fields;
     }
 
-    final Map<Field<?>, List<Field<?>>> valuesFlattened() {
+    private static final <E> Iterable<E> removeReadonly(Context<?> ctx, Iterable<E> it, Function<? super E, ? extends Field<?>> f) {
+
+
+
+
+        return it;
+    }
+
+    final Map<Field<?>, List<Field<?>>> valuesFlattened(Context<?> ctx) {
         Map<Field<?>, List<Field<?>>> result = new LinkedHashMap<>();
 
         // [#2530] [#6124] [#10481] TODO: Shortcut for performance, when there are no embeddables
         Set<Field<?>> overlapping = null;
-        for (Entry<Field<?>, List<Field<?>>> entry : values.entrySet()) {
+        for (Entry<Field<?>, List<Field<?>>> entry : removeReadonly(ctx, values.entrySet(), Entry::getKey)) {
 
             // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
             if (entry.getKey().getDataType().isEmbeddable()) {

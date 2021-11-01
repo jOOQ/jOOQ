@@ -537,6 +537,10 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     final void accept0(Context<?> ctx) {
+
+
+
+
         boolean declareTables = ctx.declareTables();
         ctx.start(UPDATE_UPDATE)
            .visit(K_UPDATE)

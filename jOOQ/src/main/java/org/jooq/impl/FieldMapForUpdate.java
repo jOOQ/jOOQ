@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -47,7 +46,10 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.conf.WriteIfReadonly.IGNORE;
+import static org.jooq.conf.WriteIfReadonly.THROW;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.Tools.filterIf;
 import static org.jooq.impl.Tools.flattenEntrySet;
 import static org.jooq.impl.Tools.DataKey.DATA_ON_DUPLICATE_KEY_WHERE;
 
@@ -58,10 +60,13 @@ import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
+// ...
 import org.jooq.RenderContext.CastMode;
-import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
+import org.jooq.conf.WriteIfReadonly;
+import org.jooq.exception.DataTypeException;
+import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder
@@ -98,7 +103,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> i
             if (!CASTS_NEEDED.contains(ctx.dialect()))
                 ctx.castMode(CastMode.NEVER);
 
-            for (Entry<Field<?>, Field<?>> entry : flattenEntrySet(entrySet(), true)) {
+            for (Entry<Field<?>, Field<?>> entry : removeReadonly(ctx, flattenEntrySet(entrySet(), true))) {
                 if (!"".equals(separator))
                     ctx.sql(separator)
                        .formatSeparator();
@@ -122,9 +127,15 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> i
             if (!CASTS_NEEDED.contains(ctx.dialect()))
                 ctx.castMode(previous);
         }
-        else {
+        else
             ctx.sql("[ no fields are updated ]");
-        }
+    }
+
+    static final Iterable<Entry<Field<?>, Field<?>>> removeReadonly(Context<?> ctx, Iterable<Entry<Field<?>, Field<?>>> it) {
+
+
+
+        return it;
     }
 
     final void set(Map<?, ?> map) {
@@ -133,4 +144,16 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> i
             put(field, Tools.field(v, field));
         });
     }
+
+
+
+
+
+
+
+
+
+
+
+
 }

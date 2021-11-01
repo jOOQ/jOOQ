@@ -81,6 +81,7 @@ import static org.jooq.conf.SettingsTools.getBackslashEscaping;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.ThrowExceptions.THROW_FIRST;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
+import static org.jooq.conf.WriteIfReadonly.IGNORE;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_GETTER;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_MEMBERS;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_SETTERS;
@@ -172,6 +173,7 @@ import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
+import static org.jooq.impl.Tools.filterIf;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -2200,35 +2202,21 @@ final class Tools {
         return array;
     }
 
-    static final <T, U> Iterator<U> iterator(final T[] array, Function<? super T, ? extends U> mapper) {
+    static final <T, U> Iterator<U> iterator(Iterator<? extends T> iterator, Function<? super T, ? extends U> mapper) {
         return new Iterator<U>() {
-            final Iterator<T> delegate = Arrays.asList(array).iterator();
-
             @Override
             public boolean hasNext() {
-                return delegate.hasNext();
+                return iterator.hasNext();
             }
 
             @Override
             public U next() {
-                return mapper.apply(delegate.next());
-            }
-        };
-    }
-
-    static final <T, U> Iterator<U> iterator(final T[] array, ObjIntFunction<? super T, ? extends U> mapper) {
-        return new Iterator<U>() {
-            final ListIterator<T> delegate = Arrays.asList(array).listIterator();
-
-            @Override
-            public boolean hasNext() {
-                return delegate.hasNext();
+                return mapper.apply(iterator.next());
             }
 
             @Override
-            public U next() {
-                int i = delegate.nextIndex();
-                return mapper.apply(delegate.next(), i);
+            public void remove() {
+                iterator.remove();
             }
         };
     }
@@ -5786,6 +5774,51 @@ final class Tools {
             result.add(e);
 
         return result;
+    }
+
+    static final <E> Iterator<E> filter(Iterator<E> iterator, Predicate<? super E> predicate) {
+        return new Iterator<E>() {
+            boolean uptodate;
+            E       next;
+
+            private void move() {
+                if (!uptodate) {
+                    uptodate = true;
+
+                    while (iterator.hasNext()) {
+                        next = iterator.next();
+
+                        if (predicate.test(next))
+                            return;
+                    }
+
+                    uptodate = false;
+                }
+            }
+
+            @Override
+            public boolean hasNext() {
+                move();
+                return uptodate;
+            }
+
+            @Override
+            public E next() {
+                move();
+                if (!uptodate)
+                    throw new NoSuchElementException();
+                uptodate = false;
+                return next;
+            }
+        };
+    }
+
+    static final <E> Iterable<E> filter(Iterable<E> iterable, Predicate<? super E> predicate) {
+        return () -> filter(iterable.iterator(), predicate);
+    }
+
+    static final <E> Iterable<E> filterIf(boolean filter, Iterable<E> iterable, Predicate<? super E> predicate) {
+        return filter ? () -> filter(iterable.iterator(), predicate) : iterable;
     }
 
     /**

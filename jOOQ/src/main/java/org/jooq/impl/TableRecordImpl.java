@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
@@ -48,18 +49,26 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
+import static org.jooq.conf.WriteIfReadonly.IGNORE;
+import static org.jooq.conf.WriteIfReadonly.THROW;
+import static org.jooq.conf.WriteIfReadonly.WRITE;
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.collect;
+import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.impl.Tools.settings;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_RETURNING_CLAUSE;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.jooq.Configuration;
@@ -68,7 +77,9 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.Insert;
 import org.jooq.InsertQuery;
+// ...
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.StoreQuery;
@@ -77,7 +88,12 @@ import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
+import org.jooq.Update;
+import org.jooq.conf.Settings;
+import org.jooq.conf.WriteIfReadonly;
+import org.jooq.exception.DataTypeException;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
 
 /**
  * A record implementation for a record originating from a single table
@@ -148,7 +164,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualified
     final int storeInsert0(Field<?>[] storeFields) {
         DSLContext create = create();
         InsertQuery<R> insert = create.insertQuery(getTable());
-        addChangedValues(storeFields, insert, false);
+        List<Field<?>> changedFields = addChangedValues(storeFields, insert, false);
 
         if (!insert.isExecutable()) {
 
@@ -175,8 +191,8 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualified
         int result = insert.execute();
 
         if (result > 0) {
-            for (Field<?> storeField : storeFields)
-                changed(storeField, false);
+            for (Field<?> changedField : changedFields)
+                changed(changedField, false);
 
             // [#1596] If insert was successful, update timestamp and/or version columns
             setRecordVersionAndTimestamp(version, timestamp);
@@ -269,13 +285,45 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualified
     /**
      * Set all changed values of this record to a store query.
      */
-    final void addChangedValues(Field<?>[] storeFields, StoreQuery<R> query, boolean forUpdate) {
+    final List<Field<?>> addChangedValues(Field<?>[] storeFields, StoreQuery<R> query, boolean forUpdate) {
         FieldsImpl<Record> f = new FieldsImpl<>(storeFields);
+        List<Field<?>> result = new ArrayList<>();
 
-        for (Field<?> field : fields.fields.fields)
-            if (changed(field) && f.field(field) != null)
+        for (Field<?> field : fields.fields.fields) {
+            if (changed(field) && f.field(field) != null && writable(field, forUpdate)) {
                 addValue(query, field, forUpdate);
+                result.add(field);
+            }
+        }
+
+        return result;
     }
+
+    final boolean writable(Field<?> field, boolean forUpdate) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return true;
+    }
+
 
     /**
      * Extracted method to ensure generic type safety.

@@ -720,6 +720,26 @@ inside of queries (including procedural statements) are still not supported.]]><
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8469] Whether to parse default expressions retrieved from {@link java.sql.DatabaseMetaData}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="readonlyTableRecordInsert" type="jooq-runtime:WriteIfReadonly" minOccurs="0" maxOccurs="1" default="IGNORE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#9864] The behaviour when trying to insert into readonly columns using {@link org.jooq.TableRecord#insert()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="readonlyUpdatableRecordUpdate" type="jooq-runtime:WriteIfReadonly" minOccurs="0" maxOccurs="1" default="IGNORE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#9864] The behaviour when trying to update a readonly column using {@link org.jooq.UpdatableRecord#update()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="readonlyInsert" type="jooq-runtime:WriteIfReadonly" minOccurs="0" maxOccurs="1" default="IGNORE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#9864] The behaviour when trying to insert into readonly columns using {@link org.jooq.Insert} statements, or the insert clause of a {@link org.jooq.Merge} statement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="readonlyUpdate" type="jooq-runtime:WriteIfReadonly" minOccurs="0" maxOccurs="1" default="IGNORE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#9864] The behaviour when trying to update a readonly column using {@link org.jooq.Update} statements, or the update clause of a {@link org.jooq.Merge} statement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="readonlyRecordSet" type="jooq-runtime:WriteIfReadonly" minOccurs="0" maxOccurs="1" default="IGNORE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#9864] The behaviour when trying to set a value on a {@link org.jooq.Record}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="applyWorkaroundFor7962" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7963] Apply workaround for ORA-04043 when inserting into Oracle tables with qualified, quoted identifiers, and fetching generated keys]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -1414,6 +1434,20 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
     
       <!-- Emulate LIST, SET, MULTISET syntax using JSONB -->
       <enumeration value="JSONB"/>
+    </restriction>
+  </simpleType>
+  
+  <simpleType name="WriteIfReadonly">
+    <restriction base="string">
+    
+      <!-- Allow for writing to readonly fields -->
+      <enumeration value="WRITE"/>
+      
+      <!-- Ignore writes to readonly fields -->
+      <enumeration value="IGNORE"/>
+      
+      <!-- Throw an exception when writing to readonly fields -->
+      <enumeration value="THROW"/>
     </restriction>
   </simpleType>
 </schema>

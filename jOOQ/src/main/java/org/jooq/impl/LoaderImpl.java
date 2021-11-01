@@ -327,7 +327,7 @@ final class LoaderImpl<R extends Record> implements
 
     @Override
     public final LoaderRowsStep<R> loadRecords(Iterator<? extends Record> records) {
-        return loadArrays(new MappingIterator<Record, Object[]>(records, value -> {
+        return loadArrays(Tools.<Record, Object[]>iterator(records, value -> {
             if (value == null)
                 return null;
 

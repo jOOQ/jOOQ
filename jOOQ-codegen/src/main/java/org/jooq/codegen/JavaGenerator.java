@@ -77,6 +77,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.function.BiConsumer;
@@ -4391,6 +4392,14 @@ public class JavaGenerator extends AbstractGenerator {
                             printNullableAnnotation(out);
                             out.println("%s%s fetchOneBy%s(%s value) {", visibility(), pType, colClass, colType);
                             out.println("return fetchOne(%s, value);", colIdentifier);
+                            out.println("}");
+
+                            if (!printDeprecationIfUnknownType(out, colTypeFull))
+                                out.javadoc("Fetch a unique record that has <code>%s = value</code>", colName);
+
+                            printNonnullAnnotation(out);
+                            out.println("%s%s<%s> fetchOptionalBy%s(%s value) {", visibility(), Optional.class, pType, colClass, colType);
+                            out.println("return fetchOptional(%s, value);", colIdentifier);
                             out.println("}");
                         }
 

@@ -316,6 +316,17 @@ public interface DAO<R extends TableRecord<R>, P, T> {
     P findById(T id) throws DataAccessException;
 
     /**
+     * Find a record of the underlying table by ID.
+     *
+     * @param id The ID of a record in the underlying table
+     * @return A record of the underlying table given its ID.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @NotNull
+    @Support
+    Optional<P> findOptionalById(T id) throws DataAccessException;
+
+    /**
      * Find records by a given field and a set of values.
      *
      * @param field The field to compare values against

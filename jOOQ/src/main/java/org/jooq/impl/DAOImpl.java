@@ -61,7 +61,6 @@ import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RecordContext;
-import org.jooq.RecordListener;
 import org.jooq.RecordListenerProvider;
 import org.jooq.RecordMapper;
 import org.jooq.SQLDialect;
@@ -329,6 +328,11 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
                         .fetchOne(mapper());
 
         return null;
+    }
+
+    @Override
+    public final Optional<P> findOptionalById(T id) {
+        return Optional.ofNullable(findById(id));
     }
 
     @Override

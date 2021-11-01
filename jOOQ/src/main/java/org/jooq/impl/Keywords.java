@@ -383,6 +383,7 @@ final class Keywords {
     static final Keyword K_STRUCT                           = keyword("struct");
     static final Keyword K_SWITCH                           = keyword("switch");
     static final Keyword K_SYMMETRIC                        = keyword("symmetric");
+    static final Keyword K_SYSTEM                           = keyword("system");
     static final Keyword K_TABLE                            = keyword("table");
     static final Keyword K_TEMPORARY                        = keyword("temporary");
     static final Keyword K_THEN                             = keyword("then");

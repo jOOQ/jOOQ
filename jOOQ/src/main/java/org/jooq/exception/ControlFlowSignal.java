@@ -68,7 +68,9 @@ public class ControlFlowSignal extends RuntimeException {
      * Create a new <code>ControlFlowException</code>.
      */
     public ControlFlowSignal(String message) {
-        super(message);
+
+        // [#12582] Use more efficient instantiation without suppression or stack trace.
+        super(message, null, false, false);
     }
 
     @SuppressWarnings("sync-override")

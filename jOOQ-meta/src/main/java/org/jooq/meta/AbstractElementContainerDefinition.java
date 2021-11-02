@@ -79,30 +79,34 @@ extends AbstractDefinition {
         super(schema.getDatabase(), schema, pkg, name, comment, null, source);
     }
 
+    @SuppressWarnings("unchecked")
     protected final List<E> getElements() {
         if (elements == null) {
             elements = new ArrayList<>();
 
             try {
-                Database db = getDatabase();
+                AbstractDatabase db = (AbstractDatabase) getDatabase();
                 List<E> e = getElements0();
 
                 // [#5335] Warn if a table definition contains several identity columns
                 if (this instanceof TableDefinition) {
-                    boolean hasIdentity = false;
+                    if (e.stream().map(c -> (ColumnDefinition) c).filter(ColumnDefinition::isIdentity).count() > 1)
+                        log.warn("Multiple identities", "Table " + getOutputName() + " has multiple identity columns. Only the first one is considered.");
 
-                    for (E c : e) {
-                        boolean isIdentity = ((ColumnDefinition) c).isIdentity();
 
-                        if (isIdentity) {
-                            if (hasIdentity) {
-                                log.warn("Multiple identities", "Table " + getOutputName() + " has multiple identity columns. Only the first one is considered.");
-                                break;
-                            }
 
-                            hasIdentity = true;
-                        }
-                    }
+
+
+
+
+
+
+
+
+
+
+
+
                 }
 
                 // [#2603] Filter exclude / include also for table columns

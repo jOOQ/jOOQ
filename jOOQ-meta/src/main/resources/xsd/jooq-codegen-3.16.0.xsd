@@ -889,6 +889,14 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="readonlyRowids" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all tables for which a synthetic <code>ROWID</code> column should be generated.
+<p>
+Use this along with the synthetic primary key feature to replace existing primary key usage by <code>ROWID</code> usage, if this makes sense for your {@link UpdatableRecord}.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="customTypes" type="tns:CustomTypes" minOccurs="0" maxOccurs="1">
         <annotation>

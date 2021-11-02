@@ -54,6 +54,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.RowId;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.impl.QOM.UNotYetImplemented;
@@ -101,6 +102,13 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
 
 
 

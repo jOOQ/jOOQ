@@ -150,6 +150,8 @@ public class Database implements Serializable, XMLAppendable
     protected String embeddableUniqueKeys;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String embeddableDomains;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String readonlyRowids;
     @XmlElement(defaultValue = "true")
     protected Boolean forceIntegerTypesOnZeroScaleDecimals = true;
     protected Boolean tableValuedFunctions;
@@ -1574,6 +1576,30 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
+     * A regular expression matching all tables for which a synthetic <code>ROWID</code> column should be generated.
+     * <p>
+     * Use this along with the synthetic primary key feature to replace existing primary key usage by <code>ROWID</code> usage, if this makes sense for your {@link UpdatableRecord}.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public String getReadonlyRowids() {
+        return readonlyRowids;
+    }
+
+    /**
+     * A regular expression matching all tables for which a synthetic <code>ROWID</code> column should be generated.
+     * <p>
+     * Use this along with the synthetic primary key feature to replace existing primary key usage by <code>ROWID</code> usage, if this makes sense for your {@link UpdatableRecord}.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public void setReadonlyRowids(String value) {
+        this.readonlyRowids = value;
+    }
+
+    /**
      * Historically, zero-scale decimal types are generated as their most appropriate, corresponding integer type (e.g. NUMBER(2, 0) and less: Byte). This allows for turning off this feature. In case of conflict between this rule and actual {@link #getForcedTypes()}, the latter will win.
      * 
      * @return
@@ -2286,6 +2312,19 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * A regular expression matching all tables for which a synthetic <code>ROWID</code> column should be generated.
+     * <p>
+     * Use this along with the synthetic primary key feature to replace existing primary key usage by <code>ROWID</code> usage, if this makes sense for your {@link UpdatableRecord}.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Database withReadonlyRowids(String value) {
+        setReadonlyRowids(value);
+        return this;
+    }
+
     public Database withForceIntegerTypesOnZeroScaleDecimals(Boolean value) {
         setForceIntegerTypesOnZeroScaleDecimals(value);
         return this;
@@ -2542,6 +2581,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("embeddablePrimaryKeys", embeddablePrimaryKeys);
         builder.append("embeddableUniqueKeys", embeddableUniqueKeys);
         builder.append("embeddableDomains", embeddableDomains);
+        builder.append("readonlyRowids", readonlyRowids);
         builder.append("forceIntegerTypesOnZeroScaleDecimals", forceIntegerTypesOnZeroScaleDecimals);
         builder.append("tableValuedFunctions", tableValuedFunctions);
         builder.append("logSlowQueriesAfterSeconds", logSlowQueriesAfterSeconds);
@@ -3043,6 +3083,15 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (readonlyRowids == null) {
+            if (other.readonlyRowids!= null) {
+                return false;
+            }
+        } else {
+            if (!readonlyRowids.equals(other.readonlyRowids)) {
+                return false;
+            }
+        }
         if (forceIntegerTypesOnZeroScaleDecimals == null) {
             if (other.forceIntegerTypesOnZeroScaleDecimals!= null) {
                 return false;
@@ -3210,6 +3259,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((embeddablePrimaryKeys == null)? 0 :embeddablePrimaryKeys.hashCode()));
         result = ((prime*result)+((embeddableUniqueKeys == null)? 0 :embeddableUniqueKeys.hashCode()));
         result = ((prime*result)+((embeddableDomains == null)? 0 :embeddableDomains.hashCode()));
+        result = ((prime*result)+((readonlyRowids == null)? 0 :readonlyRowids.hashCode()));
         result = ((prime*result)+((forceIntegerTypesOnZeroScaleDecimals == null)? 0 :forceIntegerTypesOnZeroScaleDecimals.hashCode()));
         result = ((prime*result)+((tableValuedFunctions == null)? 0 :tableValuedFunctions.hashCode()));
         result = ((prime*result)+((logSlowQueriesAfterSeconds == null)? 0 :logSlowQueriesAfterSeconds.hashCode()));

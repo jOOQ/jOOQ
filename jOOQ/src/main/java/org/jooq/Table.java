@@ -2446,7 +2446,7 @@ extends
      * <code><pre>
      * -- Emulating this MySQL statement...
      * DELETE FROM x ORDER BY x.y LIMIT 1
-     *
+     * 
      * -- ... in other databases
      * DELETE FROM x
      * WHERE x.rowid IN (

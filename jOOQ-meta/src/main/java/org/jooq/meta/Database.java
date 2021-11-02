@@ -1028,33 +1028,59 @@ public interface Database extends AutoCloseable {
 
     /**
      * A regular expression matching primary keys for which embeddable types should be generated.
+     * <p>
+     * This feature is available in the commercial distribution only.
      */
     String embeddablePrimaryKeys();
 
     /**
      * A regular expression matching primary keys for which embeddable types should be generated.
+     * <p>
+     * This feature is available in the commercial distribution only.
      */
     void setEmbeddablePrimaryKeys(String embeddablePrimaryKeys);
 
     /**
      * A regular expression matching unique keys for which embeddable types should be generated.
+     * <p>
+     * This feature is available in the commercial distribution only.
      */
     String embeddableUniqueKeys();
 
     /**
      * A regular expression matching unique keys for which embeddable types should be generated.
+     * <p>
+     * This feature is available in the commercial distribution only.
      */
     void setEmbeddableUniqueKeys(String embeddableUniqueKeys);
 
     /**
      * A regular expression matching domain type definitions for which embeddable types should be generated.
+     * <p>
+     * This feature is available in the commercial distribution only.
      */
     String embeddableDomains();
 
     /**
      * A regular expression matching domain type definitions for which embeddable types should be generated.
+     * <p>
+     * This feature is available in the commercial distribution only.
      */
     void setEmbeddableDomains(String embeddableDomains);
+
+    /**
+     * A regular expression matching all tables for which a synthetic <code>ROWID</code> column should be generated.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     */
+    String readonlyRowids();
+
+    /**
+     * A regular expression matching all tables for which a synthetic <code>ROWID</code> column should be generated.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     */
+    void setReadonlyRowids(String readonlyRowids);
 
     /**
      * Configure the comments.

@@ -736,10 +736,6 @@ inside of queries (including procedural statements) are still not supported.]]><
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#9864] The behaviour when trying to update a readonly column using {@link org.jooq.Update} statements, or the update clause of a {@link org.jooq.Merge} statement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
-      <element name="readonlyRecordSet" type="jooq-runtime:WriteIfReadonly" minOccurs="0" maxOccurs="1" default="IGNORE">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#9864] The behaviour when trying to set a value on a {@link org.jooq.Record}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
-      </element>
-      
       <element name="applyWorkaroundFor7962" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7963] Apply workaround for ORA-04043 when inserting into Oracle tables with qualified, quoted identifiers, and fetching generated keys]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

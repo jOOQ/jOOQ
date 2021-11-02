@@ -84,7 +84,6 @@ import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
-import org.jooq.ExecuteListenerProvider;
 import org.jooq.Field;
 import org.jooq.Log;
 import org.jooq.Meta;
@@ -102,13 +101,10 @@ import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
 import org.jooq.conf.ParseWithMetaLookups;
 import org.jooq.conf.RenderQuotedNames;
-import org.jooq.conf.Settings;
-import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
-import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.CommentType;
@@ -190,6 +186,7 @@ public abstract class AbstractDatabase implements Database {
     private String                                                           embeddablePrimaryKeys                = null;
     private String                                                           embeddableUniqueKeys                 = null;
     private String                                                           embeddableDomains                    = null;
+    private String                                                           readonlyRowids                       = null;
     private boolean                                                          supportsUnsignedTypes;
     private boolean                                                          integerDisplayWidths;
     private boolean                                                          ignoreProcedureReturnValues;
@@ -927,6 +924,10 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final void addFilter(Filter filter) {
         filters.add(filter);
+    }
+
+    final Patterns patterns() {
+        return patterns;
     }
 
     @Override
@@ -1993,6 +1994,23 @@ public abstract class AbstractDatabase implements Database {
             log.info("Commercial feature", "Embeddable domains are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition");
 
         this.embeddableDomains = embeddableDomains;
+    }
+
+    @Override
+    public String readonlyRowids() {
+        return readonlyRowids;
+    }
+
+    @SuppressWarnings("unused")
+    @Override
+    public void setReadonlyRowids(String readonlyRowids) {
+
+
+
+        if (!isBlank(readonlyRowids))
+            log.info("Commercial feature", "Readonly ROWIDs are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition");
+
+        this.readonlyRowids = readonlyRowids;
     }
 
     @Override

@@ -147,6 +147,7 @@ import org.jooq.QualifiedAsterisk;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
+import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.SchemaMapping;
 import org.jooq.Scope;
@@ -652,6 +653,14 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         ctx.data().remove(DATA_DML_TARGET_TABLE);
         ctx.scopeEnd();
     }
+
+
+
+
+
+
+
+
 
 
 

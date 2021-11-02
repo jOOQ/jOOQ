@@ -3496,7 +3496,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final RowId get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            throw new DataTypeException("Type " + dataType + " is not supported");
+            return new RowIdImpl(ctx.statement().getObject(ctx.index()));
         }
 
         @Override

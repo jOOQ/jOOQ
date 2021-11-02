@@ -332,9 +332,6 @@ public class Settings
     @XmlElement(defaultValue = "IGNORE")
     @XmlSchemaType(name = "string")
     protected WriteIfReadonly readonlyUpdate = WriteIfReadonly.IGNORE;
-    @XmlElement(defaultValue = "IGNORE")
-    @XmlSchemaType(name = "string")
-    protected WriteIfReadonly readonlyRecordSet = WriteIfReadonly.IGNORE;
     @XmlElement(defaultValue = "true")
     protected Boolean applyWorkaroundFor7962 = true;
     @XmlElementWrapper(name = "interpreterSearchPath")
@@ -3017,22 +3014,6 @@ public class Settings
     }
 
     /**
-     * [#9864] The behaviour when trying to set a value on a {@link org.jooq.Record}.
-     * 
-     */
-    public WriteIfReadonly getReadonlyRecordSet() {
-        return readonlyRecordSet;
-    }
-
-    /**
-     * [#9864] The behaviour when trying to set a value on a {@link org.jooq.Record}.
-     * 
-     */
-    public void setReadonlyRecordSet(WriteIfReadonly value) {
-        this.readonlyRecordSet = value;
-    }
-
-    /**
      * [#7963] Apply workaround for ORA-04043 when inserting into Oracle tables with qualified, quoted identifiers, and fetching generated keys
      * 
      * @return
@@ -4084,15 +4065,6 @@ public class Settings
         return this;
     }
 
-    /**
-     * [#9864] The behaviour when trying to set a value on a {@link org.jooq.Record}.
-     * 
-     */
-    public Settings withReadonlyRecordSet(WriteIfReadonly value) {
-        setReadonlyRecordSet(value);
-        return this;
-    }
-
     public Settings withApplyWorkaroundFor7962(Boolean value) {
         setApplyWorkaroundFor7962(value);
         return this;
@@ -4285,7 +4257,6 @@ public class Settings
         builder.append("readonlyUpdatableRecordUpdate", readonlyUpdatableRecordUpdate);
         builder.append("readonlyInsert", readonlyInsert);
         builder.append("readonlyUpdate", readonlyUpdate);
-        builder.append("readonlyRecordSet", readonlyRecordSet);
         builder.append("applyWorkaroundFor7962", applyWorkaroundFor7962);
         builder.append("interpreterSearchPath", "schema", interpreterSearchPath);
         builder.append("migrationSchemata", "schema", migrationSchemata);
@@ -5409,15 +5380,6 @@ public class Settings
                 return false;
             }
         }
-        if (readonlyRecordSet == null) {
-            if (other.readonlyRecordSet!= null) {
-                return false;
-            }
-        } else {
-            if (!readonlyRecordSet.equals(other.readonlyRecordSet)) {
-                return false;
-            }
-        }
         if (applyWorkaroundFor7962 == null) {
             if (other.applyWorkaroundFor7962 != null) {
                 return false;
@@ -5583,7 +5545,6 @@ public class Settings
         result = ((prime*result)+((readonlyUpdatableRecordUpdate == null)? 0 :readonlyUpdatableRecordUpdate.hashCode()));
         result = ((prime*result)+((readonlyInsert == null)? 0 :readonlyInsert.hashCode()));
         result = ((prime*result)+((readonlyUpdate == null)? 0 :readonlyUpdate.hashCode()));
-        result = ((prime*result)+((readonlyRecordSet == null)? 0 :readonlyRecordSet.hashCode()));
         result = ((prime*result)+((applyWorkaroundFor7962 == null)? 0 :applyWorkaroundFor7962 .hashCode()));
         result = ((prime*result)+((interpreterSearchPath == null)? 0 :interpreterSearchPath.hashCode()));
         result = ((prime*result)+((migrationSchemata == null)? 0 :migrationSchemata.hashCode()));

@@ -101,7 +101,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 
 
 
-        Condition isSerial = lower(COLUMNS.COLUMN_DEFAULT).like(serialColumnDefault);
+        Condition isSerial = lower(COLUMNS.COLUMN_DEFAULT).likeIgnoreCase(serialColumnDefault);
         Condition isIdentity10 = COLUMNS.IS_IDENTITY.eq(inline("YES"));
 
         // [#9200] only use COLUMN_DEFAULT for ColumnDefinition#isIdentity() if

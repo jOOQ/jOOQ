@@ -739,7 +739,7 @@ implements
             getUpsertValues().addAll(Tools.fields(values, getUpsertFields().toArray(EMPTY_FIELD)));
         }
         else
-            getLastNotMatched().insertMap.set(Tools.fields(values, getLastNotMatched().insertMap.fields().toArray(EMPTY_FIELD)));
+            getLastNotMatched().insertMap.set(Tools.fields(values, getLastNotMatched().insertMap.values.keySet().toArray(EMPTY_FIELD)));
 
         return this;
     }

@@ -396,10 +396,6 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
             nextRow++;
     }
 
-    final Collection<Field<?>> fields() {
-        return values.keySet();
-    }
-
     final List<Map<Field<?>, Field<?>>> maps() {
         initNextRow();
 
@@ -540,6 +536,12 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
         return it;
+    }
+
+    final Collection<Field<?>> keysFlattened(Context<?> ctx) {
+
+        // [#9864] TODO: Refactor and optimise these flattening algorithms
+        return valuesFlattened(ctx).keySet();
     }
 
     final Map<Field<?>, List<Field<?>>> valuesFlattened(Context<?> ctx) {

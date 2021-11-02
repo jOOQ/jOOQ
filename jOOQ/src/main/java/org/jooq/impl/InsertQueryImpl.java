@@ -647,7 +647,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             // [#2995] Prevent the generation of wrapping parentheses around the
             //         INSERT .. SELECT statement's SELECT because they would be
             //         interpreted as the (missing) INSERT column list's parens.
-            if (insertMaps.fields().size() == 0)
+            if (insertMaps.keysFlattened(ctx).size() == 0)
                 ctx.data(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST, true);
 
 
@@ -784,7 +784,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             if (select != null) {
                 Map<Field<?>, Field<?>> map = new HashMap<>();
                 Field<?>[] names = Tools.fields(select.fields().length);
-                List<Field<?>> fields = new ArrayList<>(insertMaps.fields());
+                List<Field<?>> fields = new ArrayList<>(insertMaps.keysFlattened(ctx));
                 for (int i = 0; i < fields.size() && i < names.length; i++)
                     map.put(fields.get(i), names[i]);
 
@@ -819,7 +819,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
             return ctx.dsl()
                 .insertInto(table())
-                .columns(insertMaps.fields())
+                .columns(insertMaps.keysFlattened(ctx))
                 .select(selectFrom(rows.asTable("t")));
         }
         else {
@@ -833,12 +833,11 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             || !table().getKeys().isEmpty()) {
 
             Table<?> t = null;
+            Collection<Field<?>> k = insertMaps.keysFlattened(ctx);
             Collection<Field<?>> f = null;
 
             if (!NO_SUPPORT_SUBQUERY_IN_MERGE_USING.contains(ctx.dialect())) {
-                f = insertMaps.fields().isEmpty()
-                    ? asList(table().fields())
-                    : insertMaps.fields();
+                f = k.isEmpty() ? asList(table().fields()) : k;
 
                 // [#10461]          Multi row inserts need to be emulated using select
                 // [#11770] [#11880] Single row inserts also do, in some dialects
@@ -876,7 +875,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
             return t != null
                 ? notMatched.whenNotMatchedThenInsert(f).values(t.fields())
-                : notMatched.whenNotMatchedThenInsert(insertMaps.fields()).values(insertMaps.lastMap().values());
+                : notMatched.whenNotMatchedThenInsert(k).values(insertMaps.lastMap().values());
         }
         else
             throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into non-updatable tables : " + table());

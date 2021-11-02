@@ -150,9 +150,12 @@ public class Database implements Serializable, XMLAppendable
     protected String embeddableUniqueKeys;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String embeddableDomains;
-    protected Boolean readonlyIdentities;
-    protected Boolean readonlyComputedColumns;
-    protected Boolean readonlyNonUpdatableColumns;
+    @XmlElement(defaultValue = "false")
+    protected Boolean readonlyIdentities = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean readonlyComputedColumns = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean readonlyNonUpdatableColumns = true;
     @XmlElement(defaultValue = "true")
     protected Boolean forceIntegerTypesOnZeroScaleDecimals = true;
     protected Boolean tableValuedFunctions;

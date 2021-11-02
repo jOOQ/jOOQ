@@ -738,9 +738,8 @@ implements
             upsertStyle = true;
             getUpsertValues().addAll(Tools.fields(values, getUpsertFields().toArray(EMPTY_FIELD)));
         }
-        else {
+        else
             getLastNotMatched().insertMap.set(Tools.fields(values, getLastNotMatched().insertMap.fields().toArray(EMPTY_FIELD)));
-        }
 
         return this;
     }

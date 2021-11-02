@@ -7687,7 +7687,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void printConvenienceMethodFunctionAsField(JavaWriter out, RoutineDefinition function, boolean parametersAsField) {
         // [#281] - Java can't handle more than 255 method parameters
         if (function.getInParameters().size() > 254) {
-            log.warn("Too many parameters", "Function " + function + " has more than 254 in parameters. Skipping generation of convenience method.");
+            log.info("Too many parameters", "Function " + function + " has more than 254 in parameters. Skipping generation of convenience method.");
             return;
         }
 
@@ -7756,7 +7756,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void printConvenienceMethodTableValuedFunctionAsField(JavaWriter out, TableDefinition function, boolean parametersAsField, String methodName) {
         // [#281] - Java can't handle more than 255 method parameters
         if (function.getParameters().size() > 254) {
-            log.warn("Too many parameters", "Function " + function + " has more than 254 in parameters. Skipping generation of convenience method.");
+            log.info("Too many parameters", "Function " + function + " has more than 254 in parameters. Skipping generation of convenience method.");
             return;
         }
 
@@ -7858,7 +7858,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void printConvenienceMethodFunction(JavaWriter out, RoutineDefinition function, boolean instance) {
         // [#281] - Java can't handle more than 255 method parameters
         if (function.getInParameters().size() > 254) {
-            log.warn("Too many parameters", "Function " + function + " has more than 254 in parameters. Skipping generation of convenience method.");
+            log.info("Too many parameters", "Function " + function + " has more than 254 in parameters. Skipping generation of convenience method.");
             return;
         }
 
@@ -7955,7 +7955,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void printConvenienceMethodProcedure(JavaWriter out, RoutineDefinition procedure, boolean instance) {
         // [#281] - Java can't handle more than 255 method parameters
         if (procedure.getInParameters().size() > 254) {
-            log.warn("Too many parameters", "Procedure " + procedure + " has more than 254 in parameters. Skipping generation of convenience method.");
+            log.info("Too many parameters", "Procedure " + procedure + " has more than 254 in parameters. Skipping generation of convenience method.");
             return;
         }
 
@@ -8077,7 +8077,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void printConvenienceMethodTableValuedFunction(JavaWriter out, TableDefinition function, String methodName) {
         // [#281] - Java can't handle more than 255 method parameters
         if (function.getParameters().size() > 254) {
-            log.warn("Too many parameters", "Function " + function + " has more than 254 in parameters. Skipping generation of convenience method.");
+            log.info("Too many parameters", "Function " + function + " has more than 254 in parameters. Skipping generation of convenience method.");
             return;
         }
 

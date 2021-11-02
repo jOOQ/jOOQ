@@ -576,17 +576,16 @@ public class GenerationTool {
             database.setEmbeddablePrimaryKeys(d.getEmbeddablePrimaryKeys());
             database.setEmbeddableUniqueKeys(d.getEmbeddableUniqueKeys());
             database.setEmbeddableDomains(d.getEmbeddableDomains());
-            database.setReadonlyRowids(d.getReadonlyRowids());
             database.setLogSlowQueriesAfterSeconds(defaultIfNull(d.getLogSlowQueriesAfterSeconds(), 5));
             database.setLogSlowResultsAfterSeconds(defaultIfNull(d.getLogSlowResultsAfterSeconds(), 5));
 
             if (d.getRegexFlags() != null) {
                 database.setRegexFlags(d.getRegexFlags());
 
-                if (strategy instanceof MatcherStrategy) {
+                if (strategy instanceof MatcherStrategy)
                     ((MatcherStrategy) strategy).getPatterns().setRegexFlags(d.getRegexFlags());
-                }
             }
+
             database.setRegexMatchesPartialQualification(!FALSE.equals(d.isRegexMatchesPartialQualification()));
             database.setSqlMatchesPartialQualification(!FALSE.equals(d.isSqlMatchesPartialQualification()));
 

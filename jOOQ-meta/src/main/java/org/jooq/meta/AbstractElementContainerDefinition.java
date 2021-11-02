@@ -38,8 +38,10 @@
 
 package org.jooq.meta;
 
+import static java.util.Collections.singletonList;
 import static org.jooq.meta.AbstractDatabase.fetchedSize;
 import static org.jooq.meta.AbstractDatabase.getDefinition;
+import static org.jooq.tools.StringUtils.defaultIfEmpty;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -47,6 +49,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// ...
+import org.jooq.meta.jaxb.SyntheticReadonlyColumnType;
+import org.jooq.meta.jaxb.SyntheticReadonlyRowidType;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -89,9 +94,10 @@ extends AbstractDefinition {
                 List<E> e = getElements0();
 
                 // [#5335] Warn if a table definition contains several identity columns
-                if (this instanceof TableDefinition) {
+                if (this instanceof TableDefinition) { TableDefinition t = (TableDefinition) this;
                     if (e.stream().map(c -> (ColumnDefinition) c).filter(ColumnDefinition::isIdentity).count() > 1)
                         log.warn("Multiple identities", "Table " + getOutputName() + " has multiple identity columns. Only the first one is considered.");
+
 
 
 
@@ -126,6 +132,25 @@ extends AbstractDefinition {
 
         return elements;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     protected final E getElement(String name) {
         return getElement(name, false);

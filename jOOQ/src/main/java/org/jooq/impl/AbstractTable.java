@@ -784,7 +784,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<RowId> rowid() {
+    public /* non-final */ Field<RowId> rowid() {
         return new QualifiedRowid(this);
     }
 

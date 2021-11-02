@@ -889,14 +889,6 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-      
-      <element name="readonlyRowids" type="string" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all tables for which a synthetic <code>ROWID</code> column should be generated.
-<p>
-Use this along with the synthetic primary key feature to replace existing primary key usage by <code>ROWID</code> usage, if this makes sense for your {@link UpdatableRecord}.
-<p>
-This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
-      </element>
 
       <element name="customTypes" type="tns:CustomTypes" minOccurs="0" maxOccurs="1">
         <annotation>
@@ -987,6 +979,10 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       <element name="readonlyColumns" type="tns:SyntheticReadonlyColumnsType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic read only columns configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="readonlyRowids" type="tns:SyntheticReadonlyRowidsType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic ROWIDs configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="identities" type="tns:SyntheticIdentitiesType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic identity configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
@@ -1029,6 +1025,27 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 
       <element name="fields" type="string" minOccurs="1" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all fields on which to apply this synthetic readonly column.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+  
+  <complexType name="SyntheticReadonlyRowidsType">
+    <sequence>
+      <element name="readonlyRowid" type="tns:SyntheticReadonlyRowidType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  
+  <complexType name="SyntheticReadonlyRowidType">
+    <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic ROWIDs configurationA regular expression matching all tables for which a synthetic <code>ROWID</code> column should be generated.
+<p>
+Use this along with the synthetic primary key feature to replace existing primary key usage by <code>ROWID</code> usage, if this makes sense for your {@link UpdatableRecord}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+    <all>
+      <element name="name" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The optional ROWID column name.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="tables" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all tables on which to apply this synthetic ROWID.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>

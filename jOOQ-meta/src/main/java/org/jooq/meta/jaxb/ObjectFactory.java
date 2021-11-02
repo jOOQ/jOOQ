@@ -182,6 +182,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SyntheticReadonlyRowidType }
+     * 
+     */
+    public SyntheticReadonlyRowidType createSyntheticReadonlyRowidType() {
+        return new SyntheticReadonlyRowidType();
+    }
+
+    /**
      * Create an instance of {@link SyntheticIdentityType }
      * 
      */

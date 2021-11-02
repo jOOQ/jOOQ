@@ -63,6 +63,7 @@ import org.jooq.meta.jaxb.SyntheticIdentityType;
 import org.jooq.meta.jaxb.SyntheticObjectsType;
 import org.jooq.meta.jaxb.SyntheticPrimaryKeyType;
 import org.jooq.meta.jaxb.SyntheticReadonlyColumnType;
+import org.jooq.meta.jaxb.SyntheticReadonlyRowidType;
 import org.jooq.meta.jaxb.SyntheticUniqueKeyType;
 import org.jooq.meta.jaxb.SyntheticViewType;
 
@@ -1069,20 +1070,6 @@ public interface Database extends AutoCloseable {
     void setEmbeddableDomains(String embeddableDomains);
 
     /**
-     * A regular expression matching all tables for which a synthetic <code>ROWID</code> column should be generated.
-     * <p>
-     * This feature is available in the commercial distribution only.
-     */
-    String readonlyRowids();
-
-    /**
-     * A regular expression matching all tables for which a synthetic <code>ROWID</code> column should be generated.
-     * <p>
-     * This feature is available in the commercial distribution only.
-     */
-    void setReadonlyRowids(String readonlyRowids);
-
-    /**
      * Configure the comments.
      */
     void setConfiguredComments(List<CommentType> configuredComments);
@@ -1111,6 +1098,11 @@ public interface Database extends AutoCloseable {
      * Get the configured synthetic readonly columns.
      */
     List<SyntheticReadonlyColumnType> getConfiguredSyntheticReadonlyColumns();
+
+    /**
+     * Get the configured synthetic readonly rowids.
+     */
+    List<SyntheticReadonlyRowidType> getConfiguredSyntheticReadonlyRowids();
 
     /**
      * Get the configured synthetic identities.
@@ -1146,6 +1138,16 @@ public interface Database extends AutoCloseable {
      * Retrieve the not-yet used synthetic readonly columns.
      */
     List<SyntheticReadonlyColumnType> getUnusedSyntheticReadonlyColumns();
+
+    /**
+     * Mark a synthetic readonly rowids as used.
+     */
+    void markUsed(SyntheticReadonlyRowidType readonlyRowid);
+
+    /**
+     * Retrieve the not-yet used synthetic readonly rowids.
+     */
+    List<SyntheticReadonlyRowidType> getUnusedSyntheticReadonlyRowids();
 
     /**
      * Mark a synthetic identity as used.

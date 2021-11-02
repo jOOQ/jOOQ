@@ -123,6 +123,7 @@ import org.jooq.meta.jaxb.SyntheticIdentityType;
 import org.jooq.meta.jaxb.SyntheticObjectsType;
 import org.jooq.meta.jaxb.SyntheticPrimaryKeyType;
 import org.jooq.meta.jaxb.SyntheticReadonlyColumnType;
+import org.jooq.meta.jaxb.SyntheticReadonlyRowidType;
 import org.jooq.meta.jaxb.SyntheticUniqueKeyType;
 import org.jooq.meta.jaxb.SyntheticViewType;
 // ...
@@ -204,6 +205,8 @@ public abstract class AbstractDatabase implements Database {
     private Set<CommentType>                                                 unusedComments                       = new HashSet<>();
     private List<SyntheticReadonlyColumnType>                                configuredSyntheticReadonlyColumns   = new ArrayList<>();
     private Set<SyntheticReadonlyColumnType>                                 unusedSyntheticReadonlyColumns       = new HashSet<>();
+    private List<SyntheticReadonlyRowidType>                                 configuredSyntheticReadonlyRowids    = new ArrayList<>();
+    private Set<SyntheticReadonlyRowidType>                                  unusedSyntheticReadonlyRowids        = new HashSet<>();
     private List<SyntheticIdentityType>                                      configuredSyntheticIdentities        = new ArrayList<>();
     private Set<SyntheticIdentityType>                                       unusedSyntheticIdentities            = new HashSet<>();
     private List<SyntheticPrimaryKeyType>                                    configuredSyntheticPrimaryKeys       = new ArrayList<>();
@@ -1997,23 +2000,6 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public String readonlyRowids() {
-        return readonlyRowids;
-    }
-
-    @SuppressWarnings("unused")
-    @Override
-    public void setReadonlyRowids(String readonlyRowids) {
-
-
-
-        if (!isBlank(readonlyRowids))
-            log.info("Commercial feature", "Readonly ROWIDs are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition");
-
-        this.readonlyRowids = readonlyRowids;
-    }
-
-    @Override
     public final List<EmbeddableDefinition> getEmbeddables() {
         if (embeddables == null) {
             embeddables = new ArrayList<>();
@@ -2838,12 +2824,15 @@ public abstract class AbstractDatabase implements Database {
             // list but append it.
 
             getConfiguredSyntheticReadonlyColumns().addAll(configuredSyntheticObjects.getReadonlyColumns());
+            getConfiguredSyntheticReadonlyRowids().addAll(configuredSyntheticObjects.getReadonlyRowids());
             getConfiguredSyntheticIdentities().addAll(configuredSyntheticObjects.getIdentities());
             getConfiguredSyntheticPrimaryKeys().addAll(configuredSyntheticObjects.getPrimaryKeys());
             getConfiguredSyntheticUniqueKeys().addAll(configuredSyntheticObjects.getUniqueKeys());
             getConfiguredSyntheticForeignKeys().addAll(configuredSyntheticObjects.getForeignKeys());
             getConfiguredSyntheticViews().addAll(configuredSyntheticObjects.getViews());
 
+            unusedSyntheticReadonlyColumns.addAll(configuredSyntheticObjects.getReadonlyColumns());
+            unusedSyntheticReadonlyRowids.addAll(configuredSyntheticObjects.getReadonlyRowids());
             unusedSyntheticIdentities.addAll(configuredSyntheticObjects.getIdentities());
             unusedSyntheticPrimaryKeys.addAll(configuredSyntheticObjects.getPrimaryKeys());
             unusedSyntheticUniqueKeys.addAll(configuredSyntheticObjects.getUniqueKeys());
@@ -2857,6 +2846,8 @@ public abstract class AbstractDatabase implements Database {
 
             if (!configuredSyntheticObjects.getReadonlyColumns().isEmpty())
                 log.info("Commercial feature", "Synthetic read only columns are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
+            if (!configuredSyntheticObjects.getReadonlyRowids().isEmpty())
+                log.info("Commercial feature", "Synthetic read only rowids are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
             if (!configuredSyntheticObjects.getUniqueKeys().isEmpty())
                 log.info("Commercial feature", "Synthetic unique keys are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
             if (!configuredSyntheticObjects.getForeignKeys().isEmpty())
@@ -2870,6 +2861,14 @@ public abstract class AbstractDatabase implements Database {
             configuredSyntheticReadonlyColumns = new ArrayList<>();
 
         return configuredSyntheticReadonlyColumns;
+    }
+
+    @Override
+    public List<SyntheticReadonlyRowidType> getConfiguredSyntheticReadonlyRowids() {
+        if (configuredSyntheticReadonlyRowids == null)
+            configuredSyntheticReadonlyRowids = new ArrayList<>();
+
+        return configuredSyntheticReadonlyRowids;
     }
 
     @Override
@@ -2918,6 +2917,11 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public void markUsed(SyntheticReadonlyRowidType readonlyRowid) {
+        unusedSyntheticReadonlyRowids.remove(readonlyRowid);
+    }
+
+    @Override
     public void markUsed(SyntheticIdentityType identity) {
         unusedSyntheticIdentities.remove(identity);
     }
@@ -2945,6 +2949,11 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public List<SyntheticReadonlyColumnType> getUnusedSyntheticReadonlyColumns() {
         return new ArrayList<>(unusedSyntheticReadonlyColumns);
+    }
+
+    @Override
+    public List<SyntheticReadonlyRowidType> getUnusedSyntheticReadonlyRowids() {
+        return new ArrayList<>(unusedSyntheticReadonlyRowids);
     }
 
     @Override

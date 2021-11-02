@@ -108,6 +108,7 @@ import org.jooq.Parameter;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
+import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Sequence;
@@ -6209,6 +6210,31 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.println("}");
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // [#7809] fieldsRow()
         // [#10481] Use the types from replaced embeddables if applicable

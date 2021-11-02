@@ -150,6 +150,9 @@ public class Database implements Serializable, XMLAppendable
     protected String embeddableUniqueKeys;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String embeddableDomains;
+    protected Boolean readonlyIdentities;
+    protected Boolean readonlyComputedColumns;
+    protected Boolean readonlyNonUpdatableColumns;
     @XmlElement(defaultValue = "true")
     protected Boolean forceIntegerTypesOnZeroScaleDecimals = true;
     protected Boolean tableValuedFunctions;
@@ -1574,6 +1577,84 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
+     * Whether identity columns should expose {@link org.jooq.DataType#readonly()} behaviour.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isReadonlyIdentities() {
+        return readonlyIdentities;
+    }
+
+    /**
+     * Sets the value of the readonlyIdentities property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setReadonlyIdentities(Boolean value) {
+        this.readonlyIdentities = value;
+    }
+
+    /**
+     * Whether computed columns should expose {@link org.jooq.DataType#readonly()} behaviour.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isReadonlyComputedColumns() {
+        return readonlyComputedColumns;
+    }
+
+    /**
+     * Sets the value of the readonlyComputedColumns property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setReadonlyComputedColumns(Boolean value) {
+        this.readonlyComputedColumns = value;
+    }
+
+    /**
+     * Whether columns that are known not to be updatable (e.g. in views) should expose {@link org.jooq.DataType#readonly()} behaviour.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isReadonlyNonUpdatableColumns() {
+        return readonlyNonUpdatableColumns;
+    }
+
+    /**
+     * Sets the value of the readonlyNonUpdatableColumns property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setReadonlyNonUpdatableColumns(Boolean value) {
+        this.readonlyNonUpdatableColumns = value;
+    }
+
+    /**
      * Historically, zero-scale decimal types are generated as their most appropriate, corresponding integer type (e.g. NUMBER(2, 0) and less: Byte). This allows for turning off this feature. In case of conflict between this rule and actual {@link #getForcedTypes()}, the latter will win.
      * 
      * @return
@@ -2286,6 +2367,21 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    public Database withReadonlyIdentities(Boolean value) {
+        setReadonlyIdentities(value);
+        return this;
+    }
+
+    public Database withReadonlyComputedColumns(Boolean value) {
+        setReadonlyComputedColumns(value);
+        return this;
+    }
+
+    public Database withReadonlyNonUpdatableColumns(Boolean value) {
+        setReadonlyNonUpdatableColumns(value);
+        return this;
+    }
+
     public Database withForceIntegerTypesOnZeroScaleDecimals(Boolean value) {
         setForceIntegerTypesOnZeroScaleDecimals(value);
         return this;
@@ -2542,6 +2638,9 @@ public class Database implements Serializable, XMLAppendable
         builder.append("embeddablePrimaryKeys", embeddablePrimaryKeys);
         builder.append("embeddableUniqueKeys", embeddableUniqueKeys);
         builder.append("embeddableDomains", embeddableDomains);
+        builder.append("readonlyIdentities", readonlyIdentities);
+        builder.append("readonlyComputedColumns", readonlyComputedColumns);
+        builder.append("readonlyNonUpdatableColumns", readonlyNonUpdatableColumns);
         builder.append("forceIntegerTypesOnZeroScaleDecimals", forceIntegerTypesOnZeroScaleDecimals);
         builder.append("tableValuedFunctions", tableValuedFunctions);
         builder.append("logSlowQueriesAfterSeconds", logSlowQueriesAfterSeconds);
@@ -3043,6 +3142,33 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (readonlyIdentities == null) {
+            if (other.readonlyIdentities!= null) {
+                return false;
+            }
+        } else {
+            if (!readonlyIdentities.equals(other.readonlyIdentities)) {
+                return false;
+            }
+        }
+        if (readonlyComputedColumns == null) {
+            if (other.readonlyComputedColumns!= null) {
+                return false;
+            }
+        } else {
+            if (!readonlyComputedColumns.equals(other.readonlyComputedColumns)) {
+                return false;
+            }
+        }
+        if (readonlyNonUpdatableColumns == null) {
+            if (other.readonlyNonUpdatableColumns!= null) {
+                return false;
+            }
+        } else {
+            if (!readonlyNonUpdatableColumns.equals(other.readonlyNonUpdatableColumns)) {
+                return false;
+            }
+        }
         if (forceIntegerTypesOnZeroScaleDecimals == null) {
             if (other.forceIntegerTypesOnZeroScaleDecimals!= null) {
                 return false;
@@ -3210,6 +3336,9 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((embeddablePrimaryKeys == null)? 0 :embeddablePrimaryKeys.hashCode()));
         result = ((prime*result)+((embeddableUniqueKeys == null)? 0 :embeddableUniqueKeys.hashCode()));
         result = ((prime*result)+((embeddableDomains == null)? 0 :embeddableDomains.hashCode()));
+        result = ((prime*result)+((readonlyIdentities == null)? 0 :readonlyIdentities.hashCode()));
+        result = ((prime*result)+((readonlyComputedColumns == null)? 0 :readonlyComputedColumns.hashCode()));
+        result = ((prime*result)+((readonlyNonUpdatableColumns == null)? 0 :readonlyNonUpdatableColumns.hashCode()));
         result = ((prime*result)+((forceIntegerTypesOnZeroScaleDecimals == null)? 0 :forceIntegerTypesOnZeroScaleDecimals.hashCode()));
         result = ((prime*result)+((tableValuedFunctions == null)? 0 :tableValuedFunctions.hashCode()));
         result = ((prime*result)+((logSlowQueriesAfterSeconds == null)? 0 :logSlowQueriesAfterSeconds.hashCode()));

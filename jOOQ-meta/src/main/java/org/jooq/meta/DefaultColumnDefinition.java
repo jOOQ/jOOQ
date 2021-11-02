@@ -86,7 +86,7 @@ public class DefaultColumnDefinition
 
         this.position = position;
         this.identity = identity || isSyntheticIdentity(this);
-        this.readonly = readonly || isSyntheticReadonlyColumn(this);
+        this.readonly = readonly || isSyntheticReadonlyColumn(this, this.identity);
 
         // [#6222] Copy the column's identity flag to the data type definition
         if (type instanceof DefaultDataTypeDefinition) { DefaultDataTypeDefinition dd = (DefaultDataTypeDefinition) type;
@@ -112,7 +112,10 @@ public class DefaultColumnDefinition
         return false;
     }
 
-    private static boolean isSyntheticReadonlyColumn(DefaultColumnDefinition column) {
+    private static boolean isSyntheticReadonlyColumn(DefaultColumnDefinition column, boolean identity) {
+
+
+
 
 
 

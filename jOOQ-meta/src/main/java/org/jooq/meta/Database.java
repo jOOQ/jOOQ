@@ -45,6 +45,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.jooq.DSLContext;
+import org.jooq.DataType;
 import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
@@ -1068,6 +1069,54 @@ public interface Database extends AutoCloseable {
      * This feature is available in the commercial distribution only.
      */
     void setEmbeddableDomains(String embeddableDomains);
+
+    /**
+     * Whether identity columns should expose {@link DataType#readonly()}
+     * behaviour.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     */
+    boolean readonlyIdentities();
+
+    /**
+     * Whether identity columns should expose {@link DataType#readonly()}
+     * behaviour.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     */
+    void setReadonlyIdentities(boolean readonlyIdentities);
+
+    /**
+     * Whether computed columns columns should expose
+     * {@link DataType#readonly()} behaviour.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     */
+    boolean readonlyComputedColumns();
+
+    /**
+     * Whether computed columns columns should expose
+     * {@link DataType#readonly()} behaviour.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     */
+    void setReadonlyComputedColumns(boolean readonlyComputedColumns);
+
+    /**
+     * Whether columns that are known not to be updatable (e.g. in views) should
+     * expose {@link DataType#readonly()} behaviour.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     */
+    boolean readonlyNonUpdatableColumns();
+
+    /**
+     * Whether columns that are known not to be updatable (e.g. in views) should
+     * expose {@link DataType#readonly()} behaviour.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     */
+    void setReadonlyNonUpdatableColumns(boolean readonlyNonUpdatableColumns);
 
     /**
      * Configure the comments.

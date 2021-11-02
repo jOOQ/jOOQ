@@ -889,6 +889,24 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="readonlyIdentities" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether identity columns should expose {@link org.jooq.DataType#readonly()} behaviour.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="readonlyComputedColumns" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether computed columns should expose {@link org.jooq.DataType#readonly()} behaviour.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="readonlyNonUpdatableColumns" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether columns that are known not to be updatable (e.g. in views) should expose {@link org.jooq.DataType#readonly()} behaviour.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="customTypes" type="tns:CustomTypes" minOccurs="0" maxOccurs="1">
         <annotation>

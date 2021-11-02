@@ -187,7 +187,9 @@ public abstract class AbstractDatabase implements Database {
     private String                                                           embeddablePrimaryKeys                = null;
     private String                                                           embeddableUniqueKeys                 = null;
     private String                                                           embeddableDomains                    = null;
-    private String                                                           readonlyRowids                       = null;
+    private boolean                                                          readonlyIdentities                   = false;
+    private boolean                                                          readonlyComputedColumns              = true;
+    private boolean                                                          readonlyNonUpdatableColumns          = true;
     private boolean                                                          supportsUnsignedTypes;
     private boolean                                                          integerDisplayWidths;
     private boolean                                                          ignoreProcedureReturnValues;
@@ -1997,6 +1999,36 @@ public abstract class AbstractDatabase implements Database {
             log.info("Commercial feature", "Embeddable domains are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition");
 
         this.embeddableDomains = embeddableDomains;
+    }
+
+    @Override
+    public boolean readonlyIdentities() {
+        return readonlyIdentities;
+    }
+
+    @Override
+    public void setReadonlyIdentities(boolean readonlyIdentities) {
+        this.readonlyIdentities = readonlyIdentities;
+    }
+
+    @Override
+    public boolean readonlyComputedColumns() {
+        return readonlyComputedColumns;
+    }
+
+    @Override
+    public void setReadonlyComputedColumns(boolean readonlyComputedColumns) {
+        this.readonlyComputedColumns = readonlyComputedColumns;
+    }
+
+    @Override
+    public boolean readonlyNonUpdatableColumns() {
+        return readonlyNonUpdatableColumns;
+    }
+
+    @Override
+    public void setReadonlyNonUpdatableColumns(boolean readonlyNonUpdatableColumns) {
+        this.readonlyNonUpdatableColumns = readonlyNonUpdatableColumns;
     }
 
     @Override

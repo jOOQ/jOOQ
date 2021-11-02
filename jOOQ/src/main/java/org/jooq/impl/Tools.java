@@ -159,6 +159,7 @@ import static org.jooq.impl.Keywords.K_PRIMARY_KEY;
 import static org.jooq.impl.Keywords.K_RAISE;
 import static org.jooq.impl.Keywords.K_RAISERROR;
 import static org.jooq.impl.Keywords.K_SERIAL;
+import static org.jooq.impl.Keywords.K_SERIAL2;
 import static org.jooq.impl.Keywords.K_SERIAL4;
 import static org.jooq.impl.Keywords.K_SERIAL8;
 import static org.jooq.impl.Keywords.K_SQLSTATE;
@@ -168,9 +169,11 @@ import static org.jooq.impl.Keywords.K_THROW;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.OTHER;
+import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.Tools.filterIf;
@@ -5170,6 +5173,21 @@ final class Tools {
         // In some databases, identity is a type, not a flag.
         if (type.identity()) {
             switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

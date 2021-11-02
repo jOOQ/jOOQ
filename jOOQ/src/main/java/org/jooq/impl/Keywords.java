@@ -362,6 +362,7 @@ final class Keywords {
     static final Keyword K_SEPARATOR                        = keyword("separator");
     static final Keyword K_SEQUENCE                         = keyword("sequence");
     static final Keyword K_SERIAL                           = keyword("serial");
+    static final Keyword K_SERIAL2                          = keyword("serial2");
     static final Keyword K_SERIAL4                          = keyword("serial4");
     static final Keyword K_SERIAL8                          = keyword("serial8");
     static final Keyword K_SESSION                          = keyword("session");

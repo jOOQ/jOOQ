@@ -100,6 +100,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -837,7 +838,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             || !table().getKeys().isEmpty()) {
 
             Table<?> t = null;
-            Collection<Field<?>> k = insertMaps.keysFlattened(ctx);
+            Set<Field<?>> k = insertMaps.keysFlattened(ctx);
             Collection<Field<?>> f = null;
 
             if (!NO_SUPPORT_SUBQUERY_IN_MERGE_USING.contains(ctx.dialect())) {
@@ -879,7 +880,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
             return t != null
                 ? notMatched.whenNotMatchedThenInsert(f).values(t.fields())
-                : notMatched.whenNotMatchedThenInsert(k).values(insertMaps.lastMap().values());
+                : notMatched.whenNotMatchedThenInsert(k).values(insertMaps.lastMap().entrySet().stream().filter(e -> k.contains(e.getKey())).map(Entry::getValue).collect(toList()));
         }
         else
             throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into non-updatable tables : " + table());

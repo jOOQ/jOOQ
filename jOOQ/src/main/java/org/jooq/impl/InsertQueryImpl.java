@@ -85,6 +85,7 @@ import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Tools.unqualified;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;

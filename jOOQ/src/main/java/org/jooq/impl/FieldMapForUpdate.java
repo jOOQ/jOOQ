@@ -49,8 +49,11 @@ import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.conf.WriteIfReadonly.IGNORE;
 import static org.jooq.conf.WriteIfReadonly.THROW;
 import static org.jooq.impl.DSL.when;
-import static org.jooq.impl.Tools.filterIf;
+import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.collect;
+import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.flattenEntrySet;
+import static org.jooq.impl.Tools.row0;
 import static org.jooq.impl.Tools.DataKey.DATA_ON_DUPLICATE_KEY_WHERE;
 
 import java.util.Map;
@@ -62,9 +65,9 @@ import org.jooq.Context;
 import org.jooq.Field;
 // ...
 import org.jooq.RenderContext.CastMode;
+import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
-import org.jooq.conf.WriteIfReadonly;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
@@ -135,7 +138,24 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> i
 
 
 
+
         return it;
+    }
+
+    static final Row removeReadonly(Context<?> ctx, Row row) {
+
+
+
+
+        return row;
+    }
+
+    static final Row removeReadonly(Context<?> ctx, Row checkRow, Row removeRow) {
+
+
+
+
+        return removeRow;
     }
 
     final void set(Map<?, ?> map) {

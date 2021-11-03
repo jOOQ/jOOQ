@@ -81,6 +81,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.FieldMapForUpdate.removeReadonly;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_LIMIT;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
@@ -89,6 +90,8 @@ import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Tools.fieldName;
+import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Tools.unqualified;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Arrays;
@@ -608,10 +611,12 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
             else {
+                Row row = removeReadonly(ctx, multiRow);
+
                 ctx.start(UPDATE_SET_ASSIGNMENT)
                    .formatIndentStart()
                    .formatSeparator()
-                   .qualify(false, c -> c.visit(multiRow))
+                   .qualify(false, c -> c.visit(row))
                    .sql(" = ");
 
                 // Some dialects don't really support row value expressions on the
@@ -627,15 +632,21 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     if (REQUIRE_RVE_ROW_CLAUSE.contains(ctx.dialect()))
                         ctx.visit(K_ROW).sql(" ");
 
-                    ctx.visit(multiValue);
+                    ctx.visit(removeReadonly(ctx, multiRow, multiValue));
                 }
 
                 // Subselects or subselect emulations of row value expressions
                 else {
-                    Select<?> select = multiSelect;
+                    Select<?> select;
 
                     if (multiValue != null)
-                        select = select(multiValue.fields());
+                        select = select(removeReadonly(ctx, multiRow, multiValue).fields());
+
+
+
+
+                    else
+                        select = multiSelect;
 
                     visitSubquery(ctx, select);
                 }

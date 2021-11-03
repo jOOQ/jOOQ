@@ -81,7 +81,6 @@ import static org.jooq.conf.SettingsTools.getBackslashEscaping;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.ThrowExceptions.THROW_FIRST;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
-import static org.jooq.conf.WriteIfReadonly.IGNORE;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_GETTER;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_MEMBERS;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_SETTERS;
@@ -176,7 +175,6 @@ import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
-import static org.jooq.impl.Tools.filterIf;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -5795,9 +5793,14 @@ final class Tools {
     }
 
     static final <E> Iterator<E> filter(Iterator<E> iterator, Predicate<? super E> predicate) {
+        return filter(iterator, (e, i) -> predicate.test(e));
+    }
+
+    static final <E> Iterator<E> filter(Iterator<E> iterator, ObjIntPredicate<? super E> predicate) {
         return new Iterator<E>() {
             boolean uptodate;
             E       next;
+            int     index;
 
             private void move() {
                 if (!uptodate) {
@@ -5806,7 +5809,7 @@ final class Tools {
                     while (iterator.hasNext()) {
                         next = iterator.next();
 
-                        if (predicate.test(next))
+                        if (predicate.test(next, index++))
                             return;
                     }
 
@@ -5835,8 +5838,16 @@ final class Tools {
         return () -> filter(iterable.iterator(), predicate);
     }
 
-    static final <E> Iterable<E> filterIf(boolean filter, Iterable<E> iterable, Predicate<? super E> predicate) {
-        return filter ? () -> filter(iterable.iterator(), predicate) : iterable;
+    static final <E> Iterable<E> filter(Iterable<E> iterable, ObjIntPredicate<? super E> predicate) {
+        return () -> filter(iterable.iterator(), predicate);
+    }
+
+    static final <E> Iterable<E> filter(E[] array, Predicate<? super E> predicate) {
+        return filter(asList(array), predicate);
+    }
+
+    static final <E> Iterable<E> filter(E[] array, ObjIntPredicate<? super E> predicate) {
+        return filter(asList(array), predicate);
     }
 
     /**

@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -141,4 +142,12 @@ interface BooleanConsumer {
 @FunctionalInterface
 interface ObjIntFunction<T, R> {
     R apply(T t, int i);
+}
+
+/**
+ * A missing primitive type {@link BiPredicate} for references and ints.
+ */
+@FunctionalInterface
+interface ObjIntPredicate<T> {
+    boolean test(T t, int i);
 }

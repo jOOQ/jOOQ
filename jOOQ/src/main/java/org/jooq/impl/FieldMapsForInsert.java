@@ -53,7 +53,6 @@ import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.filter;
-import static org.jooq.impl.Tools.filterIf;
 import static org.jooq.impl.Tools.flatten;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.lazy;
@@ -531,6 +530,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
     }
 
     private static final <E> Iterable<E> removeReadonly(Context<?> ctx, Iterable<E> it, Function<? super E, ? extends Field<?>> f) {
+
 
 
 

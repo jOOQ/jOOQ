@@ -142,9 +142,27 @@ public class JPADatabase extends AbstractInterpretingDatabase {
         // [#5845] Use the correct ClassLoader to load the jpa entity classes defined in the user project
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
 
-        for (String pkg : packages.split(","))
-            for (BeanDefinition def : scanner.findCandidateComponents(defaultIfBlank(pkg, "").trim()))
-                metadata.addAnnotatedClass(Class.forName(def.getBeanClassName(), true, cl));
+        int count = 0;
+        for (String pkg : packages.split(",")) {
+            for (BeanDefinition def : scanner.findCandidateComponents(defaultIfBlank(pkg, "").trim())) {
+                Class<?> klass = Class.forName(def.getBeanClassName(), true, cl);
+                log.debug("Entity added", klass.getName());
+                metadata.addAnnotatedClass(klass);
+                count++;
+            }
+        }
+
+        if (count > 0)
+            log.info("Entities added", "Number of entities added: " + count);
+        else
+            log.warn("No entities added", ("" +
+                "No entities were added to the MetadataSources\n" +
+                "\n" +
+                "This can have several reasons, including:\n" +
+                "- The packages you've listed do not exist ({packages})\n" +
+                "- The entities in the listed packages are not on the JPADatabase classpath (you must compile them before running jOOQ's codegen, see \"how to organise your dependencies\" in the manual: https://www.jooq.org/doc/latest/manual/code-generation/codegen-jpa/!)\n" +
+                "").replace("{packages}", packages)
+            );
 
         // This seems to be the way to do this in idiomatic Hibernate 5.0 API
         // See also: http://stackoverflow.com/q/32178041/521799

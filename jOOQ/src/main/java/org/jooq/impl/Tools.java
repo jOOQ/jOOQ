@@ -5696,15 +5696,29 @@ final class Tools {
     }
 
     static final boolean isNotEmpty(Collection<?> collection) {
-        return collection != null && !collection.isEmpty();
+        return !isEmpty(collection);
     }
 
     static final boolean isEmpty(Collection<?> collection) {
         return collection == null || collection.isEmpty();
     }
 
+    static final boolean isNotEmpty(Iterable<?> it) {
+        return !isEmpty(it);
+    }
+
+    static final boolean isEmpty(Iterable<?> it) {
+        if (it == null)
+            return true;
+        else if (it instanceof Collection)
+            return isEmpty((Collection<?>) it);
+
+        Iterator<?> i = it.iterator();
+        return !i.hasNext();
+    }
+
     static final boolean isNotEmpty(Object[] array) {
-        return array != null && array.length > 0;
+        return !isEmpty(array);
     }
 
     static final boolean isEmpty(Object[] array) {

@@ -77,6 +77,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.conf.SettingsTools.getExecuteUpdateWithoutWhere;
+import static org.jooq.conf.WriteIfReadonly.THROW;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
@@ -161,6 +162,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.UpdateQuery;
+import org.jooq.exception.DataTypeException;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
@@ -733,6 +735,20 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         toSQLReturning(ctx);
         ctx.end(UPDATE_RETURNING);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void acceptFrom(Context<?> ctx) {
         ctx.start(UPDATE_FROM);

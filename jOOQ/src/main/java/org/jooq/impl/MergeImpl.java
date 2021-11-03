@@ -1260,9 +1260,8 @@ implements
             }
 
             // This should probably execute an INSERT statement
-            else {
+            else
                 throw new IllegalStateException("Cannot omit KEY() clause on a non-Updatable Table");
-            }
         }
         else {
             for (int i = 0; i < getUpsertKeys().size(); i++) {
@@ -1351,9 +1350,8 @@ implements
                     break;
             }
         }
-        else {
+        else
             toSQLStandard(ctx);
-        }
     }
 
     private final void toSQLMySQLOnDuplicateKeyUpdate(Context<?> ctx) {

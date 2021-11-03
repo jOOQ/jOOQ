@@ -87,6 +87,7 @@ import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_ALIASES;
 import static org.jooq.impl.Values.NO_SUPPORT_VALUES;
 
@@ -359,6 +360,13 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
     private final void toSQLWrapped(Context<?> ctx) {
         boolean wrap = wrapInParentheses.test(ctx);
 
+        if (wrap)
+            ctx.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, false, c -> toSQLWrapped(c, wrap));
+        else
+            toSQLWrapped(ctx, wrap);
+    }
+
+    private final void toSQLWrapped(Context<?> ctx, boolean wrap) {
         ctx.sql(wrap ? "(" : "")
            .visit(wrapped)
            .sql(wrap ? ")" : "");

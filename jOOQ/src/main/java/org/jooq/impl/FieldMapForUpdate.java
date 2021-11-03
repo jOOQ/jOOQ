@@ -143,11 +143,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> i
     }
 
     static final Row removeReadonly(Context<?> ctx, Row row) {
-
-
-
-
-        return row;
+        return removeReadonly(ctx, row, row);
     }
 
     static final Row removeReadonly(Context<?> ctx, Row checkRow, Row removeRow) {

@@ -59,6 +59,8 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.conf.WriteIfReadonly.IGNORE;
+import static org.jooq.conf.WriteIfReadonly.THROW;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.insertInto;
@@ -86,6 +88,8 @@ import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Keywords.K_WITH_PRIMARY_KEY;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.collect;
+import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.nullSafe;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
@@ -172,6 +176,7 @@ import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.UniqueKey;
 import org.jooq.conf.ParamType;
+import org.jooq.exception.DataTypeException;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.tools.StringUtils;
@@ -1392,13 +1397,17 @@ implements
     }
 
     private final void toSQLH2Merge(Context<?> ctx) {
+
+
+
+
         ctx.visit(K_MERGE_INTO)
            .sql(' ')
            .declareTables(true, c -> c.visit(table))
            .formatSeparator();
 
         ctx.sql('(')
-           .visit(wrap(getUpsertFields()).qualify(false))
+           .visit(wrap(collect(removeReadonly(ctx, getUpsertFields()))).qualify(false))
            .sql(')');
 
         if (!getUpsertKeys().isEmpty())
@@ -1413,9 +1422,31 @@ implements
         else
             ctx.formatSeparator()
                .visit(K_VALUES).sql(" (")
-               .visit(getUpsertValues())
+               .visit(wrap(collect(removeReadonly(ctx, getUpsertFields(), getUpsertValues()))))
                .sql(')');
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -38,6 +38,8 @@
 package org.jooq.impl;
 
 import static java.util.Collections.emptyList;
+import static org.jooq.conf.SettingsTools.getParamType;
+import static org.jooq.impl.CacheType.CACHE_PARSING_CONNECTION;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
 import static org.jooq.impl.Tools.map;
 
@@ -49,15 +51,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Param;
+import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DefaultRenderContext.Rendered;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.DefaultConnection;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -124,16 +131,30 @@ final class ParsingConnection extends DefaultConnection {
 
     static final Rendered translate(Configuration configuration, String sql, Param<?>... bindValues) {
         log.debug("Translating from", sql);
+        Rendered result = null;
 
-        Rendered result = Cache.run(
-            configuration,
-            () -> {
-                log.debug("Translation cache miss", sql);
-                return new CacheValue(configuration, sql, bindValues);
-            },
-            CacheType.CACHE_PARSING_CONNECTION,
-            () -> Cache.key(sql, map(nonNull(bindValues), f -> f.getDataType()))
-        ).rendered(bindValues);
+        Supplier<CacheValue> miss = () -> {
+            log.debug("Translation cache miss", sql);
+            return new CacheValue(configuration, sql, bindValues);
+        };
+
+        Settings settings = configuration.settings();
+        if (CACHE_PARSING_CONNECTION.category.predicate.test(settings) && bindValues.length > 0) {
+            switch (getParamType(settings)) {
+                case INLINED:
+                case NAMED_OR_INLINED:
+                    result = miss.get().rendered(bindValues);
+                    break;
+            }
+        }
+
+        if (result == null)
+            result = Cache.run(
+                configuration,
+                miss,
+                CACHE_PARSING_CONNECTION,
+                () -> Cache.key(sql, map(nonNull(bindValues), f -> f.getDataType()))
+            ).rendered(bindValues);
 
         log.debug("Translating to", result.sql);
         return result;

@@ -538,7 +538,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         return it;
     }
 
-    final Collection<Field<?>> keysFlattened(Context<?> ctx) {
+    final Set<Field<?>> keysFlattened(Context<?> ctx) {
 
         // [#9864] TODO: Refactor and optimise these flattening algorithms
         return valuesFlattened(ctx).keySet();

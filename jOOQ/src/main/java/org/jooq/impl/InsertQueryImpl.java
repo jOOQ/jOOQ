@@ -42,6 +42,7 @@ import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.nCopies;
 import static java.util.Collections.singletonList;
+import static java.util.stream.Collectors.toList;
 import static org.jooq.Clause.INSERT;
 import static org.jooq.Clause.INSERT_INSERT_INTO;
 import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE;
@@ -97,6 +98,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.jooq.Clause;
@@ -780,14 +782,15 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
         if (!keys.isEmpty()) {
             Select<Record> rows = null;
+            Set<Field<?>> fields = insertMaps.keysFlattened(ctx);
 
             // [#10989] INSERT .. SELECT .. ON DUPLICATE KEY IGNORE
             if (select != null) {
                 Map<Field<?>, Field<?>> map = new HashMap<>();
                 Field<?>[] names = Tools.fields(select.fields().length);
-                List<Field<?>> fields = new ArrayList<>(insertMaps.keysFlattened(ctx));
+                List<Field<?>> f = new ArrayList<>(fields);
                 for (int i = 0; i < fields.size() && i < names.length; i++)
-                    map.put(fields.get(i), names[i]);
+                    map.put(f.get(i), names[i]);
 
                 rows = (Select<Record>) selectFrom(select.asTable(DSL.table(name("t")), names))
                     .whereNotExists(
@@ -804,7 +807,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             else {
                 for (Map<Field<?>, Field<?>> map : insertMaps.maps()) {
                     Select<Record> row =
-                        select(aliasedFields(map.values()))
+                        select(aliasedFields(map.entrySet().stream().filter(e -> fields.contains(e.getKey())).map(Entry::getValue).collect(toList())))
                         .whereNotExists(
                             selectOne()
                             .from(table())
@@ -820,7 +823,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
             return ctx.dsl()
                 .insertInto(table())
-                .columns(insertMaps.keysFlattened(ctx))
+                .columns(fields)
                 .select(selectFrom(rows.asTable("t")));
         }
         else {

@@ -71,7 +71,7 @@ public interface LikeEscapeStep extends Condition {
      * Add the <code>ESCAPE</code> clause to the <code>LIKE</code> function.
      * <p>
      * For example:
-     * 
+     *
      * <code><pre>
      * some_column LIKE 'A!%%' ESCAPE '!'
      * </pre></code>

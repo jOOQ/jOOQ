@@ -1455,7 +1455,7 @@ extends
      * also to express the "ARRAY contains" operator. For example: <code><pre>
      * // Use this expression
      * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
-     * 
+     *
      * // ... to render this SQL
      * ARRAY[1, 2, 3] @&gt; ARRAY[1, 2]
      * </pre></code>
@@ -1484,7 +1484,7 @@ extends
      * also to express the "ARRAY contains" operator. For example: <code><pre>
      * // Use this expression
      * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
-     * 
+     *
      * // ... to render this SQL
      * ARRAY[1, 2, 3] @&gt; ARRAY[1, 2]
      * </pre></code>

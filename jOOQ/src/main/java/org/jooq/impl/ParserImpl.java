@@ -1778,7 +1778,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         InsertSetStep<?> s1 = (with == null ? dsl.insertInto(table) : with.insertInto(table));
         Field<?>[] fields = null;
 
-        if (parseIf('(')) {
+        if (!peekSelectOrWith(true) && parseIf('(')) {
             fields = parseList(',', c -> parseField()).toArray(EMPTY_FIELD);
             parse(')');
         }

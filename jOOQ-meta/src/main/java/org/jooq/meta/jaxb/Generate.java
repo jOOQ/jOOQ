@@ -114,6 +114,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean serializableInterfaces = true;
     @XmlElement(defaultValue = "false")
     protected Boolean daos = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean jooqVersionReference = true;
     @XmlElement(defaultValue = "false")
     protected Boolean jpaAnnotations = false;
     @XmlJavaTypeAdapter(StringAdapter.class)
@@ -1172,6 +1174,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setDaos(Boolean value) {
         this.daos = value;
+    }
+
+    /**
+     * Generate references to the most up to date minor release in {@link org.jooq.Constants} to produce compilation errors if an outdated runtime library is being used.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isJooqVersionReference() {
+        return jooqVersionReference;
+    }
+
+    /**
+     * Sets the value of the jooqVersionReference property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setJooqVersionReference(Boolean value) {
+        this.jooqVersionReference = value;
     }
 
     /**
@@ -2498,6 +2524,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withJooqVersionReference(Boolean value) {
+        setJooqVersionReference(value);
+        return this;
+    }
+
     public Generate withJpaAnnotations(Boolean value) {
         setJpaAnnotations(value);
         return this;
@@ -2808,6 +2839,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("immutableInterfaces", immutableInterfaces);
         builder.append("serializableInterfaces", serializableInterfaces);
         builder.append("daos", daos);
+        builder.append("jooqVersionReference", jooqVersionReference);
         builder.append("jpaAnnotations", jpaAnnotations);
         builder.append("jpaVersion", jpaVersion);
         builder.append("validationAnnotations", validationAnnotations);
@@ -3242,6 +3274,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!daos.equals(other.daos)) {
+                return false;
+            }
+        }
+        if (jooqVersionReference == null) {
+            if (other.jooqVersionReference!= null) {
+                return false;
+            }
+        } else {
+            if (!jooqVersionReference.equals(other.jooqVersionReference)) {
                 return false;
             }
         }
@@ -3716,6 +3757,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((immutableInterfaces == null)? 0 :immutableInterfaces.hashCode()));
         result = ((prime*result)+((serializableInterfaces == null)? 0 :serializableInterfaces.hashCode()));
         result = ((prime*result)+((daos == null)? 0 :daos.hashCode()));
+        result = ((prime*result)+((jooqVersionReference == null)? 0 :jooqVersionReference.hashCode()));
         result = ((prime*result)+((jpaAnnotations == null)? 0 :jpaAnnotations.hashCode()));
         result = ((prime*result)+((jpaVersion == null)? 0 :jpaVersion.hashCode()));
         result = ((prime*result)+((validationAnnotations == null)? 0 :validationAnnotations.hashCode()));

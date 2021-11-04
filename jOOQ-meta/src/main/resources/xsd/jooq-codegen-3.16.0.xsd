@@ -1738,6 +1738,10 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
       <element name="daos" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate DAOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="jooqVersionReference" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate references to the most up to date minor release in {@link org.jooq.Constants} to produce compilation errors if an outdated runtime library is being used.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="jpaAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Annotate POJOs and Records with JPA annotations.]]></jxb:javadoc></jxb:property></appinfo></annotation>

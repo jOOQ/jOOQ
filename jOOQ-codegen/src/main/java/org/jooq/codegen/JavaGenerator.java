@@ -6751,6 +6751,21 @@ public class JavaGenerator extends AbstractGenerator {
 
         printReferences(out, schemas, Schema.class, false);
 
+        if (generateJooqVersionReference()) {
+            String version = org.jooq.codegen.Constants.MINOR_VERSION.replace(".", "_");
+
+            out.javadoc("A reference to the " + org.jooq.codegen.Constants.MINOR_VERSION + " minor release of the code generator. "
+                + "If this doesn't compile, it's because the runtime library uses an older minor release, namely: " + org.jooq.Constants.MINOR_VERSION + ". "
+                + "You can turn off the generation of this reference by specifying /configuration/generator/generate/jooqVersionReference");
+
+            if (scala)
+                out.println("private val REQUIRE_RUNTIME_JOOQ_VERSION = %s.VERSION_%s", org.jooq.Constants.class, version);
+            else if (kotlin)
+                out.println("private val REQUIRE_RUNTIME_JOOQ_VERSION = %s.VERSION_%s", org.jooq.Constants.class, version);
+            else
+                out.println("private static final String REQUIRE_RUNTIME_JOOQ_VERSION = %s.VERSION_%s;", org.jooq.Constants.class, version);
+        }
+
         generateCatalogClassFooter(catalog, out);
         out.println("}");
     }

@@ -104,6 +104,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateImmutableInterfaces                      = false;
     boolean                            generateSerializableInterfaces                   = true;
     boolean                            generateDaos                                     = false;
+    boolean                            generateJooqVersionReference                     = true;
     boolean                            generateJPAAnnotations                           = false;
     String                             generateJPAVersion                               = "";
     boolean                            generateValidationAnnotations                    = false;
@@ -625,6 +626,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateDaos(boolean generateDaos) {
         this.generateDaos = generateDaos;
+    }
+
+    @Override
+    public boolean generateJooqVersionReference() {
+        return generateJooqVersionReference;
+    }
+
+    @Override
+    public void setGenerateJooqVersionReference(boolean generateJooqVersionReference) {
+        this.generateJooqVersionReference = generateJooqVersionReference;
     }
 
     @Override

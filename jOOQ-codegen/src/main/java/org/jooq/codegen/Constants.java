@@ -53,7 +53,7 @@ public final class Constants {
     /**
      * The latest jOOQ minor version.
      */
-    public static final String MINOR_VERSION  = "3.15";
+    public static final String MINOR_VERSION  = "3.16";
 
     /**
      * The latest jOOQ version.
@@ -154,6 +154,16 @@ public final class Constants {
     public static final int    MAX_ROW_DEGREE = 22;
 
 
+
+    /**
+     * The minor release 3.15.
+     */
+    public static final String VERSION_3_15   = "3.15";
+
+    /**
+     * The minor release 3.16.
+     */
+    public static final String VERSION_3_16   = "3.16";
 
     /**
      * No further instances

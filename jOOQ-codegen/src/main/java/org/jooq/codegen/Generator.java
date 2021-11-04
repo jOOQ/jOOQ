@@ -41,6 +41,7 @@ package org.jooq.codegen;
 import java.io.Serializable;
 import java.util.Locale;
 
+import org.jooq.Constants;
 import org.jooq.meta.Database;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
 import org.jooq.meta.jaxb.GeneratedSerialVersionUID;
@@ -486,6 +487,20 @@ public interface Generator {
      * Whether DAO's should be generated in addition to pojos
      */
     void setGenerateDaos(boolean generateDaos);
+
+    /**
+     * Whether generated objects should reference the runtime jOOQ version in
+     * {@link Constants}, to help debug code generator / runtime version
+     * mismatches.
+     */
+    boolean generateJooqVersionReference();
+
+    /**
+     * Whether generated objects should reference the runtime jOOQ version in
+     * {@link Constants}, to help debug code generator / runtime version
+     * mismatches.
+     */
+    void setGenerateJooqVersionReference(boolean generateJooqVersionReference);
 
     /**
      * Whether POJO's and records should be annotated with JPA annotations

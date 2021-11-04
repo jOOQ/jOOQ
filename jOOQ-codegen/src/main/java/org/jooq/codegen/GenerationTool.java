@@ -754,6 +754,8 @@ public class GenerationTool {
                 generator.setGenerateSerializableInterfaces(g.getGenerate().isSerializableInterfaces());
             if (g.getGenerate().isDaos() != null)
                 generator.setGenerateDaos(g.getGenerate().isDaos());
+            if (g.getGenerate().isJooqVersionReference() != null)
+                generator.setGenerateJooqVersionReference(g.getGenerate().isJooqVersionReference());
             if (g.getGenerate().isJpaAnnotations() != null)
                 generator.setGenerateJPAAnnotations(g.getGenerate().isJpaAnnotations());
             if (g.getGenerate().getJpaVersion() != null)

@@ -167,6 +167,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
 
 
 
+
             case DERBY:
             case FIREBIRD:
             case H2:

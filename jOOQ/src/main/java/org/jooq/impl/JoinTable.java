@@ -80,6 +80,7 @@ import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.IGNITE;
@@ -166,7 +167,7 @@ implements
     private static final Set<SQLDialect>  EMULATE_NATURAL_JOIN       = SQLDialect.supportedBy(CUBRID);
     private static final Set<SQLDialect>  EMULATE_NATURAL_OUTER_JOIN = SQLDialect.supportedBy(CUBRID, H2, IGNITE);
     private static final Set<SQLDialect>  EMULATE_JOIN_USING         = SQLDialect.supportedBy(CUBRID, IGNITE);
-    private static final Set<SQLDialect>  EMULATE_APPLY              = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect>  EMULATE_APPLY              = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTE);
 
     final Table<?>                        lhs;
     final Table<?>                        rhs;

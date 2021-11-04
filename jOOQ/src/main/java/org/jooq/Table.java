@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -2153,7 +2154,7 @@ extends
      * <code>CROSS APPLY</code> a table to this table.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     Table<Record> crossApply(TableLike<?> table);
 
     /**
@@ -2168,7 +2169,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> crossApply(SQL sql);
 
@@ -2184,7 +2185,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> crossApply(String sql);
 
@@ -2201,7 +2202,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> crossApply(String sql, Object... bindings);
 
@@ -2218,7 +2219,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> crossApply(String sql, QueryPart... parts);
 
@@ -2228,14 +2229,14 @@ extends
      * @see DSL#table(Name)
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     Table<Record> crossApply(Name name);
 
     /**
      * <code>OUTER APPLY</code> a table to this table.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     Table<Record> outerApply(TableLike<?> table);
 
     /**
@@ -2250,7 +2251,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> outerApply(SQL sql);
 
@@ -2266,7 +2267,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> outerApply(String sql);
 
@@ -2283,7 +2284,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> outerApply(String sql, Object... bindings);
 
@@ -2300,7 +2301,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @PlainSQL
     Table<Record> outerApply(String sql, QueryPart... parts);
 
@@ -2310,7 +2311,7 @@ extends
      * @see DSL#table(Name)
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     Table<Record> outerApply(Name name);
 
     /**
@@ -2446,7 +2447,7 @@ extends
      * <code><pre>
      * -- Emulating this MySQL statement...
      * DELETE FROM x ORDER BY x.y LIMIT 1
-     * 
+     *
      * -- ... in other databases
      * DELETE FROM x
      * WHERE x.rowid IN (

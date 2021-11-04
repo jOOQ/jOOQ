@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -1727,7 +1728,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossApply(TableLike)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     SelectJoinStep<R> crossApply(TableLike<?> table);
 
     /**
@@ -1743,7 +1744,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @PlainSQL
     SelectJoinStep<R> crossApply(SQL sql);
 
@@ -1760,7 +1761,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @PlainSQL
     SelectJoinStep<R> crossApply(String sql);
 
@@ -1778,7 +1779,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @PlainSQL
     SelectJoinStep<R> crossApply(String sql, Object... bindings);
 
@@ -1796,7 +1797,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @PlainSQL
     SelectJoinStep<R> crossApply(String sql, QueryPart... parts);
 
@@ -1807,7 +1808,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossApply(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     SelectJoinStep<R> crossApply(Name name);
 
     /**
@@ -1816,7 +1817,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#outerApply(TableLike)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     SelectJoinStep<R> outerApply(TableLike<?> table);
 
     /**
@@ -1832,7 +1833,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @PlainSQL
     SelectJoinStep<R> outerApply(SQL sql);
 
@@ -1849,7 +1850,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @PlainSQL
     SelectJoinStep<R> outerApply(String sql);
 
@@ -1867,7 +1868,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @PlainSQL
     SelectJoinStep<R> outerApply(String sql, Object... bindings);
 
@@ -1885,7 +1886,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     @PlainSQL
     SelectJoinStep<R> outerApply(String sql, QueryPart... parts);
 
@@ -1896,7 +1897,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#outerApply(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     SelectJoinStep<R> outerApply(Name name);
 
     /**

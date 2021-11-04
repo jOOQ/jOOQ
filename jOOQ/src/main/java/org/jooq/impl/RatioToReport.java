@@ -95,6 +95,7 @@ implements
 
             case CUBRID:
 
+            case FIREBIRD:
 
 
 
@@ -107,7 +108,15 @@ implements
             case POSTGRES:
             case SQLITE:
             case YUGABYTE:
-                ctx.visit(castIfNeeded(field, (DataType<?>) (ctx.family() == SQLITE ? DOUBLE : DECIMAL)))
+                DataType<?> cast;
+
+                switch (ctx.family()) {
+                    case SQLITE:   cast = DOUBLE;          break;
+                    case FIREBIRD: cast = DECIMAL(38, 19); break;
+                    default:       cast = DECIMAL;         break;
+                }
+
+                ctx.visit(castIfNeeded(field, cast))
                    .sql(" / ")
                    .visit(DSL.sum(field));
                 acceptOverClause(ctx);

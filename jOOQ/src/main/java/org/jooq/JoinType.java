@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -150,14 +151,14 @@ public enum JoinType {
      * <code>CROSS APPLY</code> two tables.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     CROSS_APPLY("cross apply", false),
 
     /**
      * <code>OUTER APPLY</code> two tables.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
     OUTER_APPLY("outer apply", false),
 
     /**

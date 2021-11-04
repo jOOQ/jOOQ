@@ -42,6 +42,7 @@ package org.jooq;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -99,7 +100,7 @@ public interface WindowSpecificationRowsAndStep {
      * specification.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     WindowSpecificationExcludeStep andUnboundedPreceding();
 
     /**
@@ -107,7 +108,7 @@ public interface WindowSpecificationRowsAndStep {
      * specification.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     WindowSpecificationExcludeStep andPreceding(int number);
 
     /**
@@ -115,7 +116,7 @@ public interface WindowSpecificationRowsAndStep {
      * specification.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     WindowSpecificationExcludeStep andCurrentRow();
 
     /**
@@ -123,7 +124,7 @@ public interface WindowSpecificationRowsAndStep {
      * specification.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     WindowSpecificationExcludeStep andUnboundedFollowing();
 
     /**
@@ -131,7 +132,7 @@ public interface WindowSpecificationRowsAndStep {
      * specification.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     WindowSpecificationExcludeStep andFollowing(int number);
 
 }

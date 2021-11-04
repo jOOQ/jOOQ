@@ -1424,16 +1424,17 @@ implements
                .sql(')');
     }
 
+    static final Iterable<Field<?>> removeReadonly(Context<?> ctx, List<Field<?>> it) {
+        return removeReadonly(ctx, it, it);
+    }
+
+    static final Iterable<Field<?>> removeReadonly(Context<?> ctx, List<Field<?>> checkIt, List<Field<?>> removeIt) {
 
 
 
 
-
-
-
-
-
-
+        return removeIt;
+    }
 
 
 

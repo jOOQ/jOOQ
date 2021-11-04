@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-    xmlns:tns="http://www.jooq.org/xsd/jooq-meta-3.14.0.xsd"
-    targetNamespace="http://www.jooq.org/xsd/jooq-meta-3.14.0.xsd"
+    xmlns:tns="http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd"
+    targetNamespace="http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd"
     elementFormDefault="qualified">
 
     <element name="information_schema">
@@ -83,6 +83,7 @@
             <element name="is_nullable" type="boolean" minOccurs="0" maxOccurs="1" />
             <element name="column_default" type="string" minOccurs="0" maxOccurs="1" />
             <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="readonly" type="boolean" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
     

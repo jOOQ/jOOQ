@@ -41,6 +41,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="is_nullable" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *         &lt;element name="column_default" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="readonly" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -59,7 +60,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Column implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31400L;
+    private final static long serialVersionUID = 31600L;
     @XmlElement(name = "table_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String tableCatalog;
@@ -111,6 +112,7 @@ public class Column implements Serializable, XMLAppendable
     protected String columnDefault;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String comment;
+    protected Boolean readonly;
 
     public String getTableCatalog() {
         return tableCatalog;
@@ -280,6 +282,30 @@ public class Column implements Serializable, XMLAppendable
         this.comment = value;
     }
 
+    /**
+     * Gets the value of the readonly property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isReadonly() {
+        return readonly;
+    }
+
+    /**
+     * Sets the value of the readonly property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setReadonly(Boolean value) {
+        this.readonly = value;
+    }
+
     public Column withTableCatalog(String value) {
         setTableCatalog(value);
         return this;
@@ -375,6 +401,11 @@ public class Column implements Serializable, XMLAppendable
         return this;
     }
 
+    public Column withReadonly(Boolean value) {
+        setReadonly(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("table_catalog", tableCatalog);
@@ -396,6 +427,7 @@ public class Column implements Serializable, XMLAppendable
         builder.append("is_nullable", isNullable);
         builder.append("column_default", columnDefault);
         builder.append("comment", comment);
+        builder.append("readonly", readonly);
     }
 
     @Override
@@ -588,6 +620,15 @@ public class Column implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (readonly == null) {
+            if (other.readonly!= null) {
+                return false;
+            }
+        } else {
+            if (!readonly.equals(other.readonly)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -614,6 +655,7 @@ public class Column implements Serializable, XMLAppendable
         result = ((prime*result)+((isNullable == null)? 0 :isNullable.hashCode()));
         result = ((prime*result)+((columnDefault == null)? 0 :columnDefault.hashCode()));
         result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
+        result = ((prime*result)+((readonly == null)? 0 :readonly.hashCode()));
         return result;
     }
 

@@ -195,6 +195,7 @@ public class XMLGenerator extends AbstractGenerator {
                         column.setNumericPrecision(type.getPrecision());
                         column.setNumericScale(type.getScale());
                         column.setOrdinalPosition(co.getPosition());
+                        column.setReadonly(co.isReadonly());
 
                         is.getColumns().add(column);
                     }

@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static java.util.Collections.emptyList;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.comparingInt;
@@ -199,7 +201,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             InformationSchemaDomain<?> id = new InformationSchemaDomain<Object>(
                 schema,
                 name(d.getDomainName()),
-                (DataType) type(d.getDataType(), length, precision, scale, nullable),
+                (DataType) type(d.getDataType(), length, precision, scale, nullable, false),
                 checks.toArray(EMPTY_CHECK)
             );
             domains.add(id);
@@ -272,7 +274,8 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             int length = xc.getCharacterMaximumLength() == null ? 0 : xc.getCharacterMaximumLength();
             int precision = xc.getNumericPrecision() == null ? 0 : xc.getNumericPrecision();
             int scale = xc.getNumericScale() == null ? 0 : xc.getNumericScale();
-            boolean nullable = xc.isIsNullable() == null || xc.isIsNullable();
+            boolean nullable = !FALSE.equals(xc.isIsNullable());
+            boolean readonly = TRUE.equals(xc.isReadonly());
 
             // TODO: Exception handling should be moved inside SQLDataType
             Name tableName = name(xc.getTableCatalog(), xc.getTableSchema(), xc.getTableName());
@@ -285,7 +288,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
             AbstractTable.createField(
                 name(xc.getColumnName()),
-                type(typeName, length, precision, scale, nullable),
+                type(typeName, length, precision, scale, nullable, readonly),
                 table,
                 xc.getComment()
             );
@@ -504,7 +507,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             InformationSchemaSequence is = new InformationSchemaSequence(
                 xs.getSequenceName(),
                 schema,
-                type(typeName, length, precision, scale, nullable),
+                type(typeName, length, precision, scale, nullable, false),
                 startWith,
                 incrementBy,
                 minvalue,
@@ -538,12 +541,13 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         lookup.computeIfAbsent(key, k -> new ArrayList<>()).add(value);
     }
 
-    private final DataType<?> type(String typeName, int length, int precision, int scale, boolean nullable) {
+    private final DataType<?> type(String typeName, int length, int precision, int scale, boolean nullable, boolean readonly) {
         DataType<?> type = null;
 
         try {
             type = DefaultDataType.getDataType(configuration.family(), typeName);
             type = type.nullable(nullable);
+            type = type.readonly(readonly);
 
             if (length != 0)
                 type = type.length(length);

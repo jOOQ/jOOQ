@@ -37,6 +37,7 @@
  */
 package org.jooq.meta.xml;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.meta.xml.XMLDatabase.unbox;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -107,6 +108,7 @@ public class XMLTableDefinition extends AbstractTableDefinition {
                     unbox(column.getOrdinalPosition()),
                     type,
                     column.getIdentityGeneration() != null,
+                    TRUE.equals(column.isReadonly()),
                     column.getComment()
                 ));
             }

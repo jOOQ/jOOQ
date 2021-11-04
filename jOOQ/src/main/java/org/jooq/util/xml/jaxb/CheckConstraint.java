@@ -44,7 +44,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class CheckConstraint implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31400L;
+    private final static long serialVersionUID = 31600L;
     @XmlElement(name = "constraint_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String constraintCatalog;

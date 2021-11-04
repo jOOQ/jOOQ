@@ -75,6 +75,11 @@ public interface ColumnDefinition extends TypedElementDefinition<TableDefinition
      */
     boolean isIdentity();
 
+    /**
+     * Whether this column is readonly.
+     */
+    boolean isReadonly();
+
 
 
 

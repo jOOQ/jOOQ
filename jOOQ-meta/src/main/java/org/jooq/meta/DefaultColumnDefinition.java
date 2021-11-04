@@ -163,6 +163,11 @@ public class DefaultColumnDefinition
         return identity;
     }
 
+    @Override
+    public final boolean isReadonly() {
+        return readonly;
+    }
+
 
 
 

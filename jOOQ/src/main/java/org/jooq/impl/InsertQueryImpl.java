@@ -909,17 +909,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
             for (Field<?> field : fields) {
                 Field<Object> f = (Field<Object>) field;
-                Field<Object> v = (Field<Object>) map.get(f);
-
-                Condition other =
-
-
-
-
-
-
-                    f.eq(v)
-                ;
+                Condition other = matchByConflictingKey(ctx, f, (Field<Object>) map.get(f));
                 and = (and == null) ? other : and.and(other);
             }
 
@@ -951,18 +941,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
             for (Field<?> field : fields) {
                 Field<Object> f = (Field<Object>) field;
-                Field<Object> v = s.field(f);
-
-                Condition other =
-
-
-
-
-
-
-                    f.eq(v)
-                ;
-
+                Condition other = matchByConflictingKey(ctx, f, s.field(f));
                 and = (and == null) ? other : and.and(other);
             }
 
@@ -970,6 +949,16 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         }
 
         return or;
+    }
+
+    private final <T> Condition matchByConflictingKey(Context<?> ctx, Field<T> f, Field<T> v) {
+
+
+
+
+
+
+        return f.eq(v);
     }
 
     @Override

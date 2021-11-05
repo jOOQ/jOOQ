@@ -18655,7 +18655,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<Date> dateAdd(Date date, Number interval, DatePart datePart) {
+    public static Field<Date> dateAdd(Date date, Number interval, DatePart datePart) {
         return new DateAdd<>(Tools.field(date), Tools.field(interval), datePart);
     }
 
@@ -18670,7 +18670,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<Date> dateAdd(Date date, Field<? extends Number> interval, DatePart datePart) {
+    public static Field<Date> dateAdd(Date date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(Tools.field(date), interval, datePart);
     }
 
@@ -18685,7 +18685,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<Date> dateAdd(Field<Date> date, Number interval, DatePart datePart) {
+    public static Field<Date> dateAdd(Field<Date> date, Number interval, DatePart datePart) {
         return new DateAdd<>(date, Tools.field(interval), datePart);
     }
 
@@ -18700,7 +18700,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<Date> dateAdd(Field<Date> date, Field<? extends Number> interval, DatePart datePart) {
+    public static Field<Date> dateAdd(Field<Date> date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(date, interval, datePart);
     }
 
@@ -18714,7 +18714,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<Date> dateAdd(Date date, Number interval) {
+    public static Field<Date> dateAdd(Date date, Number interval) {
         return new DateAdd<>(Tools.field(date), Tools.field(interval));
     }
 
@@ -18728,7 +18728,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<Date> dateAdd(Date date, Field<? extends Number> interval) {
+    public static Field<Date> dateAdd(Date date, Field<? extends Number> interval) {
         return new DateAdd<>(Tools.field(date), interval);
     }
 
@@ -18742,7 +18742,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<Date> dateAdd(Field<Date> date, Number interval) {
+    public static Field<Date> dateAdd(Field<Date> date, Number interval) {
         return new DateAdd<>(date, Tools.field(interval));
     }
 
@@ -18756,7 +18756,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<Date> dateAdd(Field<Date> date, Field<? extends Number> interval) {
+    public static Field<Date> dateAdd(Field<Date> date, Field<? extends Number> interval) {
         return new DateAdd<>(date, interval);
     }
 
@@ -18771,7 +18771,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<LocalDate> localDateAdd(LocalDate date, Number interval, DatePart datePart) {
+    public static Field<LocalDate> localDateAdd(LocalDate date, Number interval, DatePart datePart) {
         return new DateAdd<>(Tools.field(date), Tools.field(interval), datePart);
     }
 
@@ -18786,7 +18786,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<LocalDate> localDateAdd(LocalDate date, Field<? extends Number> interval, DatePart datePart) {
+    public static Field<LocalDate> localDateAdd(LocalDate date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(Tools.field(date), interval, datePart);
     }
 
@@ -18801,7 +18801,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<LocalDate> localDateAdd(Field<LocalDate> date, Number interval, DatePart datePart) {
+    public static Field<LocalDate> localDateAdd(Field<LocalDate> date, Number interval, DatePart datePart) {
         return new DateAdd<>(date, Tools.field(interval), datePart);
     }
 
@@ -18816,7 +18816,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<LocalDate> localDateAdd(Field<LocalDate> date, Field<? extends Number> interval, DatePart datePart) {
+    public static Field<LocalDate> localDateAdd(Field<LocalDate> date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(date, interval, datePart);
     }
 
@@ -18830,7 +18830,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<LocalDate> localDateAdd(LocalDate date, Number interval) {
+    public static Field<LocalDate> localDateAdd(LocalDate date, Number interval) {
         return new DateAdd<>(Tools.field(date), Tools.field(interval));
     }
 
@@ -18844,7 +18844,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<LocalDate> localDateAdd(LocalDate date, Field<? extends Number> interval) {
+    public static Field<LocalDate> localDateAdd(LocalDate date, Field<? extends Number> interval) {
         return new DateAdd<>(Tools.field(date), interval);
     }
 
@@ -18858,7 +18858,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<LocalDate> localDateAdd(Field<LocalDate> date, Number interval) {
+    public static Field<LocalDate> localDateAdd(Field<LocalDate> date, Number interval) {
         return new DateAdd<>(date, Tools.field(interval));
     }
 
@@ -18872,7 +18872,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<LocalDate> localDateAdd(Field<LocalDate> date, Field<? extends Number> interval) {
+    public static Field<LocalDate> localDateAdd(Field<LocalDate> date, Field<? extends Number> interval) {
         return new DateAdd<>(date, interval);
     }
 
@@ -18887,7 +18887,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<Timestamp> timestampAdd(Timestamp date, Number interval, DatePart datePart) {
+    public static Field<Timestamp> timestampAdd(Timestamp date, Number interval, DatePart datePart) {
         return new DateAdd<>(Tools.field(date), Tools.field(interval), datePart);
     }
 
@@ -18902,7 +18902,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<Timestamp> timestampAdd(Timestamp date, Field<? extends Number> interval, DatePart datePart) {
+    public static Field<Timestamp> timestampAdd(Timestamp date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(Tools.field(date), interval, datePart);
     }
 
@@ -18917,7 +18917,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<Timestamp> timestampAdd(Field<Timestamp> date, Number interval, DatePart datePart) {
+    public static Field<Timestamp> timestampAdd(Field<Timestamp> date, Number interval, DatePart datePart) {
         return new DateAdd<>(date, Tools.field(interval), datePart);
     }
 
@@ -18932,7 +18932,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<Timestamp> timestampAdd(Field<Timestamp> date, Field<? extends Number> interval, DatePart datePart) {
+    public static Field<Timestamp> timestampAdd(Field<Timestamp> date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(date, interval, datePart);
     }
 
@@ -18946,7 +18946,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<Timestamp> timestampAdd(Timestamp date, Number interval) {
+    public static Field<Timestamp> timestampAdd(Timestamp date, Number interval) {
         return new DateAdd<>(Tools.field(date), Tools.field(interval));
     }
 
@@ -18960,7 +18960,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<Timestamp> timestampAdd(Timestamp date, Field<? extends Number> interval) {
+    public static Field<Timestamp> timestampAdd(Timestamp date, Field<? extends Number> interval) {
         return new DateAdd<>(Tools.field(date), interval);
     }
 
@@ -18974,7 +18974,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<Timestamp> timestampAdd(Field<Timestamp> date, Number interval) {
+    public static Field<Timestamp> timestampAdd(Field<Timestamp> date, Number interval) {
         return new DateAdd<>(date, Tools.field(interval));
     }
 
@@ -18988,7 +18988,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<Timestamp> timestampAdd(Field<Timestamp> date, Field<? extends Number> interval) {
+    public static Field<Timestamp> timestampAdd(Field<Timestamp> date, Field<? extends Number> interval) {
         return new DateAdd<>(date, interval);
     }
 
@@ -19003,7 +19003,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Number interval, DatePart datePart) {
+    public static Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Number interval, DatePart datePart) {
         return new DateAdd<>(Tools.field(date), Tools.field(interval), datePart);
     }
 
@@ -19018,7 +19018,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Field<? extends Number> interval, DatePart datePart) {
+    public static Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(Tools.field(date), interval, datePart);
     }
 
@@ -19033,7 +19033,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Number interval, DatePart datePart) {
+    public static Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Number interval, DatePart datePart) {
         return new DateAdd<>(date, Tools.field(interval), datePart);
     }
 
@@ -19048,7 +19048,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Field<? extends Number> interval, DatePart datePart) {
+    public static Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(date, interval, datePart);
     }
 
@@ -19062,7 +19062,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Number interval) {
+    public static Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Number interval) {
         return new DateAdd<>(Tools.field(date), Tools.field(interval));
     }
 
@@ -19076,7 +19076,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Field<? extends Number> interval) {
+    public static Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Field<? extends Number> interval) {
         return new DateAdd<>(Tools.field(date), interval);
     }
 
@@ -19090,7 +19090,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Number interval) {
+    public static Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Number interval) {
         return new DateAdd<>(date, Tools.field(interval));
     }
 
@@ -19104,7 +19104,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Field<? extends Number> interval) {
+    public static Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Field<? extends Number> interval) {
         return new DateAdd<>(date, interval);
     }
 

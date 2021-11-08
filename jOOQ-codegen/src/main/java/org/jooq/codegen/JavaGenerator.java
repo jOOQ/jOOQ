@@ -41,6 +41,7 @@ package org.jooq.codegen;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 // ...
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -1913,6 +1914,15 @@ public class JavaGenerator extends AbstractGenerator {
         // [#3130] Invalid UDTs may have a degree of 0
         // [#3176] Avoid generating constructors for tables with more than 255 columns (Java's method argument limit)
         generateRecordConstructor(tableUdtOrEmbeddable, out, replacingEmbeddablesAndUnreplacedColumns, false);
+
+
+
+
+
+
+
+
+
 
         if (!replacingEmbeddablesAndUnreplacedColumns.equals(embeddablesOrColumns))
             generateRecordConstructor(tableUdtOrEmbeddable, out, embeddablesOrColumns, false);

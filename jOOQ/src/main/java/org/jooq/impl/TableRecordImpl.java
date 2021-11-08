@@ -166,7 +166,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualified
         InsertQuery<R> insert = create.insertQuery(getTable());
         List<Field<?>> changedFields = addChangedValues(storeFields, insert, false);
 
-        if (!insert.isExecutable()) {
+        if (changedFields.isEmpty()) {
 
             // Don't store records if no value was set by client code
             if (FALSE.equals(create.settings().isInsertUnchangedRecords())) {

@@ -46,10 +46,12 @@ import static org.jooq.Clause.INSERT_VALUES;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.conf.WriteIfReadonly.IGNORE;
 import static org.jooq.conf.WriteIfReadonly.THROW;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_VALUES;
+import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.filter;
@@ -72,6 +74,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Function;
 
+import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -205,6 +208,20 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -525,7 +542,10 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
         // [#989] Avoid qualifying fields in INSERT field declaration
         List<Field<?>> fields = collect(removeReadonly(ctx, flattenCollection(values.keySet(), true, true), e -> e));
-        ctx.sql(" (").visit(new QueryPartCollectionView<>(fields).qualify(false)).sql(')');
+
+        if (!fields.isEmpty())
+            ctx.sql(" (").visit(wrap(fields).qualify(false)).sql(')');
+
         return fields;
     }
 

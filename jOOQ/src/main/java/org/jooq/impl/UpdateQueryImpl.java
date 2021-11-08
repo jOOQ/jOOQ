@@ -158,6 +158,7 @@ import org.jooq.Row8;
 import org.jooq.Row9;
 import org.jooq.RowN;
 import org.jooq.SQLDialect;
+import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
@@ -735,6 +736,11 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         toSQLReturning(ctx);
         ctx.end(UPDATE_RETURNING);
     }
+
+
+
+
+
 
 
 

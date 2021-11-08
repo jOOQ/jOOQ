@@ -280,7 +280,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         List<Field<?>> changedFields = addChangedValues(storeFields, query, merge);
         Tools.addConditions(query, this, keys);
 
-        if (!query.isExecutable()) {
+        if (changedFields.isEmpty()) {
             switch (StringUtils.defaultIfNull(create().settings().getUpdateUnchangedRecords(), UpdateUnchangedRecords.NEVER)) {
 
                 // Don't store records if no value was set by client code

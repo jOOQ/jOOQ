@@ -119,6 +119,7 @@ import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
+import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -284,6 +285,15 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     @Override
     public final void setDefaultValues() {
         defaultValues = true;
+    }
+
+    private final boolean defaultValues(Configuration c) {
+
+
+
+
+
+        return defaultValues;
     }
 
     @Override
@@ -685,7 +695,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             ctx.data().remove(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST);
             ctx.data().remove(DATA_INSERT_SELECT);
         }
-        else if (defaultValues) {
+        else if (defaultValues(ctx.configuration())) {
             switch (ctx.family()) {
 
 
@@ -963,7 +973,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     @Override
     public final boolean isExecutable() {
-        return insertMaps.isExecutable() || defaultValues || select != null;
+        return insertMaps.isExecutable() || defaultValues(configuration()) || select != null;
     }
 
 

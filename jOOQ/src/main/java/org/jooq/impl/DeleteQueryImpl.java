@@ -103,6 +103,7 @@ import org.jooq.Param;
 // ...
 import org.jooq.Record;
 import org.jooq.SQLDialect;
+import org.jooq.Scope;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.conf.ParamType;

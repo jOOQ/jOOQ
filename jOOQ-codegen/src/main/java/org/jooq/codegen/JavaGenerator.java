@@ -177,6 +177,7 @@ import org.jooq.meta.jaxb.GeneratedAnnotationType;
 // ...
 // ...
 import org.jooq.meta.postgres.PostgresDatabase;
+import org.jooq.meta.postgres.PostgresRoutineDefinition;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
@@ -7622,6 +7623,10 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (routine.getOverload() != null)
             out.println("setOverloaded(true)%s", semicolon);
+
+        if (routine instanceof PostgresRoutineDefinition)
+            if (((PostgresRoutineDefinition) routine).isProcedure())
+                out.println("setSQLUsable(false)%s", semicolon);
 
 
 

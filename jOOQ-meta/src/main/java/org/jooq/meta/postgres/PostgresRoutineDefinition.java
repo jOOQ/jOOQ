@@ -38,6 +38,7 @@
 package org.jooq.meta.postgres;
 
 
+import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
@@ -47,7 +48,6 @@ import static org.jooq.meta.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.meta.postgres.information_schema.Tables.ROUTINES;
 
 import java.sql.SQLException;
-import java.util.Arrays;
 
 import org.jooq.Field;
 import org.jooq.Record;
@@ -60,7 +60,6 @@ import org.jooq.meta.InOutDefinition;
 import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.postgres.information_schema.tables.Parameters;
-import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -70,8 +69,8 @@ import org.jooq.tools.StringUtils;
  */
 public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
 
-    private static final JooqLogger log = JooqLogger.getLogger(PostgresRoutineDefinition.class);
-    private final String            specificName;
+    private final String  specificName;
+    private final boolean isProcedure;
 
     public PostgresRoutineDefinition(Database database, Record record) {
         super(database.getSchema(record.get(ROUTINES.ROUTINE_SCHEMA)),
@@ -79,9 +78,11 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
             record.get(ROUTINES.ROUTINE_NAME),
             null,
             record.get("overload", String.class),
-            record.get("is_agg", boolean.class));
+            record.get("is_agg", boolean.class)
+        );
 
-        if (!Arrays.asList("void", "record").contains(record.get("data_type"))) {
+        String dataType = record.get("data_type", String.class);
+        if (dataType != null && !asList("void", "record").contains(dataType)) {
             SchemaDefinition typeSchema = null;
 
             String schemaName = record.get(ROUTINES.TYPE_UDT_SCHEMA);
@@ -93,7 +94,7 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
                 typeSchema == null
                     ? database.getSchema(record.get(ROUTINES.ROUTINE_SCHEMA))
                     : typeSchema,
-                record.get("data_type", String.class),
+                dataType,
                 record.get(ROUTINES.CHARACTER_MAXIMUM_LENGTH),
                 record.get(ROUTINES.NUMERIC_PRECISION),
                 record.get(ROUTINES.NUMERIC_SCALE),
@@ -109,6 +110,7 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
         }
 
         specificName = record.get(ROUTINES.SPECIFIC_NAME);
+        isProcedure = "PROCEDURE".equalsIgnoreCase(record.get(ROUTINES.ROUTINE_TYPE));
     }
 
     // [#3375] This internal constructor is used for table-valued functions. It should not be used otherwise
@@ -116,6 +118,7 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
         super(database.getSchema(schema), null, name, null, null);
 
         this.specificName = specificName;
+        this.isProcedure = false;
     }
 
     @Override
@@ -197,5 +200,9 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
             inline("timestamp without time zone"),
             inline("timestamp with time zone"))), inline(6))
         .else_(p.NUMERIC_PRECISION);
+    }
+
+    public boolean isProcedure() {
+        return isProcedure;
     }
 }

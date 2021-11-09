@@ -951,6 +951,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 r1.ROUTINE_SCHEMA,
                 r1.ROUTINE_NAME,
                 r1.SPECIFIC_NAME,
+                r1.ROUTINE_TYPE,
 
                 // Ignore the data type when there is at least one out parameter
                 canCombineArrays()
@@ -1000,7 +1001,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     ? condition(not(PG_PROC.PRORETSET))
                     : noCondition())
             .and(!getIncludeTriggerRoutines()
-                    ? r1.DATA_TYPE.ne(inline("trigger"))
+                    ? r1.DATA_TYPE.isDistinctFrom(inline("trigger"))
                     : noCondition())
             .orderBy(
                 r1.ROUTINE_SCHEMA.asc(),

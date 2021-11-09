@@ -119,9 +119,8 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
 
     @Override
     public final ParameterDefinition getReturnValue() {
-        if (allParameters == null) {
+        if (allParameters == null)
             init();
-        }
 
         return returnValue;
     }

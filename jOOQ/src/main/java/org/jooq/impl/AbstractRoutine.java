@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.FIELD;
@@ -197,6 +198,7 @@ implements
     private final DataType<T>                 type;
     private Parameter<T>                      returnParameter;
     private ResultsImpl                       results;
+    private Boolean                           isSQLUsable;
     private boolean                           overloaded;
     private boolean                           hasUnnamedParameters;
 
@@ -370,10 +372,10 @@ implements
         results.clear();
         outValues.clear();
 
-        // [#4254] In PostgreSQL, there are only functions, no procedures. Some
-        // functions cannot be called using a CallableStatement, e.g. those with
-        // DEFAULT parameters
-        if (REQUIRE_SELECT_FROM.contains(config.dialect())) {
+        // [#4254] In PostgreSQL, some functions cannot be called using a
+        //         CallableStatement, e.g. those with DEFAULT parameters
+        // [#8431] PG 11 procedures, however, must be called with CallableStatement
+        if (isSQLUsable() && REQUIRE_SELECT_FROM.contains(config.dialect())) {
             return executeSelectFromPOSTGRES();
         }
 
@@ -737,6 +739,7 @@ implements
 
         String separator = "";
         List<Parameter<?>> all = getParameters0(context.configuration());
+        boolean defaulted = false;
         Map<Integer, Parameter<?>> indexes = new LinkedHashMap<>();
         for (int i = 0; i < all.size(); i++) {
             Parameter<?> parameter = all.get(i);
@@ -746,7 +749,7 @@ implements
                 continue;
 
             // [#1183] [#3533] Omit defaulted parameters
-            else if (inValuesDefaulted.contains(parameter))
+            else if (inValuesDefaulted.contains(parameter) && (defaulted |= true))
                 continue;
 
             // Ordinary IN, INOUT, and OUT parameters
@@ -774,6 +777,9 @@ implements
             if (indent && i++ > 0)
                 context.formatNewLine();
 
+            if (defaulted && context.family() == POSTGRES)
+                context.visit(parameter.getUnqualifiedName()).sql(" := ");
+
             // OUT and IN OUT parameters are always written as a '?' bind variable
             if (getOutParameters0(context.configuration()).contains(parameter))
                 toSQLOutParam(context, parameter, index);
@@ -793,6 +799,7 @@ implements
     }
 
     private final void toSQLEnd(RenderContext context) {
+        if (!isSQLUsable() && context.family() == POSTGRES) {}
 
 
 
@@ -833,10 +840,8 @@ implements
 
 
 
-
-        {
+        else
             context.sql(" }");
-        }
     }
 
     private final void toSQLDeclare(RenderContext context) {
@@ -994,6 +999,7 @@ implements
 
 
     private final void toSQLBegin(RenderContext context) {
+        if (!isSQLUsable() && context.family() == POSTGRES) {}
 
 
 
@@ -1021,10 +1027,8 @@ implements
 
 
 
-
-        {
+        else
             context.sql("{ ");
-        }
     }
 
 
@@ -1616,6 +1620,14 @@ implements
 
     protected final boolean isOverloaded() {
         return overloaded;
+    }
+
+    protected final void setSQLUsable(boolean isSQLUsable) {
+        this.isSQLUsable = isSQLUsable;
+    }
+
+    protected final boolean isSQLUsable() {
+        return !FALSE.equals(isSQLUsable);
     }
 
     private final boolean pgArgNeedsCasting(Parameter<?> parameter) {

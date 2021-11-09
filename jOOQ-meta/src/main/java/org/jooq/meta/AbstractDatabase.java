@@ -2750,18 +2750,17 @@ public abstract class AbstractDatabase implements Database {
 
             case POSTGRES:
             case H2:
-                return "ARRAY".equals(dataType);
+                return "ARRAY".equals(dataType.toUpperCase());
 
             case HSQLDB:
 
 
 
+            default:
                 // TODO: Is there any more robust way to recognise these?
                 // For instance, there could be a UDT that is called this way
-                return dataType.endsWith(" ARRAY");
+                return dataType.toUpperCase().endsWith(" ARRAY");
         }
-
-        return false;
     }
 
     protected static final String fetchedSize(List<?> fetched, List<?> included) {

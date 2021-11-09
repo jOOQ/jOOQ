@@ -513,16 +513,16 @@ class GenerationUtil {
                 }
 
                 // But there are also arrays with a "vector" suffix
-                else {
+                else
                     return u;
-                }
             }
 
             case H2:
                 return name(H2DataType.OTHER.getTypeName());
 
 
-            case HSQLDB: {
+            case HSQLDB:
+            default: {
 
                 // In HSQLDB 2.2.5, there has been an incompatible INFORMATION_SCHEMA change around the
                 // ELEMENT_TYPES view. Arrays are now described much more explicitly
@@ -531,11 +531,9 @@ class GenerationUtil {
 
                 // This is for backwards compatibility
                 else
-                    return name(t.replace(" ARRAY", ""));
+                    return name(t.replaceFirst("(?i: ARRAY)", ""));
             }
         }
-
-        throw new SQLDialectNotSupportedException("getArrayBaseType() is not supported for dialect " + dialect);
     }
 
     static ExpressionType expressionType(String expression) {

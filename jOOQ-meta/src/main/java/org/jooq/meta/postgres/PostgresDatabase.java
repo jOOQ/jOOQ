@@ -58,6 +58,7 @@ import static org.jooq.impl.DSL.replace;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
@@ -1092,7 +1093,9 @@ public class PostgresDatabase extends AbstractDatabase {
         Field<?> orderBy =
             exists(PG_ENUM.ENUMSORTORDER)
           ? PG_ENUM.ENUMSORTORDER
-          : field("{0}::{1}", PG_ENUM.ENUMLABEL, name(nspname, typname));
+
+        // [#9511] [#9917] Workaround for regression introduced by avoiding quoting names everywhere
+          : field("{0}::{1}", PG_ENUM.ENUMLABEL, sql(name(nspname, typname) + ""));
 
         if (canCastToEnumType == null) {
 

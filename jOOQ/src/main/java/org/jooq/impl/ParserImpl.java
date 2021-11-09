@@ -4609,6 +4609,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                                 identityOption = true;
                                 continue;
                             }
+                            else if (parseSignedIntegerLiteralIf() != null) {
+                                identityOption = true;
+                                continue;
+                            }
 
                             if (identityOption)
                                 break;

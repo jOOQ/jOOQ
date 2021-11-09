@@ -130,18 +130,7 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
                 p.PARAMETER_NAME,
                 p.DATA_TYPE,
                 p.CHARACTER_MAXIMUM_LENGTH,
-
-                // [#12048] TODO: Maintain whether we know the precision or not
-                when(p.NUMERIC_PRECISION.isNull().and(p.DATA_TYPE.in(
-                    inline("time"),
-                    inline("timetz"),
-                    inline("time without time zone"),
-                    inline("time with time zone"),
-                    inline("timestamp"),
-                    inline("timestamptz"),
-                    inline("timestamp without time zone"),
-                    inline("timestamp with time zone"))), inline(6))
-                .else_(p.NUMERIC_PRECISION).as(p.NUMERIC_PRECISION),
+                pNumericPrecision(p).as(p.NUMERIC_PRECISION),
                 p.NUMERIC_SCALE,
                 p.UDT_SCHEMA,
                 p.UDT_NAME,
@@ -193,5 +182,20 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
 
             addParameter(InOutDefinition.getFromString(inOut), parameter);
         }
+    }
+
+    static Field<Integer> pNumericPrecision(Parameters p) {
+        // [#12048] [#12612] TODO: Maintain whether we know the precision or not
+
+        return when(p.NUMERIC_PRECISION.isNull().and(p.DATA_TYPE.in(
+            inline("time"),
+            inline("timetz"),
+            inline("time without time zone"),
+            inline("time with time zone"),
+            inline("timestamp"),
+            inline("timestamptz"),
+            inline("timestamp without time zone"),
+            inline("timestamp with time zone"))), inline(6))
+        .else_(p.NUMERIC_PRECISION);
     }
 }

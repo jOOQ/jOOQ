@@ -42,10 +42,12 @@ import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.meta.postgres.PostgresRoutineDefinition.pNumericPrecision;
 import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.meta.postgres.information_schema.Tables.ROUTINES;
@@ -59,8 +61,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.TableOptions.TableType;
+import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -105,6 +109,15 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
         Columns c = COLUMNS;
         PgType pg_t = PG_TYPE;
 
+        Field<Integer> pPrecision = pNumericPrecision(p);
+        Field<Integer> cPrecision = nvl(c.DATETIME_PRECISION, c.NUMERIC_PRECISION);
+        Field<Integer> rPrecision = nvl(r.DATETIME_PRECISION, r.NUMERIC_PRECISION);
+
+
+
+
+
+
         for (Record record : create()
 
             // [#3375] The first subselect is expected to return only those
@@ -115,7 +128,7 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                 rowNumber().over(partitionBy(p.SPECIFIC_NAME).orderBy(p.ORDINAL_POSITION)).as(p.ORDINAL_POSITION),
                 p.DATA_TYPE,
                 p.CHARACTER_MAXIMUM_LENGTH,
-                p.NUMERIC_PRECISION,
+                pPrecision.as(p.NUMERIC_PRECISION),
                 p.NUMERIC_SCALE,
                 inline("true").as(c.IS_NULLABLE),
                (((PostgresDatabase) getDatabase()).is94()
@@ -145,7 +158,7 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                 coalesce(c.ORDINAL_POSITION          , inline(1)                   ).as(c.ORDINAL_POSITION),
                 coalesce(c.DATA_TYPE                 , r.DATA_TYPE                 ).as(c.DATA_TYPE),
                 coalesce(c.CHARACTER_MAXIMUM_LENGTH  , r.CHARACTER_MAXIMUM_LENGTH  ).as(c.CHARACTER_MAXIMUM_LENGTH),
-                coalesce(c.NUMERIC_PRECISION         , r.NUMERIC_PRECISION         ).as(c.NUMERIC_PRECISION),
+                coalesce(cPrecision                  , rPrecision                  ).as(c.NUMERIC_PRECISION),
                 coalesce(c.NUMERIC_SCALE             , r.NUMERIC_SCALE             ).as(c.NUMERIC_SCALE),
                 coalesce(c.IS_NULLABLE               , "true"                      ).as(c.IS_NULLABLE),
                 coalesce(c.COLUMN_DEFAULT            , inline((String) null)       ).as(c.COLUMN_DEFAULT),

@@ -29827,6 +29827,13 @@ public class DSL {
 
     /**
      * The asterisk (<code>*</code>) to be used in <code>SELECT</code> clauses.
+     * <p>
+     * When using an asterisk, jOOQ will let the database server define the
+     * order of columns, as well as which columns are included in the result
+     * set. If using jOOQ with generated code, this may conflict with the column
+     * set and its ordering as defined at code generation time, meaning columns
+     * may be in a different order, there may be fewer or more columns than
+     * expected. It is usually better to list columns explicitly.
      */
     @NotNull
     @Support

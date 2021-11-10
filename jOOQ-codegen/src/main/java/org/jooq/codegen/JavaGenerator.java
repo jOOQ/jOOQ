@@ -3630,6 +3630,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (!generateEnumsAsScalaSealedTraits()) {
                 scala = false;
                 language = l == SCALA ? JAVA : l;
+                getStrategy().setTargetLanguage(language);
             }
 
             JavaWriter out = newJavaWriter(getFile(e, Mode.ENUM));
@@ -3640,6 +3641,7 @@ public class JavaGenerator extends AbstractGenerator {
         finally {
             scala = s;
             language = l;
+            getStrategy().setTargetLanguage(language);
         }
     }
 

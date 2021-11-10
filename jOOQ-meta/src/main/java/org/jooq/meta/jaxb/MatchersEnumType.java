@@ -33,6 +33,7 @@ public class MatchersEnumType implements Serializable, XMLAppendable
     protected MatcherRule enumClass;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String enumImplements;
+    protected MatcherRule enumLiteral;
 
     /**
      * This enum matcher applies to all unqualified or qualified enum names matched by this expression. If left empty, this matcher applies to all enums.
@@ -83,6 +84,22 @@ public class MatchersEnumType implements Serializable, XMLAppendable
     }
 
     /**
+     * This rule influences the naming of the generated {@link org.jooq.EnumType} literal values.
+     * 
+     */
+    public MatcherRule getEnumLiteral() {
+        return enumLiteral;
+    }
+
+    /**
+     * This rule influences the naming of the generated {@link org.jooq.EnumType} literal values.
+     * 
+     */
+    public void setEnumLiteral(MatcherRule value) {
+        this.enumLiteral = value;
+    }
+
+    /**
      * This enum matcher applies to all unqualified or qualified enum names matched by this expression. If left empty, this matcher applies to all enums.
      * 
      */
@@ -109,11 +126,21 @@ public class MatchersEnumType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * This rule influences the naming of the generated {@link org.jooq.EnumType} literal values.
+     * 
+     */
+    public MatchersEnumType withEnumLiteral(MatcherRule value) {
+        setEnumLiteral(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("expression", expression);
         builder.append("enumClass", enumClass);
         builder.append("enumImplements", enumImplements);
+        builder.append("enumLiteral", enumLiteral);
     }
 
     @Override
@@ -162,6 +189,15 @@ public class MatchersEnumType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (enumLiteral == null) {
+            if (other.enumLiteral!= null) {
+                return false;
+            }
+        } else {
+            if (!enumLiteral.equals(other.enumLiteral)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -172,6 +208,7 @@ public class MatchersEnumType implements Serializable, XMLAppendable
         result = ((prime*result)+((expression == null)? 0 :expression.hashCode()));
         result = ((prime*result)+((enumClass == null)? 0 :enumClass.hashCode()));
         result = ((prime*result)+((enumImplements == null)? 0 :enumImplements.hashCode()));
+        result = ((prime*result)+((enumLiteral == null)? 0 :enumLiteral.hashCode()));
         return result;
     }
 

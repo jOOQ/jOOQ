@@ -225,6 +225,20 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     // -------------------------------------------------------------------------
 
     @Override
+    public final List<String> getJavaEnumLiterals(EnumDefinition definition, Collection<? extends String> literals) {
+        return literals
+            .stream()
+            .filter(Objects::nonNull)
+            .map(l -> getJavaEnumLiteral(definition, l))
+            .collect(toList());
+    }
+
+    @Override
+    public final List<String> getJavaEnumLiterals(EnumDefinition definition, String... literals) {
+        return getJavaEnumLiterals(definition, Arrays.asList(literals));
+    }
+
+    @Override
     public final List<String> getJavaIdentifiers(Collection<? extends Definition> definitions) {
         return definitions
             .stream()

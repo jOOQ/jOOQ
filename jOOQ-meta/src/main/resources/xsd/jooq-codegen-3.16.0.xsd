@@ -403,6 +403,10 @@
       <element name="enumImplements" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated {@link org.jooq.EnumType} should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="enumLiteral" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.EnumType} literal values.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 

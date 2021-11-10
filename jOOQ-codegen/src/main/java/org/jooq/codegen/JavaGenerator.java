@@ -3647,22 +3647,11 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getJavaClassName(e, Mode.ENUM);
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(e, Mode.ENUM));
         final List<String> literals = e.getLiterals();
-        final List<String> identifiers = new ArrayList<>(literals.size());
-
-        for (String literal : literals) {
-            String identifier = convertToIdentifier(literal, language);
-
-            // [#2781] Disambiguate collisions with the leading package name
-            if (identifier.equals(getStrategy().getJavaPackageName(e).replaceAll("\\..*", "")))
-                identifier += "_";
-
-            identifiers.add(identifier);
-        }
+        final List<String> identifiers = getStrategy().getJavaEnumLiterals(e, literals);
 
         printPackage(out, e);
         generateEnumClassJavadoc(e, out);
         printClassAnnotations(out, e, Mode.ENUM);
-
 
         boolean enumHasNoSchema = e.isSynthetic() || !(e.getDatabase() instanceof PostgresDatabase);
         if (scala) {

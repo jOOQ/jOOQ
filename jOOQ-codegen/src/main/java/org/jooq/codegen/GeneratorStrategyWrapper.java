@@ -63,6 +63,7 @@ import org.jooq.meta.AttributeDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.Definition;
+import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.ForeignKeyDefinition;
 import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.RoutineDefinition;
@@ -158,6 +159,17 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     @Override
     public String getFileHeader(Definition definition, Mode mode) {
         return delegate.getFileHeader(definition, mode);
+    }
+
+    @Override
+    public String getJavaEnumLiteral(EnumDefinition definition, String literal) {
+        String result = delegate.getJavaEnumLiteral(definition, literal);
+
+        // [#2781] Disambiguate collisions with the leading package name
+        if (result.equals(getJavaPackageName(definition).replaceAll("\\..*", "")))
+            result += "_";
+
+        return result;
     }
 
     @Override

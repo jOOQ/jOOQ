@@ -41,12 +41,9 @@ import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.jooq.meta.CatalogDefinition;
@@ -111,11 +108,27 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
         return null;
     }
 
+    private final String match(String name, String expression, MatcherRule rule) {
+        if (rule != null)
+            return match(name, expression, rule.getExpression(), rule.getTransform());
+
+        return null;
+    }
+
     private final String match(Definition definition, String expression, String ruleExpression) {
         return match(definition, expression, ruleExpression, null);
     }
 
     private final String match(Definition definition, String expression, String ruleExpression, MatcherTransformType ruleTransformType) {
+        String result = match(definition.getName(), expression, ruleExpression, ruleTransformType);
+
+        if (result != null)
+            return result;
+
+        return match(definition.getQualifiedName(), expression, ruleExpression, ruleTransformType);
+    }
+
+    private final String match(String name, String expression, String ruleExpression, MatcherTransformType ruleTransformType) {
         // [#3734] If users forget to specify the rule's expression but they use
         // a transformer (e.g. PASCAL), we should assume the "default" replacement
         if (ruleTransformType != null && ruleExpression == null)
@@ -123,12 +136,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
         if (ruleExpression != null) {
             Pattern p = patterns.pattern(defaultIfEmpty(expression, "^.*$").trim());
-            Matcher m = p.matcher(definition.getName());
-
-            if (m.matches())
-                return transform(m.replaceAll(ruleExpression), ruleTransformType);
-
-            m = p.matcher(definition.getQualifiedName());
+            Matcher m = p.matcher(name);
 
             if (m.matches())
                 return transform(m.replaceAll(ruleExpression), ruleTransformType);
@@ -447,6 +455,22 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
         // Default to standard behaviour
         return super.getJavaClassName(definition, mode);
+    }
+
+    @Override
+    public String getJavaEnumLiteral(EnumDefinition definition, String literal) {
+        for (MatchersEnumType enums : enums(definition)) {
+            String result = match(definition, enums.getExpression(), enums.getEnumClass());
+
+            if (result != null)
+                result = match(literal, null, enums.getEnumLiteral());
+
+            if (result != null)
+                return result;
+        }
+
+        // Default to standard behaviour
+        return super.getJavaEnumLiteral(definition, literal);
     }
 
     @Override

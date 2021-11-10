@@ -128,6 +128,23 @@ public interface GeneratorStrategy {
     // -------------------------------------------------------------------------
 
     /**
+     * This is applied to enum literals of a given {@link EnumDefinition}.
+     *
+     * @return The Java identifier representing this enum literal, e.g. [OK]
+     */
+    String getJavaEnumLiteral(EnumDefinition definition, String literal);
+
+    /**
+     * @see #getJavaEnumLiteral(EnumDefinition, String)
+     */
+    List<String> getJavaEnumLiterals(EnumDefinition definition, Collection<? extends String> literals);
+
+    /**
+     * @see #getJavaEnumLiteral(EnumDefinition, String)
+     */
+    List<String> getJavaEnumLiterals(EnumDefinition definition, String... literals);
+
+    /**
      * This is applied to definitions that can result in reference static and
      * instance members. For instance, the reference instance of a
      * {@link TableDefinition} is a java identifier

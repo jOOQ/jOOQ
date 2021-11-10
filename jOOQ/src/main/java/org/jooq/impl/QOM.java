@@ -82,6 +82,7 @@ import org.jooq.Function6;
 import org.jooq.Function7;
 import org.jooq.Function8;
 import org.jooq.Function9;
+// ...
 import org.jooq.GroupField;
 import org.jooq.Index;
 import org.jooq.Internal;
@@ -3385,6 +3386,41 @@ public final class QOM {
         @NotNull  Field<? extends Number> $field();
         @NotNull  VarSamp $field(Field<? extends Number> field);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

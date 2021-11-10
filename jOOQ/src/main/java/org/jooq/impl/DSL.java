@@ -213,6 +213,7 @@ import org.jooq.False;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
 // ...
+// ...
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.GroupField;
@@ -20398,6 +20399,140 @@ public class DSL {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Get the rpad(field, length, character) function.
      *
@@ -26580,6 +26715,22 @@ public class DSL {
         return value((Object) value, SQLDataType.XML);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * A synonym for {@link #val(Object, Class)} to be used in Scala and Groovy,
      * where <code>val</code> is a reserved keyword.
@@ -27452,6 +27603,32 @@ public class DSL {
         return inline((Object) value, SQLDataType.XML);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Create a bind value, that is always inlined.
      * <p>
@@ -27986,6 +28163,21 @@ public class DSL {
     public static Param<XML> val(XML value) {
         return val((Object) value, SQLDataType.XML);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Get a bind value with an associated type, taken from a field.

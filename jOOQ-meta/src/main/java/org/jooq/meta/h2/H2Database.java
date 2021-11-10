@@ -608,7 +608,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                         DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, "");
 
                         CSVReader reader = new CSVReader(
-                            new StringReader(r.type.replaceAll("(^enum\\()|(\\).*$)", ""))
+                            new StringReader(r.type.replaceAll("(^enum\\()|(\\)[^)]*$)", ""))
                            ,','  // Separator
                            ,'\'' // Quote character
                            ,true // Strict quotes
@@ -649,7 +649,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
             DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, r.name, "");
 
             CSVReader reader = new CSVReader(
-                new StringReader(r.sql.replaceAll("(?i:(^.*as enum\\()|(\\).*$))", ""))
+                new StringReader(r.sql.replaceAll("(?i:(^.*as enum\\()|(\\)[^)]*$))", ""))
                ,','  // Separator
                ,'\'' // Quote character
                ,true // Strict quotes

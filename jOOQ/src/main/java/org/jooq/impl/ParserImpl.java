@@ -309,6 +309,9 @@ import static org.jooq.impl.DSL.splitPart;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.sqrt;
 import static org.jooq.impl.DSL.square;
+// ...
+// ...
+// ...
 import static org.jooq.impl.DSL.stddevPop;
 import static org.jooq.impl.DSL.stddevSamp;
 import static org.jooq.impl.DSL.substringIndex;
@@ -8073,6 +8076,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if ((field = parseFieldSysConnectByPathIf()) != null)
                     return field;
 
+                else if ((field = parseFieldStGeomFromTextIf()) != null)
+                    return field;
+                else if (parseFunctionNameIf("ST_X") && requireProEdition()) {
+
+
+
+                }
+                else if (parseFunctionNameIf("ST_Y") && requireProEdition()) {
+
+
+
+                }
+
                 break;
 
             case 'T':
@@ -8359,6 +8375,20 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldSysConnectByPathIf() {
         if (parseFunctionNameIf("SYS_CONNECT_BY_PATH") && requireProEdition()) {
 
+
+
+
+
+
+
+
+        }
+
+        return null;
+    }
+
+    private final Field<?> parseFieldStGeomFromTextIf() {
+        if (parseFunctionNameIf("ST_GEOMFROMTEXT") && requireProEdition()) {
 
 
 

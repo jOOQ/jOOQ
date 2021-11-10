@@ -90,6 +90,7 @@ import org.jooq.DataType;
 // ...
 import org.jooq.JSON;
 import org.jooq.JSONB;
+// ...
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.RowId;
@@ -707,6 +708,9 @@ public final class SQLDataType {
      * they are supported
      */
     public static final DataType<XML> XML = new DefaultDataType<>(null, XML.class, "xml");
+
+
+
 
 
 

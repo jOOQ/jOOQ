@@ -88,6 +88,7 @@ import java.util.UUID;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 // ...
+// ...
 import org.jooq.JSON;
 import org.jooq.JSONB;
 // ...
@@ -708,6 +709,15 @@ public final class SQLDataType {
      * they are supported
      */
     public static final DataType<XML> XML = new DefaultDataType<>(null, XML.class, "xml");
+
+
+
+
+
+
+
+
+
 
 
 

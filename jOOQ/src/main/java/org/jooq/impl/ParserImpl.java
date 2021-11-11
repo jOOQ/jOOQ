@@ -311,6 +311,8 @@ import static org.jooq.impl.DSL.sqrt;
 import static org.jooq.impl.DSL.square;
 // ...
 // ...
+// ...
+// ...
 import static org.jooq.impl.DSL.stddevPop;
 import static org.jooq.impl.DSL.stddevSamp;
 import static org.jooq.impl.DSL.substringIndex;
@@ -7544,6 +7546,35 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse(']');
         }
 
+        r = parseMethodCallIf(r);
+        return r;
+    }
+
+    private FieldOrRow parseMethodCallIf(FieldOrRow r) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         return r;
     }
 
@@ -7831,7 +7862,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 else if ((field = parseFieldGreatestIf()) != null)
                     return field;
-                else if (parseFunctionNameIf("GROUP_ID") && requireProEdition() && parse('(') && parse(')')) {
+                else if (parseFunctionNameIf("GROUP_ID") && requireProEdition() && parseEmptyParens()) {
 
 
 
@@ -7840,6 +7871,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if (parseFunctionNameIf("GROUPING"))
                     return grouping(parseFieldParenthesised());
+                else if ((parseFunctionNameIf("GEOMETRY::STGEOMFROMTEXT") || parseFunctionNameIf("GEOGRAPHY::STGEOMFROMTEXT")) && requireProEdition()) {
+
+
+
+                }
                 else
                     break;
 
@@ -8079,7 +8115,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs3(DSL::splitPart);
                 else if ((field = parseFieldReplaceIf()) != null)
                     return field;
-                else if (parseFunctionNameIf("SCHEMA") && parseIf('(') && parse(')'))
+                else if (parseFunctionNameIf("SCHEMA") && parseEmptyParensIf())
                     return currentSchema();
                 else if (parseFunctionNameIf("STRREVERSE"))
                     return reverse((Field) parseFieldParenthesised());
@@ -8088,7 +8124,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 else if (parseFunctionNameIf("SECOND"))
                     return second(parseFieldParenthesised());
-                else if (parseFunctionNameIf("SEQ4", "SEQ8") && parse('(') && parse(')') && requireProEdition()) {
+                else if (parseFunctionNameIf("SEQ4", "SEQ8") && parseEmptyParens() && requireProEdition()) {
 
 
 
@@ -8110,6 +8146,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 else if ((field = parseFieldSysConnectByPathIf()) != null)
                     return field;
+                else if (parseFunctionNameIf("ST_AREA") && requireProEdition()) {
+
+
+
+                }
+                else if (parseFunctionNameIf("ST_ASTEXT") && requireProEdition()) {
+
+
+
+                }
                 else if (parseFunctionNameIf("ST_GEOMFROMTEXT") && requireProEdition()) {
 
 

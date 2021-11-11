@@ -378,6 +378,8 @@ final class Names {
     static final Name N_STRING_AGG             = unquotedName("string_agg");
     static final Name N_STRREVERSE             = unquotedName("strreverse");
     static final Name N_STR_REPLACE            = unquotedName("str_replace");
+    static final Name N_ST_ASTEXT              = unquotedName("st_astext");
+    static final Name N_ST_AREA                = unquotedName("st_area");
     static final Name N_ST_GEOMFROMTEXT        = unquotedName("st_geomfromtext");
     static final Name N_ST_X                   = unquotedName("st_x");
     static final Name N_ST_Y                   = unquotedName("st_y");

@@ -429,7 +429,10 @@ final class Names {
     static final Name N_ST_AREA                = unquotedName("st_area");
     static final Name N_ST_ASTEXT              = unquotedName("st_astext");
     static final Name N_ST_CONTAINS            = unquotedName("st_contains");
+    static final Name N_ST_ENDPOINT            = unquotedName("st_endpoint");
     static final Name N_ST_GEOMFROMTEXT        = unquotedName("st_geomfromtext");
+    static final Name N_ST_LENGTH              = unquotedName("st_length");
+    static final Name N_ST_STARTPOINT          = unquotedName("st_startpoint");
     static final Name N_ST_WITHIN              = unquotedName("st_within");
     static final Name N_ST_X                   = unquotedName("st_x");
     static final Name N_ST_Y                   = unquotedName("st_y");

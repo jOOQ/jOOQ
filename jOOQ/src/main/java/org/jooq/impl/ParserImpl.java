@@ -306,6 +306,7 @@ import static org.jooq.impl.DSL.square;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.stddevPop;
 import static org.jooq.impl.DSL.stddevSamp;
 import static org.jooq.impl.DSL.sum;
@@ -6142,29 +6143,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
-        if (parseKeywordIf("EXISTS")) {
-            parse('(');
-            Select<?> select = parseWithOrSelect();
-            parse(')');
-
-            return exists(select);
-        }
-        else if (parseKeywordIf("REGEXP_LIKE")) {
-            parse('(');
-            Field<?> f1 = parseField();
-            parse(',');
-            Field<?> f2 = parseField();
-            parse(')');
-
-            return f1.likeRegex((Field) f2);
-        }
-        else if (parseKeywordIf("UNIQUE")) {
-            parse('(');
-            Select<?> select = parseWithOrSelect();
-            parse(')');
-
-            return unique(select);
-        }
+        if (parseKeywordIf("EXISTS"))
+            return exists(parseParenthesised(c -> parseWithOrSelect()));
+        else if (parseKeywordIf("REGEXP_LIKE"))
+            return parseFunctionArgs2(Field::likeRegex);
+        else if (parseKeywordIf("UNIQUE"))
+            return unique(parseParenthesised(c -> parseWithOrSelect()));
         else if (parseKeywordIf("JSON_EXISTS")) {
             parse('(');
             Field json = parseField();
@@ -6201,6 +6185,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return xmlexists(xpath).passing(xml);
         }
         else if (parseFunctionNameIf("ST_CONTAINS") && requireProEdition()) {
+
+
+
+        }
+        else if (parseFunctionNameIf("ST_WITHIN") && requireProEdition()) {
 
 
 
@@ -7595,6 +7584,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private FieldOrRow parseMethodCallIf(FieldOrRow r) {
+
+
 
 
 

@@ -6229,7 +6229,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             case 'U':
                 if (parseKeywordIf("UNIQUE"))
-                    return unique(parseParenthesised(c -> parseWithOrSelect()));
+                    return unique(parseParenthesised(c -> (Select) parseWithOrSelect()));
 
 
 
@@ -7670,6 +7670,18 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private FieldOrRow parseMethodCallIf(FieldOrRow r) {
+
+
+
+
+
+
+
+
+        return r;
+    }
+
+    private FieldOrRow parseMethodCallIf0(FieldOrRow r) {
 
 
 

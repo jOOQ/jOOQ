@@ -82,7 +82,6 @@ import static org.jooq.impl.DSL.ascii;
 import static org.jooq.impl.DSL.asin;
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.atan;
-import static org.jooq.impl.DSL.atan2;
 import static org.jooq.impl.DSL.avg;
 import static org.jooq.impl.DSL.avgDistinct;
 import static org.jooq.impl.DSL.begin;
@@ -185,7 +184,6 @@ import static org.jooq.impl.DSL.iif;
 import static org.jooq.impl.DSL.in;
 import static org.jooq.impl.DSL.inOut;
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.insert;
 import static org.jooq.impl.DSL.isnull;
 import static org.jooq.impl.DSL.isoDayOfWeek;
 import static org.jooq.impl.DSL.jsonArray;
@@ -206,7 +204,6 @@ import static org.jooq.impl.DSL.lastValue;
 import static org.jooq.impl.DSL.lateral;
 import static org.jooq.impl.DSL.lead;
 import static org.jooq.impl.DSL.least;
-import static org.jooq.impl.DSL.left;
 import static org.jooq.impl.DSL.length;
 // ...
 import static org.jooq.impl.DSL.list;
@@ -216,14 +213,12 @@ import static org.jooq.impl.DSL.log;
 import static org.jooq.impl.DSL.log10;
 // ...
 import static org.jooq.impl.DSL.lower;
-import static org.jooq.impl.DSL.lpad;
 import static org.jooq.impl.DSL.ltrim;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.maxDistinct;
 import static org.jooq.impl.DSL.md5;
 import static org.jooq.impl.DSL.median;
 import static org.jooq.impl.DSL.microsecond;
-import static org.jooq.impl.DSL.mid;
 import static org.jooq.impl.DSL.millennium;
 import static org.jooq.impl.DSL.millisecond;
 import static org.jooq.impl.DSL.min;
@@ -274,10 +269,8 @@ import static org.jooq.impl.DSL.ratioToReport;
 import static org.jooq.impl.DSL.regexpReplaceAll;
 import static org.jooq.impl.DSL.regexpReplaceFirst;
 // ...
-import static org.jooq.impl.DSL.replace;
 // ...
 import static org.jooq.impl.DSL.reverse;
-import static org.jooq.impl.DSL.right;
 import static org.jooq.impl.DSL.rollup;
 import static org.jooq.impl.DSL.round;
 import static org.jooq.impl.DSL.row;
@@ -293,7 +286,6 @@ import static org.jooq.impl.DSL.rowsFollowing;
 import static org.jooq.impl.DSL.rowsPreceding;
 import static org.jooq.impl.DSL.rowsUnboundedFollowing;
 import static org.jooq.impl.DSL.rowsUnboundedPreceding;
-import static org.jooq.impl.DSL.rpad;
 import static org.jooq.impl.DSL.rtrim;
 import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.DSL.second;
@@ -313,9 +305,9 @@ import static org.jooq.impl.DSL.square;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.stddevPop;
 import static org.jooq.impl.DSL.stddevSamp;
-import static org.jooq.impl.DSL.substringIndex;
 import static org.jooq.impl.DSL.sum;
 import static org.jooq.impl.DSL.sumDistinct;
 // ...
@@ -327,7 +319,6 @@ import static org.jooq.impl.DSL.timestamp;
 import static org.jooq.impl.DSL.timezone;
 import static org.jooq.impl.DSL.timezoneHour;
 import static org.jooq.impl.DSL.timezoneMinute;
-import static org.jooq.impl.DSL.toChar;
 import static org.jooq.impl.DSL.toDate;
 import static org.jooq.impl.DSL.toHex;
 import static org.jooq.impl.DSL.toTimestamp;
@@ -346,6 +337,7 @@ import static org.jooq.impl.DSL.varSamp;
 import static org.jooq.impl.DSL.week;
 import static org.jooq.impl.DSL.when;
 // ...
+import static org.jooq.impl.DSL.widthBucket;
 import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlattributes;
 import static org.jooq.impl.DSL.xmlcomment;
@@ -6208,6 +6200,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             else
                 return xmlexists(xpath).passing(xml);
         }
+        else if (parseFunctionNameIf("ST_CONTAINS") && requireProEdition()) {
+
+
+
+        }
 
 
 
@@ -7355,7 +7352,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return r;
     }
 
-    private final Field<?> parseFunctionArgs1(Function1<? super Field, ? extends Field<?>> finisher) {
+    private final <Q extends QueryPart> Q parseFunctionArgs1(Function1<? super Field, ? extends Q> finisher) {
         parse('(');
         Field<?> f1 = parseField();
         parse(')');
@@ -7363,9 +7360,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return finisher.apply(f1);
     }
 
-    private final Field<?> parseFunctionArgs2(
-        Function1<? super Field, ? extends Field<?>> finisher1,
-        Function2<? super Field, ? super Field, ? extends Field<?>> finisher2
+    private final <Q extends QueryPart> Q parseFunctionArgs2(
+        Function1<? super Field, ? extends Q> finisher1,
+        Function2<? super Field, ? super Field, ? extends Q> finisher2
     ) {
         parse('(');
         Field<?> f1 = parseField();
@@ -7375,13 +7372,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return f2 == null ? finisher1.apply(f1) : finisher2.apply(f1, f2);
     }
 
-    private final Field<?> parseFunctionArgs2(Function2<? super Field, ? super Field, ? extends Field<?>> finisher) {
+    private final <Q extends QueryPart> Q parseFunctionArgs2(Function2<? super Field, ? super Field, ? extends Q> finisher) {
         return parseFunctionArgs2(this::parseField, finisher);
     }
 
-    private final Field<?> parseFunctionArgs2(
+    private final <Q extends QueryPart> Q parseFunctionArgs2(
         Supplier<? extends Field<?>> argument,
-        Function2<? super Field, ? super Field, ? extends Field<?>> finisher
+        Function2<? super Field, ? super Field, ? extends Q> finisher
     ) {
         parse('(');
         Field<?> f1 = argument.get();
@@ -7392,9 +7389,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return finisher.apply(f1, f2);
     }
 
-    private final Field<?> parseFunctionArgs3(
-        Function2<? super Field, ? super Field, ? extends Field<?>> finisher2,
-        Function3<? super Field, ? super Field, ? super Field, ? extends Field<?>> finisher3
+    private final <Q extends QueryPart> Q parseFunctionArgs3(
+        Function2<? super Field, ? super Field, ? extends Q> finisher2,
+        Function3<? super Field, ? super Field, ? super Field, ? extends Q> finisher3
     ) {
         parse('(');
         Field<?> f1 = parseField();
@@ -7406,7 +7403,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return f3 == null ? finisher2.apply(f1, f2) : finisher3.apply(f1, f2, f3);
     }
 
-    private final Field<?> parseFunctionArgs3(Function3<? super Field, ? super Field, ? super Field, ? extends Field<?>> finisher) {
+    private final <Q extends QueryPart> Q parseFunctionArgs3(Function3<? super Field, ? super Field, ? super Field, ? extends Q> finisher) {
         parse('(');
         Field<?> f1 = parseField();
         parse(',');
@@ -7418,7 +7415,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return finisher.apply(f1, f2, f3);
     }
 
-    private final Field<?> parseFunctionArgs4(Function4<? super Field, ? super Field, ? super Field, ? super Field, ? extends Field<?>> finisher) {
+    private final <Q extends QueryPart> Q parseFunctionArgs4(Function4<? super Field, ? super Field, ? super Field, ? super Field, ? extends Q> finisher) {
         parse('(');
         Field<?> f1 = parseField();
         parse(',');
@@ -7622,6 +7619,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+
+
         return r;
     }
 
@@ -7726,7 +7725,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("ADD_SECONDS"))
                     return parseFieldAddDatePart(SECOND);
                 else if (parseFunctionNameIf("ARRAY_GET"))
-                    return parseFunctionArgs2(DSL::arrayGet);
+                    return parseFunctionArgs2((f1, f2) -> arrayGet(f1, f2));
 
                 break;
 
@@ -7993,7 +7992,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 }
                 else if (parseKeywordIf("LSHIFT"))
-                    return parseFunctionArgs2(() -> toField(parseNumericOp()), DSL::shl);
+                    return parseFunctionArgs2(() -> toField(parseNumericOp()), (f1, f2) -> shl(f1, f2));
                 else if ((field = parseFieldLeastIf()) != null)
                     return field;
                 else if ((field = parseFieldLeadLagIf()) != null)
@@ -8141,7 +8140,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("RATIO_TO_REPORT"))
                     return parseFunctionArgs1(f -> parseWindowFunction(null, null, ratioToReport(f)));
                 else if (parseKeywordIf("RSHIFT"))
-                    return parseFunctionArgs2(() -> toField(parseNumericOp()), DSL::shr);
+                    return parseFunctionArgs2(() -> toField(parseNumericOp()), (f1, f2) -> shr(f1, f2));
                 else if (parseFunctionNameIf("ROW"))
                     return parseTuple();
 
@@ -8183,9 +8182,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("SIN"))
                     return sin((Field) parseFieldNumericOpParenthesised());
                 else if (parseKeywordIf("SHL", "SHIFTLEFT"))
-                    return parseFunctionArgs2(() -> toField(parseNumericOp()), DSL::shl);
+                    return parseFunctionArgs2(() -> toField(parseNumericOp()), (f1, f2) -> shl(f1, f2));
                 else if (parseKeywordIf("SHR", "SHIFTRIGHT"))
-                    return parseFunctionArgs2(() -> toField(parseNumericOp()), DSL::shr);
+                    return parseFunctionArgs2(() -> toField(parseNumericOp()), (f1, f2) -> shr(f1, f2));
                 else if ((field = parseFieldSysConnectByPathIf()) != null)
                     return field;
                 else if (parseFunctionNameIf("ST_AREA") && requireProEdition()) {
@@ -8270,7 +8269,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             case 'W':
                 if (parseFunctionNameIf("WIDTH_BUCKET"))
-                    return parseFunctionArgs4(DSL::widthBucket);
+                    return parseFunctionArgs4((f1, f2, f3, f4) -> widthBucket(f1, f2, f3, f4));
                 else if (parseFunctionNameIf("WEEK"))
                     return week(parseFieldParenthesised());
 

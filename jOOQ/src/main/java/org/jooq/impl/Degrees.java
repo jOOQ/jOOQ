@@ -63,7 +63,7 @@ import java.math.BigDecimal;
 
 
 /**
- * The <code>DEG</code> statement.
+ * The <code>DEGREES</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unused" })
 final class Degrees
@@ -79,7 +79,7 @@ implements
         Field<? extends Number> radians
     ) {
         super(
-            N_DEG,
+            N_DEGREES,
             allNotNull(NUMERIC, radians)
         );
 

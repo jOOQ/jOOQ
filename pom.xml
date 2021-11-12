@@ -515,6 +515,13 @@
                 <optional>true</optional>
             </dependency>
 
+            <!-- Utilities -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.12.0</version>
+            </dependency>
+
             <!-- Maven plugin dependencies -->
             <dependency>
                 <groupId>org.apache.maven</groupId>

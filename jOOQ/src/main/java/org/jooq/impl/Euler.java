@@ -131,7 +131,7 @@ implements
                 break;
 
             default:
-                ctx.visit(function(N_EULER, getDataType()));
+                ctx.visit(function(N_E, getDataType()));
                 break;
         }
     }

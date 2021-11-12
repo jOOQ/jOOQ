@@ -16165,7 +16165,7 @@ public class DSL {
     }
 
     /**
-     * The <code>DEG</code> function.
+     * The <code>DEGREES</code> function.
      * <p>
      * Turn a value in radians to degrees.
      *
@@ -16178,7 +16178,7 @@ public class DSL {
     }
 
     /**
-     * The <code>DEG</code> function.
+     * The <code>DEGREES</code> function.
      * <p>
      * Turn a value in radians to degrees.
      *
@@ -16383,7 +16383,7 @@ public class DSL {
     }
 
     /**
-     * The <code>RAD</code> function.
+     * The <code>RADIANS</code> function.
      * <p>
      * Turn a value in degrees to radians.
      *
@@ -16396,7 +16396,7 @@ public class DSL {
     }
 
     /**
-     * The <code>RAD</code> function.
+     * The <code>RADIANS</code> function.
      * <p>
      * Turn a value in degrees to radians.
      *
@@ -20092,7 +20092,7 @@ public class DSL {
     @NotNull
     @Support
     public static AggregateFunction<BigDecimal> regrAvgX(Field<? extends Number> y, Field<? extends Number> x) {
-        return new RegrAvgx(y, x);
+        return new RegrAvgX(y, x);
     }
 
     /**
@@ -20106,7 +20106,7 @@ public class DSL {
     @NotNull
     @Support
     public static AggregateFunction<BigDecimal> regrAvgY(Field<? extends Number> y, Field<? extends Number> x) {
-        return new RegrAvgy(y, x);
+        return new RegrAvgY(y, x);
     }
 
     /**
@@ -20280,6 +20280,61 @@ public class DSL {
     public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
         return new VarSamp(field);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

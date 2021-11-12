@@ -3229,28 +3229,28 @@ public final class QOM {
         @NotNull  Product $distinct(boolean distinct);
     }
 
-    public /*sealed*/ interface RegrAvgx
+    public /*sealed*/ interface RegrAvgX
         extends
             org.jooq.AggregateFunction<BigDecimal>
         //permits
-        //    RegrAvgx
+        //    RegrAvgX
     {
         @NotNull  Field<? extends Number> $y();
         @NotNull  Field<? extends Number> $x();
-        @NotNull  RegrAvgx $y(Field<? extends Number> y);
-        @NotNull  RegrAvgx $x(Field<? extends Number> x);
+        @NotNull  RegrAvgX $y(Field<? extends Number> y);
+        @NotNull  RegrAvgX $x(Field<? extends Number> x);
     }
 
-    public /*sealed*/ interface RegrAvgy
+    public /*sealed*/ interface RegrAvgY
         extends
             org.jooq.AggregateFunction<BigDecimal>
         //permits
-        //    RegrAvgy
+        //    RegrAvgY
     {
         @NotNull  Field<? extends Number> $y();
         @NotNull  Field<? extends Number> $x();
-        @NotNull  RegrAvgy $y(Field<? extends Number> y);
-        @NotNull  RegrAvgy $x(Field<? extends Number> x);
+        @NotNull  RegrAvgY $y(Field<? extends Number> y);
+        @NotNull  RegrAvgY $x(Field<? extends Number> x);
     }
 
     public /*sealed*/ interface RegrCount
@@ -3388,6 +3388,19 @@ public final class QOM {
         @NotNull  Field<? extends Number> $field();
         @NotNull  VarSamp $field(Field<? extends Number> field);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

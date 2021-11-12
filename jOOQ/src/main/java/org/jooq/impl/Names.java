@@ -432,6 +432,8 @@ final class Names {
     static final Name N_ST_ENDPOINT            = unquotedName("st_endpoint");
     static final Name N_ST_GEOMFROMTEXT        = unquotedName("st_geomfromtext");
     static final Name N_ST_LENGTH              = unquotedName("st_length");
+    static final Name N_ST_NUMPOINTS           = unquotedName("st_numpoints");
+    static final Name N_ST_POINTN              = unquotedName("st_pointn");
     static final Name N_ST_STARTPOINT          = unquotedName("st_startpoint");
     static final Name N_ST_WITHIN              = unquotedName("st_within");
     static final Name N_ST_X                   = unquotedName("st_x");

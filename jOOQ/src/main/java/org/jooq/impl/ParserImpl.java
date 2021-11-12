@@ -310,6 +310,8 @@ import static org.jooq.impl.DSL.square;
 // ...
 // ...
 // ...
+// ...
+// ...
 import static org.jooq.impl.DSL.stddevPop;
 import static org.jooq.impl.DSL.stddevSamp;
 import static org.jooq.impl.DSL.sum;
@@ -7621,6 +7623,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+
+
+
+
         return r;
     }
 
@@ -8208,6 +8214,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 }
                 else if (parseFunctionNameIf("ST_LENGTH") && requireProEdition()) {
+
+
+
+                }
+                else if (parseFunctionNameIf("ST_NUMPOINTS") && requireProEdition()) {
+
+
+
+                }
+                else if (parseFunctionNameIf("ST_POINTN") && requireProEdition()) {
 
 
 

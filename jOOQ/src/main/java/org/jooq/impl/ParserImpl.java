@@ -6229,7 +6229,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             case 'U':
                 if (parseKeywordIf("UNIQUE"))
-                    return unique(parseParenthesised(c -> (Select) parseWithOrSelect()));
+                    // javac can't infer this (?)
+                    return unique(this.<Select<?>>parseParenthesised(c -> parseWithOrSelect()));
 
 
 

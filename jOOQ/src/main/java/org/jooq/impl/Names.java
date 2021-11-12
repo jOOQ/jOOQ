@@ -431,10 +431,16 @@ final class Names {
     static final Name N_ST_CONTAINS            = unquotedName("st_contains");
     static final Name N_ST_ENDPOINT            = unquotedName("st_endpoint");
     static final Name N_ST_GEOMFROMTEXT        = unquotedName("st_geomfromtext");
+    static final Name N_ST_INTERSECTION        = unquotedName("st_intersection");
+    static final Name N_ST_INTERSECTS          = unquotedName("st_intersects");
+    static final Name N_ST_IS_CLOSED           = unquotedName("st_is_closed");
     static final Name N_ST_LENGTH              = unquotedName("st_length");
     static final Name N_ST_NUMPOINTS           = unquotedName("st_numpoints");
+    static final Name N_ST_OVERLAPS            = unquotedName("st_overlaps");
     static final Name N_ST_POINTN              = unquotedName("st_pointn");
     static final Name N_ST_STARTPOINT          = unquotedName("st_startpoint");
+    static final Name N_ST_TOUCHES             = unquotedName("st_touches");
+    static final Name N_ST_UNION               = unquotedName("st_union");
     static final Name N_ST_WITHIN              = unquotedName("st_within");
     static final Name N_ST_X                   = unquotedName("st_x");
     static final Name N_ST_Y                   = unquotedName("st_y");

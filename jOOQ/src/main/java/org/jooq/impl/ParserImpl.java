@@ -312,6 +312,12 @@ import static org.jooq.impl.DSL.square;
 // ...
 // ...
 // ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
 import static org.jooq.impl.DSL.stddevPop;
 import static org.jooq.impl.DSL.stddevSamp;
 import static org.jooq.impl.DSL.sum;
@@ -6142,19 +6148,360 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final QueryPart parsePredicate() {
+        Condition condition;
 
 
 
 
 
 
-        if (parseKeywordIf("EXISTS"))
-            return exists(parseParenthesised(c -> parseWithOrSelect()));
-        else if (parseKeywordIf("REGEXP_LIKE"))
-            return parseFunctionArgs2(Field::likeRegex);
-        else if (parseKeywordIf("UNIQUE"))
-            return unique(parseParenthesised(c -> parseWithOrSelect()));
-        else if (parseKeywordIf("JSON_EXISTS")) {
+
+        switch (characterUpper()) {
+            case 'D':
+
+
+
+
+
+
+                break;
+
+            case 'E':
+                if (parseKeywordIf("EXISTS"))
+                    return exists(parseParenthesised(c -> parseWithOrSelect()));
+
+                break;
+
+            case 'I':
+
+
+
+
+
+
+                break;
+
+            case 'J':
+                if ((condition = parsePredicateJSONExistsIf()) != null)
+                    return condition;
+
+                break;
+
+            case 'R':
+                if (parseKeywordIf("REGEXP_LIKE"))
+                    return parseFunctionArgs2(Field::likeRegex);
+
+                break;
+
+            case 'S':
+                if (parseFunctionNameIf("ST_CONTAINS") && requireProEdition()) {
+
+
+
+                }
+                else if (parseFunctionNameIf("ST_INTERSECTS") && requireProEdition()) {
+
+
+
+                }
+                else if (parseFunctionNameIf("ST_ISCLOSED") && requireProEdition()) {
+
+
+
+                }
+                else if (parseFunctionNameIf("ST_OVERLAPS") && requireProEdition()) {
+
+
+
+                }
+                else if (parseFunctionNameIf("ST_TOUCHES") && requireProEdition()) {
+
+
+
+                }
+                else if (parseFunctionNameIf("ST_WITHIN") && requireProEdition()) {
+
+
+
+                }
+
+                break;
+
+            case 'U':
+                if (parseKeywordIf("UNIQUE"))
+                    return unique(parseParenthesised(c -> parseWithOrSelect()));
+
+
+
+
+
+
+
+                break;
+
+            case 'X':
+                if ((condition = parsePredicateXMLExistsIf()) != null)
+                    return condition;
+
+                break;
+        }
+
+        FieldOrRow left;
+        Comparator comp;
+        TSQLOuterJoinComparator outer;
+        boolean not;
+        boolean notOp = false;
+
+        left = parseConcat();
+        not = parseKeywordIf("NOT");
+
+
+        if (!not && ((outer = parseTSQLOuterJoinComparatorIf()) != null) && requireProEdition()) {
+            Condition result = null;
+
+
+
+
+
+
+
+
+
+
+
+
+            return result;
+        }
+        else if (!not && (comp = parseComparatorIf()) != null) {
+            boolean all = parseKeywordIf("ALL");
+            boolean any = !all && (parseKeywordIf("ANY") || parseKeywordIf("SOME"));
+            if (all || any)
+                parse('(');
+
+            // TODO equal degrees
+            Condition result =
+                  all
+                ? left instanceof Field
+                    ? peekSelectOrWith(true)
+                        ? ((Field) left).compare(comp, DSL.all(parseWithOrSelect(1)))
+                        : ((Field) left).compare(comp, DSL.all(parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD)))
+
+                    // TODO: Support quantifiers also for rows
+                    : new RowSubqueryCondition((Row) left, DSL.all(parseWithOrSelect(((Row) left).size())), comp)
+
+                : any
+                ? left instanceof Field
+                    ? peekSelectOrWith(true)
+                        ? ((Field) left).compare(comp, DSL.any(parseWithOrSelect(1)))
+                        : ((Field) left).compare(comp, DSL.any(parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD)))
+
+                    // TODO: Support quantifiers also for rows
+                    : new RowSubqueryCondition((Row) left, DSL.any(parseWithOrSelect(((Row) left).size())), comp)
+
+                : left instanceof Field
+                    ? ((Field) left).compare(comp, toField(parseConcat()))
+                    : new RowCondition((Row) left, parseRow(((Row) left).size(), true), comp);
+
+            if (all || any)
+                parse(')');
+
+            return result;
+        }
+        else if (!not && parseKeywordIf("IS")) {
+            not = parseKeywordIf("NOT");
+
+            if (parseKeywordIf("NULL"))
+                return not
+                    ? left instanceof Field
+                        ? ((Field) left).isNotNull()
+                        : ((Row) left).isNotNull()
+                    : left instanceof Field
+                        ? ((Field) left).isNull()
+                        : ((Row) left).isNull();
+            else if (left instanceof Field && parseKeywordIf("JSON"))
+                return not
+                    ? ((Field) left).isNotJson()
+                    : ((Field) left).isJson();
+            else if (left instanceof Field && parseKeywordIf("DOCUMENT"))
+                return not
+                    ? ((Field) left).isNotDocument()
+                    : ((Field) left).isDocument();
+
+            not = parseKeywordIf("DISTINCT FROM") == not;
+            if (left instanceof Field) { Field f = (Field) left;
+                Field right = toField(parseConcat());
+                return not ? f.isNotDistinctFrom(right) : f.isDistinctFrom(right);
+            }
+            else {
+                Row right = parseRow(((Row) left).size(), true);
+                return new RowIsDistinctFrom((Row) left, right, not);
+            }
+        }
+        else if (!not && parseIf("@>")) {
+            return toField(left).contains((Field) toField(parseConcat()));
+        }
+        else if (!forbidden.contains(FK_IN) && parseKeywordIf("IN")) {
+            Condition result;
+            parse('(');
+            if (peek(')'))
+                result = not
+                    ? left instanceof Field
+                        ? ((Field) left).notIn(EMPTY_FIELD)
+                        : new RowInCondition((Row) left, new QueryPartList<>(), true)
+                    : left instanceof Field
+                        ? ((Field) left).in(EMPTY_FIELD)
+                        : new RowInCondition((Row) left, new QueryPartList<>(), false);
+            else if (peekSelectOrWith(true))
+                result = not
+                    ? left instanceof Field
+                        ? ((Field) left).notIn(parseWithOrSelect(1))
+                        : new RowSubqueryCondition((Row) left, parseWithOrSelect(((Row) left).size()), NOT_IN)
+                    : left instanceof Field
+                        ? ((Field) left).in(parseWithOrSelect(1))
+                        : new RowSubqueryCondition((Row) left, parseWithOrSelect(((Row) left).size()), IN);
+            else
+                result = not
+                    ? left instanceof Field
+                        ? ((Field) left).notIn(parseList(',', c -> c.parseField()))
+                        : new RowInCondition((Row) left, new QueryPartList<>(parseList(',', c -> parseRow(((Row) left).size()))), true)
+                    : left instanceof Field
+                        ? ((Field) left).in(parseList(',', c -> c.parseField()))
+                        : new RowInCondition((Row) left, new QueryPartList<>(parseList(',', c -> parseRow(((Row) left).size()))), false);
+
+            parse(')');
+            return result;
+        }
+        else if (parseKeywordIf("BETWEEN")) {
+            boolean symmetric = !parseKeywordIf("ASYMMETRIC") && parseKeywordIf("SYMMETRIC");
+            FieldOrRow r1 = left instanceof Field
+                ? parseConcat()
+                : parseRow(((Row) left).size());
+            parseKeyword("AND");
+            FieldOrRow r2 = left instanceof Field
+                ? parseConcat()
+                : parseRow(((Row) left).size());
+
+            return symmetric
+                ? not
+                    ? left instanceof Field
+                        ? ((Field) left).notBetweenSymmetric((Field) r1, (Field) r2)
+                        : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2)
+                    : left instanceof Field
+                        ? ((Field) left).betweenSymmetric((Field) r1, (Field) r2)
+                        : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2)
+                : not
+                    ? left instanceof Field
+                        ? ((Field) left).notBetween((Field) r1, (Field) r2)
+                        : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2)
+                    : left instanceof Field
+                        ? ((Field) left).between((Field) r1, (Field) r2)
+                        : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2);
+        }
+        else if (left instanceof Field && (parseKeywordIf("LIKE") || parseOperatorIf("~~") || (notOp = parseOperatorIf("!~~")))) {
+            if (parseKeywordIf("ANY")) {
+                parse('(');
+                if (peekSelectOrWith(true)) {
+                    Select<?> select = parseWithOrSelect();
+                    parse(')');
+                    LikeEscapeStep result = (not ^ notOp) ? ((Field) left).notLike(any(select)) : ((Field) left).like(any(select));
+                    return parseEscapeClauseIf(result);
+                }
+                else {
+                    List<Field<?>> fields;
+                    if (parseIf(')')) {
+                        fields = emptyList();
+                    }
+                    else {
+                        fields = parseList(',', c -> toField(parseConcat()));
+                        parse(')');
+                    }
+                    Field<String>[] fieldArray = fields.toArray(new Field[0]);
+                    LikeEscapeStep result = (not ^ notOp) ? ((Field<String>) left).notLike(any(fieldArray)) : ((Field<String>) left).like(any(fieldArray));
+                    return parseEscapeClauseIf(result);
+                }
+            }
+            else if (parseKeywordIf("ALL")) {
+                parse('(');
+                if (peekSelectOrWith(true)) {
+                    Select<?> select = parseWithOrSelect();
+                    parse(')');
+                    LikeEscapeStep result = (not ^ notOp) ? ((Field) left).notLike(all(select)) : ((Field) left).like(all(select));
+                    return parseEscapeClauseIf(result);
+                }
+                else {
+                    List<Field<?>> fields;
+                    if (parseIf(')')) {
+                        fields = emptyList();
+                    }
+                    else {
+                        fields = parseList(',', c -> toField(parseConcat()));
+                        parse(')');
+                    }
+                    Field<String>[] fieldArray = fields.toArray(new Field[0]);
+                    LikeEscapeStep result = (not ^ notOp) ? ((Field<String>) left).notLike(all(fieldArray)) : ((Field<String>) left).like(all(fieldArray));
+                    return parseEscapeClauseIf(result);
+                }
+            }
+            else {
+                Field right = toField(parseConcat());
+                LikeEscapeStep like = (not ^ notOp) ? ((Field) left).notLike(right) : ((Field) left).like(right);
+                return parseEscapeClauseIf(like);
+            }
+        }
+        else if (left instanceof Field && (parseKeywordIf("ILIKE") || parseOperatorIf("~~*") || (notOp = parseOperatorIf("!~~*")))) {
+            Field right = toField(parseConcat());
+            LikeEscapeStep like = (not ^ notOp) ? ((Field) left).notLikeIgnoreCase(right) : ((Field) left).likeIgnoreCase(right);
+            return parseEscapeClauseIf(like);
+        }
+        else if (left instanceof Field && (parseKeywordIf("REGEXP")
+                                        || parseKeywordIf("RLIKE")
+                                        || parseKeywordIf("LIKE_REGEX")
+                                        || parseOperatorIf("~")
+                                        || (notOp = parseOperatorIf("!~")))) {
+            Field right = toField(parseConcat());
+            return (not ^ notOp)
+                    ? ((Field) left).notLikeRegex(right)
+                    : ((Field) left).likeRegex(right);
+        }
+        else if (left instanceof Field && parseKeywordIf("SIMILAR TO")) {
+            Field right = toField(parseConcat());
+            LikeEscapeStep like = not ? ((Field) left).notSimilarTo(right) : ((Field) left).similarTo(right);
+            return parseEscapeClauseIf(like);
+        }
+        else if (left instanceof Row && ((Row) left).size() == 2 && parseKeywordIf("OVERLAPS")) {
+            Row leftRow = (Row) left;
+            Row rightRow = parseRow(2);
+
+            Row2 leftRow2 = row(leftRow.field(0), leftRow.field(1));
+            Row2 rightRow2 = row(rightRow.field(0), rightRow.field(1));
+
+            return leftRow2.overlaps(rightRow2);
+        }
+        else
+            return left;
+    }
+
+    private final Condition parsePredicateXMLExistsIf() {
+        if (parseKeywordIf("XMLEXISTS")) {
+            parse('(');
+            Field<String> xpath = (Field<String>) parseField();
+            XMLPassingMechanism m = parseXMLPassingMechanism();
+            Field<XML> xml = (Field<XML>) parseField();
+            parse(')');
+
+            if (m == BY_REF)
+                return xmlexists(xpath).passingByRef(xml);
+            else if (m == BY_VALUE)
+                return xmlexists(xpath).passingByValue(xml);
+            else
+                return xmlexists(xpath).passing(xml);
+        }
+
+        return null;
+    }
+
+    private final Condition parsePredicateJSONExistsIf() {
+        if (parseKeywordIf("JSON_EXISTS")) {
             parse('(');
             Field json = parseField();
             parse(',');
@@ -6175,274 +6522,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             return jsonExists(json, path);
         }
-        else if (parseKeywordIf("XMLEXISTS")) {
-            parse('(');
-            Field<String> xpath = (Field<String>) parseField();
-            XMLPassingMechanism m = parseXMLPassingMechanism();
-            Field<XML> xml = (Field<XML>) parseField();
-            parse(')');
 
-            if (m == BY_REF)
-                return xmlexists(xpath).passingByRef(xml);
-            else if (m == BY_VALUE)
-                return xmlexists(xpath).passingByValue(xml);
-            else
-                return xmlexists(xpath).passing(xml);
-        }
-        else if (parseFunctionNameIf("ST_CONTAINS") && requireProEdition()) {
-
-
-
-        }
-        else if (parseFunctionNameIf("ST_WITHIN") && requireProEdition()) {
-
-
-
-        }
-
-
-
-
-
-
-
-
-
-        else {
-            FieldOrRow left;
-            Comparator comp;
-            TSQLOuterJoinComparator outer;
-            boolean not;
-            boolean notOp = false;
-
-            left = parseConcat();
-            not = parseKeywordIf("NOT");
-
-
-            if (!not && ((outer = parseTSQLOuterJoinComparatorIf()) != null) && requireProEdition()) {
-                Condition result = null;
-
-
-
-
-
-
-
-
-
-
-
-
-                return result;
-            }
-            else if (!not && (comp = parseComparatorIf()) != null) {
-                boolean all = parseKeywordIf("ALL");
-                boolean any = !all && (parseKeywordIf("ANY") || parseKeywordIf("SOME"));
-                if (all || any)
-                    parse('(');
-
-                // TODO equal degrees
-                Condition result =
-                      all
-                    ? left instanceof Field
-                        ? peekSelectOrWith(true)
-                            ? ((Field) left).compare(comp, DSL.all(parseWithOrSelect(1)))
-                            : ((Field) left).compare(comp, DSL.all(parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD)))
-
-                        // TODO: Support quantifiers also for rows
-                        : new RowSubqueryCondition((Row) left, DSL.all(parseWithOrSelect(((Row) left).size())), comp)
-
-                    : any
-                    ? left instanceof Field
-                        ? peekSelectOrWith(true)
-                            ? ((Field) left).compare(comp, DSL.any(parseWithOrSelect(1)))
-                            : ((Field) left).compare(comp, DSL.any(parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD)))
-
-                        // TODO: Support quantifiers also for rows
-                        : new RowSubqueryCondition((Row) left, DSL.any(parseWithOrSelect(((Row) left).size())), comp)
-
-                    : left instanceof Field
-                        ? ((Field) left).compare(comp, toField(parseConcat()))
-                        : new RowCondition((Row) left, parseRow(((Row) left).size(), true), comp);
-
-                if (all || any)
-                    parse(')');
-
-                return result;
-            }
-            else if (!not && parseKeywordIf("IS")) {
-                not = parseKeywordIf("NOT");
-
-                if (parseKeywordIf("NULL"))
-                    return not
-                        ? left instanceof Field
-                            ? ((Field) left).isNotNull()
-                            : ((Row) left).isNotNull()
-                        : left instanceof Field
-                            ? ((Field) left).isNull()
-                            : ((Row) left).isNull();
-                else if (left instanceof Field && parseKeywordIf("JSON"))
-                    return not
-                        ? ((Field) left).isNotJson()
-                        : ((Field) left).isJson();
-                else if (left instanceof Field && parseKeywordIf("DOCUMENT"))
-                    return not
-                        ? ((Field) left).isNotDocument()
-                        : ((Field) left).isDocument();
-
-                not = parseKeywordIf("DISTINCT FROM") == not;
-                if (left instanceof Field) { Field f = (Field) left;
-                    Field right = toField(parseConcat());
-                    return not ? f.isNotDistinctFrom(right) : f.isDistinctFrom(right);
-                }
-                else {
-                    Row right = parseRow(((Row) left).size(), true);
-                    return new RowIsDistinctFrom((Row) left, right, not);
-                }
-            }
-            else if (!not && parseIf("@>")) {
-                return toField(left).contains((Field) toField(parseConcat()));
-            }
-            else if (!forbidden.contains(FK_IN) && parseKeywordIf("IN")) {
-                Condition result;
-                parse('(');
-                if (peek(')'))
-                    result = not
-                        ? left instanceof Field
-                            ? ((Field) left).notIn(EMPTY_FIELD)
-                            : new RowInCondition((Row) left, new QueryPartList<>(), true)
-                        : left instanceof Field
-                            ? ((Field) left).in(EMPTY_FIELD)
-                            : new RowInCondition((Row) left, new QueryPartList<>(), false);
-                else if (peekSelectOrWith(true))
-                    result = not
-                        ? left instanceof Field
-                            ? ((Field) left).notIn(parseWithOrSelect(1))
-                            : new RowSubqueryCondition((Row) left, parseWithOrSelect(((Row) left).size()), NOT_IN)
-                        : left instanceof Field
-                            ? ((Field) left).in(parseWithOrSelect(1))
-                            : new RowSubqueryCondition((Row) left, parseWithOrSelect(((Row) left).size()), IN);
-                else
-                    result = not
-                        ? left instanceof Field
-                            ? ((Field) left).notIn(parseList(',', c -> c.parseField()))
-                            : new RowInCondition((Row) left, new QueryPartList<>(parseList(',', c -> parseRow(((Row) left).size()))), true)
-                        : left instanceof Field
-                            ? ((Field) left).in(parseList(',', c -> c.parseField()))
-                            : new RowInCondition((Row) left, new QueryPartList<>(parseList(',', c -> parseRow(((Row) left).size()))), false);
-
-                parse(')');
-                return result;
-            }
-            else if (parseKeywordIf("BETWEEN")) {
-                boolean symmetric = !parseKeywordIf("ASYMMETRIC") && parseKeywordIf("SYMMETRIC");
-                FieldOrRow r1 = left instanceof Field
-                    ? parseConcat()
-                    : parseRow(((Row) left).size());
-                parseKeyword("AND");
-                FieldOrRow r2 = left instanceof Field
-                    ? parseConcat()
-                    : parseRow(((Row) left).size());
-
-                return symmetric
-                    ? not
-                        ? left instanceof Field
-                            ? ((Field) left).notBetweenSymmetric((Field) r1, (Field) r2)
-                            : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2)
-                        : left instanceof Field
-                            ? ((Field) left).betweenSymmetric((Field) r1, (Field) r2)
-                            : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2)
-                    : not
-                        ? left instanceof Field
-                            ? ((Field) left).notBetween((Field) r1, (Field) r2)
-                            : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2)
-                        : left instanceof Field
-                            ? ((Field) left).between((Field) r1, (Field) r2)
-                            : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2);
-            }
-            else if (left instanceof Field && (parseKeywordIf("LIKE") || parseOperatorIf("~~") || (notOp = parseOperatorIf("!~~")))) {
-                if (parseKeywordIf("ANY")) {
-                    parse('(');
-                    if (peekSelectOrWith(true)) {
-                        Select<?> select = parseWithOrSelect();
-                        parse(')');
-                        LikeEscapeStep result = (not ^ notOp) ? ((Field) left).notLike(any(select)) : ((Field) left).like(any(select));
-                        return parseEscapeClauseIf(result);
-                    }
-                    else {
-                        List<Field<?>> fields;
-                        if (parseIf(')')) {
-                            fields = emptyList();
-                        }
-                        else {
-                            fields = parseList(',', c -> toField(parseConcat()));
-                            parse(')');
-                        }
-                        Field<String>[] fieldArray = fields.toArray(new Field[0]);
-                        LikeEscapeStep result = (not ^ notOp) ? ((Field<String>) left).notLike(any(fieldArray)) : ((Field<String>) left).like(any(fieldArray));
-                        return parseEscapeClauseIf(result);
-                    }
-                }
-                else if (parseKeywordIf("ALL")) {
-                    parse('(');
-                    if (peekSelectOrWith(true)) {
-                        Select<?> select = parseWithOrSelect();
-                        parse(')');
-                        LikeEscapeStep result = (not ^ notOp) ? ((Field) left).notLike(all(select)) : ((Field) left).like(all(select));
-                        return parseEscapeClauseIf(result);
-                    }
-                    else {
-                        List<Field<?>> fields;
-                        if (parseIf(')')) {
-                            fields = emptyList();
-                        }
-                        else {
-                            fields = parseList(',', c -> toField(parseConcat()));
-                            parse(')');
-                        }
-                        Field<String>[] fieldArray = fields.toArray(new Field[0]);
-                        LikeEscapeStep result = (not ^ notOp) ? ((Field<String>) left).notLike(all(fieldArray)) : ((Field<String>) left).like(all(fieldArray));
-                        return parseEscapeClauseIf(result);
-                    }
-                }
-                else {
-                    Field right = toField(parseConcat());
-                    LikeEscapeStep like = (not ^ notOp) ? ((Field) left).notLike(right) : ((Field) left).like(right);
-                    return parseEscapeClauseIf(like);
-                }
-            }
-            else if (left instanceof Field && (parseKeywordIf("ILIKE") || parseOperatorIf("~~*") || (notOp = parseOperatorIf("!~~*")))) {
-                Field right = toField(parseConcat());
-                LikeEscapeStep like = (not ^ notOp) ? ((Field) left).notLikeIgnoreCase(right) : ((Field) left).likeIgnoreCase(right);
-                return parseEscapeClauseIf(like);
-            }
-            else if (left instanceof Field && (parseKeywordIf("REGEXP")
-                                            || parseKeywordIf("RLIKE")
-                                            || parseKeywordIf("LIKE_REGEX")
-                                            || parseOperatorIf("~")
-                                            || (notOp = parseOperatorIf("!~")))) {
-                Field right = toField(parseConcat());
-                return (not ^ notOp)
-                        ? ((Field) left).notLikeRegex(right)
-                        : ((Field) left).likeRegex(right);
-            }
-            else if (left instanceof Field && parseKeywordIf("SIMILAR TO")) {
-                Field right = toField(parseConcat());
-                LikeEscapeStep like = not ? ((Field) left).notSimilarTo(right) : ((Field) left).similarTo(right);
-                return parseEscapeClauseIf(like);
-            }
-            else if (left instanceof Row && ((Row) left).size() == 2 && parseKeywordIf("OVERLAPS")) {
-                Row leftRow = (Row) left;
-                Row rightRow = parseRow(2);
-
-                Row2 leftRow2 = row(leftRow.field(0), leftRow.field(1));
-                Row2 rightRow2 = row(rightRow.field(0), rightRow.field(1));
-
-                return leftRow2.overlaps(rightRow2);
-            }
-            else
-                return left;
-        }
+        return null;
     }
 
     private final QueryPart parseEscapeClauseIf(LikeEscapeStep like) {
@@ -7627,6 +7708,18 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
         return r;
     }
 
@@ -8213,6 +8306,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (parseFunctionNameIf("ST_INTERSECTION") && requireProEdition()) {
+
+
+
+                }
                 else if (parseFunctionNameIf("ST_LENGTH") && requireProEdition()) {
 
 
@@ -8229,6 +8327,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 }
                 else if (parseFunctionNameIf("ST_STARTPOINT") && requireProEdition()) {
+
+
+
+                }
+                else if (parseFunctionNameIf("ST_UNION") && requireProEdition()) {
 
 
 

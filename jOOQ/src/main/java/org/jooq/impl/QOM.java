@@ -994,6 +994,9 @@ public final class QOM {
 
 
 
+    /**
+     * The <code>ALTER DATABASE</code> statement.
+     */
     public /*sealed*/ interface AlterDatabase
         extends
             DDLQuery
@@ -1008,6 +1011,9 @@ public final class QOM {
         @NotNull  AlterDatabase $renameTo(Catalog renameTo);
     }
 
+    /**
+     * The <code>ALTER DOMAIN</code> statement.
+     */
     public /*sealed*/ interface AlterDomain<T>
         extends
             DDLQuery
@@ -1044,6 +1050,9 @@ public final class QOM {
         @NotNull  AlterDomain<T> $renameConstraintTo(Constraint renameConstraintTo);
     }
 
+    /**
+     * The <code>ALTER INDEX</code> statement.
+     */
     public /*sealed*/ interface AlterIndex
         extends
             DDLQuery
@@ -1060,6 +1069,9 @@ public final class QOM {
         @NotNull  AlterIndex $renameTo(Index renameTo);
     }
 
+    /**
+     * The <code>ALTER SCHEMA</code> statement.
+     */
     public /*sealed*/ interface AlterSchema
         extends
             DDLQuery
@@ -1074,6 +1086,9 @@ public final class QOM {
         @NotNull  AlterSchema $renameTo(Schema renameTo);
     }
 
+    /**
+     * The <code>ALTER SEQUENCE</code> statement.
+     */
     public /*sealed*/ interface AlterSequence<T extends Number>
         extends
             DDLQuery
@@ -1110,6 +1125,9 @@ public final class QOM {
         @NotNull  AlterSequence<T> $noCache(boolean noCache);
     }
 
+    /**
+     * The <code>ALTER TYPE</code> statement.
+     */
     public /*sealed*/ interface AlterType
         extends
             DDLQuery
@@ -1130,6 +1148,9 @@ public final class QOM {
         @NotNull  AlterType $renameValueTo(Field<String> renameValueTo);
     }
 
+    /**
+     * The <code>ALTER VIEW</code> statement.
+     */
     public /*sealed*/ interface AlterView
         extends
             DDLQuery
@@ -1146,6 +1167,9 @@ public final class QOM {
         @NotNull  AlterView $renameTo(Table<?> renameTo);
     }
 
+    /**
+     * The <code>COMMENT ON TABLE</code> statement.
+     */
     public /*sealed*/ interface CommentOn
         extends
             DDLQuery
@@ -1162,6 +1186,9 @@ public final class QOM {
         @NotNull  CommentOn $comment(Comment comment);
     }
 
+    /**
+     * The <code>CREATE DATABASE</code> statement.
+     */
     public /*sealed*/ interface CreateDatabase
         extends
             DDLQuery
@@ -1174,6 +1201,9 @@ public final class QOM {
         @NotNull  CreateDatabase $ifNotExists(boolean ifNotExists);
     }
 
+    /**
+     * The <code>CREATE DOMAIN</code> statement.
+     */
     public /*sealed*/ interface CreateDomain<T>
         extends
             DDLQuery
@@ -1221,6 +1251,12 @@ public final class QOM {
 
 
 
+
+
+
+    /**
+     * The <code>CREATE INDEX</code> statement.
+     */
     public /*sealed*/ interface CreateIndex
         extends
             DDLQuery
@@ -1307,6 +1343,15 @@ public final class QOM {
 
 
 
+
+
+
+
+
+
+    /**
+     * The <code>CREATE SCHEMA</code> statement.
+     */
     public /*sealed*/ interface CreateSchema
         extends
             DDLQuery
@@ -1319,6 +1364,9 @@ public final class QOM {
         @NotNull  CreateSchema $ifNotExists(boolean ifNotExists);
     }
 
+    /**
+     * The <code>CREATE SEQUENCE</code> statement.
+     */
     public /*sealed*/ interface CreateSequence
         extends
             DDLQuery
@@ -1349,6 +1397,9 @@ public final class QOM {
         @NotNull  CreateSequence $noCache(boolean noCache);
     }
 
+    /**
+     * The <code>DROP DATABASE</code> statement.
+     */
     public /*sealed*/ interface DropDatabase
         extends
             DDLQuery
@@ -1361,6 +1412,9 @@ public final class QOM {
         @NotNull  DropDatabase $ifExists(boolean ifExists);
     }
 
+    /**
+     * The <code>DROP DOMAIN</code> statement.
+     */
     public /*sealed*/ interface DropDomain
         extends
             DDLQuery
@@ -1390,6 +1444,12 @@ public final class QOM {
 
 
 
+
+
+
+    /**
+     * The <code>DROP INDEX</code> statement.
+     */
     public /*sealed*/ interface DropIndex
         extends
             DDLQuery
@@ -1421,6 +1481,12 @@ public final class QOM {
 
 
 
+
+
+
+    /**
+     * The <code>DROP SCHEMA</code> statement.
+     */
     public /*sealed*/ interface DropSchema
         extends
             DDLQuery
@@ -1435,6 +1501,9 @@ public final class QOM {
         @NotNull  DropSchema $cascade(Cascade cascade);
     }
 
+    /**
+     * The <code>DROP SEQUENCE</code> statement.
+     */
     public /*sealed*/ interface DropSequence
         extends
             DDLQuery
@@ -1447,6 +1516,9 @@ public final class QOM {
         @NotNull  DropSequence $ifExists(boolean ifExists);
     }
 
+    /**
+     * The <code>DROP TABLE</code> statement.
+     */
     public /*sealed*/ interface DropTable
         extends
             DDLQuery
@@ -1478,6 +1550,12 @@ public final class QOM {
 
 
 
+
+
+
+    /**
+     * The <code>DROP VIEW</code> statement.
+     */
     public /*sealed*/ interface DropView
         extends
             DDLQuery
@@ -1490,6 +1568,9 @@ public final class QOM {
         @NotNull  DropView $ifExists(boolean ifExists);
     }
 
+    /**
+     * The <code>GRANT</code> statement.
+     */
     public /*sealed*/ interface Grant
         extends
             DDLQuery
@@ -1508,6 +1589,9 @@ public final class QOM {
         @NotNull  Grant $withGrantOption(boolean withGrantOption);
     }
 
+    /**
+     * The <code>REVOKE</code> statement.
+     */
     public /*sealed*/ interface Revoke
         extends
             DDLQuery
@@ -1526,6 +1610,11 @@ public final class QOM {
         @NotNull  Revoke $fromPublic(boolean fromPublic);
     }
 
+    /**
+     * The <code>SET</code> statement.
+     * <p>
+     * Set a vendor specific session configuration to a new value.
+     */
     public /*sealed*/ interface SetCommand
         extends
             org.jooq.RowCountQuery
@@ -1540,6 +1629,11 @@ public final class QOM {
         @NotNull  SetCommand $local(boolean local);
     }
 
+    /**
+     * The <code>SET CATALOG</code> statement.
+     * <p>
+     * Set the current catalog to a new value.
+     */
     public /*sealed*/ interface SetCatalog
         extends
             org.jooq.RowCountQuery
@@ -1550,6 +1644,11 @@ public final class QOM {
         @NotNull  SetCatalog $catalog(Catalog catalog);
     }
 
+    /**
+     * The <code>SET SCHEMA</code> statement.
+     * <p>
+     * Set the current schema to a new value.
+     */
     public /*sealed*/ interface SetSchema
         extends
             org.jooq.RowCountQuery
@@ -1560,6 +1659,9 @@ public final class QOM {
         @NotNull  SetSchema $schema(Schema schema);
     }
 
+    /**
+     * The <code>TRUNCATE</code> statement.
+     */
     public /*sealed*/ interface Truncate<R extends Record>
         extends
             DDLQuery
@@ -1589,6 +1691,14 @@ public final class QOM {
 
 
 
+
+
+
+
+
+    /**
+     * The <code>AND</code> operator.
+     */
     public /*sealed*/ interface And
         extends
             CombinedCondition
@@ -1596,6 +1706,9 @@ public final class QOM {
         //    And
     {}
 
+    /**
+     * The <code>EQ</code> operator.
+     */
     public /*sealed*/ interface TableEq<R extends Record>
         extends
             org.jooq.Condition,
@@ -1604,6 +1717,9 @@ public final class QOM {
         //    TableEq
     {}
 
+    /**
+     * The <code>EQ</code> operator.
+     */
     public /*sealed*/ interface Eq<T>
         extends
             CompareCondition<T>
@@ -1611,6 +1727,9 @@ public final class QOM {
         //    Eq
     {}
 
+    /**
+     * The <code>EXISTS</code> function.
+     */
     public /*sealed*/ interface Exists
         extends
             org.jooq.Condition
@@ -1621,6 +1740,9 @@ public final class QOM {
         @NotNull  Exists $query(Select<?> query);
     }
 
+    /**
+     * The <code>GE</code> operator.
+     */
     public /*sealed*/ interface Ge<T>
         extends
             CompareCondition<T>
@@ -1628,6 +1750,9 @@ public final class QOM {
         //    Ge
     {}
 
+    /**
+     * The <code>GT</code> operator.
+     */
     public /*sealed*/ interface Gt<T>
         extends
             CompareCondition<T>
@@ -1635,6 +1760,13 @@ public final class QOM {
         //    Gt
     {}
 
+    /**
+     * The <code>IN</code> operator.
+     * <p>
+     * The subquery must return exactly one field. This is not checked
+     * by jOOQ and will result in syntax errors in the database, if not used
+     * correctly.
+     */
     public /*sealed*/ interface In<T>
         extends
             org.jooq.Condition,
@@ -1643,6 +1775,12 @@ public final class QOM {
         //    In
     {}
 
+    /**
+     * The <code>IS DISTINCT FROM</code> operator.
+     * <p>
+     * The DISTINCT predicate allows for creating NULL safe comparisons where the two operands
+     * are tested for non-equality
+     */
     public /*sealed*/ interface IsDistinctFrom<T>
         extends
             CompareCondition<T>
@@ -1650,6 +1788,9 @@ public final class QOM {
         //    IsDistinctFrom
     {}
 
+    /**
+     * The <code>IS NULL</code> operator.
+     */
     public /*sealed*/ interface IsNull
         extends
             org.jooq.Condition,
@@ -1660,6 +1801,12 @@ public final class QOM {
         @NotNull  default Field<?> $field() { return $arg1(); }
     }
 
+    /**
+     * The <code>IS NOT DISTINCT FROM</code> operator.
+     * <p>
+     * The NOT DISTINCT predicate allows for creating NULL safe comparisons where the two
+     * operands are tested for equality
+     */
     public /*sealed*/ interface IsNotDistinctFrom<T>
         extends
             CompareCondition<T>
@@ -1667,6 +1814,9 @@ public final class QOM {
         //    IsNotDistinctFrom
     {}
 
+    /**
+     * The <code>IS NOT NULL</code> operator.
+     */
     public /*sealed*/ interface IsNotNull
         extends
             org.jooq.Condition,
@@ -1677,6 +1827,9 @@ public final class QOM {
         @NotNull  default Field<?> $field() { return $arg1(); }
     }
 
+    /**
+     * The <code>LE</code> operator.
+     */
     public /*sealed*/ interface Le<T>
         extends
             CompareCondition<T>
@@ -1684,6 +1837,9 @@ public final class QOM {
         //    Le
     {}
 
+    /**
+     * The <code>LIKE</code> operator.
+     */
     public /*sealed*/ interface Like
         extends
             Condition,
@@ -1696,6 +1852,16 @@ public final class QOM {
         @Nullable default Character $escape() { return $arg3(); }
     }
 
+    /**
+     * The <code>LIKE IGNORE CASE</code> operator.
+     * <p>
+     * Create a condition to case-insensitively pattern-check this field against
+     * a value.
+     * <p>
+     * This translates to <code>this not ilike value</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) not like lower(value)</code> in all other dialects.
+     */
     public /*sealed*/ interface LikeIgnoreCase
         extends
             Condition,
@@ -1708,6 +1874,9 @@ public final class QOM {
         @Nullable default Character $escape() { return $arg3(); }
     }
 
+    /**
+     * The <code>LT</code> operator.
+     */
     public /*sealed*/ interface Lt<T>
         extends
             CompareCondition<T>
@@ -1715,6 +1884,9 @@ public final class QOM {
         //    Lt
     {}
 
+    /**
+     * The <code>NE</code> operator.
+     */
     public /*sealed*/ interface TableNe<R extends Record>
         extends
             org.jooq.Condition,
@@ -1723,6 +1895,9 @@ public final class QOM {
         //    TableNe
     {}
 
+    /**
+     * The <code>NE</code> operator.
+     */
     public /*sealed*/ interface Ne<T>
         extends
             CompareCondition<T>
@@ -1730,6 +1905,9 @@ public final class QOM {
         //    Ne
     {}
 
+    /**
+     * The <code>NOT</code> operator.
+     */
     public /*sealed*/ interface Not
         extends
             org.jooq.Condition,
@@ -1740,6 +1918,9 @@ public final class QOM {
         @NotNull  default Condition $condition() { return $arg1(); }
     }
 
+    /**
+     * The <code>NOT</code> operator.
+     */
     public /*sealed*/ interface NotField
         extends
             org.jooq.Field<Boolean>,
@@ -1750,6 +1931,17 @@ public final class QOM {
         @NotNull  default Field<Boolean> $field() { return $arg1(); }
     }
 
+    /**
+     * The <code>NOT IN</code> operator.
+     * <p>
+     * The subquery must return exactly one field. This is not checked
+     * by jOOQ and will result in syntax errors in the database, if not used
+     * correctly.
+     * <p>
+     * If any of the passed values is <code>NULL</code>, then the
+     * condition will be <code>NULL</code> (or <code>false</code>, depending on
+     * the dialect) as well. This is standard SQL behaviour.
+     */
     public /*sealed*/ interface NotIn<T>
         extends
             org.jooq.Condition,
@@ -1758,6 +1950,9 @@ public final class QOM {
         //    NotIn
     {}
 
+    /**
+     * The <code>NOT LIKE</code> operator.
+     */
     public /*sealed*/ interface NotLike
         extends
             Condition,
@@ -1770,6 +1965,16 @@ public final class QOM {
         @Nullable default Character $escape() { return $arg3(); }
     }
 
+    /**
+     * The <code>NOT LIKE IGNORE CASE</code> operator.
+     * <p>
+     * Create a condition to case-insensitively pattern-check this field against
+     * a value.
+     * <p>
+     * This translates to <code>this not ilike value</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) not like lower(value)</code> in all other dialects.
+     */
     public /*sealed*/ interface NotLikeIgnoreCase
         extends
             Condition,
@@ -1782,6 +1987,9 @@ public final class QOM {
         @Nullable default Character $escape() { return $arg3(); }
     }
 
+    /**
+     * The <code>NOT SIMILAR TO</code> operator.
+     */
     public /*sealed*/ interface NotSimilarTo
         extends
             Condition,
@@ -1794,6 +2002,9 @@ public final class QOM {
         @Nullable default Character $escape() { return $arg3(); }
     }
 
+    /**
+     * The <code>OR</code> operator.
+     */
     public /*sealed*/ interface Or
         extends
             CombinedCondition
@@ -1801,6 +2012,9 @@ public final class QOM {
         //    Or
     {}
 
+    /**
+     * The <code>SIMILAR TO</code> operator.
+     */
     public /*sealed*/ interface SimilarTo
         extends
             Condition,
@@ -1813,6 +2027,9 @@ public final class QOM {
         @Nullable default Character $escape() { return $arg3(); }
     }
 
+    /**
+     * The <code>UNIQUE</code> function.
+     */
     public /*sealed*/ interface Unique
         extends
             org.jooq.Condition
@@ -1823,6 +2040,11 @@ public final class QOM {
         @NotNull  Unique $query(Select<?> query);
     }
 
+    /**
+     * The <code>IS DOCUMENT</code> operator.
+     * <p>
+     * Create a condition to check if this field contains XML data.
+     */
     public /*sealed*/ interface IsDocument
         extends
             org.jooq.Condition,
@@ -1833,6 +2055,11 @@ public final class QOM {
         @NotNull  default Field<?> $field() { return $arg1(); }
     }
 
+    /**
+     * The <code>IS NOT DOCUMENT</code> operator.
+     * <p>
+     * Create a condition to check if this field does not contain XML data.
+     */
     public /*sealed*/ interface IsNotDocument
         extends
             org.jooq.Condition,
@@ -1843,6 +2070,11 @@ public final class QOM {
         @NotNull  default Field<?> $field() { return $arg1(); }
     }
 
+    /**
+     * The <code>IS JSON</code> operator.
+     * <p>
+     * Create a condition to check if this field contains JSON data.
+     */
     public /*sealed*/ interface IsJson
         extends
             org.jooq.Condition,
@@ -1853,6 +2085,11 @@ public final class QOM {
         @NotNull  default Field<?> $field() { return $arg1(); }
     }
 
+    /**
+     * The <code>IS NOT JSON</code> operator.
+     * <p>
+     * Create a condition to check if this field does not contain JSON data.
+     */
     public /*sealed*/ interface IsNotJson
         extends
             org.jooq.Condition,
@@ -1863,6 +2100,31 @@ public final class QOM {
         @NotNull  default Field<?> $field() { return $arg1(); }
     }
 
+    /**
+     * The <code>ROWID</code> operator.
+     * <p>
+     * Get a <code>table.rowid</code> reference from this table.
+     * <p>
+     * A rowid value describes the physical location of a row on the disk, which
+     * can be used as a replacement for a primary key in some situations -
+     * especially within a query, e.g. to self-join a table:
+     * <p>
+     * <code><pre>
+     * -- Emulating this MySQL statement...
+     * DELETE FROM x ORDER BY x.y LIMIT 1
+     *
+     * -- ... in other databases
+     * DELETE FROM x
+     * WHERE x.rowid IN (
+     *   SELECT x.rowid FROM x ORDER BY x.a LIMIT 1
+     * )
+     * </pre></code>
+     * <p>
+     * It is <em>not</em> recommended to use <code>rowid</code> values in client
+     * applications as actual row identifiers as the database system may move a
+     * row to a different physical location at any time, thus changing the rowid
+     * value. In general, use primary keys, instead.
+     */
     public /*sealed*/ interface QualifiedRowid
         extends
             org.jooq.Field<RowId>,
@@ -1873,6 +2135,9 @@ public final class QOM {
         @NotNull  default Table<?> $table() { return $arg1(); }
     }
 
+    /**
+     * The <code>ABS</code> function.
+     */
     public /*sealed*/ interface Abs<T extends Number>
         extends
             org.jooq.Field<T>
@@ -1883,6 +2148,9 @@ public final class QOM {
         @NotNull  Abs<T> $number(Field<T> number);
     }
 
+    /**
+     * The <code>ACOS</code> function.
+     */
     public /*sealed*/ interface Acos
         extends
             org.jooq.Field<BigDecimal>
@@ -1893,6 +2161,9 @@ public final class QOM {
         @NotNull  Acos $number(Field<? extends Number> number);
     }
 
+    /**
+     * The <code>ADD</code> operator.
+     */
     public /*sealed*/ interface Add<T>
         extends
             org.jooq.Field<T>,
@@ -1901,6 +2172,9 @@ public final class QOM {
         //    Add
     {}
 
+    /**
+     * The <code>ASIN</code> function.
+     */
     public /*sealed*/ interface Asin
         extends
             org.jooq.Field<BigDecimal>
@@ -1911,6 +2185,9 @@ public final class QOM {
         @NotNull  Asin $number(Field<? extends Number> number);
     }
 
+    /**
+     * The <code>ATAN</code> function.
+     */
     public /*sealed*/ interface Atan
         extends
             org.jooq.Field<BigDecimal>
@@ -1921,6 +2198,9 @@ public final class QOM {
         @NotNull  Atan $number(Field<? extends Number> number);
     }
 
+    /**
+     * The <code>ATAN2</code> function.
+     */
     public /*sealed*/ interface Atan2
         extends
             org.jooq.Field<BigDecimal>
@@ -1933,6 +2213,9 @@ public final class QOM {
         @NotNull  Atan2 $y(Field<? extends Number> y);
     }
 
+    /**
+     * The <code>BIT AND</code> operator.
+     */
     public /*sealed*/ interface BitAnd<T extends Number>
         extends
             org.jooq.Field<T>,
@@ -1941,6 +2224,11 @@ public final class QOM {
         //    BitAnd
     {}
 
+    /**
+     * The <code>BIT COUNT</code> function.
+     * <p>
+     * Count the number of bits set in a number
+     */
     public /*sealed*/ interface BitCount
         extends
             org.jooq.Field<Integer>
@@ -1951,6 +2239,9 @@ public final class QOM {
         @NotNull  BitCount $number(Field<? extends Number> number);
     }
 
+    /**
+     * The <code>BIT NAND</code> operator.
+     */
     public /*sealed*/ interface BitNand<T extends Number>
         extends
             org.jooq.Field<T>,
@@ -1959,6 +2250,9 @@ public final class QOM {
         //    BitNand
     {}
 
+    /**
+     * The <code>BIT NOR</code> operator.
+     */
     public /*sealed*/ interface BitNor<T extends Number>
         extends
             org.jooq.Field<T>,
@@ -1967,6 +2261,9 @@ public final class QOM {
         //    BitNor
     {}
 
+    /**
+     * The <code>BIT NOT</code> operator.
+     */
     public /*sealed*/ interface BitNot<T extends Number>
         extends
             org.jooq.Field<T>,
@@ -1975,6 +2272,9 @@ public final class QOM {
         //    BitNot
     {}
 
+    /**
+     * The <code>BIT OR</code> operator.
+     */
     public /*sealed*/ interface BitOr<T extends Number>
         extends
             org.jooq.Field<T>,
@@ -1983,6 +2283,9 @@ public final class QOM {
         //    BitOr
     {}
 
+    /**
+     * The <code>BIT X NOR</code> operator.
+     */
     public /*sealed*/ interface BitXNor<T extends Number>
         extends
             org.jooq.Field<T>,
@@ -1991,6 +2294,9 @@ public final class QOM {
         //    BitXNor
     {}
 
+    /**
+     * The <code>BIT XOR</code> operator.
+     */
     public /*sealed*/ interface BitXor<T extends Number>
         extends
             org.jooq.Field<T>,
@@ -1999,6 +2305,11 @@ public final class QOM {
         //    BitXor
     {}
 
+    /**
+     * The <code>CEIL</code> function.
+     * <p>
+     * Get the smallest integer value equal or greater to a value.
+     */
     public /*sealed*/ interface Ceil<T extends Number>
         extends
             org.jooq.Field<T>
@@ -2009,6 +2320,9 @@ public final class QOM {
         @NotNull  Ceil<T> $value(Field<T> value);
     }
 
+    /**
+     * The <code>COS</code> function.
+     */
     public /*sealed*/ interface Cos
         extends
             org.jooq.Field<BigDecimal>
@@ -2019,6 +2333,9 @@ public final class QOM {
         @NotNull  Cos $number(Field<? extends Number> number);
     }
 
+    /**
+     * The <code>COSH</code> function.
+     */
     public /*sealed*/ interface Cosh
         extends
             org.jooq.Field<BigDecimal>
@@ -2029,6 +2346,9 @@ public final class QOM {
         @NotNull  Cosh $number(Field<? extends Number> number);
     }
 
+    /**
+     * The <code>COT</code> function.
+     */
     public /*sealed*/ interface Cot
         extends
             org.jooq.Field<BigDecimal>
@@ -2039,6 +2359,9 @@ public final class QOM {
         @NotNull  Cot $number(Field<? extends Number> number);
     }
 
+    /**
+     * The <code>COTH</code> function.
+     */
     public /*sealed*/ interface Coth
         extends
             org.jooq.Field<BigDecimal>
@@ -2049,16 +2372,32 @@ public final class QOM {
         @NotNull  Coth $number(Field<? extends Number> number);
     }
 
+    /**
+     * The <code>DEGREES</code> function.
+     * <p>
+     * Turn a value in radians to degrees.
+     */
     public /*sealed*/ interface Degrees
         extends
             org.jooq.Field<BigDecimal>
         //permits
         //    Degrees
     {
+
+        /**
+         * The value in radians.
+         */
         @NotNull  Field<? extends Number> $radians();
+
+        /**
+         * The value in radians.
+         */
         @NotNull  Degrees $radians(Field<? extends Number> radians);
     }
 
+    /**
+     * The <code>DIV</code> operator.
+     */
     public /*sealed*/ interface Div<T>
         extends
             org.jooq.Field<T>,
@@ -2067,6 +2406,11 @@ public final class QOM {
         //    Div
     {}
 
+    /**
+     * The <code>E</code> function.
+     * <p>
+     * The E literal (Euler number).
+     */
     public /*sealed*/ interface Euler
         extends
             org.jooq.Field<BigDecimal>,
@@ -2075,6 +2419,9 @@ public final class QOM {
         //    Euler
     {}
 
+    /**
+     * The <code>EXP</code> function.
+     */
     public /*sealed*/ interface Exp
         extends
             org.jooq.Field<BigDecimal>
@@ -2085,6 +2432,11 @@ public final class QOM {
         @NotNull  Exp $value(Field<? extends Number> value);
     }
 
+    /**
+     * The <code>FLOOR</code> function.
+     * <p>
+     * Get the biggest integer value equal or less than a value.
+     */
     public /*sealed*/ interface Floor<T extends Number>
         extends
             org.jooq.Field<T>
@@ -2095,6 +2447,9 @@ public final class QOM {
         @NotNull  Floor<T> $value(Field<T> value);
     }
 
+    /**
+     * The <code>LN</code> function.
+     */
     public /*sealed*/ interface Log
         extends
             org.jooq.Field<BigDecimal>
@@ -2107,6 +2462,9 @@ public final class QOM {
         @NotNull  Log $base(Field<? extends Number> base);
     }
 
+    /**
+     * The <code>LOG10</code> function.
+     */
     public /*sealed*/ interface Log10
         extends
             org.jooq.Field<BigDecimal>
@@ -2117,6 +2475,9 @@ public final class QOM {
         @NotNull  Log10 $value(Field<? extends Number> value);
     }
 
+    /**
+     * The <code>MOD</code> operator.
+     */
     public /*sealed*/ interface Mod<T extends Number>
         extends
             org.jooq.Field<T>,
@@ -2128,6 +2489,9 @@ public final class QOM {
         @NotNull  default Field<? extends Number> $divisor() { return $arg2(); }
     }
 
+    /**
+     * The <code>MUL</code> operator.
+     */
     public /*sealed*/ interface Mul<T>
         extends
             org.jooq.Field<T>,
@@ -2136,6 +2500,11 @@ public final class QOM {
         //    Mul
     {}
 
+    /**
+     * The <code>PI</code> function.
+     * <p>
+     * The π literal.
+     */
     public /*sealed*/ interface Pi
         extends
             org.jooq.Field<BigDecimal>,
@@ -2144,6 +2513,9 @@ public final class QOM {
         //    Pi
     {}
 
+    /**
+     * The <code>POWER</code> operator.
+     */
     public /*sealed*/ interface Power
         extends
             org.jooq.Field<BigDecimal>,
@@ -2155,16 +2527,34 @@ public final class QOM {
         @NotNull  default Field<? extends Number> $exponent() { return $arg2(); }
     }
 
+    /**
+     * The <code>RADIANS</code> function.
+     * <p>
+     * Turn a value in degrees to radians.
+     */
     public /*sealed*/ interface Radians
         extends
             org.jooq.Field<BigDecimal>
         //permits
         //    Radians
     {
+
+        /**
+         * The value in degrees.
+         */
         @NotNull  Field<? extends Number> $degrees();
+
+        /**
+         * The value in degrees.
+         */
         @NotNull  Radians $degrees(Field<? extends Number> degrees);
     }
 
+    /**
+     * The <code>RAND</code> function.
+     * <p>
+     * Get a random numeric value.
+     */
     public /*sealed*/ interface Rand
         extends
             org.jooq.Field<BigDecimal>,
@@ -2173,18 +2563,44 @@ public final class QOM {
         //    Rand
     {}
 
+    /**
+     * The <code>ROUND</code> function.
+     * <p>
+     * Round a numeric value to the nearest decimal precision.
+     */
     public /*sealed*/ interface Round<T extends Number>
         extends
             org.jooq.Field<T>
         //permits
         //    Round
     {
+
+        /**
+         * The number to be rounded.
+         */
         @NotNull  Field<T> $value();
+
+        /**
+         * The decimals to round to.
+         */
         @Nullable Field<Integer> $decimals();
+
+        /**
+         * The number to be rounded.
+         */
         @NotNull  Round<T> $value(Field<T> value);
+
+        /**
+         * The decimals to round to.
+         */
         @NotNull  Round<T> $decimals(Field<Integer> decimals);
     }
 
+    /**
+     * The <code>SHL</code> operator.
+     * <p>
+     * Left shift all bits in a number
+     */
     public /*sealed*/ interface Shl<T extends Number>
         extends
             org.jooq.Field<T>,
@@ -2192,10 +2608,23 @@ public final class QOM {
         //permits
         //    Shl
     {
+
+        /**
+         * The number whose bits to shift left.
+         */
         @NotNull  default Field<T> $value() { return $arg1(); }
+
+        /**
+         * The number of bits to shift.
+         */
         @NotNull  default Field<? extends Number> $count() { return $arg2(); }
     }
 
+    /**
+     * The <code>SHR</code> operator.
+     * <p>
+     * Right shift all bits in a number
+     */
     public /*sealed*/ interface Shr<T extends Number>
         extends
             org.jooq.Field<T>,
@@ -2203,10 +2632,23 @@ public final class QOM {
         //permits
         //    Shr
     {
+
+        /**
+         * The number whose bits to shift right
+         */
         @NotNull  default Field<T> $value() { return $arg1(); }
+
+        /**
+         * The number of bits to shift.
+         */
         @NotNull  default Field<? extends Number> $count() { return $arg2(); }
     }
 
+    /**
+     * The <code>SIGN</code> function.
+     * <p>
+     * Get the sign of a number and return it as any of +1, 0, -1.
+     */
     public /*sealed*/ interface Sign
         extends
             org.jooq.Field<Integer>
@@ -2217,6 +2659,9 @@ public final class QOM {
         @NotNull  Sign $number(Field<? extends Number> number);
     }
 
+    /**
+     * The <code>SIN</code> function.
+     */
     public /*sealed*/ interface Sin
         extends
             org.jooq.Field<BigDecimal>
@@ -2227,6 +2672,9 @@ public final class QOM {
         @NotNull  Sin $number(Field<? extends Number> number);
     }
 
+    /**
+     * The <code>SINH</code> function.
+     */
     public /*sealed*/ interface Sinh
         extends
             org.jooq.Field<BigDecimal>
@@ -2237,6 +2685,9 @@ public final class QOM {
         @NotNull  Sinh $number(Field<? extends Number> number);
     }
 
+    /**
+     * The <code>SQRT</code> function.
+     */
     public /*sealed*/ interface Sqrt
         extends
             org.jooq.Field<BigDecimal>
@@ -2247,6 +2698,9 @@ public final class QOM {
         @NotNull  Sqrt $value(Field<? extends Number> value);
     }
 
+    /**
+     * The <code>SQUARE</code> function.
+     */
     public /*sealed*/ interface Square<T extends Number>
         extends
             org.jooq.Field<T>
@@ -2257,6 +2711,9 @@ public final class QOM {
         @NotNull  Square<T> $value(Field<T> value);
     }
 
+    /**
+     * The <code>SUB</code> operator.
+     */
     public /*sealed*/ interface Sub<T>
         extends
             org.jooq.Field<T>,
@@ -2265,6 +2722,9 @@ public final class QOM {
         //    Sub
     {}
 
+    /**
+     * The <code>TAN</code> function.
+     */
     public /*sealed*/ interface Tan
         extends
             org.jooq.Field<BigDecimal>
@@ -2275,6 +2735,9 @@ public final class QOM {
         @NotNull  Tan $number(Field<? extends Number> number);
     }
 
+    /**
+     * The <code>TANH</code> function.
+     */
     public /*sealed*/ interface Tanh
         extends
             org.jooq.Field<BigDecimal>
@@ -2285,6 +2748,11 @@ public final class QOM {
         @NotNull  Tanh $number(Field<? extends Number> number);
     }
 
+    /**
+     * The <code>TAU</code> function.
+     * <p>
+     * The τ literal, or π, in a better world.
+     */
     public /*sealed*/ interface Tau
         extends
             org.jooq.Field<BigDecimal>,
@@ -2293,34 +2761,97 @@ public final class QOM {
         //    Tau
     {}
 
+    /**
+     * The <code>TRUNC</code> function.
+     * <p>
+     * Truncate a number to a given number of decimals.
+     */
     public /*sealed*/ interface Trunc<T extends Number>
         extends
             org.jooq.Field<T>
         //permits
         //    Trunc
     {
+
+        /**
+         * The number to be truncated
+         */
         @NotNull  Field<T> $value();
+
+        /**
+         * The decimals to truncate to.
+         */
         @NotNull  Field<Integer> $decimals();
+
+        /**
+         * The number to be truncated
+         */
         @NotNull  Trunc<T> $value(Field<T> value);
+
+        /**
+         * The decimals to truncate to.
+         */
         @NotNull  Trunc<T> $decimals(Field<Integer> decimals);
     }
 
+    /**
+     * The <code>WIDTH BUCKET</code> function.
+     * <p>
+     * Divide a range into buckets of equal size.
+     */
     public /*sealed*/ interface WidthBucket<T extends Number>
         extends
             org.jooq.Field<T>
         //permits
         //    WidthBucket
     {
+
+        /**
+         * The value to divide into the range.
+         */
         @NotNull  Field<T> $field();
+
+        /**
+         * The lower bound of the range.
+         */
         @NotNull  Field<T> $low();
+
+        /**
+         * The upper bound of the range.
+         */
         @NotNull  Field<T> $high();
+
+        /**
+         * The number of buckets to produce.
+         */
         @NotNull  Field<Integer> $buckets();
+
+        /**
+         * The value to divide into the range.
+         */
         @NotNull  WidthBucket<T> $field(Field<T> field);
+
+        /**
+         * The lower bound of the range.
+         */
         @NotNull  WidthBucket<T> $low(Field<T> low);
+
+        /**
+         * The upper bound of the range.
+         */
         @NotNull  WidthBucket<T> $high(Field<T> high);
+
+        /**
+         * The number of buckets to produce.
+         */
         @NotNull  WidthBucket<T> $buckets(Field<Integer> buckets);
     }
 
+    /**
+     * The <code>ASCII</code> function.
+     * <p>
+     * The ASCII value of a character.
+     */
     public /*sealed*/ interface Ascii
         extends
             org.jooq.Field<Integer>
@@ -2331,6 +2862,11 @@ public final class QOM {
         @NotNull  Ascii $string(Field<String> string);
     }
 
+    /**
+     * The <code>BIT LENGTH</code> function.
+     * <p>
+     * The length of a string in bits.
+     */
     public /*sealed*/ interface BitLength
         extends
             org.jooq.Field<Integer>
@@ -2341,6 +2877,11 @@ public final class QOM {
         @NotNull  BitLength $string(Field<String> string);
     }
 
+    /**
+     * The <code>CHAR LENGTH</code> function.
+     * <p>
+     * The length of a string in characters.
+     */
     public /*sealed*/ interface CharLength
         extends
             org.jooq.Field<Integer>
@@ -2351,6 +2892,9 @@ public final class QOM {
         @NotNull  CharLength $string(Field<String> string);
     }
 
+    /**
+     * The <code>CHR</code> function.
+     */
     public /*sealed*/ interface Chr
         extends
             org.jooq.Field<String>
@@ -2361,6 +2905,29 @@ public final class QOM {
         @NotNull  Chr $number(Field<? extends Number> number);
     }
 
+    /**
+     * The <code>CONTAINS</code> operator.
+     * <p>
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
+     * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).contains(13)</code>
+     * <p>
+     * If you're using {@link SQLDialect#POSTGRES}, then you can use this method
+     * also to express the "ARRAY contains" operator. For example: <code><pre>
+     * // Use this expression
+     * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
+     *
+     * // ... to render this SQL
+     * ARRAY[1, 2, 3] @&gt; ARRAY[1, 2]
+     * </pre></code>
+     * <p>
+     * Note, this does not correspond to the Oracle Text <code>CONTAINS()</code>
+     * function. Refer to {@link OracleDSL#contains(Field, String)} instead.
+     */
     public /*sealed*/ interface Contains<T>
         extends
             CompareCondition<T>
@@ -2371,6 +2938,18 @@ public final class QOM {
         @NotNull  default Field<T> $content() { return $arg2(); }
     }
 
+    /**
+     * The <code>CONTAINS IGNORE CASE</code> operator.
+     * <p>
+     * Convenience method for {@link #likeIgnoreCase(String, char)} including
+     * proper adding of wildcards and escaping.
+     * <p>
+     * This translates to
+     * <code>this ilike ('%' || escape(value, '\') || '%') escape '\'</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) not like lower(('%' || escape(value, '\') || '%') escape '\')</code>
+     * in all other dialects.
+     */
     public /*sealed*/ interface ContainsIgnoreCase<T>
         extends
             CompareCondition<T>
@@ -2381,6 +2960,9 @@ public final class QOM {
         @NotNull  default Field<T> $content() { return $arg2(); }
     }
 
+    /**
+     * The <code>DIGITS</code> function.
+     */
     public /*sealed*/ interface Digits
         extends
             org.jooq.Field<String>
@@ -2391,6 +2973,17 @@ public final class QOM {
         @NotNull  Digits $value(Field<? extends Number> value);
     }
 
+    /**
+     * The <code>ENDS WITH</code> operator.
+     * <p>
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
+     * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).endsWith(33)</code>
+     */
     public /*sealed*/ interface EndsWith<T>
         extends
             CompareCondition<T>
@@ -2401,6 +2994,17 @@ public final class QOM {
         @NotNull  default Field<T> $suffix() { return $arg2(); }
     }
 
+    /**
+     * The <code>ENDS WITH IGNORE CASE</code> operator.
+     * <p>
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
+     * SQL: <code>lower(this) like ('%' || lower(escape(value, '\'))) escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).endsWithIgnoreCase(33)</code>
+     */
     public /*sealed*/ interface EndsWithIgnoreCase<T>
         extends
             CompareCondition<T>
@@ -2411,18 +3015,44 @@ public final class QOM {
         @NotNull  default Field<T> $suffix() { return $arg2(); }
     }
 
+    /**
+     * The <code>LEFT</code> function.
+     * <p>
+     * Get the left outermost characters from a string.
+     */
     public /*sealed*/ interface Left
         extends
             org.jooq.Field<String>
         //permits
         //    Left
     {
+
+        /**
+         * The string whose characters are extracted.
+         */
         @NotNull  Field<String> $string();
+
+        /**
+         * The number of characters to extract from the string.
+         */
         @NotNull  Field<? extends Number> $length();
+
+        /**
+         * The string whose characters are extracted.
+         */
         @NotNull  Left $string(Field<String> string);
+
+        /**
+         * The number of characters to extract from the string.
+         */
         @NotNull  Left $length(Field<? extends Number> length);
     }
 
+    /**
+     * The <code>LOWER</code> function.
+     * <p>
+     * Turn a string into lower case.
+     */
     public /*sealed*/ interface Lower
         extends
             org.jooq.Field<String>
@@ -2433,32 +3063,87 @@ public final class QOM {
         @NotNull  Lower $string(Field<String> string);
     }
 
+    /**
+     * The <code>LPAD</code> function.
+     * <p>
+     * Left-pad a string with a character (whitespace as default) for a number of times.
+     */
     public /*sealed*/ interface Lpad
         extends
             org.jooq.Field<String>
         //permits
         //    Lpad
     {
+
+        /**
+         * The string to be padded.
+         */
         @NotNull  Field<String> $string();
+
+        /**
+         * The maximum length to pad the string to.
+         */
         @NotNull  Field<? extends Number> $length();
+
+        /**
+         * The padding character, if different from whitespace
+         */
         @Nullable Field<String> $character();
+
+        /**
+         * The string to be padded.
+         */
         @NotNull  Lpad $string(Field<String> string);
+
+        /**
+         * The maximum length to pad the string to.
+         */
         @NotNull  Lpad $length(Field<? extends Number> length);
+
+        /**
+         * The padding character, if different from whitespace
+         */
         @NotNull  Lpad $character(Field<String> character);
     }
 
+    /**
+     * The <code>LTRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     */
     public /*sealed*/ interface Ltrim
         extends
             org.jooq.Field<String>
         //permits
         //    Ltrim
     {
+
+        /**
+         * The string to be trimmed.
+         */
         @NotNull  Field<String> $string();
+
+        /**
+         * The characters to be trimmed.
+         */
         @Nullable Field<String> $characters();
+
+        /**
+         * The string to be trimmed.
+         */
         @NotNull  Ltrim $string(Field<String> string);
+
+        /**
+         * The characters to be trimmed.
+         */
         @NotNull  Ltrim $characters(Field<String> characters);
     }
 
+    /**
+     * The <code>MD5</code> function.
+     * <p>
+     * Calculate an MD5 hash from a string.
+     */
     public /*sealed*/ interface Md5
         extends
             org.jooq.Field<String>
@@ -2469,6 +3154,11 @@ public final class QOM {
         @NotNull  Md5 $string(Field<String> string);
     }
 
+    /**
+     * The <code>OCTET LENGTH</code> function.
+     * <p>
+     * The length of a string in octets.
+     */
     public /*sealed*/ interface OctetLength
         extends
             org.jooq.Field<Integer>
@@ -2479,62 +3169,183 @@ public final class QOM {
         @NotNull  OctetLength $string(Field<String> string);
     }
 
+    /**
+     * The <code>OVERLAY</code> function.
+     * <p>
+     * Place a string on top of another string, replacing the original contents.
+     */
     public /*sealed*/ interface Overlay
         extends
             org.jooq.Field<String>
         //permits
         //    Overlay
     {
+
+        /**
+         * The original string on top of which the overlay is placed.
+         */
         @NotNull  Field<String> $in();
+
+        /**
+         * The string that is being placed on top of the other string.
+         */
         @NotNull  Field<String> $placing();
+
+        /**
+         * The start index (1-based) starting from where the overlay is placed.
+         */
         @NotNull  Field<? extends Number> $startIndex();
+
+        /**
+         * The length in the original string that will be replaced, if different from the overlay length.
+         */
         @Nullable Field<? extends Number> $length();
+
+        /**
+         * The original string on top of which the overlay is placed.
+         */
         @NotNull  Overlay $in(Field<String> in);
+
+        /**
+         * The string that is being placed on top of the other string.
+         */
         @NotNull  Overlay $placing(Field<String> placing);
+
+        /**
+         * The start index (1-based) starting from where the overlay is placed.
+         */
         @NotNull  Overlay $startIndex(Field<? extends Number> startIndex);
+
+        /**
+         * The length in the original string that will be replaced, if different from the overlay length.
+         */
         @NotNull  Overlay $length(Field<? extends Number> length);
     }
 
+    /**
+     * The <code>POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     */
     public /*sealed*/ interface Position
         extends
             org.jooq.Field<Integer>
         //permits
         //    Position
     {
+
+        /**
+         * The string in which to search the substring.
+         */
         @NotNull  Field<String> $in();
+
+        /**
+         * The substring to search for.
+         */
         @NotNull  Field<String> $search();
+
+        /**
+         * The start index (1-based) from which to start looking for the substring.
+         */
         @Nullable Field<? extends Number> $startIndex();
+
+        /**
+         * The string in which to search the substring.
+         */
         @NotNull  Position $in(Field<String> in);
+
+        /**
+         * The substring to search for.
+         */
         @NotNull  Position $search(Field<String> search);
+
+        /**
+         * The start index (1-based) from which to start looking for the substring.
+         */
         @NotNull  Position $startIndex(Field<? extends Number> startIndex);
     }
 
+    /**
+     * The <code>REPEAT</code> function.
+     * <p>
+     * Repeat a string a number of times.
+     */
     public /*sealed*/ interface Repeat
         extends
             org.jooq.Field<String>
         //permits
         //    Repeat
     {
+
+        /**
+         * The string to be repeated.
+         */
         @NotNull  Field<String> $string();
+
+        /**
+         * The number of times to repeat the string.
+         */
         @NotNull  Field<? extends Number> $count();
+
+        /**
+         * The string to be repeated.
+         */
         @NotNull  Repeat $string(Field<String> string);
+
+        /**
+         * The number of times to repeat the string.
+         */
         @NotNull  Repeat $count(Field<? extends Number> count);
     }
 
+    /**
+     * The <code>REPLACE</code> function.
+     * <p>
+     * Replace all occurrences of a substring in another string.
+     */
     public /*sealed*/ interface Replace
         extends
             org.jooq.Field<String>
         //permits
         //    Replace
     {
+
+        /**
+         * The string in which to replace contents.
+         */
         @NotNull  Field<String> $string();
+
+        /**
+         * The substring to search for.
+         */
         @NotNull  Field<String> $search();
+
+        /**
+         * The replacement for each substring, if not empty.
+         */
         @Nullable Field<String> $replace();
+
+        /**
+         * The string in which to replace contents.
+         */
         @NotNull  Replace $string(Field<String> string);
+
+        /**
+         * The substring to search for.
+         */
         @NotNull  Replace $search(Field<String> search);
+
+        /**
+         * The replacement for each substring, if not empty.
+         */
         @NotNull  Replace $replace(Field<String> replace);
     }
 
+    /**
+     * The <code>REVERSE</code> function.
+     * <p>
+     * Reverse a string.
+     */
     public /*sealed*/ interface Reverse
         extends
             org.jooq.Field<String>
@@ -2545,68 +3356,192 @@ public final class QOM {
         @NotNull  Reverse $string(Field<String> string);
     }
 
+    /**
+     * The <code>RIGHT</code> function.
+     * <p>
+     * Get the right outermost characters from a string.
+     */
     public /*sealed*/ interface Right
         extends
             org.jooq.Field<String>
         //permits
         //    Right
     {
+
+        /**
+         * The string whose characters are extracted.
+         */
         @NotNull  Field<String> $string();
+
+        /**
+         * The number of characters to extract from the string.
+         */
         @NotNull  Field<? extends Number> $length();
+
+        /**
+         * The string whose characters are extracted.
+         */
         @NotNull  Right $string(Field<String> string);
+
+        /**
+         * The number of characters to extract from the string.
+         */
         @NotNull  Right $length(Field<? extends Number> length);
     }
 
+    /**
+     * The <code>RPAD</code> function.
+     * <p>
+     * Right-pad a string with a character (whitespace as default) for a number of times.
+     */
     public /*sealed*/ interface Rpad
         extends
             org.jooq.Field<String>
         //permits
         //    Rpad
     {
+
+        /**
+         * The string to be padded.
+         */
         @NotNull  Field<String> $string();
+
+        /**
+         * The maximum length to pad the string to.
+         */
         @NotNull  Field<? extends Number> $length();
+
+        /**
+         * The padding character, if different from whitespace
+         */
         @Nullable Field<String> $character();
+
+        /**
+         * The string to be padded.
+         */
         @NotNull  Rpad $string(Field<String> string);
+
+        /**
+         * The maximum length to pad the string to.
+         */
         @NotNull  Rpad $length(Field<? extends Number> length);
+
+        /**
+         * The padding character, if different from whitespace
+         */
         @NotNull  Rpad $character(Field<String> character);
     }
 
+    /**
+     * The <code>RTRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     */
     public /*sealed*/ interface Rtrim
         extends
             org.jooq.Field<String>
         //permits
         //    Rtrim
     {
+
+        /**
+         * The string to be trimmed.
+         */
         @NotNull  Field<String> $string();
+
+        /**
+         * The characters to be trimmed.
+         */
         @Nullable Field<String> $characters();
+
+        /**
+         * The string to be trimmed.
+         */
         @NotNull  Rtrim $string(Field<String> string);
+
+        /**
+         * The characters to be trimmed.
+         */
         @NotNull  Rtrim $characters(Field<String> characters);
     }
 
+    /**
+     * The <code>SPACE</code> function.
+     * <p>
+     * Get a string of spaces of a given length.
+     */
     public /*sealed*/ interface Space
         extends
             org.jooq.Field<String>
         //permits
         //    Space
     {
+
+        /**
+         * The number of spaces to produce.
+         */
         @NotNull  Field<? extends Number> $count();
+
+        /**
+         * The number of spaces to produce.
+         */
         @NotNull  Space $count(Field<? extends Number> count);
     }
 
+    /**
+     * The <code>SPLIT PART</code> function.
+     * <p>
+     * Split a string into tokens, and retrieve the nth token.
+     */
     public /*sealed*/ interface SplitPart
         extends
             org.jooq.Field<String>
         //permits
         //    SplitPart
     {
+
+        /**
+         * The string to be split into parts.
+         */
         @NotNull  Field<String> $string();
+
+        /**
+         * The delimiter used for splitting.
+         */
         @NotNull  Field<String> $delimiter();
+
+        /**
+         * The token number (1-based).
+         */
         @NotNull  Field<? extends Number> $n();
+
+        /**
+         * The string to be split into parts.
+         */
         @NotNull  SplitPart $string(Field<String> string);
+
+        /**
+         * The delimiter used for splitting.
+         */
         @NotNull  SplitPart $delimiter(Field<String> delimiter);
+
+        /**
+         * The token number (1-based).
+         */
         @NotNull  SplitPart $n(Field<? extends Number> n);
     }
 
+    /**
+     * The <code>STARTS WITH</code> operator.
+     * <p>
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
+     * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).startsWith(11)</code>
+     */
     public /*sealed*/ interface StartsWith<T>
         extends
             CompareCondition<T>
@@ -2617,6 +3552,17 @@ public final class QOM {
         @NotNull  default Field<T> $prefix() { return $arg2(); }
     }
 
+    /**
+     * The <code>STARTS WITH IGNORE CASE</code> operator.
+     * <p>
+     * Convenience method for {@link #like(String, char)} including proper
+     * adding of wildcards and escaping.
+     * <p>
+     * SQL: <code>lower(this) like (lower(escape(value, '\')) || '%') escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).startsWithIgnoreCase(11)</code>
+     */
     public /*sealed*/ interface StartsWithIgnoreCase<T>
         extends
             CompareCondition<T>
@@ -2627,58 +3573,163 @@ public final class QOM {
         @NotNull  default Field<T> $prefix() { return $arg2(); }
     }
 
+    /**
+     * The <code>SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a string, from a given position.
+     */
     public /*sealed*/ interface Substring
         extends
             org.jooq.Field<String>
         //permits
         //    Substring
     {
+
+        /**
+         * The string from which to get the substring.
+         */
         @NotNull  Field<String> $string();
+
+        /**
+         * The position (1-based) from which to get the substring.
+         */
         @NotNull  Field<? extends Number> $startingPosition();
+
+        /**
+         * The maximum length of the substring.
+         */
         @Nullable Field<? extends Number> $length();
+
+        /**
+         * The string from which to get the substring.
+         */
         @NotNull  Substring $string(Field<String> string);
+
+        /**
+         * The position (1-based) from which to get the substring.
+         */
         @NotNull  Substring $startingPosition(Field<? extends Number> startingPosition);
+
+        /**
+         * The maximum length of the substring.
+         */
         @NotNull  Substring $length(Field<? extends Number> length);
     }
 
+    /**
+     * The <code>SUBSTRING INDEX</code> function.
+     * <p>
+     * Get a substring of a string, from the beginning until the nth occurrence of a substring.
+     */
     public /*sealed*/ interface SubstringIndex
         extends
             org.jooq.Field<String>
         //permits
         //    SubstringIndex
     {
+
+        /**
+         * The string from which to get the substring.
+         */
         @NotNull  Field<String> $string();
+
+        /**
+         * The delimiter.
+         */
         @NotNull  Field<String> $delimiter();
+
+        /**
+         * The number of occurrences of the delimiter.
+         */
         @NotNull  Field<? extends Number> $n();
+
+        /**
+         * The string from which to get the substring.
+         */
         @NotNull  SubstringIndex $string(Field<String> string);
+
+        /**
+         * The delimiter.
+         */
         @NotNull  SubstringIndex $delimiter(Field<String> delimiter);
+
+        /**
+         * The number of occurrences of the delimiter.
+         */
         @NotNull  SubstringIndex $n(Field<? extends Number> n);
     }
 
+    /**
+     * The <code>TO CHAR</code> function.
+     * <p>
+     * Format an arbitrary value as a string.
+     */
     public /*sealed*/ interface ToChar
         extends
             org.jooq.Field<String>
         //permits
         //    ToChar
     {
+
+        /**
+         * The value to be formatted.
+         */
         @NotNull  Field<?> $value();
+
+        /**
+         * The vendor-specific formatting string.
+         */
         @Nullable Field<String> $formatMask();
+
+        /**
+         * The value to be formatted.
+         */
         @NotNull  ToChar $value(Field<?> value);
+
+        /**
+         * The vendor-specific formatting string.
+         */
         @NotNull  ToChar $formatMask(Field<String> formatMask);
     }
 
+    /**
+     * The <code>TO DATE</code> function.
+     * <p>
+     * Parse a string-formatted date value to a date.
+     */
     public /*sealed*/ interface ToDate
         extends
             org.jooq.Field<Date>
         //permits
         //    ToDate
     {
+
+        /**
+         * The formatted DATE value.
+         */
         @NotNull  Field<String> $value();
+
+        /**
+         * The vendor-specific formatting string.
+         */
         @NotNull  Field<String> $formatMask();
+
+        /**
+         * The formatted DATE value.
+         */
         @NotNull  ToDate $value(Field<String> value);
+
+        /**
+         * The vendor-specific formatting string.
+         */
         @NotNull  ToDate $formatMask(Field<String> formatMask);
     }
 
+    /**
+     * The <code>TO HEX</code> function.
+     * <p>
+     * Format a number to its hex value.
+     */
     public /*sealed*/ interface ToHex
         extends
             org.jooq.Field<String>
@@ -2689,44 +3740,120 @@ public final class QOM {
         @NotNull  ToHex $value(Field<? extends Number> value);
     }
 
+    /**
+     * The <code>TO TIMESTAMP</code> function.
+     * <p>
+     * Parse a string-formatted timestamp value to a timestamp.
+     */
     public /*sealed*/ interface ToTimestamp
         extends
             org.jooq.Field<Timestamp>
         //permits
         //    ToTimestamp
     {
+
+        /**
+         * The formatted TIMESTAMP value.
+         */
         @NotNull  Field<String> $value();
+
+        /**
+         * The vendor-specific formatting string.
+         */
         @NotNull  Field<String> $formatMask();
+
+        /**
+         * The formatted TIMESTAMP value.
+         */
         @NotNull  ToTimestamp $value(Field<String> value);
+
+        /**
+         * The vendor-specific formatting string.
+         */
         @NotNull  ToTimestamp $formatMask(Field<String> formatMask);
     }
 
+    /**
+     * The <code>TRANSLATE</code> function.
+     * <p>
+     * Translate a set of characters to another set of characters in a string.
+     */
     public /*sealed*/ interface Translate
         extends
             org.jooq.Field<String>
         //permits
         //    Translate
     {
+
+        /**
+         * The string to translate.
+         */
         @NotNull  Field<String> $string();
+
+        /**
+         * The set of source characters.
+         */
         @NotNull  Field<String> $from();
+
+        /**
+         * The set of target characters, matched with source characters by position.
+         */
         @NotNull  Field<String> $to();
+
+        /**
+         * The string to translate.
+         */
         @NotNull  Translate $string(Field<String> string);
+
+        /**
+         * The set of source characters.
+         */
         @NotNull  Translate $from(Field<String> from);
+
+        /**
+         * The set of target characters, matched with source characters by position.
+         */
         @NotNull  Translate $to(Field<String> to);
     }
 
+    /**
+     * The <code>TRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     */
     public /*sealed*/ interface Trim
         extends
             org.jooq.Field<String>
         //permits
         //    Trim
     {
+
+        /**
+         * The string to be trimmed.
+         */
         @NotNull  Field<String> $string();
+
+        /**
+         * The characters to be trimmed.
+         */
         @Nullable Field<String> $characters();
+
+        /**
+         * The string to be trimmed.
+         */
         @NotNull  Trim $string(Field<String> string);
+
+        /**
+         * The characters to be trimmed.
+         */
         @NotNull  Trim $characters(Field<String> characters);
     }
 
+    /**
+     * The <code>UPPER</code> function.
+     * <p>
+     * Turn a string into upper case.
+     */
     public /*sealed*/ interface Upper
         extends
             org.jooq.Field<String>
@@ -2737,6 +3864,11 @@ public final class QOM {
         @NotNull  Upper $string(Field<String> string);
     }
 
+    /**
+     * The <code>UUID</code> function.
+     * <p>
+     * Generate a random UUID.
+     */
     public /*sealed*/ interface Uuid
         extends
             org.jooq.Field<UUID>,
@@ -2745,20 +3877,54 @@ public final class QOM {
         //    Uuid
     {}
 
+    /**
+     * The <code>DATE ADD</code> function.
+     * <p>
+     * Add an interval to a date.
+     */
     public /*sealed*/ interface DateAdd<T>
         extends
             org.jooq.Field<T>
         //permits
         //    DateAdd
     {
+
+        /**
+         * The date to add an interval to
+         */
         @NotNull  Field<T> $date();
+
+        /**
+         * The interval to add to the date
+         */
         @NotNull  Field<? extends Number> $interval();
+
+        /**
+         * The date part describing the interval
+         */
         @Nullable DatePart $datePart();
+
+        /**
+         * The date to add an interval to
+         */
         @NotNull  DateAdd<T> $date(Field<T> date);
+
+        /**
+         * The interval to add to the date
+         */
         @NotNull  DateAdd<T> $interval(Field<? extends Number> interval);
+
+        /**
+         * The date part describing the interval
+         */
         @NotNull  DateAdd<T> $datePart(DatePart datePart);
     }
 
+    /**
+     * The <code>CARDINALITY</code> function.
+     * <p>
+     * Calculate the cardinality of an array field.
+     */
     public /*sealed*/ interface Cardinality
         extends
             org.jooq.Field<Integer>
@@ -2769,6 +3935,11 @@ public final class QOM {
         @NotNull  Cardinality $array(Field<? extends Object[]> array);
     }
 
+    /**
+     * The <code>ARRAY GET</code> function.
+     * <p>
+     * Get an array element at a given index (1 based).
+     */
     public /*sealed*/ interface ArrayGet<T>
         extends
             org.jooq.Field<T>
@@ -2781,30 +3952,73 @@ public final class QOM {
         @NotNull  ArrayGet<T> $index(Field<Integer> index);
     }
 
+    /**
+     * The <code>NVL</code> function.
+     * <p>
+     * Return the first non-null argument.
+     */
     public /*sealed*/ interface Nvl<T>
         extends
             org.jooq.Field<T>
         //permits
         //    Nvl
     {
+
+        /**
+         * The nullable value.
+         */
         @NotNull  Field<T> $value();
+
+        /**
+         * The default value if the other value is null.
+         */
         @NotNull  Field<T> $defaultValue();
+
+        /**
+         * The nullable value.
+         */
         @NotNull  Nvl<T> $value(Field<T> value);
+
+        /**
+         * The default value if the other value is null.
+         */
         @NotNull  Nvl<T> $defaultValue(Field<T> defaultValue);
     }
 
+    /**
+     * The <code>NULLIF</code> function.
+     */
     public /*sealed*/ interface Nullif<T>
         extends
             org.jooq.Field<T>
         //permits
         //    Nullif
     {
+
+        /**
+         * The result value if the other value is not equal.
+         */
         @NotNull  Field<T> $value();
+
+        /**
+         * The value to compare the result value with.
+         */
         @NotNull  Field<T> $other();
+
+        /**
+         * The result value if the other value is not equal.
+         */
         @NotNull  Nullif<T> $value(Field<T> value);
+
+        /**
+         * The value to compare the result value with.
+         */
         @NotNull  Nullif<T> $other(Field<T> other);
     }
 
+    /**
+     * The <code>CURRENT CATALOG</code> function.
+     */
     public /*sealed*/ interface CurrentCatalog
         extends
             org.jooq.Field<String>,
@@ -2813,6 +4027,9 @@ public final class QOM {
         //    CurrentCatalog
     {}
 
+    /**
+     * The <code>CURRENT SCHEMA</code> function.
+     */
     public /*sealed*/ interface CurrentSchema
         extends
             org.jooq.Field<String>,
@@ -2821,6 +4038,9 @@ public final class QOM {
         //    CurrentSchema
     {}
 
+    /**
+     * The <code>CURRENT USER</code> function.
+     */
     public /*sealed*/ interface CurrentUser
         extends
             org.jooq.Field<String>,
@@ -2913,6 +4133,66 @@ public final class QOM {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * The <code>XMLCOMMENT</code> function.
+     */
     public /*sealed*/ interface XMLComment
         extends
             org.jooq.Field<XML>
@@ -2923,6 +4203,9 @@ public final class QOM {
         @NotNull  XMLComment $comment(Field<String> comment);
     }
 
+    /**
+     * The <code>XMLCONCAT</code> function.
+     */
     public /*sealed*/ interface XMLConcat
         extends
             org.jooq.Field<XML>
@@ -2946,6 +4229,12 @@ public final class QOM {
 
 
 
+
+
+
+    /**
+     * The <code>XMLFOREST</code> function.
+     */
     public /*sealed*/ interface XMLForest
         extends
             org.jooq.Field<XML>
@@ -2956,6 +4245,9 @@ public final class QOM {
         @NotNull  XMLForest $fields(MList<? extends Field<?>> fields);
     }
 
+    /**
+     * The <code>XMLPI</code> function.
+     */
     public /*sealed*/ interface XMLPi
         extends
             org.jooq.Field<XML>
@@ -2968,6 +4260,9 @@ public final class QOM {
         @NotNull  XMLPi $content(Field<?> content);
     }
 
+    /**
+     * The <code>XMLSERIALIZE</code> function.
+     */
     public /*sealed*/ interface XMLSerialize<T>
         extends
             org.jooq.Field<T>
@@ -2982,6 +4277,9 @@ public final class QOM {
         @NotNull  XMLSerialize<T> $type(DataType<T> type);
     }
 
+    /**
+     * The <code>JSON ARRAY</code> function.
+     */
     public /*sealed*/ interface JSONArray<T>
         extends
             Field<T>
@@ -2998,6 +4296,9 @@ public final class QOM {
         @NotNull  JSONArray<T> $returning(DataType<?> returning);
     }
 
+    /**
+     * The <code>JSON OBJECT</code> function.
+     */
     public /*sealed*/ interface JSONObject<T>
         extends
             Field<T>
@@ -3043,6 +4344,20 @@ public final class QOM {
 
 
 
+
+
+
+
+
+
+
+
+
+    /**
+     * The <code>FIELD</code> function.
+     * <p>
+     * Wrap a condition in a boolean field.
+     */
     public /*sealed*/ interface ConditionAsField
         extends
             org.jooq.Field<Boolean>
@@ -3053,6 +4368,19 @@ public final class QOM {
         @NotNull  ConditionAsField $condition(Condition condition);
     }
 
+    /**
+     * The <code>CONDITION</code> function.
+     * <p>
+     * Create a condition from a boolean field.
+     * <p>
+     * Databases that support boolean data types can use boolean expressions
+     * as predicates or as columns interchangeably. This extends to any type
+     * of field, including functions. A Postgres example:
+     * <p>
+     * <code><pre>
+     * select 1 where texteq('a', 'a');
+     * </pre></code>
+     */
     public /*sealed*/ interface FieldCondition
         extends
             org.jooq.Condition
@@ -3063,6 +4391,11 @@ public final class QOM {
         @NotNull  FieldCondition $field(Field<Boolean> field);
     }
 
+    /**
+     * The <code>ANY VALUE</code> function.
+     * <p>
+     * Get any arbitrary value from the group.
+     */
     public /*sealed*/ interface AnyValue<T>
         extends
             org.jooq.AggregateFunction<T>
@@ -3073,6 +4406,9 @@ public final class QOM {
         @NotNull  AnyValue<T> $field(Field<T> field);
     }
 
+    /**
+     * The <code>AVG</code> function.
+     */
     public /*sealed*/ interface Avg
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3085,6 +4421,11 @@ public final class QOM {
         @NotNull  Avg $distinct(boolean distinct);
     }
 
+    /**
+     * The <code>BIT AND AGG</code> function.
+     * <p>
+     * Calculate the bitwise <code>AND</code> aggregate value.
+     */
     public /*sealed*/ interface BitAndAgg<T extends Number>
         extends
             org.jooq.AggregateFunction<T>
@@ -3095,6 +4436,11 @@ public final class QOM {
         @NotNull  BitAndAgg<T> $value(Field<T> value);
     }
 
+    /**
+     * The <code>BIT OR AGG</code> function.
+     * <p>
+     * Calculate the bitwise <code>OR</code> aggregate value.
+     */
     public /*sealed*/ interface BitOrAgg<T extends Number>
         extends
             org.jooq.AggregateFunction<T>
@@ -3105,6 +4451,11 @@ public final class QOM {
         @NotNull  BitOrAgg<T> $value(Field<T> value);
     }
 
+    /**
+     * The <code>BIT XOR AGG</code> function.
+     * <p>
+     * Calculate the bitwise <code>XOR</code> aggregate value.
+     */
     public /*sealed*/ interface BitXorAgg<T extends Number>
         extends
             org.jooq.AggregateFunction<T>
@@ -3115,6 +4466,9 @@ public final class QOM {
         @NotNull  BitXorAgg<T> $value(Field<T> value);
     }
 
+    /**
+     * The <code>BOOL AND</code> function.
+     */
     public /*sealed*/ interface BoolAnd
         extends
             org.jooq.AggregateFunction<Boolean>
@@ -3125,6 +4479,9 @@ public final class QOM {
         @NotNull  BoolAnd $condition(Condition condition);
     }
 
+    /**
+     * The <code>BOOL OR</code> function.
+     */
     public /*sealed*/ interface BoolOr
         extends
             org.jooq.AggregateFunction<Boolean>
@@ -3135,6 +4492,14 @@ public final class QOM {
         @NotNull  BoolOr $condition(Condition condition);
     }
 
+    /**
+     * The <code>CORR</code> function.
+     * <p>
+     * Calculate the correlation coefficient. This standard SQL function may be supported
+     * natively, or emulated using {@link #covarPop(Field, Field)} and {@link #stddevPop(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
+     */
     public /*sealed*/ interface Corr
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3147,6 +4512,9 @@ public final class QOM {
         @NotNull  Corr $x(Field<? extends Number> x);
     }
 
+    /**
+     * The <code>COUNT</code> function.
+     */
     public /*sealed*/ interface Count
         extends
             org.jooq.AggregateFunction<Integer>
@@ -3159,6 +4527,14 @@ public final class QOM {
         @NotNull  Count $distinct(boolean distinct);
     }
 
+    /**
+     * The <code>COVAR SAMP</code> function.
+     * <p>
+     * Calculate the sample covariance. This standard SQL function may be supported natively,
+     * or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an emulation
+     * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
+     */
     public /*sealed*/ interface CovarSamp
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3171,6 +4547,14 @@ public final class QOM {
         @NotNull  CovarSamp $x(Field<? extends Number> x);
     }
 
+    /**
+     * The <code>COVAR POP</code> function.
+     * <p>
+     * Calculate the population covariance. This standard SQL function may be supported
+     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
+     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
+     */
     public /*sealed*/ interface CovarPop
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3183,6 +4567,9 @@ public final class QOM {
         @NotNull  CovarPop $x(Field<? extends Number> x);
     }
 
+    /**
+     * The <code>MAX</code> function.
+     */
     public /*sealed*/ interface Max<T>
         extends
             org.jooq.AggregateFunction<T>
@@ -3195,6 +4582,9 @@ public final class QOM {
         @NotNull  Max<T> $distinct(boolean distinct);
     }
 
+    /**
+     * The <code>MEDIAN</code> function.
+     */
     public /*sealed*/ interface Median
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3205,6 +4595,9 @@ public final class QOM {
         @NotNull  Median $field(Field<? extends Number> field);
     }
 
+    /**
+     * The <code>MIN</code> function.
+     */
     public /*sealed*/ interface Min<T>
         extends
             org.jooq.AggregateFunction<T>
@@ -3217,6 +4610,21 @@ public final class QOM {
         @NotNull  Min<T> $distinct(boolean distinct);
     }
 
+    /**
+     * The <code>PRODUCT</code> function.
+     * <p>
+     * Get the sum over a numeric field: product(distinct field).
+     * <p>
+     * Few dialects currently support multiplicative aggregation natively. jOOQ
+     * emulates this using <code>exp(sum(log(arg)))</code> for strictly positive
+     * numbers, and does some additional handling for zero and negative numbers.
+     * <p>
+     * Note that this implementation may introduce rounding errors, even for
+     * integer multiplication.
+     * <p>
+     * More information here: <a href=
+     * "https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql</a>.
+     */
     public /*sealed*/ interface Product
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3229,6 +4637,14 @@ public final class QOM {
         @NotNull  Product $distinct(boolean distinct);
     }
 
+    /**
+     * The <code>REGR AVGX</code> function.
+     * <p>
+     * Calculate the average of the independent values (x). This standard SQL function may
+     * be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
+     */
     public /*sealed*/ interface RegrAvgX
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3241,6 +4657,14 @@ public final class QOM {
         @NotNull  RegrAvgX $x(Field<? extends Number> x);
     }
 
+    /**
+     * The <code>REGR AVGY</code> function.
+     * <p>
+     * Calculate the average of the dependent values (y). This standard SQL function may
+     * be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
+     */
     public /*sealed*/ interface RegrAvgY
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3253,6 +4677,14 @@ public final class QOM {
         @NotNull  RegrAvgY $x(Field<? extends Number> x);
     }
 
+    /**
+     * The <code>REGR COUNT</code> function.
+     * <p>
+     * Calculate the number of non-<code>NULL</code> pairs. This standard SQL function may
+     * be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
+     */
     public /*sealed*/ interface RegrCount
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3265,6 +4697,14 @@ public final class QOM {
         @NotNull  RegrCount $x(Field<? extends Number> x);
     }
 
+    /**
+     * The <code>REGR INTERCEPT</code> function.
+     * <p>
+     * Calculate the y intercept of the regression line. This standard SQL function may
+     * be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
+     */
     public /*sealed*/ interface RegrIntercept
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3277,6 +4717,14 @@ public final class QOM {
         @NotNull  RegrIntercept $x(Field<? extends Number> x);
     }
 
+    /**
+     * The <code>REGR R2</code> function.
+     * <p>
+     * Calculate the coefficient of determination. This standard SQL function may be supported
+     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
+     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
+     */
     public /*sealed*/ interface RegrR2
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3289,6 +4737,14 @@ public final class QOM {
         @NotNull  RegrR2 $x(Field<? extends Number> x);
     }
 
+    /**
+     * The <code>REGR SLOPE</code> function.
+     * <p>
+     * Calculate the slope of the regression line. This standard SQL function may be supported
+     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
+     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
+     */
     public /*sealed*/ interface RegrSlope
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3301,6 +4757,14 @@ public final class QOM {
         @NotNull  RegrSlope $x(Field<? extends Number> x);
     }
 
+    /**
+     * The <code>REGR SXX</code> function.
+     * <p>
+     * Calculate the <code>REGR_SXX</code> auxiliary function. This standard SQL function
+     * may be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
+     */
     public /*sealed*/ interface RegrSxx
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3313,6 +4777,14 @@ public final class QOM {
         @NotNull  RegrSxx $x(Field<? extends Number> x);
     }
 
+    /**
+     * The <code>REGR SXY</code> function.
+     * <p>
+     * Calculate the <code>REGR_SXY</code> auxiliary function. This standard SQL function
+     * may be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
+     */
     public /*sealed*/ interface RegrSxy
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3325,6 +4797,14 @@ public final class QOM {
         @NotNull  RegrSxy $x(Field<? extends Number> x);
     }
 
+    /**
+     * The <code>REGR SYY</code> function.
+     * <p>
+     * Calculate the <code>REGR_SYY</code> auxiliary function. This standard SQL function
+     * may be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
+     */
     public /*sealed*/ interface RegrSyy
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3337,6 +4817,14 @@ public final class QOM {
         @NotNull  RegrSyy $x(Field<? extends Number> x);
     }
 
+    /**
+     * The <code>STDDEV POP</code> function.
+     * <p>
+     * Calculate the population standard deviation. This standard SQL function may be supported
+     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
+     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
+     */
     public /*sealed*/ interface StddevPop
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3347,6 +4835,14 @@ public final class QOM {
         @NotNull  StddevPop $field(Field<? extends Number> field);
     }
 
+    /**
+     * The <code>STDDEV SAMP</code> function.
+     * <p>
+     * Calculate the sample standard deviation. This standard SQL function may be supported
+     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
+     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
+     */
     public /*sealed*/ interface StddevSamp
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3357,6 +4853,9 @@ public final class QOM {
         @NotNull  StddevSamp $field(Field<? extends Number> field);
     }
 
+    /**
+     * The <code>SUM</code> function.
+     */
     public /*sealed*/ interface Sum
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3369,6 +4868,14 @@ public final class QOM {
         @NotNull  Sum $distinct(boolean distinct);
     }
 
+    /**
+     * The <code>VAR POP</code> function.
+     * <p>
+     * Calculate the population variance. This standard SQL function may be supported natively,
+     * or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an emulation
+     * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
+     */
     public /*sealed*/ interface VarPop
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3379,6 +4886,14 @@ public final class QOM {
         @NotNull  VarPop $field(Field<? extends Number> field);
     }
 
+    /**
+     * The <code>VAR SAMP</code> function.
+     * <p>
+     * Calculate the sample variance. This standard SQL function may be supported natively,
+     * or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an emulation
+     * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
+     */
     public /*sealed*/ interface VarSamp
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -3388,6 +4903,166 @@ public final class QOM {
         @NotNull  Field<? extends Number> $field();
         @NotNull  VarSamp $field(Field<? extends Number> field);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

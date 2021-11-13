@@ -428,6 +428,7 @@ final class Names {
     static final Name N_STDDEV_SAMP            = unquotedName("stddev_samp");
     static final Name N_ST_AREA                = unquotedName("st_area");
     static final Name N_ST_ASTEXT              = unquotedName("st_astext");
+    static final Name N_ST_CENTROID            = unquotedName("st_centroid");
     static final Name N_ST_CONTAINS            = unquotedName("st_contains");
     static final Name N_ST_CROSSES             = unquotedName("st_crosses");
     static final Name N_ST_DISJOINT            = unquotedName("st_disjoint");

@@ -325,6 +325,11 @@ import static org.jooq.impl.DSL.square;
 // ...
 // ...
 // ...
+// ...
+// ...
+// ...
+// ...
+// ...
 import static org.jooq.impl.DSL.stddevPop;
 import static org.jooq.impl.DSL.stddevSamp;
 import static org.jooq.impl.DSL.sum;
@@ -7774,6 +7779,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+
+
+
+
+
+
+
+
+
+
         return r;
     }
 
@@ -8365,6 +8380,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (parseFunctionNameIf("ST_EXTERIORRING") && requireProEdition()) {
+
+
+
+                }
+                else if (parseFunctionNameIf("ST_GEOMETRYN") && requireProEdition()) {
+
+
+
+                }
                 else if (parseFunctionNameIf("ST_GEOMETRYTYPE") && requireProEdition()) {
 
 
@@ -8375,12 +8400,27 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (parseFunctionNameIf("ST_INTERIORRINGN") && requireProEdition()) {
+
+
+
+                }
                 else if (parseFunctionNameIf("ST_INTERSECTION") && requireProEdition()) {
 
 
 
                 }
                 else if (parseFunctionNameIf("ST_LENGTH") && requireProEdition()) {
+
+
+
+                }
+                else if (parseFunctionNameIf("ST_NUMINTERIORRING", "ST_NUMINTERIORRINGS") && requireProEdition()) {
+
+
+
+                }
+                else if (parseFunctionNameIf("ST_NUMGEOMETRIES") && requireProEdition()) {
 
 
 

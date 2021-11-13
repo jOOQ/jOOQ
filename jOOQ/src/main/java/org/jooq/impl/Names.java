@@ -430,6 +430,7 @@ final class Names {
     static final Name N_ST_ASTEXT              = unquotedName("st_astext");
     static final Name N_ST_CONTAINS            = unquotedName("st_contains");
     static final Name N_ST_CROSSES             = unquotedName("st_crosses");
+    static final Name N_ST_DISJOINT            = unquotedName("st_disjoint");
     static final Name N_ST_DISTANCE            = unquotedName("st_distance");
     static final Name N_ST_ENDPOINT            = unquotedName("st_endpoint");
     static final Name N_ST_EQUALS              = unquotedName("st_equals");

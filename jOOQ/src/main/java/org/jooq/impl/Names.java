@@ -430,8 +430,10 @@ final class Names {
     static final Name N_ST_ASTEXT              = unquotedName("st_astext");
     static final Name N_ST_CONTAINS            = unquotedName("st_contains");
     static final Name N_ST_CROSSES             = unquotedName("st_crosses");
+    static final Name N_ST_DISTANCE            = unquotedName("st_distance");
     static final Name N_ST_ENDPOINT            = unquotedName("st_endpoint");
     static final Name N_ST_EQUALS              = unquotedName("st_equals");
+    static final Name N_ST_GEOMETRYTYPE        = unquotedName("st_geometrytype");
     static final Name N_ST_GEOMFROMTEXT        = unquotedName("st_geomfromtext");
     static final Name N_ST_INTERSECTION        = unquotedName("st_intersection");
     static final Name N_ST_INTERSECTS          = unquotedName("st_intersects");

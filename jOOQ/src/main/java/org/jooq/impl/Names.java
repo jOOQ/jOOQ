@@ -436,6 +436,7 @@ final class Names {
     static final Name N_ST_INTERSECTION        = unquotedName("st_intersection");
     static final Name N_ST_INTERSECTS          = unquotedName("st_intersects");
     static final Name N_ST_ISCLOSED            = unquotedName("st_isclosed");
+    static final Name N_ST_ISEMPTY             = unquotedName("st_isempty");
     static final Name N_ST_LENGTH              = unquotedName("st_length");
     static final Name N_ST_NUMPOINTS           = unquotedName("st_numpoints");
     static final Name N_ST_OVERLAPS            = unquotedName("st_overlaps");

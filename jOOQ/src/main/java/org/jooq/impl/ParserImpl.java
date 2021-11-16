@@ -330,6 +330,7 @@ import static org.jooq.impl.DSL.square;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.stddevPop;
 import static org.jooq.impl.DSL.stddevSamp;
 import static org.jooq.impl.DSL.sum;
@@ -6206,7 +6207,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'S':
-                if (parseFunctionNameIf("ST_CONTAINS") && requireProEdition()) {
+                if (parseFunctionNameIf("ST_CONTAINS", "SDO_CONTAINS") && requireProEdition()) {
 
 
 
@@ -6221,7 +6222,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
-                else if (parseFunctionNameIf("ST_EQUALS") && requireProEdition()) {
+                else if (parseFunctionNameIf("ST_EQUALS", "SDO_EQUAL") && requireProEdition()) {
 
 
 
@@ -6241,12 +6242,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
-                else if (parseFunctionNameIf("ST_OVERLAPS") && requireProEdition()) {
+                else if (parseFunctionNameIf("ST_OVERLAPS", "SDO_OVERLAPS") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_TOUCHES") && requireProEdition()) {
+                else if (parseFunctionNameIf("ST_TOUCHES", "SDO_TOUCH") && requireProEdition()) {
 
 
 
@@ -7806,6 +7807,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+
+
+
+
         return r;
     }
 
@@ -8397,6 +8402,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (parseFunctionNameIf("ST_DIFFERENCE") && requireProEdition()) {
+
+
+
+                }
+                else if (parseFunctionNameIf("SDO_GEOM.SDO_DIFFERENCE") && requireProEdition()) {
+
+
+
+                }
                 else if (parseFunctionNameIf("ST_DISTANCE") && requireProEdition()) {
 
 
@@ -8442,7 +8457,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (parseFunctionNameIf("SDO_GEOM.SDO_INTERSECTION") && requireProEdition()) {
+
+
+
+                }
                 else if (parseFunctionNameIf("ST_LENGTH") && requireProEdition()) {
+
+
+
+                }
+                else if (parseFunctionNameIf("SDO_GEOM.SDO_LENGTH") && requireProEdition()) {
 
 
 
@@ -8452,7 +8477,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
-                else if (parseFunctionNameIf("ST_NUMGEOMETRIES") && requireProEdition()) {
+                else if (parseFunctionNameIf("ST_NUMGEOMETRIES", "SDO_UTIL.GETNUMELEM") && requireProEdition()) {
 
 
 
@@ -8473,6 +8498,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 }
                 else if (parseFunctionNameIf("ST_UNION") && requireProEdition()) {
+
+
+
+                }
+                else if (parseFunctionNameIf("SDO_GEOM.SDO_UNION") && requireProEdition()) {
 
 
 

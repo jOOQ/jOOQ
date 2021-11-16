@@ -431,6 +431,7 @@ final class Names {
     static final Name N_ST_CENTROID            = unquotedName("st_centroid");
     static final Name N_ST_CONTAINS            = unquotedName("st_contains");
     static final Name N_ST_CROSSES             = unquotedName("st_crosses");
+    static final Name N_ST_DIFFERENCE          = unquotedName("st_difference");
     static final Name N_ST_DISJOINT            = unquotedName("st_disjoint");
     static final Name N_ST_DISTANCE            = unquotedName("st_distance");
     static final Name N_ST_ENDPOINT            = unquotedName("st_endpoint");

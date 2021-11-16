@@ -7789,6 +7789,23 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         return r;
     }
 
@@ -8360,6 +8377,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (parseFunctionNameIf("SDO_GEOM.SDO_AREA") && requireProEdition()) {
+
+
+
+                }
                 else if (parseFunctionNameIf("ST_ASTEXT") && requireProEdition()) {
 
 
@@ -8370,7 +8392,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (parseFunctionNameIf("SDO_GEOM.SDO_CENTROID") && requireProEdition()) {
+
+
+
+                }
                 else if (parseFunctionNameIf("ST_DISTANCE") && requireProEdition()) {
+
+
+
+                }
+                else if (parseFunctionNameIf("SDO_GEOM.SDO_DISTANCE") && requireProEdition()) {
 
 
 
@@ -8395,7 +8427,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
-                else if (parseFunctionNameIf("ST_GEOMFROMTEXT") && requireProEdition()) {
+                else if (parseFunctionNameIf("ST_GEOMFROMTEXT", "SDO_GEOMETRY") && requireProEdition()) {
 
 
 

@@ -15,6 +15,7 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
@@ -164,10 +165,12 @@ public class PgConstraint extends TableImpl<Record> {
     public final TableField<Record, Long[]> CONEXCLOP = createField(DSL.name("conexclop"), SQLDataType.BIGINT.getArrayDataType(), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link
-     * org.jooq.Binding} to specify how this type should be handled. Deprecation
-     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
-     * code generator configuration.
+     * @deprecated Unknown data type. If this is a qualified, user-defined type,
+     * it may have been excluded from code generation. If this is a built-in
+     * type, you can define an explicit {@link org.jooq.Binding} to specify how
+     * this type should be handled. Deprecation can be turned off using
+     * {@literal <deprecationOnUnknownTypes/>} in your code generator
+     * configuration.
      */
     @Deprecated
     public final TableField<Record, Object> CONBIN = createField(DSL.name("conbin"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
@@ -211,6 +214,16 @@ public class PgConstraint extends TableImpl<Record> {
     }
 
     @Override
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.PG_CONSTRAINT_OID_INDEX;
+    }
+
+    @Override
+    public List<UniqueKey<Record>> getUniqueKeys() {
+        return Arrays.asList(Keys.PG_CONSTRAINT_CONRELID_CONTYPID_CONNAME_INDEX);
+    }
+
+    @Override
     public List<ForeignKey<Record, ?>> getReferences() {
         return Arrays.asList(Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_NAMESPACE, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_CLASS);
     }
@@ -218,6 +231,10 @@ public class PgConstraint extends TableImpl<Record> {
     private transient PgNamespace _pgNamespace;
     private transient PgClass _pgClass;
 
+    /**
+     * Get the implicit join path to the <code>pg_catalog.pg_namespace</code>
+     * table.
+     */
     public PgNamespace pgNamespace() {
         if (_pgNamespace == null)
             _pgNamespace = new PgNamespace(this, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_NAMESPACE);
@@ -225,6 +242,9 @@ public class PgConstraint extends TableImpl<Record> {
         return _pgNamespace;
     }
 
+    /**
+     * Get the implicit join path to the <code>pg_catalog.pg_class</code> table.
+     */
     public PgClass pgClass() {
         if (_pgClass == null)
             _pgClass = new PgClass(this, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_CLASS);

@@ -205,10 +205,12 @@ public class PgClass extends TableImpl<Record> {
     public final TableField<Record, String[]> RELOPTIONS = createField(DSL.name("reloptions"), SQLDataType.CLOB.getArrayDataType(), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link
-     * org.jooq.Binding} to specify how this type should be handled. Deprecation
-     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
-     * code generator configuration.
+     * @deprecated Unknown data type. If this is a qualified, user-defined type,
+     * it may have been excluded from code generation. If this is a built-in
+     * type, you can define an explicit {@link org.jooq.Binding} to specify how
+     * this type should be handled. Deprecation can be turned off using
+     * {@literal <deprecationOnUnknownTypes/>} in your code generator
+     * configuration.
      */
     @Deprecated
     public final TableField<Record, Object> RELPARTBOUND = createField(DSL.name("relpartbound"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
@@ -257,12 +259,21 @@ public class PgClass extends TableImpl<Record> {
     }
 
     @Override
+    public List<UniqueKey<Record>> getUniqueKeys() {
+        return Arrays.asList(Keys.PG_CLASS_OID_INDEX, Keys.PG_CLASS_RELNAME_NSP_INDEX);
+    }
+
+    @Override
     public List<ForeignKey<Record, ?>> getReferences() {
         return Arrays.asList(Keys.PG_CLASS__SYNTHETIC_FK_PG_CLASS__SYNTHETIC_PK_PG_NAMESPACE);
     }
 
     private transient PgNamespace _pgNamespace;
 
+    /**
+     * Get the implicit join path to the <code>pg_catalog.pg_namespace</code>
+     * table.
+     */
     public PgNamespace pgNamespace() {
         if (_pgNamespace == null)
             _pgNamespace = new PgNamespace(this, Keys.PG_CLASS__SYNTHETIC_FK_PG_CLASS__SYNTHETIC_PK_PG_NAMESPACE);

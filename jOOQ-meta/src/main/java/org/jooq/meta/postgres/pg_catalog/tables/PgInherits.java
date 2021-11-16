@@ -12,9 +12,11 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
+import org.jooq.meta.postgres.pg_catalog.Keys;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 
 
@@ -54,6 +56,11 @@ public class PgInherits extends TableImpl<Record> {
      */
     public final TableField<Record, Integer> INHSEQNO = createField(DSL.name("inhseqno"), SQLDataType.INTEGER.nullable(false), this, "");
 
+    /**
+     * The column <code>pg_catalog.pg_inherits.inhdetachpending</code>.
+     */
+    public final TableField<Record, Boolean> INHDETACHPENDING = createField(DSL.name("inhdetachpending"), SQLDataType.BOOLEAN.nullable(false), this, "");
+
     private PgInherits(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
     }
@@ -90,6 +97,11 @@ public class PgInherits extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : PgCatalog.PG_CATALOG;
+    }
+
+    @Override
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.PG_INHERITS_RELID_SEQNO_INDEX;
     }
 
     @Override

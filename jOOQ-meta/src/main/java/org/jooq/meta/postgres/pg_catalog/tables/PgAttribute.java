@@ -4,6 +4,9 @@
 package org.jooq.meta.postgres.pg_catalog.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -12,9 +15,11 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
+import org.jooq.meta.postgres.pg_catalog.Keys;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 
 
@@ -90,14 +95,19 @@ public class PgAttribute extends TableImpl<Record> {
     public final TableField<Record, Boolean> ATTBYVAL = createField(DSL.name("attbyval"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
+     * The column <code>pg_catalog.pg_attribute.attalign</code>.
+     */
+    public final TableField<Record, String> ATTALIGN = createField(DSL.name("attalign"), SQLDataType.CHAR.nullable(false), this, "");
+
+    /**
      * The column <code>pg_catalog.pg_attribute.attstorage</code>.
      */
     public final TableField<Record, String> ATTSTORAGE = createField(DSL.name("attstorage"), SQLDataType.CHAR.nullable(false), this, "");
 
     /**
-     * The column <code>pg_catalog.pg_attribute.attalign</code>.
+     * The column <code>pg_catalog.pg_attribute.attcompression</code>.
      */
-    public final TableField<Record, String> ATTALIGN = createField(DSL.name("attalign"), SQLDataType.CHAR.nullable(false), this, "");
+    public final TableField<Record, String> ATTCOMPRESSION = createField(DSL.name("attcompression"), SQLDataType.CHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attnotnull</code>.
@@ -160,10 +170,12 @@ public class PgAttribute extends TableImpl<Record> {
     public final TableField<Record, String[]> ATTFDWOPTIONS = createField(DSL.name("attfdwoptions"), SQLDataType.CLOB.getArrayDataType(), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link
-     * org.jooq.Binding} to specify how this type should be handled. Deprecation
-     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
-     * code generator configuration.
+     * @deprecated Unknown data type. If this is a qualified, user-defined type,
+     * it may have been excluded from code generation. If this is a built-in
+     * type, you can define an explicit {@link org.jooq.Binding} to specify how
+     * this type should be handled. Deprecation can be turned off using
+     * {@literal <deprecationOnUnknownTypes/>} in your code generator
+     * configuration.
      */
     @Deprecated
     public final TableField<Record, Object> ATTMISSINGVAL = createField(DSL.name("attmissingval"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"anyarray\""), this, "");
@@ -204,6 +216,16 @@ public class PgAttribute extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : PgCatalog.PG_CATALOG;
+    }
+
+    @Override
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.PG_ATTRIBUTE_RELID_ATTNUM_INDEX;
+    }
+
+    @Override
+    public List<UniqueKey<Record>> getUniqueKeys() {
+        return Arrays.asList(Keys.PG_ATTRIBUTE_RELID_ATTNAM_INDEX);
     }
 
     @Override

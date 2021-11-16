@@ -105,6 +105,11 @@ public class PgType extends TableImpl<Record> {
     public final TableField<Record, Long> TYPRELID = createField(DSL.name("typrelid"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
+     * The column <code>pg_catalog.pg_type.typsubscript</code>.
+     */
+    public final TableField<Record, String> TYPSUBSCRIPT = createField(DSL.name("typsubscript"), SQLDataType.VARCHAR.nullable(false), this, "");
+
+    /**
      * The column <code>pg_catalog.pg_type.typelem</code>.
      */
     public final TableField<Record, Long> TYPELEM = createField(DSL.name("typelem"), SQLDataType.BIGINT.nullable(false), this, "");
@@ -185,10 +190,12 @@ public class PgType extends TableImpl<Record> {
     public final TableField<Record, Long> TYPCOLLATION = createField(DSL.name("typcollation"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link
-     * org.jooq.Binding} to specify how this type should be handled. Deprecation
-     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
-     * code generator configuration.
+     * @deprecated Unknown data type. If this is a qualified, user-defined type,
+     * it may have been excluded from code generation. If this is a built-in
+     * type, you can define an explicit {@link org.jooq.Binding} to specify how
+     * this type should be handled. Deprecation can be turned off using
+     * {@literal <deprecationOnUnknownTypes/>} in your code generator
+     * configuration.
      */
     @Deprecated
     public final TableField<Record, Object> TYPDEFAULTBIN = createField(DSL.name("typdefaultbin"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
@@ -247,12 +254,21 @@ public class PgType extends TableImpl<Record> {
     }
 
     @Override
+    public List<UniqueKey<Record>> getUniqueKeys() {
+        return Arrays.asList(Keys.PG_TYPE_OID_INDEX, Keys.PG_TYPE_TYPNAME_NSP_INDEX);
+    }
+
+    @Override
     public List<ForeignKey<Record, ?>> getReferences() {
         return Arrays.asList(Keys.PG_TYPE__SYNTHETIC_FK_PG_TYPE__SYNTHETIC_PK_PG_NAMESPACE);
     }
 
     private transient PgNamespace _pgNamespace;
 
+    /**
+     * Get the implicit join path to the <code>pg_catalog.pg_namespace</code>
+     * table.
+     */
     public PgNamespace pgNamespace() {
         if (_pgNamespace == null)
             _pgNamespace = new PgNamespace(this, Keys.PG_TYPE__SYNTHETIC_FK_PG_TYPE__SYNTHETIC_PK_PG_NAMESPACE);

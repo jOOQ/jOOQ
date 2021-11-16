@@ -15,6 +15,7 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
@@ -134,19 +135,23 @@ public class PgIndex extends TableImpl<Record> {
     public final TableField<Record, Object[]> INDOPTION = createField(DSL.name("indoption"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"int2vector\"").getArrayDataType(), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link
-     * org.jooq.Binding} to specify how this type should be handled. Deprecation
-     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
-     * code generator configuration.
+     * @deprecated Unknown data type. If this is a qualified, user-defined type,
+     * it may have been excluded from code generation. If this is a built-in
+     * type, you can define an explicit {@link org.jooq.Binding} to specify how
+     * this type should be handled. Deprecation can be turned off using
+     * {@literal <deprecationOnUnknownTypes/>} in your code generator
+     * configuration.
      */
     @Deprecated
     public final TableField<Record, Object> INDEXPRS = createField(DSL.name("indexprs"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link
-     * org.jooq.Binding} to specify how this type should be handled. Deprecation
-     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
-     * code generator configuration.
+     * @deprecated Unknown data type. If this is a qualified, user-defined type,
+     * it may have been excluded from code generation. If this is a built-in
+     * type, you can define an explicit {@link org.jooq.Binding} to specify how
+     * this type should be handled. Deprecation can be turned off using
+     * {@literal <deprecationOnUnknownTypes/>} in your code generator
+     * configuration.
      */
     @Deprecated
     public final TableField<Record, Object> INDPRED = createField(DSL.name("indpred"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
@@ -190,6 +195,11 @@ public class PgIndex extends TableImpl<Record> {
     }
 
     @Override
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.PG_INDEX_INDEXRELID_INDEX;
+    }
+
+    @Override
     public List<ForeignKey<Record, ?>> getReferences() {
         return Arrays.asList(Keys.PG_INDEX__INDEX_CLASS, Keys.PG_INDEX__TABLE_CLASS);
     }
@@ -197,6 +207,10 @@ public class PgIndex extends TableImpl<Record> {
     private transient PgClass _indexClass;
     private transient PgClass _tableClass;
 
+    /**
+     * Get the implicit join path to the <code>pg_catalog.pg_class</code> table,
+     * via the <code>INDEX_CLASS</code> key.
+     */
     public PgClass indexClass() {
         if (_indexClass == null)
             _indexClass = new PgClass(this, Keys.PG_INDEX__INDEX_CLASS);
@@ -204,6 +218,10 @@ public class PgIndex extends TableImpl<Record> {
         return _indexClass;
     }
 
+    /**
+     * Get the implicit join path to the <code>pg_catalog.pg_class</code> table,
+     * via the <code>TABLE_CLASS</code> key.
+     */
     public PgClass tableClass() {
         if (_tableClass == null)
             _tableClass = new PgClass(this, Keys.PG_INDEX__TABLE_CLASS);

@@ -15,6 +15,7 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
@@ -122,6 +123,11 @@ public class PgSequence extends TableImpl<Record> {
     }
 
     @Override
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.PG_SEQUENCE_SEQRELID_INDEX;
+    }
+
+    @Override
     public List<ForeignKey<Record, ?>> getReferences() {
         return Arrays.asList(Keys.PG_SEQUENCE__SYNTHETIC_FK_PG_SEQUENCE__SYNTHETIC_PK_PG_CLASS, Keys.PG_SEQUENCE__SYNTHETIC_FK_PG_SEQUENCE__SYNTHETIC_PK_PG_TYPE);
     }
@@ -129,6 +135,9 @@ public class PgSequence extends TableImpl<Record> {
     private transient PgClass _pgClass;
     private transient PgType _pgType;
 
+    /**
+     * Get the implicit join path to the <code>pg_catalog.pg_class</code> table.
+     */
     public PgClass pgClass() {
         if (_pgClass == null)
             _pgClass = new PgClass(this, Keys.PG_SEQUENCE__SYNTHETIC_FK_PG_SEQUENCE__SYNTHETIC_PK_PG_CLASS);
@@ -136,6 +145,9 @@ public class PgSequence extends TableImpl<Record> {
         return _pgClass;
     }
 
+    /**
+     * Get the implicit join path to the <code>pg_catalog.pg_type</code> table.
+     */
     public PgType pgType() {
         if (_pgType == null)
             _pgType = new PgType(this, Keys.PG_SEQUENCE__SYNTHETIC_FK_PG_SEQUENCE__SYNTHETIC_PK_PG_TYPE);

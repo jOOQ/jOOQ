@@ -12,9 +12,11 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
+import org.jooq.meta.postgres.pg_catalog.Keys;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 
 
@@ -95,6 +97,11 @@ public class PgDescription extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : PgCatalog.PG_CATALOG;
+    }
+
+    @Override
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.PG_DESCRIPTION_O_C_O_INDEX;
     }
 
     @Override

@@ -15,6 +15,7 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
@@ -102,12 +103,25 @@ public class PgEnum extends TableImpl<Record> {
     }
 
     @Override
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.PG_ENUM_OID_INDEX;
+    }
+
+    @Override
+    public List<UniqueKey<Record>> getUniqueKeys() {
+        return Arrays.asList(Keys.PG_ENUM_TYPID_LABEL_INDEX, Keys.PG_ENUM_TYPID_SORTORDER_INDEX);
+    }
+
+    @Override
     public List<ForeignKey<Record, ?>> getReferences() {
         return Arrays.asList(Keys.PG_ENUM__SYNTHETIC_FK_PG_ENUM__SYNTHETIC_PK_PG_TYPE);
     }
 
     private transient PgType _pgType;
 
+    /**
+     * Get the implicit join path to the <code>pg_catalog.pg_type</code> table.
+     */
     public PgType pgType() {
         if (_pgType == null)
             _pgType = new PgType(this, Keys.PG_ENUM__SYNTHETIC_FK_PG_ENUM__SYNTHETIC_PK_PG_TYPE);

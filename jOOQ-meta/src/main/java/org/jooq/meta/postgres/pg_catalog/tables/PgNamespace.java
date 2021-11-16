@@ -4,6 +4,9 @@
 package org.jooq.meta.postgres.pg_catalog.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -102,6 +105,11 @@ public class PgNamespace extends TableImpl<Record> {
     @Override
     public UniqueKey<Record> getPrimaryKey() {
         return Keys.SYNTHETIC_PK_PG_NAMESPACE;
+    }
+
+    @Override
+    public List<UniqueKey<Record>> getUniqueKeys() {
+        return Arrays.asList(Keys.PG_NAMESPACE_OID_INDEX, Keys.PG_NAMESPACE_NSPNAME_INDEX);
     }
 
     @Override

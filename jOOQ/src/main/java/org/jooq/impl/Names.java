@@ -457,6 +457,7 @@ final class Names {
     static final Name N_ST_WITHIN              = unquotedName("st_within");
     static final Name N_ST_X                   = unquotedName("st_x");
     static final Name N_ST_Y                   = unquotedName("st_y");
+    static final Name N_ST_Z                   = unquotedName("st_z");
     static final Name N_SUBSTRING              = unquotedName("substring");
     static final Name N_SUBSTRING_INDEX        = unquotedName("substring_index");
     static final Name N_SUM                    = unquotedName("sum");

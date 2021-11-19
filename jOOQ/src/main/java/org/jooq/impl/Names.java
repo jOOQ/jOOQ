@@ -451,6 +451,7 @@ final class Names {
     static final Name N_ST_NUMPOINTS           = unquotedName("st_numpoints");
     static final Name N_ST_OVERLAPS            = unquotedName("st_overlaps");
     static final Name N_ST_POINTN              = unquotedName("st_pointn");
+    static final Name N_ST_SRID                = unquotedName("st_srid");
     static final Name N_ST_STARTPOINT          = unquotedName("st_startpoint");
     static final Name N_ST_TOUCHES             = unquotedName("st_touches");
     static final Name N_ST_UNION               = unquotedName("st_union");

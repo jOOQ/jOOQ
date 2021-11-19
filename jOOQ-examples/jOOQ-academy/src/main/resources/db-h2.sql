@@ -31,7 +31,7 @@ CREATE TABLE book (
   rec_timestamp TIMESTAMP,
 
   CONSTRAINT pk_t_book PRIMARY KEY (id),
-  CONSTRAINT fk_t_book_author_id FOREIGN KEY (author_id) REFERENCES author(id),
+  CONSTRAINT fk_t_book_author_id FOREIGN KEY (author_id) REFERENCES author(id)
 )
 ;
 

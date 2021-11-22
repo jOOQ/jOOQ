@@ -131,6 +131,9 @@ public class Store extends TableImpl<StoreRecord> {
     private transient Staff _staff;
     private transient Address _address;
 
+    /**
+     * Get the implicit join path to the <code>public.staff</code> table.
+     */
     public Staff staff() {
         if (_staff == null)
             _staff = new Staff(this, Keys.STORE__STORE_MANAGER_STAFF_ID_FKEY);
@@ -138,6 +141,9 @@ public class Store extends TableImpl<StoreRecord> {
         return _staff;
     }
 
+    /**
+     * Get the implicit join path to the <code>public.address</code> table.
+     */
     public Address address() {
         if (_address == null)
             _address = new Address(this, Keys.STORE__STORE_ADDRESS_ID_FKEY);

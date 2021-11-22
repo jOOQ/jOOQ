@@ -143,6 +143,9 @@ public class Payment extends TableImpl<PaymentRecord> {
     private transient Staff _staff;
     private transient Rental _rental;
 
+    /**
+     * Get the implicit join path to the <code>public.customer</code> table.
+     */
     public Customer customer() {
         if (_customer == null)
             _customer = new Customer(this, Keys.PAYMENT__PAYMENT_CUSTOMER_ID_FKEY);
@@ -150,6 +153,9 @@ public class Payment extends TableImpl<PaymentRecord> {
         return _customer;
     }
 
+    /**
+     * Get the implicit join path to the <code>public.staff</code> table.
+     */
     public Staff staff() {
         if (_staff == null)
             _staff = new Staff(this, Keys.PAYMENT__PAYMENT_STAFF_ID_FKEY);
@@ -157,6 +163,9 @@ public class Payment extends TableImpl<PaymentRecord> {
         return _staff;
     }
 
+    /**
+     * Get the implicit join path to the <code>public.rental</code> table.
+     */
     public Rental rental() {
         if (_rental == null)
             _rental = new Rental(this, Keys.PAYMENT__PAYMENT_RENTAL_ID_FKEY);

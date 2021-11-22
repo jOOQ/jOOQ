@@ -162,6 +162,9 @@ public class Customer extends TableImpl<CustomerRecord> {
     private transient Store _store;
     private transient Address _address;
 
+    /**
+     * Get the implicit join path to the <code>public.store</code> table.
+     */
     public Store store() {
         if (_store == null)
             _store = new Store(this, Keys.CUSTOMER__CUSTOMER_STORE_ID_FKEY);
@@ -169,6 +172,9 @@ public class Customer extends TableImpl<CustomerRecord> {
         return _store;
     }
 
+    /**
+     * Get the implicit join path to the <code>public.address</code> table.
+     */
     public Address address() {
         if (_address == null)
             _address = new Address(this, Keys.CUSTOMER__CUSTOMER_ADDRESS_ID_FKEY);

@@ -87,7 +87,7 @@ public class RewardsReport extends TableImpl<RewardsReportRecord> {
     /**
      * The column <code>public.rewards_report.last_update</code>.
      */
-    public final TableField<RewardsReportRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(0).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<RewardsReportRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
 
     /**
      * The column <code>public.rewards_report.active</code>.

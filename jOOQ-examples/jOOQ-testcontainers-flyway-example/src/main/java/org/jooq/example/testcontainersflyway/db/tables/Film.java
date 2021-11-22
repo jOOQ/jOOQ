@@ -118,10 +118,12 @@ public class Film extends TableImpl<FilmRecord> {
     public final TableField<FilmRecord, String[]> SPECIAL_FEATURES = createField(DSL.name("special_features"), SQLDataType.CLOB.getArrayDataType(), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link
-     * org.jooq.Binding} to specify how this type should be handled. Deprecation
-     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
-     * code generator configuration.
+     * @deprecated Unknown data type. If this is a qualified, user-defined type,
+     * it may have been excluded from code generation. If this is a built-in
+     * type, you can define an explicit {@link org.jooq.Binding} to specify how
+     * this type should be handled. Deprecation can be turned off using
+     * {@literal <deprecationOnUnknownTypes/>} in your code generator
+     * configuration.
      */
     @Deprecated
     public final TableField<FilmRecord, Object> FULLTEXT = createField(DSL.name("fulltext"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"tsvector\"").nullable(false), this, "");
@@ -187,6 +189,10 @@ public class Film extends TableImpl<FilmRecord> {
     private transient Language _filmLanguageIdFkey;
     private transient Language _filmOriginalLanguageIdFkey;
 
+    /**
+     * Get the implicit join path to the <code>public.language</code> table, via
+     * the <code>film_language_id_fkey</code> key.
+     */
     public Language filmLanguageIdFkey() {
         if (_filmLanguageIdFkey == null)
             _filmLanguageIdFkey = new Language(this, Keys.FILM__FILM_LANGUAGE_ID_FKEY);
@@ -194,6 +200,10 @@ public class Film extends TableImpl<FilmRecord> {
         return _filmLanguageIdFkey;
     }
 
+    /**
+     * Get the implicit join path to the <code>public.language</code> table, via
+     * the <code>film_original_language_id_fkey</code> key.
+     */
     public Language filmOriginalLanguageIdFkey() {
         if (_filmOriginalLanguageIdFkey == null)
             _filmOriginalLanguageIdFkey = new Language(this, Keys.FILM__FILM_ORIGINAL_LANGUAGE_ID_FKEY);

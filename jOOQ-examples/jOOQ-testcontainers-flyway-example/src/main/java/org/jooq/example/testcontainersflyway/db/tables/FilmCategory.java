@@ -113,6 +113,9 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
     private transient Film _film;
     private transient Category _category;
 
+    /**
+     * Get the implicit join path to the <code>public.film</code> table.
+     */
     public Film film() {
         if (_film == null)
             _film = new Film(this, Keys.FILM_CATEGORY__FILM_CATEGORY_FILM_ID_FKEY);
@@ -120,6 +123,9 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
         return _film;
     }
 
+    /**
+     * Get the implicit join path to the <code>public.category</code> table.
+     */
     public Category category() {
         if (_category == null)
             _category = new Category(this, Keys.FILM_CATEGORY__FILM_CATEGORY_CATEGORY_ID_FKEY);

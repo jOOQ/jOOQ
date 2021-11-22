@@ -111,6 +111,9 @@ public class Book extends TableImpl<BookRecord> {
 
     private transient Author _author;
 
+    /**
+     * Get the implicit join path to the <code>FLYWAY_TEST.AUTHOR</code> table.
+     */
     public Author author() {
         if (_author == null)
             _author = new Author(this, Keys.FK_T_BOOK_AUTHOR_ID);

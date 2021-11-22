@@ -131,6 +131,9 @@ public class Inventory extends TableImpl<InventoryRecord> {
     private transient Film _film;
     private transient Store _store;
 
+    /**
+     * Get the implicit join path to the <code>public.film</code> table.
+     */
     public Film film() {
         if (_film == null)
             _film = new Film(this, Keys.INVENTORY__INVENTORY_FILM_ID_FKEY);
@@ -138,6 +141,9 @@ public class Inventory extends TableImpl<InventoryRecord> {
         return _film;
     }
 
+    /**
+     * Get the implicit join path to the <code>public.store</code> table.
+     */
     public Store store() {
         if (_store == null)
             _store = new Store(this, Keys.INVENTORY__INVENTORY_STORE_ID_FKEY);

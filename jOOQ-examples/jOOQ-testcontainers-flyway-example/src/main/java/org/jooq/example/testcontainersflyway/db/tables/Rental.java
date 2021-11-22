@@ -147,6 +147,9 @@ public class Rental extends TableImpl<RentalRecord> {
     private transient Customer _customer;
     private transient Staff _staff;
 
+    /**
+     * Get the implicit join path to the <code>public.inventory</code> table.
+     */
     public Inventory inventory() {
         if (_inventory == null)
             _inventory = new Inventory(this, Keys.RENTAL__RENTAL_INVENTORY_ID_FKEY);
@@ -154,6 +157,9 @@ public class Rental extends TableImpl<RentalRecord> {
         return _inventory;
     }
 
+    /**
+     * Get the implicit join path to the <code>public.customer</code> table.
+     */
     public Customer customer() {
         if (_customer == null)
             _customer = new Customer(this, Keys.RENTAL__RENTAL_CUSTOMER_ID_FKEY);
@@ -161,6 +167,9 @@ public class Rental extends TableImpl<RentalRecord> {
         return _customer;
     }
 
+    /**
+     * Get the implicit join path to the <code>public.staff</code> table.
+     */
     public Staff staff() {
         if (_staff == null)
             _staff = new Staff(this, Keys.RENTAL__RENTAL_STAFF_ID_FKEY);

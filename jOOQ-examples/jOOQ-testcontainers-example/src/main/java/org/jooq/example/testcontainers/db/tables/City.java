@@ -130,6 +130,9 @@ public class City extends TableImpl<CityRecord> {
 
     private transient Country _country;
 
+    /**
+     * Get the implicit join path to the <code>public.country</code> table.
+     */
     public Country country() {
         if (_country == null)
             _country = new Country(this, Keys.CITY__CITY_COUNTRY_ID_FKEY);

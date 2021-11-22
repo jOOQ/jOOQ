@@ -107,6 +107,9 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
     private transient Film _film;
     private transient Actor _actor;
 
+    /**
+     * Get the implicit join path to the <code>PUBLIC.FILM</code> table.
+     */
     public Film film() {
         if (_film == null)
             _film = new Film(this, Keys.FK3FSUXQ0JJ1XONRE7BHROOPVBX);
@@ -114,6 +117,9 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
         return _film;
     }
 
+    /**
+     * Get the implicit join path to the <code>PUBLIC.ACTOR</code> table.
+     */
     public Actor actor() {
         if (_actor == null)
             _actor = new Actor(this, Keys.FK43SD2F45W7YN0GAXQ94EHTWT2);

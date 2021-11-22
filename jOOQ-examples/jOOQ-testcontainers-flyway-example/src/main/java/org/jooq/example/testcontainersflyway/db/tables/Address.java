@@ -150,6 +150,9 @@ public class Address extends TableImpl<AddressRecord> {
 
     private transient City _city;
 
+    /**
+     * Get the implicit join path to the <code>public.city</code> table.
+     */
     public City city() {
         if (_city == null)
             _city = new City(this, Keys.ADDRESS__ADDRESS_CITY_ID_FKEY);

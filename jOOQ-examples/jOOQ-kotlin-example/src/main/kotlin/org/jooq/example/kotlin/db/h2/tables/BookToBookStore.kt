@@ -100,12 +100,20 @@ open class BookToBookStore(
 
     private lateinit var _bookStore: BookStore
     private lateinit var _book: Book
+
+    /**
+     * Get the implicit join path to the <code>PUBLIC.BOOK_STORE</code> table.
+     */
     fun bookStore(): BookStore {
         if (!this::_bookStore.isInitialized)
             _bookStore = BookStore(this, FK_B2BS_BS_NAME)
 
         return _bookStore;
     }
+
+    /**
+     * Get the implicit join path to the <code>PUBLIC.BOOK</code> table.
+     */
     fun book(): Book {
         if (!this::_book.isInitialized)
             _book = Book(this, FK_B2BS_B_ID)

@@ -144,12 +144,22 @@ open class Book(
 
     private lateinit var _fkTBookAuthorId: Author
     private lateinit var _fkTBookCoAuthorId: Author
+
+    /**
+     * Get the implicit join path to the <code>PUBLIC.AUTHOR</code> table, via
+     * the <code>FK_T_BOOK_AUTHOR_ID</code> key.
+     */
     fun fkTBookAuthorId(): Author {
         if (!this::_fkTBookAuthorId.isInitialized)
             _fkTBookAuthorId = Author(this, FK_T_BOOK_AUTHOR_ID)
 
         return _fkTBookAuthorId;
     }
+
+    /**
+     * Get the implicit join path to the <code>PUBLIC.AUTHOR</code> table, via
+     * the <code>FK_T_BOOK_CO_AUTHOR_ID</code> key.
+     */
     fun fkTBookCoAuthorId(): Author {
         if (!this::_fkTBookCoAuthorId.isInitialized)
             _fkTBookCoAuthorId = Author(this, FK_T_BOOK_CO_AUTHOR_ID)

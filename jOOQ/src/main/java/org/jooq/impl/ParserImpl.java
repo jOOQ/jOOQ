@@ -5862,8 +5862,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             boolean notOp = false;
 
             left = parseConcat();
+            int p = position();
             not = parseKeywordIf("NOT");
-
 
             if (!not && ((outer = parseTSQLOuterJoinComparatorIf()) != null) && requireProEdition()) {
                 Condition result = null;
@@ -6086,8 +6086,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 return leftRow2.overlaps(rightRow2);
             }
-            else
+            else {
+                position(p);
                 return left;
+            }
         }
     }
 
@@ -6854,7 +6856,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             if (type == Boolean.class)
                 return condition((Field) part);
-            
+
             // [#11631] [#12394] Numeric expressions are booleans in MySQL
             else if (dataType.isNumeric())
                 return ((Field) part).ne(zero());

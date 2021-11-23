@@ -73,6 +73,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     private final String           binding;
     private final boolean          nullable;
     private boolean                readonly;
+    private String                 generatedAlwaysAs;
     private boolean                identity;
     private final String           defaultValue;
     private final int              length;
@@ -188,10 +189,10 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     }
 
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, boolean isIdentity, Name userType, String converter, String binding, String javaType) {
-        this(database, schema, typeName, length, precision, scale, nullable, false, defaultValue, isIdentity, userType, converter, binding, javaType);
+        this(database, schema, typeName, length, precision, scale, nullable, false, null, defaultValue, isIdentity, userType, converter, binding, javaType);
     }
 
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean readonly, String defaultValue, boolean identity, Name userType, String converter, String binding, String javaType) {
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean readonly, String generatedAlwaysAs, String defaultValue, boolean identity, Name userType, String converter, String binding, String javaType) {
         this.database = database;
         this.schema = schema;
 
@@ -221,6 +222,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this.scale = scale == null ? 0 : scale.intValue();
         this.nullable = nullable == null ? true : nullable.booleanValue();
         this.readonly = readonly;
+        this.generatedAlwaysAs = generatedAlwaysAs;
         this.defaultValue = defaultValue;
         this.identity = identity;
     }
@@ -252,6 +254,21 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     @Override
     public final boolean isReadonly() {
         return readonly;
+    }
+
+    @Override
+    public final boolean isComputed() {
+        return getGeneratedAlwaysAs() != null;
+    }
+
+    @Override
+    public final String getGeneratedAlwaysAs() {
+        return generatedAlwaysAs;
+    }
+
+    public final DefaultDataTypeDefinition generatedAlwaysAs(String g) {
+        this.generatedAlwaysAs = g;
+        return this;
     }
 
     public final DefaultDataTypeDefinition identity(boolean i) {

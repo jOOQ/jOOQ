@@ -4225,6 +4225,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         List<Index> indexes = new ArrayList<>();
         boolean primary = false;
         boolean identity = false;
+        boolean computed = false;
         boolean readonly = false;
 
         // Three valued boolean:
@@ -4308,11 +4309,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     constraints,
                     primary,
                     identity,
+                    computed,
                     readonly
                 );
 
                 primary = inlineConstraints.primary;
                 identity = inlineConstraints.identity;
+                computed = inlineConstraints.computed;
 
                 if (ctas)
                     fields.add(field(fieldName));
@@ -4520,7 +4523,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return storageStep;
     }
 
-    private static final /* record */ class ParseInlineConstraints { private final DataType<?> type; private final Comment fieldComment; private final boolean primary; private final boolean identity; private final boolean readonly; public ParseInlineConstraints(DataType<?> type, Comment fieldComment, boolean primary, boolean identity, boolean readonly) { this.type = type; this.fieldComment = fieldComment; this.primary = primary; this.identity = identity; this.readonly = readonly; } public DataType<?> type() { return type; } public Comment fieldComment() { return fieldComment; } public boolean primary() { return primary; } public boolean identity() { return identity; } public boolean readonly() { return readonly; } @Override public boolean equals(Object o) { if (!(o instanceof ParseInlineConstraints)) return false; ParseInlineConstraints other = (ParseInlineConstraints) o; if (!java.util.Objects.equals(this.type, other.type)) return false; if (!java.util.Objects.equals(this.fieldComment, other.fieldComment)) return false; if (!java.util.Objects.equals(this.primary, other.primary)) return false; if (!java.util.Objects.equals(this.identity, other.identity)) return false; if (!java.util.Objects.equals(this.readonly, other.readonly)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.type, this.fieldComment, this.primary, this.identity, this.readonly); } @Override public String toString() { return new StringBuilder("ParseInlineConstraints[").append("type=").append(this.type).append(", fieldComment=").append(this.fieldComment).append(", primary=").append(this.primary).append(", identity=").append(this.identity).append(", readonly=").append(this.readonly).append("]").toString(); } }
+    private static final /* record */ class ParseInlineConstraints { private final DataType<?> type; private final Comment fieldComment; private final boolean primary; private final boolean identity; private final boolean computed; private final boolean readonly; public ParseInlineConstraints(DataType<?> type, Comment fieldComment, boolean primary, boolean identity, boolean computed, boolean readonly) { this.type = type; this.fieldComment = fieldComment; this.primary = primary; this.identity = identity; this.computed = computed; this.readonly = readonly; } public DataType<?> type() { return type; } public Comment fieldComment() { return fieldComment; } public boolean primary() { return primary; } public boolean identity() { return identity; } public boolean computed() { return computed; } public boolean readonly() { return readonly; } @Override public boolean equals(Object o) { if (!(o instanceof ParseInlineConstraints)) return false; ParseInlineConstraints other = (ParseInlineConstraints) o; if (!java.util.Objects.equals(this.type, other.type)) return false; if (!java.util.Objects.equals(this.fieldComment, other.fieldComment)) return false; if (!java.util.Objects.equals(this.primary, other.primary)) return false; if (!java.util.Objects.equals(this.identity, other.identity)) return false; if (!java.util.Objects.equals(this.computed, other.computed)) return false; if (!java.util.Objects.equals(this.readonly, other.readonly)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.type, this.fieldComment, this.primary, this.identity, this.computed, this.readonly); } @Override public String toString() { return new StringBuilder("ParseInlineConstraints[").append("type=").append(this.type).append(", fieldComment=").append(this.fieldComment).append(", primary=").append(this.primary).append(", identity=").append(this.identity).append(", computed=").append(this.computed).append(", readonly=").append(this.readonly).append("]").toString(); } }
 
     private final ParseInlineConstraints parseInlineConstraints(
         Name fieldName,
@@ -4528,6 +4531,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         List<? super Constraint> constraints,
         boolean primary,
         boolean identity,
+        boolean computed,
         boolean readonly
     ) {
         boolean nullable = false;
@@ -4538,6 +4542,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Comment fieldComment = null;
 
         identity |= type.identity();
+        computed |= type.computed();
         readonly |= type.readonly();
 
         for (;;) {
@@ -4595,65 +4600,36 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                     continue;
                 }
-                else if (!identity && parseKeywordIf("GENERATED")) {
-                    if (!parseKeywordIf("ALWAYS")) {
+                else if (!computed && parseKeywordIf("AS") && requireProEdition()) {
+
+
+
+
+
+
+                }
+                else if (!identity && !computed && parseKeywordIf("GENERATED")) {
+                    boolean always;
+                    if (!(always = parseKeywordIf("ALWAYS"))) {
                         parseKeyword("BY DEFAULT");
 
                         // TODO: Ignored keyword from Oracle
                         parseKeywordIf("ON NULL");
                     }
 
-                    parseKeyword("AS IDENTITY");
+                    if (always ? parseKeywordIf("AS IDENTITY") : parseKeyword("AS IDENTITY")) {
+                        parseIdentityOptionIf();
+                        type = type.identity(true);
+                        identity = true;
+                    }
+                    else if (parseKeyword("AS") && requireProEdition()) {
 
-                    // TODO: Ignored identity options from Oracle
-                    if (parseIf('(')) {
-                        boolean identityOption = false;
 
-                        for (;;) {
-                            if (identityOption)
-                                parseIf(',');
 
-                            if (parseKeywordIf("START WITH")) {
-                                if (!parseKeywordIf("LIMIT VALUE"))
-                                    parseUnsignedIntegerOrBindVariable();
-                                identityOption = true;
-                                continue;
-                            }
-                            else if (parseKeywordIf("INCREMENT BY")
-                                  || parseKeywordIf("MAXVALUE")
-                                  || parseKeywordIf("MINVALUE")
-                                  || parseKeywordIf("CACHE")) {
-                                parseUnsignedIntegerOrBindVariable();
-                                identityOption = true;
-                                continue;
-                            }
-                            else if (parseKeywordIf("NOMAXVALUE")
-                                  || parseKeywordIf("NOMINVALUE")
-                                  || parseKeywordIf("CYCLE")
-                                  || parseKeywordIf("NOCYCLE")
-                                  || parseKeywordIf("NOCACHE")
-                                  || parseKeywordIf("ORDER")
-                                  || parseKeywordIf("NOORDER")) {
-                                identityOption = true;
-                                continue;
-                            }
-                            else if (parseSignedIntegerLiteralIf() != null) {
-                                identityOption = true;
-                                continue;
-                            }
 
-                            if (identityOption)
-                                break;
-                            else
-                                throw unsupportedClause();
-                        }
-
-                        parse(')');
                     }
 
-                    type = type.identity(true);
                     defaultValue = true;
-                    identity = true;
                     continue;
                 }
             }
@@ -4749,7 +4725,56 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             break;
         }
 
-        return new ParseInlineConstraints(type, fieldComment, primary, identity, readonly);
+        return new ParseInlineConstraints(type, fieldComment, primary, identity, computed, readonly);
+    }
+
+    private final void parseIdentityOptionIf() {
+
+        // TODO: Ignored identity options from Oracle
+        if (parseIf('(')) {
+            boolean identityOption = false;
+
+            for (;;) {
+                if (identityOption)
+                    parseIf(',');
+
+                if (parseKeywordIf("START WITH")) {
+                    if (!parseKeywordIf("LIMIT VALUE"))
+                        parseUnsignedIntegerOrBindVariable();
+                    identityOption = true;
+                    continue;
+                }
+                else if (parseKeywordIf("INCREMENT BY")
+                      || parseKeywordIf("MAXVALUE")
+                      || parseKeywordIf("MINVALUE")
+                      || parseKeywordIf("CACHE")) {
+                    parseUnsignedIntegerOrBindVariable();
+                    identityOption = true;
+                    continue;
+                }
+                else if (parseKeywordIf("NOMAXVALUE")
+                      || parseKeywordIf("NOMINVALUE")
+                      || parseKeywordIf("CYCLE")
+                      || parseKeywordIf("NOCYCLE")
+                      || parseKeywordIf("NOCACHE")
+                      || parseKeywordIf("ORDER")
+                      || parseKeywordIf("NOORDER")) {
+                    identityOption = true;
+                    continue;
+                }
+                else if (parseSignedIntegerLiteralIf() != null) {
+                    identityOption = true;
+                    continue;
+                }
+
+                if (identityOption)
+                    break;
+                else
+                    throw unsupportedClause();
+            }
+
+            parse(')');
+        }
     }
 
     private final boolean parseSerialIf() {
@@ -5227,7 +5252,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         DataType type = parseDataType();
         int p = list == null ? -1 : list.size();
 
-        ParseInlineConstraints inline = parseInlineConstraints(fieldName, type, list, false, false, false);
+        ParseInlineConstraints inline = parseInlineConstraints(fieldName, type, list, false, false, false, false);
         Field<?> result = field(fieldName, inline.type, inline.fieldComment);
 
         if (list != null)

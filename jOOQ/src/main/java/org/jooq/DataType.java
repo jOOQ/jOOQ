@@ -444,6 +444,44 @@ public interface DataType<T> extends Named {
     boolean readonly();
 
     /**
+     * Whether this column is computed.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    boolean computed();
+
+    /**
+     * Set the computed column expression of this data type.
+     * <p>
+     * This implicitly sets {@link #readonly()} to <code>true</code>.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    DataType<T> generatedAlwaysAs(T generatedAlwaysAsValue);
+
+    /**
+     * Set the computed column expression of this data type.
+     * <p>
+     * This implicitly sets {@link #readonly()} to <code>true</code>.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    DataType<T> generatedAlwaysAs(Field<T> generatedAlwaysAsValue);
+
+    /**
+     * Get the computed column expression of this data type, if any.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    @Nullable
+    @Support({ POSTGRES })
+    Field<T> generatedAlwaysAs();
+
+    /**
      * Synonym for {@link #nullable(boolean)}, passing <code>true</code> as an
      * argument.
      */

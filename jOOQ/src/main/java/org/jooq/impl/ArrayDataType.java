@@ -70,12 +70,13 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         Integer length,
         Nullability nullability,
         boolean readonly,
+        Field<T[]> generatedAlwaysAs,
         Collation collation,
         CharacterSet characterSet,
         boolean identity,
         Field<T[]> defaultValue
     ) {
-        super(t, precision, scale, length, nullability, readonly, collation, characterSet, identity, defaultValue);
+        super(t, precision, scale, length, nullability, readonly, generatedAlwaysAs, collation, characterSet, identity, defaultValue);
 
         this.elementType = elementType;
     }
@@ -88,6 +89,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         Integer newLength,
         Nullability newNullability,
         boolean newReadonly,
+        Field<T[]> newGeneratedAlwaysAs,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -101,6 +103,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
             newLength,
             newNullability,
             newReadonly,
+            newGeneratedAlwaysAs,
             newCollation,
             newCharacterSet,
             newIdentity,

@@ -86,12 +86,13 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
         Integer length,
         Nullability nullability,
         boolean readonly,
+        Field<R> generatedAlwaysAs,
         Collation collation,
         CharacterSet characterSet,
         boolean identity,
         Field<R> defaultValue
     ) {
-        super(t, precision, scale, length, nullability, readonly, collation, characterSet, identity, defaultValue);
+        super(t, precision, scale, length, nullability, readonly, generatedAlwaysAs, collation, characterSet, identity, defaultValue);
 
         this.row = row;
     }
@@ -104,6 +105,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
         Integer newLength,
         Nullability newNullability,
         boolean newReadonly,
+        Field<R> newGeneratedAlwaysAs,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -117,6 +119,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
             newLength,
             newNullability,
             newReadonly,
+            newGeneratedAlwaysAs,
             newCollation,
             newCharacterSet,
             newIdentity,

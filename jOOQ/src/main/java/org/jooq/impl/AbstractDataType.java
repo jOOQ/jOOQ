@@ -146,6 +146,22 @@ implements
     public abstract DataType<T> readonly(boolean r);
 
     @Override
+    public final boolean computed() {
+        return generatedAlwaysAs() != null;
+    }
+
+    @Override
+    public final DataType<T> generatedAlwaysAs(T g) {
+        return generatedAlwaysAs(Tools.field(g, this));
+    }
+
+    @Override
+    public abstract DataType<T> generatedAlwaysAs(Field<T> generatedAlwaysAsValue);
+
+    @Override
+    public abstract Field<T> generatedAlwaysAs();
+
+    @Override
     public abstract DataType<T> collation(Collation c);
 
     @Override

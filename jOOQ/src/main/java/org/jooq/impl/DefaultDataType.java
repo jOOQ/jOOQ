@@ -51,9 +51,37 @@ import static org.jooq.impl.CommentImpl.NO_COMMENT;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DefaultBinding.binding;
 import static org.jooq.impl.SQLDataType.BIGINT;
-import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.SQLDataType.BINARY;
 import static org.jooq.impl.SQLDataType.BIT;
+import static org.jooq.impl.SQLDataType.BLOB;
+import static org.jooq.impl.SQLDataType.BOOLEAN;
+import static org.jooq.impl.SQLDataType.CHAR;
+import static org.jooq.impl.SQLDataType.CLOB;
+import static org.jooq.impl.SQLDataType.DATE;
+import static org.jooq.impl.SQLDataType.DECIMAL;
+import static org.jooq.impl.SQLDataType.DOUBLE;
+import static org.jooq.impl.SQLDataType.FLOAT;
+import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.SQLDataType.LONGNVARCHAR;
+import static org.jooq.impl.SQLDataType.LONGVARBINARY;
+import static org.jooq.impl.SQLDataType.LONGVARCHAR;
+import static org.jooq.impl.SQLDataType.NCHAR;
+import static org.jooq.impl.SQLDataType.NCLOB;
+import static org.jooq.impl.SQLDataType.NUMERIC;
+import static org.jooq.impl.SQLDataType.NVARCHAR;
 import static org.jooq.impl.SQLDataType.OTHER;
+import static org.jooq.impl.SQLDataType.REAL;
+import static org.jooq.impl.SQLDataType.RECORD;
+import static org.jooq.impl.SQLDataType.RESULT;
+import static org.jooq.impl.SQLDataType.SMALLINT;
+import static org.jooq.impl.SQLDataType.TIME;
+import static org.jooq.impl.SQLDataType.TIMESTAMP;
+import static org.jooq.impl.SQLDataType.TIMESTAMPWITHTIMEZONE;
+import static org.jooq.impl.SQLDataType.TIMEWITHTIMEZONE;
+import static org.jooq.impl.SQLDataType.TINYINT;
+import static org.jooq.impl.SQLDataType.VARBINARY;
+import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.tools.reflect.Reflect.wrapper;
 
 import java.math.BigDecimal;
@@ -221,6 +249,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
     private final Nullability                                   nullability;
     private final boolean                                       readonly;
+    private final Field<T>                                      generatedAlwaysAs;
     private final Collation                                     collation;
     private final CharacterSet                                  characterSet;
     private final boolean                                       identity;
@@ -290,10 +319,10 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     }
 
     DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
-        this(dialect, sqlDataType, type, binding, qualifiedTypeName, typeName, castTypeName, precision, scale, length, nullability, false, null, null, false, defaultValue);
+        this(dialect, sqlDataType, type, binding, qualifiedTypeName, typeName, castTypeName, precision, scale, length, nullability, false, null, null, null, false, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, boolean readonly, Collation collation, CharacterSet characterSet, boolean identity, Field<T> defaultValue) {
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, boolean readonly, Field<T> generatedAlwaysAs, Collation collation, CharacterSet characterSet, boolean identity, Field<T> defaultValue) {
         super(qualifiedTypeName, NO_COMMENT);
 
         // Initialise final instance members
@@ -313,6 +342,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
         this.nullability = nullability;
         this.readonly = readonly;
+        this.generatedAlwaysAs = generatedAlwaysAs;
         this.collation = collation;
         this.characterSet = characterSet;
         this.identity = identity;
@@ -353,12 +383,25 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         Integer newLength,
         Nullability newNullability,
         boolean newReadonly,
+        Field<T> newGeneratedAlwaysAs,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
         Field<T> newDefaultValue
     ) {
-        return new DefaultDataType<>(this, newPrecision, newScale, newLength, newNullability, newReadonly, newCollation, newCharacterSet, newIdentity, newDefaultValue);
+        return new DefaultDataType<>(
+            this,
+            newPrecision,
+            newScale,
+            newLength,
+            newNullability,
+            newReadonly,
+            newGeneratedAlwaysAs,
+            newCollation,
+            newCharacterSet,
+            newIdentity,
+            newDefaultValue
+        );
     }
 
     /**
@@ -371,6 +414,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         Integer length,
         Nullability nullability,
         boolean readonly,
+        Field<T> generatedAlwaysAs,
         Collation collation,
         CharacterSet characterSet,
         boolean identity,
@@ -389,6 +433,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
         this.nullability = nullability;
         this.readonly = readonly;
+        this.generatedAlwaysAs = generatedAlwaysAs;
         this.collation = collation;
         this.characterSet = characterSet;
         this.identity = identity;
@@ -426,6 +471,11 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     @Override
     public final boolean readonly() {
         return readonly;
+    }
+
+    @Override
+    public final Field<T> generatedAlwaysAs() {
+        return generatedAlwaysAs;
     }
 
     @Override
@@ -484,7 +534,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
                 // ... and then, set them back to the original value
                 // [#2710] TODO: Remove this logic along with cached data types
-                return dataType.construct(precision, scale, length, nullability, readonly, collation, characterSet, identity, defaultValue);
+                return dataType.construct(precision, scale, length, nullability, readonly, generatedAlwaysAs, collation, characterSet, identity, defaultValue);
         }
 
         // If this is already the dialect's specific data type, return this

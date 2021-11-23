@@ -82,6 +82,7 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
         Integer newLength,
         Nullability newNullability,
         boolean newReadonly,
+        Field<U> newGeneratedAlwaysAs,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -93,6 +94,7 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
             newLength,
             newNullability,
             newReadonly,
+            (Field) newGeneratedAlwaysAs,
             newCollation,
             newCharacterSet,
             newIdentity,
@@ -153,6 +155,11 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     @Override
     public final boolean readonly() {
         return delegate.readonly();
+    }
+
+    @Override
+    public final Field<U> generatedAlwaysAs() {
+        return (Field<U>) delegate.generatedAlwaysAs();
     }
 
     @Override

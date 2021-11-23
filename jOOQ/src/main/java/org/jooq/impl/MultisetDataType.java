@@ -85,12 +85,13 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
         Integer length,
         Nullability nullability,
         boolean readonly,
+        Field<Result<R>> generatedAlwaysAs,
         Collation collation,
         CharacterSet characterSet,
         boolean identity,
         Field<Result<R>> defaultValue
     ) {
-        super(t, precision, scale, length, nullability, readonly, collation, characterSet, identity, defaultValue);
+        super(t, precision, scale, length, nullability, readonly, generatedAlwaysAs, collation, characterSet, identity, defaultValue);
 
         this.row = row;
         this.recordType = recordType;
@@ -104,6 +105,7 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
         Integer newLength,
         Nullability newNullability,
         boolean newReadonly,
+        Field<Result<R>> newGeneratedAlwaysAs,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -118,6 +120,7 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
             newLength,
             newNullability,
             newReadonly,
+            newGeneratedAlwaysAs,
             newCollation,
             newCharacterSet,
             newIdentity,

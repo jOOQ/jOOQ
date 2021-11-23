@@ -51,7 +51,6 @@ import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRIBUTE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CLASS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_DESCRIPTION;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_NAMESPACE;
-import static org.jooq.util.postgres.PostgresDSL.oid;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -124,6 +123,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 COLUMNS.NUMERIC_SCALE,
                 (when(isIdentity, inline("YES"))).as(COLUMNS.IS_IDENTITY),
                 COLUMNS.IS_NULLABLE,
+                COLUMNS.GENERATION_EXPRESSION,
                 (when(isIdentity, inline(null, String.class)).else_(COLUMNS.COLUMN_DEFAULT)).as(COLUMNS.COLUMN_DEFAULT),
                 coalesce(COLUMNS.DOMAIN_SCHEMA, udtSchema).as(COLUMNS.UDT_SCHEMA),
                 coalesce(COLUMNS.DOMAIN_NAME, COLUMNS.UDT_NAME).as(COLUMNS.UDT_NAME),
@@ -166,7 +166,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                     record.get(COLUMNS.UDT_SCHEMA),
                     record.get(COLUMNS.UDT_NAME)
                 )
-            );
+            ).generatedAlwaysAs(record.get(COLUMNS.GENERATION_EXPRESSION));
 
             ColumnDefinition column = new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),

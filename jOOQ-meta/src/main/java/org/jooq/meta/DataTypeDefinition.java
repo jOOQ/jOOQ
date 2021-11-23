@@ -116,6 +116,16 @@ public interface DataTypeDefinition {
     boolean isReadonly();
 
     /**
+     * Whether this data type is computed.
+     */
+    boolean isComputed();
+
+    /**
+     * The computed column expression.
+     */
+    String getGeneratedAlwaysAs();
+
+    /**
      * Whether this data type is an identity.
      */
     boolean isIdentity();

@@ -53,7 +53,7 @@ import static java.util.stream.Collectors.joining;
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.*;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -120,6 +120,7 @@ import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
+import static org.jooq.impl.Keywords.K_ALWAYS;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_ATOMIC;
 import static org.jooq.impl.Keywords.K_AUTOINCREMENT;
@@ -127,6 +128,7 @@ import static org.jooq.impl.Keywords.K_AUTO_INCREMENT;
 import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_BEGIN_CATCH;
 import static org.jooq.impl.Keywords.K_BEGIN_TRY;
+import static org.jooq.impl.Keywords.K_BY;
 import static org.jooq.impl.Keywords.K_CHARACTER_SET;
 import static org.jooq.impl.Keywords.K_COLLATE;
 import static org.jooq.impl.Keywords.K_DECLARE;
@@ -145,7 +147,7 @@ import static org.jooq.impl.Keywords.K_EXEC;
 import static org.jooq.impl.Keywords.K_EXECUTE_BLOCK;
 import static org.jooq.impl.Keywords.K_EXECUTE_IMMEDIATE;
 import static org.jooq.impl.Keywords.K_EXECUTE_STATEMENT;
-import static org.jooq.impl.Keywords.K_GENERATED_BY_DEFAULT_AS_IDENTITY;
+import static org.jooq.impl.Keywords.K_GENERATED;
 import static org.jooq.impl.Keywords.K_IDENTITY;
 import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_INT;
@@ -158,7 +160,6 @@ import static org.jooq.impl.Keywords.K_PRIMARY_KEY;
 import static org.jooq.impl.Keywords.K_RAISE;
 import static org.jooq.impl.Keywords.K_RAISERROR;
 import static org.jooq.impl.Keywords.K_SERIAL;
-import static org.jooq.impl.Keywords.K_SERIAL2;
 import static org.jooq.impl.Keywords.K_SERIAL4;
 import static org.jooq.impl.Keywords.K_SERIAL8;
 import static org.jooq.impl.Keywords.K_SQLSTATE;
@@ -5096,6 +5097,9 @@ final class Tools {
      * keywords before the [ NOT ] NULL constraint.
      */
     static final void toSQLDDLTypeDeclarationIdentityBeforeNull(Context<?> ctx, DataType<?> type) {
+        if (REQUIRE_IDENTITY_AFTER_NULL.contains(ctx.dialect()))
+            return;
+
         if (type.identity()) {
             switch (ctx.family()) {
 
@@ -5109,7 +5113,7 @@ final class Tools {
 
                 case CUBRID:    ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
 
-                case HSQLDB:    ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY).sql('(').visit(K_START_WITH).sql(" 1)"); break;
+                case HSQLDB:    ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY).sql('(').visit(K_START_WITH).sql(" 1)"); break;
                 case SQLITE:    ctx.sql(' ').visit(K_PRIMARY_KEY).sql(' ').visit(K_AUTOINCREMENT); break;
                 case POSTGRES:
                     switch (ctx.dialect()) {
@@ -5119,23 +5123,38 @@ final class Tools {
 
 
                         case POSTGRES:
-                                ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
+                                ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY); break;
                     }
                     break;
 
 
                 case DERBY:
                 case FIREBIRD:
-                case YUGABYTE: ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
+                case YUGABYTE: ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY); break;
             }
         }
+
+
+
+
+
+
+
+
+
+
     }
+
+    private static final Set<SQLDialect> REQUIRE_IDENTITY_AFTER_NULL = SQLDialect.supportedBy(H2, MARIADB, MYSQL);
 
     /**
      * If a type is an identity type, some dialects require the relevant
      * keywords after the [ NOT ] NULL constraint.
      */
     static final void toSQLDDLTypeDeclarationIdentityAfterNull(Context<?> ctx, DataType<?> type) {
+        if (!REQUIRE_IDENTITY_AFTER_NULL.contains(ctx.dialect()))
+            return;
+
         if (type.identity()) {
 
             // [#5062] H2's (and others') AUTO_INCREMENT flag is syntactically located *after* NULL flags.
@@ -5143,7 +5162,7 @@ final class Tools {
 
 
 
-                case H2:     ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
+                case H2:     ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY); break;
 
 
 
@@ -5154,6 +5173,20 @@ final class Tools {
                 case MYSQL:  ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     private static final void toSQLDDLTypeDeclarationDefault(Context<?> ctx, DataType<?> type) {

@@ -50,7 +50,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 // ...
-import org.jooq.meta.jaxb.SyntheticReadonlyColumnType;
 import org.jooq.meta.jaxb.SyntheticReadonlyRowidType;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;

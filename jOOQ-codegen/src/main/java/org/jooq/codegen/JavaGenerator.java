@@ -8489,6 +8489,7 @@ public class JavaGenerator extends AbstractGenerator {
                 false,
                 false,
                 null,
+                null,
                 baseType
             ) + ".getArrayDataType()";
         }
@@ -8504,6 +8505,7 @@ public class JavaGenerator extends AbstractGenerator {
                 type.isNullable(),
                 type.isIdentity(),
                 type.isReadonly(),
+                type.getGeneratedAlwaysAs(),
                 type.getDefaultValue(),
                 type.getQualifiedUserType()
             );
@@ -8749,7 +8751,21 @@ public class JavaGenerator extends AbstractGenerator {
         return type;
     }
 
-    protected String getTypeReference(Database db, SchemaDefinition schema, JavaWriter out, String t, int p, int s, int l, boolean n, boolean i, boolean r, String d, Name u) {
+    protected String getTypeReference(
+        Database db,
+        SchemaDefinition schema,
+        JavaWriter out,
+        String t,
+        int p,
+        int s,
+        int l,
+        boolean n,
+        boolean i,
+        boolean r,
+        String g,
+        String d,
+        Name u
+    ) {
         StringBuilder sb = new StringBuilder();
 
         if (db.getArray(schema, u) != null) {
@@ -8808,6 +8824,8 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
+
+
             if (d != null)
                 dataType = dataType.defaultValue((Field) DSL.field(d, dataType));
 
@@ -8857,6 +8875,18 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (dataType.identity())
                 sb.append(".identity(true)");
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

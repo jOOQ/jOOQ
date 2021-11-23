@@ -6314,6 +6314,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         boolean notOp = false;
 
         left = parseConcat();
+        int p = position();
         not = parseKeywordIf("NOT");
 
 
@@ -6538,8 +6539,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             return leftRow2.overlaps(rightRow2);
         }
-        else
+        else {
+            position(p);
             return left;
+        }
     }
 
     private final Condition parsePredicateXMLExistsIf() {

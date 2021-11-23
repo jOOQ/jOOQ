@@ -478,7 +478,6 @@ public interface DataType<T> extends Named {
      * This feature is implemented in commercial distributions only.
      */
     @Nullable
-    @Support({ POSTGRES })
     Field<T> generatedAlwaysAs();
 
     /**

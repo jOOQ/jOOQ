@@ -5323,8 +5323,8 @@ final class ParserImpl implements Parser {
             boolean notOp = false;
 
             left = parseConcat(ctx, null);
+            int p = ctx.position();
             not = parseKeywordIf(ctx, "NOT");
-
 
             if (!not && ((outer = parseTSQLOuterJoinComparatorIf(ctx)) != null) && ctx.requireProEdition()) {
                 Condition result = null;
@@ -5554,8 +5554,10 @@ final class ParserImpl implements Parser {
 
                 return leftRow2.overlaps(rightRow2);
             }
-            else
+            else {
+                ctx.position(p);
                 return left;
+            }
         }
     }
 

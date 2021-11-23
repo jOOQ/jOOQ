@@ -10106,6 +10106,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         else if (string)
             parse('\'');
 
+        // [#12645] In PostgreSQL, function based indexes tend to cast the
+        //          date part to a type explicitly
+        if (parseIf("::"))
+            parseDataType();
+
         return result;
     }
 

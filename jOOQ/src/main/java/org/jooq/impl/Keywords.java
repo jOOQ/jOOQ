@@ -381,6 +381,7 @@ final class Keywords {
     static final Keyword K_START_WITH                       = keyword("start with");
     static final Keyword K_STATEMENT                        = keyword("statement");
     static final Keyword K_STEP                             = keyword("step");
+    static final Keyword K_STORED                           = keyword("stored");
     static final Keyword K_STORING                          = keyword("storing");
     static final Keyword K_STRUCT                           = keyword("struct");
     static final Keyword K_SWITCH                           = keyword("switch");

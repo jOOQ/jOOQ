@@ -164,6 +164,7 @@ import static org.jooq.impl.Keywords.K_SERIAL4;
 import static org.jooq.impl.Keywords.K_SERIAL8;
 import static org.jooq.impl.Keywords.K_SQLSTATE;
 import static org.jooq.impl.Keywords.K_START_WITH;
+import static org.jooq.impl.Keywords.K_STORED;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_THROW;
 import static org.jooq.impl.Keywords.K_WHEN;
@@ -5133,6 +5134,11 @@ final class Tools {
                 case YUGABYTE: ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY); break;
             }
         }
+
+
+
+
+
 
 
 

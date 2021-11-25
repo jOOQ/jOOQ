@@ -111,12 +111,12 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             scale0(),
             length0(),
             nullability(),
-            readonly(),
+            g != null ? true : readonly(),
             g,
             collation(),
             characterSet(),
             identity(),
-            defaultValue()
+            g != null ? null : defaultValue()
         );
     }
 
@@ -176,7 +176,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             nullability(),
             readonly(),
-            generatedAlwaysAs(),
+            d != null ? null : generatedAlwaysAs(),
             collation(),
             characterSet(),
             identity(),

@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -458,7 +459,7 @@ public interface DataType<T> extends Named {
      * This feature is implemented in commercial distributions only.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, POSTGRES })
     DataType<T> generatedAlwaysAs(T generatedAlwaysAsValue);
 
     /**
@@ -469,7 +470,7 @@ public interface DataType<T> extends Named {
      * This feature is implemented in commercial distributions only.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, POSTGRES })
     DataType<T> generatedAlwaysAs(Field<T> generatedAlwaysAsValue);
 
     /**

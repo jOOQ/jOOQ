@@ -43,7 +43,9 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -55,6 +57,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTE;
 
 import java.sql.Statement;
 import java.util.Collection;
@@ -409,7 +412,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see #store()
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     int merge() throws DataAccessException;
 
     /**
@@ -421,7 +424,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataAccessException if something went wrong executing the query
      * @see #merge()
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     int merge(Field<?>... fields) throws DataAccessException;
 
     /**
@@ -433,7 +436,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataAccessException if something went wrong executing the query
      * @see #merge()
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     int merge(Collection<? extends Field<?>> fields) throws DataAccessException;
 
     /**

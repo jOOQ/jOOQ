@@ -40,7 +40,17 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 // ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.IGNITE;
+// ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.DELETE;
@@ -88,8 +98,9 @@ import org.jooq.tools.StringUtils;
  */
 @org.jooq.Internal
 public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableRecordImpl<R> implements UpdatableRecord<R> {
-    private static final JooqLogger      log                   = JooqLogger.getLogger(UpdatableRecordImpl.class);
-    private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE = SQLDialect.supportedBy(SQLITE);
+    private static final JooqLogger      log                        = JooqLogger.getLogger(UpdatableRecordImpl.class);
+    private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE      = SQLDialect.supportedBy(SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_MERGE_RETURNING = SQLDialect.supportedBy(DERBY, IGNITE);
 
     public UpdatableRecordImpl(Table<R> table) {
         super(table);
@@ -332,8 +343,11 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
         // [#1596]  Check if the record was really changed in the database
         // [#1859]  Specify the returning clause if needed
-        // [#10051] See if we can return keys also on MERGE
-        Collection<Field<?>> key = merge ? null : setReturningIfNeeded(query);
+        // [#10051] Not all dialects support RETURNING on MERGE
+        Collection<Field<?>> key = merge && NO_SUPPORT_MERGE_RETURNING.contains(create().dialect())
+            ? null
+            : setReturningIfNeeded(query);
+
         int result = query.execute();
         checkIfChanged(result, version, timestamp);
 

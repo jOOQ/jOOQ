@@ -281,6 +281,7 @@ final class Names {
     static final Name N_STRING_AGG             = unquotedName("string_agg");
     static final Name N_STRREVERSE             = unquotedName("strreverse");
     static final Name N_STR_REPLACE            = unquotedName("str_replace");
+    static final Name N_ST_NUMINTERIORRINGS    = unquotedName("st_numinteriorrings");
     static final Name N_SUB                    = unquotedName("sub");
     static final Name N_SUBSTR                 = unquotedName("substr");
     static final Name N_SYSTEM_RANGE           = unquotedName("system_range");

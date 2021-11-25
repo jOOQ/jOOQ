@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.H2;
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
@@ -174,7 +175,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     void onDuplicateKeyUpdate(boolean flag);
 
     /**
@@ -232,7 +233,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     <T> void addValueForUpdate(Field<T> field, T value);
 
     /**
@@ -241,7 +242,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     <T> void addValueForUpdate(Field<T> field, Field<T> value);
 
     /**
@@ -254,7 +255,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
     void addValuesForUpdate(Map<?, ?> map);
 
     /**

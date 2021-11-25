@@ -143,7 +143,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
      * <code>ON CONFLICT ON CONSTRAINT</code> clause in this <code>INSERT</code>
      * statement.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, YUGABYTE })
     void onConflictOnConstraint(Name constraint);
 
     /**
@@ -151,7 +151,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
      * <code>ON CONFLICT ON CONSTRAINT</code> clause in this <code>INSERT</code>
      * statement.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, YUGABYTE })
     void onConflictOnConstraint(Constraint constraint);
 
     /**

@@ -466,7 +466,14 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         for (Parameter<?> p : outParameters)
             fields.add(DSL.field(DSL.name(p.getName()), p.getDataType()));
 
-        Result<?> result = create.select(fields).from("{0}", asField()).fetch();
+        Result<?> result;
+
+        // [#12659] Handle special case of single UDT OUT parameter, which cannot
+        //          be referred to by its name, regrettably
+        if (fields.size() == 1 && fields.get(0).getDataType().isUDT())
+            result = create.select(field("row(t.*)", fields.get(0).getDataType())).from("{0} as t", asField()).fetch();
+        else
+            result = create.select(fields).from("{0}", asField()).fetch();
 
         int i = 0;
 

@@ -67,6 +67,7 @@ public final class Source {
     private final Reader         reader;
     private final InputStream    inputStream;
     private final File           file;
+    private final int            length;
 
     private Source(
         String string,
@@ -76,7 +77,8 @@ public final class Source {
         CharsetDecoder charsetDecoder,
         Reader reader,
         InputStream inputStream,
-        File file
+        File file,
+        int length
     ) {
         this.string = string;
         this.bytes = bytes;
@@ -86,13 +88,14 @@ public final class Source {
         this.reader = reader;
         this.inputStream = inputStream;
         this.file = file;
+        this.length = length;
     }
 
     /**
      * Create a source from a string.
      */
     public static final Source of(String string) {
-        return new Source(string, null, null, null, null, null, null, null);
+        return new Source(string, null, null, null, null, null, null, null, -1);
     }
 
     /**
@@ -106,84 +109,112 @@ public final class Source {
      * Create a source from binary data using a specific character set.
      */
     public static final Source of(byte[] bytes, String charsetName) {
-        return new Source(null, bytes, charsetName, null, null, null, null, null);
+        return new Source(null, bytes, charsetName, null, null, null, null, null, -1);
     }
 
     /**
      * Create a source from binary data using a specific character set.
      */
     public static final Source of(byte[] bytes, Charset charset) {
-        return new Source(null, bytes, null, charset, null, null, null, null);
+        return new Source(null, bytes, null, charset, null, null, null, null, -1);
     }
 
     /**
      * Create a source from binary data using a specific character set.
      */
     public static final Source of(byte[] bytes, CharsetDecoder charsetDecoder) {
-        return new Source(null, bytes, null, null, charsetDecoder, null, null, null);
+        return new Source(null, bytes, null, null, charsetDecoder, null, null, null, -1);
     }
 
     /**
      * Create a source from a file.
      */
     public static final Source of(File file) {
-        return new Source(null, null, null, null, null, null, null, file);
+        return new Source(null, null, null, null, null, null, null, file, -1);
     }
 
     /**
      * Create a source from a file using a specific character set.
      */
     public static final Source of(File file, String charsetName) {
-        return new Source(null, null, charsetName, null, null, null, null, file);
+        return new Source(null, null, charsetName, null, null, null, null, file, -1);
     }
 
     /**
      * Create a source from a file using a specific character set.
      */
     public static final Source of(File file, Charset charset) {
-        return new Source(null, null, null, charset, null, null, null, file);
+        return new Source(null, null, null, charset, null, null, null, file, -1);
     }
 
     /**
      * Create a source from a file using a specific character set.
      */
     public static final Source of(File file, CharsetDecoder charsetDecoder) {
-        return new Source(null, null, null, null, charsetDecoder, null, null, file);
+        return new Source(null, null, null, null, charsetDecoder, null, null, file, -1);
     }
 
     /**
      * Create a source from a reader.
      */
     public static final Source of(Reader reader) {
-        return new Source(null, null, null, null, null, reader, null, null);
+        return new Source(null, null, null, null, null, reader, null, null, -1);
     }
 
     /**
      * Create a source from an input stream.
      */
     public static final Source of(InputStream inputStream) {
-        return new Source(null, null, null, null, null, null, inputStream, null);
+        return new Source(null, null, null, null, null, null, inputStream, null, -1);
     }
 
     /**
      * Create a source from an input stream using a specific character set.
      */
     public static final Source of(InputStream inputStream, String charsetName) {
-        return new Source(null, null, charsetName, null, null, null, inputStream, null);
+        return new Source(null, null, charsetName, null, null, null, inputStream, null, -1);
     }
 
     /**
      * Create a source from an input stream using a specific character set.
      */
     public static final Source of(InputStream inputStream, Charset charset) {
-        return new Source(null, null, null, charset, null, null, inputStream, null);
+        return new Source(null, null, null, charset, null, null, inputStream, null, -1);
     }
 
     /**
      * Create a source from an input stream using a specific character set.
      */
     public static final Source of(InputStream inputStream, CharsetDecoder charsetDecoder) {
-        return new Source(null, null, null, null, charsetDecoder, null, inputStream, null);
+        return new Source(null, null, null, null, charsetDecoder, null, inputStream, null, -1);
+    }
+
+    /**
+     * Create a source from an input stream.
+     */
+    public static final Source of(InputStream inputStream, int length) {
+        return new Source(null, null, null, null, null, null, inputStream, null, length);
+    }
+
+    /**
+     * Create a source from an input stream using a specific character set.
+     */
+    public static final Source of(InputStream inputStream, int length, String charsetName) {
+        return new Source(null, null, charsetName, null, null, null, inputStream, null, length);
+    }
+
+    /**
+     * Create a source from an input stream using a specific character set.
+     */
+    public static final Source of(InputStream inputStream, int length, Charset charset) {
+        return new Source(null, null, null, charset, null, null, inputStream, null, length);
+    }
+
+    /**
+     * Create a source from an input stream using a specific character set.
+     */
+    public static final Source of(InputStream inputStream, int length, CharsetDecoder charsetDecoder) {
+        return new Source(null, null, null, null, charsetDecoder, null, inputStream, null, length);
     }
 
     /**
@@ -197,11 +228,17 @@ public final class Source {
             if (string != null)
                 return new StringReader(string);
             else if (bytes != null)
-                return inputStreamReader(new ByteArrayInputStream(bytes));
+                if (length > -1)
+                    return inputStreamReader(new ByteArrayInputStream(bytes, 0, length));
+                else
+                    return inputStreamReader(new ByteArrayInputStream(bytes));
             else if (reader != null)
                 return reader;
             else if (inputStream != null)
-                return inputStreamReader(inputStream);
+                if (length > -1)
+                    return inputStreamReader(new LengthLimitedInputStream(inputStream, length));
+                else
+                    return inputStreamReader(inputStream);
             else if (file != null)
                 return new BufferedReader(inputStreamReader(new FileInputStream(file)));
             else
@@ -209,6 +246,21 @@ public final class Source {
         }
         catch (java.io.IOException e) {
             throw new IOException(e.getMessage(), e);
+        }
+    }
+
+    static class LengthLimitedInputStream extends InputStream {
+        final InputStream is;
+        int               length;
+
+        LengthLimitedInputStream(InputStream is, int length) {
+            this.length = length;
+            this.is = is;
+        }
+
+        @Override
+        public int read() throws java.io.IOException {
+            return length --> 0 ? is.read() : -1;
         }
     }
 

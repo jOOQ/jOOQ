@@ -591,20 +591,18 @@ final class ParsingStatement implements CallableStatement {
                 return x.readNBytes(length);
 
 
+            // Legacy Java 8 implementation
+            ByteArrayOutputStream out = new ByteArrayOutputStream(length);
 
+            long total = 0;
+            byte[] buffer = new byte[8192];
+            int delta;
+            while ((delta = x.read(buffer, 0, (int) Math.min(length - total, 8192L))) >= 0) {
+                out.write(buffer, 0, delta);
+                total += delta;
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
+            return out.toByteArray();
         }
         catch (IOException e) {
             throw new org.jooq.exception.IOException("Could not read source", e);

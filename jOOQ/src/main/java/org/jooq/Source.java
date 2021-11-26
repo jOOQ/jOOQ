@@ -158,35 +158,42 @@ public final class Source {
      * Create a source from a reader.
      */
     public static final Source of(Reader reader) {
-        return new Source(null, null, null, null, null, reader, null, null, -1);
+        return of(reader, -1);
+    }
+
+    /**
+     * Create a source from a reader.
+     */
+    public static final Source of(Reader reader, int length) {
+        return new Source(null, null, null, null, null, reader, null, null, length);
     }
 
     /**
      * Create a source from an input stream.
      */
     public static final Source of(InputStream inputStream) {
-        return new Source(null, null, null, null, null, null, inputStream, null, -1);
+        return of(inputStream, -1);
     }
 
     /**
      * Create a source from an input stream using a specific character set.
      */
     public static final Source of(InputStream inputStream, String charsetName) {
-        return new Source(null, null, charsetName, null, null, null, inputStream, null, -1);
+        return of(inputStream, -1, charsetName);
     }
 
     /**
      * Create a source from an input stream using a specific character set.
      */
     public static final Source of(InputStream inputStream, Charset charset) {
-        return new Source(null, null, null, charset, null, null, inputStream, null, -1);
+        return of(inputStream, -1, charset);
     }
 
     /**
      * Create a source from an input stream using a specific character set.
      */
     public static final Source of(InputStream inputStream, CharsetDecoder charsetDecoder) {
-        return new Source(null, null, null, null, charsetDecoder, null, inputStream, null, -1);
+        return of(inputStream, -1, charsetDecoder);
     }
 
     /**
@@ -233,7 +240,10 @@ public final class Source {
                 else
                     return inputStreamReader(new ByteArrayInputStream(bytes));
             else if (reader != null)
-                return reader;
+                if (length > -1)
+                    return new LengthLimitedReader(reader, length);
+                else
+                    return reader;
             else if (inputStream != null)
                 if (length > -1)
                     return inputStreamReader(new LengthLimitedInputStream(inputStream, length));
@@ -261,6 +271,33 @@ public final class Source {
         @Override
         public int read() throws java.io.IOException {
             return length --> 0 ? is.read() : -1;
+        }
+
+        @Override
+        public void close() throws java.io.IOException {
+            is.close();
+        }
+    }
+
+    static class LengthLimitedReader extends Reader {
+        final Reader reader;
+        int          length;
+
+        LengthLimitedReader(Reader reader, int length) {
+            this.length = length;
+            this.reader = reader;
+        }
+
+        @Override
+        public int read(char[] cbuf, int off, int len) throws java.io.IOException {
+            int r = length > 0 ? reader.read(cbuf, off, Math.min(length, len)) : -1;
+            length -= len;
+            return r;
+        }
+
+        @Override
+        public void close() throws java.io.IOException {
+            reader.close();
         }
     }
 

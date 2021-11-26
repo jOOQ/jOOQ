@@ -9092,7 +9092,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             while (!parseIf('\''));
 
             int months = (month == null ? 0 : month.intValue())
-                       + (year  == null ? 0 : asInt((long) year.doubleValue() * 12));
+                       + (year  == null ? 0 : asInt((long) (year.doubleValue() * 12)));
 
             double seconds = (month  == null ? 0.0 : ((month.doubleValue() % 1.0) * 30 * 86400))
                            + (day    == null ? 0.0 : ((day.doubleValue() * 86400)))

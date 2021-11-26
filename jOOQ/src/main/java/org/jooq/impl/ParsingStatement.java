@@ -586,10 +586,10 @@ final class ParsingStatement implements CallableStatement {
 
     private static final byte[] readBytes(InputStream x, int length) {
         try {
-            /* [java-11] */
+
             if (true)
                 return x.readNBytes(length);
-            /* [/java-11]
+
 
 
 

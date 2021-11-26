@@ -270,7 +270,12 @@ public final class Source {
 
         @Override
         public int read() throws java.io.IOException {
-            return length --> 0 ? is.read() : -1;
+            if (length > 0) {
+                length--;
+                return is.read();
+            }
+            else
+                return -1;
         }
 
         @Override
@@ -290,9 +295,13 @@ public final class Source {
 
         @Override
         public int read(char[] cbuf, int off, int len) throws java.io.IOException {
-            int r = length > 0 ? reader.read(cbuf, off, Math.min(length, len)) : -1;
-            length -= len;
-            return r;
+            if (length > 0) {
+                int r = reader.read(cbuf, off, Math.min(length, len));
+                length -= len;
+                return r;
+            }
+            else
+                return -1;
         }
 
         @Override

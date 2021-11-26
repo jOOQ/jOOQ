@@ -951,6 +951,8 @@ final class Tools {
 
 
 
+
+
     // ------------------------------------------------------------------------
     // XXX: Record constructors and related methods
     // ------------------------------------------------------------------------
@@ -5032,11 +5034,29 @@ final class Tools {
         toSQLDDLTypeDeclaration(ctx, type);
         toSQLDDLTypeDeclarationIdentityBeforeNull(ctx, type);
 
+
+
+
         // [#5356] Some dialects require the DEFAULT clause prior to the
         //         NULL constraints clause
         if (DEFAULT_BEFORE_NULL.contains(ctx.dialect()))
             toSQLDDLTypeDeclarationDefault(ctx, type);
 
+
+
+
+        toSQLDDLTypeDeclarationForAdditionNullability(ctx, type);
+
+        if (!DEFAULT_BEFORE_NULL.contains(ctx.dialect()))
+            toSQLDDLTypeDeclarationDefault(ctx, type);
+
+        toSQLDDLTypeDeclarationIdentityAfterNull(ctx, type);
+
+
+
+    }
+
+    private static final void toSQLDDLTypeDeclarationForAdditionNullability(Context<?> ctx, DataType<?> type) {
         switch (type.nullability()) {
             case NOT_NULL:
                 ctx.sql(' ').visit(K_NOT_NULL);
@@ -5086,12 +5106,9 @@ final class Tools {
             default:
                 throw new UnsupportedOperationException("Nullability not supported: " + type.nullability());
         }
-
-        if (!DEFAULT_BEFORE_NULL.contains(ctx.dialect()))
-            toSQLDDLTypeDeclarationDefault(ctx, type);
-
-        toSQLDDLTypeDeclarationIdentityAfterNull(ctx, type);
     }
+
+    private static final Set<SQLDialect> REQUIRE_IDENTITY_AFTER_NULL = SQLDialect.supportedBy(H2, MARIADB, MYSQL);
 
     /**
      * If a type is an identity type, some dialects require the relevant
@@ -5134,24 +5151,7 @@ final class Tools {
                 case YUGABYTE: ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY); break;
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-    private static final Set<SQLDialect> REQUIRE_IDENTITY_AFTER_NULL = SQLDialect.supportedBy(H2, MARIADB, MYSQL);
 
     /**
      * If a type is an identity type, some dialects require the relevant
@@ -5179,21 +5179,59 @@ final class Tools {
                 case MYSQL:  ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private static final void toSQLDDLTypeDeclarationDefault(Context<?> ctx, DataType<?> type) {
         if (type.defaulted())

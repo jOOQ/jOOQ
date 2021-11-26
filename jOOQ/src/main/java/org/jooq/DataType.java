@@ -459,7 +459,7 @@ public interface DataType<T> extends Named {
      * This feature is implemented in commercial distributions only.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     DataType<T> generatedAlwaysAs(T generatedAlwaysAsValue);
 
     /**
@@ -470,7 +470,7 @@ public interface DataType<T> extends Named {
      * This feature is implemented in commercial distributions only.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     DataType<T> generatedAlwaysAs(Field<T> generatedAlwaysAsValue);
 
     /**

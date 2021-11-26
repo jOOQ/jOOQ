@@ -92,6 +92,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     r.RDB$DEFAULT_VALUE,
                     DSL.bitOr(r.RDB$NULL_FLAG.nvl(inline((short) 0)), f.RDB$NULL_FLAG.nvl(inline((short) 0))).as(r.RDB$NULL_FLAG),
                     r.RDB$DEFAULT_SOURCE,
+                    f.RDB$COMPUTED_SOURCE,
                     r.RDB$FIELD_POSITION,
 
                     // [#3342] FIELD_LENGTH should be ignored for LOBs
@@ -111,6 +112,8 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
             // [#9411] Firebird reports the DEFAULT keyword in this column, which
             //         we do not want to reproduce in generated code.
             String defaultValue = record.get(r.RDB$DEFAULT_SOURCE);
+            boolean computed = record.get(f.RDB$COMPUTED_SOURCE) != null;
+
             if (defaultValue != null)
                 defaultValue = P_DEFAULT.matcher(defaultValue).replaceFirst("");
 
@@ -122,9 +125,9 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                 record.get(f.RDB$FIELD_PRECISION),
                 record.get("FIELD_SCALE", Integer.class),
                 record.get(r.RDB$NULL_FLAG) == 0,
-                defaultValue,
+                computed ? null : defaultValue,
                 record.get("DOMAIN_NAME") == null ? null : DSL.name(record.get("DOMAIN_NAME", String.class))
-            );
+            ).generatedAlwaysAs(computed ? record.get(f.RDB$COMPUTED_SOURCE) : null);
 
             result.add(new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),

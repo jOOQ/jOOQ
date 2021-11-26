@@ -86,6 +86,8 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                     COLUMNS.DATA_TYPE,
                     COLUMNS.IS_NULLABLE,
                     COLUMNS.COLUMN_DEFAULT,
+                    COLUMNS.EXTRA,
+                    COLUMNS.GENERATION_EXPRESSION,
                     COLUMNS.CHARACTER_MAXIMUM_LENGTH,
 
                     // [#10856] Some older versions of MySQL 5.7 don't have the DATETIME_PRECISION column yet
@@ -98,7 +100,8 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                 // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
                 .where(COLUMNS.TABLE_SCHEMA.in(getSchema().getName(), getSchema().getName()))
                 .and(COLUMNS.TABLE_NAME.equal(getName()))
-                .orderBy(COLUMNS.ORDINAL_POSITION)) {
+                .orderBy(COLUMNS.ORDINAL_POSITION)
+        ) {
 
             String dataType = record.get(COLUMNS.DATA_TYPE);
 
@@ -107,6 +110,9 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 
             // [#7719]
             boolean displayWidths = getDatabase().integerDisplayWidths();
+
+            // [#6492] MariaDB supports a standard IS_GENERATED, but MySQL doesn't (yet)
+            boolean generated = record.get(COLUMNS.EXTRA) != null && record.get(COLUMNS.EXTRA).toUpperCase().contains("GENERATED");
 
             columnTypeFix:
             if (unsigned || displayWidths) {
@@ -140,9 +146,9 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                 record.get(COLUMNS.NUMERIC_PRECISION),
                 record.get(COLUMNS.NUMERIC_SCALE),
                 record.get(COLUMNS.IS_NULLABLE, boolean.class),
-                record.get(COLUMNS.COLUMN_DEFAULT),
+                generated ? null : record.get(COLUMNS.COLUMN_DEFAULT),
                 name(getSchema().getName(), getName() + "_" + record.get(COLUMNS.COLUMN_NAME))
-            );
+            ).generatedAlwaysAs(generated ? record.get(COLUMNS.GENERATION_EXPRESSION) : null);
 
             result.add(new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),

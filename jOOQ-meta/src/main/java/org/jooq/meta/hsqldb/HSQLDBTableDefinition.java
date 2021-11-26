@@ -91,6 +91,7 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
                 COLUMNS.IDENTITY_GENERATION,
                 COLUMNS.IS_NULLABLE,
                 COLUMNS.COLUMN_DEFAULT,
+                COLUMNS.GENERATION_EXPRESSION,
                 nvl(ELEMENT_TYPES.CHARACTER_MAXIMUM_LENGTH, COLUMNS.CHARACTER_MAXIMUM_LENGTH).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 coalesce(
                     ELEMENT_TYPES.DATETIME_PRECISION,
@@ -114,7 +115,9 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
                     .and(COLUMNS.DTD_IDENTIFIER.equal(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER))
             .where(COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()))
                 .and(COLUMNS.TABLE_NAME.equal(getName()))
-            .orderBy(COLUMNS.ORDINAL_POSITION)) {
+            .orderBy(COLUMNS.ORDINAL_POSITION)
+        ) {
+            String generated = record.get(COLUMNS.GENERATION_EXPRESSION);
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
@@ -124,11 +127,11 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
                 record.get(COLUMNS.NUMERIC_PRECISION),
                 record.get(COLUMNS.NUMERIC_SCALE),
                 record.get(COLUMNS.IS_NULLABLE, boolean.class),
-                record.get(COLUMNS.COLUMN_DEFAULT),
+                generated != null ? null : record.get(COLUMNS.COLUMN_DEFAULT),
                 DSL.name(record.get(COLUMNS.UDT_SCHEMA), record.get(COLUMNS.UDT_NAME))
-            );
+            ).generatedAlwaysAs(generated);
 
-			result.add(new DefaultColumnDefinition(
+            result.add(new DefaultColumnDefinition(
 			    getDatabase().getTable(getSchema(), getName()),
 			    record.get(COLUMNS.COLUMN_NAME),
                 result.size() + 1,

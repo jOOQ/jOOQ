@@ -83,7 +83,8 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
             // [#1241] Suddenly, bind values didn't work any longer, here...
             // [#6797] The cast is necessary if a non-standard collation is used
             .where(SYSCOLUMNS.REFERENCEID.cast(VARCHAR(32672)).equal(inline(tableid)))
-            .orderBy(SYSCOLUMNS.COLUMNNUMBER)) {
+            .orderBy(SYSCOLUMNS.COLUMNNUMBER)
+        ) {
 
             String columnDataType = record.get(SYSCOLUMNS.COLUMNDATATYPE, String.class);
             String typeName = parseTypeName(columnDataType);
@@ -91,6 +92,9 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
             // [#9945] Derby timestamps always have a precision of 9
             Number precision = "TIMESTAMP".equalsIgnoreCase(typeName) ? 9 : parsePrecision(columnDataType);
             Number scale = parseScale(columnDataType);
+
+            String defaultValue = record.get(SYSCOLUMNS.COLUMNDEFAULT);
+            boolean generated = defaultValue != null && defaultValue.toUpperCase().startsWith("GENERATED ALWAYS AS");
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
@@ -100,8 +104,8 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
                 precision,
                 scale,
                 !parseNotNull(columnDataType),
-                record.get(SYSCOLUMNS.COLUMNDEFAULT)
-            );
+                generated ? null : defaultValue
+            ).generatedAlwaysAs(generated ? defaultValue.replaceAll("(?i:GENERATED\\s+ALWAYS\\s+AS\\s*\\(\\s*(.*?)\\s*\\)\\s*)", "$1") : null);
 
 			result.add(new DefaultColumnDefinition(
 				getDatabase().getTable(getSchema(), getName()),

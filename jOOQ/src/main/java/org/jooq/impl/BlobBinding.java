@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
+import static org.jooq.impl.Tools.asInt;
 
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -100,7 +101,7 @@ public class BlobBinding implements Binding<byte[], byte[]> {
         Blob blob = ctx.resultSet().getBlob(ctx.index());
 
         try {
-            ctx.value(blob == null ? null : blob.getBytes(1, (int) blob.length()));
+            ctx.value(blob == null ? null : blob.getBytes(1, asInt(blob.length())));
         }
         finally {
             JDBCUtils.safeFree(blob);
@@ -112,7 +113,7 @@ public class BlobBinding implements Binding<byte[], byte[]> {
         Blob blob = ctx.statement().getBlob(ctx.index());
 
         try {
-            ctx.value(blob == null ? null : blob.getBytes(1, (int) blob.length()));
+            ctx.value(blob == null ? null : blob.getBytes(1, asInt(blob.length())));
         }
         finally {
             JDBCUtils.safeFree(blob);
@@ -124,7 +125,7 @@ public class BlobBinding implements Binding<byte[], byte[]> {
         Blob blob = ctx.input().readBlob();
 
         try {
-            ctx.value(blob == null ? null : blob.getBytes(1, (int) blob.length()));
+            ctx.value(blob == null ? null : blob.getBytes(1, asInt(blob.length())));
         }
         finally {
             JDBCUtils.safeFree(blob);

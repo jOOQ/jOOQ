@@ -128,6 +128,7 @@ import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.TIME;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.asInt;
 import static org.jooq.impl.Tools.attachRecords;
 import static org.jooq.impl.Tools.convertBytesToHex;
 import static org.jooq.impl.Tools.emulateMultiset;
@@ -3454,7 +3455,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final Object unlob(Object object) throws SQLException {
             if (object instanceof Blob) { Blob blob = (Blob) object;
                 try {
-                    return blob.getBytes(1, (int) blob.length());
+                    return blob.getBytes(1, asInt(blob.length()));
                 }
                 finally {
                     JDBCUtils.safeFree(blob);
@@ -3462,7 +3463,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
             else if (object instanceof Clob) { Clob clob = (Clob) object;
                 try {
-                    return clob.getSubString(1, (int) clob.length());
+                    return clob.getSubString(1, asInt(clob.length()));
                 }
                 finally {
                     JDBCUtils.safeFree(clob);

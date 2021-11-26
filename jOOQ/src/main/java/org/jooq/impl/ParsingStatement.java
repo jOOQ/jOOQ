@@ -41,11 +41,15 @@ import static java.util.Collections.singletonList;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.ParsingConnection.translate;
 import static org.jooq.impl.SQLDataType.NVARCHAR;
+import static org.jooq.impl.Tools.asInt;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
@@ -75,6 +79,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import org.jooq.Param;
+import org.jooq.Source;
 
 /**
  * @author Lukas Eder
@@ -573,41 +578,150 @@ final class ParsingStatement implements CallableStatement {
     }
 
     // -------------------------------------------------------------------------
-    // XXX: Indexed Variable binding (TODO)
+    // XXX: [#12666] Streaming bind values are collected into String or byte[]
+    //               More efficient approaches are currently not possible in
+    //               jOOQ, which has no built in way to represent streaming bind
+    //               values or ResultSet values.
     // -------------------------------------------------------------------------
+
+    private static final byte[] readBytes(InputStream x, int length) {
+        try {
+            /* [java-11] */
+            if (true)
+                return x.readNBytes(length);
+            /* [/java-11]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+        catch (IOException e) {
+            throw new org.jooq.exception.IOException("Could not read source", e);
+        }
+    }
+
+    @Override
+    public final void setAsciiStream(int parameterIndex, InputStream x) throws SQLException {
+        setString(parameterIndex, Source.of(x, Charset.forName("US-ASCII")).readString());
+    }
 
     @Override
     public final void setAsciiStream(int parameterIndex, InputStream x, int length) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
+        setString(parameterIndex, Source.of(x, length, Charset.forName("US-ASCII")).readString());
+    }
+
+    @Override
+    public final void setAsciiStream(int parameterIndex, InputStream x, long length) throws SQLException {
+        setAsciiStream(parameterIndex, x, asInt(length));
     }
 
     @Override
     public final void setUnicodeStream(int parameterIndex, InputStream x, int length) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
+        setString(parameterIndex, Source.of(x, length, Charset.forName("UTF-8")).readString());
     }
 
     @Override
-    public final void setBinaryStream(int parameterIndex, InputStream x, int length) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
+    public final void setCharacterStream(int parameterIndex, Reader reader) throws SQLException {
+        setString(parameterIndex, Source.of(reader).readString());
     }
 
     @Override
     public final void setCharacterStream(int parameterIndex, Reader reader, int length) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
+        setString(parameterIndex, Source.of(reader, length).readString());
     }
 
     @Override
-    public final void setRef(int parameterIndex, Ref x) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
+    public final void setCharacterStream(int parameterIndex, Reader reader, long length) throws SQLException {
+        setCharacterStream(parameterIndex, reader, asInt(length));
     }
 
     @Override
-    public final void setBlob(int parameterIndex, Blob x) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
+    public final void setClob(int parameterIndex, Reader reader) throws SQLException {
+        setCharacterStream(parameterIndex, reader);
+    }
+
+    @Override
+    public final void setClob(int parameterIndex, Reader reader, long length) throws SQLException {
+        setCharacterStream(parameterIndex, reader, length);
     }
 
     @Override
     public final void setClob(int parameterIndex, Clob x) throws SQLException {
+        setCharacterStream(parameterIndex, x.getCharacterStream(), asInt(x.length()));
+    }
+
+    @Override
+    public final void setNCharacterStream(int parameterIndex, Reader value) throws SQLException {
+        setNString(parameterIndex, Source.of(value).readString());
+    }
+
+    @Override
+    public final void setNCharacterStream(int parameterIndex, Reader value, long length) throws SQLException {
+        setNString(parameterIndex, Source.of(value, asInt(length)).readString());
+    }
+
+    @Override
+    public final void setNClob(int parameterIndex, Reader reader) throws SQLException {
+        setNCharacterStream(parameterIndex, reader);
+    }
+
+    @Override
+    public final void setNClob(int parameterIndex, Reader reader, long length) throws SQLException {
+        setNCharacterStream(parameterIndex, reader, length);
+    }
+
+    @Override
+    public final void setNClob(int parameterIndex, NClob value) throws SQLException {
+        setNClob(parameterIndex, value.getCharacterStream(), value.length());
+    }
+
+    @Override
+    public final void setBinaryStream(int parameterIndex, InputStream x) throws SQLException {
+        setBinaryStream(parameterIndex, x, Integer.MAX_VALUE);
+    }
+
+    @Override
+    public final void setBinaryStream(int parameterIndex, InputStream x, int length) throws SQLException {
+        setBytes(parameterIndex, readBytes(x, length));
+    }
+
+    @Override
+    public final void setBinaryStream(int parameterIndex, InputStream x, long length) throws SQLException {
+        setBinaryStream(parameterIndex, x, asInt(length));
+    }
+
+    @Override
+    public final void setBlob(int parameterIndex, InputStream inputStream) throws SQLException {
+        setBinaryStream(parameterIndex, inputStream);
+    }
+
+    @Override
+    public final void setBlob(int parameterIndex, InputStream inputStream, long length) throws SQLException {
+        setBinaryStream(parameterIndex, inputStream, length);
+    }
+
+    @Override
+    public final void setBlob(int parameterIndex, Blob x) throws SQLException {
+        setBlob(parameterIndex, x.getBinaryStream(), x.length());
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Indexed Variable binding (TODO)
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final void setRef(int parameterIndex, Ref x) throws SQLException {
         throw new SQLFeatureNotSupportedException();
     }
 
@@ -642,82 +756,7 @@ final class ParsingStatement implements CallableStatement {
     }
 
     @Override
-    public final void setNCharacterStream(int parameterIndex, Reader value, long length) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public final void setNClob(int parameterIndex, NClob value) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public final void setClob(int parameterIndex, Reader reader, long length) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public final void setBlob(int parameterIndex, InputStream inputStream, long length) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public final void setNClob(int parameterIndex, Reader reader, long length) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
     public final void setSQLXML(int parameterIndex, SQLXML xmlObject) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public final void setAsciiStream(int parameterIndex, InputStream x, long length) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public final void setBinaryStream(int parameterIndex, InputStream x, long length) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public final void setCharacterStream(int parameterIndex, Reader reader, long length) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public final void setAsciiStream(int parameterIndex, InputStream x) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public final void setBinaryStream(int parameterIndex, InputStream x) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public final void setCharacterStream(int parameterIndex, Reader reader) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public final void setNCharacterStream(int parameterIndex, Reader value) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public final void setClob(int parameterIndex, Reader reader) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public final void setBlob(int parameterIndex, InputStream inputStream) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public final void setNClob(int parameterIndex, Reader reader) throws SQLException {
         throw new SQLFeatureNotSupportedException();
     }
 

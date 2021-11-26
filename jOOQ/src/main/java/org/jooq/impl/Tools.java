@@ -6319,4 +6319,15 @@ final class Tools {
     static final String stringLiteral(String string) {
         return "\"" + string.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n\" + \n\"") + "\"";
     }
+
+    static final int asInt(long value) {
+        return asInt(value, () -> new DataTypeException("Long value too large for int downcast: " + value));
+    }
+
+    static final <E extends Exception> int asInt(long value, Supplier<E> e) throws E {
+        if (value > Integer.MAX_VALUE)
+            throw e.get();
+        else
+            return (int) value;
+    }
 }

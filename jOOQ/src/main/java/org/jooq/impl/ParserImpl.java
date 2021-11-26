@@ -77,6 +77,7 @@ import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.EMPTY_TABLE;
 import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.asInt;
 import static org.jooq.impl.Tools.deleteQueryImpl;
 import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.normaliseNameCase;
@@ -8954,7 +8955,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (interval != null) {
                     DatePart part = parseIntervalDatePart();
                     long l = interval;
-                    int i = (int) l;
+                    int i = asInt(l);
 
                     switch (part) {
                         case YEAR:
@@ -8974,11 +8975,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         case SECOND:
                             return inline(new DayToSecond(0, 0, 0, i));
                         case MILLISECOND:
-                            return inline(new DayToSecond(0, 0, 0, (int) (l / 1000), (int) (l % 1000 * 1000000)));
+                            return inline(new DayToSecond(0, 0, 0, asInt(l / 1000), (int) (l % 1000 * 1000000)));
                         case MICROSECOND:
-                            return inline(new DayToSecond(0, 0, 0, (int) (l / 1000000), (int) (l % 1000000 * 1000)));
+                            return inline(new DayToSecond(0, 0, 0, asInt(l / 1000000), (int) (l % 1000000 * 1000)));
                         case NANOSECOND:
-                            return inline(new DayToSecond(0, 0, 0, (int) (l / 1000000000), (int) (l % 1000000000)));
+                            return inline(new DayToSecond(0, 0, 0, asInt(l / 1000000000), (int) (l % 1000000000)));
                     }
                 }
 
@@ -9091,7 +9092,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             while (!parseIf('\''));
 
             int months = (month == null ? 0 : month.intValue())
-                       + (year  == null ? 0 : (int) (year.doubleValue() * 12));
+                       + (year  == null ? 0 : asInt((long) year.doubleValue() * 12));
 
             double seconds = (month  == null ? 0.0 : ((month.doubleValue() % 1.0) * 30 * 86400))
                            + (day    == null ? 0.0 : ((day.doubleValue() * 86400)))
@@ -9101,7 +9102,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             return new YearToSecond(
                 new YearToMonth(0, months),
-                new DayToSecond(0, 0, 0, (int) seconds, (int) ((seconds % 1.0) * 1000000000))
+                new DayToSecond(0, 0, 0, asInt((long) seconds), asInt((long) ((seconds % 1.0) * 1000000000)))
             );
         }
 
@@ -10604,7 +10605,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldNtileIf() {
         if (parseFunctionNameIf("NTILE")) {
             parse('(');
-            int number = (int) (long) parseUnsignedIntegerLiteral();
+            int number = asInt(parseUnsignedIntegerLiteral());
             parse(')');
             return parseWindowFunction(null, null, ntile(number));
         }
@@ -10623,7 +10624,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             Field<Void> f3 = null;
 
             if (parseIf(',')) {
-                f2 = (int) (long) parseUnsignedIntegerLiteral();
+                f2 = asInt(parseUnsignedIntegerLiteral());
 
                 if (parseIf(','))
                     f3 = (Field) parseField();
@@ -11682,7 +11683,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         if (parseIf('(')) {
             if (!parseKeywordIf("MAX"))
-                result = result.length((int) (long) parseUnsignedIntegerLiteral());
+                result = result.length(asInt(parseUnsignedIntegerLiteral()));
 
             if (in == SQLDataType.VARCHAR || in == SQLDataType.CHAR)
                 if (!parseKeywordIf("BYTE"))
@@ -11741,7 +11742,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Integer precision = null;
 
         if (parseIf('(')) {
-            precision = (int) (long) parseUnsignedIntegerLiteral();
+            precision = asInt(parseUnsignedIntegerLiteral());
             parse(')');
         }
 
@@ -11750,7 +11751,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final DataType<?> parseDataTypePrecisionIf(DataType<?> result) {
         if (parseIf('(')) {
-            int precision = (int) (long) parseUnsignedIntegerLiteral();
+            int precision = asInt(parseUnsignedIntegerLiteral());
             result = result.precision(precision);
             parse(')');
         }
@@ -11760,10 +11761,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final DataType<?> parseDataTypePrecisionScaleIf(DataType<?> result) {
         if (parseIf('(')) {
-            int precision = parseIf('*') ? 38 : (int) (long) parseUnsignedIntegerLiteral();
+            int precision = parseIf('*') ? 38 : asInt(parseUnsignedIntegerLiteral());
 
             if (parseIf(','))
-                result = result.precision(precision, (int) (long) parseSignedIntegerLiteral());
+                result = result.precision(precision, asInt(parseSignedIntegerLiteral()));
             else
                 result = result.precision(precision);
 

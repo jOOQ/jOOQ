@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
+import static org.jooq.impl.Tools.asInt;
 
 import java.sql.NClob;
 import java.sql.SQLException;
@@ -100,7 +101,7 @@ public class NClobBinding implements Binding<String, String> {
         NClob clob = ctx.resultSet().getNClob(ctx.index());
 
         try {
-            ctx.value(clob == null ? null : clob.getSubString(1, (int) clob.length()));
+            ctx.value(clob == null ? null : clob.getSubString(1, asInt(clob.length())));
         }
         finally {
             JDBCUtils.safeFree(clob);
@@ -112,7 +113,7 @@ public class NClobBinding implements Binding<String, String> {
         NClob clob = ctx.statement().getNClob(ctx.index());
 
         try {
-            ctx.value(clob == null ? null : clob.getSubString(1, (int) clob.length()));
+            ctx.value(clob == null ? null : clob.getSubString(1, asInt(clob.length())));
         }
         finally {
             JDBCUtils.safeFree(clob);
@@ -124,7 +125,7 @@ public class NClobBinding implements Binding<String, String> {
         NClob clob = ctx.input().readNClob();
 
         try {
-            ctx.value(clob == null ? null : clob.getSubString(1, (int) clob.length()));
+            ctx.value(clob == null ? null : clob.getSubString(1, asInt(clob.length())));
         }
         finally {
             JDBCUtils.safeFree(clob);

@@ -42,6 +42,7 @@ import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
 import static org.jooq.Records.mapping;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.impl.DSL.inline;
@@ -253,7 +254,8 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
 
         // [#7639] The information_schema.check_constraints table was added in MySQL 8.0.16 only
         if (is8_0_16 == null)
-            is8_0_16 = configuredDialectIsNotFamilyAndSupports(asList(MYSQL), () -> exists(CHECK_CONSTRAINTS));
+            is8_0_16 = configuredDialectIsNotFamilyAndSupports(asList(MYSQL), () -> exists(CHECK_CONSTRAINTS))
+                    || configuredDialectIsNotFamilyAndSupports(asList(MARIADB), () -> exists(CHECK_CONSTRAINTS));
 
         return is8_0_16;
     }

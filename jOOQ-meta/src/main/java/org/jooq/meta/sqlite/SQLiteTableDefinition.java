@@ -117,10 +117,14 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
         Field<Boolean> fNotnull = field(name("notnull"), boolean.class);
         Field<String> fDefaultValue = field(name("dflt_value"), String.class);
         Field<Integer> fPk = field(name("pk"), int.class);
+        Field<Integer> fHidden = field(name("hidden"), int.class);
 
         for (Record record : create()
-            .select(fName, fType, fNotnull, fDefaultValue, fPk)
-            .from("pragma_table_info({0})", inline(getName()))
+            .select(fName, fType, fNotnull, fDefaultValue, fPk, fHidden)
+            .from("pragma_table_xinfo({0})", inline(getName()))
+            // 0 = ordinary column
+            // 2 = generated column
+            .where("hidden in (0, 2)")
         ) {
 
             String name = record.get(fName);
@@ -132,7 +136,10 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
             // SQLite identities are primary keys whose tables are mentioned in
             // sqlite_sequence
             int pk = record.get(fPk);
+            int hidden = record.get(fHidden);
             boolean identity = false;
+            boolean generated = hidden == 2;
+            String generator = null;
 
             // [#8278] [#11172] SQLite doesn't store the data type for all views or virtual tables
             if (isBlank(dataType) || "other".equals(dataType)) {
@@ -147,6 +154,28 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
                         scale = f.getDataType().scale();
                     }
                 }
+            }
+
+            if (generated) {
+
+                // SQLite's type affinity feature gets in the way of correctly
+                // interpreting data types when the column is computed, see
+                // https://sqlite.org/forum/forumpost/8ebb993012
+                // This is ignoring typos, because things like "generaated aways"
+                // also work in SQLite, as long as there's an "as" keyword...
+                dataType = dataType.replaceAll("(?i:\\s*generated\\s+always\\s*)", "");
+
+
+
+
+
+
+
+
+
+
+
+
             }
 
             if (pk > 0) {
@@ -169,7 +198,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
                 scale,
                 !record.get(fNotnull),
                 record.get(fDefaultValue)
-            );
+            ).generatedAlwaysAs(generator);
 
             result.add(new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),

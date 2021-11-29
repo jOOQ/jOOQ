@@ -46,6 +46,7 @@ import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -76,8 +77,14 @@ public final class SettingsTools {
 
             // Check classpath first
             InputStream in = SettingsTools.class.getResourceAsStream(property);
-            if (in != null)
-                settings = MiniJAXB.unmarshal(in, Settings.class);
+            if (in != null) {
+                try (InputStream i = in) {
+                    settings = MiniJAXB.unmarshal(i, Settings.class);
+                }
+                catch (IOException e) {
+                    log.error("Error while reading settings: " + e);
+                }
+            }
             else
                 settings = MiniJAXB.unmarshal(new File(property), Settings.class);
         }
@@ -86,8 +93,13 @@ public final class SettingsTools {
             InputStream in = SettingsTools.class.getResourceAsStream("/jooq-settings.xml");
 
             if (in != null) {
-                log.warn("DEPRECATION", "Loading system wide default settings via the classpath /jooq-settings.xml resource has been deprecated. Please use explicit Settings in your Configuration references, instead.");
-                settings = MiniJAXB.unmarshal(in, Settings.class);
+                try (InputStream i = in) {
+                    log.warn("DEPRECATION", "Loading system wide default settings via the classpath /jooq-settings.xml resource has been deprecated. Please use explicit Settings in your Configuration references, instead.");
+                    settings = MiniJAXB.unmarshal(i, Settings.class);
+                }
+                catch (IOException e) {
+                    log.error("Error while reading settings: " + e);
+                }
             }
         }
 

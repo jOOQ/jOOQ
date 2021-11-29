@@ -245,21 +245,19 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     }
 
     private static class SerializationDeprecation {}
-    private static final JooqLogger    log       = JooqLogger.getLogger(SerializationDeprecation.class);
-    private static final AtomicInteger warnCount = new AtomicInteger(0);
-    private static final int           maxWarnings = 100;
+    private static final JooqLogger log = JooqLogger.getLogger(SerializationDeprecation.class, 100);
 
     private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
         ois.defaultReadObject();
 
-        if (log.isWarnEnabled() && warnCount.getAndUpdate(i -> Math.min(i + 1, maxWarnings)) < maxWarnings)
+        if (log.isWarnEnabled())
             log.warn("DEPRECATION", "A QueryPart of type " + getClass() + " has been deserialised. Serialization support is deprecated in jOOQ. Please contact https://github.com/jOOQ/jOOQ/issues/11506 and state your use-case to see if it can be implemented otherwise.");
     }
 
     private void writeObject(ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject();
 
-        if (log.isWarnEnabled() && warnCount.getAndUpdate(i -> Math.min(i + 1, maxWarnings)) < maxWarnings)
+        if (log.isWarnEnabled())
             log.warn("DEPRECATION", "A QueryPart of type " + getClass() + " has been serialised. Serialization support is deprecated in jOOQ. Please contact https://github.com/jOOQ/jOOQ/issues/11506 and state your use-case to see if it can be implemented otherwise.");
     }
 }

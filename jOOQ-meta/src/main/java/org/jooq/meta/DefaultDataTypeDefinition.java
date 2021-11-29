@@ -51,6 +51,7 @@ import java.util.Set;
 
 import org.jooq.Name;
 import org.jooq.SQLDialect;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -266,7 +267,13 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         return generatedAlwaysAs;
     }
 
+    private static final class LogGeneratedAlwaysAs {}
+    private static final JooqLogger logGeneratedAlwaysAs = JooqLogger.getLogger(LogGeneratedAlwaysAs.class, 1);
+
     public final DefaultDataTypeDefinition generatedAlwaysAs(String g) {
+        if (g != null && !database.create().configuration().commercial())
+            logGeneratedAlwaysAs.info("Computed columns", "Computed columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
+
         this.generatedAlwaysAs = g;
         return this;
     }

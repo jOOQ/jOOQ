@@ -43,6 +43,7 @@ import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Nullability;
+import org.jooq.impl.QOM.GenerationOption;
 
 /**
  * A wrapper for anonymous array data types
@@ -71,12 +72,13 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         Nullability nullability,
         boolean readonly,
         Field<T[]> generatedAlwaysAs,
+        GenerationOption generationOption,
         Collation collation,
         CharacterSet characterSet,
         boolean identity,
         Field<T[]> defaultValue
     ) {
-        super(t, precision, scale, length, nullability, readonly, generatedAlwaysAs, collation, characterSet, identity, defaultValue);
+        super(t, precision, scale, length, nullability, readonly, generatedAlwaysAs, generationOption, collation, characterSet, identity, defaultValue);
 
         this.elementType = elementType;
     }
@@ -90,6 +92,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         Nullability newNullability,
         boolean newReadonly,
         Field<T[]> newGeneratedAlwaysAs,
+        GenerationOption newGenerationOption,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -104,6 +107,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
             newNullability,
             newReadonly,
             newGeneratedAlwaysAs,
+            newGenerationOption,
             newCollation,
             newCharacterSet,
             newIdentity,

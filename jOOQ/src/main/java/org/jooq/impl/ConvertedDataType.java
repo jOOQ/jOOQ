@@ -52,6 +52,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
+import org.jooq.impl.QOM.GenerationOption;
 
 /**
  * A <code>DataType</code> used for converted types using {@link Converter}
@@ -83,6 +84,7 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
         Nullability newNullability,
         boolean newReadonly,
         Field<U> newGeneratedAlwaysAs,
+        GenerationOption newGenerationOption,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -95,6 +97,7 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
             newNullability,
             newReadonly,
             (Field) newGeneratedAlwaysAs,
+            newGenerationOption,
             newCollation,
             newCharacterSet,
             newIdentity,
@@ -160,6 +163,11 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     @Override
     public final Field<U> generatedAlwaysAs() {
         return (Field<U>) delegate.generatedAlwaysAs();
+    }
+
+    @Override
+    public final GenerationOption generationOption() {
+        return delegate.generationOption();
     }
 
     @Override

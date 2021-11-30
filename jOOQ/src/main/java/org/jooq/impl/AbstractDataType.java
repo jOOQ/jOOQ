@@ -44,6 +44,8 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.Internal.arrayType;
+import static org.jooq.impl.QOM.GenerationOption.STORED;
+import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.NCHAR;
@@ -92,6 +94,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.XML;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.types.Interval;
 import org.jooq.types.UNumber;
@@ -160,6 +163,22 @@ implements
 
     @Override
     public abstract Field<T> generatedAlwaysAs();
+
+    @Override
+    public final DataType<T> stored() {
+        return generationOption(STORED);
+    }
+
+    @Override
+    public final DataType<T> virtual() {
+        return generationOption(VIRTUAL);
+    }
+
+    @Override
+    public abstract DataType<T> generationOption(GenerationOption generationOption);
+
+    @Override
+    public abstract GenerationOption generationOption();
 
     @Override
     public abstract DataType<T> collation(Collation c);

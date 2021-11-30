@@ -49,11 +49,12 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.SortOrder.DESC;
-import static org.jooq.codegen.GenerationUtil.convertToIdentifier;
 import static org.jooq.codegen.Language.JAVA;
 import static org.jooq.codegen.Language.KOTLIN;
 import static org.jooq.codegen.Language.SCALA;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.QOM.GenerationOption.STORED;
+import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.meta.AbstractTypedElementDefinition.getDataType;
 import static org.jooq.tools.StringUtils.isBlank;
 
@@ -135,6 +136,7 @@ import org.jooq.impl.Internal;
 import org.jooq.impl.LazySchema;
 import org.jooq.impl.LazySupplier;
 import org.jooq.impl.PackageImpl;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.TableImpl;
@@ -8495,6 +8497,7 @@ public class JavaGenerator extends AbstractGenerator {
                 false,
                 null,
                 null,
+                null,
                 baseType
             ) + ".getArrayDataType()";
         }
@@ -8511,6 +8514,7 @@ public class JavaGenerator extends AbstractGenerator {
                 type.isIdentity(),
                 type.isReadonly(),
                 type.getGeneratedAlwaysAs(),
+                type.getGenerationOption(),
                 type.getDefaultValue(),
                 type.getQualifiedUserType()
             );
@@ -8768,6 +8772,7 @@ public class JavaGenerator extends AbstractGenerator {
         boolean i,
         boolean r,
         String g,
+        GenerationOption go,
         String d,
         Name u
     ) {
@@ -8880,6 +8885,8 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (dataType.identity())
                 sb.append(".identity(true)");
+
+
 
 
 

@@ -46,6 +46,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Nullability;
+import org.jooq.impl.QOM.GenerationOption;
 
 /**
  * @author Lukas Eder
@@ -66,6 +67,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
         Nullability newNullability,
         boolean newReadonly,
         Field<T> newGeneratedAlwaysAs,
+        GenerationOption newGenerationOption,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -81,6 +83,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             n,
             readonly(),
             generatedAlwaysAs(),
+            generationOption(),
             collation(),
             characterSet(),
             !n.nullable() && identity(),
@@ -97,6 +100,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             nullability(),
             r,
             generatedAlwaysAs(),
+            generationOption(),
             collation(),
             characterSet(),
             identity(),
@@ -113,10 +117,28 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             nullability(),
             g != null ? true : readonly(),
             g,
+            generationOption(),
             collation(),
             characterSet(),
             identity(),
             g != null ? null : defaultValue()
+        );
+    }
+
+    @Override
+    public final DataType<T> generationOption(GenerationOption g) {
+        return construct(
+            precision0(),
+            scale0(),
+            length0(),
+            nullability(),
+            readonly(),
+            generatedAlwaysAs(),
+            g,
+            collation(),
+            characterSet(),
+            identity(),
+            defaultValue()
         );
     }
 
@@ -129,6 +151,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             nullability(),
             readonly(),
             generatedAlwaysAs(),
+            generationOption(),
             c,
             characterSet(),
             identity(),
@@ -145,6 +168,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             nullability(),
             readonly(),
             generatedAlwaysAs(),
+            generationOption(),
             collation(),
             c,
             identity(),
@@ -161,6 +185,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             i ? NOT_NULL : nullability(),
             readonly(),
             generatedAlwaysAs(),
+            generationOption(),
             collation(),
             characterSet(),
             i,
@@ -177,6 +202,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             nullability(),
             readonly(),
             d != null ? null : generatedAlwaysAs(),
+            generationOption(),
             collation(),
             characterSet(),
             identity(),
@@ -193,6 +219,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             nullability(),
             readonly(),
             generatedAlwaysAs(),
+            generationOption(),
             collation(),
             characterSet(),
             identity(),
@@ -209,6 +236,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             nullability(),
             readonly(),
             generatedAlwaysAs(),
+            generationOption(),
             collation(),
             characterSet(),
             identity(),
@@ -225,6 +253,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             nullability(),
             readonly(),
             generatedAlwaysAs(),
+            generationOption(),
             collation(),
             characterSet(),
             identity(),

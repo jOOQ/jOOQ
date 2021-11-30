@@ -41,6 +41,7 @@ import java.util.List;
 
 // ...
 import org.jooq.Name;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.jaxb.ForcedType;
 
 /**
@@ -124,6 +125,11 @@ public interface DataTypeDefinition {
      * The computed column expression.
      */
     String getGeneratedAlwaysAs();
+
+    /**
+     * The computed column generation option.
+     */
+    GenerationOption getGenerationOption();
 
     /**
      * Whether this data type is an identity.

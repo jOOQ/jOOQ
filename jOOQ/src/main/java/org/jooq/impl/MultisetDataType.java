@@ -53,6 +53,7 @@ import org.jooq.Nullability;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
+import org.jooq.impl.QOM.GenerationOption;
 
 /**
  * A wrapper for anonymous multiset data types.
@@ -86,12 +87,13 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
         Nullability nullability,
         boolean readonly,
         Field<Result<R>> generatedAlwaysAs,
+        GenerationOption generationOption,
         Collation collation,
         CharacterSet characterSet,
         boolean identity,
         Field<Result<R>> defaultValue
     ) {
-        super(t, precision, scale, length, nullability, readonly, generatedAlwaysAs, collation, characterSet, identity, defaultValue);
+        super(t, precision, scale, length, nullability, readonly, generatedAlwaysAs, generationOption, collation, characterSet, identity, defaultValue);
 
         this.row = row;
         this.recordType = recordType;
@@ -106,6 +108,7 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
         Nullability newNullability,
         boolean newReadonly,
         Field<Result<R>> newGeneratedAlwaysAs,
+        GenerationOption newGenerationOption,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -121,6 +124,7 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
             newNullability,
             newReadonly,
             newGeneratedAlwaysAs,
+            newGenerationOption,
             newCollation,
             newCharacterSet,
             newIdentity,

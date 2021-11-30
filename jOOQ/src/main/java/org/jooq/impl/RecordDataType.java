@@ -53,6 +53,7 @@ import org.jooq.Field;
 import org.jooq.Nullability;
 import org.jooq.Record;
 import org.jooq.Row;
+import org.jooq.impl.QOM.GenerationOption;
 
 /**
  * A wrapper for anonymous row data types.
@@ -87,12 +88,13 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
         Nullability nullability,
         boolean readonly,
         Field<R> generatedAlwaysAs,
+        GenerationOption generationOption,
         Collation collation,
         CharacterSet characterSet,
         boolean identity,
         Field<R> defaultValue
     ) {
-        super(t, precision, scale, length, nullability, readonly, generatedAlwaysAs, collation, characterSet, identity, defaultValue);
+        super(t, precision, scale, length, nullability, readonly, generatedAlwaysAs, generationOption, collation, characterSet, identity, defaultValue);
 
         this.row = row;
     }
@@ -106,6 +108,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
         Nullability newNullability,
         boolean newReadonly,
         Field<R> newGeneratedAlwaysAs,
+        GenerationOption newGenerationOption,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -120,6 +123,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
             newNullability,
             newReadonly,
             newGeneratedAlwaysAs,
+            newGenerationOption,
             newCollation,
             newCharacterSet,
             newIdentity,

@@ -78,6 +78,7 @@ import java.util.function.Function;
 import org.jooq.Converters.UnknownType;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.SQLDataType;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
@@ -480,6 +481,51 @@ public interface DataType<T> extends Named {
      */
     @Nullable
     Field<T> generatedAlwaysAs();
+
+    /**
+     * Set the {@link #generationOption()} of the computed column expression to
+     * {@link GenerationOption#STORED}.
+     * <p>
+     * If not supported by the dialect, this will be ignored.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    DataType<T> stored();
+
+    /**
+     * Set the {@link #generationOption()} of the computed column expression to
+     * {@link GenerationOption#VIRTUAL}.
+     * <p>
+     * If not supported by the dialect, this will be ignored.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    DataType<T> virtual();
+
+    /**
+     * Set the {@link #generationOption()} of the computed column expression.
+     * <p>
+     * If not supported by the dialect, this will be ignored.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    DataType<T> generationOption(GenerationOption generationOption);
+
+    /**
+     * Get the {@link GenerationOption} of the computed column expression of
+     * this data type, if any.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    @NotNull
+    @Support
+    GenerationOption generationOption();
 
     /**
      * Synonym for {@link #nullable(boolean)}, passing <code>true</code> as an

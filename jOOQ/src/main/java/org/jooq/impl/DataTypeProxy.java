@@ -48,6 +48,7 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Nullability;
 import org.jooq.SQLDialect;
+import org.jooq.impl.QOM.GenerationOption;
 
 /**
  * A mutable proxy for a temporary {@link DataType}, which can be replaced by a
@@ -57,20 +58,21 @@ import org.jooq.SQLDialect;
  */
 final class DataTypeProxy<T> extends AbstractDataType<T> {
 
-    private AbstractDataType<T> type;
-    private final Integer       overridePrecision;
-    private final Integer       overrideScale;
-    private final Integer       overrideLength;
-    private final Nullability   overrideNullability;
-    private final Boolean       overrideReadonly;
-    private final Field<T>      overrideGeneratedAlwaysAs;
-    private final Collation     overrideCollation;
-    private final CharacterSet  overrideCharacterSet;
-    private final Boolean       overrideIdentity;
-    private final Field<T>      overrideDefaultValue;
+    private AbstractDataType<T>    type;
+    private final Integer          overridePrecision;
+    private final Integer          overrideScale;
+    private final Integer          overrideLength;
+    private final Nullability      overrideNullability;
+    private final Boolean          overrideReadonly;
+    private final Field<T>         overrideGeneratedAlwaysAs;
+    private final GenerationOption overrideGenerationOption;
+    private final Collation        overrideCollation;
+    private final CharacterSet     overrideCharacterSet;
+    private final Boolean          overrideIdentity;
+    private final Field<T>         overrideDefaultValue;
 
     DataTypeProxy(AbstractDataType<T> type) {
-        this(type, null, null, null, null, null, null, null, null, null, null);
+        this(type, null, null, null, null, null, null, null, null, null, null, null);
     }
 
     private DataTypeProxy(
@@ -81,6 +83,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
         Nullability overrideNullability,
         Boolean overrideReadonly,
         Field<T> overrideGeneratedAlwaysAs,
+        GenerationOption overrideGenerationOption,
         Collation overrideCollation,
         CharacterSet overrideCharacterSet,
         Boolean overrideIdentity,
@@ -95,6 +98,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
         this.overrideNullability = overrideNullability;
         this.overrideReadonly = overrideReadonly;
         this.overrideGeneratedAlwaysAs = overrideGeneratedAlwaysAs;
+        this.overrideGenerationOption = overrideGenerationOption;
         this.overrideCollation = overrideCollation;
         this.overrideCharacterSet = overrideCharacterSet;
         this.overrideIdentity = overrideIdentity;
@@ -154,6 +158,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             n,
             overrideReadonly,
             overrideGeneratedAlwaysAs,
+            overrideGenerationOption,
             overrideCollation,
             overrideCharacterSet,
             overrideIdentity,
@@ -176,6 +181,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overrideNullability,
             r,
             overrideGeneratedAlwaysAs,
+            overrideGenerationOption,
             overrideCollation,
             overrideCharacterSet,
             overrideIdentity,
@@ -197,6 +203,30 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overrideLength,
             overrideNullability,
             overrideReadonly,
+            g,
+            overrideGenerationOption,
+            overrideCollation,
+            overrideCharacterSet,
+            overrideIdentity,
+            overrideDefaultValue
+        );
+    }
+
+    @Override
+    public final GenerationOption generationOption() {
+        return defaultIfNull(overrideGenerationOption, type.generationOption());
+    }
+
+    @Override
+    public final DataType<T> generationOption(GenerationOption g) {
+        return new DataTypeProxy<>(
+            this,
+            overridePrecision,
+            overrideScale,
+            overrideLength,
+            overrideNullability,
+            overrideReadonly,
+            overrideGeneratedAlwaysAs,
             g,
             overrideCollation,
             overrideCharacterSet,
@@ -220,6 +250,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overrideNullability,
             overrideReadonly,
             overrideGeneratedAlwaysAs,
+            overrideGenerationOption,
             c,
             overrideCharacterSet,
             overrideIdentity,
@@ -242,6 +273,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overrideNullability,
             overrideReadonly,
             overrideGeneratedAlwaysAs,
+            overrideGenerationOption,
             overrideCollation,
             c,
             overrideIdentity,
@@ -264,6 +296,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overrideNullability,
             overrideReadonly,
             overrideGeneratedAlwaysAs,
+            overrideGenerationOption,
             overrideCollation,
             overrideCharacterSet,
             i,
@@ -286,6 +319,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overrideNullability,
             overrideReadonly,
             overrideGeneratedAlwaysAs,
+            overrideGenerationOption,
             overrideCollation,
             overrideCharacterSet,
             overrideIdentity,
@@ -338,6 +372,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overrideNullability,
             overrideReadonly,
             overrideGeneratedAlwaysAs,
+            overrideGenerationOption,
             overrideCollation,
             overrideCharacterSet,
             overrideIdentity,
@@ -360,6 +395,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overrideNullability,
             overrideReadonly,
             overrideGeneratedAlwaysAs,
+            overrideGenerationOption,
             overrideCollation,
             overrideCharacterSet,
             overrideIdentity,
@@ -382,6 +418,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overrideNullability,
             overrideReadonly,
             overrideGeneratedAlwaysAs,
+            overrideGenerationOption,
             overrideCollation,
             overrideCharacterSet,
             overrideIdentity,

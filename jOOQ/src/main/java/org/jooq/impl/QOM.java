@@ -5606,6 +5606,25 @@ public final class QOM {
         }
     }
 
+    /**
+     * The <code>GenerationOption</code> type.
+     * <p>
+     * Specify whether a computed column should be stored, or computed virtually / on the
+     * fly.
+     */
+    public enum GenerationOption {
+        STORED(keyword("stored")),
+        VIRTUAL(keyword("virtual")),
+        DEFAULT(keyword("default")),
+        ;
+
+        final Keyword keyword;
+
+        private GenerationOption(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
+
 
 
 

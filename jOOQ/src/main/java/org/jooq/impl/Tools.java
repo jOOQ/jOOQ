@@ -156,6 +156,7 @@ import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_NOT_NULL;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_NVARCHAR;
+import static org.jooq.impl.Keywords.K_PERSISTED;
 import static org.jooq.impl.Keywords.K_PRIMARY_KEY;
 import static org.jooq.impl.Keywords.K_RAISE;
 import static org.jooq.impl.Keywords.K_RAISERROR;
@@ -167,7 +168,9 @@ import static org.jooq.impl.Keywords.K_START_WITH;
 import static org.jooq.impl.Keywords.K_STORED;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_THROW;
+import static org.jooq.impl.Keywords.K_VIRTUAL;
 import static org.jooq.impl.Keywords.K_WHEN;
+import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.INTEGER;
@@ -317,6 +320,7 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TemplatingException;
 import org.jooq.exception.TooManyRowsException;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
@@ -5045,6 +5049,8 @@ final class Tools {
 
 
 
+
+
         toSQLDDLTypeDeclarationForAdditionNullability(ctx, type);
 
         if (!DEFAULT_BEFORE_NULL.contains(ctx.dialect()))
@@ -5233,6 +5239,32 @@ final class Tools {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private static final void toSQLDDLTypeDeclarationDefault(Context<?> ctx, DataType<?> type) {
         if (type.defaulted())
             ctx.sql(' ').visit(K_DEFAULT).sql(' ').visit(type.defaultValue());
@@ -5240,6 +5272,11 @@ final class Tools {
 
     static final void toSQLDDLTypeDeclaration(Context<?> ctx, DataType<?> type) {
         // [#10376] TODO: Move some of this logic into DataType
+
+
+
+
+
 
         DataType<?> elementType = type instanceof ArrayDataType
             ? ((ArrayDataType<?>) type).elementType

@@ -22,42 +22,14 @@ import org.jooq.*;
 import org.jooq.impl.*;
 import org.jooq.conf.*;
 
-import generated.routines.DonothingArray;
+import generated.routines.DonothingArray1;
+import generated.routines.DonothingArray2;
+import org.jooq.impl.ParserException;
 
 public class JohnTests {
-    @Test
-    public void TestScratch() {
-        DSLContext db = DSL.using(SQLDialect.POSTGRES);
-
-        ResultQuery<?> query = db.parser().parseResultQuery(
-                "select * from a,b,c,d where c.i = d.i and (c.c1  = b.c or c.c2 = b.c) and b.a = a.a"
-        );
-
-        System.out.println(query.getSQL());
-    }
 
     @Test
-    public void TestInlinedNumberArray() {
-        DSLContext db = DSL.using(SQLDialect.POSTGRES);
-        Integer[] values = { 1, 2, 3 };
-
-        // works but doesn't exhibit the string[] inlining
-//        Select<?> s = db
-//                .select()
-//                .from(unnest(Arrays.asList(values));
-//
-//        System.out.println(s.getSQL());
-
-        // doesn't work currently, doesn't allow inlining the asList() result b/c lost type
-        Select<?> s = db
-                .select()
-                .from(unnest(inline(Arrays.asList(values))).as("x"));
-
-        System.out.println(s.getSQL());
-    }
-
-    @Test
-    @Ignore  // this is the currently working 3rd position extension, emulated in MySQL
+    @Ignore  // demonstration of the existing MySQL instr() 3rd position emulation
     public void TestMySQLInstr3rdPosEmulation() {
         // Oracle dialect also not supported for DSL Context
         // MySQL has INSTR() AND emulates the 3rd-position behavior. Maybe we can make an emulated feature instead of extending as Oracle-specific
@@ -72,7 +44,7 @@ public class JohnTests {
 
     @Test
     @Ignore  // the ANSI transform parameter is not available in the open source edition
-    public void TestANSIJoinTransform12338() {
+    public void Test12338ANSIJoinTransform() {
         DSLContext db = DSL.using(SQLDialect.POSTGRES);
         Settings set = new Settings().withTransformTableListsToAnsiJoin(true);
         ResultQuery<?> query = db.parser().parseResultQuery(
@@ -83,17 +55,17 @@ public class JohnTests {
     }
 
     @Test
-    public void TestPGArrayParamInlining6359() {
+    // Based on class generated from bigint[] overload of donothingarray()
+    public void Test6359BigintArrayInliningPG() {
         int i0 = 1234567890;
         int i1 = 1234567891;
         Long[] bigint_ary = {Long.valueOf(i0),Long.valueOf(i1)};
-        DonothingArray func = new DonothingArray();
+        DonothingArray1 func = new DonothingArray1();
         Configuration conf = new DefaultConfiguration().set(SQLDialect.POSTGRES);
 
         func.setPBigints(bigint_ary);
-
         func.attach(conf);
-
+        System.out.println(func.toString());
         DSLContext db = DSL.using(SQLDialect.POSTGRES);
 
         String inlined_call = db.renderInlined(func);
@@ -107,6 +79,30 @@ public class JohnTests {
                 containsString("\"" + Integer.toString(i0) + "\""),
                 containsString("\"" + Integer.toString(i1) + "\"")
                 ))
+        );
+    }
+
+    @Test
+    // Analogous to Test6359BigintArrayInliningPG, but based on class generated from text[] overload of donothingarray()
+    // Should pass before and also after long-related inlining changes
+    public void Test6359TextArrayInliningPG() {
+        String i0 = "foo";
+        String i1 = "bar";
+        String[] text_ary = {i0,i1};
+        DonothingArray2 func = new DonothingArray2();
+        Configuration conf = new DefaultConfiguration().set(SQLDialect.POSTGRES);
+
+        func.setPTexts(text_ary);
+        func.attach(conf);
+        System.out.println(func.toString());
+        DSLContext db = DSL.using(SQLDialect.POSTGRES);
+
+        String inlined_call = db.renderInlined(func);
+
+        assertThat(inlined_call, allOf(
+                containsString("\"" + i0 + "\""),
+                containsString("\"" + i1 + "\"")
+            )
         );
     }
 

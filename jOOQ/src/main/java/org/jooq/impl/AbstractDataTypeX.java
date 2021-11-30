@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Nullability.NOT_NULL;
+import static org.jooq.impl.Tools.CTX;
 
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
@@ -47,6 +48,8 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Nullability;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.tools.JooqLogger;
+
 
 /**
  * @author Lukas Eder
@@ -93,6 +96,9 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
 
     @Override
     public final DataType<T> readonly(boolean r) {
+        if (r && !CTX.configuration().commercial())
+            logGeneratedAlwaysAs.info("Readonly columns", "Readonly columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
+
         return construct(
             precision0(),
             scale0(),
@@ -108,8 +114,13 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
         );
     }
 
+    private static final JooqLogger logGeneratedAlwaysAs = JooqLogger.getLogger(AbstractDataTypeX.class, "generateAlwaysAs", 1);
+
     @Override
     public final DataType<T> generatedAlwaysAs(Field<T> g) {
+        if (g != null && !CTX.configuration().commercial())
+            logGeneratedAlwaysAs.info("Computed columns", "Computed columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
+
         return construct(
             precision0(),
             scale0(),
@@ -127,6 +138,9 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
 
     @Override
     public final DataType<T> generationOption(GenerationOption g) {
+        if (g != null && !CTX.configuration().commercial())
+            logGeneratedAlwaysAs.info("Computed columns", "Computed columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
+
         return construct(
             precision0(),
             scale0(),

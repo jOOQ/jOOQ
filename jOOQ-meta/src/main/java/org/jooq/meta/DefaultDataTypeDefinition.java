@@ -269,8 +269,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         return generatedAlwaysAs;
     }
 
-    private static final class LogGeneratedAlwaysAs {}
-    private static final JooqLogger logGeneratedAlwaysAs = JooqLogger.getLogger(LogGeneratedAlwaysAs.class, 1);
+    private static final JooqLogger logGeneratedAlwaysAs = JooqLogger.getLogger(DefaultDataTypeDefinition.class, "generateAlwaysAs", 1);
 
     public final DefaultDataTypeDefinition generatedAlwaysAs(String g) {
         if (g != null && !database.create().configuration().commercial())

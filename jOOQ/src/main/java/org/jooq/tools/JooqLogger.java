@@ -77,20 +77,53 @@ public final class JooqLogger implements Log {
      * Get a logger wrapper for a class.
      */
     public static JooqLogger getLogger(Class<?> clazz) {
-        return getLogger(clazz, -1);
+        return getLogger(clazz, clazz.getName(), -1);
     }
 
+    /**
+     * Get a logger wrapper for a class.
+     */
+    public static JooqLogger getLogger(String name) {
+        return getLogger(null, name, -1);
+    }
+
+    /**
+     * Get a logger wrapper for a class, which logs at most a certain number of
+     * messages.
+     */
     public static JooqLogger getLogger(Class<?> clazz, int limitMessages) {
+        return getLogger(clazz, clazz.getName(), limitMessages);
+    }
+
+    /**
+     * Get a logger wrapper for a class, which logs at most a certain number of
+     * messages.
+     */
+    public static JooqLogger getLogger(String name, int limitMessages) {
+        return getLogger(null, name, limitMessages);
+    }
+
+    /**
+     * Get a logger wrapper for a class, which logs at most a certain number of
+     * messages.
+     */
+    public static JooqLogger getLogger(Class<?> clazz, String nameSuffix, int limitMessages) {
+        String name = clazz != null && nameSuffix != null
+            ? (clazz.getName() + "." + nameSuffix)
+            : clazz != null
+            ? clazz.getName()
+            : nameSuffix;
+
         JooqLogger result = new JooqLogger(limitMessages);
 
         // Prioritise slf4j
         try {
-            result.slf4j = org.slf4j.LoggerFactory.getLogger(clazz);
+            result.slf4j = org.slf4j.LoggerFactory.getLogger(name);
         }
 
         // If that's not on the classpath, log using the JDK logger
         catch (Throwable e2) {
-            result.util = java.util.logging.Logger.getLogger(clazz.getName());
+            result.util = java.util.logging.Logger.getLogger(name);
         }
 
         // [#2085] Check if any of the INFO, DEBUG, TRACE levels might be

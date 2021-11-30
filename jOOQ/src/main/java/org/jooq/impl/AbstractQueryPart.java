@@ -44,10 +44,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.SQLException;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jooq.Attachable;
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -55,8 +53,6 @@ import org.jooq.DSLContext;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
-import org.jooq.RenderContext;
-import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
@@ -244,8 +240,7 @@ abstract class AbstractQueryPart implements QueryPartInternal {
         return Tools.translate(sql, e);
     }
 
-    private static class SerializationDeprecation {}
-    private static final JooqLogger log = JooqLogger.getLogger(SerializationDeprecation.class, 100);
+    private static final JooqLogger log = JooqLogger.getLogger(AbstractQueryPart.class, "serialization", 100);
 
     private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
         ois.defaultReadObject();

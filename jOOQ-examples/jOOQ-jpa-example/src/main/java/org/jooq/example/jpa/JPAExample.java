@@ -45,7 +45,7 @@ import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.min;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 import org.jooq.DSLContext;
 

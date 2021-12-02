@@ -43,16 +43,16 @@ import static org.jooq.example.jpa.jooq.Tables.LANGUAGE;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.countDistinct;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Tuple;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Root;
-import javax.persistence.criteria.SetJoin;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Tuple;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Path;
+import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.SetJoin;
 
 import org.jooq.DSLContext;
 import org.jooq.Record;

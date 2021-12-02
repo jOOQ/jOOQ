@@ -44,11 +44,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-import javax.persistence.SharedCacheMode;
-import javax.persistence.ValidationMode;
-import javax.persistence.spi.ClassTransformer;
-import javax.persistence.spi.PersistenceUnitInfo;
-import javax.persistence.spi.PersistenceUnitTransactionType;
+import jakarta.persistence.SharedCacheMode;
+import jakarta.persistence.ValidationMode;
+import jakarta.persistence.spi.ClassTransformer;
+import jakarta.persistence.spi.PersistenceUnitInfo;
+import jakarta.persistence.spi.PersistenceUnitTransactionType;
 import javax.sql.DataSource;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;

@@ -53,7 +53,7 @@
                         
                         <!-- [#12408] Some of these are resolved by introspecting reflective usage -->
                         <Import-Package>
-                            javax.persistence;resolution:=optional,
+                            jakarta.persistence;resolution:=optional,
                             org.slf4j;resolution:=optional;version="[1.7,2)",
                             com.fasterxml.jackson.databind;resolution:=optional,
                             com.fasterxml.jackson.module.kotlin;resolution:=optional,
@@ -97,8 +97,8 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>javax.persistence-api</artifactId>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
         </dependency>
 
         <!-- From JDK 9 onwards, the JAXB dependency needs to be made explicit -->

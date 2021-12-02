@@ -7158,11 +7158,11 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (generateJPAAnnotations()) {
             // Since JPA 1.0
-            out.println("@%s", out.ref("javax.persistence.Entity"));
+            out.println("@%s", out.ref("jakarta.persistence.Entity"));
 
             // Since JPA 1.0
-            out.println("@%s(", out.ref("javax.persistence.Table"));
-            out.print("name = \"", out.ref("javax.persistence.Table"));
+            out.println("@%s(", out.ref("jakarta.persistence.Table"));
+            out.print("name = \"", out.ref("jakarta.persistence.Table"));
             out.print(escapeString(table.getName()));
             out.print("\"");
 
@@ -7185,7 +7185,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.print(scala ? "new " : kotlin ? "" : "@")
 
                        // Since JPA 1.0
-                       .print(out.ref("javax.persistence.UniqueConstraint"))
+                       .print(out.ref("jakarta.persistence.UniqueConstraint"))
                        .print("(");
 
                     if (!StringUtils.isBlank(uk.getOutputName()))
@@ -7219,7 +7219,7 @@ public class JavaGenerator extends AbstractGenerator {
                         IndexDefinition index = indexes.get(i);
 
                         out.print(scala ? "new " : kotlin ? "" : "@");
-                        out.print(out.ref("javax.persistence.Index"));
+                        out.print(out.ref("jakarta.persistence.Index"));
                         out.print("(name = \"").print(escapeString(index.getOutputName())).print("\"");
 
                         if (index.isUnique())
@@ -7269,14 +7269,14 @@ public class JavaGenerator extends AbstractGenerator {
                 if (pk.getKeyColumns().size() == 1) {
 
                     // Since JPA 1.0
-                    out.println("@%s%s", prefix, out.ref("javax.persistence.Id"));
+                    out.println("@%s%s", prefix, out.ref("jakarta.persistence.Id"));
 
                     // Since JPA 1.0
                     if (pk.getKeyColumns().get(0).isIdentity())
                         out.println("@%s%s(strategy = %s.IDENTITY)",
                             prefix,
-                            out.ref("javax.persistence.GeneratedValue"),
-                            out.ref("javax.persistence.GenerationType")
+                            out.ref("jakarta.persistence.GeneratedValue"),
+                            out.ref("jakarta.persistence.GenerationType")
                         );
                 }
             }
@@ -7304,7 +7304,7 @@ public class JavaGenerator extends AbstractGenerator {
             //         the table's @UniqueConstraint section.
 
             // Since JPA 1.0
-            out.print("@%s%s(name = \"", prefix, out.ref("javax.persistence.Column"));
+            out.print("@%s%s(name = \"", prefix, out.ref("jakarta.persistence.Column"));
             out.print(escapeString(column.getName()));
             out.print("\"");
             out.print(nullable);

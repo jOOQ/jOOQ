@@ -39,7 +39,7 @@ package org.jooq.impl;
 
 import java.lang.reflect.Method;
 
-import javax.persistence.AttributeConverter;
+import jakarta.persistence.AttributeConverter;
 
 import org.jooq.exception.MappingException;
 import org.jooq.tools.JooqLogger;

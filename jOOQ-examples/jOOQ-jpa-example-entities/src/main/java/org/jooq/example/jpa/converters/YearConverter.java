@@ -39,7 +39,7 @@ package org.jooq.example.jpa.converters;
 
 import java.time.Year;
 
-import javax.persistence.AttributeConverter;
+import jakarta.persistence.AttributeConverter;
 
 /**
  * @author Lukas Eder

@@ -86,7 +86,7 @@ import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.persistence.Column;
+import jakarta.persistence.Column;
 
 import org.jooq.Attachable;
 import org.jooq.Configuration;
@@ -177,7 +177,7 @@ import org.jooq.tools.reflect.ReflectException;
  * <p>
  * <h5>If a default constructor is available and if there are no JPA
  * <code>Column</code> annotations, or jOOQ can't find the
- * <code>javax.persistence</code> API on the classpath, jOOQ will map
+ * <code>jakarta.persistence</code> API on the classpath, jOOQ will map
  * <code>Record</code> values by naming convention:</h5>
  * <p>
  * If {@link Field#getName()} is <code>MY_field</code> (case-sensitive!), then

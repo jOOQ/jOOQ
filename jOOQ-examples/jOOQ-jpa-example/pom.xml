@@ -44,11 +44,11 @@
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
+            <artifactId>hibernate-core-jakarta</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>javax.persistence-api</artifactId>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -149,9 +149,9 @@
                 </executions>
                 <dependencies>
                     <dependency>
-                        <groupId>javax.persistence</groupId>
-                        <artifactId>javax.persistence-api</artifactId>
-                        <version>${javax.persistence-api.version}</version>
+                        <groupId>jakarta.persistence</groupId>
+                        <artifactId>jakarta.persistence-api</artifactId>
+                        <version>${jakarta.persistence-api.version}</version>                
                     </dependency>
                 </dependencies>
             </plugin>

@@ -238,9 +238,9 @@ import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 // ...
 // ...
@@ -809,7 +809,7 @@ final class Tools {
     private static final Object     initLock                           = new Object();
 
     /**
-     * Indicating whether JPA (<code>javax.persistence</code>) is on the
+     * Indicating whether JPA (<code>jakarta.persistence</code>) is on the
      * classpath.
      */
     private static volatile Boolean isJPAAvailable;
@@ -3748,7 +3748,7 @@ final class Tools {
             if (type.getAnnotation(Entity.class) != null)
                 return true;
 
-            if (type.getAnnotation(javax.persistence.Table.class) != null)
+            if (type.getAnnotation(jakarta.persistence.Table.class) != null)
                 return true;
 
             if (anyMatch(getInstanceMembers(type), m ->

@@ -50,9 +50,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.spi.PersistenceUnitInfo;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.spi.PersistenceUnitInfo;
 
 import org.jooq.Name;
 import org.jooq.tools.JooqLogger;

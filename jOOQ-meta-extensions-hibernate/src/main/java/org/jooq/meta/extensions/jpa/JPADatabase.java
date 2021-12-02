@@ -49,8 +49,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Entity;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Entity;
 
 import org.jooq.Name;
 import org.jooq.SQLDialect;
@@ -124,7 +124,9 @@ public class JPADatabase extends AbstractInterpretingDatabase {
         for (Entry<Object, Object> entry : getProperties().entrySet()) {
             String key = "" + entry.getKey();
 
-            if (key.startsWith("hibernate.") || key.startsWith("javax.persistence."))
+            if (key.startsWith("hibernate.")
+                    || key.startsWith("javax.persistence.")
+                    || key.startsWith("jakarta.persistence."))
                 userSettings.put(key, entry.getValue());
         }
         settings.putAll(userSettings);

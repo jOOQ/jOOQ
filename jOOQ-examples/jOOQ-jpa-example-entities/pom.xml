@@ -30,7 +30,7 @@
         <!-- Database access -->
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
+            <artifactId>hibernate-core-jakarta</artifactId>
         </dependency>
     </dependencies>
 

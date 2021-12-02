@@ -22,7 +22,7 @@ module org.jooq {
     // - The DefaultRecordMapper
     // - The JPADatabase in the code generator
     // - The EntityManagerConnectionProvider
-    requires static java.persistence;
+    requires static jakarta.persistence;
 
     // The runtime Java compiler is used to generate enum types on the fly.
     // This dependency may be removed in the future.

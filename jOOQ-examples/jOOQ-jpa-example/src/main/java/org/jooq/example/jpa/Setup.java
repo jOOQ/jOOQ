@@ -45,8 +45,8 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.function.BiConsumer;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;

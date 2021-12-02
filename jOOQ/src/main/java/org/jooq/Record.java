@@ -47,7 +47,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import javax.persistence.Column;
+import jakarta.persistence.Column;
 
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
@@ -1038,7 +1038,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * </ul>
      * <p>
      * <h5>If there are no JPA <code>Column</code> annotations, or jOOQ can't
-     * find the <code>javax.persistence</code> API on the classpath, jOOQ will
+     * find the <code>jakarta.persistence</code> API on the classpath, jOOQ will
      * map members by naming convention:</h5>
      * <p>
      * If {@link Field#getName()} is <code>MY_field</code> (case-sensitive!),

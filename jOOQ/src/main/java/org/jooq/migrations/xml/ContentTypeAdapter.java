@@ -37,7 +37,7 @@
  */
 package org.jooq.migrations.xml;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.jooq.ContentType;
 

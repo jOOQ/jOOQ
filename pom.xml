@@ -42,7 +42,7 @@
         <io.r2dbc.version>0.9.0.M2</io.r2dbc.version>
 
         <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->
-        <jaxb.version>2.3.1</jaxb.version>
+        <jaxb.version>3.0.0</jaxb.version>
         <javax.activation.version>1.2.0</javax.activation.version>
 
         <!-- Scala versions -->
@@ -240,20 +240,10 @@
             <!-- The dependency can cause trouble in older JDKs, so it needs to be
                  excluded from pre-java-9 builds: https://github.com/jOOQ/jOOQ/issues/7649 -->
             <dependency>
-                <groupId>javax.xml.bind</groupId>
-                <artifactId>jaxb-api</artifactId>
+                <groupId>jakarta.xml.bind</groupId>
+                <artifactId>jakarta.xml.bind-api</artifactId>
                 <version>${jaxb.version}</version>
             </dependency>
-
-
-
-
-
-
-
-
-
-
 
 
 

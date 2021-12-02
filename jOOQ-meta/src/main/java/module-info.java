@@ -9,7 +9,7 @@ module org.jooq.meta {
     // JAXB is used optionally for loading a variety of XML content, including
     // - Settings (org.jooq.conf)
     // - InformationSchema (org.jooq.util.xml.jaxb)
-    requires static java.xml.bind;
+    requires static jakarta.xml.bind;
 
     exports org.jooq.meta;
     exports org.jooq.meta.cubrid;

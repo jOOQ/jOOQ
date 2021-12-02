@@ -40,7 +40,7 @@ package org.jooq.util.jaxb.tools;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.jooq.tools.StringUtils;
 

@@ -46,13 +46,13 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.sql.SQLXML;
 
-import javax.xml.bind.DataBindingException;
-import javax.xml.bind.JAXB;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.DataBindingException;
+import jakarta.xml.bind.JAXB;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
 import org.jooq.Converter;

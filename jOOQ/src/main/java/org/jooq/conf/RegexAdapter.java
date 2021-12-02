@@ -39,7 +39,7 @@ package org.jooq.conf;
 
 import java.util.regex.Pattern;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * @author Lukas Eder

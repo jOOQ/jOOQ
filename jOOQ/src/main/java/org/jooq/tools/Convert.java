@@ -86,7 +86,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-import javax.xml.bind.JAXB;
+import jakarta.xml.bind.JAXB;
 
 // ...
 import org.jooq.Converter;

@@ -47,7 +47,7 @@ import java.io.Serializable;
  * of those many JAXB / XJC plugins. Besides, cloning objects through the
  * standard Java {@link Cloneable} mechanism is around factor 1000x faster than
  * using {@link Serializable}, and even 10000x faster than using
- * {@link javax.xml.bind.JAXB#marshal(Object, java.io.OutputStream)},
+ * {@link jakarta.xml.bind.JAXB#marshal(Object, java.io.OutputStream)},
  * marshalling a JAXB object into a {@link ByteArrayOutputStream}.
  *
  * @author Lukas Eder

@@ -37,7 +37,7 @@
  */
 package org.jooq.util.jaxb.tools;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * [#2401] A string-trimming {@link XmlAdapter} that takes out whitespace from

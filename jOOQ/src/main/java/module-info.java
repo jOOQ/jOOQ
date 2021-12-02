@@ -12,7 +12,7 @@ module org.jooq {
     // JAXB is used optionally for loading a variety of XML content, including
     // - Settings (org.jooq.conf)
     // - InformationSchema (org.jooq.util.xml.jaxb)
-    requires static java.xml.bind;
+    requires static jakarta.xml.bind;
 
     // The DefaultRecordMapper makes use of JavaBeans utilities, including:
     // - Support for ConstructorProperties

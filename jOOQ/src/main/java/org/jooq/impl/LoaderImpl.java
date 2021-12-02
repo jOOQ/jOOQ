@@ -66,7 +66,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import javax.xml.bind.DatatypeConverter;
+import jakarta.xml.bind.DatatypeConverter;
 
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;

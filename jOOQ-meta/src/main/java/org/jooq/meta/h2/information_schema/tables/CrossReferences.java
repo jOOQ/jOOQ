@@ -46,42 +46,42 @@ public class CrossReferences extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKTABLE_CATALOG</code>.
      */
-    public final TableField<Record, String> PKTABLE_CATALOG = createField(DSL.name("PKTABLE_CATALOG"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> PKTABLE_CATALOG = createField(DSL.name("PKTABLE_CATALOG"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKTABLE_SCHEMA</code>.
      */
-    public final TableField<Record, String> PKTABLE_SCHEMA = createField(DSL.name("PKTABLE_SCHEMA"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> PKTABLE_SCHEMA = createField(DSL.name("PKTABLE_SCHEMA"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKTABLE_NAME</code>.
      */
-    public final TableField<Record, String> PKTABLE_NAME = createField(DSL.name("PKTABLE_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> PKTABLE_NAME = createField(DSL.name("PKTABLE_NAME"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKCOLUMN_NAME</code>.
      */
-    public final TableField<Record, String> PKCOLUMN_NAME = createField(DSL.name("PKCOLUMN_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> PKCOLUMN_NAME = createField(DSL.name("PKCOLUMN_NAME"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKTABLE_CATALOG</code>.
      */
-    public final TableField<Record, String> FKTABLE_CATALOG = createField(DSL.name("FKTABLE_CATALOG"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> FKTABLE_CATALOG = createField(DSL.name("FKTABLE_CATALOG"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKTABLE_SCHEMA</code>.
      */
-    public final TableField<Record, String> FKTABLE_SCHEMA = createField(DSL.name("FKTABLE_SCHEMA"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> FKTABLE_SCHEMA = createField(DSL.name("FKTABLE_SCHEMA"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKTABLE_NAME</code>.
      */
-    public final TableField<Record, String> FKTABLE_NAME = createField(DSL.name("FKTABLE_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> FKTABLE_NAME = createField(DSL.name("FKTABLE_NAME"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKCOLUMN_NAME</code>.
      */
-    public final TableField<Record, String> FKCOLUMN_NAME = createField(DSL.name("FKCOLUMN_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> FKCOLUMN_NAME = createField(DSL.name("FKCOLUMN_NAME"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.ORDINAL_POSITION</code>.
@@ -101,12 +101,12 @@ public class CrossReferences extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FK_NAME</code>.
      */
-    public final TableField<Record, String> FK_NAME = createField(DSL.name("FK_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> FK_NAME = createField(DSL.name("FK_NAME"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PK_NAME</code>.
      */
-    public final TableField<Record, String> PK_NAME = createField(DSL.name("PK_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> PK_NAME = createField(DSL.name("PK_NAME"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.DEFERRABILITY</code>.

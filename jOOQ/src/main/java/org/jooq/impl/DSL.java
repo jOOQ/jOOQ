@@ -98,20 +98,15 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.impl.Keywords.K_GROUPING_SETS;
-import static org.jooq.impl.Names.N_AVG;
 import static org.jooq.impl.Names.N_COUNT;
 import static org.jooq.impl.Names.N_CUME_DIST;
 import static org.jooq.impl.Names.N_DENSE_RANK;
 import static org.jooq.impl.Names.N_IF;
 import static org.jooq.impl.Names.N_IIF;
-import static org.jooq.impl.Names.N_MAX;
-import static org.jooq.impl.Names.N_MIN;
 import static org.jooq.impl.Names.N_PERCENTILE_CONT;
 import static org.jooq.impl.Names.N_PERCENTILE_DISC;
 import static org.jooq.impl.Names.N_PERCENT_RANK;
 import static org.jooq.impl.Names.N_RANK;
-import static org.jooq.impl.Names.N_SUM;
 import static org.jooq.impl.Names.N_SYSTEM_TIME;
 import static org.jooq.impl.Names.N_VALUE;
 import static org.jooq.impl.SQLDataType.DATE;
@@ -421,8 +416,8 @@ import org.jooq.XMLTablePassingStep;
 import org.jooq.conf.NestedCollectionEmulation;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.impl.QOM.ResultOption;
 import org.jooq.impl.QOM.DocumentOrContent;
+import org.jooq.impl.QOM.ResultOption;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.types.DayToSecond;
@@ -18339,7 +18334,7 @@ public class DSL {
      * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
+    @Support({ HSQLDB, POSTGRES, YUGABYTE })
     public static Field<Date> toDate(@Stringly.Param String value, @Stringly.Param String formatMask) {
         return new ToDate(Tools.field(value), Tools.field(formatMask));
     }
@@ -18353,7 +18348,7 @@ public class DSL {
      * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
+    @Support({ HSQLDB, POSTGRES, YUGABYTE })
     public static Field<Date> toDate(@Stringly.Param String value, Field<String> formatMask) {
         return new ToDate(Tools.field(value), formatMask);
     }
@@ -18367,7 +18362,7 @@ public class DSL {
      * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
+    @Support({ HSQLDB, POSTGRES, YUGABYTE })
     public static Field<Date> toDate(Field<String> value, @Stringly.Param String formatMask) {
         return new ToDate(value, Tools.field(formatMask));
     }
@@ -18381,7 +18376,7 @@ public class DSL {
      * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
+    @Support({ HSQLDB, POSTGRES, YUGABYTE })
     public static Field<Date> toDate(Field<String> value, Field<String> formatMask) {
         return new ToDate(value, formatMask);
     }
@@ -18419,7 +18414,7 @@ public class DSL {
      * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
+    @Support({ HSQLDB, POSTGRES, YUGABYTE })
     public static Field<Timestamp> toTimestamp(@Stringly.Param String value, @Stringly.Param String formatMask) {
         return new ToTimestamp(Tools.field(value), Tools.field(formatMask));
     }
@@ -18433,7 +18428,7 @@ public class DSL {
      * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
+    @Support({ HSQLDB, POSTGRES, YUGABYTE })
     public static Field<Timestamp> toTimestamp(@Stringly.Param String value, Field<String> formatMask) {
         return new ToTimestamp(Tools.field(value), formatMask);
     }
@@ -18447,7 +18442,7 @@ public class DSL {
      * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
+    @Support({ HSQLDB, POSTGRES, YUGABYTE })
     public static Field<Timestamp> toTimestamp(Field<String> value, @Stringly.Param String formatMask) {
         return new ToTimestamp(value, Tools.field(formatMask));
     }
@@ -18461,7 +18456,7 @@ public class DSL {
      * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
+    @Support({ HSQLDB, POSTGRES, YUGABYTE })
     public static Field<Timestamp> toTimestamp(Field<String> value, Field<String> formatMask) {
         return new ToTimestamp(value, formatMask);
     }

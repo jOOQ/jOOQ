@@ -42,17 +42,17 @@ public class Indexes extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.TABLE_CATALOG</code>.
      */
-    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("TABLE_CATALOG"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("TABLE_CATALOG"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.TABLE_SCHEMA</code>.
      */
-    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("TABLE_SCHEMA"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("TABLE_SCHEMA"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.TABLE_NAME</code>.
      */
-    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("TABLE_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("TABLE_NAME"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.NON_UNIQUE</code>.
@@ -62,7 +62,7 @@ public class Indexes extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.INDEX_NAME</code>.
      */
-    public final TableField<Record, String> INDEX_NAME = createField(DSL.name("INDEX_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> INDEX_NAME = createField(DSL.name("INDEX_NAME"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.ORDINAL_POSITION</code>.
@@ -72,7 +72,7 @@ public class Indexes extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.COLUMN_NAME</code>.
      */
-    public final TableField<Record, String> COLUMN_NAME = createField(DSL.name("COLUMN_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> COLUMN_NAME = createField(DSL.name("COLUMN_NAME"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.CARDINALITY</code>.
@@ -87,7 +87,7 @@ public class Indexes extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.INDEX_TYPE_NAME</code>.
      */
-    public final TableField<Record, String> INDEX_TYPE_NAME = createField(DSL.name("INDEX_TYPE_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> INDEX_TYPE_NAME = createField(DSL.name("INDEX_TYPE_NAME"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.IS_GENERATED</code>.
@@ -102,7 +102,7 @@ public class Indexes extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.ASC_OR_DESC</code>.
      */
-    public final TableField<Record, String> ASC_OR_DESC = createField(DSL.name("ASC_OR_DESC"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> ASC_OR_DESC = createField(DSL.name("ASC_OR_DESC"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.PAGES</code>.
@@ -112,17 +112,17 @@ public class Indexes extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.FILTER_CONDITION</code>.
      */
-    public final TableField<Record, String> FILTER_CONDITION = createField(DSL.name("FILTER_CONDITION"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> FILTER_CONDITION = createField(DSL.name("FILTER_CONDITION"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.REMARKS</code>.
      */
-    public final TableField<Record, String> REMARKS = createField(DSL.name("REMARKS"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> REMARKS = createField(DSL.name("REMARKS"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.SQL</code>.
      */
-    public final TableField<Record, String> SQL = createField(DSL.name("SQL"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> SQL = createField(DSL.name("SQL"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.ID</code>.
@@ -137,12 +137,12 @@ public class Indexes extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.CONSTRAINT_NAME</code>.
      */
-    public final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("CONSTRAINT_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("CONSTRAINT_NAME"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.INDEX_CLASS</code>.
      */
-    public final TableField<Record, String> INDEX_CLASS = createField(DSL.name("INDEX_CLASS"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> INDEX_CLASS = createField(DSL.name("INDEX_CLASS"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.AFFINITY</code>.

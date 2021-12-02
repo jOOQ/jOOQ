@@ -43,6 +43,7 @@ import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Nullability;
+import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.GenerationOption;
 
 /**
@@ -151,7 +152,12 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
                 return dataType + "[]";
 
             case H2:
-                return "array";
+
+
+
+
+
+                return dataType + " array";
 
             // Default implementation is needed for hash-codes and toString()
             default:

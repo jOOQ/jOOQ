@@ -50,6 +50,8 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
+// ...
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.IGNITE;
 // ...
@@ -178,13 +180,14 @@ import org.jooq.tools.jdbc.JDBCUtils;
  */
 abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery implements DMLQuery<R> {
 
-    private static final JooqLogger              log                              = JooqLogger.getLogger(AbstractQuery.class);
+    private static final JooqLogger              log                                    = JooqLogger.getLogger(AbstractQuery.class);
 
-    private static final Set<SQLDialect>         NO_SUPPORT_INSERT_ALIASED_TABLE  = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, MARIADB, MYSQL);
-    private static final Set<SQLDialect>         NATIVE_SUPPORT_INSERT_RETURNING  = SQLDialect.supportedBy(FIREBIRD, MARIADB, POSTGRES, YUGABYTE);
-    private static final Set<SQLDialect>         NATIVE_SUPPORT_UPDATE_RETURNING  = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTE);
-    private static final Set<SQLDialect>         NATIVE_SUPPORT_DELETE_RETURNING  = SQLDialect.supportedBy(FIREBIRD, MARIADB, POSTGRES, YUGABYTE);
-    private static final Set<SQLDialect>         NO_SUPPORT_FETCHING_KEYS         = SQLDialect.supportedBy(IGNITE);
+    private static final Set<SQLDialect>         NO_SUPPORT_INSERT_ALIASED_TABLE        = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, MARIADB, MYSQL);
+    private static final Set<SQLDialect>         NATIVE_SUPPORT_INSERT_RETURNING        = SQLDialect.supportedBy(FIREBIRD, MARIADB, POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect>         NATIVE_SUPPORT_UPDATE_RETURNING        = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect>         NATIVE_SUPPORT_DELETE_RETURNING        = SQLDialect.supportedBy(FIREBIRD, MARIADB, POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect>         NATIVE_SUPPORT_DATA_CHANGE_DELTA_TABLE = SQLDialect.supportedBy(H2);
+    private static final Set<SQLDialect>         NO_SUPPORT_FETCHING_KEYS               = SQLDialect.supportedBy(IGNITE);
 
 
 
@@ -847,6 +850,10 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
             || this instanceof Delete && NATIVE_SUPPORT_DELETE_RETURNING.contains(ctx.dialect());
     }
 
+    final boolean nativeSupportReturningOrDataChangeDeltaTable(Scope ctx) {
+        return NATIVE_SUPPORT_DATA_CHANGE_DELTA_TABLE.contains(ctx.dialect()) || nativeSupportReturning(ctx);
+    }
+
     @Override
     protected final void prepare(ExecuteContext ctx) throws SQLException {
         prepare0(ctx);
@@ -864,7 +871,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         else if (NO_SUPPORT_FETCHING_KEYS.contains(ctx.dialect()))
             super.prepare(ctx);
 
-        else if (nativeSupportReturning(ctx))
+        else if (nativeSupportReturningOrDataChangeDeltaTable(ctx))
             super.prepare(ctx);
 
 
@@ -878,8 +885,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
         else {
             switch (ctx.family()) {
-
-
 
 
 
@@ -905,7 +910,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
                 case DERBY:
-                case H2:
 
                 // [#9212] Older MariaDB versions that don't support RETURNING
                 //         yet, or UPDATE .. RETURNING
@@ -1040,7 +1044,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
                 case DERBY:
-                case H2:
                 case MYSQL: {
                     return executeReturningGeneratedKeysFetchAdditionalRows(ctx, listener);
                 }
@@ -1053,6 +1056,15 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                     break;
                 }
 
+                // [#9676] H2 2.0.202 has introduced support for data change delta tables
+                case H2:
+
+
+
+
+
+                    rs = executeReturningQuery(ctx, listener);
+                    break;
 
 
 

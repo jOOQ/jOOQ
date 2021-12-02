@@ -265,13 +265,21 @@ implements
 
 
 
-            case H2:
             case IGNITE:
             case MARIADB:
             case MYSQL:
             case POSTGRES:
             case YUGABYTE:
                 ctx.visit(N_BIT_AND);
+                break;
+
+            case H2:
+
+
+
+
+
+                ctx.visit(N_BIT_AND_AGG);
                 break;
 
             default:

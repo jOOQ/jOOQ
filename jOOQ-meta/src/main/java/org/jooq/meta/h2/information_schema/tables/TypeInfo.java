@@ -42,7 +42,7 @@ public class TypeInfo extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.TYPE_NAME</code>.
      */
-    public final TableField<Record, String> TYPE_NAME = createField(DSL.name("TYPE_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> TYPE_NAME = createField(DSL.name("TYPE_NAME"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.DATA_TYPE</code>.
@@ -57,17 +57,17 @@ public class TypeInfo extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.PREFIX</code>.
      */
-    public final TableField<Record, String> PREFIX = createField(DSL.name("PREFIX"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> PREFIX = createField(DSL.name("PREFIX"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.SUFFIX</code>.
      */
-    public final TableField<Record, String> SUFFIX = createField(DSL.name("SUFFIX"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> SUFFIX = createField(DSL.name("SUFFIX"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.PARAMS</code>.
      */
-    public final TableField<Record, String> PARAMS = createField(DSL.name("PARAMS"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> PARAMS = createField(DSL.name("PARAMS"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.AUTO_INCREMENT</code>.

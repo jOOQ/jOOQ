@@ -103,9 +103,15 @@ implements
 
 
 
-            case H2:
-                ctx.visit(N_ARRAY_GET).sql('(').visit(array).sql(", ").visit(index).sql(')');
-                break;
+
+
+
+
+
+
+
+
+
 
             case HSQLDB:
                 ctx.visit(when(cardinality(array).ge(index), new Standard()));

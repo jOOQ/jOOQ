@@ -42,27 +42,27 @@ public class FunctionAliases extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ALIAS_CATALOG</code>.
      */
-    public final TableField<Record, String> ALIAS_CATALOG = createField(DSL.name("ALIAS_CATALOG"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> ALIAS_CATALOG = createField(DSL.name("ALIAS_CATALOG"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ALIAS_SCHEMA</code>.
      */
-    public final TableField<Record, String> ALIAS_SCHEMA = createField(DSL.name("ALIAS_SCHEMA"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> ALIAS_SCHEMA = createField(DSL.name("ALIAS_SCHEMA"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ALIAS_NAME</code>.
      */
-    public final TableField<Record, String> ALIAS_NAME = createField(DSL.name("ALIAS_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> ALIAS_NAME = createField(DSL.name("ALIAS_NAME"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.JAVA_CLASS</code>.
      */
-    public final TableField<Record, String> JAVA_CLASS = createField(DSL.name("JAVA_CLASS"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> JAVA_CLASS = createField(DSL.name("JAVA_CLASS"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.JAVA_METHOD</code>.
      */
-    public final TableField<Record, String> JAVA_METHOD = createField(DSL.name("JAVA_METHOD"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> JAVA_METHOD = createField(DSL.name("JAVA_METHOD"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.DATA_TYPE</code>.
@@ -72,7 +72,7 @@ public class FunctionAliases extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.TYPE_NAME</code>.
      */
-    public final TableField<Record, String> TYPE_NAME = createField(DSL.name("TYPE_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> TYPE_NAME = createField(DSL.name("TYPE_NAME"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.COLUMN_COUNT</code>.
@@ -87,7 +87,7 @@ public class FunctionAliases extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.REMARKS</code>.
      */
-    public final TableField<Record, String> REMARKS = createField(DSL.name("REMARKS"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> REMARKS = createField(DSL.name("REMARKS"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ID</code>.
@@ -97,7 +97,7 @@ public class FunctionAliases extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.SOURCE</code>.
      */
-    public final TableField<Record, String> SOURCE = createField(DSL.name("SOURCE"), SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> SOURCE = createField(DSL.name("SOURCE"), SQLDataType.VARCHAR, this, "");
 
     private FunctionAliases(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);

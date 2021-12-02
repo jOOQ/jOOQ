@@ -38,12 +38,21 @@
 package org.jooq.meta.h2;
 
 
+import static org.jooq.impl.DSL.concat;
+import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.DSL.nvl;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.meta.h2.information_schema.Tables.FUNCTION_COLUMNS;
+import static org.jooq.meta.hsqldb.information_schema.Tables.ELEMENT_TYPES;
+import static org.jooq.meta.hsqldb.information_schema.Tables.PARAMETERS;
+import static org.jooq.meta.hsqldb.information_schema.Tables.ROUTINES;
 
 import java.sql.SQLException;
 
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.meta.AbstractRoutineDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
@@ -62,18 +71,16 @@ import org.jooq.util.h2.H2DataType;
  */
 public class H2RoutineDefinition extends AbstractRoutineDefinition {
 
-    public H2RoutineDefinition(SchemaDefinition schema, String name, String comment, String typeName, Number precision, Number scale) {
-        this(schema, name, comment, typeName, precision, scale, null);
-    }
+    private final String specificName; // internal name for the function used by H2
 
-    public H2RoutineDefinition(SchemaDefinition schema, String name, String comment, String typeName, Number precision, Number scale, String overload) {
+    public H2RoutineDefinition(SchemaDefinition schema, String name, String specificName, String dataType, Number precision, Number scale, String comment, String overload) {
         super(schema, null, name, comment, overload);
 
-        if (!StringUtils.isBlank(typeName)) {
+        if (!StringUtils.isBlank(dataType)) {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 schema,
-                typeName,
+                dataType,
                 precision,
                 precision,
                 scale,
@@ -83,10 +90,65 @@ public class H2RoutineDefinition extends AbstractRoutineDefinition {
 
             this.returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
         }
+
+        this.specificName = specificName;
     }
 
     @Override
     protected void init0() throws SQLException {
+        if (((H2Database) getDatabase()).is2_0_202())
+            init2_0();
+        else
+            init1_4();
+    }
+
+    private void init2_0() {
+        Result<?> result = create().select(
+                PARAMETERS.PARAMETER_MODE,
+                PARAMETERS.PARAMETER_NAME,
+                nvl(concat(ELEMENT_TYPES.DATA_TYPE, inline(" ARRAY")), PARAMETERS.DATA_TYPE).as(PARAMETERS.DATA_TYPE),
+                nvl(ELEMENT_TYPES.CHARACTER_MAXIMUM_LENGTH, PARAMETERS.CHARACTER_MAXIMUM_LENGTH).as(PARAMETERS.CHARACTER_MAXIMUM_LENGTH),
+                nvl(ELEMENT_TYPES.NUMERIC_PRECISION, PARAMETERS.NUMERIC_PRECISION).as(PARAMETERS.NUMERIC_PRECISION),
+                nvl(ELEMENT_TYPES.NUMERIC_SCALE, PARAMETERS.NUMERIC_SCALE).as(PARAMETERS.NUMERIC_SCALE),
+                PARAMETERS.ORDINAL_POSITION)
+            .from(PARAMETERS)
+                .join(ROUTINES)
+                    .on(PARAMETERS.SPECIFIC_SCHEMA.eq(ROUTINES.SPECIFIC_SCHEMA))
+                    .and(PARAMETERS.SPECIFIC_NAME.eq(ROUTINES.SPECIFIC_NAME))
+                .leftJoin(ELEMENT_TYPES)
+                    .on(PARAMETERS.SPECIFIC_SCHEMA.eq(ELEMENT_TYPES.OBJECT_SCHEMA))
+                    .and(PARAMETERS.SPECIFIC_NAME.eq(ELEMENT_TYPES.OBJECT_NAME))
+                    .and(PARAMETERS.DTD_IDENTIFIER.eq(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER))
+            .where(PARAMETERS.SPECIFIC_SCHEMA.eq(getSchema().getName()))
+            .and(PARAMETERS.SPECIFIC_NAME.eq(specificName))
+            .orderBy(PARAMETERS.ORDINAL_POSITION.asc()).fetch();
+
+        for (Record record : result) {
+            String inOut = record.get(PARAMETERS.PARAMETER_MODE);
+
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
+                record.get(PARAMETERS.DATA_TYPE),
+                record.get(PARAMETERS.CHARACTER_MAXIMUM_LENGTH),
+                record.get(PARAMETERS.NUMERIC_PRECISION),
+                record.get(PARAMETERS.NUMERIC_SCALE),
+                null,
+                (String) null
+            );
+
+            ParameterDefinition parameter = new DefaultParameterDefinition(
+                this,
+                record.get(PARAMETERS.PARAMETER_NAME).replaceAll("@", ""),
+                record.get(PARAMETERS.ORDINAL_POSITION, int.class),
+                type
+            );
+
+            addParameter(InOutDefinition.getFromString(inOut), parameter);
+        }
+    }
+
+    private void init1_4() {
         for (Record record : create()
                 .select(
                     FUNCTION_COLUMNS.COLUMN_NAME,

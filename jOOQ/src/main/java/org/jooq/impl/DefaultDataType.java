@@ -39,7 +39,9 @@ package org.jooq.impl;
 
 import static java.util.Collections.unmodifiableCollection;
 // ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -131,6 +133,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     private static final Set<SQLDialect>                        ENCODED_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(HSQLDB, MARIADB);
     private static final Set<SQLDialect>                        NO_SUPPORT_TIMESTAMP_PRECISION  = SQLDialect.supportedBy(FIREBIRD, MYSQL, SQLITE);
     private static final Set<SQLDialect>                        SUPPORT_POSTGRES_ARRAY_NOTATION = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect>                        SUPPORT_HSQLDB_ARRAY_NOTATION   = SQLDialect.supportedBy(H2, HSQLDB);
 
     /**
      * A pattern for data type name normalisation.
@@ -644,9 +647,13 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
                 else if (result == null && SUPPORT_POSTGRES_ARRAY_NOTATION.contains(dialect) && normalised.charAt(0) == '_')
                     result = getDataType(dialect, normalised.substring(1)).getArrayDataType();
 
-                // [#6466] HSQLDB reports array types as XYZARRAY
-                else if (result == null && family == HSQLDB && upper.endsWith(" ARRAY"))
+                // [#6466] HSQLDB reports array types as XYZARRAY. H2 should, too
+                else if (result == null && SUPPORT_HSQLDB_ARRAY_NOTATION.contains(dialect) && upper.endsWith(" ARRAY"))
                     result = getDataType(dialect, typeName.substring(0, typeName.length() - 6)).getArrayDataType();
+
+                // [#9609] H2 might still report an untyped array, too
+                else if (result == null && SUPPORT_HSQLDB_ARRAY_NOTATION.contains(dialect) && upper.equals("ARRAY"))
+                    result = SQLDataType.OTHER.getArrayDataType();
 
 
 

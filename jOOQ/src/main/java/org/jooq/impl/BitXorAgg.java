@@ -271,12 +271,20 @@ implements
 
 
 
-            case H2:
             case IGNITE:
             case MARIADB:
             case MYSQL:
             case POSTGRES:
                 ctx.visit(N_BIT_XOR);
+                break;
+
+            case H2:
+
+
+
+
+
+                ctx.visit(N_BIT_XOR_AGG);
                 break;
 
             default:

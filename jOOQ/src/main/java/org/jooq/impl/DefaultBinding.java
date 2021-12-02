@@ -61,6 +61,8 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.H2;
 // ...
+// ...
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
@@ -634,7 +636,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     // -----------------------------------------------------------------------------------------------------------------
 
     abstract static class AbstractBinding<T, U> implements org.jooq.Binding<T, U> {
-        static final Set<SQLDialect> NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB);
+        static final Set<SQLDialect> NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB);
         static final Set<SQLDialect> REQUIRES_JSON_CAST                  = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
         static final Set<SQLDialect> NO_SUPPORT_ENUM_CAST                = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
         static final Set<SQLDialect> NO_SUPPORT_NVARCHAR                 = SQLDialect.supportedBy(DERBY, FIREBIRD, POSTGRES, SQLITE, YUGABYTE);
@@ -1100,6 +1102,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     static final class DefaultArrayBinding<U> extends AbstractBinding<Object[], U> {
         private static final Set<SQLDialect> REQUIRES_ARRAY_CAST = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
 
+
+
+
+
+
         DefaultArrayBinding(DataType<Object[]> dataType, Converter<Object[], U> converter) {
             super(dataType, converter);
         }
@@ -1109,20 +1116,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final void sqlInline0(BindingSQLContext<U> ctx, Object[] value) throws SQLException {
             String separator = "";
 
-            // H2 renders arrays as rows
-            if (ctx.family() == H2) {
-                ctx.render().sql('(');
-
-                for (Object o : value) {
-                    ctx.render().sql(separator);
-                    binding((DataType<Object>) dataType.getArrayComponentDataType()).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), o));
-                    separator = ", ";
-                }
-
-                ctx.render().sql(')');
-            }
-
-            else if (REQUIRES_ARRAY_CAST.contains(ctx.dialect())) {
+            if (REQUIRES_ARRAY_CAST.contains(ctx.dialect())) {
 
                 // [#8933] In some cases, we cannot derive the cast type from
                 //         array type directly
@@ -1133,6 +1127,22 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 ctx.render().visit(cast(inline(PostgresUtils.toPGArrayString(value)), arrayType));
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             // By default, render HSQLDB syntax
             else {

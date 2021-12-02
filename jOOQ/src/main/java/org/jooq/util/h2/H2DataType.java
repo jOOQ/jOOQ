@@ -102,6 +102,7 @@ public class H2DataType {
     public static final DataType<BigDecimal>     NUMBER                = new DefaultDataType<>(FAMILY, SQLDataType.NUMERIC, "number(p, s)");
     public static final DataType<BigDecimal>     NUMERIC               = new DefaultDataType<>(FAMILY, SQLDataType.NUMERIC, "numeric(p, s)");
     public static final DataType<Double>         DOUBLE                = new DefaultDataType<>(FAMILY, SQLDataType.DOUBLE, "double");
+    public static final DataType<Double>         DOUBLEPRECISION       = new DefaultDataType<>(FAMILY, SQLDataType.DOUBLE, "double precision");
     public static final DataType<Double>         FLOAT                 = new DefaultDataType<>(FAMILY, SQLDataType.FLOAT, "float");
     public static final DataType<Double>         FLOAT4                = new DefaultDataType<>(FAMILY, SQLDataType.FLOAT, "float4");
     public static final DataType<Double>         FLOAT8                = new DefaultDataType<>(FAMILY, SQLDataType.FLOAT, "float8");
@@ -116,13 +117,17 @@ public class H2DataType {
     public static final DataType<byte[]>         VARBINARY             = new DefaultDataType<>(FAMILY, SQLDataType.VARBINARY, "varbinary(l)");
     public static final DataType<byte[]>         LONGVARBINARY         = new DefaultDataType<>(FAMILY, SQLDataType.LONGVARBINARY, "longvarbinary(l)");
     public static final DataType<byte[]>         BLOB                  = new DefaultDataType<>(FAMILY, SQLDataType.BLOB, "blob");
+    public static final DataType<byte[]>         BINARYLARGEOBJECT     = new DefaultDataType<>(FAMILY, SQLDataType.BLOB, "binary large object");
     public static final DataType<Object>         OTHER                 = new DefaultDataType<>(FAMILY, SQLDataType.OTHER, "other");
+    public static final DataType<Object>         JAVAOBJECT            = new DefaultDataType<>(FAMILY, SQLDataType.OTHER, "java_object");
     public static final DataType<String>         VARCHAR               = new DefaultDataType<>(FAMILY, SQLDataType.VARCHAR, "varchar(l)");
     public static final DataType<String>         VARCHAR2              = new DefaultDataType<>(FAMILY, SQLDataType.VARCHAR, "varchar2(l)");
+    public static final DataType<String>         CHARACTERVARYING      = new DefaultDataType<>(FAMILY, SQLDataType.VARCHAR, "character varying(l)");
     public static final DataType<String>         CHAR                  = new DefaultDataType<>(FAMILY, SQLDataType.CHAR, "char(l)");
     public static final DataType<String>         CHARACTER             = new DefaultDataType<>(FAMILY, SQLDataType.CHAR, "character(l)");
     public static final DataType<String>         LONGVARCHAR           = new DefaultDataType<>(FAMILY, SQLDataType.LONGVARCHAR, "longvarchar(l)");
     public static final DataType<String>         CLOB                  = new DefaultDataType<>(FAMILY, SQLDataType.CLOB, "clob");
+    public static final DataType<String>         CHARACTERLARGEOBJECT  = new DefaultDataType<>(FAMILY, SQLDataType.CLOB, "character large object");
     public static final DataType<String>         NVARCHAR              = new DefaultDataType<>(FAMILY, SQLDataType.NVARCHAR, "nvarchar(l)");
     public static final DataType<String>         NVARCHAR2             = new DefaultDataType<>(FAMILY, SQLDataType.NVARCHAR, "nvarchar2(l)");
     public static final DataType<String>         NCHAR                 = new DefaultDataType<>(FAMILY, SQLDataType.NCHAR, "nchar(l)");
@@ -162,7 +167,6 @@ public class H2DataType {
     public static final DataType<byte[]>     MEDIUMBLOB            = new DefaultDataType<>(FAMILY, SQLDataType.BLOB, "mediumblob");
     public static final DataType<byte[]>     LONGBLOB              = new DefaultDataType<>(FAMILY, SQLDataType.BLOB, "longblob");
     public static final DataType<byte[]>     IMAGE                 = new DefaultDataType<>(FAMILY, SQLDataType.BLOB, "image");
-    public static final DataType<byte[]>     OID                   = new DefaultDataType<>(FAMILY, SQLDataType.BLOB, "oid");
     public static final DataType<String>     VARCHAR_CASESENSITIVE = new DefaultDataType<>(FAMILY, SQLDataType.VARCHAR, "varchar_casesensitive(l)");
     public static final DataType<String>     VARCHAR_IGNORECASE    = new DefaultDataType<>(FAMILY, SQLDataType.VARCHAR, "varchar_ignorecase(l)");
     public static final DataType<UUID>       UUID                  = new DefaultDataType<>(FAMILY, SQLDataType.UUID, "uuid");

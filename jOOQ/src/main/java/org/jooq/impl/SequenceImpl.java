@@ -42,6 +42,7 @@ import static org.jooq.Clause.SEQUENCE_REFERENCE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -265,9 +266,11 @@ implements
                 case MARIADB:
                     if (method == SequenceMethod.NEXTVAL)
                         ctx.visit(K_NEXT_VALUE_FOR).sql(' ').visit(sequence);
-                    else if (family == H2)
-                        ctx.visit(sequence).sql('.').visit(method.keyword);
-                    else if (family == HSQLDB)
+
+
+
+
+                    else if (family == HSQLDB || family == H2)
                         ctx.visit(K_CURRENT_VALUE_FOR).sql(' ').visit(sequence);
                     else if (family == MARIADB)
                         ctx.visit(K_PREVIOUS_VALUE_FOR).sql(' ').visit(sequence);

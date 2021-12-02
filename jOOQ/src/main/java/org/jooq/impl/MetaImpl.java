@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 // ...
 // ...
 // ...
@@ -75,6 +76,7 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.flatMap;
+import static org.jooq.impl.Tools.ignoreNPE;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
 import static org.jooq.tools.StringUtils.defaultString;
@@ -85,6 +87,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -125,6 +128,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.ThreadGuard.Guard;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+import org.jooq.tools.jdbc.MockResultSet;
 
 /**
  * An implementation of the public {@link Meta} type.
@@ -688,30 +692,36 @@ final class MetaImpl extends AbstractMeta {
 
         @Override
         public final List<Index> getIndexes() {
-            Result<Record> result = removeSystemIndexes(meta(meta -> {
-                try (ResultSet rs = catalogSchema(getCatalog(), getSchema(), (c, s) -> meta.getIndexInfo(c, s, getName(), false, true))) {
-                    return dsl().fetch(
-                        rs,
-                        String.class,  // TABLE_CAT
-                        String.class,  // TABLE_SCHEM
-                        String.class,  // TABLE_NAME
-                        boolean.class, // NON_UNIQUE
-                        String.class,  // INDEX_QUALIFIER
-                        String.class,  // INDEX_NAME
-                        int.class,     // TYPE
-                        int.class,     // ORDINAL_POSITION
-                        String.class,  // COLUMN_NAME
-                        String.class,  // ASC_OR_DESC
-                        long.class,    // CARDINALITY
-                        long.class,    // PAGES
-                        String.class   // FILTER_CONDITION
-                    );
-                }
-            }));
+            // See https://github.com/h2database/h2database/issues/3236
+            return ignoreNPE(
+                () -> {
+                    Result<Record> result = removeSystemIndexes(meta(meta -> {
+                        try (ResultSet rs = catalogSchema(getCatalog(), getSchema(), (c, s) -> meta.getIndexInfo(c, s, getName(), false, true))) {
+                            return dsl().fetch(
+                                rs,
+                                String.class,  // TABLE_CAT
+                                String.class,  // TABLE_SCHEM
+                                String.class,  // TABLE_NAME
+                                boolean.class, // NON_UNIQUE
+                                String.class,  // INDEX_QUALIFIER
+                                String.class,  // INDEX_NAME
+                                int.class,     // TYPE
+                                int.class,     // ORDINAL_POSITION
+                                String.class,  // COLUMN_NAME
+                                String.class,  // ASC_OR_DESC
+                                long.class,    // CARDINALITY
+                                long.class,    // PAGES
+                                String.class   // FILTER_CONDITION
+                            );
+                        }
+                    }));
 
-            // Sort by INDEX_NAME (5), ORDINAL_POSITION (7)
-            result.sortAsc(7).sortAsc(5);
-            return createIndexes(result);
+                    // Sort by INDEX_NAME (5), ORDINAL_POSITION (7)
+                    result.sortAsc(7).sortAsc(5);
+                    return createIndexes(result);
+                },
+                () -> emptyList()
+            );
         }
 
         private final Result<Record> removeSystemIndexes(Result<Record> result) {

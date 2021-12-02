@@ -80,7 +80,7 @@ public interface AlterTableDropStep extends AlterTableFinalStep {
      * <code>ALTER TABLE .. DROP</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, H2, HSQLDB, POSTGRES, YUGABYTE })
+    @Support({ DERBY, HSQLDB, POSTGRES, YUGABYTE })
     AlterTableFinalStep cascade();
 
     /**

@@ -39,28 +39,39 @@ package org.jooq.meta.h2;
 
 import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.choose;
+import static org.jooq.impl.DSL.coalesce;
+import static org.jooq.impl.DSL.concat;
+import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.when;
-import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.SQLDataType.BOOLEAN;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.meta.h2.information_schema.Tables.COLUMNS;
+import static org.jooq.meta.hsqldb.information_schema.Tables.ELEMENT_TYPES;
 import static org.jooq.tools.StringUtils.defaultString;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.Record;
+import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
+import org.jooq.meta.Database;
 import org.jooq.meta.DefaultColumnDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.SchemaDefinition;
+import org.jooq.meta.hsqldb.information_schema.Tables;
 
 /**
  * H2 table definition
@@ -78,64 +89,163 @@ public class H2TableDefinition extends AbstractTableDefinition {
         super(schema, name, comment, tableType, source);
     }
 
+    final H2Database getH2Database() {
+        return (H2Database) super.getDatabase();
+    }
+
     @Override
     public List<ColumnDefinition> getElements0() throws SQLException {
+        if (getH2Database().is2_0_202())
+            return getElements2_0();
+        else
+            return getElements1_4();
+    }
+
+    public List<ColumnDefinition> getElements2_0() {
         List<ColumnDefinition> result = new ArrayList<>();
 
-        // [#7206] H2 defaults to these precision/scale values when a DECIMAL/NUMERIC type
-        //         does not have any precision/scale. What works in H2 works in almost no
-        //         other database, which is relevant when using the DDLDatabase for instance,
-        //         which is based on the H2Database
-        Param<Integer> maxP = inline(65535);
-        Param<Integer> maxS = inline(32767);
+        H2Database db = (H2Database) getDatabase();
 
         for (Record record : create().select(
                 COLUMNS.COLUMN_NAME,
                 COLUMNS.ORDINAL_POSITION,
 
                 // [#2230] [#11733] Translate INTERVAL_TYPE to supported types
-                (((H2Database) getDatabase()).is1_4_198()
-                    ? (when(COLUMNS.INTERVAL_TYPE.like(any(inline("%YEAR%"), inline("%MONTH%"))), inline("INTERVAL YEAR TO MONTH"))
+                nvl(concat(ELEMENT_TYPES.DATA_TYPE, inline(" ARRAY")),
+                    when(COLUMNS.INTERVAL_TYPE.like(any(inline("%YEAR%"), inline("%MONTH%"))), inline("INTERVAL YEAR TO MONTH"))
                       .when(COLUMNS.INTERVAL_TYPE.like(any(inline("%DAY%"), inline("%HOUR%"), inline("%MINUTE%"), inline("%SECOND%"))), inline("INTERVAL DAY TO SECOND"))
-                      .else_(COLUMNS.TYPE_NAME))
-                    : COLUMNS.TYPE_NAME
+                      .else_(Tables.COLUMNS.DATA_TYPE)
                 ).as(COLUMNS.TYPE_NAME),
-                (((H2Database) getDatabase()).is1_4_197()
-                    ? COLUMNS.COLUMN_TYPE
-                    : COLUMNS.TYPE_NAME
-                ).as(COLUMNS.COLUMN_TYPE),
-                choose().when(COLUMNS.NUMERIC_PRECISION.eq(maxP).and(COLUMNS.NUMERIC_SCALE.eq(maxS)), zero())
-                        .otherwise(COLUMNS.CHARACTER_MAXIMUM_LENGTH).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
-                COLUMNS.NUMERIC_PRECISION.decode(maxP, zero(), COLUMNS.NUMERIC_PRECISION).as(COLUMNS.NUMERIC_PRECISION),
-                COLUMNS.NUMERIC_SCALE.decode(maxS, zero(), COLUMNS.NUMERIC_SCALE).as(COLUMNS.NUMERIC_SCALE),
+                nvl(ELEMENT_TYPES.CHARACTER_MAXIMUM_LENGTH, COLUMNS.CHARACTER_MAXIMUM_LENGTH).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
+                coalesce(
+                    ELEMENT_TYPES.DATETIME_PRECISION,
+                    ELEMENT_TYPES.NUMERIC_PRECISION,
+                    COLUMNS.DATETIME_PRECISION,
+                    COLUMNS.NUMERIC_PRECISION).as(COLUMNS.NUMERIC_PRECISION),
+                nvl(ELEMENT_TYPES.NUMERIC_SCALE, COLUMNS.NUMERIC_SCALE).as(COLUMNS.NUMERIC_SCALE),
                 COLUMNS.IS_NULLABLE,
-                COLUMNS.IS_COMPUTED,
+                field(Tables.COLUMNS.IS_GENERATED.eq(inline("ALWAYS"))).as(COLUMNS.IS_COMPUTED),
+                Tables.COLUMNS.GENERATION_EXPRESSION,
                 COLUMNS.COLUMN_DEFAULT,
                 COLUMNS.REMARKS,
-                COLUMNS.SEQUENCE_NAME,
-                ((H2Database) getDatabase()).is1_4_198() ? COLUMNS.DOMAIN_SCHEMA : inline("").as(COLUMNS.DOMAIN_SCHEMA),
-                ((H2Database) getDatabase()).is1_4_198() ? COLUMNS.DOMAIN_NAME : inline("").as(COLUMNS.DOMAIN_NAME)
+                field(Tables.COLUMNS.IS_IDENTITY.eq(inline("YES"))).as(Tables.COLUMNS.IS_IDENTITY),
+                COLUMNS.DOMAIN_SCHEMA,
+                COLUMNS.DOMAIN_NAME
             )
             .from(COLUMNS)
+                .leftJoin(ELEMENT_TYPES)
+                .on(Tables.COLUMNS.TABLE_SCHEMA.equal(ELEMENT_TYPES.OBJECT_SCHEMA))
+                .and(Tables.COLUMNS.TABLE_NAME.equal(ELEMENT_TYPES.OBJECT_NAME))
+                .and(Tables.COLUMNS.DTD_IDENTIFIER.equal(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER))
             .where(COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()))
             .and(COLUMNS.TABLE_NAME.equal(getName()))
             .and(!getDatabase().getIncludeInvisibleColumns()
-                ? ((H2Database) getDatabase()).is1_4_198()
-                    ? COLUMNS.IS_VISIBLE.eq(inline("TRUE"))
-                    : COLUMNS.COLUMN_TYPE.notLike(inline("%INVISIBLE%"))
+                ? condition(COLUMNS.IS_VISIBLE.coerce(BOOLEAN))
                 : noCondition())
-            .orderBy(COLUMNS.ORDINAL_POSITION)) {
+            .orderBy(COLUMNS.ORDINAL_POSITION)
+        ) {
 
             // [#5331] AUTO_INCREMENT (MySQL style)
             // [#5331] DEFAULT nextval('sequence') (PostgreSQL style)
             // [#6332] [#6339] system-generated defaults shouldn't produce a default clause
             boolean isIdentity =
-                   null != record.get(COLUMNS.SEQUENCE_NAME)
+                   record.get(Tables.COLUMNS.IS_IDENTITY, boolean.class)
                 || defaultString(record.get(COLUMNS.COLUMN_DEFAULT)).trim().toLowerCase().startsWith("nextval");
 
             boolean isComputed = record.get(COLUMNS.IS_COMPUTED, boolean.class);
 
-            // [#7644] H2 puts DATETIME_PRECISION in NUMERIC_SCALE column
+            // [#681] Domain name if available
+            Name userType = record.get(COLUMNS.DOMAIN_NAME) != null
+                ? name(record.get(COLUMNS.DOMAIN_SCHEMA), record.get(COLUMNS.DOMAIN_NAME))
+                : name(getSchema().getName(), getName() + "_" + record.get(COLUMNS.COLUMN_NAME));
+
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
+                record.get(COLUMNS.TYPE_NAME),
+                record.get(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
+                record.get(COLUMNS.NUMERIC_PRECISION),
+                record.get(COLUMNS.NUMERIC_SCALE),
+                record.get(COLUMNS.IS_NULLABLE, boolean.class),
+                isIdentity || isComputed ? null : record.get(COLUMNS.COLUMN_DEFAULT),
+                userType
+            ).generatedAlwaysAs(isComputed ? record.get(Tables.COLUMNS.GENERATION_EXPRESSION) : null);
+
+            result.add(new DefaultColumnDefinition(
+                getDatabase().getTable(getSchema(), getName()),
+                record.get(COLUMNS.COLUMN_NAME),
+                result.size() + 1,
+                type,
+                isIdentity,
+                record.get(COLUMNS.REMARKS))
+            );
+        }
+
+        return result;
+    }
+
+    public List<ColumnDefinition> getElements1_4() {
+        List<ColumnDefinition> result = new ArrayList<>();
+
+        // [#7206] H2 defaults to these precision/scale values when a DECIMAL/NUMERIC type
+        //         does not have any precision/scale. What works in H2 works in almost no
+        //         other database, which is relevant when using the DDLDatabase for instance,
+        //         which is based on the H2Database
+        Param<Long> maxP = inline(65535L);
+        Param<Long> maxS = inline(32767L);
+
+        H2Database db = (H2Database) getDatabase();
+        Field<String> columnsDataType =
+              db.is1_4_197()
+            ? COLUMNS.COLUMN_TYPE
+            : COLUMNS.TYPE_NAME;
+
+        for (Record record : create().select(
+                COLUMNS.COLUMN_NAME,
+                COLUMNS.ORDINAL_POSITION,
+
+                // [#2230] [#11733] Translate INTERVAL_TYPE to supported types
+                (db.is1_4_198()
+                    ? (when(COLUMNS.INTERVAL_TYPE.like(any(inline("%YEAR%"), inline("%MONTH%"))), inline("INTERVAL YEAR TO MONTH"))
+                      .when(COLUMNS.INTERVAL_TYPE.like(any(inline("%DAY%"), inline("%HOUR%"), inline("%MINUTE%"), inline("%SECOND%"))), inline("INTERVAL DAY TO SECOND"))
+                      .else_(columnsDataType))
+                    : columnsDataType
+                ).as(COLUMNS.TYPE_NAME),
+                columnsDataType.as(COLUMNS.COLUMN_TYPE),
+                choose().when(COLUMNS.NUMERIC_PRECISION.eq(maxP).and(COLUMNS.NUMERIC_SCALE.eq(maxS)), inline(0L))
+                        .otherwise(COLUMNS.CHARACTER_MAXIMUM_LENGTH).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
+                COLUMNS.NUMERIC_PRECISION.decode(maxP, inline(0L), COLUMNS.NUMERIC_PRECISION).as(COLUMNS.NUMERIC_PRECISION),
+                COLUMNS.NUMERIC_SCALE.decode(maxS, inline(0L), COLUMNS.NUMERIC_SCALE).as(COLUMNS.NUMERIC_SCALE),
+                COLUMNS.IS_NULLABLE,
+                COLUMNS.IS_COMPUTED.as(COLUMNS.IS_COMPUTED),
+                COLUMNS.COLUMN_DEFAULT.as("GENERATION_EXPRESSION"),
+                COLUMNS.COLUMN_DEFAULT,
+                COLUMNS.REMARKS,
+                field(COLUMNS.SEQUENCE_NAME.isNotNull()).as("IS_IDENTITY"),
+                db.is1_4_198() ? COLUMNS.DOMAIN_SCHEMA : inline("").as(COLUMNS.DOMAIN_SCHEMA),
+                db.is1_4_198() ? COLUMNS.DOMAIN_NAME : inline("").as(COLUMNS.DOMAIN_NAME)
+            )
+            .from(COLUMNS)
+            .where(COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()))
+            .and(COLUMNS.TABLE_NAME.equal(getName()))
+            .and(!getDatabase().getIncludeInvisibleColumns()
+                ? db.is1_4_198()
+                    ? COLUMNS.IS_VISIBLE.eq(inline("TRUE"))
+                    : COLUMNS.COLUMN_TYPE.notLike(inline("%INVISIBLE%"))
+                : noCondition())
+            .orderBy(COLUMNS.ORDINAL_POSITION)
+        ) {
+
+            // [#5331] AUTO_INCREMENT (MySQL style)
+            // [#5331] DEFAULT nextval('sequence') (PostgreSQL style)
+            // [#6332] [#6339] system-generated defaults shouldn't produce a default clause
+            boolean isIdentity =
+                   record.get("IS_IDENTITY", boolean.class)
+                || defaultString(record.get(COLUMNS.COLUMN_DEFAULT)).trim().toLowerCase().startsWith("nextval");
+
+            boolean isComputed = record.get(COLUMNS.IS_COMPUTED, boolean.class);
+
+            // [#7644] H2 1.4.200 puts DATETIME_PRECISION in NUMERIC_SCALE column
             boolean isTimestamp = record.get(COLUMNS.TYPE_NAME).trim().toLowerCase().startsWith("timestamp");
 
             // [#681] Domain name if available
@@ -157,10 +267,10 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 record.get(COLUMNS.IS_NULLABLE, boolean.class),
                 isIdentity || isComputed ? null : record.get(COLUMNS.COLUMN_DEFAULT),
                 userType
-            ).generatedAlwaysAs(isComputed ? record.get(COLUMNS.COLUMN_DEFAULT) : null);
+            ).generatedAlwaysAs(isComputed ? record.get("GENERATION_EXPRESSION", String.class) : null);
 
             result.add(new DefaultColumnDefinition(
-            	getDatabase().getTable(getSchema(), getName()),
+                getDatabase().getTable(getSchema(), getName()),
                 record.get(COLUMNS.COLUMN_NAME),
                 result.size() + 1,
                 type,

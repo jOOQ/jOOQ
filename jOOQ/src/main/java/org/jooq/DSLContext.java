@@ -11610,7 +11610,6 @@ public interface DSLContext extends Scope {
      * <li>{@link SQLDialect#ACCESS}: Using <code>@@identity</code></li>
      * <li>{@link SQLDialect#ASE}: Using <code>@@identity</code></li>
      * <li>{@link SQLDialect#DERBY}: Using <code>identity_val_local()</code></li>
-     * <li>{@link SQLDialect#H2}: Using <code>identity()</code></li>
      * <li>{@link SQLDialect#HSQLDB}: Using <code>identity()</code></li>
      * <li>{@link SQLDialect#INFORMIX}: Using
      * <code>dbinfo('sqlca.sqlerrd1')</code></li>
@@ -11629,7 +11628,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     BigInteger lastID() throws DataAccessException;
 
     /**

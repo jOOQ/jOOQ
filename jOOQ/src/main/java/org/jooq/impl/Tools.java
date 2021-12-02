@@ -316,6 +316,7 @@ import org.jooq.conf.ThrowExceptions;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.DetachedException;
+import org.jooq.exception.ExceptionTools;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TemplatingException;
@@ -5265,6 +5266,9 @@ final class Tools {
 
 
 
+
+
+
     private static final void toSQLDDLTypeDeclarationDefault(Context<?> ctx, DataType<?> type) {
         if (type.defaulted())
             ctx.sql(' ').visit(K_DEFAULT).sql(' ').visit(type.defaultValue());
@@ -6658,5 +6662,24 @@ final class Tools {
             throw e.get();
         else
             return (int) value;
+    }
+
+    /**
+     * Used to work around bugs in JDBC drivers, e.g.
+     * https://github.com/h2database/h2database/issues/3236
+     */
+    static final <T, E extends Exception> T ignoreNPE(ThrowingSupplier<? extends T, ? extends E> supplier, Supplier<? extends T> ifNPE) throws E {
+        try {
+            return supplier.get();
+        }
+        catch (NullPointerException e) {
+            return ifNPE.get();
+        }
+        catch (Exception e) {
+            if (ExceptionTools.getCause(e, NullPointerException.class) != null)
+                return ifNPE.get();
+            else
+                throw e;
+        }
     }
 }

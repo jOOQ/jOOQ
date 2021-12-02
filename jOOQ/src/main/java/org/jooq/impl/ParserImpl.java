@@ -6330,6 +6330,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         left = parseConcat();
         int p = position();
         not = parseKeywordIf("NOT");
+        boolean isField = left instanceof Field;
 
 
         if (!not && ((outer = parseTSQLOuterJoinComparatorIf()) != null) && requireProEdition()) {
@@ -6357,7 +6358,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             // TODO equal degrees
             Condition result =
                   all
-                ? left instanceof Field
+                ? isField
                     ? peekSelectOrWith(true)
                         ? ((Field) left).compare(comp, DSL.all(parseWithOrSelect(1)))
                         : ((Field) left).compare(comp, DSL.all(parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD)))
@@ -6366,7 +6367,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     : new RowSubqueryCondition((Row) left, DSL.all(parseWithOrSelect(((Row) left).size())), comp)
 
                 : any
-                ? left instanceof Field
+                ? isField
                     ? peekSelectOrWith(true)
                         ? ((Field) left).compare(comp, DSL.any(parseWithOrSelect(1)))
                         : ((Field) left).compare(comp, DSL.any(parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD)))
@@ -6374,7 +6375,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     // TODO: Support quantifiers also for rows
                     : new RowSubqueryCondition((Row) left, DSL.any(parseWithOrSelect(((Row) left).size())), comp)
 
-                : left instanceof Field
+                : isField
                     ? ((Field) left).compare(comp, toField(parseConcat()))
                     : new RowCondition((Row) left, parseRow(((Row) left).size(), true), comp);
 
@@ -6388,17 +6389,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             if (parseKeywordIf("NULL"))
                 return not
-                    ? left instanceof Field
+                    ? isField
                         ? ((Field) left).isNotNull()
                         : ((Row) left).isNotNull()
-                    : left instanceof Field
+                    : isField
                         ? ((Field) left).isNull()
                         : ((Row) left).isNull();
-            else if (left instanceof Field && parseKeywordIf("JSON"))
+            else if (isField && parseKeywordIf("JSON"))
                 return not
                     ? ((Field) left).isNotJson()
                     : ((Field) left).isJson();
-            else if (left instanceof Field && parseKeywordIf("DOCUMENT"))
+            else if (isField && parseKeywordIf("DOCUMENT"))
                 return not
                     ? ((Field) left).isNotDocument()
                     : ((Field) left).isDocument();
@@ -6418,62 +6419,73 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
         else if (!forbidden.contains(FK_IN) && parseKeywordIf("IN")) {
             Condition result;
-            parse('(');
-            if (peek(')'))
-                result = not
-                    ? left instanceof Field
-                        ? ((Field) left).notIn(EMPTY_FIELD)
-                        : new RowInCondition((Row) left, new QueryPartList<>(), true)
-                    : left instanceof Field
-                        ? ((Field) left).in(EMPTY_FIELD)
-                        : new RowInCondition((Row) left, new QueryPartList<>(), false);
-            else if (peekSelectOrWith(true))
-                result = not
-                    ? left instanceof Field
-                        ? ((Field) left).notIn(parseWithOrSelect(1))
-                        : new RowSubqueryCondition((Row) left, parseWithOrSelect(((Row) left).size()), NOT_IN)
-                    : left instanceof Field
-                        ? ((Field) left).in(parseWithOrSelect(1))
-                        : new RowSubqueryCondition((Row) left, parseWithOrSelect(((Row) left).size()), IN);
-            else
-                result = not
-                    ? left instanceof Field
-                        ? ((Field) left).notIn(parseList(',', c -> c.parseField()))
-                        : new RowInCondition((Row) left, new QueryPartList<>(parseList(',', c -> parseRow(((Row) left).size()))), true)
-                    : left instanceof Field
-                        ? ((Field) left).in(parseList(',', c -> c.parseField()))
-                        : new RowInCondition((Row) left, new QueryPartList<>(parseList(',', c -> parseRow(((Row) left).size()))), false);
 
-            parse(')');
+            // [#12691] Some dialects support A IN B syntax without parentheses for single element in lists
+            if (isField && !peek('(')) {
+                result = not
+                    ? ((Field) left).notIn(parseField())
+                    : ((Field) left).in(parseField());
+            }
+            else {
+                parse('(');
+
+                if (peek(')'))
+                    result = not
+                        ? isField
+                            ? ((Field) left).notIn(EMPTY_FIELD)
+                            : new RowInCondition((Row) left, new QueryPartList<>(), true)
+                        : isField
+                            ? ((Field) left).in(EMPTY_FIELD)
+                            : new RowInCondition((Row) left, new QueryPartList<>(), false);
+                else if (peekSelectOrWith(true))
+                    result = not
+                        ? isField
+                            ? ((Field) left).notIn(parseWithOrSelect(1))
+                            : new RowSubqueryCondition((Row) left, parseWithOrSelect(((Row) left).size()), NOT_IN)
+                        : isField
+                            ? ((Field) left).in(parseWithOrSelect(1))
+                            : new RowSubqueryCondition((Row) left, parseWithOrSelect(((Row) left).size()), IN);
+                else
+                    result = not
+                        ? isField
+                            ? ((Field) left).notIn(parseList(',', c -> c.parseField()))
+                            : new RowInCondition((Row) left, new QueryPartList<>(parseList(',', c -> parseRow(((Row) left).size()))), true)
+                        : isField
+                            ? ((Field) left).in(parseList(',', c -> c.parseField()))
+                            : new RowInCondition((Row) left, new QueryPartList<>(parseList(',', c -> parseRow(((Row) left).size()))), false);
+
+                parse(')');
+            }
+
             return result;
         }
         else if (parseKeywordIf("BETWEEN")) {
             boolean symmetric = !parseKeywordIf("ASYMMETRIC") && parseKeywordIf("SYMMETRIC");
-            FieldOrRow r1 = left instanceof Field
+            FieldOrRow r1 = isField
                 ? parseConcat()
                 : parseRow(((Row) left).size());
             parseKeyword("AND");
-            FieldOrRow r2 = left instanceof Field
+            FieldOrRow r2 = isField
                 ? parseConcat()
                 : parseRow(((Row) left).size());
 
             return symmetric
                 ? not
-                    ? left instanceof Field
+                    ? isField
                         ? ((Field) left).notBetweenSymmetric((Field) r1, (Field) r2)
                         : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2)
-                    : left instanceof Field
+                    : isField
                         ? ((Field) left).betweenSymmetric((Field) r1, (Field) r2)
                         : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2)
                 : not
-                    ? left instanceof Field
+                    ? isField
                         ? ((Field) left).notBetween((Field) r1, (Field) r2)
                         : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2)
-                    : left instanceof Field
+                    : isField
                         ? ((Field) left).between((Field) r1, (Field) r2)
                         : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2);
         }
-        else if (left instanceof Field && (parseKeywordIf("LIKE") || parseOperatorIf("~~") || (notOp = parseOperatorIf("!~~")))) {
+        else if (isField && (parseKeywordIf("LIKE") || parseOperatorIf("~~") || (notOp = parseOperatorIf("!~~")))) {
             if (parseKeywordIf("ANY")) {
                 parse('(');
                 if (peekSelectOrWith(true)) {
@@ -6524,12 +6536,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return parseEscapeClauseIf(like);
             }
         }
-        else if (left instanceof Field && (parseKeywordIf("ILIKE") || parseOperatorIf("~~*") || (notOp = parseOperatorIf("!~~*")))) {
+        else if (isField && (parseKeywordIf("ILIKE") || parseOperatorIf("~~*") || (notOp = parseOperatorIf("!~~*")))) {
             Field right = toField(parseConcat());
             LikeEscapeStep like = (not ^ notOp) ? ((Field) left).notLikeIgnoreCase(right) : ((Field) left).likeIgnoreCase(right);
             return parseEscapeClauseIf(like);
         }
-        else if (left instanceof Field && (parseKeywordIf("REGEXP")
+        else if (isField && (parseKeywordIf("REGEXP")
                                         || parseKeywordIf("RLIKE")
                                         || parseKeywordIf("LIKE_REGEX")
                                         || parseOperatorIf("~")
@@ -6539,7 +6551,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     ? ((Field) left).notLikeRegex(right)
                     : ((Field) left).likeRegex(right);
         }
-        else if (left instanceof Field && parseKeywordIf("SIMILAR TO")) {
+        else if (isField && parseKeywordIf("SIMILAR TO")) {
             Field right = toField(parseConcat());
             LikeEscapeStep like = not ? ((Field) left).notSimilarTo(right) : ((Field) left).similarTo(right);
             return parseEscapeClauseIf(like);

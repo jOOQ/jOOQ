@@ -5952,33 +5952,44 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             }
             else if (!forbidden.contains(FK_IN) && parseKeywordIf("IN")) {
                 Condition result;
-                parse('(');
-                if (peek(')'))
-                    result = not
-                        ? left instanceof Field
-                            ? ((Field) left).notIn(EMPTY_FIELD)
-                            : new RowInCondition((Row) left, new QueryPartList<>(), true)
-                        : left instanceof Field
-                            ? ((Field) left).in(EMPTY_FIELD)
-                            : new RowInCondition((Row) left, new QueryPartList<>(), false);
-                else if (peekSelectOrWith(true))
-                    result = not
-                        ? left instanceof Field
-                            ? ((Field) left).notIn(parseWithOrSelect(1))
-                            : new RowSubqueryCondition((Row) left, parseWithOrSelect(((Row) left).size()), NOT_IN)
-                        : left instanceof Field
-                            ? ((Field) left).in(parseWithOrSelect(1))
-                            : new RowSubqueryCondition((Row) left, parseWithOrSelect(((Row) left).size()), IN);
-                else
-                    result = not
-                        ? left instanceof Field
-                            ? ((Field) left).notIn(parseList(',', ParseContext::parseField))
-                            : new RowInCondition((Row) left, new QueryPartList<>(parseList(',', c -> parseRow(((Row) left).size()))), true)
-                        : left instanceof Field
-                            ? ((Field) left).in(parseList(',', ParseContext::parseField))
-                            : new RowInCondition((Row) left, new QueryPartList<>(parseList(',', c -> parseRow(((Row) left).size()))), false);
 
-                parse(')');
+                // [#12691] Some dialects support A IN B syntax without parentheses for single element in lists
+                if (left instanceof Field && !peek('(')) {
+                    result = not
+                        ? ((Field) left).notIn(parseField())
+                        : ((Field) left).in(parseField());
+                }
+                else {
+                    parse('(');
+
+                    if (peek(')'))
+                        result = not
+                            ? left instanceof Field
+                                ? ((Field) left).notIn(EMPTY_FIELD)
+                                : new RowInCondition((Row) left, new QueryPartList<>(), true)
+                            : left instanceof Field
+                                ? ((Field) left).in(EMPTY_FIELD)
+                                : new RowInCondition((Row) left, new QueryPartList<>(), false);
+                    else if (peekSelectOrWith(true))
+                        result = not
+                            ? left instanceof Field
+                                ? ((Field) left).notIn(parseWithOrSelect(1))
+                                : new RowSubqueryCondition((Row) left, parseWithOrSelect(((Row) left).size()), NOT_IN)
+                            : left instanceof Field
+                                ? ((Field) left).in(parseWithOrSelect(1))
+                                : new RowSubqueryCondition((Row) left, parseWithOrSelect(((Row) left).size()), IN);
+                    else
+                        result = not
+                            ? left instanceof Field
+                                ? ((Field) left).notIn(parseList(',', ParseContext::parseField))
+                                : new RowInCondition((Row) left, new QueryPartList<>(parseList(',', c -> parseRow(((Row) left).size()))), true)
+                            : left instanceof Field
+                                ? ((Field) left).in(parseList(',', ParseContext::parseField))
+                                : new RowInCondition((Row) left, new QueryPartList<>(parseList(',', c -> parseRow(((Row) left).size()))), false);
+
+                    parse(')');
+                }
+
                 return result;
             }
             else if (parseKeywordIf("BETWEEN")) {

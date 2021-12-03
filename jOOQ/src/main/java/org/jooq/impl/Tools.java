@@ -53,7 +53,10 @@ import static java.util.stream.Collectors.joining;
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.*;
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -183,6 +186,7 @@ import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -237,10 +241,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 
 // ...
 // ...
@@ -321,7 +321,6 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TemplatingException;
 import org.jooq.exception.TooManyRowsException;
-import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
@@ -338,6 +337,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import io.r2dbc.spi.R2dbcException;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 /**
  * General internal jOOQ utilities
@@ -801,50 +803,50 @@ final class Tools {
      * The default escape character for <code>[a] LIKE [b] ESCAPE [...]</code>
      * clauses.
      */
-    static final char               ESCAPE                             = '!';
+    static final char                    ESCAPE                             = '!';
 
     /**
      * A lock for the initialisation of other static members
      */
-    private static final Object     initLock                           = new Object();
+    private static final Object          initLock                           = new Object();
 
     /**
      * Indicating whether JPA (<code>jakarta.persistence</code>) is on the
      * classpath.
      */
-    private static volatile Boolean isJPAAvailable;
+    private static volatile JPANamespace jpaNamespace;
 
     /**
      * Indicating whether Kotlin (<code>kotlin.*</code>) is on the classpath.
      */
-    private static volatile Boolean isKotlinAvailable;
-    private static volatile Reflect ktJvmClassMapping;
-    private static volatile Reflect ktKClasses;
-    private static volatile Reflect ktKClass;
-    private static volatile Reflect ktKTypeParameter;
+    private static volatile Boolean      isKotlinAvailable;
+    private static volatile Reflect      ktJvmClassMapping;
+    private static volatile Reflect      ktKClasses;
+    private static volatile Reflect      ktKClass;
+    private static volatile Reflect      ktKTypeParameter;
 
     /**
      * [#3696] The maximum number of consumed exceptions in
      * {@link #consumeExceptions(Configuration, PreparedStatement, SQLException)}
      * helps prevent infinite loops and {@link OutOfMemoryError}.
      */
-    static int                      maxConsumedExceptions              = 256;
-    static int                      maxConsumedResults                 = 65536;
+    static int                           maxConsumedExceptions              = 256;
+    static int                           maxConsumedResults                 = 65536;
 
     /**
      * A pattern for the dash line syntax
      */
-    private static final Pattern    DASH_PATTERN                       = Pattern.compile("(-+)");
+    private static final Pattern         DASH_PATTERN                       = Pattern.compile("(-+)");
 
     /**
      * A pattern for the pipe line syntax
      */
-    private static final Pattern    PIPE_PATTERN                       = Pattern.compile("(?<=\\|)([^|]+)(?=\\|)");
+    private static final Pattern         PIPE_PATTERN                       = Pattern.compile("(?<=\\|)([^|]+)(?=\\|)");
 
     /**
      * A pattern for the dash line syntax
      */
-    private static final Pattern    PLUS_PATTERN                       = Pattern.compile("\\+(-+)(?=\\+)");
+    private static final Pattern         PLUS_PATTERN                       = Pattern.compile("\\+(-+)(?=\\+)");
 
     /**
      * All characters that are matched by Java's interpretation of \s.
@@ -854,25 +856,25 @@ final class Tools {
      * processing, it is probably safe to ignore most of those alternative
      * Unicode whitespaces.
      */
-    private static final char[]     WHITESPACE_CHARACTERS              = " \t\n\u000B\f\r".toCharArray();
+    private static final char[]          WHITESPACE_CHARACTERS              = " \t\n\u000B\f\r".toCharArray();
 
     /**
      * Acceptable prefixes for JDBC escape syntax.
      */
-    private static final char[][]   JDBC_ESCAPE_PREFIXES               = {
+    private static final char[][]        JDBC_ESCAPE_PREFIXES                = {
         "{fn ".toCharArray(),
         "{d ".toCharArray(),
         "{t ".toCharArray(),
         "{ts ".toCharArray()
     };
 
-    private static final char[]     TOKEN_SINGLE_LINE_COMMENT          = { '-', '-' };
-    private static final char[]     TOKEN_SINGLE_LINE_COMMENT_C        = { '/', '/' };
-    private static final char[]     TOKEN_HASH                         = { '#' };
-    private static final char[]     TOKEN_MULTI_LINE_COMMENT_OPEN      = { '/', '*' };
-    private static final char[]     TOKEN_MULTI_LINE_COMMENT_CLOSE     = { '*', '/' };
-    private static final char[]     TOKEN_APOS                         = { '\'' };
-    private static final char[]     TOKEN_ESCAPED_APOS                 = { '\'', '\'' };
+    private static final char[]          TOKEN_SINGLE_LINE_COMMENT          = { '-', '-' };
+    private static final char[]          TOKEN_SINGLE_LINE_COMMENT_C        = { '/', '/' };
+    private static final char[]          TOKEN_HASH                         = { '#' };
+    private static final char[]          TOKEN_MULTI_LINE_COMMENT_OPEN      = { '/', '*' };
+    private static final char[]          TOKEN_MULTI_LINE_COMMENT_CLOSE     = { '*', '/' };
+    private static final char[]          TOKEN_APOS                         = { '\'' };
+    private static final char[]          TOKEN_ESCAPED_APOS                 = { '\'', '\'' };
 
     /**
      * "Suffixes" that are placed behind a "?" character to form an operator,
@@ -907,7 +909,7 @@ final class Tools {
      * <li>?|</li>
      * </ul>
      */
-    private static final char[][]   NON_BIND_VARIABLE_SUFFIXES         = {
+    private static final char[][]        NON_BIND_VARIABLE_SUFFIXES         = {
         { '?' },
         { '|' },
         { '&' },
@@ -926,7 +928,7 @@ final class Tools {
      * such as <code>"?&lt;&gt;"</code>, which is a non-equality operator, not
      * an operator on its own.
      */
-    private static final char[][]   BIND_VARIABLE_SUFFIXES             = {
+    private static final char[][]        BIND_VARIABLE_SUFFIXES             = {
         { '<', '>' }
     };
 
@@ -934,17 +936,17 @@ final class Tools {
      * All hexadecimal digits accessible through array index, e.g.
      * <code>HEX_DIGITS[15] == 'f'</code>.
      */
-    private static final char[]     HEX_DIGITS                         = "0123456789abcdef".toCharArray();
+    private static final char[]          HEX_DIGITS                         = "0123456789abcdef".toCharArray();
 
-    static final Set<SQLDialect>    REQUIRES_BACKSLASH_ESCAPING        = SQLDialect.supportedBy(MARIADB, MYSQL);
-    static final Set<SQLDialect>    NO_SUPPORT_NULL                    = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
-    static final Set<SQLDialect>    NO_SUPPORT_BINARY_TYPE_LENGTH      = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
-    static final Set<SQLDialect>    NO_SUPPORT_CAST_TYPE_IN_DDL        = SQLDialect.supportedBy(MARIADB, MYSQL);
-    static final Set<SQLDialect>    SUPPORT_NON_BIND_VARIABLE_SUFFIXES = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
-    static final Set<SQLDialect>    SUPPORT_POSTGRES_LITERALS          = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
-    static final Set<SQLDialect>    DEFAULT_BEFORE_NULL                = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
-    static final Set<SQLDialect>    NO_SUPPORT_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(DERBY);
-    static final Set<SQLDialect>    DEFAULT_TIMESTAMP_NOT_NULL         = SQLDialect.supportedBy(MARIADB);
+    static final Set<SQLDialect>         REQUIRES_BACKSLASH_ESCAPING        = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect>         NO_SUPPORT_NULL                    = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
+    static final Set<SQLDialect>         NO_SUPPORT_BINARY_TYPE_LENGTH      = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    static final Set<SQLDialect>         NO_SUPPORT_CAST_TYPE_IN_DDL        = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect>         SUPPORT_NON_BIND_VARIABLE_SUFFIXES = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    static final Set<SQLDialect>         SUPPORT_POSTGRES_LITERALS          = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    static final Set<SQLDialect>         DEFAULT_BEFORE_NULL                = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
+    static final Set<SQLDialect>         NO_SUPPORT_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(DERBY);
+    static final Set<SQLDialect>         DEFAULT_TIMESTAMP_NOT_NULL         = SQLDialect.supportedBy(MARIADB);
 
 
 
@@ -3629,22 +3631,33 @@ final class Tools {
     /**
      * Check if JPA classes can be loaded. This is only done once per JVM!
      */
-    static final boolean isJPAAvailable() {
-        if (isJPAAvailable == null) {
+    static final JPANamespace jpaNamespace() {
+        if (jpaNamespace == null) {
             synchronized (initLock) {
-                if (isJPAAvailable == null) {
+                if (jpaNamespace == null) {
                     try {
                         Class.forName(Column.class.getName());
-                        isJPAAvailable = true;
+                        jpaNamespace = JPANamespace.JAKARTA;
                     }
                     catch (Throwable e) {
-                        isJPAAvailable = false;
+                        try {
+                            Class.forName("javax.persistence.Column");
+                            jpaNamespace = JPANamespace.JAVAX;
+                            JooqLogger.getLogger(Tools.class, "isJPAAvailable", 1).info("javax.persistence.Column was found on the classpath instead of jakarta.persistence.Column. jOOQ 3.16 requires you to upgrade to Jakarta EE if you wish to use JPA annotations in your DefaultRecordMapper");
+                        }
+                        catch (Throwable ignore) {
+                            jpaNamespace = JPANamespace.NONE;
+                        }
                     }
                 }
             }
         }
 
-        return isJPAAvailable;
+        return jpaNamespace;
+    }
+
+    enum JPANamespace {
+        JAVAX, JAKARTA, NONE
     }
 
     static final boolean isKotlinAvailable() {
@@ -3741,22 +3754,34 @@ final class Tools {
      */
     static final boolean hasColumnAnnotations(final Configuration configuration, final Class<?> type) {
         return Cache.run(configuration, () -> {
-            if (!isJPAAvailable())
-                return false;
+            switch (Tools.jpaNamespace()) {
+                case JAVAX:
+                    if (anyMatch(type.getAnnotations(), a -> a.annotationType().getName().startsWith("javax.persistence.")))
+                        JooqLogger.getLogger(Tools.class, "hasColumnAnnotations", 1).warn("Type " + type + " is annotated with javax.persistence annotation for usage in DefaultRecordMapper, but starting from jOOQ 3.16, only JakartaEE annotations are supported.");
 
-            // An @Entity or @Table usually has @Column annotations, too
-            if (type.getAnnotation(Entity.class) != null)
-                return true;
+                    return false;
 
-            if (type.getAnnotation(jakarta.persistence.Table.class) != null)
-                return true;
+                case JAKARTA:
 
-            if (anyMatch(getInstanceMembers(type), m ->
-                    m.getAnnotation(Column.class) != null
-                 || m.getAnnotation(Id.class) != null))
-                return true;
-            else
-                return anyMatch(getInstanceMethods(type), m -> m.getAnnotation(Column.class) != null);
+                    // An @Entity or @Table usually has @Column annotations, too
+                    if (type.getAnnotation(Entity.class) != null)
+                        return true;
+
+                    if (type.getAnnotation(jakarta.persistence.Table.class) != null)
+                        return true;
+
+                    if (anyMatch(getInstanceMembers(type), m ->
+                            m.getAnnotation(Column.class) != null
+                         || m.getAnnotation(Id.class) != null))
+                        return true;
+                    else
+                        return anyMatch(getInstanceMethods(type), m -> m.getAnnotation(Column.class) != null);
+
+                case NONE:
+                default:
+                    return false;
+            }
+
         }, REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS, () -> type);
     }
 

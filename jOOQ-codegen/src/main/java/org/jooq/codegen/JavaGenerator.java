@@ -7335,14 +7335,14 @@ public class JavaGenerator extends AbstractGenerator {
             if (!column.getType(resolver(out)).isNullable() &&
                 !column.getType(resolver(out)).isDefaulted() &&
                 !column.getType(resolver(out)).isIdentity())
-                out.println("@%s%s", prefix, out.ref("javax.validation.constraints.NotNull"));
+                out.println("@%s%s", prefix, out.ref("jakarta.validation.constraints.NotNull"));
 
             String javaType = getJavaType(type, out);
             if ("java.lang.String".equals(javaType) || "byte[]".equals(javaType)) {
                 int length = type.getLength();
 
                 if (length > 0)
-                    out.println("@%s%s(max = %s)", prefix, out.ref("javax.validation.constraints.Size"), length);
+                    out.println("@%s%s(max = %s)", prefix, out.ref("jakarta.validation.constraints.Size"), length);
             }
         }
     }

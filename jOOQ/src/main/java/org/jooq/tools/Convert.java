@@ -1220,13 +1220,15 @@ public final class Convert {
         }
 
         private static final String patchIso8601Timestamp(String string, boolean t) {
-            if (string.length() > 11)
-                if (t && string.charAt(10) == ' ')
-                    return string.substring(0, 10) + "T" + string.substring(11);
-                else if (!t && string.charAt(10) == 'T')
-                    return string.substring(0, 10) + " " + string.substring(11);
-
-            return string;
+            if (t) {
+                if (string.contains("T")) {
+                    return string;
+                } else {
+                    return string.replaceFirst(" ", "T");
+                }
+            } else {
+                return string.replaceFirst("T", " ");
+            }
         }
 
         @Override

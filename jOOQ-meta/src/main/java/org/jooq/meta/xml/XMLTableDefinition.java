@@ -38,6 +38,8 @@
 package org.jooq.meta.xml;
 
 import static java.lang.Boolean.TRUE;
+import static org.jooq.impl.QOM.GenerationOption.STORED;
+import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.meta.xml.XMLDatabase.unbox;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -100,7 +102,15 @@ public class XMLTableDefinition extends AbstractTableDefinition {
                     unbox(column.getNumericScale()),
                     column.isIsNullable(),
                     column.getColumnDefault()
-                );
+                )
+                    .generatedAlwaysAs(TRUE.equals(column.isIsGenerated()) ? column.getGenerationExpression() : null)
+                    .generationOption(TRUE.equals(column.isIsGenerated())
+                        ? "STORED".equalsIgnoreCase(column.getGenerationOption())
+                            ? STORED
+                            : "VIRTUAL".equalsIgnoreCase(column.getGenerationOption())
+                            ? VIRTUAL
+                            : null
+                        : null);
 
                 result.add(new DefaultColumnDefinition(
                     this,

@@ -43,19 +43,27 @@ import static java.util.Collections.emptyList;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.comparingInt;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.QOM.GenerationOption.STORED;
+import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.impl.Tools.EMPTY_CHECK;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 
 import java.math.BigInteger;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import org.jooq.Catalog;
 import org.jooq.Check;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Domain;
+import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
@@ -69,6 +77,7 @@ import org.jooq.TableOptions;
 import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
@@ -201,7 +210,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             InformationSchemaDomain<?> id = new InformationSchemaDomain<Object>(
                 schema,
                 name(d.getDomainName()),
-                (DataType) type(d.getDataType(), length, precision, scale, nullable, false),
+                (DataType) type(d.getDataType(), length, precision, scale, nullable, false, null, null),
                 checks.toArray(EMPTY_CHECK)
             );
             domains.add(id);
@@ -276,6 +285,16 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             int scale = xc.getNumericScale() == null ? 0 : xc.getNumericScale();
             boolean nullable = !FALSE.equals(xc.isIsNullable());
             boolean readonly = TRUE.equals(xc.isReadonly());
+            Field<?> generatedAlwaysAs = TRUE.equals(xc.isIsGenerated())
+                ? DSL.field(xc.getGenerationExpression())
+                : null;
+            GenerationOption generationOption = TRUE.equals(xc.isIsGenerated())
+                ? "STORED".equalsIgnoreCase(xc.getGenerationOption())
+                    ? STORED
+                    : "VIRTUAL".equalsIgnoreCase(xc.getGenerationOption())
+                    ? VIRTUAL
+                    : null
+                : null;
 
             // TODO: Exception handling should be moved inside SQLDataType
             Name tableName = name(xc.getTableCatalog(), xc.getTableSchema(), xc.getTableName());
@@ -288,7 +307,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
             AbstractTable.createField(
                 name(xc.getColumnName()),
-                type(typeName, length, precision, scale, nullable, readonly),
+                type(typeName, length, precision, scale, nullable, readonly, generatedAlwaysAs, generationOption),
                 table,
                 xc.getComment()
             );
@@ -507,7 +526,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             InformationSchemaSequence is = new InformationSchemaSequence(
                 xs.getSequenceName(),
                 schema,
-                type(typeName, length, precision, scale, nullable, false),
+                type(typeName, length, precision, scale, nullable, false, null, null),
                 startWith,
                 incrementBy,
                 minvalue,
@@ -541,7 +560,17 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         lookup.computeIfAbsent(key, k -> new ArrayList<>()).add(value);
     }
 
-    private final DataType<?> type(String typeName, int length, int precision, int scale, boolean nullable, boolean readonly) {
+    @SuppressWarnings("unchecked")
+    private final DataType<?> type(
+        String typeName,
+        int length,
+        int precision,
+        int scale,
+        boolean nullable,
+        boolean readonly,
+        Field<?> generatedAlwaysAs,
+        GenerationOption generationOption
+    ) {
         DataType<?> type = null;
 
         try {
@@ -553,6 +582,11 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                 type = type.length(length);
             else if (precision != 0 || scale != 0)
                 type = type.precision(precision, scale);
+
+            if (generatedAlwaysAs != null)
+                type = type.generatedAlwaysAs((Field) generatedAlwaysAs);
+            if (generationOption != null)
+                type = type.generationOption(generationOption);
         }
         catch (SQLDialectNotSupportedException e) {
             type = SQLDataType.OTHER;

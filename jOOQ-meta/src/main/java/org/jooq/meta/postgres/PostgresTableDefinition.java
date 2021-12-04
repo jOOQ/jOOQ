@@ -60,6 +60,7 @@ import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.TableOptions.TableType;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -92,6 +93,10 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
         Field<String> udtSchema = COLUMNS.UDT_SCHEMA;
         Field<Integer> precision = nvl(COLUMNS.DATETIME_PRECISION, COLUMNS.NUMERIC_PRECISION);
         Field<String> serialColumnDefault = inline("nextval('%_seq'::regclass)");
+        Field<String> generationExpression = COLUMNS.GENERATION_EXPRESSION;
+        Field<String> attgenerated = PG_ATTRIBUTE.ATTGENERATED;
+
+
 
 
 
@@ -123,7 +128,8 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 COLUMNS.NUMERIC_SCALE,
                 (when(isIdentity, inline("YES"))).as(COLUMNS.IS_IDENTITY),
                 COLUMNS.IS_NULLABLE,
-                COLUMNS.GENERATION_EXPRESSION,
+                generationExpression.as(COLUMNS.GENERATION_EXPRESSION),
+                attgenerated.as(PG_ATTRIBUTE.ATTGENERATED),
                 (when(isIdentity, inline(null, String.class)).else_(COLUMNS.COLUMN_DEFAULT)).as(COLUMNS.COLUMN_DEFAULT),
                 coalesce(COLUMNS.DOMAIN_SCHEMA, udtSchema).as(COLUMNS.UDT_SCHEMA),
                 coalesce(COLUMNS.DOMAIN_NAME, COLUMNS.UDT_NAME).as(COLUMNS.UDT_NAME),
@@ -166,7 +172,15 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                     record.get(COLUMNS.UDT_SCHEMA),
                     record.get(COLUMNS.UDT_NAME)
                 )
-            ).generatedAlwaysAs(record.get(COLUMNS.GENERATION_EXPRESSION));
+            )
+                .generatedAlwaysAs(record.get(COLUMNS.GENERATION_EXPRESSION))
+                .generationOption(
+                    "s".equals(record.get(PG_ATTRIBUTE.ATTGENERATED))
+                  ? GenerationOption.STORED
+                  : "v".equals(record.get(PG_ATTRIBUTE.ATTGENERATED))
+                  ? GenerationOption.VIRTUAL
+                  : null
+                );
 
             ColumnDefinition column = new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),

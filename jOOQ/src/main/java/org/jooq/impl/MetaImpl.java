@@ -693,7 +693,7 @@ final class MetaImpl extends AbstractMeta {
         @Override
         public final List<Index> getIndexes() {
             // See https://github.com/h2database/h2database/issues/3236
-            return ignoreNPE(
+            return Tools.<List<Index>, RuntimeException>ignoreNPE(
                 () -> {
                     Result<Record> result = removeSystemIndexes(meta(meta -> {
                         try (ResultSet rs = catalogSchema(getCatalog(), getSchema(), (c, s) -> meta.getIndexInfo(c, s, getName(), false, true))) {

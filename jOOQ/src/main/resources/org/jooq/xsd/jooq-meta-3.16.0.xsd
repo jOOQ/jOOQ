@@ -84,6 +84,9 @@
             <element name="column_default" type="string" minOccurs="0" maxOccurs="1" />
             <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
             <element name="readonly" type="boolean" minOccurs="0" maxOccurs="1" />
+            <element name="is_generated" type="boolean" minOccurs="0" maxOccurs="1" />
+            <element name="generation_expression" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="generation_option" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
     

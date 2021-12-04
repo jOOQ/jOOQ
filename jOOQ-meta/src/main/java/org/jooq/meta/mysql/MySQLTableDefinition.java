@@ -52,6 +52,7 @@ import java.util.regex.Pattern;
 
 import org.jooq.Record;
 import org.jooq.TableOptions.TableType;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -113,6 +114,12 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 
             // [#6492] MariaDB supports a standard IS_GENERATED, but MySQL doesn't (yet)
             boolean generated = record.get(COLUMNS.EXTRA) != null && record.get(COLUMNS.EXTRA).toUpperCase().contains("GENERATED");
+            GenerationOption generationOption =
+                  "VIRTUAL GENERATED".equalsIgnoreCase(record.get(COLUMNS.EXTRA))
+                ? GenerationOption.VIRTUAL
+                : "STORED GENERATED".equalsIgnoreCase(record.get(COLUMNS.EXTRA))
+                ? GenerationOption.STORED
+                : null;
 
             columnTypeFix:
             if (unsigned || displayWidths) {
@@ -148,7 +155,9 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                 record.get(COLUMNS.IS_NULLABLE, boolean.class),
                 generated ? null : record.get(COLUMNS.COLUMN_DEFAULT),
                 name(getSchema().getName(), getName() + "_" + record.get(COLUMNS.COLUMN_NAME))
-            ).generatedAlwaysAs(generated ? record.get(COLUMNS.GENERATION_EXPRESSION) : null);
+            )
+                .generatedAlwaysAs(generated ? record.get(COLUMNS.GENERATION_EXPRESSION) : null)
+                .generationOption(generationOption);
 
             result.add(new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),

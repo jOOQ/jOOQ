@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.QOM.GenerationOption.STORED;
+import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.tools.StringUtils.isBlank;
 import static org.jooq.util.xml.jaxb.TableConstraintType.CHECK;
 import static org.jooq.util.xml.jaxb.TableConstraintType.FOREIGN_KEY;
@@ -51,6 +53,7 @@ import java.util.Set;
 import org.jooq.Catalog;
 import org.jooq.Check;
 import org.jooq.Configuration;
+import org.jooq.DataType;
 import org.jooq.Domain;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -64,6 +67,7 @@ import org.jooq.SortField;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
@@ -328,6 +332,7 @@ final class InformationSchemaExport {
         Field<?>[] fields = t.fields();
         for (int i = 0; i < fields.length; i++) {
             Field<?> f = fields[i];
+            DataType<?> type = f.getDataType();
             Column ic = new Column();
 
             if (!isBlank(catalogName))
@@ -339,21 +344,27 @@ final class InformationSchemaExport {
             ic.setTableName(t.getName());
             ic.setColumnName(f.getName());
             ic.setComment(f.getComment());
-            ic.setDataType(f.getDataType().getTypeName(configuration));
+            ic.setDataType(type.getTypeName(configuration));
 
-            if (f.getDataType().lengthDefined())
-                ic.setCharacterMaximumLength(f.getDataType().length());
+            if (type.lengthDefined())
+                ic.setCharacterMaximumLength(type.length());
 
-            if (f.getDataType().precisionDefined())
-                ic.setNumericPrecision(f.getDataType().precision());
+            if (type.precisionDefined())
+                ic.setNumericPrecision(type.precision());
 
-            if (f.getDataType().scaleDefined())
-                ic.setNumericScale(f.getDataType().scale());
+            if (type.scaleDefined())
+                ic.setNumericScale(type.scale());
 
-            ic.setColumnDefault(DSL.using(configuration).render(f.getDataType().defaultValue()));
-            ic.setIsNullable(f.getDataType().nullable());
+            ic.setColumnDefault(DSL.using(configuration).render(type.defaultValue()));
+            ic.setIsNullable(type.nullable());
             ic.setOrdinalPosition(i + 1);
-            ic.setReadonly(f.getDataType().readonly());
+            ic.setReadonly(type.readonly());
+
+            if (type.computed()) {
+                ic.setIsGenerated(type.computed());
+                ic.setGenerationExpression(DSL.using(configuration).render(type.generatedAlwaysAs()));
+                ic.setGenerationOption(type.generationOption() == VIRTUAL ? "VIRTUAL" : type.generationOption() == STORED ? "STORED" : null);
+            }
 
             result.getColumns().add(ic);
         }

@@ -174,6 +174,7 @@ import static org.jooq.impl.Keywords.K_THROW;
 import static org.jooq.impl.Keywords.K_VIRTUAL;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.QOM.GenerationOption.STORED;
+import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.INTEGER;
@@ -321,6 +322,7 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TemplatingException;
 import org.jooq.exception.TooManyRowsException;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
@@ -5212,6 +5214,26 @@ final class Tools {
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

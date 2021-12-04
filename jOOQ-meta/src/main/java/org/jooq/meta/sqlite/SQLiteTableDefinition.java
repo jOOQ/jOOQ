@@ -42,6 +42,8 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.QOM.GenerationOption.STORED;
+import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.meta.sqlite.sqlite_master.SQLiteMaster.SQLITE_MASTER;
 import static org.jooq.tools.StringUtils.isBlank;
 
@@ -49,7 +51,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.Check;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Query;
@@ -61,7 +62,6 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.ParserException;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
-import org.jooq.meta.DefaultCheckConstraintDefinition;
 import org.jooq.meta.DefaultColumnDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.SchemaDefinition;
@@ -123,8 +123,9 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
             .select(fName, fType, fNotnull, fDefaultValue, fPk, fHidden)
             .from("pragma_table_xinfo({0})", inline(getName()))
             // 0 = ordinary column
-            // 2 = generated column
-            .where("hidden in (0, 2)")
+            // 2 = generated column (virtual)
+            // 3 = generated column (stored)
+            .where("hidden in (0, 2, 3)")
         ) {
 
             String name = record.get(fName);
@@ -138,7 +139,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
             int pk = record.get(fPk);
             int hidden = record.get(fHidden);
             boolean identity = false;
-            boolean generated = hidden == 2;
+            boolean generated = hidden == 2 || hidden == 3;
             String generator = null;
 
             // [#8278] [#11172] SQLite doesn't store the data type for all views or virtual tables
@@ -198,7 +199,9 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
                 scale,
                 !record.get(fNotnull),
                 record.get(fDefaultValue)
-            ).generatedAlwaysAs(generator);
+            )
+                .generatedAlwaysAs(generator)
+                .generationOption(hidden == 2 ? VIRTUAL : hidden == 3 ? STORED : null);
 
             result.add(new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),

@@ -42,6 +42,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="column_default" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="readonly" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
+ *         &lt;element name="is_generated" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
+ *         &lt;element name="generation_expression" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="generation_option" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -113,6 +116,14 @@ public class Column implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String comment;
     protected Boolean readonly;
+    @XmlElement(name = "is_generated")
+    protected Boolean isGenerated;
+    @XmlElement(name = "generation_expression")
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String generationExpression;
+    @XmlElement(name = "generation_option")
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String generationOption;
 
     public String getTableCatalog() {
         return tableCatalog;
@@ -306,6 +317,46 @@ public class Column implements Serializable, XMLAppendable
         this.readonly = value;
     }
 
+    /**
+     * Gets the value of the isGenerated property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIsGenerated() {
+        return isGenerated;
+    }
+
+    /**
+     * Sets the value of the isGenerated property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIsGenerated(Boolean value) {
+        this.isGenerated = value;
+    }
+
+    public String getGenerationExpression() {
+        return generationExpression;
+    }
+
+    public void setGenerationExpression(String value) {
+        this.generationExpression = value;
+    }
+
+    public String getGenerationOption() {
+        return generationOption;
+    }
+
+    public void setGenerationOption(String value) {
+        this.generationOption = value;
+    }
+
     public Column withTableCatalog(String value) {
         setTableCatalog(value);
         return this;
@@ -406,6 +457,21 @@ public class Column implements Serializable, XMLAppendable
         return this;
     }
 
+    public Column withIsGenerated(Boolean value) {
+        setIsGenerated(value);
+        return this;
+    }
+
+    public Column withGenerationExpression(String value) {
+        setGenerationExpression(value);
+        return this;
+    }
+
+    public Column withGenerationOption(String value) {
+        setGenerationOption(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("table_catalog", tableCatalog);
@@ -428,6 +494,9 @@ public class Column implements Serializable, XMLAppendable
         builder.append("column_default", columnDefault);
         builder.append("comment", comment);
         builder.append("readonly", readonly);
+        builder.append("is_generated", isGenerated);
+        builder.append("generation_expression", generationExpression);
+        builder.append("generation_option", generationOption);
     }
 
     @Override
@@ -629,6 +698,33 @@ public class Column implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (isGenerated == null) {
+            if (other.isGenerated!= null) {
+                return false;
+            }
+        } else {
+            if (!isGenerated.equals(other.isGenerated)) {
+                return false;
+            }
+        }
+        if (generationExpression == null) {
+            if (other.generationExpression!= null) {
+                return false;
+            }
+        } else {
+            if (!generationExpression.equals(other.generationExpression)) {
+                return false;
+            }
+        }
+        if (generationOption == null) {
+            if (other.generationOption!= null) {
+                return false;
+            }
+        } else {
+            if (!generationOption.equals(other.generationOption)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -656,6 +752,9 @@ public class Column implements Serializable, XMLAppendable
         result = ((prime*result)+((columnDefault == null)? 0 :columnDefault.hashCode()));
         result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
         result = ((prime*result)+((readonly == null)? 0 :readonly.hashCode()));
+        result = ((prime*result)+((isGenerated == null)? 0 :isGenerated.hashCode()));
+        result = ((prime*result)+((generationExpression == null)? 0 :generationExpression.hashCode()));
+        result = ((prime*result)+((generationOption == null)? 0 :generationOption.hashCode()));
         return result;
     }
 

@@ -37,6 +37,8 @@
  */
 package org.jooq.codegen;
 
+import static org.jooq.impl.QOM.GenerationOption.STORED;
+import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.tools.StringUtils.isBlank;
 import static org.jooq.util.xml.jaxb.TableConstraintType.CHECK;
 import static org.jooq.util.xml.jaxb.TableConstraintType.FOREIGN_KEY;
@@ -196,6 +198,12 @@ public class XMLGenerator extends AbstractGenerator {
                         column.setNumericScale(type.getScale());
                         column.setOrdinalPosition(co.getPosition());
                         column.setReadonly(co.isReadonly());
+
+                        if (type.isComputed()) {
+                            column.setIsGenerated(type.isComputed());
+                            column.setGenerationExpression(type.getGeneratedAlwaysAs());
+                            column.setGenerationOption(type.getGenerationOption() == VIRTUAL ? "VIRTUAL" : type.getGenerationOption() == STORED ? "STORED" : null);
+                        }
 
                         is.getColumns().add(column);
                     }

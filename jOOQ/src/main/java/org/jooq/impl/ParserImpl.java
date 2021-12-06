@@ -5956,8 +5956,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 // [#12691] Some dialects support A IN B syntax without parentheses for single element in lists
                 if (left instanceof Field && !peek('(')) {
                     result = not
-                        ? ((Field) left).notIn(parseField())
-                        : ((Field) left).in(parseField());
+                        ? ((Field) left).notIn(parseConcat())
+                        : ((Field) left).in(parseConcat());
                 }
                 else {
                     parse('(');

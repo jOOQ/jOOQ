@@ -110,21 +110,8 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
         this(row, N_ROW);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     RowField(final ROW row, Name as) {
-        super(as, new RecordDataType<>(row), CommentImpl.NO_COMMENT, binding(fromNullable(
-            Object.class,
-            (Class<REC>) Tools.recordType(row.size()),
-
-            // [#7100] In non-PostgreSQL style dialects, RowField is emulated,
-            // and at conversion time, we already have a synthetic Record[N],
-            // so no further conversion is required.
-            t -> (REC) (
-                  t instanceof InternalRecord
-                ? t
-                : pgNewRecord(Record.class, (AbstractRow) row, t)
-            )
-        )));
+        super(as, new RecordDataType<>(row));
 
         this.row = row;
     }
@@ -234,7 +221,9 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
 
                 break;
 
+            // case ARRAY:
             case NATIVE:
+            default:
                 acceptDefault.accept(ctx);
                 break;
         }

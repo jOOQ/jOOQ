@@ -69,7 +69,6 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
 import static org.jooq.conf.ParamType.INLINED;
@@ -319,6 +318,7 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import io.r2dbc.spi.R2dbcException;
@@ -1819,6 +1819,15 @@ final class Tools {
 
     private static final <T> List<T> newListWithCapacity(Iterable<?> it) {
         return it instanceof Collection ? new ArrayList<>(((Collection<?>) it).size()) : new ArrayList<>();
+    }
+
+    static final <T, R> R apply(@Nullable T t, Function<? super @NotNull T, ? extends R> f) {
+        return t == null ? null : f.apply(t);
+    }
+
+    static final <T> T let(T t, Consumer<? super T> consumer) {
+        consumer.accept(t);
+        return t;
     }
 
     static final <T, E extends Exception> boolean anyMatch(T[] array, ThrowingPredicate<? super T, E> test) throws E {

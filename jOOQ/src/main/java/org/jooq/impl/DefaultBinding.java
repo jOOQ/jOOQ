@@ -46,6 +46,7 @@ import static java.time.temporal.ChronoField.MONTH_OF_YEAR;
 import static java.time.temporal.ChronoField.NANO_OF_SECOND;
 import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 import static java.time.temporal.ChronoField.YEAR;
+import static java.util.function.Function.identity;
 // ...
 // ...
 // ...
@@ -87,6 +88,8 @@ import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.REQUIRES_LITERAL
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.infinity;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.nan;
 import static org.jooq.impl.DefaultBinding.DefaultJSONBBinding.EMULATE_AS_BLOB;
+import static org.jooq.impl.DefaultBinding.DefaultResultBinding.readMultisetJSON;
+import static org.jooq.impl.DefaultBinding.DefaultResultBinding.readMultisetXML;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.impl.Keywords.K_ARRAY;
@@ -125,6 +128,7 @@ import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.TIME;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.asInt;
 import static org.jooq.impl.Tools.attachRecords;
 import static org.jooq.impl.Tools.convertBytesToHex;
@@ -3578,7 +3582,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
                 case POSTGRES:
-                    return pgNewRecord(dataType.getType(), null, ctx.resultSet().getObject(ctx.index()));
+                    return pgNewRecord(ctx, dataType.getType(), (AbstractRow<Record>) dataType.getRow(), ctx.resultSet().getObject(ctx.index()));
 
                 default:
                     return (Record) ctx.resultSet().getObject(ctx.index(), typeMap(dataType.getType(), ctx));
@@ -3591,7 +3595,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
                 case POSTGRES:
-                    return pgNewRecord(dataType.getType(), null, ctx.statement().getObject(ctx.index()));
+                    return pgNewRecord(ctx, dataType.getType(), (AbstractRow<Record>) dataType.getRow(), ctx.statement().getObject(ctx.index()));
 
                 default:
                     return (Record) ctx.statement().getObject(ctx.index(), typeMap(dataType.getType(), ctx));
@@ -3601,6 +3605,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final Record get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
             return (Record) ctx.input().readObject();
+        }
+
+        static final <R extends Record> R readMultiset(BindingGetResultSetContext<?> ctx, DataType<R> type) throws SQLException {
+            return DefaultResultBinding.readMultiset(ctx, (AbstractRow<R>) type.getRow(), type.getType(),
+                b -> b,
+                s -> "[" + s + "]",
+                s -> "<result>" + s + "</result>"
+            ).get(0);
         }
 
         @Override
@@ -3622,7 +3634,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @SuppressWarnings("unchecked")
-        private static final <T> T pgFromString(Field<T> field, String string) {
+        private static final <T> T pgFromString(Scope ctx, Field<T> field, String string) {
             Converter<?, T> converter = field.getConverter();
             Class<T> type = Reflect.wrapper(converter.toType());
 
@@ -3683,18 +3695,23 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             else if (type == UUID.class)
                 return (T) UUID.fromString(string);
             else if (type.isArray())
-                return (T) pgNewArray(field, type, string);
+                return (T) pgNewArray(ctx, field, type, string);
 
 
 
 
             else if (EnumType.class.isAssignableFrom(type))
                 return (T) DefaultEnumTypeBinding.getEnumType((Class<EnumType>) type, string);
+            else if (Result.class.isAssignableFrom(type))
+                if (string.startsWith("<"))
+                    return (T) readMultisetXML(ctx, (AbstractRow<Record>) field.getDataType().getRow(), (Class<Record>) field.getDataType().getRecordType(), string);
+                else
+                    return (T) readMultisetJSON(ctx, (AbstractRow<Record>) field.getDataType().getRow(), (Class<Record>) field.getDataType().getRecordType(), string);
             else if (Record.class.isAssignableFrom(type)
 
             // [#11812] UDTRecords/TableRecords or InternalRecords that don't have an explicit converter
                     && (!InternalRecord.class.isAssignableFrom(type) || type == converter.fromType()))
-                return (T) pgNewRecord(type, (AbstractRow<?>) field.getDataType().getRow(), string);
+                return (T) pgNewRecord(ctx, type, (AbstractRow<?>) field.getDataType().getRow(), string);
             else if (type == Object.class)
                 return (T) string;
 
@@ -3702,7 +3719,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             //                 which would cause a StackOverflowError, here!
             else if (type != converter.fromType()) {
                 Converter<Object, T> c = (Converter<Object, T>) converter;
-                return c.from(pgFromString(field("converted_field", ((ConvertedDataType<?, ?>) field.getDataType()).delegate), string));
+                return c.from(pgFromString(ctx, field("converted_field", ((ConvertedDataType<?, ?>) field.getDataType()).delegate), string));
             }
 
             throw new UnsupportedOperationException("Class " + type + " is not supported");
@@ -3720,11 +3737,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * @return The converted {@link UDTRecord}
          */
         @SuppressWarnings("unchecked")
-        static final Record pgNewRecord(Class<?> type, AbstractRow<?> fields, final Object object) {
+        static final Record pgNewRecord(Scope ctx, Class<?> type, AbstractRow<?> fields, Object object) {
             if (object == null)
                 return null;
 
-            final List<String> values = PostgresUtils.toPGObject(object.toString());
+            String s = object.toString();
+            List<String> values = PostgresUtils.toPGObject(s);
 
             // [#6404] [#7691]
             //   In the event of an unknown record type, derive the record length from actual values.
@@ -3743,14 +3761,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                             Row row = record.fieldsRow();
 
                             for (int i = 0; i < row.size(); i++)
-                                pgSetValue(record, row.field(i), values.get(i));
+                                pgSetValue(ctx, record, row.field(i), values.get(i));
 
                             return record;
                         });
         }
 
-        private static final <T> void pgSetValue(Record record, Field<T> field, String value) {
-            record.set(field, pgFromString(field, value));
+        private static final <T> void pgSetValue(Scope ctx, Record record, Field<T> field, String value) {
+            record.set(field, pgFromString(ctx, field, value));
         }
 
         /**
@@ -3762,14 +3780,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * @param string A String representation of an array
          * @return The converted array
          */
-        private static final Object[] pgNewArray(Field<?> field, Class<?> type, String string) {
+        private static final Object[] pgNewArray(Scope ctx, Field<?> field, Class<?> type, String string) {
             if (string == null)
                 return null;
 
             try {
                 return Tools.map(
                     toPGArray(string),
-                    v -> pgFromString(field("array_element", field.getDataType().getArrayComponentDataType()), v),
+                    v -> pgFromString(ctx, field("array_element", field.getDataType().getArrayComponentDataType()), v),
                     size -> (Object[]) java.lang.reflect.Array.newInstance(type.getComponentType(), size)
                 );
             }
@@ -3812,7 +3830,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @SuppressWarnings("unchecked")
-        private final <R extends Record> Result<R> readMultiset(BindingGetResultSetContext<U> ctx, DataType<Result<R>> type) throws SQLException {
+        static final <R extends Record> Result<R> readMultiset(BindingGetResultSetContext<?> ctx, DataType<Result<R>> type) throws SQLException {
+            return readMultiset(ctx, (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType(), identity(), identity(), identity());
+        }
+
+        static final <R extends Record> Result<R> readMultiset(
+            BindingGetResultSetContext<?> ctx,
+            AbstractRow<R> row,
+            Class<R> recordType,
+            Function<byte[], byte[]> jsonBytesPatch,
+            Function<String, String> jsonStringPatch,
+            Function<String, String> xmlStringPatch
+        )
+        throws SQLException {
             NestedCollectionEmulation emulation = emulateMultiset(ctx.configuration());
 
             switch (emulation) {
@@ -3820,24 +3850,27 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 //     return copy(ctx, (Multiset<?>) field, ctx.configuration().dsl().fetch(ctx.resultSet().getArray(ctx.index()).getResultSet()));
 
                 case JSON:
-                case JSONB: {
-                    if (emulation == NestedCollectionEmulation.JSONB && EMULATE_AS_BLOB.contains(ctx.dialect())) {
-                        byte[] s = ctx.resultSet().getBytes(ctx.index());
-                        return s == null ? null : new JSONReader<>(ctx.dsl(), (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType()).read(new InputStreamReader(new ByteArrayInputStream(s)), true);
-                    }
-                    else {
-                        String s = ctx.resultSet().getString(ctx.index());
-                        return s == null ? null : new JSONReader<>(ctx.dsl(), (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType()).read(new StringReader(s), true);
-                    }
-                }
-
-                case XML: {
-                    String s = ctx.resultSet().getString(ctx.index());
-                    return s == null ? null : new XMLHandler<>(ctx.dsl(), (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType()).read(s);
-                }
+                case JSONB:
+                    if (emulation == NestedCollectionEmulation.JSONB && EMULATE_AS_BLOB.contains(ctx.dialect()))
+                        return apply(jsonBytesPatch.apply(ctx.resultSet().getBytes(ctx.index())),
+                            s -> new JSONReader<>(ctx.dsl(), row, recordType).read(new InputStreamReader(new ByteArrayInputStream(s), ctx.configuration().charsetProvider().provide()), true));
+                    else
+                        return apply(jsonStringPatch.apply(ctx.resultSet().getString(ctx.index())),
+                            s -> readMultisetJSON(ctx, row, recordType, s));
+                case XML:
+                    return apply(xmlStringPatch.apply(ctx.resultSet().getString(ctx.index())),
+                        s -> readMultisetXML(ctx, row, recordType, s));
             }
 
             throw new UnsupportedOperationException("Multiset emulation not yet supported: " + emulation);
+        }
+
+        static <R extends Record> Result<R> readMultisetXML(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {
+            return new XMLHandler<>(ctx.dsl(), row, recordType).read(s);
+        }
+
+        static <R extends Record> Result<R> readMultisetJSON(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {
+            return new JSONReader<>(ctx.dsl(), row, recordType).read(new StringReader(s), true);
         }
 
         @Override

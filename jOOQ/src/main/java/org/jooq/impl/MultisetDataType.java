@@ -65,7 +65,7 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
     final Class<? extends R> recordType;
 
     @SuppressWarnings("unchecked")
-    public MultisetDataType(AbstractRow<R> row, Class<? extends R> recordType) {
+    MultisetDataType(AbstractRow<R> row, Class<? extends R> recordType) {
         // [#11829] TODO: Implement this correctly for ArrayRecord
         super(null, (Class) Result.class, "multiset", "multiset");
 

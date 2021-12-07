@@ -1219,7 +1219,7 @@ public final class Convert {
                  : string;
         }
 
-        private static final String patchIso8601Timestamp(String string, boolean t) {
+        private static String patchIso8601Timestamp(String string, boolean t) {
             if (t) {
                 if (string.contains("T")) {
                     return string;

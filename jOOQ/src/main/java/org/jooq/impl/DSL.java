@@ -20211,7 +20211,7 @@ public class DSL {
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static AggregateFunction<BigDecimal> stddevPop(Field<? extends Number> field) {
         return new StddevPop(field);
     }
@@ -20225,7 +20225,7 @@ public class DSL {
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field) {
         return new StddevSamp(field);
     }
@@ -20271,7 +20271,7 @@ public class DSL {
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
     public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
         return new VarSamp(field);
     }

@@ -39,6 +39,7 @@ package org.jooq;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 // ...
@@ -68,7 +69,7 @@ public interface WindowFromFirstLastStep<T> extends WindowIgnoreNullsStep<T> {
      * might not be supported by all dialects.
      */
     @NotNull
-    @Support({ H2 })
+    @Support({ FIREBIRD, H2 })
     WindowIgnoreNullsStep<T> fromFirst();
 
     /**
@@ -76,6 +77,6 @@ public interface WindowFromFirstLastStep<T> extends WindowIgnoreNullsStep<T> {
      * might not be supported by all dialects.
      */
     @NotNull
-    @Support({ H2 })
+    @Support({ FIREBIRD, H2 })
     WindowIgnoreNullsStep<T> fromLast();
 }

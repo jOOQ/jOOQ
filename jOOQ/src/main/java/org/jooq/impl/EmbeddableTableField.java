@@ -94,6 +94,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
 
+        // TODO [#12021] [#12706] ROW must consistently follow MULTISET emulation
         // [#12237] If a RowField is nested somewhere in MULTISET, we must apply
         //          the MULTISET emulation as well, here
         if (TRUE.equals(ctx.data(DATA_MULTISET_CONTENT)))

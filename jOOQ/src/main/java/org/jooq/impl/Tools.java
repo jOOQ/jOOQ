@@ -1916,6 +1916,11 @@ final class Tools {
         return t == null ? null : f.apply(t);
     }
 
+    static final <T> T let(T t, Consumer<? super T> consumer) {
+        consumer.accept(t);
+        return t;
+    }
+
     static final <T, E extends Exception> boolean anyMatch(T[] array, ThrowingPredicate<? super T, E> test) throws E {
         return findAny(array, test, t -> TRUE) != null;
     }

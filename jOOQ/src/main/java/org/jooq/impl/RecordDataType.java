@@ -65,12 +65,12 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
     final AbstractRow<R> row;
 
     @SuppressWarnings("unchecked")
-    public RecordDataType(Row row) {
+    RecordDataType(Row row) {
         this(row, (Class<R>) recordType(row.size()), "record");
     }
 
     @SuppressWarnings("unchecked")
-    public RecordDataType(Row row, Class<R> recordType, String name) {
+    RecordDataType(Row row, Class<R> recordType, String name) {
         super(null, recordType, name, name);
 
         this.row = (AbstractRow<R>) row;

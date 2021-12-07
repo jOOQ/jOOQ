@@ -3821,7 +3821,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultResultBinding<U> extends AbstractBinding<Result<?>, U> {
+    static final class DefaultResultBinding<U> extends AbstractBinding<org.jooq.Result<?>, U> {
 
         DefaultResultBinding(DataType<Result<?>> dataType, Converter<Result<?>, U> converter) {
             super(dataType, converter);

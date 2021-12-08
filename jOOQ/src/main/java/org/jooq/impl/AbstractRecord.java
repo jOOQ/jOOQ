@@ -1017,8 +1017,9 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         for (int i = 0; i < s && i < t; i++) {
             int j = indexMapping == null ? i : indexMapping[i];
 
+            // [#12697] Don't re-apply data type conversion, assuming it already happened
             if (source.field(j) != null && source.changed(j))
-                Tools.setValue(this, field(j), j, source, j);
+                set((Field) field(j), j, source.get(j));
         }
     }
 

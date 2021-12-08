@@ -1367,7 +1367,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         }
         else if (value instanceof Record) {
             formatted += Arrays
-                .stream(((Record) value).valuesRow().fields())
+                .stream(((Record) value).intoArray())
                 .map(f -> format0(f, false, visual))
                 .collect(joining(", ", "(", ")"));
         }

@@ -8,3 +8,9 @@
 # Ignore project level .idea folders
 */.idea
 /jOOQ-r2dbc/
+
+# Random stuff I'm not messing with
+*.classpath
+*.factorypath
+*.project
+*.settings/

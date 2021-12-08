@@ -77,6 +77,15 @@
                     </archive>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.15.0</version>
+                <configuration>
+                    <analysisCache>true</analysisCache>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -114,6 +123,12 @@
             <artifactId>postgresql</artifactId>
             <scope>provided</scope>
             <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
         </dependency>
 
 

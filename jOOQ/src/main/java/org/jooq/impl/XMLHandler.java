@@ -105,7 +105,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
     XMLHandler(DSLContext ctx, AbstractRow<R> row, Class<? extends R> recordType) {
         this.ctx = ctx;
         this.states = new ArrayDeque<>();
-        s = new State<>(row, recordType);
+        this.s = new State<>(row, recordType);
     }
 
     Result<R> read(String string) {

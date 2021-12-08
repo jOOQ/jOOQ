@@ -135,7 +135,7 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
 
     private final class ArrayUnmapper implements RecordUnmapper<E, R> {
 
-        @SuppressWarnings({ "unchecked", "rawtypes" })
+        @SuppressWarnings({ "unchecked" })
         @Override
         public final R unmap(E source) {
             if (source == null)
@@ -144,14 +144,10 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
             if (source instanceof Object[]) {
                 Object[] array = (Object[]) source;
                 int size = rowType.size();
-                Record record = newRecord();
+                AbstractRecord record = (AbstractRecord) newRecord();
 
-                for (int i = 0; i < size && i < array.length; i++) {
-                    Field field = rowType.field(i);
-
-                    if (rowType.field(field) != null)
-                        Tools.setValue(record, field, array[i]);
-                }
+                for (int i = 0; i < size && i < array.length; i++)
+                    Tools.setValue(record, rowType.field(i), i, array[i]);
 
                 return (R) record;
             }
@@ -162,7 +158,7 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
 
     private final class IterableUnmapper implements RecordUnmapper<E, R> {
 
-        @SuppressWarnings({ "unchecked", "rawtypes" })
+        @SuppressWarnings({ "unchecked" })
         @Override
         public final R unmap(E source) {
             if (source == null)
@@ -171,14 +167,10 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
             if (source instanceof Iterable) {
                 Iterator<?> it = ((Iterable<?>) source).iterator();
                 int size = rowType.size();
-                Record record = newRecord();
+                AbstractRecord record = (AbstractRecord) newRecord();
 
-                for (int i = 0; i < size && it.hasNext(); i++) {
-                    Field field = rowType.field(i);
-
-                    if (rowType.field(field) != null)
-                        Tools.setValue(record, field, it.next());
-                }
+                for (int i = 0; i < size && it.hasNext(); i++)
+                    Tools.setValue(record, rowType.field(i), i, it.next());
 
                 return (R) record;
             }

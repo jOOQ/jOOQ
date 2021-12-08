@@ -407,6 +407,10 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     public final <T> void set(Field<T> field, T value) {
         int index = fields.indexOf(field);
 
+        set(field, index, value);
+    }
+
+    final <T> void set(Field<T> field, int index, T value) {
         if (index >= 0)
             set(index, field, value);
         else if (Tools.nonReplacingEmbeddable(field)) {
@@ -904,111 +908,93 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return mapper.map(this);
     }
 
-    private final void from0(Object source, FieldsImpl f) {
+    private final void from0(Object source, int[] targetIndexMapping) {
         if (source == null) return;
 
         // [#2520] TODO: Benchmark this from() method. There's probably a better implementation
-        from(Tools.configuration(this).recordUnmapperProvider().provide(source.getClass(), f).unmap(prepareArrayForUnmap(source, f)));
+        from(
+            Tools.configuration(this).recordUnmapperProvider().provide(source.getClass(), (FieldsImpl) fields.fields).unmap(source),
+            targetIndexMapping
+        );
 
         // [#2700] [#3582] If a POJO attribute is NULL, but the column is NOT NULL
         // then we should let the database apply DEFAULT values
         resetChangedOnNotNull(this);
     }
 
-    private final Object prepareArrayForUnmap(Object source, FieldsImpl f) {
-        if (source instanceof Object[]) {
-            Object[] array = (Object[]) source;
-
-            if (array.length != f.size()) {
-                Object[] result = new Object[f.size()];
-
-                for (int i = 0; i < result.length; i++) {
-                    int index = fields.indexOf(f.field(i));
-                    result[i] = index >= 0 && index < array.length ? array[index] : null;
-                }
-
-                return result;
-            }
-            else
-                return source;
-        }
-        else
-            return source;
-    }
-
     @Override
     public final void from(Object source) {
-        from0(source, fields.fields);
+        from0(source, null);
     }
 
     @Override
     public final void from(Object source, Field<?>... f) {
-        from0(source, new FieldsImpl(f));
+        from0(source, fields.fields.indexesOf(f));
     }
 
     @Override
     public final void from(Object source, String... fieldNames) {
-        from(source, fields(fieldNames));
+        from0(source, fields.fields.indexesOf(fieldNames));
     }
 
     @Override
     public final void from(Object source, Name... fieldNames) {
-        from(source, fields(fieldNames));
+        from0(source, fields.fields.indexesOf(fieldNames));
     }
 
     @Override
     public final void from(Object source, int... fieldIndexes) {
-        from(source, fields(fieldIndexes));
+        from0(source, fieldIndexes);
     }
 
     @Override
     public final void fromMap(Map<String, ?> map) {
-        from(map, fields());
+        from(map);
     }
 
     @Override
     public final void fromMap(Map<String, ?> map, Field<?>... f) {
-        from0(map, new FieldsImpl(f));
+        from(map, f);
     }
 
     @Override
     public final void fromMap(Map<String, ?> map, String... fieldNames) {
-        fromMap(map, fields(fieldNames));
+        from(map, fieldNames);
     }
 
     @Override
     public final void fromMap(Map<String, ?> map, Name... fieldNames) {
-        fromMap(map, fields(fieldNames));
+        from(map, fieldNames);
     }
 
     @Override
     public final void fromMap(Map<String, ?> map, int... fieldIndexes) {
-        fromMap(map, fields(fieldIndexes));
+        from(map, fieldIndexes);
     }
 
     @Override
     public final void fromArray(Object... array) {
-        fromArray(array, fields());
+        from(array);
     }
 
     @Override
     public final void fromArray(Object[] array, Field<?>... f) {
-        from0(array, new FieldsImpl(f));
+        from(array, f);
     }
 
     @Override
     public final void fromArray(Object[] array, String... fieldNames) {
-        fromArray(array, fields(fieldNames));
+        from(array, fieldNames);
     }
 
     @Override
     public final void fromArray(Object[] array, Name... fieldNames) {
-        fromArray(array, fields(fieldNames));
+        from(array, fieldNames);
     }
 
     @Override
     public final void fromArray(Object[] array, int... fieldIndexes) {
-        fromArray(array, fields(fieldIndexes));
+        from(array, fieldIndexes);
     }
 
     /**
@@ -1021,6 +1007,18 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
             if (sourceField != null && source.changed(sourceField))
                 Tools.setValue(this, field, source, sourceField);
+        }
+    }
+
+    final void from(Record source, int[] indexMapping) {
+        int s = source.size();
+        int t = indexMapping == null ? s : indexMapping.length;
+
+        for (int i = 0; i < s && i < t; i++) {
+            int j = indexMapping == null ? i : indexMapping[i];
+
+            if (source.field(j) != null && source.changed(j))
+                Tools.setValue(this, field(j), j, source, j);
         }
     }
 

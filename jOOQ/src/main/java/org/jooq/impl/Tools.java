@@ -3071,10 +3071,24 @@ final class Tools {
     }
 
     /**
+     * Type-safely copy a value from one record to another
+     */
+    static final <T> void setValue(AbstractRecord target, Field<T> targetField, int targetIndex, Record source, int sourceIndex) {
+        setValue(target, targetField, targetIndex, source.get(sourceIndex));
+    }
+
+    /**
      * Type-safely set a value to a record
      */
     static final <T> void setValue(Record target, Field<T> targetField, Object value) {
         target.set(targetField, targetField.getDataType().convert(value));
+    }
+
+    /**
+     * Type-safely set a value to a record
+     */
+    static final <T> void setValue(AbstractRecord target, Field<T> targetField, int targetIndex, Object value) {
+        target.set(targetField, targetIndex, targetField.getDataType().convert(value));
     }
 
     /**

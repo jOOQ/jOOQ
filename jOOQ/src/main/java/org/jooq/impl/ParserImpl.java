@@ -4279,11 +4279,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                     int p2 = position();
 
-                    // [#7348] [#7651] [#9132] Look ahead if the next tokens
-                    // indicate a MySQL index definition
-                    if (parseIf('(') || (parseIdentifierIf() != null
-                                && parseUsingIndexTypeIf()
-                                && parseIf('('))) {
+                    // [#7348] [#7651] [#9132] [#12712]
+                    // Look ahead if the next tokens indicate a MySQL index definition
+                    if (parseIf('(') || (
+                            parseDataTypeIf(false) == null
+                         && parseIdentifierIf() != null
+                         && parseUsingIndexTypeIf()
+                         && parseIf('('))
+                    ) {
                         position(p2);
                         indexes.add(parseIndexSpecification(tableName));
 

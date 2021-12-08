@@ -49,9 +49,7 @@ import java.sql.SQLWarning;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import org.jooq.Configuration;
@@ -63,7 +61,6 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.jooq.RecordType;
-import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SelectField;
 import org.jooq.Table;
@@ -473,10 +470,6 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
         return dataType(indexOrFail(this, fieldName));
     }
 
-    /**
-     * @deprecated - 3.14.5 - [#11058] - These are used for the deprecated interning feature only.
-     */
-    @Deprecated
     final int[] indexesOf(Field<?>... f) {
         int[] result = new int[f.length];
 
@@ -486,10 +479,6 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
         return result;
     }
 
-    /**
-     * @deprecated - 3.14.5 - [#11058] - These are used for the deprecated interning feature only.
-     */
-    @Deprecated
     final int[] indexesOf(String... fieldNames) {
         int[] result = new int[fieldNames.length];
 
@@ -499,10 +488,6 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
         return result;
     }
 
-    /**
-     * @deprecated - 3.14.5 - [#11058] - These are used for the deprecated interning feature only.
-     */
-    @Deprecated
     final int[] indexesOf(Name... fieldNames) {
         int[] result = new int[fieldNames.length];
 
@@ -511,7 +496,6 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
 
         return result;
     }
-
 
     @Override
     public final void accept(Context<?> ctx) {

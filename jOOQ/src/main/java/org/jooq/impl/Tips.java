@@ -89,6 +89,8 @@ final class Tips {
         "Using jOOQ's parsers, and can't parse some vendor specific syntax? The ParseListener SPI will help you: https://www.jooq.org/doc/latest/manual/sql-building/sql-parser/sql-parser-listener/",
         "Move logic to your data, not data to your logic, by running procedural code as a stored function: https://www.jooq.org/doc/latest/manual/sql-building/ddl-statements/create-statement/create-function-statement/",
         "The code generator produces Javadoc from table or column comments, but you can override those directly in the code generator: https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-comments/",
+        "Want to exclude some columns from your write operations? No problem, specify them as 'readonly' in the code generator: https://www.jooq.org/doc/dev/manual/sql-building/column-expressions/readonly-columns/",
+        "Need to frequently calculate the same expressions based on other columns from the same table? Many dialects support computed columns: https://www.jooq.org/doc/dev/manual/sql-building/column-expressions/computed-columns/",
         ""
     };
 

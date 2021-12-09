@@ -482,8 +482,17 @@ final class R2DBC {
                 Rendered rendered = rendered(batch.configuration, batch.query);
                 Statement stmt = c.createStatement(rendered.sql);
                 Param<?>[] params = rendered.bindValues.toArray(EMPTY_PARAM);
+                boolean first = true;
 
                 for (Object[] bindValues : batch.allBindValues) {
+
+                    // Change of specification in 0.9.0.RELEASE:
+                    // No trailing add() calls are allowed anymore
+                    // https://github.com/r2dbc/r2dbc-spi/issues/229
+                    if (first)
+                        first = false;
+                    else
+                        stmt = stmt.add();
 
                     // [#1371] [#2139] Don't bind variables directly onto statement, bind them through the collected params
                     //                 list to preserve type information
@@ -493,8 +502,6 @@ final class R2DBC {
                         (params.length > 0)
                             ? fields(bindValues, params)
                             : fields(bindValues));
-
-                    stmt = stmt.add();
                 }
 
                 stmt.execute().subscribe(new RowCountSubscriber(downstream));

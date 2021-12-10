@@ -3058,6 +3058,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
             out.println("public companion object {");
             out.javadoc("The reference instance of <code>%s</code>", udt.getQualifiedOutputName());
+            out.println("@JvmStatic");
             out.println("public val %s: %s = %s()", getStrategy().getJavaIdentifier(udt), className, className);
             out.println("}");
         }

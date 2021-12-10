@@ -46,7 +46,12 @@ import static org.jooq.Log.Level.ERROR;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.partitionBy;
+import static org.jooq.impl.DSL.rowNumber;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.AbstractTypedElementDefinition.customType;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
@@ -3366,5 +3371,12 @@ public abstract class AbstractDatabase implements Database {
                     throw new RuntimeException(e);
             }
         }
+    }
+
+    protected final Field<Integer> overload(Field<String> schema, Field<String> name, Field<String> order) {
+        return when(
+            count().over(partitionBy(schema, name)).gt(one()),
+            rowNumber().over(partitionBy(schema, name).orderBy(order))
+        ).as("overload");
     }
 }

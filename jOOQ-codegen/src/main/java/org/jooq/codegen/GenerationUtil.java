@@ -395,16 +395,22 @@ class GenerationUtil {
      *
      */
     public static String convertToIdentifier(String literal, Language language) {
+        String result = convertToIdentifier0(literal, language);
+
+        // [#4703] [#10866] If an identifier consists only of underscores add one more. _ -> __, __ -> ___
+        if (language == JAVA && UNDERSCORE_PATTERN.matcher(result).matches())
+            return result + "_";
+        else
+            return result;
+    }
+
+    private static String convertToIdentifier0(String literal, Language language) {
         if (language == JAVA && JAVA_KEYWORDS.contains(literal))
             return literal + "_";
         if (language == SCALA && SCALA_KEYWORDS.contains(literal))
             return "`" + literal + "`";
         if (language == KOTLIN && KOTLIN_KEYWORDS.contains(literal))
             return "`" + literal + "`";
-
-        // [#4703] If an identifier consists only of underscores add one more. _ -> __, __ -> ___
-        if (UNDERSCORE_PATTERN.matcher(literal).matches())
-            return literal + "_";
 
         StringBuilder sb = new StringBuilder();
 

@@ -53,6 +53,8 @@ import static java.util.function.Function.identity;
 // ...
 // ...
 // ...
+// ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DEFAULT;
@@ -107,6 +109,8 @@ import static org.jooq.impl.Keywords.K_DATETIME2;
 import static org.jooq.impl.Keywords.K_DATETIMEOFFSET;
 import static org.jooq.impl.Keywords.K_FALSE;
 import static org.jooq.impl.Keywords.K_FORMAT;
+import static org.jooq.impl.Keywords.K_GEOGRAPHY;
+import static org.jooq.impl.Keywords.K_GEOMETRY;
 import static org.jooq.impl.Keywords.K_HOUR_TO_SECOND;
 import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_NULL;
@@ -117,6 +121,7 @@ import static org.jooq.impl.Keywords.K_TIME_WITH_TIME_ZONE;
 import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
 import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
+import static org.jooq.impl.Names.N_ST_GEOMFROMTEXT;
 import static org.jooq.impl.R2DBC.isR2dbc;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BLOB;
@@ -126,6 +131,7 @@ import static org.jooq.impl.SQLDataType.DECIMAL_INTEGER;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.LONGVARCHAR;
+import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.REAL;
 import static org.jooq.impl.SQLDataType.ROWID;
@@ -139,7 +145,6 @@ import static org.jooq.impl.Tools.attachRecords;
 import static org.jooq.impl.Tools.convertBytesToHex;
 import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.enums;
-import static org.jooq.impl.Tools.findAny;
 // ...
 import static org.jooq.impl.Tools.getMappedUDTName;
 import static org.jooq.impl.Tools.map;
@@ -148,7 +153,6 @@ import static org.jooq.impl.Tools.uncoerce;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
-import static org.jooq.tools.reflect.Reflect.on;
 import static org.jooq.tools.reflect.Reflect.onClass;
 import static org.jooq.util.postgres.PostgresUtils.toPGArray;
 import static org.jooq.util.postgres.PostgresUtils.toPGArrayString;
@@ -214,8 +218,11 @@ import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.ExecuteScope;
 import org.jooq.Field;
+// ...
+// ...
 import org.jooq.JSON;
 import org.jooq.JSONB;
+import org.jooq.Package;
 import org.jooq.Param;
 // ...
 import org.jooq.QualifiedRecord;
@@ -228,6 +235,8 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Scope;
 import org.jooq.TableRecord;
+import org.jooq.UDT;
+import org.jooq.UDTField;
 import org.jooq.UDTRecord;
 import org.jooq.XML;
 import org.jooq.conf.NestedCollectionEmulation;
@@ -253,6 +262,7 @@ import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 import org.jooq.util.postgres.PostgresUtils;
 
+// ...
 // ...
 
 // ...
@@ -317,6 +327,21 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return new DefaultDoubleBinding(dataType, converter);
         else if (type == Float.class || type == float.class)
             return new DefaultFloatBinding(dataType, converter);
+        else if (type == Geometry.class)
+
+
+
+
+
+            return new CommercialOnlyBinding(dataType, converter);
+        else if (type == Geography.class)
+
+
+
+
+
+
+            return new CommercialOnlyBinding(dataType, converter);
         else if (type == Integer.class || type == int.class)
             return new DefaultIntegerBinding(dataType, converter);
         else if (type == JSON.class)
@@ -729,7 +754,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
 
             // [#7242] Other vendor specific types also need a lot of casting
-            if (dataType.isJSON()) {
+            if (dataType.isJSON() || dataType.isSpatial()) {
                 switch (ctx.family()) {
 
 
@@ -802,8 +827,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     (sqlDataType == null ||
                     (!sqlDataType.isTemporal()
                         && sqlDataType != SQLDataType.UUID
-                        && sqlDataType != SQLDataType.JSON
-                        && sqlDataType != SQLDataType.JSONB)))
+                        && !sqlDataType.isSpatial()
+                        && !sqlDataType.isJSON())))
                 sql(ctx, converted);
 
 
@@ -3390,6 +3415,45 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
+    static final class CommercialOnlyBinding<U> extends AbstractBinding<Object, U> {
+        CommercialOnlyBinding(DataType<Object> dataType, Converter<Object, U> converter) {
+            super(dataType, converter);
+        }
+
+        @Override
+        final void set0(BindingSetStatementContext<U> ctx, Object value) throws SQLException {
+            ctx.configuration().requireCommercial(() -> "The out of the box binding for " + dataType.getName() + " is available in the commercial jOOQ distribution only. Alternatively, you can implement your own custom binding.");
+        }
+
+        @Override
+        final void set0(BindingSetSQLOutputContext<U> ctx, Object value) throws SQLException {
+            ctx.configuration().requireCommercial(() -> "The out of the box binding for " + dataType.getName() + " is available in the commercial jOOQ distribution only. Alternatively, you can implement your own custom binding.");
+        }
+
+        @Override
+        final Object get0(BindingGetResultSetContext<U> ctx) throws SQLException {
+            ctx.configuration().requireCommercial(() -> "The out of the box binding for " + dataType.getName() + " is available in the commercial jOOQ distribution only. Alternatively, you can implement your own custom binding.");
+            return null;
+        }
+
+        @Override
+        final Object get0(BindingGetStatementContext<U> ctx) throws SQLException {
+            ctx.configuration().requireCommercial(() -> "The out of the box binding for " + dataType.getName() + " is available in the commercial jOOQ distribution only. Alternatively, you can implement your own custom binding.");
+            return null;
+        }
+
+        @Override
+        final Object get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
+            ctx.configuration().requireCommercial(() -> "The out of the box binding for " + dataType.getName() + " is available in the commercial jOOQ distribution only. Alternatively, you can implement your own custom binding.");
+            return null;
+        }
+
+        @Override
+        final int sqltype(Statement statement, Configuration configuration) throws SQLException {
+            return Types.OTHER;
+        }
+    }
+
     static final class DefaultOtherBinding<U> extends AbstractBinding<Object, U> {
 
         DefaultOtherBinding(DataType<Object> dataType, Converter<Object, U> converter) {
@@ -4500,6 +4564,229 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     static final class DefaultJSONBinding<U> extends AbstractBinding<JSON, U> {
 
         DefaultJSONBinding(DataType<JSON> dataType, Converter<JSON, U> converter) {
@@ -4892,5 +5179,98 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return Types.VARCHAR;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 

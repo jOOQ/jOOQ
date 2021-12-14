@@ -1052,4 +1052,9 @@ public interface DataType<T> extends Named {
      * Whether this data type is an XML type.
      */
     boolean isXML();
+
+    /**
+     * Whether this data type is a spatial type.
+     */
+    boolean isSpatial();
 }

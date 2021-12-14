@@ -186,6 +186,8 @@ final class Keywords {
     static final Keyword K_FROM                     = keyword("from");
     static final Keyword K_FUNCTION                 = keyword("function");
     static final Keyword K_GENERATED                = keyword("generated");
+    static final Keyword K_GEOGRAPHY                = keyword("geography");
+    static final Keyword K_GEOMETRY                 = keyword("geometry");
     static final Keyword K_GLOBAL_TEMPORARY         = keyword("global temporary");
     static final Keyword K_GOTO                     = keyword("goto");
     static final Keyword K_GRANT                    = keyword("grant");

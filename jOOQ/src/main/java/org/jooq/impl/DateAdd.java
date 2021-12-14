@@ -86,7 +86,7 @@ implements
         );
 
         this.date = nullSafeNotNull(date, (DataType) OTHER);
-        this.interval = nullSafeNotNull(interval, (DataType) OTHER);
+        this.interval = nullSafeNotNull(interval, INTEGER);
         this.datePart = null;
     }
 
@@ -101,7 +101,7 @@ implements
         );
 
         this.date = nullSafeNotNull(date, (DataType) OTHER);
-        this.interval = nullSafeNotNull(interval, (DataType) OTHER);
+        this.interval = nullSafeNotNull(interval, INTEGER);
         this.datePart = datePart;
     }
 

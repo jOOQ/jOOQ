@@ -87,7 +87,7 @@ implements
         );
 
         this.content = content;
-        this.value = nullSafeNotNull(value, (DataType) OTHER);
+        this.value = nullSafeNotNull(value, XML);
         this.type = type;
     }
 

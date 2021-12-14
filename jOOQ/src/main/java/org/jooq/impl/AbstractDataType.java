@@ -83,6 +83,8 @@ import org.jooq.Domain;
 import org.jooq.EmbeddableRecord;
 import org.jooq.EnumType;
 import org.jooq.Field;
+// ...
+// ...
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Name;
@@ -751,6 +753,12 @@ implements
     @Override
     public final boolean isXML() {
         return tType0() == XML.class;
+    }
+
+    @Override
+    public final boolean isSpatial() {
+        Class<?> tType = tType0();
+        return tType == Geometry.class || tType == Geography.class;
     }
 
     @Override

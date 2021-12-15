@@ -745,7 +745,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
 
             // [#7242] Other vendor specific types also need a lot of casting
-            if (dataType.isJSON() || dataType.isSpatial()) {
+            if (dataType.isJSON()
+
+
+
+            ) {
                 switch (ctx.family()) {
 
 
@@ -818,7 +822,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     (sqlDataType == null ||
                     (!sqlDataType.isTemporal()
                         && sqlDataType != SQLDataType.UUID
-                        && !sqlDataType.isSpatial()
+
+
+
                         && !sqlDataType.isJSON())))
                 sql(ctx, converted);
 

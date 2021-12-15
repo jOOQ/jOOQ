@@ -153,6 +153,11 @@ final class ListAgg extends DefaultAggregateFunction<String> {
         super.acceptFunctionName(ctx);
     }
 
+    @Override
+    boolean applyFilter(Field<?> arg, int i) {
+        return i == 0;
+    }
+
     /**
      * [#1273] <code>LIST_AGG</code> emulation for MySQL
      */
@@ -169,6 +174,9 @@ final class ListAgg extends DefaultAggregateFunction<String> {
                    .visit(arguments.get(1));
 
         ctx.sql(')');
+
+        acceptFilterClause(ctx);
+        acceptOverClause(ctx);
     }
 
     /**

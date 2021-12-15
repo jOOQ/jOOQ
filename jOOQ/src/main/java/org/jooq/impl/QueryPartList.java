@@ -77,6 +77,11 @@ class QueryPartList<T extends QueryPart> extends QueryPartListView<T> {
     }
 
     @Override
+    QueryPartList<T> map(ObjIntFunction<? super T, ? extends T> newMapper) {
+        return (QueryPartList<T>) super.map(newMapper);
+    }
+
+    @Override
     QueryPartList<T> separator(String newSeparator) {
         return (QueryPartList<T>) super.separator(newSeparator);
     }

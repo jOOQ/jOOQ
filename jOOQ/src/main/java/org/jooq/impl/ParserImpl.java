@@ -333,6 +333,7 @@ import static org.jooq.impl.DSL.square;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.stddevPop;
 import static org.jooq.impl.DSL.stddevSamp;
 import static org.jooq.impl.DSL.sum;
@@ -7885,6 +7886,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+
+
+
+
         return r;
     }
 
@@ -8180,6 +8185,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if (parseFunctionNameIf("GROUPING"))
                     return grouping(parseFieldParenthesised());
+                else if ((parseFunctionNameIf("GEOMETRY::STGEOMFROMWKB") || parseFunctionNameIf("GEOGRAPHY::STGEOMFROMWKB")) && requireProEdition()) {
+
+
+
+                }
                 else if ((parseFunctionNameIf("GEOMETRY::STGEOMFROMTEXT") || parseFunctionNameIf("GEOGRAPHY::STGEOMFROMTEXT")) && requireProEdition()) {
 
 
@@ -8461,6 +8471,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (parseFunctionNameIf("ST_ASBINARY") && requireProEdition()) {
+
+
+
+                }
                 else if (parseFunctionNameIf("ST_ASTEXT") && requireProEdition()) {
 
 
@@ -8516,7 +8531,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (parseFunctionNameIf("ST_GEOMFROMWKB") && requireProEdition()) {
+
+
+
+                }
                 else if (parseFunctionNameIf("ST_GEOMFROMTEXT", "SDO_GEOMETRY") && requireProEdition()) {
+
+
+
+
 
 
 

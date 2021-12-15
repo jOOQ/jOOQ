@@ -85,6 +85,9 @@ implements
         else
             result = new ListAgg(distinct, field, inline(separator));
 
+        if (filter != null)
+            result.filterWhere(filter);
+
 
 
 

@@ -70,10 +70,10 @@ import org.jooq.impl.QOM.MCollection;
  */
 class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart implements MCollection<T>, SimpleQueryPart, SeparatedQueryPart {
 
-    final Collection<T>              wrapped;
-    Boolean                          qualify;
-    String                           separator;
-    Function<? super T, ? extends T> mapper;
+    final Collection<T>                    wrapped;
+    Boolean                                qualify;
+    String                                 separator;
+    ObjIntFunction<? super T, ? extends T> mapper;
 
     static final <T extends QueryPart> QueryPartCollectionView<T> wrap(Collection<T> wrapped) {
         return new QueryPartCollectionView<>(wrapped);
@@ -97,6 +97,10 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
     }
 
     QueryPartCollectionView<T> map(Function<? super T, ? extends T> newMapper) {
+        return map((t, i) -> newMapper.apply(t));
+    }
+
+    QueryPartCollectionView<T> map(ObjIntFunction<? super T, ? extends T> newMapper) {
         this.mapper = mapper == null ? newMapper : mapper.andThen(newMapper);
         return this;
     }
@@ -169,11 +173,12 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
 
             for (T part : this) {
                 try {
+                    int j0 = j;
                     if (!rendersContent.get(j++))
                         continue;
 
                     if (mapper != null)
-                        part = mapper.apply(part);
+                        part = mapper.apply(part, j0);
 
                     if (k++ > 0) {
 

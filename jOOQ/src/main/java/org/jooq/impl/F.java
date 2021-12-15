@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
@@ -142,6 +143,10 @@ interface BooleanConsumer {
 @FunctionalInterface
 interface ObjIntFunction<T, R> {
     R apply(T t, int i);
+
+    default <V> ObjIntFunction<T, V> andThen(ObjIntFunction<? super R, ? extends V> after) {
+        return (t, i) -> after.apply(apply(t, i), i);
+    }
 }
 
 /**

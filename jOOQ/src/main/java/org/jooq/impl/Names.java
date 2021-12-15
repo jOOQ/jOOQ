@@ -428,6 +428,7 @@ final class Names {
     static final Name N_STDDEV_POP             = unquotedName("stddev_pop");
     static final Name N_STDDEV_SAMP            = unquotedName("stddev_samp");
     static final Name N_ST_AREA                = unquotedName("st_area");
+    static final Name N_ST_ASBINARY            = unquotedName("st_asbinary");
     static final Name N_ST_ASTEXT              = unquotedName("st_astext");
     static final Name N_ST_CENTROID            = unquotedName("st_centroid");
     static final Name N_ST_CONTAINS            = unquotedName("st_contains");
@@ -441,6 +442,7 @@ final class Names {
     static final Name N_ST_GEOMETRYN           = unquotedName("st_geometryn");
     static final Name N_ST_GEOMETRYTYPE        = unquotedName("st_geometrytype");
     static final Name N_ST_GEOMFROMTEXT        = unquotedName("st_geomfromtext");
+    static final Name N_ST_GEOMFROMWKB         = unquotedName("st_geomfromwkb");
     static final Name N_ST_INTERIORRINGN       = unquotedName("st_interiorringn");
     static final Name N_ST_INTERSECTION        = unquotedName("st_intersection");
     static final Name N_ST_INTERSECTS          = unquotedName("st_intersects");

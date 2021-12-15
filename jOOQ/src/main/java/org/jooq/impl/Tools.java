@@ -938,7 +938,16 @@ final class Tools {
      * All hexadecimal digits accessible through array index, e.g.
      * <code>HEX_DIGITS[15] == 'f'</code>.
      */
-    private static final char[]          HEX_DIGITS                         = "0123456789abcdef".toCharArray();
+    private static final char[]          HEX_DIGITS                         = "0123456789ABCDEF".toCharArray();
+    private static final byte[]          HEX_LOOKUP                         = {
+        /* 0x00 */ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        /* 0x10 */ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        /* 0x20 */ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        /* 0x30 */ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  0,  0,  0,  0,  0,  0,
+        /* 0x40 */ 0, 10, 11, 12, 13, 14, 15,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        /* 0x50 */ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        /* 0x60 */ 0, 10, 11, 12, 13, 14, 15,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+    };
 
     static final Set<SQLDialect>         REQUIRES_BACKSLASH_ESCAPING        = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>         NO_SUPPORT_NULL                    = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
@@ -5858,14 +5867,17 @@ final class Tools {
      * @param len the number of bytes to encode
      * @return the hex encoded string
      */
-    static final String convertBytesToHex(byte[] value, int len) {
-        char[] buff = new char[len + len];
+    static final String convertBytesToHex(byte[] value, int offset, int len) {
+        len = Math.min(value.length - offset, len);
+        char[] buff = new char[2 * len];
         char[] hex = HEX_DIGITS;
+
         for (int i = 0; i < len; i++) {
-            int c = value[i] & 0xff;
+            int c = value[i + offset] & 0xff;
             buff[i + i] = hex[c >> 4];
             buff[i + i + 1] = hex[c & 0xf];
         }
+
         return new String(buff);
     }
 
@@ -5876,7 +5888,43 @@ final class Tools {
      * @return the hex encoded string
      */
     static final String convertBytesToHex(byte[] value) {
-        return convertBytesToHex(value, value.length);
+        return convertBytesToHex(value, 0, value.length);
+    }
+
+    /**
+     * Convert a hex encoded string to a byte array.
+     *
+     * @param value the hex encoded string
+     * @param len the number of bytes to encode
+     * @return the byte array
+     */
+    static final byte[] convertHexToBytes(String value, int offset, int len) {
+        len = Math.min(value.length() / 2 - offset, len);
+        byte[] buff = new byte[len];
+        byte[] lookup = HEX_LOOKUP;
+        int max = lookup.length;
+
+        for (int i = 0; i < len; i++) {
+            int pos = (i + offset) * 2;
+            char c1 = value.charAt(pos);
+            char c2 = value.charAt(pos + 1);
+            byte v1 = c1 < max ? lookup[c1] : 0;
+            byte v2 = c2 < max ? lookup[c2] : 0;
+
+            buff[i] = (byte) ((v1 << 4) + v2);
+        }
+
+        return buff;
+    }
+
+    /**
+     * Convert a hex encoded string to a byte array.
+     *
+     * @param value the hex encoded string
+     * @return the byte array
+     */
+    static final byte[] convertHexToBytes(String value) {
+        return convertHexToBytes(value, 0, value.length());
     }
 
     static final boolean isNotEmpty(Collection<?> collection) {

@@ -23,7 +23,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>3.2.6.RELEASE</org.springframework.version>
-        <org.h2.version>1.4.199</org.h2.version>
     </properties>
 
     <dependencies>
@@ -54,6 +53,12 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j18-impl</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <scope>compile</scope>
         </dependency>
         
         <!-- Testing -->
@@ -165,7 +170,7 @@
                     <dependency>
                         <groupId>com.h2database</groupId>
                         <artifactId>h2</artifactId>
-                        <version>${org.h2.version}</version>
+                        <version>${h2.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -217,6 +222,7 @@
                         </goals>
                         <configuration>
                             <mainClass>org.jooq.example.spark.SparkCRUD</mainClass>
+<classpathScope>compile</classpathScope>
                         </configuration>
                     </execution>
                 </executions>

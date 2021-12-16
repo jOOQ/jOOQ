@@ -14,7 +14,7 @@ CREATE TABLE book (
   title VARCHAR(400) NOT NULL,
 
   CONSTRAINT pk_t_book PRIMARY KEY (id),
-  CONSTRAINT fk_t_book_author_id FOREIGN KEY (author_id) REFERENCES author(id) ON DELETE CASCADE,
+  CONSTRAINT fk_t_book_author_id FOREIGN KEY (author_id) REFERENCES author(id) ON DELETE CASCADE
 );
 
 INSERT INTO author VALUES (DEFAULT, 'George Orwell');

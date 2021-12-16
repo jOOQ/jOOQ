@@ -23,7 +23,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.h2.version>1.4.199</org.h2.version>
     </properties>
 
     <dependencies>
@@ -137,7 +136,7 @@
                     <dependency>
                         <groupId>com.h2database</groupId>
                         <artifactId>h2</artifactId>
-                        <version>${org.h2.version}</version>
+                        <version>${h2.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>

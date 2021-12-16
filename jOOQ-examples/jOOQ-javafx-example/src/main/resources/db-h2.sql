@@ -4,11 +4,11 @@ CREATE SCHEMA world;
 
 CREATE TABLE world.countries (
   code CHAR(2) NOT NULL,
-  year INT NOT NULL,
+  "YEAR" INT NOT NULL,
   gdp_per_capita DECIMAL(10, 2) NOT NULL,
   govt_debt DECIMAL(10, 2) NOT NULL,
 
-  CONSTRAINT pk_countries PRIMARY KEY (code, year)
+  CONSTRAINT pk_countries PRIMARY KEY (code, "YEAR")
 );
 
 INSERT INTO world.countries

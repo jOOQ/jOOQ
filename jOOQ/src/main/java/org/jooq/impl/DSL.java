@@ -26812,7 +26812,7 @@ public class DSL {
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
     @NotNull
-    @Support({ H2, POSTGRES, YUGABYTE })
+    @Support({ H2, MARIADB, POSTGRES, YUGABYTE })
     public static OrderedAggregateFunction<BigDecimal> percentileCont(Number number) {
         return percentileCont(val(number));
     }
@@ -26827,7 +26827,7 @@ public class DSL {
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
     @NotNull
-    @Support({ H2, POSTGRES, YUGABYTE })
+    @Support({ H2, MARIADB, POSTGRES, YUGABYTE })
     public static OrderedAggregateFunction<BigDecimal> percentileCont(Field<? extends Number> field) {
         return new DefaultAggregateFunction<>(N_PERCENTILE_CONT, SQLDataType.NUMERIC, Tools.nullSafe(field));
     }
@@ -26842,7 +26842,7 @@ public class DSL {
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
     @NotNull
-    @Support({ H2, POSTGRES, YUGABYTE })
+    @Support({ H2, MARIADB, POSTGRES, YUGABYTE })
     public static OrderedAggregateFunction<BigDecimal> percentileDisc(Number number) {
         return percentileDisc(val(number));
     }
@@ -26857,7 +26857,7 @@ public class DSL {
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
     @NotNull
-    @Support({ H2, POSTGRES, YUGABYTE })
+    @Support({ H2, MARIADB, POSTGRES, YUGABYTE })
     public static OrderedAggregateFunction<BigDecimal> percentileDisc(Field<? extends Number> field) {
         return new DefaultAggregateFunction<>(N_PERCENTILE_DISC, SQLDataType.NUMERIC, Tools.nullSafe(field));
     }

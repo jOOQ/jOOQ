@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.query;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.Keywords.K_DISTINCT;
@@ -69,6 +70,7 @@ import static org.jooq.impl.Names.N_LISTAGG;
 import static org.jooq.impl.Names.N_STRING_AGG;
 import static org.jooq.impl.Names.N_XMLSERIALIZE;
 import static org.jooq.impl.Names.N_XMLTEXT;
+import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.Tools.appendSQL;
@@ -199,16 +201,13 @@ final class ListAgg extends AbstractAggregateFunction<String> implements UNotYet
 
         ctx.sql('(');
 
-        if (distinct)
-            ctx.visit(K_DISTINCT).sql(' ');
-
         // The explicit cast is needed in Postgres
-        ctx.visit(castIfNeeded((Field<?>) arguments.get(0), String.class));
+        QueryPartListView<Field<?>> args =  wrap(
+            castIfNeeded((Field<?>) arguments.get(0), String.class),
+            arguments.size() > 1 ? arguments.get(1) : inline("")
+        );
 
-        if (arguments.size() > 1)
-            ctx.sql(", ").visit(arguments.get(1));
-        else
-            ctx.sql(", ''");
+        acceptArguments1(ctx, args);
 
 
 

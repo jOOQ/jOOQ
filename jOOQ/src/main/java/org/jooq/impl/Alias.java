@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.IGNITE;
 // ...
@@ -101,6 +102,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Name.Quoted;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
@@ -121,7 +123,10 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
     private static final Set<SQLDialect> SUPPORT_AS_REQUIRED                   = SQLDialect.supportedBy(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE);
     private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1 = SQLDialect.supportedBy(CUBRID, FIREBIRD, MYSQL);
     private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2 = SQLDialect.supportedBy(IGNITE, MARIADB, MYSQL, SQLITE);
-    private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3 = SQLDialect.supportedBy(H2);
+
+
+
+
 
     final Q                              wrapped;
     final Q                              wrapping;
@@ -218,7 +223,10 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
         else if (fieldAliases != null && (
                 emulatedDerivedColumnList
              || SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2.contains(dialect)
-             || SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3.contains(dialect))) {
+
+
+
+        )) {
 
             emulatedDerivedColumnList = true;
 
@@ -238,16 +246,18 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
 
                 List<Field<?>> select = wrappedAsSelect.getSelect();
 
-                // [#9486] H2 cannot handle duplicate column names in derived tables, despite derived column lists
-                //         See: https://github.com/h2database/h2database/issues/2532
-                if (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3.contains(dialect)) {
-                    List<Name> names = map(select, Field::getUnqualifiedName);
 
-                    if (names.size() > 0 && names.size() == new HashSet<>(names).size()) {
-                        toSQLWrapped(context);
-                        emulatedDerivedColumnList = false;
-                    }
-                }
+
+
+
+
+
+
+
+
+
+
+
 
                 if (emulatedDerivedColumnList) {
                     SelectFieldList<Field<?>> fields = new SelectFieldList<>();

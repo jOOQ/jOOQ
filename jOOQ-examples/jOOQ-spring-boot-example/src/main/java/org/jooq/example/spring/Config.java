@@ -4,14 +4,14 @@ import org.jooq.conf.RenderQuotedNames;
 import org.jooq.impl.DefaultConfiguration;
 import org.springframework.boot.autoconfigure.jooq.DefaultConfigurationCustomizer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * Optionally, add additional configuration beans
  *
  * @author Lukas Eder
  */
-@Component
+@Configuration
 public class Config {
 
 	/**

@@ -78,6 +78,7 @@ final class LastValue<T> extends AbstractWindowFunction<T> implements QOM.LastVa
 
 
 
+
                 ctx.sql(')');
                 acceptNullTreatment(ctx);
                 break;

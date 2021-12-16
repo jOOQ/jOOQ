@@ -37,9 +37,9 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.Names.N_NTH_VALUE;
 
-import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
 import org.jooq.Context;
@@ -82,8 +82,18 @@ final class NthValue<T> extends AbstractWindowFunction<T> implements QOM.NthValu
 
 
                 ctx.sql(')');
+
+
+
+
                 acceptFromFirstOrLast(ctx);
-                acceptNullTreatment(ctx);
+                acceptNullTreatmentStandard(ctx);
+
+
+
+
+
+
                 break;
         }
 

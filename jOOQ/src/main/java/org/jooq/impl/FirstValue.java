@@ -78,6 +78,7 @@ final class FirstValue<T> extends AbstractWindowFunction<T> implements QOM.First
 
 
 
+
                 ctx.sql(')');
                 acceptNullTreatment(ctx);
                 break;

@@ -217,6 +217,12 @@ implements
 
 
 
+
+
+
+
+
+
     final void acceptNullTreatment(Context<?> ctx) {
         switch (ctx.family()) {
 
@@ -228,6 +234,19 @@ implements
 
 
 
+
+
+
+
+
+            default:
+                acceptNullTreatmentStandard(ctx);
+                break;
+        }
+    }
+
+    final void acceptNullTreatmentStandard(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 

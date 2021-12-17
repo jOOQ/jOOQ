@@ -61,6 +61,6 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface Constraint extends FieldOrConstraint {
+public /* non-sealed */ interface Constraint extends FieldOrConstraint {
 
 }

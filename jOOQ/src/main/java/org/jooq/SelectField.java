@@ -52,7 +52,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface SelectField<T> extends SelectFieldOrAsterisk, Named, Typed<T> {
+public /* non-sealed */ interface SelectField<T> extends SelectFieldOrAsterisk, Named, Typed<T> {
 
     /**
      * Create an alias for this field.

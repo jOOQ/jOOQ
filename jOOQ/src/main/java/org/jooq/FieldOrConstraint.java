@@ -47,6 +47,12 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface FieldOrConstraint extends Named {
+public /* sealed */ interface FieldOrConstraint
+extends
+    Named
+/* permits
+    Field,
+    Constraint */ 
+{
 
 }

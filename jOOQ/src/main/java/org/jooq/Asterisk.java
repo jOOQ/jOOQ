@@ -69,7 +69,7 @@ import org.jooq.impl.QOM.MList;
  * @see Table#asterisk()
  * @author Lukas Eder
  */
-public interface Asterisk extends SelectFieldOrAsterisk {
+public /* non-sealed */ interface Asterisk extends SelectFieldOrAsterisk {
 
     /**
      * The asterisk (<code>* EXCEPT (fields)</code>) expression to be used in

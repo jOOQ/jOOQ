@@ -67,7 +67,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface QualifiedAsterisk extends SelectFieldOrAsterisk {
+public /* non-sealed */ interface QualifiedAsterisk extends SelectFieldOrAsterisk {
 
     /**
      * The qualifier.

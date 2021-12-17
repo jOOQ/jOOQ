@@ -92,7 +92,7 @@ import org.jetbrains.annotations.Nullable;
  * @author Lukas Eder
  * @see DSL#param(String, Object)
  */
-public interface Param<T> extends ParamOrVariable<T> {
+public /* non-sealed */ interface Param<T> extends ParamOrVariable<T> {
 
     /**
      * The parameter name. This name is useful for two things:

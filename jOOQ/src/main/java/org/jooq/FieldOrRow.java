@@ -55,6 +55,12 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface FieldOrRow extends QueryPart {
+public /* sealed */ interface FieldOrRow
+extends
+    QueryPart
+/* permits
+    Field,
+    Row */ 
+{
 
 }

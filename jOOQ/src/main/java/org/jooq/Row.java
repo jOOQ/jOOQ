@@ -78,7 +78,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface Row extends Fields, FieldOrRow {
+public /* non-sealed */ interface Row extends Fields, FieldOrRow {
 
     /**
      * Get the degree of this row value expression.

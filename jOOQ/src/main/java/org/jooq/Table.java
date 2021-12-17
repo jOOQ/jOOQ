@@ -97,7 +97,7 @@ import org.jetbrains.annotations.Nullable;
  * different types of tables, including:
  * <p>
  * <ul>
- * <li>Generated table references</li>
+ * <li>Generated table or view references</li>
  * <li>Plain SQL tables created with {@link DSL#table(String)}</li>
  * <li>Table references created with {@link DSL#table(Name)}</li>
  * <li>Derived tables created with {@link DSL#table(Select)}</li>

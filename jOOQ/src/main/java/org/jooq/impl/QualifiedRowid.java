@@ -99,11 +99,11 @@ implements
 
 
             case H2:
-                ctx.visit(table.getQualifiedName().append(unquotedName("_rowid_")));
+                ctx.visit(table.getQualifiedName().append(systemName("_rowid_")));
                 break;
 
             case POSTGRES:
-                ctx.visit(table.getQualifiedName().append(unquotedName("ctid")));
+                ctx.visit(table.getQualifiedName().append(systemName("ctid")));
                 break;
 
 
@@ -113,7 +113,7 @@ implements
 
 
             default:
-                ctx.visit(table.getQualifiedName().append(unquotedName("rowid")));
+                ctx.visit(table.getQualifiedName().append(systemName("rowid")));
                 break;
         }
     }

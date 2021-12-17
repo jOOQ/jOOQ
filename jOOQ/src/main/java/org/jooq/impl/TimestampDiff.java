@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.keyword;
+import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.Keywords.K_MILLISECOND;
 import static org.jooq.impl.Names.N_DATEDIFF;
 import static org.jooq.impl.Names.N_DAYS;

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.Name.Quoted.DEFAULT;
 import static org.jooq.Name.Quoted.QUOTED;
+import static org.jooq.Name.Quoted.SYSTEM;
 import static org.jooq.Name.Quoted.UNQUOTED;
 // ...
 import static org.jooq.impl.Tools.stringLiteral;
@@ -84,13 +85,16 @@ final class UnqualifiedName extends AbstractName {
 
 
 
+
+
         RenderQuotedNames q = SettingsTools.getRenderQuotedNames(ctx.settings());
 
         boolean previous = ctx.quote();
-        boolean current =
+        boolean current = quoted != SYSTEM && (
              q == RenderQuotedNames.ALWAYS
           || q == RenderQuotedNames.EXPLICIT_DEFAULT_QUOTED && (quoted == DEFAULT || quoted == QUOTED)
-          || q == RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED && quoted == QUOTED;
+          || q == RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED && quoted == QUOTED
+        );
 
         ctx.quote(current);
         ctx.literal(name);

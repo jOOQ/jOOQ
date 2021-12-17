@@ -126,11 +126,14 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
                 ctx.configuration().set(new DefaultVisitListener() {
                     @Override
                     public void visitStart(VisitContext vc) {
-                        if (vc.queryPart() instanceof Name) {
-                            Name[] parts = ((Name) vc.queryPart()).parts();
+                        if (vc.queryPart() instanceof Name) { Name n = (Name) vc.queryPart();
+                            Name[] parts = n.parts();
                             boolean changed = false;
 
                             for (int i = 0; i < parts.length; i++) {
+
+                                // [#9931] [#12752] This explicitly excludes the new Quoted.SYSTEM
+                                //                  flag for DSL.systemName() names
                                 if (parts[i].quoted() == Quoted.UNQUOTED) {
                                     parts[i] = DSL.quotedName(
                                         "UPPER".equals(defaultNameCase)

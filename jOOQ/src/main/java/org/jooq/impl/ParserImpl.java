@@ -339,6 +339,7 @@ import static org.jooq.impl.DSL.stddevSamp;
 import static org.jooq.impl.DSL.sum;
 import static org.jooq.impl.DSL.sumDistinct;
 // ...
+import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.tan;
 import static org.jooq.impl.DSL.tanh;
@@ -9080,7 +9081,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parseKeywordIf("NAME");
 
             if (parseIf(')'))
-                return xmlelement(unquotedName("NAME"));
+                return xmlelement(systemName("NAME"));
 
             Name name = parseIdentifier();
             XMLAttributes attr = null;

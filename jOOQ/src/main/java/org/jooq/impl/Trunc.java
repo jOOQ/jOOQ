@@ -131,7 +131,7 @@ implements
             case POSTGRES:
             case YUGABYTE:
                 ctx.visit(castIfNeeded(
-                    DSL.function("trunc", NUMERIC,
+                    DSL.function(N_TRUNC, NUMERIC,
                         castIfNeeded(value, NUMERIC),
                         decimals
                     ),

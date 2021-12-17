@@ -50,7 +50,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.YUGABYTE;
 import static org.jooq.impl.CommentImpl.NO_COMMENT;
-import static org.jooq.impl.DSL.unquotedName;
+import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.DefaultBinding.binding;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BINARY;
@@ -304,11 +304,11 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     }
 
     public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName) {
-        this(dialect, null, type, unquotedName(typeName), typeName, null, null, null, null, Nullability.DEFAULT, null);
+        this(dialect, null, type, systemName(typeName), typeName, null, null, null, null, Nullability.DEFAULT, null);
     }
 
     public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName, String castTypeName) {
-        this(dialect, null, type, unquotedName(typeName), typeName, castTypeName, null, null, null, Nullability.DEFAULT, null);
+        this(dialect, null, type, systemName(typeName), typeName, castTypeName, null, null, null, Nullability.DEFAULT, null);
     }
 
     DefaultDataType(SQLDialect dialect, Class<T> type, Name qualifiedTypeName) {

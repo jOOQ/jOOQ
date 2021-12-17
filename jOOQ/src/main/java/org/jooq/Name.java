@@ -122,6 +122,11 @@ public interface Name extends QueryPart, Comparable<Name> {
         UNQUOTED,
 
         /**
+         * The name is a system name, and thus it is never quoted.
+         */
+        SYSTEM,
+
+        /**
          * The name is not quoted explicitly.
          * <p>
          * The behaviour of this name's quoting is governed by

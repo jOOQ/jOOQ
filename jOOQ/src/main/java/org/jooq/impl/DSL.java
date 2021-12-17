@@ -414,6 +414,7 @@ import org.jooq.XMLFormat;
 import org.jooq.XMLQueryPassingStep;
 import org.jooq.XMLTablePassingStep;
 import org.jooq.conf.NestedCollectionEmulation;
+import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.QOM.DocumentOrContent;
@@ -11758,6 +11759,60 @@ public class DSL {
     @Support
     public static Name unquotedName(Collection<String> qualifiedName) {
         return unquotedName(qualifiedName.toArray(Tools.EMPTY_STRING));
+    }
+
+    /**
+     * Create a new SQL identifier using an unqualified, quoted name.
+     * <p>
+     * This works like {@link #name(String...)}, except that generated
+     * identifiers will be guaranteed to be unquoted, even when the relevant
+     * {@link Settings#getRenderQuotedNames()} flag is set to
+     * {@link RenderQuotedNames#ALWAYS}.
+     *
+     * @param unqualifiedName The SQL identifier's unqualified name
+     * @return A {@link QueryPart} that will render the SQL identifier
+     */
+    @NotNull
+    @Support
+    public static Name systemName(String unqualifiedName) {
+        return new UnqualifiedName(unqualifiedName, Quoted.SYSTEM);
+    }
+
+    /**
+     * Create a new SQL identifier using a qualified, quoted name.
+     * <p>
+     * This works like {@link #name(String...)}, except that generated
+     * identifiers will be guaranteed to be unquoted, even when the relevant
+     * {@link Settings#getRenderQuotedNames()} flag is set to
+     * {@link RenderQuotedNames#ALWAYS}.
+     *
+     * @param qualifiedName The SQL identifier's qualified name parts
+     * @return A {@link QueryPart} that will render the SQL identifier
+     */
+    @NotNull
+    @Support
+    public static Name systemName(String... qualifiedName) {
+        if (qualifiedName == null || qualifiedName.length != 1)
+            return new QualifiedName(qualifiedName, Quoted.SYSTEM);
+        else
+            return new UnqualifiedName(qualifiedName[0], Quoted.SYSTEM);
+    }
+
+    /**
+     * Create a new SQL identifier using a qualified, system name.
+     * <p>
+     * This works like {@link #name(Collection)}, except that generated
+     * identifiers will be guaranteed to be unquoted, even when the relevant
+     * {@link Settings#getRenderQuotedNames()} flag is set to
+     * {@link RenderQuotedNames#ALWAYS}.
+     *
+     * @param qualifiedName The SQL identifier's qualified name parts
+     * @return A {@link QueryPart} that will render the SQL identifier
+     */
+    @NotNull
+    @Support
+    public static Name systemName(Collection<String> qualifiedName) {
+        return systemName(qualifiedName.toArray(Tools.EMPTY_STRING));
     }
 
     // -------------------------------------------------------------------------

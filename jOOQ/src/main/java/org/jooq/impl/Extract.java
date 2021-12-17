@@ -43,6 +43,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.isoDayOfWeek;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.Internal.iadd;
 import static org.jooq.impl.Internal.idiv;
 import static org.jooq.impl.Internal.imul;
@@ -127,7 +128,7 @@ final class Extract extends AbstractField<Integer> implements QOM.Extract {
                         ctx.visit(function(N_STRFTIME, VARCHAR, inline("%s"), field).cast(INTEGER));
                         return;
                     case ISO_DAY_OF_WEEK:
-                        ctx.visit(dowSun0ToISO(function("strftime", INTEGER, inline("%w"), field).cast(INTEGER)));
+                        ctx.visit(dowSun0ToISO(function(systemName("strftime"), INTEGER, inline("%w"), field).cast(INTEGER)));
                         return;
                     case DAY_OF_WEEK:
                         ctx.visit(function(N_STRFTIME, VARCHAR, inline("%w"), field).cast(INTEGER).plus(one()));

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.CONCAT;
 import static org.jooq.impl.Names.N_CONCAT;
@@ -89,7 +90,7 @@ final class Concat extends AbstractField<String> implements QOM.Concat {
 
             case MARIADB:
             case MYSQL:
-                ctx.visit(function("concat", SQLDataType.VARCHAR, cast));
+                ctx.visit(function(systemName("concat"), SQLDataType.VARCHAR, cast));
                 return;
 
 

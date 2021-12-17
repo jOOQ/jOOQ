@@ -11551,8 +11551,10 @@ public class DSL {
      * Create a new SQL identifier using an unqualified, quoted name.
      * <p>
      * This works like {@link #name(String...)}, except that generated
-     * identifiers will be guaranteed to be quoted in databases that support
-     * quoted identifiers.
+     * identifiers will be quoted by default in databases that support quoted
+     * identifiers, exept if forced to be unquoted using
+     * {@link Settings#getRenderQuotedNames()} with value
+     * {@link RenderQuotedNames#NEVER}.
      *
      * @param unqualifiedName The SQL identifier's unqualified name
      * @return A {@link QueryPart} that will render the SQL identifier
@@ -11567,8 +11569,10 @@ public class DSL {
      * Create a new SQL identifier using a qualified, quoted name.
      * <p>
      * This works like {@link #name(String...)}, except that generated
-     * identifiers will be guaranteed to be quoted in databases that support
-     * quoted identifiers.
+     * identifiers will be quoted by default in databases that support quoted
+     * identifiers, exept if forced to be unquoted using
+     * {@link Settings#getRenderQuotedNames()} with value
+     * {@link RenderQuotedNames#NEVER}.
      *
      * @param qualifiedName The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
@@ -11583,8 +11587,10 @@ public class DSL {
      * Create a new SQL identifier using a qualified, quoted name.
      * <p>
      * This works like {@link #name(Collection)}, except that generated
-     * identifiers will be guaranteed to be quoted in databases that support
-     * quoted identifiers.
+     * identifiers will be quoted by default in databases that support quoted
+     * identifiers, exept if forced to be unquoted using
+     * {@link Settings#getRenderQuotedNames()} with value
+     * {@link RenderQuotedNames#NEVER}.
      *
      * @param qualifiedName The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
@@ -11598,9 +11604,10 @@ public class DSL {
     /**
      * Create a new SQL identifier using an unqualified, quoted name.
      * <p>
-     * This works like {@link #name(String...)}, except that generated
-     * identifiers will be guaranteed to be quoted in databases that support
-     * quoted identifiers.
+     * This works like {@link #name(String)}, except that generated
+     * identifiers will be unquoted by default, except if forced to be quoted
+     * using {@link Settings#getRenderQuotedNames()} with value
+     * {@link RenderQuotedNames#ALWAYS}.
      *
      * @param unqualifiedName The SQL identifier's unqualified name
      * @return A {@link QueryPart} that will render the SQL identifier
@@ -11615,8 +11622,9 @@ public class DSL {
      * Create a new SQL identifier using a qualified, quoted name.
      * <p>
      * This works like {@link #name(String...)}, except that generated
-     * identifiers will be guaranteed to be quoted in databases that support
-     * quoted identifiers.
+     * identifiers will be unquoted by default, except if forced to be quoted
+     * using {@link Settings#getRenderQuotedNames()} with value
+     * {@link RenderQuotedNames#ALWAYS}.
      *
      * @param qualifiedName The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
@@ -11634,8 +11642,9 @@ public class DSL {
      * Create a new SQL identifier using a qualified, quoted name.
      * <p>
      * This works like {@link #name(Collection)}, except that generated
-     * identifiers will be guaranteed to be quoted in databases that support
-     * quoted identifiers.
+     * identifiers will be unquoted by default, except if forced to be quoted
+     * using {@link Settings#getRenderQuotedNames()} with value
+     * {@link RenderQuotedNames#ALWAYS}.
      *
      * @param qualifiedName The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier

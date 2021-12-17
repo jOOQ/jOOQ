@@ -232,6 +232,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -580,8 +581,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return result;
     }
 
-    private final SelectQueryImpl<R> copy(Function<? super SelectQueryImpl<R>, ? extends SelectQueryImpl<R>> finisher) {
-        return finisher.apply(copyTo(CopyClause.END, false, new SelectQueryImpl<>(configuration(), with)));
+    private final SelectQueryImpl<R> copy(Consumer<? super SelectQueryImpl<R>> finisher) {
+        SelectQueryImpl<R> result = copyTo(CopyClause.END, false, new SelectQueryImpl<>(configuration(), with));
+        finisher.accept(result);
+        return result;
     }
 
 
@@ -1216,9 +1219,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
-
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private final Select<?> distinctOnEmulation() {
 
@@ -1231,7 +1231,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         Field<Integer> rn = rowNumber().over(partitionBy(partitionBy).orderBy(orderBy)).as("rn");
 
-        SelectQueryImpl<R> copy = copy(identity());
+        SelectQueryImpl<R> copy = copy(x -> {});
         copy.distinctOn = null;
         copy.select.add(rn);
         copy.orderBy.clear();
@@ -1252,7 +1252,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         else
             return limit.offset != null ? s1.offset((Param) limit.offset) : s1;
     }
-
 
 
 
@@ -4483,14 +4482,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final SelectQueryImpl<?> $select(MList<? extends SelectFieldOrAsterisk> select) {
-        if ($select() == select)
+    public final SelectQueryImpl<?> $select(MList<? extends SelectFieldOrAsterisk> newSelect) {
+        if ($select() == newSelect)
             return this;
         else
             return copy(s -> {
                 s.select.clear();
-                s.select.addAll(select);
-                return s;
+                s.select.addAll(newSelect);
             });
     }
 
@@ -4500,25 +4498,40 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
+    public final Select<R> $distinct(boolean newDistinct) {
+        if ($distinct() == newDistinct)
+            return this;
+        else
+            return copy(s -> s.distinct = newDistinct);
+    }
+
+    @Override
     public final TableList $from() {
         return from;
     }
 
     @Override
-    public final SelectQueryImpl<?> $from(MList<? extends Table<?>> from) {
-        if ($from() == from)
+    public final SelectQueryImpl<R> $from(MList<? extends Table<?>> newFrom) {
+        if ($from() == newFrom)
             return this;
         else
             return copy(s -> {
                 s.from.clear();
-                s.from.addAll(from);
-                return s;
+                s.from.addAll(newFrom);
             });
     }
 
     @Override
     public final Condition $where() {
         return condition;
+    }
+
+    @Override
+    public final Select<R> $where(Condition newWhere) {
+        if ($where() == newWhere)
+            return this;
+        else
+            return copy(s -> s.condition.setWhere(newWhere));
     }
 
     @Override
@@ -4532,8 +4545,24 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
+    public final Select<R> $groupByDistinct(boolean newGroupByDistinct) {
+        if ($groupByDistinct() == newGroupByDistinct)
+            return this;
+        else
+            return copy(s -> s.groupByDistinct = newGroupByDistinct);
+    }
+
+    @Override
     public final Condition $having() {
         return having;
+    }
+
+    @Override
+    public final Select<R> $having(Condition newHaving) {
+        if ($having() == newHaving)
+            return this;
+        else
+            return copy(s -> s.having.setWhere(newHaving));
     }
 
     @Override
@@ -4547,9 +4576,60 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
+    public final Select<R> $qualify(Condition newQualify) {
+        if ($qualify() == newQualify)
+            return this;
+        else
+            return copy(s -> s.qualify.setWhere(newQualify));
+    }
+
+    @Override
     public final QueryPartList<SortField<?>> $orderBy() {
         return orderBy;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final <T> T $traverse(Traverser<?, T> traverser) {

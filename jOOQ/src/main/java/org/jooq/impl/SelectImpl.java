@@ -3390,18 +3390,28 @@ implements
     }
 
     @Override
+    public final Select<R> $distinct(boolean distinct) {
+        return getDelegate().$distinct(distinct);
+    }
+
+    @Override
     public final MList<? extends Table<?>> $from() {
         return getDelegate().$from();
     }
 
     @Override
-    public final Select<?> $from(MList<? extends Table<?>> from) {
+    public final Select<R> $from(MList<? extends Table<?>> from) {
         return getDelegate().$from(from);
     }
 
     @Override
     public final Condition $where() {
         return getDelegate().$where();
+    }
+
+    @Override
+    public final Select<R> $where(Condition condition) {
+        return getDelegate().$where(condition);
     }
 
     @Override
@@ -3415,8 +3425,18 @@ implements
     }
 
     @Override
+    public final Select<R> $groupByDistinct(boolean groupByDistinct) {
+        return getDelegate().$groupByDistinct(groupByDistinct);
+    }
+
+    @Override
     public final Condition $having() {
         return getDelegate().$having();
+    }
+
+    @Override
+    public final Select<R> $having(Condition condition) {
+        return getDelegate().$having(condition);
     }
 
     @Override
@@ -3430,7 +3450,47 @@ implements
     }
 
     @Override
+    public final Select<R> $qualify(Condition condition) {
+        return getDelegate().$qualify(condition);
+    }
+
+    @Override
     public MList<? extends SortField<?>> $orderBy() {
         return getDelegate().$orderBy();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

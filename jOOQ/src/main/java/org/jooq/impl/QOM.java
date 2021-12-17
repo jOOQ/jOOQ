@@ -503,7 +503,9 @@ public final class QOM {
     // XXX: SelectFields, GroupFields and SortFields
     // -------------------------------------------------------------------------
 
-    public /*sealed*/ interface Rollup
+    // Can't seal these types yet because of https://bugs.eclipse.org/bugs/show_bug.cgi?id=577872
+
+    public /* non-sealed */ interface Rollup
         extends
             GroupField,
             UOperator1<MList<? extends FieldOrRow>, GroupField>
@@ -511,7 +513,7 @@ public final class QOM {
             Rollup*/
     {}
 
-    public /*sealed*/ interface Cube
+    public /* non-sealed */ interface Cube
         extends
             GroupField,
             UOperator1<MList<? extends FieldOrRow>, GroupField>
@@ -519,7 +521,7 @@ public final class QOM {
             Cube*/
     {}
 
-    public /*sealed*/ interface GroupingSets
+    public /* non-sealed */ interface GroupingSets
         extends
             GroupField,
             UOperator1<MList<? extends MList<? extends FieldOrRow>>, GroupField>

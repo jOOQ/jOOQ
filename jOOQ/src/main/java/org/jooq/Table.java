@@ -125,7 +125,7 @@ import org.jetbrains.annotations.Nullable;
  * @param <R> The record type associated with this table
  * @author Lukas Eder
  */
-public interface Table<R extends Record>
+public /* non-sealed */ interface Table<R extends Record>
 extends
     TableLike<R>,
     RecordQualifier<R>,

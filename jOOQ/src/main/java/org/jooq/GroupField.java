@@ -38,6 +38,7 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM;
 
 /**
  * An expression to be used exclusively in <code>GROUP BY</code> clauses.
@@ -64,6 +65,6 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface GroupField extends QueryPart {
+public /* sealed */ interface GroupField extends QueryPart /* permits Table, Field, QOM.Rollup, QOM.Cube, QOM.GroupingSets */  {
 
 }

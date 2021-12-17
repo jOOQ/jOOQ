@@ -188,13 +188,27 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
     @NotNull MList<? extends SelectFieldOrAsterisk> $select();
     @NotNull Select<?> $select(MList<? extends SelectFieldOrAsterisk> select);
     boolean $distinct();
+    @NotNull Select<R> $distinct(boolean distinct);
     @NotNull MList<? extends Table<?>> $from();
-    @NotNull Select<?> $from(MList<? extends Table<?>> from);
+    @NotNull Select<R> $from(MList<? extends Table<?>> from);
     @Nullable Condition $where();
+    @NotNull Select<R> $where(Condition condition);
     @NotNull MList<? extends GroupField> $groupBy();
     boolean $groupByDistinct();
+    @NotNull Select<R> $groupByDistinct(boolean groupByDistinct);
     @Nullable Condition $having();
+    @NotNull Select<R> $having(Condition condition);
     @NotNull MList<? extends WindowDefinition> $window();
     @Nullable Condition $qualify();
+    @NotNull Select<R> $qualify(Condition condition);
     @NotNull MList<? extends SortField<?>> $orderBy();
+
+
+
+
+
+
+
+
+
 }

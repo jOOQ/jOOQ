@@ -310,20 +310,24 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
         return parsed();
     }
 
-    @Override
-    public final <T> T $traverse(Traverser<?, T> traverser) {
-        return QOM.traverse(traverser, this, $view(), $fields(), $query());
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, view, fields, select, (v, f, s) -> {
-            CreateViewImpl<Record> r = new CreateViewImpl<>(configuration(), v, f, ifNotExists, orReplace);
-            r.select = s;
-            return r;
-        }, recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

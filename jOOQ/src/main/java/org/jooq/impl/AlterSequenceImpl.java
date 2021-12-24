@@ -611,44 +611,48 @@ implements
         return (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) -> new AlterSequenceImpl(configuration(), a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
     }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            $sequence(),
-            $ifExists(),
-            $renameTo(),
-            $restart(),
-            $restartWith(),
-            $startWith(),
-            $incrementBy(),
-            $minvalue(),
-            $noMinvalue(),
-            $maxvalue(),
-            $noMaxvalue(),
-            $cycle(),
-            $cache(),
-            $noCache(),
-            (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) -> constructor().apply(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14),
-            recurse,
-            replacement
-        );
-    }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this,
-            $sequence(),
-            $renameTo(),
-            $restartWith(),
-            $startWith(),
-            $incrementBy(),
-            $minvalue(),
-            $maxvalue(),
-            $cache()
-        );
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

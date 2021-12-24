@@ -339,27 +339,31 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
         wrapped.clear();
     }
 
-    // -------------------------------------------------------------------------
-    // XXX: Query Object Model
-    // -------------------------------------------------------------------------
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, wrapped.toArray(EMPTY_QUERYPART));
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, wrapped, l -> {
-            QueryPartList<T> r = new QueryPartList<>(l);
-            if (qualify != null)
-                r = r.qualify(qualify);
-            return r.map(mapper).separator(separator);
-        }, recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

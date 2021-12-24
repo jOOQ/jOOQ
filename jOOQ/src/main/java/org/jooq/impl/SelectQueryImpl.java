@@ -4631,68 +4631,69 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    @Override
-    public final <T> T $traverse(Traverser<?, T> traverser) {
-        return QOM.traverse(
-            traverser,
-            this,
-            $with(),
-            $select(),
-            $distinct(),
-            $from(),
-            $where(),
-            $groupBy(),
-            $having(),
-            $window(),
-            $qualify(),
-            $orderBy()
-        );
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            $with(),
-            $select(),
-            $distinct(),
-            $from(),
-            $where(),
-            $groupBy(),
-            $groupByDistinct(),
-            $having(),
-            $window(),
-            $qualify(),
-            $orderBy(),
-            (cte, s, d, f, c, g, gd, h, w, q, o) -> {
-                SelectQueryImpl<?> r = new SelectQueryImpl<>(configuration(), cte, d);
-                r.select.addAll(s);
-                r.from.addAll(f);
-                r.condition.addConditions(extractCondition(c));
-                r.groupBy = g;
-                r.groupByDistinct = gd;
-                r.having.addConditions(extractCondition(h));
-                r.addWindow(w);
-                r.qualify.addConditions(extractCondition(q));
-                r.orderBy.addAll(o);
-                return r;
-            },
-            recurse,
-            replacement
-        );
-    }
 
-    private final Condition extractCondition(Condition c) {
 
-        // join(..).on(..).and(..) uses some identity tricks to keep the right
-        // reference to the mutable ConditionProviderImpl instance, which we
-        // must take into account here.
-        if (c instanceof ConditionProviderImpl)
-            return ((ConditionProviderImpl) c).getWhere();
-        else
-            return c;
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

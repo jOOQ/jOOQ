@@ -122,22 +122,26 @@ public class CatalogImpl extends AbstractNamed implements Catalog {
         return getSchemas().stream();
     }
 
-    // -------------------------------------------------------------------------
-    // XXX: Query Object Model
-    // -------------------------------------------------------------------------
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, getQualifiedName());
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, getQualifiedName(), getCommentPart(), CatalogImpl::new, recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // ------------------------------------------------------------------------
     // XXX: Object API

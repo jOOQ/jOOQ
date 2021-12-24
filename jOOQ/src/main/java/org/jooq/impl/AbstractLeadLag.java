@@ -176,24 +176,29 @@ abstract class AbstractLeadLag<T> extends AbstractWindowFunction<T> {
         return defaultValue;
     }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, field, offset, defaultValue, $windowSpecification() != null ? $windowSpecification() : $windowDefinition());
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            field, offset, defaultValue, $windowSpecification(), $windowDefinition(),
-            (f, o, def, s, d) -> constructor(f, o, def).$windowSpecification(s).$windowDefinition(d).$nullTreatment(nullTreatment),
-            recurse,
-            replacement
-        );
-    }
 
-    abstract AbstractLeadLag<T> constructor(Field<T> f, Field<Integer> o, Field<T> def);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

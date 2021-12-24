@@ -96,22 +96,26 @@ final class LastValue<T> extends AbstractWindowFunction<T> implements QOM.LastVa
         return field;
     }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, field, $windowSpecification() != null ? $windowSpecification() : $windowDefinition());
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            field, $windowSpecification(), $windowDefinition(),
-            (f, s, d) -> new FirstValue<>(f).$windowSpecification(s).$windowDefinition(d).$nullTreatment(nullTreatment),
-            recurse,
-            replacement
-        );
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -252,30 +252,34 @@ implements
         return (a1, a2, a3, a4, a5) -> new RevokeImpl(configuration(), (Collection<? extends Privilege>) a1, a2, a3, a4, a5);
     }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            $privileges(),
-            $grantOptionFor(),
-            $on(),
-            $from(),
-            $fromPublic(),
-            (a1, a2, a3, a4, a5) -> constructor().apply(a1, a2, a3, a4, a5),
-            recurse,
-            replacement
-        );
-    }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this,
-            $privileges(),
-            $on(),
-            $from()
-        );
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

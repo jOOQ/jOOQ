@@ -93,28 +93,32 @@ final class Function<T> extends AbstractField<T> implements QOM.Function<T> {
         return arguments;
     }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            $args(),
-            a -> new Function<>(getQualifiedName(), getDataType(), a.toArray(EMPTY_FIELD)),
-            recurse,
-            replacement
-        );
-    }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(
-            traverser,
-            this,
-            $args()
-        );
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

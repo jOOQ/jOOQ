@@ -188,28 +188,6 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
     // -------------------------------------------------------------------------
 
     @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            field,
-            minValue,
-            maxValue,
-            not
-                ? symmetric
-                    ? Field::notBetweenSymmetric
-                    : Field::notBetween
-                : symmetric
-                    ? Field::betweenSymmetric
-                    : Field::between,
-            recurse,
-            replacement
-        );
-    }
-
-    @Override
     public final Function3<? super Field<T>, ? super Field<T>, ? super Field<T>, ? extends Condition> constructor() {
         return (f, min, max) -> new BetweenCondition<>(f, min, not, symmetric).and(max);
     }
@@ -233,4 +211,30 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
     public final boolean $symmetric() {
         return symmetric;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

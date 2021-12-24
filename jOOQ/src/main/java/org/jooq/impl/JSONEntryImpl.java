@@ -318,16 +318,20 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
         return value;
     }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, key, value);
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, key, value, JSONEntryImpl::new, recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

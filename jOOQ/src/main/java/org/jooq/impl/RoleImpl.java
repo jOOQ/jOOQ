@@ -78,20 +78,24 @@ final class RoleImpl extends AbstractNamed implements Role {
         return CLAUSES;
     }
 
-    // -------------------------------------------------------------------------
-    // XXX: Query Object Model
-    // -------------------------------------------------------------------------
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, $name());
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, $name(), RoleImpl::new, recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

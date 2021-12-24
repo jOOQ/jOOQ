@@ -158,16 +158,20 @@ final class LazyVal<T> extends AbstractParamX<T> implements QOM.Val<T> {
         return delegate.$value(value);
     }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return delegate.$traverse(traverser);
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return delegate.$replace(recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

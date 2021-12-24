@@ -400,20 +400,24 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
     // -------------------------------------------------------------------------
 
     @Override
-    public final <Q> Q $traverse(Traverser<?, Q> traverser) {
-        return QOM.traverse(traverser, select);
-    }
-
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, select, Multiset::new, recurse, replacement);
-    }
-
-    @Override
     public final Select<R> $select() {
         return select;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

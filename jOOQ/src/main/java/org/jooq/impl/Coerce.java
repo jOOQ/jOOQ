@@ -130,28 +130,32 @@ final class Coerce<T> extends AbstractField<T> implements QOM.Coerce<T> {
         return field;
     }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            $field(),
-            $dataType(),
-            Coerce::new,
-            recurse,
-            replacement
-        );
-    }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(
-            traverser,
-            this,
-            $field(),
-            $dataType()
-        );
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

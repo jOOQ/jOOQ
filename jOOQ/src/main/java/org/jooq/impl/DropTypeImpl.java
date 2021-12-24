@@ -135,20 +135,24 @@ implements
         return cascade;
     }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, type);
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, type, t -> {
-            DropTypeImpl r = new DropTypeImpl(configuration(), t, ifExists);
-            r.cascade = cascade;
-            return r;
-        }, recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

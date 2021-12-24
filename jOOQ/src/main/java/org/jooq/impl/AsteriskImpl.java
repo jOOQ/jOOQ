@@ -122,16 +122,20 @@ final class AsteriskImpl extends AbstractQueryPart implements Asterisk {
         return fields;
     }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, fields);
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, fields, AsteriskImpl::new, recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -192,16 +192,20 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
         return materialized;
     }
 
-    @Override
-    public final <T> T $traverse(Traverser<?, T> traverser) {
-        return QOM.traverse(traverser, this, name, query);
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, name, query, materialized, CommonTableExpressionImpl::new, recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -101,22 +101,26 @@ final class RowsFrom extends AbstractTable<Record> implements QOM.RowsFrom {
         return QueryPartListView.wrap(tables);
     }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            tables.toArray(EMPTY_TABLE),
-            RowsFrom::new,
-            recurse,
-            replacement
-        );
-    }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, $tables());
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

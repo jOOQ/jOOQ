@@ -117,16 +117,20 @@ final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
         return QueryPartListView.wrap(fields.fields);
     }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, $elements());
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, fields, f -> new Array<>(asList((Field<T>[]) f.fields)), recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

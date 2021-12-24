@@ -118,28 +118,32 @@ implements
         return (a1, a2) -> new Sum(a1, a2);
     }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            $field(),
-            $distinct(),
-            (a1, a2) -> constructor().apply(a1, a2),
-            recurse,
-            replacement
-        );
-    }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        QOM.traverse(traverser, this,
-            $field()
-        );
-        return super.$traverse(traverser);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

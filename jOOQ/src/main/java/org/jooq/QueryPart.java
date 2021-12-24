@@ -38,16 +38,15 @@
 package org.jooq;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
 import java.util.stream.Collector;
 
 import org.jooq.conf.Settings;
+import org.jooq.impl.Internal;
+import org.jooq.impl.QOM.NotYetImplementedException;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * The common base type for all objects that can be used for query composition.
@@ -150,8 +149,13 @@ public interface QueryPart extends Serializable {
      * it. This is useful e.g. to wrap each tree node in XML opening and closing
      * tags.</li>
      * </ul>
+     * <p>
+     * This is a commercial jOOQ edition only feature.
      */
-    <R> R $traverse(Traverser<?, R> traverser);
+    default <R> R $traverse(Traverser<?, R> traverser) {
+        Internal.requireCommercial(() -> "Query object model traversal is available in the commercial jOOQ distribution only. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
+        throw new NotYetImplementedException();
+    }
 
     /**
      * Convenience method for {@link #$traverse(Traverser)}.
@@ -202,6 +206,8 @@ public interface QueryPart extends Serializable {
     /**
      * Traverse a {@link QueryPart} hierarchy and recursively replace its
      * elements by alternatives.
+     * <p>
+     * This is a commercial jOOQ edition only feature.
      *
      * @param recurse A predicate to decide whether to recurse into a
      *            {@link QueryPart} subtree.
@@ -210,10 +216,13 @@ public interface QueryPart extends Serializable {
      *            any given input.
      */
     @NotNull
-    QueryPart $replace(
+    default QueryPart $replace(
         Predicate<? super QueryPart> recurse,
         Function1<? super QueryPart, ? extends QueryPart> replacement
-    );
+    ) {
+        Internal.requireCommercial(() -> "Query object model traversal is available in the commercial jOOQ distribution only. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
+        throw new NotYetImplementedException();
+    }
 
     /**
      * Convenience method for {@link #$replace(Predicate, Function1)}.

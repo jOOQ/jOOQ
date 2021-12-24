@@ -96,27 +96,31 @@ final class CountTable extends AbstractAggregateFunction<Integer> implements QOM
         return table;
     }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        QOM.traverse(
-            traverser, this,
-            $table()
-        );
-        return super.$traverse(traverser);
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            $table(),
-            distinct,
-            CountTable::new,
-            recurse,
-            replacement
-        );
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

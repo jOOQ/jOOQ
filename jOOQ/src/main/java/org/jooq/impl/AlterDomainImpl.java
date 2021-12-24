@@ -527,43 +527,47 @@ implements
         return (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) -> new AlterDomainImpl(configuration(), a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
     }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            $domain(),
-            $ifExists(),
-            $addConstraint(),
-            $dropConstraint(),
-            $dropConstraintIfExists(),
-            $renameTo(),
-            $renameConstraint(),
-            $renameConstraintIfExists(),
-            $setDefault(),
-            $dropDefault(),
-            $setNotNull(),
-            $dropNotNull(),
-            $cascade(),
-            $renameConstraintTo(),
-            (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) -> constructor().apply(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14),
-            recurse,
-            replacement
-        );
-    }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this,
-            $domain(),
-            $addConstraint(),
-            $dropConstraint(),
-            $renameTo(),
-            $renameConstraint(),
-            $setDefault(),
-            $renameConstraintTo()
-        );
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

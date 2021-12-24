@@ -109,22 +109,26 @@ final class NthValue<T> extends AbstractWindowFunction<T> implements QOM.NthValu
         return field;
     }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, field, $windowSpecification() != null ? $windowSpecification() : $windowDefinition());
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            field, $windowSpecification(), $windowDefinition(),
-            (f, s, d) -> new FirstValue<>(f).$windowSpecification(s).$windowDefinition(d).$fromFirstOrLast(fromFirstOrLast).$nullTreatment(nullTreatment),
-            recurse,
-            replacement
-        );
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

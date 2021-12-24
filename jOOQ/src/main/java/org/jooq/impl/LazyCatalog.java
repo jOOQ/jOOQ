@@ -115,20 +115,24 @@ public final class LazyCatalog extends AbstractNamed implements Catalog {
         return catalog().schemaStream();
     }
 
-    // -------------------------------------------------------------------------
-    // XXX: Query Object Model
-    // -------------------------------------------------------------------------
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return catalog().$traverse(traverser);
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return catalog().$replace(recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

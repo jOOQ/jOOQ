@@ -87,22 +87,26 @@ final class Ntile extends AbstractWindowFunction<Integer> implements QOM.Ntile {
         return tiles;
     }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, tiles, $windowSpecification() != null ? $windowSpecification() : $windowDefinition());
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            tiles, $windowSpecification(), $windowDefinition(),
-            (t, s, d) -> new Ntile(t).$windowSpecification(s).$windowDefinition(d),
-            recurse,
-            replacement
-        );
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

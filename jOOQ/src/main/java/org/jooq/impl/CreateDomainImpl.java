@@ -260,31 +260,35 @@ implements
         return (a1, a2, a3, a4, a5) -> new CreateDomainImpl(configuration(), a1, a2, a3, a4, (Collection<? extends Constraint>) a5);
     }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            $domain(),
-            $ifNotExists(),
-            $dataType(),
-            $default_(),
-            $constraints(),
-            (a1, a2, a3, a4, a5) -> constructor().apply(a1, a2, a3, a4, a5),
-            recurse,
-            replacement
-        );
-    }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this,
-            $domain(),
-            $dataType(),
-            $default_(),
-            $constraints()
-        );
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

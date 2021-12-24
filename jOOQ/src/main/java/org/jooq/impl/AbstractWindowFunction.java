@@ -651,12 +651,16 @@ implements
         return this;
     }
 
-    // -------------------------------------------------------------------------
-    // XXX: Query Object Model
-    // -------------------------------------------------------------------------
 
-    @Override
-    public /* non-final */ <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, $windowDefinition(), $windowSpecification());
-    }
+
+
+
+
+
+
+
+
+
+
+
 }

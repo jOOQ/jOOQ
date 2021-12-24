@@ -180,16 +180,20 @@ final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Resu
         return row;
     }
 
-    @Override
-    public final <T> T $traverse(Traverser<?, T> traverser) {
-        return QOM.traverse(traverser, this, row);
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, distinct, row, MultisetAgg::new, recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

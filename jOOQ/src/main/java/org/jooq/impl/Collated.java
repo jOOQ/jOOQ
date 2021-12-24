@@ -91,19 +91,6 @@ final class Collated extends AbstractField<String> implements QOM.Collated {
     // -------------------------------------------------------------------------
 
     @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, field, collation);
-    }
-
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, field, collation, Collated::new, recurse, replacement);
-    }
-
-    @Override
     public final Field<?> $field() {
         return field;
     }
@@ -112,4 +99,21 @@ final class Collated extends AbstractField<String> implements QOM.Collated {
     public final Collation $collation() {
         return collation;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

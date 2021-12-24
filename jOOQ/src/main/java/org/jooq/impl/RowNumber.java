@@ -80,26 +80,30 @@ final class RowNumber extends AbstractWindowFunction<Integer> implements QOM.Row
         }
     }
 
-    // -------------------------------------------------------------------------
-    // XXX: Query Object Model
-    // -------------------------------------------------------------------------
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, $windowSpecification() != null ? $windowSpecification() : $windowDefinition());
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            $windowSpecification(), $windowDefinition(),
-            (s, d) -> new RowNumber().$windowSpecification(s).$windowDefinition(d),
-            recurse,
-            replacement
-        );
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

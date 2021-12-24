@@ -172,16 +172,20 @@ final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep, 
         return passingMechanism;
     }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, xpath, passing);
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, xpath, passing, (x, p) -> new XMLQuery(x, passing, passingMechanism), recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

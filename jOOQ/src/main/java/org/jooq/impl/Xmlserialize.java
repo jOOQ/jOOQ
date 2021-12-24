@@ -176,29 +176,33 @@ implements
         return (a1, a2, a3) -> new XMLSerialize<>(a1, a2, a3);
     }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            $content(),
-            $value(),
-            $type(),
-            (a1, a2, a3) -> constructor().apply(a1, a2, a3),
-            recurse,
-            replacement
-        );
-    }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this,
-            $value(),
-            $type()
-        );
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

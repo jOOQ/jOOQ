@@ -597,16 +597,20 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
         return new QueryPartList<>(statements);
     }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, $statements());
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, statements, s -> new BlockImpl(configuration(), statements, alwaysWrapInBeginEnd), recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

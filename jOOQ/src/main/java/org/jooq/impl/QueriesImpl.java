@@ -178,22 +178,26 @@ final class QueriesImpl extends AbstractAttachableQueryPart implements Queries {
     // -------------------------------------------------------------------------
 
     @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, $queries());
-    }
-
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, queries, q -> new QueriesImpl(configuration(), q), recurse, replacement);
-    }
-
-    @Override
     public final MList<? extends Query> $queries() {
         return queries;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // ------------------------------------------------------------------------
     // Object API

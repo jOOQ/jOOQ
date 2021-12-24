@@ -346,22 +346,26 @@ public class SchemaImpl extends AbstractNamed implements Schema {
         return getSequences().stream();
     }
 
-    // -------------------------------------------------------------------------
-    // XXX: Query Object Model
-    // -------------------------------------------------------------------------
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, getQualifiedName(), getCatalog());
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, getQualifiedName(), getCatalog(), getCommentPart(), SchemaImpl::new, recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // ------------------------------------------------------------------------
     // XXX: Object API

@@ -357,16 +357,20 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
         return apply($windowSpecification(), t -> t.$exclude());
     }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, $name(), $windowSpecification());
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, name, window, WindowDefinitionImpl::new, recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

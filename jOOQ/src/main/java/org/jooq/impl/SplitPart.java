@@ -238,30 +238,34 @@ implements
         return (a1, a2, a3) -> new SplitPart(a1, a2, a3);
     }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            $string(),
-            $delimiter(),
-            $n(),
-            (a1, a2, a3) -> constructor().apply(a1, a2, a3),
-            recurse,
-            replacement
-        );
-    }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this,
-            $string(),
-            $delimiter(),
-            $n()
-        );
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

@@ -76,15 +76,19 @@ final class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
         super(distinct, name, type, arguments);
     }
 
-    // -------------------------------------------------------------------------
-    // XXX: Query Object Model
-    // -------------------------------------------------------------------------
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, arguments, a -> new DefaultAggregateFunction<>(distinct, getQualifiedName(), getDataType(), a.toArray(EMPTY_FIELD)), recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

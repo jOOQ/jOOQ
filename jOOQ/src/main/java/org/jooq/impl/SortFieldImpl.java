@@ -216,26 +216,30 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T>, 
         return nullOrdering;
     }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, field);
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            field, order, nullOrdering,
-            (f, o, n) -> {
-                SortFieldImpl<T> r = new SortFieldImpl<>(f, o);
-                r.nullOrdering = n;
-                return r;
-            },
-            recurse,
-            replacement
-        );
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

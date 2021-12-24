@@ -726,30 +726,34 @@ implements
         return exclude;
     }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, $windowDefinition(), $partitionBy(), $orderBy());
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            $windowDefinition(), $partitionBy(), $orderBy(),
-            (d, p, o) -> {
-                WindowSpecificationImpl r = new WindowSpecificationImpl(d);
-                r.partitionBy(p.toArray(EMPTY_FIELD)).orderBy(o.toArray(EMPTY_SORTFIELD));
-                r.frameUnits = frameUnits;
-                r.frameStart = frameStart;
-                r.frameEnd = frameEnd;
-                r.exclude = exclude;
-                return r;
-            },
-            recurse,
-            replacement
-        );
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

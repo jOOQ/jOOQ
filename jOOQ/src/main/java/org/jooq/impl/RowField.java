@@ -276,16 +276,20 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
         return row;
     }
 
-    @Override
-    public final <T> T $traverse(Traverser<?, T> traverser) {
-        return QOM.traverse(traverser, this, row);
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, row, RowField::new, recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -441,22 +441,26 @@ implements
         return true;
     }
 
-    // -------------------------------------------------------------------------
-    // XXX: Query Object Model
-    // -------------------------------------------------------------------------
 
-    @Override
-    public final <X> X $traverse(Traverser<?, X> traverser) {
-        return QOM.traverse(traverser, this, getSchema());
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, getSchema(), s -> new TableImpl<>(getQualifiedName(), s), recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // ------------------------------------------------------------------------
     // XXX: Object API

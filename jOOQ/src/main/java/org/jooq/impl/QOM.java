@@ -95,6 +95,7 @@ import org.jooq.OrderField;
 import org.jooq.Param;
 import org.jooq.Parameter;
 import org.jooq.Privilege;
+// ...
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -5917,25 +5918,29 @@ public final class QOM {
             return function.apply($arg1());
         }
 
-        @Override
-        default <T> T $traverse(Traverser<?, T> traverser) {
-            return QOM.traverse(traverser, this, $arg1());
-        };
 
-        @NotNull
-        @Override
-        default org.jooq.QueryPart $replace(
-            Predicate<? super org.jooq.QueryPart> recurse,
-            Function1<? super org.jooq.QueryPart, ? extends org.jooq.QueryPart> replacement
-        ) {
-            return QOM.replace(
-                this,
-                $arg1(),
-                constructor(),
-                recurse,
-                replacement
-            );
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     interface UOperator2<Q1, Q2, R extends org.jooq.QueryPart> extends org.jooq.QueryPart {
@@ -5952,26 +5957,30 @@ public final class QOM {
             return function.apply($arg1(), $arg2());
         }
 
-        @Override
-        default <T> T $traverse(Traverser<?, T> traverser) {
-            return QOM.traverse(traverser, this, $arg1(), $arg2());
-        };
 
-        @NotNull
-        @Override
-        default org.jooq.QueryPart $replace(
-            Predicate<? super org.jooq.QueryPart> recurse,
-            Function1<? super org.jooq.QueryPart, ? extends org.jooq.QueryPart> replacement
-        ) {
-            return QOM.replace(
-                this,
-                $arg1(),
-                $arg2(),
-                constructor(),
-                recurse,
-                replacement
-            );
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     interface UOperator3<Q1, Q2, Q3, R extends org.jooq.QueryPart> extends org.jooq.QueryPart {
@@ -5989,27 +5998,31 @@ public final class QOM {
             return function.apply($arg1(), $arg2(), $arg3());
         }
 
-        @Override
-        default <T> T $traverse(Traverser<?, T> traverser) {
-            return QOM.traverse(traverser, this, $arg1(), $arg2(), $arg3());
-        };
 
-        @NotNull
-        @Override
-        default org.jooq.QueryPart $replace(
-            Predicate<? super org.jooq.QueryPart> recurse,
-            Function1<? super org.jooq.QueryPart, ? extends org.jooq.QueryPart> replacement
-        ) {
-            return QOM.replace(
-                this,
-                $arg1(),
-                $arg2(),
-                $arg3(),
-                constructor(),
-                recurse,
-                replacement
-            );
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     /**
@@ -6037,43 +6050,51 @@ public final class QOM {
      *             as soon as possible!
      */
     @Deprecated(forRemoval = true)
-    static class UNotYetImplementedException extends RuntimeException {}
+    public static class NotYetImplementedException extends RuntimeException {}
 
     interface UProxy<Q extends org.jooq.QueryPart> extends org.jooq.QueryPart {
         Q $delegate();
 
-        @Override
-        default <R> R $traverse(Traverser<?, R> traverser) {
-            return $delegate().$traverse(traverser);
-        }
 
-        @Override
-        default org.jooq.QueryPart $replace(
-            Predicate<? super org.jooq.QueryPart> recurse,
-            Function1<? super org.jooq.QueryPart, ? extends org.jooq.QueryPart> replacement
-        ) {
-            org.jooq.QueryPart r = $delegate().$replace(recurse, replacement);
-            return $delegate() == r ? this : r;
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     interface UEmpty extends org.jooq.QueryPart {
 
-        @Override
-        default <R> R $traverse(Traverser<?, R> traverser) {
-            return QOM.traverse(traverser, this);
-        }
 
-        @Override
-        default org.jooq.QueryPart $replace(
-            Predicate<? super org.jooq.QueryPart> recurse,
-            Function1<? super org.jooq.QueryPart, ? extends org.jooq.QueryPart> replacement
-        ) {
-            if (recurse.test(this))
-                return replacement.apply(this);
-            else
-                return this;
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     // -------------------------------------------------------------------------
@@ -6086,914 +6107,945 @@ public final class QOM {
     interface UEmptyStatement extends Statement, UEmpty {}
     interface UEmptyQuery extends Query, UEmpty {}
 
-    // -------------------------------------------------------------------------
-    // XXX: Utilities
-    // -------------------------------------------------------------------------
-
-    @SuppressWarnings("unchecked")
-    static final <Q> Q replace(
-        Q q,
-        Predicate<? super org.jooq.QueryPart> recurse,
-        Function1<? super org.jooq.QueryPart, ? extends org.jooq.QueryPart> replacement
-    ) {
-
-        // TODO: Support also arrays, sets, etc.
-        if (q instanceof List) { List<?> l = (List<?>) q;
-            List<Object> r = null;
-
-            for (int i = 0; i < l.size(); i++) {
-                Object o = l.get(i);
-                Object x = replace(o, recurse, replacement);
-
-                if (o != x) {
-
-                    // TODO: What about other lists, e.g. org.jooq.QueryPartList?
-                    if (r == null) {
-                        r = Reflect.onClass(q.getClass()).create().get();
-                        r.addAll(l.subList(0, i));
-                    }
-
-                    r.add(x);
-                }
-                else if (r != null)
-                    r.add(o);
-            }
-
-            return r != null ? (Q) r : q;
-        }
-
-
-        return q instanceof org.jooq.QueryPart && recurse.test((org.jooq.QueryPart) q)
-             ? (Q) ((org.jooq.QueryPart) q).$replace(recurse, replacement)
-             : q;
-    }
-
-    static final <T> boolean test(Predicate<? super T> predicate, T value) {
-        return predicate != null && predicate.test(value);
-    }
-
-    static final <A, T> T traverse(Traverser<A, T> t, Object part, Object... parts) {
-        if (test(t.abort(), t.supplied()))
-            return t.finished();
-
-        try {
-            if (part instanceof QueryPart)
-                t.before().apply(t.supplied(), (QueryPart) part);
-            if (test(t.abort(), t.supplied()))
-                return t.finished();
-
-            for (int i = 0; i < parts.length; i++) {
-                if (parts[i] instanceof QueryPart) { QueryPart p = (QueryPart) parts[i];
-                    if (test(t.recurse(), p)) {
-                        p.$traverse(t);
-                        if (test(t.abort(), t.supplied()))
-                            return t.finished();
-                    }
-                }
-            }
-        }
-        finally {
-            if (part instanceof QueryPart)
-                t.after().apply(t.supplied(), (QueryPart) part);
-        }
-
-        return t.finished();
-    };
-
-    @SuppressWarnings("unchecked")
-    static final <QR extends org.jooq.QueryPart, Q> QR replace(
-        QR wrapper,
-        Q[] q,
-        Function1<? super Q[], ? extends QR> wrap,
-        Predicate<? super org.jooq.QueryPart> recurse,
-        Function1<? super org.jooq.QueryPart, ? extends org.jooq.QueryPart> replacement
-    ) {
-        Q[] r = (Q[]) java.lang.reflect.Array.newInstance(q.getClass().getComponentType(), q.length);
-
-        for (int i = 0; i < r.length; i++)
-            r[i] = replace(q[i], recurse, replacement);
-
-        wrapIfReplaced: {
-            for (int i = 0; i < r.length; i++) {
-                if (r[i] != q[i]) {
-                    wrapper = wrap.apply(r);
-                    break wrapIfReplaced;
-                }
-            }
-        }
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-
-
-    static final <QR extends QueryPart, Q1> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Function1<? super Q1, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-
-        if (r1 != q1)
-            wrapper = wrap.apply(r1);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Function2<? super Q1, ? super Q2, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2)
-            wrapper = wrap.apply(r1, r2);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Function3<? super Q1, ? super Q2, ? super Q3, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3)
-            wrapper = wrap.apply(r1, r2, r3);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Function4<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4)
-            wrapper = wrap.apply(r1, r2, r3, r4);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Q5 q5,
-        Function5<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-        Q5 r5 = replace(q5, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4 || r5 != q5)
-            wrapper = wrap.apply(r1, r2, r3, r4, r5);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Q5 q5,
-        Q6 q6,
-        Function6<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-        Q5 r5 = replace(q5, recurse, replacement);
-        Q6 r6 = replace(q6, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4 || r5 != q5 || r6 != q6)
-            wrapper = wrap.apply(r1, r2, r3, r4, r5, r6);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Q5 q5,
-        Q6 q6,
-        Q7 q7,
-        Function7<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-        Q5 r5 = replace(q5, recurse, replacement);
-        Q6 r6 = replace(q6, recurse, replacement);
-        Q7 r7 = replace(q7, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4 || r5 != q5 || r6 != q6 || r7 != q7)
-            wrapper = wrap.apply(r1, r2, r3, r4, r5, r6, r7);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Q5 q5,
-        Q6 q6,
-        Q7 q7,
-        Q8 q8,
-        Function8<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-        Q5 r5 = replace(q5, recurse, replacement);
-        Q6 r6 = replace(q6, recurse, replacement);
-        Q7 r7 = replace(q7, recurse, replacement);
-        Q8 r8 = replace(q8, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4 || r5 != q5 || r6 != q6 || r7 != q7 || r8 != q8)
-            wrapper = wrap.apply(r1, r2, r3, r4, r5, r6, r7, r8);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Q5 q5,
-        Q6 q6,
-        Q7 q7,
-        Q8 q8,
-        Q9 q9,
-        Function9<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-        Q5 r5 = replace(q5, recurse, replacement);
-        Q6 r6 = replace(q6, recurse, replacement);
-        Q7 r7 = replace(q7, recurse, replacement);
-        Q8 r8 = replace(q8, recurse, replacement);
-        Q9 r9 = replace(q9, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4 || r5 != q5 || r6 != q6 || r7 != q7 || r8 != q8 || r9 != q9)
-            wrapper = wrap.apply(r1, r2, r3, r4, r5, r6, r7, r8, r9);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Q5 q5,
-        Q6 q6,
-        Q7 q7,
-        Q8 q8,
-        Q9 q9,
-        Q10 q10,
-        Function10<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-        Q5 r5 = replace(q5, recurse, replacement);
-        Q6 r6 = replace(q6, recurse, replacement);
-        Q7 r7 = replace(q7, recurse, replacement);
-        Q8 r8 = replace(q8, recurse, replacement);
-        Q9 r9 = replace(q9, recurse, replacement);
-        Q10 r10 = replace(q10, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4 || r5 != q5 || r6 != q6 || r7 != q7 || r8 != q8 || r9 != q9 || r10 != q10)
-            wrapper = wrap.apply(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Q5 q5,
-        Q6 q6,
-        Q7 q7,
-        Q8 q8,
-        Q9 q9,
-        Q10 q10,
-        Q11 q11,
-        Function11<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-        Q5 r5 = replace(q5, recurse, replacement);
-        Q6 r6 = replace(q6, recurse, replacement);
-        Q7 r7 = replace(q7, recurse, replacement);
-        Q8 r8 = replace(q8, recurse, replacement);
-        Q9 r9 = replace(q9, recurse, replacement);
-        Q10 r10 = replace(q10, recurse, replacement);
-        Q11 r11 = replace(q11, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4 || r5 != q5 || r6 != q6 || r7 != q7 || r8 != q8 || r9 != q9 || r10 != q10 || r11 != q11)
-            wrapper = wrap.apply(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Q5 q5,
-        Q6 q6,
-        Q7 q7,
-        Q8 q8,
-        Q9 q9,
-        Q10 q10,
-        Q11 q11,
-        Q12 q12,
-        Function12<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-        Q5 r5 = replace(q5, recurse, replacement);
-        Q6 r6 = replace(q6, recurse, replacement);
-        Q7 r7 = replace(q7, recurse, replacement);
-        Q8 r8 = replace(q8, recurse, replacement);
-        Q9 r9 = replace(q9, recurse, replacement);
-        Q10 r10 = replace(q10, recurse, replacement);
-        Q11 r11 = replace(q11, recurse, replacement);
-        Q12 r12 = replace(q12, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4 || r5 != q5 || r6 != q6 || r7 != q7 || r8 != q8 || r9 != q9 || r10 != q10 || r11 != q11 || r12 != q12)
-            wrapper = wrap.apply(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Q5 q5,
-        Q6 q6,
-        Q7 q7,
-        Q8 q8,
-        Q9 q9,
-        Q10 q10,
-        Q11 q11,
-        Q12 q12,
-        Q13 q13,
-        Function13<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-        Q5 r5 = replace(q5, recurse, replacement);
-        Q6 r6 = replace(q6, recurse, replacement);
-        Q7 r7 = replace(q7, recurse, replacement);
-        Q8 r8 = replace(q8, recurse, replacement);
-        Q9 r9 = replace(q9, recurse, replacement);
-        Q10 r10 = replace(q10, recurse, replacement);
-        Q11 r11 = replace(q11, recurse, replacement);
-        Q12 r12 = replace(q12, recurse, replacement);
-        Q13 r13 = replace(q13, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4 || r5 != q5 || r6 != q6 || r7 != q7 || r8 != q8 || r9 != q9 || r10 != q10 || r11 != q11 || r12 != q12 || r13 != q13)
-            wrapper = wrap.apply(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Q5 q5,
-        Q6 q6,
-        Q7 q7,
-        Q8 q8,
-        Q9 q9,
-        Q10 q10,
-        Q11 q11,
-        Q12 q12,
-        Q13 q13,
-        Q14 q14,
-        Function14<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? super Q14, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-        Q5 r5 = replace(q5, recurse, replacement);
-        Q6 r6 = replace(q6, recurse, replacement);
-        Q7 r7 = replace(q7, recurse, replacement);
-        Q8 r8 = replace(q8, recurse, replacement);
-        Q9 r9 = replace(q9, recurse, replacement);
-        Q10 r10 = replace(q10, recurse, replacement);
-        Q11 r11 = replace(q11, recurse, replacement);
-        Q12 r12 = replace(q12, recurse, replacement);
-        Q13 r13 = replace(q13, recurse, replacement);
-        Q14 r14 = replace(q14, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4 || r5 != q5 || r6 != q6 || r7 != q7 || r8 != q8 || r9 != q9 || r10 != q10 || r11 != q11 || r12 != q12 || r13 != q13 || r14 != q14)
-            wrapper = wrap.apply(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Q5 q5,
-        Q6 q6,
-        Q7 q7,
-        Q8 q8,
-        Q9 q9,
-        Q10 q10,
-        Q11 q11,
-        Q12 q12,
-        Q13 q13,
-        Q14 q14,
-        Q15 q15,
-        Function15<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? super Q14, ? super Q15, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-        Q5 r5 = replace(q5, recurse, replacement);
-        Q6 r6 = replace(q6, recurse, replacement);
-        Q7 r7 = replace(q7, recurse, replacement);
-        Q8 r8 = replace(q8, recurse, replacement);
-        Q9 r9 = replace(q9, recurse, replacement);
-        Q10 r10 = replace(q10, recurse, replacement);
-        Q11 r11 = replace(q11, recurse, replacement);
-        Q12 r12 = replace(q12, recurse, replacement);
-        Q13 r13 = replace(q13, recurse, replacement);
-        Q14 r14 = replace(q14, recurse, replacement);
-        Q15 r15 = replace(q15, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4 || r5 != q5 || r6 != q6 || r7 != q7 || r8 != q8 || r9 != q9 || r10 != q10 || r11 != q11 || r12 != q12 || r13 != q13 || r14 != q14 || r15 != q15)
-            wrapper = wrap.apply(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Q5 q5,
-        Q6 q6,
-        Q7 q7,
-        Q8 q8,
-        Q9 q9,
-        Q10 q10,
-        Q11 q11,
-        Q12 q12,
-        Q13 q13,
-        Q14 q14,
-        Q15 q15,
-        Q16 q16,
-        Function16<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? super Q14, ? super Q15, ? super Q16, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-        Q5 r5 = replace(q5, recurse, replacement);
-        Q6 r6 = replace(q6, recurse, replacement);
-        Q7 r7 = replace(q7, recurse, replacement);
-        Q8 r8 = replace(q8, recurse, replacement);
-        Q9 r9 = replace(q9, recurse, replacement);
-        Q10 r10 = replace(q10, recurse, replacement);
-        Q11 r11 = replace(q11, recurse, replacement);
-        Q12 r12 = replace(q12, recurse, replacement);
-        Q13 r13 = replace(q13, recurse, replacement);
-        Q14 r14 = replace(q14, recurse, replacement);
-        Q15 r15 = replace(q15, recurse, replacement);
-        Q16 r16 = replace(q16, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4 || r5 != q5 || r6 != q6 || r7 != q7 || r8 != q8 || r9 != q9 || r10 != q10 || r11 != q11 || r12 != q12 || r13 != q13 || r14 != q14 || r15 != q15 || r16 != q16)
-            wrapper = wrap.apply(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Q5 q5,
-        Q6 q6,
-        Q7 q7,
-        Q8 q8,
-        Q9 q9,
-        Q10 q10,
-        Q11 q11,
-        Q12 q12,
-        Q13 q13,
-        Q14 q14,
-        Q15 q15,
-        Q16 q16,
-        Q17 q17,
-        Function17<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? super Q14, ? super Q15, ? super Q16, ? super Q17, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-        Q5 r5 = replace(q5, recurse, replacement);
-        Q6 r6 = replace(q6, recurse, replacement);
-        Q7 r7 = replace(q7, recurse, replacement);
-        Q8 r8 = replace(q8, recurse, replacement);
-        Q9 r9 = replace(q9, recurse, replacement);
-        Q10 r10 = replace(q10, recurse, replacement);
-        Q11 r11 = replace(q11, recurse, replacement);
-        Q12 r12 = replace(q12, recurse, replacement);
-        Q13 r13 = replace(q13, recurse, replacement);
-        Q14 r14 = replace(q14, recurse, replacement);
-        Q15 r15 = replace(q15, recurse, replacement);
-        Q16 r16 = replace(q16, recurse, replacement);
-        Q17 r17 = replace(q17, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4 || r5 != q5 || r6 != q6 || r7 != q7 || r8 != q8 || r9 != q9 || r10 != q10 || r11 != q11 || r12 != q12 || r13 != q13 || r14 != q14 || r15 != q15 || r16 != q16 || r17 != q17)
-            wrapper = wrap.apply(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Q5 q5,
-        Q6 q6,
-        Q7 q7,
-        Q8 q8,
-        Q9 q9,
-        Q10 q10,
-        Q11 q11,
-        Q12 q12,
-        Q13 q13,
-        Q14 q14,
-        Q15 q15,
-        Q16 q16,
-        Q17 q17,
-        Q18 q18,
-        Function18<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? super Q14, ? super Q15, ? super Q16, ? super Q17, ? super Q18, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-        Q5 r5 = replace(q5, recurse, replacement);
-        Q6 r6 = replace(q6, recurse, replacement);
-        Q7 r7 = replace(q7, recurse, replacement);
-        Q8 r8 = replace(q8, recurse, replacement);
-        Q9 r9 = replace(q9, recurse, replacement);
-        Q10 r10 = replace(q10, recurse, replacement);
-        Q11 r11 = replace(q11, recurse, replacement);
-        Q12 r12 = replace(q12, recurse, replacement);
-        Q13 r13 = replace(q13, recurse, replacement);
-        Q14 r14 = replace(q14, recurse, replacement);
-        Q15 r15 = replace(q15, recurse, replacement);
-        Q16 r16 = replace(q16, recurse, replacement);
-        Q17 r17 = replace(q17, recurse, replacement);
-        Q18 r18 = replace(q18, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4 || r5 != q5 || r6 != q6 || r7 != q7 || r8 != q8 || r9 != q9 || r10 != q10 || r11 != q11 || r12 != q12 || r13 != q13 || r14 != q14 || r15 != q15 || r16 != q16 || r17 != q17 || r18 != q18)
-            wrapper = wrap.apply(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18, Q19> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Q5 q5,
-        Q6 q6,
-        Q7 q7,
-        Q8 q8,
-        Q9 q9,
-        Q10 q10,
-        Q11 q11,
-        Q12 q12,
-        Q13 q13,
-        Q14 q14,
-        Q15 q15,
-        Q16 q16,
-        Q17 q17,
-        Q18 q18,
-        Q19 q19,
-        Function19<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? super Q14, ? super Q15, ? super Q16, ? super Q17, ? super Q18, ? super Q19, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-        Q5 r5 = replace(q5, recurse, replacement);
-        Q6 r6 = replace(q6, recurse, replacement);
-        Q7 r7 = replace(q7, recurse, replacement);
-        Q8 r8 = replace(q8, recurse, replacement);
-        Q9 r9 = replace(q9, recurse, replacement);
-        Q10 r10 = replace(q10, recurse, replacement);
-        Q11 r11 = replace(q11, recurse, replacement);
-        Q12 r12 = replace(q12, recurse, replacement);
-        Q13 r13 = replace(q13, recurse, replacement);
-        Q14 r14 = replace(q14, recurse, replacement);
-        Q15 r15 = replace(q15, recurse, replacement);
-        Q16 r16 = replace(q16, recurse, replacement);
-        Q17 r17 = replace(q17, recurse, replacement);
-        Q18 r18 = replace(q18, recurse, replacement);
-        Q19 r19 = replace(q19, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4 || r5 != q5 || r6 != q6 || r7 != q7 || r8 != q8 || r9 != q9 || r10 != q10 || r11 != q11 || r12 != q12 || r13 != q13 || r14 != q14 || r15 != q15 || r16 != q16 || r17 != q17 || r18 != q18 || r19 != q19)
-            wrapper = wrap.apply(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18, Q19, Q20> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Q5 q5,
-        Q6 q6,
-        Q7 q7,
-        Q8 q8,
-        Q9 q9,
-        Q10 q10,
-        Q11 q11,
-        Q12 q12,
-        Q13 q13,
-        Q14 q14,
-        Q15 q15,
-        Q16 q16,
-        Q17 q17,
-        Q18 q18,
-        Q19 q19,
-        Q20 q20,
-        Function20<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? super Q14, ? super Q15, ? super Q16, ? super Q17, ? super Q18, ? super Q19, ? super Q20, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-        Q5 r5 = replace(q5, recurse, replacement);
-        Q6 r6 = replace(q6, recurse, replacement);
-        Q7 r7 = replace(q7, recurse, replacement);
-        Q8 r8 = replace(q8, recurse, replacement);
-        Q9 r9 = replace(q9, recurse, replacement);
-        Q10 r10 = replace(q10, recurse, replacement);
-        Q11 r11 = replace(q11, recurse, replacement);
-        Q12 r12 = replace(q12, recurse, replacement);
-        Q13 r13 = replace(q13, recurse, replacement);
-        Q14 r14 = replace(q14, recurse, replacement);
-        Q15 r15 = replace(q15, recurse, replacement);
-        Q16 r16 = replace(q16, recurse, replacement);
-        Q17 r17 = replace(q17, recurse, replacement);
-        Q18 r18 = replace(q18, recurse, replacement);
-        Q19 r19 = replace(q19, recurse, replacement);
-        Q20 r20 = replace(q20, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4 || r5 != q5 || r6 != q6 || r7 != q7 || r8 != q8 || r9 != q9 || r10 != q10 || r11 != q11 || r12 != q12 || r13 != q13 || r14 != q14 || r15 != q15 || r16 != q16 || r17 != q17 || r18 != q18 || r19 != q19 || r20 != q20)
-            wrapper = wrap.apply(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18, Q19, Q20, Q21> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Q5 q5,
-        Q6 q6,
-        Q7 q7,
-        Q8 q8,
-        Q9 q9,
-        Q10 q10,
-        Q11 q11,
-        Q12 q12,
-        Q13 q13,
-        Q14 q14,
-        Q15 q15,
-        Q16 q16,
-        Q17 q17,
-        Q18 q18,
-        Q19 q19,
-        Q20 q20,
-        Q21 q21,
-        Function21<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? super Q14, ? super Q15, ? super Q16, ? super Q17, ? super Q18, ? super Q19, ? super Q20, ? super Q21, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-        Q5 r5 = replace(q5, recurse, replacement);
-        Q6 r6 = replace(q6, recurse, replacement);
-        Q7 r7 = replace(q7, recurse, replacement);
-        Q8 r8 = replace(q8, recurse, replacement);
-        Q9 r9 = replace(q9, recurse, replacement);
-        Q10 r10 = replace(q10, recurse, replacement);
-        Q11 r11 = replace(q11, recurse, replacement);
-        Q12 r12 = replace(q12, recurse, replacement);
-        Q13 r13 = replace(q13, recurse, replacement);
-        Q14 r14 = replace(q14, recurse, replacement);
-        Q15 r15 = replace(q15, recurse, replacement);
-        Q16 r16 = replace(q16, recurse, replacement);
-        Q17 r17 = replace(q17, recurse, replacement);
-        Q18 r18 = replace(q18, recurse, replacement);
-        Q19 r19 = replace(q19, recurse, replacement);
-        Q20 r20 = replace(q20, recurse, replacement);
-        Q21 r21 = replace(q21, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4 || r5 != q5 || r6 != q6 || r7 != q7 || r8 != q8 || r9 != q9 || r10 != q10 || r11 != q11 || r12 != q12 || r13 != q13 || r14 != q14 || r15 != q15 || r16 != q16 || r17 != q17 || r18 != q18 || r19 != q19 || r20 != q20 || r21 != q21)
-            wrapper = wrap.apply(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-    static final <QR extends QueryPart, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18, Q19, Q20, Q21, Q22> QR replace(
-        QR wrapper,
-        Q1 q1,
-        Q2 q2,
-        Q3 q3,
-        Q4 q4,
-        Q5 q5,
-        Q6 q6,
-        Q7 q7,
-        Q8 q8,
-        Q9 q9,
-        Q10 q10,
-        Q11 q11,
-        Q12 q12,
-        Q13 q13,
-        Q14 q14,
-        Q15 q15,
-        Q16 q16,
-        Q17 q17,
-        Q18 q18,
-        Q19 q19,
-        Q20 q20,
-        Q21 q21,
-        Q22 q22,
-        Function22<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? super Q9, ? super Q10, ? super Q11, ? super Q12, ? super Q13, ? super Q14, ? super Q15, ? super Q16, ? super Q17, ? super Q18, ? super Q19, ? super Q20, ? super Q21, ? super Q22, ? extends QR> wrap,
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        Q1 r1 = replace(q1, recurse, replacement);
-        Q2 r2 = replace(q2, recurse, replacement);
-        Q3 r3 = replace(q3, recurse, replacement);
-        Q4 r4 = replace(q4, recurse, replacement);
-        Q5 r5 = replace(q5, recurse, replacement);
-        Q6 r6 = replace(q6, recurse, replacement);
-        Q7 r7 = replace(q7, recurse, replacement);
-        Q8 r8 = replace(q8, recurse, replacement);
-        Q9 r9 = replace(q9, recurse, replacement);
-        Q10 r10 = replace(q10, recurse, replacement);
-        Q11 r11 = replace(q11, recurse, replacement);
-        Q12 r12 = replace(q12, recurse, replacement);
-        Q13 r13 = replace(q13, recurse, replacement);
-        Q14 r14 = replace(q14, recurse, replacement);
-        Q15 r15 = replace(q15, recurse, replacement);
-        Q16 r16 = replace(q16, recurse, replacement);
-        Q17 r17 = replace(q17, recurse, replacement);
-        Q18 r18 = replace(q18, recurse, replacement);
-        Q19 r19 = replace(q19, recurse, replacement);
-        Q20 r20 = replace(q20, recurse, replacement);
-        Q21 r21 = replace(q21, recurse, replacement);
-        Q22 r22 = replace(q22, recurse, replacement);
-
-        if (r1 != q1 || r2 != q2 || r3 != q3 || r4 != q4 || r5 != q5 || r6 != q6 || r7 != q7 || r8 != q8 || r9 != q9 || r10 != q10 || r11 != q11 || r12 != q12 || r13 != q13 || r14 != q14 || r15 != q15 || r16 != q16 || r17 != q17 || r18 != q18 || r19 != q19 || r20 != q20 || r21 != q21 || r22 != q22)
-            wrapper = wrap.apply(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22);
-
-        return replaceUntilStable(wrapper, recurse, replacement);
-    }
-
-
-
-    private static <QR extends org.jooq.QueryPart> QR replaceUntilStable(
-        QR wrapper,
-        Predicate<? super org.jooq.QueryPart> recurse,
-        Function1<? super org.jooq.QueryPart, ? extends org.jooq.QueryPart> replacement
-    ) {
-        QR q = wrapper;
-        QR r = wrapper;
-
-        do {
-            if (recurse.test(q))
-                r = (QR) replacement.apply(q);
-        }
-        while (r != null && r != q && (q = (QR) r.$replace(recurse, replacement)) != null);
-        return r;
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

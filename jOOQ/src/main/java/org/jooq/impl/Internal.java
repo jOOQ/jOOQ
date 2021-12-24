@@ -37,14 +37,12 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.ExpressionOperator.ADD;
-import static org.jooq.impl.ExpressionOperator.DIVIDE;
-import static org.jooq.impl.ExpressionOperator.MULTIPLY;
-import static org.jooq.impl.ExpressionOperator.SUBTRACT;
+import static org.jooq.impl.Tools.CTX;
 import static org.jooq.impl.Tools.nullSafe;
 
 import java.lang.reflect.Array;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import org.jooq.Binding;
 import org.jooq.Check;
@@ -72,6 +70,7 @@ import org.jooq.TableField;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UniqueKey;
+import org.jooq.exception.DataAccessException;
 // ...
 // ...
 
@@ -471,5 +470,28 @@ public final class Internal {
      */
     public static final <R extends Record> Result<R> result(R record) {
         return new ResultImpl<>(Tools.configuration(record), ((AbstractRecord) record).fields);
+    }
+
+    /**
+     * Whether this is a commercial edition of jOOQ.
+     */
+    public static final boolean commercial() {
+        return CTX.configuration().commercial();
+    }
+
+    /**
+     * Whether this is a commercial edition of jOOQ, logging a warning message,
+     * if not.
+     */
+    public static final boolean commercial(Supplier<String> logMessage) {
+        return CTX.configuration().commercial(logMessage);
+    }
+
+    /**
+     * Whether this is a commercial edition of jOOQ, throwing an exception with
+     * a message, if not.
+     */
+    public static final void requireCommercial(Supplier<String> logMessage) throws DataAccessException {
+        CTX.configuration().requireCommercial(logMessage);
     }
 }

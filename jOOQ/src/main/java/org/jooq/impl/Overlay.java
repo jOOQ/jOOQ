@@ -229,32 +229,36 @@ implements
         return (a1, a2, a3, a4) -> new Overlay(a1, a2, a3, a4);
     }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(
-            this,
-            $in(),
-            $placing(),
-            $startIndex(),
-            $length(),
-            (a1, a2, a3, a4) -> constructor().apply(a1, a2, a3, a4),
-            recurse,
-            replacement
-        );
-    }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this,
-            $in(),
-            $placing(),
-            $startIndex(),
-            $length()
-        );
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

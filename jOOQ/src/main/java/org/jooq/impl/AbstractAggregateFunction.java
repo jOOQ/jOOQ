@@ -555,9 +555,13 @@ implements
         return filter;
     }
 
-    @Override
-    public /* non-final */ <R> R $traverse(Traverser<?, R> traverser) {
-        QOM.traverse(traverser, this, filter);
-        return super.$traverse(traverser);
-    }
+
+
+
+
+
+
+
+
+
 }

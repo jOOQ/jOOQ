@@ -185,18 +185,22 @@ final class TableAlias<R extends Record> extends AbstractTable<R> implements QOM
         return getUnqualifiedName();
     }
 
-    @Override
-    public final <T> T $traverse(Traverser<?, T> traverser) {
-        return QOM.traverse(traverser, this, $table(), $alias());
-    }
 
-    @Override
-    public final QueryPart $replace(
-        Predicate<? super QueryPart> recurse,
-        Function1<? super QueryPart, ? extends QueryPart> replacement
-    ) {
-        return QOM.replace(this, $table(), $alias(), (t, n) -> new TableAlias<>(t, n, alias.fieldAliases, alias.wrapInParentheses), recurse, replacement);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // ------------------------------------------------------------------------
     // XXX: Object API

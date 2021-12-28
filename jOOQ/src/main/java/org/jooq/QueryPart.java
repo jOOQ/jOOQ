@@ -158,52 +158,6 @@ public interface QueryPart extends Serializable {
     }
 
     /**
-     * Convenience method for {@link #$traverse(Traverser)}.
-     */
-    default <R> R $traverse(
-        R init,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return $traverse(Traverser.of(() -> init, before, after));
-    }
-
-    /**
-     * Convenience method for {@link #$traverse(Traverser)}.
-     */
-    default <R> R $traverse(
-        R init,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before
-    ) {
-        return $traverse(Traverser.of(() -> init, before));
-    }
-
-    /**
-     * Convenience method for {@link #$traverse(Traverser)}.
-     */
-    default <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before,
-        BiFunction<? super R, ? super QueryPart, ? extends R> after
-    ) {
-        return $traverse(Traverser.of(() -> init, abort, recurse, before, after));
-    }
-
-    /**
-     * Convenience method for {@link #$traverse(Traverser)}.
-     */
-    default <R> R $traverse(
-        R init,
-        Predicate<? super R> abort,
-        Predicate<? super QueryPart> recurse,
-        BiFunction<? super R, ? super QueryPart, ? extends R> before
-    ) {
-        return $traverse(Traverser.of(() -> init, abort, recurse, before));
-    }
-
-    /**
      * Traverse a {@link QueryPart} hierarchy and recursively replace its
      * elements by alternatives.
      * <p>

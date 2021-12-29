@@ -134,39 +134,29 @@ import org.jetbrains.annotations.Nullable;
  * <p>
  * This class provides a single namespace for jOOQ's query object model API.
  * Every {@link QueryPart} from the DSL API has a matching {@link QueryPart}
- * representation in this API, and an internal implementation in the
- * <code>org.jooq.impl</code> package, that covers both the DSL and model API
- * functionality.
+ * representation in this query object model API, and a shared internal
+ * implementation in the <code>org.jooq.impl</code> package, that covers both
+ * the DSL and model API functionality.
  * <p>
  * The goal of this model API is to allow for expression tree transformations
- * that are independent of the DSL API that would otherwise be too noisy for
- * this task.
+ * via {@link QueryPart#$replace(Function1)} as well as via per-querypart
+ * methods, such as for example {@link Substring#$startingPosition(Field)}, and
+ * traversals via {@link QueryPart#$traverse(Traverser)} that are independent of
+ * the DSL API that would otherwise be too noisy for this task.
  * <p>
  * <h3>Design</h3>
  * <p>
  * In order to avoid conflicts between the model API and the DSL API, all model
  * API in this class follows these naming conventions:
  * <ul>
- * <li>All public model API types are named <code>MXyz</code>, e.g.
- * {@link QueryPart}</li>
+ * <li>All public model API types are nested in the {@link QOM} class, whereas
+ * DSL API types are top level types in the <code>org.jooq</code> package.</li>
+ * <li>All accessor methods and their corresponding "immutable setters"
+ * (returning a copy containing the modification) are named
+ * <code>$property()</code>, e.g. {@link Substring#$startingPosition()} and
+ * {@link Substring#$startingPosition(Field)}.</li>
  * <li>All private model API utility types are named <code>UXyz</code>, e.g.
  * {@link UEmpty}</li>
- * <li>All accessor methods are named <code>$property()</code>, e.g.
- * {@link Not#$arg1()}</li>
- * </ul>
- * <p>
- * Furthermore, the current draft design lets each {@link QueryPart} publicly
- * extend its matching {@link QueryPart}. <strong>This may not be the case in
- * the future, as long as this API is experimental, a backwards incompatible
- * change may revert this</strong>. Alternative possible designs include:
- * <ul>
- * <li>There's no public relationship between the two types (though accessor
- * methods might be provided)</li>
- * <li>The relationship might be inversed to let {@link QueryPart} extend
- * {@link QueryPart}.</li>
- * <li>The publicly available {@link QueryPart} types don't have an
- * {@link QueryPart} equivalence, but they <em>are</em> the
- * {@link QueryPart}.</li>
  * </ul>
  * <p>
  * <h3>Limitations</h3>
@@ -174,10 +164,17 @@ import org.jetbrains.annotations.Nullable;
  * The API offers public access to jOOQ's internal representation, and as such,
  * is prone to incompatible changes between minor releases, in addition to the
  * incompatible changes that may arise due to this API being experimental. In
- * this experimental stage, not all {@link QueryPart} implementations have a
- * corresponding public {@link QueryPart} type, but may just implement the API
- * via a {@link UEmpty} or {@link UNotYetImplemented} subtype, and may not
- * provide access to contents via accessor methods.
+ * this experimental stage, the following limitations are accepted:
+ * <ul>
+ * <li>Not all {@link QueryPart} implementations have a corresponding public
+ * {@link QueryPart} type yet, but may just implement the API via a
+ * {@link UEmpty} or {@link UNotYetImplemented} subtype, and may not provide
+ * access to contents via accessor methods.</li>
+ * <li>Some child elements of a {@link QueryPart} may not yet be represented in
+ * the model API, such as for example the <code>SELECT .. FOR UPDATE</code>
+ * clause, as substantial changes to the internal model are still required
+ * before being able to offer public access to it.</li>
+ * </ul>
  * <p>
  * <h3>Mutability</h3>
  * <p>
@@ -190,11 +187,10 @@ import org.jetbrains.annotations.Nullable;
  * <p>
  * <h3>Notes</h3>
  * <p>
- * The Java 17 distribution of jOOQ will make use of sealed types to improve the
- * usability of the model API in pattern matching expressions etc. The
- * implementations currently can't be made publicly available
- * {@link java.lang.Record} types, because of the existing internal type
- * hierarchy.
+ * A future Java 17 distribution of jOOQ might make use of sealed types to
+ * improve the usability of the model API in pattern matching expressions etc.
+ * Other Java language features that benefit pattern matching expression trees
+ * might be adopted in the future in this area of the jOOQ API.
  *
  * @author Lukas Eder
  */

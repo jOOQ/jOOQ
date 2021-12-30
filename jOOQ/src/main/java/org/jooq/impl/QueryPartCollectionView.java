@@ -69,7 +69,19 @@ import org.jooq.impl.QOM.UnmodifiableCollection;
  *
  * @author Lukas Eder
  */
-class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart implements UnmodifiableCollection<T>, SimpleQueryPart, SeparatedQueryPart {
+/* sealed */ class QueryPartCollectionView<T extends QueryPart>
+extends
+    AbstractQueryPart
+implements
+    UnmodifiableCollection<T>,
+    SimpleQueryPart,
+    SeparatedQueryPart
+/* permits
+
+
+
+    QueryPartListView */ 
+{
 
     final Collection<T>                    wrapped;
     Boolean                                qualify;

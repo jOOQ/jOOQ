@@ -5671,30 +5671,6 @@ final class Tools {
         return anyMatch(fields, f -> !names.add(f.getName()));
     }
 
-    static final QueryPartList<SelectFieldOrAsterisk> qualify(final Table<?> table, Iterable<SelectFieldOrAsterisk> fields) {
-        QueryPartList<SelectFieldOrAsterisk> result = new QueryPartList<SelectFieldOrAsterisk>() {
-            @Override
-            public final boolean rendersContent(Context<?> ctx) {
-                return super.rendersContent(ctx);
-            }
-
-            @Override
-            protected final void toSQLEmptyList(Context<?> context) {
-                table.asterisk();
-            }
-
-            @Override
-            public final boolean declaresFields() {
-                return true;
-            }
-        };
-
-        for (SelectFieldOrAsterisk field : fields)
-            result.add(qualify(table, field));
-
-        return result;
-    }
-
     static final SelectFieldOrAsterisk qualify(Table<?> table, SelectFieldOrAsterisk field) {
         if (field instanceof Field)
             return qualify(table, (Field<?>) field);

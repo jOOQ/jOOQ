@@ -214,12 +214,25 @@ public final class QOM {
     /**
      * An unmodifiable {@link Collection} of {@link QueryPart} elements.
      */
-    public interface UnmodifiableCollection<Q extends org.jooq.QueryPart> extends org.jooq.QueryPart, java.util.Collection<Q> {}
+    public /* sealed */ interface UnmodifiableCollection<Q extends org.jooq.QueryPart>
+        extends
+            org.jooq.QueryPart,
+            java.util.Collection<Q>
+        /* permits
+            UnmodifiableList,
+            QueryPartCollectionView */ 
+    {}
 
     /**
      * An unmodifiable {@link List} of {@link QueryPart} elements.
      */
-    public interface UnmodifiableList<Q extends org.jooq.QueryPart> extends UnmodifiableCollection<Q>, java.util.List<Q> {}
+    public /* sealed */ interface UnmodifiableList<Q extends org.jooq.QueryPart>
+        extends
+            UnmodifiableCollection<Q>,
+            java.util.List<Q>
+        /* permits
+            QueryPartListView */ 
+    {}
 
     public /*sealed*/ interface With
         extends

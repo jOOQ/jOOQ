@@ -1238,7 +1238,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         copy.limit.clear();
 
         SelectLimitStep<?> s1 =
-        DSL.select(qualify(table(name("t")), select))
+        DSL.select(new QualifiedSelectFieldList(table(name("t")), select))
            .from(copy.asTable("t"))
            .where(rn.eq(one()))
            .orderBy(map(orderBy, o -> unqualified(o)));

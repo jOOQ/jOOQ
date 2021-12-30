@@ -126,65 +126,37 @@ public interface Traverser<A, R> {
         BiFunction<? super A, ? super QueryPart, ? extends A> after,
         Function<? super A, ? extends R> finisher
     ) {
+
+        // TODO: Perhaps we should accept only invariant functions?
         return new Traverser<A, R>() {
-
-            boolean supplied;
-            boolean aborted;
-            boolean finished;
-
-            A a0;
-            R r0;
-
-            private A a(A a) {
-                finished = false;
-                return a0 = a;
-            }
-
             @Override
             public Supplier<A> supplier() {
-                return () -> {
-                    if (supplied)
-                        return a0;
-
-                    supplied = true;
-                    return a(supplier.get());
-                };
+                return supplier;
             }
 
             @Override
             public Predicate<A> abort() {
-                return a -> {
-                    if (aborted)
-                        return true;
-
-                    return aborted = abort.test(a);
-                };
+                return (Predicate<A>) abort;
             }
 
             @Override
             public Predicate<QueryPart> recurse() {
-                return recurse::test;
+                return (Predicate<QueryPart>) recurse;
             }
 
             @Override
             public BiFunction<A, QueryPart, A> before() {
-                return (a, p) -> a(before.apply(a, p));
+                return (BiFunction<A, QueryPart, A>) before;
             }
 
             @Override
             public BiFunction<A, QueryPart, A> after() {
-                return (a, p) -> a(after.apply(a, p));
+                return (BiFunction<A, QueryPart, A>) after;
             }
 
             @Override
             public Function<A, R> finisher() {
-                return a -> {
-                    if (finished)
-                        return r0;
-
-                    finished = true;
-                    return r0 = finisher.apply(a);
-                };
+                return (Function<A, R>) finisher;
             }
         };
     }
@@ -222,20 +194,4 @@ public interface Traverser<A, R> {
      * supplied by {@link #supplier()} into the final data structure.
      */
     Function<A, R> finisher();
-
-    /**
-     * A shortcut to {@link #supplier()} and then {@link Supplier#get()}, which
-     * can be cached by implementations.
-     */
-    default A supplied() {
-        return supplier().get();
-    }
-
-    /**
-     * A shortcut to {@link #finisher()} and then
-     * {@link Function#apply(Object)}, which can be cached by implementations.
-     */
-    default R finished() {
-        return finisher().apply(supplied());
-    }
 }

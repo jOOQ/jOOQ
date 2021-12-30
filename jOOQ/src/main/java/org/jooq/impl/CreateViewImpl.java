@@ -298,7 +298,7 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
 
     @Override
     public final MList<? extends Field<?>> $fields() {
-        return QueryPartListView.wrap(fields);
+        return QOM.unmodifiable(fields);
     }
 
     @Override

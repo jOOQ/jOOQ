@@ -121,7 +121,7 @@ final class Least<T> extends AbstractField<T> implements QOM.Least<T> {
 
     @Override
     public final MList<? extends Field<T>> $arg1() {
-        return (MList<? extends Field<T>>) args;
+        return QOM.unmodifiable((MList<? extends Field<T>>) args);
     }
 
     @Override

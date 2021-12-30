@@ -273,6 +273,6 @@ abstract class AbstractInList<T> extends AbstractCondition {
     }
 
     public final MList<? extends Field<T>> $arg2() {
-        return values;
+        return QOM.unmodifiable(values);
     }
 }

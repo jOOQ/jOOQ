@@ -76,7 +76,6 @@ final class NotInList<T> extends AbstractInList<T> implements QOM.NotInList<T> {
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
-    @SuppressWarnings("unchecked")
     @Override
     public final Function2<? super Field<T>, ? super MList<? extends Field<T>>, ? extends Condition> constructor() {
         return (a1, a2) -> new NotInList<T>(a1, a2);

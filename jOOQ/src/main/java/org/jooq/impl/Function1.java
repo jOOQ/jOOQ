@@ -82,7 +82,7 @@ final class Function1<T> extends AbstractField<T> implements QOM.Function<T> {
 
     @Override
     public final MList<? extends Field<?>> $args() {
-        return QueryPartListView.wrap(argument);
+        return QOM.unmodifiable(QueryPartListView.wrap(argument));
     }
 
 

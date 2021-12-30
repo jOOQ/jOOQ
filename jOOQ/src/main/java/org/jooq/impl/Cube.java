@@ -71,7 +71,7 @@ final class Cube extends AbstractField<Object> implements QOM.Cube {
 
     @Override
     public final MList<? extends FieldOrRow> $arg1() {
-        return arguments;
+        return QOM.unmodifiable(arguments);
     }
 
     @Override

@@ -134,7 +134,7 @@ final class CreateTypeImpl extends AbstractDDLQuery implements
 
     @Override
     public final MList<? extends Field<String>> $values() {
-        return values;
+        return QOM.unmodifiable(values);
     }
 
 

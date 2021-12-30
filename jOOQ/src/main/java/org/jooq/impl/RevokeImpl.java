@@ -200,7 +200,7 @@ implements
 
     @Override
     public final MList<? extends Privilege> $privileges() {
-        return privileges;
+        return QOM.unmodifiable(privileges);
     }
 
     @Override

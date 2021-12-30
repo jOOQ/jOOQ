@@ -124,7 +124,7 @@ implements
 
     @Override
     public final MList<? extends Field<?>> $fields() {
-        return fields;
+        return QOM.unmodifiable(fields);
     }
 
     @Override

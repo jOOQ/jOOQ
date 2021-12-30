@@ -98,7 +98,7 @@ final class RowsFrom extends AbstractTable<Record> implements QOM.RowsFrom {
 
     @Override
     public final MList<? extends Table<?>> $tables() {
-        return QueryPartListView.wrap(tables);
+        return QOM.unmodifiable(tables);
     }
 
 

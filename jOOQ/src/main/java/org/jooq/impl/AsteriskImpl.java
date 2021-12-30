@@ -119,7 +119,7 @@ final class AsteriskImpl extends AbstractQueryPart implements Asterisk {
 
     @Override
     public final MList<? extends Field<?>> $except() {
-        return fields;
+        return QOM.unmodifiable(fields);
     }
 
 

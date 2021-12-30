@@ -37,11 +37,16 @@
  */
 package org.jooq.impl;
 
+import static java.util.Collections.unmodifiableCollection;
+import static java.util.Collections.unmodifiableList;
 import static org.jooq.impl.DSL.keyword;
 
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
@@ -206,7 +211,14 @@ public final class QOM {
     // minimal example. Without the qualification, the types cannot be found
     // despite being imported
 
+    /**
+     * An unmodifiable {@link Collection} of {@link QueryPart} elements.
+     */
     public interface MCollection<Q extends org.jooq.QueryPart> extends org.jooq.QueryPart, java.util.Collection<Q> {}
+
+    /**
+     * An unmodifiable {@link List} of {@link QueryPart} elements.
+     */
     public interface MList<Q extends org.jooq.QueryPart> extends MCollection<Q>, java.util.List<Q> {}
 
     public /*sealed*/ interface With
@@ -7044,4 +7056,37 @@ public final class QOM {
 
 
 
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Turn an array into an unmodifiable {@link MList}.
+     */
+    static final <Q extends QueryPart> MList<Q> unmodifiable(Q[] array) {
+        return unmodifiable(QueryPartListView.wrap(array));
+    }
+
+    /**
+     * Turn a {@link List} into an unmodifiable {@link MList}.
+     */
+    static final <Q extends QueryPart> MList<Q> unmodifiable(List<Q> list) {
+        return QueryPartListView.wrap(unmodifiableList(list));
+    }
+
+    /**
+     * Turn a {@link Collection} into an unmodifiable {@link MList}.
+     */
+    static final <Q extends QueryPart> MList<Q> unmodifiable(Collection<Q> collection) {
+        if (collection instanceof List)
+            return unmodifiable((List<Q>) collection);
+        else
+            return new QueryPartList<>(unmodifiableCollection(collection));
+    }
 }

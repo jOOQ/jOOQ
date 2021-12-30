@@ -1173,7 +1173,7 @@ implements
 
     @Override
     public final MList<? extends CommonTableExpression<?>> $commonTableExpressions() {
-        return ctes;
+        return QOM.unmodifiable(ctes);
     }
 
     @Override

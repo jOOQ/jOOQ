@@ -91,7 +91,7 @@ final class Coalesce<T> extends AbstractField<T> implements QOM.Coalesce<T> {
 
     @Override
     public final MList<? extends Field<T>> $arg1() {
-        return QueryPartListView.wrap(fields);
+        return QOM.unmodifiable(fields);
     }
 
     @Override

@@ -114,7 +114,7 @@ final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
 
     @Override
     public final MList<? extends Field<?>> $elements() {
-        return QueryPartListView.wrap(fields.fields);
+        return QOM.unmodifiable(fields.fields);
     }
 
 

@@ -399,12 +399,12 @@ implements
 
     @Override
     public final MList<? extends OrderField<?>> $on() {
-        return on;
+        return QOM.unmodifiable(on);
     }
 
     @Override
     public final MList<? extends Field<?>> $include() {
-        return include;
+        return QOM.unmodifiable(include);
     }
 
     @Override

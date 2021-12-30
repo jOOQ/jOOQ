@@ -122,7 +122,7 @@ final class Greatest<T> extends AbstractField<T> implements QOM.Greatest<T> {
 
     @Override
     public final MList<? extends Field<T>> $arg1() {
-        return (MList<? extends Field<T>>) args;
+        return QOM.unmodifiable((MList<? extends Field<T>>) args);
     }
 
     @Override

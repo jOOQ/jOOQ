@@ -131,7 +131,7 @@ final class QualifiedAsteriskImpl extends AbstractQueryPart implements Qualified
 
     @Override
     public final MList<? extends Field<?>> $except() {
-        return fields;
+        return QOM.unmodifiable(fields);
     }
 
 

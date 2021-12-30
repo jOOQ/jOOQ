@@ -265,7 +265,7 @@ implements
 
     @Override
     public final MList<? extends JSONEntry<?>> $entries() {
-        return entries;
+        return QOM.unmodifiable(entries);
     }
 
     @Override

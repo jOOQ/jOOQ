@@ -52,6 +52,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -376,9 +377,15 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
 
     @Override
     public boolean equals(Object that) {
-
         // [#11126] Speed up comparisons of two QueryPartCollectionViews of the same type
-        if (that instanceof QueryPartCollectionView && getClass() == that.getClass())
+
+        if (this == that)
+            return true;
+
+        // Maintain List::equals and Set::equals contracts
+        else if (that instanceof List && !(this instanceof List))
+            return false;
+        else if (that instanceof QueryPartCollectionView)
             return wrapped.equals(((QueryPartCollectionView<?>) that).wrapped);
         else
             return super.equals(that);

@@ -329,12 +329,12 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
 
     @Override
     public final MList<? extends Field<?>> $partitionBy() {
-        return $windowSpecification() == null ? new QueryPartList<>() : $windowSpecification().$partitionBy();
+        return QOM.unmodifiable($windowSpecification() == null ? new QueryPartList<>() : $windowSpecification().$partitionBy());
     }
 
     @Override
     public final MList<? extends SortField<?>> $orderBy() {
-        return $windowSpecification() == null ? new QueryPartList<>() : $windowSpecification().$orderBy();
+        return QOM.unmodifiable($windowSpecification() == null ? new QueryPartList<>() : $windowSpecification().$orderBy());
     }
 
     @Override

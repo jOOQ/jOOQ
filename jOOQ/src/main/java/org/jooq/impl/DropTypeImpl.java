@@ -122,7 +122,7 @@ implements
 
     @Override
     public final MList<? extends Name> $names() {
-        return type;
+        return QOM.unmodifiable(type);
     }
 
     @Override

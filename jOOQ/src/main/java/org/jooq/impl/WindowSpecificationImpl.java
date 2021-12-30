@@ -698,12 +698,12 @@ implements
 
     @Override
     public final MList<? extends Field<?>> $partitionBy() {
-        return partitionBy;
+        return QOM.unmodifiable(partitionBy);
     }
 
     @Override
     public final MList<? extends SortField<?>> $orderBy() {
-        return orderBy;
+        return QOM.unmodifiable(orderBy);
     }
 
     @Override

@@ -163,4 +163,18 @@ class QueryPartListView<T extends QueryPart> extends QueryPartCollectionView<T> 
     public final List<T> subList(int fromIndex, int toIndex) {
         return wrapped().subList(fromIndex, toIndex);
     }
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that)
+            return true;
+        else if (that instanceof List)
+            return wrapped.equals(that);
+        else
+            return false;
+    }
 }

@@ -121,7 +121,7 @@ final class Concat extends AbstractField<String> implements QOM.Concat {
 
     @Override
     public final MList<? extends Field<?>> $arg1() {
-        return QueryPartListView.wrap(arguments);
+        return QOM.unmodifiable(arguments);
     }
 
     @Override

@@ -425,7 +425,7 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
 
     @Override
     public final MList<? extends Field<?>> $fields() {
-        return QueryPartListView.wrap(fields());
+        return QOM.unmodifiable(fields());
     }
 
 

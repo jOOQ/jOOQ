@@ -122,7 +122,7 @@ implements
 
     @Override
     public final MList<? extends Field<?>> $args() {
-        return args;
+        return QOM.unmodifiable(args);
     }
 
     @Override

@@ -84,7 +84,7 @@ final class GroupingSets extends AbstractField<Object> implements QOM.GroupingSe
 
     @Override
     public final MList<? extends MList<? extends FieldOrRow>> $arg1() {
-        return fieldSets;
+        return QOM.unmodifiable(fieldSets);
     }
 
     @Override

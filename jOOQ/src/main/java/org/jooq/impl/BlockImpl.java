@@ -594,7 +594,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
     @Override
     public final MList<? extends Statement> $statements() {
-        return new QueryPartList<>(statements);
+        return QOM.unmodifiable(statements);
     }
 
 

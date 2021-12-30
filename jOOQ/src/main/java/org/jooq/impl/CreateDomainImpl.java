@@ -228,7 +228,7 @@ implements
 
     @Override
     public final MList<? extends Constraint> $constraints() {
-        return constraints;
+        return QOM.unmodifiable(constraints);
     }
 
     @Override

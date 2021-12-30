@@ -179,7 +179,7 @@ final class QueriesImpl extends AbstractAttachableQueryPart implements Queries {
 
     @Override
     public final MList<? extends Query> $queries() {
-        return queries;
+        return QOM.unmodifiable(queries);
     }
 
 

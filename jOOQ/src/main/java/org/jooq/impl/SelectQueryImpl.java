@@ -4477,8 +4477,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final SelectFieldList<SelectFieldOrAsterisk> $select() {
-        return select;
+    public final MList<SelectFieldOrAsterisk> $select() {
+        return QOM.unmodifiable(select);
     }
 
     @Override
@@ -4506,8 +4506,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final TableList $from() {
-        return from;
+    public final MList<Table<?>> $from() {
+        return QOM.unmodifiable(from);
     }
 
     @Override
@@ -4535,8 +4535,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final GroupFieldList $groupBy() {
-        return groupBy == null ? new GroupFieldList() : groupBy;
+    public final MList<GroupField> $groupBy() {
+        return QOM.unmodifiable(groupBy == null ? new GroupFieldList() : groupBy);
     }
 
     @Override
@@ -4567,7 +4567,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final MList<? extends WindowDefinition> $window() {
-        return window == null ? QueryPartList.emptyList() : window;
+        return QOM.unmodifiable(window == null ? QueryPartList.emptyList() : window);
     }
 
     @Override
@@ -4584,9 +4584,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final QueryPartList<SortField<?>> $orderBy() {
-        return orderBy;
+    public final MList<SortField<?>> $orderBy() {
+        return QOM.unmodifiable(orderBy);
     }
+
 
 
 

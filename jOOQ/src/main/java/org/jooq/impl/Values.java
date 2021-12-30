@@ -266,6 +266,6 @@ final class Values<R extends Record> extends AbstractTable<R> implements QOM.Val
 
     @Override
     public final MList<? extends Row> $arg1() {
-        return rows;
+        return QOM.unmodifiable(rows);
     }
 }

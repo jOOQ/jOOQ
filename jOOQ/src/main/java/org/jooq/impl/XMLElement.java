@@ -178,7 +178,7 @@ final class XMLElement extends AbstractField<XML> implements QOM.XMLElement {
 
     @Override
     public final MList<? extends Field<?>> $content() {
-        return content;
+        return QOM.unmodifiable(content);
     }
 
 

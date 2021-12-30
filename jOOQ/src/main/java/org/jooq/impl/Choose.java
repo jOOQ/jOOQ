@@ -107,7 +107,7 @@ final class Choose<T> extends AbstractField<T> implements QOM.Choose<T> {
 
     @Override
     public final MList<? extends Field<T>> $arg2() {
-        return QueryPartListView.wrap(values);
+        return QOM.unmodifiable(values);
     }
 
     @Override

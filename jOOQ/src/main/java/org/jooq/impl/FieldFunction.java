@@ -125,7 +125,7 @@ final class FieldFunction<T> extends AbstractField<Integer> implements QOM.Field
 
     @Override
     public final MList<? extends Field<T>> $arg2() {
-        return arguments;
+        return QOM.unmodifiable(arguments);
     }
 
     @Override

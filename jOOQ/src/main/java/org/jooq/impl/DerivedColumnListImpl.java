@@ -189,7 +189,7 @@ implements
 
     @Override
     public final MList<? extends Name> $columnNames() {
-        return QueryPartListView.wrap(fieldNames != null ? fieldNames : EMPTY_NAME);
+        return QOM.unmodifiable(fieldNames != null ? fieldNames : EMPTY_NAME);
     }
 
 

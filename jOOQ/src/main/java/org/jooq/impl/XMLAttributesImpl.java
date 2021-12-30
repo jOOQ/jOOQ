@@ -99,7 +99,7 @@ final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes
 
     @Override
     public final MList<? extends Field<?>> $attributes() {
-        return attributes;
+        return QOM.unmodifiable(attributes);
     }
 
 

@@ -118,6 +118,7 @@ public interface Traverser<A, R> {
      * {@link #supplier()}, {@link #abort()}, {@link #recurse()},
      * {@link #before()}, {@link #after()}, and {@link #finisher()}.
      */
+    @SuppressWarnings("unchecked")
     static <A, R> Traverser<A, R> of(
         Supplier<A> supplier,
         Predicate<? super A> abort,
@@ -127,7 +128,9 @@ public interface Traverser<A, R> {
         Function<? super A, ? extends R> finisher
     ) {
 
-        // TODO: Perhaps we should accept only invariant functions?
+        // The below casts can be considered safe as they can be replaced by
+        // respective x::test or x::apply method references turning variant
+        // versions of the functions into invariant ones.
         return new Traverser<A, R>() {
             @Override
             public Supplier<A> supplier() {

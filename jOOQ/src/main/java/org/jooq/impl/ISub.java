@@ -94,7 +94,7 @@ implements
 
     @Override
     public final void accept0(Context<?> ctx) {
-        ctx.visit(transform(Sub::new));
+        ctx.visit(new Sub($arg1(), $arg2()));
     }
 
 

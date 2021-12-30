@@ -5938,10 +5938,6 @@ public final class QOM {
         @NotNull
         Function1<? super Q1, ? extends R> constructor();
 
-        default <T> T transform(Function1<? super Q1, ? extends T> function) {
-            return function.apply($arg1());
-        }
-
 
 
 
@@ -5976,10 +5972,6 @@ public final class QOM {
 
         @NotNull
         Function2<? super Q1, ? super Q2, ? extends R> constructor();
-
-        default <T> T transform(Function2<? super Q1, ? super Q2, ? extends T> function) {
-            return function.apply($arg1(), $arg2());
-        }
 
 
 
@@ -6017,10 +6009,6 @@ public final class QOM {
 
         @NotNull
         Function3<? super Q1, ? super Q2, ? super Q3, ? extends R> constructor();
-
-        default <T> T transform(Function3<? super Q1, ? super Q2, ? super Q3, ? extends T> function) {
-            return function.apply($arg1(), $arg2(), $arg3());
-        }
 
 
 

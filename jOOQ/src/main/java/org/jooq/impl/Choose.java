@@ -49,7 +49,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function2;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
@@ -106,12 +106,12 @@ final class Choose<T> extends AbstractField<T> implements QOM.Choose<T> {
     }
 
     @Override
-    public final MList<? extends Field<T>> $arg2() {
+    public final UnmodifiableList<? extends Field<T>> $arg2() {
         return QOM.unmodifiable(values);
     }
 
     @Override
-    public final Function2<? super Field<Integer>, ? super MList<? extends Field<T>>, ? extends Field<T>> constructor() {
+    public final Function2<? super Field<Integer>, ? super UnmodifiableList<? extends Field<T>>, ? extends Field<T>> constructor() {
         return (i, v) -> new Choose<T>(i, (Field<T>[]) v.toArray(EMPTY_FIELD));
     }
 }

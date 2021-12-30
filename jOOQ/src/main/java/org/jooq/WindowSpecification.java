@@ -40,7 +40,7 @@ package org.jooq;
 import org.jooq.impl.DSL;
 import org.jooq.impl.QOM.FrameExclude;
 import org.jooq.impl.QOM.FrameUnits;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -74,8 +74,8 @@ public interface WindowSpecification extends QueryPart {
     // -------------------------------------------------------------------------
 
     @Nullable WindowDefinition $windowDefinition();
-    @NotNull MList<? extends Field<?>> $partitionBy();
-    @NotNull MList<? extends SortField<?>> $orderBy();
+    @NotNull UnmodifiableList<? extends Field<?>> $partitionBy();
+    @NotNull UnmodifiableList<? extends SortField<?>> $orderBy();
     @Nullable FrameUnits $frameUnits();
     @Nullable Integer $frameStart();
     @Nullable Integer $frameEnd();

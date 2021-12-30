@@ -46,7 +46,7 @@ import org.jooq.Context;
 import org.jooq.FieldOrRow;
 import org.jooq.Function1;
 import org.jooq.GroupField;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
@@ -84,12 +84,12 @@ final class Rollup extends AbstractField<Object> implements QOM.Rollup {
     // -------------------------------------------------------------------------
 
     @Override
-    public final MList<? extends FieldOrRow> $arg1() {
+    public final UnmodifiableList<? extends FieldOrRow> $arg1() {
         return QOM.unmodifiable(arguments);
     }
 
     @Override
-    public final Function1<? super MList<? extends FieldOrRow>, ? extends GroupField> constructor() {
+    public final Function1<? super UnmodifiableList<? extends FieldOrRow>, ? extends GroupField> constructor() {
         return l -> new Rollup(l.toArray(EMPTY_FIELD_OR_ROW));
     }
 }

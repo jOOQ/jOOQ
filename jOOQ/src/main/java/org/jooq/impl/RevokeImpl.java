@@ -199,7 +199,7 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final MList<? extends Privilege> $privileges() {
+    public final UnmodifiableList<? extends Privilege> $privileges() {
         return QOM.unmodifiable(privileges);
     }
 
@@ -224,7 +224,7 @@ implements
     }
 
     @Override
-    public final QOM.Revoke $privileges(MList<? extends Privilege> newValue) {
+    public final QOM.Revoke $privileges(UnmodifiableList<? extends Privilege> newValue) {
         return constructor().apply(newValue, $grantOptionFor(), $on(), $from(), $fromPublic());
     }
 
@@ -248,7 +248,7 @@ implements
         return constructor().apply($privileges(), $grantOptionFor(), $on(), $from(), newValue);
     }
 
-    public final Function5<? super MList<? extends Privilege>, ? super Boolean, ? super Table<?>, ? super Role, ? super Boolean, ? extends QOM.Revoke> constructor() {
+    public final Function5<? super UnmodifiableList<? extends Privilege>, ? super Boolean, ? super Table<?>, ? super Role, ? super Boolean, ? extends QOM.Revoke> constructor() {
         return (a1, a2, a3, a4, a5) -> new RevokeImpl(configuration(), (Collection<? extends Privilege>) a1, a2, a3, a4, a5);
     }
 

@@ -104,7 +104,7 @@ import org.jooq.Statement;
 import org.jooq.Traverser;
 // ...
 import org.jooq.conf.ParamType;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.ScopeMarker.ScopeContent;
 import org.jooq.impl.Tools.DataExtendedKey;
 
@@ -593,7 +593,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
     // -------------------------------------------------------------------------
 
     @Override
-    public final MList<? extends Statement> $statements() {
+    public final UnmodifiableList<? extends Statement> $statements() {
         return QOM.unmodifiable(statements);
     }
 

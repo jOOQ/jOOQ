@@ -121,16 +121,16 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final MList<? extends Field<?>> $args() {
+    public final UnmodifiableList<? extends Field<?>> $args() {
         return QOM.unmodifiable(args);
     }
 
     @Override
-    public final QOM.XMLConcat $args(MList<? extends Field<?>> newValue) {
+    public final QOM.XMLConcat $args(UnmodifiableList<? extends Field<?>> newValue) {
         return constructor().apply(newValue);
     }
 
-    public final Function1<? super MList<? extends Field<?>>, ? extends QOM.XMLConcat> constructor() {
+    public final Function1<? super UnmodifiableList<? extends Field<?>>, ? extends QOM.XMLConcat> constructor() {
         return (a1) -> new XMLConcat((Collection<? extends Field<?>>) a1);
     }
 

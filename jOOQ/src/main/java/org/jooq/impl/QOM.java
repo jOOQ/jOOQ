@@ -214,12 +214,12 @@ public final class QOM {
     /**
      * An unmodifiable {@link Collection} of {@link QueryPart} elements.
      */
-    public interface MCollection<Q extends org.jooq.QueryPart> extends org.jooq.QueryPart, java.util.Collection<Q> {}
+    public interface UnmodifiableCollection<Q extends org.jooq.QueryPart> extends org.jooq.QueryPart, java.util.Collection<Q> {}
 
     /**
      * An unmodifiable {@link List} of {@link QueryPart} elements.
      */
-    public interface MList<Q extends org.jooq.QueryPart> extends MCollection<Q>, java.util.List<Q> {}
+    public interface UnmodifiableList<Q extends org.jooq.QueryPart> extends UnmodifiableCollection<Q>, java.util.List<Q> {}
 
     public /*sealed*/ interface With
         extends
@@ -227,7 +227,7 @@ public final class QOM {
         /*permits
             WithImpl*/
     {
-        @NotNull MList<? extends CommonTableExpression<?>> $commonTableExpressions();
+        @NotNull UnmodifiableList<? extends CommonTableExpression<?>> $commonTableExpressions();
         boolean $recursive();
     }
 
@@ -242,7 +242,7 @@ public final class QOM {
             CreateTypeImpl*/
     {
         @NotNull Name $name();
-        @NotNull MList<? extends Field<String>> $values();
+        @NotNull UnmodifiableList<? extends Field<String>> $values();
     }
 
     public /*sealed*/ interface DropType
@@ -251,7 +251,7 @@ public final class QOM {
         /*permits
             DropTypeImpl*/
     {
-        @NotNull MList<? extends Name> $names();
+        @NotNull UnmodifiableList<? extends Name> $names();
         boolean $ifExists();
         @Nullable Cascade $cascade();
     }
@@ -265,7 +265,7 @@ public final class QOM {
         boolean $ifNotExists();
         boolean $orReplace();
         @NotNull Table<?> $view();
-        @NotNull MList<? extends Field<?>> $fields();
+        @NotNull UnmodifiableList<? extends Field<?>> $fields();
         @NotNull ResultQuery<R> $query();
     }
 
@@ -282,13 +282,13 @@ public final class QOM {
 
 
     public interface PrimaryKey extends Constraint {
-        @NotNull MList<? extends Field<?>> $fields();
+        @NotNull UnmodifiableList<? extends Field<?>> $fields();
     }
     public interface UniqueKey extends Constraint {
-        @NotNull MList<? extends Field<?>> $fields();
+        @NotNull UnmodifiableList<? extends Field<?>> $fields();
     }
     public interface ForeignKey extends Constraint {
-        @NotNull MList<? extends Field<?>> $fields();
+        @NotNull UnmodifiableList<? extends Field<?>> $fields();
         @NotNull Constraint $references();
     }
     public interface Check extends Constraint {
@@ -352,13 +352,13 @@ public final class QOM {
     public interface Dual extends Table<Record>, UEmpty {}
     public interface Lateral<R extends Record> extends Table<R>, UOperator1<Table<R>, Table<R>> {}
     public interface DerivedTable<R extends Record> extends Table<R>, UOperator1<Select<R>, Table<R>> {}
-    public interface Values<R extends Record> extends Table<R>, UOperator1<MList<? extends Row>, Table<R>> {}
+    public interface Values<R extends Record> extends Table<R>, UOperator1<UnmodifiableList<? extends Row>, Table<R>> {}
     public interface DataChangeDeltaTable<R extends Record> extends Table<R> {
         @NotNull ResultOption $resultOption();
         @NotNull DMLQuery<R> $query();
     }
     public interface RowsFrom extends Table<Record> {
-        @NotNull MList<? extends Table<?>> $tables();
+        @NotNull UnmodifiableList<? extends Table<?>> $tables();
     }
     public interface GenerateSeries<T> extends Table<Record1<T>>, UOperator3<Field<T>, Field<T>, Field<T>, Table<Record1<T>>> {
         @NotNull default Field<T> $from() { return $arg1(); }
@@ -407,23 +407,23 @@ public final class QOM {
     public /*sealed*/ interface InList<T>
         extends
             Condition,
-            UOperator2<Field<T>, MList<? extends Field<T>>, Condition>
+            UOperator2<Field<T>, UnmodifiableList<? extends Field<T>>, Condition>
         /*permits
             InList*/
     {
         @NotNull default Field<T> $field() { return $arg1(); }
-        @NotNull default MList<? extends Field<T>> $list() { return $arg2(); }
+        @NotNull default UnmodifiableList<? extends Field<T>> $list() { return $arg2(); }
     }
 
     public /*sealed*/ interface NotInList<T>
         extends
             Condition,
-            UOperator2<Field<T>, MList<? extends Field<T>>, Condition>
+            UOperator2<Field<T>, UnmodifiableList<? extends Field<T>>, Condition>
         /*permits
             NotInList*/
     {
         @NotNull default Field<T> $field() { return $arg1(); }
-        @NotNull default MList<? extends Field<T>> $list() { return $arg2(); }
+        @NotNull default UnmodifiableList<? extends Field<T>> $list() { return $arg2(); }
     }
 
     public /*sealed*/ interface RegexpLike
@@ -517,7 +517,7 @@ public final class QOM {
     public /* non-sealed */ interface Rollup
         extends
             GroupField,
-            UOperator1<MList<? extends FieldOrRow>, GroupField>
+            UOperator1<UnmodifiableList<? extends FieldOrRow>, GroupField>
         /*permits
             Rollup*/
     {}
@@ -525,7 +525,7 @@ public final class QOM {
     public /* non-sealed */ interface Cube
         extends
             GroupField,
-            UOperator1<MList<? extends FieldOrRow>, GroupField>
+            UOperator1<UnmodifiableList<? extends FieldOrRow>, GroupField>
         /*permits
             Cube*/
     {}
@@ -533,7 +533,7 @@ public final class QOM {
     public /* non-sealed */ interface GroupingSets
         extends
             GroupField,
-            UOperator1<MList<? extends MList<? extends FieldOrRow>>, GroupField>
+            UOperator1<UnmodifiableList<? extends UnmodifiableList<? extends FieldOrRow>>, GroupField>
         /*permits
             GroupingSets*/
     {}
@@ -758,7 +758,7 @@ public final class QOM {
             org.jooq.impl.Function,
             org.jooq.impl.Function1*/
     {
-        @NotNull MList<? extends Field<?>> $args();
+        @NotNull UnmodifiableList<? extends Field<?>> $args();
     }
 
     public /*sealed*/ interface Cast<T>
@@ -806,7 +806,7 @@ public final class QOM {
         /*permits
             org.jooq.impl.Array*/
     {
-        @NotNull MList<? extends Field<?>> $elements();
+        @NotNull UnmodifiableList<? extends Field<?>> $elements();
     }
 
     public /*sealed*/ interface ArrayQuery<T>
@@ -846,7 +846,7 @@ public final class QOM {
     public /*sealed*/ interface Greatest<T>
         extends
             Field<T>,
-            UOperator1<MList<? extends Field<T>>, Field<T>>
+            UOperator1<UnmodifiableList<? extends Field<T>>, Field<T>>
         /*permits
             Greatest*/
     {}
@@ -854,7 +854,7 @@ public final class QOM {
     public /*sealed*/ interface Least<T>
         extends
             Field<T>,
-            UOperator1<MList<? extends Field<T>>, Field<T>>
+            UOperator1<UnmodifiableList<? extends Field<T>>, Field<T>>
         /*permits
             Least*/
     {}
@@ -862,7 +862,7 @@ public final class QOM {
     public /*sealed*/ interface Choose<T>
         extends
             Field<T>,
-            UOperator2<Field<Integer>, MList<? extends Field<T>>, Field<T>>
+            UOperator2<Field<Integer>, UnmodifiableList<? extends Field<T>>, Field<T>>
         /*permits
             Choose*/
     {}
@@ -870,7 +870,7 @@ public final class QOM {
     public /*sealed*/ interface FieldFunction<T>
         extends
             Field<Integer>,
-            UOperator2<Field<T>, MList<? extends Field<T>>, Field<Integer>>
+            UOperator2<Field<T>, UnmodifiableList<? extends Field<T>>, Field<Integer>>
         /*permits
             FieldFunction*/
     {}
@@ -902,7 +902,7 @@ public final class QOM {
     public /*sealed*/ interface Coalesce<T>
         extends
             Field<T>,
-            UOperator1<MList<? extends Field<T>>, Field<T>>
+            UOperator1<UnmodifiableList<? extends Field<T>>, Field<T>>
         /*permits
             Coalesce*/
     {}
@@ -910,7 +910,7 @@ public final class QOM {
     public /*sealed*/ interface Concat
         extends
             Field<String>,
-            UOperator1<MList<? extends Field<?>>, Field<String>>
+            UOperator1<UnmodifiableList<? extends Field<?>>, Field<String>>
         /*permits
             Concat*/
     {}
@@ -979,7 +979,7 @@ public final class QOM {
     {
         @NotNull Name $elementName();
         @NotNull XMLAttributes $attributes();
-        @NotNull MList<? extends Field<?>> $content();
+        @NotNull UnmodifiableList<? extends Field<?>> $content();
     }
 
     public /*sealed*/ interface XMLExists
@@ -1225,12 +1225,12 @@ public final class QOM {
                   boolean $ifNotExists();
         @NotNull  DataType<T> $dataType();
         @Nullable Field<T> $default_();
-        @NotNull  MList<? extends Constraint> $constraints();
+        @NotNull  UnmodifiableList<? extends Constraint> $constraints();
         @NotNull  CreateDomain<T> $domain(Domain<?> domain);
         @NotNull  CreateDomain<T> $ifNotExists(boolean ifNotExists);
         @NotNull  CreateDomain<T> $dataType(DataType<T> dataType);
         @NotNull  CreateDomain<T> $default_(Field<T> default_);
-        @NotNull  CreateDomain<T> $constraints(MList<? extends Constraint> constraints);
+        @NotNull  CreateDomain<T> $constraints(UnmodifiableList<? extends Constraint> constraints);
     }
 
 
@@ -1278,16 +1278,16 @@ public final class QOM {
         @Nullable Index $index();
                   boolean $ifNotExists();
         @Nullable Table<?> $table();
-        @NotNull  MList<? extends OrderField<?>> $on();
-        @NotNull  MList<? extends Field<?>> $include();
+        @NotNull  UnmodifiableList<? extends OrderField<?>> $on();
+        @NotNull  UnmodifiableList<? extends Field<?>> $include();
         @Nullable Condition $where();
                   boolean $excludeNullKeys();
         @NotNull  CreateIndex $unique(boolean unique);
         @NotNull  CreateIndex $index(Index index);
         @NotNull  CreateIndex $ifNotExists(boolean ifNotExists);
         @NotNull  CreateIndex $table(Table<?> table);
-        @NotNull  CreateIndex $on(MList<? extends OrderField<?>> on);
-        @NotNull  CreateIndex $include(MList<? extends Field<?>> include);
+        @NotNull  CreateIndex $on(UnmodifiableList<? extends OrderField<?>> on);
+        @NotNull  CreateIndex $include(UnmodifiableList<? extends Field<?>> include);
         @NotNull  CreateIndex $where(Condition where);
         @NotNull  CreateIndex $excludeNullKeys(boolean excludeNullKeys);
     }
@@ -1588,12 +1588,12 @@ public final class QOM {
         //permits
         //    GrantImpl
     {
-        @NotNull  MList<? extends Privilege> $privileges();
+        @NotNull  UnmodifiableList<? extends Privilege> $privileges();
         @NotNull  Table<?> $on();
         @Nullable Role $to();
                   boolean $toPublic();
                   boolean $withGrantOption();
-        @NotNull  Grant $privileges(MList<? extends Privilege> privileges);
+        @NotNull  Grant $privileges(UnmodifiableList<? extends Privilege> privileges);
         @NotNull  Grant $on(Table<?> on);
         @NotNull  Grant $to(Role to);
         @NotNull  Grant $toPublic(boolean toPublic);
@@ -1609,12 +1609,12 @@ public final class QOM {
         //permits
         //    RevokeImpl
     {
-        @NotNull  MList<? extends Privilege> $privileges();
+        @NotNull  UnmodifiableList<? extends Privilege> $privileges();
                   boolean $grantOptionFor();
         @NotNull  Table<?> $on();
         @Nullable Role $from();
                   boolean $fromPublic();
-        @NotNull  Revoke $privileges(MList<? extends Privilege> privileges);
+        @NotNull  Revoke $privileges(UnmodifiableList<? extends Privilege> privileges);
         @NotNull  Revoke $grantOptionFor(boolean grantOptionFor);
         @NotNull  Revoke $on(Table<?> on);
         @NotNull  Revoke $from(Role from);
@@ -4223,8 +4223,8 @@ public final class QOM {
         //permits
         //    XMLConcat
     {
-        @NotNull  MList<? extends Field<?>> $args();
-        @NotNull  XMLConcat $args(MList<? extends Field<?>> args);
+        @NotNull  UnmodifiableList<? extends Field<?>> $args();
+        @NotNull  XMLConcat $args(UnmodifiableList<? extends Field<?>> args);
     }
 
 
@@ -4252,8 +4252,8 @@ public final class QOM {
         //permits
         //    XMLForest
     {
-        @NotNull  MList<? extends Field<?>> $fields();
-        @NotNull  XMLForest $fields(MList<? extends Field<?>> fields);
+        @NotNull  UnmodifiableList<? extends Field<?>> $fields();
+        @NotNull  XMLForest $fields(UnmodifiableList<? extends Field<?>> fields);
     }
 
     /**
@@ -4298,11 +4298,11 @@ public final class QOM {
         //    JSONArray
     {
         @NotNull  DataType<T> $type();
-        @NotNull  MList<? extends Field<?>> $fields();
+        @NotNull  UnmodifiableList<? extends Field<?>> $fields();
         @Nullable JSONOnNull $onNull();
         @Nullable DataType<?> $returning();
         @NotNull  JSONArray<T> $type(DataType<T> type);
-        @NotNull  JSONArray<T> $fields(MList<? extends Field<?>> fields);
+        @NotNull  JSONArray<T> $fields(UnmodifiableList<? extends Field<?>> fields);
         @NotNull  JSONArray<T> $onNull(JSONOnNull onNull);
         @NotNull  JSONArray<T> $returning(DataType<?> returning);
     }
@@ -4317,11 +4317,11 @@ public final class QOM {
         //    JSONObject
     {
         @NotNull  DataType<T> $type();
-        @NotNull  MList<? extends JSONEntry<?>> $entries();
+        @NotNull  UnmodifiableList<? extends JSONEntry<?>> $entries();
         @Nullable JSONOnNull $onNull();
         @Nullable DataType<?> $returning();
         @NotNull  JSONObject<T> $type(DataType<T> type);
-        @NotNull  JSONObject<T> $entries(MList<? extends JSONEntry<?>> entries);
+        @NotNull  JSONObject<T> $entries(UnmodifiableList<? extends JSONEntry<?>> entries);
         @NotNull  JSONObject<T> $onNull(JSONOnNull onNull);
         @NotNull  JSONObject<T> $returning(DataType<?> returning);
     }
@@ -7067,23 +7067,23 @@ public final class QOM {
 
 
     /**
-     * Turn an array into an unmodifiable {@link MList}.
+     * Turn an array into an unmodifiable {@link UnmodifiableList}.
      */
-    static final <Q extends QueryPart> MList<Q> unmodifiable(Q[] array) {
+    static final <Q extends QueryPart> UnmodifiableList<Q> unmodifiable(Q[] array) {
         return unmodifiable(QueryPartListView.wrap(array));
     }
 
     /**
-     * Turn a {@link List} into an unmodifiable {@link MList}.
+     * Turn a {@link List} into an unmodifiable {@link UnmodifiableList}.
      */
-    static final <Q extends QueryPart> MList<Q> unmodifiable(List<Q> list) {
+    static final <Q extends QueryPart> UnmodifiableList<Q> unmodifiable(List<Q> list) {
         return QueryPartListView.wrap(unmodifiableList(list));
     }
 
     /**
-     * Turn a {@link Collection} into an unmodifiable {@link MList}.
+     * Turn a {@link Collection} into an unmodifiable {@link UnmodifiableList}.
      */
-    static final <Q extends QueryPart> MList<Q> unmodifiable(Collection<Q> collection) {
+    static final <Q extends QueryPart> UnmodifiableList<Q> unmodifiable(Collection<Q> collection) {
         if (collection instanceof List)
             return unmodifiable((List<Q>) collection);
         else

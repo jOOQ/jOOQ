@@ -49,7 +49,7 @@ import org.jooq.Field;
 import org.jooq.FieldOrRow;
 import org.jooq.Function1;
 import org.jooq.GroupField;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
@@ -83,12 +83,12 @@ final class GroupingSets extends AbstractField<Object> implements QOM.GroupingSe
     // -------------------------------------------------------------------------
 
     @Override
-    public final MList<? extends MList<? extends FieldOrRow>> $arg1() {
+    public final UnmodifiableList<? extends UnmodifiableList<? extends FieldOrRow>> $arg1() {
         return QOM.unmodifiable(fieldSets);
     }
 
     @Override
-    public final Function1<? super MList<? extends MList<? extends FieldOrRow>>, ? extends GroupField> constructor() {
+    public final Function1<? super UnmodifiableList<? extends UnmodifiableList<? extends FieldOrRow>>, ? extends GroupField> constructor() {
         return l -> new GroupingSets((Collection[]) l.toArray(EMPTY_COLLECTION));
     }
 }

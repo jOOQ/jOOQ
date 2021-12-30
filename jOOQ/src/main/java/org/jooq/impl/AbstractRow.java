@@ -66,7 +66,7 @@ import org.jooq.Row1;
 import org.jooq.Row2;
 import org.jooq.SelectField;
 import org.jooq.Traverser;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.QueryPart;
 
 import org.jetbrains.annotations.NotNull;
@@ -424,7 +424,7 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
     }
 
     @Override
-    public final MList<? extends Field<?>> $fields() {
+    public final UnmodifiableList<? extends Field<?>> $fields() {
         return QOM.unmodifiable(fields());
     }
 

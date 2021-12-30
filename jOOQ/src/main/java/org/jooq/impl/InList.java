@@ -49,7 +49,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function2;
 import org.jooq.RowN;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
@@ -77,7 +77,7 @@ final class InList<T> extends AbstractInList<T> implements QOM.InList<T> {
     // -------------------------------------------------------------------------
 
     @Override
-    public final Function2<? super Field<T>, ? super MList<? extends Field<T>>, ? extends Condition> constructor() {
+    public final Function2<? super Field<T>, ? super UnmodifiableList<? extends Field<T>>, ? extends Condition> constructor() {
         return (a1, a2) -> new InList<T>(a1, a2);
     }
 }

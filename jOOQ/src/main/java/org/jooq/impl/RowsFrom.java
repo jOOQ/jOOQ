@@ -55,7 +55,7 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.Traverser;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
@@ -97,7 +97,7 @@ final class RowsFrom extends AbstractTable<Record> implements QOM.RowsFrom {
     // -------------------------------------------------------------------------
 
     @Override
-    public final MList<? extends Table<?>> $tables() {
+    public final UnmodifiableList<? extends Table<?>> $tables() {
         return QOM.unmodifiable(tables);
     }
 

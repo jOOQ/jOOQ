@@ -73,7 +73,7 @@ import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.ResultQuery;
 import org.jooq.Traverser;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.QueryPart;
 import org.jooq.impl.QOM.Materialized;
 
@@ -188,7 +188,7 @@ implements
     }
 
     @Override
-    public final MList<? extends Name> $columnNames() {
+    public final UnmodifiableList<? extends Name> $columnNames() {
         return QOM.unmodifiable(fieldNames != null ? fieldNames : EMPTY_NAME);
     }
 

@@ -132,7 +132,7 @@ import org.jooq.TableField;
 import org.jooq.TableLike;
 // ...
 import org.jooq.WindowDefinition;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.With;
 
 /**
@@ -3375,12 +3375,12 @@ implements
     }
 
     @Override
-    public final MList<? extends SelectFieldOrAsterisk> $select() {
+    public final UnmodifiableList<? extends SelectFieldOrAsterisk> $select() {
         return getDelegate().$select();
     }
 
     @Override
-    public final Select<?> $select(MList<? extends SelectFieldOrAsterisk> select) {
+    public final Select<?> $select(UnmodifiableList<? extends SelectFieldOrAsterisk> select) {
         return getDelegate().$select(select);
     }
 
@@ -3395,12 +3395,12 @@ implements
     }
 
     @Override
-    public final MList<? extends Table<?>> $from() {
+    public final UnmodifiableList<? extends Table<?>> $from() {
         return getDelegate().$from();
     }
 
     @Override
-    public final Select<R> $from(MList<? extends Table<?>> from) {
+    public final Select<R> $from(UnmodifiableList<? extends Table<?>> from) {
         return getDelegate().$from(from);
     }
 
@@ -3415,7 +3415,7 @@ implements
     }
 
     @Override
-    public final MList<? extends GroupField> $groupBy() {
+    public final UnmodifiableList<? extends GroupField> $groupBy() {
         return getDelegate().$groupBy();
     }
 
@@ -3440,7 +3440,7 @@ implements
     }
 
     @Override
-    public final MList<? extends WindowDefinition> $window() {
+    public final UnmodifiableList<? extends WindowDefinition> $window() {
         return getDelegate().$window();
     }
 
@@ -3455,7 +3455,7 @@ implements
     }
 
     @Override
-    public MList<? extends SortField<?>> $orderBy() {
+    public UnmodifiableList<? extends SortField<?>> $orderBy() {
         return getDelegate().$orderBy();
     }
 

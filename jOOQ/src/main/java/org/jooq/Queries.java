@@ -42,7 +42,7 @@ import java.util.stream.Stream;
 
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -132,5 +132,5 @@ public interface Queries extends AttachableQueryPart, Iterable<Query> {
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
-    @NotNull MList<? extends Query> $queries();
+    @NotNull UnmodifiableList<? extends Query> $queries();
 }

@@ -84,7 +84,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.conf.ParamType;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 
 /**
@@ -260,12 +260,12 @@ final class Values<R extends Record> extends AbstractTable<R> implements QOM.Val
     // -------------------------------------------------------------------------
 
     @Override
-    public final Function1<? super MList<? extends Row>, ? extends Table<R>> constructor() {
+    public final Function1<? super UnmodifiableList<? extends Row>, ? extends Table<R>> constructor() {
         return r -> new Values<>(r.toArray(EMPTY_ROW));
     }
 
     @Override
-    public final MList<? extends Row> $arg1() {
+    public final UnmodifiableList<? extends Row> $arg1() {
         return QOM.unmodifiable(rows);
     }
 }

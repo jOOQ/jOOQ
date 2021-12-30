@@ -56,7 +56,7 @@ import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.impl.QOM.Cascade;
 import org.jooq.impl.QOM.DropType;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.QueryPart;
 import org.jooq.Traverser;
 
@@ -121,7 +121,7 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final MList<? extends Name> $names() {
+    public final UnmodifiableList<? extends Name> $names() {
         return QOM.unmodifiable(type);
     }
 

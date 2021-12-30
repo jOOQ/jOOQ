@@ -38,7 +38,7 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -54,5 +54,5 @@ public interface XMLAttributes extends QueryPart {
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
-    @NotNull MList<? extends Field<?>> $attributes();
+    @NotNull UnmodifiableList<? extends Field<?>> $attributes();
 }

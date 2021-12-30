@@ -68,7 +68,7 @@ import static org.jooq.SQLDialect.YUGABYTE;
 import java.util.List;
 
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.With;
 
 import org.jetbrains.annotations.NotNull;
@@ -185,23 +185,23 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
     // -------------------------------------------------------------------------
 
     @Nullable With $with();
-    @NotNull MList<? extends SelectFieldOrAsterisk> $select();
-    @NotNull Select<?> $select(MList<? extends SelectFieldOrAsterisk> select);
+    @NotNull UnmodifiableList<? extends SelectFieldOrAsterisk> $select();
+    @NotNull Select<?> $select(UnmodifiableList<? extends SelectFieldOrAsterisk> select);
     boolean $distinct();
     @NotNull Select<R> $distinct(boolean distinct);
-    @NotNull MList<? extends Table<?>> $from();
-    @NotNull Select<R> $from(MList<? extends Table<?>> from);
+    @NotNull UnmodifiableList<? extends Table<?>> $from();
+    @NotNull Select<R> $from(UnmodifiableList<? extends Table<?>> from);
     @Nullable Condition $where();
     @NotNull Select<R> $where(Condition condition);
-    @NotNull MList<? extends GroupField> $groupBy();
+    @NotNull UnmodifiableList<? extends GroupField> $groupBy();
     boolean $groupByDistinct();
     @NotNull Select<R> $groupByDistinct(boolean groupByDistinct);
     @Nullable Condition $having();
     @NotNull Select<R> $having(Condition condition);
-    @NotNull MList<? extends WindowDefinition> $window();
+    @NotNull UnmodifiableList<? extends WindowDefinition> $window();
     @Nullable Condition $qualify();
     @NotNull Select<R> $qualify(Condition condition);
-    @NotNull MList<? extends SortField<?>> $orderBy();
+    @NotNull UnmodifiableList<? extends SortField<?>> $orderBy();
 
 
 

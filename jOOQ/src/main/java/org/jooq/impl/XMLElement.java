@@ -62,7 +62,7 @@ import org.jooq.QueryPart;
 import org.jooq.Traverser;
 import org.jooq.XML;
 import org.jooq.XMLAttributes;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
@@ -177,7 +177,7 @@ final class XMLElement extends AbstractField<XML> implements QOM.XMLElement {
     }
 
     @Override
-    public final MList<? extends Field<?>> $content() {
+    public final UnmodifiableList<? extends Field<?>> $content() {
         return QOM.unmodifiable(content);
     }
 

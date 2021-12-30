@@ -47,7 +47,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function1;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
@@ -120,12 +120,12 @@ final class Least<T> extends AbstractField<T> implements QOM.Least<T> {
     // -------------------------------------------------------------------------
 
     @Override
-    public final MList<? extends Field<T>> $arg1() {
-        return QOM.unmodifiable((MList<? extends Field<T>>) args);
+    public final UnmodifiableList<? extends Field<T>> $arg1() {
+        return QOM.unmodifiable((UnmodifiableList<? extends Field<T>>) args);
     }
 
     @Override
-    public final Function1<? super MList<? extends Field<T>>, ? extends Field<T>> constructor() {
+    public final Function1<? super UnmodifiableList<? extends Field<T>>, ? extends Field<T>> constructor() {
         return a -> new Least<>(a.toArray(EMPTY_FIELD));
     }
 }

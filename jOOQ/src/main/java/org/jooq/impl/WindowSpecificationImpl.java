@@ -108,7 +108,7 @@ import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.conf.RenderImplicitWindowRange;
 import org.jooq.impl.QOM.FrameExclude;
 import org.jooq.impl.QOM.FrameUnits;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
@@ -697,12 +697,12 @@ implements
     }
 
     @Override
-    public final MList<? extends Field<?>> $partitionBy() {
+    public final UnmodifiableList<? extends Field<?>> $partitionBy() {
         return QOM.unmodifiable(partitionBy);
     }
 
     @Override
-    public final MList<? extends SortField<?>> $orderBy() {
+    public final UnmodifiableList<? extends SortField<?>> $orderBy() {
         return QOM.unmodifiable(orderBy);
     }
 

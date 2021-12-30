@@ -61,7 +61,7 @@ import org.jooq.Function1;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.Traverser;
-import org.jooq.impl.QOM.MCollection;
+import org.jooq.impl.QOM.UnmodifiableCollection;
 
 /**
  * A {@link List} view, delegating all calls to a wrapped list, but acting like
@@ -69,7 +69,7 @@ import org.jooq.impl.QOM.MCollection;
  *
  * @author Lukas Eder
  */
-class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart implements MCollection<T>, SimpleQueryPart, SeparatedQueryPart {
+class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart implements UnmodifiableCollection<T>, SimpleQueryPart, SeparatedQueryPart {
 
     final Collection<T>                    wrapped;
     Boolean                                qualify;

@@ -38,7 +38,7 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -87,5 +87,5 @@ public interface Block extends RowCountQuery {
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
-    @NotNull MList<? extends Statement> $statements();
+    @NotNull UnmodifiableList<? extends Statement> $statements();
 }

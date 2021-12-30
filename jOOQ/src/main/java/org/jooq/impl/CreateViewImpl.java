@@ -94,7 +94,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.Traverser;
 import org.jooq.impl.QOM.CreateView;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
@@ -297,7 +297,7 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
     }
 
     @Override
-    public final MList<? extends Field<?>> $fields() {
+    public final UnmodifiableList<? extends Field<?>> $fields() {
         return QOM.unmodifiable(fields);
     }
 

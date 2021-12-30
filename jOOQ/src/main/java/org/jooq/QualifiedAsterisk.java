@@ -37,7 +37,7 @@
  */
 package org.jooq;
 
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -116,5 +116,5 @@ public /* non-sealed */ interface QualifiedAsterisk extends SelectFieldOrAsteris
     // -------------------------------------------------------------------------
 
     @NotNull Table<?> $table();
-    @NotNull MList<? extends Field<?>> $except();
+    @NotNull UnmodifiableList<? extends Field<?>> $except();
 }

@@ -49,7 +49,7 @@ import static org.jooq.impl.Tools.castAllIfNeeded;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
@@ -120,12 +120,12 @@ final class Concat extends AbstractField<String> implements QOM.Concat {
     // -------------------------------------------------------------------------
 
     @Override
-    public final MList<? extends Field<?>> $arg1() {
+    public final UnmodifiableList<? extends Field<?>> $arg1() {
         return QOM.unmodifiable(arguments);
     }
 
     @Override
-    public final Function1<? super MList<? extends Field<?>>, ? extends Field<String>> constructor() {
+    public final Function1<? super UnmodifiableList<? extends Field<?>>, ? extends Field<String>> constructor() {
         return l -> new Concat(l.toArray(EMPTY_FIELD));
     }
 }

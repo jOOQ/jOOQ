@@ -51,7 +51,7 @@ import java.util.List;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function2;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
@@ -124,12 +124,12 @@ final class FieldFunction<T> extends AbstractField<Integer> implements QOM.Field
     }
 
     @Override
-    public final MList<? extends Field<T>> $arg2() {
+    public final UnmodifiableList<? extends Field<T>> $arg2() {
         return QOM.unmodifiable(arguments);
     }
 
     @Override
-    public final Function2<? super Field<T>, ? super MList<? extends Field<T>>, ? extends Field<Integer>> constructor() {
+    public final Function2<? super Field<T>, ? super UnmodifiableList<? extends Field<T>>, ? extends Field<Integer>> constructor() {
         return (f, a) -> new FieldFunction<T>(f, (Field<T>[]) a.toArray(EMPTY_FIELD));
     }
 }

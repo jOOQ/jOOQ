@@ -100,7 +100,7 @@ import org.jooq.Function2;
 import org.jooq.RowN;
 import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.InList;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
@@ -272,7 +272,7 @@ abstract class AbstractInList<T> extends AbstractCondition {
         return field;
     }
 
-    public final MList<? extends Field<T>> $arg2() {
+    public final UnmodifiableList<? extends Field<T>> $arg2() {
         return QOM.unmodifiable(values);
     }
 }

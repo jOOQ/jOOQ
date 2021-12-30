@@ -46,7 +46,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function1;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
@@ -90,12 +90,12 @@ final class Coalesce<T> extends AbstractField<T> implements QOM.Coalesce<T> {
     // -------------------------------------------------------------------------
 
     @Override
-    public final MList<? extends Field<T>> $arg1() {
+    public final UnmodifiableList<? extends Field<T>> $arg1() {
         return QOM.unmodifiable(fields);
     }
 
     @Override
-    public final Function1<? super MList<? extends Field<T>>, ? extends Field<T>> constructor() {
+    public final Function1<? super UnmodifiableList<? extends Field<T>>, ? extends Field<T>> constructor() {
         return l -> new Coalesce<>(l.toArray(EMPTY_FIELD));
     }
 }

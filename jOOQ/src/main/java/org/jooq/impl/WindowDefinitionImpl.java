@@ -62,7 +62,7 @@ import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.WindowSpecificationRowsStep;
 import org.jooq.impl.QOM.FrameExclude;
 import org.jooq.impl.QOM.FrameUnits;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
@@ -328,12 +328,12 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
     }
 
     @Override
-    public final MList<? extends Field<?>> $partitionBy() {
+    public final UnmodifiableList<? extends Field<?>> $partitionBy() {
         return QOM.unmodifiable($windowSpecification() == null ? new QueryPartList<>() : $windowSpecification().$partitionBy());
     }
 
     @Override
-    public final MList<? extends SortField<?>> $orderBy() {
+    public final UnmodifiableList<? extends SortField<?>> $orderBy() {
         return QOM.unmodifiable($windowSpecification() == null ? new QueryPartList<>() : $windowSpecification().$orderBy());
     }
 

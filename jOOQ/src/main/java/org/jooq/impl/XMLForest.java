@@ -123,16 +123,16 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final MList<? extends Field<?>> $fields() {
+    public final UnmodifiableList<? extends Field<?>> $fields() {
         return QOM.unmodifiable(fields);
     }
 
     @Override
-    public final QOM.XMLForest $fields(MList<? extends Field<?>> newValue) {
+    public final QOM.XMLForest $fields(UnmodifiableList<? extends Field<?>> newValue) {
         return constructor().apply(newValue);
     }
 
-    public final Function1<? super MList<? extends Field<?>>, ? extends QOM.XMLForest> constructor() {
+    public final Function1<? super UnmodifiableList<? extends Field<?>>, ? extends QOM.XMLForest> constructor() {
         return (a1) -> new XMLForest((Collection<? extends Field<?>>) a1);
     }
 

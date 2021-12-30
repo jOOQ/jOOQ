@@ -51,7 +51,7 @@ import org.jooq.QualifiedAsterisk;
 import org.jooq.QueryPart;
 import org.jooq.Table;
 import org.jooq.Traverser;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
@@ -130,7 +130,7 @@ final class QualifiedAsteriskImpl extends AbstractQueryPart implements Qualified
     }
 
     @Override
-    public final MList<? extends Field<?>> $except() {
+    public final UnmodifiableList<? extends Field<?>> $except() {
         return QOM.unmodifiable(fields);
     }
 

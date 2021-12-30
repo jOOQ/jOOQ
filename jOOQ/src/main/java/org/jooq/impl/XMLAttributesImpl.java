@@ -53,7 +53,7 @@ import org.jooq.Function1;
 import org.jooq.QueryPart;
 import org.jooq.Traverser;
 import org.jooq.XMLAttributes;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
@@ -98,7 +98,7 @@ final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes
     // -------------------------------------------------------------------------
 
     @Override
-    public final MList<? extends Field<?>> $attributes() {
+    public final UnmodifiableList<? extends Field<?>> $attributes() {
         return QOM.unmodifiable(attributes);
     }
 

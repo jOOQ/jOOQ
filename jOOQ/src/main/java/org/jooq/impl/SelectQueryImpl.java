@@ -285,7 +285,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.impl.ForLock.ForLockMode;
 import org.jooq.impl.ForLock.ForLockWaitMode;
 import org.jooq.impl.QOM.CompareCondition;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.Materialized;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataExtendedKey;
@@ -4477,12 +4477,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final MList<SelectFieldOrAsterisk> $select() {
+    public final UnmodifiableList<SelectFieldOrAsterisk> $select() {
         return QOM.unmodifiable(select);
     }
 
     @Override
-    public final SelectQueryImpl<?> $select(MList<? extends SelectFieldOrAsterisk> newSelect) {
+    public final SelectQueryImpl<?> $select(UnmodifiableList<? extends SelectFieldOrAsterisk> newSelect) {
         if ($select() == newSelect)
             return this;
         else
@@ -4506,12 +4506,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final MList<Table<?>> $from() {
+    public final UnmodifiableList<Table<?>> $from() {
         return QOM.unmodifiable(from);
     }
 
     @Override
-    public final SelectQueryImpl<R> $from(MList<? extends Table<?>> newFrom) {
+    public final SelectQueryImpl<R> $from(UnmodifiableList<? extends Table<?>> newFrom) {
         if ($from() == newFrom)
             return this;
         else
@@ -4535,7 +4535,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final MList<GroupField> $groupBy() {
+    public final UnmodifiableList<GroupField> $groupBy() {
         return QOM.unmodifiable(groupBy == null ? new GroupFieldList() : groupBy);
     }
 
@@ -4566,7 +4566,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final MList<? extends WindowDefinition> $window() {
+    public final UnmodifiableList<? extends WindowDefinition> $window() {
         return QOM.unmodifiable(window == null ? QueryPartList.emptyList() : window);
     }
 
@@ -4584,7 +4584,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final MList<SortField<?>> $orderBy() {
+    public final UnmodifiableList<SortField<?>> $orderBy() {
         return QOM.unmodifiable(orderBy);
     }
 

@@ -129,7 +129,7 @@ import org.jooq.WithAsStep7;
 import org.jooq.WithAsStep8;
 import org.jooq.WithAsStep9;
 import org.jooq.WithStep;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.With;
 
 /**
@@ -1172,7 +1172,7 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final MList<? extends CommonTableExpression<?>> $commonTableExpressions() {
+    public final UnmodifiableList<? extends CommonTableExpression<?>> $commonTableExpressions() {
         return QOM.unmodifiable(ctes);
     }
 

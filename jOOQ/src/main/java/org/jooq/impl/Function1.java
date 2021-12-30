@@ -48,7 +48,7 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Traverser;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
@@ -81,7 +81,7 @@ final class Function1<T> extends AbstractField<T> implements QOM.Function<T> {
     // -------------------------------------------------------------------------
 
     @Override
-    public final MList<? extends Field<?>> $args() {
+    public final UnmodifiableList<? extends Field<?>> $args() {
         return QOM.unmodifiable(QueryPartListView.wrap(argument));
     }
 

@@ -58,7 +58,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SQLDialect.YUGABYTE;
 
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -126,5 +126,5 @@ public interface DerivedColumnList extends QueryPart {
     // -------------------------------------------------------------------------
 
     @NotNull Name $tableName();
-    @NotNull MList<? extends Name> $columnNames();
+    @NotNull UnmodifiableList<? extends Name> $columnNames();
 }

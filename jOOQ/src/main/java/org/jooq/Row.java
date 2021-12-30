@@ -38,7 +38,7 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -124,5 +124,5 @@ public /* non-sealed */ interface Row extends Fields, FieldOrRow {
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
-    @NotNull MList<? extends Field<?>> $fields();
+    @NotNull UnmodifiableList<? extends Field<?>> $fields();
 }

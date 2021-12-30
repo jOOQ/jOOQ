@@ -60,7 +60,7 @@ import org.jooq.ResultQuery;
 import org.jooq.Results;
 import org.jooq.Traverser;
 import org.jooq.impl.DefaultParseContext.IgnoreQuery;
-import org.jooq.impl.QOM.MList;
+import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 
 /**
@@ -178,7 +178,7 @@ final class QueriesImpl extends AbstractAttachableQueryPart implements Queries {
     // -------------------------------------------------------------------------
 
     @Override
-    public final MList<? extends Query> $queries() {
+    public final UnmodifiableList<? extends Query> $queries() {
         return QOM.unmodifiable(queries);
     }
 

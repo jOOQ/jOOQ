@@ -46,13 +46,9 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 // ...
 import org.jooq.Catalog;
@@ -91,7 +87,6 @@ import org.jooq.Function7;
 import org.jooq.Function8;
 import org.jooq.Function9;
 // ...
-// ...
 import org.jooq.GroupField;
 import org.jooq.Index;
 import org.jooq.Internal;
@@ -114,6 +109,7 @@ import org.jooq.Role;
 import org.jooq.Row;
 import org.jooq.RowCountQuery;
 import org.jooq.RowId;
+import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Sequence;
@@ -126,8 +122,9 @@ import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
 import org.jooq.XML;
 import org.jooq.XMLAttributes;
-import org.jooq.tools.reflect.Reflect;
+import org.jooq.conf.Settings;
 import org.jooq.types.DayToSecond;
+// ...
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -6118,99 +6115,6 @@ public final class QOM {
     interface UEmptyTable<R extends Record> extends Table<R>, UEmpty {}
     interface UEmptyStatement extends Statement, UEmpty {}
     interface UEmptyQuery extends Query, UEmpty {}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

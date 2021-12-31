@@ -50,7 +50,8 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
-import org.jooq.Traverser;
+// ...
+// ...
 import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
@@ -92,10 +93,6 @@ final class Function<T> extends AbstractField<T> implements QOM.Function<T> {
     public final UnmodifiableList<? extends Field<?>> $args() {
         return QOM.unmodifiable(arguments);
     }
-
-
-
-
 
 
 

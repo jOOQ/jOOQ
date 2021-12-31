@@ -66,10 +66,11 @@ import org.jooq.Merge;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableOptions;
-import org.jooq.Traverser;
+// ...
 import org.jooq.Update;
 import org.jooq.impl.QOM.ResultOption;
 
@@ -204,9 +205,6 @@ implements
     public final DMLQuery<R> $query() {
         return query;
     }
-
-
-
 
 
 

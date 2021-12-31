@@ -57,7 +57,8 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.QueryPart;
-import org.jooq.Traverser;
+// ...
+// ...
 import org.jooq.XML;
 import org.jooq.XMLQueryPassingStep;
 import org.jooq.impl.QOM.XMLPassingMechanism;
@@ -171,9 +172,6 @@ final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep, 
     public final XMLPassingMechanism $passingMechanism() {
         return passingMechanism;
     }
-
-
-
 
 
 

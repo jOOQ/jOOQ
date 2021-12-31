@@ -87,12 +87,13 @@ import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+// ...
 import org.jooq.ResultQuery;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.Traverser;
+// ...
 import org.jooq.impl.QOM.CreateView;
 import org.jooq.impl.QOM.UnmodifiableList;
 
@@ -309,9 +310,6 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
     final Select<?> $select() {
         return parsed();
     }
-
-
-
 
 
 

@@ -37,17 +37,14 @@
  */
 package org.jooq.impl;
 
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
-
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
-import org.jooq.Traverser;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
@@ -129,10 +126,6 @@ final class Coerce<T> extends AbstractField<T> implements QOM.Coerce<T> {
     public final Field<?> $field() {
         return field;
     }
-
-
-
-
 
 
 

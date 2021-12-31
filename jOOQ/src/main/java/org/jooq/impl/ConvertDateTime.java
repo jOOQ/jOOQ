@@ -230,6 +230,3 @@ package org.jooq.impl;
 
 
 
-
-
-

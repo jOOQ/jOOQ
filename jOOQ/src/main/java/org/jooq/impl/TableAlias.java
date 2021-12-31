@@ -50,9 +50,10 @@ import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+// ...
 import org.jooq.Table;
 import org.jooq.TableField;
-import org.jooq.Traverser;
+// ...
 import org.jooq.UniqueKey;
 
 /**
@@ -184,9 +185,6 @@ final class TableAlias<R extends Record> extends AbstractTable<R> implements QOM
     public final Name $alias() {
         return getUnqualifiedName();
     }
-
-
-
 
 
 

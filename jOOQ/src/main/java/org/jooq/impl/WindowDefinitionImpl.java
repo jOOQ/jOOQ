@@ -53,8 +53,9 @@ import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.QueryPart;
+// ...
 import org.jooq.SortField;
-import org.jooq.Traverser;
+// ...
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
 import org.jooq.WindowSpecificationExcludeStep;
@@ -356,9 +357,6 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
     public final FrameExclude $exclude() {
         return apply($windowSpecification(), t -> t.$exclude());
     }
-
-
-
 
 
 

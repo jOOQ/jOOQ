@@ -51,7 +51,8 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.QueryPart;
-import org.jooq.Traverser;
+// ...
+// ...
 import org.jooq.XML;
 import org.jooq.XMLExistsPassingStep;
 import org.jooq.impl.QOM.UNotYetImplemented;
@@ -139,9 +140,6 @@ final class XMLExists extends AbstractCondition implements XMLExistsPassingStep,
     public final XMLPassingMechanism $passingMechanism() {
         return passingMechanism;
     }
-
-
-
 
 
 

@@ -56,9 +56,10 @@ import org.jooq.Function1;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
+// ...
 import org.jooq.ResultQuery;
 import org.jooq.Results;
-import org.jooq.Traverser;
+// ...
 import org.jooq.impl.DefaultParseContext.IgnoreQuery;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
@@ -181,9 +182,6 @@ final class QueriesImpl extends AbstractAttachableQueryPart implements Queries {
     public final UnmodifiableList<? extends Query> $queries() {
         return QOM.unmodifiable(queries);
     }
-
-
-
 
 
 

@@ -96,6 +96,7 @@ import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Record8;
 import org.jooq.Record9;
+// ...
 import org.jooq.ResultQuery;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
@@ -104,7 +105,7 @@ import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.Table;
-import org.jooq.Traverser;
+// ...
 import org.jooq.WithAsStep;
 import org.jooq.WithAsStep1;
 import org.jooq.WithAsStep10;
@@ -1180,9 +1181,6 @@ implements
     public final boolean $recursive() {
         return recursive;
     }
-
-
-
 
 
 

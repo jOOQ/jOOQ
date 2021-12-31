@@ -97,9 +97,10 @@ import org.jooq.Function1;
 import org.jooq.OrderField;
 // ...
 import org.jooq.QueryPart;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.SortField;
-import org.jooq.Traverser;
+// ...
 import org.jooq.WindowSpecificationExcludeStep;
 import org.jooq.WindowSpecificationFinalStep;
 import org.jooq.WindowSpecificationOrderByStep;
@@ -725,10 +726,6 @@ implements
     public final FrameExclude $exclude() {
         return exclude;
     }
-
-
-
-
 
 
 

@@ -69,7 +69,8 @@ import org.jooq.LanguageContext;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.RenderContext.CastMode;
-import org.jooq.Traverser;
+// ...
+// ...
 import org.jooq.impl.QOM.UTransient;
 
 /**
@@ -357,10 +358,6 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
     public final Field<?> $field() {
         return field;
     }
-
-
-
-
 
 
 

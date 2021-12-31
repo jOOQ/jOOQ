@@ -98,9 +98,10 @@ import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+// ...
 import org.jooq.Row;
 import org.jooq.SQLDialect;
-import org.jooq.Traverser;
+// ...
 
 /**
  * @author Lukas Eder
@@ -275,9 +276,6 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
     public final Row $row() {
         return row;
     }
-
-
-
 
 
 

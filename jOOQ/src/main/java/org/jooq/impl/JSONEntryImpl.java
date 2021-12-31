@@ -82,10 +82,11 @@ import org.jooq.JSONEntryValueStep;
 import org.jooq.Param;
 // ...
 import org.jooq.Record1;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
-import org.jooq.Traverser;
+// ...
 import org.jooq.conf.NestedCollectionEmulation;
 import org.jooq.QueryPart;
 
@@ -317,9 +318,6 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
     public final Field<?> $value() {
         return value;
     }
-
-
-
 
 
 

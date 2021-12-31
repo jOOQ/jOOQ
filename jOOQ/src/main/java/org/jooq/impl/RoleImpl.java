@@ -48,8 +48,9 @@ import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
+// ...
 import org.jooq.Role;
-import org.jooq.Traverser;
+// ...
 
 /**
  * A common implementation of the Role type.
@@ -77,9 +78,6 @@ final class RoleImpl extends AbstractNamed implements Role {
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
-
-
-
 
 
 

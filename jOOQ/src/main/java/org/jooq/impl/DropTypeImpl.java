@@ -58,7 +58,8 @@ import org.jooq.impl.QOM.Cascade;
 import org.jooq.impl.QOM.DropType;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.QueryPart;
-import org.jooq.Traverser;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
@@ -134,9 +135,6 @@ implements
     public final Cascade $cascade() {
         return cascade;
     }
-
-
-
 
 
 

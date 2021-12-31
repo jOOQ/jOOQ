@@ -50,7 +50,8 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
-import org.jooq.Traverser;
+// ...
+// ...
 
 
 /**
@@ -175,10 +176,6 @@ abstract class AbstractLeadLag<T> extends AbstractWindowFunction<T> {
     public final Field<T> $defaultValue() {
         return defaultValue;
     }
-
-
-
-
 
 
 

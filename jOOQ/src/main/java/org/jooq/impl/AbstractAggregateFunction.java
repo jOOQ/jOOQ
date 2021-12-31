@@ -92,7 +92,7 @@ import org.jooq.OrderedAggregateFunction;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
-import org.jooq.Traverser;
+// ...
 import org.jooq.WindowBeforeOverStep;
 
 /**

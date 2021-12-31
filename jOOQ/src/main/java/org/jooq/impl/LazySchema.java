@@ -54,10 +54,11 @@ import org.jooq.Name;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
-import org.jooq.Traverser;
+// ...
 import org.jooq.UDT;
 import org.jooq.UniqueKey;
 import org.jooq.QueryPart;
+// ...
 
 /**
  * A schema that references a lazy initialisable {@link Schema} singleton, for
@@ -267,9 +268,6 @@ public final class LazySchema extends AbstractNamed implements Schema {
     public final Stream<Sequence<?>> sequenceStream() {
         return schema().sequenceStream();
     }
-
-
-
 
 
 

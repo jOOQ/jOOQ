@@ -49,7 +49,8 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.QueryPart;
-import org.jooq.Traverser;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
@@ -99,9 +100,6 @@ final class Collated extends AbstractField<String> implements QOM.Collated {
     public final Collation $collation() {
         return collation;
     }
-
-
-
 
 
 

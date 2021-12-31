@@ -54,8 +54,9 @@ import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.Schema;
-import org.jooq.Traverser;
+// ...
 import org.jooq.QueryPart;
+// ...
 import org.jooq.tools.StringUtils;
 
 /**
@@ -121,9 +122,6 @@ public class CatalogImpl extends AbstractNamed implements Catalog {
     public final Stream<Schema> schemaStream() {
         return getSchemas().stream();
     }
-
-
-
 
 
 

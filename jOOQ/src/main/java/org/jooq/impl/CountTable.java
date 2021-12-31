@@ -43,8 +43,9 @@ import java.util.function.Predicate;
 import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.QueryPart;
+// ...
 import org.jooq.Table;
-import org.jooq.Traverser;
+// ...
 import org.jooq.UniqueKey;
 
 /**
@@ -95,10 +96,6 @@ final class CountTable extends AbstractAggregateFunction<Integer> implements QOM
     public final Table<?> $table() {
         return table;
     }
-
-
-
-
 
 
 

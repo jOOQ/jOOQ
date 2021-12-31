@@ -60,7 +60,8 @@ import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
-import org.jooq.Traverser;
+// ...
+// ...
 import org.jooq.impl.QOM.UnmodifiableCollection;
 
 /**
@@ -351,9 +352,6 @@ implements
     public final void clear() {
         wrapped.clear();
     }
-
-
-
 
 
 

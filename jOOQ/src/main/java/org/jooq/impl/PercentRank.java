@@ -56,8 +56,9 @@ import org.jooq.Context;
 import org.jooq.Function1;
 // ...
 import org.jooq.QueryPart;
+// ...
 import org.jooq.SQLDialect;
-import org.jooq.Traverser;
+// ...
 import org.jooq.WindowSpecification;
 
 /**
@@ -100,10 +101,6 @@ final class PercentRank extends AbstractWindowFunction<BigDecimal> implements QO
             acceptOverClause(ctx);
         }
     }
-
-
-
-
 
 
 

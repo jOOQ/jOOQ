@@ -47,7 +47,8 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
-import org.jooq.Traverser;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
@@ -110,9 +111,6 @@ final class FieldAlias<T> extends AbstractField<T> implements QOM.FieldAlias<T> 
     public final Name $alias() {
         return getQualifiedName();
     }
-
-
-
 
 
 

@@ -51,9 +51,10 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.QueryPart;
 import org.jooq.Record1;
+// ...
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.Traverser;
+// ...
 
 /**
  * @author Lukas Eder
@@ -104,9 +105,6 @@ final class ArrayQuery<T> extends AbstractField<T[]> implements QOM.ArrayQuery<T
     public final Select<? extends Record1<T>> $select() {
         return select;
     }
-
-
-
 
 
 

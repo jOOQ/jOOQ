@@ -66,10 +66,11 @@ import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONB;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+// ...
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SelectField;
-import org.jooq.Traverser;
+// ...
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
 
@@ -179,9 +180,6 @@ final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Resu
     public final Row $row() {
         return row;
     }
-
-
-
 
 
 

@@ -57,8 +57,9 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+// ...
 import org.jooq.SQLDialect;
-import org.jooq.Traverser;
+// ...
 import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
@@ -116,9 +117,6 @@ final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
     public final UnmodifiableList<? extends Field<?>> $elements() {
         return QOM.unmodifiable(fields.fields);
     }
-
-
-
 
 
 

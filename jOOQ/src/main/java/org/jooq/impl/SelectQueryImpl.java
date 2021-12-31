@@ -40,7 +40,6 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
-import static java.util.function.Function.identity;
 import static java.util.stream.IntStream.range;
 import static org.jooq.Clause.SELECT;
 import static org.jooq.Clause.SELECT_CONNECT_BY;
@@ -109,7 +108,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.SortOrder.DESC;
-import static org.jooq.Traversers.containing;
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.AsteriskImpl.NO_SUPPORT_UNQUALIFIED_COMBINED;
 import static org.jooq.impl.AsteriskImpl.SUPPORT_NATIVE_EXCEPT;
@@ -234,7 +233,6 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
@@ -244,7 +242,6 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Function1;
 import org.jooq.GroupField;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectNullStep;
@@ -258,6 +255,7 @@ import org.jooq.Param;
 import org.jooq.QualifiedAsterisk;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+// ...
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
@@ -277,7 +275,7 @@ import org.jooq.TableLike;
 import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
-import org.jooq.Traverser;
+// ...
 // ...
 import org.jooq.WindowDefinition;
 import org.jooq.XML;
@@ -285,8 +283,8 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.impl.ForLock.ForLockMode;
 import org.jooq.impl.ForLock.ForLockWaitMode;
 import org.jooq.impl.QOM.CompareCondition;
-import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.Materialized;
+import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.impl.Tools.DataKey;
@@ -740,6 +738,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
+
 
 
 
@@ -4587,10 +4586,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final UnmodifiableList<SortField<?>> $orderBy() {
         return QOM.unmodifiable(orderBy);
     }
-
-
-
-
 
 
 

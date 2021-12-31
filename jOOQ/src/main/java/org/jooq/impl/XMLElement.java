@@ -59,7 +59,8 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
-import org.jooq.Traverser;
+// ...
+// ...
 import org.jooq.XML;
 import org.jooq.XMLAttributes;
 import org.jooq.impl.QOM.UnmodifiableList;
@@ -180,9 +181,6 @@ final class XMLElement extends AbstractField<XML> implements QOM.XMLElement {
     public final UnmodifiableList<? extends Field<?>> $content() {
         return QOM.unmodifiable(content);
     }
-
-
-
 
 
 

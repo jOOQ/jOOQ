@@ -52,9 +52,10 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+// ...
 import org.jooq.Table;
 import org.jooq.TableOptions;
-import org.jooq.Traverser;
+// ...
 import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
@@ -100,10 +101,6 @@ final class RowsFrom extends AbstractTable<Record> implements QOM.RowsFrom {
     public final UnmodifiableList<? extends Table<?>> $tables() {
         return QOM.unmodifiable(tables);
     }
-
-
-
-
 
 
 

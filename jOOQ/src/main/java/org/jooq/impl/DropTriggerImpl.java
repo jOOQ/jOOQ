@@ -169,7 +169,3 @@ package org.jooq.impl;
 
 
 
-
-
-
-

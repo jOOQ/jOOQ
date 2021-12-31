@@ -66,7 +66,7 @@ import org.jooq.OrderField;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
-import org.jooq.Traverser;
+// ...
 import org.jooq.WindowDefinition;
 import org.jooq.WindowExcludeStep;
 import org.jooq.WindowFinalStep;

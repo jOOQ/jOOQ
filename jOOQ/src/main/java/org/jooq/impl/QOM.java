@@ -103,6 +103,7 @@ import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
+// ...
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Role;
@@ -116,7 +117,7 @@ import org.jooq.Sequence;
 // ...
 import org.jooq.Statement;
 import org.jooq.Table;
-import org.jooq.Traverser;
+// ...
 // ...
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
@@ -5954,10 +5955,6 @@ public final class QOM {
 
 
 
-
-
-
-
     }
 
     interface UOperator2<Q1, Q2, R extends org.jooq.QueryPart> extends org.jooq.QueryPart {
@@ -5969,10 +5966,6 @@ public final class QOM {
 
         @NotNull
         Function2<? super Q1, ? super Q2, ? extends R> constructor();
-
-
-
-
 
 
 
@@ -6006,10 +5999,6 @@ public final class QOM {
 
         @NotNull
         Function3<? super Q1, ? super Q2, ? super Q3, ? extends R> constructor();
-
-
-
-
 
 
 
@@ -6078,15 +6067,9 @@ public final class QOM {
 
 
 
-
-
-
     }
 
     interface UEmpty extends org.jooq.QueryPart {
-
-
-
 
 
 
@@ -6115,35 +6098,6 @@ public final class QOM {
     interface UEmptyTable<R extends Record> extends Table<R>, UEmpty {}
     interface UEmptyStatement extends Statement, UEmpty {}
     interface UEmptyQuery extends Query, UEmpty {}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

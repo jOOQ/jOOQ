@@ -52,7 +52,8 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.QueryPart;
-import org.jooq.Traverser;
+// ...
+// ...
 
 import org.jetbrains.annotations.NotNull;
 
@@ -137,9 +138,6 @@ implements
     public final Field<? extends Number> $field() {
         return field;
     }
-
-
-
 
 
 

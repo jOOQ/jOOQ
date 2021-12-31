@@ -61,11 +61,12 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.Record;
+// ...
 import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.Row2;
 import org.jooq.SelectField;
-import org.jooq.Traverser;
+// ...
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.QueryPart;
 
@@ -427,9 +428,6 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
     public final UnmodifiableList<? extends Field<?>> $fields() {
         return QOM.unmodifiable(fields());
     }
-
-
-
 
 
 

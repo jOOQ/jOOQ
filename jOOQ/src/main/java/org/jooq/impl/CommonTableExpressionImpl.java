@@ -59,11 +59,12 @@ import org.jooq.Function1;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
+// ...
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.TableOptions;
-import org.jooq.Traverser;
+// ...
 import org.jooq.impl.QOM.Materialized;
 import org.jooq.impl.Tools.DataKey;
 
@@ -191,9 +192,6 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
     public final Materialized $materialized() {
         return materialized;
     }
-
-
-
 
 
 

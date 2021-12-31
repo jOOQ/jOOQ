@@ -47,6 +47,7 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
+// ...
 
 /**
  * A field that handles built-in functions, aggregate functions, and window
@@ -75,9 +76,6 @@ final class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
     DefaultAggregateFunction(boolean distinct, Name name, DataType<T> type, Field<?>... arguments) {
         super(distinct, name, type, arguments);
     }
-
-
-
 
 
 

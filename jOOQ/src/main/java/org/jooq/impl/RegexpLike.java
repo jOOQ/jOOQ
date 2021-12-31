@@ -51,7 +51,8 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.QueryPart;
-import org.jooq.Traverser;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
@@ -149,9 +150,6 @@ final class RegexpLike extends AbstractCondition implements QOM.RegexpLike {
     public final Field<String> $pattern() {
         return pattern;
     }
-
-
-
 
 
 

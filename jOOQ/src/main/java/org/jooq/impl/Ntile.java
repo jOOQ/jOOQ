@@ -47,7 +47,8 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.QueryPart;
-import org.jooq.Traverser;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
@@ -86,10 +87,6 @@ final class Ntile extends AbstractWindowFunction<Integer> implements QOM.Ntile {
     public final Field<Integer> $tiles() {
         return tiles;
     }
-
-
-
-
 
 
 

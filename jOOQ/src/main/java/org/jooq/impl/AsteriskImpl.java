@@ -55,8 +55,9 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
+// ...
 import org.jooq.SQLDialect;
-import org.jooq.Traverser;
+// ...
 import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
@@ -121,9 +122,6 @@ final class AsteriskImpl extends AbstractQueryPart implements Asterisk {
     public final UnmodifiableList<? extends Field<?>> $except() {
         return QOM.unmodifiable(fields);
     }
-
-
-
 
 
 

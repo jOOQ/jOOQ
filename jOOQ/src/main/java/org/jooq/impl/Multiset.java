@@ -91,12 +91,13 @@ import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
+// ...
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.Traverser;
+// ...
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
 
@@ -403,9 +404,6 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
     public final Select<R> $select() {
         return select;
     }
-
-
-
 
 
 

@@ -48,8 +48,9 @@ import org.jooq.Function1;
 import org.jooq.Internal;
 import org.jooq.Name;
 import org.jooq.Schema;
-import org.jooq.Traverser;
+// ...
 import org.jooq.QueryPart;
+// ...
 
 /**
  * A schema that references a lazy initialisable {@link Catalog} singleton, for
@@ -114,9 +115,6 @@ public final class LazyCatalog extends AbstractNamed implements Catalog {
     public final Stream<Schema> schemaStream() {
         return catalog().schemaStream();
     }
-
-
-
 
 
 

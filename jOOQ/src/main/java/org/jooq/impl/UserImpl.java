@@ -49,7 +49,8 @@ import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.User;
 import org.jooq.QueryPart;
-import org.jooq.Traverser;
+// ...
+// ...
 
 /**
  * A common implementation of the User type.
@@ -77,9 +78,6 @@ final class UserImpl extends AbstractNamed implements User {
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
-
-
-
 
 
 

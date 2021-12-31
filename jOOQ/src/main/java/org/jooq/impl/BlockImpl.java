@@ -99,9 +99,10 @@ import org.jooq.Name;
 // ...
 import org.jooq.Query;
 import org.jooq.QueryPart;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.Statement;
-import org.jooq.Traverser;
+// ...
 // ...
 import org.jooq.conf.ParamType;
 import org.jooq.impl.QOM.UnmodifiableList;
@@ -596,9 +597,6 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
     public final UnmodifiableList<? extends Statement> $statements() {
         return QOM.unmodifiable(statements);
     }
-
-
-
 
 
 

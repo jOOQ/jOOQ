@@ -60,7 +60,8 @@ import org.jooq.conf.ParamType;
 import org.jooq.impl.QOM.CreateType;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.QueryPart;
-import org.jooq.Traverser;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
@@ -136,9 +137,6 @@ final class CreateTypeImpl extends AbstractDDLQuery implements
     public final UnmodifiableList<? extends Field<String>> $values() {
         return QOM.unmodifiable(values);
     }
-
-
-
 
 
 

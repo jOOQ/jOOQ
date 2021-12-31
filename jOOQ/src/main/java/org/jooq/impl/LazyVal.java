@@ -46,7 +46,8 @@ import org.jooq.Function1;
 import org.jooq.Param;
 import org.jooq.ParamMode;
 import org.jooq.QueryPart;
-import org.jooq.Traverser;
+// ...
+// ...
 import org.jooq.conf.ParamType;
 
 /**
@@ -157,9 +158,6 @@ final class LazyVal<T> extends AbstractParamX<T> implements QOM.Val<T> {
     public final Param<T> $value(T value) {
         return delegate.$value(value);
     }
-
-
-
 
 
 

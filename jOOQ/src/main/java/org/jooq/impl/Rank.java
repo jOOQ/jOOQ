@@ -46,7 +46,8 @@ import java.util.function.Predicate;
 import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.QueryPart;
-import org.jooq.Traverser;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
@@ -72,10 +73,6 @@ final class Rank extends AbstractWindowFunction<Integer> implements QOM.Rank {
                 acceptOverClause(ctx);
         }
     }
-
-
-
-
 
 
 

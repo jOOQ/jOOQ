@@ -65,10 +65,11 @@ import org.jooq.Name;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
-import org.jooq.Traverser;
+// ...
 import org.jooq.UDT;
 import org.jooq.UniqueKey;
 import org.jooq.QueryPart;
+// ...
 import org.jooq.tools.StringUtils;
 
 /**
@@ -345,9 +346,6 @@ public class SchemaImpl extends AbstractNamed implements Schema {
     public final Stream<Sequence<?>> sequenceStream() {
         return getSequences().stream();
     }
-
-
-
 
 
 

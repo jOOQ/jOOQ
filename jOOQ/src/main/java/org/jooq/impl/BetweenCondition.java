@@ -91,6 +91,7 @@ import org.jooq.RowN;
 import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.Between;
 import org.jooq.QueryPart;
+// ...
 
 /**
  * @author Lukas Eder
@@ -211,10 +212,6 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
     public final boolean $symmetric() {
         return symmetric;
     }
-
-
-
-
 
 
 

@@ -63,7 +63,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -151,7 +151,7 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
      */
     @Override
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
     SelectOrderByStep<R> except(Select<? extends R> select);
 
     /**
@@ -159,7 +159,7 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
      */
     @Override
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, HSQLDB, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, DERBY, HSQLDB, POSTGRES, YUGABYTEDB })
     SelectOrderByStep<R> exceptAll(Select<? extends R> select);
 
     /**
@@ -167,7 +167,7 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
      */
     @Override
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
     SelectOrderByStep<R> intersect(Select<? extends R> select);
 
     /**
@@ -175,6 +175,6 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
      */
     @Override
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, HSQLDB, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, DERBY, HSQLDB, POSTGRES, YUGABYTEDB })
     SelectOrderByStep<R> intersectAll(Select<? extends R> select);
 }

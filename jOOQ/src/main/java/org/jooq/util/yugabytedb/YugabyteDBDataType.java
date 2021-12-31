@@ -36,7 +36,7 @@
  *
  */
 
-package org.jooq.util.yugabyte;
+package org.jooq.util.yugabytedb;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -65,7 +65,7 @@ import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 
 /**
- * Supported data types for the {@link SQLDialect#YUGABYTE} dialect
+ * Supported data types for the {@link SQLDialect#YUGABYTEDB} dialect
  *
  * @author Lukas Eder
  * @see <a href="http://www.postgresql.org/docs/9.0/interactive/datatype.html">http://www.postgresql.org/docs/9.0/interactive/datatype.html</a>
@@ -79,9 +79,9 @@ import org.jooq.types.YearToSecond;
  *             Use the corresponding {@link SQLDataType} instead.
  */
 @Deprecated(forRemoval = true, since = "3.11")
-public class YugabyteDataType {
+public class YugabyteDBDataType {
 
-    private static final SQLDialect FAMILY = SQLDialect.YUGABYTE;
+    private static final SQLDialect FAMILY = SQLDialect.YUGABYTEDB;
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof

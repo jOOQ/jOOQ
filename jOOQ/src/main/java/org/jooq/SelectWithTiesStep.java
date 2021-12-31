@@ -58,7 +58,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -128,6 +128,6 @@ public interface SelectWithTiesStep<R extends Record> extends SelectOffsetStep<R
      * Add the <code>WITH TIES</code> clause to a <code>LIMIT</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     SelectOffsetStep<R> withTies();
 }

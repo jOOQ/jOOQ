@@ -52,7 +52,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.ParamType.INLINED;
 // ...
 // ...
@@ -113,7 +113,7 @@ import org.jooq.impl.Tools.DataExtendedKey;
  */
 final class BlockImpl extends AbstractRowCountQuery implements Block {
     private static final Set<SQLDialect>  REQUIRES_EXECUTE_IMMEDIATE_ON_DDL = SQLDialect.supportedBy(FIREBIRD);
-    private static final Set<SQLDialect>  SUPPORTS_NULL_STATEMENT           = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect>  SUPPORTS_NULL_STATEMENT           = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
 
 
@@ -160,7 +160,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
             }
 
             case POSTGRES:
-            case YUGABYTE: {
+            case YUGABYTEDB: {
                 bodyAsString(ctx, K_DO, c -> accept0(c));
                 break;
             }

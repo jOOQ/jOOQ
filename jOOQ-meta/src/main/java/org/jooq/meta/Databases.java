@@ -67,7 +67,7 @@ import org.jooq.meta.sqlite.SQLiteDatabase;
 // ...
 // ...
 // ...
-import org.jooq.meta.yugabyte.YugabyteDatabase;
+import org.jooq.meta.yugabytedb.YugabyteDBDatabase;
 
 /**
  * A common utility class that provides access to various {@link Database}
@@ -116,7 +116,7 @@ public class Databases {
             case MYSQL:            result = MySQLDatabase.class;            break;
             case POSTGRES:         result = PostgresDatabase.class;         break;
             case SQLITE:           result = SQLiteDatabase.class;           break;
-            case YUGABYTE:         result = YugabyteDatabase.class;         break;
+            case YUGABYTEDB:         result = YugabyteDBDatabase.class;         break;
 
             case DEFAULT:          result = JDBCDatabase.class;             break;
         }

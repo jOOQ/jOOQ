@@ -73,7 +73,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.row;
@@ -109,7 +109,7 @@ abstract class AbstractInList<T> extends AbstractCondition {
 
     static final int              IN_LIMIT               = 1000;
     static final Set<SQLDialect>  REQUIRES_IN_LIMIT      = SQLDialect.supportedBy(FIREBIRD);
-    static final Set<SQLDialect>  NO_SUPPORT_EMPTY_LISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE);
+    static final Set<SQLDialect>  NO_SUPPORT_EMPTY_LISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
 
     final Field<T>                field;
     final QueryPartList<Field<T>> values;

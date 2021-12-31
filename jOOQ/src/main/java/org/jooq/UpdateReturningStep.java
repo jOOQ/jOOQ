@@ -47,7 +47,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import java.util.Collection;
 
@@ -105,7 +105,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     UpdateResultStep<R> returning();
 
     /**
@@ -125,7 +125,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     UpdateResultStep<R> returning(SelectFieldOrAsterisk... fields);
 
     /**
@@ -145,7 +145,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     UpdateResultStep<R> returning(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
@@ -159,7 +159,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     UpdateResultStep<Record> returningResult(SelectFieldOrAsterisk... fields);
 
     /**
@@ -173,7 +173,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     UpdateResultStep<Record> returningResult(Collection<? extends SelectFieldOrAsterisk> fields);
 
 
@@ -188,7 +188,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1> UpdateResultStep<Record1<T1>> returningResult(SelectField<T1> field1);
 
     /**
@@ -201,7 +201,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2> UpdateResultStep<Record2<T1, T2>> returningResult(SelectField<T1> field1, SelectField<T2> field2);
 
     /**
@@ -214,7 +214,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3> UpdateResultStep<Record3<T1, T2, T3>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3);
 
     /**
@@ -227,7 +227,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4> UpdateResultStep<Record4<T1, T2, T3, T4>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4);
 
     /**
@@ -240,7 +240,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4, T5> UpdateResultStep<Record5<T1, T2, T3, T4, T5>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5);
 
     /**
@@ -253,7 +253,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4, T5, T6> UpdateResultStep<Record6<T1, T2, T3, T4, T5, T6>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6);
 
     /**
@@ -266,7 +266,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4, T5, T6, T7> UpdateResultStep<Record7<T1, T2, T3, T4, T5, T6, T7>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7);
 
     /**
@@ -279,7 +279,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4, T5, T6, T7, T8> UpdateResultStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8);
 
     /**
@@ -292,7 +292,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9> UpdateResultStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9);
 
     /**
@@ -305,7 +305,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> UpdateResultStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10);
 
     /**
@@ -318,7 +318,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> UpdateResultStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11);
 
     /**
@@ -331,7 +331,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> UpdateResultStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12);
 
     /**
@@ -344,7 +344,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> UpdateResultStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13);
 
     /**
@@ -357,7 +357,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> UpdateResultStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14);
 
     /**
@@ -370,7 +370,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> UpdateResultStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15);
 
     /**
@@ -383,7 +383,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> UpdateResultStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16);
 
     /**
@@ -396,7 +396,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> UpdateResultStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17);
 
     /**
@@ -409,7 +409,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> UpdateResultStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18);
 
     /**
@@ -422,7 +422,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> UpdateResultStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19);
 
     /**
@@ -435,7 +435,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> UpdateResultStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20);
 
     /**
@@ -448,7 +448,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> UpdateResultStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21);
 
     /**
@@ -461,7 +461,7 @@ public interface UpdateReturningStep<R extends Record> extends UpdateFinalStep<R
      * @see UpdateResultStep
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> UpdateResultStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22);
 
 

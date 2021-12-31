@@ -42,7 +42,7 @@ import org.jetbrains.annotations.*;
 // ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 /**
  * A {@link Query} that can drop types.
@@ -73,13 +73,13 @@ public interface DropTypeStep extends DropTypeFinalStep {
      * Add the <code>CASCADE</code> clause to the <code>DROP TYPE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTE })
+    @Support({ H2, POSTGRES, YUGABYTEDB })
     DropTypeFinalStep cascade();
 
     /**
      * Add the <code>RESTRICT</code> clause to the <code>DROP TYPE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTE })
+    @Support({ H2, POSTGRES, YUGABYTEDB })
     DropTypeFinalStep restrict();
 }

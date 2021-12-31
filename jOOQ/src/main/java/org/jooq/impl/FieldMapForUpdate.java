@@ -45,7 +45,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.WriteIfReadonly.IGNORE;
 import static org.jooq.conf.WriteIfReadonly.THROW;
 import static org.jooq.impl.DSL.when;
@@ -75,8 +75,8 @@ import org.jooq.impl.QOM.UNotYetImplemented;
  * @author Lukas Eder
  */
 final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> implements UNotYetImplemented {
-    private static final Set<SQLDialect> CASTS_NEEDED       = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
-    private static final Set<SQLDialect> NO_SUPPORT_QUALIFY = SQLDialect.supportedBy(POSTGRES, SQLITE, YUGABYTE);
+    private static final Set<SQLDialect> CASTS_NEEDED       = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_QUALIFY = SQLDialect.supportedBy(POSTGRES, SQLITE, YUGABYTEDB);
 
     private final Table<?>               table;
     private final Clause                 assignmentClause;

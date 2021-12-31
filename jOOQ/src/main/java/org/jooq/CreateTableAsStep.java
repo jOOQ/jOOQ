@@ -62,7 +62,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -95,6 +95,6 @@ public interface CreateTableAsStep<R extends Record> {
      * Add an <code>AS</code> clause to the <code>CREATE TABLE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateTableWithDataStep as(Select<? extends R> select);
 }

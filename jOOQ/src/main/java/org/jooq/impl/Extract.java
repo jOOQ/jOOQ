@@ -367,7 +367,7 @@ final class Extract extends AbstractField<Integer> implements QOM.Extract {
 
 
             case POSTGRES:
-            case YUGABYTE:
+            case YUGABYTEDB:
                 switch (datePart) {
                     case DAY_OF_WEEK:
                         ctx.sql('(');

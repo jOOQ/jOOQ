@@ -56,7 +56,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -90,20 +90,20 @@ public interface AlterTableRenameConstraintToStep {
      * Specify a new constraint name.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, H2, HSQLDB, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     AlterTableFinalStep to(Constraint newName);
 
     /**
      * Specify a new constraint name.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, H2, HSQLDB, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     AlterTableFinalStep to(Name newName);
 
     /**
      * Specify a new constraint name.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, H2, HSQLDB, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     AlterTableFinalStep to(String newName);
 }

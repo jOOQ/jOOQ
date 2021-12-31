@@ -70,21 +70,21 @@ public interface AlterDatabaseStep {
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER DATABASE</code> statement.
      */
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     AlterDatabaseFinalStep renameTo(@Stringly.Name String renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER DATABASE</code> statement.
      */
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     AlterDatabaseFinalStep renameTo(Name renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER DATABASE</code> statement.
      */
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     AlterDatabaseFinalStep renameTo(Catalog renameTo);
 }

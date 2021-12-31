@@ -439,7 +439,7 @@ implements
 
 
                 case POSTGRES:
-                case YUGABYTE:
+                case YUGABYTEDB:
                 default:
                     return Types.OTHER;
             }

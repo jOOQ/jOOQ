@@ -62,7 +62,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -95,13 +95,13 @@ public interface CreateTableWithDataStep extends CreateTableOnCommitStep {
      * Add a <code>WITH DATA</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateTableCommentStep withData();
 
     /**
      * Add a <code>WITH DATA</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateTableCommentStep withNoData();
 }

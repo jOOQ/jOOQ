@@ -198,7 +198,7 @@ implements
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
             case POSTGRES:
-            case YUGABYTE:
+            case YUGABYTEDB:
                 acceptPostgres(ctx);
                 break;
 

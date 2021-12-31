@@ -59,7 +59,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -127,6 +127,6 @@ public interface SelectWithTiesAfterOffsetStep<R extends Record> extends SelectF
      * Add the <code>WITH TIES</code> clause to a <code>LIMIT</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, POSTGRES, YUGABYTEDB })
     SelectForUpdateStep<R> withTies();
 }

@@ -76,7 +76,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.QOM.Cascade.CASCADE;
 import static org.jooq.impl.QOM.Cascade.RESTRICT;
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
@@ -230,11 +230,11 @@ implements
     private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS_COLUMN       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect>     SUPPORT_RENAME_COLUMN                 = SQLDialect.supportedBy(DERBY);
     private static final Set<SQLDialect>     SUPPORT_RENAME_TABLE                  = SQLDialect.supportedBy(DERBY);
-    private static final Set<SQLDialect>     NO_SUPPORT_RENAME_QUALIFIED_TABLE     = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
-    private static final Set<SQLDialect>     NO_SUPPORT_ALTER_TYPE_AND_NULL        = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect>     NO_SUPPORT_RENAME_QUALIFIED_TABLE     = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect>     NO_SUPPORT_ALTER_TYPE_AND_NULL        = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect>     NO_SUPPORT_DROP_CONSTRAINT            = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect>     REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE);
-    private static final Set<SQLDialect>     REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect>     REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect>     REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
 
 
 
@@ -1082,7 +1082,7 @@ implements
 
 
                 case POSTGRES:
-                case YUGABYTE:
+                case YUGABYTEDB:
                     alterColumnTypeAndNullabilityInBlock(ctx);
                     return;
             }
@@ -1458,7 +1458,7 @@ implements
 
                     case FIREBIRD:
                     case POSTGRES:
-                    case YUGABYTE:
+                    case YUGABYTEDB:
                         ctx.sql(' ').visit(K_TYPE);
                         break;
                 }
@@ -1852,7 +1852,7 @@ implements
 
 
                 case POSTGRES:
-                case YUGABYTE: {
+                case YUGABYTEDB: {
                     AlterTableAlterStep<?> step = c1.dsl().alterTable(table).alterColumn(alterColumn);
                     c1.visit(alterColumnType.nullable() ? step.dropNotNull() : step.setNotNull())
                        .sql(';');

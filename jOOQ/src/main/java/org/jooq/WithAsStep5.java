@@ -65,7 +65,7 @@ public interface WithAsStep5 {
      * names.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WithStep as(ResultQuery<? extends Record5<?, ?, ?, ?, ?>> query);
 
     /**
@@ -77,7 +77,7 @@ public interface WithAsStep5 {
      * supported.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WithStep asMaterialized(ResultQuery<? extends Record5<?, ?, ?, ?, ?>> query);
 
     /**
@@ -89,6 +89,6 @@ public interface WithAsStep5 {
      * is not supported.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WithStep asNotMaterialized(ResultQuery<? extends Record5<?, ?, ?, ?, ?>> query);
 }

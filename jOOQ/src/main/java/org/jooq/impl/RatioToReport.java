@@ -107,7 +107,7 @@ implements
             case MYSQL:
             case POSTGRES:
             case SQLITE:
-            case YUGABYTE:
+            case YUGABYTEDB:
                 DataType<?> cast;
 
                 switch (ctx.family()) {

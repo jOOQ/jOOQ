@@ -49,7 +49,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
 import static org.jooq.impl.DSL.field;
@@ -177,8 +177,8 @@ implements
 
 
 
-    private static final Set<SQLDialect>      REQUIRE_SELECT_FROM                = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
-    private static final Set<SQLDialect>      REQUIRE_DISAMBIGUATE_OVERLOADS     = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect>      REQUIRE_SELECT_FROM                = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect>      REQUIRE_DISAMBIGUATE_OVERLOADS     = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
     // ------------------------------------------------------------------------
     // Meta-data attributes (the same for every call)

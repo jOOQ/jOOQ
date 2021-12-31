@@ -69,7 +69,7 @@ final class CountTable extends AbstractAggregateFunction<Integer> implements QOM
 
 
             case POSTGRES:
-            case YUGABYTE: {
+            case YUGABYTEDB: {
                 super.accept(ctx);
                 break;
             }

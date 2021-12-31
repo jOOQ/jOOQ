@@ -42,7 +42,7 @@ import static java.util.Arrays.asList;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Keywords.K_INT;
 import static org.jooq.impl.Names.N_ARRAY;
@@ -66,7 +66,7 @@ import org.jooq.impl.QOM.UnmodifiableList;
  */
 final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
 
-    private static final Set<SQLDialect> REQUIRES_CAST = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect> REQUIRES_CAST = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
     private final FieldsImpl<Record>     fields;
 

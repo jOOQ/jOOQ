@@ -110,7 +110,7 @@ implements
             case MARIADB:
             case MYSQL:
             case SQLITE:
-            case YUGABYTE:
+            case YUGABYTEDB:
                 ctx.visit(function(N_CHAR, getDataType(), number));
                 break;
 

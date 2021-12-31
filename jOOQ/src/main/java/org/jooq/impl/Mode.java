@@ -42,7 +42,7 @@ import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.mode;
 import static org.jooq.impl.Names.N_MODE;
 import static org.jooq.impl.Names.N_STATS_MODE;
@@ -59,7 +59,7 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 final class Mode<T> extends AbstractAggregateFunction<T> implements QOM.Mode<T> {
-    private static final Set<SQLDialect> EMULATE_AS_ORDERED_SET_AGG = SQLDialect.supportedBy(H2, POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect> EMULATE_AS_ORDERED_SET_AGG = SQLDialect.supportedBy(H2, POSTGRES, YUGABYTEDB);
 
     Mode(Field<T> arg) {
         super(false, N_MODE, arg.getDataType(), arg);

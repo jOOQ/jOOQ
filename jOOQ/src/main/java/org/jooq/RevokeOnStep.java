@@ -70,21 +70,21 @@ public interface RevokeOnStep {
     /**
      * Add the <code>ON</code> clause to the <code>REVOKE</code> statement.
      */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     RevokeFromStep on(@Stringly.Name String on);
 
     /**
      * Add the <code>ON</code> clause to the <code>REVOKE</code> statement.
      */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     RevokeFromStep on(Name on);
 
     /**
      * Add the <code>ON</code> clause to the <code>REVOKE</code> statement.
      */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     RevokeFromStep on(Table<?> on);
 }

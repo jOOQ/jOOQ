@@ -100,7 +100,7 @@ implements
 
 
             case POSTGRES:
-            case YUGABYTE: {
+            case YUGABYTEDB: {
                 // [#1107] Some dialects support "contains" operations for ARRAYs
                 // [#5929] Check both sides of the operation for array types
                 if (value.getDataType().isArray() || content.getDataType().isArray())

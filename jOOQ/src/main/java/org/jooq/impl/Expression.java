@@ -49,7 +49,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.inlined;
 import static org.jooq.impl.DSL.keyword;
@@ -113,8 +113,8 @@ import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 
 final class Expression<T> extends AbstractTransformable<T> implements UOperator2<Field<T>, Field<?>, Field<T>> {
-    static final Set<SQLDialect>     HASH_OP_FOR_BIT_XOR    = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
-    static final Set<SQLDialect>     SUPPORT_YEAR_TO_SECOND = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    static final Set<SQLDialect>     HASH_OP_FOR_BIT_XOR    = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>     SUPPORT_YEAR_TO_SECOND = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
     private final ExpressionOperator operator;
     private final boolean            internal;
@@ -773,7 +773,7 @@ final class Expression<T> extends AbstractTransformable<T> implements UOperator2
 
 
                 case POSTGRES:
-                case YUGABYTE: {
+                case YUGABYTEDB: {
 
                     // This seems to be the most reliable way to avoid issues
                     // with incompatible data types and timezones

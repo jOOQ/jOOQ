@@ -72,7 +72,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
 import static org.jooq.conf.ParamType.INLINED;
@@ -951,10 +951,10 @@ final class Tools {
 
     static final Set<SQLDialect>         REQUIRES_BACKSLASH_ESCAPING        = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>         NO_SUPPORT_NULL                    = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
-    static final Set<SQLDialect>         NO_SUPPORT_BINARY_TYPE_LENGTH      = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    static final Set<SQLDialect>         NO_SUPPORT_BINARY_TYPE_LENGTH      = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect>         NO_SUPPORT_CAST_TYPE_IN_DDL        = SQLDialect.supportedBy(MARIADB, MYSQL);
-    static final Set<SQLDialect>         SUPPORT_NON_BIND_VARIABLE_SUFFIXES = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
-    static final Set<SQLDialect>         SUPPORT_POSTGRES_LITERALS          = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    static final Set<SQLDialect>         SUPPORT_NON_BIND_VARIABLE_SUFFIXES = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>         SUPPORT_POSTGRES_LITERALS          = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect>         DEFAULT_BEFORE_NULL                = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
     static final Set<SQLDialect>         NO_SUPPORT_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(DERBY);
     static final Set<SQLDialect>         DEFAULT_TIMESTAMP_NOT_NULL         = SQLDialect.supportedBy(MARIADB);
@@ -4631,7 +4631,7 @@ final class Tools {
 
 
             case POSTGRES:
-            case YUGABYTE:
+            case YUGABYTEDB:
                 if (increment(ctx.data(), DATA_BLOCK_NESTING))
                     ctx.visit(K_DO).sql(" $$").formatSeparator();
 
@@ -4663,7 +4663,7 @@ final class Tools {
 
 
             case POSTGRES:
-            case YUGABYTE:
+            case YUGABYTEDB:
                 ctx.formatIndentEnd().formatSeparator()
                    .visit(K_END);
 
@@ -5064,7 +5064,7 @@ final class Tools {
 
 
             case POSTGRES:
-            case YUGABYTE: {
+            case YUGABYTEDB: {
                 begin(ctx, c -> {
                     String sqlstate;
 
@@ -5210,7 +5210,7 @@ final class Tools {
 
                 case DERBY:
                 case FIREBIRD:
-                case YUGABYTE: ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY); break;
+                case YUGABYTEDB: ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY); break;
             }
         }
     }
@@ -5425,7 +5425,7 @@ final class Tools {
 
 
                 case POSTGRES:
-                case YUGABYTE: {
+                case YUGABYTEDB: {
 
                     // [#7597] but only if the EnumType.getSchema() value is present
                     //         i.e. when it is a known, stored enum type
@@ -6327,7 +6327,7 @@ final class Tools {
 
 
                 case POSTGRES:
-                case YUGABYTE:
+                case YUGABYTEDB:
                     return ParseNameCase.LOWER_IF_UNQUOTED;
 
 
@@ -6360,7 +6360,7 @@ final class Tools {
 
                 case H2:
                 case POSTGRES:
-                case YUGABYTE:
+                case YUGABYTEDB:
                     return NestedCollectionEmulation.JSONB;
 
                 case MARIADB:

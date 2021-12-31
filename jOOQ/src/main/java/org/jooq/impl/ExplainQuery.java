@@ -144,7 +144,7 @@ final class ExplainQuery {
 
 
             case POSTGRES:
-            case YUGABYTE: {
+            case YUGABYTEDB: {
                 Matcher matcher = Pattern
                     .compile(".*\\bcost=\\d+\\.\\d+\\.\\.(\\d+\\.\\d+)\\s+rows=(\\d+).*")
                     .matcher(result.get(0).get(0, String.class));

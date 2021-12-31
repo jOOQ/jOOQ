@@ -70,14 +70,14 @@ public interface DropIndexCascadeStep extends DropIndexFinalStep {
     /**
      * Add the <code>CASCADE</code> clause to the <code>DROP INDEX</code> statement.
      */
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     DropIndexFinalStep cascade();
 
     /**
      * Add the <code>RESTRICT</code> clause to the <code>DROP INDEX</code> statement.
      */
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     DropIndexFinalStep restrict();
 }

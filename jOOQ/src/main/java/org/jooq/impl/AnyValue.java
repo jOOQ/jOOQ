@@ -115,7 +115,7 @@ implements
             case MARIADB:
             case POSTGRES:
             case SQLITE:
-            case YUGABYTE:
+            case YUGABYTEDB:
                 ctx.visit(N_MIN);
                 break;
 

@@ -49,7 +49,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.codegen.GenerationUtil.convertToIdentifier;
 import static org.jooq.codegen.Language.KOTLIN;
 
@@ -194,7 +194,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             return ((UniqueKeyDefinition) definition).getTable().getOutputName().toUpperCase(targetLocale) + "__" + definition.getOutputName().toUpperCase(targetLocale);
 
         // [#9758] And then also for foreign keys
-        else if (definition instanceof ForeignKeyDefinition && asList(POSTGRES, SQLITE, YUGABYTE).contains(definition.getDatabase().getDialect().family()))
+        else if (definition instanceof ForeignKeyDefinition && asList(POSTGRES, SQLITE, YUGABYTEDB).contains(definition.getDatabase().getDialect().family()))
             return ((ForeignKeyDefinition) definition).getTable().getOutputName().toUpperCase(targetLocale) + "__" + definition.getOutputName().toUpperCase(targetLocale);
 
         // [#10481] Embeddables have a defining name (class name) and a referencing name (identifier name, member name).

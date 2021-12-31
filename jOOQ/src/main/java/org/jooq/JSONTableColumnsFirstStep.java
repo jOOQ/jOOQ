@@ -47,7 +47,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 /**
  * A step in the construction of an <code>JSON_TABLE</code> expression.
@@ -61,7 +61,7 @@ public interface JSONTableColumnsFirstStep {
      * <code>JSON_TABLE</code> expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     JSONTableColumnForOrdinalityStep column(String name);
 
     /**
@@ -69,7 +69,7 @@ public interface JSONTableColumnsFirstStep {
      * <code>JSON_TABLE</code> expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     JSONTableColumnForOrdinalityStep column(Name name);
 
     /**
@@ -77,7 +77,7 @@ public interface JSONTableColumnsFirstStep {
      * <code>JSON_TABLE</code> expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     JSONTableColumnPathStep column(Field<?> name);
 
     /**
@@ -85,7 +85,7 @@ public interface JSONTableColumnsFirstStep {
      * <code>JSON_TABLE</code> expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     JSONTableColumnPathStep column(String name, DataType<?> type);
 
     /**
@@ -93,7 +93,7 @@ public interface JSONTableColumnsFirstStep {
      * <code>JSON_TABLE</code> expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     JSONTableColumnPathStep column(Name name, DataType<?> type);
 
     /**
@@ -101,7 +101,7 @@ public interface JSONTableColumnsFirstStep {
      * <code>JSON_TABLE</code> expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     JSONTableColumnPathStep column(Field<?> name, DataType<?> type);
 
 }

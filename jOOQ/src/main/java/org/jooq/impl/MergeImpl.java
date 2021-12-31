@@ -1327,7 +1327,7 @@ implements
 
 
                 case POSTGRES:
-                case YUGABYTE:
+                case YUGABYTEDB:
                     toPostgresInsertOnConflict(ctx);
                     break;
 

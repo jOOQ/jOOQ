@@ -269,7 +269,7 @@ implements
             case MARIADB:
             case MYSQL:
             case POSTGRES:
-            case YUGABYTE:
+            case YUGABYTEDB:
                 ctx.visit(N_BIT_OR);
                 break;
 

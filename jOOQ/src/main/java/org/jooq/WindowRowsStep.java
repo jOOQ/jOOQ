@@ -61,7 +61,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -88,7 +88,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowExcludeStep<T> rowsUnboundedPreceding();
 
     /**
@@ -96,14 +96,14 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowExcludeStep<T> rowsPreceding(int number);
 
     /**
      * Add a <code>ROWS CURRENT ROW</code> frame clause to the window function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowExcludeStep<T> rowsCurrentRow();
 
     /**
@@ -111,7 +111,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowExcludeStep<T> rowsUnboundedFollowing();
 
     /**
@@ -119,7 +119,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowExcludeStep<T> rowsFollowing(int number);
 
     /**
@@ -127,7 +127,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowRowsAndStep<T> rowsBetweenUnboundedPreceding();
 
     /**
@@ -135,7 +135,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowRowsAndStep<T> rowsBetweenPreceding(int number);
 
     /**
@@ -143,7 +143,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowRowsAndStep<T> rowsBetweenCurrentRow();
 
     /**
@@ -151,7 +151,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowRowsAndStep<T> rowsBetweenUnboundedFollowing();
 
     /**
@@ -159,7 +159,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowRowsAndStep<T> rowsBetweenFollowing(int number);
 
     /**
@@ -167,7 +167,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowExcludeStep<T> rangeUnboundedPreceding();
 
     /**
@@ -175,14 +175,14 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowExcludeStep<T> rangePreceding(int number);
 
     /**
      * Add a <code>RANGE CURRENT ROW</code> frame clause to the window function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowExcludeStep<T> rangeCurrentRow();
 
     /**
@@ -190,7 +190,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowExcludeStep<T> rangeUnboundedFollowing();
 
     /**
@@ -198,7 +198,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowExcludeStep<T> rangeFollowing(int number);
 
     /**
@@ -206,7 +206,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowRowsAndStep<T> rangeBetweenUnboundedPreceding();
 
     /**
@@ -214,7 +214,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowRowsAndStep<T> rangeBetweenPreceding(int number);
 
     /**
@@ -222,7 +222,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowRowsAndStep<T> rangeBetweenCurrentRow();
 
     /**
@@ -230,7 +230,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowRowsAndStep<T> rangeBetweenUnboundedFollowing();
 
     /**
@@ -238,7 +238,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     WindowRowsAndStep<T> rangeBetweenFollowing(int number);
 
     /**
@@ -246,7 +246,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
     WindowExcludeStep<T> groupsUnboundedPreceding();
 
     /**
@@ -254,14 +254,14 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
     WindowExcludeStep<T> groupsPreceding(int number);
 
     /**
      * Add a <code>GROUPS CURRENT ROW</code> frame clause to the window function.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
     WindowExcludeStep<T> groupsCurrentRow();
 
     /**
@@ -269,7 +269,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
     WindowExcludeStep<T> groupsUnboundedFollowing();
 
     /**
@@ -277,7 +277,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
     WindowExcludeStep<T> groupsFollowing(int number);
 
     /**
@@ -285,7 +285,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
     WindowRowsAndStep<T> groupsBetweenUnboundedPreceding();
 
     /**
@@ -293,7 +293,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
     WindowRowsAndStep<T> groupsBetweenPreceding(int number);
 
     /**
@@ -301,7 +301,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
     WindowRowsAndStep<T> groupsBetweenCurrentRow();
 
     /**
@@ -309,7 +309,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
     WindowRowsAndStep<T> groupsBetweenUnboundedFollowing();
 
     /**
@@ -317,6 +317,6 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
     WindowRowsAndStep<T> groupsBetweenFollowing(int number);
 }

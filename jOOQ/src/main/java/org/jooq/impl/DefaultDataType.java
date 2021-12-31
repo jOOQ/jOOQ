@@ -48,7 +48,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.CommentImpl.NO_COMMENT;
 import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.DefaultBinding.binding;
@@ -132,7 +132,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
     private static final Set<SQLDialect>                        ENCODED_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(HSQLDB, MARIADB);
     private static final Set<SQLDialect>                        NO_SUPPORT_TIMESTAMP_PRECISION  = SQLDialect.supportedBy(FIREBIRD, MYSQL, SQLITE);
-    private static final Set<SQLDialect>                        SUPPORT_POSTGRES_ARRAY_NOTATION = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect>                        SUPPORT_POSTGRES_ARRAY_NOTATION = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect>                        SUPPORT_HSQLDB_ARRAY_NOTATION   = SQLDialect.supportedBy(H2, HSQLDB);
 
     /**

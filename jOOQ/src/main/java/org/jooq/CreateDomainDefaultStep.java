@@ -72,14 +72,14 @@ public interface CreateDomainDefaultStep<T> extends CreateDomainConstraintStep {
      *
      * @param default_ is wrapped as {@link org.jooq.impl.DSL#val(Object)}.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateDomainConstraintStep default_(T default_);
 
     /**
      * Add the <code>DEFAULT_</code> clause to the <code>CREATE DOMAIN</code> statement.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateDomainConstraintStep default_(Field<T> default_);
 }

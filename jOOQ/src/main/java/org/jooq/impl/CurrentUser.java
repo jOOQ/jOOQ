@@ -118,7 +118,7 @@ implements
             case FIREBIRD:
             case HSQLDB:
             case POSTGRES:
-            case YUGABYTE:
+            case YUGABYTEDB:
                 ctx.visit(N_CURRENT_USER);
                 break;
 

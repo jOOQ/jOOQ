@@ -187,7 +187,7 @@ final class ArrayTable extends AbstractTable<Record> implements UNotYetImplement
 
             case HSQLDB:
             case POSTGRES:
-            case YUGABYTE:
+            case YUGABYTEDB:
                 return new PostgresHSQLDBTable().as(alias, fieldAliases);
 
             // Other dialects can simulate unnested arrays using UNION ALL

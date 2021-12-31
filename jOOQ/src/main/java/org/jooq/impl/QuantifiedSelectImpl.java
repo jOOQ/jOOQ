@@ -140,7 +140,7 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
 
 
                 case POSTGRES:
-                case YUGABYTE:
+                case YUGABYTEDB:
                     return array;
 
                 // [#869] H2 and HSQLDB can emulate this syntax by unnesting

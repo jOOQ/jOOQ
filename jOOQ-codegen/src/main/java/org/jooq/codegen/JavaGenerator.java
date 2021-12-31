@@ -47,7 +47,7 @@ import static java.util.stream.Collectors.toList;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.SortOrder.DESC;
 import static org.jooq.codegen.Language.JAVA;
 import static org.jooq.codegen.Language.KOTLIN;
@@ -206,7 +206,7 @@ public class JavaGenerator extends AbstractGenerator {
     /**
      * Dialects that can reference tables in contexts where UDTs are expected.
      */
-    private static final Set<SQLDialect>          SUPPORT_TABLE_AS_UDT         = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect>          SUPPORT_TABLE_AS_UDT         = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
     /**
      * The Javadoc to be used for private constructors

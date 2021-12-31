@@ -70,14 +70,14 @@ public interface DropDomainCascadeStep extends DropDomainFinalStep {
     /**
      * Add the <code>CASCADE</code> clause to the <code>DROP DOMAIN</code> statement.
      */
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTE })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     DropDomainFinalStep cascade();
 
     /**
      * Add the <code>RESTRICT</code> clause to the <code>DROP DOMAIN</code> statement.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTE })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     DropDomainFinalStep restrict();
 }

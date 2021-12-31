@@ -109,7 +109,7 @@ implements
 
 
             case POSTGRES:
-            case YUGABYTE:
+            case YUGABYTEDB:
                 ctx.visit(N_WIDTH_BUCKET).sql('(').visit(field).sql(", ").visit(low).sql(", ").visit(high).sql(", ").visit(buckets).sql(')');
                 break;
 

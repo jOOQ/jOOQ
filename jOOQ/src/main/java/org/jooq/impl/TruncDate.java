@@ -128,7 +128,7 @@ final class TruncDate<T> extends AbstractField<T> implements UNotYetImplemented 
 
 
             case POSTGRES:
-            case YUGABYTE: {
+            case YUGABYTEDB: {
                 switch (part) {
                     case YEAR:   keyword = "year";   break;
                     case MONTH:  keyword = "month";  break;

@@ -36,7 +36,7 @@
  *
  */
 
-package org.jooq.meta.yugabyte;
+package org.jooq.meta.yugabytedb;
 
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.unquotedName;
@@ -49,18 +49,18 @@ import org.jooq.meta.postgres.PostgresDatabase;
 /**
  * @author Lukas Eder
  */
-public class YugabyteDatabase extends PostgresDatabase {
+public class YugabyteDBDatabase extends PostgresDatabase {
 
     boolean connectionInitialised;
 
     @Override
     protected DSLContext create0() {
-        DSLContext ctx = DSL.using(getConnection(), SQLDialect.YUGABYTE);
+        DSLContext ctx = DSL.using(getConnection(), SQLDialect.YUGABYTEDB);
 
         if (!connectionInitialised && getConnection() != null) {
             connectionInitialised = true;
 
-            // Work around Yugabyte's distributed catalog, which performs very poorly when using nested loops
+            // Work around YugabyteDB's distributed catalog, which performs very poorly when using nested loops
             // https://github.com/yugabyte/yugabyte-db/issues/9938
             ctx.set(unquotedName("enable_nestloop"), inline(false)).execute();
         }

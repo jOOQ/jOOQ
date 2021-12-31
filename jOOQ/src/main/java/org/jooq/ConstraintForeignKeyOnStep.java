@@ -61,7 +61,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -110,7 +110,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * <code>FOREIGN KEY</code> constraint.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     ConstraintForeignKeyOnStep onDeleteRestrict();
 
     /**
@@ -118,7 +118,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * <code>FOREIGN KEY</code> constraint.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     ConstraintForeignKeyOnStep onDeleteCascade();
 
     /**
@@ -126,7 +126,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * <code>FOREIGN KEY</code> constraint.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     ConstraintForeignKeyOnStep onDeleteSetNull();
 
     /**
@@ -134,7 +134,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * <code>FOREIGN KEY</code> constraint.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     ConstraintForeignKeyOnStep onDeleteSetDefault();
 
     /**
@@ -155,7 +155,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * <code>FOREIGN KEY</code> constraint.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     ConstraintForeignKeyOnStep onUpdateRestrict();
 
     /**
@@ -163,7 +163,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * <code>FOREIGN KEY</code> constraint.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     ConstraintForeignKeyOnStep onUpdateCascade();
 
     /**
@@ -171,7 +171,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * <code>FOREIGN KEY</code> constraint.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     ConstraintForeignKeyOnStep onUpdateSetNull();
 
     /**
@@ -179,7 +179,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * <code>FOREIGN KEY</code> constraint.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     ConstraintForeignKeyOnStep onUpdateSetDefault();
 
 }

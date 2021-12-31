@@ -68,7 +68,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.CommonTableExpressionList.markTopLevelCteAndAccept;
 import static org.jooq.impl.DSL.finalTable;
@@ -183,9 +183,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     private static final JooqLogger              log                                    = JooqLogger.getLogger(AbstractQuery.class);
 
     private static final Set<SQLDialect>         NO_SUPPORT_INSERT_ALIASED_TABLE        = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, MARIADB, MYSQL);
-    private static final Set<SQLDialect>         NATIVE_SUPPORT_INSERT_RETURNING        = SQLDialect.supportedBy(FIREBIRD, MARIADB, POSTGRES, YUGABYTE);
-    private static final Set<SQLDialect>         NATIVE_SUPPORT_UPDATE_RETURNING        = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTE);
-    private static final Set<SQLDialect>         NATIVE_SUPPORT_DELETE_RETURNING        = SQLDialect.supportedBy(FIREBIRD, MARIADB, POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect>         NATIVE_SUPPORT_INSERT_RETURNING        = SQLDialect.supportedBy(FIREBIRD, MARIADB, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect>         NATIVE_SUPPORT_UPDATE_RETURNING        = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect>         NATIVE_SUPPORT_DELETE_RETURNING        = SQLDialect.supportedBy(FIREBIRD, MARIADB, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect>         NATIVE_SUPPORT_DATA_CHANGE_DELTA_TABLE = SQLDialect.supportedBy(H2);
     private static final Set<SQLDialect>         NO_SUPPORT_FETCHING_KEYS               = SQLDialect.supportedBy(IGNITE);
 
@@ -1077,7 +1077,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 // in the Postgres JDBC driver
                 case FIREBIRD:
                 case POSTGRES:
-                case YUGABYTE: {
+                case YUGABYTEDB: {
                     rs = executeReturningQuery(ctx, listener);
                     break;
                 }

@@ -104,7 +104,7 @@ implements
 
 
 
-            case YUGABYTE:
+            case YUGABYTEDB:
                 ctx.visit(DSL.log(value, inline(10)));
                 break;
 

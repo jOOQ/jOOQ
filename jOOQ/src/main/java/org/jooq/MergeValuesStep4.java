@@ -67,7 +67,7 @@ public interface MergeValuesStep4<R extends Record, T1, T2, T3, T4> {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Merge<R> values(T1 value1, T2 value2, T3 value3, T4 value4);
 
     /**
@@ -77,7 +77,7 @@ public interface MergeValuesStep4<R extends Record, T1, T2, T3, T4> {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Merge<R> values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4);
 
     /**
@@ -87,7 +87,7 @@ public interface MergeValuesStep4<R extends Record, T1, T2, T3, T4> {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Merge<R> values(Collection<?> values);
 
     /**

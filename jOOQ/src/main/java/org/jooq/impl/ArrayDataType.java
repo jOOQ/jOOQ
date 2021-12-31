@@ -148,7 +148,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
 
 
             case POSTGRES:
-            case YUGABYTE:
+            case YUGABYTEDB:
                 return dataType + "[]";
 
             case H2:

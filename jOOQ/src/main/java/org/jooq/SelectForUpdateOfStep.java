@@ -52,7 +52,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import java.util.Collection;
 
@@ -147,7 +147,7 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      * @see SelectQuery#setForLockModeOf(Table...)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, YUGABYTEDB })
     SelectForUpdateWaitStep<R> of(Table<?>... tables);
 
 }

@@ -510,7 +510,7 @@ class GenerationUtil {
 
 
             case POSTGRES:
-            case YUGABYTE: {
+            case YUGABYTEDB: {
 
                 // The convention is to prepend a "_" to a type to get an array type
                 if (u != null && u.last().startsWith("_")) {

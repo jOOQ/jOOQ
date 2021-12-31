@@ -120,7 +120,7 @@ implements
             case DERBY:
             case POSTGRES:
             case SQLITE:
-            case YUGABYTE:
+            case YUGABYTEDB:
                 ctx.visit(function(N_RANDOM, getDataType()));
                 break;
 

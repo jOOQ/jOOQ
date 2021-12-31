@@ -50,7 +50,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -133,7 +133,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectForStep
      * @see SelectQuery#setForLockModeNoWait()
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     SelectForStep<R> noWait();
 
     /**
@@ -143,6 +143,6 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectForStep
      * @see SelectQuery#setForLockModeSkipLocked()
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     SelectForStep<R> skipLocked();
 }

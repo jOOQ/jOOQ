@@ -70,7 +70,7 @@ public interface GrantWithGrantOptionStep extends GrantFinalStep {
     /**
      * Add the <code>WITH GRANT OPTION</code> clause to the <code>GRANT</code> statement.
      */
-    @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     GrantFinalStep withGrantOption();
 }

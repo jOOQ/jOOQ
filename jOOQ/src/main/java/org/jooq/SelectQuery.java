@@ -77,7 +77,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import java.util.Collection;
 
@@ -124,7 +124,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <p>
      * This also sets the <code>distinct</code> flag to <code>true</code>
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void addDistinctOn(SelectFieldOrAsterisk... fields);
 
     /**
@@ -132,14 +132,14 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <p>
      * This also sets the <code>distinct</code> flag to <code>true</code>
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void addDistinctOn(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
      * Add a T-SQL style <code>INTO</code> clause to the <code>SELECT</code>
      * statement to create a new table from a <code>SELECT</code> statement.
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void setInto(Table<?> table);
 
 
@@ -417,7 +417,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param definitions The definitions
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void addWindow(WindowDefinition... definitions);
 
     /**
@@ -425,7 +425,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param definitions The definitions
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void addWindow(Collection<? extends WindowDefinition> definitions);
 
     /**
@@ -434,7 +434,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param condition The condition
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void addQualify(Condition condition);
 
     /**
@@ -443,7 +443,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param conditions The condition
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void addQualify(Condition... conditions);
 
     /**
@@ -452,7 +452,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param conditions The condition
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void addQualify(Collection<? extends Condition> conditions);
 
     /**
@@ -463,7 +463,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *            conditions
      * @param condition The condition
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void addQualify(Operator operator, Condition condition);
 
     /**
@@ -474,7 +474,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *            conditions
      * @param conditions The condition
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void addQualify(Operator operator, Condition... conditions);
 
     /**
@@ -485,7 +485,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *            conditions
      * @param conditions The condition
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void addQualify(Operator operator, Collection<? extends Condition> conditions);
 
     /**
@@ -906,7 +906,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     /**
      * Add the <code>WITH TIES</code> clause to a <code>LIMIT</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     void setWithTies(boolean withTies);
 
     /**
@@ -958,13 +958,13 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param forUpdate The flag's value
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     void setForUpdate(boolean forUpdate);
 
     /**
      * Sets the "FOR NO KEY UPDATE" lock mode onto the query.
      */
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ POSTGRES, YUGABYTEDB })
     void setForNoKeyUpdate(boolean forNoKeyUpdate);
 
     /**
@@ -1039,7 +1039,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @deprecated [#5218] - 3.14.0 - Use {@link #setForLockModeOf(Table...)}
      */
     @Deprecated(forRemoval = true, since = "3.14")
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, YUGABYTEDB })
     void setForUpdateOf(Table<?>... tables);
 
     /**
@@ -1080,7 +1080,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @deprecated [#5218] - 3.14.0 - Use {@link #setForLockModeNoWait()}
      */
     @Deprecated(forRemoval = true, since = "3.14")
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     void setForUpdateNoWait();
 
     /**
@@ -1099,7 +1099,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @deprecated [#5218] - 3.14.0 - Use {@link #setForLockModeSkipLocked()}
      */
     @Deprecated(forRemoval = true, since = "3.14")
-    @Support({ MYSQL, POSTGRES, YUGABYTE })
+    @Support({ MYSQL, POSTGRES, YUGABYTEDB })
     void setForUpdateSkipLocked();
 
     /**
@@ -1123,13 +1123,13 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param forShare The flag's value
      */
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     void setForShare(boolean forShare);
 
     /**
      * Sets the "FOR KEY SHARE" lock mode onto the query.
      */
-    @Support({ POSTGRES, YUGABYTE })
+    @Support({ POSTGRES, YUGABYTEDB })
     void setForKeyShare(boolean forKeyShare);
 
     /**
@@ -1173,7 +1173,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param tables The tables that should be locked
      */
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, YUGABYTEDB })
     void setForLockModeOf(Table<?>... tables);
 
     /**
@@ -1205,7 +1205,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * Depending on the dialect and lock mode this flag may or may not be
      * supported.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     void setForLockModeNoWait();
 
     /**
@@ -1220,7 +1220,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * Depending on the dialect and lock mode this flag may or may not be
      * supported.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     void setForLockModeSkipLocked();
 
 

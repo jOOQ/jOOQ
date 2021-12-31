@@ -42,7 +42,7 @@ import org.jetbrains.annotations.*;
 // ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import java.util.Collection;
 
@@ -75,14 +75,14 @@ public interface CreateTypeStep {
      * Add the <code>AS ENUM</code> clause to the <code>CREATE TYPE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTE })
+    @Support({ H2, POSTGRES, YUGABYTEDB })
     CreateTypeFinalStep asEnum();
 
     /**
      * Add the <code>AS ENUM</code> clause to the <code>CREATE TYPE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTE })
+    @Support({ H2, POSTGRES, YUGABYTEDB })
     CreateTypeFinalStep asEnum(String... values);
 
     /**
@@ -90,13 +90,13 @@ public interface CreateTypeStep {
      */
     @SuppressWarnings("unchecked")
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTE })
+    @Support({ H2, POSTGRES, YUGABYTEDB })
     CreateTypeFinalStep asEnum(Field<String>... values);
 
     /**
      * Add the <code>AS ENUM</code> clause to the <code>CREATE TYPE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTE })
+    @Support({ H2, POSTGRES, YUGABYTEDB })
     CreateTypeFinalStep asEnum(Collection<?> values);
 }

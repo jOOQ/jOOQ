@@ -508,7 +508,7 @@ Natively supported values are:
 <li>{@link org.jooq.meta.sqlserver.SQLServerDatabase}</li>
 <li>{@link org.jooq.meta.sybase.SybaseDatabase}</li>
 <li>{@link org.jooq.meta.vertica.VerticaDatabase}</li>
-<li>{@link org.jooq.meta.yugabyte.YugabyteDatabase}</li>
+<li>{@link org.jooq.meta.yugabytedb.YugabyteDBDatabase}</li>
 </ul>
 <p>
 This value can be used to reverse-engineer generic JDBC DatabaseMetaData (e.g. for MS Access).

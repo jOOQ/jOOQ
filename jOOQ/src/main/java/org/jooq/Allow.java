@@ -73,7 +73,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -189,7 +189,7 @@ public @interface Allow {
         MYSQL,
         POSTGRES,
         SQLITE,
-        YUGABYTE
+        YUGABYTEDB
     };
 
     /**

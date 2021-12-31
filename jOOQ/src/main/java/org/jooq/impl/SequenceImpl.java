@@ -252,7 +252,7 @@ implements
 
 
                 case POSTGRES:
-                case YUGABYTE:
+                case YUGABYTEDB:
                     ctx.visit(method.keyword).sql('(');
                     ctx.sql('\'').stringLiteral(true).visit(sequence).stringLiteral(false).sql('\'');
                     ctx.sql(')');

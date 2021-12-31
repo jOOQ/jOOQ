@@ -54,7 +54,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.Keywords.K_FOR;
@@ -101,7 +101,7 @@ final class ForLock extends AbstractQueryPart implements UNotYetImplemented {
 
 
     private static final Set<SQLDialect> EMULATE_FOR_UPDATE_WAIT_MY      = SQLDialect.supportedUntil(MYSQL);
-    private static final Set<SQLDialect> EMULATE_FOR_UPDATE_WAIT_PG      = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    private static final Set<SQLDialect> EMULATE_FOR_UPDATE_WAIT_PG      = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
     QueryPartList<Field<?>>              forLockOf;
     TableList                            forLockOfTables;

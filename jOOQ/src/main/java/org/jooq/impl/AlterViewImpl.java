@@ -147,7 +147,7 @@ implements
 
     private static final Clause[]        CLAUSES                    = { Clause.ALTER_VIEW };
     private static final Set<SQLDialect> SUPPORT_IF_EXISTS          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
-    private static final Set<SQLDialect> SUPPORT_ALTER_TABLE_RENAME = SQLDialect.supportedBy(HSQLDB, YUGABYTE);
+    private static final Set<SQLDialect> SUPPORT_ALTER_TABLE_RENAME = SQLDialect.supportedBy(HSQLDB, YUGABYTEDB);
 
     private final boolean supportsIfExists(Context<?> ctx) {
         return !SUPPORT_IF_EXISTS.contains(ctx.dialect());

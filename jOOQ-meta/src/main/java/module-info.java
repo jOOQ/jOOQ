@@ -25,7 +25,7 @@ module org.jooq.meta {
     exports org.jooq.meta.postgres;
     exports org.jooq.meta.sqlite;
     exports org.jooq.meta.xml;
-    exports org.jooq.meta.yugabyte;
+    exports org.jooq.meta.yugabytedb;
 
 
 

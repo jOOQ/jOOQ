@@ -58,7 +58,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import java.util.Collection;
 
@@ -94,7 +94,7 @@ public interface OrderedAggregateFunction<T> {
      * aggregate function
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AggregateFilterStep<T> withinGroupOrderBy(OrderField<?>... fields);
 
     /**
@@ -102,6 +102,6 @@ public interface OrderedAggregateFunction<T> {
      * aggregate function
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AggregateFilterStep<T> withinGroupOrderBy(Collection<? extends OrderField<?>> fields);
 }

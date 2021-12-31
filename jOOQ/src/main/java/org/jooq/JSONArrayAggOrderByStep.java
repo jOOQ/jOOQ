@@ -47,7 +47,7 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import java.util.Collection;
 
@@ -66,13 +66,13 @@ public interface JSONArrayAggOrderByStep<J> extends JSONArrayAggNullStep<J> {
      * Add an <code>ORDER BY</code> clause to the function.
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES, YUGABYTE })
+    @Support({ H2, MARIADB, POSTGRES, YUGABYTEDB })
     JSONArrayAggNullStep<J> orderBy(OrderField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the function.
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES, YUGABYTE })
+    @Support({ H2, MARIADB, POSTGRES, YUGABYTEDB })
     JSONArrayAggNullStep<J> orderBy(Collection<? extends OrderField<?>> fields);
 }

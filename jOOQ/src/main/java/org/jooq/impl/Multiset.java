@@ -42,7 +42,7 @@ import static java.lang.Boolean.TRUE;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonArrayAgg;
 import static org.jooq.impl.DSL.jsonEntry;
@@ -105,7 +105,7 @@ import org.jooq.XMLAggOrderByStep;
  */
 final class Multiset<R extends Record> extends AbstractField<Result<R>> implements QOM.Multiset<R> {
 
-    static final Set<SQLDialect> NO_SUPPORT_JSON_COMPARE  = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    static final Set<SQLDialect> NO_SUPPORT_JSON_COMPARE  = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect> NO_SUPPORT_JSONB_COMPARE = SQLDialect.supportedBy();
     static final Set<SQLDialect> NO_SUPPORT_XML_COMPARE   = SQLDialect.supportedBy(POSTGRES);
 

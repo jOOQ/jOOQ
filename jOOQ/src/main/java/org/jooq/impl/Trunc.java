@@ -129,7 +129,7 @@ implements
 
 
             case POSTGRES:
-            case YUGABYTE:
+            case YUGABYTEDB:
                 ctx.visit(castIfNeeded(
                     DSL.function(N_TRUNC, NUMERIC,
                         castIfNeeded(value, NUMERIC),

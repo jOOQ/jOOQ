@@ -137,7 +137,7 @@ final class JSONExists extends AbstractCondition implements JSONExistsOnStep, UN
                 break;
 
             case POSTGRES:
-            case YUGABYTE:
+            case YUGABYTEDB:
                 ctx.visit(N_JSONB_PATH_EXISTS).sql('(').visit(castIfNeeded(json, JSONB)).sql(", ").visit(path).sql("::jsonpath)");
                 break;
 

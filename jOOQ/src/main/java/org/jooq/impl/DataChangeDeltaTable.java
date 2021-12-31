@@ -42,7 +42,7 @@ package org.jooq.impl;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.YUGABYTE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.resultQuery;
 import static org.jooq.impl.Keywords.K_FINAL;
@@ -85,7 +85,7 @@ implements
     QOM.DataChangeDeltaTable<R>
 {
 
-    private final Set<SQLDialect> EMULATE_USING_CTE = SQLDialect.supportedBy(POSTGRES, YUGABYTE);
+    private final Set<SQLDialect> EMULATE_USING_CTE = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
     private final ResultOption    resultOption;
     private final DMLQuery<R>     query;

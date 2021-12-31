@@ -196,7 +196,7 @@ implements
 
 
             case POSTGRES:
-            case YUGABYTE: {
+            case YUGABYTEDB: {
                 switch (datePart) {
                     case YEAR:   string = "1 year";   break;
                     case MONTH:  string = "1 month";  break;

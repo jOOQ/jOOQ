@@ -103,7 +103,7 @@ implements
 
 
             case POSTGRES:
-            case YUGABYTE:
+            case YUGABYTEDB:
                 acceptPostgres(ctx);
                 break;
 

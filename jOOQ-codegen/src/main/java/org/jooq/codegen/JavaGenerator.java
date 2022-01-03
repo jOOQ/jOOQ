@@ -4635,7 +4635,8 @@ public class JavaGenerator extends AbstractGenerator {
             for (int i = 0; i < embeddables.size(); i++) {
                 EmbeddableDefinition embeddable = embeddables.get(i);
 
-                generateEmbeddablePojoSetter(embeddable, i, out);
+                if (!generateImmutablePojos())
+                    generateEmbeddablePojoSetter(embeddable, i, out);
                 generateEmbeddablePojoGetter(embeddable, i, out);
             }
         }
@@ -4845,7 +4846,10 @@ public class JavaGenerator extends AbstractGenerator {
             if (kotlin)
                 out.tab(1).println("%s%s", getStrategy().getJavaMemberName(column.getReferencingColumn(), Mode.POJO), separator);
             else
-                out.println("%s%s%s", getStrategy().getJavaGetterName(column.getReferencingColumn(), Mode.POJO), emptyparens, separator);
+                out.println("%s%s%s", generatePojosAsJavaRecordClasses()
+                    ? getStrategy().getJavaMemberName(column.getReferencingColumn(), Mode.POJO)
+                    : getStrategy().getJavaGetterName(column.getReferencingColumn(), Mode.POJO), emptyparens, separator
+                );
         });
 
         if (scala)

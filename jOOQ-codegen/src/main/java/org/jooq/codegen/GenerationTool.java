@@ -42,6 +42,7 @@ import static java.lang.Boolean.TRUE;
 import static java.util.Comparator.comparing;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.tools.StringUtils.isBlank;
@@ -347,6 +348,11 @@ public class GenerationTool {
                             if (a != null)
                                 j.setAutoCommit(Boolean.valueOf(a));
                         }
+
+                        if (j.getInitScript() == null)
+                            j.setInitScript(System.getProperty("jooq.codegen.jdbc.initScript"));
+                        if (j.getInitSeparator() == null)
+                            j.setInitSeparator(System.getProperty("jooq.codegen.jdbc.initSeparator"));
                     }
 
                     if (j != null) {
@@ -360,6 +366,11 @@ public class GenerationTool {
                                 properties.put("password", defaultString(j.getPassword()));
 
                             setConnection(driver.newInstance().connect(defaultString(j.getUrl()), properties));
+
+                            if (j.getInitScript() != null)
+                                for (String sql : j.getInitScript().split(defaultIfBlank(j.getInitSeparator(), ";")))
+                                    if (!StringUtils.isBlank(sql))
+                                        ctx.execute(sql);
                         }
                         catch (Exception e) {
                             if (databaseName != null)

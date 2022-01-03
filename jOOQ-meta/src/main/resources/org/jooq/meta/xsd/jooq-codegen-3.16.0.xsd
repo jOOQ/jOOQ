@@ -77,7 +77,7 @@
       </element>
 
       <element name="user" type="string" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="username" type="string" minOccurs="0" maxOccurs="1">
@@ -93,7 +93,15 @@
       </element>
 
       <element name="properties" type="tns:Properties" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Enlist custom JDBC driver properties that are provided to the java.sql.DriverManager when fetching a connection]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Enlist custom JDBC driver properties that are provided to the java.sql.DriverManager when fetching a connection.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="initScript" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A script to run after creating the JDBC connection, and before running the code generator.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="initSeparator" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The separator used to separate statements in the initScript.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>

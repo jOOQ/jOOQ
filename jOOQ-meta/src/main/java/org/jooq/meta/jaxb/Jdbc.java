@@ -47,6 +47,10 @@ public class Jdbc implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String password;
     protected Boolean autoCommit;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String initScript;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String initSeparator;
     @XmlElementWrapper(name = "properties")
     @XmlElement(name = "property")
     protected List<Property> properties;
@@ -102,7 +106,7 @@ public class Jdbc implements Serializable, XMLAppendable
     }
 
     /**
-     * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts
+     * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts.
      * 
      */
     public String getUser() {
@@ -110,7 +114,7 @@ public class Jdbc implements Serializable, XMLAppendable
     }
 
     /**
-     * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts
+     * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts.
      * 
      */
     public void setUser(String value) {
@@ -173,6 +177,38 @@ public class Jdbc implements Serializable, XMLAppendable
         this.autoCommit = value;
     }
 
+    /**
+     * A script to run after creating the JDBC connection, and before running the code generator.
+     * 
+     */
+    public String getInitScript() {
+        return initScript;
+    }
+
+    /**
+     * A script to run after creating the JDBC connection, and before running the code generator.
+     * 
+     */
+    public void setInitScript(String value) {
+        this.initScript = value;
+    }
+
+    /**
+     * The separator used to separate statements in the initScript.
+     * 
+     */
+    public String getInitSeparator() {
+        return initSeparator;
+    }
+
+    /**
+     * The separator used to separate statements in the initScript.
+     * 
+     */
+    public void setInitSeparator(String value) {
+        this.initSeparator = value;
+    }
+
     public List<Property> getProperties() {
         if (properties == null) {
             properties = new ArrayList<Property>();
@@ -213,7 +249,7 @@ public class Jdbc implements Serializable, XMLAppendable
     }
 
     /**
-     * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts
+     * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts.
      * 
      */
     public Jdbc withUser(String value) {
@@ -241,6 +277,24 @@ public class Jdbc implements Serializable, XMLAppendable
 
     public Jdbc withAutoCommit(Boolean value) {
         setAutoCommit(value);
+        return this;
+    }
+
+    /**
+     * A script to run after creating the JDBC connection, and before running the code generator.
+     * 
+     */
+    public Jdbc withInitScript(String value) {
+        setInitScript(value);
+        return this;
+    }
+
+    /**
+     * The separator used to separate statements in the initScript.
+     * 
+     */
+    public Jdbc withInitSeparator(String value) {
+        setInitSeparator(value);
         return this;
     }
 
@@ -274,6 +328,8 @@ public class Jdbc implements Serializable, XMLAppendable
         builder.append("username", username);
         builder.append("password", password);
         builder.append("autoCommit", autoCommit);
+        builder.append("initScript", initScript);
+        builder.append("initSeparator", initSeparator);
         builder.append("properties", "property", properties);
     }
 
@@ -359,6 +415,24 @@ public class Jdbc implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (initScript == null) {
+            if (other.initScript!= null) {
+                return false;
+            }
+        } else {
+            if (!initScript.equals(other.initScript)) {
+                return false;
+            }
+        }
+        if (initSeparator == null) {
+            if (other.initSeparator!= null) {
+                return false;
+            }
+        } else {
+            if (!initSeparator.equals(other.initSeparator)) {
+                return false;
+            }
+        }
         if (properties == null) {
             if (other.properties!= null) {
                 return false;
@@ -382,6 +456,8 @@ public class Jdbc implements Serializable, XMLAppendable
         result = ((prime*result)+((username == null)? 0 :username.hashCode()));
         result = ((prime*result)+((password == null)? 0 :password.hashCode()));
         result = ((prime*result)+((autoCommit == null)? 0 :autoCommit.hashCode()));
+        result = ((prime*result)+((initScript == null)? 0 :initScript.hashCode()));
+        result = ((prime*result)+((initSeparator == null)? 0 :initSeparator.hashCode()));
         result = ((prime*result)+((properties == null)? 0 :properties.hashCode()));
         return result;
     }

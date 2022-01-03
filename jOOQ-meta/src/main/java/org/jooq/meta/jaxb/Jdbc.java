@@ -194,7 +194,7 @@ public class Jdbc implements Serializable, XMLAppendable
     }
 
     /**
-     * The separator used to separate statements in the initScript.
+     * The separator used to separate statements in the initScript, defaulting to ";".
      * 
      */
     public String getInitSeparator() {
@@ -202,7 +202,7 @@ public class Jdbc implements Serializable, XMLAppendable
     }
 
     /**
-     * The separator used to separate statements in the initScript.
+     * The separator used to separate statements in the initScript, defaulting to ";".
      * 
      */
     public void setInitSeparator(String value) {
@@ -290,7 +290,7 @@ public class Jdbc implements Serializable, XMLAppendable
     }
 
     /**
-     * The separator used to separate statements in the initScript.
+     * The separator used to separate statements in the initScript, defaulting to ";".
      * 
      */
     public Jdbc withInitSeparator(String value) {

@@ -454,14 +454,13 @@ final class Tools {
          */
         DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY,
 
-
-
-
-
-
-
-
-
+        /**
+         * [#2744] Currently rendering the data change delta table syntax.
+         * <p>
+         * In some dialects, a <code>FINAL TABLE (INSERT ...)</code> clause exists, which
+         * corresponds to the PostgreSQL <code>INSERT .. RETURNING</code> clause.
+         */
+        DATA_RENDERING_DATA_CHANGE_DELTA_TABLE,
 
 
 

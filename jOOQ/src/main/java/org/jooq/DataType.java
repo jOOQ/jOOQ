@@ -460,7 +460,7 @@ public interface DataType<T> extends Named {
      * This feature is implemented in commercial distributions only.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DataType<T> generatedAlwaysAs(T generatedAlwaysAsValue);
 
     /**
@@ -471,7 +471,7 @@ public interface DataType<T> extends Named {
      * This feature is implemented in commercial distributions only.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DataType<T> generatedAlwaysAs(Field<T> generatedAlwaysAsValue);
 
     /**
@@ -491,7 +491,7 @@ public interface DataType<T> extends Named {
      * This feature is implemented in commercial distributions only.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DataType<T> stored();
 
     /**
@@ -503,7 +503,7 @@ public interface DataType<T> extends Named {
      * This feature is implemented in commercial distributions only.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DataType<T> virtual();
 
     /**
@@ -514,7 +514,7 @@ public interface DataType<T> extends Named {
      * This feature is implemented in commercial distributions only.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DataType<T> generationOption(GenerationOption generationOption);
 
     /**

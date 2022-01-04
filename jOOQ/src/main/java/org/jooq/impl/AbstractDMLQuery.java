@@ -51,7 +51,6 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.IGNITE;
 // ...
@@ -71,9 +70,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.CommonTableExpressionList.markTopLevelCteAndAccept;
-import static org.jooq.impl.DSL.finalTable;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.oldTable;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.Keywords.K_BEGIN;
@@ -96,7 +93,6 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.autoAlias;
-import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
@@ -113,9 +109,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.Instant;
-import java.time.OffsetDateTime;
-import java.time.OffsetTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -166,8 +159,8 @@ import org.jooq.conf.RenderMapping;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.QOM.ResultOption;
 import org.jooq.impl.DefaultUnwrapperProvider.DefaultUnwrapper;
+import org.jooq.impl.QOM.ResultOption;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
@@ -372,281 +365,281 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
         boolean previousDeclareFields = ctx.declareFields();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        {
-            accept0(ctx);
+        if (NATIVE_SUPPORT_DATA_CHANGE_DELTA_TABLE.contains(ctx.dialect())
+                && !returning.isEmpty()
+                && !TRUE.equals(ctx.data(BooleanDataKey.DATA_RENDERING_DATA_CHANGE_DELTA_TABLE))) {
+            ctx.data(BooleanDataKey.DATA_RENDERING_DATA_CHANGE_DELTA_TABLE,
+                true,
+                c -> c.visit(select(returning).from(
+                    new DataChangeDeltaTable<>(this instanceof Delete ? ResultOption.OLD : ResultOption.FINAL, this).as(table().getUnqualifiedName())
+                ))
+            );
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        else
+            accept0(ctx);
 
 
 

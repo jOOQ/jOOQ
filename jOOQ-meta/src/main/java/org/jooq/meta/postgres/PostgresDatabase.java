@@ -72,7 +72,6 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BIGINT;
@@ -102,9 +101,7 @@ import static org.jooq.meta.postgres.pg_catalog.Tables.PG_NAMESPACE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_PROC;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_SEQUENCE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_TYPE;
-import static org.jooq.util.postgres.PostgresDSL.array;
 import static org.jooq.util.postgres.PostgresDSL.arrayAppend;
-import static org.jooq.util.postgres.PostgresDSL.oid;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -124,13 +121,10 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record12;
-import org.jooq.Record2;
 import org.jooq.Record5;
 import org.jooq.Record6;
-import org.jooq.Records;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
-import org.jooq.Rows;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SortOrder;
@@ -138,7 +132,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
 import org.jooq.conf.ParseUnknownFunctions;
-import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.ParserException;
@@ -168,10 +161,10 @@ import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.hsqldb.HSQLDBDatabase;
+import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.postgres.information_schema.tables.CheckConstraints;
 import org.jooq.meta.postgres.information_schema.tables.KeyColumnUsage;
 import org.jooq.meta.postgres.information_schema.tables.Routines;
-import org.jooq.meta.postgres.pg_catalog.Tables;
 import org.jooq.meta.postgres.pg_catalog.tables.PgClass;
 import org.jooq.meta.postgres.pg_catalog.tables.PgConstraint;
 import org.jooq.meta.postgres.pg_catalog.tables.PgIndex;
@@ -953,11 +946,14 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 r1.SPECIFIC_NAME,
                 r1.ROUTINE_TYPE,
 
+                when(r1.DATA_TYPE.eq(inline("USER-DEFINED")).and(r1.TYPE_UDT_NAME.eq(inline("geometry"))), inline("geometry"))
+
                 // Ignore the data type when there is at least one out parameter
-                canCombineArrays()
+                .else_(canCombineArrays()
                     ? when(condition("{0} && ARRAY['o','b']::\"char\"[]", PG_PROC.PROARGMODES), inline("void"))
-                     .otherwise(r1.DATA_TYPE).as("data_type")
-                    : r1.DATA_TYPE.as("data_type"),
+                     .else_(r1.DATA_TYPE)
+                    : r1.DATA_TYPE
+                ).as("data_type"),
 
                 r1.CHARACTER_MAXIMUM_LENGTH,
 

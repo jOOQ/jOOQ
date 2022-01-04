@@ -6301,7 +6301,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
-                else if (parseFunctionNameIf("ST_WITHIN") && requireProEdition()) {
+                else if (parseFunctionNameIf("ST_WITHIN", "SDO_INSIDE") && requireProEdition()) {
 
 
 
@@ -11903,6 +11903,23 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'F':
                 if (parseKeywordOrIdentifierIf("FLOAT"))
                     return parseAndIgnoreDataTypePrecisionScaleIf(SQLDataType.FLOAT);
+
+                break;
+
+            case 'G':
+                if ((parseKeywordOrIdentifierIf("GEOMETRY") ||
+                    parseKeywordOrIdentifierIf("SDO_GEOMETRY"))
+                    && requireProEdition()
+                ) {
+
+
+
+                }
+                else if (parseKeywordOrIdentifierIf("GEOGRAPHY") && requireProEdition()) {
+
+
+
+                }
 
                 break;
 

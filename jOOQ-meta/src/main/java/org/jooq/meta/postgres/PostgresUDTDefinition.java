@@ -38,8 +38,11 @@
 package org.jooq.meta.postgres;
 
 import static org.jooq.impl.DSL.coalesce;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.postgres.information_schema.Tables.ATTRIBUTES;
+import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.information_schema.Tables.DOMAINS;
 
 import java.sql.SQLException;
@@ -69,7 +72,11 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
         for (Record record : create().select(
                     ATTRIBUTES.ATTRIBUTE_NAME,
                     ATTRIBUTES.ORDINAL_POSITION,
-                    coalesce(DOMAINS.DATA_TYPE, ATTRIBUTES.DATA_TYPE).as(ATTRIBUTES.DATA_TYPE),
+                    coalesce(
+                        DOMAINS.DATA_TYPE,
+                        when(ATTRIBUTES.DATA_TYPE.eq(inline("USER-DEFINED")).and(ATTRIBUTES.ATTRIBUTE_UDT_NAME.eq(inline("geometry"))), inline("geometry"))
+                        .else_(ATTRIBUTES.DATA_TYPE)
+                    ).as(ATTRIBUTES.DATA_TYPE),
                     coalesce(DOMAINS.CHARACTER_MAXIMUM_LENGTH, ATTRIBUTES.CHARACTER_MAXIMUM_LENGTH).as(ATTRIBUTES.CHARACTER_MAXIMUM_LENGTH),
                     coalesce(DOMAINS.NUMERIC_PRECISION, ATTRIBUTES.NUMERIC_PRECISION).as(ATTRIBUTES.NUMERIC_PRECISION),
                     coalesce(DOMAINS.NUMERIC_SCALE, ATTRIBUTES.NUMERIC_SCALE).as(ATTRIBUTES.NUMERIC_SCALE),

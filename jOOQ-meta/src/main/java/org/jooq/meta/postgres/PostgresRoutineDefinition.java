@@ -44,6 +44,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.meta.postgres.information_schema.Tables.ROUTINES;
 
@@ -131,7 +132,9 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
 
         for (Record record : create().select(
                 p.PARAMETER_NAME,
-                p.DATA_TYPE,
+                when(p.DATA_TYPE.eq(inline("USER-DEFINED")).and(p.UDT_NAME.eq(inline("geometry"))), inline("geometry"))
+                    .else_(p.DATA_TYPE)
+                    .as(p.DATA_TYPE),
                 p.CHARACTER_MAXIMUM_LENGTH,
                 pNumericPrecision(p).as(p.NUMERIC_PRECISION),
                 p.NUMERIC_SCALE,

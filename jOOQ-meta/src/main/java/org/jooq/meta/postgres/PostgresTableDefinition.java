@@ -89,6 +89,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
         Field<String> dataType =
             when(COLUMNS.INTERVAL_TYPE.like(any(inline("%YEAR%"), inline("%MONTH%"))), inline("INTERVAL YEAR TO MONTH"))
             .when(COLUMNS.INTERVAL_TYPE.like(any(inline("%DAY%"), inline("%HOUR%"), inline("%MINUTE%"), inline("%SECOND%"))), inline("INTERVAL DAY TO SECOND"))
+            .when(COLUMNS.DATA_TYPE.eq(inline("USER-DEFINED")).and(COLUMNS.UDT_NAME.eq(inline("geometry"))), inline("geometry"))
             .else_(COLUMNS.DATA_TYPE);
         Field<String> udtSchema = COLUMNS.UDT_SCHEMA;
         Field<Integer> precision = nvl(COLUMNS.DATETIME_PRECISION, COLUMNS.NUMERIC_PRECISION);

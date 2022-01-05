@@ -87,8 +87,8 @@ import java.util.UUID;
 
 import org.jooq.Configuration;
 import org.jooq.DataType;
-// ...
-// ...
+import org.jooq.Geography;
+import org.jooq.Geometry;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 // ...
@@ -672,8 +672,8 @@ public final class SQLDataType {
     /**
      * The {@link ResultSet} type.
      * <p>
-     * This is not a SQL or JDBC standard. This type emulates REF CURSOR types
-     * and similar constructs
+     * This is not a JDBC standard. This type emulates REF CURSOR types and
+     * similar constructs
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static final DataType<Result<Record>> RESULT = new DefaultDataType<>(null, (Class) Result.class, "result");
@@ -681,56 +681,54 @@ public final class SQLDataType {
     /**
      * The {@link UUID} type.
      * <p>
-     * This is not a SQL or JDBC standard. This type handles UUID types where
-     * they are supported
+     * This is not a JDBC standard. This type handles UUID types where they are
+     * supported
      */
     public static final DataType<UUID> UUID = new DefaultDataType<>(null, UUID.class, "uuid");
 
     /**
      * The {@link JSON} type.
      * <p>
-     * This is not a SQL or JDBC standard. This type handles JSON types where
-     * they are supported.
+     * This is not a JDBC standard. This type handles JSON types where they are
+     * supported.
      */
     public static final DataType<JSON> JSON = new DefaultDataType<>(null, JSON.class, "json");
 
     /**
      * The {@link JSONB} type.
      * <p>
-     * This is not a SQL or JDBC standard. This type handles JSONB types where
-     * they are supported
+     * This is not a JDBC standard. This type handles JSONB types where they are
+     * supported
      */
     public static final DataType<JSONB> JSONB = new DefaultDataType<>(null, JSONB.class, "jsonb");
 
     /**
      * The {@link XML} type.
      * <p>
-     * This is not a SQL or JDBC standard. This type handles XML types where
-     * they are supported
+     * This is not a JDBC standard. This type handles XML types where they are
+     * supported
      */
     public static final DataType<XML> XML = new DefaultDataType<>(null, XML.class, "xml");
 
+    /**
+     * The {@link Geography} type.
+     * <p>
+     * This is not a JDBC standard. This type handles spatial types where they
+     * are supported.
+     * <p>
+     * This data type is supported only by the commercial editions of jOOQ.
+     */
+    public static final DataType<Geography> GEOGRAPHY = new DefaultDataType<>(null, Geography.class, "geography");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * The {@link Geometry} type.
+     * <p>
+     * This is not a JDBC standard. This type handles spatial types where they
+     * are supported.
+     * <p>
+     * This data type is supported only by the commercial editions of jOOQ.
+     */
+    public static final DataType<Geometry> GEOMETRY = new DefaultDataType<>(null, Geometry.class, "geometry");
 
     // -------------------------------------------------------------------------
     // Static initialisation of dialect-specific data types

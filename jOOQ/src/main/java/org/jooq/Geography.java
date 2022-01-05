@@ -37,85 +37,82 @@
  */
 package org.jooq;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/**
+ * A wrapper type for spatial data obtained from the database.
+ * <p>
+ * The wrapper represents spatial {@link #data()} in serialised string form
+ * either as a well known text (WKT) or well known binary in hex format (WKB),
+ * depending on your dialect's default behaviour. A
+ * <code>CAST(NULL AS GEOGRAPHY)</code> value is represented by a
+ * <code>null</code> reference of type {@link Geography}, not as
+ * <code>data() == null</code>. This is consistent with jOOQ's general way of
+ * returning <code>NULL</code> from {@link Result} and {@link Record} methods.
+ * <p>
+ * This data type is supported only by the commercial editions of jOOQ.
+ */
+public final class Geography implements Spatial {
+
+    private final String data;
+
+    private Geography(String data) {
+        this.data = String.valueOf(data);
+    }
+
+    @Override
+    @NotNull
+    public final String data() {
+        return data;
+    }
+
+    /**
+     * Create a new {@link Geography} instance from string data input.
+     */
+    @NotNull
+    public static final Geography valueOf(String data) {
+        return new Geography(data);
+    }
+
+    /**
+     * Create a new {@link Geography} instance from string data input.
+     * <p>
+     * This is the same as {@link #valueOf(String)}, but it can be static
+     * imported.
+     */
+    @NotNull
+    public static final Geography geography(String data) {
+        return new Geography(data);
+    }
+
+    /**
+     * Create a new {@link Geography} instance from string data input, or
+     * <code>null</code> if the input is <code>null</code>.
+     */
+    @Nullable
+    public static final Geography geographyOrNull(String data) {
+        return data == null ? null : geography(data);
+    }
+
+    @Override
+    public int hashCode() {
+        return data.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj instanceof Geography)
+            return data.equals(((Geography) obj).data);
+        return false;
+
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(data);
+    }
+}
 

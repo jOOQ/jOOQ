@@ -78,6 +78,13 @@
         <connection>git://github.com/jOOQ/jOOQ.git</connection>
     </scm>
 
+    <developers>
+        <developer>
+            <name>Data Geekery</name>
+            <email>contact@datageekery.com</email>
+        </developer>
+    </developers>
+
     <issueManagement>
         <system>GitHub</system>
         <url>http://github.com/jOOQ/jOOQ/issues</url>
@@ -912,6 +919,16 @@
 
             </modules>
         </profile>
+
+
+
+
+
+
+
+
+
+
 
 
 

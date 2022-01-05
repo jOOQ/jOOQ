@@ -6,7 +6,6 @@ package org.jooq.example.jpa.jooq.tables;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row2;
@@ -47,7 +46,7 @@ public class Language extends TableImpl<LanguageRecord> {
     /**
      * The column <code>LANGUAGE.LANGUAGEID</code>.
      */
-    public final TableField<LanguageRecord, Integer> LANGUAGEID = createField(DSL.name("LANGUAGEID"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<LanguageRecord, Integer> LANGUAGEID = createField(DSL.name("LANGUAGEID"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>LANGUAGE.NAME</code>.
@@ -90,11 +89,6 @@ public class Language extends TableImpl<LanguageRecord> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
-    }
-
-    @Override
-    public Identity<LanguageRecord, Integer> getIdentity() {
-        return (Identity<LanguageRecord, Integer>) super.getIdentity();
     }
 
     @Override

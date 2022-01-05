@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>jooq-r2dbc-example</artifactId>
+    <name>jOOQ R2DBC Example</name>
     
     <build>
         <plugins>

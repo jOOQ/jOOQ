@@ -6,7 +6,6 @@ package org.jooq.example.jpa.jooq.tables;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row3;
@@ -47,7 +46,7 @@ public class Actor extends TableImpl<ActorRecord> {
     /**
      * The column <code>ACTOR.ACTORID</code>.
      */
-    public final TableField<ActorRecord, Integer> ACTORID = createField(DSL.name("ACTORID"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<ActorRecord, Integer> ACTORID = createField(DSL.name("ACTORID"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>ACTOR.FIRSTNAME</code>.
@@ -95,11 +94,6 @@ public class Actor extends TableImpl<ActorRecord> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
-    }
-
-    @Override
-    public Identity<ActorRecord, Integer> getIdentity() {
-        return (Identity<ActorRecord, Integer>) super.getIdentity();
     }
 
     @Override

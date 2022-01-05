@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row6;
@@ -51,7 +50,7 @@ public class Film extends TableImpl<FilmRecord> {
     /**
      * The column <code>FILM.FILMID</code>.
      */
-    public final TableField<FilmRecord, Integer> FILMID = createField(DSL.name("FILMID"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<FilmRecord, Integer> FILMID = createField(DSL.name("FILMID"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>FILM.LENGTH</code>.
@@ -114,11 +113,6 @@ public class Film extends TableImpl<FilmRecord> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
-    }
-
-    @Override
-    public Identity<FilmRecord, Integer> getIdentity() {
-        return (Identity<FilmRecord, Integer>) super.getIdentity();
     }
 
     @Override

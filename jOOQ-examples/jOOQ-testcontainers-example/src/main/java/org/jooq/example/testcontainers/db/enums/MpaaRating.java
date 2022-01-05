@@ -51,4 +51,11 @@ public enum MpaaRating implements EnumType {
     public String getLiteral() {
         return literal;
     }
+
+    /**
+     * Lookup a value of this EnumType by its literal
+     */
+    public static MpaaRating lookupLiteral(String literal) {
+        return EnumType.lookupLiteral(MpaaRating.class, literal);
+    }
 }

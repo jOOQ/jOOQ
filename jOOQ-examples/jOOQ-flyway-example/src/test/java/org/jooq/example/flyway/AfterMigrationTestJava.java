@@ -20,7 +20,7 @@ public class AfterMigrationTestJava {
 
     @Test
     public void testQueryingAfterMigration() throws Exception {
-        try (Connection c = DriverManager.getConnection("jdbc:h2:~/flyway-test", "sa", "")) {
+        try (Connection c = DriverManager.getConnection("jdbc:h2:~/jooq-flyway-example-2", "sa", "")) {
             Result<?> result =
             DSL.using(c)
                 .select(

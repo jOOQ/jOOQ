@@ -333,12 +333,21 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return new DefaultDoubleBinding(dataType, converter);
         else if (type == Float.class || type == float.class)
             return new DefaultFloatBinding(dataType, converter);
+        else if (type == Geometry.class)
+
+
+
+
+
+            return new CommercialOnlyBinding(dataType, converter);
+        else if (type == Geography.class)
 
 
 
 
 
 
+            return new CommercialOnlyBinding(dataType, converter);
         else if (type == Integer.class || type == int.class)
             return new DefaultIntegerBinding(dataType, converter);
         else if (type == JSON.class)

@@ -208,8 +208,8 @@ import org.jooq.False;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
 // ...
-// ...
-// ...
+import org.jooq.Geography;
+import org.jooq.Geometry;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.GroupField;
@@ -363,7 +363,7 @@ import org.jooq.SelectForStep;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.Sequence;
-// ...
+import org.jooq.Spatial;
 import org.jooq.Statement;
 import org.jooq.Stringly;
 import org.jooq.Support;

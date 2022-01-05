@@ -37,85 +37,82 @@
  */
 package org.jooq;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/**
+ * A wrapper type for spatial data obtained from the database.
+ * <p>
+ * The wrapper represents spatial {@link #data()} in serialised string form
+ * either as a well known text (WKT) or well known binary in hex format (WKB),
+ * depending on your dialect's default behaviour. A
+ * <code>CAST(NULL AS GEOMETRY)</code> value is represented by a
+ * <code>null</code> reference of type {@link Geometry}, not as
+ * <code>data() == null</code>. This is consistent with jOOQ's general way of
+ * returning <code>NULL</code> from {@link Result} and {@link Record} methods.
+ * <p>
+ * This data type is supported only by the commercial editions of jOOQ.
+ */
+public final class Geometry implements Spatial {
+
+    private final String data;
+
+    private Geometry(String data) {
+        this.data = String.valueOf(data);
+    }
+
+    @Override
+    @NotNull
+    public final String data() {
+        return data;
+    }
+
+    /**
+     * Create a new {@link Geometry} instance from string data input.
+     */
+    @NotNull
+    public static final Geometry valueOf(String data) {
+        return new Geometry(data);
+    }
+
+    /**
+     * Create a new {@link Geometry} instance from string data input.
+     * <p>
+     * This is the same as {@link #valueOf(String)}, but it can be static
+     * imported.
+     */
+    @NotNull
+    public static final Geometry geometry(String data) {
+        return new Geometry(data);
+    }
+
+    /**
+     * Create a new {@link Geometry} instance from string data input, or
+     * <code>null</code> if the input is <code>null</code>.
+     */
+    @Nullable
+    public static final Geometry geometryOrNull(String data) {
+        return data == null ? null : geometry(data);
+    }
+
+    @Override
+    public int hashCode() {
+        return data.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj instanceof Geometry)
+            return data.equals(((Geometry) obj).data);
+        return false;
+
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(data);
+    }
+}
 

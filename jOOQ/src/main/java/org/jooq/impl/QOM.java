@@ -86,7 +86,7 @@ import org.jooq.Function6;
 import org.jooq.Function7;
 import org.jooq.Function8;
 import org.jooq.Function9;
-// ...
+import org.jooq.Geometry;
 import org.jooq.GroupField;
 import org.jooq.Index;
 import org.jooq.Internal;
@@ -114,7 +114,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Sequence;
-// ...
+import org.jooq.Spatial;
 import org.jooq.Statement;
 import org.jooq.Table;
 // ...

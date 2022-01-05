@@ -83,8 +83,8 @@ import org.jooq.Domain;
 import org.jooq.EmbeddableRecord;
 import org.jooq.EnumType;
 import org.jooq.Field;
-// ...
-// ...
+import org.jooq.Geography;
+import org.jooq.Geometry;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Name;

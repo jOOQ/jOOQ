@@ -47,8 +47,8 @@ import static java.time.temporal.ChronoField.NANO_OF_SECOND;
 import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 import static java.time.temporal.ChronoField.YEAR;
 import static java.util.function.Function.identity;
-// ...
-// ...
+import static org.jooq.Geography.geography;
+import static org.jooq.Geometry.geometry;
 // ...
 // ...
 // ...
@@ -223,8 +223,8 @@ import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.ExecuteScope;
 import org.jooq.Field;
-// ...
-// ...
+import org.jooq.Geography;
+import org.jooq.Geometry;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Package;
@@ -239,7 +239,7 @@ import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Scope;
-// ...
+import org.jooq.Spatial;
 import org.jooq.TableRecord;
 import org.jooq.UDT;
 import org.jooq.UDTField;

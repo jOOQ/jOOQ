@@ -51,7 +51,7 @@ import jakarta.persistence.Id;
 public class Language {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue
     public Integer languageId;
 
     @Column

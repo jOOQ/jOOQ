@@ -38,7 +38,6 @@
 package org.jooq.example.jpa.entity;
 
 import static jakarta.persistence.FetchType.LAZY;
-import static jakarta.persistence.GenerationType.IDENTITY;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -54,7 +53,7 @@ import jakarta.persistence.ManyToMany;
 public class Actor {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue
     public Integer actorId;
 
     @Column

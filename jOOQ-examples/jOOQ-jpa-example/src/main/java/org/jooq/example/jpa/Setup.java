@@ -37,28 +37,34 @@
  */
 package org.jooq.example.jpa;
 
+import static org.jooq.ExecuteListener.onStart;
+
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.time.Year;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import java.util.function.BiConsumer;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
 
 import org.jooq.DSLContext;
-import org.jooq.ExecuteContext;
-import org.jooq.SQLDialect;
 import org.jooq.example.jpa.embeddables.Title;
 import org.jooq.example.jpa.entity.Actor;
 import org.jooq.example.jpa.entity.Film;
 import org.jooq.example.jpa.entity.Language;
-import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
-import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.tools.jdbc.LoggingConnection;
+import org.jooq.tools.jdbc.SingleConnectionDataSource;
 
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -67,9 +73,14 @@ import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.schema.TargetType;
-import org.springframework.jdbc.datasource.SingleConnectionDataSource;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.SharedCacheMode;
+import jakarta.persistence.ValidationMode;
+import jakarta.persistence.spi.ClassTransformer;
+import jakarta.persistence.spi.PersistenceUnitInfo;
+import jakarta.persistence.spi.PersistenceUnitTransactionType;
 
 /**
  * @author Lukas Eder
@@ -78,7 +89,6 @@ final class Setup {
 
     // This class sets up an EntityManager and configures the jOOQ DSLContext
     // ----------------------------------------------------------------------
-
     static void run(BiConsumer<EntityManager, DSLContext> consumer) throws Exception {
         Connection connection = null;
         EntityManagerFactory emf = null;
@@ -134,18 +144,13 @@ final class Setup {
             SchemaExport export = new SchemaExport();
             export.create(EnumSet.of(TargetType.DATABASE), metadata.buildMetadata());
 
-            // Setting up an EntityManager using Spring (much easier than out-of-the-box Hibernate)
-            LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
-            HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
-            adapter.setDatabasePlatform(SQLDialect.H2.thirdParty().hibernateDialect());
-            bean.setDataSource(new SingleConnectionDataSource(connection, true));
-            bean.setPackagesToScan("org.jooq.example.jpa.entity");
-            bean.setJpaVendorAdapter(adapter);
-            bean.setPersistenceUnitName("test");
-            bean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-            bean.afterPropertiesSet();
+            Map<Object, Object> props = new HashMap<>();
 
-            emf = bean.getObject();
+            DataSource ds = new SingleConnectionDataSource(connection);
+            props.put("hibernate.connection.datasource", ds);
+            props.put("hibernate.archive.autodetection", "");
+
+            emf = new HibernatePersistenceProvider().createContainerEntityManagerFactory(pui(ds), props);
             em = emf.createEntityManager();
 
             final EntityManager e = em;
@@ -156,17 +161,12 @@ final class Setup {
 
             consumer.accept(
                 em,
-                DSL.using(new DefaultConfiguration()
+                new DefaultConfiguration()
                     .set(connection)
-                    .set(new DefaultExecuteListener() {
-                        @Override
-                        public void start(ExecuteContext ctx) {
-                            // Flush all changes from the EntityManager to the database for them to be visible in jOOQ
-                            e.flush();
-                            super.start(ctx);
-                        }
-                    })
-            ));
+                    // Flush all changes from the EntityManager to the database for them to be visible in jOOQ
+                    .set(onStart(ctx -> e.flush()))
+                    .dsl()
+            );
             em.getTransaction().commit();
         }
         finally {
@@ -179,6 +179,105 @@ final class Setup {
             if (connection != null)
                 connection.close();
         }
+    }
+
+    private static PersistenceUnitInfo pui(DataSource ds) {
+        return new PersistenceUnitInfo() {
+            @Override
+            public String getPersistenceUnitName() {
+                return "ApplicationPersistenceUnit";
+            }
+
+            @Override
+            public String getPersistenceProviderClassName() {
+                return "org.hibernate.jpa.HibernatePersistenceProvider";
+            }
+
+            @Override
+            public PersistenceUnitTransactionType getTransactionType() {
+                return PersistenceUnitTransactionType.RESOURCE_LOCAL;
+            }
+
+            @Override
+            public DataSource getJtaDataSource() {
+                return null;
+            }
+
+            @Override
+            public DataSource getNonJtaDataSource() {
+                return ds;
+            }
+
+            @Override
+            public List<String> getMappingFileNames() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public List<URL> getJarFileUrls() {
+                try {
+                    return Collections.list(this.getClass()
+                                                .getClassLoader()
+                                                .getResources(""));
+                } catch (IOException e) {
+                    throw new UncheckedIOException(e);
+                }
+            }
+
+            @Override
+            public URL getPersistenceUnitRootUrl() {
+                return null;
+            }
+
+            @Override
+            public List<String> getManagedClassNames() {
+                return Arrays.asList(
+                    Actor.class.getName(),
+                    Film.class.getName(),
+                    Language.class.getName()
+                );
+            }
+
+            @Override
+            public boolean excludeUnlistedClasses() {
+                return true;
+            }
+
+            @Override
+            public SharedCacheMode getSharedCacheMode() {
+                return null;
+            }
+
+            @Override
+            public ValidationMode getValidationMode() {
+                return null;
+            }
+
+            @Override
+            public Properties getProperties() {
+                return new Properties();
+            }
+
+            @Override
+            public String getPersistenceXMLSchemaVersion() {
+                return null;
+            }
+
+            @Override
+            public ClassLoader getClassLoader() {
+                return null;
+            }
+
+            @Override
+            public void addTransformer(ClassTransformer transformer) {
+
+            }
+
+            @Override
+            public ClassLoader getNewTempClassLoader() {
+                return null;
+            }
+        };
     }
 
     static void data(EntityManager em) {

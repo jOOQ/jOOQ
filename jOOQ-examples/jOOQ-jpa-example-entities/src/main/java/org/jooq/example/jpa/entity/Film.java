@@ -38,11 +38,13 @@
 package org.jooq.example.jpa.entity;
 
 import static jakarta.persistence.FetchType.LAZY;
-import static jakarta.persistence.GenerationType.IDENTITY;
 
 import java.time.Year;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.jooq.example.jpa.converters.YearConverter;
+import org.jooq.example.jpa.embeddables.Title;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -54,9 +56,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
-import org.jooq.example.jpa.converters.YearConverter;
-import org.jooq.example.jpa.embeddables.Title;
-
 /**
  * @author Lukas Eder
  */
@@ -64,7 +63,7 @@ import org.jooq.example.jpa.embeddables.Title;
 public class Film {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue
     public Integer filmId;
 
     // Future versions of jOOQ's code generator will be able to derive nested records

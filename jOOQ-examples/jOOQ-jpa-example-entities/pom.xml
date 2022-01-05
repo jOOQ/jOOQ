@@ -22,7 +22,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.hibernate.version>5.4.9.Final</org.hibernate.version>
+        <org.hibernate.version>5.6.3.Final</org.hibernate.version>
     </properties>
 
     <dependencies>
@@ -58,7 +58,7 @@
                     <annotationProcessorPaths>
                         <annotationProcessorPath>
                             <groupId>org.hibernate</groupId>
-                            <artifactId>hibernate-jpamodelgen</artifactId>
+                            <artifactId>hibernate-jpamodelgen-jakarta</artifactId>
                             <version>${org.hibernate.version}</version>
                         </annotationProcessorPath>
                         <annotationProcessorPath>

@@ -58,7 +58,7 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>8.2.0</version>
+                <version>8.3.0</version>
                 <executions>
                     <execution>
                         <phase>generate-sources</phase>
@@ -97,8 +97,8 @@
                                 <database>
                                     <includes>.*</includes>
                                     <inputSchema>FLYWAY_TEST</inputSchema>
-                                    <catalogVersionProvider>SELECT :schema_name || '_' || MAX("version") FROM "schema_version"</catalogVersionProvider>
-                                    <schemaVersionProvider>SELECT :schema_name || '_' || MAX("version") FROM "schema_version"</schemaVersionProvider>
+                                    <catalogVersionProvider>SELECT :schema_name || '_' || MAX("version") FROM "flyway_schema_history"</catalogVersionProvider>
+                                    <schemaVersionProvider>SELECT :schema_name || '_' || MAX("version") FROM "flyway_schema_history"</schemaVersionProvider>
                                 </database>
                                 <target>
                                     <packageName>org.jooq.example.flyway.j.db.h2</packageName>

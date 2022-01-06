@@ -172,4 +172,10 @@ public interface DiagnosticsContext {
      */
     @NotNull
     List<String> repeatedStatements();
+
+    /**
+     * The exception that occurred while diagnosing a statement.
+     */
+    @Nullable
+    Throwable exception();
 }

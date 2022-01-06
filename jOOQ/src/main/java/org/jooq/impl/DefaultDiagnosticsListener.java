@@ -73,4 +73,6 @@ public class DefaultDiagnosticsListener implements DiagnosticsListener {
 
 
 
+    @Override
+    public void exception(DiagnosticsContext ctx) {}
 }

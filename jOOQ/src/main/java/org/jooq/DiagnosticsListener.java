@@ -42,6 +42,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import org.jooq.impl.DSL;
+import org.jooq.impl.ParserException;
 
 /**
  * A diagnostics listener.
@@ -203,4 +204,18 @@ public interface DiagnosticsListener {
 
 
 
+
+    /**
+     * Something went wrong while diagnosing a SQL query.
+     * <p>
+     * The actual exception will be provided by
+     * {@link DiagnosticsContext#exception()}. Likely exceptions include:
+     * <ul>
+     * <li>A {@link ParserException} because jOOQ couldn't parse user defined
+     * SQL.</li>
+     * <li>A user exception from a custom {@link DiagnosticsListener}
+     * implementation.</li>
+     * </ul>
+     */
+    void exception(DiagnosticsContext ctx);
 }

@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;
+import static java.util.Collections.singleton;
+import static java.util.Collections.singletonList;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -72,16 +74,34 @@ final class DefaultDiagnosticsContext implements DiagnosticsContext {
     boolean                         resultSetUnnecessaryWasNullCall;
     boolean                         resultSetMissingWasNullCall;
     int                             resultSetColumnIndex;
+    final Throwable                 exception;
 
     DefaultDiagnosticsContext(String actualStatement) {
-        this(actualStatement, actualStatement, Collections.singleton(actualStatement), Collections.singletonList(actualStatement));
+        this(actualStatement, null);
     }
 
-    DefaultDiagnosticsContext(String actualStatement, String normalisedStatement, Set<String> duplicateStatements, List<String> repeatedStatements) {
+    DefaultDiagnosticsContext(String actualStatement, Throwable exception) {
+        this(
+            actualStatement,
+            actualStatement,
+            singleton(actualStatement),
+            singletonList(actualStatement),
+            exception
+        );
+    }
+
+    DefaultDiagnosticsContext(
+        String actualStatement,
+        String normalisedStatement,
+        Set<String> duplicateStatements,
+        List<String> repeatedStatements,
+        Throwable exception
+    ) {
         this.actualStatement = actualStatement;
         this.normalisedStatement = normalisedStatement;
         this.duplicateStatements = duplicateStatements == null ? emptySet() : duplicateStatements;
         this.repeatedStatements = repeatedStatements == null ? emptyList() : repeatedStatements;
+        this.exception = exception;
     }
 
     @Override
@@ -184,5 +204,10 @@ final class DefaultDiagnosticsContext implements DiagnosticsContext {
     @Override
     public final List<String> repeatedStatements() {
         return Collections.unmodifiableList(repeatedStatements);
+    }
+
+    @Override
+    public final Throwable exception() {
+        return exception;
     }
 }

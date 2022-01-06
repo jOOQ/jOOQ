@@ -169,38 +169,47 @@ final class DiagnosticsConnection extends DefaultConnection {
             queries = parser.parse(sql);
             normalised = normalisingRenderer.render(queries);
         }
-        catch (ParserException ignore) {
+        catch (ParserException exception) {
             normalised = sql;
+            listeners.exception(new DefaultDiagnosticsContext(sql, exception));
         }
 
-        Set<String> duplicates;
-        synchronized (DUPLICATE_SQL) {
-            duplicates = duplicates(DUPLICATE_SQL, sql, normalised);
+        try {
+            Set<String> duplicates = null;
+            synchronized (DUPLICATE_SQL) {
+                duplicates = duplicates(DUPLICATE_SQL, sql, normalised);
+            }
+
+            if (duplicates != null)
+                listeners.duplicateStatements(new DefaultDiagnosticsContext(sql, normalised, duplicates, null, null));
+
+            List<String> repetitions = repetitions(repeatedSQL, sql, normalised);
+
+            if (repetitions != null)
+                listeners.repeatedStatements(new DefaultDiagnosticsContext(sql, normalised, null, repetitions, null));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
-
-        if (duplicates != null)
-            listeners.duplicateStatements(new DefaultDiagnosticsContext(sql, normalised, duplicates, null));
-
-        List<String> repetitions = repetitions(repeatedSQL, sql, normalised);
-
-        if (repetitions != null)
-            listeners.repeatedStatements(new DefaultDiagnosticsContext(sql, normalised, null, repetitions));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        catch (Error e) {
+            throw e;
+        }
+        catch (Throwable exception) {
+            listeners.exception(new DefaultDiagnosticsContext(sql, normalised, null, null, exception));
+        }
 
         return sql;
     }

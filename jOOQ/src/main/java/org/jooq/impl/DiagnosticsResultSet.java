@@ -580,7 +580,7 @@ final class DiagnosticsResultSet extends DefaultResultSet {
     @Override
     public final boolean wasNull() throws SQLException {
         if (!wasPrimitive) {
-            DefaultDiagnosticsContext ctx = ctx();
+            DefaultDiagnosticsContext ctx = ctx("ResultSet::wasNull was called unnecessarily.");
             ctx.resultSetUnnecessaryWasNullCall = true;
             ctx.resultSetColumnIndex = wasColumnIndex;
             connection.listeners.unnecessaryWasNullCall(ctx);
@@ -610,7 +610,7 @@ final class DiagnosticsResultSet extends DefaultResultSet {
 
     private final void checkPrimitive() throws SQLException {
         if (wasPrimitive && wasNullable) {
-            DefaultDiagnosticsContext ctx = ctx();
+            DefaultDiagnosticsContext ctx = ctx("ResultSet::wasNull was not called.");
             ctx.resultSetMissingWasNullCall = true;
             ctx.resultSetColumnIndex = wasColumnIndex;
             connection.listeners.missingWasNullCall(ctx);
@@ -628,8 +628,8 @@ final class DiagnosticsResultSet extends DefaultResultSet {
         read(super.findColumn(columnLabel));
     }
 
-    private final DefaultDiagnosticsContext ctx() throws SQLException {
-        DefaultDiagnosticsContext ctx = new DefaultDiagnosticsContext(sql);
+    private final DefaultDiagnosticsContext ctx(String message) throws SQLException {
+        DefaultDiagnosticsContext ctx = new DefaultDiagnosticsContext(message, sql);
 
         ctx.resultSet = super.getDelegate();
         ctx.resultSetWrapper = this;
@@ -745,14 +745,17 @@ final class DiagnosticsResultSet extends DefaultResultSet {
             if (current < rows)
                 super.absolute(current = rows);
 
-            DefaultDiagnosticsContext ctx = ctx();
-            ctx.resultSetClosing = true;
+            DefaultDiagnosticsContext c1 = ctx("Too many rows fetched");
+            c1.resultSetClosing = true;
 
             if (super.next())
-                connection.listeners.tooManyRowsFetched(ctx);
+                connection.listeners.tooManyRowsFetched(c1);
+
+            DefaultDiagnosticsContext c2 = ctx("Too many columns fetched");
+            c2.resultSetClosing = true;
 
             if (read.cardinality() != columns)
-                connection.listeners.tooManyColumnsFetched(ctx);
+                connection.listeners.tooManyColumnsFetched(c2);
         }
         catch (SQLException ignore) {}
 

@@ -171,7 +171,9 @@ final class DiagnosticsConnection extends DefaultConnection {
         }
         catch (ParserException exception) {
             normalised = sql;
-            listeners.exception(new DefaultDiagnosticsContext(sql, exception));
+            listeners.exception(new DefaultDiagnosticsContext(
+                "Query could not be parsed.", sql, exception
+            ));
         }
 
         try {
@@ -181,12 +183,20 @@ final class DiagnosticsConnection extends DefaultConnection {
             }
 
             if (duplicates != null)
-                listeners.duplicateStatements(new DefaultDiagnosticsContext(sql, normalised, duplicates, null, null));
+                listeners.duplicateStatements(new DefaultDiagnosticsContext(
+                    "Duplicate statements encountered.",
+                    sql, normalised, duplicates, null, queries, null
+                ));
 
             List<String> repetitions = repetitions(repeatedSQL, sql, normalised);
-
             if (repetitions != null)
-                listeners.repeatedStatements(new DefaultDiagnosticsContext(sql, normalised, null, repetitions, null));
+                listeners.repeatedStatements(new DefaultDiagnosticsContext(
+                    "Repeated statements encountered.",
+                    sql, normalised, null, repetitions, queries, null
+                ));
+
+
+
 
 
 
@@ -208,7 +218,10 @@ final class DiagnosticsConnection extends DefaultConnection {
             throw e;
         }
         catch (Throwable exception) {
-            listeners.exception(new DefaultDiagnosticsContext(sql, normalised, null, null, exception));
+            listeners.exception(new DefaultDiagnosticsContext(
+                "An unexpected exception has occurred. See exception for details.",
+                sql, normalised, null, null, queries, exception
+            ));
         }
 
         return sql;

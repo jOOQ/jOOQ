@@ -53,6 +53,18 @@ import org.jetbrains.annotations.Nullable;
 public interface DiagnosticsContext {
 
     /**
+     * The object that was diagnosed if available, or <code>null</code>, if there was no specific {@link QueryPart} to attach the diagnostic to.
+     */
+    @Nullable
+    QueryPart part();
+
+    /**
+     * A message describing the diagnostics and the object in question.
+     */
+    @NotNull
+    String message();
+
+    /**
      * The {@link ResultSet} available in this context, or <code>null</code>, if
      * there was no result set.
      */

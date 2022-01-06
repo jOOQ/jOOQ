@@ -51,6 +51,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.jooq.DiagnosticsContext;
+import org.jooq.QueryPart;
 import org.jooq.tools.JooqLogger;
 
 /**
@@ -60,6 +61,8 @@ final class DefaultDiagnosticsContext implements DiagnosticsContext {
 
     private static final JooqLogger log = JooqLogger.getLogger(DefaultDiagnosticsContext.class);
 
+    final QueryPart                 part;
+    final String                    message;
     ResultSet                       resultSet;
     DiagnosticsResultSet            resultSetWrapper;
     boolean                         resultSetClosing;
@@ -76,32 +79,48 @@ final class DefaultDiagnosticsContext implements DiagnosticsContext {
     int                             resultSetColumnIndex;
     final Throwable                 exception;
 
-    DefaultDiagnosticsContext(String actualStatement) {
-        this(actualStatement, null);
+    DefaultDiagnosticsContext(String message, String actualStatement) {
+        this(message, actualStatement, null);
     }
 
-    DefaultDiagnosticsContext(String actualStatement, Throwable exception) {
+    DefaultDiagnosticsContext(String message, String actualStatement, Throwable exception) {
         this(
+            message,
             actualStatement,
             actualStatement,
             singleton(actualStatement),
             singletonList(actualStatement),
+            null,
             exception
         );
     }
 
     DefaultDiagnosticsContext(
+        String message,
         String actualStatement,
         String normalisedStatement,
         Set<String> duplicateStatements,
         List<String> repeatedStatements,
+        QueryPart part,
         Throwable exception
     ) {
+        this.message = message;
         this.actualStatement = actualStatement;
         this.normalisedStatement = normalisedStatement;
         this.duplicateStatements = duplicateStatements == null ? emptySet() : duplicateStatements;
         this.repeatedStatements = repeatedStatements == null ? emptyList() : repeatedStatements;
+        this.part = part;
         this.exception = exception;
+    }
+
+    @Override
+    public final QueryPart part() {
+        return part;
+    }
+
+    @Override
+    public final String message() {
+        return message;
     }
 
     @Override

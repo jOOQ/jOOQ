@@ -356,7 +356,6 @@ import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.trunc;
 import static org.jooq.impl.DSL.unique;
 import static org.jooq.impl.DSL.unnest;
-import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.user;
 import static org.jooq.impl.DSL.uuid;
 import static org.jooq.impl.DSL.values0;
@@ -4229,12 +4228,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         boolean primary = false;
         boolean identity = false;
         boolean readonly = false;
-
-        // Three valued boolean:
-        // null: Possibly CTAS
-        // true: Definitely CTAS
-        // false: Definitely not CTAS
-        Boolean ctas = null;
+        boolean ctas = false;
 
         if (parseIf('(')) {
 
@@ -4303,14 +4297,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     throw expected("CHECK", "CONSTRAINT", "FOREIGN KEY", "INDEX", "KEY", "PRIMARY KEY", "UNIQUE");
 
                 Name fieldName = parseIdentifier();
-
-                if (ctas == null)
-                    ctas = peek(',') || peek(')');
+                boolean skipType = peek(',') || peek(')');
 
                 // If only we had multiple return values or destructuring...
                 ParseInlineConstraints inlineConstraints = parseInlineConstraints(
                     fieldName,
-                    !TRUE.equals(ctas) ? parseDataType() : SQLDataType.OTHER,
+                    !skipType ? parseDataType() : SQLDataType.OTHER,
                     constraints,
                     primary,
                     identity,
@@ -4320,10 +4312,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 primary = inlineConstraints.primary;
                 identity = inlineConstraints.identity;
 
-                if (ctas)
-                    fields.add(field(fieldName));
-                else
-                    fields.add(field(fieldName, inlineConstraints.type, inlineConstraints.fieldComment));
+                fields.add(field(fieldName, inlineConstraints.type, inlineConstraints.fieldComment));
             }
             while (parseIf(','));
 
@@ -4346,8 +4335,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (!fields.isEmpty())
             columnStep = columnStep.columns(fields);
 
-        if (TRUE.equals(ctas) && parseKeyword("AS") ||
-           !FALSE.equals(ctas) && parseKeywordIf("AS")) {
+        if (ctas && parseKeyword("AS") ||
+           !ctas && parseKeywordIf("AS")) {
             boolean previousMetaLookupsForceIgnore = metaLookupsForceIgnore();
             CreateTableWithDataStep withDataStep = columnStep.as((Select<Record>) metaLookupsForceIgnore(false).parseQuery(true, true));
             metaLookupsForceIgnore(previousMetaLookupsForceIgnore);
@@ -5271,7 +5260,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         // a new parseXXX() method.
 
         Name fieldName = parseIdentifier();
-        DataType type = parseDataType();
+        DataType type = parseDataTypeIf(true);
+        if (type == null)
+            type = SQLDataType.OTHER;
+
         int p = list == null ? -1 : list.size();
 
         ParseInlineConstraints inline = parseInlineConstraints(fieldName, type, list, false, false, false);
@@ -11800,7 +11792,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final DataType<?> parseDataType() {
-        return parseDataTypeIf(true);
+        DataType<?> result = parseDataTypeIf(true);
+
+        if (result == null)
+            throw expected("Data type");
+
+        return result;
     }
 
     private final DataType<?> parseDataTypeIf(boolean parseUnknownTypes) {
@@ -12086,8 +12083,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
         }
 
-        if (parseUnknownTypes)
-            return new DefaultDataType(dsl.dialect(), Object.class, parseName());
+        Name name;
+        if (parseUnknownTypes && (name = parseNameIf()) != null)
+            return new DefaultDataType(dsl.dialect(), Object.class, name);
         else
             return null;
     }

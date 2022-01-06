@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.conf.ParamType.FORCE_INDEXED;
 
 import java.sql.CallableStatement;
@@ -55,8 +56,9 @@ import java.util.Set;
 import org.jooq.Configuration;
 import org.jooq.Parser;
 import org.jooq.Queries;
+import org.jooq.QueryPart;
 import org.jooq.RenderContext;
-import org.jooq.conf.SettingsTools;
+import org.jooq.impl.QOM.Eq;
 import org.jooq.tools.jdbc.DefaultConnection;
 
 /**
@@ -160,7 +162,7 @@ final class DiagnosticsConnection extends DefaultConnection {
     }
 
     final String parse(String sql) {
-        Queries queries;
+        Queries queries = null;
         String normalised;
 
         try {
@@ -183,6 +185,22 @@ final class DiagnosticsConnection extends DefaultConnection {
 
         if (repetitions != null)
             listeners.repeatedStatements(new DefaultDiagnosticsContext(sql, normalised, null, repetitions));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         return sql;
     }

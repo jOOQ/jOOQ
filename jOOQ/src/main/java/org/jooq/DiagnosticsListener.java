@@ -41,6 +41,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.jooq.impl.DSL;
+
 /**
  * A diagnostics listener.
  *
@@ -174,5 +176,31 @@ public interface DiagnosticsListener {
      * {@link Connection#close()} is called.
      */
     void repeatedStatements(DiagnosticsContext ctx);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

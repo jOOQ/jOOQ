@@ -41,7 +41,7 @@ import static java.util.Comparator.naturalOrder;
 import static org.jooq.FilePattern.Sort.SEMANTIC;
 
 import java.io.File;
-import java.net.URISyntaxException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -224,8 +224,14 @@ public final class FilePattern {
             if (url != null) {
                 log.info("Reading from classpath: " + pattern);
 
-                load0(new File(url.toURI()), loader);
-                loaded = true;
+                // [#11637] Avoid working with File to support classpath resources
+                //          inside of nested jar files.
+                try (InputStream is = FilePattern.class.getResourceAsStream(pattern)) {
+
+                    // Cannot accept a Source based on an InputStream if using FilePattern::collect
+                    loader.accept(Source.of(Source.of(is).readString()));
+                    loaded = true;
+                }
             }
             else {
                 file = new File(pattern);
@@ -252,11 +258,6 @@ public final class FilePattern {
                     loaded = true;
                 }
             }
-        }
-
-        // It is quite unlikely that a classpath URL doesn't produce a valid URI
-        catch (URISyntaxException e) {
-            throw new RuntimeException(e);
         }
         catch (java.io.IOException e) {
             throw new IOException("Error while loading pattern", e);

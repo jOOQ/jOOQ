@@ -11843,7 +11843,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseKeywordOrIdentifierIf("BIGSERIAL"))
                     return SQLDataType.BIGINT.identity(true);
                 else if (parseKeywordOrIdentifierIf("BINARY"))
-                    return parseDataTypeLength(SQLDataType.BINARY);
+                    if (parseKeywordIf("VARYING"))
+                        return parseDataTypeLength(SQLDataType.VARBINARY);
+                    else
+                        return parseDataTypeLength(SQLDataType.BINARY);
                 else if (parseKeywordOrIdentifierIf("BIT"))
                     return parseDataTypeLength(SQLDataType.BIT);
                 else if (parseKeywordOrIdentifierIf("BLOB"))
@@ -11865,11 +11868,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'C':
-                if (parseKeywordOrIdentifierIf("CHARACTER VARYING"))
-                    return parseDataTypeCollation(parseDataTypeLength(SQLDataType.VARCHAR));
-                else if (parseKeywordOrIdentifierIf("CHAR") ||
-                         parseKeywordOrIdentifierIf("CHARACTER"))
-                    return parseDataTypeCollation(parseDataTypeLength(SQLDataType.CHAR));
+                if (parseKeywordOrIdentifierIf("CHAR") ||
+                    parseKeywordOrIdentifierIf("CHARACTER"))
+                    if (parseKeywordIf("VARYING"))
+                        return parseDataTypeCollation(parseDataTypeLength(SQLDataType.VARCHAR));
+                    else if (parseKeywordIf("LARGE OBJECT"))
+                        return parseDataTypeCollation(parseDataTypeLength(SQLDataType.CLOB));
+                    else
+                        return parseDataTypeCollation(parseDataTypeLength(SQLDataType.CHAR));
+
                 // [#5934] [#10291] TODO: support as actual data type as well
                 else if (parseKeywordOrIdentifierIf("CITEXT"))
                     return parseDataTypeCollation(parseAndIgnoreDataTypeLength(SQLDataType.CLOB));
@@ -11883,7 +11890,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return SQLDataType.DATE;
                 else if (parseKeywordOrIdentifierIf("DATETIME"))
                     return parseDataTypePrecisionIf(SQLDataType.TIMESTAMP);
-                else if (parseKeywordOrIdentifierIf("DECIMAL"))
+                else if (parseKeywordOrIdentifierIf("DECIMAL") ||
+                         parseKeywordOrIdentifierIf("DEC"))
                     return parseDataTypePrecisionScaleIf(SQLDataType.DECIMAL);
                 else if (parseKeywordOrIdentifierIf("DOUBLE PRECISION") ||
                          parseKeywordOrIdentifierIf("DOUBLE"))
@@ -11984,10 +11992,23 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'N':
-                if (parseKeywordOrIdentifierIf("NCHAR"))
-                    return parseDataTypeCollation(parseDataTypeLength(SQLDataType.NCHAR));
+                if (parseKeywordIf("NATIONAL CHARACTER") ||
+                    parseKeywordIf("NATIONAL CHAR"))
+                    if (parseKeywordIf("VARYING"))
+                        return parseDataTypeCollation(parseDataTypeLength(SQLDataType.NVARCHAR));
+                    else if (parseKeywordIf("LARGE OBJECT"))
+                        return parseDataTypeCollation(parseDataTypeLength(SQLDataType.NCLOB));
+                    else
+                        return parseDataTypeCollation(parseDataTypeLength(SQLDataType.NCHAR));
+                else if (parseKeywordOrIdentifierIf("NCHAR"))
+                    if (parseKeywordIf("VARYING"))
+                        return parseDataTypeCollation(parseDataTypeLength(SQLDataType.NVARCHAR));
+                    else if (parseKeywordIf("LARGE OBJECT"))
+                        return parseDataTypeCollation(parseDataTypeLength(SQLDataType.NCLOB));
+                    else
+                        return parseDataTypeCollation(parseDataTypeLength(SQLDataType.NCHAR));
                 else if (parseKeywordOrIdentifierIf("NCLOB"))
-                    return parseDataTypeCollation(SQLDataType.NCLOB);
+                    return parseDataTypeCollation(parseDataTypeLength(SQLDataType.NCLOB));
                 else if (parseKeywordOrIdentifierIf("NUMBER") ||
                          parseKeywordOrIdentifierIf("NUMERIC"))
                     return parseDataTypePrecisionScaleIf(SQLDataType.NUMERIC);

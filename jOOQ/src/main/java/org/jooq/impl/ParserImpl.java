@@ -1749,7 +1749,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         DeleteUsingStep<?> s1 = with == null ? dsl.delete(table) : with.delete(table);
         DeleteWhereStep<?> s2 = parseKeywordIf("USING", "FROM") ? s1.using(parseList(',', t -> parseTable(() -> peekKeyword(KEYWORDS_IN_DELETE_FROM)))) : s1;
-        DeleteOrderByStep<?> s3 = parseKeywordIf("WHERE") ? s2.where(parseCondition()) : s2;
+        DeleteOrderByStep<?> s3 = parseKeywordIf("ALL")
+            ? s2
+            : parseKeywordIf("WHERE")
+            ? s2.where(parseCondition())
+            : s2;
         DeleteLimitStep<?> s4 = parseKeywordIf("ORDER BY") ? s3.orderBy(parseList(',', ParseContext::parseSortField)) : s3;
         DeleteReturningStep<?> s5 = (limit != null || parseKeywordIf("LIMIT"))
             ? s4.limit(limit != null ? limit : requireParam(parseParenthesisedUnsignedIntegerOrBindVariable()))
@@ -1961,7 +1965,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             : parseKeywordIf("FROM")
             ? s2.from(parseList(',', t -> parseTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM))))
             : s2;
-        UpdateOrderByStep<?> s4 = parseKeywordIf("WHERE") ? s3.where(parseCondition()) : s3;
+        UpdateOrderByStep<?> s4 = parseKeywordIf("ALL")
+            ? s3
+            : parseKeywordIf("WHERE")
+            ? s3.where(parseCondition())
+            : s3;
         UpdateLimitStep<?> s5 = parseKeywordIf("ORDER BY") ? s4.orderBy(parseList(',', ParseContext::parseSortField)) : s4;
         UpdateReturningStep<?> s6 = (limit != null || parseKeywordIf("LIMIT"))
             ? s5.limit(limit != null ? limit : requireParam(parseParenthesisedUnsignedIntegerOrBindVariable()))
@@ -13327,7 +13335,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     static {
         Set<String> set = new TreeSet<>(asList(KEYWORDS_IN_FROM));
-        set.addAll(asList("FROM", "USING", "WHERE", "ORDER BY", "LIMIT", "RETURNING"));
+        set.addAll(asList("FROM", "USING", "ALL", "WHERE", "ORDER BY", "LIMIT", "RETURNING"));
         set.addAll(asList(KEYWORDS_IN_STATEMENTS));
         KEYWORDS_IN_DELETE_FROM = set.toArray(EMPTY_STRING);
     };

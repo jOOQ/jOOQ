@@ -114,7 +114,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         this.mapper = ((FieldsImpl<R>) table.recordType()).mapper(this.configuration = Tools.configuration(configuration), type);
     }
 
-    public final DSLContext ctx() {
+    public /* non-final */ DSLContext ctx() {
         return configuration().dsl();
     }
 

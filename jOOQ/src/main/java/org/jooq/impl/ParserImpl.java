@@ -7749,6 +7749,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         }
 
+        if (parseIf('~'))
+            return toField(parseUnaryOps()).bitNot();
+
         FieldOrRow r;
         Sign sign = parseSign();
 

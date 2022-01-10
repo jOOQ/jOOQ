@@ -118,11 +118,15 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNotNot = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsNotTruthValue = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsNotComparison = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsNotNotDistinct = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNegNeg = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsBitNotBitNot = true;
-    @XmlElement(defaultValue = "true")
-    protected Boolean transformPatternsNotNotDistinct = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsIdempotentFunctionRepetition = true;
     @XmlElement(defaultValue = "false")
@@ -1153,7 +1157,7 @@ public class Settings
     }
 
     /**
-     * Transform <code>LTRIM(RTRIM(x))</code> or <code>RTRIM(LTRIM(x))</code> to <code>TRIM(x)</code>
+     * Transform <code>LTRIM(RTRIM(x))</code> or <code>RTRIM(LTRIM(x))</code> to <code>TRIM(x)</code>.
      * <p>
      * Historically, a few dialects did not implement <code>TRIM(x)</code> or <code>TRIM(BOTH FROM x)</code>,
      * so users worked around this by wrapping <code>LTRIM()</code> and <code>RTRIM()</code> with each other.
@@ -1185,7 +1189,7 @@ public class Settings
     }
 
     /**
-     * Transform <code>NOT(NOT(x))</code> to <code>x</code>
+     * Transform <code>NOT(NOT(x))</code> to <code>x</code>.
      * <p>
      * This transformation removes a redundant logic negation.
      * <p>
@@ -1212,6 +1216,92 @@ public class Settings
      */
     public void setTransformPatternsNotNot(Boolean value) {
         this.transformPatternsNotNot = value;
+    }
+
+    /**
+     * Transform <code>NOT(TRUE)</code> to <code>FALSE</code> and <code>NOT(FALSE)</code> to <code>TRUE</code>.
+     * <p>
+     * This transformation removes a redundant logic negation of truth values.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsNotTruthValue() {
+        return transformPatternsNotTruthValue;
+    }
+
+    /**
+     * Sets the value of the transformPatternsNotTruthValue property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsNotTruthValue(Boolean value) {
+        this.transformPatternsNotTruthValue = value;
+    }
+
+    /**
+     * Transform <code>NOT (a != b)</code> to <code>a = b/code>, and similar comparisons.
+     * <p>
+     * This transformation removes a redundant logical negation from the <code>DISTINCT</code> predicate.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsNotComparison() {
+        return transformPatternsNotComparison;
+    }
+
+    /**
+     * Sets the value of the transformPatternsNotComparison property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsNotComparison(Boolean value) {
+        this.transformPatternsNotComparison = value;
+    }
+
+    /**
+     * Transform <code>NOT (a IS NOT DISTINCT FROM b)</code> to <code>a IS DISTINCT FROM b</code>.
+     * <p>
+     * This transformation removes a redundant logical negation from the <code>DISTINCT</code> predicate.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsNotNotDistinct() {
+        return transformPatternsNotNotDistinct;
+    }
+
+    /**
+     * Sets the value of the transformPatternsNotNotDistinct property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsNotNotDistinct(Boolean value) {
+        this.transformPatternsNotNotDistinct = value;
     }
 
     /**
@@ -1275,35 +1365,7 @@ public class Settings
     }
 
     /**
-     * Transform <code>NOT (a IS NOT DISTINCT FROM b)</code> to <code>a IS DISTINCT FROM b</code>
-     * <p>
-     * This transformation removes a redundant logical negation from the <code>DISTINCT</code> predicate.
-     * <p>
-     * This feature is available in the commercial distribution only.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public Boolean isTransformPatternsNotNotDistinct() {
-        return transformPatternsNotNotDistinct;
-    }
-
-    /**
-     * Sets the value of the transformPatternsNotNotDistinct property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setTransformPatternsNotNotDistinct(Boolean value) {
-        this.transformPatternsNotNotDistinct = value;
-    }
-
-    /**
-     * Transform all repetitions of idempotent functions, such as <code>UPPER(UPPER(s))</code> to <code>UPPER(s)</code>
+     * Transform all repetitions of idempotent functions, such as <code>UPPER(UPPER(s))</code> to <code>UPPER(s)</code>.
      * <p>
      * Idempotent functions that are covered so far, include:
      * <ul>
@@ -3591,6 +3653,21 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsNotTruthValue(Boolean value) {
+        setTransformPatternsNotTruthValue(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsNotComparison(Boolean value) {
+        setTransformPatternsNotComparison(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsNotNotDistinct(Boolean value) {
+        setTransformPatternsNotNotDistinct(value);
+        return this;
+    }
+
     public Settings withTransformPatternsNegNeg(Boolean value) {
         setTransformPatternsNegNeg(value);
         return this;
@@ -3598,11 +3675,6 @@ public class Settings
 
     public Settings withTransformPatternsBitNotBitNot(Boolean value) {
         setTransformPatternsBitNotBitNot(value);
-        return this;
-    }
-
-    public Settings withTransformPatternsNotNotDistinct(Boolean value) {
-        setTransformPatternsNotNotDistinct(value);
         return this;
     }
 
@@ -4437,9 +4509,11 @@ public class Settings
         builder.append("transformPatterns", transformPatterns);
         builder.append("transformPatternsTrim", transformPatternsTrim);
         builder.append("transformPatternsNotNot", transformPatternsNotNot);
+        builder.append("transformPatternsNotTruthValue", transformPatternsNotTruthValue);
+        builder.append("transformPatternsNotComparison", transformPatternsNotComparison);
+        builder.append("transformPatternsNotNotDistinct", transformPatternsNotNotDistinct);
         builder.append("transformPatternsNegNeg", transformPatternsNegNeg);
         builder.append("transformPatternsBitNotBitNot", transformPatternsBitNotBitNot);
-        builder.append("transformPatternsNotNotDistinct", transformPatternsNotNotDistinct);
         builder.append("transformPatternsIdempotentFunctionRepetition", transformPatternsIdempotentFunctionRepetition);
         builder.append("transformAnsiJoinToTableLists", transformAnsiJoinToTableLists);
         builder.append("transformInConditionSubqueryWithLimitToDerivedTable", transformInConditionSubqueryWithLimitToDerivedTable);
@@ -4863,6 +4937,33 @@ public class Settings
                 return false;
             }
         }
+        if (transformPatternsNotTruthValue == null) {
+            if (other.transformPatternsNotTruthValue!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsNotTruthValue.equals(other.transformPatternsNotTruthValue)) {
+                return false;
+            }
+        }
+        if (transformPatternsNotComparison == null) {
+            if (other.transformPatternsNotComparison!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsNotComparison.equals(other.transformPatternsNotComparison)) {
+                return false;
+            }
+        }
+        if (transformPatternsNotNotDistinct == null) {
+            if (other.transformPatternsNotNotDistinct!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsNotNotDistinct.equals(other.transformPatternsNotNotDistinct)) {
+                return false;
+            }
+        }
         if (transformPatternsNegNeg == null) {
             if (other.transformPatternsNegNeg!= null) {
                 return false;
@@ -4878,15 +4979,6 @@ public class Settings
             }
         } else {
             if (!transformPatternsBitNotBitNot.equals(other.transformPatternsBitNotBitNot)) {
-                return false;
-            }
-        }
-        if (transformPatternsNotNotDistinct == null) {
-            if (other.transformPatternsNotNotDistinct!= null) {
-                return false;
-            }
-        } else {
-            if (!transformPatternsNotNotDistinct.equals(other.transformPatternsNotNotDistinct)) {
                 return false;
             }
         }
@@ -5795,9 +5887,11 @@ public class Settings
         result = ((prime*result)+((transformPatterns == null)? 0 :transformPatterns.hashCode()));
         result = ((prime*result)+((transformPatternsTrim == null)? 0 :transformPatternsTrim.hashCode()));
         result = ((prime*result)+((transformPatternsNotNot == null)? 0 :transformPatternsNotNot.hashCode()));
+        result = ((prime*result)+((transformPatternsNotTruthValue == null)? 0 :transformPatternsNotTruthValue.hashCode()));
+        result = ((prime*result)+((transformPatternsNotComparison == null)? 0 :transformPatternsNotComparison.hashCode()));
+        result = ((prime*result)+((transformPatternsNotNotDistinct == null)? 0 :transformPatternsNotNotDistinct.hashCode()));
         result = ((prime*result)+((transformPatternsNegNeg == null)? 0 :transformPatternsNegNeg.hashCode()));
         result = ((prime*result)+((transformPatternsBitNotBitNot == null)? 0 :transformPatternsBitNotBitNot.hashCode()));
-        result = ((prime*result)+((transformPatternsNotNotDistinct == null)? 0 :transformPatternsNotNotDistinct.hashCode()));
         result = ((prime*result)+((transformPatternsIdempotentFunctionRepetition == null)? 0 :transformPatternsIdempotentFunctionRepetition.hashCode()));
         result = ((prime*result)+((transformAnsiJoinToTableLists == null)? 0 :transformAnsiJoinToTableLists.hashCode()));
         result = ((prime*result)+((transformInConditionSubqueryWithLimitToDerivedTable == null)? 0 :transformInConditionSubqueryWithLimitToDerivedTable.hashCode()));

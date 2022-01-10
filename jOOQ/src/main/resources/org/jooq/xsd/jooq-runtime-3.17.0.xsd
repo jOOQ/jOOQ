@@ -295,9 +295,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       <element name="transformPatternsNotNot" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>NOT(NOT(x))</code> to <code>x</code>
 <p>
-For various reasons, there may be a redundant nesting of <code>NOT</code> unary operators, e.g. as a
-left over of some prior transformation, including manual ones. This transformation will simplify such
-redundant negations by removing them.
+This transformation removes a redundant logic negation.
 <p>
 To enable this feature, {@link #transformPatterns} must be enabled as well.
 <p>
@@ -307,9 +305,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       <element name="transformPatternsNegNeg" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>-(-(x))</code> to <code>x</code>
 <p>
-For various reasons, there may be a redundant nesting of <code>-</code> unary operators, e.g. as a
-left over of some prior transformation, including manual ones. This transformation will simplify such
-redundant negations by removing them.
+This transformation removes a redundant arithmetic negation.
 <p>
 To enable this feature, {@link #transformPatterns} must be enabled as well.
 <p>
@@ -317,13 +313,37 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       </element>
       
       <element name="transformPatternsBitNotBitNot" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>~(~(x))</code> to <code>x</code>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>~(~(x))</code> to <code>x</code>.
 <p>
-For various reasons, there may be a redundant nesting of <code>~</code> unary operators, e.g. as a
-left over of some prior transformation, including manual ones. This transformation will simplify such
-redundant negations by removing them.
+This transformation removes a redundant bitwise negation.
 <p>
 To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformPatternsNotNotDistinct" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>NOT (a IS NOT DISTINCT FROM b)</code> to <code>a IS DISTINCT FROM b</code>
+<p>
+This transformation removes a redundant logical negation from the <code>DISTINCT</code> predicate.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformPatternsIdempotentFunctionRepetition" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform all repetitions of idempotent functions, such as <code>UPPER(UPPER(s))</code> to <code>UPPER(s)</code>
+<p>
+Idempotent functions that are covered so far, include:
+<ul>
+<li><code>LTRIM(LTRIM(s))</code> to <code>LTRIM(s)</code></li>
+<li><code>LTRIM(TRIM(s))</code> to <code>TRIM(s)</code></li>
+<li><code>RTRIM(RTRIM(s))</code> to <code>RTRIM(s)</code></li>
+<li><code>RTRIM(TRIM(s))</code> to <code>TRIM(s)</code></li>
+<li><code>TRIM(LTRIM(s))</code> to <code>TRIM(s)</code></li>
+<li><code>TRIM(RTRIM(s))</code> to <code>TRIM(s)</code></li>
+<li><code>UPPER(UPPER(s))</code> to <code>UPPER(s)</code></li>
+<li><code>LOWER(LOWER(s))</code> to <code>LOWER(s)</code></li>
+</ul>
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

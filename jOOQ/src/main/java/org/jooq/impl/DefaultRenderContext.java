@@ -84,10 +84,13 @@ import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.QOM.BitNot;
+import org.jooq.impl.QOM.IsNotDistinctFrom;
 import org.jooq.impl.QOM.Ltrim;
 import org.jooq.impl.QOM.Neg;
 import org.jooq.impl.QOM.Not;
 import org.jooq.impl.QOM.Rtrim;
+import org.jooq.impl.QOM.Trim;
+import org.jooq.impl.QOM.Upper;
 import org.jooq.impl.ScopeMarker.ScopeContent;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -713,10 +716,11 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         if (isQuery == null) {
             isQuery = internal instanceof Query;
 
+            if (TRUE.equals(settings().isTransformPatterns()) && configuration().requireCommercial(() -> "SQL transformations are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.")) {
 
 
 
-
+            }
         }
 
 
@@ -792,6 +796,77 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

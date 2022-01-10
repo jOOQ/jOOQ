@@ -121,6 +121,10 @@ public class Settings
     protected Boolean transformPatternsNegNeg = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsBitNotBitNot = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsNotNotDistinct = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsIdempotentFunctionRepetition = true;
     @XmlElement(defaultValue = "false")
     protected Boolean transformAnsiJoinToTableLists = false;
     @XmlElement(defaultValue = "WHEN_NEEDED")
@@ -1183,9 +1187,7 @@ public class Settings
     /**
      * Transform <code>NOT(NOT(x))</code> to <code>x</code>
      * <p>
-     * For various reasons, there may be a redundant nesting of <code>NOT</code> unary operators, e.g. as a
-     * left over of some prior transformation, including manual ones. This transformation will simplify such
-     * redundant negations by removing them.
+     * This transformation removes a redundant logic negation.
      * <p>
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
@@ -1215,9 +1217,7 @@ public class Settings
     /**
      * Transform <code>-(-(x))</code> to <code>x</code>
      * <p>
-     * For various reasons, there may be a redundant nesting of <code>-</code> unary operators, e.g. as a
-     * left over of some prior transformation, including manual ones. This transformation will simplify such
-     * redundant negations by removing them.
+     * This transformation removes a redundant arithmetic negation.
      * <p>
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
@@ -1245,11 +1245,9 @@ public class Settings
     }
 
     /**
-     * Transform <code>~(~(x))</code> to <code>x</code>
+     * Transform <code>~(~(x))</code> to <code>x</code>.
      * <p>
-     * For various reasons, there may be a redundant nesting of <code>~</code> unary operators, e.g. as a
-     * left over of some prior transformation, including manual ones. This transformation will simplify such
-     * redundant negations by removing them.
+     * This transformation removes a redundant bitwise negation.
      * <p>
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
@@ -1274,6 +1272,72 @@ public class Settings
      */
     public void setTransformPatternsBitNotBitNot(Boolean value) {
         this.transformPatternsBitNotBitNot = value;
+    }
+
+    /**
+     * Transform <code>NOT (a IS NOT DISTINCT FROM b)</code> to <code>a IS DISTINCT FROM b</code>
+     * <p>
+     * This transformation removes a redundant logical negation from the <code>DISTINCT</code> predicate.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsNotNotDistinct() {
+        return transformPatternsNotNotDistinct;
+    }
+
+    /**
+     * Sets the value of the transformPatternsNotNotDistinct property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsNotNotDistinct(Boolean value) {
+        this.transformPatternsNotNotDistinct = value;
+    }
+
+    /**
+     * Transform all repetitions of idempotent functions, such as <code>UPPER(UPPER(s))</code> to <code>UPPER(s)</code>
+     * <p>
+     * Idempotent functions that are covered so far, include:
+     * <ul>
+     * <li><code>LTRIM(LTRIM(s))</code> to <code>LTRIM(s)</code></li>
+     * <li><code>LTRIM(TRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>RTRIM(RTRIM(s))</code> to <code>RTRIM(s)</code></li>
+     * <li><code>RTRIM(TRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>TRIM(LTRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>TRIM(RTRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>UPPER(UPPER(s))</code> to <code>UPPER(s)</code></li>
+     * <li><code>LOWER(LOWER(s))</code> to <code>LOWER(s)</code></li>
+     * </ul>
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsIdempotentFunctionRepetition() {
+        return transformPatternsIdempotentFunctionRepetition;
+    }
+
+    /**
+     * Sets the value of the transformPatternsIdempotentFunctionRepetition property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsIdempotentFunctionRepetition(Boolean value) {
+        this.transformPatternsIdempotentFunctionRepetition = value;
     }
 
     /**
@@ -3537,6 +3601,16 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsNotNotDistinct(Boolean value) {
+        setTransformPatternsNotNotDistinct(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsIdempotentFunctionRepetition(Boolean value) {
+        setTransformPatternsIdempotentFunctionRepetition(value);
+        return this;
+    }
+
     public Settings withTransformAnsiJoinToTableLists(Boolean value) {
         setTransformAnsiJoinToTableLists(value);
         return this;
@@ -4365,6 +4439,8 @@ public class Settings
         builder.append("transformPatternsNotNot", transformPatternsNotNot);
         builder.append("transformPatternsNegNeg", transformPatternsNegNeg);
         builder.append("transformPatternsBitNotBitNot", transformPatternsBitNotBitNot);
+        builder.append("transformPatternsNotNotDistinct", transformPatternsNotNotDistinct);
+        builder.append("transformPatternsIdempotentFunctionRepetition", transformPatternsIdempotentFunctionRepetition);
         builder.append("transformAnsiJoinToTableLists", transformAnsiJoinToTableLists);
         builder.append("transformInConditionSubqueryWithLimitToDerivedTable", transformInConditionSubqueryWithLimitToDerivedTable);
         builder.append("transformQualify", transformQualify);
@@ -4802,6 +4878,24 @@ public class Settings
             }
         } else {
             if (!transformPatternsBitNotBitNot.equals(other.transformPatternsBitNotBitNot)) {
+                return false;
+            }
+        }
+        if (transformPatternsNotNotDistinct == null) {
+            if (other.transformPatternsNotNotDistinct!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsNotNotDistinct.equals(other.transformPatternsNotNotDistinct)) {
+                return false;
+            }
+        }
+        if (transformPatternsIdempotentFunctionRepetition == null) {
+            if (other.transformPatternsIdempotentFunctionRepetition!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsIdempotentFunctionRepetition.equals(other.transformPatternsIdempotentFunctionRepetition)) {
                 return false;
             }
         }
@@ -5703,6 +5797,8 @@ public class Settings
         result = ((prime*result)+((transformPatternsNotNot == null)? 0 :transformPatternsNotNot.hashCode()));
         result = ((prime*result)+((transformPatternsNegNeg == null)? 0 :transformPatternsNegNeg.hashCode()));
         result = ((prime*result)+((transformPatternsBitNotBitNot == null)? 0 :transformPatternsBitNotBitNot.hashCode()));
+        result = ((prime*result)+((transformPatternsNotNotDistinct == null)? 0 :transformPatternsNotNotDistinct.hashCode()));
+        result = ((prime*result)+((transformPatternsIdempotentFunctionRepetition == null)? 0 :transformPatternsIdempotentFunctionRepetition.hashCode()));
         result = ((prime*result)+((transformAnsiJoinToTableLists == null)? 0 :transformAnsiJoinToTableLists.hashCode()));
         result = ((prime*result)+((transformInConditionSubqueryWithLimitToDerivedTable == null)? 0 :transformInConditionSubqueryWithLimitToDerivedTable.hashCode()));
         result = ((prime*result)+((transformQualify == null)? 0 :transformQualify.hashCode()));

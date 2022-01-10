@@ -113,7 +113,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         this.mapper = ((FieldsImpl<R>) table.recordType()).mapper(this.configuration = Tools.configuration(configuration), type);
     }
 
-    public final DSLContext ctx() {
+    public /* non-final */ DSLContext ctx() {
         return configuration().dsl();
     }
 
@@ -331,7 +331,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     @Override
-    public final Optional<P> findOptionalById(T id) {
+    public /* non-final */ Optional<P> findOptionalById(T id) {
         return Optional.ofNullable(findById(id));
     }
 

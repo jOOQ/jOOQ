@@ -4178,6 +4178,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         boolean onUpdate = false;
         boolean unique = false;
         boolean comment = false;
+        boolean compress = false;
         Comment fieldComment = null;
 
         identity |= type.identity();
@@ -4375,6 +4376,30 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     continue;
                 }
             }
+
+
+            if (!compress) {
+                if (parseKeywordIf("NO COMPRESS") && requireProEdition()) {
+
+
+
+
+                }
+                else if (parseKeywordIf("COMPRESS") && requireProEdition()) {
+
+
+
+
+
+
+
+
+
+
+
+                }
+            }
+
 
             break;
         }

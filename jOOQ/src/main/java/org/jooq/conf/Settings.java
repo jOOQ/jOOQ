@@ -112,6 +112,16 @@ public class Settings
     @XmlSchemaType(name = "string")
     protected FetchIntermediateResult fetchIntermediateResult = FetchIntermediateResult.WHEN_RESULT_REQUESTED;
     @XmlElement(defaultValue = "false")
+    protected Boolean transformPatterns = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsTrim = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsNotNot = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsNegNeg = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsBitNotBitNot = true;
+    @XmlElement(defaultValue = "false")
     protected Boolean transformAnsiJoinToTableLists = false;
     @XmlElement(defaultValue = "WHEN_NEEDED")
     @XmlSchemaType(name = "string")
@@ -1105,6 +1115,165 @@ public class Settings
      */
     public void setFetchIntermediateResult(FetchIntermediateResult value) {
         this.fetchIntermediateResult = value;
+    }
+
+    /**
+     * Transform various syntax patterns to better versions, if possible.
+     * <p>
+     * This flag enables the pattern transformation feature, which consists of several sub-flags that are
+     * all prefixed with "transformPatterns", e.g. {@link #transformPatternsTrim}. While the sub-flags default
+     * to being enabled, and can be disabled on an individual basis, the global feature itself is disabled by
+     * default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatterns() {
+        return transformPatterns;
+    }
+
+    /**
+     * Sets the value of the transformPatterns property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatterns(Boolean value) {
+        this.transformPatterns = value;
+    }
+
+    /**
+     * Transform <code>LTRIM(RTRIM(x))</code> or <code>RTRIM(LTRIM(x))</code> to <code>TRIM(x)</code>
+     * <p>
+     * Historically, a few dialects did not implement <code>TRIM(x)</code> or <code>TRIM(BOTH FROM x)</code>,
+     * so users worked around this by wrapping <code>LTRIM()</code> and <code>RTRIM()</code> with each other.
+     * Maintaining this is usually undesirable, so this transformation helps remove the unwanted wrapping.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsTrim() {
+        return transformPatternsTrim;
+    }
+
+    /**
+     * Sets the value of the transformPatternsTrim property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsTrim(Boolean value) {
+        this.transformPatternsTrim = value;
+    }
+
+    /**
+     * Transform <code>NOT(NOT(x))</code> to <code>x</code>
+     * <p>
+     * For various reasons, there may be a redundant nesting of <code>NOT</code> unary operators, e.g. as a
+     * left over of some prior transformation, including manual ones. This transformation will simplify such
+     * redundant negations by removing them.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsNotNot() {
+        return transformPatternsNotNot;
+    }
+
+    /**
+     * Sets the value of the transformPatternsNotNot property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsNotNot(Boolean value) {
+        this.transformPatternsNotNot = value;
+    }
+
+    /**
+     * Transform <code>-(-(x))</code> to <code>x</code>
+     * <p>
+     * For various reasons, there may be a redundant nesting of <code>-</code> unary operators, e.g. as a
+     * left over of some prior transformation, including manual ones. This transformation will simplify such
+     * redundant negations by removing them.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsNegNeg() {
+        return transformPatternsNegNeg;
+    }
+
+    /**
+     * Sets the value of the transformPatternsNegNeg property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsNegNeg(Boolean value) {
+        this.transformPatternsNegNeg = value;
+    }
+
+    /**
+     * Transform <code>~(~(x))</code> to <code>x</code>
+     * <p>
+     * For various reasons, there may be a redundant nesting of <code>~</code> unary operators, e.g. as a
+     * left over of some prior transformation, including manual ones. This transformation will simplify such
+     * redundant negations by removing them.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsBitNotBitNot() {
+        return transformPatternsBitNotBitNot;
+    }
+
+    /**
+     * Sets the value of the transformPatternsBitNotBitNot property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsBitNotBitNot(Boolean value) {
+        this.transformPatternsBitNotBitNot = value;
     }
 
     /**
@@ -3343,6 +3512,31 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatterns(Boolean value) {
+        setTransformPatterns(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsTrim(Boolean value) {
+        setTransformPatternsTrim(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsNotNot(Boolean value) {
+        setTransformPatternsNotNot(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsNegNeg(Boolean value) {
+        setTransformPatternsNegNeg(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsBitNotBitNot(Boolean value) {
+        setTransformPatternsBitNotBitNot(value);
+        return this;
+    }
+
     public Settings withTransformAnsiJoinToTableLists(Boolean value) {
         setTransformAnsiJoinToTableLists(value);
         return this;
@@ -4166,6 +4360,11 @@ public class Settings
         builder.append("bindOffsetTimeType", bindOffsetTimeType);
         builder.append("fetchTriggerValuesAfterSQLServerOutput", fetchTriggerValuesAfterSQLServerOutput);
         builder.append("fetchIntermediateResult", fetchIntermediateResult);
+        builder.append("transformPatterns", transformPatterns);
+        builder.append("transformPatternsTrim", transformPatternsTrim);
+        builder.append("transformPatternsNotNot", transformPatternsNotNot);
+        builder.append("transformPatternsNegNeg", transformPatternsNegNeg);
+        builder.append("transformPatternsBitNotBitNot", transformPatternsBitNotBitNot);
         builder.append("transformAnsiJoinToTableLists", transformAnsiJoinToTableLists);
         builder.append("transformInConditionSubqueryWithLimitToDerivedTable", transformInConditionSubqueryWithLimitToDerivedTable);
         builder.append("transformQualify", transformQualify);
@@ -4558,6 +4757,51 @@ public class Settings
             }
         } else {
             if (!fetchIntermediateResult.equals(other.fetchIntermediateResult)) {
+                return false;
+            }
+        }
+        if (transformPatterns == null) {
+            if (other.transformPatterns!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatterns.equals(other.transformPatterns)) {
+                return false;
+            }
+        }
+        if (transformPatternsTrim == null) {
+            if (other.transformPatternsTrim!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsTrim.equals(other.transformPatternsTrim)) {
+                return false;
+            }
+        }
+        if (transformPatternsNotNot == null) {
+            if (other.transformPatternsNotNot!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsNotNot.equals(other.transformPatternsNotNot)) {
+                return false;
+            }
+        }
+        if (transformPatternsNegNeg == null) {
+            if (other.transformPatternsNegNeg!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsNegNeg.equals(other.transformPatternsNegNeg)) {
+                return false;
+            }
+        }
+        if (transformPatternsBitNotBitNot == null) {
+            if (other.transformPatternsBitNotBitNot!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsBitNotBitNot.equals(other.transformPatternsBitNotBitNot)) {
                 return false;
             }
         }
@@ -5454,6 +5698,11 @@ public class Settings
         result = ((prime*result)+((bindOffsetTimeType == null)? 0 :bindOffsetTimeType.hashCode()));
         result = ((prime*result)+((fetchTriggerValuesAfterSQLServerOutput == null)? 0 :fetchTriggerValuesAfterSQLServerOutput.hashCode()));
         result = ((prime*result)+((fetchIntermediateResult == null)? 0 :fetchIntermediateResult.hashCode()));
+        result = ((prime*result)+((transformPatterns == null)? 0 :transformPatterns.hashCode()));
+        result = ((prime*result)+((transformPatternsTrim == null)? 0 :transformPatternsTrim.hashCode()));
+        result = ((prime*result)+((transformPatternsNotNot == null)? 0 :transformPatternsNotNot.hashCode()));
+        result = ((prime*result)+((transformPatternsNegNeg == null)? 0 :transformPatternsNegNeg.hashCode()));
+        result = ((prime*result)+((transformPatternsBitNotBitNot == null)? 0 :transformPatternsBitNotBitNot.hashCode()));
         result = ((prime*result)+((transformAnsiJoinToTableLists == null)? 0 :transformAnsiJoinToTableLists.hashCode()));
         result = ((prime*result)+((transformInConditionSubqueryWithLimitToDerivedTable == null)? 0 :transformInConditionSubqueryWithLimitToDerivedTable.hashCode()));
         result = ((prime*result)+((transformQualify == null)? 0 :transformQualify.hashCode()));

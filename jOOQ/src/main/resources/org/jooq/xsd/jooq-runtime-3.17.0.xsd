@@ -269,6 +269,65 @@ Using this flag, fetching of intermediate results can be turned off even when ex
 are present, or turned on even if they're absent.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatterns" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform various syntax patterns to better versions, if possible.
+<p>
+This flag enables the pattern transformation feature, which consists of several sub-flags that are
+all prefixed with "transformPatterns", e.g. {@link #transformPatternsTrim}. While the sub-flags default
+to being enabled, and can be disabled on an individual basis, the global feature itself is disabled by
+default.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformPatternsTrim" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>LTRIM(RTRIM(x))</code> or <code>RTRIM(LTRIM(x))</code> to <code>TRIM(x)</code>
+<p>
+Historically, a few dialects did not implement <code>TRIM(x)</code> or <code>TRIM(BOTH FROM x)</code>,
+so users worked around this by wrapping <code>LTRIM()</code> and <code>RTRIM()</code> with each other.
+Maintaining this is usually undesirable, so this transformation helps remove the unwanted wrapping.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformPatternsNotNot" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>NOT(NOT(x))</code> to <code>x</code>
+<p>
+For various reasons, there may be a redundant nesting of <code>NOT</code> unary operators, e.g. as a
+left over of some prior transformation, including manual ones. This transformation will simplify such
+redundant negations by removing them.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformPatternsNegNeg" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>-(-(x))</code> to <code>x</code>
+<p>
+For various reasons, there may be a redundant nesting of <code>-</code> unary operators, e.g. as a
+left over of some prior transformation, including manual ones. This transformation will simplify such
+redundant negations by removing them.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformPatternsBitNotBitNot" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>~(~(x))</code> to <code>x</code>
+<p>
+For various reasons, there may be a redundant nesting of <code>~</code> unary operators, e.g. as a
+left over of some prior transformation, including manual ones. This transformation will simplify such
+redundant negations by removing them.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformAnsiJoinToTableLists" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform ANSI join to table lists if possible.
 <p>

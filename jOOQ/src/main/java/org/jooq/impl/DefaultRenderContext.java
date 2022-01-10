@@ -42,6 +42,7 @@ import static java.lang.Boolean.TRUE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.renderLocale;
+import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
@@ -64,12 +65,13 @@ import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.LanguageContext;
 import org.jooq.Param;
+// ...
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -81,6 +83,11 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.QOM.BitNot;
+import org.jooq.impl.QOM.Ltrim;
+import org.jooq.impl.QOM.Neg;
+import org.jooq.impl.QOM.Not;
+import org.jooq.impl.QOM.Rtrim;
 import org.jooq.impl.ScopeMarker.ScopeContent;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -703,8 +710,14 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     protected final void visit0(QueryPartInternal internal) {
-        if (isQuery == null)
+        if (isQuery == null) {
             isQuery = internal instanceof Query;
+
+
+
+
+
+        }
 
 
 
@@ -779,6 +792,66 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void checkForceInline(int max) throws ForceInlineSignal {
         if (bindValues.size() > max)

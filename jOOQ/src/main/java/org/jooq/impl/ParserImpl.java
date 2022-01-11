@@ -7353,9 +7353,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     field = parseSelectField();
 
                     if (parseKeywordIf("AS"))
-                        alias = parseIdentifier(true);
+                        alias = parseIdentifier(true, false);
                     else if (!peekKeyword(KEYWORDS_IN_SELECT) && !peekKeyword(KEYWORDS_IN_STATEMENTS))
-                        alias = parseIdentifierIf(true);
+                        alias = parseIdentifierIf(true, false);
                 }
 
                 result.add(alias == null ? field : field.as(alias));
@@ -9281,7 +9281,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             Field<?> field = parseField();
 
             if (parseKeywordIf("AS"))
-                field = field.as(parseIdentifier(true));
+                field = field.as(parseIdentifier(true, false));
 
             result.add(field);
         }
@@ -11778,11 +11778,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final Name parseIdentifier() {
-        return parseIdentifier(false);
+        return parseIdentifier(false, false);
     }
 
-    private final Name parseIdentifier(boolean allowAposQuotes) {
-        Name result = parseIdentifierIf(allowAposQuotes);
+    private final Name parseIdentifier(boolean allowAposQuotes, boolean allowPartAsStart) {
+        Name result = parseIdentifierIf(allowAposQuotes, allowPartAsStart);
 
         if (result == null)
             throw expected("Identifier");
@@ -11792,22 +11792,29 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final Name parseIdentifierIf() {
-        return parseIdentifierIf(false);
+        return parseIdentifierIf(false, false);
     }
 
-    private final Name parseIdentifierIf(boolean allowAposQuotes) {
+    private final Name parseIdentifierIf(boolean allowAposQuotes, boolean allowPartAsStart) {
         char quoteEnd = parseQuote(allowAposQuotes);
         boolean quoted = quoteEnd != 0;
 
         int start = position();
         StringBuilder sb = new StringBuilder();
         char c;
-        if (quoted)
+        if (quoted) {
             while ((c = character()) != quoteEnd && hasMore() && positionInc() || character(position + 1) == quoteEnd && hasMore(1) && positionInc(2))
                 sb.append(c);
-        else
-            for (; isIdentifierPart() && hasMore(); positionInc())
-                sb.append(character());
+        }
+        else {
+            if (allowPartAsStart ? isIdentifierPart() : isIdentifierStart()) {
+                do {
+                    sb.append(character());
+                    positionInc();
+                }
+                while (isIdentifierPart() && hasMore());
+            }
+        }
 
         if (position() == start)
             return null;
@@ -12394,7 +12401,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 String prefix = defaultIfNull(settings().getParseNamedParamPrefix(), ":");
 
                 if (parseIf(prefix, false)) {
-                    Name identifier = parseIdentifier();
+                    Name identifier = parseIdentifier(false, true);
                     paramName = identifier.last();
 
                     // [#8821] Avoid conflicts with dollar quoted string literals
@@ -14199,6 +14206,21 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final boolean isIdentifierPart(char character) {
         return Character.isJavaIdentifierPart(character)
+           || ((character == '@'
+           ||   character == '#')
+           &&   character != delimiter.charAt(0));
+    }
+
+    private final boolean isIdentifierStart() {
+        return isIdentifierStart(character());
+    }
+
+    private final boolean isIdentifierStart(int pos) {
+        return isIdentifierStart(character(pos));
+    }
+
+    private final boolean isIdentifierStart(char character) {
+        return Character.isJavaIdentifierStart(character)
            || ((character == '@'
            ||   character == '#')
            &&   character != delimiter.charAt(0));

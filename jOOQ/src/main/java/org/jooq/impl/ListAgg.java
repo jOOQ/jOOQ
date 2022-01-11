@@ -202,13 +202,14 @@ final class ListAgg extends AbstractAggregateFunction<String> implements UNotYet
         ctx.sql('(');
 
         // The explicit cast is needed in Postgres
-        QueryPartListView<Field<?>> args =  wrap(
-            castIfNeeded((Field<?>) arguments.get(0), String.class),
-            arguments.size() > 1 ? arguments.get(1) : inline("")
-        );
-
+        QueryPartListView<Field<?>> args =  wrap(castIfNeeded((Field<?>) arguments.get(0), String.class));
         acceptArguments1(ctx, args);
-
+        
+        if (arguments.size() > 1)
+            ctx.sql(", ").visit(arguments.get(1));
+        else
+            ctx.sql(", ").visit(inline(""));
+            
 
 
 

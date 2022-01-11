@@ -8151,7 +8151,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'D':
-                if ((parseFunctionNameIf("DB_NAME") && parseEmptyParens()))
+                if ((parseFunctionNameIf("DATABASE") && parseEmptyParens()))
+                    return currentCatalog();
+                else if ((parseFunctionNameIf("DB_NAME") && parseEmptyParens()))
                     return currentCatalog();
                 else if ((parseFunctionNameIf("DBINFO") && parse('(') && parseStringLiteral("dbname") != null && parse(')')))
                     return currentCatalog();

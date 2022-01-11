@@ -11823,7 +11823,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         if (quoted) {
             if (character() != quoteEnd)
-                throw exception("Quoted identifier must terminate in " + quoteEnd);
+                throw exception("Quoted identifier must terminate in " + quoteEnd + ". Start of identifier: " + StringUtils.abbreviate(sb.toString(), 30));
 
             positionInc();
             parseWhitespaceIf();

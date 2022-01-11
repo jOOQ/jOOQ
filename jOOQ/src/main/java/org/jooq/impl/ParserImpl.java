@@ -6843,6 +6843,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse(')');
             result = s1;
         }
+        else if (peekFunctionNameIf("VALUES")) {
+            result = parseTableValueConstructor();
+        }
         else if (parseFunctionNameIf("XMLTABLE")) {
             parse('(');
 
@@ -13315,6 +13318,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parseWhitespaceIf();
 
         return true;
+    }
+
+    private final boolean peekFunctionNameIf(String name) {
+        return peekKeyword(name, false, false, true);
     }
 
     @Override

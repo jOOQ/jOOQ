@@ -398,10 +398,40 @@ import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
 import static org.jooq.impl.QOM.XMLPassingMechanism.BY_REF;
 import static org.jooq.impl.QOM.XMLPassingMechanism.BY_VALUE;
 import static org.jooq.impl.SQLDataType.BIGINT;
+import static org.jooq.impl.SQLDataType.BINARY;
+import static org.jooq.impl.SQLDataType.BIT;
+import static org.jooq.impl.SQLDataType.BLOB;
+import static org.jooq.impl.SQLDataType.BOOLEAN;
+import static org.jooq.impl.SQLDataType.CHAR;
+import static org.jooq.impl.SQLDataType.CLOB;
+import static org.jooq.impl.SQLDataType.DATE;
+import static org.jooq.impl.SQLDataType.DECIMAL;
+import static org.jooq.impl.SQLDataType.DOUBLE;
+import static org.jooq.impl.SQLDataType.FLOAT;
+import static org.jooq.impl.SQLDataType.GEOGRAPHY;
+import static org.jooq.impl.SQLDataType.GEOMETRY;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.SQLDataType.INTERVAL;
+import static org.jooq.impl.SQLDataType.INTERVALDAYTOSECOND;
+import static org.jooq.impl.SQLDataType.INTERVALYEARTOMONTH;
+import static org.jooq.impl.SQLDataType.JSON;
+import static org.jooq.impl.SQLDataType.JSONB;
+import static org.jooq.impl.SQLDataType.LONGNVARCHAR;
+import static org.jooq.impl.SQLDataType.LONGVARBINARY;
+import static org.jooq.impl.SQLDataType.LONGVARCHAR;
+import static org.jooq.impl.SQLDataType.NCHAR;
+import static org.jooq.impl.SQLDataType.NCLOB;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.SQLDataType.NVARCHAR;
+import static org.jooq.impl.SQLDataType.OTHER;
+import static org.jooq.impl.SQLDataType.REAL;
+import static org.jooq.impl.SQLDataType.SMALLINT;
+import static org.jooq.impl.SQLDataType.TIME;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
+import static org.jooq.impl.SQLDataType.TIMESTAMPWITHTIMEZONE;
+import static org.jooq.impl.SQLDataType.TIMEWITHTIMEZONE;
+import static org.jooq.impl.SQLDataType.TINYINT;
+import static org.jooq.impl.SQLDataType.VARBINARY;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SelectQueryImpl.EMULATE_SELECT_INTO_AS_CTAS;
 import static org.jooq.impl.SelectQueryImpl.NO_SUPPORT_FOR_UPDATE_OF_FIELDS;
@@ -11862,41 +11892,41 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         switch (character) {
             case 'A':
                 if (parseKeywordOrIdentifierIf("ARRAY"))
-                    return SQLDataType.OTHER.getArrayDataType();
+                    return OTHER.getArrayDataType();
                 else if (parseKeywordIf("AUTO_INCREMENT")) {
                     parseDataTypeIdentityArgsIf();
-                    return SQLDataType.INTEGER.identity(true);
+                    return INTEGER.identity(true);
                 }
 
                 break;
 
             case 'B':
                 if (parseKeywordOrIdentifierIf("BIGINT"))
-                    return parseUnsigned(parseAndIgnoreDataTypeLength(SQLDataType.BIGINT));
+                    return parseUnsigned(parseAndIgnoreDataTypeLength(BIGINT));
                 else if (parseKeywordOrIdentifierIf("BIGSERIAL"))
-                    return SQLDataType.BIGINT.identity(true);
+                    return BIGINT.identity(true);
                 else if (parseKeywordOrIdentifierIf("BINARY"))
                     if (parseKeywordIf("VARYING"))
-                        return parseDataTypeLength(SQLDataType.VARBINARY);
+                        return parseDataTypeLength(VARBINARY);
                     else
-                        return parseDataTypeLength(SQLDataType.BINARY);
+                        return parseDataTypeLength(BINARY);
                 else if (parseKeywordOrIdentifierIf("BIT"))
-                    return parseDataTypeLength(SQLDataType.BIT);
+                    return parseDataTypeLength(BIT);
                 else if (parseKeywordOrIdentifierIf("BLOB"))
                     if (parseKeywordIf("SUB_TYPE"))
                         if (parseKeywordIf("0", "BINARY"))
-                            return parseDataTypeLength(SQLDataType.BLOB);
+                            return parseDataTypeLength(BLOB);
                         else if (parseKeywordIf("1", "TEXT"))
-                            return parseDataTypeLength(SQLDataType.CLOB);
+                            return parseDataTypeLength(CLOB);
                         else
                             throw expected("0", "BINARY", "1", "TEXT");
                     else
-                        return parseDataTypeLength(SQLDataType.BLOB);
+                        return parseDataTypeLength(BLOB);
                 else if (parseKeywordOrIdentifierIf("BOOLEAN") ||
                          parseKeywordOrIdentifierIf("BOOL"))
-                    return SQLDataType.BOOLEAN;
+                    return BOOLEAN;
                 else if (parseKeywordOrIdentifierIf("BYTEA"))
-                    return SQLDataType.BLOB;
+                    return BLOB;
 
                 break;
 
@@ -11904,31 +11934,31 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (parseKeywordOrIdentifierIf("CHAR") ||
                     parseKeywordOrIdentifierIf("CHARACTER"))
                     if (parseKeywordIf("VARYING"))
-                        return parseDataTypeCollation(parseDataTypeLength(SQLDataType.VARCHAR));
+                        return parseDataTypeCollation(parseDataTypeLength(VARCHAR, VARBINARY, () -> parseKeywordIf("FOR BIT DATA")));
                     else if (parseKeywordIf("LARGE OBJECT"))
-                        return parseDataTypeCollation(parseDataTypeLength(SQLDataType.CLOB));
+                        return parseDataTypeCollation(parseDataTypeLength(CLOB));
                     else
-                        return parseDataTypeCollation(parseDataTypeLength(SQLDataType.CHAR));
+                        return parseDataTypeCollation(parseDataTypeLength(CHAR, BINARY, () -> parseKeywordIf("FOR BIT DATA")));
 
                 // [#5934] [#10291] TODO: support as actual data type as well
                 else if (parseKeywordOrIdentifierIf("CITEXT"))
-                    return parseDataTypeCollation(parseAndIgnoreDataTypeLength(SQLDataType.CLOB));
+                    return parseDataTypeCollation(parseAndIgnoreDataTypeLength(CLOB));
                 else if (parseKeywordOrIdentifierIf("CLOB"))
-                    return parseDataTypeCollation(parseDataTypeLength(SQLDataType.CLOB));
+                    return parseDataTypeCollation(parseDataTypeLength(CLOB));
 
                 break;
 
             case 'D':
                 if (parseKeywordOrIdentifierIf("DATE"))
-                    return SQLDataType.DATE;
+                    return DATE;
                 else if (parseKeywordOrIdentifierIf("DATETIME"))
-                    return parseDataTypePrecisionIf(SQLDataType.TIMESTAMP);
+                    return parseDataTypePrecisionIf(TIMESTAMP);
                 else if (parseKeywordOrIdentifierIf("DECIMAL") ||
                          parseKeywordOrIdentifierIf("DEC"))
-                    return parseDataTypePrecisionScaleIf(SQLDataType.DECIMAL);
+                    return parseDataTypePrecisionScaleIf(DECIMAL);
                 else if (parseKeywordOrIdentifierIf("DOUBLE PRECISION") ||
                          parseKeywordOrIdentifierIf("DOUBLE"))
-                    return parseAndIgnoreDataTypePrecisionScaleIf(SQLDataType.DOUBLE);
+                    return parseAndIgnoreDataTypePrecisionScaleIf(DOUBLE);
 
                 break;
 
@@ -11940,7 +11970,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             case 'F':
                 if (parseKeywordOrIdentifierIf("FLOAT"))
-                    return parseAndIgnoreDataTypePrecisionScaleIf(SQLDataType.FLOAT);
+                    return parseAndIgnoreDataTypePrecisionScaleIf(FLOAT);
 
                 break;
 
@@ -11965,62 +11995,62 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (parseKeywordOrIdentifierIf("INTEGER") ||
                     parseKeywordOrIdentifierIf("INT") ||
                     parseKeywordOrIdentifierIf("INT4"))
-                    return parseUnsigned(parseAndIgnoreDataTypeLength(SQLDataType.INTEGER));
+                    return parseUnsigned(parseAndIgnoreDataTypeLength(INTEGER));
                 else if (parseKeywordOrIdentifierIf("INT2"))
-                    return SQLDataType.SMALLINT;
+                    return SMALLINT;
                 else if (parseKeywordOrIdentifierIf("INT8"))
-                    return SQLDataType.BIGINT;
+                    return BIGINT;
                 else if (parseKeywordIf("INTERVAL")) {
                     if (parseKeywordIf("YEAR")) {
                         parseDataTypePrecisionIf();
                         parseKeyword("TO MONTH");
-                        return SQLDataType.INTERVALYEARTOMONTH;
+                        return INTERVALYEARTOMONTH;
                     }
                     else if (parseKeywordIf("DAY")) {
                         parseDataTypePrecisionIf();
                         parseKeyword("TO SECOND");
                         parseDataTypePrecisionIf();
-                        return SQLDataType.INTERVALDAYTOSECOND;
+                        return INTERVALDAYTOSECOND;
                     }
                     else
-                        return SQLDataType.INTERVAL;
+                        return INTERVAL;
                 }
                 else if (parseKeywordIf("IDENTITY")) {
                     parseDataTypeIdentityArgsIf();
-                    return SQLDataType.INTEGER.identity(true);
+                    return INTEGER.identity(true);
                 }
 
                 break;
 
             case 'J':
                 if (parseKeywordOrIdentifierIf("JSON"))
-                    return SQLDataType.JSON;
+                    return JSON;
                 else if (parseKeywordOrIdentifierIf("JSONB"))
-                    return SQLDataType.JSONB;
+                    return JSONB;
 
                 break;
 
             case 'L':
                 if (parseKeywordOrIdentifierIf("LONGBLOB"))
-                    return SQLDataType.BLOB;
+                    return BLOB;
                 else if (parseKeywordOrIdentifierIf("LONGTEXT"))
-                    return parseDataTypeCollation(SQLDataType.CLOB);
+                    return parseDataTypeCollation(CLOB);
                 else if (parseKeywordOrIdentifierIf("LONG NVARCHAR"))
-                    return parseDataTypeCollation(parseDataTypeLength(SQLDataType.LONGNVARCHAR));
+                    return parseDataTypeCollation(parseDataTypeLength(LONGNVARCHAR));
                 else if (parseKeywordOrIdentifierIf("LONG VARBINARY"))
-                    return parseDataTypeCollation(parseDataTypeLength(SQLDataType.LONGVARBINARY));
+                    return parseDataTypeCollation(parseDataTypeLength(LONGVARBINARY));
                 else if (parseKeywordOrIdentifierIf("LONG VARCHAR"))
-                    return parseDataTypeCollation(parseDataTypeLength(SQLDataType.LONGVARCHAR));
+                    return parseDataTypeCollation(parseDataTypeLength(LONGVARCHAR, LONGVARBINARY, () -> parseKeywordIf("FOR BIT DATA")));
 
                 break;
 
             case 'M':
                 if (parseKeywordOrIdentifierIf("MEDIUMBLOB"))
-                    return SQLDataType.BLOB;
+                    return BLOB;
                 else if (parseKeywordOrIdentifierIf("MEDIUMINT"))
-                    return parseUnsigned(parseAndIgnoreDataTypeLength(SQLDataType.INTEGER));
+                    return parseUnsigned(parseAndIgnoreDataTypeLength(INTEGER));
                 else if (parseKeywordOrIdentifierIf("MEDIUMTEXT"))
-                    return parseDataTypeCollation(SQLDataType.CLOB);
+                    return parseDataTypeCollation(CLOB);
 
                 break;
 
@@ -12028,86 +12058,86 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (parseKeywordIf("NATIONAL CHARACTER") ||
                     parseKeywordIf("NATIONAL CHAR"))
                     if (parseKeywordIf("VARYING"))
-                        return parseDataTypeCollation(parseDataTypeLength(SQLDataType.NVARCHAR));
+                        return parseDataTypeCollation(parseDataTypeLength(NVARCHAR));
                     else if (parseKeywordIf("LARGE OBJECT"))
-                        return parseDataTypeCollation(parseDataTypeLength(SQLDataType.NCLOB));
+                        return parseDataTypeCollation(parseDataTypeLength(NCLOB));
                     else
-                        return parseDataTypeCollation(parseDataTypeLength(SQLDataType.NCHAR));
+                        return parseDataTypeCollation(parseDataTypeLength(NCHAR));
                 else if (parseKeywordOrIdentifierIf("NCHAR"))
                     if (parseKeywordIf("VARYING"))
-                        return parseDataTypeCollation(parseDataTypeLength(SQLDataType.NVARCHAR));
+                        return parseDataTypeCollation(parseDataTypeLength(NVARCHAR));
                     else if (parseKeywordIf("LARGE OBJECT"))
-                        return parseDataTypeCollation(parseDataTypeLength(SQLDataType.NCLOB));
+                        return parseDataTypeCollation(parseDataTypeLength(NCLOB));
                     else
-                        return parseDataTypeCollation(parseDataTypeLength(SQLDataType.NCHAR));
+                        return parseDataTypeCollation(parseDataTypeLength(NCHAR));
                 else if (parseKeywordOrIdentifierIf("NCLOB"))
-                    return parseDataTypeCollation(parseDataTypeLength(SQLDataType.NCLOB));
+                    return parseDataTypeCollation(parseDataTypeLength(NCLOB));
                 else if (parseKeywordOrIdentifierIf("NUMBER") ||
                          parseKeywordOrIdentifierIf("NUMERIC"))
-                    return parseDataTypePrecisionScaleIf(SQLDataType.NUMERIC);
+                    return parseDataTypePrecisionScaleIf(NUMERIC);
                 else if (parseKeywordOrIdentifierIf("NVARCHAR") ||
                          parseKeywordOrIdentifierIf("NVARCHAR2"))
-                    return parseDataTypeCollation(parseDataTypeLength(SQLDataType.NVARCHAR));
+                    return parseDataTypeCollation(parseDataTypeLength(NVARCHAR));
 
                 break;
 
             case 'O':
                 if (parseKeywordOrIdentifierIf("OTHER"))
-                    return SQLDataType.OTHER;
+                    return OTHER;
 
                 break;
 
             case 'R':
                 if (parseKeywordOrIdentifierIf("REAL"))
-                    return parseAndIgnoreDataTypePrecisionScaleIf(SQLDataType.REAL);
+                    return parseAndIgnoreDataTypePrecisionScaleIf(REAL);
 
                 break;
 
             case 'S':
                 if (parseKeywordOrIdentifierIf("SERIAL4") ||
                     parseKeywordOrIdentifierIf("SERIAL"))
-                    return SQLDataType.INTEGER.identity(true);
+                    return INTEGER.identity(true);
                 else if (parseKeywordOrIdentifierIf("SERIAL8"))
-                    return SQLDataType.BIGINT.identity(true);
+                    return BIGINT.identity(true);
                 else if (parseKeywordOrIdentifierIf("SET"))
                     return parseDataTypeCollation(parseDataTypeEnum());
                 else if (parseKeywordOrIdentifierIf("SMALLINT"))
-                    return parseUnsigned(parseAndIgnoreDataTypeLength(SQLDataType.SMALLINT));
+                    return parseUnsigned(parseAndIgnoreDataTypeLength(SMALLINT));
                 else if (parseKeywordOrIdentifierIf("SMALLSERIAL") ||
                          parseKeywordOrIdentifierIf("SERIAL2"))
-                    return SQLDataType.SMALLINT.identity(true);
+                    return SMALLINT.identity(true);
 
                 break;
 
             case 'T':
                 if (parseKeywordOrIdentifierIf("TEXT"))
-                    return parseDataTypeCollation(parseAndIgnoreDataTypeLength(SQLDataType.CLOB));
+                    return parseDataTypeCollation(parseAndIgnoreDataTypeLength(CLOB));
                 else if (parseKeywordOrIdentifierIf("TIMESTAMPTZ"))
-                    return parseDataTypePrecisionIf(SQLDataType.TIMESTAMPWITHTIMEZONE);
+                    return parseDataTypePrecisionIf(TIMESTAMPWITHTIMEZONE);
                 else if (parseKeywordOrIdentifierIf("TIMESTAMP")) {
                     Integer precision = parseDataTypePrecisionIf();
 
                     if (parseKeywordOrIdentifierIf("WITH TIME ZONE"))
-                        return precision == null ? SQLDataType.TIMESTAMPWITHTIMEZONE : SQLDataType.TIMESTAMPWITHTIMEZONE(precision);
+                        return precision == null ? TIMESTAMPWITHTIMEZONE : TIMESTAMPWITHTIMEZONE(precision);
                     else if (parseKeywordOrIdentifierIf("WITHOUT TIME ZONE") || true)
-                        return precision == null ? SQLDataType.TIMESTAMP : SQLDataType.TIMESTAMP(precision);
+                        return precision == null ? TIMESTAMP : TIMESTAMP(precision);
                 }
                 else if (parseKeywordOrIdentifierIf("TIMETZ"))
-                    return parseDataTypePrecisionIf(SQLDataType.TIMEWITHTIMEZONE);
+                    return parseDataTypePrecisionIf(TIMEWITHTIMEZONE);
                 else if (parseKeywordOrIdentifierIf("TIME")) {
                     Integer precision = parseDataTypePrecisionIf();
 
                     if (parseKeywordOrIdentifierIf("WITH TIME ZONE"))
-                        return precision == null ? SQLDataType.TIMEWITHTIMEZONE : SQLDataType.TIMEWITHTIMEZONE(precision);
+                        return precision == null ? TIMEWITHTIMEZONE : SQLDataType.TIMEWITHTIMEZONE(precision);
                     else if (parseKeywordOrIdentifierIf("WITHOUT TIME ZONE") || true)
-                        return precision == null ? SQLDataType.TIME : SQLDataType.TIME(precision);
+                        return precision == null ? TIME : TIME(precision);
                 }
                 else if (parseKeywordOrIdentifierIf("TINYBLOB"))
-                    return SQLDataType.BLOB;
+                    return BLOB;
                 else if (parseKeywordOrIdentifierIf("TINYINT"))
-                    return parseUnsigned(parseAndIgnoreDataTypeLength(SQLDataType.TINYINT));
+                    return parseUnsigned(parseAndIgnoreDataTypeLength(TINYINT));
                 else if (parseKeywordOrIdentifierIf("TINYTEXT"))
-                    return parseDataTypeCollation(SQLDataType.CLOB);
+                    return parseDataTypeCollation(CLOB);
 
                 break;
 
@@ -12124,9 +12154,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     parseKeywordOrIdentifierIf("VARCHAR2") ||
                     // [#5934] [#10291] TODO: support as actual data type as well
                     parseKeywordOrIdentifierIf("VARCHAR_IGNORECASE"))
-                    return parseDataTypeCollation(parseDataTypeLength(SQLDataType.VARCHAR));
+                    return parseDataTypeCollation(parseDataTypeLength(VARCHAR, VARBINARY, () -> parseKeywordIf("FOR BIT DATA")));
                 else if (parseKeywordOrIdentifierIf("VARBINARY"))
-                    return parseDataTypeLength(SQLDataType.VARBINARY);
+                    return parseDataTypeLength(VARBINARY);
 
                 break;
 
@@ -12188,20 +12218,25 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final DataType<?> parseDataTypeLength(DataType<?> in) {
-        DataType<?> result = in;
+        return parseDataTypeLength(in, in, () -> false);
+    }
+
+    private final DataType<?> parseDataTypeLength(DataType<?> in, DataType<?> alternative, BooleanSupplier alternativeIfTrue) {
+        Integer length = null;
 
         if (parseIf('(')) {
             if (!parseKeywordIf("MAX"))
-                result = result.length(asInt(parseUnsignedIntegerLiteral()));
+                length = asInt(parseUnsignedIntegerLiteral());
 
-            if (in == SQLDataType.VARCHAR || in == SQLDataType.CHAR)
+            if (in == VARCHAR || in == CHAR)
                 if (!parseKeywordIf("BYTE"))
                     parseKeywordIf("CHAR");
 
             parse(')');
         }
 
-        return result;
+        DataType<?> result = alternativeIfTrue.getAsBoolean() ? alternative : in;
+        return length == null ? result : result.length(length);
     }
 
     private final DataType<?> parseDataTypeCollation(DataType<?> result) {

@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.*;
 import static org.jooq.impl.Internal.*;
 import static org.jooq.impl.Keywords.*;
 import static org.jooq.impl.Names.*;
+import static org.jooq.impl.QOM.Cascade.CASCADE;
 import static org.jooq.impl.SQLDataType.*;
 import static org.jooq.impl.Tools.*;
 import static org.jooq.impl.Tools.BooleanDataKey.*;
@@ -163,10 +164,26 @@ implements
             ctx.visit(K_IF_EXISTS).sql(' ');
 
         ctx.visit(table);
-        acceptCascade(ctx, cascade);
+        acceptCascade(ctx);
         ctx.end(Clause.DROP_TABLE_TABLE);
     }
 
+    private final void acceptCascade(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+            default:
+                acceptCascade(ctx, cascade);
+                break;
+        }
+    }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {

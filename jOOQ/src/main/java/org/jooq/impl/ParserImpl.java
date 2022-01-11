@@ -5479,7 +5479,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         Table<?> tableName = parseTableName();
         ifExists = ifExists || parseKeywordIf("IF EXISTS");
-        boolean cascade = parseKeywordIf("CASCADE");
+        boolean cascade = parseKeywordIf("CASCADE") && (parseKeywordIf("CONSTRAINTS") || true);
         boolean restrict = !cascade && parseKeywordIf("RESTRICT");
 
         DropTableStep s1;

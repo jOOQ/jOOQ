@@ -85,19 +85,15 @@ implements
         else
             result = new ListAgg(distinct, field, inline(separator));
 
-        if (filter != null)
-            result.filterWhere(filter);
+        if (!orderBy.isEmpty())
+            result.withinGroupOrderBy(orderBy);
 
 
 
 
 
 
-
-        if (orderBy.isEmpty())
-            ctx.visit(result);
-        else
-            ctx.visit(result.withinGroupOrderBy(orderBy));
+        ctx.visit(fo(result));
     }
 
     @Override

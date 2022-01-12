@@ -10624,10 +10624,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             boolean both = !leading && !trailing && (parseKeywordIf("BOTH") || parseKeywordIf("B"));
 
             if (leading || trailing || both) {
-                if (parseIf(',')) {
-                    position(p);
-                }
-                else if (parseIf(')')) {
+                if (parseIf(',') || parseIf(')')) {
                     position(p);
                 }
                 else if (parseKeywordIf("FROM")) {
@@ -10637,6 +10634,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return leading ? ltrim(f)
                          : trailing ? rtrim(f)
                          : trim(f);
+                }
+            }
+
+            if (parseKeywordIf("FROM")) {
+                if (parseIf(',') || parseIf(')')) {
+                    position(p);
+                }
+                else {
+                    Field<String> f = (Field) parseField();
+                    parse(')');
+                    return trim(f);
                 }
             }
 

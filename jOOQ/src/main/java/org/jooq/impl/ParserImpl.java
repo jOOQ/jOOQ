@@ -12050,9 +12050,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseDataTypeCollation(CLOB);
                 else if (parseKeywordOrIdentifierIf("LONG NVARCHAR"))
                     return parseDataTypeCollation(parseDataTypeLength(LONGNVARCHAR));
-                else if (parseKeywordOrIdentifierIf("LONG VARBINARY"))
+                else if (parseKeywordOrIdentifierIf("LONG VARBINARY") ||
+                         parseKeywordOrIdentifierIf("LONGVARBINARY"))
                     return parseDataTypeCollation(parseDataTypeLength(LONGVARBINARY));
-                else if (parseKeywordOrIdentifierIf("LONG VARCHAR"))
+                else if (parseKeywordOrIdentifierIf("LONG VARCHAR") ||
+                         parseKeywordOrIdentifierIf("LONGVARCHAR"))
                     return parseDataTypeCollation(parseDataTypeLength(LONGVARCHAR, LONGVARBINARY, () -> parseKeywordIf("FOR BIT DATA")));
 
                 break;

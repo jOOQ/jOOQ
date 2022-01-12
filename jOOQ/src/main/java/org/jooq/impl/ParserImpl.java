@@ -2935,7 +2935,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (parseKeywordIf("DATABASE"))
                     return parseDropDatabase();
                 else if (parseKeywordIf("DOMAIN"))
-                    return parseDropDomain();
+                    return parseCascadeRestrictIf(
+                        parseIfExists(this::parseDomainName, dsl::dropDomainIfExists, dsl::dropDomain),
+                        DropDomainCascadeStep::cascade,
+                        DropDomainCascadeStep::restrict
+                    );
 
                 break;
 
@@ -2987,7 +2991,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (parseKeywordIf("SEQUENCE"))
                     return parseDropSequence();
                 else if (parseKeywordIf("SCHEMA"))
-                    return parseDropSchema();
+                    return parseCascadeRestrictIf(
+                        parseIfExists(this::parseSchemaName, dsl::dropSchemaIfExists, dsl::dropSchema),
+                        DropSchemaStep::cascade,
+                        DropSchemaStep::restrict
+                    );
 
                 break;
 
@@ -3002,7 +3010,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                     ;
                 else if (parseKeywordIf("TYPE"))
-                    return parseDropType();
+                    return parseCascadeRestrictIf(
+                        parseIfExists(this::parseIdentifiers, dsl::dropTypeIfExists, dsl::dropType),
+                        DropTypeStep::cascade,
+                        DropTypeStep::restrict
+                    );
                 else if (parseKeywordIf("TABLESPACE"))
                     throw notImplemented("DROP TABLESPACE");
 
@@ -4055,13 +4067,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final DDLQuery parseDropView() {
-        boolean ifExists = parseKeywordIf("IF EXISTS");
-        Table<?> tableName = parseTableName();
-        ifExists = ifExists || parseKeywordIf("IF EXISTS");
-
-        return ifExists
-            ? dsl.dropViewIfExists(tableName)
-            : dsl.dropView(tableName);
+        return parseIfExists(this::parseTableName, dsl::dropViewIfExists, dsl::dropView);
     }
 
     private final DDLQuery parseCreateSequence() {
@@ -5053,6 +5059,33 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return parseConstraintEnforcementIf(e);
     }
 
+    private final <O, S extends QueryPart> S parseIfExists(
+        Supplier<? extends O> part,
+        Function<? super O, ? extends S> stepIfExists,
+        Function<? super O, ? extends S> step
+    ) {
+        boolean ifExists = parseKeywordIf("IF EXISTS");
+        O q = part.get();
+        ifExists = ifExists || parseKeywordIf("IF EXISTS");
+
+        return ifExists ? stepIfExists.apply(q) : step.apply(q);
+    }
+
+    private final <S2 extends QueryPart, S1 extends S2> S2 parseCascadeRestrictIf(
+        S1 step,
+        Function<? super S1, ? extends S2> stepCascade,
+        Function<? super S1, ? extends S2> stepRestrict
+    ) {
+        boolean cascade = parseKeywordIf("CASCADE");
+        boolean restrict = !cascade && parseKeywordIf("RESTRICT");
+
+        return cascade
+            ? stepCascade.apply(step)
+            : restrict
+            ? stepRestrict.apply(step)
+            : step;
+    }
+
     private static final Set<String> ALTER_KEYWORDS = new HashSet<>(Arrays.asList("ADD", "ALTER", "COMMENT", "DROP", "MODIFY", "RENAME"));
 
     private final DDLQuery parseAlterTable() {
@@ -5108,19 +5141,30 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'D':
                 if (parseKeywordIf("DROP")) {
                     if (parseKeywordIf("CONSTRAINT")) {
-                        return parseCascadeRestrictIf(parseKeywordIf("IF EXISTS")
-                            ? s1.dropConstraintIfExists(parseIdentifier())
-                            : s1.dropConstraint(parseIdentifier()));
+                        return parseCascadeRestrictIf(
+                            parseIfExists(this::parseIdentifier, s1::dropConstraintIfExists, s1::dropConstraint),
+                            AlterTableDropStep::cascade,
+                            AlterTableDropStep::restrict
+                        );
                     }
                     else if (parseKeywordIf("UNIQUE")) {
-                        return parseCascadeRestrictIf(s1.dropUnique(
-                              peek('(')
-                            ? unique(parseKeyColumnList())
-                            : constraint(parseIdentifier())));
+                        return parseCascadeRestrictIf(
+                            s1.dropUnique(
+                                  peek('(')
+                                ? unique(parseKeyColumnList())
+                                : constraint(parseIdentifier())
+                            ),
+                            AlterTableDropStep::cascade,
+                            AlterTableDropStep::restrict
+                        );
                     }
                     else if (parseKeywordIf("PRIMARY KEY")) {
                         Name identifier = parseIdentifierIf();
-                        return parseCascadeRestrictIf(identifier == null ? s1.dropPrimaryKey() : s1.dropPrimaryKey(identifier));
+                        return parseCascadeRestrictIf(
+                            identifier == null ? s1.dropPrimaryKey() : s1.dropPrimaryKey(identifier),
+                            AlterTableDropStep::cascade,
+                            AlterTableDropStep::restrict
+                        );
                     }
                     else if (parseKeywordIf("FOREIGN KEY")) {
                         return s1.dropForeignKey(parseIdentifier());
@@ -5150,11 +5194,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         if (parens)
                             parse(')');
 
-                        return parseCascadeRestrictIf(fields == null
-                            ? ifColumnExists
-                                ? s1.dropColumnIfExists(field)
-                                : s1.dropColumn(field)
-                            : s1.dropColumns(fields)
+                        return parseCascadeRestrictIf(
+                            fields == null
+                                ? ifColumnExists
+                                    ? s1.dropColumnIfExists(field)
+                                    : s1.dropColumn(field)
+                                : s1.dropColumns(fields),
+                            AlterTableDropStep::cascade,
+                            AlterTableDropStep::restrict
                         );
                     }
                 }
@@ -5216,17 +5263,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         throw expected("ADD", "ALTER", "COMMENT", "DROP", "MODIFY", "OWNER TO", "RENAME", "SET");
-    }
-
-    private final DDLQuery parseCascadeRestrictIf(AlterTableDropStep step) {
-        boolean cascade = parseKeywordIf("CASCADE");
-        boolean restrict = !cascade && parseKeywordIf("RESTRICT");
-
-        return cascade
-            ? step.cascade()
-            : restrict
-            ? step.restrict()
-            : step;
     }
 
     private final DDLQuery parseAlterTableAdd(AlterTableStep s1, Table<?> tableName) {
@@ -5845,45 +5881,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private final DDLQuery parseDropType() {
-        boolean ifExists = parseKeywordIf("IF EXISTS");
-        List<Name> typeNames = parseIdentifiers();
-        ifExists = ifExists || parseKeywordIf("IF EXISTS");
-        boolean cascade = parseKeywordIf("CASCADE");
-        boolean restrict = !cascade && parseKeywordIf("RESTRICT");
-
-        DropTypeStep s1;
-
-        s1 = ifExists
-           ? dsl.dropTypeIfExists(typeNames)
-           : dsl.dropType(typeNames);
-
-        return cascade
-           ? s1.cascade()
-           : restrict
-           ? s1.restrict()
-           : s1;
-    }
-
     private final DDLQuery parseCreateDomain() {
         boolean ifNotExists = parseKeywordIf("IF NOT EXISTS");
         Domain<?> domainName = parseDomainName();
@@ -5963,7 +5960,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 AlterDomainRenameConstraintStep s2 = ifConstraintExists
                     ? s1.renameConstraintIfExists(oldName)
                     : s1.renameConstraint(oldName);
-
                 parseKeyword("AS", "TO");
                 return s2.to(constraint(parseIdentifier()));
             }
@@ -5984,24 +5980,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
         else
             throw expected("ADD", "DROP", "RENAME", "SET", "OWNER TO");
-    }
-
-    private final DDLQuery parseDropDomain() {
-        boolean ifExists = parseKeywordIf("IF EXISTS");
-        Domain<?> domainName = parseDomainName();
-        ifExists = ifExists || parseKeywordIf("IF EXISTS");
-        boolean cascade = parseKeywordIf("CASCADE");
-        boolean restrict = !cascade && parseKeywordIf("RESTRICT");
-
-        DropDomainCascadeStep s1 = ifExists
-            ? dsl.dropDomainIfExists(domainName)
-            : dsl.dropDomain(domainName);
-
-        return cascade
-            ? s1.cascade()
-            : restrict
-            ? s1.restrict()
-            : s1;
     }
 
     private final DDLQuery parseCreateDatabase() {
@@ -6055,13 +6033,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final DDLQuery parseDropDatabase() {
-        boolean ifExists = parseKeywordIf("IF EXISTS");
-        Catalog catalogName = parseCatalogName();
-        ifExists = ifExists || parseKeywordIf("IF EXISTS");
-
-        return ifExists
-            ? dsl.dropDatabaseIfExists(catalogName)
-            : dsl.dropDatabase(catalogName);
+        return parseIfExists(this::parseCatalogName, dsl::dropDatabaseIfExists, dsl::dropDatabase);
     }
 
     private final DDLQuery parseCreateSchema() {
@@ -6094,24 +6066,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return IGNORE;
         else
             throw expected("OWNER TO", "RENAME TO");
-    }
-
-    private final DDLQuery parseDropSchema() {
-        boolean ifExists = parseKeywordIf("IF EXISTS");
-        Schema schemaName = parseSchemaName();
-        ifExists = ifExists || parseKeywordIf("IF EXISTS");
-        boolean cascade = parseKeywordIf("CASCADE");
-        boolean restrict = !cascade && parseKeywordIf("RESTRICT");
-
-        DropSchemaStep s1 = ifExists
-            ? dsl.dropSchemaIfExists(schemaName)
-            : dsl.dropSchema(schemaName);
-
-        return cascade
-            ? s1.cascade()
-            : restrict
-            ? s1.restrict()
-            : s1;
     }
 
     private final DDLQuery parseCreateIndex(boolean unique) {

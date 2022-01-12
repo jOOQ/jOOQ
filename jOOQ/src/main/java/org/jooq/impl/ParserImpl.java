@@ -9613,6 +9613,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldLogIf() {
         if (parseFunctionNameIf("LOG")) {
             parse('(');
+            Field f1 = toField(parseNumericOp());
+            Field f2 = parseIf(',') ? toField(parseNumericOp()) : null;
+            parse(')');
+
             switch (parseFamily()) {
 
 
@@ -9625,16 +9629,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
-
-
-
+                case POSTGRES:
+                case SQLITE:
+                    return f2 == null ? log10(f1) : log(f2, f1);
 
                 default:
-                    Field<?> base = toField(parseNumericOp());
-                    parse(',');
-                    Field<?> value = toField(parseNumericOp());
-                    parse(')');
-                    return log((Field) value, (Field) base);
+                    return f2 == null ? ln(f1) : log(f2, f1);
             }
         }
 

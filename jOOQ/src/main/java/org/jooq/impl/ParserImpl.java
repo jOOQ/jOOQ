@@ -4715,7 +4715,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 continue;
             }
 
-            if (parseKeywordIf("REFERENCES")) {
+            if (parseKeywordIf("FOREIGN KEY REFERENCES", "REFERENCES")) {
                 constraints.add(parseForeignKeyReferenceSpecification(inlineConstraint, new Field[] { field(fieldName) }));
                 continue;
             }

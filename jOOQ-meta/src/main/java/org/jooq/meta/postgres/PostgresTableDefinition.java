@@ -95,7 +95,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
         Field<Integer> precision = nvl(COLUMNS.DATETIME_PRECISION, COLUMNS.NUMERIC_PRECISION);
         Field<String> serialColumnDefault = inline("nextval('%_seq'::regclass)");
         Field<String> generationExpression = COLUMNS.GENERATION_EXPRESSION;
-        Field<String> attgenerated = PG_ATTRIBUTE.ATTGENERATED;
+        Field<String> attgenerated = database.is12() ? PG_ATTRIBUTE.ATTGENERATED : inline("s");
 
 
 

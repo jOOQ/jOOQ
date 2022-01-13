@@ -33,41 +33,28 @@ public class R2dbcTest {
         
         ctx = DSL.using(connectionFactory);
         
-        try {
-            Flux.fromIterable(ctx.parser().parse(Source.of(R2dbcTest.class.getResourceAsStream("/db.sql")).readString()))
-                .ofType(RowCountQuery.class)
-                .flatMap(q -> q)
-                .collectList()
-                .block();
-            
-            Assert.fail("The fix for https://github.com/r2dbc/r2dbc-h2/issues/203 has been released");
-        }
-        
-        // A fix for https://github.com/r2dbc/r2dbc-h2/issues/203 has been implemented but not yet released
-        catch (NoSuchMethodError expected) {}
+        Flux.fromIterable(ctx.parser().parse(Source.of(R2dbcTest.class.getResourceAsStream("/db.sql")).readString()))
+            .ofType(RowCountQuery.class)
+            .flatMap(q -> q)
+            .collectList()
+            .block();
     }
 
     @Test
     public void test() {
-        try {
-            Flux.from(ctx
-                    .insertInto(AUTHOR)
-                    .columns(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
-                    .values("John", "Doe")
-                    .returningResult(AUTHOR.ID))
-                .flatMap(id -> ctx
-                    .insertInto(BOOK)
-                    .columns(BOOK.AUTHOR_ID, BOOK.TITLE)
-                    .values(id.value1(), "Fancy Book"))
-                .thenMany(ctx
-                    .select(BOOK.author().FIRST_NAME, BOOK.author().LAST_NAME, BOOK.TITLE)
-                    .from(BOOK))
-                .doOnNext(System.out::println)
-                .subscribe();
-        
-            Assert.fail("The fix for https://github.com/r2dbc/r2dbc-h2/issues/203 has been released");
-        }
-        // A fix for https://github.com/r2dbc/r2dbc-h2/issues/203 has been implemented but not yet released
-        catch (NoSuchMethodError expected) {}
+        Flux.from(ctx
+                .insertInto(AUTHOR)
+                .columns(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
+                .values("John", "Doe")
+                .returningResult(AUTHOR.ID))
+            .flatMap(id -> ctx
+                .insertInto(BOOK)
+                .columns(BOOK.AUTHOR_ID, BOOK.TITLE)
+                .values(id.value1(), "Fancy Book"))
+            .thenMany(ctx
+                .select(BOOK.author().FIRST_NAME, BOOK.author().LAST_NAME, BOOK.TITLE)
+                .from(BOOK))
+            .doOnNext(System.out::println)
+            .subscribe();
     }
 }

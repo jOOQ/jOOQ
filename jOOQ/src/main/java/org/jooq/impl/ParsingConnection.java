@@ -57,14 +57,11 @@ import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Param;
 import org.jooq.conf.Settings;
-import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DefaultRenderContext.Rendered;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.DefaultConnection;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder

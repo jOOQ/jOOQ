@@ -81,6 +81,9 @@ import java.util.function.Supplier;
 import org.jooq.Param;
 import org.jooq.Source;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * @author Lukas Eder
  */
@@ -93,6 +96,7 @@ final class ParsingStatement implements CallableStatement {
     private final List<Param<?>>                                                          binds;
     private final List<List<Param<?>>>                                                    batch;
     private PreparedStatement                                                             last;
+    private PreparedStatement                                                             lastOrDummy;
 
     ParsingStatement(ParsingConnection connection, Statement statement) {
         this.connection = connection;
@@ -103,7 +107,10 @@ final class ParsingStatement implements CallableStatement {
         this.batch = null;
     }
 
-    ParsingStatement(ParsingConnection connection, ThrowingFunction<List<List<Param<?>>>, PreparedStatement, SQLException> prepared) {
+    ParsingStatement(
+        ParsingConnection connection,
+        ThrowingFunction<List<List<Param<?>>>, PreparedStatement, SQLException> prepared
+    ) {
         this.connection = connection;
         this.statement = null;
         this.prepared = prepared;
@@ -130,13 +137,26 @@ final class ParsingStatement implements CallableStatement {
         return new SQLException("Statement is closed or not yet prepared.");
     }
 
+    @NotNull
     private final Statement statement() throws SQLException {
+        Statement result = statement0();
+
+        if (result != null)
+            return result;
+        else
+            throw closed();
+    }
+
+    @Nullable
+    private final Statement statement0() {
         if (last != null)
             return last;
+        else if (lastOrDummy != null)
+            return lastOrDummy;
         else if (statement != null)
             return statement;
         else
-            throw closed();
+            return null;
     }
 
     private final void setFlag(ThrowingConsumer<Statement, SQLException> set) throws SQLException {
@@ -325,19 +345,46 @@ final class ParsingStatement implements CallableStatement {
     // -------------------------------------------------------------------------
 
     private final PreparedStatement last() throws SQLException {
-        if (last == null)
-            throw new SQLException("No PreparedStatement is available yet");
-        else
+        if (last != null)
             return last;
+        else
+            throw new SQLException("No PreparedStatement is available yet");
+    }
+
+    /**
+     * [#12481] Some operations require access to the {@link PreparedStatement}
+     * instance even before all bind values are known (e.g.
+     * {@link PreparedStatement#getMetaData()}.
+     */
+    private final PreparedStatement lastOrDummy() throws SQLException {
+
+        // TODO: It would be interesting to prevent re-preparing the same
+        //       statement if unnecessary (SQL string is the same before and
+        //       after knowing the bind values).
+        if (last != null)
+            return last;
+        else if (lastOrDummy != null)
+            return lastOrDummy;
+        else
+            return lastOrDummy = prepareAndBind0();
     }
 
     private final PreparedStatement prepareAndBind() throws SQLException {
-        last = prepared.apply(batch.isEmpty() ? singletonList(binds) : batch);
+        if (lastOrDummy != null) {
+            lastOrDummy.close();
+            lastOrDummy = null;
+        }
+
+        return last = prepareAndBind0();
+    }
+
+    private final PreparedStatement prepareAndBind0() throws SQLException {
+        PreparedStatement result = prepared.apply(batch.isEmpty() ? singletonList(binds) : batch);
 
         for (ThrowingConsumer<Statement, SQLException> flag : flags)
-            flag.accept(last);
+            flag.accept(result);
 
-        return last;
+        return result;
     }
 
     @Override
@@ -399,18 +446,18 @@ final class ParsingStatement implements CallableStatement {
 
     @Override
     public final void close() throws SQLException {
-        if (last != null)
-            last.close();
-        else if (statement != null)
-            statement.close();
+        Statement s = statement0();
+
+        if (s != null)
+            s.close();
     }
 
     @Override
     public final boolean isClosed() throws SQLException {
-        if (last != null)
-            return last.isClosed();
-        else if (statement != null)
-            return statement.isClosed();
+        Statement s = statement0();
+
+        if (s != null)
+            return s.isClosed();
         else
             return true;
     }
@@ -431,7 +478,7 @@ final class ParsingStatement implements CallableStatement {
 
     @Override
     public final ResultSetMetaData getMetaData() throws SQLException {
-        return last().getMetaData();
+        return lastOrDummy().getMetaData();
     }
 
     @Override

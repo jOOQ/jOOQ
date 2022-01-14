@@ -317,6 +317,8 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 <p>
 This transformation removes a redundant logical negation from the <code>DISTINCT</code> predicate.
 <p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
@@ -324,6 +326,16 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>NOT (a IS NOT DISTINCT FROM b)</code> to <code>a IS DISTINCT FROM b</code>.
 <p>
 This transformation removes a redundant logical negation from the <code>DISTINCT</code> predicate.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformPatternsTrivialPredicates" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform trivial predicates like <code>1 = 1</code> to <code>TRUE</code>.
+<p>
+This transformation removes any trivial predicates.
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -362,6 +374,8 @@ Idempotent functions that are covered so far, include:
 <li><code>UPPER(UPPER(s))</code> to <code>UPPER(s)</code></li>
 <li><code>LOWER(LOWER(s))</code> to <code>LOWER(s)</code></li>
 </ul>
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

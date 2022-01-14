@@ -60,10 +60,12 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.jooq.BindContext;
+import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.False;
@@ -88,6 +90,7 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.QOM.And;
 import org.jooq.impl.QOM.BitNot;
 import org.jooq.impl.QOM.Eq;
 import org.jooq.impl.QOM.FieldCondition;
@@ -100,6 +103,7 @@ import org.jooq.impl.QOM.Ltrim;
 import org.jooq.impl.QOM.Ne;
 import org.jooq.impl.QOM.Neg;
 import org.jooq.impl.QOM.Not;
+import org.jooq.impl.QOM.Or;
 import org.jooq.impl.QOM.Rtrim;
 import org.jooq.impl.QOM.Trim;
 import org.jooq.impl.QOM.Upper;
@@ -107,6 +111,8 @@ import org.jooq.impl.QOM.Val;
 import org.jooq.impl.ScopeMarker.ScopeContent;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -809,6 +815,58 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

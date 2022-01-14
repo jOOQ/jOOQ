@@ -124,6 +124,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNotNotDistinct = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsTrivialPredicates = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNegNeg = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsBitNotBitNot = true;
@@ -1253,6 +1255,8 @@ public class Settings
      * <p>
      * This transformation removes a redundant logical negation from the <code>DISTINCT</code> predicate.
      * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
      * This feature is available in the commercial distribution only.
      * 
      * @return
@@ -1281,6 +1285,8 @@ public class Settings
      * <p>
      * This transformation removes a redundant logical negation from the <code>DISTINCT</code> predicate.
      * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
      * This feature is available in the commercial distribution only.
      * 
      * @return
@@ -1302,6 +1308,34 @@ public class Settings
      */
     public void setTransformPatternsNotNotDistinct(Boolean value) {
         this.transformPatternsNotNotDistinct = value;
+    }
+
+    /**
+     * Transform trivial predicates like <code>1 = 1</code> to <code>TRUE</code>.
+     * <p>
+     * This transformation removes any trivial predicates.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsTrivialPredicates() {
+        return transformPatternsTrivialPredicates;
+    }
+
+    /**
+     * Sets the value of the transformPatternsTrivialPredicates property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsTrivialPredicates(Boolean value) {
+        this.transformPatternsTrivialPredicates = value;
     }
 
     /**
@@ -1378,6 +1412,8 @@ public class Settings
      * <li><code>UPPER(UPPER(s))</code> to <code>UPPER(s)</code></li>
      * <li><code>LOWER(LOWER(s))</code> to <code>LOWER(s)</code></li>
      * </ul>
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
      * 
@@ -3668,6 +3704,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsTrivialPredicates(Boolean value) {
+        setTransformPatternsTrivialPredicates(value);
+        return this;
+    }
+
     public Settings withTransformPatternsNegNeg(Boolean value) {
         setTransformPatternsNegNeg(value);
         return this;
@@ -4512,6 +4553,7 @@ public class Settings
         builder.append("transformPatternsNotTruthValue", transformPatternsNotTruthValue);
         builder.append("transformPatternsNotComparison", transformPatternsNotComparison);
         builder.append("transformPatternsNotNotDistinct", transformPatternsNotNotDistinct);
+        builder.append("transformPatternsTrivialPredicates", transformPatternsTrivialPredicates);
         builder.append("transformPatternsNegNeg", transformPatternsNegNeg);
         builder.append("transformPatternsBitNotBitNot", transformPatternsBitNotBitNot);
         builder.append("transformPatternsIdempotentFunctionRepetition", transformPatternsIdempotentFunctionRepetition);
@@ -4961,6 +5003,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsNotNotDistinct.equals(other.transformPatternsNotNotDistinct)) {
+                return false;
+            }
+        }
+        if (transformPatternsTrivialPredicates == null) {
+            if (other.transformPatternsTrivialPredicates!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsTrivialPredicates.equals(other.transformPatternsTrivialPredicates)) {
                 return false;
             }
         }
@@ -5890,6 +5941,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsNotTruthValue == null)? 0 :transformPatternsNotTruthValue.hashCode()));
         result = ((prime*result)+((transformPatternsNotComparison == null)? 0 :transformPatternsNotComparison.hashCode()));
         result = ((prime*result)+((transformPatternsNotNotDistinct == null)? 0 :transformPatternsNotNotDistinct.hashCode()));
+        result = ((prime*result)+((transformPatternsTrivialPredicates == null)? 0 :transformPatternsTrivialPredicates.hashCode()));
         result = ((prime*result)+((transformPatternsNegNeg == null)? 0 :transformPatternsNegNeg.hashCode()));
         result = ((prime*result)+((transformPatternsBitNotBitNot == null)? 0 :transformPatternsBitNotBitNot.hashCode()));
         result = ((prime*result)+((transformPatternsIdempotentFunctionRepetition == null)? 0 :transformPatternsIdempotentFunctionRepetition.hashCode()));

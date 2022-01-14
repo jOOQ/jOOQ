@@ -37,15 +37,11 @@
  */
 package org.jooq.impl;
 
-import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.renderLocale;
-import static org.jooq.impl.DSL.falseCondition;
-import static org.jooq.impl.DSL.trim;
-import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
@@ -60,28 +56,22 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.jooq.BindContext;
-import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Constants;
-import org.jooq.False;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Param;
-// ...
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
-// ...
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.True;
 import org.jooq.conf.RenderFormatting;
 import org.jooq.conf.RenderKeywordCase;
 import org.jooq.conf.RenderNameCase;
@@ -90,29 +80,9 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.QOM.And;
-import org.jooq.impl.QOM.BitNot;
-import org.jooq.impl.QOM.Eq;
-import org.jooq.impl.QOM.FieldCondition;
-import org.jooq.impl.QOM.Ge;
-import org.jooq.impl.QOM.Gt;
-import org.jooq.impl.QOM.IsNotDistinctFrom;
-import org.jooq.impl.QOM.Le;
-import org.jooq.impl.QOM.Lt;
-import org.jooq.impl.QOM.Ltrim;
-import org.jooq.impl.QOM.Ne;
-import org.jooq.impl.QOM.Neg;
-import org.jooq.impl.QOM.Not;
-import org.jooq.impl.QOM.Or;
-import org.jooq.impl.QOM.Rtrim;
-import org.jooq.impl.QOM.Trim;
-import org.jooq.impl.QOM.Upper;
-import org.jooq.impl.QOM.Val;
 import org.jooq.impl.ScopeMarker.ScopeContent;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -815,233 +785,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private final void checkForceInline(int max) throws ForceInlineSignal {
         if (bindValues.size() > max)

@@ -202,6 +202,14 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
     @Nullable Condition $qualify();
     @NotNull Select<R> $qualify(Condition condition);
     @NotNull UnmodifiableList<? extends SortField<?>> $orderBy();
+    @Nullable Field<? extends Number> $limit();
+    @NotNull Select<R> $limit(Field<? extends Number> limit);
+    boolean $limitPercent();
+    @NotNull Select<R> $limitPercent(boolean limitPercent);
+    boolean $limitWithTies();
+    @NotNull Select<R> $limitWithTies(boolean limitWithTies);
+    @Nullable Field<? extends Number> $offset();
+    @NotNull Select<R> $offset(Field<? extends Number> offset);
 
 
 

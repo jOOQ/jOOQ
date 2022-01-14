@@ -3459,6 +3459,46 @@ implements
         return getDelegate().$orderBy();
     }
 
+    @Override
+    public final Field<? extends Number> $limit() {
+        return getDelegate().$limit();
+    }
+
+    @Override
+    public final Select<R> $limit(Field<? extends Number> l) {
+        return getDelegate().$limit(l);
+    }
+
+    @Override
+    public final boolean $limitPercent() {
+        return getDelegate().$limitPercent();
+    }
+
+    @Override
+    public final Select<R> $limitPercent(boolean limitPercent) {
+        return getDelegate().$limitPercent(limitPercent);
+    }
+
+    @Override
+    public final boolean $limitWithTies() {
+        return getDelegate().$limitWithTies();
+    }
+
+    @Override
+    public final Select<R> $limitWithTies(boolean limitWithTies) {
+        return getDelegate().$limitWithTies(limitWithTies);
+    }
+
+    @Override
+    public final Field<? extends Number> $offset() {
+        return getDelegate().$offset();
+    }
+
+    @Override
+    public final Select<R> $offset(Field<? extends Number> o) {
+        return getDelegate().$offset(o);
+    }
+
 
 
 

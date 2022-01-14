@@ -291,6 +291,9 @@ import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 
 /**
  * A sub-select is a <code>SELECT</code> statement that can be combined with
@@ -4583,6 +4586,62 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final UnmodifiableList<SortField<?>> $orderBy() {
         return QOM.unmodifiable(orderBy);
+    }
+
+    @Override
+    public final Field<? extends Number> $limit() {
+        return (Field<? extends Number>) getLimit().numberOfRows;
+    }
+
+    @Override
+    public final Select<R> $limit(Field<? extends Number> newLimit) {
+        if ($limit() == newLimit)
+            return this;
+
+        // [#5695] TODO: Support all types of Field!
+        else
+            return copy(s -> s.getLimit().setNumberOfRows((Param<?>) newLimit));
+    }
+
+    @Override
+    public final boolean $limitPercent() {
+        return getLimit().percent;
+    }
+
+    @Override
+    public final Select<R> $limitPercent(boolean newLimitPercent) {
+        if ($limitPercent() == newLimitPercent)
+            return this;
+        else
+            return copy(s -> s.getLimit().setPercent(newLimitPercent));
+    }
+
+    @Override
+    public final boolean $limitWithTies() {
+        return getLimit().withTies;
+    }
+
+    @Override
+    public final Select<R> $limitWithTies(boolean newLimitWithTies) {
+        if ($limitPercent() == newLimitWithTies)
+            return this;
+        else
+            return copy(s -> s.getLimit().setWithTies(newLimitWithTies));
+    }
+
+    @Override
+    public final Field<? extends Number> $offset() {
+        return (Field<? extends Number>) getLimit().offset;
+    }
+
+    @Override
+    public final Select<R> $offset(Field<? extends Number> newOffset) {
+        if ($limit() == newOffset)
+            return this;
+
+        // [#5695] TODO: Support all types of Field!
+        else
+            return copy(s -> s.getLimit().setOffset((Param<?>) newOffset));
     }
 
 

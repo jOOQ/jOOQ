@@ -2,8 +2,12 @@ package org.jooq.example.r2dbc.test;
 
 import static org.jooq.example.r2dbc.db.Tables.AUTHOR;
 import static org.jooq.example.r2dbc.db.Tables.BOOK;
+import static org.junit.Assert.assertEquals;
+
+import java.util.List;
 
 import org.jooq.DSLContext;
+import org.jooq.Record3;
 import org.jooq.RowCountQuery;
 import org.jooq.Source;
 import org.jooq.impl.DSL;
@@ -42,6 +46,7 @@ public class R2dbcTest {
 
     @Test
     public void test() {
+        Record3<String, String, String> r =
         Flux.from(ctx
                 .insertInto(AUTHOR)
                 .columns(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
@@ -54,7 +59,10 @@ public class R2dbcTest {
             .thenMany(ctx
                 .select(BOOK.author().FIRST_NAME, BOOK.author().LAST_NAME, BOOK.TITLE)
                 .from(BOOK))
-            .doOnNext(System.out::println)
-            .subscribe();
+            .blockFirst();
+        
+        assertEquals("John", r.value1());
+        assertEquals("Doe", r.value2());
+        assertEquals("Fancy Book", r.value3());
     }
 }

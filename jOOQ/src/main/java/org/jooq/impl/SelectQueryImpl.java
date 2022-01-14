@@ -2178,8 +2178,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
+        if (TRUE.equals(context.data(BooleanDataKey.DATA_RENDERING_DATA_CHANGE_DELTA_TABLE)))
+            context.qualify(false);
 
         context.declareFields(true);
 
@@ -2195,10 +2195,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         else
             context.visit(getSelectResolveUnsupportedAsterisks(context.configuration()));
 
-
-
-
-
+        if (TRUE.equals(context.data(BooleanDataKey.DATA_RENDERING_DATA_CHANGE_DELTA_TABLE)))
+            context.qualify(qualify);
 
         context.declareFields(false)
                .end(SELECT_SELECT);

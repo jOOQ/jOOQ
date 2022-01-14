@@ -14572,7 +14572,11 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> field(SelectField<T> field) {
-        return field instanceof Field ? (Field<T>) field : field("{0}", field.getDataType(), field);
+        return field instanceof Field
+             ? (Field<T>) field
+             : field instanceof AbstractRow
+             ? (Field<T>) ((AbstractRow<?>) field).rf()
+             : field("{0}", field.getDataType(), field);
     }
 
 

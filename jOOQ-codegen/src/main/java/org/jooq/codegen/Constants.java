@@ -61,7 +61,7 @@ public final class Constants {
      * This is the same as {@link #MINOR_VERSION}, but it may include patch
      * version suffixes.
      */
-    public static final String VERSION        = "3.15.6-SNAPSHOT";
+    public static final String VERSION        = "3.15.6";
 
     /**
      * The latest jOOQ full version.
@@ -69,7 +69,7 @@ public final class Constants {
      * This is the same as {@link #VERSION}, but it may include release
      * candidate and other suffixes.
      */
-    public static final String FULL_VERSION   = "3.15.6-SNAPSHOT";
+    public static final String FULL_VERSION   = "3.15.6";
 
     /**
      * The current jooq-runtime XSD file name.

@@ -296,7 +296,12 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
                         if (ctx.configuration().connectionFactory() instanceof NoConnectionFactory)
                             throw new DetachedException("Cannot execute query. No JDBC Connection configured");
                         else
-                            throw new DetachedException("Attempt to execute a blocking method (e.g. Query.execute() or ResultQuery.fetch()) when only an R2BDC ConnectionFactory was configured");
+                            throw new DetachedException(
+                                "Attempt to execute a blocking method (e.g. Query.execute() or ResultQuery.fetch()) "
+                              + "when only an R2BDC ConnectionFactory was configured. jOOQ's RowCountQuery and ResultQuery "
+                              + "extend Publisher, which allows for reactive streams implementations to subscribe to the "
+                              + "results of a jOOQ query. Simply embed your query in the stream, e.g. using Flux.from(query). "
+                              + "See also: https://www.jooq.org/doc/latest/manual/sql-execution/fetching/reactive-fetching/");
 
                     listener.prepareStart(ctx);
                     prepare(ctx);

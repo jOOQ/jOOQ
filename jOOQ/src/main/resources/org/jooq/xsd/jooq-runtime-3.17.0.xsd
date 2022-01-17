@@ -302,16 +302,6 @@ To enable this feature, {@link #transformPatterns} must be enabled as well.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
-      <element name="transformPatternsNotTruthValue" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>NOT(TRUE)</code> to <code>FALSE</code> and <code>NOT(FALSE)</code> to <code>TRUE</code>.
-<p>
-This transformation removes a redundant logic negation of truth values.
-<p>
-To enable this feature, {@link #transformPatterns} must be enabled as well.
-<p>
-This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
-      </element>
-      
       <element name="transformPatternsNotComparison" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>NOT (a != b)</code> to <code>a = b/code>, and similar comparisons.
 <p>

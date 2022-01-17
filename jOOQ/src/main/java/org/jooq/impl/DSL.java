@@ -283,6 +283,7 @@ import org.jooq.MergeKeyStepN;
 import org.jooq.MergeUsingStep;
 import org.jooq.Name;
 import org.jooq.Name.Quoted;
+import org.jooq.Null;
 import org.jooq.Operator;
 import org.jooq.OrderField;
 import org.jooq.OrderedAggregateFunction;
@@ -14411,7 +14412,8 @@ public class DSL {
     }
 
     /**
-     * Return a <code>Condition</code> that will always evaluate to true.
+     * Return a <code>Condition</code> that will always evaluate to
+     * <code>TRUE</code>.
      */
     @NotNull
     @Support
@@ -14420,12 +14422,23 @@ public class DSL {
     }
 
     /**
-     * Return a <code>Condition</code> that will always evaluate to false.
+     * Return a <code>Condition</code> that will always evaluate to
+     * <code>FALSE</code>.
      */
     @NotNull
     @Support
     public static False falseCondition() {
         return FalseCondition.INSTANCE;
+    }
+
+    /**
+     * Return a <code>Condition</code> that will always evaluate to
+     * <code>NULL</code>.
+     */
+    @NotNull
+    @Support
+    public static Null nullCondition() {
+        return NullCondition.INSTANCE;
     }
 
     /**

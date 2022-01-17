@@ -118,8 +118,6 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNotNot = true;
     @XmlElement(defaultValue = "true")
-    protected Boolean transformPatternsNotTruthValue = true;
-    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNotComparison = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNotNotDistinct = true;
@@ -1218,36 +1216,6 @@ public class Settings
      */
     public void setTransformPatternsNotNot(Boolean value) {
         this.transformPatternsNotNot = value;
-    }
-
-    /**
-     * Transform <code>NOT(TRUE)</code> to <code>FALSE</code> and <code>NOT(FALSE)</code> to <code>TRUE</code>.
-     * <p>
-     * This transformation removes a redundant logic negation of truth values.
-     * <p>
-     * To enable this feature, {@link #transformPatterns} must be enabled as well.
-     * <p>
-     * This feature is available in the commercial distribution only.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public Boolean isTransformPatternsNotTruthValue() {
-        return transformPatternsNotTruthValue;
-    }
-
-    /**
-     * Sets the value of the transformPatternsNotTruthValue property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setTransformPatternsNotTruthValue(Boolean value) {
-        this.transformPatternsNotTruthValue = value;
     }
 
     /**
@@ -3689,11 +3657,6 @@ public class Settings
         return this;
     }
 
-    public Settings withTransformPatternsNotTruthValue(Boolean value) {
-        setTransformPatternsNotTruthValue(value);
-        return this;
-    }
-
     public Settings withTransformPatternsNotComparison(Boolean value) {
         setTransformPatternsNotComparison(value);
         return this;
@@ -4550,7 +4513,6 @@ public class Settings
         builder.append("transformPatterns", transformPatterns);
         builder.append("transformPatternsTrim", transformPatternsTrim);
         builder.append("transformPatternsNotNot", transformPatternsNotNot);
-        builder.append("transformPatternsNotTruthValue", transformPatternsNotTruthValue);
         builder.append("transformPatternsNotComparison", transformPatternsNotComparison);
         builder.append("transformPatternsNotNotDistinct", transformPatternsNotNotDistinct);
         builder.append("transformPatternsTrivialPredicates", transformPatternsTrivialPredicates);
@@ -4976,15 +4938,6 @@ public class Settings
             }
         } else {
             if (!transformPatternsNotNot.equals(other.transformPatternsNotNot)) {
-                return false;
-            }
-        }
-        if (transformPatternsNotTruthValue == null) {
-            if (other.transformPatternsNotTruthValue!= null) {
-                return false;
-            }
-        } else {
-            if (!transformPatternsNotTruthValue.equals(other.transformPatternsNotTruthValue)) {
                 return false;
             }
         }
@@ -5938,7 +5891,6 @@ public class Settings
         result = ((prime*result)+((transformPatterns == null)? 0 :transformPatterns.hashCode()));
         result = ((prime*result)+((transformPatternsTrim == null)? 0 :transformPatternsTrim.hashCode()));
         result = ((prime*result)+((transformPatternsNotNot == null)? 0 :transformPatternsNotNot.hashCode()));
-        result = ((prime*result)+((transformPatternsNotTruthValue == null)? 0 :transformPatternsNotTruthValue.hashCode()));
         result = ((prime*result)+((transformPatternsNotComparison == null)? 0 :transformPatternsNotComparison.hashCode()));
         result = ((prime*result)+((transformPatternsNotNotDistinct == null)? 0 :transformPatternsNotNotDistinct.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialPredicates == null)? 0 :transformPatternsTrivialPredicates.hashCode()));

@@ -77,5 +77,6 @@ public interface LoaderLoadStep<R extends Record> {
      */
     @NotNull @CheckReturnValue
     @Support
+    @Blocking
     Loader<R> execute() throws IOException;
 }

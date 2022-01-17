@@ -63,6 +63,7 @@ import java.util.Optional;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 
+import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -79,6 +80,7 @@ import org.jetbrains.annotations.Nullable;
  *            <code>&lt;T&gt;</code> type for single-column keys, or a
  *            {@link Record} subtype for composite keys.
  */
+@Blocking
 public interface DAO<R extends TableRecord<R>, P, T> {
 
     /**

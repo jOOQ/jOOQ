@@ -40,6 +40,7 @@ package org.jooq;
 import org.jooq.exception.DataMigrationException;
 import org.jooq.exception.DataMigrationValidationException;
 
+import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -83,5 +84,6 @@ public interface Migration extends Scope {
      * @throws DataMigrationException When something went wrong during the
      *             application of the migration.
      */
+    @Blocking
     void execute() throws DataMigrationException;
 }

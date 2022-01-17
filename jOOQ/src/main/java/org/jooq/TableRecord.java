@@ -42,6 +42,7 @@ import java.util.Collection;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 
+import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -117,6 +118,7 @@ public interface TableRecord<R extends TableRecord<R>> extends QualifiedRecord<R
      */
     @Nullable
     @Support
+    @Blocking
     <O extends UpdatableRecord<O>> O fetchParent(ForeignKey<R, O> key) throws DataAccessException;
 
     /**

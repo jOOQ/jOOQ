@@ -42,6 +42,7 @@ import java.util.List;
 
 import org.jooq.exception.DataAccessException;
 
+import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -98,6 +99,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * @see TableRecord#fetchParent(ForeignKey)
      */
     @Nullable
+    @Blocking
     O fetchParent(R record) throws DataAccessException;
 
     /**
@@ -111,6 +113,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * @see TableRecord#fetchParent(ForeignKey)
      */
     @NotNull
+    @Blocking
     Result<O> fetchParents(R... records) throws DataAccessException;
 
     /**
@@ -124,6 +127,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * @see TableRecord#fetchParent(ForeignKey)
      */
     @NotNull
+    @Blocking
     Result<O> fetchParents(Collection<? extends R> records) throws DataAccessException;
 
     /**
@@ -137,6 +141,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * @see UpdatableRecord#fetchChildren(ForeignKey)
      */
     @NotNull
+    @Blocking
     Result<R> fetchChildren(O record) throws DataAccessException;
 
     /**
@@ -151,6 +156,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * @see UpdatableRecord#fetchChildren(ForeignKey)
      */
     @NotNull
+    @Blocking
     Result<R> fetchChildren(O... records) throws DataAccessException;
 
     /**
@@ -165,6 +171,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * @see UpdatableRecord#fetchChildren(ForeignKey)
      */
     @NotNull
+    @Blocking
     Result<R> fetchChildren(Collection<? extends O> records) throws DataAccessException;
 
     /**

@@ -41,6 +41,7 @@ import java.util.List;
 
 import org.jooq.exception.DataAccessException;
 
+import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -157,6 +158,7 @@ public interface Routine<T> extends Qualified, Attachable {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Blocking
     int execute(Configuration configuration) throws DataAccessException;
 
     /**
@@ -164,6 +166,7 @@ public interface Routine<T> extends Qualified, Attachable {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Blocking
     int execute() throws DataAccessException;
 
     // -------------------------------------------------------------------------

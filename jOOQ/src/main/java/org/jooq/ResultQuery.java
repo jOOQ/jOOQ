@@ -66,6 +66,7 @@ import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.DefaultRecordMapper;
 
+import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -160,6 +161,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
+    @Blocking
     Result<R> fetch() throws DataAccessException;
 
     /**
@@ -181,6 +183,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
+    @Blocking
     ResultSet fetchResultSet() throws DataAccessException;
 
     /**
@@ -191,6 +194,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Override
+    @Blocking
     Iterator<R> iterator() throws DataAccessException;
 
     /**
@@ -201,8 +205,20 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Override
+    @Blocking
     default Spliterator<R> spliterator() {
         return Iterable.super.spliterator();
+    }
+
+    /**
+     * Execute the query and consume its results.
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    @Blocking
+    default void forEach(Consumer<? super R> action) {
+        Iterable.super.forEach(action);
     }
 
     /**
@@ -233,6 +249,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see #stream()
      */
     @NotNull
+    @Blocking
     Stream<R> fetchStream() throws DataAccessException;
 
     /**
@@ -271,6 +288,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      *             exception that might have occurred while mapping records
      */
     @NotNull
+    @Blocking
     <E> Stream<E> fetchStreamInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -310,6 +328,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
+    @Blocking
     <Z extends Record> Stream<Z> fetchStreamInto(Table<Z> table) throws DataAccessException;
 
     /**
@@ -339,6 +358,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
+    @Blocking
     Stream<R> stream() throws DataAccessException;
 
     /**
@@ -368,6 +388,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @return The result of the collection.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Blocking
     <X, A> X collect(Collector<? super R, A, X> collector) throws DataAccessException;
 
     /**
@@ -390,6 +411,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see ResultQuery#fetchSize(int)
      */
     @NotNull
+    @Blocking
     Cursor<R> fetchLazy() throws DataAccessException;
 
     /**
@@ -408,6 +430,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
+    @Blocking
     Results fetchMany() throws DataAccessException;
 
     /**
@@ -427,6 +450,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
+    @Blocking
     <T> List<T> fetch(Field<T> field) throws DataAccessException;
 
     /**
@@ -452,6 +476,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Record#get(Field, Class)
      */
     @NotNull
+    @Blocking
     <U> List<U> fetch(Field<?> field, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -473,6 +498,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Record#get(Field, Converter)
      */
     @NotNull
+    @Blocking
     <T, U> List<U> fetch(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -493,6 +519,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
+    @Blocking
     List<?> fetch(int fieldIndex) throws DataAccessException;
 
     /**
@@ -518,6 +545,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Record#get(int, Class)
      */
     @NotNull
+    @Blocking
     <U> List<U> fetch(int fieldIndex, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -539,6 +567,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Record#get(int, Converter)
      */
     @NotNull
+    @Blocking
     <U> List<U> fetch(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -559,6 +588,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
+    @Blocking
     List<?> fetch(String fieldName) throws DataAccessException;
 
     /**
@@ -584,6 +614,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Record#get(String, Class)
      */
     @NotNull
+    @Blocking
     <U> List<U> fetch(String fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -605,6 +636,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Record#get(String, Converter)
      */
     @NotNull
+    @Blocking
     <U> List<U> fetch(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -625,6 +657,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
+    @Blocking
     List<?> fetch(Name fieldName) throws DataAccessException;
 
     /**
@@ -650,6 +683,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Record#get(Name, Class)
      */
     @NotNull
+    @Blocking
     <U> List<U> fetch(Name fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -671,6 +705,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Record#get(Name, Converter)
      */
     @NotNull
+    @Blocking
     <U> List<U> fetch(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -688,6 +723,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <T> T fetchOne(Field<T> field) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -709,6 +745,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <U> U fetchOne(Field<?> field, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -726,6 +763,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <T, U> U fetchOne(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -743,6 +781,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     Object fetchOne(int fieldIndex) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -764,6 +803,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <U> U fetchOne(int fieldIndex, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -781,6 +821,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <U> U fetchOne(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -798,6 +839,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     Object fetchOne(String fieldName) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -819,6 +861,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <U> U fetchOne(String fieldName, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -836,6 +879,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <U> U fetchOne(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -853,6 +897,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     Object fetchOne(Name fieldName) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -874,6 +919,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <U> U fetchOne(Name fieldName, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -891,6 +937,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <U> U fetchOne(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -906,6 +953,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     R fetchOne() throws DataAccessException, TooManyRowsException;
 
     /**
@@ -918,6 +966,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <E> E fetchOne(RecordMapper<? super R, E> mapper) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -932,6 +981,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Record#intoMap()
      */
     @Nullable
+    @Blocking
     Map<String, Object> fetchOneMap() throws DataAccessException, TooManyRowsException;
 
     /**
@@ -946,6 +996,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     Object @Nullable [] fetchOneArray() throws DataAccessException, TooManyRowsException;
 
     /**
@@ -972,6 +1023,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @Nullable
+    @Blocking
     <E> E fetchOneInto(Class<? extends E> type) throws DataAccessException, MappingException, TooManyRowsException;
 
     /**
@@ -999,6 +1051,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1018,6 +1071,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <T> T fetchSingle(Field<T> field) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1041,6 +1095,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <U> U fetchSingle(Field<?> field, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1060,6 +1115,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <T, U> U fetchSingle(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1079,6 +1135,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     Object fetchSingle(int fieldIndex) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1102,6 +1159,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <U> U fetchSingle(int fieldIndex, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1121,6 +1179,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <U> U fetchSingle(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1140,6 +1199,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     Object fetchSingle(String fieldName) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1163,6 +1223,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <U> U fetchSingle(String fieldName, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1182,6 +1243,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <U> U fetchSingle(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1201,6 +1263,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     Object fetchSingle(Name fieldName) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1224,6 +1287,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <U> U fetchSingle(Name fieldName, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1243,6 +1307,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     <U> U fetchSingle(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1258,6 +1323,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     R fetchSingle() throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1270,6 +1336,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     <E> E fetchSingle(RecordMapper<? super R, E> mapper) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1284,6 +1351,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Record#intoMap()
      */
     @NotNull
+    @Blocking
     Map<String, Object> fetchSingleMap() throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1298,6 +1366,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Nullable
+    @Blocking
     Object @NotNull [] fetchSingleArray() throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1323,6 +1392,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      * @see DefaultRecordMapper
      */
+    @Blocking
     // [#10774] This is @Nullable in rare cases, which can be annoying for Kotlin users in most cases
     <E> E fetchSingleInto(Class<? extends E> type) throws DataAccessException, MappingException, NoDataFoundException, TooManyRowsException;
 
@@ -1351,6 +1421,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     <Z extends Record> Z fetchSingleInto(Table<Z> table) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1367,6 +1438,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     <T> Optional<T> fetchOptional(Field<T> field) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1387,6 +1459,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     <U> Optional<U> fetchOptional(Field<?> field, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1403,6 +1476,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     <T, U> Optional<U> fetchOptional(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1419,6 +1493,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     Optional<?> fetchOptional(int fieldIndex) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1439,6 +1514,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     <U> Optional<U> fetchOptional(int fieldIndex, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1455,6 +1531,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     <U> Optional<U> fetchOptional(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1471,6 +1548,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     Optional<?> fetchOptional(String fieldName) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1491,6 +1569,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     <U> Optional<U> fetchOptional(String fieldName, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1507,6 +1586,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     <U> Optional<U> fetchOptional(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1523,6 +1603,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     Optional<?> fetchOptional(Name fieldName) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1543,6 +1624,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     <U> Optional<U> fetchOptional(Name fieldName, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1559,6 +1641,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     <U> Optional<U> fetchOptional(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1573,6 +1656,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     Optional<R> fetchOptional() throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1584,6 +1668,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     <E> Optional<E> fetchOptional(RecordMapper<? super R, E> mapper) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1597,6 +1682,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Record#intoMap()
      */
     @NotNull
+    @Blocking
     Optional<Map<String, Object>> fetchOptionalMap() throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1607,6 +1693,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     Optional<Object[]> fetchOptionalArray() throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1628,6 +1715,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Optional<E> fetchOptionalInto(Class<? extends E> type) throws DataAccessException, MappingException, TooManyRowsException;
 
     /**
@@ -1650,6 +1738,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws TooManyRowsException if the query returned more than one record
      */
     @NotNull
+    @Blocking
     <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1666,6 +1755,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @Nullable
+    @Blocking
     <T> T fetchAny(Field<T> field) throws DataAccessException;
 
     /**
@@ -1686,6 +1776,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @Nullable
+    @Blocking
     <U> U fetchAny(Field<?> field, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -1702,6 +1793,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @Nullable
+    @Blocking
     <T, U> U fetchAny(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -1718,6 +1810,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @Nullable
+    @Blocking
     Object fetchAny(int fieldIndex) throws DataAccessException;
 
     /**
@@ -1738,6 +1831,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @Nullable
+    @Blocking
     <U> U fetchAny(int fieldIndex, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -1754,6 +1848,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @Nullable
+    @Blocking
     <U> U fetchAny(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -1770,6 +1865,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @Nullable
+    @Blocking
     Object fetchAny(String fieldName) throws DataAccessException;
 
     /**
@@ -1790,6 +1886,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @Nullable
+    @Blocking
     <U> U fetchAny(String fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -1806,6 +1903,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @Nullable
+    @Blocking
     <U> U fetchAny(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -1822,6 +1920,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @Nullable
+    @Blocking
     Object fetchAny(Name fieldName) throws DataAccessException;
 
     /**
@@ -1842,6 +1941,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @Nullable
+    @Blocking
     <U> U fetchAny(Name fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -1858,6 +1958,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @Nullable
+    @Blocking
     <U> U fetchAny(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -1872,6 +1973,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @Nullable
+    @Blocking
     R fetchAny() throws DataAccessException;
 
     /**
@@ -1886,6 +1988,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @Nullable
+    @Blocking
     <E> E fetchAny(RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
@@ -1899,6 +2002,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Record#intoMap()
      */
     @Nullable
+    @Blocking
     Map<String, Object> fetchAnyMap() throws DataAccessException;
 
     /**
@@ -1912,6 +2016,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @Nullable
+    @Blocking
     Object @Nullable [] fetchAnyArray() throws DataAccessException;
 
     /**
@@ -1937,6 +2042,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @Nullable
+    @Blocking
     <E> E fetchAnyInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -1963,6 +2069,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @Nullable
+    @Blocking
     <Z extends Record> Z fetchAnyInto(Table<Z> table) throws DataAccessException;
 
     /**
@@ -1982,6 +2089,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Record#intoMap()
      */
     @NotNull
+    @Blocking
     List<Map<String, Object>> fetchMaps() throws DataAccessException;
 
     /**
@@ -2014,6 +2122,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(Field)
      */
     @NotNull
+    @Blocking
     <K> Map<K, R> fetchMap(Field<K> key) throws DataAccessException;
 
     /**
@@ -2045,6 +2154,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(int)
      */
     @NotNull
+    @Blocking
     Map<?, R> fetchMap(int keyFieldIndex) throws DataAccessException;
 
     /**
@@ -2076,6 +2186,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(String)
      */
     @NotNull
+    @Blocking
     Map<?, R> fetchMap(String keyFieldName) throws DataAccessException;
 
     /**
@@ -2107,6 +2218,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(Name)
      */
     @NotNull
+    @Blocking
     Map<?, R> fetchMap(Name keyFieldName) throws DataAccessException;
 
     /**
@@ -2141,6 +2253,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(Field, Field)
      */
     @NotNull
+    @Blocking
     <K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value) throws DataAccessException;
 
     /**
@@ -2169,6 +2282,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(int, int)
      */
     @NotNull
+    @Blocking
     Map<?, ?> fetchMap(int keyFieldIndex, int valueFieldIndex) throws DataAccessException;
 
     /**
@@ -2202,6 +2316,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(String, String)
      */
     @NotNull
+    @Blocking
     Map<?, ?> fetchMap(String keyFieldName, String valueFieldName) throws DataAccessException;
 
     /**
@@ -2230,6 +2345,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(Name, Name)
      */
     @NotNull
+    @Blocking
     Map<?, ?> fetchMap(Name keyFieldName, Name valueFieldName) throws DataAccessException;
 
     /**
@@ -2257,6 +2373,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(Field[])
      */
     @NotNull
+    @Blocking
     Map<Record, R> fetchMap(Field<?>[] keys) throws DataAccessException;
 
     /**
@@ -2284,6 +2401,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(int[])
      */
     @NotNull
+    @Blocking
     Map<Record, R> fetchMap(int[] keyFieldIndexes) throws DataAccessException;
 
     /**
@@ -2311,6 +2429,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(String[])
      */
     @NotNull
+    @Blocking
     Map<Record, R> fetchMap(String[] keyFieldNames) throws DataAccessException;
 
     /**
@@ -2338,6 +2457,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(Name[])
      */
     @NotNull
+    @Blocking
     Map<Record, R> fetchMap(Name[] keyFieldNames) throws DataAccessException;
 
     /**
@@ -2366,6 +2486,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(Field[], Field[])
      */
     @NotNull
+    @Blocking
     Map<Record, Record> fetchMap(Field<?>[] keys, Field<?>[] values) throws DataAccessException;
 
     /**
@@ -2394,6 +2515,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(int[], int[])
      */
     @NotNull
+    @Blocking
     Map<Record, Record> fetchMap(int[] keyFieldIndexes, int[] valueFieldIndexes) throws DataAccessException;
 
     /**
@@ -2422,6 +2544,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(String[], String[])
      */
     @NotNull
+    @Blocking
     Map<Record, Record> fetchMap(String[] keyFieldNames, String[] valueFieldNames) throws DataAccessException;
 
     /**
@@ -2450,6 +2573,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(Name[], Name[])
      */
     @NotNull
+    @Blocking
     Map<Record, Record> fetchMap(Name[] keyFieldNames, Name[] valueFieldNames) throws DataAccessException;
 
     /**
@@ -2482,6 +2606,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<List<?>, E> fetchMap(Field<?>[] keys, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -2514,6 +2639,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<List<?>, E> fetchMap(int[] keyFieldIndexes, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -2546,6 +2672,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<List<?>, E> fetchMap(String[] keyFieldNames, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -2578,6 +2705,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<List<?>, E> fetchMap(Name[] keyFieldNames, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -2610,6 +2738,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<List<?>, E> fetchMap(Field<?>[] keys, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
@@ -2642,6 +2771,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<List<?>, E> fetchMap(int[] keyFieldIndexes, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
@@ -2674,6 +2804,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<List<?>, E> fetchMap(String[] keyFieldNames, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
@@ -2706,6 +2837,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<List<?>, E> fetchMap(Name[] keyFieldNames, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
@@ -2739,6 +2871,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <K> Map<K, R> fetchMap(Class<? extends K> keyType) throws DataAccessException, MappingException, InvalidResultException;
 
     /**
@@ -2773,6 +2906,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <K, V> Map<K, V> fetchMap(Class<? extends K> keyType, Class<? extends V> valueType) throws DataAccessException, MappingException, InvalidResultException;
 
     /**
@@ -2807,6 +2941,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <K, V> Map<K, V> fetchMap(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) throws DataAccessException, InvalidResultException, MappingException;
 
     /**
@@ -2839,6 +2974,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <K> Map<K, R> fetchMap(RecordMapper<? super R, K> keyMapper) throws DataAccessException, InvalidResultException, MappingException;
 
     /**
@@ -2872,6 +3008,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <K, V> Map<K, V> fetchMap(RecordMapper<? super R, K> keyMapper, Class<V> valueType) throws DataAccessException, InvalidResultException, MappingException;
 
     /**
@@ -2905,6 +3042,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <K, V> Map<K, V> fetchMap(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) throws DataAccessException, InvalidResultException, MappingException;
 
     /**
@@ -2932,6 +3070,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(Table)
      */
     @NotNull
+    @Blocking
     <S extends Record> Map<S, R> fetchMap(Table<S> table) throws DataAccessException;
 
     /**
@@ -2960,6 +3099,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(Table, Table)
      */
     @NotNull
+    @Blocking
     <S extends Record, T extends Record> Map<S, T> fetchMap(Table<S> keyTable, Table<T> valueTable) throws DataAccessException;
 
     /**
@@ -2991,6 +3131,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E, S extends Record> Map<S, E> fetchMap(Table<S> table, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -3022,6 +3163,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E, S extends Record> Map<S, E> fetchMap(Table<S> table, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
@@ -3050,6 +3192,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(Field, Class)
      */
     @NotNull
+    @Blocking
     <K, E> Map<K, E> fetchMap(Field<K> key, Class<? extends E> type) throws DataAccessException;
 
     /**
@@ -3078,6 +3221,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(int, Class)
      */
     @NotNull
+    @Blocking
     <E> Map<?, E> fetchMap(int keyFieldIndex, Class<? extends E> type) throws DataAccessException;
 
     /**
@@ -3106,6 +3250,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(String, Class)
      */
     @NotNull
+    @Blocking
     <E> Map<?, E> fetchMap(String keyFieldName, Class<? extends E> type) throws DataAccessException;
 
     /**
@@ -3134,6 +3279,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(Name, Class)
      */
     @NotNull
+    @Blocking
     <E> Map<?, E> fetchMap(Name keyFieldName, Class<? extends E> type) throws DataAccessException;
 
     /**
@@ -3162,6 +3308,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(Field, Class)
      */
     @NotNull
+    @Blocking
     <K, E> Map<K, E> fetchMap(Field<K> key, RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
@@ -3190,6 +3337,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(int, Class)
      */
     @NotNull
+    @Blocking
     <E> Map<?, E> fetchMap(int keyFieldIndex, RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
@@ -3218,6 +3366,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(String, Class)
      */
     @NotNull
+    @Blocking
     <E> Map<?, E> fetchMap(String keyFieldName, RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
@@ -3246,6 +3395,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoMap(Name, Class)
      */
     @NotNull
+    @Blocking
     <E> Map<?, E> fetchMap(Name keyFieldName, RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
@@ -3274,6 +3424,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoGroups(Field)
      */
     @NotNull
+    @Blocking
     <K> Map<K, Result<R>> fetchGroups(Field<K> key) throws DataAccessException;
 
     /**
@@ -3301,6 +3452,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoGroups(int)
      */
     @NotNull
+    @Blocking
     Map<?, Result<R>> fetchGroups(int keyFieldIndex) throws DataAccessException;
 
     /**
@@ -3328,6 +3480,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoGroups(String)
      */
     @NotNull
+    @Blocking
     Map<?, Result<R>> fetchGroups(String keyFieldName) throws DataAccessException;
 
     /**
@@ -3355,6 +3508,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoGroups(Name)
      */
     @NotNull
+    @Blocking
     Map<?, Result<R>> fetchGroups(Name keyFieldName) throws DataAccessException;
 
     /**
@@ -3386,6 +3540,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoGroups(Field, Field)
      */
     @NotNull
+    @Blocking
     <K, V> Map<K, List<V>> fetchGroups(Field<K> key, Field<V> value) throws DataAccessException;
 
     /**
@@ -3410,6 +3565,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoGroups(int, int)
      */
     @NotNull
+    @Blocking
     Map<?, List<?>> fetchGroups(int keyFieldIndex, int valueFieldIndex) throws DataAccessException;
 
     /**
@@ -3434,6 +3590,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoGroups(String, String)
      */
     @NotNull
+    @Blocking
     Map<?, List<?>> fetchGroups(String keyFieldName, String valueFieldName) throws DataAccessException;
 
     /**
@@ -3458,6 +3615,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoGroups(Name, Name)
      */
     @NotNull
+    @Blocking
     Map<?, List<?>> fetchGroups(Name keyFieldName, Name valueFieldName) throws DataAccessException;
 
     /**
@@ -3483,6 +3641,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoGroups(Field[])
      */
     @NotNull
+    @Blocking
     Map<Record, Result<R>> fetchGroups(Field<?>[] keys) throws DataAccessException;
 
     /**
@@ -3508,6 +3667,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoGroups(int[])
      */
     @NotNull
+    @Blocking
     Map<Record, Result<R>> fetchGroups(int[] keyFieldIndexes) throws DataAccessException;
 
     /**
@@ -3533,6 +3693,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoGroups(String[])
      */
     @NotNull
+    @Blocking
     Map<Record, Result<R>> fetchGroups(String[] keyFieldNames) throws DataAccessException;
 
     /**
@@ -3558,6 +3719,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoGroups(Name[])
      */
     @NotNull
+    @Blocking
     Map<Record, Result<R>> fetchGroups(Name[] keyFieldNames) throws DataAccessException;
 
     /**
@@ -3584,6 +3746,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoGroups(Field[], Field[])
      */
     @NotNull
+    @Blocking
     Map<Record, Result<Record>> fetchGroups(Field<?>[] keys, Field<?>[] values) throws DataAccessException;
 
     /**
@@ -3610,6 +3773,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoGroups(int[], int[])
      */
     @NotNull
+    @Blocking
     Map<Record, Result<Record>> fetchGroups(int[] keyFieldIndexes, int[] valueFieldIndexes) throws DataAccessException;
 
     /**
@@ -3636,6 +3800,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoGroups(String[], String[])
      */
     @NotNull
+    @Blocking
     Map<Record, Result<Record>> fetchGroups(String[] keyFieldNames, String[] valueFieldNames) throws DataAccessException;
 
     /**
@@ -3662,6 +3827,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoGroups(Name[], Name[])
      */
     @NotNull
+    @Blocking
     Map<Record, Result<Record>> fetchGroups(Name[] keyFieldNames, Name[] valueFieldNames) throws DataAccessException;
 
     /**
@@ -3690,6 +3856,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<Record, List<E>> fetchGroups(Field<?>[] keys, Class<? extends E> type) throws MappingException;
 
     /**
@@ -3718,6 +3885,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<Record, List<E>> fetchGroups(int[] keyFieldIndexes, Class<? extends E> type) throws MappingException;
 
     /**
@@ -3746,6 +3914,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<Record, List<E>> fetchGroups(String[] keyFieldNames, Class<? extends E> type) throws MappingException;
 
     /**
@@ -3774,6 +3943,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<Record, List<E>> fetchGroups(Name[] keyFieldNames, Class<? extends E> type) throws MappingException;
 
     /**
@@ -3802,6 +3972,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<Record, List<E>> fetchGroups(Field<?>[] keys, RecordMapper<? super R, E> mapper) throws MappingException;
 
     /**
@@ -3830,6 +4001,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<Record, List<E>> fetchGroups(int[] keyFieldIndexes, RecordMapper<? super R, E> mapper) throws MappingException;
 
     /**
@@ -3858,6 +4030,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<Record, List<E>> fetchGroups(String[] keyFieldNames, RecordMapper<? super R, E> mapper) throws MappingException;
 
     /**
@@ -3886,6 +4059,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<Record, List<E>> fetchGroups(Name[] keyFieldNames, RecordMapper<? super R, E> mapper) throws MappingException;
 
     /**
@@ -3915,6 +4089,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <K> Map<K, Result<R>> fetchGroups(Class<? extends K> keyType) throws MappingException;
 
     /**
@@ -3945,6 +4120,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <K, V> Map<K, List<V>> fetchGroups(Class<? extends K> keyType, Class<? extends V> valueType) throws MappingException;
 
     /**
@@ -3975,6 +4151,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <K, V> Map<K, List<V>> fetchGroups(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) throws MappingException;
 
     /**
@@ -4003,6 +4180,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <K> Map<K, Result<R>> fetchGroups(RecordMapper<? super R, K> keyMapper) throws MappingException;
 
     /**
@@ -4032,6 +4210,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <K, V> Map<K, List<V>> fetchGroups(RecordMapper<? super R, K> keyMapper, Class<V> valueType) throws MappingException;
 
     /**
@@ -4061,6 +4240,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <K, V> Map<K, List<V>> fetchGroups(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) throws MappingException;
 
     /**
@@ -4084,6 +4264,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoGroups(Table)
      */
     @NotNull
+    @Blocking
     <S extends Record> Map<S, Result<R>> fetchGroups(Table<S> table) throws DataAccessException;
 
     /**
@@ -4108,6 +4289,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoGroups(Table, Table)
      */
     @NotNull
+    @Blocking
     <S extends Record, T extends Record> Map<S, Result<T>> fetchGroups(Table<S> keyTable, Table<T> valueTable) throws DataAccessException;
 
     /**
@@ -4135,6 +4317,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E, S extends Record> Map<S, List<E>> fetchGroups(Table<S> table, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -4162,6 +4345,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E, S extends Record> Map<S, List<E>> fetchGroups(Table<S> table, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
@@ -4188,6 +4372,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <K, E> Map<K, List<E>> fetchGroups(Field<K> key, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -4212,6 +4397,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<?, List<E>> fetchGroups(int keyFieldIndex, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -4236,6 +4422,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<?, List<E>> fetchGroups(String keyFieldName, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -4260,6 +4447,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<?, List<E>> fetchGroups(Name keyFieldName, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -4286,6 +4474,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <K, E> Map<K, List<E>> fetchGroups(Field<K> key, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
@@ -4310,6 +4499,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<?, List<E>> fetchGroups(int keyFieldIndex, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
@@ -4334,6 +4524,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<?, List<E>> fetchGroups(String keyFieldName, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
@@ -4358,6 +4549,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @NotNull
+    @Blocking
     <E> Map<?, List<E>> fetchGroups(Name keyFieldName, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
@@ -4371,6 +4563,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoArrays()
      */
     @Nullable
+    @Blocking
     Object @NotNull [] @NotNull [] fetchArrays() throws DataAccessException;
 
     /**
@@ -4381,6 +4574,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#toArray(Object[])
      */
     @NotNull
+    @Blocking
     R @NotNull [] fetchArray() throws DataAccessException;
 
     /**
@@ -4398,6 +4592,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoArray(int)
      */
     @Nullable
+    @Blocking
     Object @NotNull [] fetchArray(int fieldIndex) throws DataAccessException;
 
     /**
@@ -4415,6 +4610,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int, Class)
      */
+    @Blocking
     <U> U @NotNull [] fetchArray(int fieldIndex, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -4428,6 +4624,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int, Converter)
      */
+    @Blocking
     <U> U @NotNull [] fetchArray(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -4445,6 +4642,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoArray(String)
      */
     @Nullable
+    @Blocking
     Object @NotNull [] fetchArray(String fieldName) throws DataAccessException;
 
     /**
@@ -4462,6 +4660,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String, Converter)
      */
+    @Blocking
     <U> U @NotNull [] fetchArray(String fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -4475,6 +4674,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String, Class)
      */
+    @Blocking
     <U> U @NotNull [] fetchArray(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -4492,6 +4692,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoArray(Name)
      */
     @Nullable
+    @Blocking
     Object @NotNull [] fetchArray(Name fieldName) throws DataAccessException;
 
     /**
@@ -4509,6 +4710,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name, Converter)
      */
+    @Blocking
     <U> U @NotNull [] fetchArray(Name fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -4522,6 +4724,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name, Class)
      */
+    @Blocking
     <U> U @NotNull [] fetchArray(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -4535,6 +4738,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field)
      */
+    @Blocking
     <T> T @NotNull [] fetchArray(Field<T> field) throws DataAccessException;
 
     /**
@@ -4552,6 +4756,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field, Class)
      */
+    @Blocking
     <U> U @NotNull [] fetchArray(Field<?> field, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -4565,6 +4770,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field, Converter)
      */
+    @Blocking
     <T, U> U @NotNull [] fetchArray(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -4580,6 +4786,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
+    @Blocking
     <E> Set<E> fetchSet(RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
@@ -4596,6 +4803,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoArray(int)
      */
     @NotNull
+    @Blocking
     Set<?> fetchSet(int fieldIndex) throws DataAccessException;
 
     /**
@@ -4616,6 +4824,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoArray(int, Class)
      */
     @NotNull
+    @Blocking
     <U> Set<U> fetchSet(int fieldIndex, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -4632,6 +4841,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoArray(int, Converter)
      */
     @NotNull
+    @Blocking
     <U> Set<U> fetchSet(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -4648,6 +4858,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoArray(String)
      */
     @NotNull
+    @Blocking
     Set<?> fetchSet(String fieldName) throws DataAccessException;
 
     /**
@@ -4668,6 +4879,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoArray(String, Converter)
      */
     @NotNull
+    @Blocking
     <U> Set<U> fetchSet(String fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -4684,6 +4896,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoArray(String, Class)
      */
     @NotNull
+    @Blocking
     <U> Set<U> fetchSet(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -4700,6 +4913,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoArray(Name)
      */
     @NotNull
+    @Blocking
     Set<?> fetchSet(Name fieldName) throws DataAccessException;
 
     /**
@@ -4720,6 +4934,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoArray(Name, Converter)
      */
     @NotNull
+    @Blocking
     <U> Set<U> fetchSet(Name fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -4736,6 +4951,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoArray(Name, Class)
      */
     @NotNull
+    @Blocking
     <U> Set<U> fetchSet(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -4756,6 +4972,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoArray(Field)
      */
     @NotNull
+    @Blocking
     <T> Set<T> fetchSet(Field<T> field) throws DataAccessException;
 
     /**
@@ -4776,6 +4993,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoArray(Field, Class)
      */
     @NotNull
+    @Blocking
     <U> Set<U> fetchSet(Field<?> field, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -4792,6 +5010,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see Result#intoArray(Field, Converter)
      */
     @NotNull
+    @Blocking
     <T, U> Set<U> fetchSet(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -4813,6 +5032,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      *             exception that might have occurred while mapping records
      */
     @NotNull
+    @Blocking
     <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -4838,6 +5058,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
+    @Blocking
     <Z extends Record> Result<Z> fetchInto(Table<Z> table) throws DataAccessException;
 
     /**
@@ -4855,6 +5076,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
+    @Blocking
     <H extends RecordHandler<? super R>> H fetchInto(H handler) throws DataAccessException;
 
     /**
@@ -4870,6 +5092,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
+    @Blocking
     <E> List<E> fetch(RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**

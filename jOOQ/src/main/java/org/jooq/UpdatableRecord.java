@@ -68,6 +68,7 @@ import org.jooq.exception.DataChangedException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TooManyRowsException;
 
+import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -604,6 +605,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      */
     @Nullable
     @Support
+    @Blocking
     <O extends TableRecord<O>> O fetchChild(ForeignKey<O, R> key) throws TooManyRowsException, DataAccessException;
 
     /**
@@ -619,6 +621,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      */
     @NotNull
     @Support
+    @Blocking
     <O extends TableRecord<O>> Result<O> fetchChildren(ForeignKey<O, R> key) throws DataAccessException;
 
     /**

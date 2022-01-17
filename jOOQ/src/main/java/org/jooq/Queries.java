@@ -44,6 +44,7 @@ import org.jooq.exception.DetachedException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.QOM.UnmodifiableList;
 
+import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -113,6 +114,7 @@ public interface Queries extends AttachableQueryPart, Iterable<Query> {
      *             {@link #queries()} is also unattached.
      */
     @NotNull
+    @Blocking
     Results fetchMany();
 
     /**
@@ -126,6 +128,7 @@ public interface Queries extends AttachableQueryPart, Iterable<Query> {
      *             unattached.
      * @see DSLContext#batch(Queries)
      */
+    @Blocking
     int @NotNull [] executeBatch();
 
     // -------------------------------------------------------------------------

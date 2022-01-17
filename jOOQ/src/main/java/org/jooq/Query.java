@@ -47,6 +47,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
 
+import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -74,6 +75,7 @@ public interface Query extends Statement, AttachableQueryPart, AutoCloseable {
      *         </ul>
      * @throws DataAccessException If anything goes wrong in the database
      */
+    @Blocking
     int execute() throws DataAccessException;
 
     /**

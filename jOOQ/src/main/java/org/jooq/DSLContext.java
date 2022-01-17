@@ -114,6 +114,7 @@ import org.jooq.tools.jdbc.MockDataProvider;
 import org.jooq.tools.jdbc.MockRunnable;
 import org.jooq.util.xml.jaxb.InformationSchema;
 
+import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -1054,6 +1055,7 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
+    @Blocking
     Result<Record> fetch(SQL sql) throws DataAccessException;
 
     /**
@@ -1082,6 +1084,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Result<Record> fetch(String sql) throws DataAccessException;
 
     /**
@@ -1114,6 +1117,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Result<Record> fetch(String sql, Object... bindings) throws DataAccessException;
 
     /**
@@ -1149,6 +1153,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Result<Record> fetch(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
@@ -1182,6 +1187,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Cursor<Record> fetchLazy(SQL sql) throws DataAccessException;
 
     /**
@@ -1215,6 +1221,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Cursor<Record> fetchLazy(String sql) throws DataAccessException;
 
     /**
@@ -1253,6 +1260,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Cursor<Record> fetchLazy(String sql, Object... bindings) throws DataAccessException;
 
     /**
@@ -1293,6 +1301,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Cursor<Record> fetchLazy(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
@@ -1588,6 +1597,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Stream<Record> fetchStream(SQL sql) throws DataAccessException;
 
     /**
@@ -1623,6 +1633,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Stream<Record> fetchStream(String sql) throws DataAccessException;
 
     /**
@@ -1663,6 +1674,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Stream<Record> fetchStream(String sql, Object... bindings) throws DataAccessException;
 
     /**
@@ -1705,6 +1717,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Stream<Record> fetchStream(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
@@ -1729,6 +1742,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Results fetchMany(SQL sql) throws DataAccessException;
 
     /**
@@ -1753,6 +1767,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Results fetchMany(String sql) throws DataAccessException;
 
     /**
@@ -1782,6 +1797,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Results fetchMany(String sql, Object... bindings) throws DataAccessException;
 
     /**
@@ -1817,6 +1833,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Results fetchMany(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
@@ -1845,6 +1862,7 @@ public interface DSLContext extends Scope {
     @Nullable
     @Support
     @PlainSQL
+    @Blocking
     Record fetchOne(SQL sql) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1873,6 +1891,7 @@ public interface DSLContext extends Scope {
     @Nullable
     @Support
     @PlainSQL
+    @Blocking
     Record fetchOne(String sql) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1906,6 +1925,7 @@ public interface DSLContext extends Scope {
     @Nullable
     @Support
     @PlainSQL
+    @Blocking
     Record fetchOne(String sql, Object... bindings) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1941,6 +1961,7 @@ public interface DSLContext extends Scope {
     @Nullable
     @Support
     @PlainSQL
+    @Blocking
     Record fetchOne(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1970,6 +1991,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Record fetchSingle(SQL sql) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1999,6 +2021,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Record fetchSingle(String sql) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -2033,6 +2056,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Record fetchSingle(String sql, Object... bindings) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -2069,6 +2093,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Record fetchSingle(String sql, QueryPart... parts) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -2097,6 +2122,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Optional<Record> fetchOptional(SQL sql) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -2125,6 +2151,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Optional<Record> fetchOptional(String sql) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -2158,6 +2185,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Optional<Record> fetchOptional(String sql, Object... bindings) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -2193,6 +2221,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Optional<Record> fetchOptional(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -2223,6 +2252,7 @@ public interface DSLContext extends Scope {
     @Nullable
     @Support
     @PlainSQL
+    @Blocking
     Object fetchValue(SQL sql) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -2253,6 +2283,7 @@ public interface DSLContext extends Scope {
     @Nullable
     @Support
     @PlainSQL
+    @Blocking
     Object fetchValue(String sql) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -2288,6 +2319,7 @@ public interface DSLContext extends Scope {
     @Nullable
     @Support
     @PlainSQL
+    @Blocking
     Object fetchValue(String sql, Object... bindings) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -2325,6 +2357,7 @@ public interface DSLContext extends Scope {
     @Nullable
     @Support
     @PlainSQL
+    @Blocking
     Object fetchValue(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -2355,6 +2388,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Optional<?> fetchOptionalValue(SQL sql) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -2385,6 +2419,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Optional<?> fetchOptionalValue(String sql) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -2420,6 +2455,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Optional<?> fetchOptionalValue(String sql, Object... bindings) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -2457,6 +2493,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     Optional<?> fetchOptionalValue(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -2486,6 +2523,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     List<?> fetchValues(SQL sql) throws DataAccessException, InvalidResultException;
 
     /**
@@ -2515,6 +2553,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     List<?> fetchValues(String sql) throws DataAccessException, InvalidResultException;
 
     /**
@@ -2549,6 +2588,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     List<?> fetchValues(String sql, Object... bindings) throws DataAccessException, InvalidResultException;
 
     /**
@@ -2585,6 +2625,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
+    @Blocking
     List<?> fetchValues(String sql, QueryPart... parts) throws DataAccessException, InvalidResultException;
 
     /**
@@ -2602,6 +2643,7 @@ public interface DSLContext extends Scope {
      */
     @Support
     @PlainSQL
+    @Blocking
     int execute(SQL sql) throws DataAccessException;
 
     /**
@@ -2619,6 +2661,7 @@ public interface DSLContext extends Scope {
      */
     @Support
     @PlainSQL
+    @Blocking
     int execute(String sql) throws DataAccessException;
 
     /**
@@ -2641,6 +2684,7 @@ public interface DSLContext extends Scope {
      */
     @Support
     @PlainSQL
+    @Blocking
     int execute(String sql, Object... bindings) throws DataAccessException;
 
     /**
@@ -2674,6 +2718,7 @@ public interface DSLContext extends Scope {
      */
     @Support
     @PlainSQL
+    @Blocking
     int execute(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
@@ -2873,6 +2918,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Result<Record> fetch(ResultSet rs) throws DataAccessException;
 
     /**
@@ -2895,6 +2941,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Result<Record> fetch(ResultSet rs, Field<?>... fields) throws DataAccessException;
 
     /**
@@ -2917,6 +2964,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Result<Record> fetch(ResultSet rs, DataType<?>... types) throws DataAccessException;
 
     /**
@@ -2939,6 +2987,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Result<Record> fetch(ResultSet rs, Class<?>... types) throws DataAccessException;
 
     /**
@@ -2955,6 +3004,7 @@ public interface DSLContext extends Scope {
      */
     @Nullable
     @Support
+    @Blocking
     Record fetchOne(ResultSet rs) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -2975,6 +3025,7 @@ public interface DSLContext extends Scope {
      */
     @Nullable
     @Support
+    @Blocking
     Record fetchOne(ResultSet rs, Field<?>... fields) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -2995,6 +3046,7 @@ public interface DSLContext extends Scope {
      */
     @Nullable
     @Support
+    @Blocking
     Record fetchOne(ResultSet rs, DataType<?>... types) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -3015,6 +3067,7 @@ public interface DSLContext extends Scope {
      */
     @Nullable
     @Support
+    @Blocking
     Record fetchOne(ResultSet rs, Class<?>... types) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -3031,6 +3084,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Record fetchSingle(ResultSet rs) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -3052,6 +3106,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Record fetchSingle(ResultSet rs, Field<?>... fields) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -3073,6 +3128,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Record fetchSingle(ResultSet rs, DataType<?>... types) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -3094,6 +3150,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Record fetchSingle(ResultSet rs, Class<?>... types) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -3111,6 +3168,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Optional<Record> fetchOptional(ResultSet rs) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -3131,6 +3189,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Optional<Record> fetchOptional(ResultSet rs, Field<?>... fields) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -3151,6 +3210,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Optional<Record> fetchOptional(ResultSet rs, DataType<?>... types) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -3171,6 +3231,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Optional<Record> fetchOptional(ResultSet rs, Class<?>... types) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -3189,6 +3250,7 @@ public interface DSLContext extends Scope {
      */
     @Nullable
     @Support
+    @Blocking
     Object fetchValue(ResultSet rs) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -3211,6 +3273,7 @@ public interface DSLContext extends Scope {
      */
     @Nullable
     @Support
+    @Blocking
     <T> T fetchValue(ResultSet rs, Field<T> field) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -3233,6 +3296,7 @@ public interface DSLContext extends Scope {
      */
     @Nullable
     @Support
+    @Blocking
     <T> T fetchValue(ResultSet rs, DataType<T> type) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -3255,6 +3319,7 @@ public interface DSLContext extends Scope {
      */
     @Nullable
     @Support
+    @Blocking
     <T> T fetchValue(ResultSet rs, Class<T> type) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -3273,6 +3338,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Optional<?> fetchOptionalValue(ResultSet rs) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -3295,6 +3361,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T> Optional<T> fetchOptionalValue(ResultSet rs, Field<T> field) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -3317,6 +3384,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T> Optional<T> fetchOptionalValue(ResultSet rs, DataType<T> type) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -3339,6 +3407,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T> Optional<T> fetchOptionalValue(ResultSet rs, Class<T> type) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -3353,6 +3422,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     List<?> fetchValues(ResultSet rs) throws DataAccessException, InvalidResultException;
 
     /**
@@ -3371,6 +3441,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T> List<T> fetchValues(ResultSet rs, Field<T> field) throws DataAccessException, InvalidResultException;
 
     /**
@@ -3389,6 +3460,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T> List<T> fetchValues(ResultSet rs, DataType<T> type) throws DataAccessException, InvalidResultException;
 
     /**
@@ -3407,6 +3479,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T> List<T> fetchValues(ResultSet rs, Class<T> type) throws DataAccessException, InvalidResultException;
 
     /**
@@ -3421,6 +3494,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Cursor<Record> fetchLazy(ResultSet rs) throws DataAccessException;
 
     /**
@@ -3439,6 +3513,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Cursor<Record> fetchLazy(ResultSet rs, Field<?>... fields) throws DataAccessException;
 
     /**
@@ -3457,6 +3532,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Cursor<Record> fetchLazy(ResultSet rs, DataType<?>... types) throws DataAccessException;
 
     /**
@@ -3475,6 +3551,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Cursor<Record> fetchLazy(ResultSet rs, Class<?>... types) throws DataAccessException;
 
     /**
@@ -3621,6 +3698,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Stream<Record> fetchStream(ResultSet rs) throws DataAccessException;
 
     /**
@@ -3639,6 +3717,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Stream<Record> fetchStream(ResultSet rs, Field<?>... fields) throws DataAccessException;
 
     /**
@@ -3657,6 +3736,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Stream<Record> fetchStream(ResultSet rs, DataType<?>... types) throws DataAccessException;
 
     /**
@@ -3675,6 +3755,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Stream<Record> fetchStream(ResultSet rs, Class<?>... types) throws DataAccessException;
 
     /**
@@ -12380,6 +12461,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Result<R> fetch(ResultQuery<R> query) throws DataAccessException;
 
     /**
@@ -12393,6 +12475,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Cursor<R> fetchLazy(ResultQuery<R> query) throws DataAccessException;
 
     /**
@@ -12435,6 +12518,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Stream<R> fetchStream(ResultQuery<R> query) throws DataAccessException;
 
     /**
@@ -12448,6 +12532,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Results fetchMany(ResultQuery<R> query) throws DataAccessException;
 
     /**
@@ -12462,6 +12547,7 @@ public interface DSLContext extends Scope {
      */
     @Nullable
     @Support
+    @Blocking
     <R extends Record> R fetchOne(ResultQuery<R> query) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -12477,6 +12563,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> R fetchSingle(ResultQuery<R> query) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -12491,6 +12578,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Optional<R> fetchOptional(ResultQuery<R> query) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -12502,6 +12590,7 @@ public interface DSLContext extends Scope {
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Support
+    @Blocking
     <T> T fetchValue(Table<? extends Record1<T>> table) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -12514,6 +12603,7 @@ public interface DSLContext extends Scope {
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Support
+    @Blocking
     <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -12526,6 +12616,7 @@ public interface DSLContext extends Scope {
      * @throws TooManyRowsException if the query returned more than one record
      */
     @Support
+    @Blocking
     <T> T fetchValue(TableField<?, T> field) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -12537,6 +12628,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @Blocking
     <T> T fetchValue(SelectField<T> field) throws DataAccessException;
 
     /**
@@ -12552,6 +12644,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T, R extends Record1<T>> Optional<T> fetchOptionalValue(ResultQuery<R> query) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -12567,6 +12660,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T> Optional<T> fetchOptionalValue(TableField<?, T> field) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -12578,6 +12672,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T> List<T> fetchValues(Table<? extends Record1<T>> table) throws DataAccessException;
 
     /**
@@ -12590,6 +12685,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T, R extends Record1<T>> List<T> fetchValues(ResultQuery<R> query) throws DataAccessException;
 
     /**
@@ -12601,6 +12697,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T> List<T> fetchValues(TableField<?, T> field) throws DataAccessException;
 
     /**
@@ -12627,6 +12724,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <K, V> Map<K, V> fetchMap(ResultQuery<? extends Record2<K, V>> query) throws DataAccessException;
 
     /**
@@ -12650,6 +12748,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <K, V> Map<K, List<V>> fetchGroups(ResultQuery<? extends Record2<K, V>> query) throws DataAccessException;
 
     /**
@@ -12662,6 +12761,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends TableRecord<R>> Result<R> fetchByExample(R example) throws DataAccessException;
 
     /**
@@ -12687,6 +12787,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @Blocking
     int fetchCount(Select<?> query) throws DataAccessException;
 
     /**
@@ -12699,6 +12800,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @Blocking
     int fetchCount(Table<?> table) throws DataAccessException;
 
     /**
@@ -12712,6 +12814,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @Blocking
     int fetchCount(Table<?> table, Condition condition) throws DataAccessException;
 
     /**
@@ -12729,6 +12832,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @Blocking
     int fetchCount(Table<?> table, Condition... conditions) throws DataAccessException;
 
     /**
@@ -12746,6 +12850,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @Blocking
     int fetchCount(Table<?> table, Collection<? extends Condition> conditions) throws DataAccessException;
 
     /**
@@ -12768,6 +12873,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @Blocking
     boolean fetchExists(Select<?> query) throws DataAccessException;
 
     /**
@@ -12780,6 +12886,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @Blocking
     boolean fetchExists(Table<?> table) throws DataAccessException;
 
     /**
@@ -12792,6 +12899,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @Blocking
     boolean fetchExists(Table<?> table, Condition condition) throws DataAccessException;
 
     /**
@@ -12807,6 +12915,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @Blocking
     boolean fetchExists(Table<?> table, Condition... conditions) throws DataAccessException;
 
     /**
@@ -12822,6 +12931,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @Blocking
     boolean fetchExists(Table<?> table, Collection<? extends Condition> conditions) throws DataAccessException;
 
     /**
@@ -12833,6 +12943,7 @@ public interface DSLContext extends Scope {
      * @see Query#execute()
      */
     @Support
+    @Blocking
     int execute(Query query) throws DataAccessException;
 
     // -------------------------------------------------------------------------
@@ -12853,6 +12964,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Result<R> fetch(Table<R> table) throws DataAccessException;
 
     /**
@@ -12869,6 +12981,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Result<R> fetch(Table<R> table, Condition condition) throws DataAccessException;
 
     /**
@@ -12888,6 +13001,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Result<R> fetch(Table<R> table, Condition... conditions) throws DataAccessException;
 
     /**
@@ -12907,6 +13021,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Result<R> fetch(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException;
 
     /**
@@ -12923,6 +13038,7 @@ public interface DSLContext extends Scope {
      */
     @Nullable
     @Support
+    @Blocking
     <R extends Record> R fetchOne(Table<R> table) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -12939,6 +13055,7 @@ public interface DSLContext extends Scope {
      */
     @Nullable
     @Support
+    @Blocking
     <R extends Record> R fetchOne(Table<R> table, Condition condition) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -12958,6 +13075,7 @@ public interface DSLContext extends Scope {
      */
     @Nullable
     @Support
+    @Blocking
     <R extends Record> R fetchOne(Table<R> table, Condition... conditions) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -12977,6 +13095,7 @@ public interface DSLContext extends Scope {
      */
     @Nullable
     @Support
+    @Blocking
     <R extends Record> R fetchOne(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -12994,6 +13113,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> R fetchSingle(Table<R> table) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -13011,6 +13131,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> R fetchSingle(Table<R> table, Condition condition) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -13031,6 +13152,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> R fetchSingle(Table<R> table, Condition... conditions) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -13051,6 +13173,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> R fetchSingle(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -13069,6 +13192,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Record fetchSingle(SelectField<?>... fields) throws DataAccessException;
 
     /**
@@ -13087,6 +13211,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     Record fetchSingle(Collection<? extends SelectField<?>> fields) throws DataAccessException;
 
 
@@ -13107,6 +13232,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1> Record1<T1> fetchSingle(SelectField<T1> field1) throws DataAccessException;
 
     /**
@@ -13125,6 +13251,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2> Record2<T1, T2> fetchSingle(SelectField<T1> field1, SelectField<T2> field2) throws DataAccessException;
 
     /**
@@ -13143,6 +13270,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3> Record3<T1, T2, T3> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3) throws DataAccessException;
 
     /**
@@ -13161,6 +13289,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4> Record4<T1, T2, T3, T4> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4) throws DataAccessException;
 
     /**
@@ -13179,6 +13308,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4, T5> Record5<T1, T2, T3, T4, T5> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5) throws DataAccessException;
 
     /**
@@ -13197,6 +13327,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4, T5, T6> Record6<T1, T2, T3, T4, T5, T6> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6) throws DataAccessException;
 
     /**
@@ -13215,6 +13346,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4, T5, T6, T7> Record7<T1, T2, T3, T4, T5, T6, T7> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7) throws DataAccessException;
 
     /**
@@ -13233,6 +13365,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4, T5, T6, T7, T8> Record8<T1, T2, T3, T4, T5, T6, T7, T8> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8) throws DataAccessException;
 
     /**
@@ -13251,6 +13384,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4, T5, T6, T7, T8, T9> Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9) throws DataAccessException;
 
     /**
@@ -13269,6 +13403,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10) throws DataAccessException;
 
     /**
@@ -13287,6 +13422,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11) throws DataAccessException;
 
     /**
@@ -13305,6 +13441,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12) throws DataAccessException;
 
     /**
@@ -13323,6 +13460,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13) throws DataAccessException;
 
     /**
@@ -13341,6 +13479,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14) throws DataAccessException;
 
     /**
@@ -13359,6 +13498,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15) throws DataAccessException;
 
     /**
@@ -13377,6 +13517,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16) throws DataAccessException;
 
     /**
@@ -13395,6 +13536,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17) throws DataAccessException;
 
     /**
@@ -13413,6 +13555,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18) throws DataAccessException;
 
     /**
@@ -13431,6 +13574,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19) throws DataAccessException;
 
     /**
@@ -13449,6 +13593,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20) throws DataAccessException;
 
     /**
@@ -13467,6 +13612,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21) throws DataAccessException;
 
     /**
@@ -13485,6 +13631,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22) throws DataAccessException;
 
 
@@ -13503,6 +13650,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Optional<R> fetchOptional(Table<R> table) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -13519,6 +13667,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Optional<R> fetchOptional(Table<R> table, Condition condition) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -13538,6 +13687,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Optional<R> fetchOptional(Table<R> table, Condition... conditions) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -13557,6 +13707,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Optional<R> fetchOptional(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -13572,6 +13723,7 @@ public interface DSLContext extends Scope {
      */
     @Nullable
     @Support
+    @Blocking
     <R extends Record> R fetchAny(Table<R> table) throws DataAccessException;
 
     /**
@@ -13587,6 +13739,7 @@ public interface DSLContext extends Scope {
      */
     @Nullable
     @Support
+    @Blocking
     <R extends Record> R fetchAny(Table<R> table, Condition condition) throws DataAccessException;
 
     /**
@@ -13605,6 +13758,7 @@ public interface DSLContext extends Scope {
      */
     @Nullable
     @Support
+    @Blocking
     <R extends Record> R fetchAny(Table<R> table, Condition... conditions) throws DataAccessException;
 
     /**
@@ -13623,6 +13777,7 @@ public interface DSLContext extends Scope {
      */
     @Nullable
     @Support
+    @Blocking
     <R extends Record> R fetchAny(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException;
 
     /**
@@ -13638,6 +13793,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Cursor<R> fetchLazy(Table<R> table) throws DataAccessException;
 
     /**
@@ -13653,6 +13809,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Cursor<R> fetchLazy(Table<R> table, Condition condition) throws DataAccessException;
 
     /**
@@ -13671,6 +13828,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Cursor<R> fetchLazy(Table<R> table, Condition... conditions) throws DataAccessException;
 
     /**
@@ -13689,6 +13847,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Cursor<R> fetchLazy(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException;
 
     /**
@@ -13835,6 +13994,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Stream<R> fetchStream(Table<R> table) throws DataAccessException;
 
     /**
@@ -13849,6 +14009,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Stream<R> fetchStream(Table<R> table, Condition condition) throws DataAccessException;
 
     /**
@@ -13866,6 +14027,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Stream<R> fetchStream(Table<R> table, Condition... conditions) throws DataAccessException;
 
     /**
@@ -13883,6 +14045,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
+    @Blocking
     <R extends Record> Stream<R> fetchStream(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException;
 
     /**
@@ -13900,6 +14063,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @Blocking
     int executeInsert(TableRecord<?> record) throws DataAccessException;
 
     /**
@@ -13910,6 +14074,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @Blocking
     int executeUpdate(UpdatableRecord<?> record) throws DataAccessException;
 
     /**
@@ -13920,6 +14085,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @Blocking
     int executeUpdate(TableRecord<?> record, Condition condition) throws DataAccessException;
 
     /**
@@ -13930,6 +14096,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @Blocking
     int executeDelete(UpdatableRecord<?> record) throws DataAccessException;
 
     /**
@@ -13940,5 +14107,6 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @Blocking
     int executeDelete(TableRecord<?> record, Condition condition) throws DataAccessException;
 }

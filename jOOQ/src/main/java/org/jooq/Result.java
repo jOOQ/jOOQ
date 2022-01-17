@@ -53,6 +53,7 @@ import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.DefaultRecordMapper;
 
+import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -3183,6 +3184,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @see ForeignKey#fetchParents(Record...)
      */
     @NotNull
+    @Blocking
     <O extends UpdatableRecord<O>> Result<O> fetchParents(ForeignKey<R, O> key) throws DataAccessException;
 
     /**
@@ -3195,6 +3197,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @see ForeignKey#fetchChildren(Record...)
      */
     @NotNull
+    @Blocking
     <O extends TableRecord<O>> Result<O> fetchChildren(ForeignKey<O, R> key) throws DataAccessException;
 
     /**

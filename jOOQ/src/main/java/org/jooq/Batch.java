@@ -44,6 +44,7 @@ import java.util.concurrent.Executor;
 
 import org.jooq.exception.DataAccessException;
 
+import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -75,6 +76,7 @@ public interface Batch extends Serializable, Publisher<Integer> {
      * @see Statement#executeBatch()
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Blocking
     int @NotNull [] execute() throws DataAccessException;
 
     /**

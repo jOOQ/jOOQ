@@ -52,6 +52,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.DefaultRecordMapper;
 
+import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -78,6 +79,7 @@ import org.jetbrains.annotations.Nullable;
  * @param <R> The cursor's record type
  * @author Lukas Eder
  */
+@Blocking
 public interface Cursor<R extends Record> extends Fields, Iterable<R>, Formattable, AutoCloseable {
 
     /**

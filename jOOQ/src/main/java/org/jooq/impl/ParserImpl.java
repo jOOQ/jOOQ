@@ -4274,7 +4274,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         boolean readonly = false;
         boolean ctas = false;
 
-        if (parseIf('(')) {
+        if (!peekSelectOrWith(true) && parseIf('(')) {
 
             columnLoop:
             do {
@@ -4379,8 +4379,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (!fields.isEmpty())
             columnStep = columnStep.columns(fields);
 
-        if (ctas && parseKeyword("AS") ||
-           !ctas && parseKeywordIf("AS")) {
+        if (parseKeywordIf("AS") || peekSelectOrWith(true)) {
             boolean previousMetaLookupsForceIgnore = metaLookupsForceIgnore();
             CreateTableWithDataStep withDataStep = columnStep.as((Select<Record>) metaLookupsForceIgnore(false).parseQuery(true, true));
             metaLookupsForceIgnore(previousMetaLookupsForceIgnore);
@@ -4390,6 +4389,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 : parseKeywordIf("WITH NO DATA")
                 ? withDataStep.withNoData()
                 : withDataStep;
+        }
+        else if (ctas) {
+            throw expected("AS, WITH, SELECT, or (");
         }
         else {
             CreateTableConstraintStep constraintStep = constraints.isEmpty()

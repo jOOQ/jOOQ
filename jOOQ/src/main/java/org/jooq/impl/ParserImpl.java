@@ -10336,6 +10336,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'W':
                 if (parseKeywordIf("WEEK") ||
                     parseKeywordIf("WEEKS") ||
+                    parseKeywordIf("WEEK_OF_YEAR") ||
                     parseKeywordIf("WK") ||
                     parseKeywordIf("WW"))
                     return DatePart.WEEK;

@@ -124,6 +124,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrivialPredicates = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsEmptyScalarSubquery = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNegNeg = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsBitNotBitNot = true;
@@ -1304,6 +1306,34 @@ public class Settings
      */
     public void setTransformPatternsTrivialPredicates(Boolean value) {
         this.transformPatternsTrivialPredicates = value;
+    }
+
+    /**
+     * Transform empty scalar subqueries like <code>(SELECT 1 WHERE FALSE)</code> to <code>NULL</code>.
+     * <p>
+     * Scalar subqueries that are guaranteed to produce no results can be replaced by a <code>NULL</code> value.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsEmptyScalarSubquery() {
+        return transformPatternsEmptyScalarSubquery;
+    }
+
+    /**
+     * Sets the value of the transformPatternsEmptyScalarSubquery property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsEmptyScalarSubquery(Boolean value) {
+        this.transformPatternsEmptyScalarSubquery = value;
     }
 
     /**
@@ -3672,6 +3702,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsEmptyScalarSubquery(Boolean value) {
+        setTransformPatternsEmptyScalarSubquery(value);
+        return this;
+    }
+
     public Settings withTransformPatternsNegNeg(Boolean value) {
         setTransformPatternsNegNeg(value);
         return this;
@@ -4516,6 +4551,7 @@ public class Settings
         builder.append("transformPatternsNotComparison", transformPatternsNotComparison);
         builder.append("transformPatternsNotNotDistinct", transformPatternsNotNotDistinct);
         builder.append("transformPatternsTrivialPredicates", transformPatternsTrivialPredicates);
+        builder.append("transformPatternsEmptyScalarSubquery", transformPatternsEmptyScalarSubquery);
         builder.append("transformPatternsNegNeg", transformPatternsNegNeg);
         builder.append("transformPatternsBitNotBitNot", transformPatternsBitNotBitNot);
         builder.append("transformPatternsIdempotentFunctionRepetition", transformPatternsIdempotentFunctionRepetition);
@@ -4965,6 +5001,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsTrivialPredicates.equals(other.transformPatternsTrivialPredicates)) {
+                return false;
+            }
+        }
+        if (transformPatternsEmptyScalarSubquery == null) {
+            if (other.transformPatternsEmptyScalarSubquery!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsEmptyScalarSubquery.equals(other.transformPatternsEmptyScalarSubquery)) {
                 return false;
             }
         }
@@ -5894,6 +5939,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsNotComparison == null)? 0 :transformPatternsNotComparison.hashCode()));
         result = ((prime*result)+((transformPatternsNotNotDistinct == null)? 0 :transformPatternsNotNotDistinct.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialPredicates == null)? 0 :transformPatternsTrivialPredicates.hashCode()));
+        result = ((prime*result)+((transformPatternsEmptyScalarSubquery == null)? 0 :transformPatternsEmptyScalarSubquery.hashCode()));
         result = ((prime*result)+((transformPatternsNegNeg == null)? 0 :transformPatternsNegNeg.hashCode()));
         result = ((prime*result)+((transformPatternsBitNotBitNot == null)? 0 :transformPatternsBitNotBitNot.hashCode()));
         result = ((prime*result)+((transformPatternsIdempotentFunctionRepetition == null)? 0 :transformPatternsIdempotentFunctionRepetition.hashCode()));

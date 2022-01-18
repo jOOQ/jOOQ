@@ -4379,7 +4379,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (!fields.isEmpty())
             columnStep = columnStep.columns(fields);
 
-        if (parseKeywordIf("AS") || peekSelectOrWith(true)) {
+        // [#12888] To avoid ambiguities with T-SQL's support for statement batches
+        //          without statement separators, let's accept MySQL's optional AS
+        //          keyword only for empty field lists
+        if (parseKeywordIf("AS") || fields.isEmpty() && peekSelectOrWith(true)) {
             boolean previousMetaLookupsForceIgnore = metaLookupsForceIgnore();
             CreateTableWithDataStep withDataStep = columnStep.as((Select<Record>) metaLookupsForceIgnore(false).parseQuery(true, true));
             metaLookupsForceIgnore(previousMetaLookupsForceIgnore);

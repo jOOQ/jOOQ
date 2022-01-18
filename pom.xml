@@ -53,7 +53,7 @@
         <liquibase.version>4.4.1</liquibase.version>
         <spring.version>5.3.14</spring.version>
         <spring.boot.version>2.6.1</spring.boot.version>
-        <errorprone.version>2.9.0</errorprone.version>
+        <errorprone.version>2.10.0</errorprone.version>
         <testcontainers.version>1.16.2</testcontainers.version>
     </properties>
 

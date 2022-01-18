@@ -138,15 +138,15 @@ implements
 
     @Override
     public final QOM.CovarSamp $y(Field<? extends Number> newValue) {
-        return constructor().apply(newValue, $x());
+        return $constructor().apply(newValue, $x());
     }
 
     @Override
     public final QOM.CovarSamp $x(Field<? extends Number> newValue) {
-        return constructor().apply($y(), newValue);
+        return $constructor().apply($y(), newValue);
     }
 
-    public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.CovarSamp> constructor() {
+    public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.CovarSamp> $constructor() {
         return (a1, a2) -> new CovarSamp(a1, a2);
     }
 

@@ -155,20 +155,20 @@ implements
 
     @Override
     public final QOM.Translate $string(Field<String> newValue) {
-        return constructor().apply(newValue, $from(), $to());
+        return $constructor().apply(newValue, $from(), $to());
     }
 
     @Override
     public final QOM.Translate $from(Field<String> newValue) {
-        return constructor().apply($string(), newValue, $to());
+        return $constructor().apply($string(), newValue, $to());
     }
 
     @Override
     public final QOM.Translate $to(Field<String> newValue) {
-        return constructor().apply($string(), $from(), newValue);
+        return $constructor().apply($string(), $from(), newValue);
     }
 
-    public final Function3<? super Field<String>, ? super Field<String>, ? super Field<String>, ? extends QOM.Translate> constructor() {
+    public final Function3<? super Field<String>, ? super Field<String>, ? super Field<String>, ? extends QOM.Translate> $constructor() {
         return (a1, a2, a3) -> new Translate(a1, a2, a3);
     }
 

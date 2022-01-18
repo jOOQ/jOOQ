@@ -125,7 +125,7 @@ final class Concat extends AbstractField<String> implements QOM.Concat {
     }
 
     @Override
-    public final Function1<? super UnmodifiableList<? extends Field<?>>, ? extends Field<String>> constructor() {
+    public final Function1<? super UnmodifiableList<? extends Field<?>>, ? extends Field<String>> $constructor() {
         return l -> new Concat(l.toArray(EMPTY_FIELD));
     }
 }

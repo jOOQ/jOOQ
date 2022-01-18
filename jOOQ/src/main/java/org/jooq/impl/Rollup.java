@@ -89,7 +89,7 @@ final class Rollup extends AbstractField<Object> implements QOM.Rollup {
     }
 
     @Override
-    public final Function1<? super UnmodifiableList<? extends FieldOrRow>, ? extends GroupField> constructor() {
+    public final Function1<? super UnmodifiableList<? extends FieldOrRow>, ? extends GroupField> $constructor() {
         return l -> new Rollup(l.toArray(EMPTY_FIELD_OR_ROW));
     }
 }

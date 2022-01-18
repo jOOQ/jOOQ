@@ -107,7 +107,7 @@ final class Neg<T> extends AbstractTransformable<T> implements QOM.Neg<T> {
     }
 
     @Override
-    public final Function1<? super Field<T>, ? extends Field<T>> constructor() {
+    public final Function1<? super Field<T>, ? extends Field<T>> $constructor() {
         return f -> new Neg<>(f, internal);
     }
 }

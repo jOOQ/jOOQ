@@ -148,15 +148,15 @@ implements
 
     @Override
     public final QOM.RegrSxx $y(Field<? extends Number> newValue) {
-        return constructor().apply(newValue, $x());
+        return $constructor().apply(newValue, $x());
     }
 
     @Override
     public final QOM.RegrSxx $x(Field<? extends Number> newValue) {
-        return constructor().apply($y(), newValue);
+        return $constructor().apply($y(), newValue);
     }
 
-    public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.RegrSxx> constructor() {
+    public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.RegrSxx> $constructor() {
         return (a1, a2) -> new RegrSxx(a1, a2);
     }
 

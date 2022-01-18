@@ -126,10 +126,10 @@ implements
 
     @Override
     public final QOM.Cardinality $array(Field<? extends Object[]> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Object[]>, ? extends QOM.Cardinality> constructor() {
+    public final Function1<? super Field<? extends Object[]>, ? extends QOM.Cardinality> $constructor() {
         return (a1) -> new Cardinality(a1);
     }
 

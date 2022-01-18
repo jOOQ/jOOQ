@@ -5931,10 +5931,10 @@ public final class QOM {
     interface UOperator1<Q1, R extends org.jooq.QueryPart> extends org.jooq.QueryPart {
         Q1 $arg1();
 
-        @NotNull default R $arg1(Q1 newArg1) { return constructor().apply(newArg1); }
+        @NotNull default R $arg1(Q1 newArg1) { return $constructor().apply(newArg1); }
 
         @NotNull
-        Function1<? super Q1, ? extends R> constructor();
+        Function1<? super Q1, ? extends R> $constructor();
 
 
 
@@ -5961,11 +5961,11 @@ public final class QOM {
         Q1 $arg1();
         Q2 $arg2();
 
-        @NotNull default R $arg1(Q1 newArg1) { return constructor().apply(newArg1, $arg2()); }
-        @NotNull default R $arg2(Q2 newArg2) { return constructor().apply($arg1(), newArg2); }
+        @NotNull default R $arg1(Q1 newArg1) { return $constructor().apply(newArg1, $arg2()); }
+        @NotNull default R $arg2(Q2 newArg2) { return $constructor().apply($arg1(), newArg2); }
 
         @NotNull
-        Function2<? super Q1, ? super Q2, ? extends R> constructor();
+        Function2<? super Q1, ? super Q2, ? extends R> $constructor();
 
 
 
@@ -5993,12 +5993,12 @@ public final class QOM {
         Q1 $arg1();
         Q2 $arg2();
         Q3 $arg3();
-        @NotNull default R $arg1(Q1 newArg1) { return constructor().apply(newArg1, $arg2(), $arg3()); }
-        @NotNull default R $arg2(Q2 newArg2) { return constructor().apply($arg1(), newArg2, $arg3()); }
-        @NotNull default R $arg3(Q3 newArg3) { return constructor().apply($arg1(), $arg2(), newArg3); }
+        @NotNull default R $arg1(Q1 newArg1) { return $constructor().apply(newArg1, $arg2(), $arg3()); }
+        @NotNull default R $arg2(Q2 newArg2) { return $constructor().apply($arg1(), newArg2, $arg3()); }
+        @NotNull default R $arg3(Q3 newArg3) { return $constructor().apply($arg1(), $arg2(), newArg3); }
 
         @NotNull
-        Function3<? super Q1, ? super Q2, ? super Q3, ? extends R> constructor();
+        Function3<? super Q1, ? super Q2, ? super Q3, ? extends R> $constructor();
 
 
 

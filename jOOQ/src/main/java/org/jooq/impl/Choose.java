@@ -111,7 +111,7 @@ final class Choose<T> extends AbstractField<T> implements QOM.Choose<T> {
     }
 
     @Override
-    public final Function2<? super Field<Integer>, ? super UnmodifiableList<? extends Field<T>>, ? extends Field<T>> constructor() {
+    public final Function2<? super Field<Integer>, ? super UnmodifiableList<? extends Field<T>>, ? extends Field<T>> $constructor() {
         return (i, v) -> new Choose<T>(i, (Field<T>[]) v.toArray(EMPTY_FIELD));
     }
 }

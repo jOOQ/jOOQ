@@ -151,10 +151,10 @@ implements
 
     @Override
     public final QOM.Sinh $number(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.Sinh> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.Sinh> $constructor() {
         return (a1) -> new Sinh(a1);
     }
 

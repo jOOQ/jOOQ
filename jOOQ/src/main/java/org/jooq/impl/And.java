@@ -166,7 +166,7 @@ implements
     }
 
     @Override
-    public final Function2<? super Condition, ? super Condition, ? extends Condition> constructor() {
+    public final Function2<? super Condition, ? super Condition, ? extends Condition> $constructor() {
         return (a1, a2) -> DSL.and(a1, a2);
     }
 

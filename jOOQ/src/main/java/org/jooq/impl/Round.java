@@ -212,15 +212,15 @@ implements
 
     @Override
     public final QOM.Round<T> $value(Field<T> newValue) {
-        return constructor().apply(newValue, $decimals());
+        return $constructor().apply(newValue, $decimals());
     }
 
     @Override
     public final QOM.Round<T> $decimals(Field<Integer> newValue) {
-        return constructor().apply($value(), newValue);
+        return $constructor().apply($value(), newValue);
     }
 
-    public final Function2<? super Field<T>, ? super Field<Integer>, ? extends QOM.Round<T>> constructor() {
+    public final Function2<? super Field<T>, ? super Field<Integer>, ? extends QOM.Round<T>> $constructor() {
         return (a1, a2) -> new Round<>(a1, a2);
     }
 

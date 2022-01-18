@@ -138,15 +138,15 @@ implements
 
     @Override
     public final QOM.CovarPop $y(Field<? extends Number> newValue) {
-        return constructor().apply(newValue, $x());
+        return $constructor().apply(newValue, $x());
     }
 
     @Override
     public final QOM.CovarPop $x(Field<? extends Number> newValue) {
-        return constructor().apply($y(), newValue);
+        return $constructor().apply($y(), newValue);
     }
 
-    public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.CovarPop> constructor() {
+    public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.CovarPop> $constructor() {
         return (a1, a2) -> new CovarPop(a1, a2);
     }
 

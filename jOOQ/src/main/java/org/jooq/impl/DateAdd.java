@@ -438,20 +438,20 @@ implements
 
     @Override
     public final QOM.DateAdd<T> $date(Field<T> newValue) {
-        return constructor().apply(newValue, $interval(), $datePart());
+        return $constructor().apply(newValue, $interval(), $datePart());
     }
 
     @Override
     public final QOM.DateAdd<T> $interval(Field<? extends Number> newValue) {
-        return constructor().apply($date(), newValue, $datePart());
+        return $constructor().apply($date(), newValue, $datePart());
     }
 
     @Override
     public final QOM.DateAdd<T> $datePart(DatePart newValue) {
-        return constructor().apply($date(), $interval(), newValue);
+        return $constructor().apply($date(), $interval(), newValue);
     }
 
-    public final Function3<? super Field<T>, ? super Field<? extends Number>, ? super DatePart, ? extends QOM.DateAdd<T>> constructor() {
+    public final Function3<? super Field<T>, ? super Field<? extends Number>, ? super DatePart, ? extends QOM.DateAdd<T>> $constructor() {
         return (a1, a2, a3) -> new DateAdd<>(a1, a2, a3);
     }
 

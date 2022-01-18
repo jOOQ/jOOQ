@@ -249,7 +249,7 @@ implements
     }
 
     @Override
-    public final Function1<? super JSONEntry<?>, ? extends AggregateFunction<J>> constructor() {
+    public final Function1<? super JSONEntry<?>, ? extends AggregateFunction<J>> $constructor() {
         return e -> {
             JSONObjectAgg<J> r = new JSONObjectAgg<J>(getDataType(), e);
             r.onNull = onNull;

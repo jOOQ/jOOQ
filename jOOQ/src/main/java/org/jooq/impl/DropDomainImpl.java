@@ -183,20 +183,20 @@ implements
 
     @Override
     public final QOM.DropDomain $domain(Domain<?> newValue) {
-        return constructor().apply(newValue, $ifExists(), $cascade());
+        return $constructor().apply(newValue, $ifExists(), $cascade());
     }
 
     @Override
     public final QOM.DropDomain $ifExists(boolean newValue) {
-        return constructor().apply($domain(), newValue, $cascade());
+        return $constructor().apply($domain(), newValue, $cascade());
     }
 
     @Override
     public final QOM.DropDomain $cascade(Cascade newValue) {
-        return constructor().apply($domain(), $ifExists(), newValue);
+        return $constructor().apply($domain(), $ifExists(), newValue);
     }
 
-    public final Function3<? super Domain<?>, ? super Boolean, ? super Cascade, ? extends QOM.DropDomain> constructor() {
+    public final Function3<? super Domain<?>, ? super Boolean, ? super Cascade, ? extends QOM.DropDomain> $constructor() {
         return (a1, a2, a3) -> new DropDomainImpl(configuration(), a1, a2, a3);
     }
 

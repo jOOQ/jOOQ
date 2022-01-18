@@ -146,10 +146,10 @@ implements
 
     @Override
     public final QOM.Chr $number(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.Chr> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.Chr> $constructor() {
         return (a1) -> new Chr(a1);
     }
 

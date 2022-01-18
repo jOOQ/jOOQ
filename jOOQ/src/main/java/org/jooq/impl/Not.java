@@ -136,11 +136,11 @@ implements
 
     @Override
     public final QOM.Not $arg1(Condition newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
     @Override
-    public final Function1<? super Condition, ? extends QOM.Not> constructor() {
+    public final Function1<? super Condition, ? extends QOM.Not> $constructor() {
         return (a1) -> new Not(a1);
     }
 

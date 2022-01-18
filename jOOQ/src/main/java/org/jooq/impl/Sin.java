@@ -127,10 +127,10 @@ implements
 
     @Override
     public final QOM.Sin $number(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.Sin> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.Sin> $constructor() {
         return (a1) -> new Sin(a1);
     }
 

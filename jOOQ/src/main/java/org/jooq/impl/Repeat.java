@@ -163,15 +163,15 @@ implements
 
     @Override
     public final QOM.Repeat $string(Field<String> newValue) {
-        return constructor().apply(newValue, $count());
+        return $constructor().apply(newValue, $count());
     }
 
     @Override
     public final QOM.Repeat $count(Field<? extends Number> newValue) {
-        return constructor().apply($string(), newValue);
+        return $constructor().apply($string(), newValue);
     }
 
-    public final Function2<? super Field<String>, ? super Field<? extends Number>, ? extends QOM.Repeat> constructor() {
+    public final Function2<? super Field<String>, ? super Field<? extends Number>, ? extends QOM.Repeat> $constructor() {
         return (a1, a2) -> new Repeat(a1, a2);
     }
 

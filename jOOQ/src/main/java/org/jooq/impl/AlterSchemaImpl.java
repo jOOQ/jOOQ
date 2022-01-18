@@ -213,20 +213,20 @@ implements
 
     @Override
     public final QOM.AlterSchema $schema(Schema newValue) {
-        return constructor().apply(newValue, $ifExists(), $renameTo());
+        return $constructor().apply(newValue, $ifExists(), $renameTo());
     }
 
     @Override
     public final QOM.AlterSchema $ifExists(boolean newValue) {
-        return constructor().apply($schema(), newValue, $renameTo());
+        return $constructor().apply($schema(), newValue, $renameTo());
     }
 
     @Override
     public final QOM.AlterSchema $renameTo(Schema newValue) {
-        return constructor().apply($schema(), $ifExists(), newValue);
+        return $constructor().apply($schema(), $ifExists(), newValue);
     }
 
-    public final Function3<? super Schema, ? super Boolean, ? super Schema, ? extends QOM.AlterSchema> constructor() {
+    public final Function3<? super Schema, ? super Boolean, ? super Schema, ? extends QOM.AlterSchema> $constructor() {
         return (a1, a2, a3) -> new AlterSchemaImpl(configuration(), a1, a2, a3);
     }
 

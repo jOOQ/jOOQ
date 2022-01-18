@@ -134,15 +134,15 @@ implements
 
     @Override
     public final QOM.DropDatabase $database(Catalog newValue) {
-        return constructor().apply(newValue, $ifExists());
+        return $constructor().apply(newValue, $ifExists());
     }
 
     @Override
     public final QOM.DropDatabase $ifExists(boolean newValue) {
-        return constructor().apply($database(), newValue);
+        return $constructor().apply($database(), newValue);
     }
 
-    public final Function2<? super Catalog, ? super Boolean, ? extends QOM.DropDatabase> constructor() {
+    public final Function2<? super Catalog, ? super Boolean, ? extends QOM.DropDatabase> $constructor() {
         return (a1, a2) -> new DropDatabaseImpl(configuration(), a1, a2);
     }
 

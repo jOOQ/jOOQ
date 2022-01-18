@@ -156,10 +156,10 @@ implements
 
     @Override
     public final QOM.Md5 $string(Field<String> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<String>, ? extends QOM.Md5> constructor() {
+    public final Function1<? super Field<String>, ? extends QOM.Md5> $constructor() {
         return (a1) -> new Md5(a1);
     }
 

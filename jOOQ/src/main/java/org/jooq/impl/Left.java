@@ -142,15 +142,15 @@ implements
 
     @Override
     public final QOM.Left $string(Field<String> newValue) {
-        return constructor().apply(newValue, $length());
+        return $constructor().apply(newValue, $length());
     }
 
     @Override
     public final QOM.Left $length(Field<? extends Number> newValue) {
-        return constructor().apply($string(), newValue);
+        return $constructor().apply($string(), newValue);
     }
 
-    public final Function2<? super Field<String>, ? super Field<? extends Number>, ? extends QOM.Left> constructor() {
+    public final Function2<? super Field<String>, ? super Field<? extends Number>, ? extends QOM.Left> $constructor() {
         return (a1, a2) -> new Left(a1, a2);
     }
 

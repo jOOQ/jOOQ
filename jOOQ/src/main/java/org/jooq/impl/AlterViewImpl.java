@@ -292,25 +292,25 @@ implements
 
     @Override
     public final QOM.AlterView $view(Table<?> newValue) {
-        return constructor().apply(newValue, $ifExists(), $comment(), $renameTo());
+        return $constructor().apply(newValue, $ifExists(), $comment(), $renameTo());
     }
 
     @Override
     public final QOM.AlterView $ifExists(boolean newValue) {
-        return constructor().apply($view(), newValue, $comment(), $renameTo());
+        return $constructor().apply($view(), newValue, $comment(), $renameTo());
     }
 
     @Override
     public final QOM.AlterView $comment(Comment newValue) {
-        return constructor().apply($view(), $ifExists(), newValue, $renameTo());
+        return $constructor().apply($view(), $ifExists(), newValue, $renameTo());
     }
 
     @Override
     public final QOM.AlterView $renameTo(Table<?> newValue) {
-        return constructor().apply($view(), $ifExists(), $comment(), newValue);
+        return $constructor().apply($view(), $ifExists(), $comment(), newValue);
     }
 
-    public final Function4<? super Table<?>, ? super Boolean, ? super Comment, ? super Table<?>, ? extends QOM.AlterView> constructor() {
+    public final Function4<? super Table<?>, ? super Boolean, ? super Comment, ? super Table<?>, ? extends QOM.AlterView> $constructor() {
         return (a1, a2, a3, a4) -> new AlterViewImpl(configuration(), a1, a2, a3, a4);
     }
 

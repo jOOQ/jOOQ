@@ -139,7 +139,7 @@ implements
         return new FieldCondition(newValue);
     }
 
-    public final Function1<? super Field<Boolean>, ? extends Condition> constructor() {
+    public final Function1<? super Field<Boolean>, ? extends Condition> $constructor() {
         return (a1) -> DSL.condition(a1);
     }
 

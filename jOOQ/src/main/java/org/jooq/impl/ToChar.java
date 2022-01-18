@@ -167,15 +167,15 @@ implements
 
     @Override
     public final QOM.ToChar $value(Field<?> newValue) {
-        return constructor().apply(newValue, $formatMask());
+        return $constructor().apply(newValue, $formatMask());
     }
 
     @Override
     public final QOM.ToChar $formatMask(Field<String> newValue) {
-        return constructor().apply($value(), newValue);
+        return $constructor().apply($value(), newValue);
     }
 
-    public final Function2<? super Field<?>, ? super Field<String>, ? extends QOM.ToChar> constructor() {
+    public final Function2<? super Field<?>, ? super Field<String>, ? extends QOM.ToChar> $constructor() {
         return (a1, a2) -> new ToChar(a1, a2);
     }
 

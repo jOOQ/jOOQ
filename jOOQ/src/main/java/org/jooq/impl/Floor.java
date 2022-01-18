@@ -133,10 +133,10 @@ implements
 
     @Override
     public final QOM.Floor<T> $value(Field<T> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<T>, ? extends QOM.Floor<T>> constructor() {
+    public final Function1<? super Field<T>, ? extends QOM.Floor<T>> $constructor() {
         return (a1) -> new Floor<>(a1);
     }
 

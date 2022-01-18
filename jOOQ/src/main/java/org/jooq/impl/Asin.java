@@ -138,10 +138,10 @@ implements
 
     @Override
     public final QOM.Asin $number(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.Asin> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.Asin> $constructor() {
         return (a1) -> new Asin(a1);
     }
 

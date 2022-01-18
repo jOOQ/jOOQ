@@ -207,25 +207,25 @@ implements
 
     @Override
     public final QOM.Overlay $in(Field<String> newValue) {
-        return constructor().apply(newValue, $placing(), $startIndex(), $length());
+        return $constructor().apply(newValue, $placing(), $startIndex(), $length());
     }
 
     @Override
     public final QOM.Overlay $placing(Field<String> newValue) {
-        return constructor().apply($in(), newValue, $startIndex(), $length());
+        return $constructor().apply($in(), newValue, $startIndex(), $length());
     }
 
     @Override
     public final QOM.Overlay $startIndex(Field<? extends Number> newValue) {
-        return constructor().apply($in(), $placing(), newValue, $length());
+        return $constructor().apply($in(), $placing(), newValue, $length());
     }
 
     @Override
     public final QOM.Overlay $length(Field<? extends Number> newValue) {
-        return constructor().apply($in(), $placing(), $startIndex(), newValue);
+        return $constructor().apply($in(), $placing(), $startIndex(), newValue);
     }
 
-    public final Function4<? super Field<String>, ? super Field<String>, ? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Overlay> constructor() {
+    public final Function4<? super Field<String>, ? super Field<String>, ? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Overlay> $constructor() {
         return (a1, a2, a3, a4) -> new Overlay(a1, a2, a3, a4);
     }
 

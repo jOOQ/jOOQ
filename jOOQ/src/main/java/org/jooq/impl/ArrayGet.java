@@ -166,15 +166,15 @@ implements
 
     @Override
     public final QOM.ArrayGet<T> $array(Field<T[]> newValue) {
-        return constructor().apply(newValue, $index());
+        return $constructor().apply(newValue, $index());
     }
 
     @Override
     public final QOM.ArrayGet<T> $index(Field<Integer> newValue) {
-        return constructor().apply($array(), newValue);
+        return $constructor().apply($array(), newValue);
     }
 
-    public final Function2<? super Field<T[]>, ? super Field<Integer>, ? extends QOM.ArrayGet<T>> constructor() {
+    public final Function2<? super Field<T[]>, ? super Field<Integer>, ? extends QOM.ArrayGet<T>> $constructor() {
         return (a1, a2) -> new ArrayGet<>(a1, a2);
     }
 

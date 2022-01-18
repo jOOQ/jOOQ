@@ -154,15 +154,15 @@ implements
 
     @Override
     public final QOM.XMLPi $target(Name newValue) {
-        return constructor().apply(newValue, $content());
+        return $constructor().apply(newValue, $content());
     }
 
     @Override
     public final QOM.XMLPi $content(Field<?> newValue) {
-        return constructor().apply($target(), newValue);
+        return $constructor().apply($target(), newValue);
     }
 
-    public final Function2<? super Name, ? super Field<?>, ? extends QOM.XMLPi> constructor() {
+    public final Function2<? super Name, ? super Field<?>, ? extends QOM.XMLPi> $constructor() {
         return (a1, a2) -> new XMLPi(a1, a2);
     }
 

@@ -148,15 +148,15 @@ implements
 
     @Override
     public final QOM.RegrAvgY $y(Field<? extends Number> newValue) {
-        return constructor().apply(newValue, $x());
+        return $constructor().apply(newValue, $x());
     }
 
     @Override
     public final QOM.RegrAvgY $x(Field<? extends Number> newValue) {
-        return constructor().apply($y(), newValue);
+        return $constructor().apply($y(), newValue);
     }
 
-    public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.RegrAvgY> constructor() {
+    public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.RegrAvgY> $constructor() {
         return (a1, a2) -> new RegrAvgY(a1, a2);
     }
 

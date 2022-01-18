@@ -173,15 +173,15 @@ implements
 
     @Override
     public final QOM.Rtrim $string(Field<String> newValue) {
-        return constructor().apply(newValue, $characters());
+        return $constructor().apply(newValue, $characters());
     }
 
     @Override
     public final QOM.Rtrim $characters(Field<String> newValue) {
-        return constructor().apply($string(), newValue);
+        return $constructor().apply($string(), newValue);
     }
 
-    public final Function2<? super Field<String>, ? super Field<String>, ? extends QOM.Rtrim> constructor() {
+    public final Function2<? super Field<String>, ? super Field<String>, ? extends QOM.Rtrim> $constructor() {
         return (a1, a2) -> new Rtrim(a1, a2);
     }
 

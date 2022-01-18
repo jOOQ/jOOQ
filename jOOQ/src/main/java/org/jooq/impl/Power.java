@@ -145,16 +145,16 @@ implements
 
     @Override
     public final QOM.Power $arg1(Field<? extends Number> newValue) {
-        return constructor().apply(newValue, $arg2());
+        return $constructor().apply(newValue, $arg2());
     }
 
     @Override
     public final QOM.Power $arg2(Field<? extends Number> newValue) {
-        return constructor().apply($arg1(), newValue);
+        return $constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Power> constructor() {
+    public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Power> $constructor() {
         return (a1, a2) -> new Power(a1, a2);
     }
 

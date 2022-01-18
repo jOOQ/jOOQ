@@ -225,30 +225,30 @@ implements
 
     @Override
     public final QOM.Revoke $privileges(UnmodifiableList<? extends Privilege> newValue) {
-        return constructor().apply(newValue, $grantOptionFor(), $on(), $from(), $fromPublic());
+        return $constructor().apply(newValue, $grantOptionFor(), $on(), $from(), $fromPublic());
     }
 
     @Override
     public final QOM.Revoke $grantOptionFor(boolean newValue) {
-        return constructor().apply($privileges(), newValue, $on(), $from(), $fromPublic());
+        return $constructor().apply($privileges(), newValue, $on(), $from(), $fromPublic());
     }
 
     @Override
     public final QOM.Revoke $on(Table<?> newValue) {
-        return constructor().apply($privileges(), $grantOptionFor(), newValue, $from(), $fromPublic());
+        return $constructor().apply($privileges(), $grantOptionFor(), newValue, $from(), $fromPublic());
     }
 
     @Override
     public final QOM.Revoke $from(Role newValue) {
-        return constructor().apply($privileges(), $grantOptionFor(), $on(), newValue, $fromPublic());
+        return $constructor().apply($privileges(), $grantOptionFor(), $on(), newValue, $fromPublic());
     }
 
     @Override
     public final QOM.Revoke $fromPublic(boolean newValue) {
-        return constructor().apply($privileges(), $grantOptionFor(), $on(), $from(), newValue);
+        return $constructor().apply($privileges(), $grantOptionFor(), $on(), $from(), newValue);
     }
 
-    public final Function5<? super UnmodifiableList<? extends Privilege>, ? super Boolean, ? super Table<?>, ? super Role, ? super Boolean, ? extends QOM.Revoke> constructor() {
+    public final Function5<? super UnmodifiableList<? extends Privilege>, ? super Boolean, ? super Table<?>, ? super Role, ? super Boolean, ? extends QOM.Revoke> $constructor() {
         return (a1, a2, a3, a4, a5) -> new RevokeImpl(configuration(), (Collection<? extends Privilege>) a1, a2, a3, a4, a5);
     }
 

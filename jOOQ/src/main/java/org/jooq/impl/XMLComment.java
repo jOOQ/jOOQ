@@ -125,10 +125,10 @@ implements
 
     @Override
     public final QOM.XMLComment $comment(Field<String> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<String>, ? extends QOM.XMLComment> constructor() {
+    public final Function1<? super Field<String>, ? extends QOM.XMLComment> $constructor() {
         return (a1) -> new XMLComment(a1);
     }
 

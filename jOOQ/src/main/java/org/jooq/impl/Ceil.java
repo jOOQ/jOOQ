@@ -145,10 +145,10 @@ implements
 
     @Override
     public final QOM.Ceil<T> $value(Field<T> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<T>, ? extends QOM.Ceil<T>> constructor() {
+    public final Function1<? super Field<T>, ? extends QOM.Ceil<T>> $constructor() {
         return (a1) -> new Ceil<>(a1);
     }
 

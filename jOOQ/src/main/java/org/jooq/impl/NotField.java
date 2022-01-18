@@ -143,11 +143,11 @@ implements
 
     @Override
     public final QOM.NotField $arg1(Field<Boolean> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
     @Override
-    public final Function1<? super Field<Boolean>, ? extends QOM.NotField> constructor() {
+    public final Function1<? super Field<Boolean>, ? extends QOM.NotField> $constructor() {
         return (a1) -> new NotField(a1);
     }
 

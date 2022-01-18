@@ -88,7 +88,7 @@ final class GroupingSets extends AbstractField<Object> implements QOM.GroupingSe
     }
 
     @Override
-    public final Function1<? super UnmodifiableList<? extends UnmodifiableList<? extends FieldOrRow>>, ? extends GroupField> constructor() {
+    public final Function1<? super UnmodifiableList<? extends UnmodifiableList<? extends FieldOrRow>>, ? extends GroupField> $constructor() {
         return l -> new GroupingSets((Collection[]) l.toArray(EMPTY_COLLECTION));
     }
 }

@@ -157,10 +157,10 @@ implements
 
     @Override
     public final QOM.BitLength $string(Field<String> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<String>, ? extends QOM.BitLength> constructor() {
+    public final Function1<? super Field<String>, ? extends QOM.BitLength> $constructor() {
         return (a1) -> new BitLength(a1);
     }
 

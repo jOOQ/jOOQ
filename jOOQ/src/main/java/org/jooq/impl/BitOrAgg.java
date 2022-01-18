@@ -302,10 +302,10 @@ implements
 
     @Override
     public final QOM.BitOrAgg<T> $value(Field<T> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<T>, ? extends QOM.BitOrAgg<T>> constructor() {
+    public final Function1<? super Field<T>, ? extends QOM.BitOrAgg<T>> $constructor() {
         return (a1) -> new BitOrAgg<>(a1);
     }
 

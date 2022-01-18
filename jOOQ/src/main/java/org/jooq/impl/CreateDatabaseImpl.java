@@ -134,15 +134,15 @@ implements
 
     @Override
     public final QOM.CreateDatabase $database(Catalog newValue) {
-        return constructor().apply(newValue, $ifNotExists());
+        return $constructor().apply(newValue, $ifNotExists());
     }
 
     @Override
     public final QOM.CreateDatabase $ifNotExists(boolean newValue) {
-        return constructor().apply($database(), newValue);
+        return $constructor().apply($database(), newValue);
     }
 
-    public final Function2<? super Catalog, ? super Boolean, ? extends QOM.CreateDatabase> constructor() {
+    public final Function2<? super Catalog, ? super Boolean, ? extends QOM.CreateDatabase> $constructor() {
         return (a1, a2) -> new CreateDatabaseImpl(configuration(), a1, a2);
     }
 

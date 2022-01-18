@@ -127,10 +127,10 @@ implements
 
     @Override
     public final QOM.XMLConcat $args(UnmodifiableList<? extends Field<?>> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super UnmodifiableList<? extends Field<?>>, ? extends QOM.XMLConcat> constructor() {
+    public final Function1<? super UnmodifiableList<? extends Field<?>>, ? extends QOM.XMLConcat> $constructor() {
         return (a1) -> new XMLConcat((Collection<? extends Field<?>>) a1);
     }
 

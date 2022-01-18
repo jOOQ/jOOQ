@@ -142,11 +142,11 @@ implements
 
     @Override
     public final QOM.BitNot<T> $arg1(Field<T> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
     @Override
-    public final Function1<? super Field<T>, ? extends QOM.BitNot<T>> constructor() {
+    public final Function1<? super Field<T>, ? extends QOM.BitNot<T>> $constructor() {
         return (a1) -> new BitNot<>(a1);
     }
 

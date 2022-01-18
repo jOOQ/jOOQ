@@ -143,15 +143,15 @@ implements
 
     @Override
     public final QOM.Nullif<T> $value(Field<T> newValue) {
-        return constructor().apply(newValue, $other());
+        return $constructor().apply(newValue, $other());
     }
 
     @Override
     public final QOM.Nullif<T> $other(Field<T> newValue) {
-        return constructor().apply($value(), newValue);
+        return $constructor().apply($value(), newValue);
     }
 
-    public final Function2<? super Field<T>, ? super Field<T>, ? extends QOM.Nullif<T>> constructor() {
+    public final Function2<? super Field<T>, ? super Field<T>, ? extends QOM.Nullif<T>> $constructor() {
         return (a1, a2) -> new Nullif<>(a1, a2);
     }
 

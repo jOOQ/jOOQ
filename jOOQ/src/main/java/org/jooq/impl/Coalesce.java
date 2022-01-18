@@ -95,7 +95,7 @@ final class Coalesce<T> extends AbstractField<T> implements QOM.Coalesce<T> {
     }
 
     @Override
-    public final Function1<? super UnmodifiableList<? extends Field<T>>, ? extends Field<T>> constructor() {
+    public final Function1<? super UnmodifiableList<? extends Field<T>>, ? extends Field<T>> $constructor() {
         return l -> new Coalesce<>(l.toArray(EMPTY_FIELD));
     }
 }

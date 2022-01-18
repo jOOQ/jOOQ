@@ -139,10 +139,10 @@ implements
 
     @Override
     public final QOM.Exists $query(Select<?> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Select<?>, ? extends QOM.Exists> constructor() {
+    public final Function1<? super Select<?>, ? extends QOM.Exists> $constructor() {
         return (a1) -> new Exists(a1);
     }
 

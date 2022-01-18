@@ -121,7 +121,7 @@ final class SelectIsNotNull extends AbstractCondition implements QOM.SelectIsNot
     }
 
     @Override
-    public final Function1<? super Select<?>, ? extends Condition> constructor() {
+    public final Function1<? super Select<?>, ? extends Condition> $constructor() {
         return r -> new SelectIsNotNull(r);
     }
 }

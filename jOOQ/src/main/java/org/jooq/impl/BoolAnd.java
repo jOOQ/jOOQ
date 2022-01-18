@@ -140,10 +140,10 @@ implements
 
     @Override
     public final QOM.BoolAnd $condition(Condition newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Condition, ? extends QOM.BoolAnd> constructor() {
+    public final Function1<? super Condition, ? extends QOM.BoolAnd> $constructor() {
         return (a1) -> new BoolAnd(a1);
     }
 

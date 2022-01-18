@@ -210,15 +210,15 @@ implements
 
     @Override
     public final QOM.Log $value(Field<? extends Number> newValue) {
-        return constructor().apply(newValue, $base());
+        return $constructor().apply(newValue, $base());
     }
 
     @Override
     public final QOM.Log $base(Field<? extends Number> newValue) {
-        return constructor().apply($value(), newValue);
+        return $constructor().apply($value(), newValue);
     }
 
-    public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Log> constructor() {
+    public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Log> $constructor() {
         return (a1, a2) -> new Log(a1, a2);
     }
 

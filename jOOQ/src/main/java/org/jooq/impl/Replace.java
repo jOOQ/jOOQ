@@ -209,20 +209,20 @@ implements
 
     @Override
     public final QOM.Replace $string(Field<String> newValue) {
-        return constructor().apply(newValue, $search(), $replace());
+        return $constructor().apply(newValue, $search(), $replace());
     }
 
     @Override
     public final QOM.Replace $search(Field<String> newValue) {
-        return constructor().apply($string(), newValue, $replace());
+        return $constructor().apply($string(), newValue, $replace());
     }
 
     @Override
     public final QOM.Replace $replace(Field<String> newValue) {
-        return constructor().apply($string(), $search(), newValue);
+        return $constructor().apply($string(), $search(), newValue);
     }
 
-    public final Function3<? super Field<String>, ? super Field<String>, ? super Field<String>, ? extends QOM.Replace> constructor() {
+    public final Function3<? super Field<String>, ? super Field<String>, ? super Field<String>, ? extends QOM.Replace> $constructor() {
         return (a1, a2, a3) -> new Replace(a1, a2, a3);
     }
 

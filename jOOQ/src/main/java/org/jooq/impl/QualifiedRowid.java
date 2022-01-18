@@ -138,11 +138,11 @@ implements
 
     @Override
     public final QOM.QualifiedRowid $arg1(Table<?> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
     @Override
-    public final Function1<? super Table<?>, ? extends QOM.QualifiedRowid> constructor() {
+    public final Function1<? super Table<?>, ? extends QOM.QualifiedRowid> $constructor() {
         return (a1) -> new QualifiedRowid(a1);
     }
 

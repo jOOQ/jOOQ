@@ -539,75 +539,75 @@ implements
 
     @Override
     public final QOM.AlterSequence<T> $sequence(Sequence<T> newValue) {
-        return constructor().apply(newValue, $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+        return $constructor().apply(newValue, $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.AlterSequence<T> $ifExists(boolean newValue) {
-        return constructor().apply($sequence(), newValue, $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+        return $constructor().apply($sequence(), newValue, $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.AlterSequence<T> $renameTo(Sequence<?> newValue) {
-        return constructor().apply($sequence(), $ifExists(), newValue, $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+        return $constructor().apply($sequence(), $ifExists(), newValue, $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.AlterSequence<T> $restart(boolean newValue) {
-        return constructor().apply($sequence(), $ifExists(), $renameTo(), newValue, $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+        return $constructor().apply($sequence(), $ifExists(), $renameTo(), newValue, $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.AlterSequence<T> $restartWith(Field<T> newValue) {
-        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), newValue, $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+        return $constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), newValue, $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.AlterSequence<T> $startWith(Field<T> newValue) {
-        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), newValue, $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+        return $constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), newValue, $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.AlterSequence<T> $incrementBy(Field<T> newValue) {
-        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), newValue, $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+        return $constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), newValue, $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.AlterSequence<T> $minvalue(Field<T> newValue) {
-        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), newValue, $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+        return $constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), newValue, $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.AlterSequence<T> $noMinvalue(boolean newValue) {
-        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), newValue, $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+        return $constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), newValue, $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.AlterSequence<T> $maxvalue(Field<T> newValue) {
-        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), newValue, $noMaxvalue(), $cycle(), $cache(), $noCache());
+        return $constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), newValue, $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.AlterSequence<T> $noMaxvalue(boolean newValue) {
-        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), newValue, $cycle(), $cache(), $noCache());
+        return $constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), newValue, $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.AlterSequence<T> $cycle(CycleOption newValue) {
-        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), newValue, $cache(), $noCache());
+        return $constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), newValue, $cache(), $noCache());
     }
 
     @Override
     public final QOM.AlterSequence<T> $cache(Field<T> newValue) {
-        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), newValue, $noCache());
+        return $constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), newValue, $noCache());
     }
 
     @Override
     public final QOM.AlterSequence<T> $noCache(boolean newValue) {
-        return constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), newValue);
+        return $constructor().apply($sequence(), $ifExists(), $renameTo(), $restart(), $restartWith(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), newValue);
     }
 
-    public final Function14<? super Sequence<T>, ? super Boolean, ? super Sequence<?>, ? super Boolean, ? super Field<T>, ? super Field<T>, ? super Field<T>, ? super Field<T>, ? super Boolean, ? super Field<T>, ? super Boolean, ? super CycleOption, ? super Field<T>, ? super Boolean, ? extends QOM.AlterSequence<T>> constructor() {
+    public final Function14<? super Sequence<T>, ? super Boolean, ? super Sequence<?>, ? super Boolean, ? super Field<T>, ? super Field<T>, ? super Field<T>, ? super Field<T>, ? super Boolean, ? super Field<T>, ? super Boolean, ? super CycleOption, ? super Field<T>, ? super Boolean, ? extends QOM.AlterSequence<T>> $constructor() {
         return (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) -> new AlterSequenceImpl(configuration(), a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
     }
 

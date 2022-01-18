@@ -160,20 +160,20 @@ implements
 
     @Override
     public final QOM.SubstringIndex $string(Field<String> newValue) {
-        return constructor().apply(newValue, $delimiter(), $n());
+        return $constructor().apply(newValue, $delimiter(), $n());
     }
 
     @Override
     public final QOM.SubstringIndex $delimiter(Field<String> newValue) {
-        return constructor().apply($string(), newValue, $n());
+        return $constructor().apply($string(), newValue, $n());
     }
 
     @Override
     public final QOM.SubstringIndex $n(Field<? extends Number> newValue) {
-        return constructor().apply($string(), $delimiter(), newValue);
+        return $constructor().apply($string(), $delimiter(), newValue);
     }
 
-    public final Function3<? super Field<String>, ? super Field<String>, ? super Field<? extends Number>, ? extends QOM.SubstringIndex> constructor() {
+    public final Function3<? super Field<String>, ? super Field<String>, ? super Field<? extends Number>, ? extends QOM.SubstringIndex> $constructor() {
         return (a1, a2, a3) -> new SubstringIndex(a1, a2, a3);
     }
 

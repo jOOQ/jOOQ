@@ -146,10 +146,10 @@ implements
 
     @Override
     public final QOM.Sqrt $value(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.Sqrt> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.Sqrt> $constructor() {
         return (a1) -> new Sqrt(a1);
     }
 

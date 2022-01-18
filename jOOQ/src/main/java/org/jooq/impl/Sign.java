@@ -138,10 +138,10 @@ implements
 
     @Override
     public final QOM.Sign $number(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.Sign> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.Sign> $constructor() {
         return (a1) -> new Sign(a1);
     }
 

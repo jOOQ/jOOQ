@@ -126,7 +126,7 @@ final class Greatest<T> extends AbstractField<T> implements QOM.Greatest<T> {
     }
 
     @Override
-    public final Function1<? super UnmodifiableList<? extends Field<T>>, ? extends Field<T>> constructor() {
+    public final Function1<? super UnmodifiableList<? extends Field<T>>, ? extends Field<T>> $constructor() {
         return a -> new Greatest<>(a.toArray(EMPTY_FIELD));
     }
 }

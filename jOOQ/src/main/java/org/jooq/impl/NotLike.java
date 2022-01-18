@@ -159,21 +159,21 @@ implements
 
     @Override
     public final QOM.NotLike $arg1(Field<?> newValue) {
-        return constructor().apply(newValue, $arg2(), $arg3());
+        return $constructor().apply(newValue, $arg2(), $arg3());
     }
 
     @Override
     public final QOM.NotLike $arg2(Field<String> newValue) {
-        return constructor().apply($arg1(), newValue, $arg3());
+        return $constructor().apply($arg1(), newValue, $arg3());
     }
 
     @Override
     public final QOM.NotLike $arg3(Character newValue) {
-        return constructor().apply($arg1(), $arg2(), newValue);
+        return $constructor().apply($arg1(), $arg2(), newValue);
     }
 
     @Override
-    public final Function3<? super Field<?>, ? super Field<String>, ? super Character, ? extends QOM.NotLike> constructor() {
+    public final Function3<? super Field<?>, ? super Field<String>, ? super Character, ? extends QOM.NotLike> $constructor() {
         return (a1, a2, a3) -> new NotLike(a1, a2, a3);
     }
 

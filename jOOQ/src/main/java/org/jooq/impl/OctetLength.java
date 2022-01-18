@@ -148,10 +148,10 @@ implements
 
     @Override
     public final QOM.OctetLength $string(Field<String> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<String>, ? extends QOM.OctetLength> constructor() {
+    public final Function1<? super Field<String>, ? extends QOM.OctetLength> $constructor() {
         return (a1) -> new OctetLength(a1);
     }
 

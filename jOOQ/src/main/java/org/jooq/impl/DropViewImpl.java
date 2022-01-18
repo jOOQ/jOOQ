@@ -148,15 +148,15 @@ implements
 
     @Override
     public final QOM.DropView $view(Table<?> newValue) {
-        return constructor().apply(newValue, $ifExists());
+        return $constructor().apply(newValue, $ifExists());
     }
 
     @Override
     public final QOM.DropView $ifExists(boolean newValue) {
-        return constructor().apply($view(), newValue);
+        return $constructor().apply($view(), newValue);
     }
 
-    public final Function2<? super Table<?>, ? super Boolean, ? extends QOM.DropView> constructor() {
+    public final Function2<? super Table<?>, ? super Boolean, ? extends QOM.DropView> $constructor() {
         return (a1, a2) -> new DropViewImpl(configuration(), a1, a2);
     }
 

@@ -196,15 +196,15 @@ implements
 
     @Override
     public final QOM.Trunc<T> $value(Field<T> newValue) {
-        return constructor().apply(newValue, $decimals());
+        return $constructor().apply(newValue, $decimals());
     }
 
     @Override
     public final QOM.Trunc<T> $decimals(Field<Integer> newValue) {
-        return constructor().apply($value(), newValue);
+        return $constructor().apply($value(), newValue);
     }
 
-    public final Function2<? super Field<T>, ? super Field<Integer>, ? extends QOM.Trunc<T>> constructor() {
+    public final Function2<? super Field<T>, ? super Field<Integer>, ? extends QOM.Trunc<T>> $constructor() {
         return (a1, a2) -> new Trunc<>(a1, a2);
     }
 

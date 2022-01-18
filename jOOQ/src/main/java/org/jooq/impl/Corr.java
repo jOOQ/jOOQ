@@ -138,15 +138,15 @@ implements
 
     @Override
     public final QOM.Corr $y(Field<? extends Number> newValue) {
-        return constructor().apply(newValue, $x());
+        return $constructor().apply(newValue, $x());
     }
 
     @Override
     public final QOM.Corr $x(Field<? extends Number> newValue) {
-        return constructor().apply($y(), newValue);
+        return $constructor().apply($y(), newValue);
     }
 
-    public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Corr> constructor() {
+    public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Corr> $constructor() {
         return (a1, a2) -> new Corr(a1, a2);
     }
 

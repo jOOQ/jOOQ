@@ -233,30 +233,30 @@ implements
 
     @Override
     public final QOM.CreateDomain<T> $domain(Domain<?> newValue) {
-        return constructor().apply(newValue, $ifNotExists(), $dataType(), $default_(), $constraints());
+        return $constructor().apply(newValue, $ifNotExists(), $dataType(), $default_(), $constraints());
     }
 
     @Override
     public final QOM.CreateDomain<T> $ifNotExists(boolean newValue) {
-        return constructor().apply($domain(), newValue, $dataType(), $default_(), $constraints());
+        return $constructor().apply($domain(), newValue, $dataType(), $default_(), $constraints());
     }
 
     @Override
     public final QOM.CreateDomain<T> $dataType(DataType<T> newValue) {
-        return constructor().apply($domain(), $ifNotExists(), newValue, $default_(), $constraints());
+        return $constructor().apply($domain(), $ifNotExists(), newValue, $default_(), $constraints());
     }
 
     @Override
     public final QOM.CreateDomain<T> $default_(Field<T> newValue) {
-        return constructor().apply($domain(), $ifNotExists(), $dataType(), newValue, $constraints());
+        return $constructor().apply($domain(), $ifNotExists(), $dataType(), newValue, $constraints());
     }
 
     @Override
     public final QOM.CreateDomain<T> $constraints(UnmodifiableList<? extends Constraint> newValue) {
-        return constructor().apply($domain(), $ifNotExists(), $dataType(), $default_(), newValue);
+        return $constructor().apply($domain(), $ifNotExists(), $dataType(), $default_(), newValue);
     }
 
-    public final Function5<? super Domain<?>, ? super Boolean, ? super DataType<T>, ? super Field<T>, ? super UnmodifiableList<? extends Constraint>, ? extends QOM.CreateDomain<T>> constructor() {
+    public final Function5<? super Domain<?>, ? super Boolean, ? super DataType<T>, ? super Field<T>, ? super UnmodifiableList<? extends Constraint>, ? extends QOM.CreateDomain<T>> $constructor() {
         return (a1, a2, a3, a4, a5) -> new CreateDomainImpl(configuration(), a1, a2, a3, a4, (Collection<? extends Constraint>) a5);
     }
 

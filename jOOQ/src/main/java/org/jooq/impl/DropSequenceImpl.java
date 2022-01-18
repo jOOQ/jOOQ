@@ -161,15 +161,15 @@ implements
 
     @Override
     public final QOM.DropSequence $sequence(Sequence<?> newValue) {
-        return constructor().apply(newValue, $ifExists());
+        return $constructor().apply(newValue, $ifExists());
     }
 
     @Override
     public final QOM.DropSequence $ifExists(boolean newValue) {
-        return constructor().apply($sequence(), newValue);
+        return $constructor().apply($sequence(), newValue);
     }
 
-    public final Function2<? super Sequence<?>, ? super Boolean, ? extends QOM.DropSequence> constructor() {
+    public final Function2<? super Sequence<?>, ? super Boolean, ? extends QOM.DropSequence> $constructor() {
         return (a1, a2) -> new DropSequenceImpl(configuration(), a1, a2);
     }
 

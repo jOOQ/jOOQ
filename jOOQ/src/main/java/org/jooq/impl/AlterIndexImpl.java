@@ -275,25 +275,25 @@ implements
 
     @Override
     public final QOM.AlterIndex $index(Index newValue) {
-        return constructor().apply(newValue, $ifExists(), $on(), $renameTo());
+        return $constructor().apply(newValue, $ifExists(), $on(), $renameTo());
     }
 
     @Override
     public final QOM.AlterIndex $ifExists(boolean newValue) {
-        return constructor().apply($index(), newValue, $on(), $renameTo());
+        return $constructor().apply($index(), newValue, $on(), $renameTo());
     }
 
     @Override
     public final QOM.AlterIndex $on(Table<?> newValue) {
-        return constructor().apply($index(), $ifExists(), newValue, $renameTo());
+        return $constructor().apply($index(), $ifExists(), newValue, $renameTo());
     }
 
     @Override
     public final QOM.AlterIndex $renameTo(Index newValue) {
-        return constructor().apply($index(), $ifExists(), $on(), newValue);
+        return $constructor().apply($index(), $ifExists(), $on(), newValue);
     }
 
-    public final Function4<? super Index, ? super Boolean, ? super Table<?>, ? super Index, ? extends QOM.AlterIndex> constructor() {
+    public final Function4<? super Index, ? super Boolean, ? super Table<?>, ? super Index, ? extends QOM.AlterIndex> $constructor() {
         return (a1, a2, a3, a4) -> new AlterIndexImpl(configuration(), a1, a2, a3, a4);
     }
 

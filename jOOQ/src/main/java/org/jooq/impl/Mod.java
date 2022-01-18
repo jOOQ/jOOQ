@@ -149,16 +149,16 @@ implements
 
     @Override
     public final QOM.Mod<T> $arg1(Field<T> newValue) {
-        return constructor().apply(newValue, $arg2());
+        return $constructor().apply(newValue, $arg2());
     }
 
     @Override
     public final QOM.Mod<T> $arg2(Field<? extends Number> newValue) {
-        return constructor().apply($arg1(), newValue);
+        return $constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super Field<T>, ? super Field<? extends Number>, ? extends QOM.Mod<T>> constructor() {
+    public final Function2<? super Field<T>, ? super Field<? extends Number>, ? extends QOM.Mod<T>> $constructor() {
         return (a1, a2) -> new Mod<>(a1, a2);
     }
 

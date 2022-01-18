@@ -105,15 +105,15 @@ implements
 
     @Override
     public final QOM.Min<T> $field(Field<T> newValue) {
-        return constructor().apply(newValue, $distinct());
+        return $constructor().apply(newValue, $distinct());
     }
 
     @Override
     public final QOM.Min<T> $distinct(boolean newValue) {
-        return constructor().apply($field(), newValue);
+        return $constructor().apply($field(), newValue);
     }
 
-    public final Function2<? super Field<T>, ? super Boolean, ? extends QOM.Min<T>> constructor() {
+    public final Function2<? super Field<T>, ? super Boolean, ? extends QOM.Min<T>> $constructor() {
         return (a1, a2) -> new Min<>(a1, a2);
     }
 

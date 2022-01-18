@@ -132,11 +132,11 @@ implements
 
     @Override
     public final QOM.IsNotJson $arg1(Field<?> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
     @Override
-    public final Function1<? super Field<?>, ? extends QOM.IsNotJson> constructor() {
+    public final Function1<? super Field<?>, ? extends QOM.IsNotJson> $constructor() {
         return (a1) -> new IsNotJson(a1);
     }
 

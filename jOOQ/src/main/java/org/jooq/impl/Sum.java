@@ -106,15 +106,15 @@ implements
 
     @Override
     public final QOM.Sum $field(Field<? extends Number> newValue) {
-        return constructor().apply(newValue, $distinct());
+        return $constructor().apply(newValue, $distinct());
     }
 
     @Override
     public final QOM.Sum $distinct(boolean newValue) {
-        return constructor().apply($field(), newValue);
+        return $constructor().apply($field(), newValue);
     }
 
-    public final Function2<? super Field<? extends Number>, ? super Boolean, ? extends QOM.Sum> constructor() {
+    public final Function2<? super Field<? extends Number>, ? super Boolean, ? extends QOM.Sum> $constructor() {
         return (a1, a2) -> new Sum(a1, a2);
     }
 

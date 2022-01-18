@@ -130,10 +130,10 @@ implements
 
     @Override
     public final QOM.Coth $number(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.Coth> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.Coth> $constructor() {
         return (a1) -> new Coth(a1);
     }
 

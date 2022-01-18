@@ -152,7 +152,7 @@ implements
         return new ConditionAsField(newValue);
     }
 
-    public final Function1<? super Condition, ? extends Field<Boolean>> constructor() {
+    public final Function1<? super Condition, ? extends Field<Boolean>> $constructor() {
         return (a1) -> DSL.field(a1);
     }
 

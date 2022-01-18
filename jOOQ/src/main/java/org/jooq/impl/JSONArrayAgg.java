@@ -310,7 +310,7 @@ implements
     }
 
     @Override
-    public final Function1<? super Field<?>, ? extends AggregateFunction<J>> constructor() {
+    public final Function1<? super Field<?>, ? extends AggregateFunction<J>> $constructor() {
         return f -> {
             JSONArrayAgg<J> r = new JSONArrayAgg<J>(getDataType(), f);
             r.onNull = onNull;

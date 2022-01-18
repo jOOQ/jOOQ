@@ -218,20 +218,20 @@ implements
 
     @Override
     public final QOM.DropSchema $schema(Schema newValue) {
-        return constructor().apply(newValue, $ifExists(), $cascade());
+        return $constructor().apply(newValue, $ifExists(), $cascade());
     }
 
     @Override
     public final QOM.DropSchema $ifExists(boolean newValue) {
-        return constructor().apply($schema(), newValue, $cascade());
+        return $constructor().apply($schema(), newValue, $cascade());
     }
 
     @Override
     public final QOM.DropSchema $cascade(Cascade newValue) {
-        return constructor().apply($schema(), $ifExists(), newValue);
+        return $constructor().apply($schema(), $ifExists(), newValue);
     }
 
-    public final Function3<? super Schema, ? super Boolean, ? super Cascade, ? extends QOM.DropSchema> constructor() {
+    public final Function3<? super Schema, ? super Boolean, ? super Cascade, ? extends QOM.DropSchema> $constructor() {
         return (a1, a2, a3) -> new DropSchemaImpl(configuration(), a1, a2, a3);
     }
 

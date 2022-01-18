@@ -260,7 +260,7 @@ final class Values<R extends Record> extends AbstractTable<R> implements QOM.Val
     // -------------------------------------------------------------------------
 
     @Override
-    public final Function1<? super UnmodifiableList<? extends Row>, ? extends Table<R>> constructor() {
+    public final Function1<? super UnmodifiableList<? extends Row>, ? extends Table<R>> $constructor() {
         return r -> new Values<>(r.toArray(EMPTY_ROW));
     }
 

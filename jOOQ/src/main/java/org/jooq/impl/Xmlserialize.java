@@ -159,20 +159,20 @@ implements
 
     @Override
     public final QOM.XMLSerialize<T> $content(boolean newValue) {
-        return constructor().apply(newValue, $value(), $type());
+        return $constructor().apply(newValue, $value(), $type());
     }
 
     @Override
     public final QOM.XMLSerialize<T> $value(Field<XML> newValue) {
-        return constructor().apply($content(), newValue, $type());
+        return $constructor().apply($content(), newValue, $type());
     }
 
     @Override
     public final QOM.XMLSerialize<T> $type(DataType<T> newValue) {
-        return constructor().apply($content(), $value(), newValue);
+        return $constructor().apply($content(), $value(), newValue);
     }
 
-    public final Function3<? super Boolean, ? super Field<XML>, ? super DataType<T>, ? extends QOM.XMLSerialize<T>> constructor() {
+    public final Function3<? super Boolean, ? super Field<XML>, ? super DataType<T>, ? extends QOM.XMLSerialize<T>> $constructor() {
         return (a1, a2, a3) -> new XMLSerialize<>(a1, a2, a3);
     }
 

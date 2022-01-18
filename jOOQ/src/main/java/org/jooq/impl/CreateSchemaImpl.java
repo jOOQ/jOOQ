@@ -189,15 +189,15 @@ implements
 
     @Override
     public final QOM.CreateSchema $schema(Schema newValue) {
-        return constructor().apply(newValue, $ifNotExists());
+        return $constructor().apply(newValue, $ifNotExists());
     }
 
     @Override
     public final QOM.CreateSchema $ifNotExists(boolean newValue) {
-        return constructor().apply($schema(), newValue);
+        return $constructor().apply($schema(), newValue);
     }
 
-    public final Function2<? super Schema, ? super Boolean, ? extends QOM.CreateSchema> constructor() {
+    public final Function2<? super Schema, ? super Boolean, ? extends QOM.CreateSchema> $constructor() {
         return (a1, a2) -> new CreateSchemaImpl(configuration(), a1, a2);
     }
 

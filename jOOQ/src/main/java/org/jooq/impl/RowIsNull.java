@@ -140,7 +140,7 @@ final class RowIsNull extends AbstractCondition implements QOM.RowIsNull {
     }
 
     @Override
-    public final Function1<? super Row, ? extends Condition> constructor() {
+    public final Function1<? super Row, ? extends Condition> $constructor() {
         return r -> new RowIsNull(r);
     }
 }

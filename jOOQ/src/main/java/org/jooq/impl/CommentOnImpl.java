@@ -287,25 +287,25 @@ implements
 
     @Override
     public final QOM.CommentOn $table(Table<?> newValue) {
-        return constructor().apply(newValue, $isView(), $field(), $comment());
+        return $constructor().apply(newValue, $isView(), $field(), $comment());
     }
 
     @Override
     public final QOM.CommentOn $isView(boolean newValue) {
-        return constructor().apply($table(), newValue, $field(), $comment());
+        return $constructor().apply($table(), newValue, $field(), $comment());
     }
 
     @Override
     public final QOM.CommentOn $field(Field<?> newValue) {
-        return constructor().apply($table(), $isView(), newValue, $comment());
+        return $constructor().apply($table(), $isView(), newValue, $comment());
     }
 
     @Override
     public final QOM.CommentOn $comment(Comment newValue) {
-        return constructor().apply($table(), $isView(), $field(), newValue);
+        return $constructor().apply($table(), $isView(), $field(), newValue);
     }
 
-    public final Function4<? super Table<?>, ? super Boolean, ? super Field<?>, ? super Comment, ? extends QOM.CommentOn> constructor() {
+    public final Function4<? super Table<?>, ? super Boolean, ? super Field<?>, ? super Comment, ? extends QOM.CommentOn> $constructor() {
         return (a1, a2, a3, a4) -> new CommentOnImpl(configuration(), a1, a2, a3, a4);
     }
 

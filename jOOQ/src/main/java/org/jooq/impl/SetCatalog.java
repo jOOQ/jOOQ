@@ -139,10 +139,10 @@ implements
 
     @Override
     public final QOM.SetCatalog $catalog(Catalog newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Catalog, ? extends QOM.SetCatalog> constructor() {
+    public final Function1<? super Catalog, ? extends QOM.SetCatalog> $constructor() {
         return (a1) -> new SetCatalog(configuration(), a1);
     }
 

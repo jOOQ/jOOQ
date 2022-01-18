@@ -280,25 +280,25 @@ implements
 
     @Override
     public final QOM.JSONObject<T> $type(DataType<T> newValue) {
-        return constructor().apply(newValue, $entries(), $onNull(), $returning());
+        return $constructor().apply(newValue, $entries(), $onNull(), $returning());
     }
 
     @Override
     public final QOM.JSONObject<T> $entries(UnmodifiableList<? extends JSONEntry<?>> newValue) {
-        return constructor().apply($type(), newValue, $onNull(), $returning());
+        return $constructor().apply($type(), newValue, $onNull(), $returning());
     }
 
     @Override
     public final QOM.JSONObject<T> $onNull(JSONOnNull newValue) {
-        return constructor().apply($type(), $entries(), newValue, $returning());
+        return $constructor().apply($type(), $entries(), newValue, $returning());
     }
 
     @Override
     public final QOM.JSONObject<T> $returning(DataType<?> newValue) {
-        return constructor().apply($type(), $entries(), $onNull(), newValue);
+        return $constructor().apply($type(), $entries(), $onNull(), newValue);
     }
 
-    public final Function4<? super DataType<T>, ? super UnmodifiableList<? extends JSONEntry<?>>, ? super JSONOnNull, ? super DataType<?>, ? extends QOM.JSONObject<T>> constructor() {
+    public final Function4<? super DataType<T>, ? super UnmodifiableList<? extends JSONEntry<?>>, ? super JSONOnNull, ? super DataType<?>, ? extends QOM.JSONObject<T>> $constructor() {
         return (a1, a2, a3, a4) -> new JSONObject(a1, (Collection<? extends JSONEntry<?>>) a2, a3, a4);
     }
 

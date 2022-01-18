@@ -187,20 +187,20 @@ implements
 
     @Override
     public final QOM.Rpad $string(Field<String> newValue) {
-        return constructor().apply(newValue, $length(), $character());
+        return $constructor().apply(newValue, $length(), $character());
     }
 
     @Override
     public final QOM.Rpad $length(Field<? extends Number> newValue) {
-        return constructor().apply($string(), newValue, $character());
+        return $constructor().apply($string(), newValue, $character());
     }
 
     @Override
     public final QOM.Rpad $character(Field<String> newValue) {
-        return constructor().apply($string(), $length(), newValue);
+        return $constructor().apply($string(), $length(), newValue);
     }
 
-    public final Function3<? super Field<String>, ? super Field<? extends Number>, ? super Field<String>, ? extends QOM.Rpad> constructor() {
+    public final Function3<? super Field<String>, ? super Field<? extends Number>, ? super Field<String>, ? extends QOM.Rpad> $constructor() {
         return (a1, a2, a3) -> new Rpad(a1, a2, a3);
     }
 

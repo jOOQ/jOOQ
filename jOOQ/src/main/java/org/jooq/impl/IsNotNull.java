@@ -134,11 +134,11 @@ implements
 
     @Override
     public final QOM.IsNotNull $arg1(Field<?> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
     @Override
-    public final Function1<? super Field<?>, ? extends QOM.IsNotNull> constructor() {
+    public final Function1<? super Field<?>, ? extends QOM.IsNotNull> $constructor() {
         return (a1) -> new IsNotNull(a1);
     }
 

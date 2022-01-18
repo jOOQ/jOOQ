@@ -128,10 +128,10 @@ implements
 
     @Override
     public final QOM.StddevPop $field(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.StddevPop> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.StddevPop> $constructor() {
         return (a1) -> new StddevPop(a1);
     }
 

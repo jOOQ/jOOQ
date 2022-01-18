@@ -193,16 +193,16 @@ implements
 
     @Override
     public final QOM.Eq<T> $arg1(Field<T> newValue) {
-        return constructor().apply(newValue, $arg2());
+        return $constructor().apply(newValue, $arg2());
     }
 
     @Override
     public final QOM.Eq<T> $arg2(Field<T> newValue) {
-        return constructor().apply($arg1(), newValue);
+        return $constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super Field<T>, ? super Field<T>, ? extends QOM.Eq<T>> constructor() {
+    public final Function2<? super Field<T>, ? super Field<T>, ? extends QOM.Eq<T>> $constructor() {
         return (a1, a2) -> new Eq<>(a1, a2);
     }
 

@@ -152,15 +152,15 @@ implements
 
     @Override
     public final QOM.ToTimestamp $value(Field<String> newValue) {
-        return constructor().apply(newValue, $formatMask());
+        return $constructor().apply(newValue, $formatMask());
     }
 
     @Override
     public final QOM.ToTimestamp $formatMask(Field<String> newValue) {
-        return constructor().apply($value(), newValue);
+        return $constructor().apply($value(), newValue);
     }
 
-    public final Function2<? super Field<String>, ? super Field<String>, ? extends QOM.ToTimestamp> constructor() {
+    public final Function2<? super Field<String>, ? super Field<String>, ? extends QOM.ToTimestamp> $constructor() {
         return (a1, a2) -> new ToTimestamp(a1, a2);
     }
 

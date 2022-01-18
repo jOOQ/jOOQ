@@ -218,25 +218,25 @@ implements
 
     @Override
     public final QOM.DropIndex $index(Index newValue) {
-        return constructor().apply(newValue, $ifExists(), $on(), $cascade());
+        return $constructor().apply(newValue, $ifExists(), $on(), $cascade());
     }
 
     @Override
     public final QOM.DropIndex $ifExists(boolean newValue) {
-        return constructor().apply($index(), newValue, $on(), $cascade());
+        return $constructor().apply($index(), newValue, $on(), $cascade());
     }
 
     @Override
     public final QOM.DropIndex $on(Table<?> newValue) {
-        return constructor().apply($index(), $ifExists(), newValue, $cascade());
+        return $constructor().apply($index(), $ifExists(), newValue, $cascade());
     }
 
     @Override
     public final QOM.DropIndex $cascade(Cascade newValue) {
-        return constructor().apply($index(), $ifExists(), $on(), newValue);
+        return $constructor().apply($index(), $ifExists(), $on(), newValue);
     }
 
-    public final Function4<? super Index, ? super Boolean, ? super Table<?>, ? super Cascade, ? extends QOM.DropIndex> constructor() {
+    public final Function4<? super Index, ? super Boolean, ? super Table<?>, ? super Cascade, ? extends QOM.DropIndex> $constructor() {
         return (a1, a2, a3, a4) -> new DropIndexImpl(configuration(), a1, a2, a3, a4);
     }
 

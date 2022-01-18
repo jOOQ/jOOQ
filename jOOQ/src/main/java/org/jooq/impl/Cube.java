@@ -75,7 +75,7 @@ final class Cube extends AbstractField<Object> implements QOM.Cube {
     }
 
     @Override
-    public final Function1<? super UnmodifiableList<? extends FieldOrRow>, ? extends GroupField> constructor() {
+    public final Function1<? super UnmodifiableList<? extends FieldOrRow>, ? extends GroupField> $constructor() {
         return l -> new Cube(l.toArray(EMPTY_FIELD_OR_ROW));
     }
 }

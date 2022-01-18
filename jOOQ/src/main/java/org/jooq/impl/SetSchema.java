@@ -144,10 +144,10 @@ implements
 
     @Override
     public final QOM.SetSchema $schema(Schema newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Schema, ? extends QOM.SetSchema> constructor() {
+    public final Function1<? super Schema, ? extends QOM.SetSchema> $constructor() {
         return (a1) -> new SetSchema(configuration(), a1);
     }
 

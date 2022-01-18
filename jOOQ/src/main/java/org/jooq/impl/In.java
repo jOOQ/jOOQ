@@ -130,16 +130,16 @@ implements
 
     @Override
     public final QOM.In<T> $arg1(Field<T> newValue) {
-        return constructor().apply(newValue, $arg2());
+        return $constructor().apply(newValue, $arg2());
     }
 
     @Override
     public final QOM.In<T> $arg2(Select<? extends Record1<T>> newValue) {
-        return constructor().apply($arg1(), newValue);
+        return $constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super Field<T>, ? super Select<? extends Record1<T>>, ? extends QOM.In<T>> constructor() {
+    public final Function2<? super Field<T>, ? super Select<? extends Record1<T>>, ? extends QOM.In<T>> $constructor() {
         return (a1, a2) -> new In<>(a1, a2);
     }
 

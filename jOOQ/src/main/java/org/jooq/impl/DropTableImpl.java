@@ -217,25 +217,25 @@ implements
 
     @Override
     public final QOM.DropTable $temporary(boolean newValue) {
-        return constructor().apply(newValue, $table(), $ifExists(), $cascade());
+        return $constructor().apply(newValue, $table(), $ifExists(), $cascade());
     }
 
     @Override
     public final QOM.DropTable $table(Table<?> newValue) {
-        return constructor().apply($temporary(), newValue, $ifExists(), $cascade());
+        return $constructor().apply($temporary(), newValue, $ifExists(), $cascade());
     }
 
     @Override
     public final QOM.DropTable $ifExists(boolean newValue) {
-        return constructor().apply($temporary(), $table(), newValue, $cascade());
+        return $constructor().apply($temporary(), $table(), newValue, $cascade());
     }
 
     @Override
     public final QOM.DropTable $cascade(Cascade newValue) {
-        return constructor().apply($temporary(), $table(), $ifExists(), newValue);
+        return $constructor().apply($temporary(), $table(), $ifExists(), newValue);
     }
 
-    public final Function4<? super Boolean, ? super Table<?>, ? super Boolean, ? super Cascade, ? extends QOM.DropTable> constructor() {
+    public final Function4<? super Boolean, ? super Table<?>, ? super Boolean, ? super Cascade, ? extends QOM.DropTable> $constructor() {
         return (a1, a2, a3, a4) -> new DropTableImpl(configuration(), a1, a2, a3, a4);
     }
 

@@ -368,60 +368,60 @@ implements
 
     @Override
     public final QOM.CreateSequence $sequence(Sequence<?> newValue) {
-        return constructor().apply(newValue, $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+        return $constructor().apply(newValue, $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.CreateSequence $ifNotExists(boolean newValue) {
-        return constructor().apply($sequence(), newValue, $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+        return $constructor().apply($sequence(), newValue, $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.CreateSequence $startWith(Field<? extends Number> newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), newValue, $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+        return $constructor().apply($sequence(), $ifNotExists(), newValue, $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.CreateSequence $incrementBy(Field<? extends Number> newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), $startWith(), newValue, $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+        return $constructor().apply($sequence(), $ifNotExists(), $startWith(), newValue, $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.CreateSequence $minvalue(Field<? extends Number> newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), newValue, $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+        return $constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), newValue, $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.CreateSequence $noMinvalue(boolean newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), newValue, $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+        return $constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), newValue, $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.CreateSequence $maxvalue(Field<? extends Number> newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), newValue, $noMaxvalue(), $cycle(), $cache(), $noCache());
+        return $constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), newValue, $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.CreateSequence $noMaxvalue(boolean newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), newValue, $cycle(), $cache(), $noCache());
+        return $constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), newValue, $cycle(), $cache(), $noCache());
     }
 
     @Override
     public final QOM.CreateSequence $cycle(CycleOption newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), newValue, $cache(), $noCache());
+        return $constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), newValue, $cache(), $noCache());
     }
 
     @Override
     public final QOM.CreateSequence $cache(Field<? extends Number> newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), newValue, $noCache());
+        return $constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), newValue, $noCache());
     }
 
     @Override
     public final QOM.CreateSequence $noCache(boolean newValue) {
-        return constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), newValue);
+        return $constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), newValue);
     }
 
-    public final Function11<? super Sequence<?>, ? super Boolean, ? super Field<? extends Number>, ? super Field<? extends Number>, ? super Field<? extends Number>, ? super Boolean, ? super Field<? extends Number>, ? super Boolean, ? super CycleOption, ? super Field<? extends Number>, ? super Boolean, ? extends QOM.CreateSequence> constructor() {
+    public final Function11<? super Sequence<?>, ? super Boolean, ? super Field<? extends Number>, ? super Field<? extends Number>, ? super Field<? extends Number>, ? super Boolean, ? super Field<? extends Number>, ? super Boolean, ? super CycleOption, ? super Field<? extends Number>, ? super Boolean, ? extends QOM.CreateSequence> $constructor() {
         return (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11) -> new CreateSequenceImpl(configuration(), a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
     }
 

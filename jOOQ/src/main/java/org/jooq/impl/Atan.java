@@ -133,10 +133,10 @@ implements
 
     @Override
     public final QOM.Atan $number(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.Atan> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.Atan> $constructor() {
         return (a1) -> new Atan(a1);
     }
 

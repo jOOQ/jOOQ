@@ -107,7 +107,7 @@ class DerivedTable<R extends Record> extends AbstractTable<R> implements QOM.Der
     // -------------------------------------------------------------------------
 
     @Override
-    public final Function1<? super Select<R>, ? extends Table<R>> constructor() {
+    public final Function1<? super Select<R>, ? extends Table<R>> $constructor() {
         return t -> new DerivedTable<>(t);
     }
 

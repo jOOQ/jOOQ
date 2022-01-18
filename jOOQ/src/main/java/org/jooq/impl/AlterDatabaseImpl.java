@@ -191,20 +191,20 @@ implements
 
     @Override
     public final QOM.AlterDatabase $database(Catalog newValue) {
-        return constructor().apply(newValue, $ifExists(), $renameTo());
+        return $constructor().apply(newValue, $ifExists(), $renameTo());
     }
 
     @Override
     public final QOM.AlterDatabase $ifExists(boolean newValue) {
-        return constructor().apply($database(), newValue, $renameTo());
+        return $constructor().apply($database(), newValue, $renameTo());
     }
 
     @Override
     public final QOM.AlterDatabase $renameTo(Catalog newValue) {
-        return constructor().apply($database(), $ifExists(), newValue);
+        return $constructor().apply($database(), $ifExists(), newValue);
     }
 
-    public final Function3<? super Catalog, ? super Boolean, ? super Catalog, ? extends QOM.AlterDatabase> constructor() {
+    public final Function3<? super Catalog, ? super Boolean, ? super Catalog, ? extends QOM.AlterDatabase> $constructor() {
         return (a1, a2, a3) -> new AlterDatabaseImpl(configuration(), a1, a2, a3);
     }
 

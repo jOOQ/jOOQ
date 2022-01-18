@@ -88,7 +88,7 @@ final class ArrayAgg<T> extends AbstractAggregateFunction<T[]> implements QOM.Ar
     }
 
     @Override
-    public final Function1<? super Field<T>, ? extends AggregateFunction<T[]>> constructor() {
+    public final Function1<? super Field<T>, ? extends AggregateFunction<T[]>> $constructor() {
         return f -> new ArrayAgg<>(distinct, f);
     }
 }

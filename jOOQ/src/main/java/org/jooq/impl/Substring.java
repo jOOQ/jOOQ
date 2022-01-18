@@ -214,20 +214,20 @@ implements
 
     @Override
     public final QOM.Substring $string(Field<String> newValue) {
-        return constructor().apply(newValue, $startingPosition(), $length());
+        return $constructor().apply(newValue, $startingPosition(), $length());
     }
 
     @Override
     public final QOM.Substring $startingPosition(Field<? extends Number> newValue) {
-        return constructor().apply($string(), newValue, $length());
+        return $constructor().apply($string(), newValue, $length());
     }
 
     @Override
     public final QOM.Substring $length(Field<? extends Number> newValue) {
-        return constructor().apply($string(), $startingPosition(), newValue);
+        return $constructor().apply($string(), $startingPosition(), newValue);
     }
 
-    public final Function3<? super Field<String>, ? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Substring> constructor() {
+    public final Function3<? super Field<String>, ? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Substring> $constructor() {
         return (a1, a2, a3) -> new Substring(a1, a2, a3);
     }
 

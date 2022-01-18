@@ -104,15 +104,15 @@ implements
 
     @Override
     public final QOM.Count $field(Field<?> newValue) {
-        return constructor().apply(newValue, $distinct());
+        return $constructor().apply(newValue, $distinct());
     }
 
     @Override
     public final QOM.Count $distinct(boolean newValue) {
-        return constructor().apply($field(), newValue);
+        return $constructor().apply($field(), newValue);
     }
 
-    public final Function2<? super Field<?>, ? super Boolean, ? extends QOM.Count> constructor() {
+    public final Function2<? super Field<?>, ? super Boolean, ? extends QOM.Count> $constructor() {
         return (a1, a2) -> new Count(a1, a2);
     }
 

@@ -149,10 +149,10 @@ implements
 
     @Override
     public final QOM.AnyValue<T> $field(Field<T> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<T>, ? extends QOM.AnyValue<T>> constructor() {
+    public final Function1<? super Field<T>, ? extends QOM.AnyValue<T>> $constructor() {
         return (a1) -> new AnyValue<>(a1);
     }
 

@@ -138,10 +138,10 @@ implements
 
     @Override
     public final QOM.Exp $value(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.Exp> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.Exp> $constructor() {
         return (a1) -> new Exp(a1);
     }
 

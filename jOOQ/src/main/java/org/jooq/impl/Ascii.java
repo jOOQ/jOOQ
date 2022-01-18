@@ -136,10 +136,10 @@ implements
 
     @Override
     public final QOM.Ascii $string(Field<String> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<String>, ? extends QOM.Ascii> constructor() {
+    public final Function1<? super Field<String>, ? extends QOM.Ascii> $constructor() {
         return (a1) -> new Ascii(a1);
     }
 

@@ -132,10 +132,10 @@ implements
 
     @Override
     public final QOM.Reverse $string(Field<String> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<String>, ? extends QOM.Reverse> constructor() {
+    public final Function1<? super Field<String>, ? extends QOM.Reverse> $constructor() {
         return (a1) -> new Reverse(a1);
     }
 

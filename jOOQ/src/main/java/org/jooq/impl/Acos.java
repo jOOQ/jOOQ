@@ -142,10 +142,10 @@ implements
 
     @Override
     public final QOM.Acos $number(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.Acos> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.Acos> $constructor() {
         return (a1) -> new Acos(a1);
     }
 

@@ -105,15 +105,15 @@ implements
 
     @Override
     public final QOM.Max<T> $field(Field<T> newValue) {
-        return constructor().apply(newValue, $distinct());
+        return $constructor().apply(newValue, $distinct());
     }
 
     @Override
     public final QOM.Max<T> $distinct(boolean newValue) {
-        return constructor().apply($field(), newValue);
+        return $constructor().apply($field(), newValue);
     }
 
-    public final Function2<? super Field<T>, ? super Boolean, ? extends QOM.Max<T>> constructor() {
+    public final Function2<? super Field<T>, ? super Boolean, ? extends QOM.Max<T>> $constructor() {
         return (a1, a2) -> new Max<>(a1, a2);
     }
 

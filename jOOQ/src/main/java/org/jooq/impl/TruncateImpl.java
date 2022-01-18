@@ -218,20 +218,20 @@ implements
 
     @Override
     public final QOM.Truncate<R> $table(Table<R> newValue) {
-        return constructor().apply(newValue, $restartIdentity(), $cascade());
+        return $constructor().apply(newValue, $restartIdentity(), $cascade());
     }
 
     @Override
     public final QOM.Truncate<R> $restartIdentity(IdentityRestartOption newValue) {
-        return constructor().apply($table(), newValue, $cascade());
+        return $constructor().apply($table(), newValue, $cascade());
     }
 
     @Override
     public final QOM.Truncate<R> $cascade(Cascade newValue) {
-        return constructor().apply($table(), $restartIdentity(), newValue);
+        return $constructor().apply($table(), $restartIdentity(), newValue);
     }
 
-    public final Function3<? super Table<R>, ? super IdentityRestartOption, ? super Cascade, ? extends QOM.Truncate<R>> constructor() {
+    public final Function3<? super Table<R>, ? super IdentityRestartOption, ? super Cascade, ? extends QOM.Truncate<R>> $constructor() {
         return (a1, a2, a3) -> new TruncateImpl(configuration(), a1, a2, a3);
     }
 

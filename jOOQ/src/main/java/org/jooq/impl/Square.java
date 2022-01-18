@@ -164,10 +164,10 @@ implements
 
     @Override
     public final QOM.Square<T> $value(Field<T> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<T>, ? extends QOM.Square<T>> constructor() {
+    public final Function1<? super Field<T>, ? extends QOM.Square<T>> $constructor() {
         return (a1) -> new Square<>(a1);
     }
 

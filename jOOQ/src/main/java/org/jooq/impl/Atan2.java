@@ -145,15 +145,15 @@ implements
 
     @Override
     public final QOM.Atan2 $x(Field<? extends Number> newValue) {
-        return constructor().apply(newValue, $y());
+        return $constructor().apply(newValue, $y());
     }
 
     @Override
     public final QOM.Atan2 $y(Field<? extends Number> newValue) {
-        return constructor().apply($x(), newValue);
+        return $constructor().apply($x(), newValue);
     }
 
-    public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Atan2> constructor() {
+    public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Atan2> $constructor() {
         return (a1, a2) -> new Atan2(a1, a2);
     }
 

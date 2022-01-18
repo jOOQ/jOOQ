@@ -143,10 +143,10 @@ implements
 
     @Override
     public final QOM.Digits $value(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.Digits> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.Digits> $constructor() {
         return (a1) -> new Digits(a1);
     }
 

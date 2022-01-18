@@ -139,10 +139,10 @@ implements
 
     @Override
     public final QOM.VarPop $field(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.VarPop> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.VarPop> $constructor() {
         return (a1) -> new VarPop(a1);
     }
 

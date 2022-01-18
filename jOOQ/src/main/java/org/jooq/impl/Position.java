@@ -230,20 +230,20 @@ implements
 
     @Override
     public final QOM.Position $in(Field<String> newValue) {
-        return constructor().apply(newValue, $search(), $startIndex());
+        return $constructor().apply(newValue, $search(), $startIndex());
     }
 
     @Override
     public final QOM.Position $search(Field<String> newValue) {
-        return constructor().apply($in(), newValue, $startIndex());
+        return $constructor().apply($in(), newValue, $startIndex());
     }
 
     @Override
     public final QOM.Position $startIndex(Field<? extends Number> newValue) {
-        return constructor().apply($in(), $search(), newValue);
+        return $constructor().apply($in(), $search(), newValue);
     }
 
-    public final Function3<? super Field<String>, ? super Field<String>, ? super Field<? extends Number>, ? extends QOM.Position> constructor() {
+    public final Function3<? super Field<String>, ? super Field<String>, ? super Field<? extends Number>, ? extends QOM.Position> $constructor() {
         return (a1, a2, a3) -> new Position(a1, a2, a3);
     }
 

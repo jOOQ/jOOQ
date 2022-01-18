@@ -151,10 +151,10 @@ implements
 
     @Override
     public final QOM.Tanh $number(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.Tanh> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.Tanh> $constructor() {
         return (a1) -> new Tanh(a1);
     }
 

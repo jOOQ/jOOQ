@@ -150,10 +150,10 @@ implements
 
     @Override
     public final QOM.Space $count(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.Space> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.Space> $constructor() {
         return (a1) -> new Space(a1);
     }
 

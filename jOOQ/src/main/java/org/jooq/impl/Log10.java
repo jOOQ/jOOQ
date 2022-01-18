@@ -154,10 +154,10 @@ implements
 
     @Override
     public final QOM.Log10 $value(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.Log10> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.Log10> $constructor() {
         return (a1) -> new Log10(a1);
     }
 

@@ -473,10 +473,10 @@ implements
 
     @Override
     public final QOM.BitCount $number(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.BitCount> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.BitCount> $constructor() {
         return (a1) -> new BitCount(a1);
     }
 

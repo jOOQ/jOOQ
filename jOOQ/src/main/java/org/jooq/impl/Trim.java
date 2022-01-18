@@ -179,15 +179,15 @@ implements
 
     @Override
     public final QOM.Trim $string(Field<String> newValue) {
-        return constructor().apply(newValue, $characters());
+        return $constructor().apply(newValue, $characters());
     }
 
     @Override
     public final QOM.Trim $characters(Field<String> newValue) {
-        return constructor().apply($string(), newValue);
+        return $constructor().apply($string(), newValue);
     }
 
-    public final Function2<? super Field<String>, ? super Field<String>, ? extends QOM.Trim> constructor() {
+    public final Function2<? super Field<String>, ? super Field<String>, ? extends QOM.Trim> $constructor() {
         return (a1, a2) -> new Trim(a1, a2);
     }
 

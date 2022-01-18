@@ -127,10 +127,10 @@ implements
 
     @Override
     public final QOM.Cos $number(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.Cos> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.Cos> $constructor() {
         return (a1) -> new Cos(a1);
     }
 

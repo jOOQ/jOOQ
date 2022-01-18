@@ -419,45 +419,45 @@ implements
 
     @Override
     public final QOM.CreateIndex $unique(boolean newValue) {
-        return constructor().apply(newValue, $index(), $ifNotExists(), $table(), $on(), $include(), $where(), $excludeNullKeys());
+        return $constructor().apply(newValue, $index(), $ifNotExists(), $table(), $on(), $include(), $where(), $excludeNullKeys());
     }
 
     @Override
     public final QOM.CreateIndex $index(Index newValue) {
-        return constructor().apply($unique(), newValue, $ifNotExists(), $table(), $on(), $include(), $where(), $excludeNullKeys());
+        return $constructor().apply($unique(), newValue, $ifNotExists(), $table(), $on(), $include(), $where(), $excludeNullKeys());
     }
 
     @Override
     public final QOM.CreateIndex $ifNotExists(boolean newValue) {
-        return constructor().apply($unique(), $index(), newValue, $table(), $on(), $include(), $where(), $excludeNullKeys());
+        return $constructor().apply($unique(), $index(), newValue, $table(), $on(), $include(), $where(), $excludeNullKeys());
     }
 
     @Override
     public final QOM.CreateIndex $table(Table<?> newValue) {
-        return constructor().apply($unique(), $index(), $ifNotExists(), newValue, $on(), $include(), $where(), $excludeNullKeys());
+        return $constructor().apply($unique(), $index(), $ifNotExists(), newValue, $on(), $include(), $where(), $excludeNullKeys());
     }
 
     @Override
     public final QOM.CreateIndex $on(UnmodifiableList<? extends OrderField<?>> newValue) {
-        return constructor().apply($unique(), $index(), $ifNotExists(), $table(), newValue, $include(), $where(), $excludeNullKeys());
+        return $constructor().apply($unique(), $index(), $ifNotExists(), $table(), newValue, $include(), $where(), $excludeNullKeys());
     }
 
     @Override
     public final QOM.CreateIndex $include(UnmodifiableList<? extends Field<?>> newValue) {
-        return constructor().apply($unique(), $index(), $ifNotExists(), $table(), $on(), newValue, $where(), $excludeNullKeys());
+        return $constructor().apply($unique(), $index(), $ifNotExists(), $table(), $on(), newValue, $where(), $excludeNullKeys());
     }
 
     @Override
     public final QOM.CreateIndex $where(Condition newValue) {
-        return constructor().apply($unique(), $index(), $ifNotExists(), $table(), $on(), $include(), newValue, $excludeNullKeys());
+        return $constructor().apply($unique(), $index(), $ifNotExists(), $table(), $on(), $include(), newValue, $excludeNullKeys());
     }
 
     @Override
     public final QOM.CreateIndex $excludeNullKeys(boolean newValue) {
-        return constructor().apply($unique(), $index(), $ifNotExists(), $table(), $on(), $include(), $where(), newValue);
+        return $constructor().apply($unique(), $index(), $ifNotExists(), $table(), $on(), $include(), $where(), newValue);
     }
 
-    public final Function8<? super Boolean, ? super Index, ? super Boolean, ? super Table<?>, ? super UnmodifiableList<? extends OrderField<?>>, ? super UnmodifiableList<? extends Field<?>>, ? super Condition, ? super Boolean, ? extends QOM.CreateIndex> constructor() {
+    public final Function8<? super Boolean, ? super Index, ? super Boolean, ? super Table<?>, ? super UnmodifiableList<? extends OrderField<?>>, ? super UnmodifiableList<? extends Field<?>>, ? super Condition, ? super Boolean, ? extends QOM.CreateIndex> $constructor() {
         return (a1, a2, a3, a4, a5, a6, a7, a8) -> new CreateIndexImpl(configuration(), a1, a2, a3, a4, (Collection<? extends OrderField<?>>) a5, (Collection<? extends Field<?>>) a6, a7, a8);
     }
 

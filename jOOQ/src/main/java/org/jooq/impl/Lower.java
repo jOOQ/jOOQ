@@ -132,10 +132,10 @@ implements
 
     @Override
     public final QOM.Lower $string(Field<String> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<String>, ? extends QOM.Lower> constructor() {
+    public final Function1<? super Field<String>, ? extends QOM.Lower> $constructor() {
         return (a1) -> new Lower(a1);
     }
 

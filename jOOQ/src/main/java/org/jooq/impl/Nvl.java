@@ -184,15 +184,15 @@ implements
 
     @Override
     public final QOM.Nvl<T> $value(Field<T> newValue) {
-        return constructor().apply(newValue, $defaultValue());
+        return $constructor().apply(newValue, $defaultValue());
     }
 
     @Override
     public final QOM.Nvl<T> $defaultValue(Field<T> newValue) {
-        return constructor().apply($value(), newValue);
+        return $constructor().apply($value(), newValue);
     }
 
-    public final Function2<? super Field<T>, ? super Field<T>, ? extends QOM.Nvl<T>> constructor() {
+    public final Function2<? super Field<T>, ? super Field<T>, ? extends QOM.Nvl<T>> $constructor() {
         return (a1, a2) -> new Nvl<>(a1, a2);
     }
 

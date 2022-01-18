@@ -135,16 +135,16 @@ implements
 
     @Override
     public final QOM.TableEq<R> $arg1(Table<R> newValue) {
-        return constructor().apply(newValue, $arg2());
+        return $constructor().apply(newValue, $arg2());
     }
 
     @Override
     public final QOM.TableEq<R> $arg2(Table<R> newValue) {
-        return constructor().apply($arg1(), newValue);
+        return $constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super Table<R>, ? super Table<R>, ? extends QOM.TableEq<R>> constructor() {
+    public final Function2<? super Table<R>, ? super Table<R>, ? extends QOM.TableEq<R>> $constructor() {
         return (a1, a2) -> new TableEq<>(a1, a2);
     }
 

@@ -239,35 +239,35 @@ implements
 
     @Override
     public final QOM.AlterType $type(Name newValue) {
-        return constructor().apply(newValue, $renameTo(), $setSchema(), $addValue(), $renameValue(), $renameValueTo());
+        return $constructor().apply(newValue, $renameTo(), $setSchema(), $addValue(), $renameValue(), $renameValueTo());
     }
 
     @Override
     public final QOM.AlterType $renameTo(Name newValue) {
-        return constructor().apply($type(), newValue, $setSchema(), $addValue(), $renameValue(), $renameValueTo());
+        return $constructor().apply($type(), newValue, $setSchema(), $addValue(), $renameValue(), $renameValueTo());
     }
 
     @Override
     public final QOM.AlterType $setSchema(Schema newValue) {
-        return constructor().apply($type(), $renameTo(), newValue, $addValue(), $renameValue(), $renameValueTo());
+        return $constructor().apply($type(), $renameTo(), newValue, $addValue(), $renameValue(), $renameValueTo());
     }
 
     @Override
     public final QOM.AlterType $addValue(Field<String> newValue) {
-        return constructor().apply($type(), $renameTo(), $setSchema(), newValue, $renameValue(), $renameValueTo());
+        return $constructor().apply($type(), $renameTo(), $setSchema(), newValue, $renameValue(), $renameValueTo());
     }
 
     @Override
     public final QOM.AlterType $renameValue(Field<String> newValue) {
-        return constructor().apply($type(), $renameTo(), $setSchema(), $addValue(), newValue, $renameValueTo());
+        return $constructor().apply($type(), $renameTo(), $setSchema(), $addValue(), newValue, $renameValueTo());
     }
 
     @Override
     public final QOM.AlterType $renameValueTo(Field<String> newValue) {
-        return constructor().apply($type(), $renameTo(), $setSchema(), $addValue(), $renameValue(), newValue);
+        return $constructor().apply($type(), $renameTo(), $setSchema(), $addValue(), $renameValue(), newValue);
     }
 
-    public final Function6<? super Name, ? super Name, ? super Schema, ? super Field<String>, ? super Field<String>, ? super Field<String>, ? extends QOM.AlterType> constructor() {
+    public final Function6<? super Name, ? super Name, ? super Schema, ? super Field<String>, ? super Field<String>, ? super Field<String>, ? extends QOM.AlterType> $constructor() {
         return (a1, a2, a3, a4, a5, a6) -> new AlterTypeImpl(configuration(), a1, a2, a3, a4, a5, a6);
     }
 

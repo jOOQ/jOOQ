@@ -146,10 +146,10 @@ implements
 
     @Override
     public final QOM.CharLength $string(Field<String> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<String>, ? extends QOM.CharLength> constructor() {
+    public final Function1<? super Field<String>, ? extends QOM.CharLength> $constructor() {
         return (a1) -> new CharLength(a1);
     }
 

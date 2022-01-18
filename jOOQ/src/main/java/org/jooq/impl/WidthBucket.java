@@ -172,25 +172,25 @@ implements
 
     @Override
     public final QOM.WidthBucket<T> $field(Field<T> newValue) {
-        return constructor().apply(newValue, $low(), $high(), $buckets());
+        return $constructor().apply(newValue, $low(), $high(), $buckets());
     }
 
     @Override
     public final QOM.WidthBucket<T> $low(Field<T> newValue) {
-        return constructor().apply($field(), newValue, $high(), $buckets());
+        return $constructor().apply($field(), newValue, $high(), $buckets());
     }
 
     @Override
     public final QOM.WidthBucket<T> $high(Field<T> newValue) {
-        return constructor().apply($field(), $low(), newValue, $buckets());
+        return $constructor().apply($field(), $low(), newValue, $buckets());
     }
 
     @Override
     public final QOM.WidthBucket<T> $buckets(Field<Integer> newValue) {
-        return constructor().apply($field(), $low(), $high(), newValue);
+        return $constructor().apply($field(), $low(), $high(), newValue);
     }
 
-    public final Function4<? super Field<T>, ? super Field<T>, ? super Field<T>, ? super Field<Integer>, ? extends QOM.WidthBucket<T>> constructor() {
+    public final Function4<? super Field<T>, ? super Field<T>, ? super Field<T>, ? super Field<Integer>, ? extends QOM.WidthBucket<T>> $constructor() {
         return (a1, a2, a3, a4) -> new WidthBucket<>(a1, a2, a3, a4);
     }
 

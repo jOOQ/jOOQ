@@ -126,10 +126,10 @@ implements
 
     @Override
     public final QOM.Abs<T> $number(Field<T> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<T>, ? extends QOM.Abs<T>> constructor() {
+    public final Function1<? super Field<T>, ? extends QOM.Abs<T>> $constructor() {
         return (a1) -> new Abs<>(a1);
     }
 

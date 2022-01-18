@@ -120,11 +120,11 @@ implements
 
     @Override
     public final QOM.IsDocument $arg1(Field<?> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
     @Override
-    public final Function1<? super Field<?>, ? extends QOM.IsDocument> constructor() {
+    public final Function1<? super Field<?>, ? extends QOM.IsDocument> $constructor() {
         return (a1) -> new IsDocument(a1);
     }
 

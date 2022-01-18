@@ -141,10 +141,10 @@ implements
 
     @Override
     public final QOM.BoolOr $condition(Condition newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Condition, ? extends QOM.BoolOr> constructor() {
+    public final Function1<? super Condition, ? extends QOM.BoolOr> $constructor() {
         return (a1) -> new BoolOr(a1);
     }
 

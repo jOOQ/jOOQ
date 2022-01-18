@@ -248,25 +248,25 @@ implements
 
     @Override
     public final QOM.JSONArray<T> $type(DataType<T> newValue) {
-        return constructor().apply(newValue, $fields(), $onNull(), $returning());
+        return $constructor().apply(newValue, $fields(), $onNull(), $returning());
     }
 
     @Override
     public final QOM.JSONArray<T> $fields(UnmodifiableList<? extends Field<?>> newValue) {
-        return constructor().apply($type(), newValue, $onNull(), $returning());
+        return $constructor().apply($type(), newValue, $onNull(), $returning());
     }
 
     @Override
     public final QOM.JSONArray<T> $onNull(JSONOnNull newValue) {
-        return constructor().apply($type(), $fields(), newValue, $returning());
+        return $constructor().apply($type(), $fields(), newValue, $returning());
     }
 
     @Override
     public final QOM.JSONArray<T> $returning(DataType<?> newValue) {
-        return constructor().apply($type(), $fields(), $onNull(), newValue);
+        return $constructor().apply($type(), $fields(), $onNull(), newValue);
     }
 
-    public final Function4<? super DataType<T>, ? super UnmodifiableList<? extends Field<?>>, ? super JSONOnNull, ? super DataType<?>, ? extends QOM.JSONArray<T>> constructor() {
+    public final Function4<? super DataType<T>, ? super UnmodifiableList<? extends Field<?>>, ? super JSONOnNull, ? super DataType<?>, ? extends QOM.JSONArray<T>> $constructor() {
         return (a1, a2, a3, a4) -> new JSONArray(a1, (Collection<? extends Field<?>>) a2, a3, a4);
     }
 

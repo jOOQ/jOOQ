@@ -90,7 +90,7 @@ final class XMLAgg extends AbstractAggregateFunction<XML> implements XMLAggOrder
     }
 
     @Override
-    public final Function1<? super Field<XML>, ? extends AggregateFunction<XML>> constructor() {
+    public final Function1<? super Field<XML>, ? extends AggregateFunction<XML>> $constructor() {
         return f -> new XMLAgg(f);
     }
 }

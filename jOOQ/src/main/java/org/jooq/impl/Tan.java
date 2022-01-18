@@ -127,10 +127,10 @@ implements
 
     @Override
     public final QOM.Tan $number(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.Tan> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.Tan> $constructor() {
         return (a1) -> new Tan(a1);
     }
 

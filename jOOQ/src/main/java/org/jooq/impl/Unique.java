@@ -145,10 +145,10 @@ implements
 
     @Override
     public final QOM.Unique $query(Select<?> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Select<?>, ? extends QOM.Unique> constructor() {
+    public final Function1<? super Select<?>, ? extends QOM.Unique> $constructor() {
         return (a1) -> new Unique(a1);
     }
 

@@ -130,20 +130,20 @@ implements
 
     @Override
     public final QOM.SetCommand $name(Name newValue) {
-        return constructor().apply(newValue, $value(), $local());
+        return $constructor().apply(newValue, $value(), $local());
     }
 
     @Override
     public final QOM.SetCommand $value(Param<?> newValue) {
-        return constructor().apply($name(), newValue, $local());
+        return $constructor().apply($name(), newValue, $local());
     }
 
     @Override
     public final QOM.SetCommand $local(boolean newValue) {
-        return constructor().apply($name(), $value(), newValue);
+        return $constructor().apply($name(), $value(), newValue);
     }
 
-    public final Function3<? super Name, ? super Param<?>, ? super Boolean, ? extends QOM.SetCommand> constructor() {
+    public final Function3<? super Name, ? super Param<?>, ? super Boolean, ? extends QOM.SetCommand> $constructor() {
         return (a1, a2, a3) -> new SetCommand(configuration(), a1, a2, a3);
     }
 

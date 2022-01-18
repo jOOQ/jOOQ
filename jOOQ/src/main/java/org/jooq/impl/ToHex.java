@@ -146,10 +146,10 @@ implements
 
     @Override
     public final QOM.ToHex $value(Field<? extends Number> newValue) {
-        return constructor().apply(newValue);
+        return $constructor().apply(newValue);
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.ToHex> constructor() {
+    public final Function1<? super Field<? extends Number>, ? extends QOM.ToHex> $constructor() {
         return (a1) -> new ToHex(a1);
     }
 

@@ -122,6 +122,12 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNotNotDistinct = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsNormaliseAssociativeOps = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsNormaliseFieldCompareValue = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsOrEqToIn = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrivialPredicates = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsEmptyScalarSubquery = true;
@@ -1278,6 +1284,97 @@ public class Settings
      */
     public void setTransformPatternsNotNotDistinct(Boolean value) {
         this.transformPatternsNotNotDistinct = value;
+    }
+
+    /**
+     * Transform <code>(a + b) + (c + d)</code> to <code>((a + b) + c) + d</code>.
+     * <p>
+     * This transformation turns trees into lists, which greatly simplifies other tree traversal transformations.
+     * Some of those other transformations currently rely on this flag to be active.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsNormaliseAssociativeOps() {
+        return transformPatternsNormaliseAssociativeOps;
+    }
+
+    /**
+     * Sets the value of the transformPatternsNormaliseAssociativeOps property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsNormaliseAssociativeOps(Boolean value) {
+        this.transformPatternsNormaliseAssociativeOps = value;
+    }
+
+    /**
+     * Transform <code>1 = a</code> to <code>a = 1</code>.
+     * <p>
+     * This transformation inverses {@link TableField} [op] {@link org.jooq.impl.QOM.Val} comparisons, if they're not in that order.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsNormaliseFieldCompareValue() {
+        return transformPatternsNormaliseFieldCompareValue;
+    }
+
+    /**
+     * Sets the value of the transformPatternsNormaliseFieldCompareValue property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsNormaliseFieldCompareValue(Boolean value) {
+        this.transformPatternsNormaliseFieldCompareValue = value;
+    }
+
+    /**
+     * Transform <code>x = c1 OR x = c2</code> to <code>x IN (c1, c2)</code>.
+     * <p>
+     * This transformation simplifies verbose <code>OR</code> predicates into simpler <code>IN</code> predicates.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsOrEqToIn() {
+        return transformPatternsOrEqToIn;
+    }
+
+    /**
+     * Sets the value of the transformPatternsOrEqToIn property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsOrEqToIn(Boolean value) {
+        this.transformPatternsOrEqToIn = value;
     }
 
     /**
@@ -3697,6 +3794,21 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsNormaliseAssociativeOps(Boolean value) {
+        setTransformPatternsNormaliseAssociativeOps(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsNormaliseFieldCompareValue(Boolean value) {
+        setTransformPatternsNormaliseFieldCompareValue(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsOrEqToIn(Boolean value) {
+        setTransformPatternsOrEqToIn(value);
+        return this;
+    }
+
     public Settings withTransformPatternsTrivialPredicates(Boolean value) {
         setTransformPatternsTrivialPredicates(value);
         return this;
@@ -4550,6 +4662,9 @@ public class Settings
         builder.append("transformPatternsNotNot", transformPatternsNotNot);
         builder.append("transformPatternsNotComparison", transformPatternsNotComparison);
         builder.append("transformPatternsNotNotDistinct", transformPatternsNotNotDistinct);
+        builder.append("transformPatternsNormaliseAssociativeOps", transformPatternsNormaliseAssociativeOps);
+        builder.append("transformPatternsNormaliseFieldCompareValue", transformPatternsNormaliseFieldCompareValue);
+        builder.append("transformPatternsOrEqToIn", transformPatternsOrEqToIn);
         builder.append("transformPatternsTrivialPredicates", transformPatternsTrivialPredicates);
         builder.append("transformPatternsEmptyScalarSubquery", transformPatternsEmptyScalarSubquery);
         builder.append("transformPatternsNegNeg", transformPatternsNegNeg);
@@ -4992,6 +5107,33 @@ public class Settings
             }
         } else {
             if (!transformPatternsNotNotDistinct.equals(other.transformPatternsNotNotDistinct)) {
+                return false;
+            }
+        }
+        if (transformPatternsNormaliseAssociativeOps == null) {
+            if (other.transformPatternsNormaliseAssociativeOps!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsNormaliseAssociativeOps.equals(other.transformPatternsNormaliseAssociativeOps)) {
+                return false;
+            }
+        }
+        if (transformPatternsNormaliseFieldCompareValue == null) {
+            if (other.transformPatternsNormaliseFieldCompareValue!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsNormaliseFieldCompareValue.equals(other.transformPatternsNormaliseFieldCompareValue)) {
+                return false;
+            }
+        }
+        if (transformPatternsOrEqToIn == null) {
+            if (other.transformPatternsOrEqToIn!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsOrEqToIn.equals(other.transformPatternsOrEqToIn)) {
                 return false;
             }
         }
@@ -5938,6 +6080,9 @@ public class Settings
         result = ((prime*result)+((transformPatternsNotNot == null)? 0 :transformPatternsNotNot.hashCode()));
         result = ((prime*result)+((transformPatternsNotComparison == null)? 0 :transformPatternsNotComparison.hashCode()));
         result = ((prime*result)+((transformPatternsNotNotDistinct == null)? 0 :transformPatternsNotNotDistinct.hashCode()));
+        result = ((prime*result)+((transformPatternsNormaliseAssociativeOps == null)? 0 :transformPatternsNormaliseAssociativeOps.hashCode()));
+        result = ((prime*result)+((transformPatternsNormaliseFieldCompareValue == null)? 0 :transformPatternsNormaliseFieldCompareValue.hashCode()));
+        result = ((prime*result)+((transformPatternsOrEqToIn == null)? 0 :transformPatternsOrEqToIn.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialPredicates == null)? 0 :transformPatternsTrivialPredicates.hashCode()));
         result = ((prime*result)+((transformPatternsEmptyScalarSubquery == null)? 0 :transformPatternsEmptyScalarSubquery.hashCode()));
         result = ((prime*result)+((transformPatternsNegNeg == null)? 0 :transformPatternsNegNeg.hashCode()));

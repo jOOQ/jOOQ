@@ -2558,7 +2558,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final Query parseSetSchema() {
         parseIf('=');
-        return dsl.setSchema(parseSchemaName());
+        return peek('\'') ? dsl.setSchema(parseStringLiteral()) : dsl.setSchema(parseSchemaName());
     }
 
     private final Query parseSetSearchPath() {

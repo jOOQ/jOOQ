@@ -139,6 +139,10 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsMergeInLists = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsMergeRangePredicates = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsMergeBetweenSymmetricPredicates = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrivialPredicates = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsEmptyScalarSubquery = true;
@@ -1520,6 +1524,66 @@ public class Settings
      */
     public void setTransformPatternsMergeInLists(Boolean value) {
         this.transformPatternsMergeInLists = value;
+    }
+
+    /**
+     * Transform <code>x >= a AND x <= b</code> to <code>x BETWEEN a AND b</code>.
+     * <p>
+     * This transformation merges multiple <code>AND</code> connected range predicates to a single comparison using <code>BETWEEN</code>.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsMergeRangePredicates() {
+        return transformPatternsMergeRangePredicates;
+    }
+
+    /**
+     * Sets the value of the transformPatternsMergeRangePredicates property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsMergeRangePredicates(Boolean value) {
+        this.transformPatternsMergeRangePredicates = value;
+    }
+
+    /**
+     * Transform <code>x BETWEEN a AND b OR x BETWEEN b AND a</code> to <code>x BETWEEN SYMMETRIC a AND b</code>.
+     * <p>
+     * This transformation merges multiple <code>OR</code> connected <code>BETWEEN</code> predicates to a single comparison using <code>BETWEEN SYMMETRIC</code>.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsMergeBetweenSymmetricPredicates() {
+        return transformPatternsMergeBetweenSymmetricPredicates;
+    }
+
+    /**
+     * Sets the value of the transformPatternsMergeBetweenSymmetricPredicates property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsMergeBetweenSymmetricPredicates(Boolean value) {
+        this.transformPatternsMergeBetweenSymmetricPredicates = value;
     }
 
     /**
@@ -3983,6 +4047,16 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsMergeRangePredicates(Boolean value) {
+        setTransformPatternsMergeRangePredicates(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsMergeBetweenSymmetricPredicates(Boolean value) {
+        setTransformPatternsMergeBetweenSymmetricPredicates(value);
+        return this;
+    }
+
     public Settings withTransformPatternsTrivialPredicates(Boolean value) {
         setTransformPatternsTrivialPredicates(value);
         return this;
@@ -4844,6 +4918,8 @@ public class Settings
         builder.append("transformPatternsAndNeToNotIn", transformPatternsAndNeToNotIn);
         builder.append("transformPatternsMergeOrComparison", transformPatternsMergeOrComparison);
         builder.append("transformPatternsMergeInLists", transformPatternsMergeInLists);
+        builder.append("transformPatternsMergeRangePredicates", transformPatternsMergeRangePredicates);
+        builder.append("transformPatternsMergeBetweenSymmetricPredicates", transformPatternsMergeBetweenSymmetricPredicates);
         builder.append("transformPatternsTrivialPredicates", transformPatternsTrivialPredicates);
         builder.append("transformPatternsEmptyScalarSubquery", transformPatternsEmptyScalarSubquery);
         builder.append("transformPatternsNegNeg", transformPatternsNegNeg);
@@ -5358,6 +5434,24 @@ public class Settings
             }
         } else {
             if (!transformPatternsMergeInLists.equals(other.transformPatternsMergeInLists)) {
+                return false;
+            }
+        }
+        if (transformPatternsMergeRangePredicates == null) {
+            if (other.transformPatternsMergeRangePredicates!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsMergeRangePredicates.equals(other.transformPatternsMergeRangePredicates)) {
+                return false;
+            }
+        }
+        if (transformPatternsMergeBetweenSymmetricPredicates == null) {
+            if (other.transformPatternsMergeBetweenSymmetricPredicates!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsMergeBetweenSymmetricPredicates.equals(other.transformPatternsMergeBetweenSymmetricPredicates)) {
                 return false;
             }
         }
@@ -6312,6 +6406,8 @@ public class Settings
         result = ((prime*result)+((transformPatternsAndNeToNotIn == null)? 0 :transformPatternsAndNeToNotIn.hashCode()));
         result = ((prime*result)+((transformPatternsMergeOrComparison == null)? 0 :transformPatternsMergeOrComparison.hashCode()));
         result = ((prime*result)+((transformPatternsMergeInLists == null)? 0 :transformPatternsMergeInLists.hashCode()));
+        result = ((prime*result)+((transformPatternsMergeRangePredicates == null)? 0 :transformPatternsMergeRangePredicates.hashCode()));
+        result = ((prime*result)+((transformPatternsMergeBetweenSymmetricPredicates == null)? 0 :transformPatternsMergeBetweenSymmetricPredicates.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialPredicates == null)? 0 :transformPatternsTrivialPredicates.hashCode()));
         result = ((prime*result)+((transformPatternsEmptyScalarSubquery == null)? 0 :transformPatternsEmptyScalarSubquery.hashCode()));
         result = ((prime*result)+((transformPatternsNegNeg == null)? 0 :transformPatternsNegNeg.hashCode()));

@@ -131,6 +131,10 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsOrEqToIn = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsAndNeToNotIn = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsMergeOrComparison = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrivialPredicates = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsEmptyScalarSubquery = true;
@@ -1394,6 +1398,66 @@ public class Settings
      */
     public void setTransformPatternsOrEqToIn(Boolean value) {
         this.transformPatternsOrEqToIn = value;
+    }
+
+    /**
+     * Transform <code>x != c1 AND x != c2</code> to <code>x NOT IN (c1, c2)</code>.
+     * <p>
+     * This transformation simplifies verbose <code>AND</code> predicates into simpler <code>NOT IN</code> predicates.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsAndNeToNotIn() {
+        return transformPatternsAndNeToNotIn;
+    }
+
+    /**
+     * Sets the value of the transformPatternsAndNeToNotIn property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsAndNeToNotIn(Boolean value) {
+        this.transformPatternsAndNeToNotIn = value;
+    }
+
+    /**
+     * Transform <code>x = a OR x > a</code> to <code>x >= a</code>.
+     * <p>
+     * This transformation merges multiple <code>OR</code> connected comparisons to a single comparison using a simpler operator.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsMergeOrComparison() {
+        return transformPatternsMergeOrComparison;
+    }
+
+    /**
+     * Sets the value of the transformPatternsMergeOrComparison property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsMergeOrComparison(Boolean value) {
+        this.transformPatternsMergeOrComparison = value;
     }
 
     /**
@@ -3837,6 +3901,16 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsAndNeToNotIn(Boolean value) {
+        setTransformPatternsAndNeToNotIn(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsMergeOrComparison(Boolean value) {
+        setTransformPatternsMergeOrComparison(value);
+        return this;
+    }
+
     public Settings withTransformPatternsTrivialPredicates(Boolean value) {
         setTransformPatternsTrivialPredicates(value);
         return this;
@@ -4694,6 +4768,8 @@ public class Settings
         builder.append("transformPatternsNormaliseAssociativeOps", transformPatternsNormaliseAssociativeOps);
         builder.append("transformPatternsNormaliseFieldCompareValue", transformPatternsNormaliseFieldCompareValue);
         builder.append("transformPatternsOrEqToIn", transformPatternsOrEqToIn);
+        builder.append("transformPatternsAndNeToNotIn", transformPatternsAndNeToNotIn);
+        builder.append("transformPatternsMergeOrComparison", transformPatternsMergeOrComparison);
         builder.append("transformPatternsTrivialPredicates", transformPatternsTrivialPredicates);
         builder.append("transformPatternsEmptyScalarSubquery", transformPatternsEmptyScalarSubquery);
         builder.append("transformPatternsNegNeg", transformPatternsNegNeg);
@@ -5172,6 +5248,24 @@ public class Settings
             }
         } else {
             if (!transformPatternsOrEqToIn.equals(other.transformPatternsOrEqToIn)) {
+                return false;
+            }
+        }
+        if (transformPatternsAndNeToNotIn == null) {
+            if (other.transformPatternsAndNeToNotIn!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsAndNeToNotIn.equals(other.transformPatternsAndNeToNotIn)) {
+                return false;
+            }
+        }
+        if (transformPatternsMergeOrComparison == null) {
+            if (other.transformPatternsMergeOrComparison!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsMergeOrComparison.equals(other.transformPatternsMergeOrComparison)) {
                 return false;
             }
         }
@@ -6122,6 +6216,8 @@ public class Settings
         result = ((prime*result)+((transformPatternsNormaliseAssociativeOps == null)? 0 :transformPatternsNormaliseAssociativeOps.hashCode()));
         result = ((prime*result)+((transformPatternsNormaliseFieldCompareValue == null)? 0 :transformPatternsNormaliseFieldCompareValue.hashCode()));
         result = ((prime*result)+((transformPatternsOrEqToIn == null)? 0 :transformPatternsOrEqToIn.hashCode()));
+        result = ((prime*result)+((transformPatternsAndNeToNotIn == null)? 0 :transformPatternsAndNeToNotIn.hashCode()));
+        result = ((prime*result)+((transformPatternsMergeOrComparison == null)? 0 :transformPatternsMergeOrComparison.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialPredicates == null)? 0 :transformPatternsTrivialPredicates.hashCode()));
         result = ((prime*result)+((transformPatternsEmptyScalarSubquery == null)? 0 :transformPatternsEmptyScalarSubquery.hashCode()));
         result = ((prime*result)+((transformPatternsNegNeg == null)? 0 :transformPatternsNegNeg.hashCode()));

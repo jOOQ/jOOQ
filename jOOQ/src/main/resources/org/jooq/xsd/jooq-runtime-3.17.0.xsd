@@ -395,6 +395,26 @@ To enable this feature, {@link #transformPatterns} must be enabled as well.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsMergeRangePredicates" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>x >= a AND x <= b</code> to <code>x BETWEEN a AND b</code>.
+<p>
+This transformation merges multiple <code>AND</code> connected range predicates to a single comparison using <code>BETWEEN</code>.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformPatternsMergeBetweenSymmetricPredicates" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>x BETWEEN a AND b OR x BETWEEN b AND a</code> to <code>x BETWEEN SYMMETRIC a AND b</code>.
+<p>
+This transformation merges multiple <code>OR</code> connected <code>BETWEEN</code> predicates to a single comparison using <code>BETWEEN SYMMETRIC</code>.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsTrivialPredicates" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform trivial predicates like <code>1 = 1</code> to <code>TRUE</code>.
 <p>

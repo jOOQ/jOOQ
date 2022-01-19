@@ -114,6 +114,10 @@ providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> 
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All sorts of formatting flags / settings.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="renderOptionalAssociativityParentheses" type="jooq-runtime:RenderOptionalKeyword" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to render optional parentheses to make associativity explicit, e.g. <code>((a + b) + c)</code> instead of (a + b + c).]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="renderOptionalAsKeywordForTableAliases" type="jooq-runtime:RenderOptionalKeyword" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to render the optional <code>AS</code> keyword in table aliases, if it is optional in the output dialect. This is ignored if the keyword is not supported (e.g. in Oracle)]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

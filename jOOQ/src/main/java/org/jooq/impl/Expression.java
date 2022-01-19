@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.conf.RenderOptionalKeyword.OFF;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.inlined;
 import static org.jooq.impl.DSL.keyword;
@@ -103,6 +104,7 @@ import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.Typed;
+import org.jooq.conf.RenderOptionalKeyword;
 import org.jooq.conf.TransformUnneededArithmeticExpressions;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.QOM.UOperator2;
@@ -873,9 +875,12 @@ final class Expression<T> extends AbstractTransformable<T> implements UOperator2
         Class<Q2> expType = (Class<Q2>) exp.getClass();
 
         // [#10665] Associativity is only given for two operands of the same data type
-        boolean associativity = e.lhs instanceof Typed && e.rhs instanceof Typed
+        // [#12896] ... and if the feature is enabled
+        boolean associativity = (
+              e.lhs instanceof Typed && e.rhs instanceof Typed
             ? ((Typed<?>) e.lhs).getDataType().equals(((Typed<?>) e.rhs).getDataType())
-            : true;
+            : true
+        ) && !OFF.equals(ctx.settings().getRenderOptionalAssociativityParentheses());
 
         acceptAssociative(ctx, associativity, e.lhs, e.op, expType, expProvider, formatSeparator);
         formatSeparator.accept(ctx);

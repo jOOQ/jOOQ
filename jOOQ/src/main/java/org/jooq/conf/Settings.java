@@ -69,6 +69,9 @@ public class Settings
     protected RenderFormatting renderFormatting;
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
+    protected RenderOptionalKeyword renderOptionalAssociativityParentheses = RenderOptionalKeyword.DEFAULT;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
     protected RenderOptionalKeyword renderOptionalAsKeywordForTableAliases = RenderOptionalKeyword.DEFAULT;
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
@@ -668,6 +671,22 @@ public class Settings
      */
     public void setRenderFormatting(RenderFormatting value) {
         this.renderFormatting = value;
+    }
+
+    /**
+     * Whether to render optional parentheses to make associativity explicit, e.g. <code>((a + b) + c)</code> instead of (a + b + c).
+     * 
+     */
+    public RenderOptionalKeyword getRenderOptionalAssociativityParentheses() {
+        return renderOptionalAssociativityParentheses;
+    }
+
+    /**
+     * Whether to render optional parentheses to make associativity explicit, e.g. <code>((a + b) + c)</code> instead of (a + b + c).
+     * 
+     */
+    public void setRenderOptionalAssociativityParentheses(RenderOptionalKeyword value) {
+        this.renderOptionalAssociativityParentheses = value;
     }
 
     /**
@@ -3624,6 +3643,15 @@ public class Settings
     }
 
     /**
+     * Whether to render optional parentheses to make associativity explicit, e.g. <code>((a + b) + c)</code> instead of (a + b + c).
+     * 
+     */
+    public Settings withRenderOptionalAssociativityParentheses(RenderOptionalKeyword value) {
+        setRenderOptionalAssociativityParentheses(value);
+        return this;
+    }
+
+    /**
      * Whether to render the optional <code>AS</code> keyword in table aliases, if it is optional in the output dialect. This is ignored if the keyword is not supported (e.g. in Oracle)
      * 
      */
@@ -4639,6 +4667,7 @@ public class Settings
         builder.append("renderLocale", renderLocale);
         builder.append("renderFormatted", renderFormatted);
         builder.append("renderFormatting", renderFormatting);
+        builder.append("renderOptionalAssociativityParentheses", renderOptionalAssociativityParentheses);
         builder.append("renderOptionalAsKeywordForTableAliases", renderOptionalAsKeywordForTableAliases);
         builder.append("renderOptionalAsKeywordForFieldAliases", renderOptionalAsKeywordForFieldAliases);
         builder.append("renderOptionalInnerKeyword", renderOptionalInnerKeyword);
@@ -4900,6 +4929,15 @@ public class Settings
             }
         } else {
             if (!renderFormatting.equals(other.renderFormatting)) {
+                return false;
+            }
+        }
+        if (renderOptionalAssociativityParentheses == null) {
+            if (other.renderOptionalAssociativityParentheses!= null) {
+                return false;
+            }
+        } else {
+            if (!renderOptionalAssociativityParentheses.equals(other.renderOptionalAssociativityParentheses)) {
                 return false;
             }
         }
@@ -6057,6 +6095,7 @@ public class Settings
         result = ((prime*result)+((renderLocale == null)? 0 :renderLocale.hashCode()));
         result = ((prime*result)+((renderFormatted == null)? 0 :renderFormatted.hashCode()));
         result = ((prime*result)+((renderFormatting == null)? 0 :renderFormatting.hashCode()));
+        result = ((prime*result)+((renderOptionalAssociativityParentheses == null)? 0 :renderOptionalAssociativityParentheses.hashCode()));
         result = ((prime*result)+((renderOptionalAsKeywordForTableAliases == null)? 0 :renderOptionalAsKeywordForTableAliases.hashCode()));
         result = ((prime*result)+((renderOptionalAsKeywordForFieldAliases == null)? 0 :renderOptionalAsKeywordForFieldAliases.hashCode()));
         result = ((prime*result)+((renderOptionalInnerKeyword == null)? 0 :renderOptionalInnerKeyword.hashCode()));

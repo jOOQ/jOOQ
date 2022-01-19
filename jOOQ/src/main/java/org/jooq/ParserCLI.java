@@ -138,6 +138,8 @@ public final class ParserCLI {
             settings.setRenderOptionalAsKeywordForFieldAliases(a.renderOptionalAsKeywordForFieldAliases);
         if (a.renderOptionalAsKeywordForTableAliases != null)
             settings.setRenderOptionalAsKeywordForTableAliases(a.renderOptionalAsKeywordForTableAliases);
+        if (a.transformPatterns != null)
+            settings.setTransformPatterns(a.transformPatterns);
         if (a.transformAnsiJoinToTableLists != null)
             settings.setTransformAnsiJoinToTableLists(a.transformAnsiJoinToTableLists);
         if (a.transformTableListsToAnsiJoin != null)
@@ -289,6 +291,12 @@ public final class ParserCLI {
                                 parseInteractive(RenderOptionalKeyword.class, arg, e -> { a.renderOptionalAsKeywordForFieldAliases = e; }, () -> displayRenderOptionalAsKeywordForFieldAliases(a));
                             else if ("render-optional-as-keyword-for-table-aliases".equals(flag))
                                 parseInteractive(RenderOptionalKeyword.class, arg, e -> { a.renderOptionalAsKeywordForTableAliases = e; }, () -> displayRenderOptionalAsKeywordForTableAliases(a));
+                            else if ("transform-patterns".equals(flag)) {
+                                if (arg != null)
+                                    a.transformPatterns = Boolean.parseBoolean(arg.toLowerCase());
+
+                                displayTransformPatterns(a);
+                            }
                             else if ("transform-ansi-join-to-table-lists".equals(flag)) {
                                 if (arg != null)
                                     a.transformAnsiJoinToTableLists = Boolean.parseBoolean(arg.toLowerCase());
@@ -447,6 +455,10 @@ public final class ParserCLI {
         System.out.println("Render AS keyword to alias tables  :" + a.renderOptionalAsKeywordForTableAliases);
     }
 
+    private static void displayTransformPatterns(Args a) {
+        System.out.println("Transform patterns                 : " + a.transformPatterns);
+    }
+
     private static void displayTransformAnsiJoinToTablesLists(Args a) {
         System.out.println("Transform ANSI join to table lists : " + a.transformAnsiJoinToTableLists);
     }
@@ -562,6 +574,8 @@ public final class ParserCLI {
                     result.renderOptionalAsKeywordForFieldAliases = parse((Class<RenderOptionalKeyword>) (enumArgument = RenderOptionalKeyword.class), args[++i]);
                 else if ("--render-optional-as-keyword-for-table-aliases".equals(args[i]))
                     result.renderOptionalAsKeywordForTableAliases = parse((Class<RenderOptionalKeyword>) (enumArgument = RenderOptionalKeyword.class), args[++i]);
+                else if ("--transform-patterns".equals(args[i]))
+                    result.transformPatterns = true;
                 else if ("--transform-ansi-join-to-table-lists".equals(args[i]))
                     result.transformAnsiJoinToTableLists = true;
                 else if ("--transform-qualify".equals(args[i]))
@@ -630,6 +644,7 @@ public final class ParserCLI {
         System.out.println("");
         System.out.println("Commercial distribution only features:");
         System.out.println("  --render-coalesce-to-empty-string-in-concat");
+        System.out.println("  --transform-patterns");
         System.out.println("  --transform-ansi-join-to-table-lists");
         System.out.println("  --transform-qualify                             <Transformation>");
         System.out.println("  --transform-rownum                              <Transformation>");
@@ -668,6 +683,7 @@ public final class ParserCLI {
         System.out.println("");
         System.out.println("Commercial distribution only features:");
         System.out.println("  /render-coalesce-to-empty-string-in-concat     <boolean>");
+        System.out.println("  /transform-patterns                            <boolean>");
         System.out.println("  /transform-ansi-join-to-table-lists            <boolean>");
         System.out.println("  /transform-qualify                             <Transformation>");
         System.out.println("  /transform-rownum                              <Transformation>");
@@ -708,6 +724,7 @@ public final class ParserCLI {
         String                                 parseTimestampFormat                   = d.getParseTimestampFormat();
         ParseUnknownFunctions                  parseUnknownFunctions                  = d.getParseUnknownFunctions();
         ParseUnsupportedSyntax                 parseUnsupportedSyntax                 = d.getParseUnsupportedSyntax();
+        Boolean                                transformPatterns;
         Boolean                                transformAnsiJoinToTableLists;
         Transformation                         transformQualify;
         Transformation                         transformRownum;

@@ -50,7 +50,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
-import static org.jooq.conf.RenderOptionalKeyword.OFF;
+import static org.jooq.conf.RenderOptionalKeyword.ON;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.inlined;
 import static org.jooq.impl.DSL.keyword;
@@ -104,7 +104,6 @@ import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.Typed;
-import org.jooq.conf.RenderOptionalKeyword;
 import org.jooq.conf.TransformUnneededArithmeticExpressions;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.QOM.UOperator2;
@@ -880,7 +879,7 @@ final class Expression<T> extends AbstractTransformable<T> implements UOperator2
               e.lhs instanceof Typed && e.rhs instanceof Typed
             ? ((Typed<?>) e.lhs).getDataType().equals(((Typed<?>) e.rhs).getDataType())
             : true
-        ) && !OFF.equals(ctx.settings().getRenderOptionalAssociativityParentheses());
+        ) && !ON.equals(ctx.settings().getRenderOptionalAssociativityParentheses());
 
         acceptAssociative(ctx, associativity, e.lhs, e.op, expType, expProvider, formatSeparator);
         formatSeparator.accept(ctx);

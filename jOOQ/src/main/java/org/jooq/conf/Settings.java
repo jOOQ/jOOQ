@@ -137,6 +137,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsMergeOrComparison = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsMergeAndComparison = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsMergeInLists = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsMergeRangePredicates = true;
@@ -1494,6 +1496,36 @@ public class Settings
      */
     public void setTransformPatternsMergeOrComparison(Boolean value) {
         this.transformPatternsMergeOrComparison = value;
+    }
+
+    /**
+     * Transform <code>x >= a AND x <= a</code> to <code>x = a</code>.
+     * <p>
+     * This transformation merges multiple <code>AND</code> connected comparisons to a single comparison using a simpler operator.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsMergeAndComparison() {
+        return transformPatternsMergeAndComparison;
+    }
+
+    /**
+     * Sets the value of the transformPatternsMergeAndComparison property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsMergeAndComparison(Boolean value) {
+        this.transformPatternsMergeAndComparison = value;
     }
 
     /**
@@ -4042,6 +4074,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsMergeAndComparison(Boolean value) {
+        setTransformPatternsMergeAndComparison(value);
+        return this;
+    }
+
     public Settings withTransformPatternsMergeInLists(Boolean value) {
         setTransformPatternsMergeInLists(value);
         return this;
@@ -4917,6 +4954,7 @@ public class Settings
         builder.append("transformPatternsOrEqToIn", transformPatternsOrEqToIn);
         builder.append("transformPatternsAndNeToNotIn", transformPatternsAndNeToNotIn);
         builder.append("transformPatternsMergeOrComparison", transformPatternsMergeOrComparison);
+        builder.append("transformPatternsMergeAndComparison", transformPatternsMergeAndComparison);
         builder.append("transformPatternsMergeInLists", transformPatternsMergeInLists);
         builder.append("transformPatternsMergeRangePredicates", transformPatternsMergeRangePredicates);
         builder.append("transformPatternsMergeBetweenSymmetricPredicates", transformPatternsMergeBetweenSymmetricPredicates);
@@ -5425,6 +5463,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsMergeOrComparison.equals(other.transformPatternsMergeOrComparison)) {
+                return false;
+            }
+        }
+        if (transformPatternsMergeAndComparison == null) {
+            if (other.transformPatternsMergeAndComparison!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsMergeAndComparison.equals(other.transformPatternsMergeAndComparison)) {
                 return false;
             }
         }
@@ -6405,6 +6452,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsOrEqToIn == null)? 0 :transformPatternsOrEqToIn.hashCode()));
         result = ((prime*result)+((transformPatternsAndNeToNotIn == null)? 0 :transformPatternsAndNeToNotIn.hashCode()));
         result = ((prime*result)+((transformPatternsMergeOrComparison == null)? 0 :transformPatternsMergeOrComparison.hashCode()));
+        result = ((prime*result)+((transformPatternsMergeAndComparison == null)? 0 :transformPatternsMergeAndComparison.hashCode()));
         result = ((prime*result)+((transformPatternsMergeInLists == null)? 0 :transformPatternsMergeInLists.hashCode()));
         result = ((prime*result)+((transformPatternsMergeRangePredicates == null)? 0 :transformPatternsMergeRangePredicates.hashCode()));
         result = ((prime*result)+((transformPatternsMergeBetweenSymmetricPredicates == null)? 0 :transformPatternsMergeBetweenSymmetricPredicates.hashCode()));

@@ -250,7 +250,6 @@ import org.jooq.JoinType;
 import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.OrderField;
-import org.jooq.Param;
 // ...
 import org.jooq.QualifiedAsterisk;
 import org.jooq.QueryPart;
@@ -290,9 +289,6 @@ import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 
 /**
@@ -1245,14 +1241,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
            .where(rn.eq(one()))
            .orderBy(map(orderBy, o -> unqualified(o)));
 
-        if (limit.numberOfRows != null) {
-            SelectLimitPercentStep<?> s2 = s1.limit((Param) limit.numberOfRows);
+        if (limit.limit != null) {
+            SelectLimitPercentStep<?> s2 = s1.limit(limit.limit);
             SelectWithTiesStep<?> s3 = limit.percent ? s2.percent() : s2;
             SelectOffsetStep<?> s4 = limit.withTies ? s3.withTies() : s3;
-            return limit.offset != null ? s4.offset((Param) limit.offset) : s4;
+            return limit.offset != null ? s4.offset(limit.offset) : s4;
         }
         else
-            return limit.offset != null ? s1.offset((Param) limit.offset) : s1;
+            return limit.offset != null ? s1.offset(limit.offset) : s1;
     }
 
 
@@ -3296,23 +3292,23 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final void addOffset(Param<? extends Number> offset) {
+    public final void addOffset(Field<? extends Number> offset) {
         getLimit().setOffset(offset);
     }
 
     @Override
-    public final void addLimit(int numberOfRows) {
-        addLimit((Number) numberOfRows);
+    public final void addLimit(int l) {
+        addLimit((Number) l);
     }
 
     @Override
-    public final void addLimit(Number numberOfRows) {
-        getLimit().setNumberOfRows(numberOfRows);
+    public final void addLimit(Number l) {
+        getLimit().setLimit(l);
     }
 
     @Override
-    public final void addLimit(Param<? extends Number> numberOfRows) {
-        getLimit().setNumberOfRows(numberOfRows);
+    public final void addLimit(Field<? extends Number> l) {
+        getLimit().setLimit(l);
     }
 
     @Override
@@ -3321,37 +3317,37 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final void addLimit(Number offset, Number numberOfRows) {
+    public final void addLimit(Number offset, Number l) {
         getLimit().setOffset(offset);
-        getLimit().setNumberOfRows(numberOfRows);
+        getLimit().setLimit(l);
     }
 
     @Override
-    public final void addLimit(int offset, Param<Integer> numberOfRows) {
-        addLimit((Number) offset, numberOfRows);
+    public final void addLimit(int offset, Field<Integer> l) {
+        addLimit((Number) offset, l);
     }
 
     @Override
-    public final void addLimit(Number offset, Param<? extends Number> numberOfRows) {
+    public final void addLimit(Number offset, Field<? extends Number> l) {
         getLimit().setOffset(offset);
-        getLimit().setNumberOfRows(numberOfRows);
+        getLimit().setLimit(l);
     }
 
     @Override
-    public final void addLimit(Param<Integer> offset, int numberOfRows) {
-        addLimit(offset, (Number) numberOfRows);
+    public final void addLimit(Field<Integer> offset, int l) {
+        addLimit(offset, (Number) l);
     }
 
     @Override
-    public final void addLimit(Param<? extends Number> offset, Number numberOfRows) {
+    public final void addLimit(Field<? extends Number> offset, Number l) {
         getLimit().setOffset(offset);
-        getLimit().setNumberOfRows(numberOfRows);
+        getLimit().setLimit(l);
     }
 
     @Override
-    public final void addLimit(Param<? extends Number> offset, Param<? extends Number> numberOfRows) {
+    public final void addLimit(Field<? extends Number> offset, Field<? extends Number> l) {
         getLimit().setOffset(offset);
-        getLimit().setNumberOfRows(numberOfRows);
+        getLimit().setLimit(l);
     }
 
     @Override
@@ -4590,17 +4586,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final Field<? extends Number> $limit() {
-        return (Field<? extends Number>) getLimit().numberOfRows;
+        return getLimit().limit;
     }
 
     @Override
     public final Select<R> $limit(Field<? extends Number> newLimit) {
         if ($limit() == newLimit)
             return this;
-
-        // [#5695] TODO: Support all types of Field!
         else
-            return copy(s -> s.getLimit().setNumberOfRows((Param<?>) newLimit));
+            return copy(s -> s.getLimit().setLimit(newLimit));
     }
 
     @Override
@@ -4631,7 +4625,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final Field<? extends Number> $offset() {
-        return (Field<? extends Number>) getLimit().offset;
+        return getLimit().offset;
     }
 
     @Override
@@ -4641,7 +4635,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         // [#5695] TODO: Support all types of Field!
         else
-            return copy(s -> s.getLimit().setOffset((Param<?>) newOffset));
+            return copy(s -> s.getLimit().setOffset(newOffset));
     }
 
 

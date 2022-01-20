@@ -167,6 +167,6 @@ public interface SelectLimitAfterOffsetStep<R extends Record> extends SelectForU
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectLimitPercentAfterOffsetStep<R> limit(Param<? extends Number> numberOfRows);
+    SelectLimitPercentAfterOffsetStep<R> limit(Field<? extends Number> numberOfRows);
 
 }

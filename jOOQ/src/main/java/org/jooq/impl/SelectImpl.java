@@ -230,9 +230,9 @@ implements
      * The limit that has been added in a limit(Number).offset(Number) construct
      */
     private transient Number                  limit;
-    private transient Param<? extends Number> limitParam;
+    private transient Field<? extends Number> limitParam;
     private transient Number                  offset;
-    private transient Param<? extends Number> offsetParam;
+    private transient Field<? extends Number> offsetParam;
 
 
 
@@ -1644,7 +1644,7 @@ implements
     }
 
     @Override
-    public final SelectImpl limit(Param<? extends Number> l) {
+    public final SelectImpl limit(Field<? extends Number> l) {
         limit = null;
         limitParam = l;
         return limitOffset();
@@ -1665,12 +1665,12 @@ implements
     }
 
     @Override
-    public final SelectImpl limit(int o, Param<Integer> l) {
+    public final SelectImpl limit(int o, Field<Integer> l) {
         return limit((Number) o, l);
     }
 
     @Override
-    public final SelectImpl limit(Number o, Param<? extends Number> l) {
+    public final SelectImpl limit(Number o, Field<? extends Number> l) {
         offset = o;
         offsetParam = null;
         limit = null;
@@ -1679,12 +1679,12 @@ implements
     }
 
     @Override
-    public final SelectImpl limit(Param<Integer> o, int l) {
+    public final SelectImpl limit(Field<Integer> o, int l) {
         return limit(o, (Number) l);
     }
 
     @Override
-    public final SelectImpl limit(Param<? extends Number> o, Number l) {
+    public final SelectImpl limit(Field<? extends Number> o, Number l) {
         offset = null;
         offsetParam = o;
         limit = l;
@@ -1693,7 +1693,7 @@ implements
     }
 
     @Override
-    public final SelectImpl limit(Param<? extends Number> o, Param<? extends Number> l) {
+    public final SelectImpl limit(Field<? extends Number> o, Field<? extends Number> l) {
         offset = null;
         offsetParam = o;
         limit = null;
@@ -1714,7 +1714,7 @@ implements
     }
 
     @Override
-    public final SelectImpl offset(Param<? extends Number> o) {
+    public final SelectImpl offset(Field<? extends Number> o) {
         offset = null;
         offsetParam = o;
         return limitOffset();

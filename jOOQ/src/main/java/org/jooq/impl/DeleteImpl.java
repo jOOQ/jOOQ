@@ -325,7 +325,7 @@ final class DeleteImpl<R extends Record>
     }
 
     @Override
-    public final DeleteImpl<R> limit(Param<? extends Number> numberOfRows) {
+    public final DeleteImpl<R> limit(Field<? extends Number> numberOfRows) {
         getDelegate().addLimit(numberOfRows);
         return this;
     }

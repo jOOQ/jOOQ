@@ -160,6 +160,6 @@ public interface SelectSeekLimitStep<R extends Record> extends SelectForUpdateSt
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectForUpdateStep<R> limit(Param<? extends Number> numberOfRows);
+    SelectForUpdateStep<R> limit(Field<? extends Number> numberOfRows);
 
 }

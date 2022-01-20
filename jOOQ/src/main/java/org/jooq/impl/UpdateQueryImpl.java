@@ -108,7 +108,6 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.OrderField;
-import org.jooq.Param;
 // ...
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -197,7 +196,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private Row                          multiValue;
     private Select<?>                    multiSelect;
     private final SortFieldList          orderBy;
-    private Param<? extends Number>      limit;
+    private Field<? extends Number>      limit;
 
     UpdateQueryImpl(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration, with, table);
@@ -519,13 +518,13 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     }
 
     @Override
-    public final void addLimit(Number numberOfRows) {
-        addLimit(DSL.val(numberOfRows));
+    public final void addLimit(Number l) {
+        addLimit(DSL.val(l));
     }
 
     @Override
-    public final void addLimit(Param<? extends Number> numberOfRows) {
-        limit = numberOfRows;
+    public final void addLimit(Field<? extends Number> l) {
+        limit = l;
     }
 
     final Condition getWhere() {

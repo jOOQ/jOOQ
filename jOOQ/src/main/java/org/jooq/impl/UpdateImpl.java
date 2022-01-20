@@ -52,7 +52,6 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.OrderField;
-import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -666,14 +665,14 @@ final class UpdateImpl<R extends Record>
     }
 
     @Override
-    public final UpdateImpl<R> limit(Number numberOfRows) {
-        getDelegate().addLimit(numberOfRows);
+    public final UpdateImpl<R> limit(Number limit) {
+        getDelegate().addLimit(limit);
         return this;
     }
 
     @Override
-    public final UpdateImpl<R> limit(Param<? extends Number> numberOfRows) {
-        getDelegate().addLimit(numberOfRows);
+    public final UpdateImpl<R> limit(Field<? extends Number> limit) {
+        getDelegate().addLimit(limit);
         return this;
     }
 

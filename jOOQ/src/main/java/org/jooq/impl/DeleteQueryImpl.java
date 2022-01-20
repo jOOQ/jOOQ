@@ -135,7 +135,7 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
     private final TableList              using;
     private final ConditionProviderImpl  condition;
     private final SortFieldList          orderBy;
-    private Param<? extends Number>      limit;
+    private Field<? extends Number>      limit;
 
     DeleteQueryImpl(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration, with, table);
@@ -220,7 +220,7 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
     }
 
     @Override
-    public final void addLimit(Param<? extends Number> numberOfRows) {
+    public final void addLimit(Field<? extends Number> numberOfRows) {
         limit = numberOfRows;
     }
 

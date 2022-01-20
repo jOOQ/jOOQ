@@ -177,7 +177,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectLimitPercentStep<R> limit(Param<? extends Number> numberOfRows);
+    SelectLimitPercentStep<R> limit(Field<? extends Number> numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query
@@ -223,7 +223,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectLimitPercentAfterOffsetStep<R> limit(int offset, Param<Integer> numberOfRows);
+    SelectLimitPercentAfterOffsetStep<R> limit(int offset, Field<Integer> numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -239,7 +239,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectLimitPercentAfterOffsetStep<R> limit(Number offset, Param<? extends Number> numberOfRows);
+    SelectLimitPercentAfterOffsetStep<R> limit(Number offset, Field<? extends Number> numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -255,7 +255,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectLimitPercentAfterOffsetStep<R> limit(Param<Integer> offset, int numberOfRows);
+    SelectLimitPercentAfterOffsetStep<R> limit(Field<Integer> offset, int numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -271,7 +271,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectLimitPercentAfterOffsetStep<R> limit(Param<? extends Number> offset, Number numberOfRows);
+    SelectLimitPercentAfterOffsetStep<R> limit(Field<? extends Number> offset, Number numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -287,7 +287,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectLimitPercentAfterOffsetStep<R> limit(Param<? extends Number> offset, Param<? extends Number> numberOfRows);
+    SelectLimitPercentAfterOffsetStep<R> limit(Field<? extends Number> offset, Field<? extends Number> numberOfRows);
 
     /**
      * Add a 0-based <code>OFFSET</code> clause to the query.
@@ -330,5 +330,5 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectLimitAfterOffsetStep<R> offset(Param<? extends Number> offset);
+    SelectLimitAfterOffsetStep<R> offset(Field<? extends Number> offset);
 }

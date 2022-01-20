@@ -150,7 +150,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      * @param numberOfRows The number of rows to return
      */
     @Support
-    void addLimit(Param<? extends Number> numberOfRows);
+    void addLimit(Field<? extends Number> numberOfRows);
 
     // ------------------------------------------------------------------------
     // XXX: Methods for the DELETE .. RETURNING syntax

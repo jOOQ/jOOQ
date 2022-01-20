@@ -85,5 +85,5 @@ public interface DeleteLimitStep<R extends Record> extends DeleteReturningStep<R
      */
     @NotNull @CheckReturnValue
     @Support
-    DeleteReturningStep<R> limit(Param<? extends Number> numberOfRows);
+    DeleteReturningStep<R> limit(Field<? extends Number> numberOfRows);
 }

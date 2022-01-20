@@ -87,7 +87,7 @@ public interface UpdateLimitStep<R extends Record> extends UpdateReturningStep<R
      */
     @NotNull @CheckReturnValue
     @Support
-    UpdateReturningStep<R> limit(Param<? extends Number> numberOfRows);
+    UpdateReturningStep<R> limit(Field<? extends Number> numberOfRows);
 
 
 }

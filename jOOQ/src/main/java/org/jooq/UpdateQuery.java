@@ -438,7 +438,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * @param numberOfRows The number of rows to return
      */
     @Support
-    void addLimit(Param<? extends Number> numberOfRows);
+    void addLimit(Field<? extends Number> numberOfRows);
 
     // ------------------------------------------------------------------------
     // XXX: Methods for the UPDATE .. RETURNING syntax

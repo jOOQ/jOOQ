@@ -173,5 +173,5 @@ public interface SelectOffsetStep<R extends Record> extends SelectForUpdateStep<
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectForUpdateStep<R> offset(Param<? extends Number> offset);
+    SelectForUpdateStep<R> offset(Field<? extends Number> offset);
 }

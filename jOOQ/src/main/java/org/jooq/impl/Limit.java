@@ -72,6 +72,8 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.impl.QOM.UTransient;
 import org.jooq.impl.Tools.BooleanDataKey;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * @author Lukas Eder
  */
@@ -81,11 +83,11 @@ final class Limit extends AbstractQueryPart implements UTransient {
     private static final Param<Integer> ONE           = one();
     private static final Param<Integer> MAX           = DSL.inline(Integer.MAX_VALUE);
 
-    Param<?>                            limit;
-    private Param<?>                    limitOrMax    = MAX;
-    Param<?>                            offset;
-    private Param<?>                    offsetOrZero  = ZERO;
-    private Param<?>                    offsetPlusOne = ONE;
+    Field<? extends Number>             limit;
+    private Field<? extends Number>     limitOrMax    = MAX;
+    Field<? extends Number>             offset;
+    private Field<? extends Number>     offsetOrZero  = ZERO;
+    private Field<? extends Number>     offsetPlusOne = ONE;
     boolean                             withTies;
     boolean                             percent;
 
@@ -404,7 +406,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
         return !limitZero()
             && !withTies()
             && !percent()
-            && Long.valueOf(1L).equals(limit.getValue());
+            && Long.valueOf(1L).equals(getLimit());
     }
 
     /**
@@ -442,23 +444,28 @@ final class Limit extends AbstractQueryPart implements UTransient {
         this.offsetPlusOne = val(offset.longValue() + 1L, BIGINT);
     }
 
-    final void setOffset(Param<?> offset) {
+    final void setOffset(Field<? extends Number> offset) {
         this.offset = offset;
         this.offsetOrZero = offset;
     }
 
-    final void setLimit(Number numberOfRows) {
-        this.limit = val(numberOfRows.longValue(), SQLDataType.BIGINT);
+    final void setLimit(Number l) {
+        this.limit = val(l.longValue(), SQLDataType.BIGINT);
         this.limitOrMax = this.limit;
     }
 
-    final void setLimit(Param<?> numberOfRows) {
-        this.limit = numberOfRows;
-        this.limitOrMax = numberOfRows;
+    final void setLimit(Field<? extends Number> l) {
+        this.limit = l;
+        this.limitOrMax = l;
     }
 
     final Long getLimit() {
-        return Convert.convert((limit != null ? limit : limitOrMax).getValue(), long.class);
+        Field<?> l = limit != null ? limit : limitOrMax;
+
+        if (l instanceof Param)
+            return Convert.convert(((Param<?>) l).getValue(), long.class);
+        else
+            return Convert.convert(MAX.getValue(), long.class);
     }
 
     final void setPercent(boolean percent) {
@@ -477,21 +484,22 @@ final class Limit extends AbstractQueryPart implements UTransient {
         return withTies;
     }
 
-    final Limit from(Limit limit) {
+    final Limit from(Limit other) {
 
         // [#9017] Take the lower number of two LIMIT clauses, maintaining
         //         inline flags and parameter names
-        if (limit.limit != null)
-            if (limit == null)
-                this.setLimit(limit.limit);
+        // [#5695] TODO: What to do if LIMIT is an expression?
+        if (other.limit != null)
+            if (this.limit == null)
+                this.setLimit(other.limit);
             else
-                this.setLimit(((Val<?>) limit.limit).copy(Math.min(getLimit(), limit.getLimit())));
+                this.setLimit(((Val<? extends Number>) other.limit).copy(Math.min(getLimit(), other.getLimit())));
 
-        if (limit.offset != null)
-            this.setOffset(limit.offset);
+        if (other.offset != null)
+            this.setOffset(other.offset);
 
-        this.setPercent(limit.percent);
-        this.setWithTies(limit.withTies);
+        this.setPercent(other.percent);
+        this.setWithTies(other.withTies);
 
         return this;
     }

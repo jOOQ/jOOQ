@@ -732,7 +732,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <code>SELECT</code> statements.
      */
     @Support
-    void addOffset(Param<? extends Number> offset);
+    void addOffset(Field<? extends Number> offset);
 
     /**
      * Limit the results of this select.
@@ -771,7 +771,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param numberOfRows The number of rows to return
      */
     @Support
-    void addLimit(Param<? extends Number> numberOfRows);
+    void addLimit(Field<? extends Number> numberOfRows);
 
     /**
      * Limit the results of this select.
@@ -823,7 +823,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param numberOfRows The number of rows to return
      */
     @Support
-    void addLimit(Param<Integer> offset, int numberOfRows);
+    void addLimit(Field<Integer> offset, int numberOfRows);
 
     /**
      * Limit the results of this select.
@@ -841,7 +841,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param numberOfRows The number of rows to return
      */
     @Support
-    void addLimit(Param<? extends Number> offset, Number numberOfRows);
+    void addLimit(Field<? extends Number> offset, Number numberOfRows);
 
     /**
      * Limit the results of this select using named parameters.
@@ -859,7 +859,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param numberOfRows The number of rows to return
      */
     @Support
-    void addLimit(int offset, Param<Integer> numberOfRows);
+    void addLimit(int offset, Field<Integer> numberOfRows);
 
     /**
      * Limit the results of this select using named parameters.
@@ -877,7 +877,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param numberOfRows The number of rows to return
      */
     @Support
-    void addLimit(Number offset, Param<? extends Number> numberOfRows);
+    void addLimit(Number offset, Field<? extends Number> numberOfRows);
 
     /**
      * Limit the results of this select using named parameters.
@@ -895,7 +895,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param numberOfRows The number of rows to return
      */
     @Support
-    void addLimit(Param<? extends Number> offset, Param<? extends Number> numberOfRows);
+    void addLimit(Field<? extends Number> offset, Field<? extends Number> numberOfRows);
 
     /**
      * Add the <code>PERCENT</code> clause to a <code>LIMIT</code> clause.

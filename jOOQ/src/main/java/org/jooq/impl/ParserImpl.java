@@ -1483,7 +1483,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         boolean offsetPostgres = false;
 
         if (offset && parseKeywordIf("OFFSET")) {
-            result.addOffset(requireParam(parseParenthesisedUnsignedIntegerOrBindVariable()));
+            result.addOffset((Field) parseField());
 
             if (parseKeywordIf("ROWS") || parseKeywordIf("ROW"))
                 offsetStandard = true;
@@ -1496,7 +1496,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         if (!offsetStandard && parseKeywordIf("LIMIT")) {
-            Param<Long> limit = requireParam(parseParenthesisedUnsignedIntegerOrBindVariable());
+            Field<Long> limit = (Field) parseField();
 
             if (offsetPostgres) {
                 result.addLimit(limit);
@@ -1508,7 +1508,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     result.setWithTies(true);
             }
             else if (offset && parseIf(',')) {
-                result.addLimit(limit, requireParam(parseParenthesisedUnsignedIntegerOrBindVariable()));
+                result.addLimit(limit, (Field) parseField());
             }
             else {
                 if (parseKeywordIf("PERCENT"))
@@ -1518,7 +1518,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     result.setWithTies(true);
 
                 if (offset && parseKeywordIf("OFFSET"))
-                    result.addLimit(requireParam(parseParenthesisedUnsignedIntegerOrBindVariable()), limit);
+                    result.addLimit((Field) parseField(), limit);
                 else
                     result.addLimit(limit);
             }
@@ -1530,7 +1530,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 result.addLimit(inline(1L));
             }
             else {
-                result.addLimit(requireParam(parseParenthesisedUnsignedIntegerOrBindVariable()));
+                result.addLimit((Field) parseField());
 
                 if (parseKeywordIf("PERCENT"))
                     result.setLimitPercent(true);
@@ -1661,31 +1661,31 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         else
             parseKeywordIf("ALL");
 
-        Param<Long> limit = null;
-        Param<Long> offset = null;
+        Field<Long> limit = null;
+        Field<Long> offset = null;
         boolean percent = false;
         boolean withTies = false;
 
         // T-SQL style TOP .. START AT
         if (parseKeywordIf("TOP")) {
-            limit = requireParam(parseParenthesisedUnsignedIntegerOrBindVariable());
+            limit = (Field) parseField();
             percent = parseKeywordIf("PERCENT") && requireProEdition();
 
             if (parseKeywordIf("START AT"))
-                offset = requireParam(parseParenthesisedUnsignedIntegerOrBindVariable());
+                offset = (Field) parseField();
             else if (parseKeywordIf("WITH TIES"))
                 withTies = true;
         }
 
         // Informix style SKIP .. FIRST
         else if (parseKeywordIf("SKIP")) {
-            offset = requireParam(parseParenthesisedUnsignedIntegerOrBindVariable());
+            offset = (Field) parseField();
 
             if (parseKeywordIf("FIRST"))
-                limit = requireParam(parseParenthesisedUnsignedIntegerOrBindVariable());
+                limit = (Field) parseField();
         }
         else if (parseKeywordIf("FIRST")) {
-            limit = requireParam(parseParenthesisedUnsignedIntegerOrBindVariable());
+            limit = (Field) parseField();
         }
 
         List<SelectFieldOrAsterisk> select = parseSelectList();
@@ -2132,11 +2132,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final Query parseDelete(WithImpl with, boolean parseResultQuery) {
         parseKeyword("DELETE", "DEL");
-        Param<Long> limit = null;
+        Field<Long> limit = null;
 
         // T-SQL style TOP .. START AT
         if (parseKeywordIf("TOP")) {
-            limit = requireParam(parseParenthesisedUnsignedIntegerOrBindVariable());
+            limit = (Field) parseField();
 
             // [#8623] TODO Support this
             // percent = parseKeywordIf("PERCENT") && requireProEdition();
@@ -2156,7 +2156,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             : s2;
         DeleteLimitStep<?> s4 = parseKeywordIf("ORDER BY") ? s3.orderBy(parseList(',', c -> c.parseSortField())) : s3;
         DeleteReturningStep<?> s5 = (limit != null || parseKeywordIf("LIMIT"))
-            ? s4.limit(limit != null ? limit : requireParam(parseParenthesisedUnsignedIntegerOrBindVariable()))
+            ? s4.limit(limit != null ? limit : (Field) parseField())
             : s4;
         return (parseResultQuery ? parseKeyword("RETURNING") : parseKeywordIf("RETURNING"))
             ? s5.returning(parseSelectList())
@@ -2323,11 +2323,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final Query parseUpdate(WithImpl with, boolean parseResultQuery) {
         parseKeyword("UPDATE", "UPD");
-        Param<Long> limit = null;
+        Field<Long> limit = null;
 
         // T-SQL style TOP .. START AT
         if (parseKeywordIf("TOP")) {
-            limit = requireParam(parseParenthesisedUnsignedIntegerOrBindVariable());
+            limit = (Field) parseField();
 
             // [#8623] TODO Support this
             // percent = parseKeywordIf("PERCENT") && requireProEdition();
@@ -2372,7 +2372,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             : s3;
         UpdateLimitStep<?> s5 = parseKeywordIf("ORDER BY") ? s4.orderBy(parseList(',', c -> c.parseSortField())) : s4;
         UpdateReturningStep<?> s6 = (limit != null || parseKeywordIf("LIMIT"))
-            ? s5.limit(limit != null ? limit : requireParam(parseParenthesisedUnsignedIntegerOrBindVariable()))
+            ? s5.limit(limit != null ? limit : (Field) parseField())
             : s5;
         return (parseResultQuery ? parseKeyword("RETURNING") : parseKeywordIf("RETURNING"))
             ? s6.returning(parseSelectList())
@@ -12844,13 +12844,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
              : unsigned;
     }
 
-    private final <T> Param<T> requireParam(Field<T> field) {
-        if (field instanceof Param)
-            return (Param<T>) field;
-        else
-            throw expected("Bind parameter or constant");
-    }
-
     private final <T> List<T> parseList(char separator, Function<? super ParseContext, ? extends T> element) {
         return parseList(c -> c.parseIf(separator), element);
     }
@@ -12890,17 +12883,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         parse(open);
         T result = content.apply(this);
         parse(close);
-
-        return result;
-    }
-
-    private final Field<Long> parseParenthesisedUnsignedIntegerOrBindVariable() {
-        Field<Long> result;
-
-        int parens;
-        for (parens = 0; parseIf('('); parens++);
-        result = parseUnsignedIntegerOrBindVariable();
-        for (; parens > 0 && parse(')'); parens--);
 
         return result;
     }

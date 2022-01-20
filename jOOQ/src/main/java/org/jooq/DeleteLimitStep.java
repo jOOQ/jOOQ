@@ -81,7 +81,7 @@ public interface DeleteLimitStep<R extends Record> extends DeleteReturningStep<R
     DeleteReturningStep<R> limit(Number numberOfRows);
 
     /**
-     * Add a <code>LIMIT</code> clause to the query using named parameters.
+     * Add a <code>LIMIT</code> clause to the query.
      */
     @NotNull @CheckReturnValue
     @Support

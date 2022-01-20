@@ -161,7 +161,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
     SelectLimitPercentStep<R> limit(Number numberOfRows);
 
     /**
-     * Add a <code>LIMIT</code> clause to the query using named parameters
+     * Add a <code>LIMIT</code> clause to the query.
      * <p>
      * Note that some dialects do not support bind values at all in
      * <code>LIMIT</code> or <code>TOP</code> clauses!
@@ -210,7 +210,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
     SelectWithTiesAfterOffsetStep<R> limit(Number offset, Number numberOfRows);
 
     /**
-     * Add a <code>LIMIT</code> clause to the query using named parameters
+     * Add a <code>LIMIT</code> clause to the query.
      * <p>
      * Note that some dialects do not support bind values at all in
      * <code>LIMIT</code> or <code>TOP</code> clauses!
@@ -226,7 +226,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
     SelectLimitPercentAfterOffsetStep<R> limit(int offset, Field<Integer> numberOfRows);
 
     /**
-     * Add a <code>LIMIT</code> clause to the query using named parameters
+     * Add a <code>LIMIT</code> clause to the query.
      * <p>
      * Note that some dialects do not support bind values at all in
      * <code>LIMIT</code> or <code>TOP</code> clauses!
@@ -242,7 +242,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
     SelectLimitPercentAfterOffsetStep<R> limit(Number offset, Field<? extends Number> numberOfRows);
 
     /**
-     * Add a <code>LIMIT</code> clause to the query using named parameters
+     * Add a <code>LIMIT</code> clause to the query.
      * <p>
      * Note that some dialects do not support bind values at all in
      * <code>LIMIT</code> or <code>TOP</code> clauses!
@@ -258,7 +258,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
     SelectLimitPercentAfterOffsetStep<R> limit(Field<Integer> offset, int numberOfRows);
 
     /**
-     * Add a <code>LIMIT</code> clause to the query using named parameters
+     * Add a <code>LIMIT</code> clause to the query.
      * <p>
      * Note that some dialects do not support bind values at all in
      * <code>LIMIT</code> or <code>TOP</code> clauses!
@@ -274,7 +274,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
     SelectLimitPercentAfterOffsetStep<R> limit(Field<? extends Number> offset, Number numberOfRows);
 
     /**
-     * Add a <code>LIMIT</code> clause to the query using named parameters
+     * Add a <code>LIMIT</code> clause to the query.
      * <p>
      * Note that some dialects do not support bind values at all in
      * <code>LIMIT</code> or <code>TOP</code> clauses!
@@ -318,8 +318,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
     SelectLimitAfterOffsetStep<R> offset(Number offset);
 
     /**
-     * Add a 0-based <code>OFFSET</code> clause to the query using a named
-     * parameter
+     * Add a 0-based <code>OFFSET</code> clause to the query.
      * <p>
      * Offsets are 0-based as they describe the number of rows to <em>skip</em>.
      * <p>

@@ -161,8 +161,7 @@ public interface SelectOffsetStep<R extends Record> extends SelectForUpdateStep<
     SelectForUpdateStep<R> offset(Number offset);
 
     /**
-     * Add a 0-based <code>OFFSET</code> clause to the query using a named
-     * parameter.
+     * Add a 0-based <code>OFFSET</code> clause to the query.
      * <p>
      * Offsets are 0-based as they describe the number of rows to <em>skip</em>.
      * <p>

@@ -147,7 +147,7 @@ public interface SelectSeekLimitStep<R extends Record> extends SelectForUpdateSt
     SelectForUpdateStep<R> limit(Number numberOfRows);
 
     /**
-     * Add a <code>LIMIT</code> clause to the query using named parameters.
+     * Add a <code>LIMIT</code> clause to the query.
      * <p>
      * Note that some dialects do not support bind values at all in
      * <code>LIMIT</code> or <code>TOP</code> clauses!

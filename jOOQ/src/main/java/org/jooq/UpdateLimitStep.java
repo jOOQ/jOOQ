@@ -83,7 +83,7 @@ public interface UpdateLimitStep<R extends Record> extends UpdateReturningStep<R
     UpdateReturningStep<R> limit(Number numberOfRows);
 
     /**
-     * Add a <code>LIMIT</code> clause to the query using named parameters.
+     * Add a <code>LIMIT</code> clause to the query.
      */
     @NotNull @CheckReturnValue
     @Support

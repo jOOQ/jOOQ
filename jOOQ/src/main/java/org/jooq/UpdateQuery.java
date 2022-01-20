@@ -433,7 +433,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
     void addLimit(Number numberOfRows);
 
     /**
-     * Limit the results of this select using named parameters.
+     * Limit the results of this select.
      *
      * @param numberOfRows The number of rows to return
      */

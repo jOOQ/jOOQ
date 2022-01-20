@@ -721,8 +721,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addOffset(Number offset);
 
     /**
-     * Add a 0-based <code>OFFSET</code> clause to the query using a named
-     * parameter.
+     * Add a 0-based <code>OFFSET</code> clause to the query.
      * <p>
      * Offsets are 0-based as they describe the number of rows to <em>skip</em>.
      * <p>
@@ -755,7 +754,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addLimit(Number numberOfRows);
 
     /**
-     * Limit the results of this select using named parameters.
+     * Limit the results of this select.
      * <p>
      * Note that some dialects do not support bind values at all in
      * <code>LIMIT</code> or <code>TOP</code> clauses!
@@ -844,7 +843,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addLimit(Field<? extends Number> offset, Number numberOfRows);
 
     /**
-     * Limit the results of this select using named parameters.
+     * Limit the results of this select.
      * <p>
      * Note that some dialects do not support bind values at all in
      * <code>LIMIT</code> or <code>TOP</code> clauses!
@@ -862,7 +861,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addLimit(int offset, Field<Integer> numberOfRows);
 
     /**
-     * Limit the results of this select using named parameters.
+     * Limit the results of this select.
      * <p>
      * Note that some dialects do not support bind values at all in
      * <code>LIMIT</code> or <code>TOP</code> clauses!
@@ -880,7 +879,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addLimit(Number offset, Field<? extends Number> numberOfRows);
 
     /**
-     * Limit the results of this select using named parameters.
+     * Limit the results of this select.
      * <p>
      * Note that some dialects do not support bind values at all in
      * <code>LIMIT</code> or <code>TOP</code> clauses!

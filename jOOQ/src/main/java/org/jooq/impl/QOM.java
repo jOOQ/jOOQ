@@ -387,7 +387,7 @@ public final class QOM {
     public /*sealed*/ interface CombinedCondition
         extends
             Condition,
-            UOperator2<Condition, Condition, Condition>
+            UCommutativeOperator<Condition, Condition>
         /*permits
             MAnd,
             MOr*/
@@ -1737,7 +1737,7 @@ public final class QOM {
     public /*sealed*/ interface TableEq<R extends Record>
         extends
             org.jooq.Condition,
-            UOperator2<Table<R>, Table<R>, Condition>
+            UCommutativeOperator<Table<R>, Condition>
         //permits
         //    TableEq
     {}
@@ -1747,6 +1747,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Eq<T>
         extends
+            UCommutativeOperator<Field<T>, Condition>,
             CompareCondition<T>
         //permits
         //    Eq
@@ -1808,6 +1809,7 @@ public final class QOM {
      */
     public /*sealed*/ interface IsDistinctFrom<T>
         extends
+            UCommutativeOperator<Field<T>, Condition>,
             CompareCondition<T>
         //permits
         //    IsDistinctFrom
@@ -1834,6 +1836,7 @@ public final class QOM {
      */
     public /*sealed*/ interface IsNotDistinctFrom<T>
         extends
+            UCommutativeOperator<Field<T>, Condition>,
             CompareCondition<T>
         //permits
         //    IsNotDistinctFrom
@@ -1915,7 +1918,7 @@ public final class QOM {
     public /*sealed*/ interface TableNe<R extends Record>
         extends
             org.jooq.Condition,
-            UOperator2<Table<R>, Table<R>, Condition>
+            UCommutativeOperator<Table<R>, Condition>
         //permits
         //    TableNe
     {}
@@ -1925,6 +1928,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Ne<T>
         extends
+            UCommutativeOperator<Field<T>, Condition>,
             CompareCondition<T>
         //permits
         //    Ne
@@ -2192,7 +2196,7 @@ public final class QOM {
     public /*sealed*/ interface Add<T>
         extends
             org.jooq.Field<T>,
-            UOperator2<Field<T>, Field<T>, Field<T>>
+            UCommutativeOperator<Field<T>, Field<T>>
         //permits
         //    Add
     {}
@@ -2244,7 +2248,7 @@ public final class QOM {
     public /*sealed*/ interface BitAnd<T extends Number>
         extends
             org.jooq.Field<T>,
-            UOperator2<Field<T>, Field<T>, Field<T>>
+            UCommutativeOperator<Field<T>, Field<T>>
         //permits
         //    BitAnd
     {}
@@ -2270,7 +2274,7 @@ public final class QOM {
     public /*sealed*/ interface BitNand<T extends Number>
         extends
             org.jooq.Field<T>,
-            UOperator2<Field<T>, Field<T>, Field<T>>
+            UCommutativeOperator<Field<T>, Field<T>>
         //permits
         //    BitNand
     {}
@@ -2281,7 +2285,7 @@ public final class QOM {
     public /*sealed*/ interface BitNor<T extends Number>
         extends
             org.jooq.Field<T>,
-            UOperator2<Field<T>, Field<T>, Field<T>>
+            UCommutativeOperator<Field<T>, Field<T>>
         //permits
         //    BitNor
     {}
@@ -2303,7 +2307,7 @@ public final class QOM {
     public /*sealed*/ interface BitOr<T extends Number>
         extends
             org.jooq.Field<T>,
-            UOperator2<Field<T>, Field<T>, Field<T>>
+            UCommutativeOperator<Field<T>, Field<T>>
         //permits
         //    BitOr
     {}
@@ -2314,7 +2318,7 @@ public final class QOM {
     public /*sealed*/ interface BitXNor<T extends Number>
         extends
             org.jooq.Field<T>,
-            UOperator2<Field<T>, Field<T>, Field<T>>
+            UCommutativeOperator<Field<T>, Field<T>>
         //permits
         //    BitXNor
     {}
@@ -2325,7 +2329,7 @@ public final class QOM {
     public /*sealed*/ interface BitXor<T extends Number>
         extends
             org.jooq.Field<T>,
-            UOperator2<Field<T>, Field<T>, Field<T>>
+            UCommutativeOperator<Field<T>, Field<T>>
         //permits
         //    BitXor
     {}
@@ -2520,7 +2524,7 @@ public final class QOM {
     public /*sealed*/ interface Mul<T>
         extends
             org.jooq.Field<T>,
-            UOperator2<Field<T>, Field<T>, Field<T>>
+            UCommutativeOperator<Field<T>, Field<T>>
         //permits
         //    Mul
     {}
@@ -6021,6 +6025,20 @@ public final class QOM {
 
 
 
+    }
+
+    /**
+     * A binary {@link UOperator2} whose operands can be swapped using
+     * {@link #$swap()} without changing the operator's semantics.
+     */
+    interface UCommutativeOperator<Q, R extends org.jooq.QueryPart> extends UOperator2<Q, Q, R> {
+
+        /**
+         * Create a new expression with swapped operands.
+         */
+        default R $swap() {
+            return $constructor().apply($arg2(), $arg1());
+        }
     }
 
     /**

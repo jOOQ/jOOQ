@@ -1771,20 +1771,32 @@ public final class QOM {
      */
     public /*sealed*/ interface Ge<T>
         extends
+            UConvertibleOperator<Field<T>, Condition>,
             CompareCondition<T>
         //permits
         //    Ge
-    {}
+    {
+        @Override
+        default Condition $converse() {
+            return $arg2().le($arg1());
+        }
+    }
 
     /**
      * The <code>GT</code> operator.
      */
     public /*sealed*/ interface Gt<T>
         extends
+            UConvertibleOperator<Field<T>, Condition>,
             CompareCondition<T>
         //permits
         //    Gt
-    {}
+    {
+        @Override
+        default Condition $converse() {
+            return $arg2().lt($arg1());
+        }
+    }
 
     /**
      * The <code>IN</code> operator.
@@ -1860,10 +1872,16 @@ public final class QOM {
      */
     public /*sealed*/ interface Le<T>
         extends
+            UConvertibleOperator<Field<T>, Condition>,
             CompareCondition<T>
         //permits
         //    Le
-    {}
+    {
+        @Override
+        default Condition $converse() {
+            return $arg2().ge($arg1());
+        }
+    }
 
     /**
      * The <code>LIKE</code> operator.
@@ -1907,10 +1925,16 @@ public final class QOM {
      */
     public /*sealed*/ interface Lt<T>
         extends
+            UConvertibleOperator<Field<T>, Condition>,
             CompareCondition<T>
         //permits
         //    Lt
-    {}
+    {
+        @Override
+        default Condition $converse() {
+            return $arg2().gt($arg1());
+        }
+    }
 
     /**
      * The <code>NE</code> operator.
@@ -6029,15 +6053,33 @@ public final class QOM {
 
     /**
      * A binary {@link UOperator2} whose operands can be swapped using
+     * {@link #$converse()} producing the converse relation.
+     */
+    interface UConvertibleOperator<Q, R extends org.jooq.QueryPart> extends UOperator2<Q, Q, R> {
+
+        /**
+         * Create a new expression with swapped operands, using the converse
+         * operator.
+         */
+        R $converse();
+    }
+
+    /**
+     * A binary {@link UOperator2} whose operands can be swapped using
      * {@link #$swap()} without changing the operator's semantics.
      */
-    interface UCommutativeOperator<Q, R extends org.jooq.QueryPart> extends UOperator2<Q, Q, R> {
+    interface UCommutativeOperator<Q, R extends org.jooq.QueryPart> extends UConvertibleOperator<Q, R> {
 
         /**
          * Create a new expression with swapped operands.
          */
         default R $swap() {
             return $constructor().apply($arg2(), $arg1());
+        }
+
+        @Override
+        default R $converse() {
+            return $swap();
         }
     }
 

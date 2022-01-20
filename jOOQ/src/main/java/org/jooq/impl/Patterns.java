@@ -976,12 +976,3 @@ package org.jooq.impl;
 
 
 
-
-
-
-
-
-
-
-
-

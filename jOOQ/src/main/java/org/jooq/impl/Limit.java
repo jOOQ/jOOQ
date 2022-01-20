@@ -76,15 +76,16 @@ import org.jooq.impl.Tools.BooleanDataKey;
  * @author Lukas Eder
  */
 final class Limit extends AbstractQueryPart implements UTransient {
-    private static final Param<Integer> ZERO              = zero();
-    private static final Param<Integer> ONE               = one();
-    private static final Param<Integer> MAX               = DSL.inline(Integer.MAX_VALUE);
 
-    Param<?>                            numberOfRows;
-    private Param<?>                    numberOfRowsOrMax = MAX;
+    private static final Param<Integer> ZERO          = zero();
+    private static final Param<Integer> ONE           = one();
+    private static final Param<Integer> MAX           = DSL.inline(Integer.MAX_VALUE);
+
+    Param<?>                            limit;
+    private Param<?>                    limitOrMax    = MAX;
     Param<?>                            offset;
-    private Param<?>                    offsetOrZero      = ZERO;
-    private Param<?>                    offsetPlusOne     = ONE;
+    private Param<?>                    offsetOrZero  = ZERO;
+    private Param<?>                    offsetPlusOne = ONE;
     boolean                             withTies;
     boolean                             percent;
 
@@ -122,7 +123,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
                    .formatSeparator()
                    .visit(K_LIMIT)
                    .sql(' ').visit(offsetOrZero)
-                   .sql(", ").visit(numberOfRowsOrMax)
+                   .sql(", ").visit(limitOrMax)
                    .castMode(castMode);
 
                 break;
@@ -328,7 +329,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
 
         if (!limitZero()) {
             ctx.formatSeparator()
-               .visit(K_FETCH_NEXT).sql(' ').visit(numberOfRows);
+               .visit(K_FETCH_NEXT).sql(' ').visit(limit);
 
             if (percent)
                 ctx.sql(' ').visit(K_PERCENT);
@@ -345,7 +346,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
         if (!limitZero())
             ctx.formatSeparator()
                .visit(K_LIMIT)
-               .sql(' ').visit(numberOfRows);
+               .sql(' ').visit(limit);
 
         if (!offsetZero())
             ctx.formatSeparator()
@@ -359,7 +360,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
         ctx.castMode(NEVER)
            .formatSeparator()
            .visit(K_LIMIT)
-           .sql(' ').visit(numberOfRowsOrMax);
+           .sql(' ').visit(limitOrMax);
 
         if (!offsetZero())
             ctx.formatSeparator()
@@ -393,7 +394,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
      * Whether this limit has a limit of zero
      */
     final boolean limitZero() {
-        return numberOfRows == null;
+        return limit == null;
     }
 
     /**
@@ -403,7 +404,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
         return !limitZero()
             && !withTies()
             && !percent()
-            && Long.valueOf(1L).equals(numberOfRows.getValue());
+            && Long.valueOf(1L).equals(limit.getValue());
     }
 
     /**
@@ -424,7 +425,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
      * The upper bound, such that ROW_NUMBER() &lt;= getUpperRownum()
      */
     final Field<?> getUpperRownum() {
-        return iadd(offsetOrZero, numberOfRowsOrMax);
+        return iadd(offsetOrZero, limitOrMax);
     }
 
     /**
@@ -432,7 +433,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
      * LIMIT clause should be rendered.
      */
     final boolean isApplicable() {
-        return offset != null || numberOfRows != null;
+        return offset != null || limit != null;
     }
 
     final void setOffset(Number offset) {
@@ -446,18 +447,18 @@ final class Limit extends AbstractQueryPart implements UTransient {
         this.offsetOrZero = offset;
     }
 
-    final void setNumberOfRows(Number numberOfRows) {
-        this.numberOfRows = val(numberOfRows.longValue(), SQLDataType.BIGINT);
-        this.numberOfRowsOrMax = this.numberOfRows;
+    final void setLimit(Number numberOfRows) {
+        this.limit = val(numberOfRows.longValue(), SQLDataType.BIGINT);
+        this.limitOrMax = this.limit;
     }
 
-    final void setNumberOfRows(Param<?> numberOfRows) {
-        this.numberOfRows = numberOfRows;
-        this.numberOfRowsOrMax = numberOfRows;
+    final void setLimit(Param<?> numberOfRows) {
+        this.limit = numberOfRows;
+        this.limitOrMax = numberOfRows;
     }
 
-    final Long getNumberOfRows() {
-        return Convert.convert((numberOfRows != null ? numberOfRows : numberOfRowsOrMax).getValue(), long.class);
+    final Long getLimit() {
+        return Convert.convert((limit != null ? limit : limitOrMax).getValue(), long.class);
     }
 
     final void setPercent(boolean percent) {
@@ -480,11 +481,11 @@ final class Limit extends AbstractQueryPart implements UTransient {
 
         // [#9017] Take the lower number of two LIMIT clauses, maintaining
         //         inline flags and parameter names
-        if (limit.numberOfRows != null)
-            if (numberOfRows == null)
-                this.setNumberOfRows(limit.numberOfRows);
+        if (limit.limit != null)
+            if (limit == null)
+                this.setLimit(limit.limit);
             else
-                this.setNumberOfRows(((Val<?>) limit.numberOfRows).copy(Math.min(getNumberOfRows(), limit.getNumberOfRows())));
+                this.setLimit(((Val<?>) limit.limit).copy(Math.min(getLimit(), limit.getLimit())));
 
         if (limit.offset != null)
             this.setOffset(limit.offset);
@@ -497,7 +498,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
 
     final void clear() {
         offset = null;
-        numberOfRows = null;
+        limit = null;
         withTies = false;
         percent = false;
     }

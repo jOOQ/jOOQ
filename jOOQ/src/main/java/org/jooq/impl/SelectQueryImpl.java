@@ -3282,11 +3282,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
     @Override
-    public final void addOffset(int offset) {
-        addOffset((Number) offset);
-    }
-
-    @Override
     public final void addOffset(Number offset) {
         getLimit().setOffset(offset);
     }
@@ -3294,11 +3289,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final void addOffset(Field<? extends Number> offset) {
         getLimit().setOffset(offset);
-    }
-
-    @Override
-    public final void addLimit(int l) {
-        addLimit((Number) l);
     }
 
     @Override
@@ -3312,30 +3302,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final void addLimit(int offset, int numberOfRows) {
-        addLimit((Number) offset, (Number) numberOfRows);
-    }
-
-    @Override
     public final void addLimit(Number offset, Number l) {
         getLimit().setOffset(offset);
         getLimit().setLimit(l);
     }
 
     @Override
-    public final void addLimit(int offset, Field<Integer> l) {
-        addLimit((Number) offset, l);
-    }
-
-    @Override
     public final void addLimit(Number offset, Field<? extends Number> l) {
         getLimit().setOffset(offset);
         getLimit().setLimit(l);
-    }
-
-    @Override
-    public final void addLimit(Field<Integer> offset, int l) {
-        addLimit(offset, (Number) l);
     }
 
     @Override

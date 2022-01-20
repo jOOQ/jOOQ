@@ -705,19 +705,6 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <code>SELECT</code> statements.
      */
     @Support
-    void addOffset(int offset);
-
-    /**
-     * Add a 0-based <code>OFFSET</code> clause to the query.
-     * <p>
-     * Offsets are 0-based as they describe the number of rows to <em>skip</em>.
-     * <p>
-     * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
-     * your RDBMS, or if your RDBMS does not natively support offsets, this is
-     * emulated with a <code>ROW_NUMBER()</code> window function and nested
-     * <code>SELECT</code> statements.
-     */
-    @Support
     void addOffset(Number offset);
 
     /**
@@ -736,17 +723,8 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     /**
      * Limit the results of this select.
      * <p>
-     * This is the same as calling {@link #addLimit(int, int)} with offset = 0
-     *
-     * @param numberOfRows The number of rows to return
-     */
-    @Support
-    void addLimit(int numberOfRows);
-
-    /**
-     * Limit the results of this select.
-     * <p>
-     * This is the same as calling {@link #addLimit(int, int)} with offset = 0
+     * This is the same as calling {@link #addLimit(Number, Number)} with offset
+     * = 0
      *
      * @param numberOfRows The number of rows to return
      */
@@ -787,23 +765,6 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param numberOfRows The number of rows to return
      */
     @Support
-    void addLimit(int offset, int numberOfRows);
-
-    /**
-     * Limit the results of this select.
-     * <p>
-     * Note that some dialects do not support bind values at all in
-     * <code>LIMIT</code> or <code>TOP</code> clauses!
-     * <p>
-     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
-     * RDBMS, or if your RDBMS does not natively support offsets, this is
-     * emulated with a <code>ROW_NUMBER()</code> window function and nested
-     * <code>SELECT</code> statements.
-     *
-     * @param offset The lowest offset starting at 0
-     * @param numberOfRows The number of rows to return
-     */
-    @Support
     void addLimit(Number offset, Number numberOfRows);
 
     /**
@@ -822,43 +783,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param numberOfRows The number of rows to return
      */
     @Support
-    void addLimit(Field<Integer> offset, int numberOfRows);
-
-    /**
-     * Limit the results of this select.
-     * <p>
-     * Note that some dialects do not support bind values at all in
-     * <code>LIMIT</code> or <code>TOP</code> clauses!
-     * <p>
-     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
-     * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
-     * support bind values, or if your RDBMS does not natively support offsets,
-     * this may be emulated with a <code>ROW_NUMBER()</code> window function
-     * and nested <code>SELECT</code> statements.
-     *
-     * @param offset The lowest offset starting at 0
-     * @param numberOfRows The number of rows to return
-     */
-    @Support
     void addLimit(Field<? extends Number> offset, Number numberOfRows);
-
-    /**
-     * Limit the results of this select.
-     * <p>
-     * Note that some dialects do not support bind values at all in
-     * <code>LIMIT</code> or <code>TOP</code> clauses!
-     * <p>
-     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
-     * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
-     * support bind values, or if your RDBMS does not natively support offsets,
-     * this may be emulated with a <code>ROW_NUMBER()</code> window function
-     * and nested <code>SELECT</code> statements.
-     *
-     * @param offset The lowest offset starting at 0
-     * @param numberOfRows The number of rows to return
-     */
-    @Support
-    void addLimit(int offset, Field<Integer> numberOfRows);
 
     /**
      * Limit the results of this select.

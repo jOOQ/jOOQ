@@ -144,20 +144,6 @@ public interface SelectOffsetStep<R extends Record> extends SelectForUpdateStep<
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectForUpdateStep<R> offset(int offset);
-
-    /**
-     * Add a 0-based <code>OFFSET</code> clause to the query.
-     * <p>
-     * Offsets are 0-based as they describe the number of rows to <em>skip</em>.
-     * <p>
-     * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
-     * your RDBMS, or if your RDBMS does not natively support offsets, this is
-     * emulated with a <code>ROW_NUMBER()</code> window function and nested
-     * <code>SELECT</code> statements.
-     */
-    @NotNull @CheckReturnValue
-    @Support
     SelectForUpdateStep<R> offset(Number offset);
 
     /**

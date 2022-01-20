@@ -1632,11 +1632,6 @@ implements
     }
 
     @Override
-    public final SelectImpl limit(int l) {
-        return limit((Number) l);
-    }
-
-    @Override
     public final SelectImpl limit(Number l) {
         limit = l;
         limitParam = null;
@@ -1651,11 +1646,6 @@ implements
     }
 
     @Override
-    public final SelectImpl limit(int o, int l) {
-        return limit((Number) o, (Number) l);
-    }
-
-    @Override
     public final SelectImpl limit(Number o, Number l) {
         offset = o;
         offsetParam = null;
@@ -1665,22 +1655,12 @@ implements
     }
 
     @Override
-    public final SelectImpl limit(int o, Field<Integer> l) {
-        return limit((Number) o, l);
-    }
-
-    @Override
     public final SelectImpl limit(Number o, Field<? extends Number> l) {
         offset = o;
         offsetParam = null;
         limit = null;
         limitParam = l;
         return limitOffset();
-    }
-
-    @Override
-    public final SelectImpl limit(Field<Integer> o, int l) {
-        return limit(o, (Number) l);
     }
 
     @Override
@@ -1699,11 +1679,6 @@ implements
         limit = null;
         limitParam = l;
         return limitOffset();
-    }
-
-    @Override
-    public final SelectImpl offset(int o) {
-        return offset((Number) o);
     }
 
     @Override

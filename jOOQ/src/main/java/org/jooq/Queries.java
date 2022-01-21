@@ -42,10 +42,12 @@ import java.util.stream.Stream;
 
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM;
 import org.jooq.impl.QOM.UnmodifiableList;
 
 import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * A wrapper for a collection of queries.
@@ -135,5 +137,10 @@ public interface Queries extends AttachableQueryPart, Iterable<Query> {
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @NotNull UnmodifiableList<? extends Query> $queries();
 }

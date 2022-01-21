@@ -41,9 +41,11 @@ import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * A named parameter and/or bind value.
@@ -169,6 +171,17 @@ public /* non-sealed */ interface Param<T> extends ParamOrVariable<T> {
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     T $value();
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @NotNull Param<T> $value(T value);
 }

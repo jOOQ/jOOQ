@@ -37,10 +37,12 @@
  */
 package org.jooq;
 
+import org.jooq.impl.QOM;
 import org.jooq.impl.QOM.Materialized;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * A common table expression.
@@ -71,7 +73,24 @@ public interface CommonTableExpression<R extends Record> extends Table<R> {
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @NotNull DerivedColumnList $derivedColumnList();
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @NotNull ResultQuery<R> $query();
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @Nullable Materialized $materialized();
 }

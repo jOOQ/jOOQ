@@ -40,9 +40,11 @@ package org.jooq;
 import java.util.List;
 
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * A DDL index definition.
@@ -81,5 +83,10 @@ public interface Index extends Named {
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @Nullable Table<?> $table();
 }

@@ -38,12 +38,14 @@
 package org.jooq;
 
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM;
 import org.jooq.impl.QOM.FrameExclude;
 import org.jooq.impl.QOM.FrameUnits;
 import org.jooq.impl.QOM.UnmodifiableList;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * A window specification.
@@ -73,11 +75,52 @@ public interface WindowSpecification extends QueryPart {
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @Nullable WindowDefinition $windowDefinition();
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @NotNull UnmodifiableList<? extends Field<?>> $partitionBy();
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @NotNull UnmodifiableList<? extends SortField<?>> $orderBy();
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @Nullable FrameUnits $frameUnits();
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @Nullable Integer $frameStart();
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @Nullable Integer $frameEnd();
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @Nullable FrameExclude $exclude();
 }

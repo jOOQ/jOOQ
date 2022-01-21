@@ -37,10 +37,12 @@
  */
 package org.jooq;
 
+import org.jooq.impl.QOM;
 import org.jooq.impl.QOM.NullOrdering;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 
 
@@ -103,7 +105,24 @@ public /* non-sealed */ interface SortField<T> extends OrderField<T> {
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @NotNull Field<T> $field();
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @NotNull SortOrder $sortOrder();
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @Nullable NullOrdering $nullOrdering();
 }

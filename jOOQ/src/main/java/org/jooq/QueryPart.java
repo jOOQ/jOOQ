@@ -46,6 +46,7 @@ import java.util.stream.Collector;
 import org.jooq.conf.Settings;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * The common base type for all objects that can be used for query composition.
@@ -106,6 +107,10 @@ public interface QueryPart extends Serializable {
      */
     @Override
     int hashCode();
+
+
+
+
 
 
 

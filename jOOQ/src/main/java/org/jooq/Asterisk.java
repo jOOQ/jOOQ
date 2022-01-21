@@ -38,9 +38,10 @@
 package org.jooq;
 
 import org.jetbrains.annotations.*;
-
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM;
 import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
@@ -109,5 +110,10 @@ public /* non-sealed */ interface Asterisk extends SelectFieldOrAsterisk {
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @NotNull UnmodifiableList<? extends Field<?>> $except();
 }

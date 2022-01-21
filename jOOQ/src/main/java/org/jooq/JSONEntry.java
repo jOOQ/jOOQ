@@ -37,7 +37,10 @@
  */
 package org.jooq;
 
+import org.jooq.impl.QOM;
+
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * A JSON entry for JSON objects.
@@ -62,6 +65,17 @@ public interface JSONEntry<T> extends QueryPart {
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @NotNull Field<String> $key();
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @NotNull Field<?> $value();
 }

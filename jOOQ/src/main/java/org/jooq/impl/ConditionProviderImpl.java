@@ -55,6 +55,9 @@ import org.jooq.SQL;
 import org.jooq.Select;
 import org.jooq.impl.QOM.UProxy;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * @author Lukas Eder
  */
@@ -67,6 +70,12 @@ final class ConditionProviderImpl extends AbstractQueryPart implements Condition
         this.condition = condition;
     }
 
+    @Nullable
+    final Condition getWhereOrNull() {
+        return hasWhere() ? condition : null;
+    }
+
+    @NotNull
     final Condition getWhere() {
         return hasWhere() ? condition : noCondition();
     }

@@ -4520,7 +4520,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final Condition $where() {
-        return condition;
+        return condition.getWhereOrNull();
     }
 
     @Override
@@ -4551,7 +4551,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final Condition $having() {
-        return having;
+        return having.getWhereOrNull();
     }
 
     @Override
@@ -4569,7 +4569,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final Condition $qualify() {
-        return qualify;
+        return qualify.getWhereOrNull();
     }
 
     @Override

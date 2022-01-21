@@ -109,6 +109,8 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.SortOrder.DESC;
 // ...
+// ...
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.AsteriskImpl.NO_SUPPORT_UNQUALIFIED_COMBINED;
 import static org.jooq.impl.AsteriskImpl.SUPPORT_NATIVE_EXCEPT;
@@ -275,6 +277,7 @@ import org.jooq.TableLike;
 import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
+// ...
 // ...
 // ...
 import org.jooq.WindowDefinition;
@@ -444,10 +447,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             return compareTo(startInclusive) >= 0 && compareTo(endExclusive) < 0;
         }
     }
-
-
-
-
 
 
 

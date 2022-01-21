@@ -438,12 +438,12 @@ implements
     }
 
     @Override
-    public final QOM.CreateIndex $on(UnmodifiableList<? extends OrderField<?>> newValue) {
+    public final QOM.CreateIndex $on(Collection<? extends OrderField<?>> newValue) {
         return $constructor().apply($unique(), $index(), $ifNotExists(), $table(), newValue, $include(), $where(), $excludeNullKeys());
     }
 
     @Override
-    public final QOM.CreateIndex $include(UnmodifiableList<? extends Field<?>> newValue) {
+    public final QOM.CreateIndex $include(Collection<? extends Field<?>> newValue) {
         return $constructor().apply($unique(), $index(), $ifNotExists(), $table(), $on(), newValue, $where(), $excludeNullKeys());
     }
 
@@ -457,7 +457,7 @@ implements
         return $constructor().apply($unique(), $index(), $ifNotExists(), $table(), $on(), $include(), $where(), newValue);
     }
 
-    public final Function8<? super Boolean, ? super Index, ? super Boolean, ? super Table<?>, ? super UnmodifiableList<? extends OrderField<?>>, ? super UnmodifiableList<? extends Field<?>>, ? super Condition, ? super Boolean, ? extends QOM.CreateIndex> $constructor() {
+    public final Function8<? super Boolean, ? super Index, ? super Boolean, ? super Table<?>, ? super Collection<? extends OrderField<?>>, ? super Collection<? extends Field<?>>, ? super Condition, ? super Boolean, ? extends QOM.CreateIndex> $constructor() {
         return (a1, a2, a3, a4, a5, a6, a7, a8) -> new CreateIndexImpl(configuration(), a1, a2, a3, a4, (Collection<? extends OrderField<?>>) a5, (Collection<? extends Field<?>>) a6, a7, a8);
     }
 

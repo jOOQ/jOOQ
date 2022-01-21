@@ -4454,14 +4454,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final SelectQueryImpl<?> $select(UnmodifiableList<? extends SelectFieldOrAsterisk> newSelect) {
-        if ($select() == newSelect)
-            return this;
-        else
-            return copy(s -> {
-                s.select.clear();
-                s.select.addAll(newSelect);
-            });
+    public final SelectQueryImpl<?> $select(Collection<? extends SelectFieldOrAsterisk> newSelect) {
+        return copy(s -> {
+            s.select.clear();
+            s.select.addAll(newSelect);
+        });
     }
 
     @Override
@@ -4483,14 +4480,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final SelectQueryImpl<R> $from(UnmodifiableList<? extends Table<?>> newFrom) {
-        if ($from() == newFrom)
-            return this;
-        else
-            return copy(s -> {
-                s.from.clear();
-                s.from.addAll(newFrom);
-            });
+    public final SelectQueryImpl<R> $from(Collection<? extends Table<?>> newFrom) {
+        return copy(s -> {
+            s.from.clear();
+            s.from.addAll(newFrom);
+        });
     }
 
     @Override
@@ -4509,6 +4503,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final UnmodifiableList<GroupField> $groupBy() {
         return QOM.unmodifiable(groupBy == null ? new GroupFieldList() : groupBy);
+    }
+
+    @Override
+    public final Select<R> $groupBy(Collection<? extends GroupField> newGroupBy) {
+        return copy(s -> {
+            s.groupBy.clear();
+            s.groupBy.addAll(newGroupBy);
+        });
     }
 
     @Override
@@ -4543,6 +4545,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
+    public final Select<R> $window(Collection<? extends WindowDefinition> newWindow) {
+        return copy(s -> {
+            s.window.clear();
+            s.window.addAll(newWindow);
+        });
+    }
+
+    @Override
     public final Condition $qualify() {
         return qualify;
     }
@@ -4558,6 +4568,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final UnmodifiableList<SortField<?>> $orderBy() {
         return QOM.unmodifiable(orderBy);
+    }
+
+    @Override
+    public final Select<R> $orderBy(Collection<? extends SortField<?>> newOrderBy) {
+        return copy(s -> {
+            s.orderBy.clear();
+            s.orderBy.addAll(newOrderBy);
+        });
     }
 
     @Override

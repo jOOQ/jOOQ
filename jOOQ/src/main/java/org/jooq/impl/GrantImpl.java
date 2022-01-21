@@ -226,7 +226,7 @@ implements
     }
 
     @Override
-    public final QOM.Grant $privileges(UnmodifiableList<? extends Privilege> newValue) {
+    public final QOM.Grant $privileges(Collection<? extends Privilege> newValue) {
         return $constructor().apply(newValue, $on(), $to(), $toPublic(), $withGrantOption());
     }
 
@@ -250,7 +250,7 @@ implements
         return $constructor().apply($privileges(), $on(), $to(), $toPublic(), newValue);
     }
 
-    public final Function5<? super UnmodifiableList<? extends Privilege>, ? super Table<?>, ? super Role, ? super Boolean, ? super Boolean, ? extends QOM.Grant> $constructor() {
+    public final Function5<? super Collection<? extends Privilege>, ? super Table<?>, ? super Role, ? super Boolean, ? super Boolean, ? extends QOM.Grant> $constructor() {
         return (a1, a2, a3, a4, a5) -> new GrantImpl(configuration(), (Collection<? extends Privilege>) a1, a2, a3, a4, a5);
     }
 

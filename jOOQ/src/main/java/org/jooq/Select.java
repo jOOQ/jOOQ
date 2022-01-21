@@ -65,6 +65,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.jooq.impl.DSL;
@@ -186,30 +187,33 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
 
     @Nullable With $with();
     @NotNull UnmodifiableList<? extends SelectFieldOrAsterisk> $select();
-    @NotNull Select<?> $select(UnmodifiableList<? extends SelectFieldOrAsterisk> select);
+    @NotNull Select<?> $select(Collection<? extends SelectFieldOrAsterisk> newSelect);
     boolean $distinct();
-    @NotNull Select<R> $distinct(boolean distinct);
+    @NotNull Select<R> $distinct(boolean newDistinct);
     @NotNull UnmodifiableList<? extends Table<?>> $from();
-    @NotNull Select<R> $from(UnmodifiableList<? extends Table<?>> from);
+    @NotNull Select<R> $from(Collection<? extends Table<?>> newFrom);
     @Nullable Condition $where();
-    @NotNull Select<R> $where(Condition condition);
+    @NotNull Select<R> $where(Condition newWhere);
     @NotNull UnmodifiableList<? extends GroupField> $groupBy();
+    @NotNull Select<R> $groupBy(Collection<? extends GroupField> newGroupBy);
     boolean $groupByDistinct();
-    @NotNull Select<R> $groupByDistinct(boolean groupByDistinct);
+    @NotNull Select<R> $groupByDistinct(boolean newGroupByDistinct);
     @Nullable Condition $having();
-    @NotNull Select<R> $having(Condition condition);
+    @NotNull Select<R> $having(Condition newHaving);
     @NotNull UnmodifiableList<? extends WindowDefinition> $window();
+    @NotNull Select<R> $window(Collection<? extends WindowDefinition> newWindow);
     @Nullable Condition $qualify();
-    @NotNull Select<R> $qualify(Condition condition);
+    @NotNull Select<R> $qualify(Condition newQualify);
     @NotNull UnmodifiableList<? extends SortField<?>> $orderBy();
+    @NotNull Select<R> $orderBy(Collection<? extends SortField<?>> newOrderBy);
     @Nullable Field<? extends Number> $limit();
-    @NotNull Select<R> $limit(Field<? extends Number> limit);
+    @NotNull Select<R> $limit(Field<? extends Number> newLimit);
     boolean $limitPercent();
-    @NotNull Select<R> $limitPercent(boolean limitPercent);
+    @NotNull Select<R> $limitPercent(boolean newLimitPercent);
     boolean $limitWithTies();
-    @NotNull Select<R> $limitWithTies(boolean limitWithTies);
+    @NotNull Select<R> $limitWithTies(boolean newLimitWithTies);
     @Nullable Field<? extends Number> $offset();
-    @NotNull Select<R> $offset(Field<? extends Number> offset);
+    @NotNull Select<R> $offset(Field<? extends Number> newOffset);
 
 
 

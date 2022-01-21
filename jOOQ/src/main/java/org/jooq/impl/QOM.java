@@ -526,15 +526,15 @@ public final class QOM {
     // XXX: SelectFields, GroupFields and SortFields
     // -------------------------------------------------------------------------
 
-    public /* sealed */ interface EmptyGroupingSet
+    // Can't seal these types yet because of https://bugs.eclipse.org/bugs/show_bug.cgi?id=577872
+
+    public /* non-sealed */ interface EmptyGroupingSet
         extends
             GroupField,
             UEmpty
-        /* permits
-            org.jooq.impl.EmptyGroupingSet */ 
+        /*permits
+            org.jooq.impl.EmptyGroupingSet*/
     {}
-
-    // Can't seal these types yet because of https://bugs.eclipse.org/bugs/show_bug.cgi?id=577872
 
     public /* non-sealed */ interface Rollup
         extends
@@ -1252,7 +1252,7 @@ public final class QOM {
         @NotNull  CreateDomain<T> $ifNotExists(boolean ifNotExists);
         @NotNull  CreateDomain<T> $dataType(DataType<T> dataType);
         @NotNull  CreateDomain<T> $default_(Field<T> default_);
-        @NotNull  CreateDomain<T> $constraints(UnmodifiableList<? extends Constraint> constraints);
+        @NotNull  CreateDomain<T> $constraints(Collection<? extends Constraint> constraints);
     }
 
 
@@ -1308,8 +1308,8 @@ public final class QOM {
         @NotNull  CreateIndex $index(Index index);
         @NotNull  CreateIndex $ifNotExists(boolean ifNotExists);
         @NotNull  CreateIndex $table(Table<?> table);
-        @NotNull  CreateIndex $on(UnmodifiableList<? extends OrderField<?>> on);
-        @NotNull  CreateIndex $include(UnmodifiableList<? extends Field<?>> include);
+        @NotNull  CreateIndex $on(Collection<? extends OrderField<?>> on);
+        @NotNull  CreateIndex $include(Collection<? extends Field<?>> include);
         @NotNull  CreateIndex $where(Condition where);
         @NotNull  CreateIndex $excludeNullKeys(boolean excludeNullKeys);
     }
@@ -1615,7 +1615,7 @@ public final class QOM {
         @Nullable Role $to();
                   boolean $toPublic();
                   boolean $withGrantOption();
-        @NotNull  Grant $privileges(UnmodifiableList<? extends Privilege> privileges);
+        @NotNull  Grant $privileges(Collection<? extends Privilege> privileges);
         @NotNull  Grant $on(Table<?> on);
         @NotNull  Grant $to(Role to);
         @NotNull  Grant $toPublic(boolean toPublic);
@@ -1636,7 +1636,7 @@ public final class QOM {
         @NotNull  Table<?> $on();
         @Nullable Role $from();
                   boolean $fromPublic();
-        @NotNull  Revoke $privileges(UnmodifiableList<? extends Privilege> privileges);
+        @NotNull  Revoke $privileges(Collection<? extends Privilege> privileges);
         @NotNull  Revoke $grantOptionFor(boolean grantOptionFor);
         @NotNull  Revoke $on(Table<?> on);
         @NotNull  Revoke $from(Role from);
@@ -4274,7 +4274,7 @@ public final class QOM {
         //    XMLConcat
     {
         @NotNull  UnmodifiableList<? extends Field<?>> $args();
-        @NotNull  XMLConcat $args(UnmodifiableList<? extends Field<?>> args);
+        @NotNull  XMLConcat $args(Collection<? extends Field<?>> args);
     }
 
 
@@ -4303,7 +4303,7 @@ public final class QOM {
         //    XMLForest
     {
         @NotNull  UnmodifiableList<? extends Field<?>> $fields();
-        @NotNull  XMLForest $fields(UnmodifiableList<? extends Field<?>> fields);
+        @NotNull  XMLForest $fields(Collection<? extends Field<?>> fields);
     }
 
     /**
@@ -4352,7 +4352,7 @@ public final class QOM {
         @Nullable JSONOnNull $onNull();
         @Nullable DataType<?> $returning();
         @NotNull  JSONArray<T> $type(DataType<T> type);
-        @NotNull  JSONArray<T> $fields(UnmodifiableList<? extends Field<?>> fields);
+        @NotNull  JSONArray<T> $fields(Collection<? extends Field<?>> fields);
         @NotNull  JSONArray<T> $onNull(JSONOnNull onNull);
         @NotNull  JSONArray<T> $returning(DataType<?> returning);
     }
@@ -4371,7 +4371,7 @@ public final class QOM {
         @Nullable JSONOnNull $onNull();
         @Nullable DataType<?> $returning();
         @NotNull  JSONObject<T> $type(DataType<T> type);
-        @NotNull  JSONObject<T> $entries(UnmodifiableList<? extends JSONEntry<?>> entries);
+        @NotNull  JSONObject<T> $entries(Collection<? extends JSONEntry<?>> entries);
         @NotNull  JSONObject<T> $onNull(JSONOnNull onNull);
         @NotNull  JSONObject<T> $returning(DataType<?> returning);
     }

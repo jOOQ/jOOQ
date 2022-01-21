@@ -135,6 +135,8 @@ import org.jooq.WindowDefinition;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.With;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A wrapper for a {@link SelectQuery}
  *
@@ -3355,8 +3357,8 @@ implements
     }
 
     @Override
-    public final Select<?> $select(UnmodifiableList<? extends SelectFieldOrAsterisk> select) {
-        return getDelegate().$select(select);
+    public final Select<?> $select(Collection<? extends SelectFieldOrAsterisk> newSelect) {
+        return getDelegate().$select(newSelect);
     }
 
     @Override
@@ -3365,8 +3367,8 @@ implements
     }
 
     @Override
-    public final Select<R> $distinct(boolean distinct) {
-        return getDelegate().$distinct(distinct);
+    public final Select<R> $distinct(boolean newDistinct) {
+        return getDelegate().$distinct(newDistinct);
     }
 
     @Override
@@ -3375,8 +3377,8 @@ implements
     }
 
     @Override
-    public final Select<R> $from(UnmodifiableList<? extends Table<?>> from) {
-        return getDelegate().$from(from);
+    public final Select<R> $from(Collection<? extends Table<?>> newFrom) {
+        return getDelegate().$from(newFrom);
     }
 
     @Override
@@ -3385,8 +3387,8 @@ implements
     }
 
     @Override
-    public final Select<R> $where(Condition condition) {
-        return getDelegate().$where(condition);
+    public final Select<R> $where(Condition newWhere) {
+        return getDelegate().$where(newWhere);
     }
 
     @Override
@@ -3395,13 +3397,18 @@ implements
     }
 
     @Override
+    public final Select<R> $groupBy(Collection<? extends GroupField> newGroupBy) {
+        return getDelegate().$groupBy(newGroupBy);
+    }
+
+    @Override
     public final boolean $groupByDistinct() {
         return getDelegate().$groupByDistinct();
     }
 
     @Override
-    public final Select<R> $groupByDistinct(boolean groupByDistinct) {
-        return getDelegate().$groupByDistinct(groupByDistinct);
+    public final Select<R> $groupByDistinct(boolean newGroupByDistinct) {
+        return getDelegate().$groupByDistinct(newGroupByDistinct);
     }
 
     @Override
@@ -3410,8 +3417,8 @@ implements
     }
 
     @Override
-    public final Select<R> $having(Condition condition) {
-        return getDelegate().$having(condition);
+    public final Select<R> $having(Condition newHaving) {
+        return getDelegate().$having(newHaving);
     }
 
     @Override
@@ -3420,13 +3427,18 @@ implements
     }
 
     @Override
+    public final Select<R> $window(Collection<? extends WindowDefinition> newWindow) {
+        return getDelegate().$window(newWindow);
+    }
+
+    @Override
     public final Condition $qualify() {
         return getDelegate().$qualify();
     }
 
     @Override
-    public final Select<R> $qualify(Condition condition) {
-        return getDelegate().$qualify(condition);
+    public final Select<R> $qualify(Condition newQualify) {
+        return getDelegate().$qualify(newQualify);
     }
 
     @Override
@@ -3435,13 +3447,18 @@ implements
     }
 
     @Override
+    public final Select<R> $orderBy(Collection<? extends SortField<?>> newOrderBy) {
+        return getDelegate().$orderBy(newOrderBy);
+    }
+
+    @Override
     public final Field<? extends Number> $limit() {
         return getDelegate().$limit();
     }
 
     @Override
-    public final Select<R> $limit(Field<? extends Number> l) {
-        return getDelegate().$limit(l);
+    public final Select<R> $limit(Field<? extends Number> newLimit) {
+        return getDelegate().$limit(newLimit);
     }
 
     @Override
@@ -3450,8 +3467,8 @@ implements
     }
 
     @Override
-    public final Select<R> $limitPercent(boolean limitPercent) {
-        return getDelegate().$limitPercent(limitPercent);
+    public final Select<R> $limitPercent(boolean newLimitPercent) {
+        return getDelegate().$limitPercent(newLimitPercent);
     }
 
     @Override
@@ -3460,8 +3477,8 @@ implements
     }
 
     @Override
-    public final Select<R> $limitWithTies(boolean limitWithTies) {
-        return getDelegate().$limitWithTies(limitWithTies);
+    public final Select<R> $limitWithTies(boolean newLimitWithTies) {
+        return getDelegate().$limitWithTies(newLimitWithTies);
     }
 
     @Override
@@ -3470,8 +3487,8 @@ implements
     }
 
     @Override
-    public final Select<R> $offset(Field<? extends Number> o) {
-        return getDelegate().$offset(o);
+    public final Select<R> $offset(Field<? extends Number> newOffset) {
+        return getDelegate().$offset(newOffset);
     }
 
 

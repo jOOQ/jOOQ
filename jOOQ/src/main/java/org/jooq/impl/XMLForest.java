@@ -128,11 +128,11 @@ implements
     }
 
     @Override
-    public final QOM.XMLForest $fields(UnmodifiableList<? extends Field<?>> newValue) {
+    public final QOM.XMLForest $fields(Collection<? extends Field<?>> newValue) {
         return $constructor().apply(newValue);
     }
 
-    public final Function1<? super UnmodifiableList<? extends Field<?>>, ? extends QOM.XMLForest> $constructor() {
+    public final Function1<? super Collection<? extends Field<?>>, ? extends QOM.XMLForest> $constructor() {
         return (a1) -> new XMLForest((Collection<? extends Field<?>>) a1);
     }
 

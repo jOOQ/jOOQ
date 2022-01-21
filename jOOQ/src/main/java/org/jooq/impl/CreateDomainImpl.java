@@ -252,11 +252,11 @@ implements
     }
 
     @Override
-    public final QOM.CreateDomain<T> $constraints(UnmodifiableList<? extends Constraint> newValue) {
+    public final QOM.CreateDomain<T> $constraints(Collection<? extends Constraint> newValue) {
         return $constructor().apply($domain(), $ifNotExists(), $dataType(), $default_(), newValue);
     }
 
-    public final Function5<? super Domain<?>, ? super Boolean, ? super DataType<T>, ? super Field<T>, ? super UnmodifiableList<? extends Constraint>, ? extends QOM.CreateDomain<T>> $constructor() {
+    public final Function5<? super Domain<?>, ? super Boolean, ? super DataType<T>, ? super Field<T>, ? super Collection<? extends Constraint>, ? extends QOM.CreateDomain<T>> $constructor() {
         return (a1, a2, a3, a4, a5) -> new CreateDomainImpl(configuration(), a1, a2, a3, a4, (Collection<? extends Constraint>) a5);
     }
 

@@ -526,6 +526,14 @@ public final class QOM {
     // XXX: SelectFields, GroupFields and SortFields
     // -------------------------------------------------------------------------
 
+    public /* sealed */ interface EmptyGroupingSet
+        extends
+            GroupField,
+            UEmpty
+        /* permits
+            org.jooq.impl.EmptyGroupingSet */ 
+    {}
+
     // Can't seal these types yet because of https://bugs.eclipse.org/bugs/show_bug.cgi?id=577872
 
     public /* non-sealed */ interface Rollup

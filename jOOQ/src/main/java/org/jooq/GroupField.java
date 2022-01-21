@@ -65,6 +65,14 @@ import org.jooq.impl.QOM;
  *
  * @author Lukas Eder
  */
-public /* sealed */ interface GroupField extends QueryPart /* permits Table, Field, QOM.Rollup, QOM.Cube, QOM.GroupingSets */  {
-
-}
+public /* sealed */ interface GroupField
+extends
+    QueryPart
+/* permits
+    Table,
+    Field,
+    QOM.EmptyGroupingSet,
+    QOM.Rollup,
+    QOM.Cube,
+    QOM.GroupingSets */ 
+{}

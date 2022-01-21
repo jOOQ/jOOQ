@@ -24266,6 +24266,26 @@ public class DSL {
     // ------------------------------------------------------------------------
 
     /**
+     * Create a GROUPING SETS(field1, field2, .., fieldn) grouping field where
+     * each grouping set only consists of a single field.
+     * <p>
+     * Please check the SQL Server documentation for a very nice explanation of
+     * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
+     * clauses in grouping contexts: <a
+     * href="http://msdn.microsoft.com/en-US/library/bb522495.aspx"
+     * >http://msdn.microsoft.com/en-US/library/bb522495.aspx</a>
+     *
+     * @param fields The fields that are part of the <code>GROUPING SETS</code>
+     *            function
+     * @return A field to be used in a <code>GROUP BY</code> clause
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static GroupField emptyGroupingSet() {
+        return EmptyGroupingSet.INSTANCE;
+    }
+
+    /**
      * Create a ROLLUP(field1, field2, .., fieldn) grouping field.
      *
      * @see #rollup(FieldOrRow...)
@@ -24278,16 +24298,6 @@ public class DSL {
 
     /**
      * Create a ROLLUP(field1, field2, .., fieldn) grouping field.
-     * <p>
-     * This has been observed to work with the following databases:
-     * <ul>
-     * <li>DB2</li>
-     * <li>MySQL (emulated using the GROUP BY .. WITH ROLLUP clause)</li>
-     * <li>Oracle</li>
-     * <li>PostgreSQL 9.5</li>
-     * <li>SQL Server</li>
-     * <li>Sybase SQL Anywhere</li>
-     * </ul>
      * <p>
      * Please check the SQL Server documentation for a very nice explanation of
      * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
@@ -24319,15 +24329,6 @@ public class DSL {
     /**
      * Create a CUBE(field1, field2, .., fieldn) grouping field.
      * <p>
-     * This has been observed to work with the following databases:
-     * <ul>
-     * <li>DB2</li>
-     * <li>Oracle</li>
-     * <li>PostgreSQL 9.5</li>
-     * <li>SQL Server</li>
-     * <li>Sybase SQL Anywhere</li>
-     * </ul>
-     * <p>
      * Please check the SQL Server documentation for a very nice explanation of
      * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
      * clauses in grouping contexts: <a
@@ -24347,15 +24348,6 @@ public class DSL {
     /**
      * Create a GROUPING SETS(field1, field2, .., fieldn) grouping field where
      * each grouping set only consists of a single field.
-     * <p>
-     * This has been observed to work with the following databases:
-     * <ul>
-     * <li>DB2</li>
-     * <li>Oracle</li>
-     * <li>PostgreSQL 9.5</li>
-     * <li>SQL Server</li>
-     * <li>Sybase SQL Anywhere</li>
-     * </ul>
      * <p>
      * Please check the SQL Server documentation for a very nice explanation of
      * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
@@ -24378,15 +24370,6 @@ public class DSL {
      * Create a GROUPING SETS((field1a, field1b), (field2a), .., (fieldna,
      * fieldnb)) grouping field.
      * <p>
-     * This has been observed to work with the following databases:
-     * <ul>
-     * <li>DB2</li>
-     * <li>Oracle</li>
-     * <li>PostgreSQL 9.5</li>
-     * <li>SQL Server</li>
-     * <li>Sybase SQL Anywhere</li>
-     * </ul>
-     * <p>
      * Please check the SQL Server documentation for a very nice explanation of
      * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
      * clauses in grouping contexts: <a
@@ -24407,15 +24390,6 @@ public class DSL {
     /**
      * Create a GROUPING SETS((field1a, field1b), (field2a), .., (fieldna,
      * fieldnb)) grouping field.
-     * <p>
-     * This has been observed to work with the following databases:
-     * <ul>
-     * <li>DB2</li>
-     * <li>Oracle</li>
-     * <li>PostgreSQL 9.5</li>
-     * <li>SQL Server</li>
-     * <li>Sybase SQL Anywhere</li>
-     * </ul>
      * <p>
      * Please check the SQL Server documentation for a very nice explanation of
      * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>

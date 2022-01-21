@@ -40,6 +40,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.*;
+import static org.jooq.impl.DSL.emptyGroupingSet;
 import static org.jooq.impl.DSL.groupingSets;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
@@ -128,7 +129,7 @@ final class GroupFieldList extends QueryPartList<GroupField> {
 
         // Few dialects support the SQL standard "grand total" (i.e. empty grouping set)
         else
-            ctx.sql("()");
+            ctx.visit(emptyGroupingSet());
     }
 
     @Override

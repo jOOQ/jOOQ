@@ -121,6 +121,7 @@ import static org.jooq.impl.CombineOperator.UNION_ALL;
 import static org.jooq.impl.CommonTableExpressionList.markTopLevelCteAndAccept;
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.createTable;
+import static org.jooq.impl.DSL.emptyGroupingSet;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.generateSeries;
 import static org.jooq.impl.DSL.inline;
@@ -366,8 +367,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     private final TableList                              from;
     private final ConditionProviderImpl                  condition;
-    private boolean                                      grouping;
-    private GroupFieldList                               groupBy;
+    private final GroupFieldList                         groupBy;
     private boolean                                      groupByDistinct;
     private final ConditionProviderImpl                  having;
     private WindowList                                   window;
@@ -416,6 +416,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+        this.groupBy = new GroupFieldList();
         this.having = new ConditionProviderImpl();
         this.qualify = new ConditionProviderImpl();
         this.orderBy = new SortFieldList();
@@ -506,7 +507,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
     private final SelectQueryImpl<R> copyTo(CopyClause clause, boolean scalarSelect, SelectQueryImpl<R> result) {
         return copyBetween(CopyClause.START, clause, scalarSelect, result);
     }
@@ -531,8 +531,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-            result.grouping = grouping;
-            result.groupBy = groupBy;
+            result.groupBy.addAll(groupBy);
             result.groupByDistinct = groupByDistinct;
             result.having.setWhere(having.getWhere());
             if (window != null)
@@ -2380,7 +2379,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // --------------------------
         context.start(SELECT_GROUP_BY);
 
-        if (grouping) {
+        if (!getGroupBy().isEmpty()) {
             context.formatSeparator()
                    .visit(K_GROUP_BY);
 
@@ -3800,13 +3799,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return from;
     }
 
-    final void setGrouping() {
-        grouping = true;
-
-        if (groupBy == null)
-            groupBy = new GroupFieldList();
-    }
-
     final ConditionProviderImpl getWhere(Context<?> ctx) {
         ConditionProviderImpl result = new ConditionProviderImpl();
 
@@ -3889,6 +3881,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+    final GroupFieldList getGroupBy() {
+        return groupBy;
+    }
 
     final ConditionProviderImpl getHaving() {
         return having;
@@ -4099,13 +4095,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void addGroupBy(Collection<? extends GroupField> fields) {
-        setGrouping();
+
+        // [#12910] For backwards compatibility, adding empty GROUP BY lists to
+        //          a blank GROUP BY clause must maintain empty grouping set
+        //          semantics
+        if (fields.isEmpty())
+            groupBy.add(emptyGroupingSet());
+
         groupBy.addAll(fields);
     }
 
     @Override
     public final void setGroupByDistinct(boolean groupByDistinct) {
-        setGrouping();
         this.groupByDistinct = groupByDistinct;
     }
 

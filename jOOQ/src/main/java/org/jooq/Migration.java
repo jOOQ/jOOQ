@@ -41,6 +41,7 @@ import org.jooq.exception.DataMigrationException;
 import org.jooq.exception.DataMigrationValidationException;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * An executable migration between two {@link Commit} instances.
@@ -50,7 +51,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-@Internal
+@Experimental
 public interface Migration extends Scope {
 
     /**

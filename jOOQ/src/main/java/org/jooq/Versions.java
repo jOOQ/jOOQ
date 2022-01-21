@@ -39,6 +39,7 @@ package org.jooq;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * A directed, acyclic graph of {@link Version} objects.
@@ -50,7 +51,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-@Internal
+@Experimental
 public interface Versions extends Iterable<Version> {
 
     /**

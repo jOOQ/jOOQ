@@ -48,21 +48,22 @@ import org.jooq.ContentType;
 import org.jooq.File;
 import org.jooq.Internal;
 
+import org.jetbrains.annotations.ApiStatus.Experimental;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * The public API entry point for jOOQ migrations.
  */
-@Internal
+@Experimental
 public final class Migrations {
 
-    @Internal
+    @Experimental
     @NotNull
     public static final Commits commits(Configuration configuration) {
         return new CommitsImpl(configuration, new CommitImpl(configuration, "init", "init", emptyList(), emptyList()));
     }
 
-    @Internal
+    @Experimental
     @NotNull
     public static final File file(String path, String content, ContentType type) {
         return new FileImpl(path, content, type);

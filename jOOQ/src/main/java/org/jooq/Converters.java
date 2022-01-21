@@ -48,6 +48,7 @@ import org.jooq.impl.AbstractConverter;
 import org.jooq.impl.IdentityConverter;
 import org.jooq.impl.SQLDataType;
 
+import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
 
 /**

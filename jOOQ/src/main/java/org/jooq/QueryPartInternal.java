@@ -40,6 +40,8 @@ package org.jooq;
 
 import org.jooq.exception.DataAccessException;
 
+import org.jetbrains.annotations.ApiStatus.Internal;
+
 /**
  * Base functionality declaration for all query objects
  * <p>

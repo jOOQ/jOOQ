@@ -53,6 +53,8 @@ import java.util.regex.Pattern;
 import org.jooq.exception.IOException;
 import org.jooq.tools.JooqLogger;
 
+import org.jetbrains.annotations.ApiStatus.Internal;
+
 /**
  * A utility class that can traverse a directory structure given some ant-style
  * file patterns, or classpath resources.

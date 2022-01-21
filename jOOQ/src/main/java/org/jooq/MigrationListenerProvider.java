@@ -40,6 +40,7 @@ package org.jooq;
 import org.jooq.impl.DefaultMigrationListenerProvider;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * A provider for {@link MigrationListener} instances.
@@ -58,7 +59,7 @@ import org.jetbrains.annotations.NotNull;
  * @see Configuration
  */
 @FunctionalInterface
-@Internal
+@Experimental
 public interface MigrationListenerProvider {
 
     /**

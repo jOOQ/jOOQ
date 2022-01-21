@@ -38,6 +38,7 @@
 package org.jooq;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * An SPI that allows for providing a graph of versions.
@@ -47,7 +48,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-@Internal
+@Experimental
 @FunctionalInterface
 public interface CommitProvider {
 

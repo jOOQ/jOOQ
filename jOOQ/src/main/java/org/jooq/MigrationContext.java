@@ -42,6 +42,7 @@ import java.util.Set;
 import org.jooq.conf.Settings;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * The context in which a {@link Migration} is executed.
@@ -52,7 +53,7 @@ import org.jetbrains.annotations.NotNull;
  * @see MigrationListener
  * @author Lukas Eder
  */
-@Internal
+@Experimental
 public interface MigrationContext extends Scope {
 
     /**

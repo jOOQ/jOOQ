@@ -127,6 +127,7 @@ import org.jooq.conf.Settings;
 import org.jooq.types.DayToSecond;
 // ...
 
+import org.jetbrains.annotations.ApiStatus.Experimental;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -200,7 +201,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-@Internal
+@Experimental
 public final class QOM {
 
     // -------------------------------------------------------------------------

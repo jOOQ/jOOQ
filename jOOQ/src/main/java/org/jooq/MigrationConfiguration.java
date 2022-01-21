@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * A configuration type for use with the various {@link Meta#migrateTo(Meta)}
@@ -47,7 +48,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-@Internal
+@Experimental
 public final class MigrationConfiguration {
 
     private final boolean alterTableAddMultiple;

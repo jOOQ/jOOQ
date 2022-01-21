@@ -117,6 +117,7 @@ import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 import io.r2dbc.spi.ConnectionFactory;
 
@@ -262,7 +263,7 @@ public interface DSLContext extends Scope {
      * This is EXPERIMENTAL functionality and subject to change in future jOOQ
      * versions.
      */
-    @Internal
+    @Experimental
     @NotNull
     Version version(String id);
 
@@ -272,7 +273,7 @@ public interface DSLContext extends Scope {
      * This is EXPERIMENTAL functionality and subject to change in future jOOQ
      * versions.
      */
-    @Internal
+    @Experimental
     @NotNull
     Versions versions();
 
@@ -282,7 +283,7 @@ public interface DSLContext extends Scope {
      * This is EXPERIMENTAL functionality and subject to change in future jOOQ
      * versions.
      */
-    @Internal
+    @Experimental
     @NotNull
     Commit commit(String id);
 
@@ -292,7 +293,7 @@ public interface DSLContext extends Scope {
      * This is EXPERIMENTAL functionality and subject to change in future jOOQ
      * versions.
      */
-    @Internal
+    @Experimental
     @NotNull
     Commits commits();
 
@@ -302,7 +303,7 @@ public interface DSLContext extends Scope {
      * This is EXPERIMENTAL functionality and subject to change in future jOOQ
      * versions.
      */
-    @Internal
+    @Experimental
     @NotNull
     Migration migrateTo(Commit to);
 

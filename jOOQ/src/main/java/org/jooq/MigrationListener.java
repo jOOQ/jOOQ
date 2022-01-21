@@ -39,6 +39,8 @@ package org.jooq;
 
 import java.util.EventListener;
 
+import org.jetbrains.annotations.ApiStatus.Experimental;
+
 /**
  * A listener for {@link Migration} lifecycles.
  * <p>
@@ -47,7 +49,7 @@ import java.util.EventListener;
  *
  * @author Lukas Eder
  */
-@Internal
+@Experimental
 public interface MigrationListener extends EventListener {
 
     /**

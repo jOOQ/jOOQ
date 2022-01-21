@@ -43,6 +43,7 @@ import java.util.List;
 import org.jooq.conf.Settings;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * A version ID attached to a {@link Meta} description of a database.
@@ -52,7 +53,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-@Internal
+@Experimental
 public interface Version extends Node<Version> {
 
     /**

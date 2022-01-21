@@ -41,8 +41,13 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.selectFrom;
 
 import org.jooq.Condition;
+import org.jooq.QueryPart;
 import org.jooq.Record;
+// ...
 import org.jooq.Table;
+// ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -71,4 +76,28 @@ final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
     final FieldsImpl<R> fields0() {
         return new FieldsImpl<>(table.as(table).fields());
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -162,11 +162,23 @@ implements
            .sqlIndentStart(" (");
 
         // [#12925] Workaround for https://github.com/h2database/h2database/issues/3398
-        if (ctx.family() == H2)
+        if (requiresWorkaroundFor12925(ctx))
             ctx.sql("/* [#12925] ").sql(UUID.randomUUID().toString()).sql(" */ ");
 
         ctx.visit(query)
            .sqlIndentEnd(')');
+    }
+
+    private final boolean requiresWorkaroundFor12925(Context<?> ctx) {
+        if (ctx.family() == H2) {
+            if (query instanceof MergeImpl)
+                return true;
+
+            InsertQueryImpl<?> i = Tools.insertQueryImpl(query);
+            return i != null && (i.onDuplicateKeyIgnore || i.onDuplicateKeyUpdate);
+        }
+
+        return false;
     }
 
     // -------------------------------------------------------------------------

@@ -139,17 +139,17 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private static final Set<SQLDialect> NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING = SQLDialect.supportedBy(DERBY, H2);
     private static final Set<SQLDialect> NO_SUPPORT_SUBQUERY_IN_MERGE_USING            = SQLDialect.supportedBy(DERBY);
 
-    private final FieldMapForUpdate      updateMap;
-    private final FieldMapsForInsert     insertMaps;
-    private Select<?>                    select;
-    private boolean                      defaultValues;
-    private boolean                      onDuplicateKeyUpdate;
-    private boolean                      onDuplicateKeyIgnore;
-    private Constraint                   onConstraint;
-    private UniqueKey<R>                 onConstraintUniqueKey;
-    private QueryPartList<Field<?>>      onConflict;
-    private final ConditionProviderImpl  onConflictWhere;
-    private final ConditionProviderImpl  condition;
+    final FieldMapForUpdate              updateMap;
+    final FieldMapsForInsert             insertMaps;
+    Select<?>                            select;
+    boolean                              defaultValues;
+    boolean                              onDuplicateKeyUpdate;
+    boolean                              onDuplicateKeyIgnore;
+    Constraint                           onConstraint;
+    UniqueKey<R>                         onConstraintUniqueKey;
+    QueryPartList<Field<?>>              onConflict;
+    final ConditionProviderImpl          onConflictWhere;
+    final ConditionProviderImpl          condition;
 
     InsertQueryImpl(Configuration configuration, WithImpl with, Table<R> into) {
         super(configuration, with, into);

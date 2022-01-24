@@ -41,6 +41,7 @@ package org.jooq.impl;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.name;
@@ -54,6 +55,7 @@ import static org.jooq.impl.Tools.abstractDMLQuery;
 import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
 
 import java.util.Set;
+import java.util.UUID;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
@@ -157,8 +159,13 @@ implements
         }
 
         ctx.sql(' ').visit(K_TABLE)
-           .sqlIndentStart(" (")
-           .visit(query)
+           .sqlIndentStart(" (");
+
+        // [#12925] Workaround for https://github.com/h2database/h2database/issues/3398
+        if (ctx.family() == H2)
+            ctx.sql("/* [#12925] ").sql(UUID.randomUUID().toString()).sql(" */ ");
+
+        ctx.visit(query)
            .sqlIndentEnd(')');
     }
 

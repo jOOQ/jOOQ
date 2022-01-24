@@ -70,10 +70,10 @@ final class NullCondition extends AbstractCondition implements Null, UEmpty {
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (NO_SUPPORT_BOOLEAN.contains(ctx.dialect()))
-            ctx.visit(K_NULL).sql(" = ").visit(K_NULL);
-        else if (NO_SUPPORT_UNTYPED_NULL.contains(ctx.dialect()))
+        if (NO_SUPPORT_UNTYPED_NULL.contains(ctx.dialect()))
             ctx.visit(castNull(BOOLEAN));
+        else if (NO_SUPPORT_BOOLEAN.contains(ctx.dialect()))
+            ctx.visit(K_NULL).sql(" = ").visit(K_NULL);
 
 
 

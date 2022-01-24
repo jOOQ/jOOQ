@@ -38,20 +38,35 @@
 
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
-import static org.jooq.SQLDialect.*;
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.DERBY;
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.emptyGroupingSet;
-import static org.jooq.impl.DSL.groupingSets;
-import static org.jooq.impl.DSL.one;
-import static org.jooq.impl.Tools.EMPTY_FIELD;
 
-import java.util.EnumSet;
 import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.GroupField;
-// ...
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
@@ -61,24 +76,8 @@ import org.jooq.UniqueKey;
  */
 final class GroupFieldList extends QueryPartList<GroupField> {
 
-    static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_CONSTANT = SQLDialect.supportedUntil(DERBY, HSQLDB, IGNITE);
-    static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedUntil(FIREBIRD, MARIADB, MYSQL, SQLITE, YUGABYTEDB);
     static final Set<SQLDialect> NO_SUPPORT_GROUP_BY_TABLE       = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
     static final Set<SQLDialect> NO_SUPPORT_GROUP_FUNCTIONAL_DEP = SQLDialect.supportedBy(DERBY, FIREBIRD);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     GroupFieldList() {
         super();
@@ -99,37 +98,7 @@ final class GroupFieldList extends QueryPartList<GroupField> {
 
     @Override
     protected final void toSQLEmptyList(Context<?> ctx) {
-        // [#1665] Empty GROUP BY () clauses need parentheses
-
-        ctx.sql(' ');
-
-        // [#4292] Some dialects accept constant expressions in GROUP BY
-        // Note that dialects may consider constants as indexed field
-        // references, as in the ORDER BY clause!
-        if (EMULATE_EMPTY_GROUP_BY_CONSTANT.contains(ctx.dialect()))
-            ctx.sql('0');
-
-        // [#4447] CUBRID can't handle subqueries in GROUP BY
-        else if (ctx.family() == CUBRID)
-            ctx.sql("1 + 0");
-
-
-
-
-
-
-
-
-
-
-
-        // [#4292] Some dialects don't support empty GROUP BY () clauses
-        else if (EMULATE_EMPTY_GROUP_BY_OTHER.contains(ctx.dialect()))
-            ctx.sql('(').visit(DSL.select(one())).sql(')');
-
-        // Few dialects support the SQL standard "grand total" (i.e. empty grouping set)
-        else
-            ctx.visit(emptyGroupingSet());
+        ctx.sql(' ').visit(emptyGroupingSet());
     }
 
     @Override

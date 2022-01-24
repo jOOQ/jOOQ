@@ -24280,7 +24280,7 @@ public class DSL {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support
     public static GroupField emptyGroupingSet() {
         return EmptyGroupingSet.INSTANCE;
     }

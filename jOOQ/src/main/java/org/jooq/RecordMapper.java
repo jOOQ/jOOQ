@@ -58,6 +58,13 @@ import org.jetbrains.annotations.Nullable;
  * various {@link Records#mapping(Function1)},
  * {@link Records#mapping(Function2)}, etc. utilities, and other ways.
  * <p>
+ * A {@link RecordMapper} is never asked to map <code>null</code> record values,
+ * which can be obtained using methods like
+ * {@link ResultQuery#fetchOne(RecordMapper)}, or by using {@link RowN} types as
+ * nested records in scalar subqueries, mapping them e.g. via
+ * {@link Row2#mapping(Function2)}. Instead, <code>null</code> is produced
+ * without passing by this SPI.
+ * <p>
  * The inverse operation is modelled by {@link RecordUnmapper}.
  *
  * @author Lukas Eder

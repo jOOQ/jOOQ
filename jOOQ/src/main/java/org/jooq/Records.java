@@ -576,8 +576,8 @@ public final class Records {
 
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record1} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record1} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function1)} or
      * {@link Functions#nullOnAnyNull(Function1)} to achieve <code>null</code>
@@ -590,8 +590,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record2} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record2} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function2)} or
      * {@link Functions#nullOnAnyNull(Function2)} to achieve <code>null</code>
@@ -604,8 +604,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record3} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record3} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function3)} or
      * {@link Functions#nullOnAnyNull(Function3)} to achieve <code>null</code>
@@ -618,8 +618,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record4} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record4} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function4)} or
      * {@link Functions#nullOnAnyNull(Function4)} to achieve <code>null</code>
@@ -632,8 +632,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record5} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record5} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function5)} or
      * {@link Functions#nullOnAnyNull(Function5)} to achieve <code>null</code>
@@ -646,8 +646,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record6} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record6} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function6)} or
      * {@link Functions#nullOnAnyNull(Function6)} to achieve <code>null</code>
@@ -660,8 +660,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record7} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record7} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function7)} or
      * {@link Functions#nullOnAnyNull(Function7)} to achieve <code>null</code>
@@ -674,8 +674,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record8} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record8} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function8)} or
      * {@link Functions#nullOnAnyNull(Function8)} to achieve <code>null</code>
@@ -688,8 +688,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record9} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record9} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function9)} or
      * {@link Functions#nullOnAnyNull(Function9)} to achieve <code>null</code>
@@ -702,8 +702,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record10} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record10} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function10)} or
      * {@link Functions#nullOnAnyNull(Function10)} to achieve <code>null</code>
@@ -716,8 +716,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record11} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record11} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function11)} or
      * {@link Functions#nullOnAnyNull(Function11)} to achieve <code>null</code>
@@ -730,8 +730,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record12} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record12} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function12)} or
      * {@link Functions#nullOnAnyNull(Function12)} to achieve <code>null</code>
@@ -744,8 +744,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record13} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record13} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function13)} or
      * {@link Functions#nullOnAnyNull(Function13)} to achieve <code>null</code>
@@ -758,8 +758,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record14} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record14} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function14)} or
      * {@link Functions#nullOnAnyNull(Function14)} to achieve <code>null</code>
@@ -772,8 +772,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record15} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record15} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function15)} or
      * {@link Functions#nullOnAnyNull(Function15)} to achieve <code>null</code>
@@ -786,8 +786,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record16} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record16} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function16)} or
      * {@link Functions#nullOnAnyNull(Function16)} to achieve <code>null</code>
@@ -800,8 +800,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record17} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record17} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function17)} or
      * {@link Functions#nullOnAnyNull(Function17)} to achieve <code>null</code>
@@ -814,8 +814,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record18} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record18} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function18)} or
      * {@link Functions#nullOnAnyNull(Function18)} to achieve <code>null</code>
@@ -828,8 +828,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record19} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record19} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function19)} or
      * {@link Functions#nullOnAnyNull(Function19)} to achieve <code>null</code>
@@ -842,8 +842,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record20} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record20} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function20)} or
      * {@link Functions#nullOnAnyNull(Function20)} to achieve <code>null</code>
@@ -856,8 +856,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record21} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record21} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function21)} or
      * {@link Functions#nullOnAnyNull(Function21)} to achieve <code>null</code>
@@ -870,8 +870,8 @@ public final class Records {
     }
 
     /**
-     * Create a {@link RecordMapper} that can map from {@link Record22} to a user type
-     * in a type safe way.
+     * Create a {@link RecordMapper} that can map from {@link Record22} to a user
+     * type in a type safe way.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function22)} or
      * {@link Functions#nullOnAnyNull(Function22)} to achieve <code>null</code>

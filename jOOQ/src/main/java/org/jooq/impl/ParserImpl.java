@@ -1313,6 +1313,32 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return result;
     }
 
+    private final Field<?> parseScalarSubqueryIf() {
+        int p = position();
+
+        try {
+            if (peekSelectOrWith(true)) {
+                parse('(');
+                SelectQueryImpl<Record> select = parseWithOrSelect();
+                parse(')');
+                if (Tools.degree(select) != 1)
+                    throw exception("Select list must contain exactly one column");
+
+                return field((Select) select);
+            }
+        }
+        catch (ParserException e) {
+
+            // TODO: Find a better solution than backtracking, here, which doesn't complete in O(N)
+            if (e.getMessage().contains("Token ')' expected"))
+                position(p);
+            else
+                throw e;
+        }
+
+        return null;
+    }
+
     private final SelectQueryImpl<Record> parseWithOrSelect() {
         return parseWithOrSelect(null);
     }
@@ -7114,14 +7140,32 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+    private final Row parseTableValueConstructorRow(Integer degree) {
+        if (parseKeywordIf("ROW"))
+            return parseTuple(degree);
+
+        Field<?> r = null;
+
+        if (degree == null || degree == 1)
+            r = parseScalarSubqueryIf();
+
+        if (r != null)
+            return row(r);
+        else if (peek('('))
+            return parseTuple(degree);
+        else if (degree == null || degree == 1)
+            return row(parseField());
+        else
+            throw exception("Expected row of degree: " + degree);
+    }
+
     private final Table<?> parseTableValueConstructor() {
         parseKeyword("VALUES");
 
         List<Row> rows = new ArrayList<>();
         Integer degree = null;
         do {
-            parseKeywordIf("ROW");
-            Row row = parseTuple(degree);
+            Row row = parseTableValueConstructorRow(degree);
             rows.add(row);
 
             if (degree == null)
@@ -8814,28 +8858,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     if (!forbidden.isEmpty())
                         forbidden = EnumSet.noneOf(FunctionKeyword.class);
 
-                    try {
-                        if (peekSelectOrWith(true)) {
-                            parse('(');
-                            SelectQueryImpl<Record> select = parseWithOrSelect();
-                            parse(')');
-                            if (Tools.degree(select) != 1)
-                                throw exception("Select list must contain exactly one column");
-
-                            return field((Select) select);
-                        }
-                    }
-                    catch (ParserException e) {
-
-                        // TODO: Find a better solution than backtracking, here, which doesn't complete in O(N)
-                        if (e.getMessage().contains("Token ')' expected"))
-                            position(p);
-                        else
-                            throw e;
-                    }
+                    FieldOrRow r = parseScalarSubqueryIf();
+                    if (r != null)
+                        return r;
 
                     parse('(');
-                    FieldOrRow r = parseFieldOrRow();
+                    r = parseFieldOrRow();
                     List<Field<?>> list = null;
 
                     if (r instanceof Field) { Field<?> f = (Field<?>) r;

@@ -22,4 +22,4 @@
 - Java:
 - Database (include vendor):
 - OS:
-- JDBC Driver (include name if inofficial driver):
+- JDBC Driver (include name if unofficial driver):

@@ -921,12 +921,12 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @SuppressWarnings("unchecked")
     @Override
     public final Field<T> add(Field<?> value) {
-        Field<?> rhs = nullSafe(value, getDataType());
+        Field<?> rhs;
 
-        if (getDataType().isDateTime() && (rhs.getDataType().isNumeric() || rhs.getDataType().isInterval()))
+        if (getDataType().isDateTime() && ((rhs = nullSafe(value)).getDataType().isNumeric() || rhs.getDataType().isInterval()))
             return new Expression<>(ADD, false, this, rhs);
         else
-            return new Add<T>(this, (Field<T>) rhs);
+            return new Add<T>(this, (Field<T>) nullSafe(value, getDataType()));
     }
 
     @Override
@@ -937,12 +937,12 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @SuppressWarnings("unchecked")
     @Override
     public final Field<T> sub(Field<?> value) {
-        Field<?> rhs = nullSafe(value, getDataType());
+        Field<?> rhs;
 
-        if (getDataType().isDateTime() && (rhs.getDataType().isNumeric() || rhs.getDataType().isInterval()))
+        if (getDataType().isDateTime() && ((rhs = nullSafe(value)).getDataType().isNumeric() || rhs.getDataType().isInterval()))
             return new Expression<>(SUBTRACT, false, this, rhs);
         else
-            return new Sub<T>(this, (Field<T>) rhs);
+            return new Sub<T>(this, (Field<T>) nullSafe(value, getDataType()));
     }
 
     @Override

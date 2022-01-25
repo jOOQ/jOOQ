@@ -363,7 +363,12 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final Field<T> add(Field<?> value) {
-        return new Expression<>(ADD, false, this, nullSafe(value, getDataType()));
+        Field<?> rhs;
+
+        if (getDataType().isDateTime() && ((rhs = nullSafe(value)).getDataType().isNumeric() || rhs.getDataType().isInterval()))
+            return new Expression<>(ADD, false, this, rhs);
+        else
+            return new Expression<>(ADD, false, this, nullSafe(value, getDataType()));
     }
 
     @Override
@@ -373,7 +378,12 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final Field<T> sub(Field<?> value) {
-        return new Expression<>(SUBTRACT, false, this, nullSafe(value, getDataType()));
+        Field<?> rhs;
+
+        if (getDataType().isDateTime() && ((rhs = nullSafe(value)).getDataType().isNumeric() || rhs.getDataType().isInterval()))
+            return new Expression<>(SUBTRACT, false, this, rhs);
+        else
+            return new Expression<>(SUBTRACT, false, this, nullSafe(value, getDataType()));
     }
 
     @Override

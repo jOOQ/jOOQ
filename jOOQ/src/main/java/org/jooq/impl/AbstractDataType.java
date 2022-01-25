@@ -52,7 +52,9 @@ import static org.jooq.impl.SQLDataType.NCHAR;
 import static org.jooq.impl.SQLDataType.NCLOB;
 import static org.jooq.impl.SQLDataType.NVARCHAR;
 import static org.jooq.impl.Tools.NO_SUPPORT_BINARY_TYPE_LENGTH;
+import static org.jooq.impl.Tools.map;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Blob;
@@ -586,7 +588,7 @@ implements
     }
 
     @Override
-    public /* final */ T convert(Object object) {
+    public /* non-final */ T convert(Object object) {
 
         // [#1441] Avoid unneeded type conversions to improve performance
         if (object == null)
@@ -599,12 +601,12 @@ implements
 
     @Override
     public final T[] convert(Object... objects) {
-        return Convert.convertArray(objects, getConverter());
+        return map(objects, o -> convert(o), l -> (T[]) Array.newInstance(getType(), l));
     }
 
     @Override
     public final List<T> convert(Collection<?> objects) {
-        return Convert.convert(objects, getConverter());
+        return map(objects, o -> convert(o));
     }
 
     @Override

@@ -412,31 +412,25 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
     @SuppressWarnings("unchecked")
     private /* non-final */ Condition equal(Field<?>[] pk, T id) {
-        if (pk.length == 1) {
+        if (pk.length == 1)
             return ((Field<Object>) pk[0]).equal(pk[0].getDataType().convert(id));
-        }
 
         // [#2573] Composite key T types are of type Record[N]
-        else {
+        else
             return row(pk).equal((Record) id);
-        }
     }
 
     @SuppressWarnings("unchecked")
     private /* non-final */ Condition equal(Field<?>[] pk, Collection<T> ids) {
-        if (pk.length == 1) {
-            if (ids.size() == 1) {
+        if (pk.length == 1)
+            if (ids.size() == 1)
                 return equal(pk, ids.iterator().next());
-            }
-            else {
+            else
                 return ((Field<Object>) pk[0]).in(pk[0].getDataType().convert(ids));
-            }
-        }
 
         // [#2573] Composite key T types are of type Record[N]
-        else {
+        else
             return row(pk).in(ids.toArray(EMPTY_RECORD));
-        }
     }
 
     private /* non-final */ Field<?>[] pk() {

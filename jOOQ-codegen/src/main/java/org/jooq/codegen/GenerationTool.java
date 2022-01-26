@@ -355,7 +355,13 @@ public class GenerationTool {
                             if (!properties.containsKey("password"))
                                 properties.put("password", defaultString(j.getPassword()));
 
-                            setConnection(driver.newInstance().connect(defaultString(j.getUrl()), properties));
+                            Connection c = driver.newInstance().connect(defaultString(j.getUrl()), properties);
+
+                            // [#12951] Some drivers may (illegally) return null if the URL is incorrect?
+                            if (c == null)
+                                throw new SQLException("Cannot connect to database using JDBC URL: " + j.getUrl() + ". Please review your JDBC configuration in the code generator configuration.");
+
+                            setConnection(c);
                         }
                         catch (Exception e) {
                             if (databaseName != null)

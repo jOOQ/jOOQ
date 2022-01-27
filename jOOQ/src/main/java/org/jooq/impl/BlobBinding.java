@@ -57,6 +57,8 @@ import org.jooq.BindingSetStatementContext;
 import org.jooq.Converter;
 import org.jooq.Converters;
 import org.jooq.ResourceManagingScope;
+import org.jooq.impl.R2DBC.R2DBCPreparedStatement;
+import org.jooq.impl.R2DBC.R2DBCResultSet;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 // ...
@@ -89,7 +91,12 @@ public class BlobBinding implements Binding<byte[], byte[]> {
 
     @Override
     public final void set(BindingSetStatementContext<byte[]> ctx) throws SQLException {
-        ctx.statement().setBlob(ctx.index(), newBlob(ctx, ctx.value(), ctx.statement().getConnection()));
+
+        // [#12964] We don't support the whole Blob API for R2DBC yet.
+        if (ctx.statement() instanceof R2DBCPreparedStatement)
+            ctx.statement().setBytes(ctx.index(), ctx.value());
+        else
+            ctx.statement().setBlob(ctx.index(), newBlob(ctx, ctx.value(), ctx.statement().getConnection()));
     }
 
     @Override
@@ -99,13 +106,20 @@ public class BlobBinding implements Binding<byte[], byte[]> {
 
     @Override
     public final void get(BindingGetResultSetContext<byte[]> ctx) throws SQLException {
-        Blob blob = ctx.resultSet().getBlob(ctx.index());
 
-        try {
-            ctx.value(blob == null ? null : blob.getBytes(1, asInt(blob.length())));
+        // [#12964] We don't support the whole Blob API for R2DBC yet.
+        if (ctx.resultSet() instanceof R2DBCResultSet) {
+            ctx.value(ctx.resultSet().getBytes(ctx.index()));
         }
-        finally {
-            JDBCUtils.safeFree(blob);
+        else {
+            Blob blob = ctx.resultSet().getBlob(ctx.index());
+
+            try {
+                ctx.value(blob == null ? null : blob.getBytes(1, asInt(blob.length())));
+            }
+            finally {
+                JDBCUtils.safeFree(blob);
+            }
         }
     }
 

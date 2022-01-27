@@ -2059,7 +2059,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void set0(BindingSetStatementContext<U> ctx, byte[] value) throws SQLException {
             switch (ctx.family()) {
+
                 case H2:
+                case MYSQL:
                     blobs.set(new DefaultBindingSetStatementContext<>(ctx.executeContext(), ctx.statement(), ctx.index(), value));
                     break;
 
@@ -2086,7 +2088,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final byte[] get0(BindingGetResultSetContext<U> ctx) throws SQLException {
             switch (ctx.family()) {
+
                 case H2:
+                case MYSQL:
                     DefaultBindingGetResultSetContext<byte[]> x = new DefaultBindingGetResultSetContext<>(ctx.executeContext(), ctx.resultSet(), ctx.index());
                     blobs.get(x);
                     return x.value();
@@ -2099,7 +2103,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final byte[] get0(BindingGetStatementContext<U> ctx) throws SQLException {
             switch (ctx.family()) {
+
                 case H2:
+                case MYSQL:
                     DefaultBindingGetStatementContext<byte[]> x = new DefaultBindingGetStatementContext<>(ctx.executeContext(), ctx.statement(), ctx.index());
                     blobs.get(x);
                     return x.value();

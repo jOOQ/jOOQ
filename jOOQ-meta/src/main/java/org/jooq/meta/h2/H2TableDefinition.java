@@ -195,10 +195,6 @@ public class H2TableDefinition extends AbstractTableDefinition {
         Param<Long> maxS = inline(32767L);
 
         H2Database db = (H2Database) getDatabase();
-        Field<String> columnsDataType =
-              db.is1_4_197()
-            ? COLUMNS.COLUMN_TYPE
-            : COLUMNS.TYPE_NAME;
 
         for (Record record : create().select(
                 COLUMNS.COLUMN_NAME,
@@ -208,10 +204,9 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 (db.is1_4_198()
                     ? (when(COLUMNS.INTERVAL_TYPE.like(any(inline("%YEAR%"), inline("%MONTH%"))), inline("INTERVAL YEAR TO MONTH"))
                       .when(COLUMNS.INTERVAL_TYPE.like(any(inline("%DAY%"), inline("%HOUR%"), inline("%MINUTE%"), inline("%SECOND%"))), inline("INTERVAL DAY TO SECOND"))
-                      .else_(columnsDataType))
-                    : columnsDataType
+                      .else_(COLUMNS.TYPE_NAME))
+                    : COLUMNS.TYPE_NAME
                 ).as(COLUMNS.TYPE_NAME),
-                columnsDataType.as(COLUMNS.COLUMN_TYPE),
                 choose().when(COLUMNS.NUMERIC_PRECISION.eq(maxP).and(COLUMNS.NUMERIC_SCALE.eq(maxS)), inline(0L))
                         .otherwise(COLUMNS.CHARACTER_MAXIMUM_LENGTH).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 COLUMNS.NUMERIC_PRECISION.decode(maxP, inline(0L), COLUMNS.NUMERIC_PRECISION).as(COLUMNS.NUMERIC_PRECISION),

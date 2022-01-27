@@ -355,7 +355,7 @@ public class GenerationTool {
                             j.setInitSeparator(System.getProperty("jooq.codegen.jdbc.initSeparator"));
                     }
 
-                    if (j != null) {
+                    if (j != null && !StringUtils.isBlank(j.getUrl())) {
                         try {
                             Class<? extends Driver> driver = (Class<? extends Driver>) loadClass(driverClass(j));
 

@@ -1939,45 +1939,64 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultBytesBinding<U> extends AbstractBinding<byte[], U> {
-        private static final Set<SQLDialect> INLINE_AS_X_APOS           = SQLDialect.supportedBy(H2, HSQLDB, MARIADB, MYSQL, SQLITE);
-        private static final Set<SQLDialect> REQUIRE_BYTEA_CAST         = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
-
-
-
+        // [#12956] Starting from H2 2.0, we can't use byte[] for BLOB anymore, if they're
+        //          larger than 1MB
+        private final BlobBinding blobs;
 
         DefaultBytesBinding(DataType<byte[]> dataType, Converter<byte[], U> converter) {
             super(dataType, converter);
+
+            this.blobs = new BlobBinding();
         }
 
         @Override
         final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+            switch (ctx.family()) {
 
 
 
 
 
-            super.setNull0(ctx);
+
+                default:
+                    super.setNull0(ctx);
+                    break;
+            }
         }
 
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, byte[] value) {
             // [#1154] Binary data cannot always be inlined
-            if (INLINE_AS_X_APOS.contains(ctx.dialect()))
-                ctx.render()
-                   .sql("X'")
-                   .sql(convertBytesToHex(value))
-                   .sql('\'');
-            else if (ctx.dialect() == DERBY)
-                ctx.render()
-                   .visit(K_CAST)
-                   .sql("(X'")
-                   .sql(convertBytesToHex(value))
-                   .sql("' ")
-                   .visit(K_AS)
-                   .sql(' ')
-                   .visit(BLOB)
-                   .sql(')');
+
+            switch (ctx.family()) {
+
+
+
+                case H2:
+                case HSQLDB:
+                case MARIADB:
+                case MYSQL:
+                case SQLITE:
+                    ctx.render()
+                       .sql("X'")
+                       .sql(convertBytesToHex(value))
+                       .sql('\'');
+
+                    break;
+
+                case DERBY:
+                    ctx.render()
+                       .visit(K_CAST)
+                       .sql("(X'")
+                       .sql(convertBytesToHex(value))
+                       .sql("' ")
+                       .visit(K_AS)
+                       .sql(' ')
+                       .visit(BLOB)
+                       .sql(')');
+
+                    break;
 
 
 
@@ -2000,24 +2019,54 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            else if (REQUIRE_BYTEA_CAST.contains(ctx.dialect()))
-                ctx.render()
-                   .sql("E'")
-                   .sql(PostgresUtils.toPGString(value))
-                   .sql("'::bytea");
 
-            // This default behaviour is used in debug logging for dialects
-            // that do not support inlining binary data
-            else
-                ctx.render()
-                   .sql("X'")
-                   .sql(convertBytesToHex(value))
-                   .sql('\'');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                case POSTGRES:
+                case YUGABYTEDB:
+                    ctx.render()
+                       .sql("E'")
+                       .sql(PostgresUtils.toPGString(value))
+                       .sql("'::bytea");
+
+                    break;
+
+                default:
+                    ctx.render()
+                       .sql("X'")
+                       .sql(convertBytesToHex(value))
+                       .sql('\'');
+
+                    break;
+            }
         }
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, byte[] value) throws SQLException {
-            ctx.statement().setBytes(ctx.index(), value);
+            switch (ctx.family()) {
+                case H2:
+                    blobs.set(new DefaultBindingSetStatementContext<>(ctx.executeContext(), ctx.statement(), ctx.index(), value));
+                    break;
+
+                default:
+                    ctx.statement().setBytes(ctx.index(), value);
+                    break;
+            }
         }
 
         @Override
@@ -2036,12 +2085,28 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final byte[] get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return ctx.resultSet().getBytes(ctx.index());
+            switch (ctx.family()) {
+                case H2:
+                    DefaultBindingGetResultSetContext<byte[]> x = new DefaultBindingGetResultSetContext<>(ctx.executeContext(), ctx.resultSet(), ctx.index());
+                    blobs.get(x);
+                    return x.value();
+
+                default:
+                    return ctx.resultSet().getBytes(ctx.index());
+            }
         }
 
         @Override
         final byte[] get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return ctx.statement().getBytes(ctx.index());
+            switch (ctx.family()) {
+                case H2:
+                    DefaultBindingGetStatementContext<byte[]> x = new DefaultBindingGetStatementContext<>(ctx.executeContext(), ctx.statement(), ctx.index());
+                    blobs.get(x);
+                    return x.value();
+
+                default:
+                    return ctx.statement().getBytes(ctx.index());
+            }
         }
 
         @Override

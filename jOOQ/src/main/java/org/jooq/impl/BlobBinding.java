@@ -42,6 +42,7 @@ import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Tools.asInt;
 
 import java.sql.Blob;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
 
@@ -88,12 +89,12 @@ public class BlobBinding implements Binding<byte[], byte[]> {
 
     @Override
     public final void set(BindingSetStatementContext<byte[]> ctx) throws SQLException {
-        ctx.statement().setBlob(ctx.index(), newBlob(ctx, ctx.value()));
+        ctx.statement().setBlob(ctx.index(), newBlob(ctx, ctx.value(), ctx.statement().getConnection()));
     }
 
     @Override
     public final void set(BindingSetSQLOutputContext<byte[]> ctx) throws SQLException {
-        ctx.output().writeBlob(newBlob(ctx, ctx.value()));
+        ctx.output().writeBlob(newBlob(ctx, ctx.value(), null));
     }
 
     @Override
@@ -132,7 +133,7 @@ public class BlobBinding implements Binding<byte[], byte[]> {
         }
     }
 
-    static final Blob newBlob(ResourceManagingScope scope, byte[] bytes) throws SQLException {
+    static final Blob newBlob(ResourceManagingScope scope, byte[] bytes, Connection connection) throws SQLException {
         Blob blob;
 
         switch (scope.dialect()) {
@@ -148,7 +149,7 @@ public class BlobBinding implements Binding<byte[], byte[]> {
 
 
             default: {
-                blob = localConnection().createBlob();
+                blob = (connection != null ? connection : localConnection()).createBlob();
                 break;
             }
         }

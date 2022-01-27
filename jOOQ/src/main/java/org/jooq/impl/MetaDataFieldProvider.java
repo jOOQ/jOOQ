@@ -44,6 +44,7 @@ import static org.jooq.impl.DSL.name;
 import java.io.Serializable;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Objects;
 
 import org.jooq.Configuration;
 import org.jooq.DataType;
@@ -100,7 +101,7 @@ final class MetaDataFieldProvider implements Serializable {
                 String columnLabel = meta.getColumnLabel(i);
                 String columnName = meta.getColumnName(i);
 
-                if (columnName.equals(columnLabel)) {
+                if (Objects.equals(columnName, columnLabel)) {
                     try {
                         String columnSchema = meta.getSchemaName(i);
                         String columnTable = meta.getTableName(i);

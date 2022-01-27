@@ -345,7 +345,7 @@ public class GenerationTool {
                         }
                     }
 
-                    if (j != null) {
+                    if (j != null && !StringUtils.isBlank(j.getUrl())) {
                         try {
                             Class<? extends Driver> driver = (Class<? extends Driver>) loadClass(driverClass(j));
 

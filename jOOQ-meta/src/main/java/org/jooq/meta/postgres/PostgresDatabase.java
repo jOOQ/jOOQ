@@ -1069,9 +1069,9 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
     boolean is12() {
 
-        // [#11325] nameconcatoid was added in PostgreSQL 12 only
+        // [#11325] column_column_usage was added in PostgreSQL 12 only
         if (is12 == null)
-            is12 = configuredDialectIsNotFamilyAndSupports(asList(POSTGRES), () -> exists(table(select(field("nameconcatoid({0}, {1})", PG_PROC.PRONAME, PG_PROC.OID)).from(PG_PROC))));
+            is12 = configuredDialectIsNotFamilyAndSupports(asList(POSTGRES), () -> exists(table("column_column_usage")));
 
         return is12;
     }

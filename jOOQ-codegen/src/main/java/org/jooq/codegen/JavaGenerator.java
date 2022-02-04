@@ -450,7 +450,8 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("  table-valued functions", generateTableValuedFunctions());
         log.info("  tables", generateTables()
               + ((!generateTables && generateRecords) ? " (forced to true because of <records/>)" :
-                ((!generateTables && generateDaos) ? " (forced to true because of <daos/>)" : "")));
+                ((!generateTables && generateDaos) ? " (forced to true because of <daos/>)" :
+                ((!generateTables && generateIndexes) ? " (forced to true because of <indexes/>)" : ""))));
         log.info("  udts", generateUDTs());
         log.info("  relations", generateRelations()
             + ((!generateRelations && generateTables) ? " (forced to true because of <tables/>)" :

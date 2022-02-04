@@ -472,7 +472,8 @@ abstract class AbstractGenerator implements Generator {
     public boolean generateTables() {
 
         // [#5525] When DAOs or records are generated, tables must be generated, too
-        return generateTables || generateRecords || generateDaos;
+        // [#12992] When indexes are generated, tables must be generated.
+        return generateTables || generateRecords || generateDaos || generateIndexes;
     }
 
     @Override

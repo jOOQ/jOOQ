@@ -62,7 +62,7 @@ import org.jooq.tools.JooqLogger;
  */
 abstract class AbstractGenerator implements Generator {
 
-    private static final JooqLogger    log                                     = JooqLogger.getLogger(AbstractGenerator.class);
+    private static final JooqLogger    log                                              = JooqLogger.getLogger(AbstractGenerator.class);
 
     boolean                            generateDeprecated                               = true;
     boolean                            generateDeprecationOnUnknownTypes                = true;
@@ -162,10 +162,23 @@ abstract class AbstractGenerator implements Generator {
     protected boolean                  targetClean                                      = true;
     final Language                     languageConfigured;
     Language                           language;
+    Database                           database;
 
     AbstractGenerator(Language language) {
         this.languageConfigured = this.language = language;
     }
+
+    @Override
+    public void generate(Database db) {
+        this.database = db;
+
+        this.database.setIncludeRelations(generateRelations());
+        this.database.setTableValuedFunctions(generateTableValuedFunctions());
+
+        generate0(db);
+    }
+
+    protected void generate0(Database db) {}
 
     void logDatabaseParameters(Database db) {
         String url = "";
@@ -473,8 +486,12 @@ abstract class AbstractGenerator implements Generator {
     public boolean generateTables() {
 
         // [#5525] When DAOs or records are generated, tables must be generated, too
-        // [#12992] When indexes are generated, tables must be generated.
-        return generateTables || generateRecords || generateDaos || generateIndexes;
+        return generateTables
+            || generateRecords
+            || generateDaos
+
+            // [#12992] When indexes are generated, tables must be generated.
+            || generateIndexes && database.getSchemata().stream().flatMap(s -> database.getIndexes(s).stream()).anyMatch(t -> true);
     }
 
     @Override

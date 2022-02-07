@@ -260,11 +260,6 @@ public class JavaGenerator extends AbstractGenerator {
     private final StopWatch                       watch                        = new StopWatch();
 
     /**
-     * The underlying database of this generator
-     */
-    private Database                              database;
-
-    /**
      * The code generation date, if needed.
      */
     private String                                isoDate;
@@ -390,15 +385,11 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     @Override
-    public final void generate(Database db) {
+    public final void generate0(Database db) {
         this.isoDate = DatatypeConverter.printDateTime(Calendar.getInstance(TimeZone.getTimeZone("UTC")));
         this.schemaVersions = new LinkedHashMap<>();
         this.catalogVersions = new LinkedHashMap<>();
-
-        this.database = db;
         this.database.addFilter(new AvoidAmbiguousClassesFilter());
-        this.database.setIncludeRelations(generateRelations());
-        this.database.setTableValuedFunctions(generateTableValuedFunctions());
 
         logDatabaseParameters(db);
         log.info("");

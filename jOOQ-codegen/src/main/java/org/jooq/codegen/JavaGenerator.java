@@ -5950,9 +5950,10 @@ public class JavaGenerator extends AbstractGenerator {
                         for (ForeignKeyDefinition foreignKey : foreignKeys) {
                             final String referencedTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable()));
                             final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
+                            final String unquotedKeyMethodName = keyMethodName.replace("`", "");
 
                             if (kotlin)
-                                out.println("private lateinit var _%s: %s", keyMethodName, referencedTableClassName);
+                                out.println("private lateinit var _%s: %s", unquotedKeyMethodName, referencedTableClassName);
                             else
                                 out.println("private transient %s _%s;", referencedTableClassName, keyMethodName);
                         }
@@ -5965,6 +5966,7 @@ public class JavaGenerator extends AbstractGenerator {
                             : out.ref(getStrategy().getFullJavaIdentifier(foreignKey), 2);
                         final String referencedTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable()));
                         final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
+                        final String unquotedKeyMethodName = keyMethodName.replace("`", "");
 
                         out.javadoc(
                             "Get the implicit join path to the <code>" + foreignKey.getReferencedTable().getQualifiedName() + "</code> table"
@@ -5977,10 +5979,10 @@ public class JavaGenerator extends AbstractGenerator {
                         }
                         else if (kotlin) {
                             out.println("%sfun %s(): %s {", visibility(), keyMethodName, referencedTableClassName);
-                            out.println("if (!this::_%s.isInitialized)", keyMethodName);
-                            out.println("_%s = %s(this, %s)", keyMethodName, referencedTableClassName, keyFullId);
+                            out.println("if (!this::_%s.isInitialized)", unquotedKeyMethodName);
+                            out.println("_%s = %s(this, %s)", unquotedKeyMethodName, referencedTableClassName, keyFullId);
                             out.println();
-                            out.println("return _%s;", keyMethodName);
+                            out.println("return _%s;", unquotedKeyMethodName);
                             out.println("}");
                         }
                         else {

@@ -5942,7 +5942,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 // Outbound (to-one) implicit join paths
                 if (generateImplicitJoinPathsToOne()) {
-                    if (scala) {}
+                    if (scala || kotlin) {}
                     else {
                         out.println();
 
@@ -5950,11 +5950,7 @@ public class JavaGenerator extends AbstractGenerator {
                         for (ForeignKeyDefinition foreignKey : foreignKeys) {
                             final String referencedTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable()));
                             final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
-
-                            if (kotlin)
-                                out.println("private lateinit var _%s: %s", keyMethodName, referencedTableClassName);
-                            else
-                                out.println("private transient %s _%s;", referencedTableClassName, keyMethodName);
+                            out.println("private transient %s _%s;", referencedTableClassName, keyMethodName);
                         }
                     }
 
@@ -5974,14 +5970,8 @@ public class JavaGenerator extends AbstractGenerator {
 
                         if (scala) {
                             out.println("%slazy val %s: %s = { new %s(this, %s) }", visibility(), scalaWhitespaceSuffix(keyMethodName), referencedTableClassName, referencedTableClassName, keyFullId);
-                        }
-                        else if (kotlin) {
-                            out.println("%sfun %s(): %s {", visibility(), keyMethodName, referencedTableClassName);
-                            out.println("if (!this::_%s.isInitialized)", keyMethodName);
-                            out.println("_%s = %s(this, %s)", keyMethodName, referencedTableClassName, keyFullId);
-                            out.println();
-                            out.println("return _%s;", keyMethodName);
-                            out.println("}");
+                        } else if (kotlin) {
+                            out.println("%s val %s : %s by lazy { %s(this, %s) }", visibility(), keyMethodName, referencedTableClassName, referencedTableClassName, keyFullId);
                         }
                         else {
                             out.println("%s%s %s() {", visibility(), referencedTableClassName, keyMethodName);

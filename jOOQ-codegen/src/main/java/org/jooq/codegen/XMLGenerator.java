@@ -98,7 +98,7 @@ public class XMLGenerator extends AbstractGenerator {
     }
 
     @Override
-    public void generate(Database db) {
+    public void generate0(Database db) {
         logDatabaseParameters(db);
         log.info("");
         logGenerationRemarks(db);

@@ -40,8 +40,13 @@ package org.jooq;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.TableOptions.OnCommit.DELETE_ROWS;
+import static org.jooq.TableOptions.OnCommit.DROP;
+import static org.jooq.TableOptions.OnCommit.PRESERVE_ROWS;
 
 import java.io.Serializable;
+
+import org.jooq.impl.QOM.TableCommitAction;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -139,6 +144,22 @@ public final class TableOptions implements Serializable {
     @NotNull
     public static final TableOptions temporaryTable(OnCommit onCommit) {
         return new TableOptions(onCommit);
+    }
+
+    /**
+     * Create a new {@link TableOptions} object for a {@link TableType#TEMPORARY}.
+     */
+    @NotNull
+    public static final TableOptions temporaryTable(TableCommitAction onCommit) {
+        if (onCommit == null)
+            return new TableOptions((OnCommit) null);
+
+        switch (onCommit) {
+            case DELETE_ROWS: return temporaryTable(DELETE_ROWS);
+            case PRESERVE_ROWS: return temporaryTable(PRESERVE_ROWS);
+            case DROP: return temporaryTable(DROP);
+            default: throw new IllegalArgumentException("TableCommitAction not supported: " + onCommit);
+        }
     }
 
     /**

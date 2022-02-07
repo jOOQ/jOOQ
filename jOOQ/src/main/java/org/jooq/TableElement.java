@@ -38,23 +38,23 @@
 package org.jooq;
 
 /**
- * A common base type for {@link Field} and {@link Constraint} where DSL API accepts
- * both types alike.
+ * A common base type for {@link Field}, {@link Constraint}, and {@link Index}
+ * where DSL API accepts all types alike.
  * <p>
  * This is useful for DDL statements.
  * <p>
  * Instances of this type cannot be created directly, only of its subtypes.
  *
  * @author Lukas Eder
- * @deprecated - 3.17.0 - [#13005] - Use {@link TableElement} instead.
  */
-@Deprecated
-public /* sealed */ interface FieldOrConstraint
+public /* sealed */ interface TableElement
 extends
-    TableElement
+    Named
 /* permits
+    FieldOrConstraint,
     Field,
-    Constraint */ 
+    Constraint,
+    Index */ 
 {
 
 }

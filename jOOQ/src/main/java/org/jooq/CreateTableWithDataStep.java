@@ -37,37 +37,14 @@
  */
 package org.jooq;
 
-// ...
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-// ...
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.SQLITE;
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.SQLDialect.*;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.*;
+
+import org.jetbrains.annotations.*;
 
 /**
- * A {@link Query} that can create tables.
+ * A step in the construction of the <code>CREATE TABLE</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -86,22 +63,21 @@ import org.jetbrains.annotations.NotNull;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface CreateTableWithDataStep extends CreateTableOnCommitStep {
 
     /**
-     * Add a <code>WITH DATA</code> clause.
+     * Add the <code>WITH DATA</code> clause to the <code>CREATE TABLE</code> statement.
      */
-    @NotNull @CheckReturnValue
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    CreateTableCommentStep withData();
+    @NotNull @CheckReturnValue
+    CreateTableOnCommitStep withData();
 
     /**
-     * Add a <code>WITH DATA</code> clause.
+     * Add the <code>WITH NO DATA</code> clause to the <code>CREATE TABLE</code> statement.
      */
-    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    CreateTableCommentStep withNoData();
+    @NotNull @CheckReturnValue
+    CreateTableOnCommitStep withNoData();
 }

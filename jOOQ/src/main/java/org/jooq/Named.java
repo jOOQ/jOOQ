@@ -40,8 +40,8 @@ package org.jooq;
 
 import org.jooq.impl.QOM;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.ApiStatus.Experimental;
+import org.jetbrains.annotations.NotNull;
 
 
 /**

@@ -191,7 +191,6 @@ import org.jooq.ConstraintForeignKeyReferencesStep9;
 import org.jooq.ConstraintForeignKeyReferencesStepN;
 import org.jooq.ConstraintTypeStep;
 // ...
-import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTypeStep;
 import org.jooq.CreateViewAsStep;
 import org.jooq.DSLContext;
@@ -8376,6 +8375,280 @@ public class DSL {
 
 
 
+    /**
+     * The <code>CREATE TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createTable(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    public static org.jooq.CreateTableElementListStep createTable(@Stringly.Name String table) {
+        return dsl().createTable(table);
+    }
+
+    /**
+     * The <code>CREATE TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createTable(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    public static org.jooq.CreateTableElementListStep createTable(Name table) {
+        return dsl().createTable(table);
+    }
+
+    /**
+     * The <code>CREATE TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createTable(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    public static org.jooq.CreateTableElementListStep createTable(Table<?> table) {
+        return dsl().createTable(table);
+    }
+
+    /**
+     * The <code>CREATE TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createTableIfNotExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createTableIfNotExists(@Stringly.Name String table) {
+        return dsl().createTableIfNotExists(table);
+    }
+
+    /**
+     * The <code>CREATE TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createTableIfNotExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createTableIfNotExists(Name table) {
+        return dsl().createTableIfNotExists(table);
+    }
+
+    /**
+     * The <code>CREATE TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createTableIfNotExists(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createTableIfNotExists(Table<?> table) {
+        return dsl().createTableIfNotExists(table);
+    }
+
+    /**
+     * The <code>CREATE TEMPORARY TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createTemporaryTable(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createTemporaryTable(@Stringly.Name String table) {
+        return dsl().createTemporaryTable(table);
+    }
+
+    /**
+     * The <code>CREATE TEMPORARY TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createTemporaryTable(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createTemporaryTable(Name table) {
+        return dsl().createTemporaryTable(table);
+    }
+
+    /**
+     * The <code>CREATE TEMPORARY TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createTemporaryTable(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createTemporaryTable(Table<?> table) {
+        return dsl().createTemporaryTable(table);
+    }
+
+    /**
+     * The <code>CREATE TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createTemporaryTableIfNotExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createTemporaryTableIfNotExists(@Stringly.Name String table) {
+        return dsl().createTemporaryTableIfNotExists(table);
+    }
+
+    /**
+     * The <code>CREATE TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createTemporaryTableIfNotExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createTemporaryTableIfNotExists(Name table) {
+        return dsl().createTemporaryTableIfNotExists(table);
+    }
+
+    /**
+     * The <code>CREATE TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createTemporaryTableIfNotExists(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createTemporaryTableIfNotExists(Table<?> table) {
+        return dsl().createTemporaryTableIfNotExists(table);
+    }
+
+    /**
+     * The <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createGlobalTemporaryTable(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createGlobalTemporaryTable(@Stringly.Name String table) {
+        return dsl().createGlobalTemporaryTable(table);
+    }
+
+    /**
+     * The <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createGlobalTemporaryTable(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createGlobalTemporaryTable(Name table) {
+        return dsl().createGlobalTemporaryTable(table);
+    }
+
+    /**
+     * The <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createGlobalTemporaryTable(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createGlobalTemporaryTable(Table<?> table) {
+        return dsl().createGlobalTemporaryTable(table);
+    }
+
+    /**
+     * The <code>CREATE GLOBAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createGlobalTemporaryTableIfNotExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createGlobalTemporaryTableIfNotExists(@Stringly.Name String table) {
+        return dsl().createGlobalTemporaryTableIfNotExists(table);
+    }
+
+    /**
+     * The <code>CREATE GLOBAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createGlobalTemporaryTableIfNotExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Name table) {
+        return dsl().createGlobalTemporaryTableIfNotExists(table);
+    }
+
+    /**
+     * The <code>CREATE GLOBAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createGlobalTemporaryTableIfNotExists(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Table<?> table) {
+        return dsl().createGlobalTemporaryTableIfNotExists(table);
+    }
+
+
+
+
+
 
 
 
@@ -9950,171 +10223,6 @@ public class DSL {
 
 
 
-
-    /**
-     * Create a new DSL <code>CREATE TABLE</code> statement.
-     *
-     * @see DSLContext#createTable(String)
-     */
-    @NotNull
-    @Support
-    public static CreateTableColumnStep createTable(String table) {
-        return dsl().createTable(table);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE TABLE</code> statement.
-     *
-     * @see DSLContext#createTable(Name)
-     */
-    @NotNull
-    @Support
-    public static CreateTableColumnStep createTable(Name table) {
-        return dsl().createTable(table);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE TABLE</code> statement.
-     *
-     * @see DSLContext#createTable(Table)
-     */
-    @NotNull
-    @Support
-    public static CreateTableColumnStep createTable(Table<?> table) {
-        return dsl().createTable(table);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE TABLE</code> statement.
-     *
-     * @see DSLContext#createTableIfNotExists(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static CreateTableColumnStep createTableIfNotExists(String table) {
-        return dsl().createTableIfNotExists(table);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE TABLE</code> statement.
-     *
-     * @see DSLContext#createTableIfNotExists(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static CreateTableColumnStep createTableIfNotExists(Name table) {
-        return dsl().createTableIfNotExists(table);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE TABLE</code> statement.
-     *
-     * @see DSLContext#createTableIfNotExists(Table)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static CreateTableColumnStep createTableIfNotExists(Table<?> table) {
-        return dsl().createTableIfNotExists(table);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
-     *
-     * @see DSLContext#createTemporaryTable(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    public static CreateTableColumnStep createTemporaryTable(String table) {
-        return dsl().createTemporaryTable(table);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
-     *
-     * @see DSLContext#createTemporaryTable(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    public static CreateTableColumnStep createTemporaryTable(Name table) {
-        return dsl().createTemporaryTable(table);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
-     *
-     * @see DSLContext#createTemporaryTable(Table)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    public static CreateTableColumnStep createTemporaryTable(Table<?> table) {
-        return dsl().createTemporaryTable(table);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
-     *
-     * @see DSLContext#createTemporaryTableIfNotExists(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    public static CreateTableColumnStep createTemporaryTableIfNotExists(String table) {
-        return dsl().createTemporaryTableIfNotExists(table);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
-     *
-     * @see DSLContext#createTemporaryTableIfNotExists(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    public static CreateTableColumnStep createTemporaryTableIfNotExists(Name table) {
-        return dsl().createTemporaryTableIfNotExists(table);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
-     *
-     * @see DSLContext#createTemporaryTableIfNotExists(Table)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    public static CreateTableColumnStep createTemporaryTableIfNotExists(Table<?> table) {
-        return dsl().createTemporaryTableIfNotExists(table);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
-     *
-     * @see DSLContext#createGlobalTemporaryTable(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    public static CreateTableColumnStep createGlobalTemporaryTable(String table) {
-        return dsl().createGlobalTemporaryTable(table);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
-     *
-     * @see DSLContext#createGlobalTemporaryTable(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    public static CreateTableColumnStep createGlobalTemporaryTable(Name table) {
-        return dsl().createGlobalTemporaryTable(table);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
-     *
-     * @see DSLContext#createGlobalTemporaryTable(Table)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    public static CreateTableColumnStep createGlobalTemporaryTable(Table<?> table) {
-        return dsl().createGlobalTemporaryTable(table);
-    }
 
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.

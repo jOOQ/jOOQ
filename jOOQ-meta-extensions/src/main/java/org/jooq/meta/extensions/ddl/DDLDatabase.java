@@ -37,6 +37,7 @@
  */
 package org.jooq.meta.extensions.ddl;
 
+// ...
 import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.isBlank;
@@ -55,6 +56,7 @@ import org.jooq.Name;
 import org.jooq.Name.Quoted;
 import org.jooq.Queries;
 import org.jooq.Query;
+// ...
 import org.jooq.ResultQuery;
 import org.jooq.Source;
 import org.jooq.VisitContext;
@@ -170,6 +172,12 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
         try {
             Scanner s = new Scanner(r = source.reader()).useDelimiter("\\A");
             Queries queries = ctx.parser().parse(s.hasNext() ? s.next() : "");
+
+
+
+
+
+
 
             for (Query query : queries) {
 

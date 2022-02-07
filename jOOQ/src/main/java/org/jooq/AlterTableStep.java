@@ -325,7 +325,7 @@ public interface AlterTableStep {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    AlterTableAddStep add(FieldOrConstraint... fields);
+    AlterTableAddStep add(TableElement... fields);
 
     /**
      * Add an <code>ADD</code> clause with multiple columns or constraints to
@@ -333,7 +333,7 @@ public interface AlterTableStep {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    AlterTableAddStep add(Collection<? extends FieldOrConstraint> fields);
+    AlterTableAddStep add(Collection<? extends TableElement> fields);
 
     /**
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>

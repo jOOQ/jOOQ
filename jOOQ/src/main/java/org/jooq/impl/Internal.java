@@ -44,8 +44,10 @@ import java.lang.reflect.Array;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import org.jooq.Attachable;
 import org.jooq.Binding;
 import org.jooq.Check;
+import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Domain;
@@ -493,5 +495,13 @@ public final class Internal {
      */
     public static final void requireCommercial(Supplier<String> logMessage) throws DataAccessException {
         CTX.configuration().requireCommercial(logMessage);
+    }
+
+    /**
+     * Retrieve a {@link Configuration} from an attachable, or the default
+     * {@link Configuration} if the attachable is detached.
+     */
+    public static final Configuration configuration(Attachable attachable) {
+        return Tools.configuration(attachable);
     }
 }

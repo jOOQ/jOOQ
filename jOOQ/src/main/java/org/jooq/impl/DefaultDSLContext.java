@@ -110,7 +110,6 @@ import org.jooq.ConnectionProvider;
 import org.jooq.ConnectionRunnable;
 import org.jooq.ContextTransactionalCallable;
 import org.jooq.ContextTransactionalRunnable;
-import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTypeStep;
 import org.jooq.CreateViewAsStep;
 import org.jooq.Cursor;
@@ -3270,6 +3269,100 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
 
+    @Override
+    public org.jooq.CreateTableElementListStep createTable(@Stringly.Name String table) {
+        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), false, false);
+    }
+
+    @Override
+    public org.jooq.CreateTableElementListStep createTable(Name table) {
+        return new CreateTableImpl(configuration(), DSL.table(table), false, false);
+    }
+
+    @Override
+    public org.jooq.CreateTableElementListStep createTable(Table<?> table) {
+        return new CreateTableImpl(configuration(), table, false, false);
+    }
+
+    @Override
+    public org.jooq.CreateTableElementListStep createTableIfNotExists(@Stringly.Name String table) {
+        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), false, true);
+    }
+
+    @Override
+    public org.jooq.CreateTableElementListStep createTableIfNotExists(Name table) {
+        return new CreateTableImpl(configuration(), DSL.table(table), false, true);
+    }
+
+    @Override
+    public org.jooq.CreateTableElementListStep createTableIfNotExists(Table<?> table) {
+        return new CreateTableImpl(configuration(), table, false, true);
+    }
+
+    @Override
+    public org.jooq.CreateTableElementListStep createTemporaryTable(@Stringly.Name String table) {
+        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), true, false);
+    }
+
+    @Override
+    public org.jooq.CreateTableElementListStep createTemporaryTable(Name table) {
+        return new CreateTableImpl(configuration(), DSL.table(table), true, false);
+    }
+
+    @Override
+    public org.jooq.CreateTableElementListStep createTemporaryTable(Table<?> table) {
+        return new CreateTableImpl(configuration(), table, true, false);
+    }
+
+    @Override
+    public org.jooq.CreateTableElementListStep createTemporaryTableIfNotExists(@Stringly.Name String table) {
+        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), true, true);
+    }
+
+    @Override
+    public org.jooq.CreateTableElementListStep createTemporaryTableIfNotExists(Name table) {
+        return new CreateTableImpl(configuration(), DSL.table(table), true, true);
+    }
+
+    @Override
+    public org.jooq.CreateTableElementListStep createTemporaryTableIfNotExists(Table<?> table) {
+        return new CreateTableImpl(configuration(), table, true, true);
+    }
+
+    @Override
+    public org.jooq.CreateTableElementListStep createGlobalTemporaryTable(@Stringly.Name String table) {
+        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), true, false);
+    }
+
+    @Override
+    public org.jooq.CreateTableElementListStep createGlobalTemporaryTable(Name table) {
+        return new CreateTableImpl(configuration(), DSL.table(table), true, false);
+    }
+
+    @Override
+    public org.jooq.CreateTableElementListStep createGlobalTemporaryTable(Table<?> table) {
+        return new CreateTableImpl(configuration(), table, true, false);
+    }
+
+    @Override
+    public org.jooq.CreateTableElementListStep createGlobalTemporaryTableIfNotExists(@Stringly.Name String table) {
+        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), true, true);
+    }
+
+    @Override
+    public org.jooq.CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Name table) {
+        return new CreateTableImpl(configuration(), DSL.table(table), true, true);
+    }
+
+    @Override
+    public org.jooq.CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Table<?> table) {
+        return new CreateTableImpl(configuration(), table, true, true);
+    }
+
+
+
+
+
 
 
 
@@ -4027,81 +4120,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction) {
         return new CreateViewImpl<>(configuration(), view, fieldNameFunction, true, false);
-    }
-
-    @Override
-    public CreateTableColumnStep createTable(String table) {
-        return createTable(name(table));
-    }
-
-    @Override
-    public CreateTableColumnStep createTable(Name table) {
-        return createTable(table(table));
-    }
-
-    @Override
-    public CreateTableColumnStep createTable(Table<?> table) {
-        return new CreateTableImpl(configuration(), table, false, false);
-    }
-
-    @Override
-    public CreateTableColumnStep createTableIfNotExists(String table) {
-        return createTableIfNotExists(name(table));
-    }
-
-    @Override
-    public CreateTableColumnStep createTableIfNotExists(Name table) {
-        return createTableIfNotExists(table(table));
-    }
-
-    @Override
-    public CreateTableColumnStep createTableIfNotExists(Table<?> table) {
-        return new CreateTableImpl(configuration(), table, false, true);
-    }
-
-    @Override
-    public CreateTableColumnStep createTemporaryTable(String table) {
-        return createTemporaryTable(name(table));
-    }
-
-    @Override
-    public CreateTableColumnStep createTemporaryTable(Name table) {
-        return createTemporaryTable(table(table));
-    }
-
-    @Override
-    public CreateTableColumnStep createTemporaryTable(Table<?> table) {
-        return new CreateTableImpl(configuration(), table, true, false);
-    }
-
-    @Override
-    public CreateTableColumnStep createTemporaryTableIfNotExists(String table) {
-        return createTemporaryTableIfNotExists(name(table));
-    }
-
-    @Override
-    public CreateTableColumnStep createTemporaryTableIfNotExists(Name table) {
-        return createTemporaryTableIfNotExists(table(table));
-    }
-
-    @Override
-    public CreateTableColumnStep createTemporaryTableIfNotExists(Table<?> table) {
-        return new CreateTableImpl(configuration(), table, true, true);
-    }
-
-    @Override
-    public CreateTableColumnStep createGlobalTemporaryTable(String table) {
-        return createGlobalTemporaryTable(name(table));
-    }
-
-    @Override
-    public CreateTableColumnStep createGlobalTemporaryTable(Name table) {
-        return createGlobalTemporaryTable(table(table));
-    }
-
-    @Override
-    public CreateTableColumnStep createGlobalTemporaryTable(Table<?> table) {
-        return new CreateTableImpl(configuration(), table, true, false);
     }
 
     @Override

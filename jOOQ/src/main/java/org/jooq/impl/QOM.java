@@ -110,6 +110,7 @@ import org.jooq.Role;
 import org.jooq.Row;
 import org.jooq.RowCountQuery;
 import org.jooq.RowId;
+import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -117,6 +118,7 @@ import org.jooq.Sequence;
 import org.jooq.Spatial;
 import org.jooq.Statement;
 import org.jooq.Table;
+import org.jooq.TableElement;
 // ...
 // ...
 import org.jooq.WindowDefinition;
@@ -1336,6 +1338,37 @@ public final class QOM {
 
 
 
+
+
+
+    /**
+     * The <code>CREATE TABLE</code> statement.
+     */
+    public /*sealed*/ interface CreateTable
+        extends
+            DDLQuery
+        //permits
+        //    CreateTableImpl
+    {
+        @NotNull  Table<?> $table();
+                  boolean $temporary();
+                  boolean $ifNotExists();
+        @NotNull  UnmodifiableList<? extends TableElement> $tableElements();
+        @Nullable Select<?> $select();
+        @Nullable WithOrWithoutData $withData();
+        @Nullable TableCommitAction $onCommit();
+        @Nullable Comment $comment();
+        @Nullable SQL $storage();
+        @NotNull  CreateTable $table(Table<?> table);
+        @NotNull  CreateTable $temporary(boolean temporary);
+        @NotNull  CreateTable $ifNotExists(boolean ifNotExists);
+        @NotNull  CreateTable $tableElements(Collection<? extends TableElement> tableElements);
+        @NotNull  CreateTable $select(Select<?> select);
+        @NotNull  CreateTable $withData(WithOrWithoutData withData);
+        @NotNull  CreateTable $onCommit(TableCommitAction onCommit);
+        @NotNull  CreateTable $comment(Comment comment);
+        @NotNull  CreateTable $storage(SQL storage);
+    }
 
 
 
@@ -5717,6 +5750,41 @@ public final class QOM {
         final Keyword keyword;
 
         private GenerationOption(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
+
+    /**
+     * The <code>WithOrWithoutData</code> type.
+     * <p>
+     * Specify whether a table created from a subquery should include the subquery's data.
+     */
+    public enum WithOrWithoutData {
+        WITH_DATA(keyword("with data")),
+        WITH_NO_DATA(keyword("with no data")),
+        ;
+
+        final Keyword keyword;
+
+        private WithOrWithoutData(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
+
+    /**
+     * The <code>TableCommitAction</code> type.
+     * <p>
+     * Specify the action to be taken on temporary tables when committing.
+     */
+    public enum TableCommitAction {
+        DELETE_ROWS(keyword("delete rows")),
+        PRESERVE_ROWS(keyword("preserve rows")),
+        DROP(keyword("drop")),
+        ;
+
+        final Keyword keyword;
+
+        private TableCommitAction(Keyword keyword) {
             this.keyword = keyword;
         }
     }

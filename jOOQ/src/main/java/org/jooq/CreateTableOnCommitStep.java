@@ -37,18 +37,14 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
 import org.jetbrains.annotations.*;
 
-
-// ...
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.YUGABYTEDB;
-
-import org.jooq.impl.DSL;
-
 /**
- * A {@link Query} that can create tables.
+ * A step in the construction of the <code>CREATE TABLE</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -67,44 +63,28 @@ import org.jooq.impl.DSL;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface CreateTableOnCommitStep extends CreateTableCommentStep {
 
     /**
-     * Add an <code>ON COMMIT DELETE ROWS</code> clause.
-     * <p>
-     * This clause will only be rendered when used with a
-     * <code>GLOBAL TEMPORARY TABLE</code>
-     *
-     * @see DSL#createGlobalTemporaryTable(Table)
+     * Add the <code>ON COMMIT DELETE ROWS</code> clause to the <code>CREATE TABLE</code> statement.
      */
-    @NotNull @CheckReturnValue
     @Support({ POSTGRES, YUGABYTEDB })
+    @NotNull @CheckReturnValue
     CreateTableCommentStep onCommitDeleteRows();
 
     /**
-     * Add an <code>ON COMMIT PRESERVE ROWS</code> clause.
-     * <p>
-     * This clause will only be rendered when used with a
-     * <code>GLOBAL TEMPORARY TABLE</code>
-     *
-     * @see DSL#createGlobalTemporaryTable(Table)
+     * Add the <code>ON COMMIT PRESERVE ROWS</code> clause to the <code>CREATE TABLE</code> statement.
      */
-    @NotNull @CheckReturnValue
     @Support({ POSTGRES, YUGABYTEDB })
+    @NotNull @CheckReturnValue
     CreateTableCommentStep onCommitPreserveRows();
 
     /**
-     * Add an <code>ON COMMIT DROP</code> clause.
-     * <p>
-     * This clause will only be rendered when used with a
-     * <code>GLOBAL TEMPORARY TABLE</code>
-     *
-     * @see DSL#createGlobalTemporaryTable(Table)
+     * Add the <code>ON COMMIT DROP</code> clause to the <code>CREATE TABLE</code> statement.
      */
-    @NotNull @CheckReturnValue
     @Support({ POSTGRES, YUGABYTEDB })
+    @NotNull @CheckReturnValue
     CreateTableCommentStep onCommitDrop();
 }

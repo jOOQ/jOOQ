@@ -39,7 +39,6 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.AbstractName.NO_NAME;
-import static org.jooq.impl.Tools.findAny;
 
 import java.util.ArrayList;
 import java.util.List;

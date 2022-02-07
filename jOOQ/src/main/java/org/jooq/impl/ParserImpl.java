@@ -529,9 +529,8 @@ import org.jooq.CreateIndexWhereStep;
 // ...
 // ...
 import org.jooq.CreateSequenceFlagsStep;
-import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTableCommentStep;
-import org.jooq.CreateTableConstraintStep;
+import org.jooq.CreateTableElementListStep;
 import org.jooq.CreateTableOnCommitStep;
 import org.jooq.CreateTableStorageStep;
 import org.jooq.CreateTableWithDataStep;
@@ -645,6 +644,7 @@ import org.jooq.SortField;
 import org.jooq.SortOrder;
 import org.jooq.Statement;
 import org.jooq.Table;
+import org.jooq.TableElement;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnStep;
@@ -4394,7 +4394,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         else
             ctas = true;
 
-        CreateTableColumnStep columnStep = ifNotExists
+        CreateTableElementListStep elementListStep = ifNotExists
             ? temporary
                 ? dsl.createTemporaryTableIfNotExists(tableName)
                 : dsl.createTableIfNotExists(tableName)
@@ -4403,14 +4403,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 : dsl.createTable(tableName);
 
         if (!fields.isEmpty())
-            columnStep = columnStep.columns(fields);
+            elementListStep = elementListStep.columns(fields);
 
         // [#12888] To avoid ambiguities with T-SQL's support for statement batches
         //          without statement separators, let's accept MySQL's optional AS
         //          keyword only for empty field lists
         if (parseKeywordIf("AS") || fields.isEmpty() && peekSelectOrWith(true)) {
             boolean previousMetaLookupsForceIgnore = metaLookupsForceIgnore();
-            CreateTableWithDataStep withDataStep = columnStep.as((Select<Record>) metaLookupsForceIgnore(false).parseQuery(true, true));
+            CreateTableWithDataStep withDataStep = elementListStep.as((Select<Record>) metaLookupsForceIgnore(false).parseQuery(true, true));
             metaLookupsForceIgnore(previousMetaLookupsForceIgnore);
             commentStep =
                   parseKeywordIf("WITH DATA")
@@ -4423,9 +4423,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             throw expected("AS, WITH, SELECT, or (");
         }
         else {
-            CreateTableConstraintStep constraintStep = constraints.isEmpty()
-                ? columnStep
-                : columnStep.constraints(constraints);
+            CreateTableElementListStep constraintStep = constraints.isEmpty()
+                ? elementListStep
+                : elementListStep.constraints(constraints);
             CreateTableOnCommitStep onCommitStep = indexes.isEmpty()
                 ? constraintStep
                 : constraintStep.indexes(indexes);
@@ -5297,7 +5297,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final DDLQuery parseAlterTableAdd(AlterTableStep s1, Table<?> tableName) {
-        List<FieldOrConstraint> list = new ArrayList<>();
+        List<TableElement> list = new ArrayList<>();
 
         if (parseIndexOrKeyIf()) {
             Name name = parseIdentifierIf();
@@ -5358,7 +5358,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             || parseKeywordIf("KEY");
     }
 
-    private final void parseAlterTableAddFieldsOrConstraints(List<FieldOrConstraint> list) {
+    private final void parseAlterTableAddFieldsOrConstraints(List<TableElement> list) {
         ConstraintTypeStep constraint = parseConstraintNameSpecification();
 
         if (parsePrimaryKeyClusteredNonClusteredKeywordIf())
@@ -5382,7 +5382,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return null;
     }
 
-    private final Field<?> parseAlterTableAddField(List<FieldOrConstraint> list) {
+    private final Field<?> parseAlterTableAddField(List<TableElement> list) {
 
         // The below code is taken from CREATE TABLE, with minor modifications as
         // https://github.com/jOOQ/jOOQ/issues/5317 has not yet been implemented

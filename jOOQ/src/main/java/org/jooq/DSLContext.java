@@ -9992,6 +9992,172 @@ public interface DSLContext extends Scope {
 
 
 
+    /**
+     * The <code>CREATE TABLE</code> statement.
+     *
+     * @see DSL#createTable(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    CreateTableElementListStep createTable(@Stringly.Name String table);
+
+    /**
+     * The <code>CREATE TABLE</code> statement.
+     *
+     * @see DSL#createTable(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    CreateTableElementListStep createTable(Name table);
+
+    /**
+     * The <code>CREATE TABLE</code> statement.
+     *
+     * @see DSL#createTable(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    CreateTableElementListStep createTable(Table<?> table);
+
+    /**
+     * The <code>CREATE TABLE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createTableIfNotExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    CreateTableElementListStep createTableIfNotExists(@Stringly.Name String table);
+
+    /**
+     * The <code>CREATE TABLE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createTableIfNotExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    CreateTableElementListStep createTableIfNotExists(Name table);
+
+    /**
+     * The <code>CREATE TABLE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createTableIfNotExists(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    CreateTableElementListStep createTableIfNotExists(Table<?> table);
+
+    /**
+     * The <code>CREATE TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#createTemporaryTable(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    CreateTableElementListStep createTemporaryTable(@Stringly.Name String table);
+
+    /**
+     * The <code>CREATE TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#createTemporaryTable(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    CreateTableElementListStep createTemporaryTable(Name table);
+
+    /**
+     * The <code>CREATE TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#createTemporaryTable(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    CreateTableElementListStep createTemporaryTable(Table<?> table);
+
+    /**
+     * The <code>CREATE TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createTemporaryTableIfNotExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    CreateTableElementListStep createTemporaryTableIfNotExists(@Stringly.Name String table);
+
+    /**
+     * The <code>CREATE TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createTemporaryTableIfNotExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    CreateTableElementListStep createTemporaryTableIfNotExists(Name table);
+
+    /**
+     * The <code>CREATE TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createTemporaryTableIfNotExists(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    CreateTableElementListStep createTemporaryTableIfNotExists(Table<?> table);
+
+    /**
+     * The <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#createGlobalTemporaryTable(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    CreateTableElementListStep createGlobalTemporaryTable(@Stringly.Name String table);
+
+    /**
+     * The <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#createGlobalTemporaryTable(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    CreateTableElementListStep createGlobalTemporaryTable(Name table);
+
+    /**
+     * The <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#createGlobalTemporaryTable(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    CreateTableElementListStep createGlobalTemporaryTable(Table<?> table);
+
+    /**
+     * The <code>CREATE GLOBAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createGlobalTemporaryTableIfNotExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    CreateTableElementListStep createGlobalTemporaryTableIfNotExists(@Stringly.Name String table);
+
+    /**
+     * The <code>CREATE GLOBAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createGlobalTemporaryTableIfNotExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Name table);
+
+    /**
+     * The <code>CREATE GLOBAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createGlobalTemporaryTableIfNotExists(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Table<?> table);
+
+
+
+
+
 
 
 
@@ -10960,141 +11126,6 @@ public interface DSLContext extends Scope {
 
 
 
-
-    /**
-     * Create a new DSL <code>CREATE TABLE</code> statement.
-     *
-     * @see DSL#createTable(String)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    CreateTableColumnStep createTable(String table);
-
-    /**
-     * Create a new DSL <code>CREATE TABLE</code> statement.
-     *
-     * @see DSL#createTable(Name)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    CreateTableColumnStep createTable(Name table);
-
-    /**
-     * Create a new DSL <code>CREATE TABLE</code> statement.
-     *
-     * @see DSL#createTable(Table)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    CreateTableColumnStep createTable(Table<?> table);
-
-    /**
-     * Create a new DSL <code>CREATE TABLE</code> statement.
-     *
-     * @see DSL#createTableIfNotExists(String)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    CreateTableColumnStep createTableIfNotExists(String table);
-
-    /**
-     * Create a new DSL <code>CREATE TABLE</code> statement.
-     *
-     * @see DSL#createTableIfNotExists(Name)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    CreateTableColumnStep createTableIfNotExists(Name table);
-
-    /**
-     * Create a new DSL <code>CREATE TABLE</code> statement.
-     *
-     * @see DSL#createTableIfNotExists(Table)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    CreateTableColumnStep createTableIfNotExists(Table<?> table);
-
-    /**
-     * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
-     *
-     * @see DSL#createTemporaryTable(String)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    CreateTableColumnStep createTemporaryTable(String table);
-
-    /**
-     * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
-     *
-     * @see DSL#createTemporaryTable(Name)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    CreateTableColumnStep createTemporaryTable(Name table);
-
-    /**
-     * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
-     *
-     * @see DSL#createTemporaryTable(Table)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    CreateTableColumnStep createTemporaryTable(Table<?> table);
-
-    /**
-     * Create a new DSL <code>CREATE TEMPORARY TABLE IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createTemporaryTableIfNotExists(String)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    CreateTableColumnStep createTemporaryTableIfNotExists(String table);
-
-    /**
-     * Create a new DSL <code>CREATE TEMPORARY TABLE IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createTemporaryTableIfNotExists(Name)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    CreateTableColumnStep createTemporaryTableIfNotExists(Name table);
-
-    /**
-     * Create a new DSL <code>CREATE TEMPORARY TABLE IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createTemporaryTableIfNotExists(Table)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    CreateTableColumnStep createTemporaryTableIfNotExists(Table<?> table);
-
-    /**
-     * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
-     *
-     * @see DSL#createGlobalTemporaryTable(String)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    CreateTableColumnStep createGlobalTemporaryTable(String table);
-
-    /**
-     * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
-     *
-     * @see DSL#createGlobalTemporaryTable(Name)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    CreateTableColumnStep createGlobalTemporaryTable(Name table);
-
-    /**
-     * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
-     *
-     * @see DSL#createGlobalTemporaryTable(Table)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    CreateTableColumnStep createGlobalTemporaryTable(Table<?> table);
 
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.

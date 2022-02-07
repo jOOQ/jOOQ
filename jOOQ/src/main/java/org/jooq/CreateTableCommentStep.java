@@ -37,13 +37,14 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.SQLDialect.*;
 
+import java.util.*;
+
+import org.jetbrains.annotations.*;
+
 /**
- * A {@link Query} that can create tables.
+ * A step in the construction of the <code>CREATE TABLE</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -62,23 +63,21 @@ import static org.jooq.SQLDialect.*;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface CreateTableCommentStep extends CreateTableStorageStep {
 
     /**
-     * Add a comment to the table.
+     * Add the <code>COMMENT</code> clause to the <code>CREATE TABLE</code> statement.
      */
-    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    CreateTableStorageStep comment(String comment);
+    @NotNull @CheckReturnValue
+    CreateTableStorageStep comment(@Stringly.Comment String comment);
 
     /**
-     * Add a comment to the table.
+     * Add the <code>COMMENT</code> clause to the <code>CREATE TABLE</code> statement.
      */
-    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @NotNull @CheckReturnValue
     CreateTableStorageStep comment(Comment comment);
-
 }

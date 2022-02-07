@@ -150,7 +150,8 @@ extends
     GroupField,
     OrderField<T>,
     FieldOrRow,
-    FieldOrConstraint
+    FieldOrConstraint,
+    TableElement
 {
 
     // ------------------------------------------------------------------------

@@ -101,6 +101,7 @@ import org.jooq.Sequence;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
 import org.jooq.Table;
+import org.jooq.TableElement;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.TableOptions.TableType;
@@ -327,7 +328,7 @@ final class Interpreter {
             return;
         }
 
-        MutableTable mt = newTable(table, schema, query.$columnFields(), query.$columnTypes(), query.$select(), query.$comment(), query.$temporary() ? TableOptions.temporaryTable(query.$onCommit()) : TableOptions.table());
+        MutableTable mt = newTable(table, schema, query.$columns(), query.$select(), query.$comment(), query.$temporary() ? TableOptions.temporaryTable(query.$onCommit()) : TableOptions.table());
 
         for (Constraint constraint : query.$constraints())
             addConstraint(query, (ConstraintImpl) constraint, mt);
@@ -499,7 +500,7 @@ final class Interpreter {
             throw objectNotTable(table);
 
         if (query.$add() != null) {
-            for (FieldOrConstraint fc : query.$add())
+            for (TableElement fc : query.$add())
                 if (fc instanceof Field && find(existing.fields, (Field<?>) fc) != null)
                     throw alreadyExists(fc);
                 else if (fc instanceof Constraint && !fc.getUnqualifiedName().empty() && existing.constraint((Constraint) fc) != null)
@@ -523,7 +524,7 @@ final class Interpreter {
                     addField(existing, index, (UnqualifiedName) f.getUnqualifiedName(), f.getDataType());
             }
             else {
-                for (FieldOrConstraint fc : query.$add())
+                for (TableElement fc : query.$add())
                     if (fc instanceof Field)
                         addField(existing, Integer.MAX_VALUE, (UnqualifiedName) fc.getUnqualifiedName(), ((Field<?>) fc).getDataType());
                     else if (fc instanceof ConstraintImpl)
@@ -701,9 +702,9 @@ final class Interpreter {
             throw unsupportedQuery(query);
     }
 
-    private final Iterable<Field<?>> assertFields(Query query, Iterable<FieldOrConstraint> fields) {
+    private final Iterable<Field<?>> assertFields(Query query, Iterable<TableElement> fields) {
         return () -> new Iterator<Field<?>>() {
-            final Iterator<FieldOrConstraint> it = fields.iterator();
+            final Iterator<TableElement> it = fields.iterator();
 
             @Override
             public boolean hasNext() {
@@ -712,7 +713,7 @@ final class Interpreter {
 
             @Override
             public Field<?> next() {
-                FieldOrConstraint next = it.next();
+                TableElement next = it.next();
 
                 if (next instanceof Field)
                     return (Field<?>) next;
@@ -810,11 +811,7 @@ final class Interpreter {
                 return;
         }
 
-        List<DataType<?>> columnTypes = query.$select() != null
-            ? dataTypes(query.$select())
-            : map(query.$fields(), f -> f.getDataType());
-
-        newTable(table, schema, query.$fields(), columnTypes, query.$select(), null, TableOptions.view(query.$select()));
+        newTable(table, schema, query.$fields(), query.$select(), null, TableOptions.view(query.$select()));
     }
 
     private final void accept0(AlterViewImpl query) {
@@ -1251,16 +1248,16 @@ final class Interpreter {
         Table<?> table,
         MutableSchema schema,
         List<? extends Field<?>> columns,
-        List<? extends DataType<?>> columnTypes,
         Select<?> select,
         Comment comment,
         TableOptions options
     ) {
         MutableTable t = new MutableTable((UnqualifiedName) table.getUnqualifiedName(), schema, comment, options);
 
+        // TODO: [#13003] Merge the column and select types if both are available
         if (!columns.isEmpty())
             for (int i = 0; i < columns.size(); i++)
-                addField(t, Integer.MAX_VALUE, (UnqualifiedName) columns.get(i).getUnqualifiedName(), columnTypes.get(i));
+                addField(t, Integer.MAX_VALUE, (UnqualifiedName) columns.get(i).getUnqualifiedName(), columns.get(i).getDataType());
         else if (select != null)
             for (Field<?> column : select.fields())
                 addField(t, Integer.MAX_VALUE, (UnqualifiedName) column.getUnqualifiedName(), column.getDataType());

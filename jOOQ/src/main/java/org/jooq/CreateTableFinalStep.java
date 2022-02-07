@@ -37,9 +37,16 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
+import org.jetbrains.annotations.*;
 
 /**
- * A {@link Query} that can create tables.
+ * A step in the construction of the <code>CREATE TABLE</code> statement.
+ * <p>
+ * @deprecated - [#11329] - 3.15.0 - This type will be removed in the future. Do not reference it directly
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -58,11 +65,8 @@ package org.jooq;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @deprecated - [#11329] - 3.15.0 - This type will be removed in the future. Do not reference it directly
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 @Deprecated(forRemoval = true, since = "3.15")
 public interface CreateTableFinalStep extends DDLQuery {
-
 }

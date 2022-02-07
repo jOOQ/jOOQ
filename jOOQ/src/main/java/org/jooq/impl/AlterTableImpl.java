@@ -199,6 +199,7 @@ import org.jooq.Record1;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.TableElement;
 // ...
 import org.jooq.impl.QOM.Cascade;
 import org.jooq.impl.QOM.UNotYetImplemented;
@@ -223,18 +224,18 @@ implements
     UNotYetImplemented
 {
 
-    private static final Clause[]            CLAUSES                               = { ALTER_TABLE };
-    private static final Set<SQLDialect>     NO_SUPPORT_IF_EXISTS                  = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, MARIADB);
-    private static final Set<SQLDialect>     NO_SUPPORT_IF_EXISTS_COLUMN           = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
-    private static final Set<SQLDialect>     NO_SUPPORT_IF_EXISTS_CONSTRAINT       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
-    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS_COLUMN       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
-    private static final Set<SQLDialect>     SUPPORT_RENAME_COLUMN                 = SQLDialect.supportedBy(DERBY);
-    private static final Set<SQLDialect>     SUPPORT_RENAME_TABLE                  = SQLDialect.supportedBy(DERBY);
-    private static final Set<SQLDialect>     NO_SUPPORT_RENAME_QUALIFIED_TABLE     = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect>     NO_SUPPORT_ALTER_TYPE_AND_NULL        = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect>     NO_SUPPORT_DROP_CONSTRAINT            = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect>     REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect>     REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
+    private static final Clause[]        CLAUSES                               = { ALTER_TABLE };
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS                  = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, MARIADB);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_COLUMN           = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_CONSTRAINT       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS_COLUMN       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect> SUPPORT_RENAME_COLUMN                 = SQLDialect.supportedBy(DERBY);
+    private static final Set<SQLDialect> SUPPORT_RENAME_TABLE                  = SQLDialect.supportedBy(DERBY);
+    private static final Set<SQLDialect> NO_SUPPORT_RENAME_QUALIFIED_TABLE     = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_ALTER_TYPE_AND_NULL        = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_DROP_CONSTRAINT            = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
 
 
 
@@ -248,41 +249,41 @@ implements
 
 
 
-    private final Table<?>                   table;
-    private final boolean                    ifExists;
-    private boolean                          ifExistsColumn;
-    private boolean                          ifExistsConstraint;
-    private boolean                          ifNotExistsColumn;
-    private Comment                          comment;
-    private Table<?>                         renameTo;
-    private Field<?>                         renameColumn;
-    private Field<?>                         renameColumnTo;
-    private Index                            renameIndex;
-    private Index                            renameIndexTo;
-    private Constraint                       renameConstraint;
-    private Constraint                       renameConstraintTo;
-    private QueryPartList<FieldOrConstraint> add;
-    private Field<?>                         addColumn;
-    private DataType<?>                      addColumnType;
-    private Constraint                       addConstraint;
-    private boolean                          addFirst;
-    private Field<?>                         addBefore;
-    private Field<?>                         addAfter;
+    private final Table<?>               table;
+    private final boolean                ifExists;
+    private boolean                      ifExistsColumn;
+    private boolean                      ifExistsConstraint;
+    private boolean                      ifNotExistsColumn;
+    private Comment                      comment;
+    private Table<?>                     renameTo;
+    private Field<?>                     renameColumn;
+    private Field<?>                     renameColumnTo;
+    private Index                        renameIndex;
+    private Index                        renameIndexTo;
+    private Constraint                   renameConstraint;
+    private Constraint                   renameConstraintTo;
+    private QueryPartList<TableElement>  add;
+    private Field<?>                     addColumn;
+    private DataType<?>                  addColumnType;
+    private Constraint                   addConstraint;
+    private boolean                      addFirst;
+    private Field<?>                     addBefore;
+    private Field<?>                     addAfter;
 
 
 
 
-    private Constraint                       alterConstraint;
-    private boolean                          alterConstraintEnforced;
-    private Field<?>                         alterColumn;
-    private Nullability                      alterColumnNullability;
-    private DataType<?>                      alterColumnType;
-    private Field<?>                         alterColumnDefault;
-    private boolean                          alterColumnDropDefault;
-    private QueryPartList<Field<?>>          dropColumns;
-    private Constraint                       dropConstraint;
-    private ConstraintType                   dropConstraintType;
-    private Cascade                          dropCascade;
+    private Constraint                   alterConstraint;
+    private boolean                      alterConstraintEnforced;
+    private Field<?>                     alterColumn;
+    private Nullability                  alterColumnNullability;
+    private DataType<?>                  alterColumnType;
+    private Field<?>                     alterColumnDefault;
+    private boolean                      alterColumnDropDefault;
+    private QueryPartList<Field<?>>      dropColumns;
+    private Constraint                   dropConstraint;
+    private ConstraintType               dropConstraintType;
+    private Cascade                      dropCascade;
 
     AlterTableImpl(Configuration configuration, Table<?> table) {
         this(configuration, table, false);
@@ -300,7 +301,7 @@ implements
     final boolean                  $ifExistsColumn()          { return ifExistsColumn; }
     final boolean                  $ifExistsConstraint()      { return ifExistsConstraint; }
     final boolean                  $ifNotExistsColumn()       { return ifNotExistsColumn; }
-    final List<FieldOrConstraint>  $add()                     { return add; }
+    final List<TableElement>       $add()                     { return add; }
     final Field<?>                 $addColumn()               { return addColumn; }
     final DataType<?>              $addColumnType()           { return addColumnType; }
     final Constraint               $addConstraint()           { return addConstraint; }
@@ -457,21 +458,23 @@ implements
     }
 
     @Override
-    public final AlterTableImpl add(FieldOrConstraint... fields) {
+    public final AlterTableImpl add(TableElement... fields) {
         return add(Arrays.asList(fields));
     }
 
     @Override
-    public final AlterTableImpl add(Collection<? extends FieldOrConstraint> fields) {
+    public final AlterTableImpl add(Collection<? extends TableElement> fields) {
 
         // [#9570] Better portability of single item ADD statements
         if (fields.size() == 1) {
-            FieldOrConstraint first = fields.iterator().next();
+            TableElement first = fields.iterator().next();
 
             if (first instanceof Field)
                 return add((Field<?>) first);
             else if (first instanceof Constraint)
                 return add((Constraint) first);
+            else if (first instanceof Index)
+                throw new UnsupportedOperationException("ALTER TABLE .. ADD INDEX not yet supported, see https://github.com/jOOQ/jOOQ/issues/13006");
         }
 
         add = new QueryPartList<>(fields);
@@ -1295,7 +1298,7 @@ implements
                         ctx.visit(addColumnKeyword(ctx)).sql(' ');
                 }
 
-                FieldOrConstraint part = add.get(i);
+                TableElement part = add.get(i);
                 ctx.qualify(false, c -> c.visit(part));
 
                 if (part instanceof Field) { Field<?> f = (Field<?>) part;

@@ -37,125 +37,311 @@
  */
 package org.jooq.impl;
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-import static org.jooq.Clause.CREATE_TABLE;
-import static org.jooq.Clause.CREATE_TABLE_AS;
-import static org.jooq.Clause.CREATE_TABLE_COLUMNS;
-import static org.jooq.Clause.CREATE_TABLE_CONSTRAINTS;
-import static org.jooq.Clause.CREATE_TABLE_NAME;
-// ...
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-// ...
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.IGNITE;
-// ...
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.SQLITE;
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.YUGABYTEDB;
-import static org.jooq.impl.DSL.asterisk;
-import static org.jooq.impl.DSL.commentOnTable;
-import static org.jooq.impl.DSL.createIndex;
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.insertInto;
-import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.sql;
-import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Keywords.K_COMMENT;
-import static org.jooq.impl.Keywords.K_CREATE;
-import static org.jooq.impl.Keywords.K_GLOBAL_TEMPORARY;
-import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
-import static org.jooq.impl.Keywords.K_INDEX;
-import static org.jooq.impl.Keywords.K_IS;
-import static org.jooq.impl.Keywords.K_ON_COMMIT_DELETE_ROWS;
-import static org.jooq.impl.Keywords.K_ON_COMMIT_DROP;
-import static org.jooq.impl.Keywords.K_ON_COMMIT_PRESERVE_ROWS;
-import static org.jooq.impl.Keywords.K_TABLE;
-import static org.jooq.impl.Keywords.K_TEMPORARY;
-import static org.jooq.impl.Keywords.K_UNIQUE;
-import static org.jooq.impl.Keywords.K_WITH_DATA;
-import static org.jooq.impl.Keywords.K_WITH_NO_DATA;
-import static org.jooq.impl.SQLDataType.INTEGER;
-import static org.jooq.impl.Tools.EMPTY_FIELD;
-import static org.jooq.impl.Tools.anyMatch;
-import static org.jooq.impl.Tools.begin;
-import static org.jooq.impl.Tools.enums;
-import static org.jooq.impl.Tools.executeImmediate;
-import static org.jooq.impl.Tools.findAny;
-import static org.jooq.impl.Tools.map;
-import static org.jooq.impl.Tools.storedEnumType;
-import static org.jooq.impl.Tools.tryCatch;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_SELECT_NO_DATA;
-import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.function.Consumer;
-
-import org.jooq.Comment;
-import org.jooq.Condition;
-import org.jooq.Configuration;
-import org.jooq.Constraint;
-import org.jooq.Context;
-import org.jooq.CreateTableColumnStep;
-import org.jooq.CreateTableConstraintStep;
-import org.jooq.CreateTableWithDataStep;
-import org.jooq.DataType;
-import org.jooq.EnumType;
-import org.jooq.Field;
-import org.jooq.Index;
-import org.jooq.Name;
-import org.jooq.Nullability;
-// ...
-import org.jooq.QueryPart;
+import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
-import org.jooq.SQL;
-import org.jooq.SQLDialect;
-import org.jooq.Select;
-import org.jooq.Table;
-import org.jooq.TableOptions.OnCommit;
-import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.impl.QOM.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 
 
 /**
- * @author Lukas Eder
+ * The <code>CREATE TABLE</code> statement.
  */
+@SuppressWarnings({ "hiding", "rawtypes", "unused" })
 final class CreateTableImpl
 extends
     AbstractDDLQuery
 implements
+    QOM.CreateTable,
+    CreateTableElementListStep,
+    CreateTableAsStep,
     CreateTableWithDataStep,
-    CreateTableColumnStep,
-    UNotYetImplemented
-
+    CreateTableOnCommitStep,
+    CreateTableCommentStep,
+    CreateTableStorageStep,
+    CreateTableFinalStep
 {
+
+    final Table<?>                                  table;
+    final boolean                                   temporary;
+    final boolean                                   ifNotExists;
+          QueryPartListView<? extends TableElement> tableElements;
+          Select<?>                                 select;
+          WithOrWithoutData                         withData;
+          TableCommitAction                         onCommit;
+          Comment                                   comment;
+          SQL                                       storage;
+
+    CreateTableImpl(
+        Configuration configuration,
+        Table<?> table,
+        boolean temporary,
+        boolean ifNotExists
+    ) {
+        this(
+            configuration,
+            table,
+            temporary,
+            ifNotExists,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+    }
+
+    CreateTableImpl(
+        Configuration configuration,
+        Table<?> table,
+        boolean temporary,
+        boolean ifNotExists,
+        Collection<? extends TableElement> tableElements,
+        Select<?> select,
+        WithOrWithoutData withData,
+        TableCommitAction onCommit,
+        Comment comment,
+        SQL storage
+    ) {
+        super(configuration);
+
+        this.table = table;
+        this.temporary = temporary;
+        this.ifNotExists = ifNotExists;
+        this.tableElements = new QueryPartList<>(tableElements);
+        this.select = select;
+        this.withData = withData;
+        this.onCommit = onCommit;
+        this.comment = comment;
+        this.storage = storage;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: DSL API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final CreateTableImpl tableElements(TableElement... tableElements) {
+        return tableElements(Arrays.asList(tableElements));
+    }
+
+    @Override
+    public final CreateTableImpl tableElements(Collection<? extends TableElement> tableElements) {
+        if (this.tableElements == null)
+            this.tableElements = new QueryPartList<>(tableElements);
+        else
+            this.tableElements.addAll((Collection) tableElements);
+
+        return this;
+    }
+
+    @Override
+    public final CreateTableImpl columns(String... columns) {
+        return columns(Tools.fieldsByName(columns));
+    }
+
+    @Override
+    public final CreateTableImpl columns(Name... columns) {
+        return columns(Tools.fieldsByName(columns));
+    }
+
+    @Override
+    public final CreateTableImpl columns(Field<?>... columns) {
+        return columns(Arrays.asList(columns));
+    }
+
+    @Override
+    public final CreateTableImpl columns(Collection<? extends Field<?>> columns) {
+        return tableElements(new QueryPartList<>(columns));
+    }
+
+    @Override
+    public final CreateTableImpl column(Field<?> column) {
+        return tableElements(column);
+    }
+
+    @Override
+    public final CreateTableImpl column(String field, DataType<?> type) {
+        return column(DSL.name(field), type);
+    }
+
+    @Override
+    public final CreateTableImpl column(Name field, DataType<?> type) {
+        return tableElements(DSL.field(field, type));
+    }
+
+    @Override
+    public final CreateTableImpl column(Field<?> field, DataType<?> type) {
+        return tableElements(DSL.field(field.getQualifiedName(), type));
+    }
+
+    @Override
+    public final CreateTableImpl constraints(Constraint... constraints) {
+        return constraints(Arrays.asList(constraints));
+    }
+
+    @Override
+    public final CreateTableImpl constraints(Collection<? extends Constraint> constraints) {
+        return tableElements(new QueryPartList<>(constraints));
+    }
+
+    @Override
+    public final CreateTableImpl constraint(Constraint constraint) {
+        return tableElements(constraint);
+    }
+
+    @Override
+    public final CreateTableImpl primaryKey(String... fields) {
+        return primaryKey(Tools.fieldsByName(fields));
+    }
+
+    @Override
+    public final CreateTableImpl primaryKey(Name... fields) {
+        return primaryKey(Tools.fieldsByName(fields));
+    }
+
+    @Override
+    public final CreateTableImpl primaryKey(Field<?>... fields) {
+        return primaryKey(Arrays.asList(fields));
+    }
+
+    @Override
+    public final CreateTableImpl primaryKey(Collection<? extends Field<?>> fields) {
+        return tableElements(DSL.primaryKey(new QueryPartList<>(fields)));
+    }
+
+    @Override
+    public final CreateTableImpl unique(String... fields) {
+        return unique(Tools.fieldsByName(fields));
+    }
+
+    @Override
+    public final CreateTableImpl unique(Name... fields) {
+        return unique(Tools.fieldsByName(fields));
+    }
+
+    @Override
+    public final CreateTableImpl unique(Field<?>... fields) {
+        return unique(Arrays.asList(fields));
+    }
+
+    @Override
+    public final CreateTableImpl unique(Collection<? extends Field<?>> fields) {
+        return tableElements(DSL.unique(new QueryPartList<>(fields)));
+    }
+
+    @Override
+    public final CreateTableImpl check(Condition condition) {
+        return tableElements(DSL.check(condition));
+    }
+
+    @Override
+    public final CreateTableImpl indexes(Index... indexes) {
+        return indexes(Arrays.asList(indexes));
+    }
+
+    @Override
+    public final CreateTableImpl indexes(Collection<? extends Index> indexes) {
+        return tableElements(new QueryPartList<>(indexes));
+    }
+
+    @Override
+    public final CreateTableImpl index(Index index) {
+        return tableElements(index);
+    }
+
+    @Override
+    public final CreateTableImpl as(Select<?> select) {
+        this.select = select;
+        return this;
+    }
+
+    @Override
+    public final CreateTableImpl withData() {
+        this.withData = WithOrWithoutData.WITH_DATA;
+        return this;
+    }
+
+    @Override
+    public final CreateTableImpl withNoData() {
+        this.withData = WithOrWithoutData.WITH_NO_DATA;
+        return this;
+    }
+
+    @Override
+    public final CreateTableImpl onCommitDeleteRows() {
+        this.onCommit = TableCommitAction.DELETE_ROWS;
+        return this;
+    }
+
+    @Override
+    public final CreateTableImpl onCommitPreserveRows() {
+        this.onCommit = TableCommitAction.PRESERVE_ROWS;
+        return this;
+    }
+
+    @Override
+    public final CreateTableImpl onCommitDrop() {
+        this.onCommit = TableCommitAction.DROP;
+        return this;
+    }
+
+    @Override
+    public final CreateTableImpl comment(String comment) {
+        return comment(DSL.comment(comment));
+    }
+
+    @Override
+    public final CreateTableImpl comment(Comment comment) {
+        this.comment = comment;
+        return this;
+    }
+
+    @Override
+    public final CreateTableImpl storage(SQL storage) {
+        this.storage = storage;
+        return this;
+    }
+
+    @Override
+    public final CreateTableImpl storage(String storage, QueryPart... parts) {
+        return storage(DSL.sql(storage, parts));
+    }
+
+    @Override
+    public final CreateTableImpl storage(String storage, Object... bindings) {
+        return storage(DSL.sql(storage, bindings));
+    }
+
+    @Override
+    public final CreateTableImpl storage(String storage) {
+        return storage(DSL.sql(storage));
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
+
     private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS           = SQLDialect.supportedBy(DERBY, FIREBIRD);
     private static final Set<SQLDialect> NO_SUPPORT_WITH_DATA               = SQLDialect.supportedBy(H2, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> NO_SUPPORT_CTAS_COLUMN_NAMES       = SQLDialect.supportedBy(H2);
@@ -174,242 +360,23 @@ implements
 
 
 
-    private final Table<?>               table;
-    private Select<?>                    select;
-    private Boolean                      withData;
-    private final List<Field<?>>         columnFields;
-    private final List<DataType<?>>      columnTypes;
-    private final List<Constraint>       constraints;
-    private final List<Index>            indexes;
-    private final boolean                temporary;
-    private final boolean                ifNotExists;
-    private OnCommit                     onCommit;
-    private Comment                      comment;
-    private SQL                          storage;
-
-    CreateTableImpl(Configuration configuration, Table<?> table, boolean temporary, boolean ifNotExists) {
-        super(configuration);
-
-        this.table = table;
-        this.temporary = temporary;
-        this.ifNotExists = ifNotExists;
-        this.columnFields = new ArrayList<>();
-        this.columnTypes = new ArrayList<>();
-        this.constraints = new ArrayList<>();
-        this.indexes = new ArrayList<>();
+    final UnmodifiableList<? extends Field<?>> $columns() {
+        return QOM.unmodifiable(
+            tableElements.stream().filter(e -> e instanceof Field<?>).map(e -> (Field<?>) e).collect(Collectors.toList())
+        );
     }
 
-    final Table<?>          $table()        { return table; }
-    final boolean           $temporary()    { return temporary; }
-    final OnCommit          $onCommit()     { return onCommit; }
-    final Select<?>         $select()       { return select; }
-    final List<Field<?>>    $columnFields() { return columnFields; }
-    final List<DataType<?>> $columnTypes()  { return columnTypes; }
-    final List<Constraint>  $constraints()  { return constraints; }
-    final List<Index>       $indexes()      { return indexes; }
-    final boolean           $ifNotExists()  { return ifNotExists; }
-    final Comment           $comment()      { return comment; }
-
-    // ------------------------------------------------------------------------
-    // XXX: DSL API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final CreateTableImpl as(Select<? extends Record> s) {
-        this.select = s;
-        return this;
+    final UnmodifiableList<? extends Constraint> $constraints() {
+        return QOM.unmodifiable(
+            tableElements.stream().filter(e -> e instanceof Constraint).map(e -> (Constraint) e).collect(Collectors.toList())
+        );
     }
 
-    @Override
-    public final CreateTableImpl withData() {
-        withData = true;
-        return this;
+    final UnmodifiableList<? extends Index> $indexes() {
+        return QOM.unmodifiable(
+            tableElements.stream().filter(e -> e instanceof Index).map(e -> (Index) e).collect(Collectors.toList())
+        );
     }
-
-    @Override
-    public final CreateTableImpl withNoData() {
-        withData = false;
-        return this;
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final CreateTableImpl column(Field<?> field) {
-        return column((Field) field, field.getDataType());
-    }
-
-    @Override
-    public final CreateTableImpl columns(Field<?>... fields) {
-        return columns(Arrays.asList(fields));
-    }
-
-    @Override
-    public final CreateTableImpl columns(Name... fields) {
-        return columns(Tools.fieldsByName(fields));
-    }
-
-    @Override
-    public final CreateTableImpl columns(String... fields) {
-        return columns(Tools.fieldsByName(fields));
-    }
-
-    @Override
-    public final CreateTableImpl columns(Collection<? extends Field<?>> fields) {
-        for (Field<?> field : fields)
-            column(field);
-
-        return this;
-    }
-
-    @Override
-    public final <T> CreateTableImpl column(Field<T> field, DataType<T> type) {
-        columnFields.add(field);
-        columnTypes.add(type);
-        return this;
-    }
-
-    @Override
-    public final CreateTableImpl column(Name field, DataType<?> type) {
-        columnFields.add(field(field, type));
-        columnTypes.add(type);
-        return this;
-    }
-
-    @Override
-    public final CreateTableImpl column(String field, DataType<?> type) {
-        return column(name(field), type);
-    }
-
-    @Override
-    public final CreateTableImpl constraint(Constraint c) {
-        return constraints(Arrays.asList(c));
-    }
-
-    @Override
-    public final CreateTableImpl constraints(Constraint... c) {
-        return constraints(Arrays.asList(c));
-    }
-
-    @Override
-    public final CreateTableImpl constraints(Collection<? extends Constraint> c) {
-        constraints.addAll(c);
-        return this;
-    }
-
-    @Override
-    public final CreateTableConstraintStep primaryKey(String... fields) {
-        return constraint(DSL.primaryKey(fields));
-    }
-
-    @Override
-    public final CreateTableConstraintStep primaryKey(Name... fields) {
-        return constraint(DSL.primaryKey(fields));
-    }
-
-    @Override
-    public final CreateTableConstraintStep primaryKey(Field<?>... fields) {
-        return constraint(DSL.primaryKey(fields));
-    }
-
-    @Override
-    public final CreateTableConstraintStep primaryKey(Collection<? extends Field<?>> fields) {
-        return constraint(DSL.primaryKey(fields));
-    }
-
-    @Override
-    public final CreateTableConstraintStep unique(String... fields) {
-        return constraint(DSL.unique(fields));
-    }
-
-    @Override
-    public final CreateTableConstraintStep unique(Name... fields) {
-        return constraint(DSL.unique(fields));
-    }
-
-    @Override
-    public final CreateTableConstraintStep unique(Field<?>... fields) {
-        return constraint(DSL.unique(fields));
-    }
-
-    @Override
-    public final CreateTableConstraintStep unique(Collection<? extends Field<?>> fields) {
-        return constraint(DSL.unique(fields));
-    }
-
-    @Override
-    public final CreateTableConstraintStep check(Condition condition) {
-        return constraint(DSL.check(condition));
-    }
-
-    @Override
-    public final CreateTableImpl index(Index i) {
-        return indexes(Arrays.asList(i));
-    }
-
-    @Override
-    public final CreateTableImpl indexes(Index... i) {
-        return indexes(Arrays.asList(i));
-    }
-
-    @Override
-    public final CreateTableImpl indexes(Collection<? extends Index> i) {
-        indexes.addAll(i);
-        return this;
-    }
-
-    @Override
-    public final CreateTableImpl onCommitDeleteRows() {
-        onCommit = OnCommit.DELETE_ROWS;
-        return this;
-    }
-
-    @Override
-    public final CreateTableImpl onCommitPreserveRows() {
-        onCommit = OnCommit.PRESERVE_ROWS;
-        return this;
-    }
-
-    @Override
-    public final CreateTableImpl onCommitDrop() {
-        onCommit = OnCommit.DROP;
-        return this;
-    }
-
-    @Override
-    public final CreateTableImpl comment(String c) {
-        return comment(DSL.comment(c));
-    }
-
-    @Override
-    public final CreateTableImpl comment(Comment c) {
-        comment = c;
-        return this;
-    }
-
-    @Override
-    public final CreateTableImpl storage(SQL sql) {
-        storage = sql;
-        return this;
-    }
-
-    @Override
-    public final CreateTableImpl storage(String sql) {
-        return storage(sql(sql));
-    }
-
-    @Override
-    public final CreateTableImpl storage(String sql, Object... bindings) {
-        return storage(sql(sql, bindings));
-    }
-
-    @Override
-    public final CreateTableImpl storage(String sql, QueryPart... parts) {
-        return storage(sql(sql, parts));
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: QueryPart API
-    // ------------------------------------------------------------------------
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.dialect());
@@ -435,7 +402,7 @@ implements
 
     private final void accept0(Context<?> ctx) {
         boolean bc = comment != null && EMULATE_COMMENT_IN_BLOCK.contains(ctx.dialect());
-        boolean bi = !indexes.isEmpty() && EMULATE_INDEXES_IN_BLOCK.contains(ctx.dialect());
+        boolean bi = !$indexes().isEmpty() && EMULATE_INDEXES_IN_BLOCK.contains(ctx.dialect());
 
         if (bc || bi) {
             begin(ctx, c1 -> {
@@ -450,7 +417,7 @@ implements
                 }
 
                 if (bi) {
-                    for (Index index : indexes) {
+                    for (Index index : $indexes()) {
                         c1.formatSeparator();
 
                         executeImmediateIf(REQUIRE_EXECUTE_IMMEDIATE.contains(c1.dialect()), c1, c2 -> {
@@ -468,7 +435,7 @@ implements
     }
 
     private final void accept1(Context<?> ctx) {
-        ctx.start(CREATE_TABLE);
+        ctx.start(Clause.CREATE_TABLE);
 
         if (select != null) {
 
@@ -505,34 +472,37 @@ implements
             ctx.formatSeparator()
                .visit(storage);
 
-        ctx.end(CREATE_TABLE);
+        ctx.end(Clause.CREATE_TABLE);
     }
 
     private void toSQLCreateTable(Context<?> ctx) {
         toSQLCreateTableName(ctx);
 
-        if (!columnFields.isEmpty()
+        UnmodifiableList<? extends Field<?>> columns = $columns();
+        if (!columns.isEmpty()
                 && (select == null || !NO_SUPPORT_CTAS_COLUMN_NAMES.contains(ctx.dialect()))) {
             ctx.sqlIndentStart(" (")
-               .start(CREATE_TABLE_COLUMNS);
+               .start(Clause.CREATE_TABLE_COLUMNS);
 
             Field<?> identity = null;
             boolean qualify = ctx.qualify();
             ctx.qualify(false);
 
-            for (int i = 0; i < columnFields.size(); i++) {
-                DataType<?> type = columnType(ctx, i);
-                if (identity == null && type.identity())
-                    identity = columnFields.get(i);
+            for (int i = 0; i < columns.size(); i++) {
+                Field<?> field = columns.get(i);
+                DataType<?> type = columnType(ctx, field);
 
-                ctx.visit(columnFields.get(i));
+                if (identity == null && type.identity())
+                    identity = field;
+
+                ctx.visit(field);
 
                 if (select == null) {
                     ctx.sql(' ');
                     Tools.toSQLDDLTypeDeclarationForAddition(ctx, type);
                 }
 
-                if (i < columnFields.size() - 1)
+                if (i < columns.size() - 1)
                     ctx.sql(',').formatSeparator();
             }
 
@@ -540,22 +510,21 @@ implements
             toSQLDummyColumns(ctx);
 
             ctx.qualify(qualify);
-            ctx.end(CREATE_TABLE_COLUMNS)
-               .start(CREATE_TABLE_CONSTRAINTS);
+            ctx.end(Clause.CREATE_TABLE_COLUMNS)
+               .start(Clause.CREATE_TABLE_CONSTRAINTS);
 
-            if (!constraints.isEmpty())
-                for (Constraint constraint : constraints)
+            for (Constraint constraint : $constraints())
 
-                    // [#6841] SQLite has a weird requirement of the PRIMARY KEY keyword being on the column directly,
-                    //         when there is an identity. Thus, we must not repeat the primary key specification here.
-                    if (((ConstraintImpl) constraint).supported(ctx) && (ctx.family() != SQLITE || !matchingPrimaryKey(constraint, identity)))
-                        ctx.sql(',')
-                           .formatSeparator()
-                           .visit(constraint);
+                // [#6841] SQLite has a weird requirement of the PRIMARY KEY keyword being on the column directly,
+                //         when there is an identity. Thus, we must not repeat the primary key specification here.
+                if (((ConstraintImpl) constraint).supported(ctx) && (ctx.family() != SQLITE || !matchingPrimaryKey(constraint, identity)))
+                    ctx.sql(',')
+                       .formatSeparator()
+                       .visit(constraint);
 
             if (EMULATE_SOME_ENUM_TYPES_AS_CHECK.contains(ctx.dialect())) {
-                for (int i = 0; i < columnFields.size(); i++) {
-                    DataType<?> type = columnTypes.get(i);
+                for (Field<?> field : $columns()) {
+                    DataType<?> type = field.getDataType();
 
                     if (EnumType.class.isAssignableFrom(type.getType())) {
 
@@ -563,7 +532,6 @@ implements
                         DataType<EnumType> enumType = (DataType<EnumType>) type;
 
                         if (EMULATE_STORED_ENUM_TYPES_AS_CHECK.contains(ctx.dialect()) || !storedEnumType(enumType)) {
-                            Field<?> field = columnFields.get(i);
                             List<Field<String>> literals = map(enums(enumType.getType()), e -> inline(e.getLiteral()));
 
                             ctx.sql(',')
@@ -575,12 +543,12 @@ implements
                 }
             }
 
-            ctx.end(CREATE_TABLE_CONSTRAINTS);
+            ctx.end(Clause.CREATE_TABLE_CONSTRAINTS);
 
-            if (!indexes.isEmpty() && !EMULATE_INDEXES_IN_BLOCK.contains(ctx.dialect())) {
+            if (!$indexes().isEmpty() && !EMULATE_INDEXES_IN_BLOCK.contains(ctx.dialect())) {
                 ctx.qualify(false);
 
-                for (Index index : indexes) {
+                for (Index index : $indexes()) {
                     ctx.sql(',').formatSeparator();
 
                     if (index.getUnique())
@@ -609,9 +577,9 @@ implements
         if (REQUIRE_NON_PK_COLUMNS.contains(ctx.dialect())) {
             Field<?>[] primaryKeyColumns = primaryKeyColumns();
 
-            if (primaryKeyColumns != null && primaryKeyColumns.length == columnFields.size()) {
+            if (primaryKeyColumns != null && primaryKeyColumns.length == $columns().size()) {
                 ctx.sql(',').formatSeparator();
-                ctx.visit(field(name("dummy")));
+                ctx.visit(DSL.field(name("dummy")));
 
                 if (select == null) {
                     ctx.sql(' ');
@@ -621,10 +589,12 @@ implements
         }
     }
 
-    private final DataType<?> columnType(Context<?> ctx, int i) {
-        DataType<?> type = columnTypes.get(i);
+    private final DataType<?> columnType(Context<?> ctx, Field<?> field) {
+        DataType<?> type = field.getDataType();
 
-        if (NO_SUPPORT_NULLABLE_PRIMARY_KEY.contains(ctx.dialect()) && type.nullability() == Nullability.DEFAULT && isPrimaryKey(i))
+        if (NO_SUPPORT_NULLABLE_PRIMARY_KEY.contains(ctx.dialect())
+                && type.nullability() == Nullability.DEFAULT
+                && isPrimaryKey(field))
             type = type.nullable(false);
 
         return type;
@@ -632,14 +602,14 @@ implements
 
     private final Field<?>[] primaryKeyColumns() {
         return Tools.findAny(
-            constraints,
+            $constraints(),
             c -> c instanceof ConstraintImpl && ((ConstraintImpl) c).$primaryKey() != null,
             c -> ((ConstraintImpl) c).$primaryKey()
         );
     }
 
-    private final boolean isPrimaryKey(int i) {
-        return anyMatch(primaryKeyColumns(), columnFields.get(i)::equals);
+    private final boolean isPrimaryKey(Field<?> field) {
+        return anyMatch(primaryKeyColumns(), field::equals);
     }
 
     private final boolean matchingPrimaryKey(Constraint constraint, Field<?> identity) {
@@ -660,29 +630,29 @@ implements
         else
             ctx.formatSeparator();
 
-        if (FALSE.equals(withData) && NO_SUPPORT_WITH_DATA.contains(ctx.dialect()))
+        if (WithOrWithoutData.WITH_NO_DATA == withData && NO_SUPPORT_WITH_DATA.contains(ctx.dialect()))
             ctx.data(DATA_SELECT_NO_DATA, true);
 
-        ctx.start(CREATE_TABLE_AS);
+        ctx.start(Clause.CREATE_TABLE_AS);
 
-        if (!columnFields.isEmpty() && NO_SUPPORT_CTAS_COLUMN_NAMES.contains(ctx.dialect()))
-            ctx.visit(select(asterisk()).from(select.asTable(table(name("t")), columnFields.toArray(EMPTY_FIELD))));
+        if (!$columns().isEmpty() && NO_SUPPORT_CTAS_COLUMN_NAMES.contains(ctx.dialect()))
+            ctx.visit(select(asterisk()).from(select.asTable(table(name("t")), $columns().toArray(EMPTY_FIELD))));
         else
             ctx.visit(select);
 
-        ctx.end(CREATE_TABLE_AS);
+        ctx.end(Clause.CREATE_TABLE_AS);
 
-        if (FALSE.equals(withData) && NO_SUPPORT_WITH_DATA.contains(ctx.dialect()))
+        if (WithOrWithoutData.WITH_NO_DATA == withData && NO_SUPPORT_WITH_DATA.contains(ctx.dialect()))
             ctx.data().remove(DATA_SELECT_NO_DATA);
 
         if (WRAP_SELECT_IN_PARENS.contains(ctx.dialect())) {
             ctx.sqlIndentEnd(')');
         }
 
-        if (FALSE.equals(withData) && !NO_SUPPORT_WITH_DATA.contains(ctx.dialect()))
+        if (WithOrWithoutData.WITH_NO_DATA == withData && !NO_SUPPORT_WITH_DATA.contains(ctx.dialect()))
             ctx.formatSeparator()
                .visit(K_WITH_NO_DATA);
-        else if (TRUE.equals(withData) && !NO_SUPPORT_WITH_DATA.contains(ctx.dialect()))
+        else if (WithOrWithoutData.WITH_DATA == withData && !NO_SUPPORT_WITH_DATA.contains(ctx.dialect()))
             ctx.formatSeparator()
                .visit(K_WITH_DATA);
         else if (REQUIRES_WITH_DATA.contains(ctx.dialect()))
@@ -725,7 +695,7 @@ implements
 
 
     private final void toSQLCreateTableName(Context<?> ctx) {
-        ctx.start(CREATE_TABLE_NAME)
+        ctx.start(Clause.CREATE_TABLE_NAME)
            .visit(K_CREATE)
            .sql(' ');
 
@@ -743,7 +713,7 @@ implements
                .sql(' ');
 
         ctx.visit(table)
-           .end(CREATE_TABLE_NAME);
+           .end(Clause.CREATE_TABLE_NAME);
     }
 
     private final void toSQLOnCommit(Context<?> ctx) {
@@ -755,6 +725,139 @@ implements
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Table<?> $table() {
+        return table;
+    }
+
+    @Override
+    public final boolean $temporary() {
+        return temporary;
+    }
+
+    @Override
+    public final boolean $ifNotExists() {
+        return ifNotExists;
+    }
+
+    @Override
+    public final UnmodifiableList<? extends TableElement> $tableElements() {
+        return QOM.unmodifiable(tableElements);
+    }
+
+    @Override
+    public final Select<?> $select() {
+        return select;
+    }
+
+    @Override
+    public final WithOrWithoutData $withData() {
+        return withData;
+    }
+
+    @Override
+    public final TableCommitAction $onCommit() {
+        return onCommit;
+    }
+
+    @Override
+    public final Comment $comment() {
+        return comment;
+    }
+
+    @Override
+    public final SQL $storage() {
+        return storage;
+    }
+
+    @Override
+    public final QOM.CreateTable $table(Table<?> newValue) {
+        return $constructor().apply(newValue, $temporary(), $ifNotExists(), $tableElements(), $select(), $withData(), $onCommit(), $comment(), $storage());
+    }
+
+    @Override
+    public final QOM.CreateTable $temporary(boolean newValue) {
+        return $constructor().apply($table(), newValue, $ifNotExists(), $tableElements(), $select(), $withData(), $onCommit(), $comment(), $storage());
+    }
+
+    @Override
+    public final QOM.CreateTable $ifNotExists(boolean newValue) {
+        return $constructor().apply($table(), $temporary(), newValue, $tableElements(), $select(), $withData(), $onCommit(), $comment(), $storage());
+    }
+
+    @Override
+    public final QOM.CreateTable $tableElements(Collection<? extends TableElement> newValue) {
+        return $constructor().apply($table(), $temporary(), $ifNotExists(), newValue, $select(), $withData(), $onCommit(), $comment(), $storage());
+    }
+
+    @Override
+    public final QOM.CreateTable $select(Select<?> newValue) {
+        return $constructor().apply($table(), $temporary(), $ifNotExists(), $tableElements(), newValue, $withData(), $onCommit(), $comment(), $storage());
+    }
+
+    @Override
+    public final QOM.CreateTable $withData(WithOrWithoutData newValue) {
+        return $constructor().apply($table(), $temporary(), $ifNotExists(), $tableElements(), $select(), newValue, $onCommit(), $comment(), $storage());
+    }
+
+    @Override
+    public final QOM.CreateTable $onCommit(TableCommitAction newValue) {
+        return $constructor().apply($table(), $temporary(), $ifNotExists(), $tableElements(), $select(), $withData(), newValue, $comment(), $storage());
+    }
+
+    @Override
+    public final QOM.CreateTable $comment(Comment newValue) {
+        return $constructor().apply($table(), $temporary(), $ifNotExists(), $tableElements(), $select(), $withData(), $onCommit(), newValue, $storage());
+    }
+
+    @Override
+    public final QOM.CreateTable $storage(SQL newValue) {
+        return $constructor().apply($table(), $temporary(), $ifNotExists(), $tableElements(), $select(), $withData(), $onCommit(), $comment(), newValue);
+    }
+
+    public final Function9<? super Table<?>, ? super Boolean, ? super Boolean, ? super Collection<? extends TableElement>, ? super Select<?>, ? super WithOrWithoutData, ? super TableCommitAction, ? super Comment, ? super SQL, ? extends QOM.CreateTable> $constructor() {
+        return (a1, a2, a3, a4, a5, a6, a7, a8, a9) -> new CreateTableImpl(configuration(), a1, a2, a3, (Collection<? extends TableElement>) a4, a5, a6, a7, a8, a9);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

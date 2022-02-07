@@ -57,7 +57,6 @@ import static org.jooq.impl.Tools.map;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Check;
@@ -138,7 +137,7 @@ final class DDL {
                 .constraints(constraints);
 
         if (temporary && onCommit != null) {
-            switch (table.getOptions().onCommit()) {
+            switch (onCommit) {
                 case DELETE_ROWS:
                     return asList(s0.onCommitDeleteRows());
                 case PRESERVE_ROWS:

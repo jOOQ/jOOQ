@@ -103,7 +103,7 @@ final class DDL {
         this.configuration = configuration;
     }
 
-    private final List<Query> createTableOrView(Table<?> table, Collection<? extends Constraint> constraints) {
+    final List<Query> createTableOrView(Table<?> table, Collection<? extends Constraint> constraints) {
         boolean temporary = table.getType() == TableType.TEMPORARY;
         boolean view = table.getType().isView();
         OnCommit onCommit = table.getOptions().onCommit();
@@ -225,34 +225,36 @@ final class DDL {
         return createTableOrView(table, constraints(table));
     }
 
-    private final List<Query> createIndex(Table<?> table) {
+    final List<Query> createIndex(Table<?> table) {
         List<Query> result = new ArrayList<>();
 
         if (configuration.flags().contains(DDLFlag.INDEX))
             for (Index i : sortIf(table.getIndexes(), !configuration.respectIndexOrder()))
-                result.add(
-                    (configuration.createIndexIfNotExists()
-                        ? i.getUnique()
-                            ? ctx.createUniqueIndexIfNotExists(i)
-                            : ctx.createIndexIfNotExists(i)
-                        : i.getUnique()
-                            ? ctx.createUniqueIndex(i)
-                            : ctx.createIndex(i))
-                    .on(i.getTable(), i.getFields())
-                );
+                result.add(createIndex(i));
 
         return result;
     }
 
-    private final List<Query> alterTableAddConstraints(Table<?> table) {
+    final Query createIndex(Index i) {
+        return (configuration.createIndexIfNotExists()
+            ? i.getUnique()
+                ? ctx.createUniqueIndexIfNotExists(i)
+                : ctx.createIndexIfNotExists(i)
+            : i.getUnique()
+                ? ctx.createUniqueIndex(i)
+                : ctx.createIndex(i))
+        .on(i.getTable(), i.getFields());
+    }
+
+    final List<Query> alterTableAddConstraints(Table<?> table) {
         return alterTableAddConstraints(table, constraints(table));
     }
 
-    private final List<Query> alterTableAddConstraints(Table<?> table, List<Constraint> constraints) {
+    final List<Query> alterTableAddConstraints(Table<?> table, List<Constraint> constraints) {
         return map(constraints, c -> ctx.alterTable(table).add(c));
     }
 
-    private final List<Constraint> constraints(Table<?> table) {
+    final List<Constraint> constraints(Table<?> table) {
         List<Constraint> result = new ArrayList<>();
 
         result.addAll(primaryKeys(table));
@@ -263,7 +265,7 @@ final class DDL {
         return result;
     }
 
-    private final List<Constraint> primaryKeys(Table<?> table) {
+    final List<Constraint> primaryKeys(Table<?> table) {
         List<Constraint> result = new ArrayList<>();
 
         if (configuration.flags().contains(PRIMARY_KEY) && (table.getType() != VIEW || configuration.includeConstraintsOnViews()))
@@ -274,7 +276,7 @@ final class DDL {
         return result;
     }
 
-    private final List<Constraint> uniqueKeys(Table<?> table) {
+    final List<Constraint> uniqueKeys(Table<?> table) {
         List<Constraint> result = new ArrayList<>();
 
         if (configuration.flags().contains(UNIQUE) && (table.getType() != VIEW || configuration.includeConstraintsOnViews()))
@@ -285,7 +287,7 @@ final class DDL {
         return result;
     }
 
-    private final List<Constraint> foreignKeys(Table<?> table) {
+    final List<Constraint> foreignKeys(Table<?> table) {
         List<Constraint> result = new ArrayList<>();
 
         if (configuration.flags().contains(FOREIGN_KEY) && (table.getType() != VIEW || configuration.includeConstraintsOnViews()))
@@ -295,7 +297,7 @@ final class DDL {
         return result;
     }
 
-    private final List<Constraint> checks(Table<?> table) {
+    final List<Constraint> checks(Table<?> table) {
         List<Constraint> result = new ArrayList<>();
 
         if (configuration.flags().contains(CHECK) && (table.getType() != VIEW || configuration.includeConstraintsOnViews()))
@@ -321,7 +323,7 @@ final class DDL {
         return ctx.queries(queries);
     }
 
-    private final List<Query> commentOn(Table<?> table) {
+    final List<Query> commentOn(Table<?> table) {
         List<Query> result = new ArrayList<>();
 
         if (configuration.flags().contains(COMMENT)) {

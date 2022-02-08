@@ -38,17 +38,21 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Tools.CTX;
+import static org.jooq.impl.Tools.configuration;
 import static org.jooq.impl.Tools.nullSafe;
+import static org.jooq.tools.StringUtils.isBlank;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import org.jooq.Attachable;
 import org.jooq.Binding;
 import org.jooq.Check;
-import org.jooq.Configuration;
+import org.jooq.Comment;
 import org.jooq.Converter;
+import org.jooq.DDLExportConfiguration;
 import org.jooq.DataType;
 import org.jooq.Domain;
 import org.jooq.EmbeddableRecord;
@@ -61,18 +65,25 @@ import org.jooq.OrderField;
 import org.jooq.ParamMode;
 import org.jooq.Parameter;
 // ...
+import org.jooq.Queries;
+import org.jooq.Query;
 import org.jooq.Record;
+// ...
+// ...
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Schema;
 import org.jooq.Sequence;
+import org.jooq.Statement;
 import org.jooq.Support;
 import org.jooq.Table;
+import org.jooq.TableElement;
 import org.jooq.TableField;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.QOM.CreateTable;
 // ...
 // ...
 
@@ -497,11 +508,103 @@ public final class Internal {
         CTX.configuration().requireCommercial(logMessage);
     }
 
-    /**
-     * Retrieve a {@link Configuration} from an attachable, or the default
-     * {@link Configuration} if the attachable is detached.
-     */
-    public static final Configuration configuration(Attachable attachable) {
-        return Tools.configuration(attachable);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

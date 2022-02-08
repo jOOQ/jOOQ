@@ -88,8 +88,9 @@ class IndexImpl extends AbstractNamed implements Index {
         this.unique = unique;
     }
 
-    final SortField<?>[]    $fields()      { return fields; }
-    final boolean           $unique()      { return unique; }
+    final SortField<?>[] $fields() { return fields; }
+    final boolean        $unique() { return unique; }
+    final Condition      $where()  { return where; }
 
     @Override
     public final void accept(Context<?> ctx) {

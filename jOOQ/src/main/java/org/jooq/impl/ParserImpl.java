@@ -529,6 +529,7 @@ import org.jooq.CreateIndexWhereStep;
 // ...
 // ...
 import org.jooq.CreateSequenceFlagsStep;
+import org.jooq.CreateTableAsStep;
 import org.jooq.CreateTableCommentStep;
 import org.jooq.CreateTableElementListStep;
 import org.jooq.CreateTableOnCommitStep;
@@ -559,7 +560,6 @@ import org.jooq.DropSchemaStep;
 import org.jooq.DropTableStep;
 import org.jooq.DropTypeStep;
 import org.jooq.Field;
-import org.jooq.FieldOrConstraint;
 import org.jooq.FieldOrRow;
 // ...
 // ...
@@ -4289,8 +4289,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (parseKeywordIf("USING"))
             parseIdentifier();
 
+        CreateTableOnCommitStep onCommitStep;
         CreateTableCommentStep commentStep;
-        CreateTableStorageStep storageStep;
 
         List<Field<?>> fields = new ArrayList<>();
         List<Constraint> constraints = new ArrayList<>();
@@ -4405,47 +4405,49 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (!fields.isEmpty())
             elementListStep = elementListStep.columns(fields);
 
+        CreateTableElementListStep constraintStep = constraints.isEmpty()
+            ? elementListStep
+            : elementListStep.constraints(constraints);
+        CreateTableAsStep asStep = indexes.isEmpty()
+            ? constraintStep
+            : constraintStep.indexes(indexes);
+
+        // [#6133] Historically, the jOOQ API places the ON COMMIT clause after
+        // the AS clause, which doesn't correspond to dialect implementations
+        Function<CreateTableOnCommitStep, CreateTableCommentStep> onCommit;
+        if (temporary && parseKeywordIf("ON COMMIT")) {
+            if (parseKeywordIf("DELETE ROWS"))
+                onCommit = CreateTableOnCommitStep::onCommitDeleteRows;
+            else if (parseKeywordIf("DROP"))
+                onCommit = CreateTableOnCommitStep::onCommitDrop;
+            else if (parseKeywordIf("PRESERVE ROWS"))
+                onCommit = CreateTableOnCommitStep::onCommitPreserveRows;
+            else
+                throw unsupportedClause();
+        }
+        else
+            onCommit = s -> s;
+
         // [#12888] To avoid ambiguities with T-SQL's support for statement batches
         //          without statement separators, let's accept MySQL's optional AS
         //          keyword only for empty field lists
         if (parseKeywordIf("AS") || fields.isEmpty() && peekSelectOrWith(true)) {
             boolean previousMetaLookupsForceIgnore = metaLookupsForceIgnore();
-            CreateTableWithDataStep withDataStep = elementListStep.as((Select<Record>) metaLookupsForceIgnore(false).parseQuery(true, true));
+            CreateTableWithDataStep withDataStep = asStep.as((Select<Record>) metaLookupsForceIgnore(false).parseQuery(true, true));
             metaLookupsForceIgnore(previousMetaLookupsForceIgnore);
-            commentStep =
+            onCommitStep =
                   parseKeywordIf("WITH DATA")
                 ? withDataStep.withData()
                 : parseKeywordIf("WITH NO DATA")
                 ? withDataStep.withNoData()
                 : withDataStep;
         }
-        else if (ctas) {
+        else if (ctas)
             throw expected("AS, WITH, SELECT, or (");
-        }
-        else {
-            CreateTableElementListStep constraintStep = constraints.isEmpty()
-                ? elementListStep
-                : elementListStep.constraints(constraints);
-            CreateTableOnCommitStep onCommitStep = indexes.isEmpty()
-                ? constraintStep
-                : constraintStep.indexes(indexes);
+        else
+            onCommitStep = asStep;
 
-            // [#6133] TODO Support this also with CTAS
-            if (temporary && parseKeywordIf("ON COMMIT")) {
-                if (parseKeywordIf("DELETE ROWS"))
-                    commentStep = onCommitStep.onCommitDeleteRows();
-                else if (parseKeywordIf("DROP"))
-                    commentStep = onCommitStep.onCommitDrop();
-                else if (parseKeywordIf("PRESERVE ROWS"))
-                    commentStep = onCommitStep.onCommitPreserveRows();
-                else
-                    throw unsupportedClause();
-            }
-            else
-                commentStep = onCommitStep;
-        }
-
-        storageStep = commentStep;
+        commentStep = onCommit.apply(onCommitStep);
 
         List<SQL> storage = new ArrayList<>();
         Comment comment = null;
@@ -4581,8 +4583,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 throw expected("storage clause after ','");
         }
 
-        if (comment != null)
-            storageStep = commentStep.comment(comment);
+        CreateTableStorageStep storageStep = comment != null
+            ? commentStep.comment(comment)
+            : commentStep;
 
         if (storage.size() > 0)
             return storageStep.storage(new SQLConcatenationImpl(storage.toArray(EMPTY_QUERYPART)));

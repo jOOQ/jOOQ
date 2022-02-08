@@ -5941,6 +5941,8 @@ public class JavaGenerator extends AbstractGenerator {
                         for (ForeignKeyDefinition foreignKey : foreignKeys) {
                             final String referencedTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable()));
                             final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
+
+                            // [#13008] Prevent conflicts with the below leading underscore
                             final String unquotedKeyMethodName = keyMethodName.replace("`", "");
 
                             if (kotlin)

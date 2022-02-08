@@ -64,6 +64,7 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Vladimir Vinogradov
 - Vojtech Polivka
 - Wang Gaoyuan
+- Wyke Oskar
 - Zoltan Tamasi
 
 See the following website for details about contributing to jOOQ:

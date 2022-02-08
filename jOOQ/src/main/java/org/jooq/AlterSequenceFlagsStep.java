@@ -38,8 +38,11 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.*;
+import static org.jooq.impl.DSL.*;
 
 import java.util.*;
+
+import org.jooq.impl.DSL;
 
 import org.jetbrains.annotations.*;
 

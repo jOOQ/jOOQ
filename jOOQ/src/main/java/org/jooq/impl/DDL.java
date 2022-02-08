@@ -66,6 +66,7 @@ import org.jooq.ConstraintEnforcementStep;
 import org.jooq.CreateDomainAsStep;
 import org.jooq.CreateDomainConstraintStep;
 import org.jooq.CreateDomainDefaultStep;
+import org.jooq.CreateIndexIncludeStep;
 import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableOnCommitStep;
 import org.jooq.CreateViewAsStep;
@@ -236,14 +237,17 @@ final class DDL {
     }
 
     final Query createIndex(Index i) {
-        return (configuration.createIndexIfNotExists()
-            ? i.getUnique()
-                ? ctx.createUniqueIndexIfNotExists(i)
-                : ctx.createIndexIfNotExists(i)
-            : i.getUnique()
-                ? ctx.createUniqueIndex(i)
-                : ctx.createIndex(i))
-        .on(i.getTable(), i.getFields());
+        CreateIndexIncludeStep s1 =
+            (configuration.createIndexIfNotExists()
+                ? i.getUnique()
+                    ? ctx.createUniqueIndexIfNotExists(i)
+                    : ctx.createIndexIfNotExists(i)
+                : i.getUnique()
+                    ? ctx.createUniqueIndex(i)
+                    : ctx.createIndex(i))
+            .on(i.getTable(), i.getFields());
+
+        return i.getWhere() != null ? s1.where(i.getWhere()) : s1;
     }
 
     final List<Query> alterTableAddConstraints(Table<?> table) {

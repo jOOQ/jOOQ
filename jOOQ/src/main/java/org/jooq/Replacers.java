@@ -90,11 +90,3 @@ package org.jooq;
 
 
 
-
-
-
-
-
-
-
-

@@ -57,7 +57,6 @@ import static org.jooq.impl.Tools.map;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Check;
@@ -67,6 +66,7 @@ import org.jooq.ConstraintEnforcementStep;
 import org.jooq.CreateDomainAsStep;
 import org.jooq.CreateDomainConstraintStep;
 import org.jooq.CreateDomainDefaultStep;
+import org.jooq.CreateIndexIncludeStep;
 import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableOnCommitStep;
 import org.jooq.CreateViewAsStep;
@@ -138,7 +138,7 @@ final class DDL {
                 .constraints(constraints);
 
         if (temporary && onCommit != null) {
-            switch (table.getOptions().onCommit()) {
+            switch (onCommit) {
                 case DELETE_ROWS:
                     return asList(s0.onCommitDeleteRows());
                 case PRESERVE_ROWS:
@@ -231,18 +231,23 @@ final class DDL {
 
         if (configuration.flags().contains(DDLFlag.INDEX))
             for (Index i : sortIf(table.getIndexes(), !configuration.respectIndexOrder()))
-                result.add(
-                    (configuration.createIndexIfNotExists()
-                        ? i.getUnique()
-                            ? ctx.createUniqueIndexIfNotExists(i)
-                            : ctx.createIndexIfNotExists(i)
-                        : i.getUnique()
-                            ? ctx.createUniqueIndex(i)
-                            : ctx.createIndex(i))
-                    .on(i.getTable(), i.getFields())
-                );
+                result.add(createIndex(i));
 
         return result;
+    }
+
+    private final Query createIndex(Index i) {
+        CreateIndexIncludeStep s1 =
+            (configuration.createIndexIfNotExists()
+                ? i.getUnique()
+                    ? ctx.createUniqueIndexIfNotExists(i)
+                    : ctx.createIndexIfNotExists(i)
+                : i.getUnique()
+                    ? ctx.createUniqueIndex(i)
+                    : ctx.createIndex(i))
+            .on(i.getTable(), i.getFields());
+
+        return i.getWhere() != null ? s1.where(i.getWhere()) : s1;
     }
 
     private final List<Query> alterTableAddConstraints(Table<?> table) {

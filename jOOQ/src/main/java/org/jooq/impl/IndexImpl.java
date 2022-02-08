@@ -66,8 +66,6 @@ import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * @author Lukas Eder
  */
@@ -92,8 +90,9 @@ class IndexImpl extends AbstractNamed implements Index, UNotYetImplemented {
         this.unique = unique;
     }
 
-    final SortField<?>[]    $fields()      { return fields; }
-    final boolean           $unique()      { return unique; }
+    final SortField<?>[] $fields() { return fields; }
+    final boolean        $unique() { return unique; }
+    final Condition      $where()  { return where; }
 
     @Override
     public final void accept(Context<?> ctx) {

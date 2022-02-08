@@ -334,7 +334,7 @@ final class Interpreter {
 
         for (Index index : query.$indexes()) {
             IndexImpl impl = (IndexImpl) index;
-            mt.indexes.add(new MutableIndex((UnqualifiedName) impl.getUnqualifiedName(), mt, mt.sortFields(asList(impl.$fields())), impl.$unique()));
+            mt.indexes.add(new MutableIndex((UnqualifiedName) impl.getUnqualifiedName(), mt, mt.sortFields(asList(impl.$fields())), impl.$unique(), impl.$where()));
         }
     }
 
@@ -967,7 +967,7 @@ final class Interpreter {
             return;
         }
 
-        mt.indexes.add(new MutableIndex((UnqualifiedName) index.getUnqualifiedName(), mt, mtf, query.$unique()));
+        mt.indexes.add(new MutableIndex((UnqualifiedName) index.getUnqualifiedName(), mt, mtf, query.$unique(), query.$where()));
     }
 
     private final void accept0(AlterIndexImpl query) {
@@ -2015,13 +2015,15 @@ final class Interpreter {
         MutableTable           table;
         List<MutableSortField> fields;
         boolean                unique;
+        Condition              where;
 
-        MutableIndex(UnqualifiedName name, MutableTable table, List<MutableSortField> fields, boolean unique) {
+        MutableIndex(UnqualifiedName name, MutableTable table, List<MutableSortField> fields, boolean unique, Condition where) {
             super(name);
 
             this.table = table;
             this.fields = fields;
             this.unique = unique;
+            this.where = where;
         }
 
         @Override
@@ -2049,7 +2051,7 @@ final class Interpreter {
                     name(),
                     t,
                     map(fields, msf -> t.field(msf.name()).sort(msf.sort), SortField[]::new),
-                    null,
+                    where,
                     unique
                 ));
             }

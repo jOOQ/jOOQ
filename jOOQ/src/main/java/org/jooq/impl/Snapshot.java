@@ -172,8 +172,9 @@ final class Snapshot extends AbstractMeta {
             for (Field<?> field : table.fields())
                 createField(field.getUnqualifiedName(), field.getDataType(), this, field.getComment());
 
-            indexes = map(table.getIndexes(), index -> Internal.createIndex(
-                index.getQualifiedName(), this,
+            indexes = map(table.getIndexes(), index -> new IndexImpl(
+                index.getQualifiedName(),
+                this,
                 map(index.getFields(), field -> {
 
                     // [#10804] Use this table's field reference if possible.
@@ -183,6 +184,7 @@ final class Snapshot extends AbstractMeta {
 
                     // [#9009] TODO NULLS FIRST / NULLS LAST
                 }, SortField[]::new),
+                index.getWhere(),
                 index.getUnique()
             ));
 

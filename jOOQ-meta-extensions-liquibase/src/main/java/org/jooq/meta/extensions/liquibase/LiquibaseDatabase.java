@@ -39,12 +39,12 @@ package org.jooq.meta.extensions.liquibase;
 
 import static org.jooq.tools.StringUtils.isBlank;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -53,6 +53,7 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.extensions.AbstractInterpretingDatabase;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
 
 import liquibase.Liquibase;
 import liquibase.database.Database;
@@ -61,6 +62,7 @@ import liquibase.database.jvm.JdbcConnection;
 import liquibase.resource.ClassLoaderResourceAccessor;
 import liquibase.resource.CompositeResourceAccessor;
 import liquibase.resource.FileSystemResourceAccessor;
+import liquibase.resource.ResourceAccessor;
 
 /**
  * The Liquibase database.
@@ -100,6 +102,7 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
 
     @Override
     protected void export() throws Exception {
+        String rootPath = getProperties().getProperty("rootPath");
         String scripts = getProperties().getProperty("scripts");
         includeLiquibaseTables = Boolean.parseBoolean(getProperties().getProperty("includeLiquibaseTables", "false"));
 
@@ -143,27 +146,15 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
         databaseChangeLogLockTableName = database.getDatabaseChangeLogLockTableName();
 
         // [#9866] Allow for loading included files from the classpath or using absolute paths.
-        FileSystemResourceAccessor fsra;
-
-        try {
-            fsra = new FileSystemResourceAccessor();
-        }
-
-        // [#11659] Continue supporting Liquibase 3.x
-        catch (NoSuchMethodError e) {
-            fsra = FileSystemResourceAccessor.class.getConstructor().newInstance();
-        }
-
-        Liquibase liquibase = new Liquibase(
-            scripts,
-            new CompositeResourceAccessor(
-                fsra,
+        // [#12872] [#13021] The decision is made based on the presence of the rootPath property
+        ResourceAccessor ra = StringUtils.isBlank(rootPath)
+            ? new CompositeResourceAccessor(
                 new ClassLoaderResourceAccessor(),
                 new ClassLoaderResourceAccessor(Thread.currentThread().getContextClassLoader())
-            ),
-            database
-        );
+            )
+            : new FileSystemResourceAccessor(new File(rootPath));
 
+        Liquibase liquibase = new Liquibase(scripts, ra, database);
         liquibase.update(contexts);
     }
 

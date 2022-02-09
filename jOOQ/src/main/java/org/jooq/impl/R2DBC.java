@@ -583,16 +583,18 @@ final class R2DBC {
 
             delegate().connection.updateAndGet(c -> {
 
+                // [#12977] Correctly sequence the delegation to run after close completion
+                Runnable onComplete = cancelled ? () -> {} : () -> subscriber.onComplete();
+
                 // close() calls on already closed resources have no effect, so
                 // the side-effect is OK with the AtomicReference contract
                 if (c != null)
-                    c.close().subscribe(subscriber(s -> s.request(Long.MAX_VALUE), t -> {}, t -> {}, () -> {}));
+                    c.close().subscribe(subscriber(s -> s.request(Long.MAX_VALUE), t -> {}, t -> {}, onComplete));
+                else
+                    onComplete.run();
 
                 return null;
             });
-
-            if (!cancelled)
-                subscriber.onComplete();
         }
 
         abstract ConnectionSubscriber<T> delegate();

@@ -461,7 +461,7 @@ implements
     }
 
     @Override
-    public final String getTypeName() {
+    public /* non-final */ String getTypeName() {
         return typeName0();
     }
 
@@ -471,7 +471,7 @@ implements
     }
 
     @Override
-    public final String getCastTypeName() {
+    public /* final */ String getCastTypeName() {
         return getCastTypeName0(SQLDialect.DEFAULT);
     }
 

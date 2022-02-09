@@ -4294,6 +4294,7 @@ public class JavaGenerator extends AbstractGenerator {
         for (Definition column : embeddablesAndUnreplacedColumns) {
             final String colName = column.getOutputName();
             final String colClass = getStrategy().getJavaClassName(column);
+            final String colMemberUC = StringUtils.toUC(getStrategy().getJavaMemberName(column), getStrategy().getTargetLocale());
             final String colTypeFull = getJavaType(column, out, Mode.POJO);
             final String colTypeRecord = out.ref(getJavaType(column, out, Mode.RECORD));
             final String colType = out.ref(colTypeFull);
@@ -4307,7 +4308,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (scala) {
                 if (column instanceof EmbeddableDefinition)
                     out.println("%sdef fetchRangeOf%s(lowerInclusive: %s, upperInclusive: %s): %s[%s] = fetchRange(%s, new %s(lowerInclusive), new %s(upperInclusive))",
-                        visibility(), colClass, colType, colType, List.class, pType, colIdentifier, colTypeRecord, colTypeRecord);
+                        visibility(), colMemberUC, colType, colType, List.class, pType, colIdentifier, colTypeRecord, colTypeRecord);
                 else
                     out.println("%sdef fetchRangeOf%s(lowerInclusive: %s, upperInclusive: %s): %s[%s] = fetchRange(%s, lowerInclusive, upperInclusive)",
                         visibility(), colClass, colType, colType, List.class, pType, colIdentifier);
@@ -4315,19 +4316,22 @@ public class JavaGenerator extends AbstractGenerator {
             else if (kotlin) {
                 if (column instanceof EmbeddableDefinition)
                     out.println("%sfun fetchRangeOf%s(lowerInclusive: %s?, upperInclusive: %s?): %s<%s> = fetchRange(%s, if (lowerInclusive != null) %s(lowerInclusive) else null, if (upperInclusive != null) %s(upperInclusive) else null)",
-                        visibility(), colClass, colType, colType, out.ref(KLIST), pType, colIdentifier, colTypeRecord, colTypeRecord);
+                        visibility(), colMemberUC, colType, colType, out.ref(KLIST), pType, colIdentifier, colTypeRecord, colTypeRecord);
                 else
                     out.println("%sfun fetchRangeOf%s(lowerInclusive: %s?, upperInclusive: %s?): %s<%s> = fetchRange(%s, lowerInclusive, upperInclusive)",
                         visibility(), colClass, colType, colType, out.ref(KLIST), pType, colIdentifier);
             }
             else {
                 printNonnullAnnotation(out);
-                out.println("%s%s<%s> fetchRangeOf%s(%s lowerInclusive, %s upperInclusive) {", visibility(), List.class, pType, colClass, colType, colType);
 
-                if (column instanceof EmbeddableDefinition)
+                if (column instanceof EmbeddableDefinition) {
+                    out.println("%s%s<%s> fetchRangeOf%s(%s lowerInclusive, %s upperInclusive) {", visibility(), List.class, pType, colMemberUC, colType, colType);
                     out.println("return fetchRange(%s, new %s(lowerInclusive), new %s(upperInclusive));", colIdentifier, colTypeRecord, colTypeRecord);
-                else
+                }
+                else {
+                    out.println("%s%s<%s> fetchRangeOf%s(%s lowerInclusive, %s upperInclusive) {", visibility(), List.class, pType, colClass, colType, colType);
                     out.println("return fetchRange(%s, lowerInclusive, upperInclusive);", colIdentifier);
+                }
 
                 out.println("}");
             }
@@ -4340,7 +4344,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (scala) {
                 if (column instanceof EmbeddableDefinition)
                     out.println("%sdef fetchBy%s(values: %s*): %s[%s] = fetch(%s, values.map(v => new %s(v)).toArray:_*)",
-                        visibility(), colClass, colType, List.class, pType, colIdentifier, colTypeRecord);
+                        visibility(), colMemberUC, colType, List.class, pType, colIdentifier, colTypeRecord);
                 else
                     out.println("%sdef fetchBy%s(values: %s*): %s[%s] = fetch(%s, values:_*)",
                         visibility(), colClass, colType, List.class, pType, colIdentifier);
@@ -4350,16 +4354,16 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (column instanceof EmbeddableDefinition)
                     out.println("%sfun fetchBy%s(vararg values: %s): %s<%s> = fetch(%s, values.map { %s(it) })",
-                        visibility(), colClass, colType, out.ref(KLIST), pType, colIdentifier, colTypeRecord);
+                        visibility(), colMemberUC, colType, out.ref(KLIST), pType, colIdentifier, colTypeRecord);
                 else
                     out.println("%sfun fetchBy%s(vararg values: %s): %s<%s> = fetch(%s, *values%s)",
                         visibility(), colClass, colType, out.ref(KLIST), pType, colIdentifier, toTypedArray);
             }
             else {
                 printNonnullAnnotation(out);
-                out.println("%s%s<%s> fetchBy%s(%s... values) {", visibility(), List.class, pType, colClass, colType);
 
                 if (column instanceof EmbeddableDefinition) {
+                    out.println("%s%s<%s> fetchBy%s(%s... values) {", visibility(), List.class, pType, colMemberUC, colType);
                     out.println("%s[] records = new %s[values.length];", colTypeRecord, colTypeRecord);
                     out.println();
                     out.println("for (int i = 0; i < values.length; i++)");
@@ -4367,8 +4371,10 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println();
                     out.println("return fetch(%s, records);", colIdentifier);
                 }
-                else
+                else {
+                    out.println("%s%s<%s> fetchBy%s(%s... values) {", visibility(), List.class, pType, colClass, colType);
                     out.println("return fetch(%s, values);", colIdentifier);
+                }
 
                 out.println("}");
             }

@@ -19,6 +19,7 @@ package org.jooq.tools;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1399,20 +1400,34 @@ public final class StringUtils {
      * Change a string's first letter to lower case
      */
     public static String toLC(String string) {
+        return toLC(string, Locale.getDefault());
+    }
+
+    /**
+     * Change a string's first letter to lower case
+     */
+    public static String toLC(String string, Locale locale) {
         if (string == null || string.isEmpty())
             return string;
 
-        return Character.toLowerCase(string.charAt(0)) + string.substring(1);
+        return string.substring(0, 1).toLowerCase(locale) + string.substring(1);
     }
 
     /**
      * Change a string's first letter to upper case
      */
     public static String toUC(String string) {
+        return toUC(string, Locale.getDefault());
+    }
+
+    /**
+     * Change a string's first letter to upper case
+     */
+    public static String toUC(String string, Locale locale) {
         if (string == null || string.isEmpty())
             return string;
 
-        return Character.toUpperCase(string.charAt(0)) + string.substring(1);
+        return string.substring(0, 1).toUpperCase(locale) + string.substring(1);
     }
 
     /**

@@ -2120,22 +2120,24 @@ public abstract class AbstractDatabase implements Database {
                     if (schema == null)
                         schema = table.getSchema();
 
-                    Name name = table.getQualifiedNamePart().append(embeddable.getName());
+                    String referencingName = defaultIfBlank(embeddable.getReferencingName(), embeddable.getName());
+                    String referencingComment = defaultIfBlank(embeddable.getReferencingComment(), embeddable.getComment());
 
-                    if (result.containsKey(name)) {
-                        log.warn("Embeddable configuration", "Table " + table + " already has embeddable " + embeddable);
+                    Name key = table.getQualifiedNamePart().append(referencingName);
+                    if (result.containsKey(key)) {
+                        log.warn("Embeddable configuration", "Table " + table + " already has embeddable by the same referencingName " + embeddable);
                     }
                     else {
                         result.put(
-                            name,
+                            key,
                             new DefaultEmbeddableDefinition(
                                 schema,
                                 embeddable.getName(),
                                 embeddable.getComment(),
                                 table,
                                 names,
-                                defaultIfBlank(embeddable.getReferencingName(), embeddable.getName()),
-                                defaultIfBlank(embeddable.getReferencingComment(), embeddable.getComment()),
+                                referencingName,
+                                referencingComment,
                                 table,
                                 columns,
                                 TRUE.equals(embeddable.isReplacesFields())

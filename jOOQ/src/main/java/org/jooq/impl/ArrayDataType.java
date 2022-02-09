@@ -130,6 +130,11 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
     }
 
     @Override
+    public final String getCastTypeName() {
+        return getCastTypeName(CTX.configuration());
+    }
+
+    @Override
     public final String getCastTypeName(Configuration configuration) {
         String castTypeName = elementType.getCastTypeName(configuration);
         return getArrayType(configuration, castTypeName);

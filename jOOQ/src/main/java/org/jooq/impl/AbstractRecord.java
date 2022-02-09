@@ -1053,6 +1053,8 @@ abstract class AbstractRecord extends AbstractStore implements Record {
                 default:
                     throw new IllegalArgumentException("Format not supported: " + format);
             }
+
+            writer.flush();
         }
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing JSON", e);
@@ -1066,6 +1068,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
         try {
             AbstractResult.formatXMLRecord(writer, format, 0, this, fields);
+            writer.flush();
         }
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing XML", e);

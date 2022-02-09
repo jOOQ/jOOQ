@@ -461,7 +461,7 @@ implements
     }
 
     @Override
-    public final String getTypeName() {
+    public /* non-final */ String getTypeName() {
         return typeName0();
     }
 

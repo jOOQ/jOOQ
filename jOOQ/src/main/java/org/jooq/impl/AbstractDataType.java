@@ -811,7 +811,7 @@ implements
 
     @Override
     public String toString() {
-        return getCastTypeName() + (isArray() ? " array" : "") + " /* " + getType().getName() + " */";
+        return getCastTypeName() + " /* " + getType().getName() + " */";
     }
 
     @Override

@@ -100,8 +100,9 @@ public class H2DataType {
     public static final DataType<Long>              INT8                         = new DefaultDataType<>(FAMILY, SQLDataType.BIGINT, "int8");
     public static final DataType<BigDecimal>        DECIMAL                      = new DefaultDataType<>(FAMILY, SQLDataType.DECIMAL, "decimal(p, s)");
     public static final DataType<BigDecimal>        DEC                          = new DefaultDataType<>(FAMILY, SQLDataType.DECIMAL, "dec(p, s)");
-    public static final DataType<BigDecimal>        NUMBER                       = new DefaultDataType<>(FAMILY, SQLDataType.NUMERIC, "number(p, s)");
     public static final DataType<BigDecimal>        NUMERIC                      = new DefaultDataType<>(FAMILY, SQLDataType.NUMERIC, "numeric(p, s)");
+    // [#10880] [#13043] NUMBER should map to DECFLOAT once supported
+    public static final DataType<BigDecimal>        NUMBER                       = new DefaultDataType<>(FAMILY, SQLDataType.NUMERIC, "number(p, s)");
     public static final DataType<Double>            DOUBLE                       = new DefaultDataType<>(FAMILY, SQLDataType.DOUBLE, "double");
     public static final DataType<Double>            DOUBLEPRECISION              = new DefaultDataType<>(FAMILY, SQLDataType.DOUBLE, "double precision");
     public static final DataType<Double>            FLOAT                        = new DefaultDataType<>(FAMILY, SQLDataType.FLOAT, "float");

@@ -159,9 +159,13 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 ? name(record.get(COLUMNS.DOMAIN_SCHEMA), record.get(COLUMNS.DOMAIN_NAME))
                 : name(getSchema().getName(), getName() + "_" + record.get(COLUMNS.COLUMN_NAME));
 
+            SchemaDefinition typeSchema = record.get(COLUMNS.DOMAIN_NAME) != null
+                ? getDatabase().getSchema(record.get(COLUMNS.DOMAIN_SCHEMA))
+                : getSchema();
+
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
-                getSchema(),
+                typeSchema == null ? getSchema() : typeSchema,
                 record.get(COLUMNS.TYPE_NAME),
                 record.get(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 record.get(COLUMNS.NUMERIC_PRECISION),

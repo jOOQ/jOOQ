@@ -240,7 +240,7 @@ implements
 
 
 
-        ctx.visit(getQualifiedName());
+        AbstractFunction.acceptFunctionName(ctx, true, getQualifiedName());
     }
 
     final void acceptArguments0(Context<?> ctx) {

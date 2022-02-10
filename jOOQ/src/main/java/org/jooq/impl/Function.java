@@ -39,25 +39,18 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
-import static org.jooq.impl.Tools.camelCase;
 
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
-
-import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
-// ...
 // ...
 import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
  */
-final class Function<T> extends AbstractField<T> implements QOM.Function<T> {
+final class Function<T> extends AbstractFunction<T> {
 
     private final QueryPartList<Field<?>> arguments;
 
@@ -66,23 +59,18 @@ final class Function<T> extends AbstractField<T> implements QOM.Function<T> {
     }
 
     Function(Name name, DataType<T> type, Field<?>... arguments) {
-        super(name, type);
+        this(name, type, true, arguments);
+    }
+
+    Function(Name name, DataType<T> type, boolean applySchemaMapping, Field<?>... arguments) {
+        super(name, type, applySchemaMapping);
 
         this.arguments = new QueryPartList<>(arguments);
     }
 
     @Override
-    public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
-
-
-
-
-
-            default:
-                ctx.visit(getQualifiedName()).sql('(').visit(arguments).sql(')');
-                break;
-        }
+    final QueryPart arguments() {
+        return arguments;
     }
 
     // -------------------------------------------------------------------------
@@ -93,15 +81,6 @@ final class Function<T> extends AbstractField<T> implements QOM.Function<T> {
     public final UnmodifiableList<? extends Field<?>> $args() {
         return QOM.unmodifiable(arguments);
     }
-
-
-
-
-
-
-
-
-
 
 
 

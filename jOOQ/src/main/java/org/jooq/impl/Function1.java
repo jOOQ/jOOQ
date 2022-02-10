@@ -37,44 +37,28 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Tools.camelCase;
-
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
-
-import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.QueryPart;
-// ...
 // ...
 import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
  */
-final class Function1<T> extends AbstractField<T> implements QOM.Function<T> {
+final class Function1<T> extends AbstractFunction<T> {
     private final Field<?> argument;
 
     Function1(Name name, DataType<T> type, Field<?> argument) {
-        super(name, type);
+        super(name, type, true);
 
         this.argument = argument;
     }
 
     @Override
-    public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
-
-
-
-
-
-            default:
-                ctx.visit(getQualifiedName()).sql('(').visit(argument).sql(')');
-                break;
-        }
+    final QueryPart arguments() {
+        return argument;
     }
 
     // -------------------------------------------------------------------------
@@ -100,12 +84,16 @@ final class Function1<T> extends AbstractField<T> implements QOM.Function<T> {
 
 
 
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
 
-
-
-
-
-
-
-
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Function1)
+            return getQualifiedName().equals(((Function1<?>) that).getQualifiedName())
+                && argument.equals(((Function1<?>) that).argument);
+        else
+            return super.equals(that);
+    }
 }

@@ -2166,7 +2166,13 @@ implements
                     fields.add(getInValues().get(parameter));
             }
 
-            Field<?> result = function(name != null ? name(name) : AbstractRoutine.this.getQualifiedName(ctx), returnType, fields.toArray(EMPTY_FIELD));
+            // [#13033] Schema mapping has already been applied, don't re-apply it
+            Field<?> result = new Function<>(
+                name != null ? name(name) : AbstractRoutine.this.getQualifiedName(ctx),
+                returnType,
+                false,
+                fields.toArray(EMPTY_FIELD)
+            );
 
             // [#3592] Decrease SQL -> PL/SQL context switches with Oracle Scalar Subquery Caching
             if (TRUE.equals(settings(ctx.configuration()).isRenderScalarSubqueriesForStoredFunctions()))

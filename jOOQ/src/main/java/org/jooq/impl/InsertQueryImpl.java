@@ -840,12 +840,11 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 .columns(fields)
                 .select(selectFrom(rows.asTable("t")));
         }
-        else {
-            throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into tables without any known keys : " + table());
-        }
+        else
+            return DSL.sql("[ The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into tables without any known keys : " + table() + " ]");
     }
 
-    private final Merge<R> toMerge(Context<?> ctx) {
+    private final QueryPart toMerge(Context<?> ctx) {
         if ((onConflict != null && onConflict.size() > 0)
             || onConstraint != null
             || !table().getKeys().isEmpty()) {
@@ -896,7 +895,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 : notMatched.whenNotMatchedThenInsert(k).values(insertMaps.lastMap().entrySet().stream().filter(e -> k.contains(e.getKey())).map(Entry::getValue).collect(toList()));
         }
         else
-            throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into non-updatable tables : " + table());
+            return DSL.sql("[ The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into non-updatable tables : " + table() + " ]");
     }
 
     /**

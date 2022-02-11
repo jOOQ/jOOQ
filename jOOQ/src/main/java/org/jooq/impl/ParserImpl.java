@@ -862,15 +862,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 while (parseDelimiterIf(false))
                     p = positionBeforeWhitespace;
 
-                if (TRUE.equals(settings().isParseRetainCommentsBetweenQueries()) && p < position) {
-                    for (int i = p; i < position; i++) {
-                        if (character(i) != ' ') {
-                            result.add(new IgnoreQuery(substring(p, position)));
-                            break;
-                        }
-                    }
-                }
-
+                retainComments(result, p);
                 query = patchParsedQuery(parseQuery(false, false));
                 if (query == IGNORE || query == IGNORE_NO_DELIMITER)
                     continue;
@@ -879,8 +871,20 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             }
             while (parseDelimiterIf(true) && (p = positionBeforeWhitespace) >= 0 && !done());
 
+            retainComments(result, p);
             return done("Unexpected token or missing query delimiter", dsl.queries(result));
         });
+    }
+
+    private final void retainComments(List<Query> result, int p) {
+        if (TRUE.equals(settings().isParseRetainCommentsBetweenQueries()) && p < position) {
+            for (int i = p; i < position; i++) {
+                if (character(i) != ' ') {
+                    result.add(new IgnoreQuery(substring(p, position)));
+                    break;
+                }
+            }
+        }
     }
 
     private static final Pattern P_SEARCH_PATH = Pattern.compile("(?i:select\\s+(pg_catalog\\s*\\.\\s*)?set_config\\s*\\(\\s*'search_path'\\s*,\\s*'([^']*)'\\s*,\\s*\\w+\\s*\\))");

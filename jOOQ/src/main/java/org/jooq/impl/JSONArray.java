@@ -145,7 +145,7 @@ implements
 
             case POSTGRES:
             case YUGABYTEDB:
-                if (onNull == JSONOnNull.ABSENT_ON_NULL) {
+                if (onNull == JSONOnNull.ABSENT_ON_NULL && !mapped.isEmpty()) {
                     Row1[] rows = map(fields, f -> row(f), Row1[]::new);
                     Table<?> t = values(rows).as("t", "a");
                     Field<?> a = t.field("a");

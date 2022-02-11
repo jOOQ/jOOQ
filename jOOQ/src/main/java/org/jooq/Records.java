@@ -112,7 +112,7 @@ public final class Records {
      * String[] titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
-     *    .collect(intoList(new String[0], r -&gt; r.get(BOOK.TITLE)));
+     *    .collect(intoArray(new String[0], r -&gt; r.get(BOOK.TITLE)));
      * </pre></code>
      * <p>
      * This is the same as the following:
@@ -138,7 +138,7 @@ public final class Records {
      * String[] titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
-     *    .collect(intoList(new String[0], r -&gt; r.get(BOOK.TITLE)));
+     *    .collect(intoArray(new String[0], r -&gt; r.get(BOOK.TITLE)));
      * </pre></code>
      * <p>
      * This is the same as the following:
@@ -164,7 +164,7 @@ public final class Records {
      * String[] titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
-     *    .collect(intoList(new String[0], r -&gt; r.get(BOOK.TITLE)));
+     *    .collect(intoArray(new String[0], r -&gt; r.get(BOOK.TITLE)));
      * </pre></code>
      * <p>
      * This is the same as the following:

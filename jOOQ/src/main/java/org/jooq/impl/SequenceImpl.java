@@ -258,6 +258,16 @@ implements
                     ctx.sql(')');
                     break;
 
+                case CUBRID:
+                    ctx.visit(sequence).sql('.');
+
+                    if (method == SequenceMethod.NEXTVAL)
+                        ctx.visit(DSL.keyword("next_value"));
+                    else
+                        ctx.visit(DSL.keyword("current_value"));
+
+                    break;
+
 
                 case DERBY:
                 case FIREBIRD:
@@ -289,19 +299,8 @@ implements
 
 
 
-
-                    else {
-                        throw new SQLDialectNotSupportedException("The sequence's current value functionality is not supported for the " + family + " dialect.");
-                    }
-                    break;
-
-                case CUBRID:
-                    ctx.visit(sequence).sql('.');
-
-                    if (method == SequenceMethod.NEXTVAL)
-                        ctx.visit(DSL.keyword("next_value"));
                     else
-                        ctx.visit(DSL.keyword("current_value"));
+                        ctx.visit(sequence).sql('.').visit(method.keyword);
 
                     break;
 

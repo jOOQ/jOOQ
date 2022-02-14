@@ -50,7 +50,14 @@ import org.jetbrains.annotations.NotNull;
  * @param <R> The record type
  * @author Lukas Eder
  */
-public interface TableLike<R extends Record> extends Fields, QueryPart {
+public /* sealed */ interface TableLike<R extends Record>
+extends
+    Fields,
+    QueryPart
+/* permits
+    Select,
+    Table */ 
+{
 
     /**
      * The underlying table representation of this object.

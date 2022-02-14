@@ -97,7 +97,7 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  * @param <R> The record type being returned by this query
  * @author Lukas Eder
  */
-public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, FieldLike {
+public /* non-sealed */ interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, FieldLike {
 
     /**
      * Apply the <code>UNION</code> set operation.

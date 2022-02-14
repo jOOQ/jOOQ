@@ -105,6 +105,7 @@ import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.Table;
+import org.jooq.TableLike;
 // ...
 import org.jooq.WithAsStep;
 import org.jooq.WithAsStep1;
@@ -586,7 +587,7 @@ implements
     }
 
     @Override
-    public final <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
+    public final <R extends Record> SelectWhereStep<R> selectFrom(TableLike<R> table) {
         return new SelectImpl(configuration, this).from(table);
     }
 

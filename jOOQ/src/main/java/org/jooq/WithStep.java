@@ -530,13 +530,13 @@ public interface WithStep extends QueryPart {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table);
+    <R extends Record> SelectWhereStep<R> selectFrom(TableLike<R> table);
 
     /**
      * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
      * Without knowing any columns from the argument table (see
-     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * {@link #selectFrom(TableLike)}), this will project <code>SELECT *</code>.
      * <p>
      * Example:
      * <p>
@@ -554,7 +554,7 @@ public interface WithStep extends QueryPart {
      * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
      * Without knowing any columns from the argument table (see
-     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * {@link #selectFrom(TableLike)}), this will project <code>SELECT *</code>.
      * <p>
      * Example:
      * <p>
@@ -579,7 +579,7 @@ public interface WithStep extends QueryPart {
      * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
      * Without knowing any columns from the argument table (see
-     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * {@link #selectFrom(TableLike)}), this will project <code>SELECT *</code>.
      * <p>
      * Example:
      * <p>
@@ -605,7 +605,7 @@ public interface WithStep extends QueryPart {
      * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
      * Without knowing any columns from the argument table (see
-     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * {@link #selectFrom(TableLike)}), this will project <code>SELECT *</code>.
      * <p>
      * Example:
      * <p>
@@ -631,7 +631,7 @@ public interface WithStep extends QueryPart {
      * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
      * Without knowing any columns from the argument table (see
-     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * {@link #selectFrom(TableLike)}), this will project <code>SELECT *</code>.
      * <p>
      * Example:
      * <p>

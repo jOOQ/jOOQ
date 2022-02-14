@@ -2029,7 +2029,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
+    public <R extends Record> SelectWhereStep<R> selectFrom(TableLike<R> table) {
         return new SelectImpl(configuration(), null).from(table);
     }
 

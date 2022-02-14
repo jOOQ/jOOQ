@@ -3002,7 +3002,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
+    public static <R extends Record> SelectWhereStep<R> selectFrom(TableLike<R> table) {
         return dsl().selectFrom(table);
     }
 
@@ -3010,7 +3010,7 @@ public class DSL {
      * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
      * Without knowing any columns from the argument table (see
-     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * {@link #selectFrom(TableLike)}), this will project <code>SELECT *</code>.
      * <p>
      * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -3038,7 +3038,7 @@ public class DSL {
      * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
      * Without knowing any columns from the argument table (see
-     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * {@link #selectFrom(TableLike)}), this will project <code>SELECT *</code>.
      * <p>
      * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -3073,7 +3073,7 @@ public class DSL {
      * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
      * Without knowing any columns from the argument table (see
-     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * {@link #selectFrom(TableLike)}), this will project <code>SELECT *</code>.
      * <p>
      * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -3109,7 +3109,7 @@ public class DSL {
      * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
      * Without knowing any columns from the argument table (see
-     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * {@link #selectFrom(TableLike)}), this will project <code>SELECT *</code>.
      * <p>
      * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -3145,7 +3145,7 @@ public class DSL {
      * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
      * Without knowing any columns from the argument table (see
-     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * {@link #selectFrom(TableLike)}), this will project <code>SELECT *</code>.
      * <p>
      * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable

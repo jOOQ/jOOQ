@@ -6058,13 +6058,13 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table);
+    <R extends Record> SelectWhereStep<R> selectFrom(TableLike<R> table);
 
     /**
      * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
      * Without knowing any columns from the argument table (see
-     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * {@link #selectFrom(TableLike)}), this will project <code>SELECT *</code>.
      * <p>
      * Example:
      * <p>
@@ -6082,7 +6082,7 @@ public interface DSLContext extends Scope {
      * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
      * Without knowing any columns from the argument table (see
-     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * {@link #selectFrom(TableLike)}), this will project <code>SELECT *</code>.
      * <p>
      * Example:
      * <p>
@@ -6107,7 +6107,7 @@ public interface DSLContext extends Scope {
      * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
      * Without knowing any columns from the argument table (see
-     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * {@link #selectFrom(TableLike)}), this will project <code>SELECT *</code>.
      * <p>
      * Example:
      * <p>
@@ -6133,7 +6133,7 @@ public interface DSLContext extends Scope {
      * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
      * Without knowing any columns from the argument table (see
-     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * {@link #selectFrom(TableLike)}), this will project <code>SELECT *</code>.
      * <p>
      * Example:
      * <p>
@@ -6159,7 +6159,7 @@ public interface DSLContext extends Scope {
      * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
      * Without knowing any columns from the argument table (see
-     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * {@link #selectFrom(TableLike)}), this will project <code>SELECT *</code>.
      * <p>
      * Example:
      * <p>

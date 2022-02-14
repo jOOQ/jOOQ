@@ -37,7 +37,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Matchers implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31600L;
+    private final static long serialVersionUID = 31700L;
     @XmlElementWrapper(name = "catalogs")
     @XmlElement(name = "catalog")
     protected List<MatchersCatalogType> catalogs;

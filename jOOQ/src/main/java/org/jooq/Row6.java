@@ -91,27 +91,19 @@ public interface Row6<T1, T2, T3, T4, T5, T6> extends Row, SelectField<Record6<T
 
     /**
      * A convenience method to define a local {@link Record6} to custom type
-     * {@link RecordMapper} that can be used when projecting {@link Row} types in
-     * <code>SELECT</code> or <code>RETURNING</code> clauses.
+     * {@link RecordMapper} that can be used when projecting {@link Row} types
+     * in <code>SELECT</code> or <code>RETURNING</code> clauses.
      * <p>
-     * EXPERIMENTAL. Unlike {@link #mapping(Class, Function6)}, this method
-     * attempts to work without an explicit {@link Class} reference for the underlying
-     * {@link Converter#toType()}. There may be some edge cases where this doesn't
-     * work. Please report any bugs here:
-     * <a href="https://github.com/jOOQ/jOOQ/issues/new/choose">https://github.com/jOOQ/jOOQ/issues/new/choose</a>
+     * Unlike {@link #mapping(Class, Function6)}, this method attempts to work
+     * without an explicit {@link Class} reference for the underlying
+     * {@link Converter#toType()}, e.g. when nesting rows in arrays, the class
+     * literal is required for reflective array creation.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function6)} or
      * {@link Functions#nullOnAnyNull(Function6)} to achieve <code>null</code>
      * safety when mapping nested rows from <code>LEFT JOIN</code> etc.
-     * <p>
-     * Known issues include:
-     * <p>
-     * <ul>
-     * <li>When nesting rows in arrays, the class literal is required for reflective array creation.</li>
-     * </ul>
      */
     @NotNull
-    @Internal
     <U> SelectField<U> mapping(Function6<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? extends U> function);
 
     /**

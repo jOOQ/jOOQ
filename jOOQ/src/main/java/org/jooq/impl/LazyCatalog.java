@@ -38,19 +38,17 @@
 package org.jooq.impl;
 
 import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.jooq.Catalog;
 import org.jooq.Context;
-import org.jooq.Function1;
-import org.jooq.Internal;
 import org.jooq.Name;
-import org.jooq.Schema;
-// ...
 import org.jooq.QueryPart;
 // ...
+import org.jooq.Schema;
+// ...
+
+import org.jetbrains.annotations.ApiStatus.Internal;
 
 /**
  * A schema that references a lazy initialisable {@link Catalog} singleton, for

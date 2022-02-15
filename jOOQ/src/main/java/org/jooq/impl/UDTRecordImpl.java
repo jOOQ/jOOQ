@@ -40,6 +40,8 @@ package org.jooq.impl;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
 
+import org.jetbrains.annotations.ApiStatus.Internal;
+
 /**
  * A record implementation for a record originating from a single UDT
  * <p>
@@ -47,7 +49,7 @@ import org.jooq.UDTRecord;
  *
  * @author Lukas Eder
  */
-@org.jooq.Internal
+@Internal
 public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractQualifiedRecord<R> implements UDTRecord<R> {
 
     public UDTRecordImpl(UDT<R> udt) {

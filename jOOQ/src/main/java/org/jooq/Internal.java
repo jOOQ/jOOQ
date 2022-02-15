@@ -59,5 +59,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 @Target(value = { FIELD, METHOD, TYPE, ANNOTATION_TYPE })
 @Internal
+@org.jetbrains.annotations.ApiStatus.Internal
 public @interface Internal {
 }

@@ -37,7 +37,7 @@
  */
 package org.jooq.util.jaxb.tools;
 
-import org.jooq.Internal;
+import org.jetbrains.annotations.ApiStatus.Internal;
 
 /**
  * Interface to be implemented by JAXB annotated Java classes which are

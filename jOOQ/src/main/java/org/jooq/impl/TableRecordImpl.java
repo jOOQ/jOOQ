@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
-import static java.util.Arrays.asList;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
@@ -50,13 +49,9 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.WriteIfReadonly.IGNORE;
-import static org.jooq.conf.WriteIfReadonly.THROW;
-import static org.jooq.conf.WriteIfReadonly.WRITE;
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
-import static org.jooq.impl.Tools.collect;
-import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.impl.Tools.settings;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_RETURNING_CLAUSE;
@@ -77,9 +72,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
-import org.jooq.Insert;
 import org.jooq.InsertQuery;
-// ...
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.StoreQuery;
@@ -88,12 +81,12 @@ import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
-import org.jooq.Update;
 import org.jooq.conf.Settings;
 import org.jooq.conf.WriteIfReadonly;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.JooqLogger;
-import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.ApiStatus.Internal;
 
 /**
  * A record implementation for a record originating from a single table
@@ -102,7 +95,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-@org.jooq.Internal
+@Internal
 public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualifiedRecord<R> implements TableRecord<R> {
     private static final JooqLogger      log                    = JooqLogger.getLogger(TableRecordImpl.class);
     private static final Set<SQLDialect> REFRESH_GENERATED_KEYS = SQLDialect.supportedBy(DERBY, H2, MARIADB, MYSQL);

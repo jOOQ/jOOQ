@@ -41,7 +41,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import org.jooq.Internal;
+import org.jetbrains.annotations.ApiStatus.Internal;
 
 /**
  * Wrapper around a {@link StringBuilder} which can be used to serialize

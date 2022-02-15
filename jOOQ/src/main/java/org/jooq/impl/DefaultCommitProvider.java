@@ -43,6 +43,8 @@ import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.migrations.xml.jaxb.MigrationsType;
 
+import org.jetbrains.annotations.ApiStatus.Experimental;
+
 /**
  * A default implementation of the {@link CommitProvider} SPI, which provides
  * a materialisation of the currently available database version graph.
@@ -51,7 +53,7 @@ import org.jooq.migrations.xml.jaxb.MigrationsType;
  *
  * @author Lukas Eder
  */
-@org.jooq.Internal
+@Experimental
 public class DefaultCommitProvider implements CommitProvider {
 
     private final DSLContext     ctx;

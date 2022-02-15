@@ -46,6 +46,8 @@ import org.jooq.Field;
 import org.jooq.Row;
 import org.jooq.TableField;
 
+import org.jetbrains.annotations.ApiStatus.Internal;
+
 /**
  * A record implementation for a record originating from a single table
  * <p>
@@ -53,7 +55,7 @@ import org.jooq.TableField;
  *
  * @author Lukas Eder
  */
-@org.jooq.Internal
+@Internal
 public class EmbeddableRecordImpl<R extends EmbeddableRecord<R>> extends AbstractRecord implements EmbeddableRecord<R> {
 
     /**

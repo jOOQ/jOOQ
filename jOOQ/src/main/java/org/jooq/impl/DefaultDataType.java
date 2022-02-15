@@ -117,6 +117,8 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 
+import org.jetbrains.annotations.ApiStatus.Internal;
+
 /**
  * A common base class for data types.
  * <p>
@@ -127,7 +129,7 @@ import org.jooq.types.UShort;
  * @author Lukas Eder
  */
 @SuppressWarnings({"unchecked"})
-@org.jooq.Internal
+@Internal
 public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
     private static final Set<SQLDialect>                        ENCODED_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(HSQLDB, MARIADB);

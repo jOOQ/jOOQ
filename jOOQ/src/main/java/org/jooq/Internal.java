@@ -54,11 +54,14 @@ import java.lang.annotation.Target;
  * containing library.
  *
  * @author Knut Wannheden
+ * @deprecated - 3.17.0 - [#13071] - Use
+ *             {@link org.jetbrains.annotations.ApiStatus.Internal} instead.
  */
 @Documented
 @Retention(RetentionPolicy.CLASS)
 @Target(value = { FIELD, METHOD, TYPE, ANNOTATION_TYPE })
 @Internal
 @org.jetbrains.annotations.ApiStatus.Internal
+@Deprecated
 public @interface Internal {
 }

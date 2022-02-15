@@ -1582,6 +1582,24 @@ This is a prerequisite for various advanced features]]></jxb:javadoc></jxb:prope
       <element name="implicitJoinPathsToOne" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate implicit join path constructors on generated tables for outgoing foreign key relationships (to-one relationships)]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="rowConvenienceToOne" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate <code>ROW</code> convenience syntax for to-one relationships.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="multisetConvenienceOneToMany" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate <code>MULTISET</code> convenience syntax for one-to-many relationships.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="multisetConvenienceManyToMany" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate <code>MULTISET</code> convenience syntax for many-to-many relationships. A many-to-many relationship is achieved when a child table has 2 non-nullable foreign keys that are part of a unique key.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="deprecated" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate deprecated code for backwards compatibility]]></jxb:javadoc></jxb:property></appinfo></annotation>

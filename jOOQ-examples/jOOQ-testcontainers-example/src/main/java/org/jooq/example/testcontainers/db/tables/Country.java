@@ -5,20 +5,24 @@ package org.jooq.example.testcontainers.db.tables;
 
 
 import java.time.LocalDateTime;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.Row3;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableLike;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.testcontainers.db.Keys;
 import org.jooq.example.testcontainers.db.Public;
+import org.jooq.example.testcontainers.db.tables.records.CityRecord;
 import org.jooq.example.testcontainers.db.tables.records.CountryRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -107,6 +111,22 @@ public class Country extends TableImpl<CountryRecord> {
     @Override
     public UniqueKey<CountryRecord> getPrimaryKey() {
         return Keys.COUNTRY_PKEY;
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.city</code> one-to-many child table.
+     */
+    public Field<Result<CityRecord>> cityMultiset() {
+        return cityMultiset(Function.identity());
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.city</code> one-to-many child table.
+     */
+    public <O extends Record> Field<Result<O>> cityMultiset(Function<? super City, ? extends TableLike<O>> subquery) {
+        return oneToManyMultiset(Keys.CITY__CITY_COUNTRY_ID_FKEY, t -> subquery.apply((City) t));
     }
 
     @Override

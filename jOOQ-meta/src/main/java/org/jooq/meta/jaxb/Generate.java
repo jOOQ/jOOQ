@@ -39,6 +39,12 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean implicitJoinPathsToOne = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean rowConvenienceToOne = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean multisetConvenienceOneToMany = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean multisetConvenienceManyToMany = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean deprecated = true;
     @XmlElement(defaultValue = "true")
     protected Boolean deprecationOnUnknownTypes = true;
@@ -309,6 +315,84 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setImplicitJoinPathsToOne(Boolean value) {
         this.implicitJoinPathsToOne = value;
+    }
+
+    /**
+     * Generate <code>ROW</code> convenience syntax for to-one relationships.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRowConvenienceToOne() {
+        return rowConvenienceToOne;
+    }
+
+    /**
+     * Sets the value of the rowConvenienceToOne property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRowConvenienceToOne(Boolean value) {
+        this.rowConvenienceToOne = value;
+    }
+
+    /**
+     * Generate <code>MULTISET</code> convenience syntax for one-to-many relationships.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isMultisetConvenienceOneToMany() {
+        return multisetConvenienceOneToMany;
+    }
+
+    /**
+     * Sets the value of the multisetConvenienceOneToMany property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setMultisetConvenienceOneToMany(Boolean value) {
+        this.multisetConvenienceOneToMany = value;
+    }
+
+    /**
+     * Generate <code>MULTISET</code> convenience syntax for many-to-many relationships. A many-to-many relationship is achieved when a child table has 2 non-nullable foreign keys that are part of a unique key.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isMultisetConvenienceManyToMany() {
+        return multisetConvenienceManyToMany;
+    }
+
+    /**
+     * Sets the value of the multisetConvenienceManyToMany property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setMultisetConvenienceManyToMany(Boolean value) {
+        this.multisetConvenienceManyToMany = value;
     }
 
     /**
@@ -2322,6 +2406,21 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withRowConvenienceToOne(Boolean value) {
+        setRowConvenienceToOne(value);
+        return this;
+    }
+
+    public Generate withMultisetConvenienceOneToMany(Boolean value) {
+        setMultisetConvenienceOneToMany(value);
+        return this;
+    }
+
+    public Generate withMultisetConvenienceManyToMany(Boolean value) {
+        setMultisetConvenienceManyToMany(value);
+        return this;
+    }
+
     public Generate withDeprecated(Boolean value) {
         setDeprecated(value);
         return this;
@@ -2802,6 +2901,9 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("relations", relations);
         builder.append("sequenceFlags", sequenceFlags);
         builder.append("implicitJoinPathsToOne", implicitJoinPathsToOne);
+        builder.append("rowConvenienceToOne", rowConvenienceToOne);
+        builder.append("multisetConvenienceOneToMany", multisetConvenienceOneToMany);
+        builder.append("multisetConvenienceManyToMany", multisetConvenienceManyToMany);
         builder.append("deprecated", deprecated);
         builder.append("deprecationOnUnknownTypes", deprecationOnUnknownTypes);
         builder.append("instanceFields", instanceFields);
@@ -2941,6 +3043,33 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!implicitJoinPathsToOne.equals(other.implicitJoinPathsToOne)) {
+                return false;
+            }
+        }
+        if (rowConvenienceToOne == null) {
+            if (other.rowConvenienceToOne!= null) {
+                return false;
+            }
+        } else {
+            if (!rowConvenienceToOne.equals(other.rowConvenienceToOne)) {
+                return false;
+            }
+        }
+        if (multisetConvenienceOneToMany == null) {
+            if (other.multisetConvenienceOneToMany!= null) {
+                return false;
+            }
+        } else {
+            if (!multisetConvenienceOneToMany.equals(other.multisetConvenienceOneToMany)) {
+                return false;
+            }
+        }
+        if (multisetConvenienceManyToMany == null) {
+            if (other.multisetConvenienceManyToMany!= null) {
+                return false;
+            }
+        } else {
+            if (!multisetConvenienceManyToMany.equals(other.multisetConvenienceManyToMany)) {
                 return false;
             }
         }
@@ -3720,6 +3849,9 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((relations == null)? 0 :relations.hashCode()));
         result = ((prime*result)+((sequenceFlags == null)? 0 :sequenceFlags.hashCode()));
         result = ((prime*result)+((implicitJoinPathsToOne == null)? 0 :implicitJoinPathsToOne.hashCode()));
+        result = ((prime*result)+((rowConvenienceToOne == null)? 0 :rowConvenienceToOne.hashCode()));
+        result = ((prime*result)+((multisetConvenienceOneToMany == null)? 0 :multisetConvenienceOneToMany.hashCode()));
+        result = ((prime*result)+((multisetConvenienceManyToMany == null)? 0 :multisetConvenienceManyToMany.hashCode()));
         result = ((prime*result)+((deprecated == null)? 0 :deprecated.hashCode()));
         result = ((prime*result)+((deprecationOnUnknownTypes == null)? 0 :deprecationOnUnknownTypes.hashCode()));
         result = ((prime*result)+((instanceFields == null)? 0 :instanceFields.hashCode()));

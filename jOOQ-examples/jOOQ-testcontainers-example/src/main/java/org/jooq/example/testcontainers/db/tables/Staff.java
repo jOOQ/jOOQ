@@ -7,21 +7,33 @@ package org.jooq.example.testcontainers.db.tables;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.Row11;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableLike;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.testcontainers.db.Keys;
 import org.jooq.example.testcontainers.db.Public;
+import org.jooq.example.testcontainers.db.tables.records.PaymentP2007_01Record;
+import org.jooq.example.testcontainers.db.tables.records.PaymentP2007_02Record;
+import org.jooq.example.testcontainers.db.tables.records.PaymentP2007_03Record;
+import org.jooq.example.testcontainers.db.tables.records.PaymentP2007_04Record;
+import org.jooq.example.testcontainers.db.tables.records.PaymentP2007_05Record;
+import org.jooq.example.testcontainers.db.tables.records.PaymentP2007_06Record;
+import org.jooq.example.testcontainers.db.tables.records.PaymentRecord;
+import org.jooq.example.testcontainers.db.tables.records.RentalRecord;
 import org.jooq.example.testcontainers.db.tables.records.StaffRecord;
+import org.jooq.example.testcontainers.db.tables.records.StoreRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
@@ -177,6 +189,162 @@ public class Staff extends TableImpl<StaffRecord> {
             _store = new Store(this, Keys.STAFF__STAFF_STORE_ID_FKEY);
 
         return _store;
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.payment</code> one-to-many child table.
+     */
+    public Field<Result<PaymentRecord>> paymentMultiset() {
+        return paymentMultiset(Function.identity());
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.payment</code> one-to-many child table.
+     */
+    public <O extends Record> Field<Result<O>> paymentMultiset(Function<? super Payment, ? extends TableLike<O>> subquery) {
+        return oneToManyMultiset(Keys.PAYMENT__PAYMENT_STAFF_ID_FKEY, t -> subquery.apply((Payment) t));
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.payment_p2007_01</code> one-to-many child
+     * table.
+     */
+    public Field<Result<PaymentP2007_01Record>> paymentP2007_01Multiset() {
+        return paymentP2007_01Multiset(Function.identity());
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.payment_p2007_01</code> one-to-many child
+     * table.
+     */
+    public <O extends Record> Field<Result<O>> paymentP2007_01Multiset(Function<? super PaymentP2007_01, ? extends TableLike<O>> subquery) {
+        return oneToManyMultiset(Keys.PAYMENT_P2007_01__PAYMENT_P2007_01_STAFF_ID_FKEY, t -> subquery.apply((PaymentP2007_01) t));
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.payment_p2007_02</code> one-to-many child
+     * table.
+     */
+    public Field<Result<PaymentP2007_02Record>> paymentP2007_02Multiset() {
+        return paymentP2007_02Multiset(Function.identity());
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.payment_p2007_02</code> one-to-many child
+     * table.
+     */
+    public <O extends Record> Field<Result<O>> paymentP2007_02Multiset(Function<? super PaymentP2007_02, ? extends TableLike<O>> subquery) {
+        return oneToManyMultiset(Keys.PAYMENT_P2007_02__PAYMENT_P2007_02_STAFF_ID_FKEY, t -> subquery.apply((PaymentP2007_02) t));
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.payment_p2007_03</code> one-to-many child
+     * table.
+     */
+    public Field<Result<PaymentP2007_03Record>> paymentP2007_03Multiset() {
+        return paymentP2007_03Multiset(Function.identity());
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.payment_p2007_03</code> one-to-many child
+     * table.
+     */
+    public <O extends Record> Field<Result<O>> paymentP2007_03Multiset(Function<? super PaymentP2007_03, ? extends TableLike<O>> subquery) {
+        return oneToManyMultiset(Keys.PAYMENT_P2007_03__PAYMENT_P2007_03_STAFF_ID_FKEY, t -> subquery.apply((PaymentP2007_03) t));
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.payment_p2007_04</code> one-to-many child
+     * table.
+     */
+    public Field<Result<PaymentP2007_04Record>> paymentP2007_04Multiset() {
+        return paymentP2007_04Multiset(Function.identity());
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.payment_p2007_04</code> one-to-many child
+     * table.
+     */
+    public <O extends Record> Field<Result<O>> paymentP2007_04Multiset(Function<? super PaymentP2007_04, ? extends TableLike<O>> subquery) {
+        return oneToManyMultiset(Keys.PAYMENT_P2007_04__PAYMENT_P2007_04_STAFF_ID_FKEY, t -> subquery.apply((PaymentP2007_04) t));
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.payment_p2007_05</code> one-to-many child
+     * table.
+     */
+    public Field<Result<PaymentP2007_05Record>> paymentP2007_05Multiset() {
+        return paymentP2007_05Multiset(Function.identity());
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.payment_p2007_05</code> one-to-many child
+     * table.
+     */
+    public <O extends Record> Field<Result<O>> paymentP2007_05Multiset(Function<? super PaymentP2007_05, ? extends TableLike<O>> subquery) {
+        return oneToManyMultiset(Keys.PAYMENT_P2007_05__PAYMENT_P2007_05_STAFF_ID_FKEY, t -> subquery.apply((PaymentP2007_05) t));
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.payment_p2007_06</code> one-to-many child
+     * table.
+     */
+    public Field<Result<PaymentP2007_06Record>> paymentP2007_06Multiset() {
+        return paymentP2007_06Multiset(Function.identity());
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.payment_p2007_06</code> one-to-many child
+     * table.
+     */
+    public <O extends Record> Field<Result<O>> paymentP2007_06Multiset(Function<? super PaymentP2007_06, ? extends TableLike<O>> subquery) {
+        return oneToManyMultiset(Keys.PAYMENT_P2007_06__PAYMENT_P2007_06_STAFF_ID_FKEY, t -> subquery.apply((PaymentP2007_06) t));
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.rental</code> one-to-many child table.
+     */
+    public Field<Result<RentalRecord>> rentalMultiset() {
+        return rentalMultiset(Function.identity());
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.rental</code> one-to-many child table.
+     */
+    public <O extends Record> Field<Result<O>> rentalMultiset(Function<? super Rental, ? extends TableLike<O>> subquery) {
+        return oneToManyMultiset(Keys.RENTAL__RENTAL_STAFF_ID_FKEY, t -> subquery.apply((Rental) t));
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.store</code> one-to-many child table.
+     */
+    public Field<Result<StoreRecord>> storeMultiset() {
+        return storeMultiset(Function.identity());
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.store</code> one-to-many child table.
+     */
+    public <O extends Record> Field<Result<O>> storeMultiset(Function<? super Store, ? extends TableLike<O>> subquery) {
+        return oneToManyMultiset(Keys.STORE__STORE_MANAGER_STAFF_ID_FKEY, t -> subquery.apply((Store) t));
     }
 
     @Override

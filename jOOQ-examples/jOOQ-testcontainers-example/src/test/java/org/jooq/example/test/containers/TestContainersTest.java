@@ -1,12 +1,16 @@
 package org.jooq.example.test.containers;
 
-import org.jooq.*;
-import org.jooq.example.testcontainers.db.Tables;
-import org.jooq.impl.DSL;
-import org.jooq.tools.JooqLogger;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.testcontainers.jdbc.ContainerDatabaseDriver;
+import static org.jooq.JSONFormat.RecordFormat.OBJECT;
+import static org.jooq.Records.mapping;
+import static org.jooq.XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS;
+import static org.jooq.example.testcontainers.db.Tables.FILM;
+import static org.jooq.example.testcontainers.db.Tables.FILM_ACTOR;
+import static org.jooq.example.testcontainers.db.Tables.FILM_CATEGORY;
+import static org.jooq.example.testcontainers.db.Tables.PAYMENT;
+import static org.jooq.impl.DSL.multiset;
+import static org.jooq.impl.DSL.multisetAgg;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.sum;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -14,11 +18,19 @@ import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Properties;
 
-import static org.jooq.JSONFormat.RecordFormat.OBJECT;
-import static org.jooq.Records.mapping;
-import static org.jooq.XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS;
-import static org.jooq.example.testcontainers.db.Tables.*;
-import static org.jooq.impl.DSL.*;
+import org.jooq.DSLContext;
+import org.jooq.JSONFormat;
+import org.jooq.Result;
+import org.jooq.SQLDialect;
+import org.jooq.Source;
+import org.jooq.TXTFormat;
+import org.jooq.XMLFormat;
+import org.jooq.impl.DSL;
+import org.jooq.tools.JooqLogger;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.testcontainers.jdbc.ContainerDatabaseDriver;
 
 public class TestContainersTest {
 

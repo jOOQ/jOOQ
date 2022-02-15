@@ -7,6 +7,7 @@ package org.jooq.example.testcontainers.db.tables;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -14,15 +15,18 @@ import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.Row4;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableLike;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.testcontainers.db.Indexes;
 import org.jooq.example.testcontainers.db.Keys;
 import org.jooq.example.testcontainers.db.Public;
+import org.jooq.example.testcontainers.db.tables.records.AddressRecord;
 import org.jooq.example.testcontainers.db.tables.records.CityRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -138,6 +142,22 @@ public class City extends TableImpl<CityRecord> {
             _country = new Country(this, Keys.CITY__CITY_COUNTRY_ID_FKEY);
 
         return _country;
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.address</code> one-to-many child table.
+     */
+    public Field<Result<AddressRecord>> addressMultiset() {
+        return addressMultiset(Function.identity());
+    }
+
+    /**
+     * A convenience constructor for correlated <code>MULTISET</code>s
+     * expressions to the <code>public.address</code> one-to-many child table.
+     */
+    public <O extends Record> Field<Result<O>> addressMultiset(Function<? super Address, ? extends TableLike<O>> subquery) {
+        return oneToManyMultiset(Keys.ADDRESS__ADDRESS_CITY_ID_FKEY, t -> subquery.apply((Address) t));
     }
 
     @Override

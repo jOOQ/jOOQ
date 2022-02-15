@@ -69,6 +69,9 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateIndexes                                  = true;
     boolean                            generateRelations                                = true;
     boolean                            generateImplicitJoinPathsToOne                   = true;
+    boolean                            generateRowConvenienceToOne                      = true;
+    boolean                            generateMultisetConvenienceOneToMany             = true;
+    boolean                            generateMultisetConvenienceManyToMany            = true;
     boolean                            generateInstanceFields                           = true;
     VisibilityModifier                 generateVisibilityModifier                       = VisibilityModifier.DEFAULT;
     boolean                            generateGeneratedAnnotation                      = false;
@@ -285,6 +288,36 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateImplicitJoinPathsToOne(boolean generateImplicitJoinPathsToOne) {
         this.generateImplicitJoinPathsToOne = generateImplicitJoinPathsToOne;
+    }
+
+    @Override
+    public boolean generateRowConvenienceToOne() {
+        return generateRowConvenienceToOne && generateRelations();
+    }
+
+    @Override
+    public void setGenerateRowConvenienceToOne(boolean generateRowConvenienceToOne) {
+        this.generateRowConvenienceToOne = generateRowConvenienceToOne;
+    }
+
+    @Override
+    public boolean generateMultisetConvenienceOneToMany() {
+        return generateMultisetConvenienceOneToMany && generateRelations();
+    }
+
+    @Override
+    public void setGenerateMultisetConvenienceOneToMany(boolean generateMultisetConvenienceOneToMany) {
+        this.generateMultisetConvenienceOneToMany = generateMultisetConvenienceOneToMany;
+    }
+
+    @Override
+    public boolean generateMultisetConvenienceManyToMany() {
+        return generateMultisetConvenienceManyToMany && generateRelations();
+    }
+
+    @Override
+    public void setGenerateMultisetConvenienceManyToMany(boolean generateMultisetConvenienceManyToMany) {
+        this.generateMultisetConvenienceManyToMany = generateMultisetConvenienceManyToMany;
     }
 
     @Override

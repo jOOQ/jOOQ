@@ -41,13 +41,9 @@ import java.util.function.Function;
 
 /**
  * A function of degree 1.
- * <p>
- * This is EXPERIMENTAL API. Future jOOQ versions may instead use the
- * functional interfaces from jOOλ, and remove these types again.
  *
  * @author Lukas Eder
  */
-@Internal
 @FunctionalInterface
 public interface Function1<T1, R> extends Function<T1, R> {
 

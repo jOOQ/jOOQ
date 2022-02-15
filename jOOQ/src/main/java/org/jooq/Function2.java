@@ -41,13 +41,9 @@ import java.util.function.BiFunction;
 
 /**
  * A function of degree 2.
- * <p>
- * This is EXPERIMENTAL API. Future jOOQ versions may instead use the
- * functional interfaces from jOOλ, and remove these types again.
  *
  * @author Lukas Eder
  */
-@Internal
 @FunctionalInterface
 public interface Function2<T1, T2, R> extends BiFunction<T1, T2, R> {
 

@@ -39,13 +39,9 @@ package org.jooq;
 
 /**
  * A function of degree 4.
- * <p>
- * This is EXPERIMENTAL API. Future jOOQ versions may instead use the
- * functional interfaces from jOOλ, and remove these types again.
  *
  * @author Lukas Eder
  */
-@Internal
 @FunctionalInterface
 public interface Function4<T1, T2, T3, T4, R> {
 

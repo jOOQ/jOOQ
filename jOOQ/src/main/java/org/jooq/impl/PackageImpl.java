@@ -37,16 +37,18 @@
  */
 package org.jooq.impl;
 
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
 import org.jooq.Catalog;
 import org.jooq.Context;
+import org.jooq.Function1;
 import org.jooq.Package;
-import org.jooq.QueryPart;
-// ...
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 // ...
-
-import org.jetbrains.annotations.ApiStatus.Internal;
+import org.jooq.QueryPart;
+// ...
 
 /**
  * A default implementation for packages (containers of stored procedures and
@@ -58,7 +60,7 @@ import org.jetbrains.annotations.ApiStatus.Internal;
  *
  * @author Lukas Eder
  */
-@Internal
+@org.jooq.Internal
 public class PackageImpl extends AbstractNamed implements Package {
 
     private Schema schema;

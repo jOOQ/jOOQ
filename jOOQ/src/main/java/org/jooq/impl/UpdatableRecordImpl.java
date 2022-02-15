@@ -89,8 +89,6 @@ import org.jooq.exception.NoDataFoundException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
-import org.jetbrains.annotations.ApiStatus.Internal;
-
 /**
  * A record implementation for a record holding a primary key
  * <p>
@@ -98,7 +96,7 @@ import org.jetbrains.annotations.ApiStatus.Internal;
  *
  * @author Lukas Eder
  */
-@Internal
+@org.jooq.Internal
 public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableRecordImpl<R> implements UpdatableRecord<R> {
     private static final JooqLogger      log                        = JooqLogger.getLogger(UpdatableRecordImpl.class);
     private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE      = SQLDialect.supportedBy(SQLITE);

@@ -162,7 +162,7 @@ import org.jooq.tools.reflect.Reflect;
  *
  * @author Lukas Eder
  */
-@org.jetbrains.annotations.ApiStatus.Internal
+@org.jooq.Internal
 public abstract class AbstractRoutine<T>
 extends
     AbstractNamed

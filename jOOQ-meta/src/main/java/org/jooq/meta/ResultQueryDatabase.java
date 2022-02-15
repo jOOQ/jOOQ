@@ -38,14 +38,14 @@
 package org.jooq.meta;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.List;
 
-import org.jooq.Internal;
 import org.jooq.Meta;
 import org.jooq.Record12;
 import org.jooq.Record6;
 import org.jooq.ResultQuery;
+
+import org.jetbrains.annotations.ApiStatus.Internal;
 
 /**
  * An interface for all {@link AbstractDatabase} implementations that can

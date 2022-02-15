@@ -40,18 +40,18 @@ package org.jooq.meta.extensions;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 
 import org.jooq.DSLContext;
-import org.jooq.Internal;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.h2.H2Database;
 import org.jooq.tools.jdbc.JDBCUtils;
+
+import org.jetbrains.annotations.ApiStatus.Internal;
 
 /**
  * A common base class for "interpreting" databases, which interpret a third

@@ -74,9 +74,12 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Sequence;
+import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.UTransient;
 
-import org.jetbrains.annotations.ApiStatus.Internal;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A common base class for sequences
@@ -85,7 +88,7 @@ import org.jetbrains.annotations.ApiStatus.Internal;
  *
  * @author Lukas Eder
  */
-@Internal
+@org.jooq.Internal
 public class SequenceImpl<T extends Number>
 extends
     AbstractTypedNamed<T>

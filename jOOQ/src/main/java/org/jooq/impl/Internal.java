@@ -100,7 +100,6 @@ import org.reactivestreams.Subscription;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-@org.jetbrains.annotations.ApiStatus.Internal
 public final class Internal {
 
     /**

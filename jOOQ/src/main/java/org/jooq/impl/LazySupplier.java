@@ -40,7 +40,7 @@ package org.jooq.impl;
 import java.io.Serializable;
 import java.util.function.Supplier;
 
-import org.jetbrains.annotations.ApiStatus.Internal;
+import org.jooq.Internal;
 
 /**
  * A lazy supplier

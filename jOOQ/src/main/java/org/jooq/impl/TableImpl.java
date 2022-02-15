@@ -62,6 +62,8 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.Arrays;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.jooq.Clause;
@@ -69,6 +71,7 @@ import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function1;
 import org.jooq.Name;
 // ...
 import org.jooq.QueryPart;
@@ -84,8 +87,6 @@ import org.jooq.TableOptions;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.tools.StringUtils;
 
-import org.jetbrains.annotations.ApiStatus.Internal;
-
 /**
  * A common base type for tables
  * <p>
@@ -93,7 +94,7 @@ import org.jetbrains.annotations.ApiStatus.Internal;
  *
  * @author Lukas Eder
  */
-@Internal
+@org.jooq.Internal
 public class TableImpl<R extends Record>
 extends
     AbstractTable<R>
@@ -257,7 +258,7 @@ implements
      * This method is used by generated code of table valued functions. Do not
      * call this method directly.
      */
-    @Internal
+    @org.jooq.Internal
     protected boolean aliased() {
         return getAliasedTable() != null;
     }
@@ -268,13 +269,13 @@ implements
      * This method is used by generated code of synthetic views. Do not
      * call this method directly.
      */
-    @Internal
+    @org.jooq.Internal
     protected boolean isSynthetic() {
         return false;
     }
 
     @Override
-    @Internal
+    @org.jooq.Internal
     public final boolean isSimple(Context<?> ctx) {
         return alias == null && (parameters == null || parameters.length < 2);
     }

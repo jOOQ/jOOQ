@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.and;
+import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.multiset;
 import static org.jooq.impl.DSL.multisetAgg;
 import static org.jooq.impl.DSL.row;
@@ -71,6 +72,7 @@ import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
 import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.getMappedTable;
+import static org.jooq.impl.Tools.unalias;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.ArrayList;
@@ -339,6 +341,39 @@ implements
 
         throw new DataAccessException("The many-to-many MULTISET convenience feature is available in the commercial jOOQ distribution only. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

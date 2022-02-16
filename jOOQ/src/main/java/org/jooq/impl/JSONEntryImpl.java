@@ -172,6 +172,11 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
             case H2:
                 if (isType(type, UUID.class))
                     return field.cast(VARCHAR(36));
+
+                // This is fixed, but not in 2.1.210 yet:
+                // https://github.com/h2database/h2database/issues/3439
+                else if (type.isEnum())
+                    return field.cast(VARCHAR);
                 else if (type.isTemporal())
                     return field.cast(VARCHAR);
 

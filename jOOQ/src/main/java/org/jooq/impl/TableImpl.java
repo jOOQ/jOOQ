@@ -68,6 +68,7 @@ import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Names.N_MULTISET;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
+import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.getMappedTable;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -100,9 +101,12 @@ import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOptions;
 // ...
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.QOM.UEmptyField;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A common base type for tables
@@ -269,6 +273,17 @@ implements
         return null;
     }
 
+    /**
+     * Create a <code>MULTISET</code> one-to-many child table expression from
+     * this table.
+     */
+    @org.jooq.Internal
+    @NotNull
+    protected <O1 extends Record, O2 extends Record> Field<Result<O2>> oneToManyMultiset(
+        ForeignKey<O1, R> path,
+        Function<? super Table<O1>, ? extends TableLike<O2>> f
+    ) {
+        if (CONFIG.commercial()) {
 
 
 
@@ -286,6 +301,23 @@ implements
 
 
 
+        }
+
+        throw new DataAccessException("The one-to-many MULTISET convenience feature is available in the commercial jOOQ distribution only. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
+    }
+
+    /**
+     * Create a <code>MULTISET</code> many-to-many child table expression from
+     * this table.
+     */
+    @org.jooq.Internal
+    @NotNull
+    protected <O1 extends Record, X extends Record, O2 extends Record> Field<Result<O2>> manyToManyMultiset(
+        ForeignKey<O1, R> path1,
+        ForeignKey<O1, X> path2,
+        Function<? super Table<X>, ? extends TableLike<O2>> f
+    ) {
+        if (CONFIG.commercial()) {
 
 
 
@@ -303,26 +335,10 @@ implements
 
 
 
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        throw new DataAccessException("The many-to-many MULTISET convenience feature is available in the commercial jOOQ distribution only. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
+    }
 
 
 

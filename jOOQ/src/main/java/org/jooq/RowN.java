@@ -86,6 +86,31 @@ import org.jetbrains.annotations.NotNull;
 public interface RowN extends Row, SelectField<Record> {
 
     // ------------------------------------------------------------------------
+    // Mapping convenience methods
+    // ------------------------------------------------------------------------
+
+    /**
+     * A convenience method to define a local {@link Record} to custom type
+     * {@link RecordMapper} that can be used when projecting {@link Row} types
+     * in <code>SELECT</code> or <code>RETURNING</code> clauses.
+     * <p>
+     * Unlike {@link #mapping(Class, Function)}, this method attempts to work
+     * without an explicit {@link Class} reference for the underlying
+     * {@link Converter#toType()}, e.g. when nesting rows in arrays, the class
+     * literal is required for reflective array creation.
+     */
+    @NotNull
+    <U> SelectField<U> mapping(Function<? super Object[], ? extends U> function);
+
+    /**
+     * A convenience method to define a local {@link Record} to custom type
+     * {@link RecordMapper} that can be used when projecting {@link Row} types in
+     * <code>SELECT</code> or <code>RETURNING</code> clauses.
+     */
+    @NotNull
+    <U> SelectField<U> mapping(Class<U> uType, Function<? super Object[], ? extends U> function);
+
+    // ------------------------------------------------------------------------
     // Generic comparison predicates
     // ------------------------------------------------------------------------
 

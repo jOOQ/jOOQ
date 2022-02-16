@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.row;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.Function;
 
 import org.jooq.BetweenAndStepN;
 import org.jooq.Comparator;
@@ -73,6 +74,20 @@ final class RowImplN extends AbstractRow<Record> implements RowN {
 
     RowImplN(FieldsImpl<?> fields) {
         super((FieldsImpl) fields);
+    }
+
+    // ------------------------------------------------------------------------
+    // Mapping convenience methods
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final <U> SelectField<U> mapping(Function<? super Object[], ? extends U> function) {
+        return rf().convertFrom(r -> r == null ? null : function.apply(r.intoArray()));
+    }
+
+    @Override
+    public final <U> SelectField<U> mapping(Class<U> uType, Function<? super Object[], ? extends U> function) {
+        return rf().convertFrom(uType, r -> r == null ? null : function.apply(r.intoArray()));
     }
 
     // ------------------------------------------------------------------------

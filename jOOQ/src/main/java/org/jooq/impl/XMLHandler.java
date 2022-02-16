@@ -229,6 +229,9 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
                 log.debug("< " + qName);
 
         if (states.isEmpty() && s.inResult && s.inRecord == 0 && "result".equalsIgnoreCase(qName)) {
+            if (s.result == null)
+                initResult();
+
             s.inResult = false;
         }
         else if (s.inResult && s.inFields && "fields".equalsIgnoreCase(qName)) {

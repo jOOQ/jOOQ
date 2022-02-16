@@ -27,7 +27,7 @@
         <hsqldb.version>2.5.1</hsqldb.version>
 
         <!-- JDBC drivers for jOOQ-xyz-extensions modules and vendor-specific API access -->
-        <postgres.version>42.3.2</postgres.version>
+        <postgres.version>42.3.3</postgres.version>
         <sqlserver.version>9.4.0.jre11</sqlserver.version>
         <oracle.version>21.3.0.0</oracle.version>
         <redshift.version>2.0.0.6</redshift.version>

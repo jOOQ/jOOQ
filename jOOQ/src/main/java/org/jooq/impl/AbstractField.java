@@ -72,7 +72,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -307,7 +307,13 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final SortField<Integer> sortAsc(Collection<T> sortList) {
-        return Tools.isEmpty(sortList) ? sortConstant() : DSL.field(this, fieldsArray(sortList.toArray(), getDataType())).asc();
+        Map<T, Integer> map = new LinkedHashMap<>();
+
+        int i = 0;
+        for (T value : sortList)
+            map.put(value, i++);
+
+        return sort(map);
     }
 
     @Override
@@ -318,7 +324,13 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final SortField<Integer> sortDesc(Collection<T> sortList) {
-        return Tools.isEmpty(sortList) ? sortConstant() : DSL.field(this, fieldsArray(sortList.toArray(), getDataType())).desc();
+        Map<T, Integer> map = new LinkedHashMap<>();
+
+        int i = 0;
+        for (T value : sortList)
+            map.put(value, i--);
+
+        return sort(map);
     }
 
     @Override

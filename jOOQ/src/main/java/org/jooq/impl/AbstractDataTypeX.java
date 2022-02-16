@@ -38,7 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Nullability.NOT_NULL;
-import static org.jooq.impl.Tools.CTX;
+import static org.jooq.impl.Tools.CONFIG;
 
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
@@ -96,7 +96,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
 
     @Override
     public final DataType<T> readonly(boolean r) {
-        if (r && !CTX.configuration().commercial())
+        if (r && !CONFIG.commercial())
             logGeneratedAlwaysAs.info("Readonly columns", "Readonly columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
 
         return construct(
@@ -118,7 +118,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
 
     @Override
     public final DataType<T> generatedAlwaysAs(Field<T> g) {
-        if (g != null && !CTX.configuration().commercial())
+        if (g != null && !CONFIG.commercial())
             logGeneratedAlwaysAs.info("Computed columns", "Computed columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
 
         return construct(
@@ -138,7 +138,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
 
     @Override
     public final DataType<T> generationOption(GenerationOption g) {
-        if (g != null && !CTX.configuration().commercial())
+        if (g != null && !CONFIG.commercial())
             logGeneratedAlwaysAs.info("Computed columns", "Computed columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
 
         return construct(

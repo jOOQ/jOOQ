@@ -39,7 +39,7 @@ package org.jooq.impl;
 
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
-import static org.jooq.impl.Tools.CTX;
+import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.newRecord;
 
 import java.util.List;
@@ -148,10 +148,10 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
 
         // [#3884] TODO: Move this logic into JSONReader to make it more generally useful
         if (object instanceof List) { List l = (List) object;
-            ResultImpl<R> result = new ResultImpl<>(CTX.configuration(), row);
+            ResultImpl<R> result = new ResultImpl<>(CONFIG, row);
 
             for (Object record : l)
-                result.add(newRecord(true, recordType, row, CTX.configuration())
+                result.add(newRecord(true, recordType, row, CONFIG)
                     .operate(r -> {
 
                         // [#12014] TODO: Fix this and remove workaround
@@ -170,7 +170,7 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
             return result;
         }
         else if (object == null)
-            return new ResultImpl<>(CTX.configuration(), row);
+            return new ResultImpl<>(CONFIG, row);
         else
             return super.convert(object);
     }

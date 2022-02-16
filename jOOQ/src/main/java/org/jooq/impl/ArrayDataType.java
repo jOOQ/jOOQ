@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.CTX;
 
 import org.jooq.CharacterSet;
@@ -120,7 +121,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
 
     @Override
     public final String getTypeName() {
-        return getTypeName(CTX.configuration());
+        return getTypeName(CONFIG);
     }
 
     @Override
@@ -131,7 +132,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
 
     @Override
     public final String getCastTypeName() {
-        return getCastTypeName(CTX.configuration());
+        return getCastTypeName(CONFIG);
     }
 
     @Override

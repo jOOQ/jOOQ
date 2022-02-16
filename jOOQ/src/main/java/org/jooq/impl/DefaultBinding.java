@@ -141,6 +141,7 @@ import static org.jooq.impl.SQLDataType.TIME;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.SQLDataType.VARBINARY;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.CTX;
 import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.asInt;
 import static org.jooq.impl.Tools.attachRecords;

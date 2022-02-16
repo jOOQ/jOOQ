@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
+import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.CTX;
 import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.impl.Tools.recordType;
@@ -147,7 +148,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
 
         // [#12116] TODO: Move this logic into JSONReader to make it more generally useful
         if (object instanceof Record || object instanceof Map || object instanceof List) {
-            return newRecord(true, getRecordType(), row, CTX.configuration())
+            return newRecord(true, getRecordType(), row, CONFIG)
                 .operate(r -> {
 
                     // [#12014] TODO: Fix this and remove workaround

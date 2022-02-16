@@ -1288,7 +1288,7 @@ final class Tools {
         Converter<T, U> result = configuration(configuration).converterProvider().provide(tType, uType);
 
         if (result == null)
-            result = CTX.configuration().converterProvider().provide(tType, uType);
+            result = CONFIG.converterProvider().provide(tType, uType);
 
         // [#11823] [#12208] The new ad-hoc conversion API tries to avoid the Class<U> literal
         //                   meaning there are perfectly reasonable API usages when using MULTISET
@@ -3381,7 +3381,8 @@ final class Tools {
 
 
 
-    static final DSLContext CTX = DSL.using(new DefaultConfiguration());
+    static final Configuration CONFIG = new DefaultConfiguration();
+    static final DSLContext    CTX    = DSL.using(CONFIG);
 
     /**
      * A possibly inefficient but stable way to generate an alias for any

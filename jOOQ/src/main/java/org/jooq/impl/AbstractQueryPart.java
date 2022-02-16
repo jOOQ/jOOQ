@@ -38,7 +38,7 @@
 
 package org.jooq.impl;
 
-import static org.jooq.impl.Tools.CTX;
+import static org.jooq.impl.Tools.CONFIG;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -67,7 +67,7 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     // -------------------------------------------------------------------------
 
     Configuration configuration() {
-        return CTX.configuration();
+        return CONFIG;
     }
 
     // -------------------------------------------------------------------------

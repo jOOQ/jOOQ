@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.CTX;
 import static org.jooq.impl.Tools.configuration;
 import static org.jooq.impl.Tools.nullSafe;
@@ -489,7 +490,7 @@ public final class Internal {
      * Whether this is a commercial edition of jOOQ.
      */
     public static final boolean commercial() {
-        return CTX.configuration().commercial();
+        return CONFIG.commercial();
     }
 
     /**
@@ -497,7 +498,7 @@ public final class Internal {
      * if not.
      */
     public static final boolean commercial(Supplier<String> logMessage) {
-        return CTX.configuration().commercial(logMessage);
+        return CONFIG.commercial(logMessage);
     }
 
     /**
@@ -505,7 +506,7 @@ public final class Internal {
      * a message, if not.
      */
     public static final void requireCommercial(Supplier<String> logMessage) throws DataAccessException {
-        CTX.configuration().requireCommercial(logMessage);
+        CONFIG.requireCommercial(logMessage);
     }
 
 

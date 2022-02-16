@@ -43,6 +43,7 @@ import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonArrayAgg;
 import static org.jooq.impl.DSL.jsonEntry;
@@ -57,11 +58,14 @@ import static org.jooq.impl.DSL.xmlelement;
 import static org.jooq.impl.DSL.xmlserializeContent;
 import static org.jooq.impl.JSONArrayAgg.patchOracleArrayAggBug;
 import static org.jooq.impl.Keywords.K_MULTISET;
+import static org.jooq.impl.Names.N_JSON_QUERY;
 import static org.jooq.impl.Names.N_MULTISET;
 import static org.jooq.impl.Names.N_RECORD;
 import static org.jooq.impl.Names.N_RESULT;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
+import static org.jooq.impl.SQLDataType.JSON;
+import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.fieldName;
@@ -157,6 +161,14 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
 
 
+
+
+
+
+
+
+
+
                     default: {
                         JSONArrayAggOrderByStep<JSON> order;
                         JSONArrayAggReturningStep<JSON> returning;
@@ -191,6 +203,15 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                 Table<?> t = new AliasedSelect<>(select, true, false, fieldNames(select.getSelect().size())).as(DSL.name("t"), (Name[]) null);
 
                 switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
 
 
 

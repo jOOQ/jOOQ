@@ -5,19 +5,16 @@ package org.jooq.example.testcontainers.db.tables;
 
 
 import java.time.LocalDateTime;
-import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Result;
 import org.jooq.Row3;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
-import org.jooq.TableLike;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.testcontainers.db.Keys;
@@ -110,38 +107,6 @@ public class Language extends TableImpl<LanguageRecord> {
     @Override
     public UniqueKey<LanguageRecord> getPrimaryKey() {
         return Keys.LANGUAGE_PKEY;
-    }
-
-    /**
-     * A convenience constructor for correlated <code>MULTISET</code>s
-     * expressions to the <code>public.language</code> many-to-many child table.
-     */
-    public Field<Result<LanguageRecord>> filmOriginalLanguageIdFkeyMultiset() {
-        return filmOriginalLanguageIdFkeyMultiset(Function.identity());
-    }
-
-    /**
-     * A convenience constructor for correlated <code>MULTISET</code>s
-     * expressions to the <code>public.language</code> many-to-many child table.
-     */
-    public <O extends Record> Field<Result<O>> filmOriginalLanguageIdFkeyMultiset(Function<? super Language, ? extends TableLike<O>> subquery) {
-        return manyToManyMultiset(Keys.FILM__FILM_LANGUAGE_ID_FKEY, Keys.FILM__FILM_ORIGINAL_LANGUAGE_ID_FKEY, t -> subquery.apply((Language) t));
-    }
-
-    /**
-     * A convenience constructor for correlated <code>MULTISET</code>s
-     * expressions to the <code>public.language</code> many-to-many child table.
-     */
-    public Field<Result<LanguageRecord>> filmLanguageIdFkeyMultiset() {
-        return filmLanguageIdFkeyMultiset(Function.identity());
-    }
-
-    /**
-     * A convenience constructor for correlated <code>MULTISET</code>s
-     * expressions to the <code>public.language</code> many-to-many child table.
-     */
-    public <O extends Record> Field<Result<O>> filmLanguageIdFkeyMultiset(Function<? super Language, ? extends TableLike<O>> subquery) {
-        return manyToManyMultiset(Keys.FILM__FILM_ORIGINAL_LANGUAGE_ID_FKEY, Keys.FILM__FILM_LANGUAGE_ID_FKEY, t -> subquery.apply((Language) t));
     }
 
     @Override

@@ -526,7 +526,7 @@ implements
     }
 
     @Override
-    public final DataType<T[]> getArrayDataType() {
+    public /* non-final */ DataType<T[]> getArrayDataType() {
         return new ArrayDataType<>(this);
     }
 

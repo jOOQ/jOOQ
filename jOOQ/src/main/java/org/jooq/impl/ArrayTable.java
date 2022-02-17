@@ -55,6 +55,7 @@ import org.jooq.Name;
 import org.jooq.Param;
 // ...
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.UDTRecord;
@@ -226,7 +227,7 @@ final class ArrayTable extends AbstractTable<Record> {
             if (array.getDataType().getType() == Object[].class)
                 ctx.sql(H2DataType.VARCHAR.getTypeName());
             else
-                ctx.sql(array.getDataType().getTypeName());
+                ctx.sql(array.getDataType().getArrayComponentDataType().getTypeName(ctx.configuration()));
 
             ctx.sql(" = ").visit(array).sql(')');
         }

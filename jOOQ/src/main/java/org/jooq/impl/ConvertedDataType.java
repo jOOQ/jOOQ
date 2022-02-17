@@ -53,6 +53,8 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A <code>DataType</code> used for converted types using {@link Converter}
  *
@@ -126,6 +128,26 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     @Override
     public final DataType<U> getDataType(Configuration configuration) {
         return (DataType<U>) delegate.getDataType(configuration);
+    }
+
+    @Override
+    public final String getCastTypeName() {
+        return delegate.getCastTypeName();
+    }
+
+    @Override
+    public final String getCastTypeName(Configuration configuration) {
+        return delegate.getCastTypeName(configuration);
+    }
+
+    @Override
+    public final String getTypeName() {
+        return delegate.getTypeName();
+    }
+
+    @Override
+    public final String getTypeName(Configuration configuration) {
+        return delegate.getTypeName(configuration);
     }
 
     @Override

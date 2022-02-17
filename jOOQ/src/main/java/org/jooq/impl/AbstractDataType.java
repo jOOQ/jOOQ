@@ -408,7 +408,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     }
 
     @Override
-    public final String getTypeName() {
+    public /* non-final */ String getTypeName() {
         return typeName0();
     }
 
@@ -418,7 +418,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     }
 
     @Override
-    public final String getCastTypeName() {
+    public /* final */ String getCastTypeName() {
         return getCastTypeName0(SQLDialect.DEFAULT);
     }
 
@@ -735,7 +735,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
 
     @Override
     public String toString() {
-        return getCastTypeName() + (isArray() ? " array" : "") + " /* " + getType().getName() + " */";
+        return getCastTypeName() + " /* " + getType().getName() + " */";
     }
 
     @Override

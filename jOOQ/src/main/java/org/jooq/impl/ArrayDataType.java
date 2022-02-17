@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.CTX;
+
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Configuration;
@@ -107,9 +109,19 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
     }
 
     @Override
+    public final String getTypeName() {
+        return getTypeName(CTX.configuration());
+    }
+
+    @Override
     public final String getTypeName(Configuration configuration) {
         String typeName = elementType.getTypeName(configuration);
         return getArrayType(configuration, typeName);
+    }
+
+    @Override
+    public final String getCastTypeName() {
+        return getCastTypeName(CTX.configuration());
     }
 
     @Override
@@ -132,10 +144,6 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
     private static String getArrayType(Configuration configuration, String dataType) {
         switch (configuration.family()) {
 
-            case HSQLDB:
-                return dataType + " array";
-
-
 
             case POSTGRES:
                 return dataType + "[]";
@@ -144,7 +152,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
 
             // Default implementation is needed for hash-codes and toString()
             default:
-                return dataType + "[]";
+                return dataType + " array";
         }
     }
 }

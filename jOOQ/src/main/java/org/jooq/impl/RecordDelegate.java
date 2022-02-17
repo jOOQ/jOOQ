@@ -43,6 +43,7 @@ import static org.jooq.conf.InvocationOrder.REVERSE;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.LOAD;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.REFRESH;
 import static org.jooq.impl.Tools.attachRecords;
+import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
 
 import java.util.Arrays;
@@ -108,7 +109,7 @@ final class RecordDelegate<R extends Record> {
         if (configuration != null) {
             providers = configuration.recordListenerProviders();
 
-            if (providers != null && providers.length > 0) {
+            if (!isEmpty(providers)) {
                 listeners = map(providers, p -> p.provide(), RecordListener[]::new);
                 ctx = new DefaultRecordContext(configuration, executeType(), record);
             }

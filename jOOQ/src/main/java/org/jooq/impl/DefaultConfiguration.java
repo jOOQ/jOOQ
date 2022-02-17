@@ -1833,6 +1833,9 @@ public class DefaultConfiguration extends AbstractConfiguration {
     @Override
     @Deprecated
     public final org.jooq.SchemaMapping schemaMapping() {
+        if (mapping == null)
+            mapping = new org.jooq.SchemaMapping(this);
+
         return mapping;
     }
 

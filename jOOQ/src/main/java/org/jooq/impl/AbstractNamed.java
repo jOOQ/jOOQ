@@ -100,7 +100,7 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
 
         // [#1938] This is a much more efficient hashCode() implementation
         // compared to that of standard QueryParts
-        return getQualifiedName() == null ? 0 : getQualifiedName().hashCode();
+        return getQualifiedName().hashCode();
     }
 
     @Override

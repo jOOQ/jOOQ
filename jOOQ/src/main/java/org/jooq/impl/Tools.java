@@ -3207,8 +3207,7 @@ final class Tools {
             if (mapping == null)
                 mapping = scope.configuration().schemaMapping();
 
-            if (mapping != null)
-                return mapping.map(catalog);
+            return mapping.map(catalog);
         }
 
         return catalog;
@@ -3224,8 +3223,7 @@ final class Tools {
             if (mapping == null)
                 mapping = scope.configuration().schemaMapping();
 
-            if (mapping != null)
-                return mapping.map(schema);
+            return mapping.map(schema);
         }
 
         return schema;
@@ -3241,8 +3239,7 @@ final class Tools {
             if (mapping == null)
                 mapping = scope.configuration().schemaMapping();
 
-            if (mapping != null)
-                return mapping.map(table);
+            return mapping.map(table);
         }
 
         return table;
@@ -5548,8 +5545,7 @@ final class Tools {
     private static final DataType<String> emulateEnumType(DataType<? extends EnumType> type, EnumType[] enums) {
         int length = 0;
         for (EnumType e : enums)
-            if (e.getLiteral() != null)
-                length = Math.max(length, e.getLiteral().length());
+            length = Math.max(length, e.getLiteral().length());
 
         return VARCHAR(length).nullability(type.nullability()).defaultValue((Field) type.defaultValue());
     }

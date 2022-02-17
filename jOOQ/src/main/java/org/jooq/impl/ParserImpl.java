@@ -2055,7 +2055,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         throw expected("FOLLOWING", "PRECEDING");
                 else if (parseKeywordIf("CURRENT ROW"))
                     s4 =  s3.andCurrentRow();
-                else if ((n = parseUnsignedIntegerLiteral()) != null)
+                else if (asTrue(n = parseUnsignedIntegerLiteral()))
                     if (parseKeywordIf("PRECEDING"))
                         s4 =  s3.andPreceding(n.intValue());
                     else if (parseKeywordIf("FOLLOWING"))
@@ -2104,7 +2104,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         : range
                         ? s2.rangeCurrentRow()
                         : s2.groupsCurrentRow();
-            else if ((n = parseUnsignedIntegerLiteral()) != null)
+            else if (asTrue(n = parseUnsignedIntegerLiteral()))
                 if (parseKeywordIf("PRECEDING"))
                     s4 = s2 == null
                         ?     rows
@@ -14285,6 +14285,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         return result;
+    }
+
+    @SuppressWarnings("unused")
+    private final boolean asTrue(Object o) {
+        return true;
     }
 
     private final String mark() {

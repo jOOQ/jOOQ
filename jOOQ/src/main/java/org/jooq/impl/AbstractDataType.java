@@ -827,7 +827,7 @@ implements
         result = prime * result + length();
         result = prime * result + precision();
         result = prime * result + scale();
-        result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
+        result = prime * result + getType().hashCode();
         result = prime * result + ((tType0() == null) ? 0 : tType0().hashCode());
         result = prime * result + ((typeName0() == null) ? 0 : typeName0().hashCode());
         return result;
@@ -850,11 +850,7 @@ implements
             return false;
         if (!eq(scale0(), other.scale0()))
             return false;
-        if (getType() == null) {
-            if (other.getType() != null)
-                return false;
-        }
-        else if (!getType().equals(other.getType()))
+        if (!getType().equals(other.getType()))
             return false;
         if (tType0() == null) {
             if (other.tType0() != null)

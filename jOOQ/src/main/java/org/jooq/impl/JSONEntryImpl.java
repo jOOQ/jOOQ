@@ -56,6 +56,8 @@ import static org.jooq.impl.Names.N_JSON_EXTRACT;
 import static org.jooq.impl.Names.N_JSON_MERGE;
 import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
 import static org.jooq.impl.Names.N_JSON_QUERY;
+import static org.jooq.impl.SQLDataType.BIT;
+import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.emulateMultiset;
@@ -185,7 +187,12 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
             // [#11025] These don't have boolean support outside of JSON
             case MARIADB:
             case MYSQL:
-                if (isType(type, Boolean.class))
+                // [#10323] [#13089] An explicit CAST is needed for BIT(1) types,
+                //                   which jOOQ interprets as BOOLEAN, but which are
+                //                   serialised as binary by MySQL
+                if (type.getSQLDataType() == BIT)
+                    return field.cast(BOOLEAN);
+                else if (isType(type, Boolean.class))
                     return inlined(field);
 
                 break;

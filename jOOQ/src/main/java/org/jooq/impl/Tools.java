@@ -706,12 +706,6 @@ final class Tools {
          * statement.
          */
         DATA_SELECT_ALIASES,
-
-        /**
-         * [#8917] An internal schema mapping that overrides any user-defined
-         * schema mappings.
-         */
-        DATA_SCHEMA_MAPPING,
     }
 
     /**
@@ -3201,14 +3195,8 @@ final class Tools {
      * Map a {@link Catalog} according to the configured {@link org.jooq.SchemaMapping}
      */
     static final Catalog getMappedCatalog(Scope scope, Catalog catalog) {
-        if (scope != null) {
-            org.jooq.SchemaMapping mapping = (SchemaMapping) scope.data(DataKey.DATA_SCHEMA_MAPPING);
-
-            if (mapping == null)
-                mapping = scope.configuration().schemaMapping();
-
-            return mapping.map(catalog);
-        }
+        if (scope != null)
+            scope.configuration().schemaMapping().map(catalog);
 
         return catalog;
     }
@@ -3217,14 +3205,8 @@ final class Tools {
      * Map a {@link Schema} according to the configured {@link org.jooq.SchemaMapping}
      */
     static final Schema getMappedSchema(Scope scope, Schema schema) {
-        if (scope != null) {
-            org.jooq.SchemaMapping mapping = (SchemaMapping) scope.data(DataKey.DATA_SCHEMA_MAPPING);
-
-            if (mapping == null)
-                mapping = scope.configuration().schemaMapping();
-
-            return mapping.map(schema);
-        }
+        if (scope != null)
+            return scope.configuration().schemaMapping().map(schema);
 
         return schema;
     }
@@ -3233,14 +3215,8 @@ final class Tools {
      * Map a {@link Table} according to the configured {@link org.jooq.SchemaMapping}
      */
     static final <R extends Record> Table<R> getMappedTable(Scope scope, Table<R> table) {
-        if (scope != null) {
-            org.jooq.SchemaMapping mapping = (SchemaMapping) scope.data(DataKey.DATA_SCHEMA_MAPPING);
-
-            if (mapping == null)
-                mapping = scope.configuration().schemaMapping();
-
-            return mapping.map(table);
-        }
+        if (scope != null)
+            return scope.configuration().schemaMapping().map(table);
 
         return table;
     }

@@ -89,6 +89,8 @@ import static org.jooq.impl.Keywords.K_ROWCOUNT;
 import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_SQL;
 import static org.jooq.impl.Keywords.K_TABLE;
+import static org.jooq.impl.Names.N_DELETED;
+import static org.jooq.impl.Names.N_INSERTED;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.anyMatch;
@@ -752,6 +754,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 throw new DataAccessException("A statement is executed without WHERE clause");
         }
     }
+
 
 
 

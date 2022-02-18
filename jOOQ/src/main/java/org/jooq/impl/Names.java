@@ -157,6 +157,7 @@ final class Names {
     static final Name N_IFNULL                 = systemName("ifnull");
     static final Name N_IIF                    = systemName("iif");
     static final Name N_INSERT                 = systemName("insert");
+    static final Name N_INSERTED               = systemName("inserted");
     static final Name N_INSTR                  = systemName("instr");
     static final Name N_ISJSON                 = systemName("isjson");
     static final Name N_JOIN                   = systemName("join");
@@ -361,6 +362,7 @@ final class Names {
     static final Name N_CURRENT_USER           = systemName("current_user");
     static final Name N_DATE_ADD               = systemName("date_add");
     static final Name N_DEGREES                = systemName("degrees");
+    static final Name N_DELETED                = systemName("deleted");
     static final Name N_DELETING               = systemName("deleting");
     static final Name N_DIGITS                 = systemName("digits");
     static final Name N_E                      = systemName("e");

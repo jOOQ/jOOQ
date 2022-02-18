@@ -128,6 +128,7 @@ final class Names {
     static final Name N_DB_NAME                = systemName("db_name");
     static final Name N_DECODE                 = systemName("decode");
     static final Name N_DEFAULT                = systemName("default");
+    static final Name N_DELETED                = systemName("deleted");
     static final Name N_DENSE_RANK             = systemName("dense_rank");
     static final Name N_DIV                    = systemName("div");
     static final Name N_DUAL                   = systemName("dual");
@@ -362,7 +363,6 @@ final class Names {
     static final Name N_CURRENT_USER           = systemName("current_user");
     static final Name N_DATE_ADD               = systemName("date_add");
     static final Name N_DEGREES                = systemName("degrees");
-    static final Name N_DELETED                = systemName("deleted");
     static final Name N_DELETING               = systemName("deleting");
     static final Name N_DIGITS                 = systemName("digits");
     static final Name N_E                      = systemName("e");

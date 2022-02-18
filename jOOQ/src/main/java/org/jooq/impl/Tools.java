@@ -3196,7 +3196,7 @@ final class Tools {
      */
     static final Catalog getMappedCatalog(Scope scope, Catalog catalog) {
         if (scope != null)
-            scope.configuration().schemaMapping().map(catalog);
+            return scope.configuration().schemaMapping().map(catalog);
 
         return catalog;
     }

@@ -133,15 +133,18 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
      * Create a converter that can convert arrays with the component types being
      * the argument converter's types.
      */
-    public static <T, U> Converter<T[], U[]> forArrays(final Converter<T, U> converter) {
-        return new ArrayConverter<>(converter);
+    public static <T, U> Converter<T[], U[]> forArrays(Converter<T, U> converter) {
+        if (converter instanceof ArrayComponentConverter)
+            return ((ArrayComponentConverter<T, U>) converter).converter;
+        else
+            return new ArrayConverter<>(converter);
     }
 
     /**
      * Create a converter that can convert component types based on the argument
      * converter, which converts array types.
      */
-    public static <T, U> Converter<T, U> forArrayComponents(final Converter<T[], U[]> converter) {
+    public static <T, U> Converter<T, U> forArrayComponents(Converter<T[], U[]> converter) {
         if (converter instanceof ArrayConverter)
             return ((ArrayConverter<T, U>) converter).converter;
         else

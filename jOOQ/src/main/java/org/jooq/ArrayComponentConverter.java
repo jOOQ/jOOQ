@@ -47,7 +47,7 @@ import org.jooq.impl.AbstractConverter;
 @SuppressWarnings("unchecked")
 final class ArrayComponentConverter<T, U> extends AbstractConverter<T, U> {
 
-    private final Converter<T[], U[]> converter;
+    final Converter<T[], U[]> converter;
 
     public ArrayComponentConverter(Converter<T[], U[]> converter) {
         super((Class<T>) converter.fromType().getComponentType(), (Class<U>) converter.toType().getComponentType());

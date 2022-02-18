@@ -35,44 +35,43 @@
  *
  *
  */
-package org.jooq.impl;
+package org.jooq;
 
-import org.jooq.Converter;
+import java.lang.reflect.Array;
+
+import org.jooq.impl.AbstractConverter;
 
 /**
- * A converter that doesn't convert anything.
- *
  * @author Lukas Eder
  */
-public final class IdentityConverter<T> implements Converter<T, T> {
-    private final Class<T> type;
+@SuppressWarnings("unchecked")
+final class ArrayComponentConverter<T, U> extends AbstractConverter<T, U> {
 
-    public IdentityConverter(Class<T> type) {
-        this.type = type;
+    final Converter<T[], U[]> converter;
+
+    public ArrayComponentConverter(Converter<T[], U[]> converter) {
+        super((Class<T>) converter.fromType().getComponentType(), (Class<U>) converter.toType().getComponentType());
+
+        this.converter = converter;
     }
 
     @Override
-    public final T from(T t) {
-        return t;
+    public final U from(T t) {
+        if (t == null)
+            return null;
+
+        T[] a = (T[]) Array.newInstance(fromType(), 1);
+        a[0] = t;
+        return converter.from(a)[0];
     }
 
     @Override
-    public final T to(T t) {
-        return t;
-    }
+    public final T to(U u) {
+        if (u == null)
+            return null;
 
-    @Override
-    public final Class<T> fromType() {
-        return type;
-    }
-
-    @Override
-    public final Class<T> toType() {
-        return type;
-    }
-
-    @Override
-    public String toString() {
-        return "IdentityConverter [ " + fromType().getName() + " ]";
+        U[] a = (U[]) Array.newInstance(fromType(), 1);
+        a[0] = u;
+        return converter.to(a)[0];
     }
 }

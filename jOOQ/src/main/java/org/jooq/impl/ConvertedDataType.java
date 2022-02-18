@@ -45,6 +45,7 @@ import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Configuration;
 import org.jooq.Converter;
+import org.jooq.Converters;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Nullability;
@@ -54,6 +55,7 @@ import org.jooq.Row;
 import org.jooq.SQLDialect;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A <code>DataType</code> used for converted types using {@link Converter}
@@ -123,6 +125,25 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     @Override
     public final DataType<U> getSQLDataType() {
         return (DataType<U>) delegate.getSQLDataType();
+    }
+
+    @Override
+    public final DataType<U[]> getArrayDataType() {
+        return delegate.getArrayDataType().asConvertedDataType(Converters.forArrays(binding.converter()));
+    }
+
+    @Override
+    public final DataType<?> getArrayComponentDataType() {
+        DataType<?> d = delegate.getArrayComponentDataType();
+
+        return d == null ? null : d.asConvertedDataType(Converters.forArrayComponents((Converter) binding.converter()));
+    }
+
+    @Override
+    public final Class<?> getArrayComponentType() {
+        DataType<?> d = getArrayComponentDataType();
+
+        return d == null ? null : d.getType();
     }
 
     @Override

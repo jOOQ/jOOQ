@@ -670,7 +670,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     // Type-specific subclasses API
     // -----------------------------------------------------------------------------------------------------------------
 
-    abstract static class AbstractBinding<T, U> implements org.jooq.Binding<T, U> {
+    /**
+     * An internal binding class for default data type binding implementations.
+     * <p>
+     * This base class can be safely assumed to not leak into custom bindings.
+     */
+    abstract static class InternalBinding<T, U> implements org.jooq.Binding<T, U> {
         static final Set<SQLDialect> NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB);
         static final Set<SQLDialect> REQUIRES_JSON_CAST                  = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
         static final Set<SQLDialect> NO_SUPPORT_ENUM_CAST                = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
@@ -684,7 +689,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final Converter<T, U>        converter;
         final boolean                attachable;
 
-        AbstractBinding(DataType<T> dataType, Converter<T, U> converter) {
+        InternalBinding(DataType<T> dataType, Converter<T, U> converter) {
             this.dataType = dataType;
             this.converter = converter;
 
@@ -1077,16 +1082,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DelegatingBinding<X, T, U> extends AbstractBinding<X, U> {
+    static final class DelegatingBinding<X, T, U> extends InternalBinding<X, U> {
 
         private final Converter<T, X>       delegatingConverter;
-        private final AbstractBinding<T, U> delegatingBinding;
+        private final InternalBinding<T, U> delegatingBinding;
 
         DelegatingBinding(
             DataType<X> originalDataType,
             Converter<T, X> delegatingConverter,
             Converter<X, U> originalConverter,
-            Function<? super Converter<T, U>, ? extends AbstractBinding<T, U>> f
+            Function<? super Converter<T, U>, ? extends InternalBinding<T, U>> f
         ) {
             super(originalDataType, originalConverter);
 
@@ -1140,7 +1145,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultArrayBinding<U> extends AbstractBinding<Object[], U> {
+    static final class DefaultArrayBinding<U> extends InternalBinding<Object[], U> {
         private static final Set<SQLDialect> REQUIRES_ARRAY_CAST = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
 
@@ -1563,7 +1568,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-    static final class DefaultBigDecimalBinding<U> extends AbstractBinding<BigDecimal, U> {
+    static final class DefaultBigDecimalBinding<U> extends InternalBinding<BigDecimal, U> {
         private static final Set<SQLDialect> BIND_AS_STRING   = SQLDialect.supportedBy(SQLITE);
 
         DefaultBigDecimalBinding(DataType<BigDecimal> dataType, Converter<BigDecimal, U> converter) {
@@ -1624,7 +1629,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultBigIntegerBinding<U> extends AbstractBinding<BigInteger, U> {
+    static final class DefaultBigIntegerBinding<U> extends InternalBinding<BigInteger, U> {
         private static final Set<SQLDialect> BIND_AS_STRING   = SQLDialect.supportedBy(SQLITE);
 
         DefaultBigIntegerBinding(DataType<BigInteger> dataType, Converter<BigInteger, U> converter) {
@@ -1688,7 +1693,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultBlobBinding<U> extends AbstractBinding<Blob, U> {
+    static final class DefaultBlobBinding<U> extends InternalBinding<Blob, U> {
 
         DefaultBlobBinding(DataType<Blob> dataType, Converter<Blob, U> converter) {
             super(dataType, converter);
@@ -1750,7 +1755,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultBooleanBinding<U> extends AbstractBinding<Boolean, U> {
+    static final class DefaultBooleanBinding<U> extends InternalBinding<Boolean, U> {
         private static final Set<SQLDialect> BIND_AS_1_0        = SQLDialect.supportedBy(FIREBIRD, SQLITE);
 
 
@@ -1878,7 +1883,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultByteBinding<U> extends AbstractBinding<Byte, U> {
+    static final class DefaultByteBinding<U> extends InternalBinding<Byte, U> {
 
         DefaultByteBinding(DataType<Byte> dataType, Converter<Byte, U> converter) {
             super(dataType, converter);
@@ -1938,7 +1943,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultBytesBinding<U> extends AbstractBinding<byte[], U> {
+    static final class DefaultBytesBinding<U> extends InternalBinding<byte[], U> {
 
         // [#12956] Starting from H2 2.0, we can't use byte[] for BLOB anymore, if they're
         //          larger than 1MB
@@ -2151,7 +2156,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultClobBinding<U> extends AbstractBinding<Clob, U> {
+    static final class DefaultClobBinding<U> extends InternalBinding<Clob, U> {
 
         DefaultClobBinding(DataType<Clob> dataType, Converter<Clob, U> converter) {
             super(dataType, converter);
@@ -2198,7 +2203,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultDateBinding<U> extends AbstractBinding<Date, U> {
+    static final class DefaultDateBinding<U> extends InternalBinding<Date, U> {
         private static final Set<SQLDialect> INLINE_AS_STRING_LITERAL = SQLDialect.supportedBy(SQLITE);
 
         DefaultDateBinding(DataType<Date> dataType, Converter<Date, U> converter) {
@@ -2392,7 +2397,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultDayToSecondBinding<U> extends AbstractBinding<DayToSecond, U> {
+    static final class DefaultDayToSecondBinding<U> extends InternalBinding<DayToSecond, U> {
         private static final Set<SQLDialect> REQUIRE_PG_INTERVAL       = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
         private static final Set<SQLDialect> REQUIRE_STANDARD_INTERVAL = SQLDialect.supportedBy(H2);
 
@@ -2487,7 +2492,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultDoubleBinding<U> extends AbstractBinding<Double, U> {
+    static final class DefaultDoubleBinding<U> extends InternalBinding<Double, U> {
         static final Set<SQLDialect> REQUIRES_LITERAL_CAST = SQLDialect.supportedBy(H2);
 
         DefaultDoubleBinding(DataType<Double> dataType, Converter<Double, U> converter) {
@@ -2656,7 +2661,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultEnumTypeBinding<U> extends AbstractBinding<EnumType, U> {
+    static final class DefaultEnumTypeBinding<U> extends InternalBinding<EnumType, U> {
         private static final Set<SQLDialect> REQUIRE_ENUM_CAST = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
         DefaultEnumTypeBinding(DataType<EnumType> dataType, Converter<EnumType, U> converter) {
@@ -2747,7 +2752,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultFloatBinding<U> extends AbstractBinding<Float, U> {
+    static final class DefaultFloatBinding<U> extends InternalBinding<Float, U> {
 
         DefaultFloatBinding(DataType<Float> dataType, Converter<Float, U> converter) {
             super(dataType, converter);
@@ -2839,7 +2844,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultIntegerBinding<U> extends AbstractBinding<Integer, U> {
+    static final class DefaultIntegerBinding<U> extends InternalBinding<Integer, U> {
 
         DefaultIntegerBinding(DataType<Integer> dataType, Converter<Integer, U> converter) {
             super(dataType, converter);
@@ -2896,7 +2901,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultLongBinding<U> extends AbstractBinding<Long, U> {
+    static final class DefaultLongBinding<U> extends InternalBinding<Long, U> {
 
         DefaultLongBinding(DataType<Long> dataType, Converter<Long, U> converter) {
             super(dataType, converter);
@@ -3129,7 +3134,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultOffsetDateTimeBinding<U> extends AbstractBinding<OffsetDateTime, U> {
+    static final class DefaultOffsetDateTimeBinding<U> extends InternalBinding<OffsetDateTime, U> {
 
         DefaultOffsetDateTimeBinding(DataType<OffsetDateTime> dataType, Converter<OffsetDateTime, U> converter) {
             super(dataType, converter);
@@ -3320,7 +3325,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultOffsetTimeBinding<U> extends AbstractBinding<OffsetTime, U> {
+    static final class DefaultOffsetTimeBinding<U> extends InternalBinding<OffsetTime, U> {
 
         DefaultOffsetTimeBinding(DataType<OffsetTime> dataType, Converter<OffsetTime, U> converter) {
             super(dataType, converter);
@@ -3434,7 +3439,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultInstantBinding<U> extends AbstractBinding<Instant, U> {
+    static final class DefaultInstantBinding<U> extends InternalBinding<Instant, U> {
 
         private static final Converter<OffsetDateTime, Instant> CONVERTER        = Converter.ofNullable(
             OffsetDateTime.class,
@@ -3492,7 +3497,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class CommercialOnlyBinding<U> extends AbstractBinding<Object, U> {
+    static final class CommercialOnlyBinding<U> extends InternalBinding<Object, U> {
         CommercialOnlyBinding(DataType<Object> dataType, Converter<Object, U> converter) {
             super(dataType, converter);
         }
@@ -3531,7 +3536,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultOtherBinding<U> extends AbstractBinding<Object, U> {
+    static final class DefaultOtherBinding<U> extends InternalBinding<Object, U> {
 
         DefaultOtherBinding(DataType<Object> dataType, Converter<Object, U> converter) {
             super(dataType, converter);
@@ -3540,7 +3545,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @SuppressWarnings({ "unchecked", "rawtypes" })
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Object value) throws SQLException {
-            AbstractBinding b = (AbstractBinding) binding(DefaultDataType.getDataType(ctx.dialect(), value.getClass()));
+            InternalBinding b = (InternalBinding) binding(DefaultDataType.getDataType(ctx.dialect(), value.getClass()));
 
             // [#7370] Prevent a stack overflow error on unsupported data types
             if (b instanceof DefaultOtherBinding)
@@ -3629,7 +3634,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultRowIdBinding<U> extends AbstractBinding<RowId, U> {
+    static final class DefaultRowIdBinding<U> extends InternalBinding<RowId, U> {
 
         DefaultRowIdBinding(DataType<RowId> dataType, Converter<RowId, U> converter) {
             super(dataType, converter);
@@ -3666,7 +3671,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultRecordBinding<U> extends AbstractBinding<Record, U> {
+    static final class DefaultRecordBinding<U> extends InternalBinding<Record, U> {
         private static final Set<SQLDialect> REQUIRE_RECORD_CAST = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
         DefaultRecordBinding(DataType<Record> dataType, Converter<Record, U> converter) {
@@ -3879,7 +3884,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             //                 which would cause a StackOverflowError, here!
             else if (type != converter.fromType()) {
                 Converter<Object, T> c = (Converter<Object, T>) converter;
-                return c.from(pgFromString(ctx, field("converted_field", ((ConvertedDataType<?, ?>) field.getDataType()).delegate), string));
+                return c.from(pgFromString(ctx, field("converted_field", ((ConvertedDataType<?, ?>) field.getDataType()).delegate()), string));
             }
 
             throw new UnsupportedOperationException("Class " + type + " is not supported");
@@ -3962,7 +3967,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultResultBinding<U> extends AbstractBinding<org.jooq.Result<?>, U> {
+    static final class DefaultResultBinding<U> extends InternalBinding<org.jooq.Result<?>, U> {
 
         DefaultResultBinding(DataType<Result<?>> dataType, Converter<Result<?>, U> converter) {
             super(dataType, converter);
@@ -4057,7 +4062,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultShortBinding<U> extends AbstractBinding<Short, U> {
+    static final class DefaultShortBinding<U> extends InternalBinding<Short, U> {
 
         DefaultShortBinding(DataType<Short> dataType, Converter<Short, U> converter) {
             super(dataType, converter);
@@ -4114,7 +4119,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultStringBinding<U> extends AbstractBinding<String, U> {
+    static final class DefaultStringBinding<U> extends InternalBinding<String, U> {
 
         DefaultStringBinding(DataType<String> dataType, Converter<String, U> converter) {
             super(dataType, converter);
@@ -4194,7 +4199,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultNStringBinding<U> extends AbstractBinding<String, U> {
+    static final class DefaultNStringBinding<U> extends InternalBinding<String, U> {
         private final DefaultStringBinding<U> fallback;
 
         DefaultNStringBinding(DataType<String> dataType, Converter<String, U> converter) {
@@ -4289,7 +4294,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultTimeBinding<U> extends AbstractBinding<Time, U> {
+    static final class DefaultTimeBinding<U> extends InternalBinding<Time, U> {
 
         DefaultTimeBinding(DataType<Time> dataType, Converter<Time, U> converter) {
             super(dataType, converter);
@@ -4402,7 +4407,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultTimestampBinding<U> extends AbstractBinding<Timestamp, U> {
+    static final class DefaultTimestampBinding<U> extends InternalBinding<Timestamp, U> {
         private static final Set<SQLDialect> INLINE_AS_STRING_LITERAL = SQLDialect.supportedBy(SQLITE);
 
         DefaultTimestampBinding(DataType<Timestamp> dataType, Converter<Timestamp, U> converter) {
@@ -4509,7 +4514,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultUUIDBinding<U> extends AbstractBinding<UUID, U> {
+    static final class DefaultUUIDBinding<U> extends InternalBinding<UUID, U> {
 
         DefaultUUIDBinding(DataType<UUID> dataType, Converter<UUID, U> converter) {
             super(dataType, converter);
@@ -5229,7 +5234,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-    static final class DefaultJSONBinding<U> extends AbstractBinding<JSON, U> {
+    static final class DefaultJSONBinding<U> extends InternalBinding<JSON, U> {
 
         DefaultJSONBinding(DataType<JSON> dataType, Converter<JSON, U> converter) {
             super(dataType, converter);
@@ -5295,7 +5300,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultJSONBBinding<U> extends AbstractBinding<org.jooq.JSONB, U> {
+    static final class DefaultJSONBBinding<U> extends InternalBinding<org.jooq.JSONB, U> {
         static final Set<SQLDialect> EMULATE_AS_BLOB = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, SQLITE);
 
         DefaultJSONBBinding(DataType<JSONB> dataType, Converter<JSONB, U> converter) {
@@ -5397,7 +5402,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultXMLBinding<U> extends AbstractBinding<XML, U> {
+    static final class DefaultXMLBinding<U> extends InternalBinding<XML, U> {
 
         DefaultXMLBinding(DataType<XML> dataType, Converter<XML, U> converter) {
             super(dataType, converter);
@@ -5447,7 +5452,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultYearToSecondBinding<U> extends AbstractBinding<YearToSecond, U> {
+    static final class DefaultYearToSecondBinding<U> extends InternalBinding<YearToSecond, U> {
         private static final Set<SQLDialect> REQUIRE_PG_INTERVAL = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
         DefaultYearToSecondBinding(DataType<YearToSecond> dataType, Converter<YearToSecond, U> converter) {
@@ -5527,7 +5532,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultYearToMonthBinding<U> extends AbstractBinding<YearToMonth, U> {
+    static final class DefaultYearToMonthBinding<U> extends InternalBinding<YearToMonth, U> {
         private static final Set<SQLDialect> REQUIRE_PG_INTERVAL       = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
         private static final Set<SQLDialect> REQUIRE_STANDARD_INTERVAL = SQLDialect.supportedBy(H2);
 

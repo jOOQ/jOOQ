@@ -35,44 +35,38 @@
  *
  *
  */
-package org.jooq.impl;
+package org.jooq;
 
-import org.jooq.Converter;
+import static org.jooq.impl.Internal.arrayType;
+
+import org.jooq.impl.AbstractConverter;
+import org.jooq.tools.Convert;
 
 /**
- * A converter that doesn't convert anything.
+ * A {@link Converter} that can convert arrays based on a delegate converter
+ * that can convert the array base types.
  *
  * @author Lukas Eder
  */
-public final class IdentityConverter<T> implements Converter<T, T> {
-    private final Class<T> type;
+final class ArrayConverter<T, U> extends AbstractConverter<T[], U[]> {
 
-    public IdentityConverter(Class<T> type) {
-        this.type = type;
+    final Converter<T, U> converter;
+    final Converter<U, T> inverse;
+
+    public ArrayConverter(Converter<T, U> converter) {
+        super(arrayType(converter.fromType()), arrayType(converter.toType()));
+
+        this.converter = converter;
+        this.inverse = Converters.inverse(converter);
     }
 
     @Override
-    public final T from(T t) {
-        return t;
+    public final U[] from(T[] t) {
+        return Convert.convertArray(t, converter);
     }
 
     @Override
-    public final T to(T t) {
-        return t;
-    }
-
-    @Override
-    public final Class<T> fromType() {
-        return type;
-    }
-
-    @Override
-    public final Class<T> toType() {
-        return type;
-    }
-
-    @Override
-    public String toString() {
-        return "IdentityConverter [ " + fromType().getName() + " ]";
+    public final T[] to(U[] t) {
+        return Convert.convertArray(t, inverse);
     }
 }

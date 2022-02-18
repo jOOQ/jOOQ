@@ -53,6 +53,8 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
+import org.jooq.exception.DataTypeException;
+import org.jooq.impl.DefaultBinding.InternalBinding;
 import org.jooq.impl.QOM.GenerationOption;
 
 import org.jetbrains.annotations.NotNull;
@@ -136,7 +138,10 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
 
     @Override
     public final DataType<U[]> getArrayDataType() {
-        return delegate.getArrayDataType().asConvertedDataType(Converters.forArrays(binding.converter()));
+        if (getBinding() instanceof InternalBinding)
+            return delegate.getArrayDataType().asConvertedDataType(Converters.forArrays(binding.converter()));
+        else
+            throw new DataTypeException("Cannot create array data types from custom data types with custom bindings.");
     }
 
     @Override

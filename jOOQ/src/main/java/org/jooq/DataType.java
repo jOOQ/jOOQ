@@ -77,6 +77,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import org.jooq.Converters.UnknownType;
+import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.QOM.GenerationOption;
@@ -176,9 +177,29 @@ public interface DataType<T> extends Named {
 
     /**
      * Retrieve the data type for an ARRAY of this data type.
+     * <p>
+     * Built-in data types, as well as custom data types that have a custom
+     * {@link #getConverter()} can be translated to array data types using
+     * {@link Converter#forArrays()}. Data types with custom
+     * {@link #getBinding()} cannot be translated to an array data type. Use
+     * this idiom, instead:
+     * <p>
+     * <code><pre>
+     * // Doesn't work
+     * DataType<UserType[]> t1 =
+     *   SQLDataType.INTEGER.asConvertedDataType(binding).getArrayDataType();
+     *
+     * // Works
+     * DataType<UserType[]> t2 =
+     *   SQLDataType.INTEGER.getArrayDataType().asConvertedDataType(arrayBinding);
+     * </pre></code>
+     *
+     * @throws DataTypeException When this data type has a custom
+     *             {@link #getBinding()}, which cannot be automatically
+     *             translated to an array {@link Binding}.
      */
     @NotNull
-    DataType<T[]> getArrayDataType();
+    DataType<T[]> getArrayDataType() throws DataTypeException;
 
     /**
      * Retrieve the Java component type if this is an ARRAY type, or

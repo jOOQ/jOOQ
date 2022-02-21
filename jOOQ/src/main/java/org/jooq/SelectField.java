@@ -187,11 +187,11 @@ public /* non-sealed */ interface SelectField<T> extends SelectFieldOrAsterisk, 
      * allows for creating a derived field expression with an ad-hoc data type
      * converter for single query usage.
      * <p>
-     * EXPERIMENTAL. Unlike {@link #convertFrom(Class, Function)}, this method
-     * attempts to work without an explicit {@link Class} reference for the underlying
-     * {@link Converter#toType()}. There may be some edge cases where this doesn't
-     * work. Please report any bugs here:
-     * <a href="https://github.com/jOOQ/jOOQ/issues/new/choose">https://github.com/jOOQ/jOOQ/issues/new/choose</a>
+     * Unlike {@link #convertFrom(Class, Function)}, this method attempts to
+     * work without an explicit {@link Class} reference for the underlying
+     * {@link Converter#toType()}. There may be some edge cases where this
+     * doesn't work, e.g. when nesting rows in arrays, the class literal is
+     * required for reflective array creation.
      *
      * @param <U> The user type.
      * @param converter The read-only converter to be applied on any operations
@@ -229,11 +229,11 @@ public /* non-sealed */ interface SelectField<T> extends SelectFieldOrAsterisk, 
      * allows for creating a derived field expression with an ad-hoc data type
      * converter for single query usage.
      * <p>
-     * EXPERIMENTAL. Unlike {@link #convertTo(Class, Function)}, this method
-     * attempts to work without an explicit {@link Class} reference for the underlying
-     * {@link Converter#toType()}. There may be some edge cases where this doesn't
-     * work. Please report any bugs here:
-     * <a href="https://github.com/jOOQ/jOOQ/issues/new/choose">https://github.com/jOOQ/jOOQ/issues/new/choose</a>
+     * Unlike {@link #convertTo(Class, Function)}, this method attempts to work
+     * without an explicit {@link Class} reference for the underlying
+     * {@link Converter#toType()}. There may be some edge cases where this
+     * doesn't work, e.g. when nesting rows in arrays, the class literal is
+     * required for reflective array creation.
      *
      * @param <U> The user type.
      * @param converter The write-only converter to be applied on any operations

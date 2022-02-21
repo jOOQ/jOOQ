@@ -99,8 +99,9 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row, SelectField<R
      * <p>
      * Unlike {@link #mapping(Class, Function8)}, this method attempts to work
      * without an explicit {@link Class} reference for the underlying
-     * {@link Converter#toType()}, e.g. when nesting rows in arrays, the class
-     * literal is required for reflective array creation.
+     * {@link Converter#toType()}. There may be some edge cases where this
+     * doesn't work, e.g. when nesting rows in arrays, the class literal is
+     * required for reflective array creation.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function8)} or
      * {@link Functions#nullOnAnyNull(Function8)} to achieve <code>null</code>

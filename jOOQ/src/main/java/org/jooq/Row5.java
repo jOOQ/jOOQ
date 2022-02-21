@@ -99,8 +99,9 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row, SelectField<Record5<T1, T
      * <p>
      * Unlike {@link #mapping(Class, Function5)}, this method attempts to work
      * without an explicit {@link Class} reference for the underlying
-     * {@link Converter#toType()}, e.g. when nesting rows in arrays, the class
-     * literal is required for reflective array creation.
+     * {@link Converter#toType()}. There may be some edge cases where this
+     * doesn't work, e.g. when nesting rows in arrays, the class literal is
+     * required for reflective array creation.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function5)} or
      * {@link Functions#nullOnAnyNull(Function5)} to achieve <code>null</code>

@@ -99,8 +99,9 @@ public interface RowN extends Row, SelectField<Record> {
      * <p>
      * Unlike {@link #mapping(Class, Function)}, this method attempts to work
      * without an explicit {@link Class} reference for the underlying
-     * {@link Converter#toType()}, e.g. when nesting rows in arrays, the class
-     * literal is required for reflective array creation.
+     * {@link Converter#toType()}. There may be some edge cases where this
+     * doesn't work, e.g. when nesting rows in arrays, the class literal is
+     * required for reflective array creation.
      */
     @NotNull
     <U> SelectField<U> mapping(Function<? super Object[], ? extends U> function);

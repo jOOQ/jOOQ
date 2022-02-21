@@ -158,7 +158,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#VARCHAR} type.
      */
-    public static final DataType<String> VARCHAR = new DefaultDataType<>(null, String.class, "varchar(l)");
+    public static final DataType<String> VARCHAR = new BuiltInDataType<>(String.class, "varchar(l)");
 
     /**
      * The {@link Types#VARCHAR} type.
@@ -170,7 +170,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#CHAR} type.
      */
-    public static final DataType<String> CHAR = new DefaultDataType<>(null, String.class, "char(l)");
+    public static final DataType<String> CHAR = new BuiltInDataType<>(String.class, "char(l)");
 
     /**
      * The {@link Types#CHAR} type.
@@ -182,7 +182,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#LONGVARCHAR} type.
      */
-    public static final DataType<String> LONGVARCHAR = new DefaultDataType<>(null, String.class, "longvarchar(l)");
+    public static final DataType<String> LONGVARCHAR = new BuiltInDataType<>(String.class, "longvarchar(l)");
 
     /**
      * The {@link Types#LONGVARCHAR} type.
@@ -194,7 +194,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#CLOB} type.
      */
-    public static final DataType<String> CLOB = new DefaultDataType<>(null, String.class, "clob");
+    public static final DataType<String> CLOB = new BuiltInDataType<>(String.class, "clob");
 
     /**
      * The {@link Types#CLOB} type.
@@ -206,7 +206,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#NVARCHAR} type.
      */
-    public static final DataType<String> NVARCHAR = new DefaultDataType<>(null, String.class, "nvarchar(l)");
+    public static final DataType<String> NVARCHAR = new BuiltInDataType<>(String.class, "nvarchar(l)");
 
     /**
      * The {@link Types#NVARCHAR} type.
@@ -218,7 +218,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#NCHAR} type.
      */
-    public static final DataType<String> NCHAR = new DefaultDataType<>(null, String.class, "nchar(l)");
+    public static final DataType<String> NCHAR = new BuiltInDataType<>(String.class, "nchar(l)");
 
     /**
      * The {@link Types#NCHAR} type.
@@ -230,7 +230,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#LONGNVARCHAR} type.
      */
-    public static final DataType<String> LONGNVARCHAR = new DefaultDataType<>(null, String.class, "longnvarchar(l)");
+    public static final DataType<String> LONGNVARCHAR = new BuiltInDataType<>(String.class, "longnvarchar(l)");
 
     /**
      * The {@link Types#LONGNVARCHAR} type.
@@ -242,7 +242,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#NCLOB} type.
      */
-    public static final DataType<String> NCLOB = new DefaultDataType<>(null, String.class, "nclob");
+    public static final DataType<String> NCLOB = new BuiltInDataType<>(String.class, "nclob");
 
     /**
      * The {@link Types#NCLOB} type.
@@ -258,12 +258,12 @@ public final class SQLDataType {
     /**
      * The {@link Types#BOOLEAN} type.
      */
-    public static final DataType<Boolean> BOOLEAN = new DefaultDataType<>(null, Boolean.class, "boolean");
+    public static final DataType<Boolean> BOOLEAN = new BuiltInDataType<>(Boolean.class, "boolean");
 
     /**
      * The {@link Types#BIT} type.
      */
-    public static final DataType<Boolean> BIT = new DefaultDataType<>(null, Boolean.class, "bit");
+    public static final DataType<Boolean> BIT = new BuiltInDataType<>(Boolean.class, "bit");
 
     // -------------------------------------------------------------------------
     // Integer types
@@ -272,27 +272,27 @@ public final class SQLDataType {
     /**
      * The {@link Types#TINYINT} type.
      */
-    public static final DataType<Byte> TINYINT = new DefaultDataType<>(null, Byte.class, "tinyint");
+    public static final DataType<Byte> TINYINT = new BuiltInDataType<>(Byte.class, "tinyint");
 
     /**
      * The {@link Types#SMALLINT} type.
      */
-    public static final DataType<Short> SMALLINT = new DefaultDataType<>(null, Short.class, "smallint");
+    public static final DataType<Short> SMALLINT = new BuiltInDataType<>(Short.class, "smallint");
 
     /**
      * The {@link Types#INTEGER} type.
      */
-    public static final DataType<Integer> INTEGER = new DefaultDataType<>(null, Integer.class, "integer");
+    public static final DataType<Integer> INTEGER = new BuiltInDataType<>(Integer.class, "integer");
 
     /**
      * The {@link Types#BIGINT} type.
      */
-    public static final DataType<Long> BIGINT = new DefaultDataType<>(null, Long.class, "bigint");
+    public static final DataType<Long> BIGINT = new BuiltInDataType<>(Long.class, "bigint");
 
     /**
      * The zero-scale {@link Types#DECIMAL} type.
      */
-    public static final DataType<BigInteger> DECIMAL_INTEGER = new DefaultDataType<>(null, BigInteger.class, "decimal_integer");
+    public static final DataType<BigInteger> DECIMAL_INTEGER = new BuiltInDataType<>(BigInteger.class, "decimal_integer");
 
     /**
      * The zero-scale {@link Types#DECIMAL} type.
@@ -308,22 +308,22 @@ public final class SQLDataType {
     /**
      * The unsigned {@link Types#TINYINT} type.
      */
-    public static final DataType<UByte> TINYINTUNSIGNED = new DefaultDataType<>(null, UByte.class, "tinyint unsigned");
+    public static final DataType<UByte> TINYINTUNSIGNED = new BuiltInDataType<>(UByte.class, "tinyint unsigned");
 
     /**
      * The unsigned {@link Types#SMALLINT} type.
      */
-    public static final DataType<UShort> SMALLINTUNSIGNED = new DefaultDataType<>(null, UShort.class, "smallint unsigned");
+    public static final DataType<UShort> SMALLINTUNSIGNED = new BuiltInDataType<>(UShort.class, "smallint unsigned");
 
     /**
      * The unsigned {@link Types#INTEGER} type.
      */
-    public static final DataType<UInteger> INTEGERUNSIGNED = new DefaultDataType<>(null, UInteger.class, "integer unsigned");
+    public static final DataType<UInteger> INTEGERUNSIGNED = new BuiltInDataType<>(UInteger.class, "integer unsigned");
 
     /**
      * The unsigned {@link Types#BIGINT} type.
      */
-    public static final DataType<ULong> BIGINTUNSIGNED = new DefaultDataType<>(null, ULong.class, "bigint unsigned");
+    public static final DataType<ULong> BIGINTUNSIGNED = new BuiltInDataType<>(ULong.class, "bigint unsigned");
 
     // -------------------------------------------------------------------------
     // Floating point types
@@ -332,17 +332,17 @@ public final class SQLDataType {
     /**
      * The {@link Types#DOUBLE} type.
      */
-    public static final DataType<Double> DOUBLE = new DefaultDataType<>(null, Double.class, "double");
+    public static final DataType<Double> DOUBLE = new BuiltInDataType<>(Double.class, "double");
 
     /**
      * The {@link Types#FLOAT} type.
      */
-    public static final DataType<Double> FLOAT = new DefaultDataType<>(null, Double.class, "float");
+    public static final DataType<Double> FLOAT = new BuiltInDataType<>(Double.class, "float");
 
     /**
      * The {@link Types#REAL} type.
      */
-    public static final DataType<Float> REAL = new DefaultDataType<>(null, Float.class, "real");
+    public static final DataType<Float> REAL = new BuiltInDataType<>(Float.class, "real");
 
     // -------------------------------------------------------------------------
     // Numeric types
@@ -351,7 +351,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#NUMERIC} type.
      */
-    public static final DataType<BigDecimal> NUMERIC = new DefaultDataType<>(null, BigDecimal.class, "numeric(p, s)");
+    public static final DataType<BigDecimal> NUMERIC = new BuiltInDataType<>(BigDecimal.class, "numeric(p, s)");
 
     /**
      * The {@link Types#NUMERIC} type.
@@ -370,7 +370,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#DECIMAL} type.
      */
-    public static final DataType<BigDecimal> DECIMAL = new DefaultDataType<>(null, BigDecimal.class, "decimal(p, s)");
+    public static final DataType<BigDecimal> DECIMAL = new BuiltInDataType<>(BigDecimal.class, "decimal(p, s)");
 
     /**
      * The {@link Types#DECIMAL} type.
@@ -393,12 +393,12 @@ public final class SQLDataType {
     /**
      * The {@link Types#DATE} type.
      */
-    public static final DataType<Date> DATE = new DefaultDataType<>(null, Date.class, "date");
+    public static final DataType<Date> DATE = new BuiltInDataType<>(Date.class, "date");
 
     /**
      * The {@link Types#TIMESTAMP} type.
      */
-    public static final DataType<Timestamp> TIMESTAMP = new DefaultDataType<>(null, Timestamp.class, "timestamp(p)");
+    public static final DataType<Timestamp> TIMESTAMP = new BuiltInDataType<>(Timestamp.class, "timestamp(p)");
 
     /**
      * The {@link Types#TIMESTAMP} type.
@@ -410,7 +410,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#TIME} type.
      */
-    public static final DataType<Time> TIME = new DefaultDataType<>(null, Time.class, "time(p)");
+    public static final DataType<Time> TIME = new BuiltInDataType<>(Time.class, "time(p)");
 
     /**
      * The {@link Types#TIME} type.
@@ -423,17 +423,17 @@ public final class SQLDataType {
      * A vendor specific <code>INTERVAL YEAR TO SECOND</code> data type, which
      * combines {@link #INTERVALYEARTOMONTH} and {@link #INTERVALDAYTOSECOND}.
      */
-    public static final DataType<YearToSecond> INTERVAL = new DefaultDataType<>(null, YearToSecond.class, "interval");
+    public static final DataType<YearToSecond> INTERVAL = new BuiltInDataType<>(YearToSecond.class, "interval");
 
     /**
      * The SQL standard <code>INTERVAL YEAR TO MONTH</code> data type.
      */
-    public static final DataType<YearToMonth> INTERVALYEARTOMONTH = new DefaultDataType<>(null, YearToMonth.class, "interval year to month");
+    public static final DataType<YearToMonth> INTERVALYEARTOMONTH = new BuiltInDataType<>(YearToMonth.class, "interval year to month");
 
     /**
      * The SQL standard <code>INTERVAL DAY TO SECOND</code> data type.
      */
-    public static final DataType<DayToSecond> INTERVALDAYTOSECOND = new DefaultDataType<>(null, DayToSecond.class, "interval day to second");
+    public static final DataType<DayToSecond> INTERVALDAYTOSECOND = new BuiltInDataType<>(DayToSecond.class, "interval day to second");
 
     // -------------------------------------------------------------------------
     // JSR310 types
@@ -442,12 +442,12 @@ public final class SQLDataType {
     /**
      * The {@link Types#DATE} type.
      */
-    public static final DataType<LocalDate> LOCALDATE = new DefaultDataType<>(null, LocalDate.class, "date");
+    public static final DataType<LocalDate> LOCALDATE = new BuiltInDataType<>(LocalDate.class, "date");
 
     /**
      * The {@link Types#TIME} type.
      */
-    public static final DataType<LocalTime> LOCALTIME = new DefaultDataType<>(null, LocalTime.class, "time(p)");
+    public static final DataType<LocalTime> LOCALTIME = new BuiltInDataType<>(LocalTime.class, "time(p)");
 
     /**
      * The {@link Types#TIME} type.
@@ -459,7 +459,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#TIMESTAMP} type.
      */
-    public static final DataType<LocalDateTime> LOCALDATETIME = new DefaultDataType<>(null, LocalDateTime.class, "timestamp(p)");
+    public static final DataType<LocalDateTime> LOCALDATETIME = new BuiltInDataType<>(LocalDateTime.class, "timestamp(p)");
 
     /**
      * The {@link Types#TIMESTAMP} type.
@@ -482,7 +482,7 @@ public final class SQLDataType {
      * refer to your database for more information about the behaviour of this
      * data type.
      */
-    public static final DataType<OffsetTime> OFFSETTIME = new DefaultDataType<>(null, OffsetTime.class, "time(p) with time zone");
+    public static final DataType<OffsetTime> OFFSETTIME = new BuiltInDataType<>(OffsetTime.class, "time(p) with time zone");
 
     /**
      * The {@link Types#TIME_WITH_TIMEZONE} type.
@@ -516,7 +516,7 @@ public final class SQLDataType {
      * refer to your database for more information about the behaviour of this
      * data type.
      */
-    public static final DataType<OffsetDateTime> OFFSETDATETIME = new DefaultDataType<>(null, OffsetDateTime.class, "timestamp(p) with time zone");
+    public static final DataType<OffsetDateTime> OFFSETDATETIME = new BuiltInDataType<>(OffsetDateTime.class, "timestamp(p) with time zone");
 
     /**
      * The {@link Types#TIMESTAMP_WITH_TIMEZONE} type.
@@ -580,7 +580,7 @@ public final class SQLDataType {
      * information. Irrespective of that storage, this type will always produce
      * time zone agnostic instants in client code.
      */
-    public static final DataType<Instant> INSTANT = new DefaultDataType<>(null, Instant.class, "instant");
+    public static final DataType<Instant> INSTANT = new BuiltInDataType<>(Instant.class, "instant");
 
     /**
      * A {@link Types#TIMESTAMP_WITH_TIMEZONE} type that uses UTC as time zone.
@@ -605,7 +605,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#BINARY} type.
      */
-    public static final DataType<byte[]> BINARY = new DefaultDataType<>(null, byte[].class, "binary(l)");
+    public static final DataType<byte[]> BINARY = new BuiltInDataType<>(byte[].class, "binary(l)");
 
     /**
      * The {@link Types#BINARY} type.
@@ -617,7 +617,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#VARBINARY} type.
      */
-    public static final DataType<byte[]> VARBINARY = new DefaultDataType<>(null, byte[].class, "varbinary(l)");
+    public static final DataType<byte[]> VARBINARY = new BuiltInDataType<>(byte[].class, "varbinary(l)");
 
     /**
      * The {@link Types#VARBINARY} type.
@@ -629,7 +629,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#LONGVARBINARY} type.
      */
-    public static final DataType<byte[]> LONGVARBINARY = new DefaultDataType<>(null, byte[].class, "longvarbinary(l)");
+    public static final DataType<byte[]> LONGVARBINARY = new BuiltInDataType<>(byte[].class, "longvarbinary(l)");
 
     /**
      * The {@link Types#LONGVARBINARY} type.
@@ -641,7 +641,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#BLOB} type.
      */
-    public static final DataType<byte[]> BLOB = new DefaultDataType<>(null, byte[].class, "blob");
+    public static final DataType<byte[]> BLOB = new BuiltInDataType<>(byte[].class, "blob");
 
     /**
      * The {@link Types#BLOB} type.
@@ -657,17 +657,17 @@ public final class SQLDataType {
     /**
      * The {@link Types#OTHER} type.
      */
-    public static final DataType<Object> OTHER = new DefaultDataType<>(null, Object.class, "other");
+    public static final DataType<Object> OTHER = new BuiltInDataType<>(Object.class, "other");
 
     /**
      * The {@link Types#ROWID} type.
      */
-    public static final DataType<RowId> ROWID = new DefaultDataType<>(null, RowId.class, "rowid");
+    public static final DataType<RowId> ROWID = new BuiltInDataType<>(RowId.class, "rowid");
 
     /**
      * The {@link Types#STRUCT} type.
      */
-    public static final DataType<Record> RECORD = new DefaultDataType<>(null, Record.class, "record");
+    public static final DataType<Record> RECORD = new BuiltInDataType<>(Record.class, "record");
 
     /**
      * The {@link ResultSet} type.
@@ -676,7 +676,7 @@ public final class SQLDataType {
      * similar constructs
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static final DataType<Result<Record>> RESULT = new DefaultDataType<>(null, (Class) Result.class, "result");
+    public static final DataType<Result<Record>> RESULT = new BuiltInDataType<>((Class) Result.class, "result");
 
     /**
      * The {@link UUID} type.
@@ -684,7 +684,7 @@ public final class SQLDataType {
      * This is not a JDBC standard. This type handles UUID types where they are
      * supported
      */
-    public static final DataType<UUID> UUID = new DefaultDataType<>(null, UUID.class, "uuid");
+    public static final DataType<UUID> UUID = new BuiltInDataType<>(UUID.class, "uuid");
 
     /**
      * The {@link JSON} type.
@@ -692,7 +692,7 @@ public final class SQLDataType {
      * This is not a JDBC standard. This type handles JSON types where they are
      * supported.
      */
-    public static final DataType<JSON> JSON = new DefaultDataType<>(null, JSON.class, "json");
+    public static final DataType<JSON> JSON = new BuiltInDataType<>(JSON.class, "json");
 
     /**
      * The {@link JSONB} type.
@@ -700,7 +700,7 @@ public final class SQLDataType {
      * This is not a JDBC standard. This type handles JSONB types where they are
      * supported
      */
-    public static final DataType<JSONB> JSONB = new DefaultDataType<>(null, JSONB.class, "jsonb");
+    public static final DataType<JSONB> JSONB = new BuiltInDataType<>(JSONB.class, "jsonb");
 
     /**
      * The {@link XML} type.
@@ -708,7 +708,7 @@ public final class SQLDataType {
      * This is not a JDBC standard. This type handles XML types where they are
      * supported
      */
-    public static final DataType<XML> XML = new DefaultDataType<>(null, XML.class, "xml");
+    public static final DataType<XML> XML = new BuiltInDataType<>(XML.class, "xml");
 
     /**
      * The {@link Geography} type.
@@ -718,7 +718,7 @@ public final class SQLDataType {
      * <p>
      * This data type is supported only by the commercial editions of jOOQ.
      */
-    public static final DataType<Geography> GEOGRAPHY = new DefaultDataType<>(null, Geography.class, "geography");
+    public static final DataType<Geography> GEOGRAPHY = new BuiltInDataType<>(Geography.class, "geography");
 
     /**
      * The {@link Geometry} type.
@@ -728,7 +728,7 @@ public final class SQLDataType {
      * <p>
      * This data type is supported only by the commercial editions of jOOQ.
      */
-    public static final DataType<Geometry> GEOMETRY = new DefaultDataType<>(null, Geometry.class, "geometry");
+    public static final DataType<Geometry> GEOMETRY = new BuiltInDataType<>(Geometry.class, "geometry");
 
     // -------------------------------------------------------------------------
     // Static initialisation of dialect-specific data types
@@ -842,9 +842,9 @@ public final class SQLDataType {
 
         // [#8561] Register JSR-310 types according to their matching JDBC
         //         type configuration
-        new DefaultDataType<>(family, SQLDataType.LOCALDATE, DATE.getTypeName(configuration), DATE.getCastTypeName(configuration));
-        new DefaultDataType<>(family, SQLDataType.LOCALTIME, TIME.getTypeName(configuration), TIME.getCastTypeName(configuration));
-        new DefaultDataType<>(family, SQLDataType.LOCALDATETIME, TIMESTAMP.getTypeName(configuration), TIMESTAMP.getCastTypeName(configuration));
+        new BuiltInDataType<>(family, SQLDataType.LOCALDATE, DATE.getTypeName(configuration), DATE.getCastTypeName(configuration));
+        new BuiltInDataType<>(family, SQLDataType.LOCALTIME, TIME.getTypeName(configuration), TIME.getCastTypeName(configuration));
+        new BuiltInDataType<>(family, SQLDataType.LOCALDATETIME, TIMESTAMP.getTypeName(configuration), TIMESTAMP.getCastTypeName(configuration));
     }
 
     /**

@@ -40,9 +40,9 @@ package org.jooq.util.jaxb.tools;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jakarta.xml.bind.annotation.adapters.XmlAdapter;
-
 import org.jooq.tools.StringUtils;
+
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * An {@link XmlAdapter} that implements useful features after parsing XML

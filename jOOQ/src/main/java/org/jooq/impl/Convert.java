@@ -1377,23 +1377,6 @@ final class Convert {
             };
         }
 
-        private static final String patchIso8601Time(String string) {
-            // [#12158] Support Db2's 15.30.45 format
-            return string.length() == 8
-                 ? string.replace('.', ':')
-                 : string;
-        }
-
-        private static final String patchIso8601Timestamp(String string, boolean t) {
-            if (string.length() > 11)
-                if (t && string.charAt(10) == ' ')
-                    return string.substring(0, 10) + "T" + string.substring(11);
-                else if (!t && string.charAt(10) == 'T')
-                    return string.substring(0, 10) + " " + string.substring(11);
-
-            return string;
-        }
-
         @Override
         public Object to(U to) {
             return to;
@@ -1489,5 +1472,22 @@ final class Convert {
             else
                 return new DataTypeException(message);
         }
+    }
+
+    static final String patchIso8601Time(String string) {
+        // [#12158] Support Db2's 15.30.45 format
+        return string.length() == 8
+             ? string.replace('.', ':')
+             : string;
+    }
+
+    static final String patchIso8601Timestamp(String string, boolean t) {
+        if (string.length() > 11)
+            if (t && string.charAt(10) == ' ')
+                return string.substring(0, 10) + "T" + string.substring(11);
+            else if (!t && string.charAt(10) == 'T')
+                return string.substring(0, 10) + " " + string.substring(11);
+
+        return string;
     }
 }

@@ -84,6 +84,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Convert.convert;
+import static org.jooq.impl.Convert.patchIso8601Timestamp;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
@@ -158,6 +159,7 @@ import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
 import static org.jooq.tools.reflect.Reflect.onClass;
+import static org.jooq.tools.reflect.Reflect.wrapper;
 import static org.jooq.util.postgres.PostgresUtils.toPGArray;
 import static org.jooq.util.postgres.PostgresUtils.toPGArrayString;
 import static org.jooq.util.postgres.PostgresUtils.toPGInterval;
@@ -3800,92 +3802,91 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @SuppressWarnings("unchecked")
-        private static final <T> T pgFromString(Scope ctx, Field<T> field, String string) {
-            Converter<?, T> converter = field.getConverter();
-            Class<T> type = Reflect.wrapper(converter.toType());
+        private static final <T, U> U pgFromString(Scope ctx, Field<U> field, String string) {
+            Converter<T, U> converter = (Converter<T, U>) field.getConverter();
+            Class<?> type = wrapper(converter.fromType());
 
             if (string == null)
                 return null;
             else if (type == Blob.class)
                 ; // Not supported
             else if (type == Boolean.class)
-                return (T) Convert.convert(string, Boolean.class);
+                return converter.from((T) Convert.convert(string, Boolean.class));
             else if (type == BigInteger.class)
-                return (T) new BigInteger(string);
+                return converter.from((T) new BigInteger(string));
             else if (type == BigDecimal.class)
-                return (T) new BigDecimal(string);
+                return converter.from((T) new BigDecimal(string));
             else if (type == Byte.class)
-                return (T) Byte.valueOf(string);
+                return converter.from((T) Byte.valueOf(string));
             else if (type == byte[].class)
-                return (T) PostgresUtils.toBytes(string);
+                return converter.from((T) PostgresUtils.toBytes(string));
             else if (type == Clob.class)
                 ; // Not supported
             else if (type == Date.class)
-                return (T) Date.valueOf(string);
+                return converter.from((T) Date.valueOf(string));
             else if (type == Double.class)
-                return (T) Double.valueOf(string);
+                return converter.from((T) Double.valueOf(string));
             else if (type == Float.class)
-                return (T) Float.valueOf(string);
+                return converter.from((T) Float.valueOf(string));
             else if (type == Integer.class)
-                return (T) Integer.valueOf(string);
+                return converter.from((T) Integer.valueOf(string));
             else if (type == Long.class)
-                return (T) Long.valueOf(string);
+                return converter.from((T) Long.valueOf(string));
             else if (type == Short.class)
-                return (T) Short.valueOf(string);
+                return converter.from((T) Short.valueOf(string));
             else if (type == String.class)
-                return (T) string;
+                return converter.from((T) string);
             else if (type == Time.class)
-                return (T) Time.valueOf(string);
+                return converter.from((T) Time.valueOf(string));
             else if (type == Timestamp.class)
-                return (T) Timestamp.valueOf(string);
+                return converter.from((T) Timestamp.valueOf(patchIso8601Timestamp(string, false)));
             else if (type == LocalTime.class)
-                return (T) LocalTime.parse(string);
+                return converter.from((T) LocalTime.parse(string));
             else if (type == LocalDate.class)
-                return (T) LocalDate.parse(string);
+                return converter.from((T) LocalDate.parse(string));
             else if (type == LocalDateTime.class)
-                return (T) LocalDateTime.parse(string);
+                return converter.from((T) LocalDateTime.parse(patchIso8601Timestamp(string, true)));
             else if (type == OffsetTime.class)
-                return (T) OffsetDateTimeParser.offsetTime(string);
+                return converter.from((T) OffsetDateTimeParser.offsetTime(string));
             else if (type == OffsetDateTime.class)
-                return (T) OffsetDateTimeParser.offsetDateTime(string);
+                return converter.from((T) OffsetDateTimeParser.offsetDateTime(string));
             else if (type == Instant.class)
-                return (T) OffsetDateTimeParser.offsetDateTime(string).toInstant();
+                return converter.from((T) OffsetDateTimeParser.offsetDateTime(string).toInstant());
             else if (type == UByte.class)
-                return (T) UByte.valueOf(string);
+                return converter.from((T) UByte.valueOf(string));
             else if (type == UShort.class)
-                return (T) UShort.valueOf(string);
+                return converter.from((T) UShort.valueOf(string));
             else if (type == UInteger.class)
-                return (T) UInteger.valueOf(string);
+                return converter.from((T) UInteger.valueOf(string));
             else if (type == ULong.class)
-                return (T) ULong.valueOf(string);
+                return converter.from((T) ULong.valueOf(string));
             else if (type == UUID.class)
-                return (T) UUID.fromString(string);
+                return converter.from((T) UUID.fromString(string));
             else if (type.isArray())
-                return (T) pgNewArray(ctx, field, type, string);
+                return converter.from((T) pgNewArray(ctx, field, type, string));
 
 
 
 
             else if (EnumType.class.isAssignableFrom(type))
-                return (T) DefaultEnumTypeBinding.getEnumType((Class<EnumType>) type, string);
+                return converter.from((T) DefaultEnumTypeBinding.getEnumType((Class<EnumType>) type, string));
             else if (Result.class.isAssignableFrom(type))
                 if (string.startsWith("<"))
-                    return (T) readMultisetXML(ctx, (AbstractRow<Record>) field.getDataType().getRow(), (Class<Record>) field.getDataType().getRecordType(), string);
+                    return converter.from((T) readMultisetXML(ctx, (AbstractRow<Record>) field.getDataType().getRow(), (Class<Record>) field.getDataType().getRecordType(), string));
                 else
-                    return (T) readMultisetJSON(ctx, (AbstractRow<Record>) field.getDataType().getRow(), (Class<Record>) field.getDataType().getRecordType(), string);
+                    return converter.from((T) readMultisetJSON(ctx, (AbstractRow<Record>) field.getDataType().getRow(), (Class<Record>) field.getDataType().getRecordType(), string));
             else if (Record.class.isAssignableFrom(type)
 
             // [#11812] UDTRecords/TableRecords or InternalRecords that don't have an explicit converter
                     && (!InternalRecord.class.isAssignableFrom(type) || type == converter.fromType()))
-                return (T) pgNewRecord(ctx, type, (AbstractRow<?>) field.getDataType().getRow(), string);
+                return converter.from((T) pgNewRecord(ctx, type, (AbstractRow<?>) field.getDataType().getRow(), string));
             else if (type == Object.class)
-                return (T) string;
+                return converter.from((T) string);
 
             // [#4964] [#6058] Recurse only if we have a meaningful converter, not the identity converter,
             //                 which would cause a StackOverflowError, here!
-            else if (type != converter.fromType()) {
-                Converter<Object, T> c = (Converter<Object, T>) converter;
-                return c.from(pgFromString(ctx, field("converted_field", ((ConvertedDataType<?, ?>) field.getDataType()).delegate()), string));
+            else if (type != wrapper(converter.toType())) {
+                return converter.from((T) pgFromString(ctx, field("converted_field", ((ConvertedDataType<?, ?>) field.getDataType()).delegate()), string));
             }
 
             throw new UnsupportedOperationException("Class " + type + " is not supported");
@@ -3953,7 +3954,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             try {
                 return Tools.map(
                     toPGArray(string),
-                    v -> pgFromString(ctx, field("array_element", field.getDataType().getArrayComponentDataType()), v),
+                    v -> pgFromString(ctx, field("array_element", type.getComponentType()), v),
                     size -> (Object[]) java.lang.reflect.Array.newInstance(type.getComponentType(), size)
                 );
             }

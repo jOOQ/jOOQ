@@ -11958,22 +11958,18 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 break;
 
-            case 'G':
-                if ((parseKeywordOrIdentifierIf("GEOMETRY") ||
-                    parseKeywordOrIdentifierIf("SDO_GEOMETRY"))
-                    && requireProEdition()
-                ) {
 
 
 
-                }
-                else if (parseKeywordOrIdentifierIf("GEOGRAPHY") && requireProEdition()) {
 
 
 
-                }
 
-                break;
+
+
+
+
+
 
             case 'I':
                 if (parseKeywordOrIdentifierIf("INTEGER") ||

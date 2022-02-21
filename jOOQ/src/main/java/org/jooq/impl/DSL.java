@@ -14698,7 +14698,7 @@ public class DSL {
              : field instanceof AbstractRow
              ? (Field<T>) ((AbstractRow<?>) field).rf()
              : field instanceof AbstractTable
-             ? (Field<T>) new TableAsField<>((AbstractTable<?>) field)
+             ? (Field<T>) ((AbstractTable<?>) field).tf()
              : field("{0}", field.getDataType(), field);
     }
 

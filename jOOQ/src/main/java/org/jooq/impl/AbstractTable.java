@@ -120,6 +120,8 @@ import org.jooq.UniqueKey;
 // ...
 import org.jooq.tools.JooqLogger;
 
+import org.jetbrains.annotations.NotNull;
+
 
 /**
  * @author Lukas Eder
@@ -180,8 +182,47 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     }
 
     @Override
+    public final <U> SelectField<U> convert(Binding<R, U> binding) {
+        return tf().convert(binding);
+    }
+
+    @Override
+    public final <U> SelectField<U> convert(Converter<R, U> converter) {
+        return tf().convert(converter);
+    }
+
+    @Override
+    public final <U> SelectField<U> convert(Class<U> toType, Function<? super R, ? extends U> from, Function<? super U, ? extends R> to) {
+        return tf().convert(toType, from, to);
+    }
+
+    @Override
+    public final <U> SelectField<U> convertFrom(Class<U> toType, Function<? super R, ? extends U> from) {
+        return tf().convertFrom(toType, from);
+    }
+
+    @Override
+    public final <U> SelectField<U> convertFrom(Function<? super R, ? extends U> from) {
+        return tf().convertFrom(from);
+    }
+
+    @Override
+    public final <U> SelectField<U> convertTo(Class<U> toType, Function<? super U, ? extends R> to) {
+        return tf().convertTo(toType, to);
+    }
+
+    @Override
+    public final <U> SelectField<U> convertTo(Function<? super U, ? extends R> to) {
+        return tf().convertTo(to);
+    }
+
+    @Override
     public final SelectField<R> as(Field<?> otherField) {
         return as(otherField.getUnqualifiedName());
+    }
+
+    final TableAsField<R> tf() {
+        return new TableAsField<>(this);
     }
 
     // ------------------------------------------------------------------------

@@ -94,6 +94,9 @@ public interface RowN extends Row, SelectField<Record> {
      * {@link RecordMapper} that can be used when projecting {@link Row} types
      * in <code>SELECT</code> or <code>RETURNING</code> clauses.
      * <p>
+     * This calls through to {@link #convertFrom(Function)}, offering some
+     * deconstruction over the {@link Record}'s individual component values.
+     * <p>
      * Unlike {@link #mapping(Class, Function)}, this method attempts to work
      * without an explicit {@link Class} reference for the underlying
      * {@link Converter#toType()}, e.g. when nesting rows in arrays, the class
@@ -106,6 +109,10 @@ public interface RowN extends Row, SelectField<Record> {
      * A convenience method to define a local {@link Record} to custom type
      * {@link RecordMapper} that can be used when projecting {@link Row} types in
      * <code>SELECT</code> or <code>RETURNING</code> clauses.
+     * <p>
+     * This calls through to {@link #convertFrom(Class, Function)}, offering
+     * some deconstruction over the {@link Record}'s individual component
+     * values.
      */
     @NotNull
     <U> SelectField<U> mapping(Class<U> uType, Function<? super Object[], ? extends U> function);

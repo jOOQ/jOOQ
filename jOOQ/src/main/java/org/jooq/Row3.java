@@ -94,6 +94,9 @@ public interface Row3<T1, T2, T3> extends Row, SelectField<Record3<T1, T2, T3>> 
      * {@link RecordMapper} that can be used when projecting {@link Row} types
      * in <code>SELECT</code> or <code>RETURNING</code> clauses.
      * <p>
+     * This calls through to {@link #convertFrom(Function)}, offering some
+     * deconstruction over the {@link Record3}'s individual component values.
+     * <p>
      * Unlike {@link #mapping(Class, Function3)}, this method attempts to work
      * without an explicit {@link Class} reference for the underlying
      * {@link Converter#toType()}, e.g. when nesting rows in arrays, the class
@@ -110,6 +113,10 @@ public interface Row3<T1, T2, T3> extends Row, SelectField<Record3<T1, T2, T3>> 
      * A convenience method to define a local {@link Record3} to custom type
      * {@link RecordMapper} that can be used when projecting {@link Row} types in
      * <code>SELECT</code> or <code>RETURNING</code> clauses.
+     * <p>
+     * This calls through to {@link #convertFrom(Class, Function)}, offering
+     * some deconstruction over the {@link Record3}'s individual component
+     * values.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function3)} or
      * {@link Functions#nullOnAnyNull(Function3)} to achieve <code>null</code>

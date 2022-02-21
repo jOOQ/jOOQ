@@ -247,57 +247,18 @@ extends
     Field<T> as(Field<?> otherField);
 
     // ------------------------------------------------------------------------
-    // Type casts
+    // Ad-hoc converters
     // ------------------------------------------------------------------------
 
-    /**
-     * Apply an ad-hoc data type {@link Binding} to this field expression.
-     * <p>
-     * Rather than attaching data type bindings at code generation time, or
-     * creating cumbersome expressions using
-     * {@link DataType#asConvertedDataType(Binding)}, this method allows for
-     * creating a derived field expression with an ad-hoc data type binding for
-     * single query usage.
-     *
-     * @param <U> The user type.
-     * @param binding The binding to be applied on any operations using this
-     *            field.
-     * @return A derived field expression using a new binding.
-     */
+    @Override
     @NotNull
     <U> Field<U> convert(Binding<T, U> binding);
 
-    /**
-     * Apply an ad-hoc data type {@link Converter} to this field expression.
-     * <p>
-     * Rather than attaching data type converters at code generation time, or
-     * creating cumbersome expressions using
-     * {@link DataType#asConvertedDataType(Converter)}, this method allows for
-     * creating a derived field expression with an ad-hoc data type converter for
-     * single query usage.
-     *
-     * @param <U> The user type.
-     * @param converter The converter to be applied on any operations using this
-     *            field.
-     * @return A derived field expression using a new converter.
-     */
+    @Override
     @NotNull
     <U> Field<U> convert(Converter<T, U> converter);
 
-    /**
-     * Apply an ad-hoc data type {@link Converter} to this field expression.
-     * <p>
-     * Rather than attaching data type converters at code generation time, or
-     * creating cumbersome expressions using
-     * {@link DataType#asConvertedDataType(Class, Function, Function)}, this
-     * method allows for creating a derived field expression with an ad-hoc data
-     * type converter for single query usage.
-     *
-     * @param <U> The user type.
-     * @param converter The converter to be applied on any operations using this
-     *            field.
-     * @return A derived field expression using a new converter.
-     */
+    @Override
     @NotNull
     <U> Field<U> convert(
         Class<U> toType,
@@ -305,89 +266,25 @@ extends
         Function<? super U, ? extends T> to
     );
 
-    /**
-     * Apply an ad-hoc read-only data type {@link Converter} to this field
-     * expression.
-     * <p>
-     * Rather than attaching data type converters at code generation time, or
-     * creating cumbersome expressions using
-     * {@link DataType#asConvertedDataTypeFrom(Class, Function)}, this method
-     * allows for creating a derived field expression with an ad-hoc data type
-     * converter for single query usage.
-     *
-     * @param <U> The user type.
-     * @param converter The read-only converter to be applied on any operations
-     *            using this field.
-     * @return A derived field expression using a new converter.
-     */
+    @Override
     @NotNull
     <U> Field<U> convertFrom(Class<U> toType, Function<? super T, ? extends U> from);
 
-    /**
-     * Apply an ad-hoc read-only data type {@link Converter} to this field
-     * expression.
-     * <p>
-     * Rather than attaching data type converters at code generation time, or
-     * creating cumbersome expressions using
-     * {@link DataType#asConvertedDataTypeFrom(Class, Function)}, this method
-     * allows for creating a derived field expression with an ad-hoc data type
-     * converter for single query usage.
-     * <p>
-     * EXPERIMENTAL. Unlike {@link #convertFrom(Class, Function)}, this method
-     * attempts to work without an explicit {@link Class} reference for the underlying
-     * {@link Converter#toType()}. There may be some edge cases where this doesn't
-     * work. Please report any bugs here:
-     * <a href="https://github.com/jOOQ/jOOQ/issues/new/choose">https://github.com/jOOQ/jOOQ/issues/new/choose</a>
-     *
-     * @param <U> The user type.
-     * @param converter The read-only converter to be applied on any operations
-     *            using this field.
-     * @return A derived field expression using a new converter.
-     */
+    @Override
     @NotNull
     <U> Field<U> convertFrom(Function<? super T, ? extends U> from);
 
-    /**
-     * Apply an ad-hoc write-only data type {@link Converter} to this field
-     * expression.
-     * <p>
-     * Rather than attaching data type converters at code generation time, or
-     * creating cumbersome expressions using
-     * {@link DataType#asConvertedDataTypeTo(Class, Function)}, this method
-     * allows for creating a derived field expression with an ad-hoc data type
-     * converter for single query usage.
-     *
-     * @param <U> The user type.
-     * @param converter The write-only converter to be applied on any operations
-     *            using this field.
-     * @return A derived field expression using a new converter.
-     */
+    @Override
     @NotNull
     <U> Field<U> convertTo(Class<U> toType, Function<? super U, ? extends T> to);
 
-    /**
-     * Apply an ad-hoc write-only data type {@link Converter} to this field
-     * expression.
-     * <p>
-     * Rather than attaching data type converters at code generation time, or
-     * creating cumbersome expressions using
-     * {@link DataType#asConvertedDataTypeTo(Class, Function)}, this method
-     * allows for creating a derived field expression with an ad-hoc data type
-     * converter for single query usage.
-     * <p>
-     * EXPERIMENTAL. Unlike {@link #convertTo(Class, Function)}, this method
-     * attempts to work without an explicit {@link Class} reference for the underlying
-     * {@link Converter#toType()}. There may be some edge cases where this doesn't
-     * work. Please report any bugs here:
-     * <a href="https://github.com/jOOQ/jOOQ/issues/new/choose">https://github.com/jOOQ/jOOQ/issues/new/choose</a>
-     *
-     * @param <U> The user type.
-     * @param converter The write-only converter to be applied on any operations
-     *            using this field.
-     * @return A derived field expression using a new converter.
-     */
+    @Override
     @NotNull
     <U> Field<U> convertTo(Function<? super U, ? extends T> to);
+
+    // ------------------------------------------------------------------------
+    // Type casts
+    // ------------------------------------------------------------------------
 
     /**
      * Cast this field to the type of another field.

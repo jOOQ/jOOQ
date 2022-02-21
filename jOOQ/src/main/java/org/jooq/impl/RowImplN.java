@@ -82,12 +82,12 @@ final class RowImplN extends AbstractRow<Record> implements RowN {
 
     @Override
     public final <U> SelectField<U> mapping(Function<? super Object[], ? extends U> function) {
-        return rf().convertFrom(r -> r == null ? null : function.apply(r.intoArray()));
+        return convertFrom(r -> r == null ? null : function.apply(r.intoArray()));
     }
 
     @Override
     public final <U> SelectField<U> mapping(Class<U> uType, Function<? super Object[], ? extends U> function) {
-        return rf().convertFrom(uType, r -> r == null ? null : function.apply(r.intoArray()));
+        return convertFrom(uType, r -> r == null ? null : function.apply(r.intoArray()));
     }
 
     // ------------------------------------------------------------------------

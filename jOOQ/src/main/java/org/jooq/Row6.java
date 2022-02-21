@@ -94,6 +94,9 @@ public interface Row6<T1, T2, T3, T4, T5, T6> extends Row, SelectField<Record6<T
      * {@link RecordMapper} that can be used when projecting {@link Row} types
      * in <code>SELECT</code> or <code>RETURNING</code> clauses.
      * <p>
+     * This calls through to {@link #convertFrom(Function)}, offering some
+     * deconstruction over the {@link Record6}'s individual component values.
+     * <p>
      * Unlike {@link #mapping(Class, Function6)}, this method attempts to work
      * without an explicit {@link Class} reference for the underlying
      * {@link Converter#toType()}, e.g. when nesting rows in arrays, the class
@@ -110,6 +113,10 @@ public interface Row6<T1, T2, T3, T4, T5, T6> extends Row, SelectField<Record6<T
      * A convenience method to define a local {@link Record6} to custom type
      * {@link RecordMapper} that can be used when projecting {@link Row} types in
      * <code>SELECT</code> or <code>RETURNING</code> clauses.
+     * <p>
+     * This calls through to {@link #convertFrom(Class, Function)}, offering
+     * some deconstruction over the {@link Record6}'s individual component
+     * values.
      * <p>
      * Combine this with e.g. {@link Functions#nullOnAllNull(Function6)} or
      * {@link Functions#nullOnAnyNull(Function6)} to achieve <code>null</code>

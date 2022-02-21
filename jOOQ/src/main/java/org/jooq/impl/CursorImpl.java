@@ -39,7 +39,7 @@ package org.jooq.impl;
 
 import static java.util.Collections.emptyList;
 // ...
-import static org.jooq.impl.RowField.NO_NATIVE_SUPPORT;
+import static org.jooq.impl.RowAsField.NO_NATIVE_SUPPORT;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.embeddedRecordType;
 import static org.jooq.impl.Tools.recordFactory;
@@ -1547,9 +1547,13 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
                     //         RowField may have a Row[N].mapping(...) applied
                     Field<?> f = uncoerce(field);
 
-                    if (f instanceof RowField && NO_NATIVE_SUPPORT.contains(ctx.dialect())) {
-                        nested = ((RowField<?, ?>) f).emulatedFields(configuration);
+                    if (f instanceof RowAsField && NO_NATIVE_SUPPORT.contains(ctx.dialect())) {
+                        nested = ((RowAsField<?, ?>) f).emulatedFields(configuration);
                         recordType = Tools.recordType(nested.size());
+                    }
+                    else if (f instanceof TableAsField && NO_NATIVE_SUPPORT.contains(ctx.dialect())) {
+                        nested = ((TableAsField<?>) f).emulatedFields(configuration);
+                        recordType = (Class<? extends AbstractRecord>) ((TableAsField<?>) f).table.getRecordType();
                     }
                     else if (f.getDataType().isEmbeddable()) {
                         nested = Tools.row0(embeddedFields(f));

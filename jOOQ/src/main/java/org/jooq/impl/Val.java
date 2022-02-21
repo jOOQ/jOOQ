@@ -45,7 +45,7 @@ import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.QueryPartListView.wrap;
-import static org.jooq.impl.RowField.acceptMultisetContent;
+import static org.jooq.impl.RowAsField.acceptMultisetContent;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.embeddedFields;

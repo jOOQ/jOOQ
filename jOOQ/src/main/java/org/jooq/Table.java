@@ -129,14 +129,15 @@ public /* non-sealed */ interface Table<R extends Record>
 extends
     TableLike<R>,
     RecordQualifier<R>,
-    GroupField
+    GroupField,
+    SelectField<R>
 {
 
     /**
      * Get the table type.
      */
     @NotNull
-    TableType getType();
+    TableType getTableType();
 
     /**
      * Get the table options.
@@ -371,6 +372,7 @@ extends
      * @param alias The alias name
      * @return The table alias
      */
+    @Override
     @NotNull
     @Support
     Table<R> as(String alias);
@@ -494,6 +496,7 @@ extends
      * @param alias The alias name
      * @return The table alias
      */
+    @Override
     @NotNull
     @Support
     Table<R> as(Name alias);

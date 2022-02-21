@@ -243,7 +243,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
             else if (s instanceof Asterisk)
                 returningResolvedAsterisks.addAll(Arrays.asList(table.fields()));
             else if (s instanceof Row)
-                returningResolvedAsterisks.add(new RowField<>((Row) s));
+                returningResolvedAsterisks.add(new RowAsField<>((Row) s));
+            else if (s instanceof Table)
+                returningResolvedAsterisks.add(new TableAsField<>((Table<?>) s));
             else
                 throw new UnsupportedOperationException("Type not supported: " + s);
     }

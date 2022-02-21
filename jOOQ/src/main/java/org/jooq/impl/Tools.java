@@ -6086,14 +6086,16 @@ final class Tools {
 
 
             // TODO [#10525] Should embedded records be emulated as RowField?
-            if (flattenRowFields && e instanceof RowField) {
-                List<Field<?>> result = new ArrayList<>();
+            if (flattenRowFields) {
+                if (e instanceof AbstractRowAsField) { AbstractRowAsField<?> r = (AbstractRowAsField<?>) e;
+                    List<Field<?>> result = new ArrayList<>();
 
-                for (Field<?> field : ((RowField<?, ?>) e).row().fields())
-                    if (duplicates.test(field))
-                        result.add(field);
+                    for (Field<?> field : r.fields0().fields())
+                        if (duplicates.test(field))
+                            result.add(field);
 
-                return result;
+                    return result;
+                }
             }
 
             return Tools.flatten(e);

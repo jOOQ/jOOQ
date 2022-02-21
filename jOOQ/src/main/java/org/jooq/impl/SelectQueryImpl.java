@@ -2955,7 +2955,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 // [#11904] Shift field indexes in ORDER BY <field index>, in
                 //          case we are projecting emulated nested records of some sort
-                if (RowField.NO_NATIVE_SUPPORT.contains(ctx.dialect())
+                if (RowAsField.NO_NATIVE_SUPPORT.contains(ctx.dialect())
                     && Tools.findAny(actualOrderBy, s -> ((SortFieldImpl<?>) s).getField() instanceof Val) != null) {
                     SelectFieldIndexes s = getSelectFieldIndexes(ctx);
 
@@ -3668,7 +3668,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     result.add(s);
             }
             else if (s instanceof Row)
-                result.add(getResolveProjection(c, new RowField<Row, Record>((Row) s)));
+                result.add(getResolveProjection(c, new RowAsField<Row, Record>((Row) s)));
+            else if (s instanceof Table)
+                result.add(getResolveProjection(c, new TableAsField<>((Table<?>) s)));
             else
                 throw new AssertionError("Type not supported: " + s);
 
@@ -3746,7 +3748,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         int[] mapping = new int[s.size()];
         int[] projectionSizes = new int[s.size()];
 
-        if (RowField.NO_NATIVE_SUPPORT.contains(ctx.dialect())) {
+        if (RowAsField.NO_NATIVE_SUPPORT.contains(ctx.dialect())) {
             for (int i = 0; i < mapping.length; i++) {
                 projectionSizes[i] = ((AbstractField<?>) s.get(i)).projectionSize();
                 mapped |= projectionSizes[i] > 1;

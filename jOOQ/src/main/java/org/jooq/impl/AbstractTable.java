@@ -80,6 +80,7 @@ import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Comparator;
 import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
@@ -104,6 +105,7 @@ import org.jooq.RowId;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
@@ -118,7 +120,6 @@ import org.jooq.UniqueKey;
 // ...
 import org.jooq.tools.JooqLogger;
 
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -147,6 +148,40 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
 
         this.options = options;
         this.tableschema = schema;
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: SelectField API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final Class<R> getType() {
+        return getDataType().getType();
+    }
+
+    @Override
+    public final DataType<R> getDataType(Configuration configuration) {
+        return getDataType();
+    }
+
+    @Override
+    public final DataType<R> $dataType() {
+        return getDataType();
+    }
+
+    @Override
+    public final Binding<?, R> getBinding() {
+        return getDataType().getBinding();
+    }
+
+    @Override
+    public final Converter<?, R> getConverter() {
+        return getDataType().getConverter();
+    }
+
+    @Override
+    public final SelectField<R> as(Field<?> otherField) {
+        return as(otherField.getUnqualifiedName());
     }
 
     // ------------------------------------------------------------------------
@@ -312,7 +347,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     // ------------------------------------------------------------------------
 
     @Override
-    public final TableType getType() {
+    public final TableType getTableType() {
         return options.type();
     }
 

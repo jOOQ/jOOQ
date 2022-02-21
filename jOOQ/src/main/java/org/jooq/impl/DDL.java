@@ -105,8 +105,8 @@ final class DDL {
     }
 
     final List<Query> createTableOrView(Table<?> table, Collection<? extends Constraint> constraints) {
-        boolean temporary = table.getType() == TableType.TEMPORARY;
-        boolean view = table.getType().isView();
+        boolean temporary = table.getTableType() == TableType.TEMPORARY;
+        boolean view = table.getTableType().isView();
         OnCommit onCommit = table.getOptions().onCommit();
 
         if (view) {
@@ -272,7 +272,7 @@ final class DDL {
     final List<Constraint> primaryKeys(Table<?> table) {
         List<Constraint> result = new ArrayList<>();
 
-        if (configuration.flags().contains(PRIMARY_KEY) && (table.getType() != VIEW || configuration.includeConstraintsOnViews()))
+        if (configuration.flags().contains(PRIMARY_KEY) && (table.getTableType() != VIEW || configuration.includeConstraintsOnViews()))
             for (UniqueKey<?> key : table.getKeys())
                 if (key.isPrimary())
                     result.add(enforced(constraint(key.getUnqualifiedName()).primaryKey(key.getFieldsArray()), key.enforced()));
@@ -283,7 +283,7 @@ final class DDL {
     final List<Constraint> uniqueKeys(Table<?> table) {
         List<Constraint> result = new ArrayList<>();
 
-        if (configuration.flags().contains(UNIQUE) && (table.getType() != VIEW || configuration.includeConstraintsOnViews()))
+        if (configuration.flags().contains(UNIQUE) && (table.getTableType() != VIEW || configuration.includeConstraintsOnViews()))
             for (UniqueKey<?> key : sortKeysIf(table.getKeys(), !configuration.respectConstraintOrder()))
                 if (!key.isPrimary())
                     result.add(enforced(constraint(key.getUnqualifiedName()).unique(key.getFieldsArray()), key.enforced()));
@@ -294,7 +294,7 @@ final class DDL {
     final List<Constraint> foreignKeys(Table<?> table) {
         List<Constraint> result = new ArrayList<>();
 
-        if (configuration.flags().contains(FOREIGN_KEY) && (table.getType() != VIEW || configuration.includeConstraintsOnViews()))
+        if (configuration.flags().contains(FOREIGN_KEY) && (table.getTableType() != VIEW || configuration.includeConstraintsOnViews()))
             for (ForeignKey<?, ?> key : sortKeysIf(table.getReferences(), !configuration.respectConstraintOrder()))
                 result.add(enforced(constraint(key.getUnqualifiedName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKeyFieldsArray()), key.enforced()));
 
@@ -304,7 +304,7 @@ final class DDL {
     final List<Constraint> checks(Table<?> table) {
         List<Constraint> result = new ArrayList<>();
 
-        if (configuration.flags().contains(CHECK) && (table.getType() != VIEW || configuration.includeConstraintsOnViews()))
+        if (configuration.flags().contains(CHECK) && (table.getTableType() != VIEW || configuration.includeConstraintsOnViews()))
             for (Check<?> check : sortIf(table.getChecks(), !configuration.respectConstraintOrder()))
                 result.add(enforced(constraint(check.getUnqualifiedName()).check(check.condition()), check.enforced()));
 
@@ -334,7 +334,7 @@ final class DDL {
             Comment tComment = table.getCommentPart();
 
             if (!StringUtils.isEmpty(tComment.getComment()))
-                if (table.getType().isView())
+                if (table.getTableType().isView())
                     result.add(ctx.commentOnView(table).is(tComment));
                 else
                     result.add(ctx.commentOnTable(table).is(tComment));

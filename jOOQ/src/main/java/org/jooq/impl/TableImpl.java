@@ -494,7 +494,7 @@ implements
 
 
 
-        if ((getType().isView() || getType().isFunction()) && isSynthetic() && ctx.declareTables()) {
+        if ((getTableType().isView() || getTableType().isFunction()) && isSynthetic() && ctx.declareTables()) {
             Select<?> s = getOptions().select();
 
             // TODO: Avoid parsing this every time

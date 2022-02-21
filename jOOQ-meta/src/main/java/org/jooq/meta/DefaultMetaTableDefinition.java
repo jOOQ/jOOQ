@@ -55,7 +55,7 @@ public class DefaultMetaTableDefinition extends AbstractTableDefinition {
     private final Table<?> table;
 
     public DefaultMetaTableDefinition(SchemaDefinition schema, Table<?> table) {
-        super(schema, table.getName(), table.getComment(), table.getType(), null);
+        super(schema, table.getName(), table.getComment(), table.getTableType(), null);
 
         this.table = table;
     }

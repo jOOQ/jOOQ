@@ -66,7 +66,7 @@ public /* non-sealed */ interface SelectField<T> extends SelectFieldOrAsterisk, 
      */
     @NotNull
     @Support
-    Field<T> as(String alias);
+    SelectField<T> as(String alias);
 
     /**
      * Create an alias for this field.
@@ -84,7 +84,7 @@ public /* non-sealed */ interface SelectField<T> extends SelectFieldOrAsterisk, 
      */
     @NotNull
     @Support
-    Field<T> as(Name alias);
+    SelectField<T> as(Name alias);
 
     /**
      * Create an alias for this field based on another field's name.
@@ -94,6 +94,6 @@ public /* non-sealed */ interface SelectField<T> extends SelectFieldOrAsterisk, 
      */
     @NotNull
     @Support
-    Field<T> as(Field<?> otherField);
+    SelectField<T> as(Field<?> otherField);
 
 }

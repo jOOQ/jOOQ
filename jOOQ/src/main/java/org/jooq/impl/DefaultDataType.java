@@ -345,7 +345,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         this.castTypeName = castTypeName == null ? this.typeName : castTypeName;
 
         String[] split = TYPE_NAME_PATTERN.split(castTypeName == null ? typeName : castTypeName);
-        this.castTypePrefix = split[0];
+        this.castTypePrefix = split.length > 0 ? split[0] : "";
         this.castTypeSuffix = split.length > 1 ? split[1] : "";
 
         this.nullability = nullability == null ? Nullability.DEFAULT : nullability;

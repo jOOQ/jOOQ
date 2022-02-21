@@ -39,7 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.QueryPartListView.wrap;
-import static org.jooq.impl.RowField.acceptMultisetContent;
+import static org.jooq.impl.RowAsField.acceptMultisetContent;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 

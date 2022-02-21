@@ -197,7 +197,11 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     // -------------------------------------------------------------------------
 
     private static final ThrowingFunction<SelectField<?>, Field<?>, RuntimeException> toField() {
-        return f -> f instanceof Row ? new RowField<>((Row) f) : (Field<?>) f;
+        return f -> f instanceof Row
+                  ? new RowAsField<>((Row) f)
+                  : f instanceof Table
+                  ? new TableAsField<>((Table<?>) f)
+                  : (Field<?>) f;
     }
 
     @Override

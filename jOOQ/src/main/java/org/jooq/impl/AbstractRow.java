@@ -99,8 +99,8 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
     // XXX: SelectField API
     // ------------------------------------------------------------------------
 
-    final RowField<Row, R> rf() {
-        return new RowField<Row, R>(this);
+    final RowAsField<Row, R> rf() {
+        return new RowAsField<Row, R>(this);
     }
 
     @Override

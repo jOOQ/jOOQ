@@ -516,13 +516,22 @@ public final class QOM {
     // XXX: Rows
     // -------------------------------------------------------------------------
 
-    public /*sealed*/ interface RowField<R extends Record>
+    public /*sealed*/ interface RowAsField<R extends Record>
         extends
             Field<R>
         /*permits
-            RowField*/
+            RowAsField*/
     {
         @NotNull Row $row();
+    }
+
+    public /*sealed*/ interface TableAsField<R extends Record>
+        extends
+            Field<R>
+        /*permits
+            TableAsField*/
+    {
+        @NotNull Table<R> $table();
     }
 
     // -------------------------------------------------------------------------

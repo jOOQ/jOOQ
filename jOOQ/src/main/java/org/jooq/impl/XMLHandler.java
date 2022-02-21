@@ -191,8 +191,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
 
                 if (f.getDataType().isRecord()) {
                     states.push(s);
-                    // TODO: Support UDTRecord, EmbeddableRecord types
-                    s = new State<>((AbstractRow<R>) f.getDataType().getRow(), (Class<R>) Record.class);
+                    s = new State<>((AbstractRow<R>) f.getDataType().getRow(), (Class<R>) f.getDataType().getRecordType());
                     s.inResult = true;
                 }
                 else

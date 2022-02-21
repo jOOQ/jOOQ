@@ -228,6 +228,25 @@ extends
     boolean equals(Object other);
 
     // ------------------------------------------------------------------------
+    // SelectField API covariant overrides
+    // ------------------------------------------------------------------------
+
+    @Override
+    @NotNull
+    @Support
+    Field<T> as(String alias);
+
+    @Override
+    @NotNull
+    @Support
+    Field<T> as(Name alias);
+
+    @Override
+    @NotNull
+    @Support
+    Field<T> as(Field<?> otherField);
+
+    // ------------------------------------------------------------------------
     // Type casts
     // ------------------------------------------------------------------------
 

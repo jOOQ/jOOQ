@@ -254,9 +254,9 @@ final class Diff {
                     if (r.droppedFks.add(fk) && !migrateConf.dropTableCascade())
                         r.queries.add(ctx.alterTable(fk.getTable()).dropForeignKey(fk.constraint()));
 
-            if (t.getType().isView())
+            if (t.getTableType().isView())
                 r.queries.add(ctx.dropView(t));
-            else if (t.getType() == TableType.TEMPORARY)
+            else if (t.getTableType() == TableType.TEMPORARY)
                 r.queries.add(ctx.dropTemporaryTable(t));
             else
                 r.queries.add(migrateConf.dropTableCascade()
@@ -268,8 +268,8 @@ final class Diff {
     private final Merge<Table<?>> MERGE_TABLE = new Merge<Table<?>>() {
         @Override
         public void merge(DiffResult r, Table<?> t1, Table<?> t2) {
-            boolean v1 = t1.getType().isView();
-            boolean v2 = t2.getType().isView();
+            boolean v1 = t1.getTableType().isView();
+            boolean v2 = t2.getTableType().isView();
 
             if (v1 && v2) {
                 if (!Arrays.equals(t1.fields(), t2.fields())

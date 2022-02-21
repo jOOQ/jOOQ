@@ -513,15 +513,21 @@ class GenerationUtil {
             case YUGABYTEDB: {
 
                 // The convention is to prepend a "_" to a type to get an array type
-                if (u != null && u.last().startsWith("_")) {
-                    String[] name = u.getName();
-                    name[name.length - 1] = name[name.length - 1].substring(1);
-                    return name(name);
+                if (u != null) {
+                    if (u.last().startsWith("_")) {
+                        String[] name = u.getName();
+                        name[name.length - 1] = name[name.length - 1].substring(1);
+                        return name(name);
+                    }
+                    else if (u.last().toUpperCase().endsWith(" ARRAY")) {
+                        String[] name = u.getName();
+                        name[name.length - 1] = name[name.length - 1].replaceFirst("(?i: ARRAY)", "");
+                        return name(name);
+                    }
                 }
 
                 // But there are also arrays with a "vector" suffix
-                else
-                    return u;
+                return u;
             }
 
             case H2:

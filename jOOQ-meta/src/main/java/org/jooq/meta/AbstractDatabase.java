@@ -2802,11 +2802,9 @@ public abstract class AbstractDatabase implements Database {
 
 
 
+            case H2:
             case POSTGRES:
             case YUGABYTEDB:
-                return "ARRAY".equals(upper);
-
-            case H2:
                 return "ARRAY".equals(upper) || upper.endsWith(" ARRAY");
 
 

@@ -356,6 +356,8 @@ public class Settings
     @XmlSchemaType(name = "string")
     protected ParseUnknownFunctions parseUnknownFunctions = ParseUnknownFunctions.FAIL;
     @XmlElement(defaultValue = "false")
+    protected Boolean parseIgnoreCommercialOnlyFeatures = false;
+    @XmlElement(defaultValue = "false")
     protected Boolean parseIgnoreComments = false;
     @XmlElement(defaultValue = "[jooq ignore start]")
     protected String parseIgnoreCommentStart = "[jooq ignore start]";
@@ -3538,6 +3540,30 @@ public class Settings
     }
 
     /**
+     * [#13109] Whether the parser of the jOOQ Open Source Edition should ignore commercial only features, rather than failing.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isParseIgnoreCommercialOnlyFeatures() {
+        return parseIgnoreCommercialOnlyFeatures;
+    }
+
+    /**
+     * Sets the value of the parseIgnoreCommercialOnlyFeatures property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setParseIgnoreCommercialOnlyFeatures(Boolean value) {
+        this.parseIgnoreCommercialOnlyFeatures = value;
+    }
+
+    /**
      * [#8325] Whether the parser should ignore content between ignore comment tokens.
      * 
      * @return
@@ -4808,6 +4834,11 @@ public class Settings
         return this;
     }
 
+    public Settings withParseIgnoreCommercialOnlyFeatures(Boolean value) {
+        setParseIgnoreCommercialOnlyFeatures(value);
+        return this;
+    }
+
     public Settings withParseIgnoreComments(Boolean value) {
         setParseIgnoreComments(value);
         return this;
@@ -5082,6 +5113,7 @@ public class Settings
         builder.append("parseSetCommands", parseSetCommands);
         builder.append("parseUnsupportedSyntax", parseUnsupportedSyntax);
         builder.append("parseUnknownFunctions", parseUnknownFunctions);
+        builder.append("parseIgnoreCommercialOnlyFeatures", parseIgnoreCommercialOnlyFeatures);
         builder.append("parseIgnoreComments", parseIgnoreComments);
         builder.append("parseIgnoreCommentStart", parseIgnoreCommentStart);
         builder.append("parseIgnoreCommentStop", parseIgnoreCommentStop);
@@ -6331,6 +6363,15 @@ public class Settings
                 return false;
             }
         }
+        if (parseIgnoreCommercialOnlyFeatures == null) {
+            if (other.parseIgnoreCommercialOnlyFeatures!= null) {
+                return false;
+            }
+        } else {
+            if (!parseIgnoreCommercialOnlyFeatures.equals(other.parseIgnoreCommercialOnlyFeatures)) {
+                return false;
+            }
+        }
         if (parseIgnoreComments == null) {
             if (other.parseIgnoreComments!= null) {
                 return false;
@@ -6590,6 +6631,7 @@ public class Settings
         result = ((prime*result)+((parseSetCommands == null)? 0 :parseSetCommands.hashCode()));
         result = ((prime*result)+((parseUnsupportedSyntax == null)? 0 :parseUnsupportedSyntax.hashCode()));
         result = ((prime*result)+((parseUnknownFunctions == null)? 0 :parseUnknownFunctions.hashCode()));
+        result = ((prime*result)+((parseIgnoreCommercialOnlyFeatures == null)? 0 :parseIgnoreCommercialOnlyFeatures.hashCode()));
         result = ((prime*result)+((parseIgnoreComments == null)? 0 :parseIgnoreComments.hashCode()));
         result = ((prime*result)+((parseIgnoreCommentStart == null)? 0 :parseIgnoreCommentStart.hashCode()));
         result = ((prime*result)+((parseIgnoreCommentStop == null)? 0 :parseIgnoreCommentStop.hashCode()));

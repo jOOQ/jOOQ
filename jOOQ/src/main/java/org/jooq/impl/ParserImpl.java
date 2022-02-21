@@ -1091,7 +1091,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return result = metaLookupsForceIgnore(true).parseCreateTable(false);
                     else if (!parseResultQuery && parseKeywordIf("CV"))
                         return result = metaLookupsForceIgnore(true).parseCreateView(false);
-                    else if (peekKeyword("CALL") && requireProEdition())
+                    else if (!ignoreProEdition() && peekKeyword("CALL") && requireProEdition())
 
 
 
@@ -1104,7 +1104,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     break;
 
                 case 'D':
-                    if (!parseResultQuery && peekKeyword("DECLARE") && requireProEdition())
+                    if (!parseResultQuery && !ignoreProEdition() && peekKeyword("DECLARE") && requireProEdition())
                         return result = parseBlock(true);
                     else if (!parseSelect && (peekKeyword("DELETE") || peekKeyword("DEL")))
                         return result = parseDelete(null, parseResultQuery);
@@ -1120,7 +1120,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return result = parseBlock(true);
                     else if (!parseResultQuery && peekKeyword("EXEC"))
                         return result = parseExec();
-                    else if (peekKeyword("EXECUTE PROCEDURE") && requireProEdition())
+                    else if (!ignoreProEdition() && peekKeyword("EXECUTE PROCEDURE") && requireProEdition())
 
 
 
@@ -1217,7 +1217,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return result = parseSelect();
 
                 case '{':
-                    if (peekKeyword("{ CALL") && requireProEdition())
+                    if (!ignoreProEdition() && peekKeyword("{ CALL") && requireProEdition())
 
 
 
@@ -1366,7 +1366,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 scope(field);
 
         if (parseKeywordIf("ORDER")) {
-            if (parseKeywordIf("SIBLINGS BY") && requireProEdition()) {
+            if (!ignoreProEdition() && parseKeywordIf("SIBLINGS BY") && requireProEdition()) {
 
 
 
@@ -1411,7 +1411,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 result.setForShare(true);
             else if (parseKeywordIf("UPDATE"))
                 result.setForUpdate(true);
-            else if (parseKeywordIf("XML") && requireProEdition()) {
+            else if (!ignoreProEdition() && parseKeywordIf("XML") && requireProEdition()) {
 
 
 
@@ -1454,7 +1454,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
             }
-            else if ((jsonb = parseKeywordIf("JSONB") || parseKeywordIf("JSON")) && requireProEdition()) {
+            else if (!ignoreProEdition() && (jsonb = parseKeywordIf("JSONB") || parseKeywordIf("JSON")) && requireProEdition()) {
 
 
 
@@ -1496,7 +1496,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             if (parseKeywordIf("NOWAIT"))
                 result.setForUpdateNoWait();
-            else if (parseKeywordIf("WAIT") && requireProEdition())
+            else if (!ignoreProEdition() && parseKeywordIf("WAIT") && requireProEdition())
 
 
 
@@ -1700,7 +1700,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         // T-SQL style TOP .. START AT
         if (parseKeywordIf("TOP")) {
             limit = (Field) parseField();
-            percent = parseKeywordIf("PERCENT") && requireProEdition();
+            percent = !ignoreProEdition() && parseKeywordIf("PERCENT") && requireProEdition();
 
             if (parseKeywordIf("START AT"))
                 offset = (Field) parseField();
@@ -1905,7 +1905,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final boolean parseQueryPrimaryConnectBy(SelectQueryImpl<Record> result) {
-        if (parseKeywordIf("CONNECT BY") && requireProEdition()) {
+        if (!ignoreProEdition() && parseKeywordIf("CONNECT BY") && requireProEdition()) {
 
 
 
@@ -1920,7 +1920,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final boolean parseQueryPrimaryStartWith(SelectQueryImpl<Record> result) {
-        if (parseKeywordIf("START WITH") && requireProEdition()) {
+        if (!ignoreProEdition() && parseKeywordIf("START WITH") && requireProEdition()) {
 
 
 
@@ -2741,7 +2741,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseCreateView(false);
                 else if (parseKeywordIf("FULLTEXT INDEX") && requireUnsupportedSyntax())
                     return parseCreateIndex(false);
-                else if (parseKeywordIf("FUNCTION") && requireProEdition())
+                else if (!ignoreProEdition() && parseKeywordIf("FUNCTION") && requireProEdition())
 
 
 
@@ -2767,21 +2767,21 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (parseKeywordIf("OR")) {
                     parseKeyword("REPLACE", "ALTER");
 
-                    if (parseKeywordIf("TRIGGER") && requireProEdition())
+                    if (!ignoreProEdition() && parseKeywordIf("TRIGGER") && requireProEdition())
 
 
 
                         ;
                     else if (parseKeywordIf("VIEW", "FORCE VIEW"))
                         return parseCreateView(true);
-                    else if (parseKeywordIf("FUNCTION") && requireProEdition())
+                    else if (!ignoreProEdition() && parseKeywordIf("FUNCTION") && requireProEdition())
 
 
 
                         ;
                     else if (parseKeywordIf("PACKAGE"))
                         throw notImplemented("CREATE PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
-                    else if (parseKeywordIf("PROC", "PROCEDURE") && requireProEdition())
+                    else if (!ignoreProEdition() && parseKeywordIf("PROC", "PROCEDURE") && requireProEdition())
 
 
 
@@ -2795,7 +2795,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'P':
                 if (parseKeywordIf("PACKAGE"))
                     throw notImplemented("CREATE PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
-                else if (parseKeywordIf("PROC", "PROCEDURE") && requireProEdition())
+                else if (!ignoreProEdition() && parseKeywordIf("PROC", "PROCEDURE") && requireProEdition())
 
 
 
@@ -2826,7 +2826,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseCreateTable(false);
                 else if (parseKeywordIf("TEMP TABLE", "TEMPORARY TABLE"))
                     return parseCreateTable(true);
-                else if (parseKeywordIf("TRIGGER") && requireProEdition())
+                else if (!ignoreProEdition() && parseKeywordIf("TRIGGER") && requireProEdition())
 
 
 
@@ -2981,7 +2981,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'F':
-                if (parseKeywordIf("FUNCTION") && requireProEdition())
+                if (!ignoreProEdition() && parseKeywordIf("FUNCTION") && requireProEdition())
 
 
 
@@ -3004,7 +3004,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'P':
                 if (parseKeywordIf("PACKAGE"))
                     throw notImplemented("DROP PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
-                else if (parseKeywordIf("PROC", "PROCEDURE") && requireProEdition())
+                else if (!ignoreProEdition() && parseKeywordIf("PROC", "PROCEDURE") && requireProEdition())
 
 
 
@@ -3035,7 +3035,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseDropTable(false);
                 else if (parseKeywordIf("TEMPORARY TABLE"))
                     return parseDropTable(true);
-                else if (parseKeywordIf("TRIGGER") && requireProEdition())
+                else if (!ignoreProEdition() && parseKeywordIf("TRIGGER") && requireProEdition())
 
 
 
@@ -3197,7 +3197,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 throw exception("Unsupported object type: " + objectType);
         }
         else {
-            if (requireProEdition()) {
+            if (!ignoreProEdition() && requireProEdition()) {
 
 
 
@@ -3220,7 +3220,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
-            if (allowDeclareSection && parseKeywordIf("DECLARE") && requireProEdition())
+            if (allowDeclareSection && !ignoreProEdition() && parseKeywordIf("DECLARE") && requireProEdition())
 
 
 
@@ -3382,12 +3382,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Statement parseStatement() {
         switch (characterUpper()) {
             case 'C':
-                if (peekKeyword("CALL") && requireProEdition())
+                if (!ignoreProEdition() && peekKeyword("CALL") && requireProEdition())
 
 
 
                 ;
-                else if (peekKeyword("CONTINUE") && requireProEdition())
+                else if (!ignoreProEdition() && peekKeyword("CONTINUE") && requireProEdition())
 
 
 
@@ -3396,7 +3396,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'D':
-                if (peekKeyword("DECLARE") && requireProEdition())
+                if (!ignoreProEdition() && peekKeyword("DECLARE") && requireProEdition())
 
 
 
@@ -3405,7 +3405,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 ;
-                else if (peekKeyword("DEFINE") && requireProEdition())
+                else if (!ignoreProEdition() && peekKeyword("DEFINE") && requireProEdition())
 
 
 
@@ -3414,17 +3414,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'E':
-                if (peekKeyword("EXECUTE PROCEDURE", "EXEC") && requireProEdition())
+                if (!ignoreProEdition() && peekKeyword("EXECUTE PROCEDURE", "EXEC") && requireProEdition())
 
 
 
                 ;
-                if (peekKeyword("EXECUTE") && !peekKeyword("EXECUTE BLOCK") && requireProEdition())
+                if (!ignoreProEdition() && peekKeyword("EXECUTE") && !peekKeyword("EXECUTE BLOCK") && requireProEdition())
 
 
 
                 ;
-                else if (peekKeyword("EXIT") && requireProEdition())
+                else if (!ignoreProEdition() && peekKeyword("EXIT") && requireProEdition())
 
 
 
@@ -3433,7 +3433,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'F':
-                if (peekKeyword("FOR") && requireProEdition())
+                if (!ignoreProEdition() && peekKeyword("FOR") && requireProEdition())
 
 
 
@@ -3442,7 +3442,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'G':
-                if (peekKeyword("GOTO") && requireProEdition())
+                if (!ignoreProEdition() && peekKeyword("GOTO") && requireProEdition())
 
 
 
@@ -3451,12 +3451,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'I':
-                if (peekKeyword("IF") && requireProEdition())
+                if (!ignoreProEdition() && peekKeyword("IF") && requireProEdition())
 
 
 
                 ;
-                else if (peekKeyword("ITERATE") && requireProEdition())
+                else if (!ignoreProEdition() && peekKeyword("ITERATE") && requireProEdition())
 
 
 
@@ -3465,17 +3465,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'L':
-                if (peekKeyword("LEAVE") && requireProEdition())
+                if (!ignoreProEdition() && peekKeyword("LEAVE") && requireProEdition())
 
 
 
                 ;
-                else if (peekKeyword("LET") && requireProEdition())
+                else if (!ignoreProEdition() && peekKeyword("LET") && requireProEdition())
 
 
 
                 ;
-                else if (peekKeyword("LOOP") && requireProEdition())
+                else if (!ignoreProEdition() && peekKeyword("LOOP") && requireProEdition())
 
 
 
@@ -3490,17 +3490,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'R':
-                if (peekKeyword("REPEAT") && requireProEdition())
+                if (!ignoreProEdition() && peekKeyword("REPEAT") && requireProEdition())
 
 
 
                 ;
-                else if (peekKeyword("RETURN") && requireProEdition())
+                else if (!ignoreProEdition() && peekKeyword("RETURN") && requireProEdition())
 
 
 
                 ;
-                else if (peekKeyword("RAISE") && requireProEdition())
+                else if (!ignoreProEdition() && peekKeyword("RAISE") && requireProEdition())
 
 
 
@@ -3509,12 +3509,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'S':
-                if (peekKeyword("SET") && requireProEdition())
+                if (!ignoreProEdition() && peekKeyword("SET") && requireProEdition())
 
 
 
                 ;
-                else if (peekKeyword("SIGNAL") && requireProEdition())
+                else if (!ignoreProEdition() && peekKeyword("SIGNAL") && requireProEdition())
 
 
 
@@ -3523,7 +3523,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'W':
-                if (peekKeyword("WHILE") && requireProEdition())
+                if (!ignoreProEdition() && peekKeyword("WHILE") && requireProEdition())
 
 
 
@@ -4648,7 +4648,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     identity = true;
                     continue;
                 }
-                else if (parseKeywordIf("READONLY") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseKeywordIf("READONLY") && requireProEdition()) {
 
 
 
@@ -4676,6 +4676,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     continue;
                 }
                 else if (!computed
+                        && !ignoreProEdition()
                         && (parseKeywordIf("AS")
                             || parseKeywordIf("COMPUTED") && (parseKeywordIf("BY") || true))
                         && requireProEdition()) {
@@ -4700,7 +4701,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         type = type.identity(true);
                         identity = true;
                     }
-                    else if (parseKeyword("AS") && requireProEdition()) {
+                    else if (!ignoreProEdition() && parseKeyword("AS") && requireProEdition()) {
 
 
 
@@ -4803,13 +4804,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
             if (!compress) {
-                if (parseKeywordIf("NO COMPRESS") && requireProEdition()) {
+                if (!ignoreProEdition() && parseKeywordIf("NO COMPRESS") && requireProEdition()) {
 
 
 
 
                 }
-                else if (parseKeywordIf("COMPRESS") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseKeywordIf("COMPRESS") && requireProEdition()) {
 
 
 
@@ -6304,52 +6305,52 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'S':
-                if (parseFunctionNameIf("ST_CONTAINS", "SDO_CONTAINS") && requireProEdition()) {
+                if (!ignoreProEdition() && parseFunctionNameIf("ST_CONTAINS", "SDO_CONTAINS") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_CROSSES") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_CROSSES") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_DISJOINT") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_DISJOINT") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_EQUALS", "SDO_EQUAL") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_EQUALS", "SDO_EQUAL") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_INTERSECTS") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_INTERSECTS") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_ISCLOSED") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_ISCLOSED") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_ISEMPTY") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_ISEMPTY") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_OVERLAPS", "SDO_OVERLAPS") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_OVERLAPS", "SDO_OVERLAPS") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_TOUCHES", "SDO_TOUCH") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_TOUCHES", "SDO_TOUCH") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_WITHIN", "SDO_INSIDE") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_WITHIN", "SDO_INSIDE") && requireProEdition()) {
 
 
 
@@ -6389,7 +6390,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         boolean isField = left instanceof Field;
 
 
-        if (!not && ((outer = parseTSQLOuterJoinComparatorIf()) != null) && requireProEdition()) {
+        if (!not && !ignoreProEdition() && ((outer = parseTSQLOuterJoinComparatorIf()) != null) && requireProEdition()) {
             Condition result = null;
 
 
@@ -6902,7 +6903,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             // TODO Sample clause
         }
 
-        if (parseKeywordIf("VERSIONS BETWEEN") && requireProEdition()) {
+        if (!ignoreProEdition() && parseKeywordIf("VERSIONS BETWEEN") && requireProEdition()) {
 
 
 
@@ -6934,7 +6935,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
         }
-        else if (peekKeyword("FOR")
+        else if (!ignoreProEdition()
+            && peekKeyword("FOR")
             && !peekKeyword("FOR JSON")
             && !peekKeyword("FOR KEY SHARE")
             && !peekKeyword("FOR NO KEY UPDATE")
@@ -6968,7 +6970,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
         }
-        else if (parseKeywordIf("AS OF") && requireProEdition()) {
+        else if (!ignoreProEdition() && parseKeywordIf("AS OF") && requireProEdition()) {
 
 
 
@@ -6981,7 +6983,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         }
 
-        if (parseKeywordIf("PIVOT") && requireProEdition()) {
+        if (!ignoreProEdition() && parseKeywordIf("PIVOT") && requireProEdition()) {
 
 
 
@@ -7036,7 +7038,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         int p = position();
         if (parseKeywordIf("WITH")) {
-            if (parseIf('(') && requireProEdition()) {
+            if (!ignoreProEdition() && parseIf('(') && requireProEdition()) {
 
 
 
@@ -7264,7 +7266,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case LEFT_OUTER_JOIN:
             case FULL_OUTER_JOIN:
             case RIGHT_OUTER_JOIN:
-                if (parseKeywordIf("PARTITION BY")) {
+                if (!ignoreProEdition() && parseKeywordIf("PARTITION BY")) {
                     requireProEdition();
 
 
@@ -7715,17 +7717,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Field rhs = (Field) parseFactor();
         DatePart part;
 
-        if ((parseKeywordIf("YEAR") || parseKeywordIf("YEARS")) && requireProEdition())
+        if (!ignoreProEdition() && (parseKeywordIf("YEAR") || parseKeywordIf("YEARS")) && requireProEdition())
             part = DatePart.YEAR;
-        else if ((parseKeywordIf("MONTH") || parseKeywordIf("MONTHS")) && requireProEdition())
+        else if (!ignoreProEdition() && (parseKeywordIf("MONTH") || parseKeywordIf("MONTHS")) && requireProEdition())
             part = DatePart.MONTH;
-        else if ((parseKeywordIf("DAY") || parseKeywordIf("DAYS")) && requireProEdition())
+        else if (!ignoreProEdition() && (parseKeywordIf("DAY") || parseKeywordIf("DAYS")) && requireProEdition())
             part = DatePart.DAY;
-        else if ((parseKeywordIf("HOUR") || parseKeywordIf("HOURS")) && requireProEdition())
+        else if (!ignoreProEdition() && (parseKeywordIf("HOUR") || parseKeywordIf("HOURS")) && requireProEdition())
             part = DatePart.HOUR;
-        else if ((parseKeywordIf("MINUTE") || parseKeywordIf("MINUTES")) && requireProEdition())
+        else if (!ignoreProEdition() && (parseKeywordIf("MINUTE") || parseKeywordIf("MINUTES")) && requireProEdition())
             part = DatePart.MINUTE;
-        else if ((parseKeywordIf("SECOND") || parseKeywordIf("SECONDS")) && requireProEdition())
+        else if (!ignoreProEdition() && (parseKeywordIf("SECOND") || parseKeywordIf("SECONDS")) && requireProEdition())
             part = DatePart.SECOND;
         else
             part = null;
@@ -7787,7 +7789,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final FieldOrRow parseUnaryOps() {
-        if (parseKeywordIf("CONNECT_BY_ROOT") && requireProEdition()) {
+        if (!ignoreProEdition() && parseKeywordIf("CONNECT_BY_ROOT") && requireProEdition()) {
 
 
 
@@ -7806,7 +7808,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         else if ((r = parseFieldUnsignedNumericLiteralIf(Sign.MINUS)) == null)
             r = toField(parseTerm()).neg();
 
-        if (parseTokensIf('(', '+', ')') && requireProEdition())
+        if (!ignoreProEdition() && parseTokensIf('(', '+', ')') && requireProEdition())
 
 
 
@@ -8151,12 +8153,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if ((field = parseFieldChooseIf()) != null)
                     return field;
-                else if (parseKeywordIf("CONNECT_BY_ISCYCLE") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseKeywordIf("CONNECT_BY_ISCYCLE") && requireProEdition()) {
 
 
 
                 }
-                else if (parseKeywordIf("CONNECT_BY_ISLEAF") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseKeywordIf("CONNECT_BY_ISLEAF") && requireProEdition()) {
 
 
 
@@ -8251,7 +8253,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 else if ((field = parseFieldGreatestIf()) != null)
                     return field;
-                else if (parseFunctionNameIf("GROUP_ID") && requireProEdition() && parseEmptyParens()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("GROUP_ID") && requireProEdition() && parseEmptyParens()) {
 
 
 
@@ -8260,12 +8262,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if (parseFunctionNameIf("GROUPING"))
                     return grouping(parseFieldParenthesised());
-                else if ((parseFunctionNameIf("GEOMETRY::STGEOMFROMWKB") || parseFunctionNameIf("GEOGRAPHY::STGEOMFROMWKB")) && requireProEdition()) {
+                else if (!ignoreProEdition() && (parseFunctionNameIf("GEOMETRY::STGEOMFROMWKB") || parseFunctionNameIf("GEOGRAPHY::STGEOMFROMWKB")) && requireProEdition()) {
 
 
 
                 }
-                else if ((parseFunctionNameIf("GEOMETRY::STGEOMFROMTEXT") || parseFunctionNameIf("GEOGRAPHY::STGEOMFROMTEXT")) && requireProEdition()) {
+                else if (!ignoreProEdition() && (parseFunctionNameIf("GEOMETRY::STGEOMFROMTEXT") || parseFunctionNameIf("GEOGRAPHY::STGEOMFROMTEXT")) && requireProEdition()) {
 
 
 
@@ -8335,7 +8337,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if ((field = parseFieldLocateIf()) != null)
                     return field;
-                else if (parseKeywordIf("LEVEL") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseKeywordIf("LEVEL") && requireProEdition()) {
 
 
 
@@ -8435,7 +8437,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("PI") && parseEmptyParens())
                     return pi();
 
-                else if (parseKeywordIf("PRIOR") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseKeywordIf("PRIOR") && requireProEdition()) {
 
 
 
@@ -8474,7 +8476,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if ((field = parseFieldRoundIf()) != null)
                     return field;
-                else if (parseKeywordIf("ROWNUM") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseKeywordIf("ROWNUM") && requireProEdition()) {
 
 
 
@@ -8515,7 +8517,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 else if (parseFunctionNameIf("SECOND"))
                     return second(parseFieldParenthesised());
-                else if (parseFunctionNameIf("SEQ4", "SEQ8") && parseEmptyParens() && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("SEQ4", "SEQ8") && parseEmptyParens() && requireProEdition()) {
 
 
 
@@ -8536,82 +8538,82 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs2(() -> toField(parseNumericOp()), (f1, f2) -> shr(f1, f2));
                 else if ((field = parseFieldSysConnectByPathIf()) != null)
                     return field;
-                else if (parseFunctionNameIf("ST_AREA") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_AREA") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("SDO_GEOM.SDO_AREA") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("SDO_GEOM.SDO_AREA") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_ASBINARY") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_ASBINARY") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_ASTEXT") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_ASTEXT") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_CENTROID") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_CENTROID") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("SDO_GEOM.SDO_CENTROID") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("SDO_GEOM.SDO_CENTROID") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_DIFFERENCE") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_DIFFERENCE") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("SDO_GEOM.SDO_DIFFERENCE") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("SDO_GEOM.SDO_DIFFERENCE") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_DISTANCE") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_DISTANCE") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("SDO_GEOM.SDO_DISTANCE") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("SDO_GEOM.SDO_DISTANCE") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_ENDPOINT") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_ENDPOINT") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_EXTERIORRING") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_EXTERIORRING") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_GEOMETRYN") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_GEOMETRYN") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_GEOMETRYTYPE") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_GEOMETRYTYPE") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_GEOMFROMWKB") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_GEOMFROMWKB") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_GEOMFROMTEXT", "SDO_GEOMETRY") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_GEOMFROMTEXT", "SDO_GEOMETRY") && requireProEdition()) {
 
 
 
@@ -8620,82 +8622,82 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
-                else if (parseFunctionNameIf("ST_INTERIORRINGN") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_INTERIORRINGN") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_INTERSECTION") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_INTERSECTION") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("SDO_GEOM.SDO_INTERSECTION") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("SDO_GEOM.SDO_INTERSECTION") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_LENGTH") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_LENGTH") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("SDO_GEOM.SDO_LENGTH") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("SDO_GEOM.SDO_LENGTH") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_NUMINTERIORRING", "ST_NUMINTERIORRINGS") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_NUMINTERIORRING", "ST_NUMINTERIORRINGS") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_NUMGEOMETRIES", "SDO_UTIL.GETNUMELEM") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_NUMGEOMETRIES", "SDO_UTIL.GETNUMELEM") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_NUMPOINTS") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_NUMPOINTS") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_POINTN") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_POINTN") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_SRID") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_SRID") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_STARTPOINT") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_STARTPOINT") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_UNION") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_UNION") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("SDO_GEOM.SDO_UNION") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("SDO_GEOM.SDO_UNION") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_X") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_X") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_Y") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_Y") && requireProEdition()) {
 
 
 
                 }
-                else if (parseFunctionNameIf("ST_Z") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_Z") && requireProEdition()) {
 
 
 
@@ -8918,7 +8920,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseFieldSysConnectByPathIf() {
-        if (parseFunctionNameIf("SYS_CONNECT_BY_PATH") && requireProEdition()) {
+        if (!ignoreProEdition() && parseFunctionNameIf("SYS_CONNECT_BY_PATH") && requireProEdition()) {
 
 
 
@@ -9166,7 +9168,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseFieldXMLDocumentIf() {
-        if (parseFunctionNameIf("XMLDOCUMENT") && requireProEdition()) {
+        if (!ignoreProEdition() && parseFunctionNameIf("XMLDOCUMENT") && requireProEdition()) {
 
 
 
@@ -9357,24 +9359,24 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final JSONValue.Behaviour parseJSONValueBehaviourIf() {
-        if (parseKeywordIf("ERROR") && requireProEdition())
+        if (!ignoreProEdition() && parseKeywordIf("ERROR") && requireProEdition())
             return JSONValue.Behaviour.ERROR;
-        else if (parseKeywordIf("NULL") && requireProEdition())
+        else if (!ignoreProEdition() && parseKeywordIf("NULL") && requireProEdition())
             return JSONValue.Behaviour.NULL;
-        else if (parseKeywordIf("DEFAULT") && requireProEdition())
+        else if (!ignoreProEdition() && parseKeywordIf("DEFAULT") && requireProEdition())
             return JSONValue.Behaviour.DEFAULT;
         else
             return null;
     }
 
     private final JSONExists.Behaviour parseJSONExistsOnErrorBehaviourIf() {
-        if (parseKeywordIf("ERROR") && parseKeyword("ON ERROR") && requireProEdition())
+        if (!ignoreProEdition() && parseKeywordIf("ERROR") && parseKeyword("ON ERROR") && requireProEdition())
             return JSONExists.Behaviour.ERROR;
-        else if (parseKeywordIf("TRUE") && parseKeyword("ON ERROR") && requireProEdition())
+        else if (!ignoreProEdition() && parseKeywordIf("TRUE") && parseKeyword("ON ERROR") && requireProEdition())
             return JSONExists.Behaviour.TRUE;
-        else if (parseKeywordIf("FALSE") && parseKeyword("ON ERROR") && requireProEdition())
+        else if (!ignoreProEdition() && parseKeywordIf("FALSE") && parseKeyword("ON ERROR") && requireProEdition())
             return JSONExists.Behaviour.FALSE;
-        else if (parseKeywordIf("UNKNOWN") && parseKeyword("ON ERROR") && requireProEdition())
+        else if (!ignoreProEdition() && parseKeywordIf("UNKNOWN") && parseKeyword("ON ERROR") && requireProEdition())
             return JSONExists.Behaviour.UNKNOWN;
         else
             return null;
@@ -9732,7 +9734,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseFieldGroupingIdIf() {
-        if (parseFunctionNameIf("GROUPING_ID") && requireProEdition()) {
+        if (!ignoreProEdition() && parseFunctionNameIf("GROUPING_ID") && requireProEdition()) {
 
 
 
@@ -10877,7 +10879,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse(',');
             Field<?> field = parseField();
             Long style = null;
-            if (parseIf(',') && requireProEdition())
+            if (!ignoreProEdition() && parseIf(',') && requireProEdition())
                 style = parseUnsignedIntegerLiteral();
             parse(')');
 
@@ -10960,7 +10962,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             else
                 return null;
 
-        if (keep != null && filter != null && !basic && parseKeywordIf("KEEP")) {
+        if (keep != null && filter != null && !basic && !ignoreProEdition() && parseKeywordIf("KEEP")) {
             requireProEdition();
 
 
@@ -11995,15 +11997,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'G':
-                if ((parseKeywordOrIdentifierIf("GEOMETRY") ||
-                    parseKeywordOrIdentifierIf("SDO_GEOMETRY"))
+                if (!ignoreProEdition()
+                    && (parseKeywordOrIdentifierIf("GEOMETRY") || parseKeywordOrIdentifierIf("SDO_GEOMETRY"))
                     && requireProEdition()
                 ) {
 
 
 
                 }
-                else if (parseKeywordOrIdentifierIf("GEOGRAPHY") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseKeywordOrIdentifierIf("GEOGRAPHY") && requireProEdition()) {
 
 
 
@@ -13995,6 +13997,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final boolean proEdition() {
         return configuration().commercial();
+    }
+
+    private final boolean ignoreProEdition() {
+        return !proEdition() && TRUE.equals(settings().isParseIgnoreCommercialOnlyFeatures());
     }
 
     private final boolean requireProEdition() {

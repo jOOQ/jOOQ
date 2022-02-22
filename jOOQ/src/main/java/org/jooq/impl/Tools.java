@@ -5702,7 +5702,7 @@ final class Tools {
             if (flattenRowFields && e instanceof RowField) {
                 List<Field<?>> result = new ArrayList<>();
 
-                for (Field<?> field : ((RowField<?, ?>) e).row().fields())
+                for (Field<?> field : flattenCollection(asList(((RowField<?, ?>) e).row().fields()), removeDuplicates, flattenRowFields))
                     if (duplicates.test(field))
                         result.add(field);
 

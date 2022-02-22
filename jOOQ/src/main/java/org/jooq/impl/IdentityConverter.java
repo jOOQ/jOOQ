@@ -39,11 +39,6 @@ package org.jooq.impl;
 
 import org.jooq.Converter;
 
-/**
- * A converter that doesn't convert anything.
- *
- * @author Lukas Eder
- */
 public final class IdentityConverter<T> implements Converter<T, T> {
     private final Class<T> type;
 

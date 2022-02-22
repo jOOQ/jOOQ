@@ -473,7 +473,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     }
 
     @Override
-    public /* non-final */ DataType<T[]> getArrayDataType() {
+    public final DataType<T[]> getArrayDataType() {
         return new ArrayDataType<>(this);
     }
 

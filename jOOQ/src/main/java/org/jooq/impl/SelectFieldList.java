@@ -80,6 +80,8 @@ final class SelectFieldList<F extends SelectFieldOrAsterisk> extends QueryPartLi
         //         resolve the instance in time for the rendering, e.g. RETURNING
         if (part instanceof AbstractTable)
             ctx.visit(((AbstractTable<?>) part).tf());
+        else if (part instanceof AbstractRow)
+            ctx.visit(((AbstractRow<?>) part).rf());
         else
             super.acceptElement(ctx, part);
     }

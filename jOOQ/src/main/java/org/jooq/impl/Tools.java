@@ -6090,7 +6090,7 @@ final class Tools {
                 if (e instanceof AbstractRowAsField) { AbstractRowAsField<?> r = (AbstractRowAsField<?>) e;
                     List<Field<?>> result = new ArrayList<>();
 
-                    for (Field<?> field : r.fields0().fields())
+                    for (Field<?> field : flattenCollection(asList(r.fields0().fields()), removeDuplicates, flattenRowFields))
                         if (duplicates.test(field))
                             result.add(field);
 

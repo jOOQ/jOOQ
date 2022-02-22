@@ -72,4 +72,15 @@ final class SelectFieldList<F extends SelectFieldOrAsterisk> extends QueryPartLi
     public final boolean declaresFields() {
         return true;
     }
+
+    @Override
+    protected void acceptElement(Context<?> ctx, F part) {
+
+        // [#4727] Various SelectFieldList references containing Table<?> cannot
+        //         resolve the instance in time for the rendering, e.g. RETURNING
+        if (part instanceof AbstractTable)
+            ctx.visit(((AbstractTable<?>) part).tf());
+        else
+            super.acceptElement(ctx, part);
+    }
 }

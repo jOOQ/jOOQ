@@ -51,12 +51,11 @@ import static org.jooq.tools.StringUtils.defaultIfBlank;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import jakarta.xml.bind.DatatypeConverter;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -65,6 +64,8 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.tools.json.ContainerFactory;
 import org.jooq.tools.json.JSONParser;
+
+import jakarta.xml.bind.DatatypeConverter;
 
 /**
  * A very simple JSON reader based on Simple JSON.
@@ -154,6 +155,14 @@ final class JSONReader<R extends Record> {
             result = new ResultImpl<>(ctx.configuration(), actualRow);
 
         if (records != null) {
+
+            // [#12930] Nested ROW emulations can produce scalar values
+            //          when they're of degree 1. This is patched
+            if (!records.isEmpty()
+                    && !(records.get(0) instanceof Map)
+                    && !(records.get(0) instanceof List))
+                records = asList(records);
+
             for (Object o3 : records) {
                 if (o3 instanceof Map) {
                     Map<String, Object> record = (Map<String, Object>) o3;

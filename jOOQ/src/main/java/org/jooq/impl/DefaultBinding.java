@@ -3782,6 +3782,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         static final <R extends Record> R readMultiset(BindingGetResultSetContext<?> ctx, DataType<R> type) throws SQLException {
             return DefaultResultBinding.readMultiset(ctx, (AbstractRow<R>) type.getRow(), type.getType(),
+
+                // [#12930] Tricky to patch a byte[]. We're patching it in JSONReader, instead
                 b -> b,
                 s -> s.startsWith("[") || s.startsWith("{") ? "[" + s + "]" : s,
                 s -> s.startsWith("<") ? "<result>" + s + "</result>" : s

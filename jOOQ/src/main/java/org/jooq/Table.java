@@ -121,6 +121,20 @@ import org.jetbrains.annotations.Nullable;
  * </pre></code>
  * <p>
  * Instances can be created using {@link DSL#table(Name)} and overloads.
+ * <p>
+ * <h3>Using table references as field expressions</h3>
+ * <p>
+ * Table references can be used like {@link Field} in queries. This includes:
+ * <ul>
+ * <li>A {@link GroupField} is an expression that is used in a {@link Select}
+ * query's <code>GROUP BY</code> clause.</li>
+ * <li>A {@link SelectField} is an expression that is used in a {@link Select}
+ * query's <code>SELECT</code> clause, or in a DML query's
+ * <code>RETURNING</code> clause, such as <code>INSERT .. RETURNING</code>.</li>
+ * </ul>
+ * <p>
+ * Other types of {@link Table} cannot be used this way, even if the type system
+ * cannot prevent this.
  *
  * @param <R> The record type associated with this table
  * @author Lukas Eder

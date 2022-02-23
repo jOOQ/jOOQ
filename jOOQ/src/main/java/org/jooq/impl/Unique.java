@@ -103,7 +103,7 @@ implements
 
             case H2:
                 ctx.visit(K_UNIQUE).sql(' ');
-                visitSubquery(ctx, query, true);
+                visitSubquery(ctx, query, false, true);
                 break;
 
             default:

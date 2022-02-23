@@ -124,7 +124,7 @@ final class SelectIsNull extends AbstractCondition implements QOM.SelectIsNull {
     }
 
     private final void acceptStandard(Context<?> ctx) {
-        visitSubquery(ctx, select, true);
+        visitSubquery(ctx, select, false, true);
 
         switch (ctx.family()) {
 

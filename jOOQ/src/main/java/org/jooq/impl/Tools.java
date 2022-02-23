@@ -2498,11 +2498,22 @@ final class Tools {
             return e;
     }
 
-    static final void visitSubquery(Context<?> ctx, QueryPart query, boolean predicandSubquery) {
-        visitSubquery(ctx, query, predicandSubquery, true);
+    static final void visitSubquery(
+        Context<?> ctx,
+        QueryPart query,
+        boolean derivedTableSubquery,
+        boolean predicandSubquery
+    ) {
+        visitSubquery(ctx, query, derivedTableSubquery, predicandSubquery, true);
     }
 
-    static final void visitSubquery(Context<?> ctx, QueryPart query, boolean predicandSubquery, boolean parentheses) {
+    static final void visitSubquery(
+        Context<?> ctx,
+        QueryPart query,
+        boolean derivedTableSubquery,
+        boolean predicandSubquery,
+        boolean parentheses
+    ) {
 
 
 
@@ -2512,14 +2523,17 @@ final class Tools {
             ctx.sql('(');
 
         boolean previousPredicandSubquery = ctx.predicandSubquery();
+        boolean previousDerivedTableSubquery = ctx.derivedTableSubquery();
 
         ctx.subquery(true)
            .predicandSubquery(predicandSubquery)
+           .derivedTableSubquery(derivedTableSubquery)
            .formatIndentStart()
            .formatNewLine()
            .visit(query)
            .formatIndentEnd()
            .formatNewLine()
+           .derivedTableSubquery(previousDerivedTableSubquery)
            .predicandSubquery(previousPredicandSubquery)
            .subquery(false);
 

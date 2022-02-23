@@ -229,6 +229,7 @@ implements
                 json.getType() == JSONB.class ? json : json.cast(JSONB),
                 path
             ),
+            true,
             false
         );
     }

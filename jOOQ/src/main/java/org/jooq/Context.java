@@ -248,6 +248,17 @@ public interface Context<C extends Context<C>> extends Scope {
     C subquery(boolean subquery);
 
     /**
+     * Whether the current context is rendering a derived table subquery.
+     */
+    boolean derivedTableSubquery();
+
+    /**
+     * Set the new context value for {@link #derivedTableSubquery()}.
+     */
+    @NotNull
+    C derivedTableSubquery(boolean derivedTableSubquery);
+
+    /**
      * Whether the current context is rendering a predicand subquery, i.e. a
      * subquery that is an operand of a predicate.
      */

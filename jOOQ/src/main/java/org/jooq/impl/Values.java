@@ -183,7 +183,7 @@ final class Values<R extends Record> extends AbstractTable<R> implements QOM.Val
                     selects = selects.unionAll(select);
             }
 
-            visitSubquery(ctx, selects, false, false);
+            visitSubquery(ctx, selects, true, false, false);
         }
 
 

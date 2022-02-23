@@ -157,6 +157,7 @@ implements
                 withRecursive(name, name)
                     .as(select(from).unionAll(select(iadd(f, step == null ? inline(1) : step)).from(name).where(f.lt(to))))
                     .select(f).from(name),
+                true,
                 false
             );
         }
@@ -172,6 +173,8 @@ implements
                 ctx.sql(')');
             }
         }
+
+
 
 
 

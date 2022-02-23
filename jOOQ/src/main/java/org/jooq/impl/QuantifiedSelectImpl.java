@@ -111,7 +111,7 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
             default:
                 ctx.visit(quantifier.toKeyword());
                 ctx.sql(extraParentheses ? " ((" : " (");
-                visitSubquery(ctx, delegate(ctx.configuration()), true, false);
+                visitSubquery(ctx, delegate(ctx.configuration()), false, true, false);
                 ctx.sql(extraParentheses ? "))" : ")");
                 break;
         }

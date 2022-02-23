@@ -123,6 +123,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     int                                            subquery;
     BitSet                                         subqueryScopedNestedSetOperations;
     boolean                                        predicandSubquery;
+    boolean                                        derivedTableSubquery;
     int                                            stringLiteral;
     String                                         stringLiteralEscapedApos    = "'";
     int                                            index;
@@ -313,7 +314,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C visitSubquery(QueryPart part) {
-        Tools.visitSubquery(this, part, false);
+        Tools.visitSubquery(this, part, false, false);
         return (C) this;
     }
 
@@ -655,6 +656,17 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public final C predicandSubquery(boolean s) {
         predicandSubquery = s;
+        return (C) this;
+    }
+
+    @Override
+    public final boolean derivedTableSubquery() {
+        return derivedTableSubquery;
+    }
+
+    @Override
+    public final C derivedTableSubquery(boolean s) {
+        derivedTableSubquery = s;
         return (C) this;
     }
 

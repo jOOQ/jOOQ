@@ -4643,7 +4643,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T> T fetchValue(SelectField<T> field) {
-        return field instanceof TableField ? fetchValue((TableField<?, T>) field) : fetchValue(select(field));
+        return field instanceof TableField
+             ? fetchValue((TableField<?, T>) field)
+             : field instanceof Table<?>
+             ? fetchValue(select(field).from((Table<?>) field))
+             : fetchValue(select(field));
     }
 
     @Override

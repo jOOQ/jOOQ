@@ -3754,7 +3754,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     return pgNewRecord(ctx, dataType.getType(), (AbstractRow<Record>) dataType.getRow(), ctx.resultSet().getObject(ctx.index()));
 
                 default:
-                    if (dataType.isUDT())
+                    if (UDTRecord.class.isAssignableFrom(dataType.getType()))
                         return localExecuteContext(ctx.executeContext(), () -> (Record) ctx.resultSet().getObject(ctx.index(), typeMap(dataType.getType(), ctx)));
                     else
                         return readMultiset(ctx, dataType);

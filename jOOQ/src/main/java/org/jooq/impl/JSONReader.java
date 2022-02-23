@@ -50,6 +50,7 @@ import static org.jooq.tools.StringUtils.defaultIfBlank;
 
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -155,14 +156,6 @@ final class JSONReader<R extends Record> {
             result = new ResultImpl<>(ctx.configuration(), actualRow);
 
         if (records != null) {
-
-            // [#12930] Nested ROW emulations can produce scalar values
-            //          when they're of degree 1. This is patched
-            if (!records.isEmpty()
-                    && !(records.get(0) instanceof Map)
-                    && !(records.get(0) instanceof List))
-                records = asList(records);
-
             for (Object o3 : records) {
                 if (o3 instanceof Map) {
                     Map<String, Object> record = (Map<String, Object>) o3;

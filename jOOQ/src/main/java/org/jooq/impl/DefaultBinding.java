@@ -70,7 +70,6 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
-import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
@@ -173,7 +172,6 @@ import java.io.StringReader;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.nio.charset.Charset;
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.Clob;
@@ -244,6 +242,7 @@ import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Scope;
+import org.jooq.Source;
 import org.jooq.Spatial;
 import org.jooq.TableRecord;
 import org.jooq.UDT;
@@ -263,7 +262,6 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
-import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -3782,9 +3780,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         static final <R extends Record> R readMultiset(BindingGetResultSetContext<?> ctx, DataType<R> type) throws SQLException {
             return DefaultResultBinding.readMultiset(ctx, (AbstractRow<R>) type.getRow(), type.getType(),
-
-                // [#12930] Tricky to patch a byte[]. We're patching it in JSONReader, instead
-                b -> b,
                 s -> s.startsWith("[") || s.startsWith("{") ? "[" + s + "]" : s,
                 s -> s.startsWith("<") ? "<result>" + s + "</result>" : s
             ).get(0);
@@ -4005,14 +4000,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @SuppressWarnings("unchecked")
         static final <R extends Record> Result<R> readMultiset(BindingGetResultSetContext<?> ctx, DataType<Result<R>> type) throws SQLException {
-            return readMultiset(ctx, (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType(), identity(), identity(), identity());
+            return readMultiset(ctx, (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType(), identity(), identity());
         }
 
         static final <R extends Record> Result<R> readMultiset(
             BindingGetResultSetContext<?> ctx,
             AbstractRow<R> row,
             Class<R> recordType,
-            Function<byte[], byte[]> jsonBytesPatch,
             Function<String, String> jsonStringPatch,
             Function<String, String> xmlStringPatch
         )
@@ -4026,15 +4020,21 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 case JSON:
                 case JSONB:
                     if (emulation == NestedCollectionEmulation.JSONB && EMULATE_AS_BLOB.contains(ctx.dialect()))
-                        return apply(jsonBytesPatch.apply(ctx.resultSet().getBytes(ctx.index())),
-                            s -> new JSONReader<>(ctx.dsl(), row, recordType).read(new InputStreamReader(new ByteArrayInputStream(s), ctx.configuration().charsetProvider().provide()), true));
+                        return apply(
+                            jsonStringPatch.apply(Source.of(ctx.resultSet().getBytes(ctx.index()), ctx.configuration().charsetProvider().provide()).readString()),
+                            s -> readMultisetJSON(ctx, row, recordType, s)
+                        );
                     else
-                        return apply(jsonStringPatch.apply(ctx.resultSet().getString(ctx.index())),
-                            s -> readMultisetJSON(ctx, row, recordType, s));
+                        return apply(
+                            jsonStringPatch.apply(ctx.resultSet().getString(ctx.index())),
+                            s -> readMultisetJSON(ctx, row, recordType, s)
+                        );
 
                 case XML:
-                    return apply(xmlStringPatch.apply(ctx.resultSet().getString(ctx.index())),
-                        s -> readMultisetXML(ctx, row, recordType, s));
+                    return apply(
+                        xmlStringPatch.apply(ctx.resultSet().getString(ctx.index())),
+                        s -> readMultisetXML(ctx, row, recordType, s)
+                    );
             }
 
             throw new UnsupportedOperationException("Multiset emulation not yet supported: " + emulation);

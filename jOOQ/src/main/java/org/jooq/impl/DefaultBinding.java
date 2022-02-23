@@ -46,6 +46,7 @@ import static java.time.temporal.ChronoField.MONTH_OF_YEAR;
 import static java.time.temporal.ChronoField.NANO_OF_SECOND;
 import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 import static java.time.temporal.ChronoField.YEAR;
+import static java.util.Arrays.asList;
 import static java.util.function.Function.identity;
 import static org.jooq.Geography.geography;
 import static org.jooq.Geometry.geometry;
@@ -154,6 +155,7 @@ import static org.jooq.impl.Tools.enums;
 import static org.jooq.impl.Tools.getMappedUDTName;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.needsBackslashEscaping;
+import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.impl.Tools.uncoerce;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
@@ -3752,7 +3754,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     return pgNewRecord(ctx, dataType.getType(), (AbstractRow<Record>) dataType.getRow(), ctx.resultSet().getObject(ctx.index()));
 
                 default:
-                    return localExecuteContext(ctx.executeContext(), () -> (Record) ctx.resultSet().getObject(ctx.index(), typeMap(dataType.getType(), ctx)));
+                    if (dataType.isUDT())
+                        return localExecuteContext(ctx.executeContext(), () -> (Record) ctx.resultSet().getObject(ctx.index(), typeMap(dataType.getType(), ctx)));
+                    else
+                        return readMultiset(ctx, dataType);
             }
         }
 
@@ -3778,8 +3783,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         static final <R extends Record> R readMultiset(BindingGetResultSetContext<?> ctx, DataType<R> type) throws SQLException {
             return DefaultResultBinding.readMultiset(ctx, (AbstractRow<R>) type.getRow(), type.getType(),
                 b -> b,
-                s -> "[" + s + "]",
-                s -> "<result>" + s + "</result>"
+                s -> s.startsWith("[") || s.startsWith("{") ? "[" + s + "]" : s,
+                s -> s.startsWith("<") ? "<result>" + s + "</result>" : s
             ).get(0);
         }
 
@@ -4034,11 +4039,28 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         static <R extends Record> Result<R> readMultisetXML(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {
-            return new XMLHandler<>(ctx.dsl(), row, recordType).read(s);
+            if (s.startsWith("<"))
+                return new XMLHandler<>(ctx.dsl(), row, recordType).read(s);
+            else
+                return readMultisetScalar(ctx, row, recordType, s);
         }
 
         static <R extends Record> Result<R> readMultisetJSON(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {
-            return new JSONReader<>(ctx.dsl(), row, recordType).read(new StringReader(s), true);
+            if (s.startsWith("{") || s.startsWith("["))
+                return new JSONReader<>(ctx.dsl(), row, recordType).read(new StringReader(s), true);
+            else
+                return readMultisetScalar(ctx, row, recordType, s);
+        }
+
+        static <R extends Record> Result<R> readMultisetScalar(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {
+            Result<R> result = new ResultImpl<>(ctx.configuration(), row);
+
+            result.add(newRecord(true, recordType, row, ctx.configuration()).operate(r -> {
+                r.from(asList(s));
+                return r;
+            }));
+
+            return result;
         }
 
         @Override

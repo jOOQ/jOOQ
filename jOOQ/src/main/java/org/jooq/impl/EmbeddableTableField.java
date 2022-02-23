@@ -37,11 +37,10 @@
  */
 package org.jooq.impl;
 
-import static java.lang.Boolean.TRUE;
+import static org.jooq.impl.AbstractRowAsField.acceptMultisetContent;
+import static org.jooq.impl.AbstractRowAsField.forceMultisetContent;
 import static org.jooq.impl.QueryPartListView.wrap;
-import static org.jooq.impl.RowAsField.acceptMultisetContent;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
 import org.jooq.Context;
 import org.jooq.EmbeddableRecord;
@@ -97,7 +96,7 @@ implements
         // TODO [#12021] [#12706] ROW must consistently follow MULTISET emulation
         // [#12237] If a RowField is nested somewhere in MULTISET, we must apply
         //          the MULTISET emulation as well, here
-        if (TRUE.equals(ctx.data(DATA_MULTISET_CONTENT)))
+        if (forceMultisetContent(ctx, () -> getDataType().getRow().size() > 1))
             acceptMultisetContent(ctx, getDataType().getRow(), this, this::acceptDefault);
         else
             acceptDefault(ctx);

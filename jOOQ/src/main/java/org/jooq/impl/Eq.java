@@ -126,8 +126,8 @@ implements
         boolean field1Embeddable = arg1.getDataType().isEmbeddable();
         SelectQueryImpl<?> s;
 
-        if (field1Embeddable && arg2 instanceof ScalarSubquery)
-            ctx.visit(compareRowSubquery.apply(row(embeddedFields(arg1)), ((ScalarSubquery<?>) arg2).query));
+        if (field1Embeddable && arg2 instanceof ScalarSubquery<?> q)
+            ctx.visit(compareRowSubquery.apply(row(embeddedFields(arg1)), q.query));
         else if (field1Embeddable && arg2.getDataType().isEmbeddable())
             ctx.visit(compareRowRow.apply(row(embeddedFields(arg1)), row(embeddedFields(arg2))));
         else if ((op == org.jooq.Comparator.IN || op == org.jooq.Comparator.NOT_IN)

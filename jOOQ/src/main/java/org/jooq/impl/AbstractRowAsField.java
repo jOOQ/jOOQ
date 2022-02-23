@@ -52,6 +52,7 @@ import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.row0;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 
 import org.jooq.Configuration;
@@ -99,43 +100,41 @@ abstract class AbstractRowAsField<R extends Record> extends AbstractField<R> {
 
         // [#12021] If a RowField is nested somewhere in MULTISET, we must apply
         //          the MULTISET emulation as well, here
-        if (TRUE.equals(ctx.data(DATA_MULTISET_CONTENT)))
+        if (forceMultisetContent(ctx, () -> getDataType().getRow().size() > 1))
             acceptMultisetContent(ctx, getDataType().getRow(), this, this::acceptDefault);
         else
             acceptDefault(ctx);
     }
 
-    static void acceptMultisetContent(Context<?> ctx, Row row, Field<?> field, Consumer<? super Context<?>> acceptDefault) {
-        Name alias = field.getUnqualifiedName();
+    static final boolean forceMultisetContent(Context<?> ctx, BooleanSupplier degreeCheck) {
+        return
 
-        switch (emulateMultiset(ctx.configuration())) {
-            case JSON:
-                switch (ctx.family()) {
+            // All types of row expressions must be emulated using MULTISET
+            // emulations if nested in some sort of MULTISET content
+            TRUE.equals(ctx.data(DATA_MULTISET_CONTENT))
 
+            // Row expressions of degree > 1 must also be emulated using MULTISET
+            // emulations if nested in scalar subqueries, except for predicand
+            // subqueries, where row subqueries are usually supported, e.g.
+            // (a, b) IN (SELECT x, y)
+            || ctx.subquery()
+                    && RowAsField.NO_NATIVE_SUPPORT.contains(ctx.dialect())
+                    && !ctx.predicandSubquery()
+                    && !ctx.derivedTableSubquery()
+                    && !ctx.setOperationSubquery()
+                    && degreeCheck.getAsBoolean();
+    }
 
+    static final void acceptMultisetContent(Context<?> ctx, Row row, Field<?> field, Consumer<? super Context<?>> acceptDefault) {
+        Object previous = ctx.data(DATA_MULTISET_CONTENT);
 
+        try {
+            ctx.data(DATA_MULTISET_CONTENT, true);
+            Name alias = field.getUnqualifiedName();
 
-
-
-
-
-
-
-
-
-
-
-
-
-                    default:
-                        ctx.visit(alias(ctx, alias, returningClob(ctx, jsonArray(row.fields()).nullOnNull())));
-                        break;
-                }
-
-                break;
-
-            case JSONB:
-                switch (ctx.family()) {
+            switch (emulateMultiset(ctx.configuration())) {
+                case JSON:
+                    switch (ctx.family()) {
 
 
 
@@ -152,17 +151,15 @@ abstract class AbstractRowAsField<R extends Record> extends AbstractField<R> {
 
 
 
-                    default:
-                        ctx.visit(alias(ctx, alias, returningClob(ctx, jsonbArray(row.fields()).nullOnNull())));
-                        break;
-                }
+                        default:
+                            ctx.visit(alias(ctx, alias, returningClob(ctx, jsonArray(row.fields()).nullOnNull())));
+                            break;
+                    }
 
-                break;
+                    break;
 
-            case XML:
-                switch (ctx.family()) {
-
-
+                case JSONB:
+                    switch (ctx.family()) {
 
 
 
@@ -170,21 +167,52 @@ abstract class AbstractRowAsField<R extends Record> extends AbstractField<R> {
 
 
 
-                    default:
-                        ctx.visit(alias(ctx, alias, xmlelement(N_RECORD,
-                            map(row.fields(), (f, i) -> xmlelement(fieldNameString(i), f)))
-                        ));
 
-                        break;
-                }
 
-                break;
 
-            // case ARRAY:
-            case NATIVE:
-            default:
-                acceptDefault.accept(ctx);
-                break;
+
+
+
+
+
+
+                        default:
+                            ctx.visit(alias(ctx, alias, returningClob(ctx, jsonbArray(row.fields()).nullOnNull())));
+                            break;
+                    }
+
+                    break;
+
+                case XML:
+                    switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+                        default:
+                            ctx.visit(alias(ctx, alias, xmlelement(N_RECORD,
+                                map(row.fields(), (f, i) -> xmlelement(fieldNameString(i), f)))
+                            ));
+
+                            break;
+                    }
+
+                    break;
+
+                // case ARRAY:
+                case NATIVE:
+                default:
+                    acceptDefault.accept(ctx);
+                    break;
+            }
+        }
+        finally {
+            ctx.data(DATA_MULTISET_CONTENT, previous);
         }
     }
 

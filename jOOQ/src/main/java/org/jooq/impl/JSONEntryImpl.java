@@ -37,12 +37,10 @@
  */
 package org.jooq.impl;
 
-import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
-// ...
 import static org.jooq.SQLDialect.MYSQL;
-// ...
+import static org.jooq.impl.AbstractRowAsField.forceMultisetContent;
 import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.condition;
@@ -67,22 +65,18 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.isScalarSubquery;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
 import java.util.Set;
 import java.util.UUID;
-import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.JSONEntry;
 import org.jooq.JSONEntryValueStep;
 import org.jooq.Param;
-// ...
+import org.jooq.QueryPart;
 import org.jooq.Record1;
 // ...
 import org.jooq.SQLDialect;
@@ -90,9 +84,6 @@ import org.jooq.Scope;
 import org.jooq.Select;
 // ...
 import org.jooq.conf.NestedCollectionEmulation;
-import org.jooq.QueryPart;
-
-import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -254,7 +245,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
         return field;
     }
 
-    static final <T> Field<T> unescapeNestedJSON(Scope ctx, Field<T> value) {
+    static final <T> Field<T> unescapeNestedJSON(Context<?> ctx, Field<T> value) {
 
         // [#12086] Avoid escaping nested JSON
         // [#12168] Yet another MariaDB JSON un-escaping workaround https://jira.mariadb.org/browse/MDEV-26134
@@ -290,14 +281,15 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
         return t.getType() == type;
     }
 
-    static final boolean isJSON(Scope scope, DataType<?> t) {
-        if (t instanceof ConvertedDataType)
-            t = ((ConvertedDataType<?, ?>) t).delegate();
+    static final boolean isJSON(Context<?> ctx, DataType<?> type) {
+        DataType<?> t = type instanceof ConvertedDataType
+            ? ((ConvertedDataType<?, ?>) type).delegate()
+            : type;
 
         return t.isJSON()
-            || t.isEmbeddable() && (TRUE.equals(scope.data(DATA_MULTISET_CONTENT)) && emulateMultisetWithJSON(scope))
-            || t.isRecord() && (TRUE.equals(scope.data(DATA_MULTISET_CONTENT)) && emulateMultisetWithJSON(scope))
-            || t.isMultiset() && emulateMultisetWithJSON(scope);
+            || t.isEmbeddable() && forceMultisetContent(ctx, () -> t.getRow().size() > 1) && emulateMultisetWithJSON(ctx)
+            || t.isRecord() && forceMultisetContent(ctx, () -> t.getRow().size() > 1) && emulateMultisetWithJSON(ctx)
+            || t.isMultiset() && emulateMultisetWithJSON(ctx);
     }
 
     private static final boolean emulateMultisetWithJSON(Scope scope) {

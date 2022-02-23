@@ -91,7 +91,7 @@ final class RowAsField<ROW extends Row, REC extends Record> extends AbstractRowA
     final ROW                    row;
 
     RowAsField(ROW row) {
-        this(row, N_ROW);
+        this(row, DSL.name("row"));
     }
 
     RowAsField(ROW row, Name as) {

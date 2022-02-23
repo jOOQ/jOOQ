@@ -356,7 +356,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
     // - It is column name agnostic (supporting ambiguous column names)
     // - The JSON never leaks outside of the emulation into user code
 
-    static final JSONArrayAggOrderByStep<JSON> jsonArrayaggEmulation(Scope ctx, Fields fields, boolean agg) {
+    static final JSONArrayAggOrderByStep<JSON> jsonArrayaggEmulation(Context<?> ctx, Fields fields, boolean agg) {
         switch (ctx.family()) {
 
 
@@ -382,7 +382,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
         }
     }
 
-    static final JSONArrayAggOrderByStep<JSONB> jsonbArrayaggEmulation(Scope ctx, Fields fields, boolean agg) {
+    static final JSONArrayAggOrderByStep<JSONB> jsonbArrayaggEmulation(Context<?> ctx, Fields fields, boolean agg) {
         switch (ctx.family()) {
 
 

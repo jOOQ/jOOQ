@@ -197,10 +197,16 @@ final class JSONReader<R extends Record> {
                     }
 
                     patchRecord(ctx, multiset, actualRow, record);
-                    result.add(newRecord(true, recordType, actualRow, ctx.configuration()).operate(r -> {
-                        r.from(record);
-                        return r;
-                    }));
+
+                    // [#12930] NULL records are possible when nested ROW is
+                    //          returned from an empty scalar subquery.
+                    if (record == null)
+                        result.add(null);
+                    else
+                        result.add(newRecord(true, recordType, actualRow, ctx.configuration()).operate(r -> {
+                            r.from(record);
+                            return r;
+                        }));
                 }
             }
         }

@@ -37,22 +37,21 @@
  */
 package org.jooq.impl;
 
-import static java.lang.Boolean.TRUE;
 import static java.util.stream.Collectors.joining;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
+import static org.jooq.impl.AbstractRowAsField.acceptMultisetContent;
+import static org.jooq.impl.AbstractRowAsField.forceMultisetContent;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.QueryPartListView.wrap;
-import static org.jooq.impl.RowAsField.acceptMultisetContent;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.row0;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.sql.Date;
@@ -164,7 +163,7 @@ final class Val<T> extends AbstractParam<T> implements QOM.Val<T>, UEmpty {
             // TODO [#12021] [#12706] ROW must consistently follow MULTISET emulation
             // [#12237] If a RowField is nested somewhere in MULTISET, we must apply
             //          the MULTISET emulation as well, here
-            if (TRUE.equals(ctx.data(DATA_MULTISET_CONTENT)))
+            if (forceMultisetContent(ctx, () -> embeddedFields(this).length > 1))
                 acceptMultisetContent(ctx, row0(embeddedFields(this)), this, this::acceptDefaultEmbeddable);
             else
                 acceptDefaultEmbeddable(ctx);

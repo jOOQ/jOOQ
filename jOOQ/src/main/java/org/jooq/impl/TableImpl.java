@@ -63,6 +63,7 @@ import static org.jooq.impl.DSL.multisetAgg;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultMetaProvider.meta;
 import static org.jooq.impl.Internal.createPathAlias;
 import static org.jooq.impl.Keywords.K_TABLE;
@@ -92,6 +93,8 @@ import org.jooq.Name;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.Record1;
+import org.jooq.Record2;
 // ...
 import org.jooq.Result;
 import org.jooq.Row;
@@ -276,6 +279,39 @@ implements
     }
 
     /**
+     * Create a <code>ROW</code> to-one parent table expression from this table.
+     */
+    @org.jooq.Internal
+    @NotNull
+    protected <O1 extends Record, O2 extends Record> Field<O2> toOneRow(
+        ForeignKey<R, O1> path,
+        Function<? super Table<O1>, ? extends TableLike<O2>> f
+    ) {
+
+        if (CONFIG.commercial()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+        throw new DataAccessException("The to-one ROW convenience feature is available in the commercial jOOQ distribution only. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
+    }
+
+    /**
      * Create a <code>MULTISET</code> one-to-many child table expression from
      * this table.
      */
@@ -341,6 +377,15 @@ implements
 
         throw new DataAccessException("The many-to-many MULTISET convenience feature is available in the commercial jOOQ distribution only. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
     }
+
+
+
+
+
+
+
+
+
 
 
 

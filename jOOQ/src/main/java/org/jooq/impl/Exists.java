@@ -105,7 +105,7 @@ implements
 
             default:
                 ctx.visit(K_EXISTS).sql(' ');
-                visitSubquery(ctx, query, false, true);
+                visitSubquery(ctx, query, false, false, true);
                 break;
         }
     }

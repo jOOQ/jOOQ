@@ -265,6 +265,7 @@ implements
 
 
 
+
     private final void acceptStandard(Context<?> ctx) {
         ctx.visit(K_XMLTABLE).sqlIndentStart('(');
         acceptXPath(ctx, xpath);

@@ -2502,15 +2502,17 @@ final class Tools {
         Context<?> ctx,
         QueryPart query,
         boolean derivedTableSubquery,
+        boolean setOperationSubquery,
         boolean predicandSubquery
     ) {
-        visitSubquery(ctx, query, derivedTableSubquery, predicandSubquery, true);
+        visitSubquery(ctx, query, derivedTableSubquery, setOperationSubquery, predicandSubquery, true);
     }
 
     static final void visitSubquery(
         Context<?> ctx,
         QueryPart query,
         boolean derivedTableSubquery,
+        boolean setOperationSubquery,
         boolean predicandSubquery,
         boolean parentheses
     ) {
@@ -2524,15 +2526,18 @@ final class Tools {
 
         boolean previousPredicandSubquery = ctx.predicandSubquery();
         boolean previousDerivedTableSubquery = ctx.derivedTableSubquery();
+        boolean previousSetOperationSubquery = ctx.setOperationSubquery();
 
         ctx.subquery(true)
            .predicandSubquery(predicandSubquery)
            .derivedTableSubquery(derivedTableSubquery)
+           .setOperationSubquery(setOperationSubquery)
            .formatIndentStart()
            .formatNewLine()
            .visit(query)
            .formatIndentEnd()
            .formatNewLine()
+           .setOperationSubquery(previousSetOperationSubquery)
            .derivedTableSubquery(previousDerivedTableSubquery)
            .predicandSubquery(previousPredicandSubquery)
            .subquery(false);

@@ -251,7 +251,7 @@ final class RowSubqueryCondition extends AbstractCondition implements UNotYetImp
                         boolean extraParentheses = false ;
 
                         ctx.sql(extraParentheses ? "((" : "(")
-                           .data(BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true, c -> visitSubquery(c, right, false, true, false))
+                           .data(BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true, c -> visitSubquery(c, right, false, false, true, false))
                            .sql(extraParentheses ? "))" : ")");
                     }
 

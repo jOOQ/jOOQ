@@ -630,7 +630,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @SuppressWarnings("unchecked")
     @Override
     public final <T> Field<T> asField() {
-        return new ScalarSubquery<>(this, (DataType<T>) Tools.scalarType(this));
+        return new ScalarSubquery<>(this, (DataType<T>) Tools.scalarType(this), false);
     }
 
     @Override

@@ -1488,7 +1488,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final Condition compare(Comparator comparator, Select<? extends Record1<T>> query) {
-        return compare(comparator, new ScalarSubquery<>(query, getDataType()));
+        return compare(comparator, new ScalarSubquery<>(query, getDataType(), true));
     }
 
     @Override

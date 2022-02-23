@@ -2498,11 +2498,11 @@ final class Tools {
             return e;
     }
 
-    static final void visitSubquery(Context<?> ctx, QueryPart query) {
-        visitSubquery(ctx, query, true);
+    static final void visitSubquery(Context<?> ctx, QueryPart query, boolean predicandSubquery) {
+        visitSubquery(ctx, query, predicandSubquery, true);
     }
 
-    static final void visitSubquery(Context<?> ctx, QueryPart query, boolean parentheses) {
+    static final void visitSubquery(Context<?> ctx, QueryPart query, boolean predicandSubquery, boolean parentheses) {
 
 
 
@@ -2511,12 +2511,16 @@ final class Tools {
         if (parentheses)
             ctx.sql('(');
 
+        boolean previousPredicandSubquery = ctx.predicandSubquery();
+
         ctx.subquery(true)
+           .predicandSubquery(predicandSubquery)
            .formatIndentStart()
            .formatNewLine()
            .visit(query)
            .formatIndentEnd()
            .formatNewLine()
+           .predicandSubquery(previousPredicandSubquery)
            .subquery(false);
 
         if (parentheses)

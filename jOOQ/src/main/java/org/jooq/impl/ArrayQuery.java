@@ -42,13 +42,9 @@ import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Names.N_ARRAY;
 import static org.jooq.impl.Tools.visitSubquery;
 
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
-
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.QueryPart;
 import org.jooq.Record1;
 // ...
@@ -86,7 +82,7 @@ final class ArrayQuery<T> extends AbstractField<T[]> implements QOM.ArrayQuery<T
 
                 // [#11053] TODO: Move ORDER BY clause from subquery to ARRAY_AGG
                 // See https://github.com/jOOQ/jOOQ/issues/11053#issuecomment-735773248
-                visitSubquery(ctx, DSL.select(arrayAgg(c)).from(t));
+                visitSubquery(ctx, DSL.select(arrayAgg(c)).from(t), false);
                 break;
             }
 

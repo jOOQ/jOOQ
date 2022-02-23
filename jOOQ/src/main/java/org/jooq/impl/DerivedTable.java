@@ -94,7 +94,7 @@ class DerivedTable<R extends Record> extends AbstractTable<R> implements QOM.Der
 
 
 
-        visitSubquery(ctx, query, false);
+        visitSubquery(ctx, query, false, false);
     }
 
     @Override // Avoid AbstractTable implementation

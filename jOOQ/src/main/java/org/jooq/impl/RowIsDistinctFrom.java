@@ -138,7 +138,7 @@ final class RowIsDistinctFrom extends AbstractCondition implements UNotYetImplem
             if (rhsRow != null)
                 ctx.visit(rhsRow);
             else
-                visitSubquery(ctx, rhsSelect);
+                visitSubquery(ctx, rhsSelect, true);
 
             if (!not)
                 ctx.sql(')');
@@ -154,7 +154,7 @@ final class RowIsDistinctFrom extends AbstractCondition implements UNotYetImplem
             if (rhsRow != null)
                 ctx.visit(rhsRow);
             else
-                visitSubquery(ctx, rhsSelect);
+                visitSubquery(ctx, rhsSelect, true);
         }
 
 

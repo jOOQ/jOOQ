@@ -138,7 +138,7 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
 
             }
 
-            visitSubquery(ctx, s);
+            visitSubquery(ctx, s, false);
 
 
 

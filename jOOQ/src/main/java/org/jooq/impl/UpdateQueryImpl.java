@@ -650,7 +650,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     else
                         select = multiSelect;
 
-                    visitSubquery(ctx, select);
+                    visitSubquery(ctx, select, false);
                 }
 
                 ctx.formatIndentEnd().end(UPDATE_SET_ASSIGNMENT);

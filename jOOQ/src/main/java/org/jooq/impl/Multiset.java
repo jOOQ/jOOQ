@@ -78,13 +78,11 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import org.jooq.AggregateFilterStep;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Fields;
-import org.jooq.Function1;
 import org.jooq.JSON;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONArrayAggReturningStep;
@@ -190,7 +188,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                         if (multisetCondition && NO_SUPPORT_JSON_COMPARE.contains(ctx.dialect()))
                             ctx.visit(DSL.field(s).cast(VARCHAR));
                         else
-                            visitSubquery(ctx, s, true);
+                            visitSubquery(ctx, s, false);
 
                         break;
                     }
@@ -242,7 +240,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                         if (multisetCondition && NO_SUPPORT_JSONB_COMPARE.contains(ctx.dialect()))
                             ctx.visit(DSL.field(s).cast(VARCHAR));
                         else
-                            visitSubquery(ctx, s, true);
+                            visitSubquery(ctx, s, false);
 
                         break;
                     }
@@ -289,7 +287,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                         if (multisetCondition && NO_SUPPORT_XML_COMPARE.contains(ctx.dialect()))
                             ctx.visit(xmlserializeContent(DSL.field(s), VARCHAR));
                         else
-                            visitSubquery(ctx, s, true);
+                            visitSubquery(ctx, s, false);
 
                         break;
                     }
@@ -299,7 +297,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
             }
 
             case NATIVE:
-                visitSubquery(ctx.visit(K_MULTISET), select, true);
+                visitSubquery(ctx.visit(K_MULTISET), select, false);
                 break;
         }
     }

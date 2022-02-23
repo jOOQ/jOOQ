@@ -156,7 +156,8 @@ implements
                 ctx,
                 withRecursive(name, name)
                     .as(select(from).unionAll(select(iadd(f, step == null ? inline(1) : step)).from(name).where(f.lt(to))))
-                    .select(f).from(name)
+                    .select(f).from(name),
+                false
             );
         }
         else if (EMULATE_SYSTEM_RANGE.contains(ctx.dialect())) {
@@ -171,6 +172,8 @@ implements
                 ctx.sql(')');
             }
         }
+
+
 
 
 

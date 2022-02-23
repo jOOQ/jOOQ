@@ -251,13 +251,13 @@ final class RowSubqueryCondition extends AbstractCondition implements UNotYetImp
                         boolean extraParentheses = false ;
 
                         ctx.sql(extraParentheses ? "((" : "(")
-                           .data(BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true, c -> visitSubquery(c, right, false))
+                           .data(BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true, c -> visitSubquery(c, right, true, false))
                            .sql(extraParentheses ? "))" : ")");
                     }
 
                     // [#2054] Quantified row value expression comparison predicates shouldn't have parentheses before ANY or ALL
                     else
-                        ctx.data(BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true, c -> c.subquery(true).visit(rightQuantified).subquery(false));
+                        ctx.data(BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true, c -> c.visit(rightQuantified));
 
                     break;
             }

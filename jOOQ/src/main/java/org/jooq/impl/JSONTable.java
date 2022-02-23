@@ -228,7 +228,8 @@ implements
                 : "jsonb_path_query({0}, {1}::jsonpath) {as} t(j)",
                 json.getType() == JSONB.class ? json : json.cast(JSONB),
                 path
-            )
+            ),
+            false
         );
     }
 

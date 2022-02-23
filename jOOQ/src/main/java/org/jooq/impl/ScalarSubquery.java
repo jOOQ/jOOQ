@@ -64,11 +64,13 @@ final class ScalarSubquery<T> extends AbstractField<T> implements QOM.ScalarSubq
 
     static final Set<SQLDialect> NO_SUPPORT_WITH_IN_SCALAR_SUBQUERY = SQLDialect.supportedBy(HSQLDB);
     final Select<?>              query;
+    final boolean                predicandSubquery;
 
-    ScalarSubquery(Select<?> query, DataType<T> type) {
+    ScalarSubquery(Select<?> query, DataType<T> type, boolean predicandSubquery) {
         super(N_SELECT, type);
 
         this.query = query;
+        this.predicandSubquery = predicandSubquery;
     }
 
     @Override
@@ -84,9 +86,9 @@ final class ScalarSubquery<T> extends AbstractField<T> implements QOM.ScalarSubq
         // HSQLDB allows for using WITH inside of IN, see: https://sourceforge.net/p/hsqldb/bugs/1617/
         // We'll still emulate CTE in scalar subqueries with a derived tables in all cases.
         if (q != null && q.with != null && NO_SUPPORT_WITH_IN_SCALAR_SUBQUERY.contains(ctx.dialect()))
-            visitSubquery(ctx, select(asterisk()).from(query.asTable("t")));
+            visitSubquery(ctx, select(asterisk()).from(query.asTable("t")), predicandSubquery);
         else
-            visitSubquery(ctx, query);
+            visitSubquery(ctx, query, predicandSubquery);
     }
 
     // -------------------------------------------------------------------------
@@ -95,7 +97,7 @@ final class ScalarSubquery<T> extends AbstractField<T> implements QOM.ScalarSubq
 
     @Override
     public final Function1<? super Select<? extends Record1<T>>, ? extends Field<T>> $constructor() {
-        return s -> new ScalarSubquery<>((Select<?>) s, (DataType<T>) Tools.scalarType(s));
+        return s -> new ScalarSubquery<>((Select<?>) s, (DataType<T>) Tools.scalarType(s), predicandSubquery);
     }
 
     @Override

@@ -95,6 +95,8 @@ import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
 import org.jooq.tools.StringUtils;
 
+import org.jetbrains.annotations.NotNull;
+
 
 /**
  * @author Lukas Eder
@@ -120,6 +122,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     int                                            subquery;
     BitSet                                         subqueryScopedNestedSetOperations;
+    boolean                                        predicandSubquery;
     int                                            stringLiteral;
     String                                         stringLiteralEscapedApos    = "'";
     int                                            index;
@@ -310,7 +313,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C visitSubquery(QueryPart part) {
-        Tools.visitSubquery(this, part);
+        Tools.visitSubquery(this, part, false);
         return (C) this;
     }
 
@@ -642,6 +645,17 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public final int subqueryLevel() {
         return subquery;
+    }
+
+    @Override
+    public final boolean predicandSubquery() {
+        return predicandSubquery;
+    }
+
+    @Override
+    public final C predicandSubquery(boolean s) {
+        predicandSubquery = s;
+        return (C) this;
     }
 
     @Override

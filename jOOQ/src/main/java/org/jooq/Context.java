@@ -237,7 +237,7 @@ public interface Context<C extends Context<C>> extends Scope {
     C declareCTE(boolean declareCTE, Consumer<? super C> consumer);
 
     /**
-     * Whether the current context is rendering a sub-query (nested query).
+     * Whether the current context is rendering a subquery (nested query).
      */
     boolean subquery();
 
@@ -246,6 +246,18 @@ public interface Context<C extends Context<C>> extends Scope {
      */
     @NotNull
     C subquery(boolean subquery);
+
+    /**
+     * Whether the current context is rendering a predicand subquery, i.e. a
+     * subquery that is an operand of a predicate.
+     */
+    boolean predicandSubquery();
+
+    /**
+     * Set the new context value for {@link #predicandSubquery()}.
+     */
+    @NotNull
+    C predicandSubquery(boolean predicandSubquery);
 
     /**
      * Which level of subqueries we're currently in, starting with 0 for the top

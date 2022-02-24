@@ -343,10 +343,12 @@ public interface Context<C extends Context<C>> extends Scope {
     C scopeRegister(QueryPart part, boolean forceNew, QueryPart mapped);
 
     /**
-     * Retrieve the registered mapping for a query part in the current scope, or
-     * <code>null</code> if no such mapping exists.
+     * Retrieve the registered mapping for a query part in the current scope.
+     * <p>
+     * If no such mapping exists, the argument {@link QueryPart} itself is
+     * returned.
      */
-    @Nullable
+    @NotNull
     QueryPart scopeMapping(QueryPart part);
 
     /**

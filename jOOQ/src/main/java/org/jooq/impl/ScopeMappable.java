@@ -48,3 +48,24 @@ import org.jooq.QueryPartInternal;
  * @author Lukas Eder
  */
 interface ScopeMappable extends QueryPartInternal {}
+
+/**
+ * A marker interface for all {@link ScopeMappable} parts that are themselves
+ * wrappers for another {@link ScopeMappable} part, and as such, if mapped to
+ * their wrapper, should re-wrap the mapped object.
+ *
+ * @author Lukas Eder
+ */
+interface ScopeMappableWrapper<
+    WRAPPER extends ScopeMappableWrapper<WRAPPER, WRAPPED>,
+    WRAPPED extends QueryPart
+>
+extends
+    ScopeMappable
+{
+
+    /**
+     * Wrap a {@link QueryPart}
+     */
+    WRAPPER wrap(WRAPPED wrapped);
+}

@@ -81,7 +81,13 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-final class TableAsField<R extends Record> extends AbstractRowAsField<R> implements QOM.TableAsField<R> {
+final class TableAsField<R extends Record>
+extends
+    AbstractRowAsField<R>
+implements
+    QOM.TableAsField<R>,
+    ScopeMappableWrapper<TableAsField<R>, Table<R>>
+{
 
     static final Set<SQLDialect> NO_NATIVE_SUPPORT = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
 
@@ -147,4 +153,13 @@ final class TableAsField<R extends Record> extends AbstractRowAsField<R> impleme
 
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: ScopeMappable
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final TableAsField<R> wrap(Table<R> wrapped) {
+        return new TableAsField<>(wrapped, getQualifiedName());
+    }
 }

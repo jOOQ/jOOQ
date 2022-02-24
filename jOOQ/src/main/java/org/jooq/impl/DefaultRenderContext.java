@@ -197,13 +197,21 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         e.positions[1] = sql.length();
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public QueryPart scopeMapping(QueryPart part) {
         if (scopeStack.inScope() && part instanceof ScopeMappable) {
             ScopeStackElement e = scopeStack.get(part);
 
-            if (e != null && e.mapped != null)
-                return e.mapped;
+            if (e != null && e.mapped != null) {
+                QueryPart result = e.mapped;
+
+                // [#13148] Prevent undesired unwrapping of scope mappables by re-wrapping them.
+                if (part instanceof ScopeMappableWrapper)
+                    result = ((ScopeMappableWrapper) part).wrap(result);
+
+                return result;
+            }
         }
 
         return part;

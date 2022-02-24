@@ -39,9 +39,13 @@ package org.jooq.codegen;
 
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.nCopies;
+import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.IntStream.rangeClosed;
 // ...
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -87,6 +91,7 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import org.jooq.AggregateFunction;
@@ -99,6 +104,7 @@ import org.jooq.Domain;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function2;
 import org.jooq.Identity;
 import org.jooq.Index;
 // ...
@@ -107,11 +113,13 @@ import org.jooq.OrderField;
 import org.jooq.Parameter;
 // ...
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Sequence;
 import org.jooq.SortOrder;
 import org.jooq.Table;
@@ -2691,10 +2699,14 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private String refRowType(JavaWriter out, Collection<? extends Definition> columns) {
+        return refRowType(out, columns, identity());
+    }
+
+    private String refRowType(JavaWriter out, Collection<? extends Definition> columns, Function<String, String> map) {
         StringBuilder result = new StringBuilder();
 
         forEach(columns, "", ", ", (column, separator) -> {
-            result.append(getJavaTypeRef(column, out));
+            result.append(map.apply(getJavaTypeRef(column, out)));
 
             if (kotlin && !(column instanceof EmbeddableDefinition))
                 result.append("?");
@@ -6474,6 +6486,7 @@ public class JavaGenerator extends AbstractGenerator {
         List<Definition> replacingEmbeddablesAndUnreplacedColumns = replacingEmbeddablesAndUnreplacedColumns(table);
         int degree = replacingEmbeddablesAndUnreplacedColumns.size();
         String rowType = refRowType(out, replacingEmbeddablesAndUnreplacedColumns);
+        String rowTypeContravariantJava = refRowType(out, replacingEmbeddablesAndUnreplacedColumns, s -> "? super " + s);
 
         if (generateRecordsImplementingRecordN() && degree > 0 && degree <= Constants.MAX_ROW_DEGREE) {
             final String rowNType = out.ref(Row.class.getName() + degree);
@@ -6570,6 +6583,42 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("return aliased() ? result.as(getUnqualifiedName()) : result;");
                     out.println("}");
                 }
+            }
+        }
+
+        if (generateRecordsImplementingRecordN() && degree > 0 && degree <= Constants.MAX_ROW_DEGREE) {
+            out.javadoc("Convenience mapping calling {@link #convertFrom(%s)}.", Function.class);
+
+            if (scala) {
+                out.println("%sdef mapping[U](from: (" + rowType + ") => U): %s[U] = convertFrom(r => from.apply(" + rangeClosed(1, degree).mapToObj(i -> "r.value" + i + "()").collect(joining(", ")) + "))",
+                    visibility(), SelectField.class);
+            }
+            else if (kotlin) {
+                out.println("%sfun <U> mapping(from: (" + rowType + ") -> U): %s<U> = convertFrom(%s.mapping(from))",
+                    visibility(), SelectField.class, Records.class);
+            }
+            else {
+                out.println("%s<U> %s<U> mapping(%s<" + rowTypeContravariantJava + ", ? extends U> from) {",
+                    visibility(), SelectField.class, out.ref("org.jooq.Function" + degree));
+                out.println("return convertFrom(%s.mapping(from));", Records.class);
+                out.println("}");
+            }
+
+            out.javadoc("Convenience mapping calling {@link #convertFrom(%s, %s)}.", Class.class, Function.class);
+
+            if (scala) {
+                out.println("%sdef mapping[U](toType: %s[U], from: (" + rowType + ") => U): %s[U] = convertFrom(toType,r => from.apply(" + rangeClosed(1, degree).mapToObj(i -> "r.value" + i + "()").collect(joining(", ")) + "))",
+                    visibility(), Class.class, SelectField.class);
+            }
+            else if (kotlin) {
+                out.println("%sfun <U> mapping(toType: %s<U>, from: (" + rowType + ") -> U): %s<U> = convertFrom(toType, %s.mapping(from))",
+                    visibility(), Class.class, SelectField.class, Records.class);
+            }
+            else {
+                out.println("%s<U> %s<U> mapping(%s<U> toType, %s<" + rowTypeContravariantJava + ", ? extends U> from) {",
+                    visibility(), SelectField.class, Class.class, out.ref("org.jooq.Function" + degree));
+                out.println("return convertFrom(toType, %s.mapping(from));", Records.class);
+                out.println("}");
             }
         }
 

@@ -555,7 +555,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                         writer.append(separator);
 
                         if (format.format())
-                            writer.append(format.newline());
+                            writer.append(format.newline()).append(format.indentString(recordLevel));
 
                         formatJSONArray0(record, fields, format, recordLevel, writer);
                         separator = ",";
@@ -568,7 +568,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                         writer.append(separator);
 
                         if (format.format())
-                            writer.append(format.newline());
+                            writer.append(format.newline()).append(format.indentString(recordLevel));
 
                         formatJSONMap0(record, fields, format, recordLevel, writer);
                         separator = ",";
@@ -653,9 +653,6 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         int size = fields.size();
         boolean wrapRecords = format.wrapSingleColumnRecords() || size > 1;
 
-        if (format.format())
-            writer.append(format.indentString(recordLevel));
-
         if (wrapRecords)
             writer.append('{');
 
@@ -701,9 +698,6 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         String separator = "";
         int size = fields.size();
         boolean wrapRecords = format.wrapSingleColumnRecords() || size > 1;
-
-        if (format.format())
-            writer.append(format.indentString(recordLevel));
 
         if (wrapRecords)
             writer.append('[');

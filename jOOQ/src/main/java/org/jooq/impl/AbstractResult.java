@@ -456,6 +456,8 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
     @Override
     public final void formatJSON(Writer writer, JSONFormat format) {
+        format = format.mutable(true);
+
         try {
             String separator;
             int recordLevel = format.header() ? 2 : 1;
@@ -673,7 +675,9 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     writer.append(' ');
             }
 
+            int previous = format.globalIndent();
             formatJSON0(record.get(index), writer, format.globalIndent(format.globalIndent() + format.indent() * (recordLevel + 1)));
+            format.globalIndent(previous);
 
             if (format.format() && format.wrapSingleColumnRecords() && size == 1)
                 writer.append(' ');
@@ -711,7 +715,9 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 else if (format.wrapSingleColumnRecords())
                     writer.append(' ');
 
+            int previous = format.globalIndent();
             formatJSON0(record.get(index), writer, format.globalIndent(format.globalIndent() + format.indent() * (recordLevel + 1)));
+            format.globalIndent(previous);
 
             if (format.format() && format.wrapSingleColumnRecords() && size == 1)
                 writer.append(' ');
@@ -733,6 +739,8 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
     @Override
     public final void formatXML(Writer writer, XMLFormat format) {
+        format = format.mutable(true);
+
         String newline = format.newline();
         int recordLevel = format.header() ? 2 : 1;
 
@@ -837,7 +845,9 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
                 if (value instanceof Formattable) { Formattable f = (Formattable) value;
                     writer.append(newline).append(format.indentString(recordLevel + 2));
+                    int previous = format.globalIndent();
                     f.formatXML(writer, format.globalIndent(format.globalIndent() + format.indent() * (recordLevel + 2)));
+                    format.globalIndent(previous);
                     writer.append(newline).append(format.indentString(recordLevel + 1));
                 }
                 else if (value instanceof XML && !format.quoteNested())

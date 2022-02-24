@@ -54,18 +54,20 @@ public final class XMLFormat {
     public final static XMLFormat DEFAULT_FOR_RESULTS = new XMLFormat();
     public final static XMLFormat DEFAULT_FOR_RECORDS = new XMLFormat().header(false).xmlns(false);
 
-    final boolean                 xmlns;
-    final boolean                 format;
-    final String                  newline;
-    final int                     globalIndent;
-    final int                     indent;
-    final String[]                indented;
-    final boolean                 header;
-    final RecordFormat            recordFormat;
-    final boolean                 quoteNested;
+    final boolean                 mutable;
+    boolean                       xmlns;
+    boolean                       format;
+    String                        newline;
+    int                           globalIndent;
+    int                           indent;
+    String[]                      indented;
+    boolean                       header;
+    RecordFormat                  recordFormat;
+    boolean                       quoteNested;
 
     public XMLFormat() {
         this(
+            false,
             true,
             false,
             "\n",
@@ -79,6 +81,7 @@ public final class XMLFormat {
     }
 
     private XMLFormat(
+        boolean mutable,
         boolean xmlns,
         boolean format,
         String newline,
@@ -89,6 +92,7 @@ public final class XMLFormat {
         RecordFormat recordFormat,
         boolean quoteNested
     ) {
+        this.mutable = mutable;
         this.xmlns = xmlns;
         this.format = format;
         this.newline = newline;
@@ -106,21 +110,56 @@ public final class XMLFormat {
     }
 
     /**
+     * Whether this configuration object is mutable.
+     */
+    public final boolean mutable() {
+        return mutable;
+    }
+
+    /**
+     * The new value for the mutable flag, defaulting to <code>false</code>.
+     */
+    @NotNull
+    public final XMLFormat mutable(boolean newMutable) {
+        if (mutable ^ newMutable)
+            return new XMLFormat(
+                newMutable,
+                xmlns,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                recordFormat,
+                quoteNested
+            );
+        else
+            return this;
+    }
+
+    /**
      * The new value for the xmlns flag, defaulting to <code>true</code>.
      */
     @NotNull
     public final XMLFormat xmlns(boolean newXmlns) {
-        return new XMLFormat(
-            newXmlns,
-            format,
-            newline,
-            globalIndent,
-            indent,
-            indented,
-            header,
-            recordFormat,
-            quoteNested
-        );
+        if (mutable) {
+            xmlns = newXmlns;
+            return this;
+        }
+        else
+            return new XMLFormat(
+                mutable,
+                newXmlns,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                recordFormat,
+                quoteNested
+            );
     }
 
     /**
@@ -135,17 +174,23 @@ public final class XMLFormat {
      */
     @NotNull
     public final XMLFormat format(boolean newFormat) {
-        return new XMLFormat(
-            xmlns,
-            newFormat,
-            newline,
-            globalIndent,
-            indent,
-            null,
-            header,
-            recordFormat,
-            quoteNested
-        );
+        if (mutable) {
+            format = newFormat;
+            return this;
+        }
+        else
+            return new XMLFormat(
+                mutable,
+                xmlns,
+                newFormat,
+                newline,
+                globalIndent,
+                indent,
+                null,
+                header,
+                recordFormat,
+                quoteNested
+            );
     }
 
     /**
@@ -160,17 +205,23 @@ public final class XMLFormat {
      */
     @NotNull
     public final XMLFormat newline(String newNewline) {
-        return new XMLFormat(
-            xmlns,
-            format,
-            newNewline,
-            globalIndent,
-            indent,
-            indented,
-            header,
-            recordFormat,
-            quoteNested
-        );
+        if (mutable) {
+            newline = newNewline;
+            return this;
+        }
+        else
+            return new XMLFormat(
+                mutable,
+                xmlns,
+                format,
+                newNewline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                recordFormat,
+                quoteNested
+            );
     }
 
     /**
@@ -186,17 +237,23 @@ public final class XMLFormat {
      */
     @NotNull
     public final XMLFormat globalIndent(int newGlobalIndent) {
-        return new XMLFormat(
-            xmlns,
-            format,
-            newline,
-            newGlobalIndent,
-            indent,
-            null,
-            header,
-            recordFormat,
-            quoteNested
-        );
+        if (mutable) {
+            globalIndent = newGlobalIndent;
+            return this;
+        }
+        else
+            return new XMLFormat(
+                mutable,
+                xmlns,
+                format,
+                newline,
+                newGlobalIndent,
+                indent,
+                null,
+                header,
+                recordFormat,
+                quoteNested
+            );
     }
 
     /**
@@ -211,17 +268,23 @@ public final class XMLFormat {
      */
     @NotNull
     public final XMLFormat indent(int newIndent) {
-        return new XMLFormat(
-            xmlns,
-            format,
-            newline,
-            globalIndent,
-            newIndent,
-            null,
-            header,
-            recordFormat,
-            quoteNested
-        );
+        if (mutable) {
+            indent = newIndent;
+            return this;
+        }
+        else
+            return new XMLFormat(
+                mutable,
+                xmlns,
+                format,
+                newline,
+                globalIndent,
+                newIndent,
+                null,
+                header,
+                recordFormat,
+                quoteNested
+            );
     }
 
     /**
@@ -257,17 +320,23 @@ public final class XMLFormat {
      */
     @NotNull
     public final XMLFormat header(boolean newHeader) {
-        return new XMLFormat(
-            xmlns,
-            format,
-            newline,
-            globalIndent,
-            indent,
-            indented,
-            newHeader,
-            recordFormat,
-            quoteNested
-        );
+        if (mutable) {
+            header = newHeader;
+            return this;
+        }
+        else
+            return new XMLFormat(
+                mutable,
+                xmlns,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                newHeader,
+                recordFormat,
+                quoteNested
+            );
     }
 
     /**
@@ -283,17 +352,23 @@ public final class XMLFormat {
      */
     @NotNull
     public final XMLFormat recordFormat(RecordFormat newRecordFormat) {
-        return new XMLFormat(
-            xmlns,
-            format,
-            newline,
-            globalIndent,
-            indent,
-            indented,
-            header,
-            newRecordFormat,
-            quoteNested
-        );
+        if (mutable) {
+            recordFormat = newRecordFormat;
+            return this;
+        }
+        else
+            return new XMLFormat(
+                mutable,
+                xmlns,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                newRecordFormat,
+                quoteNested
+            );
     }
 
     /**
@@ -311,17 +386,23 @@ public final class XMLFormat {
      */
     @NotNull
     public final XMLFormat quoteNested(boolean newQuoteNested) {
-        return new XMLFormat(
-            xmlns,
-            format,
-            newline,
-            globalIndent,
-            indent,
-            indented,
-            header,
-            recordFormat,
-            newQuoteNested
-        );
+        if (mutable) {
+            quoteNested = newQuoteNested;
+            return this;
+        }
+        else
+            return new XMLFormat(
+                mutable,
+                xmlns,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                recordFormat,
+                newQuoteNested
+            );
     }
 
     /**

@@ -1039,8 +1039,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void formatJSON(Writer writer, JSONFormat format) {
-        if (format.header())
-            log.debug("JSONFormat.header currently not supported for Record.formatJSON()");
+        format = format.mutable(true);
 
         try {
             switch (format.recordFormat()) {
@@ -1063,8 +1062,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void formatXML(Writer writer, XMLFormat format) {
-        if (format.header())
-            log.debug("XMLFormat.header currently not supported for Record.formatXML()");
+        format = format.mutable(true);
 
         try {
             AbstractResult.formatXMLRecord(writer, format, 0, this, fields);

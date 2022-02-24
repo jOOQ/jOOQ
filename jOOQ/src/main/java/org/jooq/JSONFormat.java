@@ -73,18 +73,20 @@ public final class JSONFormat {
     public final static JSONFormat DEFAULT_FOR_RESULTS = new JSONFormat();
     public final static JSONFormat DEFAULT_FOR_RECORDS = new JSONFormat().header(false);
 
-    final boolean                  format;
-    final String                   newline;
-    final int                      globalIndent;
-    final int                      indent;
-    final String[]                 indented;
-    final boolean                  header;
-    final RecordFormat             recordFormat;
-    final boolean                  wrapSingleColumnRecords;
-    final boolean                  quoteNested;
+    final boolean                  mutable;
+    boolean                        format;
+    String                         newline;
+    int                            globalIndent;
+    int                            indent;
+    String[]                       indented;
+    boolean                        header;
+    RecordFormat                   recordFormat;
+    boolean                        wrapSingleColumnRecords;
+    boolean                        quoteNested;
 
     public JSONFormat() {
         this(
+            false,
             false,
             "\n",
             0,
@@ -98,6 +100,7 @@ public final class JSONFormat {
     }
 
     private JSONFormat(
+        boolean mutable,
         boolean format,
         String newline,
         int globalIndent,
@@ -108,6 +111,7 @@ public final class JSONFormat {
         boolean wrapSingleColumnRecords,
         boolean quoteNested
     ) {
+        this.mutable = mutable;
         this.format = format;
         this.newline = newline;
         this.globalIndent = globalIndent;
@@ -125,21 +129,56 @@ public final class JSONFormat {
     }
 
     /**
+     * Whether this configuration object is mutable.
+     */
+    public final boolean mutable() {
+        return mutable;
+    }
+
+    /**
+     * The new value for the mutable flag, defaulting to <code>false</code>.
+     */
+    @NotNull
+    public final JSONFormat mutable(boolean newMutable) {
+        if (mutable ^ newMutable)
+            return new JSONFormat(
+                newMutable,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                null,
+                header,
+                recordFormat,
+                wrapSingleColumnRecords,
+                quoteNested
+            );
+        else
+            return this;
+    }
+
+    /**
      * The new value for the formatting flag, defaulting to <code>false</code>.
      */
     @NotNull
     public final JSONFormat format(boolean newFormat) {
-        return new JSONFormat(
-            newFormat,
-            newline,
-            globalIndent,
-            indent,
-            null,
-            header,
-            recordFormat,
-            wrapSingleColumnRecords,
-            quoteNested
-        );
+        if (mutable) {
+            format = newFormat;
+            return this;
+        }
+        else
+            return new JSONFormat(
+                mutable,
+                newFormat,
+                newline,
+                globalIndent,
+                indent,
+                null,
+                header,
+                recordFormat,
+                wrapSingleColumnRecords,
+                quoteNested
+            );
     }
 
     /**
@@ -154,17 +193,23 @@ public final class JSONFormat {
      */
     @NotNull
     public final JSONFormat newline(String newNewline) {
-        return new JSONFormat(
-            format,
-            newNewline,
-            globalIndent,
-            indent,
-            indented,
-            header,
-            recordFormat,
-            wrapSingleColumnRecords,
-            quoteNested
-        );
+        if (mutable) {
+            newline = newNewline;
+            return this;
+        }
+        else
+            return new JSONFormat(
+                mutable,
+                format,
+                newNewline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                recordFormat,
+                wrapSingleColumnRecords,
+                quoteNested
+            );
     }
 
     /**
@@ -180,17 +225,23 @@ public final class JSONFormat {
      */
     @NotNull
     public final JSONFormat globalIndent(int newGlobalIndent) {
-        return new JSONFormat(
-            format,
-            newline,
-            newGlobalIndent,
-            indent,
-            null,
-            header,
-            recordFormat,
-            wrapSingleColumnRecords,
-            quoteNested
-        );
+        if (mutable) {
+            globalIndent = newGlobalIndent;
+            return this;
+        }
+        else
+            return new JSONFormat(
+                mutable,
+                format,
+                newline,
+                newGlobalIndent,
+                indent,
+                null,
+                header,
+                recordFormat,
+                wrapSingleColumnRecords,
+                quoteNested
+            );
     }
 
     /**
@@ -205,17 +256,23 @@ public final class JSONFormat {
      */
     @NotNull
     public final JSONFormat indent(int newIndent) {
-        return new JSONFormat(
-            format,
-            newline,
-            globalIndent,
-            newIndent,
-            null,
-            header,
-            recordFormat,
-            wrapSingleColumnRecords,
-            quoteNested
-        );
+        if (mutable) {
+            indent = newIndent;
+            return this;
+        }
+        else
+            return new JSONFormat(
+                mutable,
+                format,
+                newline,
+                globalIndent,
+                newIndent,
+                null,
+                header,
+                recordFormat,
+                wrapSingleColumnRecords,
+                quoteNested
+            );
     }
 
     /**
@@ -246,17 +303,23 @@ public final class JSONFormat {
      */
     @NotNull
     public final JSONFormat header(boolean newHeader) {
-        return new JSONFormat(
-            format,
-            newline,
-            globalIndent,
-            indent,
-            indented,
-            newHeader,
-            recordFormat,
-            wrapSingleColumnRecords,
-            quoteNested
-        );
+        if (mutable) {
+            header = newHeader;
+            return this;
+        }
+        else
+            return new JSONFormat(
+                mutable,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                newHeader,
+                recordFormat,
+                wrapSingleColumnRecords,
+                quoteNested
+            );
     }
 
     /**
@@ -273,17 +336,23 @@ public final class JSONFormat {
      */
     @NotNull
     public final JSONFormat recordFormat(RecordFormat newRecordFormat) {
-        return new JSONFormat(
-            format,
-            newline,
-            globalIndent,
-            indent,
-            indented,
-            header,
-            newRecordFormat,
-            wrapSingleColumnRecords,
-            quoteNested
-        );
+        if (mutable) {
+            recordFormat = newRecordFormat;
+            return this;
+        }
+        else
+            return new JSONFormat(
+                mutable,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                newRecordFormat,
+                wrapSingleColumnRecords,
+                quoteNested
+            );
     }
 
     /**
@@ -300,17 +369,23 @@ public final class JSONFormat {
      */
     @NotNull
     public final JSONFormat wrapSingleColumnRecords(boolean newWrapSingleColumnRecords) {
-        return new JSONFormat(
-            format,
-            newline,
-            globalIndent,
-            indent,
-            indented,
-            header,
-            recordFormat,
-            newWrapSingleColumnRecords,
-            quoteNested
-        );
+        if (mutable) {
+            wrapSingleColumnRecords = newWrapSingleColumnRecords;
+            return this;
+        }
+        else
+            return new JSONFormat(
+                mutable,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                recordFormat,
+                newWrapSingleColumnRecords,
+                quoteNested
+            );
     }
 
     /**
@@ -326,17 +401,23 @@ public final class JSONFormat {
      */
     @NotNull
     public final JSONFormat quoteNested(boolean newQuoteNested) {
-        return new JSONFormat(
-            format,
-            newline,
-            globalIndent,
-            indent,
-            indented,
-            header,
-            recordFormat,
-            wrapSingleColumnRecords,
-            newQuoteNested
-        );
+        if (mutable) {
+            quoteNested = newQuoteNested;
+            return this;
+        }
+        else
+            return new JSONFormat(
+                mutable,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                recordFormat,
+                wrapSingleColumnRecords,
+                newQuoteNested
+            );
     }
 
     /**

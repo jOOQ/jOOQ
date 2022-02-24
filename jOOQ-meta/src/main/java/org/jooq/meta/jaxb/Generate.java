@@ -98,8 +98,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean enumsAsScalaSealedTraits = false;
     @XmlElement(defaultValue = "false")
     protected Boolean pojos = false;
-    @XmlElement(defaultValue = "false")
-    protected Boolean pojosEqualsAndHashCode = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean pojosEqualsAndHashCode = true;
     @XmlElement(defaultValue = "true")
     protected Boolean pojosToString = true;
     @XmlElement(defaultValue = "false")

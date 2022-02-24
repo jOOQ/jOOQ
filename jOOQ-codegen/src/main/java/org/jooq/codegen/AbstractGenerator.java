@@ -99,7 +99,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generatePojosAsJavaRecordClasses                 = false;
     boolean                            generatePojosAsScalaCaseClasses                  = true;
     boolean                            generatePojosAsKotlinDataClasses                 = true;
-    boolean                            generatePojosEqualsAndHashCode                   = false;
+    boolean                            generatePojosEqualsAndHashCode                   = true;
     boolean                            generatePojosToString                            = true;
     boolean                            generateImmutablePojos                           = false;
     boolean                            generateSerializablePojos                        = true;

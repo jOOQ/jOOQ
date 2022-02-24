@@ -1725,7 +1725,7 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="pojosEqualsAndHashCode" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+      <element name="pojosEqualsAndHashCode" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate basic equals() and hashCode() methods in POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 

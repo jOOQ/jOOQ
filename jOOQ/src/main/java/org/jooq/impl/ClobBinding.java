@@ -56,6 +56,8 @@ import org.jooq.BindingSetStatementContext;
 import org.jooq.Converter;
 import org.jooq.Converters;
 import org.jooq.ResourceManagingScope;
+import org.jooq.Scope;
+import org.jooq.Source;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 // ...
@@ -101,7 +103,7 @@ public class ClobBinding implements Binding<String, String> {
         Clob clob = ctx.resultSet().getClob(ctx.index());
 
         try {
-            ctx.value(clob == null ? null : clob.getSubString(1, asInt(clob.length())));
+            ctx.value(clob == null ? null : read(ctx, clob));
         }
         finally {
             JDBCUtils.safeFree(clob);
@@ -113,7 +115,7 @@ public class ClobBinding implements Binding<String, String> {
         Clob clob = ctx.statement().getClob(ctx.index());
 
         try {
-            ctx.value(clob == null ? null : clob.getSubString(1, asInt(clob.length())));
+            ctx.value(clob == null ? null : read(ctx, clob));
         }
         finally {
             JDBCUtils.safeFree(clob);
@@ -125,10 +127,21 @@ public class ClobBinding implements Binding<String, String> {
         Clob clob = ctx.input().readClob();
 
         try {
-            ctx.value(clob == null ? null : clob.getSubString(1, asInt(clob.length())));
+            ctx.value(clob == null ? null : read(ctx, clob));
         }
         finally {
             JDBCUtils.safeFree(clob);
+        }
+    }
+
+    static final String read(Scope ctx, Clob clob) throws SQLException {
+        switch (ctx.family()) {
+
+            // [#13144] Cannot call Clob::length in Firebird
+            case FIREBIRD:
+                return Source.of(clob.getCharacterStream()).readString();
+            default:
+                return clob.getSubString(1, asInt(clob.length()));
         }
     }
 

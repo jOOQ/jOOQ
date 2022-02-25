@@ -54,22 +54,14 @@ import org.jetbrains.annotations.NotNull;
  */
 final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
 
-    private final Table<R>  table;
-    private final Condition where;
+    final Table<R>  table;
+    final Condition condition;
 
-    InlineDerivedTable(Table<R> table, Condition where) {
-        super(selectFrom(table).where(where));
+    InlineDerivedTable(Table<R> table, Condition condition) {
+        super(selectFrom(table).where(condition), table.getUnqualifiedName());
 
         this.table = table;
-        this.where = where;
-    }
-
-    final Table<R> table() {
-        return table;
-    }
-
-    final Condition condition() {
-        return where;
+        this.condition = condition;
     }
 
     @Override

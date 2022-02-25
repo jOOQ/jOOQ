@@ -152,6 +152,7 @@ import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.enums;
 // ...
 import static org.jooq.impl.Tools.getMappedUDTName;
+import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.needsBackslashEscaping;
 import static org.jooq.impl.Tools.newRecord;
@@ -3779,10 +3780,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         static final <R extends Record> R readMultiset(BindingGetResultSetContext<?> ctx, DataType<R> type) throws SQLException {
-            return DefaultResultBinding.readMultiset(ctx, (AbstractRow<R>) type.getRow(), type.getType(),
-                s -> s.startsWith("[") || s.startsWith("{") ? "[" + s + "]" : s,
-                s -> s.startsWith("<") ? "<result>" + s + "</result>" : s
-            ).get(0);
+            Result<R> result = DefaultResultBinding.readMultiset(ctx, (AbstractRow<R>) type.getRow(), type.getType(),
+                s -> s != null && (s.startsWith("[") || s.startsWith("{")) ? "[" + s + "]" : s,
+                s -> s != null && (s.startsWith("<")) ? "<result>" + s + "</result>" : s
+            );
+
+            return isEmpty(result) ? null : result.get(0);
         }
 
         @Override
@@ -4019,16 +4022,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 case JSON:
                 case JSONB:
-                    if (emulation == NestedCollectionEmulation.JSONB && EMULATE_AS_BLOB.contains(ctx.dialect()))
+                    if (emulation == NestedCollectionEmulation.JSONB && EMULATE_AS_BLOB.contains(ctx.dialect())) {
+                        byte[] bytes = ctx.resultSet().getBytes(ctx.index());
                         return apply(
-                            jsonStringPatch.apply(Source.of(ctx.resultSet().getBytes(ctx.index()), ctx.configuration().charsetProvider().provide()).readString()),
+                            jsonStringPatch.apply(bytes == null ? null : Source.of(bytes, ctx.configuration().charsetProvider().provide()).readString()),
                             s -> readMultisetJSON(ctx, row, recordType, s)
                         );
-                    else
+                    }
+                    else {
                         return apply(
                             jsonStringPatch.apply(ctx.resultSet().getString(ctx.index())),
                             s -> readMultisetJSON(ctx, row, recordType, s)
                         );
+                    }
 
                 case XML:
                     return apply(

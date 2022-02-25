@@ -306,6 +306,8 @@ implements
 
 
 
+
+
         }
 
         throw new DataAccessException("The to-one ROW convenience feature is available in the commercial jOOQ distribution only. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
@@ -322,6 +324,8 @@ implements
         Function<? super Table<O1>, ? extends TableLike<O2>> f
     ) {
         if (CONFIG.commercial()) {
+
+
 
 
 
@@ -373,10 +377,16 @@ implements
 
 
 
+
+
         }
 
         throw new DataAccessException("The many-to-many MULTISET convenience feature is available in the commercial jOOQ distribution only. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
     }
+
+
+
+
 
 
 

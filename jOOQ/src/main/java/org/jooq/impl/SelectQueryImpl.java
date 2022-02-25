@@ -2526,8 +2526,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     private final void transformInlineDerivedTable0(Table<?> table, TableList result, ConditionProviderImpl where) {
         if (table instanceof InlineDerivedTable) { InlineDerivedTable<?> t = (InlineDerivedTable<?>) table;
-            result.add(t.table());
-            where.addConditions(t.condition());
+            result.add(t.table);
+            where.addConditions(t.condition);
         }
         else if (table instanceof JoinTable)
             result.add(transformInlineDerivedTables0(table, where, false));
@@ -2538,10 +2538,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private final Table<?> transformInlineDerivedTables0(Table<?> table, ConditionProviderImpl where, boolean keepDerivedTable) {
         if (table instanceof InlineDerivedTable) { InlineDerivedTable<?> t = (InlineDerivedTable<?>) table;
             if (keepDerivedTable)
-                return t.query().asTable(t.table());
+                return t.query().asTable(t.table);
 
-            where.addConditions(t.condition());
-            return t.table();
+            where.addConditions(t.condition);
+            return t.table;
         }
         else if (table instanceof JoinTable) { JoinTable j = (JoinTable) table;
             Table<?> lhs;

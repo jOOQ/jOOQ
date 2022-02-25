@@ -39,7 +39,7 @@
 package org.jooq.impl;
 
 // ...
-import static org.jooq.impl.Names.N_SELECT;
+import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import org.jooq.Clause;
@@ -59,7 +59,11 @@ class DerivedTable<R extends Record> extends AbstractTable<R> implements QOM.Der
     private final Select<R> query;
 
     DerivedTable(Select<R> query) {
-        super(TableOptions.expression(), N_SELECT);
+        this(query, N_T);
+    }
+
+    DerivedTable(Select<R> query, Name name) {
+        super(TableOptions.expression(), name);
 
         this.query = query;
     }

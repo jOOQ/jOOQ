@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import static org.jooq.impl.Internal.arrayType;
-import static org.jooq.tools.Convert.convertArray;
-
 import java.io.Serializable;
 import java.util.function.Function;
 
@@ -147,22 +144,28 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
             };
     }
 
-    public static <T, U> Converter<T[], U[]> forArrays(final Converter<T, U> converter) {
-        return new AbstractConverter<T[], U[]>(arrayType(converter.fromType()), arrayType(converter.toType())) {
-
-            private final Converter<U, T> inverse = Converters.inverse(converter);
-
-            @Override
-            public U[] from(T[] t) {
-                return convertArray(t, converter);
-            }
-
-            @Override
-            public T[] to(U[] u) {
-                return convertArray(u, inverse);
-            }
-        };
+    /**
+     * Create a converter that can convert arrays with the component types being
+     * the argument converter's types.
+     */
+    public static <T, U> Converter<T[], U[]> forArrays(Converter<T, U> converter) {
+        if (converter instanceof ArrayComponentConverter)
+            return ((ArrayComponentConverter<T, U>) converter).converter;
+        else
+            return new ArrayConverter<>(converter);
     }
+
+    /**
+     * Create a converter that can convert component types based on the argument
+     * converter, which converts array types.
+     */
+    public static <T, U> Converter<T, U> forArrayComponents(Converter<T[], U[]> converter) {
+        if (converter instanceof ArrayConverter)
+            return ((ArrayConverter<T, U>) converter).converter;
+        else
+            return new ArrayComponentConverter<>(converter);
+    }
+
 
     Converters(Converter... chain) {
         super(chain[0].fromType(), chain[chain.length - 1].toType());

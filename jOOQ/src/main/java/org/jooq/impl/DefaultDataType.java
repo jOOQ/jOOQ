@@ -80,6 +80,7 @@ import org.jooq.QualifiedRecord;
 import org.jooq.SQLDialect;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.DefaultBinding.InternalBinding;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
@@ -392,7 +393,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
         // [#10362] User bindings and/or converters need to be retained
         this.binding =
-            t.getBinding() instanceof org.jooq.impl.DefaultBinding.AbstractBinding
+            t.getBinding() instanceof InternalBinding
           ? binding(this, (Converter<T, T>) t.getBinding().converter())
           : t.getBinding();
     }

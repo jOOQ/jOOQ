@@ -58,7 +58,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface Query extends Statement, AttachableQueryPart, AutoCloseable {
+public interface Query extends Statement, AttachableQueryPart {
 
     /**
      * Execute the query, if it has been created with a proper configuration.
@@ -200,27 +200,13 @@ public interface Query extends Statement, AttachableQueryPart, AutoCloseable {
      * This indicates to jOOQ that the query's underlying {@link Statement} or
      * {@link PreparedStatement} should be kept open after execution. If it is
      * kept open, client code is responsible for properly closing it using
-     * {@link #close()}
+     * {@link CloseableQuery#close()}, e.g. via a
+     * <code>try-with-resources</code> statement.
      *
      * @param keepStatement Whether to keep the underlying statement open
      */
     @NotNull
-    Query keepStatement(boolean keepStatement);
-
-    /**
-     * Close the underlying statement.
-     * <p>
-     * This closes the query's underlying {@link Statement} or
-     * {@link PreparedStatement} if a previous call to
-     * {@link #keepStatement(boolean)} indicated that jOOQ should keep
-     * statements open after query execution. If there is no underlying open
-     * statement, this call is simply ignored.
-     *
-     * @throws DataAccessException If something went wrong closing the statement
-     * @see java.sql.Statement#close()
-     */
-    @Override
-    void close() throws DataAccessException;
+    CloseableQuery keepStatement(boolean keepStatement);
 
     /**
      * Cancel the underlying statement.

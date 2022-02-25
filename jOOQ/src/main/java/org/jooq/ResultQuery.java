@@ -5155,7 +5155,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     @NotNull
     @Override
-    ResultQuery<R> keepStatement(boolean keepStatement);
+    CloseableResultQuery<R> keepStatement(boolean keepStatement);
 
     /**
      * Specify the maximum number of rows returned by the underlying

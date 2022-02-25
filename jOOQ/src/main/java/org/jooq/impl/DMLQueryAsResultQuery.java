@@ -48,6 +48,7 @@ import java.util.Map;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 
+import org.jooq.CloseableResultQuery;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Delete;
@@ -117,15 +118,15 @@ implements
     }
 
     @Override
-    public final <X extends Record> ResultQuery<X> coerce(Table<X> table) {
+    public final <X extends Record> CloseableResultQuery<X> coerce(Table<X> table) {
         this.coerceTable = table;
-        return (ResultQuery<X>) coerce(Arrays.asList(table.fields()));
+        return (CloseableResultQuery<X>) coerce(Arrays.asList(table.fields()));
     }
 
     @Override
-    public final ResultQuery<Record> coerce(Collection<? extends Field<?>> fields) {
+    public final CloseableResultQuery<Record> coerce(Collection<? extends Field<?>> fields) {
         this.coerceFields = fields;
-        return (ResultQuery<Record>) this;
+        return (CloseableResultQuery<Record>) this;
     }
 
     @Override
@@ -225,77 +226,77 @@ implements
     }
 
     @Override
-    public final ResultQuery<R> bind(String param, Object value) throws IllegalArgumentException, DataTypeException {
+    public final CloseableResultQuery<R> bind(String param, Object value) throws IllegalArgumentException, DataTypeException {
         delegate.bind(param, value);
         return this;
     }
 
     @Override
-    public final ResultQuery<R> bind(int index, Object value) throws IllegalArgumentException, DataTypeException {
+    public final CloseableResultQuery<R> bind(int index, Object value) throws IllegalArgumentException, DataTypeException {
         delegate.bind(index, value);
         return this;
     }
 
     @Override
-    public final ResultQuery<R> poolable(boolean poolable) {
+    public final CloseableResultQuery<R> poolable(boolean poolable) {
         delegate.poolable(poolable);
         return this;
     }
 
     @Override
-    public final ResultQuery<R> queryTimeout(int timeout) {
+    public final CloseableResultQuery<R> queryTimeout(int timeout) {
         delegate.queryTimeout(timeout);
         return this;
     }
 
     @Override
-    public final ResultQuery<R> keepStatement(boolean keepStatement) {
+    public final CloseableResultQuery<R> keepStatement(boolean keepStatement) {
         delegate.keepStatement(keepStatement);
         return this;
     }
 
     @Override
-    public final ResultQuery<R> maxRows(int rows) {
+    public final CloseableResultQuery<R> maxRows(int rows) {
         return this;
     }
 
     @Override
-    public final ResultQuery<R> fetchSize(int rows) {
+    public final CloseableResultQuery<R> fetchSize(int rows) {
         return this;
     }
 
     @Override
-    public final ResultQuery<R> resultSetConcurrency(int resultSetConcurrency) {
+    public final CloseableResultQuery<R> resultSetConcurrency(int resultSetConcurrency) {
         return this;
     }
 
     @Override
-    public final ResultQuery<R> resultSetType(int resultSetType) {
+    public final CloseableResultQuery<R> resultSetType(int resultSetType) {
         return this;
     }
 
     @Override
-    public final ResultQuery<R> resultSetHoldability(int resultSetHoldability) {
+    public final CloseableResultQuery<R> resultSetHoldability(int resultSetHoldability) {
         return this;
     }
 
     @Override
-    public final ResultQuery<R> intern(Field<?>... fields) {
+    public final CloseableResultQuery<R> intern(Field<?>... fields) {
         return this;
     }
 
     @Override
-    public final ResultQuery<R> intern(int... fieldIndexes) {
+    public final CloseableResultQuery<R> intern(int... fieldIndexes) {
         return this;
     }
 
     @Override
-    public final ResultQuery<R> intern(String... fieldNames) {
+    public final CloseableResultQuery<R> intern(String... fieldNames) {
         return this;
     }
 
     @Override
-    public final ResultQuery<R> intern(Name... fieldNames) {
+    public final CloseableResultQuery<R> intern(Name... fieldNames) {
         return this;
     }
 }

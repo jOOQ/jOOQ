@@ -55,6 +55,7 @@ import java.util.function.Function;
 
 import org.jooq.BetweenAndStep;
 import org.jooq.BetweenAndStepR;
+import org.jooq.CloseableResultQuery;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -2756,47 +2757,47 @@ implements
     }
 
     @Override
-    public final ResultQuery<R> maxRows(int rows) {
+    public final CloseableResultQuery<R> maxRows(int rows) {
         return getDelegate().maxRows(rows);
     }
 
     @Override
-    public final ResultQuery<R> fetchSize(int rows) {
+    public final CloseableResultQuery<R> fetchSize(int rows) {
         return getDelegate().fetchSize(rows);
     }
 
     @Override
-    public final ResultQuery<R> resultSetConcurrency(int resultSetConcurrency) {
+    public final CloseableResultQuery<R> resultSetConcurrency(int resultSetConcurrency) {
         return getDelegate().resultSetConcurrency(resultSetConcurrency);
     }
 
     @Override
-    public final ResultQuery<R> resultSetType(int resultSetType) {
+    public final CloseableResultQuery<R> resultSetType(int resultSetType) {
         return getDelegate().resultSetType(resultSetType);
     }
 
     @Override
-    public final ResultQuery<R> resultSetHoldability(int resultSetHoldability) {
+    public final CloseableResultQuery<R> resultSetHoldability(int resultSetHoldability) {
         return getDelegate().resultSetHoldability(resultSetHoldability);
     }
 
     @Override
-    public final ResultQuery<R> intern(Field<?>... fields) {
+    public final CloseableResultQuery<R> intern(Field<?>... fields) {
         return getDelegate().intern(fields);
     }
 
     @Override
-    public final ResultQuery<R> intern(int... fieldIndexes) {
+    public final CloseableResultQuery<R> intern(int... fieldIndexes) {
         return getDelegate().intern(fieldIndexes);
     }
 
     @Override
-    public final ResultQuery<R> intern(String... fieldNames) {
+    public final CloseableResultQuery<R> intern(String... fieldNames) {
         return getDelegate().intern(fieldNames);
     }
 
     @Override
-    public final ResultQuery<R> intern(Name... fieldNames) {
+    public final CloseableResultQuery<R> intern(Name... fieldNames) {
         return getDelegate().intern(fieldNames);
     }
 
@@ -2915,12 +2916,12 @@ implements
     }
 
     @Override
-    public final <X extends Record> ResultQuery<X> coerce(Table<X> table) {
+    public final <X extends Record> CloseableResultQuery<X> coerce(Table<X> table) {
         return getDelegate().coerce(table);
     }
 
     @Override
-    public final ResultQuery<Record> coerce(Collection<? extends Field<?>> fields) {
+    public final CloseableResultQuery<Record> coerce(Collection<? extends Field<?>> fields) {
         return getDelegate().coerce(fields);
     }
 

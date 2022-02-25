@@ -42,6 +42,7 @@ import java.util.Map;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 
+import org.jooq.CloseableQuery;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Param;
@@ -53,11 +54,11 @@ import org.jooq.impl.QOM.UProxy;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractDelegatingQuery<R extends Record, Q extends Query>
+abstract class AbstractDelegatingQuery<R extends Record, Q extends CloseableQuery>
 extends
     AbstractQueryPart
 implements
-    Query, UProxy<Q>
+    CloseableQuery, UProxy<Q>
 {
     private final Q           delegate;
 

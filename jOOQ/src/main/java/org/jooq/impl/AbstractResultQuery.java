@@ -51,6 +51,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
 
+import org.jooq.CloseableResultQuery;
 import org.jooq.Configuration;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
@@ -74,7 +75,12 @@ import org.jooq.tools.jdbc.MockResultSet;
  *
  * @author Lukas Eder
  */
-abstract class AbstractResultQuery<R extends Record> extends AbstractQuery<R> implements ResultQueryTrait<R> {
+abstract class AbstractResultQuery<R extends Record>
+extends
+    AbstractQuery<R>
+implements
+    ResultQueryTrait<R>
+{
     private static final JooqLogger        log                               = JooqLogger.getLogger(AbstractResultQuery.class);
 
     private static final Set<SQLDialect>   REPORT_FETCH_SIZE_WITH_AUTOCOMMIT = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
@@ -102,42 +108,42 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery<R> im
 
     @SuppressWarnings("unchecked")
     @Override
-    public final ResultQuery<R> bind(String param, Object value) {
-        return (ResultQuery<R>) super.bind(param, value);
+    public final CloseableResultQuery<R> bind(String param, Object value) {
+        return (CloseableResultQuery<R>) super.bind(param, value);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public final ResultQuery<R> bind(int index, Object value) {
-        return (ResultQuery<R>) super.bind(index, value);
+    public final CloseableResultQuery<R> bind(int index, Object value) {
+        return (CloseableResultQuery<R>) super.bind(index, value);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public final ResultQuery<R> poolable(boolean poolable) {
-        return (ResultQuery<R>) super.poolable(poolable);
+    public final CloseableResultQuery<R> poolable(boolean poolable) {
+        return (CloseableResultQuery<R>) super.poolable(poolable);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public final ResultQuery<R> queryTimeout(int timeout) {
-        return (ResultQuery<R>) super.queryTimeout(timeout);
+    public final CloseableResultQuery<R> queryTimeout(int timeout) {
+        return (CloseableResultQuery<R>) super.queryTimeout(timeout);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public final ResultQuery<R> keepStatement(boolean k) {
-        return (ResultQuery<R>) super.keepStatement(k);
+    public final CloseableResultQuery<R> keepStatement(boolean k) {
+        return (CloseableResultQuery<R>) super.keepStatement(k);
     }
 
     @Override
-    public final ResultQuery<R> maxRows(int rows) {
+    public final CloseableResultQuery<R> maxRows(int rows) {
         this.maxRows = rows;
         return this;
     }
 
     @Override
-    public final ResultQuery<R> fetchSize(int rows) {
+    public final CloseableResultQuery<R> fetchSize(int rows) {
         this.fetchSize = rows;
         return this;
     }
@@ -147,43 +153,43 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery<R> im
     }
 
     @Override
-    public final ResultQuery<R> resultSetConcurrency(int concurrency) {
+    public final CloseableResultQuery<R> resultSetConcurrency(int concurrency) {
         this.resultSetConcurrency = concurrency;
         return this;
     }
 
     @Override
-    public final ResultQuery<R> resultSetType(int type) {
+    public final CloseableResultQuery<R> resultSetType(int type) {
         this.resultSetType = type;
         return this;
     }
 
     @Override
-    public final ResultQuery<R> resultSetHoldability(int holdability) {
+    public final CloseableResultQuery<R> resultSetHoldability(int holdability) {
         this.resultSetHoldability = holdability;
         return this;
     }
 
     @Override
-    public final ResultQuery<R> intern(Field<?>... fields) {
+    public final CloseableResultQuery<R> intern(Field<?>... fields) {
         intern.internFields = fields;
         return this;
     }
 
     @Override
-    public final ResultQuery<R> intern(int... fieldIndexes) {
+    public final CloseableResultQuery<R> intern(int... fieldIndexes) {
         intern.internIndexes = fieldIndexes;
         return this;
     }
 
     @Override
-    public final ResultQuery<R> intern(String... fieldNameStrings) {
+    public final CloseableResultQuery<R> intern(String... fieldNameStrings) {
         intern.internNameStrings = fieldNameStrings;
         return this;
     }
 
     @Override
-    public final ResultQuery<R> intern(Name... fieldNames) {
+    public final CloseableResultQuery<R> intern(Name... fieldNames) {
         intern.internNames = fieldNames;
         return this;
     }
@@ -354,15 +360,15 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery<R> im
 
     @SuppressWarnings("unchecked")
     @Override
-    public final <X extends Record> ResultQuery<X> coerce(Table<X> table) {
+    public final <X extends Record> CloseableResultQuery<X> coerce(Table<X> table) {
         this.coerceTable = table;
-        return (ResultQuery<X>) coerce(Arrays.asList(table.fields()));
+        return (CloseableResultQuery<X>) coerce(Arrays.asList(table.fields()));
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public final ResultQuery<Record> coerce(Collection<? extends Field<?>> fields) {
+    public final CloseableResultQuery<Record> coerce(Collection<? extends Field<?>> fields) {
         this.coerceFields = fields;
-        return (ResultQuery<Record>) this;
+        return (CloseableResultQuery<Record>) this;
     }
 }

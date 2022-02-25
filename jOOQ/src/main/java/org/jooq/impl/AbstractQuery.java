@@ -64,6 +64,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 
+import org.jooq.CloseableQuery;
 import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
@@ -84,7 +85,7 @@ import org.jooq.tools.JooqLogger;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPart implements Query {
+abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPart implements CloseableQuery {
 
     private static final JooqLogger log      = JooqLogger.getLogger(AbstractQuery.class);
 
@@ -121,7 +122,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
      * {@inheritDoc}
      */
     @Override
-    public Query bind(String param, Object value) {
+    public CloseableQuery bind(String param, Object value) {
         Integer index = Ints.tryParse(param);
         if (index != null)
             return bind(index, value);
@@ -147,7 +148,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
      * {@inheritDoc}
      */
     @Override
-    public Query bind(int index, Object value) {
+    public CloseableQuery bind(int index, Object value) {
         Param<?>[] params = getParams().values().toArray(EMPTY_PARAM);
 
         if (index < 1 || index > params.length)
@@ -193,7 +194,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
      * {@inheritDoc}
      */
     @Override
-    public Query poolable(boolean p) {
+    public CloseableQuery poolable(boolean p) {
         this.poolable = p ? QueryPoolable.TRUE : QueryPoolable.FALSE;
         return this;
     }
@@ -204,7 +205,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
      * {@inheritDoc}
      */
     @Override
-    public Query queryTimeout(int t) {
+    public CloseableQuery queryTimeout(int t) {
         this.timeout = t;
         return this;
     }
@@ -215,7 +216,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
      * {@inheritDoc}
      */
     @Override
-    public Query keepStatement(boolean k) {
+    public CloseableQuery keepStatement(boolean k) {
         this.keepStatement = k;
         return this;
     }

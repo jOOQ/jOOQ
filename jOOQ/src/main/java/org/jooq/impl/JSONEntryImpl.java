@@ -40,7 +40,6 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
-// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.impl.DSL.NULL;
@@ -51,6 +50,7 @@ import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.iif;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.inlined;
+import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.toChar;
 import static org.jooq.impl.Keywords.K_FORMAT;
 import static org.jooq.impl.Keywords.K_JSON;
@@ -71,18 +71,15 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
 import java.util.Set;
 import java.util.UUID;
-import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.JSONEntry;
 import org.jooq.JSONEntryValueStep;
 import org.jooq.Param;
-// ...
+import org.jooq.QueryPart;
 import org.jooq.Record1;
 // ...
 import org.jooq.SQLDialect;
@@ -90,9 +87,6 @@ import org.jooq.Scope;
 import org.jooq.Select;
 // ...
 import org.jooq.conf.NestedCollectionEmulation;
-import org.jooq.QueryPart;
-
-import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -219,6 +213,10 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
                     return function(N_JSON, SQLDataType.JSON, iif(condition((Field<Boolean>) field), inline("true"), inline("false")));
 
                 break;
+
+
+
+
 
 
 

@@ -41,12 +41,14 @@ import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+// ...
 import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.inlined;
+import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.toChar;
 import static org.jooq.impl.Keywords.K_FORMAT;
 import static org.jooq.impl.Keywords.K_JSON;
@@ -196,6 +198,10 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
                     return inlined(field);
 
                 break;
+
+
+
+
 
 
 

@@ -41,6 +41,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
@@ -221,20 +222,17 @@ implements
 
 
 
+
+
     private final void acceptStandard(Context<?> ctx) {
         ctx.visit(N_JSON_ARRAYAGG).sql('(');
 
-        switch (ctx.family()) {
 
 
 
 
 
-
-            default:
-                acceptArguments3(ctx, arguments, jsonCastMapper(ctx));
-                break;
-        }
+        acceptArguments3(ctx, arguments, jsonCastMapper(ctx));
         acceptOrderBy(ctx);
 
         JSONNull jsonNull = new JSONNull(onNull);

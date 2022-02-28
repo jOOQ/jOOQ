@@ -8847,7 +8847,7 @@ public class JavaGenerator extends AbstractGenerator {
                 sqlDataTypeRef =
                     out.ref(SQLDataType.class)
                   + '.'
-                  + literal;
+                  + (literal == null ? "OTHER" : literal);
 
                 sb.append(sqlDataTypeRef);
 

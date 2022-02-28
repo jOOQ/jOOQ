@@ -930,6 +930,18 @@ public interface Database extends AutoCloseable {
     void setConfiguredForcedTypes(List<ForcedType> types);
 
     /**
+     * Whether some additional forced types for built in data type extensions,
+     * such as the ones from <code>jooq-codegen-postgres</code> should be added.
+     */
+    boolean getForcedTypesForBuiltinDataTypeExtensions();
+
+    /**
+     * Whether some additional forced types for built in data type extensions,
+     * such as the ones from <code>jooq-codegen-postgres</code> should be added.
+     */
+    void setForcedTypesForBuiltinDataTypeExtensions(boolean forcedTypesForBuiltinDataTypeExtensions);
+
+    /**
      * Log slow queries after this amount of seconds.
      */
     int getLogSlowQueriesAfterSeconds();

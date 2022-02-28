@@ -158,77 +158,78 @@ public abstract class AbstractDatabase implements Database {
     private Connection                                                       connection;
     private boolean                                                          regexMatchesPartialQualification;
     private boolean                                                          sqlMatchesPartialQualification;
-    private OnError                                                          onError                              = OnError.FAIL;
+    private OnError                                                          onError                                 = OnError.FAIL;
     private List<Filter>                                                     filters;
     private String[]                                                         excludes;
-    private String[]                                                         includes                             = { ".*" };
-    private boolean                                                          includeExcludeColumns                = false;
-    private boolean                                                          includeExcludePackageRoutines        = false;
-    private boolean                                                          includeInvisibleColumns              = true;
-    private boolean                                                          includeTables                        = true;
-    private boolean                                                          includeEmbeddables                   = true;
-    private boolean                                                          includeRoutines                      = true;
-    private boolean                                                          includeTriggerRoutines               = false;
-    private boolean                                                          includePackages                      = true;
-    private boolean                                                          includePackageRoutines               = true;
-    private boolean                                                          includePackageUDTs                   = true;
-    private boolean                                                          includePackageConstants              = true;
-    private boolean                                                          includeUDTs                          = true;
-    private boolean                                                          includeDomains                       = true;
-    private boolean                                                          includeSequences                     = true;
-    private boolean                                                          includeIndexes                       = true;
-    private boolean                                                          includeCheckConstraints              = true;
-    private boolean                                                          includeSystemTables                  = false;
-    private boolean                                                          includeSystemIndexes                 = false;
-    private boolean                                                          includeSystemCheckConstraints        = false;
-    private boolean                                                          includeSystemSequences               = false;
-    private boolean                                                          includeSystemUDTs                    = false;
-    private boolean                                                          includePrimaryKeys                   = true;
-    private boolean                                                          includeUniqueKeys                    = true;
-    private boolean                                                          includeForeignKeys                   = true;
-    private boolean                                                          forceIntegerTypesOnZeroScaleDecimals = true;
+    private String[]                                                         includes                                = { ".*" };
+    private boolean                                                          includeExcludeColumns                   = false;
+    private boolean                                                          includeExcludePackageRoutines           = false;
+    private boolean                                                          includeInvisibleColumns                 = true;
+    private boolean                                                          includeTables                           = true;
+    private boolean                                                          includeEmbeddables                      = true;
+    private boolean                                                          includeRoutines                         = true;
+    private boolean                                                          includeTriggerRoutines                  = false;
+    private boolean                                                          includePackages                         = true;
+    private boolean                                                          includePackageRoutines                  = true;
+    private boolean                                                          includePackageUDTs                      = true;
+    private boolean                                                          includePackageConstants                 = true;
+    private boolean                                                          includeUDTs                             = true;
+    private boolean                                                          includeDomains                          = true;
+    private boolean                                                          includeSequences                        = true;
+    private boolean                                                          includeIndexes                          = true;
+    private boolean                                                          includeCheckConstraints                 = true;
+    private boolean                                                          includeSystemTables                     = false;
+    private boolean                                                          includeSystemIndexes                    = false;
+    private boolean                                                          includeSystemCheckConstraints           = false;
+    private boolean                                                          includeSystemSequences                  = false;
+    private boolean                                                          includeSystemUDTs                       = false;
+    private boolean                                                          includePrimaryKeys                      = true;
+    private boolean                                                          includeUniqueKeys                       = true;
+    private boolean                                                          includeForeignKeys                      = true;
+    private boolean                                                          forceIntegerTypesOnZeroScaleDecimals    = true;
     private String[]                                                         recordVersionFields;
     private String[]                                                         recordTimestampFields;
-    private String                                                           embeddablePrimaryKeys                = null;
-    private String                                                           embeddableUniqueKeys                 = null;
-    private String                                                           embeddableDomains                    = null;
-    private boolean                                                          readonlyIdentities                   = false;
-    private boolean                                                          readonlyComputedColumns              = true;
-    private boolean                                                          readonlyNonUpdatableColumns          = true;
+    private String                                                           embeddablePrimaryKeys                   = null;
+    private String                                                           embeddableUniqueKeys                    = null;
+    private String                                                           embeddableDomains                       = null;
+    private boolean                                                          readonlyIdentities                      = false;
+    private boolean                                                          readonlyComputedColumns                 = true;
+    private boolean                                                          readonlyNonUpdatableColumns             = true;
     private boolean                                                          supportsUnsignedTypes;
     private boolean                                                          integerDisplayWidths;
     private boolean                                                          ignoreProcedureReturnValues;
     private boolean                                                          dateAsTimestamp;
-    private boolean                                                          javaTimeTypes                        = true;
-    private List<CatalogMappingType>                                         configuredCatalogs                   = new ArrayList<>();
-    private List<SchemaMappingType>                                          configuredSchemata                   = new ArrayList<>();
-    private List<CustomType>                                                 configuredCustomTypes                = new ArrayList<>();
-    private List<EnumType>                                                   configuredEnumTypes                  = new ArrayList<>();
+    private boolean                                                          javaTimeTypes                           = true;
+    private List<CatalogMappingType>                                         configuredCatalogs                      = new ArrayList<>();
+    private List<SchemaMappingType>                                          configuredSchemata                      = new ArrayList<>();
+    private List<CustomType>                                                 configuredCustomTypes                   = new ArrayList<>();
+    private List<EnumType>                                                   configuredEnumTypes                     = new ArrayList<>();
+    private boolean                                                          forcedTypesForBuiltinDataTypeExtensions = true;
     private List<ForcedType>                                                 configuredForcedTypes;
-    private Set<ForcedType>                                                  unusedForcedTypes                    = new HashSet<>();
-    private List<EmbeddableDefinitionType>                                   configuredEmbeddables                = new ArrayList<>();
-    private Set<EmbeddableDefinitionType>                                    unusedEmbeddables                    = new HashSet<>();
-    private List<CommentType>                                                configuredComments                   = new ArrayList<>();
-    private Set<CommentType>                                                 unusedComments                       = new HashSet<>();
-    private List<SyntheticReadonlyColumnType>                                configuredSyntheticReadonlyColumns   = new ArrayList<>();
-    private Set<SyntheticReadonlyColumnType>                                 unusedSyntheticReadonlyColumns       = new HashSet<>();
-    private List<SyntheticReadonlyRowidType>                                 configuredSyntheticReadonlyRowids    = new ArrayList<>();
-    private Set<SyntheticReadonlyRowidType>                                  unusedSyntheticReadonlyRowids        = new HashSet<>();
-    private List<SyntheticIdentityType>                                      configuredSyntheticIdentities        = new ArrayList<>();
-    private Set<SyntheticIdentityType>                                       unusedSyntheticIdentities            = new HashSet<>();
-    private List<SyntheticPrimaryKeyType>                                    configuredSyntheticPrimaryKeys       = new ArrayList<>();
-    private Set<SyntheticPrimaryKeyType>                                     unusedSyntheticPrimaryKeys           = new HashSet<>();
-    private List<SyntheticUniqueKeyType>                                     configuredSyntheticUniqueKeys        = new ArrayList<>();
-    private Set<SyntheticUniqueKeyType>                                      unusedSyntheticUniqueKeys            = new HashSet<>();
-    private List<SyntheticForeignKeyType>                                    configuredSyntheticForeignKeys       = new ArrayList<>();
-    private Set<SyntheticForeignKeyType>                                     unusedSyntheticForeignKeys           = new HashSet<>();
-    private List<SyntheticViewType>                                          configuredSyntheticViews             = new ArrayList<>();
-    private Set<SyntheticViewType>                                           unusedSyntheticViews                 = new HashSet<>();
+    private Set<ForcedType>                                                  unusedForcedTypes                       = new HashSet<>();
+    private List<EmbeddableDefinitionType>                                   configuredEmbeddables                   = new ArrayList<>();
+    private Set<EmbeddableDefinitionType>                                    unusedEmbeddables                       = new HashSet<>();
+    private List<CommentType>                                                configuredComments                      = new ArrayList<>();
+    private Set<CommentType>                                                 unusedComments                          = new HashSet<>();
+    private List<SyntheticReadonlyColumnType>                                configuredSyntheticReadonlyColumns      = new ArrayList<>();
+    private Set<SyntheticReadonlyColumnType>                                 unusedSyntheticReadonlyColumns          = new HashSet<>();
+    private List<SyntheticReadonlyRowidType>                                 configuredSyntheticReadonlyRowids       = new ArrayList<>();
+    private Set<SyntheticReadonlyRowidType>                                  unusedSyntheticReadonlyRowids           = new HashSet<>();
+    private List<SyntheticIdentityType>                                      configuredSyntheticIdentities           = new ArrayList<>();
+    private Set<SyntheticIdentityType>                                       unusedSyntheticIdentities               = new HashSet<>();
+    private List<SyntheticPrimaryKeyType>                                    configuredSyntheticPrimaryKeys          = new ArrayList<>();
+    private Set<SyntheticPrimaryKeyType>                                     unusedSyntheticPrimaryKeys              = new HashSet<>();
+    private List<SyntheticUniqueKeyType>                                     configuredSyntheticUniqueKeys           = new ArrayList<>();
+    private Set<SyntheticUniqueKeyType>                                      unusedSyntheticUniqueKeys               = new HashSet<>();
+    private List<SyntheticForeignKeyType>                                    configuredSyntheticForeignKeys          = new ArrayList<>();
+    private Set<SyntheticForeignKeyType>                                     unusedSyntheticForeignKeys              = new HashSet<>();
+    private List<SyntheticViewType>                                          configuredSyntheticViews                = new ArrayList<>();
+    private Set<SyntheticViewType>                                           unusedSyntheticViews                    = new HashSet<>();
     private SchemaVersionProvider                                            schemaVersionProvider;
     private CatalogVersionProvider                                           catalogVersionProvider;
     private Comparator<Definition>                                           orderProvider;
-    private boolean                                                          includeRelations                     = true;
-    private boolean                                                          tableValuedFunctions                 = true;
+    private boolean                                                          includeRelations                        = true;
+    private boolean                                                          tableValuedFunctions                    = true;
     private int                                                              logSlowQueriesAfterSeconds;
     private int                                                              logSlowResultsAfterSeconds;
 
@@ -1475,6 +1476,45 @@ public abstract class AbstractDatabase implements Database {
             configuredForcedTypes = new SortedList<>(new ArrayList<>(), comparing(f -> defaultIfNull(f.getPriority(), 0), (i1, i2) -> Integer.compare(i2, i1)));
 
         return configuredForcedTypes;
+    }
+
+    @Override
+    public boolean getForcedTypesForBuiltinDataTypeExtensions() {
+        return this.forcedTypesForBuiltinDataTypeExtensions;
+    }
+
+    @Override
+    public void setForcedTypesForBuiltinDataTypeExtensions(boolean forcedTypesForBuiltinDataTypeExtensions) {
+        this.forcedTypesForBuiltinDataTypeExtensions = forcedTypesForBuiltinDataTypeExtensions;
+
+        if (forcedTypesForBuiltinDataTypeExtensions) {
+            try {
+                ClassUtils.loadClass("org.jooq.postgres.extensions.types.Hstore");
+
+                // [#13161] TODO: Add also array type bindings here
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.Hstore")
+                    .withBinding("org.jooq.postgres.extensions.bindings.HstoreBinding")
+                    .withIncludeTypes("hstore")
+                    .withPriority(Integer.MAX_VALUE)
+                );
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.Inet")
+                    .withBinding("org.jooq.postgres.extensions.bindings.InetBinding")
+                    .withIncludeTypes("inet")
+                    .withPriority(Integer.MAX_VALUE)
+                );
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.Cidr")
+                    .withBinding("org.jooq.postgres.extensions.bindings.CidrBinding")
+                    .withIncludeTypes("cidr")
+                    .withPriority(Integer.MAX_VALUE)
+                );
+            }
+            catch (ClassNotFoundException ignore) {
+                log.debug("Built in data types", "org.jooq.postgres.extensions.types.Hstore not found on classpath, ignoring built in data type extensions");
+            }
+        }
     }
 
     @Override

@@ -157,6 +157,8 @@ public class Database implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean readonlyNonUpdatableColumns = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean forcedTypesForBuiltinDataTypeExtensions = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean forceIntegerTypesOnZeroScaleDecimals = true;
     protected Boolean tableValuedFunctions;
     @XmlElement(defaultValue = "5")
@@ -1658,6 +1660,30 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
+     * Enable some default forced type configurations for built in data type extensions, such as the ones from the jooq-postgres-extensions module.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isForcedTypesForBuiltinDataTypeExtensions() {
+        return forcedTypesForBuiltinDataTypeExtensions;
+    }
+
+    /**
+     * Sets the value of the forcedTypesForBuiltinDataTypeExtensions property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setForcedTypesForBuiltinDataTypeExtensions(Boolean value) {
+        this.forcedTypesForBuiltinDataTypeExtensions = value;
+    }
+
+    /**
      * Historically, zero-scale decimal types are generated as their most appropriate, corresponding integer type (e.g. NUMBER(2, 0) and less: Byte). This allows for turning off this feature. In case of conflict between this rule and actual {@link #getForcedTypes()}, the latter will win.
      * 
      * @return
@@ -2385,6 +2411,11 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    public Database withForcedTypesForBuiltinDataTypeExtensions(Boolean value) {
+        setForcedTypesForBuiltinDataTypeExtensions(value);
+        return this;
+    }
+
     public Database withForceIntegerTypesOnZeroScaleDecimals(Boolean value) {
         setForceIntegerTypesOnZeroScaleDecimals(value);
         return this;
@@ -2644,6 +2675,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("readonlyIdentities", readonlyIdentities);
         builder.append("readonlyComputedColumns", readonlyComputedColumns);
         builder.append("readonlyNonUpdatableColumns", readonlyNonUpdatableColumns);
+        builder.append("forcedTypesForBuiltinDataTypeExtensions", forcedTypesForBuiltinDataTypeExtensions);
         builder.append("forceIntegerTypesOnZeroScaleDecimals", forceIntegerTypesOnZeroScaleDecimals);
         builder.append("tableValuedFunctions", tableValuedFunctions);
         builder.append("logSlowQueriesAfterSeconds", logSlowQueriesAfterSeconds);
@@ -3172,6 +3204,15 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (forcedTypesForBuiltinDataTypeExtensions == null) {
+            if (other.forcedTypesForBuiltinDataTypeExtensions!= null) {
+                return false;
+            }
+        } else {
+            if (!forcedTypesForBuiltinDataTypeExtensions.equals(other.forcedTypesForBuiltinDataTypeExtensions)) {
+                return false;
+            }
+        }
         if (forceIntegerTypesOnZeroScaleDecimals == null) {
             if (other.forceIntegerTypesOnZeroScaleDecimals!= null) {
                 return false;
@@ -3342,6 +3383,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((readonlyIdentities == null)? 0 :readonlyIdentities.hashCode()));
         result = ((prime*result)+((readonlyComputedColumns == null)? 0 :readonlyComputedColumns.hashCode()));
         result = ((prime*result)+((readonlyNonUpdatableColumns == null)? 0 :readonlyNonUpdatableColumns.hashCode()));
+        result = ((prime*result)+((forcedTypesForBuiltinDataTypeExtensions == null)? 0 :forcedTypesForBuiltinDataTypeExtensions.hashCode()));
         result = ((prime*result)+((forceIntegerTypesOnZeroScaleDecimals == null)? 0 :forceIntegerTypesOnZeroScaleDecimals.hashCode()));
         result = ((prime*result)+((tableValuedFunctions == null)? 0 :tableValuedFunctions.hashCode()));
         result = ((prime*result)+((logSlowQueriesAfterSeconds == null)? 0 :logSlowQueriesAfterSeconds.hashCode()));

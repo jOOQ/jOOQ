@@ -2744,6 +2744,8 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final boolean isArrayType(String dataType) {
+        String upper = dataType.toUpperCase();
+
         switch (getDialect().family()) {
 
 
@@ -2756,14 +2758,14 @@ public abstract class AbstractDatabase implements Database {
 
             case POSTGRES:
             case H2:
-                return "ARRAY".equals(dataType.toUpperCase());
+                return "ARRAY".equals(upper) || upper.endsWith(" ARRAY") || upper.equals("ANYARRAY");
 
 
             case HSQLDB:
             default:
                 // TODO: Is there any more robust way to recognise these?
                 // For instance, there could be a UDT that is called this way
-                return dataType.toUpperCase().endsWith(" ARRAY");
+                return upper.endsWith(" ARRAY");
         }
     }
 

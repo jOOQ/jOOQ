@@ -1496,19 +1496,19 @@ public abstract class AbstractDatabase implements Database {
                     .withUserType("org.jooq.postgres.extensions.types.Hstore")
                     .withBinding("org.jooq.postgres.extensions.bindings.HstoreBinding")
                     .withIncludeTypes("hstore")
-                    .withPriority(Integer.MAX_VALUE)
+                    .withPriority(Integer.MIN_VALUE)
                 );
                 getConfiguredForcedTypes().add(new ForcedType()
                     .withUserType("org.jooq.postgres.extensions.types.Inet")
                     .withBinding("org.jooq.postgres.extensions.bindings.InetBinding")
                     .withIncludeTypes("inet")
-                    .withPriority(Integer.MAX_VALUE)
+                    .withPriority(Integer.MIN_VALUE)
                 );
                 getConfiguredForcedTypes().add(new ForcedType()
                     .withUserType("org.jooq.postgres.extensions.types.Cidr")
                     .withBinding("org.jooq.postgres.extensions.bindings.CidrBinding")
                     .withIncludeTypes("cidr")
-                    .withPriority(Integer.MAX_VALUE)
+                    .withPriority(Integer.MIN_VALUE)
                 );
             }
             catch (ClassNotFoundException ignore) {

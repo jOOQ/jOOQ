@@ -35,32 +35,28 @@
  *
  *
  */
-package org.jooq.postgres.extensions.converters;
+package org.jooq.postgres.extensions.bindings;
 
-import static org.jooq.postgres.extensions.types.Hstore.hstore;
-
-import org.jooq.impl.AbstractConverter;
-import org.jooq.postgres.extensions.types.Hstore;
+import org.jooq.Converter;
+import org.jooq.postgres.extensions.converters.CidrConverter;
+import org.jooq.postgres.extensions.types.Cidr;
 
 /**
- * A converter for the PostgreSQL <code>hstore</code> data type.
+ * A binding for the PostgreSQL <code>cidr</code> data type.
  *
- * @author Dmitry Baev
  * @author Lukas Eder
  */
-public class HstoreConverter extends AbstractConverter<Object, Hstore> {
+public class CidrBinding extends AbstractInetBinding<Cidr> {
 
-    public HstoreConverter() {
-        super(Object.class, Hstore.class);
+    private static final Converter<Object, Cidr> CONVERTER = new CidrConverter();
+
+    @Override
+    public Converter<Object, Cidr> converter() {
+        return CONVERTER;
     }
 
     @Override
-    public Hstore from(Object t) {
-        return t == null ? null : hstore(org.postgresql.util.HStoreConverter.fromString("" + t));
-    }
-
-    @Override
-    public Object to(Hstore u) {
-        return u == null ? null : org.postgresql.util.HStoreConverter.toString(u.data());
+    protected String castType() {
+        return "cidr";
     }
 }

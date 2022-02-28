@@ -37,30 +37,25 @@
  */
 package org.jooq.postgres.extensions.converters;
 
-import static org.jooq.postgres.extensions.types.Hstore.hstore;
+import static org.jooq.postgres.extensions.types.Inet.inet;
 
-import org.jooq.impl.AbstractConverter;
-import org.jooq.postgres.extensions.types.Hstore;
+import java.net.InetAddress;
+
+import org.jooq.postgres.extensions.types.Inet;
 
 /**
- * A converter for the PostgreSQL <code>hstore</code> data type.
+ * A converter for the PostgreSQL <code>inet</code> data type.
  *
- * @author Dmitry Baev
  * @author Lukas Eder
  */
-public class HstoreConverter extends AbstractConverter<Object, Hstore> {
+public class InetConverter extends AbstractInetConverter<Inet> {
 
-    public HstoreConverter() {
-        super(Object.class, Hstore.class);
+    public InetConverter() {
+        super(Inet.class);
     }
 
     @Override
-    public Hstore from(Object t) {
-        return t == null ? null : hstore(org.postgresql.util.HStoreConverter.fromString("" + t));
-    }
-
-    @Override
-    public Object to(Hstore u) {
-        return u == null ? null : org.postgresql.util.HStoreConverter.toString(u.data());
+    final Inet construct(InetAddress address, Integer prefix) {
+        return inet(address, prefix);
     }
 }

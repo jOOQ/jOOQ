@@ -38,73 +38,53 @@
 package org.jooq.postgres.extensions.types;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+import java.net.InetAddress;
+import java.util.Objects;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
 
 /**
- * A data type representing the PostgreSQL <code>hstore</code> type.
+ * A data type representing the PostgreSQL <code>inet</code> or
+ * <code>cidr</code> type.
  *
  * @author Lukas Eder
  */
-public final class Hstore implements Serializable {
+public abstract class AbstractInet implements Serializable {
 
-    private final Map<String, String> data;
+    private final InetAddress address;
+    private final Integer     prefix;
 
-    private Hstore(Map<String, String> data) {
-        this.data = data == null ? new HashMap<>() : data;
+    AbstractInet(InetAddress address, Integer prefix) {
+        this.address = address;
+        this.prefix = prefix;
     }
 
     @NotNull
-    public final Map<String, String> data() {
-        return data;
+    public final InetAddress address() {
+        return address;
     }
 
-    /**
-     * Create a new {@link Hstore} instance from string data input.
-     */
-    @NotNull
-    public static final Hstore valueOf(Map<String, String> data) {
-        return new Hstore(data);
-    }
-
-    /**
-     * Create a new {@link Hstore} instance from map data input.
-     * <p>
-     * This is the same as {@link #valueOf(Map)}, but it can be static imported.
-     */
-    @NotNull
-    public static final Hstore hstore(Map<String, String> data) {
-        return new Hstore(data);
-    }
-
-    /**
-     * Create a new {@link Hstore} instance from string data input, or
-     * <code>null</code> if the input is <code>null</code>.
-     */
-    @Nullable
-    public static final Hstore hstoreOrNull(Map<String, String> data) {
-        return data == null ? null : new Hstore(data);
+    public /* non-final */ Integer prefix() {
+        return prefix;
     }
 
     @Override
     public int hashCode() {
-        return data.hashCode();
+        return address.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj instanceof Hstore)
-            return data.equals(((Hstore) obj).data);
+        if (obj instanceof AbstractInet)
+            return address.equals(((AbstractInet) obj).address) && Objects.equals(prefix, ((AbstractInet) obj).prefix);
         return false;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(data);
+        return prefix == null ? address.getHostAddress() : address.getHostAddress() + "/" + prefix;
     }
 }

@@ -37,30 +37,25 @@
  */
 package org.jooq.postgres.extensions.converters;
 
-import static org.jooq.postgres.extensions.types.Hstore.hstore;
+import static org.jooq.postgres.extensions.types.Cidr.cidr;
 
-import org.jooq.impl.AbstractConverter;
-import org.jooq.postgres.extensions.types.Hstore;
+import java.net.InetAddress;
+
+import org.jooq.postgres.extensions.types.Cidr;
 
 /**
- * A converter for the PostgreSQL <code>hstore</code> data type.
+ * A converter for the PostgreSQL <code>cidr</code> data type.
  *
- * @author Dmitry Baev
  * @author Lukas Eder
  */
-public class HstoreConverter extends AbstractConverter<Object, Hstore> {
+public class CidrConverter extends AbstractInetConverter<Cidr> {
 
-    public HstoreConverter() {
-        super(Object.class, Hstore.class);
+    public CidrConverter() {
+        super(Cidr.class);
     }
 
     @Override
-    public Hstore from(Object t) {
-        return t == null ? null : hstore(org.postgresql.util.HStoreConverter.fromString("" + t));
-    }
-
-    @Override
-    public Object to(Hstore u) {
-        return u == null ? null : org.postgresql.util.HStoreConverter.toString(u.data());
+    final Cidr construct(InetAddress address, Integer prefix) {
+        return cidr(address, prefix);
     }
 }

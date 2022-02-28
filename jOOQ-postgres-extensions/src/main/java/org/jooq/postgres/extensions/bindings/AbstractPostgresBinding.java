@@ -39,7 +39,6 @@ package org.jooq.postgres.extensions.bindings;
 
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
-import java.util.Map;
 
 import org.jooq.BindingGetSQLInputContext;
 import org.jooq.BindingSQLContext;
@@ -52,11 +51,6 @@ import org.jooq.impl.AbstractBinding;
  * @author Lukas Eder
  */
 public abstract class AbstractPostgresBinding<T, U> extends AbstractBinding<T, U> {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 689952685043626697L;
 
     /**
      * Provide the data type name for casts.

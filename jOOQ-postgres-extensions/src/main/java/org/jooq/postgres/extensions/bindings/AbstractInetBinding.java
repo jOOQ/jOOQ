@@ -45,49 +45,37 @@ import org.jooq.BindingGetStatementContext;
 import org.jooq.BindingRegisterContext;
 import org.jooq.BindingSetStatementContext;
 import org.jooq.Converter;
-import org.jooq.postgres.extensions.converters.HstoreConverter;
-import org.jooq.postgres.extensions.types.Hstore;
+import org.jooq.postgres.extensions.converters.InetConverter;
+import org.jooq.postgres.extensions.types.AbstractInet;
+import org.jooq.postgres.extensions.types.Inet;
 
 /**
- * A binding for the PostgreSQL <code>hstore</code> data type.
+ * A binding for the PostgreSQL <code>inet</code> or <code>cidr</code> data
+ * type.
  *
- * @author Dmitry Baev
  * @author Lukas Eder
  */
-public class HstoreBinding extends AbstractPostgresBinding<Object, Hstore> {
-
-    private static final Converter<Object, Hstore> CONVERTER = new HstoreConverter();
+abstract class AbstractInetBinding<U extends AbstractInet> extends AbstractPostgresBinding<Object, U> {
 
     @Override
-    public Converter<Object, Hstore> converter() {
-        return CONVERTER;
-    }
-
-    @Override
-    protected String castType() {
-        return "hstore";
-    }
-
-    @Override
-    public void register(final BindingRegisterContext<Hstore> ctx) throws SQLException {
+    public void register(final BindingRegisterContext<U> ctx) throws SQLException {
         ctx.statement().registerOutParameter(ctx.index(), Types.VARCHAR);
     }
 
     @Override
-    public void set(final BindingSetStatementContext<Hstore> ctx) throws SQLException {
+    public void set(final BindingSetStatementContext<U> ctx) throws SQLException {
         Object value = ctx.convert(converter()).value();
 
         ctx.statement().setString(ctx.index(), value == null ? null : "" + value);
     }
 
-
     @Override
-    public void get(final BindingGetResultSetContext<Hstore> ctx) throws SQLException {
+    public void get(final BindingGetResultSetContext<U> ctx) throws SQLException {
         ctx.convert(converter()).value(ctx.resultSet().getString(ctx.index()));
     }
 
     @Override
-    public void get(final BindingGetStatementContext<Hstore> ctx) throws SQLException {
+    public void get(final BindingGetStatementContext<U> ctx) throws SQLException {
         ctx.convert(converter()).value(ctx.statement().getString(ctx.index()));
     }
 }

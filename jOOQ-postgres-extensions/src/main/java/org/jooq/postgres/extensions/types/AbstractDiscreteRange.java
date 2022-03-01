@@ -92,8 +92,18 @@ abstract class AbstractDiscreteRange<T, R extends AbstractDiscreteRange<T, R>> e
     }
 
     @Override
-    public int hashCode() {
+    public boolean isEmpty() {
         if (isCanonical())
+            return super.isEmpty();
+        else
+            return canonical().isEmpty();
+    }
+
+    @Override
+    public int hashCode() {
+        if (isEmpty())
+            return 0;
+        else if (isCanonical())
             return Objects.hash(lower(), upper());
         else
             return canonical().hashCode();
@@ -115,6 +125,9 @@ abstract class AbstractDiscreteRange<T, R extends AbstractDiscreteRange<T, R>> e
 
         R r1 = c1 ? (R) this : canonical();
         R r2 = c2 ? other : other.canonical();
+
+        if (r1.isEmpty())
+            return r2.isEmpty();
 
         return Objects.equals(r1.lower(), r2.lower()) && Objects.equals(r1.upper(), r2.upper());
     }

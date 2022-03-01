@@ -61,6 +61,13 @@ public abstract class AbstractRange<T> implements Serializable {
         this.upperIncluding = upperIncluding;
     }
 
+    /**
+     * In PostgreSQL, a [x,x) range is considered "empty".
+     */
+    public /* non-final */ boolean isEmpty() {
+        return lowerIncluding && !upperIncluding && Objects.equals(lower, upper);
+    }
+
     @Nullable
     public final T lower() {
         return lower;
@@ -81,7 +88,10 @@ public abstract class AbstractRange<T> implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(lower, lowerIncluding, upper, upperIncluding);
+        if (isEmpty())
+            return 0;
+        else
+            return Objects.hash(lower, lowerIncluding, upper, upperIncluding);
     }
 
     @Override
@@ -92,7 +102,11 @@ public abstract class AbstractRange<T> implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
+
         AbstractRange<?> other = (AbstractRange<?>) obj;
+        if (isEmpty())
+            return other.isEmpty();
+
         return Objects.equals(lower, other.lower) && lowerIncluding == other.lowerIncluding
             && Objects.equals(upper, other.upper) && upperIncluding == other.upperIncluding;
     }

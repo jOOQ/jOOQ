@@ -39,7 +39,6 @@ package org.jooq.postgres.extensions.test;
 
 import static org.jooq.postgres.extensions.test.RangeTestUtils.assertEqualsHashCode;
 import static org.jooq.postgres.extensions.types.LongRange.longRange;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
@@ -49,6 +48,7 @@ public class LongRangeTest {
     @Test
     public void testEqualsHashCode() {
         assertEqualsHashCode(longRange(0L, 0L), longRange(0L, 0L));
+        assertEqualsHashCode(longRange(0L, 0L), longRange(1L, 1L));
         assertEqualsHashCode(longRange(0L, 1L), longRange(0L, 1L));
         assertEqualsHashCode(longRange(0L, 2L), longRange(0L, true, 1L, true));
         assertEqualsHashCode(longRange(0L, 2L), longRange(0L, true, 2L, false));

@@ -205,6 +205,7 @@ public abstract class AbstractDatabase implements Database {
     private List<CustomType>                                                 configuredCustomTypes                   = new ArrayList<>();
     private List<EnumType>                                                   configuredEnumTypes                     = new ArrayList<>();
     private boolean                                                          forcedTypesForBuiltinDataTypeExtensions = true;
+    private boolean                                                          builtInForcedTypesInitialised           = false;
     private List<ForcedType>                                                 configuredForcedTypes;
     private Set<ForcedType>                                                  unusedForcedTypes                       = new HashSet<>();
     private List<EmbeddableDefinitionType>                                   configuredEmbeddables                   = new ArrayList<>();
@@ -1486,80 +1487,6 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public void setForcedTypesForBuiltinDataTypeExtensions(boolean forcedTypesForBuiltinDataTypeExtensions) {
         this.forcedTypesForBuiltinDataTypeExtensions = forcedTypesForBuiltinDataTypeExtensions;
-
-        if (forcedTypesForBuiltinDataTypeExtensions) {
-            try {
-                ClassUtils.loadClass("org.jooq.postgres.extensions.types.Hstore");
-
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.Hstore")
-                    .withBinding("org.jooq.postgres.extensions.bindings.HstoreBinding")
-                    .withIncludeTypes("hstore")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.Hstore[]")
-                    .withBinding("org.jooq.postgres.extensions.bindings.HstoreArrayBinding")
-                    .withIncludeTypes("_hstore")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.Inet")
-                    .withBinding("org.jooq.postgres.extensions.bindings.InetBinding")
-                    .withIncludeTypes("inet")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.Inet[]")
-                    .withBinding("org.jooq.postgres.extensions.bindings.InetArrayBinding")
-                    .withIncludeTypes("_inet")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.Cidr")
-                    .withBinding("org.jooq.postgres.extensions.bindings.CidrBinding")
-                    .withIncludeTypes("cidr")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.Cidr[]")
-                    .withBinding("org.jooq.postgres.extensions.bindings.CidrArrayBinding")
-                    .withIncludeTypes("_cidr")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.IntegerRange")
-                    .withBinding("org.jooq.postgres.extensions.bindings.IntegerRangeBinding")
-                    .withIncludeTypes("int4range")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.IntegerRange[]")
-                    .withBinding("org.jooq.postgres.extensions.bindings.IntegerRangeArrayBinding")
-                    .withIncludeTypes("_int4range")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.LongRange")
-                    .withBinding("org.jooq.postgres.extensions.bindings.LongRangeBinding")
-                    .withIncludeTypes("int8range")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.LongRange[]")
-                    .withBinding("org.jooq.postgres.extensions.bindings.LongRangeArrayBinding")
-                    .withIncludeTypes("_int8range")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-            }
-            catch (ClassNotFoundException ignore) {
-                log.debug("Built in data types", "org.jooq.postgres.extensions.types.Hstore not found on classpath, ignoring built in data type extensions");
-            }
-        }
     }
 
     @Override
@@ -1956,6 +1883,7 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final ForcedType getConfiguredForcedType(Definition definition, DataTypeDefinition definedType) {
+        initBuiltinForcedTypes();
 
         // [#5885] Only the first matching <forcedType/> is applied to the data type definition.
         forcedTypeLoop:
@@ -1999,6 +1927,113 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return null;
+    }
+
+    private void initBuiltinForcedTypes() {
+        if (forcedTypesForBuiltinDataTypeExtensions && !builtInForcedTypesInitialised) {
+            builtInForcedTypesInitialised = true;
+
+            try {
+                ClassUtils.loadClass("org.jooq.postgres.extensions.types.Hstore");
+
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.Hstore")
+                    .withBinding("org.jooq.postgres.extensions.bindings.HstoreBinding")
+                    .withIncludeTypes("hstore")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.Hstore[]")
+                    .withBinding("org.jooq.postgres.extensions.bindings.HstoreArrayBinding")
+                    .withIncludeTypes("_hstore")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.Inet")
+                    .withBinding("org.jooq.postgres.extensions.bindings.InetBinding")
+                    .withIncludeTypes("inet")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.Inet[]")
+                    .withBinding("org.jooq.postgres.extensions.bindings.InetArrayBinding")
+                    .withIncludeTypes("_inet")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.Cidr")
+                    .withBinding("org.jooq.postgres.extensions.bindings.CidrBinding")
+                    .withIncludeTypes("cidr")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.Cidr[]")
+                    .withBinding("org.jooq.postgres.extensions.bindings.CidrArrayBinding")
+                    .withIncludeTypes("_cidr")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.IntegerRange")
+                    .withBinding("org.jooq.postgres.extensions.bindings.IntegerRangeBinding")
+                    .withIncludeTypes("int4range")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.IntegerRange[]")
+                    .withBinding("org.jooq.postgres.extensions.bindings.IntegerRangeArrayBinding")
+                    .withIncludeTypes("_int4range")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.LongRange")
+                    .withBinding("org.jooq.postgres.extensions.bindings.LongRangeBinding")
+                    .withIncludeTypes("int8range")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.LongRange[]")
+                    .withBinding("org.jooq.postgres.extensions.bindings.LongRangeArrayBinding")
+                    .withIncludeTypes("_int8range")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+
+                if (javaTimeTypes()) {
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.LocalDateRange")
+                        .withBinding("org.jooq.postgres.extensions.bindings.LocalDateRangeBinding")
+                        .withIncludeTypes("daterange")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.LocalDateRange[]")
+                        .withBinding("org.jooq.postgres.extensions.bindings.LocalDateRangeArrayBinding")
+                        .withIncludeTypes("_daterange")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+                }
+                else {
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.DateRange")
+                        .withBinding("org.jooq.postgres.extensions.bindings.DateRangeBinding")
+                        .withIncludeTypes("daterange")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.DateRange[]")
+                        .withBinding("org.jooq.postgres.extensions.bindings.DateRangeArrayBinding")
+                        .withIncludeTypes("_daterange")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+                }
+            }
+            catch (ClassNotFoundException ignore) {
+                log.debug("Built in data types", "org.jooq.postgres.extensions.types.Hstore not found on classpath, ignoring built in data type extensions");
+            }
+        }
     }
 
     private boolean typeMatchesExcludeInclude(DataTypeDefinition type, String exclude, String include) {

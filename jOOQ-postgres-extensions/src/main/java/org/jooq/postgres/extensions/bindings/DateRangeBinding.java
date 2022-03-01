@@ -35,39 +35,28 @@
  *
  *
  */
-package org.jooq.postgres.extensions.converters;
+package org.jooq.postgres.extensions.bindings;
 
-import static org.jooq.postgres.extensions.types.IntegerRange.integerRange;
-import static org.jooq.postgres.extensions.types.LongRange.longRange;
-
-import org.jooq.postgres.extensions.types.IntegerRange;
-import org.jooq.postgres.extensions.types.LongRange;
+import org.jooq.Converter;
+import org.jooq.postgres.extensions.converters.DateRangeConverter;
+import org.jooq.postgres.extensions.types.DateRange;
 
 /**
- * A converter for {@link IntegerRange}.
+ * A binding for the PostgreSQL <code>daterange</code> data type.
  *
  * @author Lukas Eder
  */
-public class LongRangeConverter extends AbstractRangeConverter<Long, LongRange> {
+public class DateRangeBinding extends AbstractRangeBinding<DateRange> {
 
-    private static final LongRange EMPTY = longRange(0L, 0L);
+    private static final Converter<Object, DateRange> CONVERTER = new DateRangeConverter();
 
-    public LongRangeConverter() {
-        super(LongRange.class);
+    @Override
+    public Converter<Object, DateRange> converter() {
+        return CONVERTER;
     }
 
     @Override
-    final LongRange construct(String lower, boolean lowerIncluding, String upper, boolean upperIncluding) {
-        return longRange(
-            lower == null ? null : Long.valueOf(lower),
-            lowerIncluding,
-            upper == null ? null : Long.valueOf(upper),
-            upperIncluding
-        );
-    }
-
-    @Override
-    final LongRange empty() {
-        return EMPTY;
+    protected String castType() {
+        return "daterange";
     }
 }

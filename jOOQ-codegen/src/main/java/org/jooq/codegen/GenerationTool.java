@@ -555,6 +555,20 @@ public class GenerationTool {
             database.setConfiguredSchemata(schemata);
             database.setIncludes(new String[] { defaultString(d.getIncludes()) });
             database.setExcludes(new String[] { defaultString(d.getExcludes()) });
+
+            // [#10763] Currently, the javaTimeTypes flag needs to be set before
+            //          the forcedTypesForBuiltinDataTypeExtensions flag.
+            if (d.isDateAsTimestamp() != null)
+                database.setDateAsTimestamp(d.isDateAsTimestamp());
+            if (g.getGenerate().isJavaTimeTypes() != null)
+                database.setJavaTimeTypes(g.getGenerate().isJavaTimeTypes());
+            if (d.isUnsignedTypes() != null)
+                database.setSupportsUnsignedTypes(d.isUnsignedTypes());
+            if (d.isIntegerDisplayWidths() != null)
+                database.setIntegerDisplayWidths(d.isIntegerDisplayWidths());
+            if (d.isIgnoreProcedureReturnValues() != null)
+                database.setIgnoreProcedureReturnValues(d.isIgnoreProcedureReturnValues());
+
             database.setIncludeExcludeColumns(TRUE.equals(d.isIncludeExcludeColumns()));
             database.setIncludeExcludePackageRoutines(TRUE.equals(d.isIncludeExcludePackageRoutines()));
             database.setIncludeForeignKeys(!FALSE.equals(d.isIncludeForeignKeys()));
@@ -667,18 +681,6 @@ public class GenerationTool {
                 log.warn("DEPRECATED", "The configuration property /configuration/generator/database/enumTypes is experimental and deprecated and will be removed in the future.");
             if (Boolean.TRUE.equals(d.isDateAsTimestamp()))
                 log.warn("DEPRECATED", "The configuration property /configuration/generator/database/dateAsTimestamp is deprecated as it is superseded by custom bindings and converters. It will thus be removed in the future.");
-
-            if (d.isDateAsTimestamp() != null)
-                database.setDateAsTimestamp(d.isDateAsTimestamp());
-            if (g.getGenerate().isJavaTimeTypes() != null)
-                database.setJavaTimeTypes(g.getGenerate().isJavaTimeTypes());
-            if (d.isUnsignedTypes() != null)
-                database.setSupportsUnsignedTypes(d.isUnsignedTypes());
-            if (d.isIntegerDisplayWidths() != null)
-                database.setIntegerDisplayWidths(d.isIntegerDisplayWidths());
-            if (d.isIgnoreProcedureReturnValues() != null)
-                database.setIgnoreProcedureReturnValues(d.isIgnoreProcedureReturnValues());
-
             if (Boolean.TRUE.equals(d.isIgnoreProcedureReturnValues()))
                 log.warn("DEPRECATED", "The <ignoreProcedureReturnValues/> flag is deprecated and used for backwards-compatibility only. It will be removed in the future.");
 

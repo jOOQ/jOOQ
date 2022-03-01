@@ -37,37 +37,42 @@
  */
 package org.jooq.postgres.extensions.converters;
 
-import static org.jooq.postgres.extensions.types.IntegerRange.integerRange;
-import static org.jooq.postgres.extensions.types.LongRange.longRange;
+import static org.jooq.postgres.extensions.types.DateRange.dateRange;
+import static org.jooq.postgres.extensions.types.LocalDateRange.localDateRange;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
+import org.jooq.postgres.extensions.types.DateRange;
 import org.jooq.postgres.extensions.types.IntegerRange;
-import org.jooq.postgres.extensions.types.LongRange;
+import org.jooq.postgres.extensions.types.LocalDateRange;
 
 /**
  * A converter for {@link IntegerRange}.
  *
  * @author Lukas Eder
  */
-public class LongRangeConverter extends AbstractRangeConverter<Long, LongRange> {
+public class LocalDateRangeConverter extends AbstractRangeConverter<LocalDate, LocalDateRange> {
 
-    private static final LongRange EMPTY = longRange(0L, 0L);
+    private static final LocalDate      EPOCH = LocalDate.parse("1970-01-01");
+    private static final LocalDateRange EMPTY = localDateRange(EPOCH, EPOCH);
 
-    public LongRangeConverter() {
-        super(LongRange.class);
+    public LocalDateRangeConverter() {
+        super(LocalDateRange.class);
     }
 
     @Override
-    final LongRange construct(String lower, boolean lowerIncluding, String upper, boolean upperIncluding) {
-        return longRange(
-            lower == null ? null : Long.valueOf(lower),
+    final LocalDateRange construct(String lower, boolean lowerIncluding, String upper, boolean upperIncluding) {
+        return localDateRange(
+            lower == null ? null : LocalDate.parse(lower),
             lowerIncluding,
-            upper == null ? null : Long.valueOf(upper),
+            upper == null ? null : LocalDate.parse(upper),
             upperIncluding
         );
     }
 
     @Override
-    final LongRange empty() {
+    final LocalDateRange empty() {
         return EMPTY;
     }
 }

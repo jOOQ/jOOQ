@@ -48,6 +48,8 @@ import org.jooq.postgres.extensions.types.IntegerRange;
  */
 public class IntegerRangeConverter extends AbstractRangeConverter<Integer, IntegerRange> {
 
+    private static final IntegerRange EMPTY = integerRange(0, 0);
+
     public IntegerRangeConverter() {
         super(IntegerRange.class);
     }
@@ -64,6 +66,6 @@ public class IntegerRangeConverter extends AbstractRangeConverter<Integer, Integ
 
     @Override
     final IntegerRange empty() {
-        return integerRange(0, 0);
+        return EMPTY;
     }
 }

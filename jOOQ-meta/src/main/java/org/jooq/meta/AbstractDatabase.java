@@ -1491,7 +1491,6 @@ public abstract class AbstractDatabase implements Database {
             try {
                 ClassUtils.loadClass("org.jooq.postgres.extensions.types.Hstore");
 
-                // [#13161] TODO: Add also array type bindings here
                 getConfiguredForcedTypes().add(new ForcedType()
                     .withUserType("org.jooq.postgres.extensions.types.Hstore")
                     .withBinding("org.jooq.postgres.extensions.bindings.HstoreBinding")
@@ -1499,15 +1498,35 @@ public abstract class AbstractDatabase implements Database {
                     .withPriority(Integer.MIN_VALUE)
                 );
                 getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.Hstore[]")
+                    .withBinding("org.jooq.postgres.extensions.bindings.HstoreArrayBinding")
+                    .withIncludeTypes("_hstore")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+
+                getConfiguredForcedTypes().add(new ForcedType()
                     .withUserType("org.jooq.postgres.extensions.types.Inet")
                     .withBinding("org.jooq.postgres.extensions.bindings.InetBinding")
                     .withIncludeTypes("inet")
                     .withPriority(Integer.MIN_VALUE)
                 );
                 getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.Inet[]")
+                    .withBinding("org.jooq.postgres.extensions.bindings.InetArrayBinding")
+                    .withIncludeTypes("_inet")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+
+                getConfiguredForcedTypes().add(new ForcedType()
                     .withUserType("org.jooq.postgres.extensions.types.Cidr")
                     .withBinding("org.jooq.postgres.extensions.bindings.CidrBinding")
                     .withIncludeTypes("cidr")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.Cidr[]")
+                    .withBinding("org.jooq.postgres.extensions.bindings.CidrArrayBinding")
+                    .withIncludeTypes("_cidr")
                     .withPriority(Integer.MIN_VALUE)
                 );
             }

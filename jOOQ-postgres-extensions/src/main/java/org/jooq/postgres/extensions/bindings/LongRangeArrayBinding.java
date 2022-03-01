@@ -38,25 +38,25 @@
 package org.jooq.postgres.extensions.bindings;
 
 import org.jooq.Converter;
-import org.jooq.postgres.extensions.converters.IntegerRangeConverter;
-import org.jooq.postgres.extensions.types.IntegerRange;
+import org.jooq.postgres.extensions.converters.LongRangeConverter;
+import org.jooq.postgres.extensions.types.LongRange;
 
 /**
- * A binding for the PostgreSQL <code>int4range[]</code> data type.
+ * A binding for the PostgreSQL <code>int8range[]</code> data type.
  *
  * @author Lukas Eder
  */
-public class IntegerRangeArrayBinding extends AbstractPostgresArrayBinding<IntegerRange> {
+public class LongRangeArrayBinding extends AbstractPostgresArrayBinding<LongRange> {
 
-    private static final Converter<Object[], IntegerRange[]> CONVERTER = new IntegerRangeConverter().forArrays();
+    private static final Converter<Object[], LongRange[]> CONVERTER = new LongRangeConverter().forArrays();
 
     @Override
-    public Converter<Object[], IntegerRange[]> converter() {
+    public Converter<Object[], LongRange[]> converter() {
         return CONVERTER;
     }
 
     @Override
     protected String castType() {
-        return "int4range[]";
+        return "int8range[]";
     }
 }

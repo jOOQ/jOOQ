@@ -40,53 +40,53 @@ package org.jooq.postgres.extensions.types;
 import org.jooq.exception.DataTypeException;
 
 /**
- * A data type representing the PostgreSQL <code>int4range</code> type.
+ * A data type representing the PostgreSQL <code>int8range</code> type.
  *
  * @author Lukas Eder
  */
-public final class IntegerRange extends AbstractDiscreteRange<Integer, IntegerRange> {
+public final class LongRange extends AbstractDiscreteRange<Long, LongRange> {
 
-    private IntegerRange(Integer lower, boolean lowerIncluding, Integer upper, boolean upperIncluding) {
+    private LongRange(Long lower, boolean lowerIncluding, Long upper, boolean upperIncluding) {
         super(lower, lowerIncluding, upper, upperIncluding);
     }
 
     /**
-     * Create a new {@link IntegerRange} with a inclusive lower bound and an
+     * Create a new {@link LongRange} with a inclusive lower bound and an
      * exclusive upper bound.
      */
-    public static final IntegerRange integerRange(Integer lower, Integer upper) {
-        return new IntegerRange(lower, true, upper, false);
+    public static final LongRange longRange(Long lower, Long upper) {
+        return new LongRange(lower, true, upper, false);
     }
 
     /**
-     * Create a new {@link IntegerRange}.
+     * Create a new {@link LongRange}.
      */
-    public static final IntegerRange integerRange(Integer lower, boolean lowerIncluding, Integer upper, boolean upperIncluding) {
-        return new IntegerRange(lower, lowerIncluding, upper, upperIncluding);
+    public static final LongRange longRange(Long lower, boolean lowerIncluding, Long upper, boolean upperIncluding) {
+        return new LongRange(lower, lowerIncluding, upper, upperIncluding);
     }
 
     @Override
-    final IntegerRange construct(Integer lower, Integer upper) {
-        return new IntegerRange(lower, true, upper, false);
+    final LongRange construct(Long lower, Long upper) {
+        return new LongRange(lower, true, upper, false);
     }
 
     @Override
-    final Integer next(Integer t) {
-        int l = t.intValue();
+    final Long next(Long t) {
+        long l = t.longValue();
 
-        if (l == Integer.MAX_VALUE)
-            throw new DataTypeException("Integer overflow: " + this);
+        if (l == Long.MAX_VALUE)
+            throw new DataTypeException("Long overflow: " + this);
         else
-            return l + 1;
+            return l + 1L;
     }
 
     @Override
-    final Integer prev(Integer t) {
-        int l = t.intValue();
+    final Long prev(Long t) {
+        long l = t.longValue();
 
-        if (l == Integer.MIN_VALUE)
-            throw new DataTypeException("Integer underflow: " + this);
+        if (l == Long.MIN_VALUE)
+            throw new DataTypeException("Long underflow: " + this);
         else
-            return l - 1;
+            return l - 1L;
     }
 }

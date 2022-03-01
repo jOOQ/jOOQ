@@ -35,28 +35,14 @@
  *
  *
  */
-package org.jooq.postgres.extensions.bindings;
+package org.jooq.postgres.extensions.test;
 
-import org.jooq.Converter;
-import org.jooq.postgres.extensions.converters.IntegerRangeConverter;
-import org.jooq.postgres.extensions.types.IntegerRange;
+import static org.junit.Assert.assertEquals;
 
-/**
- * A binding for the PostgreSQL <code>int4range[]</code> data type.
- *
- * @author Lukas Eder
- */
-public class IntegerRangeArrayBinding extends AbstractPostgresArrayBinding<IntegerRange> {
+public class RangeTestUtils {
 
-    private static final Converter<Object[], IntegerRange[]> CONVERTER = new IntegerRangeConverter().forArrays();
-
-    @Override
-    public Converter<Object[], IntegerRange[]> converter() {
-        return CONVERTER;
-    }
-
-    @Override
-    protected String castType() {
-        return "int4range[]";
+    public static void assertEqualsHashCode(Object expected, Object actual) {
+        assertEquals(expected, actual);
+        assertEquals(expected.hashCode(), actual.hashCode());
     }
 }

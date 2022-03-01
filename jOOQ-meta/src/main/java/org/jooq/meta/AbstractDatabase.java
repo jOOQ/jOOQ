@@ -1542,6 +1542,19 @@ public abstract class AbstractDatabase implements Database {
                     .withIncludeTypes("_int4range")
                     .withPriority(Integer.MIN_VALUE)
                 );
+
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.LongRange")
+                    .withBinding("org.jooq.postgres.extensions.bindings.LongRangeBinding")
+                    .withIncludeTypes("int8range")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.LongRange[]")
+                    .withBinding("org.jooq.postgres.extensions.bindings.LongRangeArrayBinding")
+                    .withIncludeTypes("_int8range")
+                    .withPriority(Integer.MIN_VALUE)
+                );
             }
             catch (ClassNotFoundException ignore) {
                 log.debug("Built in data types", "org.jooq.postgres.extensions.types.Hstore not found on classpath, ignoring built in data type extensions");

@@ -39,6 +39,8 @@ package org.jooq.postgres.extensions.types;
 
 import java.util.Objects;
 
+import org.jooq.exception.DataTypeException;
+
 /**
  * A data type representing the PostgreSQL <code>range</code> type for discrete ranges.
  *
@@ -52,13 +54,17 @@ abstract class AbstractDiscreteRange<T, R extends AbstractDiscreteRange<T, R>> e
 
     /**
      * Given a value t, get the next value.
+     *
+     * @throws DataTypeException on overflow.
      */
-    abstract T next(T t);
+    abstract T next(T t) throws DataTypeException;
 
     /**
      * Given a value t, get the previous value.
+     *
+     * @throws DataTypeException on underflow.
      */
-    abstract T prev(T t);
+    abstract T prev(T t) throws DataTypeException;
 
     /**
      * Construct a new instance of this type.
@@ -79,9 +85,6 @@ abstract class AbstractDiscreteRange<T, R extends AbstractDiscreteRange<T, R>> e
 
         if (!lowerIncluding() && l != null)
             l = next(l);
-
-        // This can overflow for Integer and Long. In PostgreSQL, an overflow
-        // will cause an error. We might deal with this too, in the future
         if (upperIncluding() && u != null)
             u = next(u);
 

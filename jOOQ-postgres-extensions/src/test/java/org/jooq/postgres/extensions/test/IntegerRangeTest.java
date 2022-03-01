@@ -37,6 +37,7 @@
  */
 package org.jooq.postgres.extensions.test;
 
+import static org.jooq.postgres.extensions.test.RangeTestUtils.assertEqualsHashCode;
 import static org.jooq.postgres.extensions.types.IntegerRange.integerRange;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -70,10 +71,5 @@ public class IntegerRangeTest {
         assertEqualsHashCode(integerRange(null, null), integerRange(null, false, null, false));
 
         assertNotEquals(integerRange(0, 1), integerRange(1, 0));
-    }
-
-    private void assertEqualsHashCode(Object expected, Object actual) {
-        assertEquals(expected, actual);
-        assertEquals(expected.hashCode(), actual.hashCode());
     }
 }

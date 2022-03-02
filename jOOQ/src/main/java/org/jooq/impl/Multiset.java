@@ -44,6 +44,7 @@ import static java.lang.Boolean.TRUE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonArrayAgg;
 import static org.jooq.impl.DSL.jsonEntry;
@@ -53,7 +54,9 @@ import static org.jooq.impl.DSL.jsonbArrayAgg;
 import static org.jooq.impl.DSL.jsonbObject;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.DSL.xmlagg;
+import static org.jooq.impl.DSL.xmlattributes;
 import static org.jooq.impl.DSL.xmlelement;
 import static org.jooq.impl.DSL.xmlserializeContent;
 import static org.jooq.impl.JSONArrayAgg.patchOracleArrayAggBug;
@@ -411,10 +414,16 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
     static final XMLAggOrderByStep<XML> xmlaggEmulation(Fields fields, boolean agg) {
         return xmlagg(
             xmlelement(N_RECORD,
-                map(fields.fields(), (f, i) -> xmlelement(
-                    fieldNameString(i),
-                    agg ? f : DSL.field(fieldName(i), f.getDataType())
-                ))
+                map(fields.fields(), (f, i) -> {
+                    Field<?> v = agg ? f : DSL.field(fieldName(i), f.getDataType());
+                    String n = fieldNameString(i);
+
+                    // [#13181] We must make the '' vs NULL distinction explicit in XML
+                    if (v.getDataType().isString())
+                        return xmlelement(n, xmlattributes(when(v.isNull(), inline("true")).as("xsi:nil")), v);
+                    else
+                        return xmlelement(n, v);
+                })
             )
         );
     }

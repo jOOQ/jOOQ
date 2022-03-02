@@ -216,7 +216,11 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
             s.inColumn = true;
 
             DataType<?> t = s.fields.get(s.column).getDataType();
-            if (!t.isMultiset() && !t.isRecord())
+
+            // [#13181] String NULL and '' values cannot be distinguished without xsi:nil
+            if (t.isString() && !("true".equals(attributes.getValue("xsi:nil"))))
+                s.values.add("");
+            else if (!t.isMultiset() && !t.isRecord())
                 s.values.add(null);
         }
     }

@@ -116,6 +116,7 @@ import org.xml.sax.SAXException;
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 abstract class AbstractRecord extends AbstractStore implements Record {
+    private static final JooqLogger             log              = JooqLogger.getLogger(AbstractRecord.class);
 
     final AbstractRow<? extends AbstractRecord> fields;
     final Object[]                              values;

@@ -150,6 +150,16 @@ final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends Abstra
         }
 
         ctx.sql(')');
+
+        // [#13174] Need to cast inline UDT ROW expressions to the UDT type
+        switch (ctx.family()) {
+
+
+            case POSTGRES:
+            case YUGABYTEDB:
+                ctx.sql("::").visit(value.getQualifier());
+                break;
+        }
     }
 
     @Deprecated

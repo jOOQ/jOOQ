@@ -108,7 +108,13 @@ public interface TableRecord<R extends TableRecord<R>> extends QualifiedRecord<R
      * <p>
      * This returns a parent record referenced by this record through a given
      * foreign key, as if fetching from {@link #parent(ForeignKey)}. If no
-     * parent record was found, this returns <code>null</code>
+     * parent record was found, this returns <code>null</code>.
+     * <p>
+     * <strong>A separate roundtrip is created by this operation.</strong> It is
+     * often much better to include parent records using ordinary
+     * <code>JOIN</code> mechanisms in a single query, or using nested records,
+     * see <a href=
+     * "https://www.jooq.org/doc/latest/manual/sql-building/column-expressions/nested-records/">https://www.jooq.org/doc/latest/manual/sql-building/column-expressions/nested-records/</a>.
      *
      * @throws DataAccessException if something went wrong executing the query
      * @see ForeignKey#fetchParent(Record)

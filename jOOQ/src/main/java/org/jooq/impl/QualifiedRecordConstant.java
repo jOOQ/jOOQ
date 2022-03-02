@@ -156,7 +156,6 @@ final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends Abstra
 
 
             case POSTGRES:
-            case YUGABYTEDB:
                 ctx.sql("::").visit(value.getQualifier());
                 break;
         }

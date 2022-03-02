@@ -446,8 +446,8 @@ public class PostgresUtils {
                         state = PG_OBJECT_QUOTED_VALUE;
                     }
 
-                    // Consume "null"
-                    else if ((c == 'n' || c == 'N') && (i + 4 < input.length())
+                    // [#13169] Consume "null", if this is an array literal
+                    else if ((c == 'n' || c == 'N') && (i + 4 < input.length() && open == '{')
                         && input.substring(i, i + 4).equalsIgnoreCase("null")) {
                         values.add(null);
                         i += 3;

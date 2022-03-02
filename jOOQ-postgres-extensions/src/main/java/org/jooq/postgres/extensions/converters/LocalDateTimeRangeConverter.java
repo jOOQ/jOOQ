@@ -37,38 +37,42 @@
  */
 package org.jooq.postgres.extensions.converters;
 
-import static org.jooq.postgres.extensions.types.DateRange.dateRange;
+import static org.jooq.postgres.extensions.types.LocalDateTimeRange.localDateTimeRange;
 
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
-import org.jooq.postgres.extensions.types.DateRange;
+import org.jooq.Converter;
+import org.jooq.impl.DefaultConverterProvider;
+import org.jooq.postgres.extensions.types.LocalDateTimeRange;
 
 /**
- * A converter for {@link DateRange}.
+ * A converter for {@link LocalDateTimeRange}.
  *
  * @author Lukas Eder
  */
-public class DateRangeConverter extends AbstractRangeConverter<Date, DateRange> {
+public class LocalDateTimeRangeConverter extends AbstractRangeConverter<LocalDateTime, LocalDateTimeRange> {
 
-    private static final Date      EPOCH = Date.valueOf("1970-01-01");
-    private static final DateRange EMPTY = dateRange(EPOCH, EPOCH);
+    private static final LocalDateTime                    EPOCH     = LocalDateTime.parse("1970-01-01T00:00:00");
+    private static final LocalDateTimeRange               EMPTY     = localDateTimeRange(EPOCH, EPOCH);
+    private static final Converter<String, LocalDateTime> CONVERTER = new DefaultConverterProvider().provide(String.class, LocalDateTime.class);
 
-    public DateRangeConverter() {
-        super(DateRange.class);
+    public LocalDateTimeRangeConverter() {
+        super(LocalDateTimeRange.class);
     }
 
     @Override
-    final DateRange construct(String lower, boolean lowerIncluding, String upper, boolean upperIncluding) {
-        return dateRange(
-            lower == null ? null : Date.valueOf(lower),
+    final LocalDateTimeRange construct(String lower, boolean lowerIncluding, String upper, boolean upperIncluding) {
+        return localDateTimeRange(
+            CONVERTER.from(lower),
             lowerIncluding,
-            upper == null ? null : Date.valueOf(upper),
+            CONVERTER.from(upper),
             upperIncluding
         );
     }
 
     @Override
-    final DateRange empty() {
+    final LocalDateTimeRange empty() {
         return EMPTY;
     }
 }

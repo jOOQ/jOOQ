@@ -37,18 +37,14 @@
  */
 package org.jooq.postgres.extensions.converters;
 
-import static org.jooq.postgres.extensions.types.DateRange.dateRange;
 import static org.jooq.postgres.extensions.types.LocalDateRange.localDateRange;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
-import org.jooq.postgres.extensions.types.DateRange;
-import org.jooq.postgres.extensions.types.IntegerRange;
 import org.jooq.postgres.extensions.types.LocalDateRange;
 
 /**
- * A converter for {@link IntegerRange}.
+ * A converter for {@link LocalDateRange}.
  *
  * @author Lukas Eder
  */

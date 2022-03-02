@@ -35,40 +35,33 @@
  *
  *
  */
-package org.jooq.postgres.extensions.converters;
+package org.jooq.postgres.extensions.types;
 
-import static org.jooq.postgres.extensions.types.DateRange.dateRange;
-
-import java.sql.Date;
-
-import org.jooq.postgres.extensions.types.DateRange;
+import java.sql.Timestamp;
 
 /**
- * A converter for {@link DateRange}.
+ * A data type representing the PostgreSQL <code>tsrange</code> type.
  *
  * @author Lukas Eder
  */
-public class DateRangeConverter extends AbstractRangeConverter<Date, DateRange> {
+public final class TimestampRange extends AbstractRange<Timestamp> {
 
-    private static final Date      EPOCH = Date.valueOf("1970-01-01");
-    private static final DateRange EMPTY = dateRange(EPOCH, EPOCH);
-
-    public DateRangeConverter() {
-        super(DateRange.class);
+    private TimestampRange(Timestamp lower, boolean lowerIncluding, Timestamp upper, boolean upperIncluding) {
+        super(lower, lowerIncluding, upper, upperIncluding);
     }
 
-    @Override
-    final DateRange construct(String lower, boolean lowerIncluding, String upper, boolean upperIncluding) {
-        return dateRange(
-            lower == null ? null : Date.valueOf(lower),
-            lowerIncluding,
-            upper == null ? null : Date.valueOf(upper),
-            upperIncluding
-        );
+    /**
+     * Create a new {@link TimestampRange} with a inclusive lower bound and an
+     * exclusive upper bound.
+     */
+    public static final TimestampRange timestampRange(Timestamp lower, Timestamp upper) {
+        return new TimestampRange(lower, true, upper, false);
     }
 
-    @Override
-    final DateRange empty() {
-        return EMPTY;
+    /**
+     * Create a new {@link TimestampRange}.
+     */
+    public static final TimestampRange timestampRange(Timestamp lower, boolean lowerIncluding, Timestamp upper, boolean upperIncluding) {
+        return new TimestampRange(lower, lowerIncluding, upper, upperIncluding);
     }
 }

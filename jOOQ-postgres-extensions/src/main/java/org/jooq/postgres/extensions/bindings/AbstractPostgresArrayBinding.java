@@ -39,17 +39,12 @@ package org.jooq.postgres.extensions.bindings;
 
 import java.sql.Array;
 import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
 import java.sql.Types;
 
 import org.jooq.BindingGetResultSetContext;
-import org.jooq.BindingGetSQLInputContext;
 import org.jooq.BindingGetStatementContext;
 import org.jooq.BindingRegisterContext;
-import org.jooq.BindingSQLContext;
-import org.jooq.BindingSetSQLOutputContext;
 import org.jooq.BindingSetStatementContext;
-import org.jooq.impl.AbstractBinding;
 
 /**
  * A common base class for bindings in this module.

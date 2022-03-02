@@ -37,38 +37,42 @@
  */
 package org.jooq.postgres.extensions.converters;
 
-import static org.jooq.postgres.extensions.types.DateRange.dateRange;
+import static org.jooq.postgres.extensions.types.OffsetDateTimeRange.offsetDateTimeRange;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
-import org.jooq.postgres.extensions.types.DateRange;
+import org.jooq.Converter;
+import org.jooq.impl.DefaultConverterProvider;
+import org.jooq.postgres.extensions.types.OffsetDateTimeRange;
 
 /**
- * A converter for {@link DateRange}.
+ * A converter for {@link OffsetDateTimeRange}.
  *
  * @author Lukas Eder
  */
-public class DateRangeConverter extends AbstractRangeConverter<Date, DateRange> {
+public class OffsetDateTimeRangeConverter extends AbstractRangeConverter<OffsetDateTime, OffsetDateTimeRange> {
 
-    private static final Date      EPOCH = Date.valueOf("1970-01-01");
-    private static final DateRange EMPTY = dateRange(EPOCH, EPOCH);
+    private static final OffsetDateTime                    EPOCH     = OffsetDateTime.parse("1970-01-01T00:00:00Z");
+    private static final OffsetDateTimeRange               EMPTY     = offsetDateTimeRange(EPOCH, EPOCH);
+    private static final Converter<String, OffsetDateTime> CONVERTER = new DefaultConverterProvider().provide(String.class, OffsetDateTime.class);
 
-    public DateRangeConverter() {
-        super(DateRange.class);
+    public OffsetDateTimeRangeConverter() {
+        super(OffsetDateTimeRange.class);
     }
 
     @Override
-    final DateRange construct(String lower, boolean lowerIncluding, String upper, boolean upperIncluding) {
-        return dateRange(
-            lower == null ? null : Date.valueOf(lower),
+    final OffsetDateTimeRange construct(String lower, boolean lowerIncluding, String upper, boolean upperIncluding) {
+        return offsetDateTimeRange(
+            CONVERTER.from(lower),
             lowerIncluding,
-            upper == null ? null : Date.valueOf(upper),
+            CONVERTER.from(upper),
             upperIncluding
         );
     }
 
     @Override
-    final DateRange empty() {
+    final OffsetDateTimeRange empty() {
         return EMPTY;
     }
 }

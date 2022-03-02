@@ -37,14 +37,12 @@
  */
 package org.jooq.postgres.extensions.converters;
 
-import static org.jooq.postgres.extensions.types.IntegerRange.integerRange;
 import static org.jooq.postgres.extensions.types.LongRange.longRange;
 
-import org.jooq.postgres.extensions.types.IntegerRange;
 import org.jooq.postgres.extensions.types.LongRange;
 
 /**
- * A converter for {@link IntegerRange}.
+ * A converter for {@link LongRange}.
  *
  * @author Lukas Eder
  */

@@ -2027,6 +2027,19 @@ public abstract class AbstractDatabase implements Database {
                         .withIncludeTypes("_daterange")
                         .withPriority(Integer.MIN_VALUE)
                     );
+
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.LocalDateTimeRange")
+                        .withBinding("org.jooq.postgres.extensions.bindings.LocalDateTimeRangeBinding")
+                        .withIncludeTypes("tsrange")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.LocalDateTimeRange[]")
+                        .withBinding("org.jooq.postgres.extensions.bindings.LocalDateTimeRangeArrayBinding")
+                        .withIncludeTypes("_tsrange")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
                 }
                 else {
                     getConfiguredForcedTypes().add(new ForcedType()
@@ -2041,7 +2054,33 @@ public abstract class AbstractDatabase implements Database {
                         .withIncludeTypes("_daterange")
                         .withPriority(Integer.MIN_VALUE)
                     );
+
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.TimestampRange")
+                        .withBinding("org.jooq.postgres.extensions.bindings.TimestampRangeBinding")
+                        .withIncludeTypes("tsrange")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.TimestampRange[]")
+                        .withBinding("org.jooq.postgres.extensions.bindings.TimestampRangeArrayBinding")
+                        .withIncludeTypes("_tsrange")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
                 }
+
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.OffsetDateTimeRange")
+                    .withBinding("org.jooq.postgres.extensions.bindings.OffsetDateTimeRangeBinding")
+                    .withIncludeTypes("tstzrange")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.OffsetDateTimeRange[]")
+                    .withBinding("org.jooq.postgres.extensions.bindings.OffsetDateTimeRangeArrayBinding")
+                    .withIncludeTypes("_tstzrange")
+                    .withPriority(Integer.MIN_VALUE)
+                );
             }
             catch (ClassNotFoundException ignore) {
                 log.debug("Built in data types", "org.jooq.postgres.extensions.types.Hstore not found on classpath, ignoring built in data type extensions");

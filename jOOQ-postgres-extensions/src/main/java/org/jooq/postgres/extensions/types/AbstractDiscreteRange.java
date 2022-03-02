@@ -72,7 +72,8 @@ abstract class AbstractDiscreteRange<T, R extends AbstractDiscreteRange<T, R>> e
     abstract R construct(T lower, T upper);
 
     final boolean isCanonical() {
-        return lowerIncluding() && !upperIncluding();
+        return (lower() == null || lowerIncluding())
+            && (upper() == null || !upperIncluding());
     }
 
     @SuppressWarnings("unchecked")

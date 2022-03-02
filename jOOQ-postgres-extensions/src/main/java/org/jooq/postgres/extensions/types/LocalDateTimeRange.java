@@ -35,40 +35,33 @@
  *
  *
  */
-package org.jooq.postgres.extensions.converters;
+package org.jooq.postgres.extensions.types;
 
-import static org.jooq.postgres.extensions.types.DateRange.dateRange;
-
-import java.sql.Date;
-
-import org.jooq.postgres.extensions.types.DateRange;
+import java.time.LocalDateTime;
 
 /**
- * A converter for {@link DateRange}.
+ * A data type representing the PostgreSQL <code>tsrange</code> type.
  *
  * @author Lukas Eder
  */
-public class DateRangeConverter extends AbstractRangeConverter<Date, DateRange> {
+public final class LocalDateTimeRange extends AbstractRange<LocalDateTime> {
 
-    private static final Date      EPOCH = Date.valueOf("1970-01-01");
-    private static final DateRange EMPTY = dateRange(EPOCH, EPOCH);
-
-    public DateRangeConverter() {
-        super(DateRange.class);
+    private LocalDateTimeRange(LocalDateTime lower, boolean lowerIncluding, LocalDateTime upper, boolean upperIncluding) {
+        super(lower, lowerIncluding, upper, upperIncluding);
     }
 
-    @Override
-    final DateRange construct(String lower, boolean lowerIncluding, String upper, boolean upperIncluding) {
-        return dateRange(
-            lower == null ? null : Date.valueOf(lower),
-            lowerIncluding,
-            upper == null ? null : Date.valueOf(upper),
-            upperIncluding
-        );
+    /**
+     * Create a new {@link LocalDateTimeRange} with a inclusive lower bound and an
+     * exclusive upper bound.
+     */
+    public static final LocalDateTimeRange localDateTimeRange(LocalDateTime lower, LocalDateTime upper) {
+        return new LocalDateTimeRange(lower, true, upper, false);
     }
 
-    @Override
-    final DateRange empty() {
-        return EMPTY;
+    /**
+     * Create a new {@link LocalDateTimeRange}.
+     */
+    public static final LocalDateTimeRange localDateTimeRange(LocalDateTime lower, boolean lowerIncluding, LocalDateTime upper, boolean upperIncluding) {
+        return new LocalDateTimeRange(lower, lowerIncluding, upper, upperIncluding);
     }
 }

@@ -44,10 +44,7 @@ import org.jooq.BindingGetResultSetContext;
 import org.jooq.BindingGetStatementContext;
 import org.jooq.BindingRegisterContext;
 import org.jooq.BindingSetStatementContext;
-import org.jooq.Converter;
-import org.jooq.postgres.extensions.converters.InetConverter;
 import org.jooq.postgres.extensions.types.AbstractInet;
-import org.jooq.postgres.extensions.types.Inet;
 
 /**
  * A binding for the PostgreSQL <code>inet</code> or <code>cidr</code> data

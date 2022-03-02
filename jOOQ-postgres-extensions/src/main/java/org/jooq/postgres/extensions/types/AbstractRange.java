@@ -50,15 +50,17 @@ import org.jetbrains.annotations.Nullable;
 public abstract class AbstractRange<T> implements Serializable {
 
     private final T       lower;
-    private final boolean lowerIncluding;
     private final T       upper;
+    private final boolean lowerIncluding;
     private final boolean upperIncluding;
 
     AbstractRange(T lower, boolean lowerIncluding, T upper, boolean upperIncluding) {
         this.lower = lower;
-        this.lowerIncluding = lowerIncluding;
         this.upper = upper;
-        this.upperIncluding = upperIncluding;
+
+        // In PostgreSQL, there is no [,] range, only (,)
+        this.lowerIncluding = lower != null && lowerIncluding;
+        this.upperIncluding = upper != null && upperIncluding;
     }
 
     /**

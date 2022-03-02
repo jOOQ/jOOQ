@@ -70,9 +70,13 @@ abstract class AbstractRangeConverter<X, U extends AbstractRange<X>> extends Abs
         String s1 = a[1];
 
         String lower = s0.substring(1);
+        if (lower.startsWith("\""))
+            lower = lower.substring(1, lower.length() - 1);
         boolean lowerIncluding = s0.charAt(0) == '[';
         int l = s1.length() - 1;
         String upper = s1.substring(0, l);
+        if (upper.startsWith("\""))
+            upper = upper.substring(1, upper.length() - 1);
         boolean upperIncluding = s1.charAt(l) == ']';
 
         return construct(

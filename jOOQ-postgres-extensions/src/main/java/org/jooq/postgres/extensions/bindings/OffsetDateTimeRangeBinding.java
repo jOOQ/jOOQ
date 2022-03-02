@@ -35,40 +35,28 @@
  *
  *
  */
-package org.jooq.postgres.extensions.converters;
+package org.jooq.postgres.extensions.bindings;
 
-import static org.jooq.postgres.extensions.types.DateRange.dateRange;
-
-import java.sql.Date;
-
-import org.jooq.postgres.extensions.types.DateRange;
+import org.jooq.Converter;
+import org.jooq.postgres.extensions.converters.OffsetDateTimeRangeConverter;
+import org.jooq.postgres.extensions.types.OffsetDateTimeRange;
 
 /**
- * A converter for {@link DateRange}.
+ * A binding for the PostgreSQL <code>tstzrange</code> data type.
  *
  * @author Lukas Eder
  */
-public class DateRangeConverter extends AbstractRangeConverter<Date, DateRange> {
+public class OffsetDateTimeRangeBinding extends AbstractRangeBinding<OffsetDateTimeRange> {
 
-    private static final Date      EPOCH = Date.valueOf("1970-01-01");
-    private static final DateRange EMPTY = dateRange(EPOCH, EPOCH);
+    private static final Converter<Object, OffsetDateTimeRange> CONVERTER = new OffsetDateTimeRangeConverter();
 
-    public DateRangeConverter() {
-        super(DateRange.class);
+    @Override
+    public Converter<Object, OffsetDateTimeRange> converter() {
+        return CONVERTER;
     }
 
     @Override
-    final DateRange construct(String lower, boolean lowerIncluding, String upper, boolean upperIncluding) {
-        return dateRange(
-            lower == null ? null : Date.valueOf(lower),
-            lowerIncluding,
-            upper == null ? null : Date.valueOf(upper),
-            upperIncluding
-        );
-    }
-
-    @Override
-    final DateRange empty() {
-        return EMPTY;
+    protected String castType() {
+        return "tstzrange";
     }
 }

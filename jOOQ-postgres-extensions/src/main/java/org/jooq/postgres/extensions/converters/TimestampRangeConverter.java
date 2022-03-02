@@ -37,38 +37,41 @@
  */
 package org.jooq.postgres.extensions.converters;
 
-import static org.jooq.postgres.extensions.types.DateRange.dateRange;
+import static org.jooq.postgres.extensions.types.TimestampRange.timestampRange;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
-import org.jooq.postgres.extensions.types.DateRange;
+import org.jooq.Converter;
+import org.jooq.impl.DefaultConverterProvider;
+import org.jooq.postgres.extensions.types.TimestampRange;
 
 /**
- * A converter for {@link DateRange}.
+ * A converter for {@link TimestampRange}.
  *
  * @author Lukas Eder
  */
-public class DateRangeConverter extends AbstractRangeConverter<Date, DateRange> {
+public class TimestampRangeConverter extends AbstractRangeConverter<Timestamp, TimestampRange> {
 
-    private static final Date      EPOCH = Date.valueOf("1970-01-01");
-    private static final DateRange EMPTY = dateRange(EPOCH, EPOCH);
+    private static final Timestamp                    EPOCH     = Timestamp.valueOf("1970-01-01 00:00:00");
+    private static final TimestampRange               EMPTY     = timestampRange(EPOCH, EPOCH);
+    private static final Converter<String, Timestamp> CONVERTER = new DefaultConverterProvider().provide(String.class, Timestamp.class);
 
-    public DateRangeConverter() {
-        super(DateRange.class);
+    public TimestampRangeConverter() {
+        super(TimestampRange.class);
     }
 
     @Override
-    final DateRange construct(String lower, boolean lowerIncluding, String upper, boolean upperIncluding) {
-        return dateRange(
-            lower == null ? null : Date.valueOf(lower),
+    final TimestampRange construct(String lower, boolean lowerIncluding, String upper, boolean upperIncluding) {
+        return timestampRange(
+            CONVERTER.from(lower),
             lowerIncluding,
-            upper == null ? null : Date.valueOf(upper),
+            CONVERTER.from(upper),
             upperIncluding
         );
     }
 
     @Override
-    final DateRange empty() {
+    final TimestampRange empty() {
         return EMPTY;
     }
 }

@@ -37,41 +37,38 @@
  */
 package org.jooq.postgres.extensions.converters;
 
-import static org.jooq.postgres.extensions.types.LocalDateTimeRange.localDateTimeRange;
+import static org.jooq.postgres.extensions.types.BigDecimalRange.bigDecimalRange;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
-import org.jooq.Converter;
-import org.jooq.impl.DefaultConverterProvider;
-import org.jooq.postgres.extensions.types.LocalDateTimeRange;
+import org.jooq.postgres.extensions.types.BigDecimalRange;
+import org.jooq.postgres.extensions.types.TimestampRange;
 
 /**
- * A converter for {@link LocalDateTimeRange}.
+ * A converter for {@link TimestampRange}.
  *
  * @author Lukas Eder
  */
-public class LocalDateTimeRangeConverter extends AbstractRangeConverter<LocalDateTime, LocalDateTimeRange> {
+public class BigDecimalRangeConverter extends AbstractRangeConverter<BigDecimal, BigDecimalRange> {
 
-    private static final LocalDateTime                    EPOCH     = LocalDateTime.parse("1970-01-01T00:00:00");
-    private static final LocalDateTimeRange               EMPTY     = localDateTimeRange(EPOCH, EPOCH);
-    private static final Converter<String, LocalDateTime> CONVERTER = new DefaultConverterProvider().provide(String.class, LocalDateTime.class);
+    private static final BigDecimalRange EMPTY = bigDecimalRange(BigDecimal.ZERO, BigDecimal.ZERO);
 
-    public LocalDateTimeRangeConverter() {
-        super(LocalDateTimeRange.class);
+    public BigDecimalRangeConverter() {
+        super(BigDecimalRange.class);
     }
 
     @Override
-    final LocalDateTimeRange construct(String lower, boolean lowerIncluding, String upper, boolean upperIncluding) {
-        return localDateTimeRange(
-            CONVERTER.from(lower),
+    final BigDecimalRange construct(String lower, boolean lowerIncluding, String upper, boolean upperIncluding) {
+        return bigDecimalRange(
+            lower == null ? null : new BigDecimal(lower),
             lowerIncluding,
-            CONVERTER.from(upper),
+            upper == null ? null : new BigDecimal(upper),
             upperIncluding
         );
     }
 
     @Override
-    final LocalDateTimeRange empty() {
+    final BigDecimalRange empty() {
         return EMPTY;
     }
 }

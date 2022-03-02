@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Tools.findAny;
 import static org.jooq.tools.reflect.Reflect.wrapper;
 
 import java.io.File;

@@ -2014,6 +2014,19 @@ public abstract class AbstractDatabase implements Database {
                     .withPriority(Integer.MIN_VALUE)
                 );
 
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.BigDecimalRange")
+                    .withBinding("org.jooq.postgres.extensions.bindings.BigDecimalRangeBinding")
+                    .withIncludeTypes("numrange")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.BigDecimalRange[]")
+                    .withBinding("org.jooq.postgres.extensions.bindings.BigDecimalRangeArrayBinding")
+                    .withIncludeTypes("_numrange")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+
                 if (javaTimeTypes()) {
                     getConfiguredForcedTypes().add(new ForcedType()
                         .withUserType("org.jooq.postgres.extensions.types.LocalDateRange")

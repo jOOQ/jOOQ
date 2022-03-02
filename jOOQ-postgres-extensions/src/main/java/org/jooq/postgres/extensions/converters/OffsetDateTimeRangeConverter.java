@@ -39,7 +39,6 @@ package org.jooq.postgres.extensions.converters;
 
 import static org.jooq.postgres.extensions.types.OffsetDateTimeRange.offsetDateTimeRange;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 import org.jooq.Converter;

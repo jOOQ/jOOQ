@@ -1937,6 +1937,19 @@ public abstract class AbstractDatabase implements Database {
                 ClassUtils.loadClass("org.jooq.postgres.extensions.types.Hstore");
 
                 getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("java.lang.String")
+                    .withBinding("org.jooq.postgres.extensions.bindings.CitextBinding")
+                    .withIncludeTypes("citext")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("java.lang.String[]")
+                    .withBinding("org.jooq.postgres.extensions.bindings.CitextArrayBinding")
+                    .withIncludeTypes("_citext")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+
+                getConfiguredForcedTypes().add(new ForcedType()
                     .withUserType("org.jooq.postgres.extensions.types.Hstore")
                     .withBinding("org.jooq.postgres.extensions.bindings.HstoreBinding")
                     .withIncludeTypes("hstore")

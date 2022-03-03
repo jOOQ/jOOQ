@@ -37,7 +37,6 @@
  */
 package org.jooq.postgres.extensions.types;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import org.jetbrains.annotations.Nullable;
@@ -47,7 +46,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-public abstract class AbstractRange<T> implements Serializable {
+abstract class AbstractRange<T> implements Range<T> {
 
     private final T       lower;
     private final T       upper;
@@ -63,27 +62,29 @@ public abstract class AbstractRange<T> implements Serializable {
         this.upperIncluding = upper != null && upperIncluding;
     }
 
-    /**
-     * In PostgreSQL, a [x,x) range is considered "empty".
-     */
+    @Override
     public /* non-final */ boolean isEmpty() {
         return lowerIncluding && !upperIncluding && Objects.equals(lower, upper);
     }
 
+    @Override
     @Nullable
     public final T lower() {
         return lower;
     }
 
+    @Override
     public final boolean lowerIncluding() {
         return lowerIncluding;
     }
 
+    @Override
     @Nullable
     public final T upper() {
         return upper;
     }
 
+    @Override
     public final boolean upperIncluding() {
         return upperIncluding;
     }

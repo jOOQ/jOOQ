@@ -40,14 +40,14 @@ package org.jooq.postgres.extensions.converters;
 import static org.jooq.tools.StringUtils.isBlank;
 
 import org.jooq.impl.AbstractConverter;
-import org.jooq.postgres.extensions.types.AbstractRange;
+import org.jooq.postgres.extensions.types.Range;
 
 /**
  * A converter for {@link AbstractRange} types.
  *
  * @author Lukas Eder
  */
-abstract class AbstractRangeConverter<X, U extends AbstractRange<X>> extends AbstractConverter<Object, U> {
+abstract class AbstractRangeConverter<X, U extends Range<X>> extends AbstractConverter<Object, U> {
 
     public AbstractRangeConverter(Class<U> toType) {
         super(Object.class, toType);

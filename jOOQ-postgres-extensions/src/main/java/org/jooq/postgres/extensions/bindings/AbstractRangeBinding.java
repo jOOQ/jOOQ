@@ -44,14 +44,14 @@ import org.jooq.BindingGetResultSetContext;
 import org.jooq.BindingGetStatementContext;
 import org.jooq.BindingRegisterContext;
 import org.jooq.BindingSetStatementContext;
-import org.jooq.postgres.extensions.types.AbstractRange;
+import org.jooq.postgres.extensions.types.Range;
 
 /**
  * A binding for the PostgreSQL <code>range</code> data types.
  *
  * @author Lukas Eder
  */
-abstract class AbstractRangeBinding<U extends AbstractRange<?>> extends AbstractPostgresBinding<Object, U> {
+abstract class AbstractRangeBinding<U extends Range<?>> extends AbstractPostgresBinding<Object, U> {
 
     // TODO: This looks just like the AbstractInetBinding. Perhaps rename?
 

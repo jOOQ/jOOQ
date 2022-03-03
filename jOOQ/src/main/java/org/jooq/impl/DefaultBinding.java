@@ -3789,11 +3789,26 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return (Record) ctx.input().readObject();
         }
 
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         static final <R extends Record> R readMultiset(BindingGetResultSetContext<?> ctx, DataType<R> type) throws SQLException {
-            Result<R> result = DefaultResultBinding.readMultiset(ctx, (AbstractRow<R>) type.getRow(), type.getType(),
-                s -> s != null && (s.startsWith("[") || s.startsWith("{")) ? "[" + s + "]" : s,
-                s -> s != null && (s.startsWith("<")) ? "<result>" + s + "</result>" : s
-            );
+            AbstractRow<R> row = (AbstractRow<R>) type.getRow();
+            Result<R> result;
+
+            // [#12930] AbstractRowAsSubquery doesn't unnecessarily nest Row1
+            if (row.size() == 1) {
+                result = new ResultImpl<>(ctx.configuration(), row);
+                result.add(newRecord(true, (Class<R>) type.getRecordType(), row, ctx.configuration()).operate(r -> {
+                    DefaultBindingGetResultSetContext<?> c = new DefaultBindingGetResultSetContext<>(ctx.executeContext(), ctx.resultSet(), ctx.index());
+                    r.field(0).getBinding().get((BindingGetResultSetContext) c);
+                    r.fromArray(c.value());
+                    return r;
+                }));
+            }
+            else
+                result = DefaultResultBinding.readMultiset(ctx, row, type.getType(),
+                    s -> s != null && (s.startsWith("[") || s.startsWith("{")) ? "[" + s + "]" : s,
+                    s -> s != null && (s.startsWith("<")) ? "<result>" + s + "</result>" : s
+                );
 
             return isEmpty(result) ? null : result.get(0);
         }

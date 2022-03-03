@@ -37,9 +37,8 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Integer.parseInt;
 import static java.util.Arrays.asList;
-import static java.util.Comparator.comparing;
-import static java.util.stream.Collectors.toList;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DefaultDataType.getDataType;
@@ -50,9 +49,7 @@ import static org.jooq.tools.StringUtils.defaultIfBlank;
 
 import java.io.Reader;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -175,7 +172,7 @@ final class JSONReader<R extends Record> {
                             actualRow,
 
                             // This sort is required if we use the JSONFormat.RecordFormat.OBJECT encoding (e.g. in SQL Server)
-                            record.entrySet().stream().sorted(comparing(Entry::getKey)).map(Entry::getValue).collect(toList())
+                            sortedValues(record)
                         )
                         : null;
 
@@ -212,6 +209,19 @@ final class JSONReader<R extends Record> {
                 }
             }
         }
+
+        return result;
+    }
+
+    private static final List<Object> sortedValues(Map<String, Object> record) {
+
+        // [#13200] The MULTISET map keys are always of the form v0, v1, v2, ...
+        List<Object> result = asList(new Object[record.size()]);
+
+        // [#13200] Knowing the key format, we can "sort" the contents in O(N)
+        //          rather than with a more name-agnostic O(N log N) approach
+        for (Entry<String, Object> e : record.entrySet())
+            result.set(parseInt(e.getKey().substring(1)), e.getValue());
 
         return result;
     }

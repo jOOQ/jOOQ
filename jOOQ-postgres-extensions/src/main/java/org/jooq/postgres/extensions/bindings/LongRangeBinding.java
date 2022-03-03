@@ -46,7 +46,7 @@ import org.jooq.postgres.extensions.types.LongRange;
  *
  * @author Lukas Eder
  */
-public class LongRangeBinding extends AbstractRangeBinding<LongRange> {
+public class LongRangeBinding extends AbstractPostgresVarcharBinding<LongRange> {
 
     private static final Converter<Object, LongRange> CONVERTER = new LongRangeConverter();
 

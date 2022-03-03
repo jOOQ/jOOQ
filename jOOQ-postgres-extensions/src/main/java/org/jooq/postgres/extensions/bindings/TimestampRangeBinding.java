@@ -46,7 +46,7 @@ import org.jooq.postgres.extensions.types.TimestampRange;
  *
  * @author Lukas Eder
  */
-public class TimestampRangeBinding extends AbstractRangeBinding<TimestampRange> {
+public class TimestampRangeBinding extends AbstractPostgresVarcharBinding<TimestampRange> {
 
     private static final Converter<Object, TimestampRange> CONVERTER = new TimestampRangeConverter();
 

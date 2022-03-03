@@ -46,7 +46,7 @@ import org.jooq.postgres.extensions.types.OffsetDateTimeRange;
  *
  * @author Lukas Eder
  */
-public class OffsetDateTimeRangeBinding extends AbstractRangeBinding<OffsetDateTimeRange> {
+public class OffsetDateTimeRangeBinding extends AbstractPostgresVarcharBinding<OffsetDateTimeRange> {
 
     private static final Converter<Object, OffsetDateTimeRange> CONVERTER = new OffsetDateTimeRangeConverter();
 

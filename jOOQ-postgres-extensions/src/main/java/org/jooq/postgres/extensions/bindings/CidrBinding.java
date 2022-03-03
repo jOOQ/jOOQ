@@ -46,7 +46,7 @@ import org.jooq.postgres.extensions.types.Cidr;
  *
  * @author Lukas Eder
  */
-public class CidrBinding extends AbstractInetBinding<Cidr> {
+public class CidrBinding extends AbstractPostgresVarcharBinding<Cidr> {
 
     private static final Converter<Object, Cidr> CONVERTER = new CidrConverter();
 

@@ -1950,6 +1950,19 @@ public abstract class AbstractDatabase implements Database {
                 );
 
                 getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.Ltree")
+                    .withBinding("org.jooq.postgres.extensions.bindings.LtreeBinding")
+                    .withIncludeTypes("ltree")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+                getConfiguredForcedTypes().add(new ForcedType()
+                    .withUserType("org.jooq.postgres.extensions.types.Ltree[]")
+                    .withBinding("org.jooq.postgres.extensions.bindings.LtreeArrayBinding")
+                    .withIncludeTypes("_ltree")
+                    .withPriority(Integer.MIN_VALUE)
+                );
+
+                getConfiguredForcedTypes().add(new ForcedType()
                     .withUserType("org.jooq.postgres.extensions.types.Hstore")
                     .withBinding("org.jooq.postgres.extensions.bindings.HstoreBinding")
                     .withIncludeTypes("hstore")

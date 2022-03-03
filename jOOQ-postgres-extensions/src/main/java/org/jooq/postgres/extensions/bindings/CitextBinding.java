@@ -37,13 +37,6 @@
  */
 package org.jooq.postgres.extensions.bindings;
 
-import java.sql.SQLException;
-import java.sql.Types;
-
-import org.jooq.BindingGetResultSetContext;
-import org.jooq.BindingGetStatementContext;
-import org.jooq.BindingRegisterContext;
-import org.jooq.BindingSetStatementContext;
 import org.jooq.Converter;
 import org.jooq.postgres.extensions.converters.CitextConverter;
 
@@ -52,7 +45,7 @@ import org.jooq.postgres.extensions.converters.CitextConverter;
  *
  * @author Lukas Eder
  */
-public class CitextBinding extends AbstractPostgresBinding<Object, String> {
+public class CitextBinding extends AbstractPostgresVarcharBinding<String> {
 
     private static final Converter<Object, String> CONVERTER = new CitextConverter();
 
@@ -64,26 +57,5 @@ public class CitextBinding extends AbstractPostgresBinding<Object, String> {
     @Override
     protected String castType() {
         return "citext";
-    }
-
-    @Override
-    public void register(final BindingRegisterContext<String> ctx) throws SQLException {
-        ctx.statement().registerOutParameter(ctx.index(), Types.VARCHAR);
-    }
-
-    @Override
-    public void set(final BindingSetStatementContext<String> ctx) throws SQLException {
-        ctx.statement().setString(ctx.index(), ctx.value());
-    }
-
-
-    @Override
-    public void get(final BindingGetResultSetContext<String> ctx) throws SQLException {
-        ctx.value(ctx.resultSet().getString(ctx.index()));
-    }
-
-    @Override
-    public void get(final BindingGetStatementContext<String> ctx) throws SQLException {
-        ctx.value(ctx.statement().getString(ctx.index()));
     }
 }

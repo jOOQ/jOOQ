@@ -37,6 +37,9 @@
  */
 package org.jooq.postgres.extensions.types;
 
+import static org.jooq.impl.DSL.lower;
+import static org.jooq.impl.DSL.upper;
+
 import java.util.Objects;
 
 import org.jooq.exception.DataTypeException;

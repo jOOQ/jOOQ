@@ -46,7 +46,7 @@ import org.jooq.postgres.extensions.types.IntegerRange;
  *
  * @author Lukas Eder
  */
-public class IntegerRangeBinding extends AbstractRangeBinding<IntegerRange> {
+public class IntegerRangeBinding extends AbstractPostgresVarcharBinding<IntegerRange> {
 
     private static final Converter<Object, IntegerRange> CONVERTER = new IntegerRangeConverter();
 

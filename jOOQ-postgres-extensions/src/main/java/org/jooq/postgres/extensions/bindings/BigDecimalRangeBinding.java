@@ -46,7 +46,7 @@ import org.jooq.postgres.extensions.types.BigDecimalRange;
  *
  * @author Lukas Eder
  */
-public class BigDecimalRangeBinding extends AbstractRangeBinding<BigDecimalRange> {
+public class BigDecimalRangeBinding extends AbstractPostgresVarcharBinding<BigDecimalRange> {
 
     private static final Converter<Object, BigDecimalRange> CONVERTER = new BigDecimalRangeConverter();
 

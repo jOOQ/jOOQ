@@ -37,13 +37,6 @@
  */
 package org.jooq.postgres.extensions.bindings;
 
-import java.sql.SQLException;
-import java.sql.Types;
-
-import org.jooq.BindingGetResultSetContext;
-import org.jooq.BindingGetStatementContext;
-import org.jooq.BindingRegisterContext;
-import org.jooq.BindingSetStatementContext;
 import org.jooq.Converter;
 import org.jooq.postgres.extensions.converters.HstoreConverter;
 import org.jooq.postgres.extensions.types.Hstore;
@@ -54,7 +47,7 @@ import org.jooq.postgres.extensions.types.Hstore;
  * @author Dmitry Baev
  * @author Lukas Eder
  */
-public class HstoreBinding extends AbstractPostgresBinding<Object, Hstore> {
+public class HstoreBinding extends AbstractPostgresVarcharBinding<Hstore> {
 
     private static final Converter<Object, Hstore> CONVERTER = new HstoreConverter();
 
@@ -66,28 +59,5 @@ public class HstoreBinding extends AbstractPostgresBinding<Object, Hstore> {
     @Override
     protected String castType() {
         return "hstore";
-    }
-
-    @Override
-    public void register(final BindingRegisterContext<Hstore> ctx) throws SQLException {
-        ctx.statement().registerOutParameter(ctx.index(), Types.VARCHAR);
-    }
-
-    @Override
-    public void set(final BindingSetStatementContext<Hstore> ctx) throws SQLException {
-        Object value = ctx.convert(converter()).value();
-
-        ctx.statement().setString(ctx.index(), value == null ? null : "" + value);
-    }
-
-
-    @Override
-    public void get(final BindingGetResultSetContext<Hstore> ctx) throws SQLException {
-        ctx.convert(converter()).value(ctx.resultSet().getString(ctx.index()));
-    }
-
-    @Override
-    public void get(final BindingGetStatementContext<Hstore> ctx) throws SQLException {
-        ctx.convert(converter()).value(ctx.statement().getString(ctx.index()));
     }
 }

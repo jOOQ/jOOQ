@@ -46,7 +46,7 @@ import org.jooq.postgres.extensions.types.DateRange;
  *
  * @author Lukas Eder
  */
-public class DateRangeBinding extends AbstractRangeBinding<DateRange> {
+public class DateRangeBinding extends AbstractPostgresVarcharBinding<DateRange> {
 
     private static final Converter<Object, DateRange> CONVERTER = new DateRangeConverter();
 

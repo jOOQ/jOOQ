@@ -46,7 +46,7 @@ import org.jooq.postgres.extensions.types.Inet;
  *
  * @author Lukas Eder
  */
-public class InetBinding extends AbstractInetBinding<Inet> {
+public class InetBinding extends AbstractPostgresVarcharBinding<Inet> {
 
     private static final Converter<Object, Inet> CONVERTER = new InetConverter();
 

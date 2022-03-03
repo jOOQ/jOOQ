@@ -46,7 +46,7 @@ import org.jooq.postgres.extensions.types.LocalDateRange;
  *
  * @author Lukas Eder
  */
-public class LocalDateRangeBinding extends AbstractRangeBinding<LocalDateRange> {
+public class LocalDateRangeBinding extends AbstractPostgresVarcharBinding<LocalDateRange> {
 
     private static final Converter<Object, LocalDateRange> CONVERTER = new LocalDateRangeConverter();
 

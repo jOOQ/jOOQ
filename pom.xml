@@ -28,9 +28,9 @@
 
         <!-- JDBC drivers for jOOQ-xyz-extensions modules and vendor-specific API access -->
         <postgres.version>42.3.3</postgres.version>
-        <sqlserver.version>9.4.0.jre11</sqlserver.version>
+        <sqlserver.version>10.2.0.jre11</sqlserver.version>
         <oracle.version>21.5.0.0</oracle.version>
-        <redshift.version>2.0.0.6</redshift.version>
+        <redshift.version>2.1.0.4</redshift.version>
 
         <!-- R2DBC SPI version and some matching driver versions -->
         <io.r2dbc.version>0.9.0.RELEASE</io.r2dbc.version>
@@ -49,13 +49,13 @@
         <jakarta.persistence-api.version>3.0.0</jakarta.persistence-api.version>
 
         <!-- Examples and/or extension modules use these dependencies -->
-        <hibernate.version>5.6.1.Final</hibernate.version>
+        <hibernate.version>5.6.5.Final</hibernate.version>
         <liquibase.version>4.4.3</liquibase.version>
-        <spring.version>5.3.14</spring.version>
+        <spring.version>5.3.16</spring.version>
         <spring.boot.version>2.6.1</spring.boot.version>
         <!-- [#12884] TODO: Remove explicit upgrade of protobuf-java again when https://github.com/google/error-prone/pull/2819 is released  -->
-        <errorprone.version>2.10.0</errorprone.version>
-        <testcontainers.version>1.16.2</testcontainers.version>
+        <errorprone.version>2.11.0</errorprone.version>
+        <testcontainers.version>1.16.3</testcontainers.version>
     </properties>
 
     <licenses>
@@ -312,7 +312,7 @@
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>4.13.1</version>
+                <version>4.13.2</version>
                 <scope>test</scope>
             </dependency>
             <dependency>

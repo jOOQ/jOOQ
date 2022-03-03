@@ -67,6 +67,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -951,6 +952,8 @@ final class Tools {
     static final Set<SQLDialect>         DEFAULT_BEFORE_NULL                = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
     static final Set<SQLDialect>         NO_SUPPORT_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(DERBY);
     static final Set<SQLDialect>         DEFAULT_TIMESTAMP_NOT_NULL         = SQLDialect.supportedBy(MARIADB);
+
+
 
 
 
@@ -5500,6 +5503,9 @@ final class Tools {
         //         context of an autoincrement column, in case of which explicit "integer" types are required.
         else if (type.identity() && ctx.family() == SQLITE && type.isNumeric())
             ctx.sql("integer");
+
+
+
 
 
 

@@ -223,6 +223,13 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
 
 
+
+
+
+
+
+
+
             case POSTGRES:
                 if (field instanceof Param)
                     if (field.getType() != Object.class)

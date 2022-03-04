@@ -8675,7 +8675,15 @@ public class JavaGenerator extends AbstractGenerator {
             f.readFully(bytes);
             String string = new String(bytes);
 
-            Matcher matcher = Pattern.compile("@(?:javax\\.annotation\\.)?Generated\\(\\s*?value\\s*?=\\s*?" + (scala ? "Array\\([^)]*?" : "\\{[^}]*?") + "\"" + type + " version:([^\"]*?)\"").matcher(string);
+            String arrayStart;
+            if (scala) {
+                arrayStart = "Array\\([^)]";
+            } else if (kotlin) {
+                arrayStart = "\\[[^]]";
+            } else {
+                arrayStart = "\\{[^}]";
+            }
+            Matcher matcher = Pattern.compile("@(?:javax\\.annotation\\.)?Generated\\(\\s*?value\\s*?=\\s*?" + arrayStart + "*?\"" + type + " version:([^\"]*?)\"").matcher(string);
             if (matcher.find())
                 return matcher.group(1);
         }

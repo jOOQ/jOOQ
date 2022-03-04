@@ -237,6 +237,13 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
 
 
+
+
+
+
+
+
+
             case POSTGRES:
             case YUGABYTEDB:
                 if (field instanceof Param)

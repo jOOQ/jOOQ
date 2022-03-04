@@ -177,6 +177,7 @@ final class Names {
     static final Name N_JSON_GROUP_OBJECT      = systemName("json_group_object");
     static final Name N_JSON_MERGE             = systemName("json_merge");
     static final Name N_JSON_MERGE_PRESERVE    = systemName("json_merge_preserve");
+    static final Name N_JSON_MODIFY            = systemName("json_modify");
     static final Name N_JSON_OBJECTAGG         = systemName("json_objectagg");
     static final Name N_JSON_OBJECT_AGG        = systemName("json_object_agg");
     static final Name N_JSON_QUERY             = systemName("json_query");

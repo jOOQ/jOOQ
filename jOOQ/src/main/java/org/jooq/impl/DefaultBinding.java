@@ -707,8 +707,18 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         private final boolean shouldCast(BindingSQLContext<U> ctx, T converted) {
 
-            // In default mode, casting is only done when parameters are NOT inlined
-            if (ctx.render().paramType() != INLINED) {
+            // [#10662] A few dialects require casts for NULL literals
+            if (ctx.render().paramType() == INLINED) {
+                if (converted == null) {
+                    switch (ctx.family()) {
+                        case DERBY:
+                            return true;
+                    }
+                }
+            }
+
+            // Many dialects require casts for bind values
+            else {
 
                 // Generated enums should not be cast...
                 if (!(converted instanceof EnumType)) {

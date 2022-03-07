@@ -41,6 +41,7 @@ import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Tools.asInt;
 
+import java.io.Reader;
 import java.sql.Clob;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -139,9 +140,16 @@ public class ClobBinding implements Binding<String, String> {
 
             // [#13144] Cannot call Clob::length in Firebird
             case FIREBIRD:
-                return Source.of(clob.getCharacterStream()).readString();
-            default:
+
+            // [#13217] The Clob may be non-null, yet the data is still null in SQLite
+            case SQLITE: {
+                Reader r = clob.getCharacterStream();
+                return r == null ? null : Source.of(r).readString();
+            }
+
+            default: {
                 return clob.getSubString(1, asInt(clob.length()));
+            }
         }
     }
 

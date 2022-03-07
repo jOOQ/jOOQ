@@ -109,19 +109,28 @@ implements
     }
 
     @Override
-    final boolean noNativeSupport(Context<?> ctx) {
-        return NO_NATIVE_SUPPORT.contains(ctx.dialect());
-    }
-
-    @Override
     final Table<R> fields0() {
         return table;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    final Class<R> getRecordType() {
+        return (Class<R>) table.getRecordType();
     }
 
     @Override
     final void acceptDefault(Context<?> ctx) {
         if (NO_NATIVE_SUPPORT.contains(ctx.dialect()))
-            ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(new SelectFieldList<>(emulatedFields(ctx.configuration()).fields.fields)));
+
+
+
+
+
+
+
+
+                ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(new SelectFieldList<>(emulatedFields(ctx.configuration()).fields.fields)));
 
 
 

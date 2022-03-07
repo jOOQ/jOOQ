@@ -100,13 +100,14 @@ final class RowAsField<ROW extends Row, REC extends Record> extends AbstractRowA
     }
 
     @Override
-    final boolean noNativeSupport(Context<?> ctx) {
-        return NO_NATIVE_SUPPORT.contains(ctx.dialect());
-    }
-
-    @Override
     final ROW fields0() {
         return row;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    final Class<REC> getRecordType() {
+        return (Class<REC>) Tools.recordType(row.size());
     }
 
     @Override

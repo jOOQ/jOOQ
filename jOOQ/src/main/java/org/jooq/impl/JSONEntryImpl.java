@@ -304,8 +304,8 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
             : type;
 
         return t.isJSON()
-            || t.isEmbeddable() && forceMultisetContent(ctx, () -> NO_NATIVE_SUPPORT.contains(ctx.dialect()), () -> t.getRow().size() > 1) && emulateMultisetWithJSON(ctx)
-            || t.isRecord() && forceMultisetContent(ctx, () -> NO_NATIVE_SUPPORT.contains(ctx.dialect()), () -> t.getRow().size() > 1) && emulateMultisetWithJSON(ctx)
+            || t.isEmbeddable() && forceMultisetContent(ctx, () -> t.getRow().size() > 1) && emulateMultisetWithJSON(ctx)
+            || t.isRecord() && forceMultisetContent(ctx, () -> t.getRow().size() > 1) && emulateMultisetWithJSON(ctx)
             || t.isMultiset() && emulateMultisetWithJSON(ctx);
     }
 

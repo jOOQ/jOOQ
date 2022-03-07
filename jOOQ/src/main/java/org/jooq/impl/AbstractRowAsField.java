@@ -46,6 +46,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.xmlelement;
 import static org.jooq.impl.Multiset.returningClob;
 import static org.jooq.impl.Names.N_RECORD;
+import static org.jooq.impl.RowAsField.NO_NATIVE_SUPPORT;
 import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.fieldNameString;
 import static org.jooq.impl.Tools.map;
@@ -74,13 +75,12 @@ abstract class AbstractRowAsField<R extends Record> extends AbstractField<R> {
     }
 
     abstract Fields fields0();
+    abstract Class<R> getRecordType();
 
     @SuppressWarnings("unchecked")
     final AbstractRow<R> emulatedFields(Configuration configuration) {
         return (AbstractRow<R>) row0(map(fields0().fields(), x -> x.as(getUnqualifiedName().unquotedName() + configuration.settings().getNamePathSeparator() + x.getName()), Field[]::new));
     }
-
-    abstract boolean noNativeSupport(Context<?> ctx);
 
     @Override
     final int projectionSize() {
@@ -102,7 +102,7 @@ abstract class AbstractRowAsField<R extends Record> extends AbstractField<R> {
 
         // [#12021] If a RowField is nested somewhere in MULTISET, we must apply
         //          the MULTISET emulation as well, here
-        if (forceMultisetContent(ctx, () -> noNativeSupport(ctx), () -> getDataType().getRow().size() > 1))
+        if (forceMultisetContent(ctx, () -> getDataType().getRow().size() > 1))
             acceptMultisetContent(ctx, getDataType().getRow(), this, this::acceptDefault);
         else
             acceptDefault(ctx);
@@ -110,7 +110,6 @@ abstract class AbstractRowAsField<R extends Record> extends AbstractField<R> {
 
     static final boolean forceMultisetContent(
         Context<?> ctx,
-        BooleanSupplier noNativeSupportCheck,
         BooleanSupplier degreeCheck
     ) {
         return
@@ -124,7 +123,7 @@ abstract class AbstractRowAsField<R extends Record> extends AbstractField<R> {
             // subqueries, where row subqueries are usually supported, e.g.
             // (a, b) IN (SELECT x, y)
             || ctx.subquery()
-                    && noNativeSupportCheck.getAsBoolean()
+                    && NO_NATIVE_SUPPORT.contains(ctx.dialect())
                     && !ctx.predicandSubquery()
                     && !ctx.derivedTableSubquery()
                     && !ctx.setOperationSubquery()

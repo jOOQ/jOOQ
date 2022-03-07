@@ -1547,13 +1547,9 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
                     //         RowField may have a Row[N].mapping(...) applied
                     Field<?> f = uncoerce(field);
 
-                    if (f instanceof RowAsField && RowAsField.NO_NATIVE_SUPPORT.contains(ctx.dialect())) {
-                        nested = ((RowAsField<?, ?>) f).emulatedFields(configuration);
-                        recordType = Tools.recordType(nested.size());
-                    }
-                    else if (f instanceof TableAsField && TableAsField.NO_NATIVE_SUPPORT.contains(ctx.dialect())) {
-                        nested = ((TableAsField<?>) f).emulatedFields(configuration);
-                        recordType = (Class<? extends AbstractRecord>) ((TableAsField<?>) f).table.getRecordType();
+                    if (f instanceof AbstractRowAsField && NO_NATIVE_SUPPORT.contains(ctx.dialect())) {
+                        nested = ((AbstractRowAsField<?>) f).emulatedFields(configuration);
+                        recordType = (Class<? extends AbstractRecord>) ((AbstractRowAsField<?>) f).getRecordType();
                     }
                     else if (f.getDataType().isEmbeddable()) {
                         nested = Tools.row0(embeddedFields(f));

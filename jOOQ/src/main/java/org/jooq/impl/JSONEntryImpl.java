@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.impl.DSL.NULL;
+import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.field;
@@ -210,7 +211,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
             case SQLITE:
                 if (isType(type, Boolean.class))
-                    return function(N_JSON, SQLDataType.JSON, iif(condition((Field<Boolean>) field), inline("true"), inline("false")));
+                    return function(N_JSON, SQLDataType.JSON, case_((Field<Boolean>) field).when(inline(true), inline("true")).when(inline(false), inline("false")));
 
                 break;
 

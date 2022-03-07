@@ -338,6 +338,10 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
         this.binding = binding != null ? binding : binding(this);
         this.tType = this.binding.converter().fromType();
+
+        // [#13107] Eagerly register array types of built-in types in type registry
+        if (this instanceof BuiltInDataType && !tType.isArray())
+            getArrayDataType();
     }
 
     /**

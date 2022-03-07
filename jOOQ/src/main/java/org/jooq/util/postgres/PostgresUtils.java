@@ -58,7 +58,6 @@ import org.jooq.tools.StringUtils;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
-// ...
 
 import org.postgresql.util.PGInterval;
 

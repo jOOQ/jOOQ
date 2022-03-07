@@ -37,9 +37,6 @@
  */
 package org.jooq.util.mysql;
 
-import org.jetbrains.annotations.*;
-
-
 // ...
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -49,6 +46,8 @@ import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.Support;
 import org.jooq.impl.DSL;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The {@link SQLDialect#MYSQL} specific DSL.

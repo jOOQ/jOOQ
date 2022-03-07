@@ -2756,8 +2756,8 @@ public abstract class AbstractDatabase implements Database {
 
 
 
-            case POSTGRES:
             case H2:
+            case POSTGRES:
                 return "ARRAY".equals(upper) || upper.endsWith(" ARRAY") || upper.equals("ANYARRAY");
 
 

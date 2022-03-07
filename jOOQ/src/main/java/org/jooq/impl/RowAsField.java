@@ -66,7 +66,6 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.impl.Keywords.K_ROW;
-import static org.jooq.impl.Names.N_ROW;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import java.util.Set;
@@ -98,6 +97,11 @@ final class RowAsField<ROW extends Row, REC extends Record> extends AbstractRowA
         super(as, new RecordDataType<>(row));
 
         this.row = row;
+    }
+
+    @Override
+    final boolean noNativeSupport(Context<?> ctx) {
+        return NO_NATIVE_SUPPORT.contains(ctx.dialect());
     }
 
     @Override

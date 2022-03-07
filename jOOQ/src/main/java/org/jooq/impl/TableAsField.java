@@ -41,6 +41,7 @@ package org.jooq.impl;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -105,6 +106,11 @@ implements
         ));
 
         this.table = table;
+    }
+
+    @Override
+    final boolean noNativeSupport(Context<?> ctx) {
+        return NO_NATIVE_SUPPORT.contains(ctx.dialect());
     }
 
     @Override

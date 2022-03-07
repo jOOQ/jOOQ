@@ -45,10 +45,8 @@ import static org.jooq.impl.AbstractRowAsField.forceMultisetContent;
 import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.coalesce;
-import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.iif;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.inlined;
 import static org.jooq.impl.DSL.nvl;
@@ -62,6 +60,7 @@ import static org.jooq.impl.Names.N_JSON_EXTRACT;
 import static org.jooq.impl.Names.N_JSON_MERGE;
 import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
 import static org.jooq.impl.Names.N_JSON_QUERY;
+import static org.jooq.impl.RowAsField.NO_NATIVE_SUPPORT;
 import static org.jooq.impl.SQLDataType.BIT;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.VARCHAR;
@@ -305,8 +304,8 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
             : type;
 
         return t.isJSON()
-            || t.isEmbeddable() && forceMultisetContent(ctx, () -> t.getRow().size() > 1) && emulateMultisetWithJSON(ctx)
-            || t.isRecord() && forceMultisetContent(ctx, () -> t.getRow().size() > 1) && emulateMultisetWithJSON(ctx)
+            || t.isEmbeddable() && forceMultisetContent(ctx, () -> NO_NATIVE_SUPPORT.contains(ctx.dialect()), () -> t.getRow().size() > 1) && emulateMultisetWithJSON(ctx)
+            || t.isRecord() && forceMultisetContent(ctx, () -> NO_NATIVE_SUPPORT.contains(ctx.dialect()), () -> t.getRow().size() > 1) && emulateMultisetWithJSON(ctx)
             || t.isMultiset() && emulateMultisetWithJSON(ctx);
     }
 

@@ -80,6 +80,8 @@ abstract class AbstractRowAsField<R extends Record> extends AbstractField<R> {
         return (AbstractRow<R>) row0(map(fields0().fields(), x -> x.as(getUnqualifiedName().unquotedName() + configuration.settings().getNamePathSeparator() + x.getName()), Field[]::new));
     }
 
+    abstract boolean noNativeSupport(Context<?> ctx);
+
     @Override
     final int projectionSize() {
         int result = 0;
@@ -100,13 +102,17 @@ abstract class AbstractRowAsField<R extends Record> extends AbstractField<R> {
 
         // [#12021] If a RowField is nested somewhere in MULTISET, we must apply
         //          the MULTISET emulation as well, here
-        if (forceMultisetContent(ctx, () -> getDataType().getRow().size() > 1))
+        if (forceMultisetContent(ctx, () -> noNativeSupport(ctx), () -> getDataType().getRow().size() > 1))
             acceptMultisetContent(ctx, getDataType().getRow(), this, this::acceptDefault);
         else
             acceptDefault(ctx);
     }
 
-    static final boolean forceMultisetContent(Context<?> ctx, BooleanSupplier degreeCheck) {
+    static final boolean forceMultisetContent(
+        Context<?> ctx,
+        BooleanSupplier noNativeSupportCheck,
+        BooleanSupplier degreeCheck
+    ) {
         return
 
             // All types of row expressions must be emulated using MULTISET
@@ -118,7 +124,7 @@ abstract class AbstractRowAsField<R extends Record> extends AbstractField<R> {
             // subqueries, where row subqueries are usually supported, e.g.
             // (a, b) IN (SELECT x, y)
             || ctx.subquery()
-                    && RowAsField.NO_NATIVE_SUPPORT.contains(ctx.dialect())
+                    && noNativeSupportCheck.getAsBoolean()
                     && !ctx.predicandSubquery()
                     && !ctx.derivedTableSubquery()
                     && !ctx.setOperationSubquery()

@@ -37,6 +37,8 @@
  */
 package org.jooq.postgres.extensions.bindings;
 
+import static org.jooq.impl.DSL.keyword;
+
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 
@@ -44,6 +46,7 @@ import org.jooq.BindingGetSQLInputContext;
 import org.jooq.BindingSQLContext;
 import org.jooq.BindingSetSQLOutputContext;
 import org.jooq.impl.AbstractBinding;
+import org.jooq.impl.DSL;
 
 /**
  * A common base class for bindings in this module.
@@ -65,7 +68,19 @@ public abstract class AbstractPostgresBinding<T, U> extends AbstractBinding<T, U
 
     @Override
     protected void sqlInline(BindingSQLContext<U> ctx) throws SQLException {
-        super.sqlInline(ctx);
+        if (ctx.value() instanceof Object[]) {
+            ctx.render().visit(keyword("ARRAY")).sql('[');
+
+            String separator = "";
+            for (Object value : ((Object[]) ctx.value())) {
+                ctx.render().sql(separator).visit(value == null ? keyword("NULL") : DSL.inline("" + value));
+                separator = ", ";
+            }
+
+            ctx.render().sql(']');
+        }
+        else
+            super.sqlInline(ctx);
 
         String castType = castType();
         if (castType != null)

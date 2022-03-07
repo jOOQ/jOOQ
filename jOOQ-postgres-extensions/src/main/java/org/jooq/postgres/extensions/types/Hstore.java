@@ -105,6 +105,6 @@ public final class Hstore implements Serializable {
 
     @Override
     public String toString() {
-        return String.valueOf(data);
+        return org.postgresql.util.HStoreConverter.toString(data);
     }
 }

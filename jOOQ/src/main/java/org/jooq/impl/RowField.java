@@ -83,6 +83,7 @@ import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.fieldNameString;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.row0;
+import static org.jooq.impl.Tools.sanitiseName;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
@@ -124,7 +125,7 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
 
     @SuppressWarnings("unchecked")
     AbstractRow<REC> emulatedFields(Configuration configuration) {
-        return (AbstractRow<REC>) row0(map(row.fields(), x -> x.as(getUnqualifiedName().unquotedName() + configuration.settings().getNamePathSeparator() + x.getName()), Field[]::new));
+        return (AbstractRow<REC>) row0(map(row.fields(), x -> x.as(sanitiseName(configuration, getUnqualifiedName().unquotedName() + configuration.settings().getNamePathSeparator() + x.getName())), Field[]::new));
     }
 
     ROW row() {

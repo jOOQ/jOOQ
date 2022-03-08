@@ -828,7 +828,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
         create().resultQuery(("" +
                 "select c.TABLE_SCHEMA , c.TABLE_NAME , c.COLUMN_NAME , array_agg(ev.value_name order by ev.VALUE_ORDINAL)\n" +
                 "from INFORMATION_SCHEMA.ENUM_VALUES ev\n" +
-                "join information_schema.columns c\n" +
+                "join INFORMATION_SCHEMA.COLUMNS c\n" +
                 "on ev.OBJECT_SCHEMA = c.TABLE_SCHEMA\n" +
                 "and ev.OBJECT_NAME = c.TABLE_NAME\n" +
                 "and ev.ENUM_IDENTIFIER = c.DTD_IDENTIFIER\n" +

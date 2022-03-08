@@ -44,9 +44,6 @@ import static org.jooq.impl.Names.N_ARRAY_TABLE;
 import static org.jooq.impl.Names.N_COLUMN_VALUE;
 import static org.jooq.impl.Tools.map;
 
-import java.util.ArrayList;
-import java.util.List;
-
 // ...
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -55,10 +52,8 @@ import org.jooq.Name;
 import org.jooq.Param;
 // ...
 import org.jooq.Record;
-import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableOptions;
-import org.jooq.UDTRecord;
 import org.jooq.exception.DataTypeException;
 import org.jooq.util.h2.H2DataType;
 
@@ -81,7 +76,7 @@ final class ArrayTable extends AbstractTable<Record> {
     ArrayTable(Field<?> array, Name alias) {
 
         // [#7863] TODO: Possibly resolve field aliases from UDT type
-        this(array, alias, new Name[] { N_COLUMN_VALUE });
+        this(array, alias, null);
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -90,10 +85,8 @@ final class ArrayTable extends AbstractTable<Record> {
 
         Class<?> arrayType;
 
-        if (array.getDataType().getType().isArray()) {
+        if (array.getDataType().getType().isArray())
             arrayType = array.getDataType().getArrayComponentType();
-        }
-
 
 
 
@@ -115,11 +108,11 @@ final class ArrayTable extends AbstractTable<Record> {
 
         this.array = array;
         this.alias = alias;
-        this.fieldAliases = fieldAliases;
-        this.field = init(arrayType, alias);
+        this.fieldAliases = Tools.isEmpty(fieldAliases) ? new Name[] { N_COLUMN_VALUE } : fieldAliases;
+        this.field = init(arrayType, this.alias, this.fieldAliases[0]);
     }
 
-    private static final FieldsImpl<Record> init(Class<?> arrayType, Name alias) {
+    private static final FieldsImpl<Record> init(Class<?> arrayType, Name alias, Name fieldAlias) {
 
         // [#1114] [#7863] VARRAY/TABLE of OBJECT have more than one field
         if (Record.class.isAssignableFrom(arrayType)) {
@@ -136,7 +129,7 @@ final class ArrayTable extends AbstractTable<Record> {
 
         // Simple array types have a synthetic field called "COLUMN_VALUE"
         else
-            return new FieldsImpl<>(DSL.field(name(alias.last(), "COLUMN_VALUE"), DSL.getDataType(arrayType)));
+            return new FieldsImpl<>(DSL.field(alias.unqualifiedName().append(fieldAlias.unqualifiedName()), DSL.getDataType(arrayType)));
     }
 
     @Override

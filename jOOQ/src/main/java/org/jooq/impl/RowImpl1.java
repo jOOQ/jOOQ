@@ -119,7 +119,7 @@ final class RowImpl1<T1> extends AbstractRow<Record1<T1>> implements Row1<T1> {
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1) {
-        return compare(comparator, row(t1));
+        return compare(comparator, row(Tools.nullSafe(t1, dataType(0))));
     }
 
     @Override

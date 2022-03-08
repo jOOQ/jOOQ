@@ -96,7 +96,7 @@ final class RowImplN extends AbstractRow<Record> implements RowN {
 
     @Override
     public final Condition compare(Comparator comparator, Field<?>... values) {
-        return compare(comparator, row(values));
+        return compare(comparator, row(Tools.fields(values, dataTypes())));
     }
 
     @Override

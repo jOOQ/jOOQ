@@ -516,18 +516,18 @@ public final class QOM {
     // XXX: Rows
     // -------------------------------------------------------------------------
 
-    public /*sealed*/ interface RowAsField<R extends Record>
+    public /*sealed*/ interface RowAsField<R extends org.jooq.Record>
         extends
-            Field<R>
+            org.jooq.Field<R>
         /*permits
             RowAsField*/
     {
         @NotNull Row $row();
     }
 
-    public /*sealed*/ interface TableAsField<R extends Record>
+    public /*sealed*/ interface TableAsField<R extends org.jooq.Record>
         extends
-            Field<R>
+            org.jooq.Field<R>
         /*permits
             TableAsField*/
     {

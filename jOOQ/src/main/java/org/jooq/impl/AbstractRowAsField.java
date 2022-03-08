@@ -51,6 +51,7 @@ import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.fieldNameString;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.row0;
+import static org.jooq.impl.Tools.sanitiseName;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
 import java.util.function.BooleanSupplier;
@@ -79,7 +80,7 @@ abstract class AbstractRowAsField<R extends Record> extends AbstractField<R> {
 
     @SuppressWarnings("unchecked")
     final AbstractRow<R> emulatedFields(Configuration configuration) {
-        return (AbstractRow<R>) row0(map(fields0().fields(), x -> x.as(getUnqualifiedName().unquotedName() + configuration.settings().getNamePathSeparator() + x.getName()), Field[]::new));
+        return (AbstractRow<R>) row0(map(fields0().fields(), x -> x.as(sanitiseName(configuration, getUnqualifiedName().unquotedName() + configuration.settings().getNamePathSeparator() + x.getName())), Field[]::new));
     }
 
     @Override

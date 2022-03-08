@@ -1432,6 +1432,19 @@ final class Tools {
         return map(names, n -> n instanceof Name ? (Name) n : DSL.name(String.valueOf(n)));
     }
 
+    static final String sanitiseName(Configuration configuration, String name) {
+        switch (configuration.family()) {
+
+
+
+
+
+
+            default:
+                return name;
+        }
+    }
+
     static final List<JSONEntry<?>> jsonEntries(Field<?>[] entries) {
         return Tools.map(entries, f -> DSL.jsonEntry(f));
     }

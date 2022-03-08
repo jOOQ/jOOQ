@@ -447,9 +447,10 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @Override
     public final RenderContext sql(char c) {
         applyNewLine();
-        sql.append(c);
 
         if (c == '\'' && stringLiteral())
+            sql.append(stringLiteralEscapedApos);
+        else
             sql.append(c);
 
         resetSeparatorFlags();

@@ -127,7 +127,7 @@ final class RowImpl3<T1, T2, T3> extends AbstractRow<Record3<T1, T2, T3>> implem
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3) {
-        return compare(comparator, row(t1, t2, t3));
+        return compare(comparator, row(Tools.nullSafe(t1, dataType(0)), Tools.nullSafe(t2, dataType(1)), Tools.nullSafe(t3, dataType(2))));
     }
 
     @Override

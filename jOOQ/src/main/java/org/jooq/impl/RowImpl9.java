@@ -157,7 +157,7 @@ final class RowImpl9<T1, T2, T3, T4, T5, T6, T7, T8, T9> extends AbstractRow<Rec
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
-        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+        return compare(comparator, row(Tools.nullSafe(t1, dataType(0)), Tools.nullSafe(t2, dataType(1)), Tools.nullSafe(t3, dataType(2)), Tools.nullSafe(t4, dataType(3)), Tools.nullSafe(t5, dataType(4)), Tools.nullSafe(t6, dataType(5)), Tools.nullSafe(t7, dataType(6)), Tools.nullSafe(t8, dataType(7)), Tools.nullSafe(t9, dataType(8))));
     }
 
     @Override

@@ -43,7 +43,7 @@
         <scala.version>2.13.6</scala.version>
 
         <!-- Kotlin versions -->
-        <kotlin.version>1.5.21</kotlin.version>
+        <kotlin.version>1.6.10</kotlin.version>
 
         <!-- DefaultRecordMapper and jOOQ-meta-extensions can read JPA annotations -->
         <jakarta.persistence-api.version>3.0.0</jakarta.persistence-api.version>

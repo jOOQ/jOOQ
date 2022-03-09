@@ -757,15 +757,11 @@ implements
         return tType0() == XML.class;
     }
 
-
-
-
-
-
-
-
-
-
+    @Override
+    public final boolean isSpatial() {
+        Class<?> tType = tType0();
+        return tType == Geometry.class || tType == Geography.class;
+    }
 
     @Override
     public final void accept(Context<?> ctx) {

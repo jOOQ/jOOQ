@@ -422,16 +422,28 @@ public final class SQLDataType {
     /**
      * A vendor specific <code>INTERVAL YEAR TO SECOND</code> data type, which
      * combines {@link #INTERVALYEARTOMONTH} and {@link #INTERVALDAYTOSECOND}.
+     * <p>
+     * If you want to opt out of code generation support for this type, you can
+     * specify <code>/configuration/generator/generate/intervalTypes</code> to
+     * <code>false</code>.
      */
     public static final DataType<YearToSecond> INTERVAL = new BuiltInDataType<>(YearToSecond.class, "interval");
 
     /**
      * The SQL standard <code>INTERVAL YEAR TO MONTH</code> data type.
+     * <p>
+     * If you want to opt out of code generation support for this type, you can
+     * specify <code>/configuration/generator/generate/intervalTypes</code> to
+     * <code>false</code>.
      */
     public static final DataType<YearToMonth> INTERVALYEARTOMONTH = new BuiltInDataType<>(YearToMonth.class, "interval year to month");
 
     /**
      * The SQL standard <code>INTERVAL DAY TO SECOND</code> data type.
+     * <p>
+     * If you want to opt out of code generation support for this type, you can
+     * specify <code>/configuration/generator/generate/intervalTypes</code> to
+     * <code>false</code>.
      */
     public static final DataType<DayToSecond> INTERVALDAYTOSECOND = new BuiltInDataType<>(DayToSecond.class, "interval day to second");
 
@@ -691,6 +703,10 @@ public final class SQLDataType {
      * <p>
      * This is not a JDBC standard. This type handles JSON types where they are
      * supported.
+     * <p>
+     * If you want to opt out of code generation support for this type, you can
+     * specify <code>/configuration/generator/generate/jsonTypes</code> to
+     * <code>false</code>.
      */
     public static final DataType<JSON> JSON = new BuiltInDataType<>(JSON.class, "json");
 
@@ -698,7 +714,11 @@ public final class SQLDataType {
      * The {@link JSONB} type.
      * <p>
      * This is not a JDBC standard. This type handles JSONB types where they are
-     * supported
+     * supported.
+     * <p>
+     * If you want to opt out of code generation support for this type, you can
+     * specify <code>/configuration/generator/generate/jsonTypes</code> to
+     * <code>false</code>.
      */
     public static final DataType<JSONB> JSONB = new BuiltInDataType<>(JSONB.class, "jsonb");
 
@@ -706,7 +726,11 @@ public final class SQLDataType {
      * The {@link XML} type.
      * <p>
      * This is not a JDBC standard. This type handles XML types where they are
-     * supported
+     * supported.
+     * <p>
+     * If you want to opt out of code generation support for this type, you can
+     * specify <code>/configuration/generator/generate/xmlTypes</code> to
+     * <code>false</code>.
      */
     public static final DataType<XML> XML = new BuiltInDataType<>(XML.class, "xml");
 
@@ -715,6 +739,10 @@ public final class SQLDataType {
      * <p>
      * This is not a JDBC standard. This type handles spatial types where they
      * are supported.
+     * <p>
+     * If you want to opt out of code generation support for this type, you can
+     * specify <code>/configuration/generator/generate/spatialTypes</code> to
+     * <code>false</code>.
      * <p>
      * This data type is supported only by the commercial editions of jOOQ.
      */
@@ -725,6 +753,10 @@ public final class SQLDataType {
      * <p>
      * This is not a JDBC standard. This type handles spatial types where they
      * are supported.
+     * <p>
+     * If you want to opt out of code generation support for this type, you can
+     * specify <code>/configuration/generator/generate/spatialTypes</code> to
+     * <code>false</code>.
      * <p>
      * This data type is supported only by the commercial editions of jOOQ.
      */

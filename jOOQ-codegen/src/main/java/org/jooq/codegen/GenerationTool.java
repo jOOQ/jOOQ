@@ -867,6 +867,14 @@ public class GenerationTool {
                 generator.setGenerateFullyQualifiedTypes(g.getGenerate().getFullyQualifiedTypes());
             if (g.getGenerate().isJavaTimeTypes() != null)
                 generator.setGenerateJavaTimeTypes(g.getGenerate().isJavaTimeTypes());
+            if (g.getGenerate().isSpatialTypes() != null)
+                generator.setGenerateSpatialTypes(g.getGenerate().isSpatialTypes());
+            if (g.getGenerate().isXmlTypes() != null)
+                generator.setGenerateXmlTypes(g.getGenerate().isXmlTypes());
+            if (g.getGenerate().isJsonTypes() != null)
+                generator.setGenerateJsonTypes(g.getGenerate().isJsonTypes());
+            if (g.getGenerate().isIntervalTypes() != null)
+                generator.setGenerateIntervalTypes(g.getGenerate().isIntervalTypes());
             if (g.getGenerate().isEmptyCatalogs() != null)
                 generator.setGenerateEmptyCatalogs(g.getGenerate().isEmptyCatalogs());
             if (g.getGenerate().isEmptySchemas() != null)

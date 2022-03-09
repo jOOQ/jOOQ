@@ -150,6 +150,10 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateVarargsSetters                           = true;
     String                             generateFullyQualifiedTypes                      = "";
     boolean                            generateJavaTimeTypes                            = true;
+    boolean                            generateSpatialTypes                             = true;
+    boolean                            generateXmlTypes                                 = true;
+    boolean                            generateJsonTypes                                = true;
+    boolean                            generateIntervalTypes                            = true;
     boolean                            generateTableValuedFunctions                     = false;
     boolean                            generateEmptyCatalogs                            = false;
     boolean                            generateEmptySchemas                             = false;
@@ -1148,6 +1152,46 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateJavaTimeTypes(boolean generateJavaTimeTypes) {
         this.generateJavaTimeTypes = generateJavaTimeTypes;
+    }
+
+    @Override
+    public boolean generateSpatialTypes() {
+        return generateSpatialTypes;
+    }
+
+    @Override
+    public void setGenerateSpatialTypes(boolean generateSpatialTypes) {
+        this.generateSpatialTypes = generateSpatialTypes;
+    }
+
+    @Override
+    public boolean generateXmlTypes() {
+        return generateXmlTypes;
+    }
+
+    @Override
+    public void setGenerateXmlTypes(boolean generateXmlTypes) {
+        this.generateXmlTypes = generateXmlTypes;
+    }
+
+    @Override
+    public boolean generateJsonTypes() {
+        return generateJsonTypes;
+    }
+
+    @Override
+    public void setGenerateJsonTypes(boolean generateJsonTypes) {
+        this.generateJsonTypes = generateJsonTypes;
+    }
+
+    @Override
+    public boolean generateIntervalTypes() {
+        return generateIntervalTypes;
+    }
+
+    @Override
+    public void setGenerateIntervalTypes(boolean generateIntervalTypes) {
+        this.generateIntervalTypes = generateIntervalTypes;
     }
 
     @Override

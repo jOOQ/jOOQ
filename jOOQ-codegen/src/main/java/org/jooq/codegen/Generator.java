@@ -42,10 +42,15 @@ import java.io.Serializable;
 import java.util.Locale;
 
 import org.jooq.Constants;
+import org.jooq.JSON;
+import org.jooq.JSONB;
+import org.jooq.Spatial;
+import org.jooq.XML;
 import org.jooq.meta.Database;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
 import org.jooq.meta.jaxb.GeneratedSerialVersionUID;
 import org.jooq.meta.jaxb.VisibilityModifier;
+import org.jooq.types.Interval;
 
 /**
  * The Generator provides a basic interface for java code generation
@@ -1028,6 +1033,52 @@ public interface Generator {
      * This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+
      */
     void setGenerateJavaTimeTypes(boolean generateJavaTimeTypes);
+
+    /**
+     * A flag indicating whether the {@link Spatial} type support should be
+     * enabled.
+     */
+    boolean generateSpatialTypes();
+
+    /**
+     * A flag indicating whether the {@link Spatial} type support should be
+     * enabled.
+     */
+    void setGenerateSpatialTypes(boolean generateSpatialTypes);
+
+    /**
+     * A flag indicating whether the {@link XML} type support should be enabled.
+     */
+    boolean generateXmlTypes();
+
+    /**
+     * A flag indicating whether the {@link XML} type support should be enabled.
+     */
+    void setGenerateXmlTypes(boolean generateXmlTypes);
+
+    /**
+     * A flag indicating whether the {@link JSON} and {@link JSONB} type support
+     * should be enabled.
+     */
+    boolean generateJsonTypes();
+
+    /**
+     * A flag indicating whether the {@link JSON} and {@link JSONB} type support
+     * should be enabled.
+     */
+    void setGenerateJsonTypes(boolean generateJsonTypes);
+
+    /**
+     * A flag indicating whether the {@link Interval} type support should be
+     * enabled.
+     */
+    boolean generateIntervalTypes();
+
+    /**
+     * A flag indicating whether the {@link Interval} type support should be
+     * enabled.
+     */
+    void setGenerateIntervalTypes(boolean generateJsonTypes);
 
     /**
      * Whether empty catalogs should still be generated.

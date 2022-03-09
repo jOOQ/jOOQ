@@ -206,6 +206,14 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean emptySchemas = false;
     @XmlElement(defaultValue = "true")
     protected Boolean javaTimeTypes = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean spatialTypes = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean xmlTypes = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean jsonTypes = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean intervalTypes = true;
     @XmlElement(defaultValue = "\\n")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String newline = "\\n";
@@ -2255,6 +2263,102 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * A flag indicating whether the spatial type support should be enabled.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isSpatialTypes() {
+        return spatialTypes;
+    }
+
+    /**
+     * Sets the value of the spatialTypes property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setSpatialTypes(Boolean value) {
+        this.spatialTypes = value;
+    }
+
+    /**
+     * A flag indicating whether the XML type support should be enabled.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isXmlTypes() {
+        return xmlTypes;
+    }
+
+    /**
+     * Sets the value of the xmlTypes property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setXmlTypes(Boolean value) {
+        this.xmlTypes = value;
+    }
+
+    /**
+     * A flag indicating whether the JSON type support should be enabled.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isJsonTypes() {
+        return jsonTypes;
+    }
+
+    /**
+     * Sets the value of the jsonTypes property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setJsonTypes(Boolean value) {
+        this.jsonTypes = value;
+    }
+
+    /**
+     * A flag indicating whether the INTERVAL type support should be enabled.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIntervalTypes() {
+        return intervalTypes;
+    }
+
+    /**
+     * Sets the value of the intervalTypes property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIntervalTypes(Boolean value) {
+        this.intervalTypes = value;
+    }
+
+    /**
      * The newline characters to be used in generated code. Whitespace characters can be used, e.g. \n, \r\n
      * 
      */
@@ -2769,6 +2873,26 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withSpatialTypes(Boolean value) {
+        setSpatialTypes(value);
+        return this;
+    }
+
+    public Generate withXmlTypes(Boolean value) {
+        setXmlTypes(value);
+        return this;
+    }
+
+    public Generate withJsonTypes(Boolean value) {
+        setJsonTypes(value);
+        return this;
+    }
+
+    public Generate withIntervalTypes(Boolean value) {
+        setIntervalTypes(value);
+        return this;
+    }
+
     /**
      * The newline characters to be used in generated code. Whitespace characters can be used, e.g. \n, \r\n
      * 
@@ -2884,6 +3008,10 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("emptyCatalogs", emptyCatalogs);
         builder.append("emptySchemas", emptySchemas);
         builder.append("javaTimeTypes", javaTimeTypes);
+        builder.append("spatialTypes", spatialTypes);
+        builder.append("xmlTypes", xmlTypes);
+        builder.append("jsonTypes", jsonTypes);
+        builder.append("intervalTypes", intervalTypes);
         builder.append("newline", newline);
         builder.append("indentation", indentation);
         builder.append("printMarginForBlockComment", printMarginForBlockComment);
@@ -3682,6 +3810,42 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (spatialTypes == null) {
+            if (other.spatialTypes!= null) {
+                return false;
+            }
+        } else {
+            if (!spatialTypes.equals(other.spatialTypes)) {
+                return false;
+            }
+        }
+        if (xmlTypes == null) {
+            if (other.xmlTypes!= null) {
+                return false;
+            }
+        } else {
+            if (!xmlTypes.equals(other.xmlTypes)) {
+                return false;
+            }
+        }
+        if (jsonTypes == null) {
+            if (other.jsonTypes!= null) {
+                return false;
+            }
+        } else {
+            if (!jsonTypes.equals(other.jsonTypes)) {
+                return false;
+            }
+        }
+        if (intervalTypes == null) {
+            if (other.intervalTypes!= null) {
+                return false;
+            }
+        } else {
+            if (!intervalTypes.equals(other.intervalTypes)) {
+                return false;
+            }
+        }
         if (newline == null) {
             if (other.newline!= null) {
                 return false;
@@ -3802,6 +3966,10 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((emptyCatalogs == null)? 0 :emptyCatalogs.hashCode()));
         result = ((prime*result)+((emptySchemas == null)? 0 :emptySchemas.hashCode()));
         result = ((prime*result)+((javaTimeTypes == null)? 0 :javaTimeTypes.hashCode()));
+        result = ((prime*result)+((spatialTypes == null)? 0 :spatialTypes.hashCode()));
+        result = ((prime*result)+((xmlTypes == null)? 0 :xmlTypes.hashCode()));
+        result = ((prime*result)+((jsonTypes == null)? 0 :jsonTypes.hashCode()));
+        result = ((prime*result)+((intervalTypes == null)? 0 :intervalTypes.hashCode()));
         result = ((prime*result)+((newline == null)? 0 :newline.hashCode()));
         result = ((prime*result)+((indentation == null)? 0 :indentation.hashCode()));
         result = ((prime*result)+((printMarginForBlockComment == null)? 0 :printMarginForBlockComment.hashCode()));

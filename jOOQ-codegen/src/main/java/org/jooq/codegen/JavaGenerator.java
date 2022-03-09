@@ -8998,7 +8998,7 @@ public class JavaGenerator extends AbstractGenerator {
         // Try finding a basic standard SQL type according to the current dialect
         else {
             try {
-                Class<?> clazz = mapJavaTimeTypes(getDataType(db, t, p, s)).getType();
+                Class<?> clazz = mapTypes(getDataType(db, t, p, s)).getType();
                 if (scala && clazz == byte[].class)
                     type = "scala.Array[scala.Byte]";
                 else if (kotlin && clazz == byte[].class)
@@ -9086,7 +9086,7 @@ public class JavaGenerator extends AbstractGenerator {
             String sqlDataTypeRef;
 
             try {
-                dataType = mapJavaTimeTypes(getDataType(db, t, p, s));
+                dataType = mapTypes(getDataType(db, t, p, s));
             }
 
             // Mostly because of unsupported data types.
@@ -9218,11 +9218,11 @@ public class JavaGenerator extends AbstractGenerator {
         return typed.getType().isNullable() ? "?" : "";
     }
 
-    private DataType<?> mapJavaTimeTypes(DataType<?> dataType) {
+    private DataType<?> mapTypes(DataType<?> dataType) {
         DataType<?> result = dataType;
 
         // [#4429] [#5713] This logic should be implemented in Configuration
-        if (dataType.isDateTime() && generateJavaTimeTypes) {
+        if (dataType.isDateTime() && generateJavaTimeTypes()) {
             if (dataType.getType() == Date.class)
                 result = SQLDataType.LOCALDATE;
             else if (dataType.getType() == Time.class)
@@ -9230,6 +9230,15 @@ public class JavaGenerator extends AbstractGenerator {
             else if (dataType.getType() == Timestamp.class)
                 result = SQLDataType.LOCALDATETIME;
         }
+
+        // [#13143] Turn off support for some types
+        else if (
+            dataType.isSpatial() && !generateSpatialTypes() ||
+            dataType.isJSON() && !generateJsonTypes() ||
+            dataType.isXML() && !generateXmlTypes() ||
+            dataType.isInterval() && !generateIntervalTypes()
+        )
+            result = SQLDataType.OTHER;
 
         return result;
     }

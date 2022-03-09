@@ -1999,6 +1999,22 @@ source code generator, rather than JDBC's java.sql types.
 <p>
 This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+ ]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="spatialTypes" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A flag indicating whether the spatial type support should be enabled.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="xmlTypes" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A flag indicating whether the XML type support should be enabled.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="jsonTypes" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A flag indicating whether the JSON type support should be enabled.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="intervalTypes" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A flag indicating whether the INTERVAL type support should be enabled.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
       
       <element name="newline" type="string" default="\n" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The newline characters to be used in generated code. Whitespace characters can be used, e.g. \n, \r\n]]></jxb:javadoc></jxb:property></appinfo></annotation>

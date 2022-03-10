@@ -778,8 +778,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 }
             }
 
-            // [#7242] Other vendor specific types also need a lot of casting
+            // [#7242] [#13252] Other vendor specific types also need a lot of casting
             if (dataType.isJSON()
+                || dataType.isXML()
 
 
 
@@ -852,10 +853,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#1130] TODO type can be null for ARRAY types, etc.
             // [#7351] UUID data types need to be cast too
             // [#7242] JSON(B) data types need to be cast too
+            // [#13252] XML data types need to be cast too
             else if (REQUIRES_JSON_CAST.contains(ctx.dialect()) &&
                     (sqlDataType == null ||
                     (!sqlDataType.isTemporal()
                         && sqlDataType != SQLDataType.UUID
+                        && !sqlDataType.isXML()
 
 
 

@@ -270,6 +270,11 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
             records(objects, true).get(0).delete();
     }
 
+    @Override
+    public /* non-final */ void deleteById(T ids) {
+        deleteById(singletonList(ids));
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public /* non-final */ void deleteById(T... ids) {

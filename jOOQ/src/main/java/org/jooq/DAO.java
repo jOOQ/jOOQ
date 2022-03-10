@@ -254,6 +254,16 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @see #delete(Collection)
      */
     @Support
+    void deleteById(T id) throws DataAccessException;
+
+    /**
+     * Performs a <code>DELETE</code> statement for a given set of IDs.
+     *
+     * @param ids The IDs to be deleted
+     * @throws DataAccessException if something went wrong executing the query
+     * @see #delete(Collection)
+     */
+    @Support
     void deleteById(T... ids) throws DataAccessException;
 
     /**

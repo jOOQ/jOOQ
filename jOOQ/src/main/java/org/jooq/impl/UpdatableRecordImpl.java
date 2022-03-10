@@ -289,7 +289,10 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         boolean merge
     ) {
         List<Field<?>> changedFields = addChangedValues(storeFields, query, merge);
-        Tools.addConditions(query, this, keys);
+
+        // [#11552] These conditions should be omitted in the MERGE case
+        if (!merge)
+            Tools.addConditions(query, this, keys);
 
         if (changedFields.isEmpty()) {
             switch (StringUtils.defaultIfNull(create().settings().getUpdateUnchangedRecords(), UpdateUnchangedRecords.NEVER)) {

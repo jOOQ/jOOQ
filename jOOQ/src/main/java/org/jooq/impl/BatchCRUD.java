@@ -176,7 +176,7 @@ final class BatchCRUD extends AbstractBatch {
         return result;
     }
 
-    private void executeAction(int i) {
+    private final void executeAction(int i) {
         switch (action) {
             case STORE:
                 ((UpdatableRecord<?>) records[i]).store();

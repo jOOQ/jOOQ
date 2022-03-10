@@ -73,9 +73,10 @@ import org.jooq.impl.DefaultVisitListener;
  */
 public class LoggerListener extends DefaultExecuteListener {
 
-    private static final JooqLogger log       = JooqLogger.getLogger(LoggerListener.class);
-    private static final String     BUFFER    = "org.jooq.tools.LoggerListener.BUFFER";
-    private static final String     DO_BUFFER = "org.jooq.tools.LoggerListener.DO_BUFFER";
+    private static final JooqLogger log        = JooqLogger.getLogger(LoggerListener.class);
+    private static final String     BUFFER     = "org.jooq.tools.LoggerListener.BUFFER";
+    private static final String     DO_BUFFER  = "org.jooq.tools.LoggerListener.DO_BUFFER";
+    private static final String     BATCH_SIZE = "org.jooq.tools.LoggerListener.BATCH_SIZE";
 
     @Override
     public void renderEnd(ExecuteContext ctx) {
@@ -111,6 +112,14 @@ public class LoggerListener extends DefaultExecuteListener {
                     log.debug("-> with bind values", newline + inlined);
             }
 
+            // [#2532] Log a complete BatchMultiple query
+            else if (ctx.type() == ExecuteType.BATCH
+                    && batchSQL.length > 0
+                    && batchSQL[batchSQL.length - 1] != null) {
+                for (String sql : batchSQL)
+                    log.debug("Executing batch query", newline + sql);
+            }
+
             else if (!StringUtils.isBlank(ctx.sql())) {
 
                 // [#1529] Batch queries should be logged specially
@@ -119,16 +128,22 @@ public class LoggerListener extends DefaultExecuteListener {
                 else
                     log.debug("Executing query", newline + ctx.sql());
             }
-
-            // [#2532] Log a complete BatchMultiple query
-            else if (batchSQL.length > 0) {
-                if (batchSQL[batchSQL.length - 1] != null)
-                    for (String sql : batchSQL)
-                        log.debug("Executing batch query", newline + sql);
-            }
         }
     }
 
+    @Override
+    public void bindEnd(ExecuteContext ctx) {
+        if (log.isDebugEnabled())
+            if (ctx.type() == ExecuteType.BATCH)
+                ctx.data().compute(BATCH_SIZE, (k, v) -> v == null ? 1 : ((int) v) + 1);
+    }
+
+    @Override
+    public void executeStart(ExecuteContext ctx) {
+        if (log.isDebugEnabled())
+            if (ctx.type() == ExecuteType.BATCH)
+                log.debug("Batch size", ctx.data().getOrDefault(BATCH_SIZE, ctx.batchSQL().length));
+    }
 
     @SuppressWarnings("unchecked")
     @Override

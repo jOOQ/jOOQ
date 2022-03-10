@@ -46,6 +46,7 @@ import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.Names.N_TO_CLOB;
 import static org.jooq.impl.Names.N_TO_DATE;
 import static org.jooq.impl.Names.N_TO_TIMESTAMP;
+import static org.jooq.impl.Names.N_XMLTYPE;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.CHAR;
 import static org.jooq.impl.SQLDataType.DECIMAL;
@@ -235,6 +236,10 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
                 super.accept(ctx);
         }
     }
+
+
+
+
 
 
 

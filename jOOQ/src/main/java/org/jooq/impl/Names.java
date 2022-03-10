@@ -322,6 +322,7 @@ final class Names {
     static final Name N_XMLROOT                = systemName("xmlroot");
     static final Name N_XMLTABLE               = systemName("xmltable");
     static final Name N_XMLTEXT                = systemName("xmltext");
+    static final Name N_XMLTYPE                = systemName("xmltype");
     static final Name N_XPATH                  = systemName("xpath");
     static final Name N_ZEROBLOB               = systemName("zeroblob");
 

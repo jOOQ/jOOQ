@@ -433,6 +433,7 @@ import static org.jooq.impl.SQLDataType.TIMEWITHTIMEZONE;
 import static org.jooq.impl.SQLDataType.TINYINT;
 import static org.jooq.impl.SQLDataType.VARBINARY;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.SelectQueryImpl.EMULATE_SELECT_INTO_AS_CTAS;
 import static org.jooq.impl.SelectQueryImpl.NO_SUPPORT_FOR_UPDATE_OF_FIELDS;
 import static org.jooq.impl.Tools.CONFIG;
@@ -8771,6 +8772,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 else if (parseFunctionNameIf("XMLCOMMENT"))
                     return xmlcomment((Field) parseField());
+                else if (parseFunctionNameIf("XMLTYPE"))
+                    return cast((Field) parseField(), XML);
                 else if ((field = parseFieldXMLConcatIf()) != null)
                     return field;
                 else if ((field = parseFieldXMLElementIf()) != null)

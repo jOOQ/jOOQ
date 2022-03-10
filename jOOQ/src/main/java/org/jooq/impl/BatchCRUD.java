@@ -38,13 +38,11 @@
 package org.jooq.impl;
 
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_RETURNING_CLAUSE;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
@@ -88,18 +86,27 @@ final class BatchCRUD extends AbstractBatch {
             return executePrepared();
     }
 
+    private final Configuration deriveConfiguration(QueryCollector collector) {
+        Configuration local = configuration.deriveAppending(collector);
+
+        local.settings()
+
+            // [#1529] Avoid DEBUG logging of single INSERT / UPDATE statements
+            .withExecuteLogging(false)
+
+            // [#3327] [#11509] We can't return generated keys from batches (yet)
+            .withReturnAllOnUpdatableRecord(false)
+            .withReturnIdentityOnUpdatableRecord(false);
+
+        return local;
+    }
+
     private final int[] executePrepared() {
         Map<String, List<Query>> queries = new LinkedHashMap<>();
         QueryCollector collector = new QueryCollector();
 
         // Add the QueryCollector to intercept query execution after rendering
-        Configuration local = configuration.deriveAppending(collector);
-
-        // [#1537] Communicate with UpdatableRecordImpl
-        local.data(DATA_OMIT_RETURNING_CLAUSE, true);
-
-        // [#1529] Avoid DEBUG logging of single INSERT / UPDATE statements
-        local.settings().setExecuteLogging(false);
+        Configuration local = deriveConfiguration(collector);
 
         for (int i = 0; i < records.length; i++) {
             Configuration previous = records[i].configuration();
@@ -150,7 +157,7 @@ final class BatchCRUD extends AbstractBatch {
     private final int[] executeStatic() {
         List<Query> queries = new ArrayList<>();
         QueryCollector collector = new QueryCollector();
-        Configuration local = configuration.derive(collector);
+        Configuration local = deriveConfiguration(collector);
 
         for (int i = 0; i < records.length; i++) {
             Configuration previous = records[i].configuration();

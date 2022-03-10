@@ -375,13 +375,6 @@ final class Tools {
     enum BooleanDataKey {
 
         /**
-         * [#1537] This constant is used internally by jOOQ to omit the RETURNING
-         * clause in {@link DSLContext#batchStore(UpdatableRecord...)} calls for
-         * {@link SQLDialect#POSTGRES}.
-         */
-        DATA_OMIT_RETURNING_CLAUSE,
-
-        /**
          * [#1520] Count the number of bind values, and potentially enforce a static
          * statement.
          */

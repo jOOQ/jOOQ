@@ -270,9 +270,17 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private final <Q extends StoreQuery<R> & org.jooq.ConditionProvider> int storeMergeOrUpdate0(Field<?>[] storeFields, TableField<R, ?>[] keys, Q query, boolean merge) {
+    private final <Q extends StoreQuery<R> & org.jooq.ConditionProvider> int storeMergeOrUpdate0(
+        Field<?>[] storeFields,
+        TableField<R, ?>[] keys,
+        Q query,
+        boolean merge
+    ) {
         addChangedValues(storeFields, query, merge);
-        Tools.addConditions(query, this, keys);
+
+        // [#11552] These conditions should be omitted in the MERGE case
+        if (!merge)
+            Tools.addConditions(query, this, keys);
 
         if (!query.isExecutable()) {
             switch (StringUtils.defaultIfNull(create().settings().getUpdateUnchangedRecords(), UpdateUnchangedRecords.NEVER)) {

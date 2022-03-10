@@ -59,7 +59,6 @@ import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.impl.Tools.settings;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_RETURNING_CLAUSE;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.math.BigInteger;
@@ -240,8 +239,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualified
         if (configuration() != null)
 
             // [#7966] Allow users to turning off the returning clause entirely
-            if (!FALSE.equals(configuration().settings().isReturnIdentityOnUpdatableRecord())
-                && !TRUE.equals(configuration().data(DATA_OMIT_RETURNING_CLAUSE)))
+            if (!FALSE.equals(configuration().settings().isReturnIdentityOnUpdatableRecord()))
 
                 // [#1859] Return also non-key columns
                 if (TRUE.equals(configuration().settings().isReturnAllOnUpdatableRecord()))

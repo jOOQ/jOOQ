@@ -89,7 +89,6 @@ import org.jooq.Function9;
 import org.jooq.Geometry;
 import org.jooq.GroupField;
 import org.jooq.Index;
-import org.jooq.Internal;
 import org.jooq.JSONEntry;
 import org.jooq.Keyword;
 // ...
@@ -130,6 +129,7 @@ import org.jooq.types.DayToSecond;
 // ...
 
 import org.jetbrains.annotations.ApiStatus.Experimental;
+import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -7175,21 +7175,24 @@ public final class QOM {
     /**
      * Turn an array into an unmodifiable {@link UnmodifiableList}.
      */
-    static final <Q extends QueryPart> UnmodifiableList<Q> unmodifiable(Q[] array) {
+    @Internal
+    public static final <Q extends QueryPart> UnmodifiableList<Q> unmodifiable(Q[] array) {
         return unmodifiable(QueryPartListView.wrap(array));
     }
 
     /**
      * Turn a {@link List} into an unmodifiable {@link UnmodifiableList}.
      */
-    static final <Q extends QueryPart> UnmodifiableList<Q> unmodifiable(List<Q> list) {
+    @Internal
+    public static final <Q extends QueryPart> UnmodifiableList<Q> unmodifiable(List<Q> list) {
         return QueryPartListView.wrap(unmodifiableList(list));
     }
 
     /**
      * Turn a {@link Collection} into an unmodifiable {@link UnmodifiableList}.
      */
-    static final <Q extends QueryPart> UnmodifiableList<Q> unmodifiable(Collection<Q> collection) {
+    @Internal
+    public static final <Q extends QueryPart> UnmodifiableList<Q> unmodifiable(Collection<Q> collection) {
         if (collection instanceof List)
             return unmodifiable((List<Q>) collection);
         else

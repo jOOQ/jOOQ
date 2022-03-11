@@ -130,6 +130,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean validationAnnotations = false;
     @XmlElement(defaultValue = "false")
     protected Boolean springAnnotations = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean springDao = false;
     @XmlElement(defaultValue = "true")
     protected Boolean kotlinSetterJvmNameAnnotationsOnIsPrefix = true;
     @XmlElement(defaultValue = "true")
@@ -1378,6 +1380,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setSpringAnnotations(Boolean value) {
         this.springAnnotations = value;
+    }
+
+    /**
+     * Generate an AbstractSpringDAOImpl as a base class for other DAO classes, containing @Transactional annotations, etc.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isSpringDao() {
+        return springDao;
+    }
+
+    /**
+     * Sets the value of the springDao property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setSpringDao(Boolean value) {
+        this.springDao = value;
     }
 
     /**
@@ -2756,6 +2782,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withSpringDao(Boolean value) {
+        setSpringDao(value);
+        return this;
+    }
+
     public Generate withKotlinSetterJvmNameAnnotationsOnIsPrefix(Boolean value) {
         setKotlinSetterJvmNameAnnotationsOnIsPrefix(value);
         return this;
@@ -3070,6 +3101,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("jpaVersion", jpaVersion);
         builder.append("validationAnnotations", validationAnnotations);
         builder.append("springAnnotations", springAnnotations);
+        builder.append("springDao", springDao);
         builder.append("kotlinSetterJvmNameAnnotationsOnIsPrefix", kotlinSetterJvmNameAnnotationsOnIsPrefix);
         builder.append("globalObjectReferences", globalObjectReferences);
         builder.append("globalCatalogReferences", globalCatalogReferences);
@@ -3579,6 +3611,15 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (springDao == null) {
+            if (other.springDao!= null) {
+                return false;
+            }
+        } else {
+            if (!springDao.equals(other.springDao)) {
+                return false;
+            }
+        }
         if (kotlinSetterJvmNameAnnotationsOnIsPrefix == null) {
             if (other.kotlinSetterJvmNameAnnotationsOnIsPrefix!= null) {
                 return false;
@@ -4058,6 +4099,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((jpaVersion == null)? 0 :jpaVersion.hashCode()));
         result = ((prime*result)+((validationAnnotations == null)? 0 :validationAnnotations.hashCode()));
         result = ((prime*result)+((springAnnotations == null)? 0 :springAnnotations.hashCode()));
+        result = ((prime*result)+((springDao == null)? 0 :springDao.hashCode()));
         result = ((prime*result)+((kotlinSetterJvmNameAnnotationsOnIsPrefix == null)? 0 :kotlinSetterJvmNameAnnotationsOnIsPrefix.hashCode()));
         result = ((prime*result)+((globalObjectReferences == null)? 0 :globalObjectReferences.hashCode()));
         result = ((prime*result)+((globalCatalogReferences == null)? 0 :globalCatalogReferences.hashCode()));

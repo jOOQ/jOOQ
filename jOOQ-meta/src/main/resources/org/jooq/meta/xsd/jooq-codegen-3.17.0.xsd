@@ -1793,6 +1793,10 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Annotate DAOs with useful spring annotations such as @Repository or @Autowired.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="springDao" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate an AbstractSpringDAOImpl as a base class for other DAO classes, containing @Transactional annotations, etc.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="kotlinSetterJvmNameAnnotationsOnIsPrefix" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Workaround for Kotlin generating <code>setX()</code> setters instead of <code>setIsX()</code> in byte code for mutable properties called <code>isX</code>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

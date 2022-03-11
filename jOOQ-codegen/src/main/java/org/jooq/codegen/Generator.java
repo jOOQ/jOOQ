@@ -46,6 +46,7 @@ import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Spatial;
 import org.jooq.XML;
+import org.jooq.impl.DAOImpl;
 import org.jooq.meta.Database;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
 import org.jooq.meta.jaxb.GeneratedSerialVersionUID;
@@ -586,6 +587,22 @@ public interface Generator {
      * <code>@Repository</code> or <code>@Autowired</code>
      */
     void setGenerateSpringAnnotations(boolean generateSpringAnnotations);
+
+    /**
+     * Whether a Spring specific {@link DAOImpl} subclass should be generated,
+     * which may contain Spring specific stuff, such as the
+     * <code>@Transactional</code> annotation (if
+     * {@link #generateSpringAnnotations()} is set).
+     */
+    boolean generateSpringDao();
+
+    /**
+     * Whether a Spring specific {@link DAOImpl} subclass should be generated,
+     * which may contain Spring specific stuff, such as the
+     * <code>@Transactional</code> annotation (if
+     * {@link #generateSpringAnnotations()} is set).
+     */
+    void setGenerateSpringDao(boolean generateSpringDao);
 
     /**
      * Whether kotlin mutable properties should be annotated with

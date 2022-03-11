@@ -87,6 +87,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -129,6 +130,7 @@ import org.jooq.TableOptions;
 import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UniqueKey;
+import org.jooq.UpdatableRecord;
 import org.jooq.codegen.GeneratorStrategy.Mode;
 import org.jooq.codegen.GeneratorWriter.CloseResult;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -570,6 +572,9 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         generateCatalog(catalog);
+
+        if (generateSpringDao() && catalog.getSchemata().stream().anyMatch(s -> !s.getTables().isEmpty()))
+            generateSpringDao(catalog);
 
         log.info("Generating schemata", "Total: " + catalog.getSchemata().size());
         for (SchemaDefinition schema : catalog.getSchemata()) {
@@ -4150,6 +4155,280 @@ public class JavaGenerator extends AbstractGenerator {
         watch.splitInfo("Table DAOs generated");
     }
 
+    protected void generateSpringDao(CatalogDefinition catalog) {
+        // [#10756] Optionally, this class could be implemented in a new jooq-spring-extensions module
+        JavaWriter out = newJavaWriter(new File(getStrategy().getFile(catalog).getParentFile(), "AbstractSpringDAOImpl.java"));
+        log.info("Generating AbstractSpringDAOImpl", out.file().getName());
+        generateSpringDao(catalog, out);
+        closeJavaWriter(out);
+    }
+
+    protected void generateSpringDao(CatalogDefinition catalog, JavaWriter out) {
+        printPackage(out, catalog);
+
+        printClassJavadoc(out, "Spring specific {@" + out.ref(DAOImpl.class) + "} override.");
+        printClassAnnotations(out, catalog, Mode.DEFAULT);
+
+        String transactional = generateSpringAnnotations()
+            ? out.ref("org.springframework.transaction.annotation.Transactional")
+            : null;
+        String className = "AbstractSpringDAOImpl";
+
+        if (scala) {
+            if (generateSpringAnnotations())
+                out.println("@%s(readOnly = true)", transactional);
+
+            out.println("%sabstract class %s[R <: %s[R], P, T](table: %s[R], klass: java.lang.Class[P], configuration: %s) extends %s[R, P, T](table, klass, configuration) {",
+                visibility(), className, UpdatableRecord.class, Table.class, Configuration.class, DAOImpl.class);
+
+            out.println();
+            out.println("%sdef this(table: %s[R], klass: java.lang.Class[P]) = this(table, klass, null)", visibility(), Table.class);
+        }
+        else if (kotlin) {
+            if (generateSpringAnnotations())
+                out.println("@%s(readOnly = true)", transactional);
+
+            out.println("%sabstract class %s<R : %s<R>, P, T>(table: %s<R>, type: %s<P>, configuration: %s?) : %s<R, P, T>(table, type, configuration) {",
+                visibility(), className, UpdatableRecord.class, Table.class, Class.class, Configuration.class, DAOImpl.class);
+
+            out.println();
+            out.println("%sconstructor(table: %s<R>, type: %s<P>) : this(table, type, null)", visibility(), Table.class, Class.class);
+        }
+        else {
+            if (generateSpringAnnotations())
+                out.println("@%s(readOnly = true)", transactional);
+
+            out.println("%sabstract class %s<R extends %s<R>, P, T> extends %s<R, P, T> {", visibility(), className, UpdatableRecord.class, DAOImpl.class);
+            out.println();
+            out.println("protected %s(%s<R> table, %s<P> type) {", className, Table.class, Class.class);
+            out.println("super(table, type);");
+            out.println("}");
+            out.println();
+            out.println("protected %s(%s<R> table, %s<P> type, %s configuration) {", className, Table.class, Class.class, Configuration.class);
+            out.println("super(table, type, configuration);");
+            out.println("}");
+        }
+
+        Consumer<Boolean> printTransactionalHeader = readOnly -> {
+            out.println();
+
+            if (readOnly)
+                out.println("@%s(readOnly = true)", transactional);
+            else
+                out.println("@%s", transactional);
+        };
+
+        printTransactionalHeader.accept(true);
+        if (scala) {
+            out.println("override def count(): Long = super.count()");
+        }
+        else if (kotlin) {
+            out.println("public override fun count(): Long = super.count()");
+        }
+        else {
+            out.override();
+            out.println("public long count() {");
+            out.println("return super.count();");
+            out.println("}");
+        }
+
+        printTransactionalHeader.accept(true);
+        if (scala) {
+            out.println("override def exists(obj: P): Boolean = super.exists(obj)");
+        }
+        else if (kotlin) {
+            out.println("public override fun exists(obj: P): Boolean = super.exists(obj)");
+        }
+        else {
+            out.override();
+            out.println("public boolean exists(P object) {");
+            out.println("return super.exists(object);");
+            out.println("}");
+        }
+
+        printTransactionalHeader.accept(true);
+        if (scala) {
+            out.println("override def existsById(id: T): Boolean = super.existsById(id)");
+        }
+        else if (kotlin) {
+            out.println("public override fun existsById(id: T): Boolean = super.existsById(id)");
+        }
+        else {
+            out.override();
+            out.println("public boolean existsById(T id) {");
+            out.println("return super.existsById(id);");
+            out.println("}");
+        }
+
+        printTransactionalHeader.accept(true);
+        if (scala) {
+            out.println("override def fetch[Z](field: %s[Z], values: %s[_ <: Z]): %s[P] = super.fetch(field, values)", Field.class, Collection.class, List.class);
+        }
+        else if (kotlin) {
+            out.println("public override fun <Z> fetch(field: %s<Z>, values: %s<Z>): %s<P> = super.fetch(field, values)", Field.class, out.ref("kotlin.collections.Collection"), out.ref("kotlin.collections.List"));
+        }
+        else {
+            out.override();
+            out.println("public <Z> %s<P> fetch(%s<Z> field, %s<? extends Z> values) {", List.class, Field.class, Collection.class);
+            out.println("return super.fetch(field, values);");
+            out.println("}");
+        }
+
+        printTransactionalHeader.accept(true);
+        if (scala) {
+            out.println("override def fetch[Z](field: %s[Z], values: Z*): %s[P] = super.fetch(field, values:_*)", Field.class, List.class);
+        }
+        else if (kotlin) {
+            out.println("public override fun <Z> fetch(field: %s<Z>, vararg values: Z): %s<P> = super.fetch(field, *values)", Field.class, out.ref("kotlin.collections.List"));
+        }
+        else {
+            out.override();
+            out.println("public <Z> %s<P> fetch(%s<Z> field, Z... values) {", List.class, Field.class);
+            out.println("return super.fetch(field, values);");
+            out.println("}");
+        }
+
+        printTransactionalHeader.accept(true);
+        if (scala) {
+            out.println("override def fetchOne[Z](field: %s[Z], value: Z): P = super.fetchOne(field, value)", Field.class);
+        }
+        else if (kotlin) {
+            out.println("public override fun <Z> fetchOne(field: %s<Z>, value: Z): P? = super.fetchOne(field, value)", Field.class);
+        }
+        else {
+            out.override();
+            out.println("public <Z> P fetchOne(%s<Z> field, Z value) {", Field.class);
+            out.println("return super.fetchOne(field, value);");
+            out.println("}");
+        }
+
+        printTransactionalHeader.accept(true);
+        if (scala) {
+            out.println("override def fetchOptional[Z](field: %s[Z], value: Z): %s[P] = super.fetchOptional(field, value)", Field.class, Optional.class);
+        }
+        else if (kotlin) {
+            out.println("public override fun <Z> fetchOptional(field: %s<Z>, value: Z): %s<P> = super.fetchOptional(field, value)", Field.class, Optional.class);
+        }
+        else {
+            out.override();
+            out.println("public <Z> %s<P> fetchOptional(%s<Z> field, Z value) {", Optional.class, Field.class);
+            out.println("return super.fetchOptional(field, value);");
+            out.println("}");
+        }
+
+        printTransactionalHeader.accept(true);
+        if (scala) {
+            out.println("override def fetchRange[Z](field: %s[Z], lowerInclusive: Z, upperInclusive: Z): %s[P] = super.fetchRange(field, lowerInclusive, upperInclusive)", Field.class, List.class);
+        }
+        else if (kotlin) {
+            out.println("public override fun <Z> fetchRange(field: %s<Z>, lowerInclusive: Z, upperInclusive: Z): %s<P> = super.fetchRange(field, lowerInclusive, upperInclusive)", Field.class, out.ref("kotlin.collections.List"));
+        }
+        else {
+            out.override();
+            out.println("public <Z> %s<P> fetchRange(%s<Z> field, Z lowerInclusive, Z upperInclusive) {", List.class, Field.class);
+            out.println("return super.fetchRange(field, lowerInclusive, upperInclusive);");
+            out.println("}");
+        }
+
+        printTransactionalHeader.accept(true);
+        if (scala) {
+            out.println("override def findAll(): %s[P] = super.findAll()", List.class);
+        }
+        else if (kotlin) {
+            out.println("public override fun findAll(): %s<P> = super.findAll()", out.ref("kotlin.collections.List"));
+        }
+        else {
+            out.override();
+            out.println("public %s<P> findAll() {", List.class);
+            out.println("return super.findAll();");
+            out.println("}");
+        }
+
+        printTransactionalHeader.accept(true);
+        if (scala) {
+            out.println("override def findById(id: T): P = super.findById(id)");
+        }
+        else if (kotlin) {
+            out.println("public override fun findById(id: T): P? = super.findById(id)");
+        }
+        else {
+            out.override();
+            out.println("public P findById(T id) {");
+            out.println("return super.findById(id);");
+            out.println("}");
+        }
+
+        printTransactionalHeader.accept(true);
+        if (scala) {
+            out.println("override def findOptionalById(id: T): %s[P] = super.findOptionalById(id)", Optional.class);
+        }
+        else if (kotlin) {
+            out.println("public override fun findOptionalById(id: T): %s<P> = super.findOptionalById(id)", Optional.class);
+        }
+        else {
+            out.override();
+            out.println("public %s<P> findOptionalById(T id) {", Optional.class);
+            out.println("return super.findOptionalById(id);");
+            out.println("}");
+        }
+
+        for (String name : asList("insert", "update", "merge", "delete", "deleteById")) {
+            String argType = name.endsWith("ById") ? "T" : "P";
+            String argName = name.endsWith("ById") ? "id" : "obj";
+
+            printTransactionalHeader.accept(false);
+            if (scala) {
+                out.println("override def %s(%s: %s): Unit = super.%s(%s)", name, argName, argType, name, argName);
+            }
+            else if (kotlin) {
+                out.println("public override fun %s(%s: %s): Unit = super.%s(%s)", name, argName, argType, name, argName);
+            }
+            else {
+                out.override();
+                out.println("public void %s(%s<%s> %ss) {", name, Collection.class, argType, argName);
+                out.println("super.%s(%ss);", name, argName);
+                out.println("}");
+            }
+
+            printTransactionalHeader.accept(false);
+            if (scala) {
+                out.println("override def %s(%ss: %s*): Unit = super.%s(%ss:_*)", name, argName, argType, name, argName);
+            }
+            else if (kotlin) {
+                out.println("public override fun %s(vararg %ss: %s): Unit = super.%s(*%ss)", name, argName, argType, name, argName);
+            }
+            else {
+                out.override();
+                out.println("public void %s(%s %s) {", name, argType, argName);
+                out.println("super.%s(%s);", name, argName);
+                out.println("}");
+            }
+
+            printTransactionalHeader.accept(false);
+            if (scala) {
+                out.println("override def %s(%ss: %s[%s]): Unit = super.%s(%ss)", name, argName, Collection.class, argType, name, argName);
+            }
+            else if (kotlin) {
+                out.println("public override fun %s(%ss: %s<%s>): Unit = super.%s(%ss)", name, argName, out.ref("kotlin.collections.Collection"), argType, name, argName);
+            }
+            else {
+                out.override();
+                out.println("public void %s(%s... %ss) {", name, argType, argName);
+                out.println("super.%s(%ss);", name, argName);
+                out.println("}");
+            }
+        }
+
+        generateSpringDaoClassFooter(catalog, out);
+        out.println("}");
+    }
+
+    /**
+     * Subclasses may override this method to provide table references class footer code.
+     */
+    @SuppressWarnings("unused")
+    protected void generateSpringDaoClassFooter(CatalogDefinition catalog, JavaWriter out) {}
+
     protected void generateDao(TableDefinition table) {
         JavaWriter out = newJavaWriter(getFile(table, Mode.DAO));
         log.info("Generating DAO", out.file().getName());
@@ -4167,7 +4446,9 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getJavaClassName(table, Mode.DAO);
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(table, Mode.DAO));
         final String tableRecord = out.ref(getStrategy().getFullJavaClassName(table, Mode.RECORD));
-        final String daoImpl = out.ref(DAOImpl.class);
+        final String daoImpl = generateSpringDao()
+            ? out.ref(getStrategy().getJavaPackageName(table.getSchema(), Mode.DAO) + ".AbstractSpringDAOImpl")
+            : out.ref(DAOImpl.class);
         final String tableIdentifier = out.ref(getStrategy().getFullJavaIdentifier(table), 2);
 
         String tType = (scala || kotlin ? "Unit" : "Void");

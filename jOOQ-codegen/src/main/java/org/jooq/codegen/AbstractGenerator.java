@@ -112,6 +112,7 @@ abstract class AbstractGenerator implements Generator {
     String                             generateJPAVersion                               = "";
     boolean                            generateValidationAnnotations                    = false;
     boolean                            generateSpringAnnotations                        = false;
+    boolean                            generateSpringDao                                = false;
     boolean                            generateKotlinSetterJvmNameAnnotationsOnIsPrefix = true;
     GeneratedSerialVersionUID          generatedSerialVersionUID                        = GeneratedSerialVersionUID.CONSTANT;
     int                                maxMembersPerInitialiser                         = 500;
@@ -731,6 +732,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateSpringAnnotations(boolean generateSpringAnnotations) {
         this.generateSpringAnnotations = generateSpringAnnotations;
+    }
+
+    @Override
+    public boolean generateSpringDao() {
+        return generateSpringDao;
+    }
+
+    @Override
+    public void setGenerateSpringDao(boolean generateSpringDao) {
+        this.generateSpringDao = generateSpringDao;
     }
 
     @Override

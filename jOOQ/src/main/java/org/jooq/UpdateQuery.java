@@ -52,6 +52,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
@@ -361,7 +362,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      *
      * @param from The added tables
      */
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     void addFrom(TableLike<?> from);
 
     /**
@@ -369,7 +370,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      *
      * @param from The added tables
      */
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     void addFrom(TableLike<?>... from);
 
     /**
@@ -377,7 +378,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      *
      * @param from The added tables
      */
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     void addFrom(Collection<? extends TableLike<?>> from);
 
     // ------------------------------------------------------------------------

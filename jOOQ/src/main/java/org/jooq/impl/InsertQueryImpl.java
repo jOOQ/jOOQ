@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.falseCondition;
@@ -136,6 +137,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     private static final Clause[]        CLAUSES                                       = { INSERT };
     private static final Set<SQLDialect> SUPPORT_INSERT_IGNORE                         = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> SUPPORTS_OPTIONAL_DO_UPDATE_CONFLICT_TARGETS  = SQLDialect.supportedBy(SQLITE);
     private static final Set<SQLDialect> NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING = SQLDialect.supportedBy(DERBY, H2);
     private static final Set<SQLDialect> NO_SUPPORT_SUBQUERY_IN_MERGE_USING            = SQLDialect.supportedBy(DERBY);
 
@@ -343,10 +345,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                         ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
                     }
                     else {
-                        ctx.sql('(');
-
                         if (onConflict != null && onConflict.size() > 0)
-                            ctx.visit(onConflict);
+                            ctx.sql('(').visit(onConflict).sql(')');
 
 
 
@@ -358,6 +358,9 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
+                        // [#13273] SQLite 3.38 has started supporting optional on conflict targets
+                        else if (SUPPORTS_OPTIONAL_DO_UPDATE_CONFLICT_TARGETS.contains(ctx.dialect()) && !onConflictWhere.hasWhere())
+                            ;
                         // [#6462] There is no way to emulate MySQL's ON DUPLICATE KEY UPDATE
                         //         where all UNIQUE keys are considered for conflicts. PostgreSQL
                         //         doesn't allow ON CONFLICT DO UPDATE without either a conflict
@@ -365,9 +368,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                         else if (table().getPrimaryKey() == null)
                             ctx.sql("[unknown primary key]");
                         else
-                            ctx.qualify(false, c -> c.visit(new FieldsImpl<>(table().getPrimaryKey().getFields())));
-
-                        ctx.sql(')');
+                            ctx.sql('(').qualify(false, c -> c.visit(new FieldsImpl<>(table().getPrimaryKey().getFields()))).sql(')');
                     }
 
                     if (onConflictWhere.hasWhere())

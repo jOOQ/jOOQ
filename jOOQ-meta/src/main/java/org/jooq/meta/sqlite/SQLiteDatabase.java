@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.list;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.one;
@@ -50,8 +51,10 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.Internal.hash;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.sqlite.sqlite_master.SQLiteMaster.SQLITE_MASTER;
+import static org.jooq.tools.StringUtils.isBlank;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -81,6 +84,7 @@ import org.jooq.UniqueKey;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.Internal;
 import org.jooq.impl.ParserException;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -103,6 +107,8 @@ import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.meta.sqlite.sqlite_master.SQLiteMaster;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * SQLite implementation of {@link AbstractDatabase}
@@ -213,6 +219,15 @@ public class SQLiteDatabase extends AbstractDatabase {
         return result;
     }
 
+    private String keyName(UniqueKey<?> key) {
+        String name = key.getName();
+        return !isBlank(name)
+             ? name
+             : key.isPrimary()
+             ? "pk_" + key.getTable().getName()
+             : "uk_" + key.getTable().getName() + "_" + hash(list(key.getFields()));
+    }
+
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
 
@@ -225,7 +240,7 @@ public class SQLiteDatabase extends AbstractDatabase {
 
                 if (table != null)
                     for (Field<?> f : pk.getFields())
-                        relations.addPrimaryKey(pk.getName(), table, table.getColumn(f.getName()));
+                        relations.addPrimaryKey(keyName(pk), table, table.getColumn(f.getName()));
             }
         }
     }
@@ -240,7 +255,7 @@ public class SQLiteDatabase extends AbstractDatabase {
 
                 if (table != null)
                     for (Field<?> f : uk.getFields())
-                        relations.addUniqueKey(uk.getName(), table, table.getColumn(f.getName()));
+                        relations.addUniqueKey(keyName(uk), table, table.getColumn(f.getName()));
             }
         }
     }
@@ -269,9 +284,7 @@ public class SQLiteDatabase extends AbstractDatabase {
                 if (fkTable == null || ukTable == null)
                     continue fkLoop;
 
-                String ukName = StringUtils.isBlank(uk.getName())
-                    ? "pk_" + ukTable.getName()
-                    : uk.getName();
+                String ukName = keyName(uk);
                 String fkName = StringUtils.isBlank(fk.getName())
                     ? "fk_" + fkTable.getName() +
                       "_" + ukName

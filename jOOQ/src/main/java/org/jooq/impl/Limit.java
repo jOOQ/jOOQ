@@ -283,6 +283,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
 
 
 
+
             // [#4785] OFFSET cannot be without LIMIT
 
 

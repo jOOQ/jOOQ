@@ -70,6 +70,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import java.util.Collection;
@@ -484,7 +485,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumn(Field)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     AlterTableDropStep drop(Field<?> field);
 
     /**
@@ -494,7 +495,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumn(Name)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     AlterTableDropStep drop(Name field);
 
     /**
@@ -504,7 +505,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumn(String)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     AlterTableDropStep drop(String field);
 
     /**
@@ -542,7 +543,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     AlterTableDropStep dropColumn(Field<?> field);
 
     /**
@@ -550,7 +551,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     AlterTableDropStep dropColumn(Name field);
 
     /**
@@ -558,7 +559,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     AlterTableDropStep dropColumn(String field);
 
     /**

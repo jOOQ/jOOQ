@@ -105,8 +105,13 @@ implements
 
 
             case SQLITE: {
-                // [#8275] Improved emulation for SQLite
-                ctx.sql('(').visit(value.cast(BIGINT)).sql(" + (").visit(value).sql(" > ").visit(value.cast(BIGINT)).sql("))");
+
+
+
+
+
+
+                ctx.visit(function(N_CEIL, getDataType(), value));
                 break;
             }
 

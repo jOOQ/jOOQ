@@ -105,10 +105,9 @@ implements
 
 
 
-
-
-
-
+            case SQLITE:
+                ctx.visit(idiv(DSL.cos(number), DSL.sin(number)));
+                break;
 
             default:
                 ctx.visit(function(N_COT, getDataType(), number));

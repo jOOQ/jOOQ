@@ -130,8 +130,9 @@ implements
 
 
 
-
-
+                case SQLITE:
+                    ctx.visit(function(N_LOG, NUMERIC, value));
+                    return;
 
                 default:
                     ctx.visit(function(N_LN, NUMERIC, value));
@@ -169,6 +170,7 @@ implements
                 case DERBY:
                 case HSQLDB:
                 case IGNITE:
+                case SQLITE:
                     ctx.visit(idiv(DSL.ln(value), DSL.ln(base)));
                     return;
 

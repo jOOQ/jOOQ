@@ -96,6 +96,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Names.N_COUNT;
@@ -15847,7 +15848,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> acos(Number number) {
         return new Acos(Tools.field(number));
     }
@@ -15856,7 +15857,7 @@ public class DSL {
      * The <code>ACOS</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> acos(Field<? extends Number> number) {
         return new Acos(number);
     }
@@ -15867,7 +15868,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> asin(Number number) {
         return new Asin(Tools.field(number));
     }
@@ -15876,7 +15877,7 @@ public class DSL {
      * The <code>ASIN</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> asin(Field<? extends Number> number) {
         return new Asin(number);
     }
@@ -15887,7 +15888,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> atan(Number number) {
         return new Atan(Tools.field(number));
     }
@@ -15896,7 +15897,7 @@ public class DSL {
      * The <code>ATAN</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> atan(Field<? extends Number> number) {
         return new Atan(number);
     }
@@ -15908,7 +15909,7 @@ public class DSL {
      * @param y is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> atan2(Number x, Number y) {
         return new Atan2(Tools.field(x), Tools.field(y));
     }
@@ -15919,7 +15920,7 @@ public class DSL {
      * @param x is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> atan2(Number x, Field<? extends Number> y) {
         return new Atan2(Tools.field(x), y);
     }
@@ -15930,7 +15931,7 @@ public class DSL {
      * @param y is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
         return new Atan2(x, Tools.field(y));
     }
@@ -15939,7 +15940,7 @@ public class DSL {
      * The <code>ATAN2</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Field<? extends Number> y) {
         return new Atan2(x, y);
     }
@@ -16276,7 +16277,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> cos(Number number) {
         return new Cos(Tools.field(number));
     }
@@ -16285,7 +16286,7 @@ public class DSL {
      * The <code>COS</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> cos(Field<? extends Number> number) {
         return new Cos(number);
     }
@@ -16296,7 +16297,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> cosh(Number number) {
         return new Cosh(Tools.field(number));
     }
@@ -16305,7 +16306,7 @@ public class DSL {
      * The <code>COSH</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> cosh(Field<? extends Number> number) {
         return new Cosh(number);
     }
@@ -16316,7 +16317,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> cot(Number number) {
         return new Cot(Tools.field(number));
     }
@@ -16325,7 +16326,7 @@ public class DSL {
      * The <code>COT</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> cot(Field<? extends Number> number) {
         return new Cot(number);
     }
@@ -16336,7 +16337,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> coth(Number number) {
         return new Coth(Tools.field(number));
     }
@@ -16345,7 +16346,7 @@ public class DSL {
      * The <code>COTH</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> coth(Field<? extends Number> number) {
         return new Coth(number);
     }
@@ -16393,7 +16394,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> exp(Number value) {
         return new Exp(Tools.field(value));
     }
@@ -16402,7 +16403,7 @@ public class DSL {
      * The <code>EXP</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> exp(Field<? extends Number> value) {
         return new Exp(value);
     }
@@ -16437,7 +16438,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> ln(Number value) {
         return new Log(Tools.field(value));
     }
@@ -16446,7 +16447,7 @@ public class DSL {
      * The <code>LN</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> ln(Field<? extends Number> value) {
         return new Log(value);
     }
@@ -16458,7 +16459,7 @@ public class DSL {
      * @param base is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> log(Number value, int base) {
         return new Log(Tools.field(value), Tools.field(base));
     }
@@ -16469,7 +16470,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> log(Number value, Field<? extends Number> base) {
         return new Log(Tools.field(value), base);
     }
@@ -16480,7 +16481,7 @@ public class DSL {
      * @param base is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> log(Field<? extends Number> value, int base) {
         return new Log(value, Tools.field(base));
     }
@@ -16489,7 +16490,7 @@ public class DSL {
      * The <code>LOG</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> log(Field<? extends Number> value, Field<? extends Number> base) {
         return new Log(value, base);
     }
@@ -16500,7 +16501,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> log10(Number value) {
         return new Log10(Tools.field(value));
     }
@@ -16509,7 +16510,7 @@ public class DSL {
      * The <code>LOG10</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> log10(Field<? extends Number> value) {
         return new Log10(value);
     }
@@ -16532,7 +16533,7 @@ public class DSL {
      * @param exponent is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> power(Number base, Number exponent) {
         return new Power(Tools.field(base), Tools.field(exponent));
     }
@@ -16543,7 +16544,7 @@ public class DSL {
      * @param base is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> power(Number base, Field<? extends Number> exponent) {
         return new Power(Tools.field(base), exponent);
     }
@@ -16554,7 +16555,7 @@ public class DSL {
      * @param exponent is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> power(Field<? extends Number> base, Number exponent) {
         return new Power(base, Tools.field(exponent));
     }
@@ -16563,7 +16564,7 @@ public class DSL {
      * The <code>POWER</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> power(Field<? extends Number> base, Field<? extends Number> exponent) {
         return new Power(base, exponent);
     }
@@ -16829,7 +16830,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> sin(Number number) {
         return new Sin(Tools.field(number));
     }
@@ -16838,7 +16839,7 @@ public class DSL {
      * The <code>SIN</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> sin(Field<? extends Number> number) {
         return new Sin(number);
     }
@@ -16849,7 +16850,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> sinh(Number number) {
         return new Sinh(Tools.field(number));
     }
@@ -16858,7 +16859,7 @@ public class DSL {
      * The <code>SINH</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> sinh(Field<? extends Number> number) {
         return new Sinh(number);
     }
@@ -16869,7 +16870,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> sqrt(Number value) {
         return new Sqrt(Tools.field(value));
     }
@@ -16878,7 +16879,7 @@ public class DSL {
      * The <code>SQRT</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> sqrt(Field<? extends Number> value) {
         return new Sqrt(value);
     }
@@ -16909,7 +16910,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> tan(Number number) {
         return new Tan(Tools.field(number));
     }
@@ -16918,7 +16919,7 @@ public class DSL {
      * The <code>TAN</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> tan(Field<? extends Number> number) {
         return new Tan(number);
     }
@@ -16929,7 +16930,7 @@ public class DSL {
      * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> tanh(Number number) {
         return new Tanh(Tools.field(number));
     }
@@ -16938,7 +16939,7 @@ public class DSL {
      * The <code>TANH</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     public static Field<BigDecimal> tanh(Field<? extends Number> number) {
         return new Tanh(number);
     }
@@ -16963,7 +16964,7 @@ public class DSL {
      * @param decimals The decimals to truncate to.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static <T extends Number> Field<T> trunc(T value, int decimals) {
         return new Trunc<>(Tools.field(value), Tools.field(decimals));
     }
@@ -16977,7 +16978,7 @@ public class DSL {
      * @param decimals The decimals to truncate to.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static <T extends Number> Field<T> trunc(T value, Field<Integer> decimals) {
         return new Trunc<>(Tools.field(value), decimals);
     }
@@ -16991,7 +16992,7 @@ public class DSL {
      * @param decimals The decimals to truncate to.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static <T extends Number> Field<T> trunc(Field<T> value, int decimals) {
         return new Trunc<>(value, Tools.field(decimals));
     }
@@ -17005,7 +17006,7 @@ public class DSL {
      * @param decimals The decimals to truncate to.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static <T extends Number> Field<T> trunc(Field<T> value, Field<Integer> decimals) {
         return new Trunc<>(value, decimals);
     }

@@ -105,7 +105,6 @@ implements
 
 
             case FIREBIRD:
-            case SQLITE:
                 ctx.visit(idiv(
                     imul(
                         castIfNeeded(degrees, BigDecimal.class),
@@ -114,6 +113,22 @@ implements
                     inline(180)
                 ));
                 break;
+
+            case SQLITE: {
+
+
+
+
+
+
+
+
+
+
+
+                ctx.visit(function(N_RADIANS, getDataType(), degrees));
+                break;
+            }
 
             default:
                 ctx.visit(function(N_RADIANS, getDataType(), degrees));

@@ -68,6 +68,7 @@ import org.jooq.Parameter;
 // ...
 import org.jooq.Queries;
 import org.jooq.Query;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...
 // ...
@@ -271,7 +272,7 @@ public final class Internal {
                 name = child.getQualifiedName().append(name);
         }
 
-        return DSL.name("alias_" + Tools.hash(name));
+        return DSL.name("alias_" + hash(name));
     }
 
     /**
@@ -608,4 +609,16 @@ public final class Internal {
 
 
 
+
+    /**
+     * Return a non-negative hash code for a {@link QueryPart}, taking into
+     * account FindBugs' <code>RV_ABSOLUTE_VALUE_OF_HASHCODE</code> pattern
+     */
+    public static final int hash(QueryPart part) {
+
+        // [#6025] Prevent unstable alias generation for derived tables due to
+        //         inlined bind variables in hashCode() calculation
+        // [#6175] TODO: Speed this up with a faster way to calculate a hash code
+        return 0x7FFFFFF & CTX.render(part).hashCode();
+    }
 }

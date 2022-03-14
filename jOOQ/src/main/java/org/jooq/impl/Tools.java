@@ -3353,7 +3353,7 @@ final class Tools {
      * parts must produce the same alias every time.
      */
     static final String autoAlias(QueryPart part) {
-        return "alias_" + hash(part);
+        return "alias_" + Internal.hash(part);
     }
 
     /**
@@ -3365,18 +3365,6 @@ final class Tools {
      */
     static final Name autoAliasName(QueryPart part) {
         return DSL.name(autoAlias(part));
-    }
-
-    /**
-     * Return a non-negative hash code for a {@link QueryPart}, taking into
-     * account FindBugs' <code>RV_ABSOLUTE_VALUE_OF_HASHCODE</code> pattern
-     */
-    static final int hash(QueryPart part) {
-
-        // [#6025] Prevent unstable alias generation for derived tables due to
-        //         inlined bind variables in hashCode() calculation
-        // [#6175] TODO: Speed this up with a faster way to calculate a hash code
-        return 0x7FFFFFF & CTX.render(part).hashCode();
     }
 
     /**

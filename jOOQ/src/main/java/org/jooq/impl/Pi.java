@@ -105,9 +105,18 @@ implements
 
 
 
-            case SQLITE:
-                ctx.visit(inline(Math.PI, BigDecimal.class));
+
+
+
+            case SQLITE: {
+
+
+
+
+
+                ctx.visit(function(N_PI, getDataType()));
                 break;
+            }
 
             default:
                 ctx.visit(function(N_PI, getDataType()));

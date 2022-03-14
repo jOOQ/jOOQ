@@ -114,10 +114,6 @@ implements
 
 
 
-            case SQLITE:
-                ctx.visit(DSL.power(value, inline(0.5)));
-                break;
-
             default:
                 ctx.visit(function(N_SQRT, getDataType(), value));
                 break;

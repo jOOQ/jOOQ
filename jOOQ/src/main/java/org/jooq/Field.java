@@ -72,6 +72,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import java.math.BigDecimal;
@@ -1279,14 +1280,14 @@ extends
      * @param exponent is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     Field<BigDecimal> power(Number exponent);
 
     /**
      * The <code>POWER</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     Field<BigDecimal> power(Field<? extends Number> exponent);
 
     /**
@@ -1295,14 +1296,14 @@ extends
      * @param exponent is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     Field<BigDecimal> pow(Number exponent);
 
     /**
      * The <code>POW</code> operator, an alias for the <code>POWER</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     Field<BigDecimal> pow(Field<? extends Number> exponent);
 
     /**

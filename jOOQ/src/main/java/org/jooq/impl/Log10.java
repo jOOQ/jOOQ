@@ -115,7 +115,8 @@ implements
 
 
 
-            case POSTGRES: {
+            case POSTGRES:
+            case SQLITE: {
 
 
 

@@ -126,9 +126,15 @@ implements
                 ctx.visit(DSL.exp(one()));
                 break;
 
-            case SQLITE:
-                ctx.visit(inline(Math.E, BigDecimal.class));
+            case SQLITE: {
+
+
+
+
+
+                ctx.visit(DSL.exp(one()));
                 break;
+            }
 
             default:
                 ctx.visit(function(N_E, getDataType()));

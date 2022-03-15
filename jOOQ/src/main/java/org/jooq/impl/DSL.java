@@ -15863,6 +15863,46 @@ public class DSL {
     }
 
     /**
+     * The <code>ACOSH</code> function.
+     *
+     * @param number is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> acosh(Number number) {
+        return new Acosh(Tools.field(number));
+    }
+
+    /**
+     * The <code>ACOSH</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> acosh(Field<? extends Number> number) {
+        return new Acosh(number);
+    }
+
+    /**
+     * The <code>ACOTH</code> function.
+     *
+     * @param number is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> acoth(Number number) {
+        return new Acoth(Tools.field(number));
+    }
+
+    /**
+     * The <code>ACOTH</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> acoth(Field<? extends Number> number) {
+        return new Acoth(number);
+    }
+
+    /**
      * The <code>ASIN</code> function.
      *
      * @param number is wrapped as {@link #val(Object)}.
@@ -15880,6 +15920,26 @@ public class DSL {
     @Support
     public static Field<BigDecimal> asin(Field<? extends Number> number) {
         return new Asin(number);
+    }
+
+    /**
+     * The <code>ASINH</code> function.
+     *
+     * @param number is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> asinh(Number number) {
+        return new Asinh(Tools.field(number));
+    }
+
+    /**
+     * The <code>ASINH</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> asinh(Field<? extends Number> number) {
+        return new Asinh(number);
     }
 
     /**
@@ -15943,6 +16003,26 @@ public class DSL {
     @Support
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Field<? extends Number> y) {
         return new Atan2(x, y);
+    }
+
+    /**
+     * The <code>ATANH</code> function.
+     *
+     * @param number is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> atanh(Number number) {
+        return new Atanh(Tools.field(number));
+    }
+
+    /**
+     * The <code>ATANH</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> atanh(Field<? extends Number> number) {
+        return new Atanh(number);
     }
 
     /**

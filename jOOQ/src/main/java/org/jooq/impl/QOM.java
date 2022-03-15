@@ -2266,6 +2266,32 @@ public final class QOM {
     }
 
     /**
+     * The <code>ACOSH</code> function.
+     */
+    public /*sealed*/ interface Acosh
+        extends
+            org.jooq.Field<BigDecimal>
+        //permits
+        //    Acosh
+    {
+        @NotNull  Field<? extends Number> $number();
+        @NotNull  Acosh $number(Field<? extends Number> number);
+    }
+
+    /**
+     * The <code>ACOTH</code> function.
+     */
+    public /*sealed*/ interface Acoth
+        extends
+            org.jooq.Field<BigDecimal>
+        //permits
+        //    Acoth
+    {
+        @NotNull  Field<? extends Number> $number();
+        @NotNull  Acoth $number(Field<? extends Number> number);
+    }
+
+    /**
      * The <code>ADD</code> operator.
      */
     public /*sealed*/ interface Add<T>
@@ -2287,6 +2313,19 @@ public final class QOM {
     {
         @NotNull  Field<? extends Number> $number();
         @NotNull  Asin $number(Field<? extends Number> number);
+    }
+
+    /**
+     * The <code>ASINH</code> function.
+     */
+    public /*sealed*/ interface Asinh
+        extends
+            org.jooq.Field<BigDecimal>
+        //permits
+        //    Asinh
+    {
+        @NotNull  Field<? extends Number> $number();
+        @NotNull  Asinh $number(Field<? extends Number> number);
     }
 
     /**
@@ -2315,6 +2354,19 @@ public final class QOM {
         @NotNull  Field<? extends Number> $y();
         @NotNull  Atan2 $x(Field<? extends Number> x);
         @NotNull  Atan2 $y(Field<? extends Number> y);
+    }
+
+    /**
+     * The <code>ATANH</code> function.
+     */
+    public /*sealed*/ interface Atanh
+        extends
+            org.jooq.Field<BigDecimal>
+        //permits
+        //    Atanh
+    {
+        @NotNull  Field<? extends Number> $number();
+        @NotNull  Atanh $number(Field<? extends Number> number);
     }
 
     /**

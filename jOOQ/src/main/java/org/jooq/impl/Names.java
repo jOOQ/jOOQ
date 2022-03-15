@@ -330,12 +330,16 @@ final class Names {
 
     static final Name N_ABS                    = systemName("abs");
     static final Name N_ACOS                   = systemName("acos");
+    static final Name N_ACOSH                  = systemName("acosh");
+    static final Name N_ACOTH                  = systemName("acoth");
     static final Name N_ANY_VALUE              = systemName("any_value");
     static final Name N_ARRAY_GET              = systemName("array_get");
     static final Name N_ASCII                  = systemName("ascii");
     static final Name N_ASIN                   = systemName("asin");
+    static final Name N_ASINH                  = systemName("asinh");
     static final Name N_ATAN                   = systemName("atan");
     static final Name N_ATAN2                  = systemName("atan2");
+    static final Name N_ATANH                  = systemName("atanh");
     static final Name N_AVG                    = systemName("avg");
     static final Name N_BIT_AND_AGG            = systemName("bit_and_agg");
     static final Name N_BIT_COUNT              = systemName("bit_count");

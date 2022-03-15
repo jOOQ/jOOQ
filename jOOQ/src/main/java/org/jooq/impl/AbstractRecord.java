@@ -55,6 +55,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -912,13 +913,43 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
         // [#2520] TODO: Benchmark this from() method. There's probably a better implementation
         from(
-            Tools.configuration(this).recordUnmapperProvider().provide(source.getClass(), (FieldsImpl) fields.fields).unmap(source),
+            Tools.configuration(this).recordUnmapperProvider().provide(source.getClass(), (FieldsImpl) fields.fields).unmap(prepareArrayOrIterableForUnmap(source, targetIndexMapping)),
             targetIndexMapping
         );
 
         // [#2700] [#3582] If a POJO attribute is NULL, but the column is NOT NULL
         // then we should let the database apply DEFAULT values
         resetChangedOnNotNull(this);
+    }
+
+    private final Object prepareArrayOrIterableForUnmap(Object source, int[] targetIndexMapping) {
+        if (targetIndexMapping == null)
+            return source;
+
+        boolean array = source instanceof Object[];
+        Iterable<?> iterable =
+              array
+            ? asList((Object[]) source)
+            : source instanceof Iterable
+            ? (Iterable<?>) source
+            : null;
+
+        if (iterable != null) {
+            Object[] result = new Object[size()];
+            Iterator<?> it = iterable.iterator();
+
+            for (int i = 0; it.hasNext() && i < targetIndexMapping.length; i++) {
+                int index = targetIndexMapping[i];
+                Object o = it.next();
+
+                if (index >= 0 && index < result.length)
+                    result[index] = o;
+            }
+
+            return array ? result : asList(result);
+        }
+        else
+            return source;
     }
 
     @Override

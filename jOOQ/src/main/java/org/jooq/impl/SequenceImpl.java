@@ -202,7 +202,7 @@ implements
 
     @Override
     public final Select<Record1<T>> nextvals(int size) {
-        return DSL.select(nextval()).from(generateSeries(1, size).as(N_GENERATE_SERIES));
+        return DSL.select(nextval().as(N_NEXTVAL)).from(generateSeries(1, size).as(N_GENERATE_SERIES));
     }
 
     private enum SequenceMethod {

@@ -72,6 +72,8 @@ import static org.jooq.conf.SettingsTools.parseLocale;
 import static org.jooq.impl.AbstractName.NO_NAME;
 import static org.jooq.impl.DSL.abs;
 import static org.jooq.impl.DSL.acos;
+import static org.jooq.impl.DSL.acosh;
+import static org.jooq.impl.DSL.acoth;
 import static org.jooq.impl.DSL.all;
 import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.anyValue;
@@ -80,8 +82,10 @@ import static org.jooq.impl.DSL.arrayAggDistinct;
 import static org.jooq.impl.DSL.arrayGet;
 import static org.jooq.impl.DSL.ascii;
 import static org.jooq.impl.DSL.asin;
+import static org.jooq.impl.DSL.asinh;
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.atan;
+import static org.jooq.impl.DSL.atanh;
 import static org.jooq.impl.DSL.avg;
 import static org.jooq.impl.DSL.avgDistinct;
 import static org.jooq.impl.DSL.begin;
@@ -437,7 +441,6 @@ import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.SelectQueryImpl.EMULATE_SELECT_INTO_AS_CTAS;
 import static org.jooq.impl.SelectQueryImpl.NO_SUPPORT_FOR_UPDATE_OF_FIELDS;
 import static org.jooq.impl.Tools.CONFIG;
-import static org.jooq.impl.Tools.CTX;
 import static org.jooq.impl.Tools.EMPTY_BYTE;
 import static org.jooq.impl.Tools.EMPTY_COLLECTION;
 import static org.jooq.impl.Tools.EMPTY_COMMON_TABLE_EXPRESSION;
@@ -8044,10 +8047,18 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return ascii((Field) parseFieldParenthesised());
                 else if (parseFunctionNameIf("ACOS"))
                     return acos((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("ACOSH"))
+                    return acosh((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("ACOTH"))
+                    return acoth((Field) parseFieldNumericOpParenthesised());
                 else if (parseFunctionNameIf("ASIN"))
                     return asin((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("ASINH"))
+                    return asinh((Field) parseFieldNumericOpParenthesised());
                 else if (parseFunctionNameIf("ATAN", "ATN"))
                     return atan((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("ATANH"))
+                    return atanh((Field) parseFieldNumericOpParenthesised());
                 else if (parseFunctionNameIf("ATN2", "ATAN2"))
                     return parseFunctionArgs2(() -> toField(parseNumericOp()), DSL::atan2);
 

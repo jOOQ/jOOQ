@@ -154,7 +154,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
             // Buffer some rows for formatting purposes
             for (int i = 0; i < MAX_RECORDS && it.hasNext(); i++)
-                buffer.offer(it.next());
+                buffer.offer(nullSafe(it.next()));
 
             // Get max decimal places for numeric type columns
             int size = fields.size();
@@ -258,7 +258,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
                 if (record == null)
                     if (it.hasNext())
-                        record = it.next();
+                        record = nullSafe(it.next());
                     else
                         break recordLoop;
 
@@ -320,6 +320,11 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing TEXT", e);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private final R nullSafe(R r) {
+        return r != null ? r : (R) Tools.configuration(this).dsl().newRecord(fields());
     }
 
     private final void formatHorizontalLine(Writer writer, TXTFormat format, final int[] widths) throws java.io.IOException {
@@ -1352,7 +1357,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
      * @param visual Whether the formatted output is to be consumed visually
      *            (HTML, TEXT) or by a machine (CSV, JSON, XML)
      */
-    private static final String format0(Object value, boolean changed, boolean visual) {
+    static final String format0(Object value, boolean changed, boolean visual) {
 
         // [#2741] TODO: This logic will be externalised in new SPI
         String formatted = changed && visual ? "*" : "";

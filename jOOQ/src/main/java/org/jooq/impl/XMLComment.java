@@ -93,12 +93,21 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
 
 
-        ctx.visit(N_XMLCOMMENT).sql('(').visit(comment).sql(')');
+
+
+
+
+
+            default:
+                ctx.visit(N_XMLCOMMENT).sql('(').visit(comment).sql(')');
+                break;
+        }
     }
 
 

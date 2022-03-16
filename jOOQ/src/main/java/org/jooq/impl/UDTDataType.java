@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Record;
+import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
@@ -46,8 +48,22 @@ import org.jooq.UDTRecord;
  */
 final class UDTDataType<R extends UDTRecord<R>> extends DefaultDataType<R> {
 
+    final UDT<R> udt;
+
     @SuppressWarnings("unchecked")
     UDTDataType(UDT<R> udt) {
         super(SQLDialect.DEFAULT, (Class<R>) udt.getRecordType(), Tools.asString(udt.getQualifiedName()));
+
+        this.udt = udt;
+    }
+
+    @Override
+    public final Row getRow() {
+        return udt.fieldsRow();
+    }
+
+    @Override
+    public final Class<? extends Record> getRecordType() {
+        return udt.getRecordType();
     }
 }

@@ -45,9 +45,7 @@ import static org.jooq.impl.Names.N_ROW;
 import static org.jooq.impl.QueryPartListView.wrap;
 
 import java.util.Collection;
-import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.jooq.Binding;
@@ -59,8 +57,8 @@ import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.Name;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...
 import org.jooq.Row;
@@ -69,9 +67,6 @@ import org.jooq.Row2;
 import org.jooq.SelectField;
 // ...
 import org.jooq.impl.QOM.UnmodifiableList;
-import org.jooq.QueryPart;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A common base class for the various degrees of {@link Row1}, {@link Row2},

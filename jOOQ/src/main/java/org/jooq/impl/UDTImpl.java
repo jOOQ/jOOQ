@@ -47,17 +47,13 @@ import org.jooq.DataType;
 import org.jooq.Name;
 import org.jooq.Named;
 import org.jooq.Package;
-import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.Schema;
 import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
-import org.jooq.QueryPart;
 import org.jooq.impl.QOM.UNotYetImplemented;
-
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A common base type for UDT's

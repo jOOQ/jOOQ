@@ -110,6 +110,9 @@ implements
 
 
 
+
+
+
             case CUBRID:
             case DERBY:
             case H2:
@@ -117,6 +120,7 @@ implements
             case IGNITE:
             case MARIADB:
             case MYSQL:
+            case YUGABYTEDB:
                 ctx.visit(DSL.ln(iadd(number, DSL.sqrt(isub(square(number), one())))));
                 break;
 

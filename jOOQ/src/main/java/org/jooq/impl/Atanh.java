@@ -109,6 +109,9 @@ implements
 
 
 
+
+
+
             case CUBRID:
             case DERBY:
             case H2:
@@ -116,6 +119,7 @@ implements
             case IGNITE:
             case MARIADB:
             case MYSQL:
+            case YUGABYTEDB:
                 ctx.visit(idiv(DSL.ln(idiv(iadd(one(), number), isub(one(), number))), two()));
                 break;
 

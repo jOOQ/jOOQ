@@ -1120,7 +1120,8 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             writer.append("</thead>");
             writer.append("<tbody>");
 
-            for (Record record : this) {
+            for (R record : this) {
+                record = nullSafe(record);
                 writer.append("<tr>");
 
                 int size = fields.size();

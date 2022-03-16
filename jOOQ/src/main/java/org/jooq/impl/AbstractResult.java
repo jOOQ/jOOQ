@@ -400,7 +400,8 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 writer.append(format.newline());
             }
 
-            for (Record record : this) {
+            for (R record : this) {
+                record = nullSafe(record);
                 String sep2 = "";
 
                 int size = fields.size();
@@ -421,7 +422,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         }
     }
 
-    private final String formatCSV0(Object value, CSVFormat format) {
+    private static final String formatCSV0(Object value, CSVFormat format) {
 
         // [#2741] TODO: This logic will be externalised in new SPI
         // [#4746] Escape null and empty strings

@@ -834,6 +834,12 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             format = format.xmlns(false);
             writer.append(" xmlns=\"" + Constants.NS_EXPORT + "\"");
         }
+
+        if (record == null) {
+            writer.append("/>");
+            return;
+        }
+
         writer.append(">");
 
         int size = fields.size();

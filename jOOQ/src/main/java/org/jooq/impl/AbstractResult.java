@@ -612,7 +612,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         }
     }
 
-    private static final void formatJSON0(Object value, Writer writer, JSONFormat format) throws java.io.IOException {
+    static final void formatJSON0(Object value, Writer writer, JSONFormat format) throws java.io.IOException {
 
         // [#2741] TODO: This logic will be externalised in new SPI
         if (value instanceof byte[]) {
@@ -658,6 +658,11 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         int recordLevel,
         Writer writer
     ) throws java.io.IOException {
+        if (record == null) {
+            writer.append("null");
+            return;
+        }
+
         String separator = "";
         int size = fields.size();
         boolean wrapRecords = format.wrapSingleColumnRecords() || size > 1;
@@ -704,6 +709,11 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         int recordLevel,
         Writer writer
     ) throws java.io.IOException {
+        if (record == null) {
+            writer.append("null");
+            return;
+        }
+
         String separator = "";
         int size = fields.size();
         boolean wrapRecords = format.wrapSingleColumnRecords() || size > 1;

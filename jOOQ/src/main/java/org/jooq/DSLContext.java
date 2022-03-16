@@ -11740,7 +11740,10 @@ public interface DSLContext extends Scope {
      * Create a new pre-filled {@link Record} that can be inserted into the
      * corresponding table.
      * <p>
-     * This performs roughly the inverse operation of {@link Record#into(Class)}
+     * This is convenience for calling {@link #newRecord(Table)} and then
+     * {@link Record#from(Object)} on the resulting record. The record unmapping
+     * implementation is governed by
+     * {@link Configuration#recordUnmapperProvider()}.
      * <p>
      * The resulting record will have its internal "changed" flags set to true
      * for all values. This means that {@link UpdatableRecord#store()} will

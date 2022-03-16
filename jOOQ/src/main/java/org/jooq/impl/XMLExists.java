@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.Keywords.K_EXIST;
+import static org.jooq.impl.Keywords.K_EXISTS;
 import static org.jooq.impl.Keywords.K_XMLEXISTS;
 import static org.jooq.impl.QOM.XMLPassingMechanism.BY_REF;
 import static org.jooq.impl.QOM.XMLPassingMechanism.BY_VALUE;
@@ -55,6 +58,7 @@ import org.jooq.QueryPart;
 // ...
 import org.jooq.XML;
 import org.jooq.XMLExistsPassingStep;
+import org.jooq.conf.ParamType;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.QOM.XMLPassingMechanism;
 
@@ -116,10 +120,20 @@ final class XMLExists extends AbstractCondition implements XMLExistsPassingStep,
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(K_XMLEXISTS).sqlIndentStart('(');
-        acceptXPath(ctx, xpath);
-        acceptPassing(ctx, passing, passingMechanism);
-        ctx.sqlIndentEnd(')');
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                ctx.visit(K_XMLEXISTS).sqlIndentStart('(');
+                acceptXPath(ctx, xpath);
+                acceptPassing(ctx, passing, passingMechanism);
+                ctx.sqlIndentEnd(')');
+                break;
+        }
     }
 
     // -------------------------------------------------------------------------

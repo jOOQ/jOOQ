@@ -38,10 +38,13 @@
 package org.jooq.impl;
 
 // ...
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unnest;
 import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.Keywords.K_CONTENT;
+import static org.jooq.impl.Keywords.K_EXISTS;
+import static org.jooq.impl.Keywords.K_QUERY;
 import static org.jooq.impl.Keywords.K_RETURNING;
 import static org.jooq.impl.Names.N_XMLQUERY;
 import static org.jooq.impl.QOM.XMLPassingMechanism.BY_REF;
@@ -138,6 +141,12 @@ final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep, 
                    .sql(')');
 
                 break;
+
+
+
+
+
+
 
             default:
                 ctx.visit(N_XMLQUERY).sqlIndentStart('(');

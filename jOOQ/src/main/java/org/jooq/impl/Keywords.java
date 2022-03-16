@@ -169,6 +169,7 @@ final class Keywords {
     static final Keyword K_EXECUTE_BLOCK            = keyword("execute block");
     static final Keyword K_EXECUTE_IMMEDIATE        = keyword("execute immediate");
     static final Keyword K_EXECUTE_STATEMENT        = keyword("execute statement");
+    static final Keyword K_EXIST                    = keyword("exist");
     static final Keyword K_EXISTS                   = keyword("exists");
     static final Keyword K_EXIT                     = keyword("exit");
     static final Keyword K_EXPLICIT                 = keyword("explicit");
@@ -321,6 +322,7 @@ final class Keywords {
     static final Keyword K_PROCEDURE                = keyword("procedure");
     static final Keyword K_PUBLIC                   = keyword("public");
     static final Keyword K_QUALIFY                  = keyword("qualify");
+    static final Keyword K_QUERY                    = keyword("query");
     static final Keyword K_RAISE                    = keyword("raise");
     static final Keyword K_RAISERROR                = keyword("raiserror");
     static final Keyword K_RAW                      = keyword("raw");

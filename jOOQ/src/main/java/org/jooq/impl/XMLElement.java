@@ -37,8 +37,11 @@
  */
 package org.jooq.impl;
 
-// ...
+import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.quotedName;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.toChar;
 import static org.jooq.impl.Keywords.K_NAME;
 import static org.jooq.impl.Names.N_XMLELEMENT;
@@ -47,16 +50,15 @@ import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.function.BiFunction;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 // ...
@@ -86,6 +88,26 @@ final class XMLElement extends AbstractField<XML> implements QOM.XMLElement {
     public final void accept(Context<?> ctx) {
         boolean hasContent = !content.isEmpty();
         boolean hasAttributes = !((XMLAttributesImpl) attributes).attributes.isEmpty();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

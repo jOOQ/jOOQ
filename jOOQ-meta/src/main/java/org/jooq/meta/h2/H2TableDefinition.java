@@ -111,10 +111,10 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 COLUMNS.ORDINAL_POSITION,
 
                 // [#2230] [#11733] Translate INTERVAL_TYPE to supported types
-                nvl(concat(ELEMENT_TYPES.DATA_TYPE, inline(" ARRAY")),
-                    when(COLUMNS.INTERVAL_TYPE.like(any(inline("%YEAR%"), inline("%MONTH%"))), inline("INTERVAL YEAR TO MONTH"))
+                nvl(when(COLUMNS.INTERVAL_TYPE.like(any(inline("%YEAR%"), inline("%MONTH%"))), inline("INTERVAL YEAR TO MONTH"))
                       .when(COLUMNS.INTERVAL_TYPE.like(any(inline("%DAY%"), inline("%HOUR%"), inline("%MINUTE%"), inline("%SECOND%"))), inline("INTERVAL DAY TO SECOND"))
-                      .else_(Tables.COLUMNS.DATA_TYPE)
+                      .else_(Tables.COLUMNS.DATA_TYPE),
+                    concat(ELEMENT_TYPES.DATA_TYPE, inline(" ARRAY"))
                 ).as(COLUMNS.TYPE_NAME),
                 nvl(ELEMENT_TYPES.CHARACTER_MAXIMUM_LENGTH, COLUMNS.CHARACTER_MAXIMUM_LENGTH).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 coalesce(

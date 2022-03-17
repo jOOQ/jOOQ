@@ -490,6 +490,36 @@ To enable this feature, {@link #transformPatterns} must be enabled as well.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsArithmeticExpressions" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>1 / y * x</code> to <code>x / y</code>, and other transformations.
+<p>
+This transformation simplifies arithmetic expressions.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformPatternsHyperbolicFunctions" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>(EXP(x) - EXP(-x)) / 2</code> to <code>SINH(x)</code>, and other transformations.
+<p>
+This transformation turns expanded hyperbolic function definitions into their shorter equivalents.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformPatternsInverseHyperbolicFunctions" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>LN(x + SQRT(SQUARE(x) + 1))</code> to <code>ASINH(x)</code>, and other transformations.
+<p>
+This transformation turns expanded inverse hyperbolic function definitions into their shorter equivalents.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformAnsiJoinToTableLists" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform ANSI join to table lists if possible.
 <p>

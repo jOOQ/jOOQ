@@ -156,6 +156,12 @@ public class Settings
     protected Boolean transformPatternsBitNotBitNot = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsIdempotentFunctionRepetition = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsArithmeticExpressions = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsHyperbolicFunctions = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsInverseHyperbolicFunctions = true;
     @XmlElement(defaultValue = "false")
     protected Boolean transformAnsiJoinToTableLists = false;
     @XmlElement(defaultValue = "WHEN_NEEDED")
@@ -1805,6 +1811,96 @@ public class Settings
      */
     public void setTransformPatternsIdempotentFunctionRepetition(Boolean value) {
         this.transformPatternsIdempotentFunctionRepetition = value;
+    }
+
+    /**
+     * Transform <code>1 / y * x</code> to <code>x / y</code>, and other transformations.
+     * <p>
+     * This transformation simplifies arithmetic expressions.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsArithmeticExpressions() {
+        return transformPatternsArithmeticExpressions;
+    }
+
+    /**
+     * Sets the value of the transformPatternsArithmeticExpressions property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsArithmeticExpressions(Boolean value) {
+        this.transformPatternsArithmeticExpressions = value;
+    }
+
+    /**
+     * Transform <code>(EXP(x) - EXP(-x)) / 2</code> to <code>SINH(x)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded hyperbolic function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsHyperbolicFunctions() {
+        return transformPatternsHyperbolicFunctions;
+    }
+
+    /**
+     * Sets the value of the transformPatternsHyperbolicFunctions property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsHyperbolicFunctions(Boolean value) {
+        this.transformPatternsHyperbolicFunctions = value;
+    }
+
+    /**
+     * Transform <code>LN(x + SQRT(SQUARE(x) + 1))</code> to <code>ASINH(x)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded inverse hyperbolic function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsInverseHyperbolicFunctions() {
+        return transformPatternsInverseHyperbolicFunctions;
+    }
+
+    /**
+     * Sets the value of the transformPatternsInverseHyperbolicFunctions property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsInverseHyperbolicFunctions(Boolean value) {
+        this.transformPatternsInverseHyperbolicFunctions = value;
     }
 
     /**
@@ -4181,6 +4277,21 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsArithmeticExpressions(Boolean value) {
+        setTransformPatternsArithmeticExpressions(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsHyperbolicFunctions(Boolean value) {
+        setTransformPatternsHyperbolicFunctions(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsInverseHyperbolicFunctions(Boolean value) {
+        setTransformPatternsInverseHyperbolicFunctions(value);
+        return this;
+    }
+
     public Settings withTransformAnsiJoinToTableLists(Boolean value) {
         setTransformAnsiJoinToTableLists(value);
         return this;
@@ -5031,6 +5142,9 @@ public class Settings
         builder.append("transformPatternsNegNeg", transformPatternsNegNeg);
         builder.append("transformPatternsBitNotBitNot", transformPatternsBitNotBitNot);
         builder.append("transformPatternsIdempotentFunctionRepetition", transformPatternsIdempotentFunctionRepetition);
+        builder.append("transformPatternsArithmeticExpressions", transformPatternsArithmeticExpressions);
+        builder.append("transformPatternsHyperbolicFunctions", transformPatternsHyperbolicFunctions);
+        builder.append("transformPatternsInverseHyperbolicFunctions", transformPatternsInverseHyperbolicFunctions);
         builder.append("transformAnsiJoinToTableLists", transformAnsiJoinToTableLists);
         builder.append("transformInConditionSubqueryWithLimitToDerivedTable", transformInConditionSubqueryWithLimitToDerivedTable);
         builder.append("transformQualify", transformQualify);
@@ -5622,6 +5736,33 @@ public class Settings
             }
         } else {
             if (!transformPatternsIdempotentFunctionRepetition.equals(other.transformPatternsIdempotentFunctionRepetition)) {
+                return false;
+            }
+        }
+        if (transformPatternsArithmeticExpressions == null) {
+            if (other.transformPatternsArithmeticExpressions!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsArithmeticExpressions.equals(other.transformPatternsArithmeticExpressions)) {
+                return false;
+            }
+        }
+        if (transformPatternsHyperbolicFunctions == null) {
+            if (other.transformPatternsHyperbolicFunctions!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsHyperbolicFunctions.equals(other.transformPatternsHyperbolicFunctions)) {
+                return false;
+            }
+        }
+        if (transformPatternsInverseHyperbolicFunctions == null) {
+            if (other.transformPatternsInverseHyperbolicFunctions!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsInverseHyperbolicFunctions.equals(other.transformPatternsInverseHyperbolicFunctions)) {
                 return false;
             }
         }
@@ -6549,6 +6690,9 @@ public class Settings
         result = ((prime*result)+((transformPatternsNegNeg == null)? 0 :transformPatternsNegNeg.hashCode()));
         result = ((prime*result)+((transformPatternsBitNotBitNot == null)? 0 :transformPatternsBitNotBitNot.hashCode()));
         result = ((prime*result)+((transformPatternsIdempotentFunctionRepetition == null)? 0 :transformPatternsIdempotentFunctionRepetition.hashCode()));
+        result = ((prime*result)+((transformPatternsArithmeticExpressions == null)? 0 :transformPatternsArithmeticExpressions.hashCode()));
+        result = ((prime*result)+((transformPatternsHyperbolicFunctions == null)? 0 :transformPatternsHyperbolicFunctions.hashCode()));
+        result = ((prime*result)+((transformPatternsInverseHyperbolicFunctions == null)? 0 :transformPatternsInverseHyperbolicFunctions.hashCode()));
         result = ((prime*result)+((transformAnsiJoinToTableLists == null)? 0 :transformAnsiJoinToTableLists.hashCode()));
         result = ((prime*result)+((transformInConditionSubqueryWithLimitToDerivedTable == null)? 0 :transformInConditionSubqueryWithLimitToDerivedTable.hashCode()));
         result = ((prime*result)+((transformQualify == null)? 0 :transformQualify.hashCode()));

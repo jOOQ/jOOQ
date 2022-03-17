@@ -99,11 +99,45 @@ implements
 
 
 
-            default:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            case CUBRID:
+            case DERBY:
+            case FIREBIRD:
+            case H2:
+            case HSQLDB:
+            case IGNITE:
+            case MARIADB:
+            case MYSQL:
+            case POSTGRES:
+            case SQLITE:
+            case YUGABYTEDB:
                 ctx.visit(idiv(
                     iadd(DSL.exp(imul(number, two())), one()),
                     isub(DSL.exp(imul(number, two())), one())
                 ));
+                break;
+
+            default:
+                ctx.visit(function(N_COTH, getDataType(), number));
                 break;
         }
     }

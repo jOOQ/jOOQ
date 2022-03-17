@@ -328,6 +328,11 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         }
     }
 
+    @SuppressWarnings("unchecked")
+    private final R nullSafe(R r) {
+        return r != null ? r : (R) Tools.configuration(configuration).dsl().newRecord(fields());
+    }
+
     private final void formatHorizontalLine(Writer writer, TXTFormat format, final int[] widths) throws java.io.IOException {
         if (format.verticalTableBorder())
             if (format.intersectLines())

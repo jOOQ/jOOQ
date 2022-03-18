@@ -2248,8 +2248,8 @@ public final class QOM {
         //permits
         //    Abs
     {
-        @NotNull  Field<T> $number();
-        @NotNull  Abs<T> $number(Field<T> number);
+        @NotNull  Field<T> $value();
+        @NotNull  Abs<T> $value(Field<T> value);
     }
 
     /**
@@ -2261,8 +2261,8 @@ public final class QOM {
         //permits
         //    Acos
     {
-        @NotNull  Field<? extends Number> $number();
-        @NotNull  Acos $number(Field<? extends Number> number);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Acos $value(Field<? extends Number> value);
     }
 
     /**
@@ -2274,8 +2274,8 @@ public final class QOM {
         //permits
         //    Acosh
     {
-        @NotNull  Field<? extends Number> $number();
-        @NotNull  Acosh $number(Field<? extends Number> number);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Acosh $value(Field<? extends Number> value);
     }
 
     /**
@@ -2287,8 +2287,8 @@ public final class QOM {
         //permits
         //    Acoth
     {
-        @NotNull  Field<? extends Number> $number();
-        @NotNull  Acoth $number(Field<? extends Number> number);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Acoth $value(Field<? extends Number> value);
     }
 
     /**
@@ -2311,8 +2311,8 @@ public final class QOM {
         //permits
         //    Asin
     {
-        @NotNull  Field<? extends Number> $number();
-        @NotNull  Asin $number(Field<? extends Number> number);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Asin $value(Field<? extends Number> value);
     }
 
     /**
@@ -2324,8 +2324,8 @@ public final class QOM {
         //permits
         //    Asinh
     {
-        @NotNull  Field<? extends Number> $number();
-        @NotNull  Asinh $number(Field<? extends Number> number);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Asinh $value(Field<? extends Number> value);
     }
 
     /**
@@ -2337,8 +2337,8 @@ public final class QOM {
         //permits
         //    Atan
     {
-        @NotNull  Field<? extends Number> $number();
-        @NotNull  Atan $number(Field<? extends Number> number);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Atan $value(Field<? extends Number> value);
     }
 
     /**
@@ -2365,8 +2365,8 @@ public final class QOM {
         //permits
         //    Atanh
     {
-        @NotNull  Field<? extends Number> $number();
-        @NotNull  Atanh $number(Field<? extends Number> number);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Atanh $value(Field<? extends Number> value);
     }
 
     /**
@@ -2391,8 +2391,8 @@ public final class QOM {
         //permits
         //    BitCount
     {
-        @NotNull  Field<? extends Number> $number();
-        @NotNull  BitCount $number(Field<? extends Number> number);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  BitCount $value(Field<? extends Number> value);
     }
 
     /**
@@ -2485,8 +2485,8 @@ public final class QOM {
         //permits
         //    Cos
     {
-        @NotNull  Field<? extends Number> $number();
-        @NotNull  Cos $number(Field<? extends Number> number);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Cos $value(Field<? extends Number> value);
     }
 
     /**
@@ -2498,8 +2498,8 @@ public final class QOM {
         //permits
         //    Cosh
     {
-        @NotNull  Field<? extends Number> $number();
-        @NotNull  Cosh $number(Field<? extends Number> number);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Cosh $value(Field<? extends Number> value);
     }
 
     /**
@@ -2511,8 +2511,8 @@ public final class QOM {
         //permits
         //    Cot
     {
-        @NotNull  Field<? extends Number> $number();
-        @NotNull  Cot $number(Field<? extends Number> number);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Cot $value(Field<? extends Number> value);
     }
 
     /**
@@ -2524,8 +2524,8 @@ public final class QOM {
         //permits
         //    Coth
     {
-        @NotNull  Field<? extends Number> $number();
-        @NotNull  Coth $number(Field<? extends Number> number);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Coth $value(Field<? extends Number> value);
     }
 
     /**
@@ -2830,8 +2830,8 @@ public final class QOM {
         //permits
         //    Sign
     {
-        @NotNull  Field<? extends Number> $number();
-        @NotNull  Sign $number(Field<? extends Number> number);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Sign $value(Field<? extends Number> value);
     }
 
     /**
@@ -2843,8 +2843,8 @@ public final class QOM {
         //permits
         //    Sin
     {
-        @NotNull  Field<? extends Number> $number();
-        @NotNull  Sin $number(Field<? extends Number> number);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Sin $value(Field<? extends Number> value);
     }
 
     /**
@@ -2856,8 +2856,8 @@ public final class QOM {
         //permits
         //    Sinh
     {
-        @NotNull  Field<? extends Number> $number();
-        @NotNull  Sinh $number(Field<? extends Number> number);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Sinh $value(Field<? extends Number> value);
     }
 
     /**
@@ -2906,8 +2906,8 @@ public final class QOM {
         //permits
         //    Tan
     {
-        @NotNull  Field<? extends Number> $number();
-        @NotNull  Tan $number(Field<? extends Number> number);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Tan $value(Field<? extends Number> value);
     }
 
     /**
@@ -2919,8 +2919,8 @@ public final class QOM {
         //permits
         //    Tanh
     {
-        @NotNull  Field<? extends Number> $number();
-        @NotNull  Tanh $number(Field<? extends Number> number);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Tanh $value(Field<? extends Number> value);
     }
 
     /**
@@ -3076,8 +3076,8 @@ public final class QOM {
         //permits
         //    Chr
     {
-        @NotNull  Field<? extends Number> $number();
-        @NotNull  Chr $number(Field<? extends Number> number);
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Chr $value(Field<? extends Number> value);
     }
 
     /**

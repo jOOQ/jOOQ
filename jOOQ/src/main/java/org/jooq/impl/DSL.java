@@ -15825,12 +15825,12 @@ public class DSL {
     /**
      * The <code>ABS</code> function.
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    public static <T extends Number> Field<T> abs(T number) {
-        return new Abs<>(Tools.field(number));
+    public static <T extends Number> Field<T> abs(T value) {
+        return new Abs<>(Tools.field(value));
     }
 
     /**
@@ -15838,19 +15838,19 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T extends Number> Field<T> abs(Field<T> number) {
-        return new Abs<>(number);
+    public static <T extends Number> Field<T> abs(Field<T> value) {
+        return new Abs<>(value);
     }
 
     /**
      * The <code>ACOS</code> function.
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> acos(Number number) {
-        return new Acos(Tools.field(number));
+    public static Field<BigDecimal> acos(Number value) {
+        return new Acos(Tools.field(value));
     }
 
     /**
@@ -15858,19 +15858,19 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> acos(Field<? extends Number> number) {
-        return new Acos(number);
+    public static Field<BigDecimal> acos(Field<? extends Number> value) {
+        return new Acos(value);
     }
 
     /**
      * The <code>ACOSH</code> function.
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> acosh(Number number) {
-        return new Acosh(Tools.field(number));
+    public static Field<BigDecimal> acosh(Number value) {
+        return new Acosh(Tools.field(value));
     }
 
     /**
@@ -15878,19 +15878,19 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> acosh(Field<? extends Number> number) {
-        return new Acosh(number);
+    public static Field<BigDecimal> acosh(Field<? extends Number> value) {
+        return new Acosh(value);
     }
 
     /**
      * The <code>ACOTH</code> function.
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> acoth(Number number) {
-        return new Acoth(Tools.field(number));
+    public static Field<BigDecimal> acoth(Number value) {
+        return new Acoth(Tools.field(value));
     }
 
     /**
@@ -15898,19 +15898,19 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> acoth(Field<? extends Number> number) {
-        return new Acoth(number);
+    public static Field<BigDecimal> acoth(Field<? extends Number> value) {
+        return new Acoth(value);
     }
 
     /**
      * The <code>ASIN</code> function.
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> asin(Number number) {
-        return new Asin(Tools.field(number));
+    public static Field<BigDecimal> asin(Number value) {
+        return new Asin(Tools.field(value));
     }
 
     /**
@@ -15918,19 +15918,19 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> asin(Field<? extends Number> number) {
-        return new Asin(number);
+    public static Field<BigDecimal> asin(Field<? extends Number> value) {
+        return new Asin(value);
     }
 
     /**
      * The <code>ASINH</code> function.
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> asinh(Number number) {
-        return new Asinh(Tools.field(number));
+    public static Field<BigDecimal> asinh(Number value) {
+        return new Asinh(Tools.field(value));
     }
 
     /**
@@ -15938,19 +15938,19 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> asinh(Field<? extends Number> number) {
-        return new Asinh(number);
+    public static Field<BigDecimal> asinh(Field<? extends Number> value) {
+        return new Asinh(value);
     }
 
     /**
      * The <code>ATAN</code> function.
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> atan(Number number) {
-        return new Atan(Tools.field(number));
+    public static Field<BigDecimal> atan(Number value) {
+        return new Atan(Tools.field(value));
     }
 
     /**
@@ -15958,8 +15958,8 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> atan(Field<? extends Number> number) {
-        return new Atan(number);
+    public static Field<BigDecimal> atan(Field<? extends Number> value) {
+        return new Atan(value);
     }
 
     /**
@@ -16008,12 +16008,12 @@ public class DSL {
     /**
      * The <code>ATANH</code> function.
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> atanh(Number number) {
-        return new Atanh(Tools.field(number));
+    public static Field<BigDecimal> atanh(Number value) {
+        return new Atanh(Tools.field(value));
     }
 
     /**
@@ -16021,8 +16021,8 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> atanh(Field<? extends Number> number) {
-        return new Atanh(number);
+    public static Field<BigDecimal> atanh(Field<? extends Number> value) {
+        return new Atanh(value);
     }
 
     /**
@@ -16073,12 +16073,12 @@ public class DSL {
      * <p>
      * Count the number of bits set in a number
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static Field<Integer> bitCount(Number number) {
-        return new BitCount(Tools.field(number));
+    public static Field<Integer> bitCount(Number value) {
+        return new BitCount(Tools.field(value));
     }
 
     /**
@@ -16088,8 +16088,8 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static Field<Integer> bitCount(Field<? extends Number> number) {
-        return new BitCount(number);
+    public static Field<Integer> bitCount(Field<? extends Number> value) {
+        return new BitCount(value);
     }
 
     /**
@@ -16354,12 +16354,12 @@ public class DSL {
     /**
      * The <code>COS</code> function.
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> cos(Number number) {
-        return new Cos(Tools.field(number));
+    public static Field<BigDecimal> cos(Number value) {
+        return new Cos(Tools.field(value));
     }
 
     /**
@@ -16367,19 +16367,19 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> cos(Field<? extends Number> number) {
-        return new Cos(number);
+    public static Field<BigDecimal> cos(Field<? extends Number> value) {
+        return new Cos(value);
     }
 
     /**
      * The <code>COSH</code> function.
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> cosh(Number number) {
-        return new Cosh(Tools.field(number));
+    public static Field<BigDecimal> cosh(Number value) {
+        return new Cosh(Tools.field(value));
     }
 
     /**
@@ -16387,19 +16387,19 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> cosh(Field<? extends Number> number) {
-        return new Cosh(number);
+    public static Field<BigDecimal> cosh(Field<? extends Number> value) {
+        return new Cosh(value);
     }
 
     /**
      * The <code>COT</code> function.
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> cot(Number number) {
-        return new Cot(Tools.field(number));
+    public static Field<BigDecimal> cot(Number value) {
+        return new Cot(Tools.field(value));
     }
 
     /**
@@ -16407,19 +16407,19 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> cot(Field<? extends Number> number) {
-        return new Cot(number);
+    public static Field<BigDecimal> cot(Field<? extends Number> value) {
+        return new Cot(value);
     }
 
     /**
      * The <code>COTH</code> function.
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> coth(Number number) {
-        return new Coth(Tools.field(number));
+    public static Field<BigDecimal> coth(Number value) {
+        return new Coth(Tools.field(value));
     }
 
     /**
@@ -16427,8 +16427,8 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> coth(Field<? extends Number> number) {
-        return new Coth(number);
+    public static Field<BigDecimal> coth(Field<? extends Number> value) {
+        return new Coth(value);
     }
 
     /**
@@ -16901,12 +16901,12 @@ public class DSL {
      * <p>
      * Get the sign of a number and return it as any of +1, 0, -1.
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    public static Field<Integer> sign(Number number) {
-        return new Sign(Tools.field(number));
+    public static Field<Integer> sign(Number value) {
+        return new Sign(Tools.field(value));
     }
 
     /**
@@ -16916,19 +16916,19 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<Integer> sign(Field<? extends Number> number) {
-        return new Sign(number);
+    public static Field<Integer> sign(Field<? extends Number> value) {
+        return new Sign(value);
     }
 
     /**
      * The <code>SIN</code> function.
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> sin(Number number) {
-        return new Sin(Tools.field(number));
+    public static Field<BigDecimal> sin(Number value) {
+        return new Sin(Tools.field(value));
     }
 
     /**
@@ -16936,19 +16936,19 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> sin(Field<? extends Number> number) {
-        return new Sin(number);
+    public static Field<BigDecimal> sin(Field<? extends Number> value) {
+        return new Sin(value);
     }
 
     /**
      * The <code>SINH</code> function.
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> sinh(Number number) {
-        return new Sinh(Tools.field(number));
+    public static Field<BigDecimal> sinh(Number value) {
+        return new Sinh(Tools.field(value));
     }
 
     /**
@@ -16956,8 +16956,8 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> sinh(Field<? extends Number> number) {
-        return new Sinh(number);
+    public static Field<BigDecimal> sinh(Field<? extends Number> value) {
+        return new Sinh(value);
     }
 
     /**
@@ -17003,12 +17003,12 @@ public class DSL {
     /**
      * The <code>TAN</code> function.
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> tan(Number number) {
-        return new Tan(Tools.field(number));
+    public static Field<BigDecimal> tan(Number value) {
+        return new Tan(Tools.field(value));
     }
 
     /**
@@ -17016,19 +17016,19 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> tan(Field<? extends Number> number) {
-        return new Tan(number);
+    public static Field<BigDecimal> tan(Field<? extends Number> value) {
+        return new Tan(value);
     }
 
     /**
      * The <code>TANH</code> function.
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> tanh(Number number) {
-        return new Tanh(Tools.field(number));
+    public static Field<BigDecimal> tanh(Number value) {
+        return new Tanh(Tools.field(value));
     }
 
     /**
@@ -17036,8 +17036,8 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<BigDecimal> tanh(Field<? extends Number> number) {
-        return new Tanh(number);
+    public static Field<BigDecimal> tanh(Field<? extends Number> value) {
+        return new Tanh(value);
     }
 
     /**
@@ -17218,12 +17218,12 @@ public class DSL {
     /**
      * The <code>CHR</code> function.
      *
-     * @param number is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static Field<String> chr(Number number) {
-        return new Chr(Tools.field(number));
+    public static Field<String> chr(Number value) {
+        return new Chr(Tools.field(value));
     }
 
     /**
@@ -17231,8 +17231,8 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static Field<String> chr(Field<? extends Number> number) {
-        return new Chr(number);
+    public static Field<String> chr(Field<? extends Number> value) {
+        return new Chr(value);
     }
 
     /**

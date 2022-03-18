@@ -73,17 +73,17 @@ implements
     QOM.Sinh
 {
 
-    final Field<? extends Number> number;
+    final Field<? extends Number> value;
 
     Sinh(
-        Field<? extends Number> number
+        Field<? extends Number> value
     ) {
         super(
             N_SINH,
-            allNotNull(NUMERIC, number)
+            allNotNull(NUMERIC, value)
         );
 
-        this.number = nullSafeNotNull(number, INTEGER);
+        this.value = nullSafeNotNull(value, INTEGER);
     }
 
     // -------------------------------------------------------------------------
@@ -118,13 +118,13 @@ implements
             case POSTGRES:
             case YUGABYTEDB:
                 ctx.visit(idiv(
-                    isub(DSL.exp(imul(number, two())), one()),
-                    imul(DSL.exp(number), two())
+                    isub(DSL.exp(imul(value, two())), one()),
+                    imul(DSL.exp(value), two())
                 ));
                 break;
 
             default:
-                ctx.visit(function(N_SINH, getDataType(), number));
+                ctx.visit(function(N_SINH, getDataType(), value));
                 break;
         }
     }
@@ -145,12 +145,12 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<? extends Number> $number() {
-        return number;
+    public final Field<? extends Number> $value() {
+        return value;
     }
 
     @Override
-    public final QOM.Sinh $number(Field<? extends Number> newValue) {
+    public final QOM.Sinh $value(Field<? extends Number> newValue) {
         return $constructor().apply(newValue);
     }
 
@@ -187,7 +187,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.Sinh) { QOM.Sinh o = (QOM.Sinh) that;
             return
-                StringUtils.equals($number(), o.$number())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

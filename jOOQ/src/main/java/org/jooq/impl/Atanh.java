@@ -73,17 +73,17 @@ implements
     QOM.Atanh
 {
 
-    final Field<? extends Number> number;
+    final Field<? extends Number> value;
 
     Atanh(
-        Field<? extends Number> number
+        Field<? extends Number> value
     ) {
         super(
             N_ATANH,
-            allNotNull(NUMERIC, number)
+            allNotNull(NUMERIC, value)
         );
 
-        this.number = nullSafeNotNull(number, INTEGER);
+        this.value = nullSafeNotNull(value, INTEGER);
     }
 
     // -------------------------------------------------------------------------
@@ -120,11 +120,11 @@ implements
             case MARIADB:
             case MYSQL:
             case YUGABYTEDB:
-                ctx.visit(idiv(DSL.ln(idiv(iadd(one(), number), isub(one(), number))), two()));
+                ctx.visit(idiv(DSL.ln(idiv(iadd(one(), value), isub(one(), value))), two()));
                 break;
 
             default:
-                ctx.visit(function(N_ATANH, getDataType(), number));
+                ctx.visit(function(N_ATANH, getDataType(), value));
                 break;
         }
     }
@@ -145,12 +145,12 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<? extends Number> $number() {
-        return number;
+    public final Field<? extends Number> $value() {
+        return value;
     }
 
     @Override
-    public final QOM.Atanh $number(Field<? extends Number> newValue) {
+    public final QOM.Atanh $value(Field<? extends Number> newValue) {
         return $constructor().apply(newValue);
     }
 
@@ -187,7 +187,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.Atanh) { QOM.Atanh o = (QOM.Atanh) that;
             return
-                StringUtils.equals($number(), o.$number())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

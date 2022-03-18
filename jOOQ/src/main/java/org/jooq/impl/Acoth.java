@@ -73,17 +73,17 @@ implements
     QOM.Acoth
 {
 
-    final Field<? extends Number> number;
+    final Field<? extends Number> value;
 
     Acoth(
-        Field<? extends Number> number
+        Field<? extends Number> value
     ) {
         super(
             N_ACOTH,
-            allNotNull(NUMERIC, number)
+            allNotNull(NUMERIC, value)
         );
 
-        this.number = nullSafeNotNull(number, INTEGER);
+        this.value = nullSafeNotNull(value, INTEGER);
     }
 
     // -------------------------------------------------------------------------
@@ -128,13 +128,13 @@ implements
             case MARIADB:
             case MYSQL:
             case POSTGRES:
-
+            case SQLITE:
             case YUGABYTEDB:
-                ctx.visit(idiv(DSL.ln(idiv(iadd(number, one()), isub(number, one()))), two()));
+                ctx.visit(idiv(DSL.ln(idiv(iadd(value, one()), isub(value, one()))), two()));
                 break;
 
             default:
-                ctx.visit(function(N_ACOTH, getDataType(), number));
+                ctx.visit(function(N_ACOTH, getDataType(), value));
                 break;
         }
     }
@@ -155,12 +155,12 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<? extends Number> $number() {
-        return number;
+    public final Field<? extends Number> $value() {
+        return value;
     }
 
     @Override
-    public final QOM.Acoth $number(Field<? extends Number> newValue) {
+    public final QOM.Acoth $value(Field<? extends Number> newValue) {
         return $constructor().apply(newValue);
     }
 
@@ -197,7 +197,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.Acoth) { QOM.Acoth o = (QOM.Acoth) that;
             return
-                StringUtils.equals($number(), o.$number())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

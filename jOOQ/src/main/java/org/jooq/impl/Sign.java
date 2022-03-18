@@ -72,17 +72,17 @@ implements
     QOM.Sign
 {
 
-    final Field<? extends Number> number;
+    final Field<? extends Number> value;
 
     Sign(
-        Field<? extends Number> number
+        Field<? extends Number> value
     ) {
         super(
             N_SIGN,
-            allNotNull(INTEGER, number)
+            allNotNull(INTEGER, value)
         );
 
-        this.number = nullSafeNotNull(number, INTEGER);
+        this.value = nullSafeNotNull(value, INTEGER);
     }
 
     // -------------------------------------------------------------------------
@@ -105,13 +105,13 @@ implements
 
 
             case SQLITE:
-                ctx.visit(when(((Field) number).gt(zero()), inline(1))
-                .when(((Field) number).lt(zero()), inline(-1))
-                .when(((Field) number).eq(zero()), inline(0)));
+                ctx.visit(when(((Field) value).gt(zero()), inline(1))
+                .when(((Field) value).lt(zero()), inline(-1))
+                .when(((Field) value).eq(zero()), inline(0)));
                 break;
 
             default:
-                ctx.visit(function(N_SIGN, getDataType(), number));
+                ctx.visit(function(N_SIGN, getDataType(), value));
                 break;
         }
     }
@@ -132,12 +132,12 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<? extends Number> $number() {
-        return number;
+    public final Field<? extends Number> $value() {
+        return value;
     }
 
     @Override
-    public final QOM.Sign $number(Field<? extends Number> newValue) {
+    public final QOM.Sign $value(Field<? extends Number> newValue) {
         return $constructor().apply(newValue);
     }
 
@@ -174,7 +174,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.Sign) { QOM.Sign o = (QOM.Sign) that;
             return
-                StringUtils.equals($number(), o.$number())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

@@ -73,17 +73,17 @@ implements
     QOM.Tan
 {
 
-    final Field<? extends Number> number;
+    final Field<? extends Number> value;
 
     Tan(
-        Field<? extends Number> number
+        Field<? extends Number> value
     ) {
         super(
             N_TAN,
-            allNotNull(NUMERIC, number)
+            allNotNull(NUMERIC, value)
         );
 
-        this.number = nullSafeNotNull(number, INTEGER);
+        this.value = nullSafeNotNull(value, INTEGER);
     }
 
     // -------------------------------------------------------------------------
@@ -100,7 +100,7 @@ implements
 
 
             default:
-                ctx.visit(function(N_TAN, getDataType(), number));
+                ctx.visit(function(N_TAN, getDataType(), value));
                 break;
         }
     }
@@ -121,12 +121,12 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<? extends Number> $number() {
-        return number;
+    public final Field<? extends Number> $value() {
+        return value;
     }
 
     @Override
-    public final QOM.Tan $number(Field<? extends Number> newValue) {
+    public final QOM.Tan $value(Field<? extends Number> newValue) {
         return $constructor().apply(newValue);
     }
 
@@ -163,7 +163,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.Tan) { QOM.Tan o = (QOM.Tan) that;
             return
-                StringUtils.equals($number(), o.$number())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

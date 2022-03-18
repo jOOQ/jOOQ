@@ -73,17 +73,17 @@ implements
     QOM.Cot
 {
 
-    final Field<? extends Number> number;
+    final Field<? extends Number> value;
 
     Cot(
-        Field<? extends Number> number
+        Field<? extends Number> value
     ) {
         super(
             N_COT,
-            allNotNull(NUMERIC, number)
+            allNotNull(NUMERIC, value)
         );
 
-        this.number = nullSafeNotNull(number, INTEGER);
+        this.value = nullSafeNotNull(value, INTEGER);
     }
 
     // -------------------------------------------------------------------------
@@ -106,11 +106,11 @@ implements
 
 
             case SQLITE:
-                ctx.visit(idiv(DSL.cos(number), DSL.sin(number)));
+                ctx.visit(idiv(DSL.cos(value), DSL.sin(value)));
                 break;
 
             default:
-                ctx.visit(function(N_COT, getDataType(), number));
+                ctx.visit(function(N_COT, getDataType(), value));
                 break;
         }
     }
@@ -131,12 +131,12 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<? extends Number> $number() {
-        return number;
+    public final Field<? extends Number> $value() {
+        return value;
     }
 
     @Override
-    public final QOM.Cot $number(Field<? extends Number> newValue) {
+    public final QOM.Cot $value(Field<? extends Number> newValue) {
         return $constructor().apply(newValue);
     }
 
@@ -173,7 +173,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.Cot) { QOM.Cot o = (QOM.Cot) that;
             return
-                StringUtils.equals($number(), o.$number())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

@@ -72,17 +72,17 @@ implements
     QOM.BitCount
 {
 
-    final Field<? extends Number> number;
+    final Field<? extends Number> value;
 
     BitCount(
-        Field<? extends Number> number
+        Field<? extends Number> value
     ) {
         super(
             N_BIT_COUNT,
-            allNotNull(INTEGER, number)
+            allNotNull(INTEGER, value)
         );
 
-        this.number = nullSafeNotNull(number, INTEGER);
+        this.value = nullSafeNotNull(value, INTEGER);
     }
 
     // -------------------------------------------------------------------------
@@ -104,7 +104,7 @@ implements
 
             case MARIADB:
             case MYSQL:
-                ctx.visit(N_BIT_COUNT).sql('(').visit(number).sql(')');
+                ctx.visit(N_BIT_COUNT).sql('(').visit(value).sql(')');
                 return;
 
 
@@ -132,9 +132,9 @@ implements
 
             case H2:
             case HSQLDB: {
-                if (number.getType() == Byte.class) {
+                if (value.getType() == Byte.class) {
                     @SuppressWarnings("unchecked")
-                    Field<Byte> f = (Field<Byte>) number;
+                    Field<Byte> f = (Field<Byte>) value;
 
                     ctx.visit(
                         DSL.bitAnd(f, inline((byte) 0x01))                          .add(
@@ -147,9 +147,9 @@ implements
                         DSL.bitAnd(f, inline((byte) 0x80)).div(inline((byte) 0x80))).cast(Integer.class));
                     return;
                 }
-                else if (number.getType() == Short.class) {
+                else if (value.getType() == Short.class) {
                     @SuppressWarnings("unchecked")
-                    Field<Short> f = (Field<Short>) number;
+                    Field<Short> f = (Field<Short>) value;
 
                     ctx.visit(
                         DSL.bitAnd(f, inline((short) 0x0001))                             .add(
@@ -170,9 +170,9 @@ implements
                         DSL.bitAnd(f, inline((short) 0x8000)).div(inline((short) 0x8000))).cast(Integer.class));
                     return;
                 }
-                else if (number.getType() == Integer.class) {
+                else if (value.getType() == Integer.class) {
                     @SuppressWarnings("unchecked")
-                    Field<Integer> f = (Field<Integer>) number;
+                    Field<Integer> f = (Field<Integer>) value;
 
                     ctx.visit(
                         DSL.bitAnd(f, inline(0x00000001))                         .add(
@@ -209,9 +209,9 @@ implements
                         DSL.bitAnd(f, inline(0x80000000)).div(inline(0x80000000))));
                     return;
                 }
-                else if (number.getType() == Long.class) {
+                else if (value.getType() == Long.class) {
                     @SuppressWarnings("unchecked")
-                    Field<Long> f = (Field<Long>) number;
+                    Field<Long> f = (Field<Long>) value;
 
                     ctx.visit(
                         DSL.bitAnd(f, inline(0x0000000000000001L))                                  .add(
@@ -282,15 +282,15 @@ implements
                 }
                 else {
                     // Currently not supported
-                    ctx.visit(N_BIT_COUNT).sql('(').visit(number).sql(')');
+                    ctx.visit(N_BIT_COUNT).sql('(').visit(value).sql(')');
                     return;
                 }
             }
 
             default: {
-                if (number.getType() == Byte.class) {
+                if (value.getType() == Byte.class) {
                     @SuppressWarnings("unchecked")
-                    Field<Byte> f = (Field<Byte>) number;
+                    Field<Byte> f = (Field<Byte>) value;
 
                     byte i = 0;
                     ctx.visit(
@@ -304,9 +304,9 @@ implements
                         DSL.shr(DSL.bitAnd(f, inline((byte) 0x80)), inline(++i))).cast(Integer.class));
                     return;
                 }
-                else if (number.getType() == Short.class) {
+                else if (value.getType() == Short.class) {
                     @SuppressWarnings("unchecked")
-                    Field<Short> f = (Field<Short>) number;
+                    Field<Short> f = (Field<Short>) value;
 
                     short i = 0;
                     ctx.visit(
@@ -328,9 +328,9 @@ implements
                         DSL.shr(DSL.bitAnd(f, inline((short) 0x8000)), inline(++i))).cast(Integer.class));
                     return;
                 }
-                else if (number.getType() == Integer.class) {
+                else if (value.getType() == Integer.class) {
                     @SuppressWarnings("unchecked")
-                    Field<Integer> f = (Field<Integer>) number;
+                    Field<Integer> f = (Field<Integer>) value;
 
                     int i = 0;
                     ctx.visit(
@@ -368,9 +368,9 @@ implements
                         DSL.shr(DSL.bitAnd(f, inline(0x80000000)), inline(++i))));
                     return;
                 }
-                else if (number.getType() == Long.class) {
+                else if (value.getType() == Long.class) {
                     @SuppressWarnings("unchecked")
-                    Field<Long> f = (Field<Long>) number;
+                    Field<Long> f = (Field<Long>) value;
 
                     long i = 0;
                     ctx.visit(
@@ -442,7 +442,7 @@ implements
                 }
                 else {
                     // Currently not supported
-                    ctx.visit(N_BIT_COUNT).sql('(').visit(number).sql(')');
+                    ctx.visit(N_BIT_COUNT).sql('(').visit(value).sql(')');
                     return;
                 }
             }
@@ -467,12 +467,12 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<? extends Number> $number() {
-        return number;
+    public final Field<? extends Number> $value() {
+        return value;
     }
 
     @Override
-    public final QOM.BitCount $number(Field<? extends Number> newValue) {
+    public final QOM.BitCount $value(Field<? extends Number> newValue) {
         return $constructor().apply(newValue);
     }
 
@@ -509,7 +509,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.BitCount) { QOM.BitCount o = (QOM.BitCount) that;
             return
-                StringUtils.equals($number(), o.$number())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

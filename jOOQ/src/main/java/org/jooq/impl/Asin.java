@@ -73,17 +73,17 @@ implements
     QOM.Asin
 {
 
-    final Field<? extends Number> number;
+    final Field<? extends Number> value;
 
     Asin(
-        Field<? extends Number> number
+        Field<? extends Number> value
     ) {
         super(
             N_ASIN,
-            allNotNull(NUMERIC, number)
+            allNotNull(NUMERIC, value)
         );
 
-        this.number = nullSafeNotNull(number, INTEGER);
+        this.value = nullSafeNotNull(value, INTEGER);
     }
 
     // -------------------------------------------------------------------------
@@ -111,7 +111,7 @@ implements
 
 
             default:
-                ctx.visit(function(N_ASIN, getDataType(), number));
+                ctx.visit(function(N_ASIN, getDataType(), value));
                 break;
         }
     }
@@ -132,12 +132,12 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<? extends Number> $number() {
-        return number;
+    public final Field<? extends Number> $value() {
+        return value;
     }
 
     @Override
-    public final QOM.Asin $number(Field<? extends Number> newValue) {
+    public final QOM.Asin $value(Field<? extends Number> newValue) {
         return $constructor().apply(newValue);
     }
 
@@ -174,7 +174,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.Asin) { QOM.Asin o = (QOM.Asin) that;
             return
-                StringUtils.equals($number(), o.$number())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

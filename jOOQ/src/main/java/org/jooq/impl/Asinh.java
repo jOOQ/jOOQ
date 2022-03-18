@@ -73,17 +73,17 @@ implements
     QOM.Asinh
 {
 
-    final Field<? extends Number> number;
+    final Field<? extends Number> value;
 
     Asinh(
-        Field<? extends Number> number
+        Field<? extends Number> value
     ) {
         super(
             N_ASINH,
-            allNotNull(NUMERIC, number)
+            allNotNull(NUMERIC, value)
         );
 
-        this.number = nullSafeNotNull(number, INTEGER);
+        this.value = nullSafeNotNull(value, INTEGER);
     }
 
     // -------------------------------------------------------------------------
@@ -121,11 +121,11 @@ implements
             case MARIADB:
             case MYSQL:
             case YUGABYTEDB:
-                ctx.visit(DSL.ln(iadd(number, DSL.sqrt(iadd(square(number), one())))));
+                ctx.visit(DSL.ln(iadd(value, DSL.sqrt(iadd(square(value), one())))));
                 break;
 
             default:
-                ctx.visit(function(N_ASINH, getDataType(), number));
+                ctx.visit(function(N_ASINH, getDataType(), value));
                 break;
         }
     }
@@ -146,12 +146,12 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<? extends Number> $number() {
-        return number;
+    public final Field<? extends Number> $value() {
+        return value;
     }
 
     @Override
-    public final QOM.Asinh $number(Field<? extends Number> newValue) {
+    public final QOM.Asinh $value(Field<? extends Number> newValue) {
         return $constructor().apply(newValue);
     }
 
@@ -188,7 +188,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.Asinh) { QOM.Asinh o = (QOM.Asinh) that;
             return
-                StringUtils.equals($number(), o.$number())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

@@ -73,17 +73,17 @@ implements
     QOM.Cosh
 {
 
-    final Field<? extends Number> number;
+    final Field<? extends Number> value;
 
     Cosh(
-        Field<? extends Number> number
+        Field<? extends Number> value
     ) {
         super(
             N_COSH,
-            allNotNull(NUMERIC, number)
+            allNotNull(NUMERIC, value)
         );
 
-        this.number = nullSafeNotNull(number, INTEGER);
+        this.value = nullSafeNotNull(value, INTEGER);
     }
 
     // -------------------------------------------------------------------------
@@ -119,15 +119,15 @@ implements
             case YUGABYTEDB:
                 ctx.visit(idiv(
                     iadd(
-                        DSL.exp(imul(number, two())),
+                        DSL.exp(imul(value, two())),
                         one()
                     ),
-                    imul(DSL.exp(number), two())
+                    imul(DSL.exp(value), two())
                 ));
                 break;
 
             default:
-                ctx.visit(function(N_COSH, getDataType(), number));
+                ctx.visit(function(N_COSH, getDataType(), value));
                 break;
         }
     }
@@ -148,12 +148,12 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<? extends Number> $number() {
-        return number;
+    public final Field<? extends Number> $value() {
+        return value;
     }
 
     @Override
-    public final QOM.Cosh $number(Field<? extends Number> newValue) {
+    public final QOM.Cosh $value(Field<? extends Number> newValue) {
         return $constructor().apply(newValue);
     }
 
@@ -190,7 +190,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.Cosh) { QOM.Cosh o = (QOM.Cosh) that;
             return
-                StringUtils.equals($number(), o.$number())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

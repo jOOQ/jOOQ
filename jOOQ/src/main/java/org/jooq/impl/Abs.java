@@ -72,17 +72,17 @@ implements
     QOM.Abs<T>
 {
 
-    final Field<T> number;
+    final Field<T> value;
 
     Abs(
-        Field<T> number
+        Field<T> value
     ) {
         super(
             N_ABS,
-            allNotNull((DataType) dataType(INTEGER, number, false), number)
+            allNotNull((DataType) dataType(INTEGER, value, false), value)
         );
 
-        this.number = nullSafeNotNull(number, INTEGER);
+        this.value = nullSafeNotNull(value, INTEGER);
     }
 
     // -------------------------------------------------------------------------
@@ -99,7 +99,7 @@ implements
 
 
             default:
-                ctx.visit(function(N_ABS, getDataType(), number));
+                ctx.visit(function(N_ABS, getDataType(), value));
                 break;
         }
     }
@@ -120,12 +120,12 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<T> $number() {
-        return number;
+    public final Field<T> $value() {
+        return value;
     }
 
     @Override
-    public final QOM.Abs<T> $number(Field<T> newValue) {
+    public final QOM.Abs<T> $value(Field<T> newValue) {
         return $constructor().apply(newValue);
     }
 
@@ -162,7 +162,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.Abs) { QOM.Abs<?> o = (QOM.Abs<?>) that;
             return
-                StringUtils.equals($number(), o.$number())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

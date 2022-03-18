@@ -73,17 +73,17 @@ implements
     QOM.Cos
 {
 
-    final Field<? extends Number> number;
+    final Field<? extends Number> value;
 
     Cos(
-        Field<? extends Number> number
+        Field<? extends Number> value
     ) {
         super(
             N_COS,
-            allNotNull(NUMERIC, number)
+            allNotNull(NUMERIC, value)
         );
 
-        this.number = nullSafeNotNull(number, INTEGER);
+        this.value = nullSafeNotNull(value, INTEGER);
     }
 
     // -------------------------------------------------------------------------
@@ -100,7 +100,7 @@ implements
 
 
             default:
-                ctx.visit(function(N_COS, getDataType(), number));
+                ctx.visit(function(N_COS, getDataType(), value));
                 break;
         }
     }
@@ -121,12 +121,12 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<? extends Number> $number() {
-        return number;
+    public final Field<? extends Number> $value() {
+        return value;
     }
 
     @Override
-    public final QOM.Cos $number(Field<? extends Number> newValue) {
+    public final QOM.Cos $value(Field<? extends Number> newValue) {
         return $constructor().apply(newValue);
     }
 
@@ -163,7 +163,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.Cos) { QOM.Cos o = (QOM.Cos) that;
             return
-                StringUtils.equals($number(), o.$number())
+                StringUtils.equals($value(), o.$value())
             ;
         }
         else

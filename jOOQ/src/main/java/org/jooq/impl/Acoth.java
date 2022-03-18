@@ -99,8 +99,42 @@ implements
 
 
 
-            default:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            case CUBRID:
+            case DERBY:
+            case FIREBIRD:
+            case H2:
+            case HSQLDB:
+            case IGNITE:
+            case MARIADB:
+            case MYSQL:
+            case POSTGRES:
+
+            case YUGABYTEDB:
                 ctx.visit(idiv(DSL.ln(idiv(iadd(number, one()), isub(number, one()))), two()));
+                break;
+
+            default:
+                ctx.visit(function(N_ACOTH, getDataType(), number));
                 break;
         }
     }

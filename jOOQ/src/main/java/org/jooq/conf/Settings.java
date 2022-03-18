@@ -161,6 +161,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrigonometricFunctions = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsLogarithmicFunctions = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsHyperbolicFunctions = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsInverseHyperbolicFunctions = true;
@@ -1873,6 +1875,36 @@ public class Settings
      */
     public void setTransformPatternsTrigonometricFunctions(Boolean value) {
         this.transformPatternsTrigonometricFunctions = value;
+    }
+
+    /**
+     * Transform <code>LN(value) / LN(base)</code> to <code>LOG(base, value)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded logarithmic function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsLogarithmicFunctions() {
+        return transformPatternsLogarithmicFunctions;
+    }
+
+    /**
+     * Sets the value of the transformPatternsLogarithmicFunctions property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsLogarithmicFunctions(Boolean value) {
+        this.transformPatternsLogarithmicFunctions = value;
     }
 
     /**
@@ -4319,6 +4351,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsLogarithmicFunctions(Boolean value) {
+        setTransformPatternsLogarithmicFunctions(value);
+        return this;
+    }
+
     public Settings withTransformPatternsHyperbolicFunctions(Boolean value) {
         setTransformPatternsHyperbolicFunctions(value);
         return this;
@@ -5181,6 +5218,7 @@ public class Settings
         builder.append("transformPatternsIdempotentFunctionRepetition", transformPatternsIdempotentFunctionRepetition);
         builder.append("transformPatternsArithmeticExpressions", transformPatternsArithmeticExpressions);
         builder.append("transformPatternsTrigonometricFunctions", transformPatternsTrigonometricFunctions);
+        builder.append("transformPatternsLogarithmicFunctions", transformPatternsLogarithmicFunctions);
         builder.append("transformPatternsHyperbolicFunctions", transformPatternsHyperbolicFunctions);
         builder.append("transformPatternsInverseHyperbolicFunctions", transformPatternsInverseHyperbolicFunctions);
         builder.append("transformAnsiJoinToTableLists", transformAnsiJoinToTableLists);
@@ -5792,6 +5830,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsTrigonometricFunctions.equals(other.transformPatternsTrigonometricFunctions)) {
+                return false;
+            }
+        }
+        if (transformPatternsLogarithmicFunctions == null) {
+            if (other.transformPatternsLogarithmicFunctions!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsLogarithmicFunctions.equals(other.transformPatternsLogarithmicFunctions)) {
                 return false;
             }
         }
@@ -6739,6 +6786,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsIdempotentFunctionRepetition == null)? 0 :transformPatternsIdempotentFunctionRepetition.hashCode()));
         result = ((prime*result)+((transformPatternsArithmeticExpressions == null)? 0 :transformPatternsArithmeticExpressions.hashCode()));
         result = ((prime*result)+((transformPatternsTrigonometricFunctions == null)? 0 :transformPatternsTrigonometricFunctions.hashCode()));
+        result = ((prime*result)+((transformPatternsLogarithmicFunctions == null)? 0 :transformPatternsLogarithmicFunctions.hashCode()));
         result = ((prime*result)+((transformPatternsHyperbolicFunctions == null)? 0 :transformPatternsHyperbolicFunctions.hashCode()));
         result = ((prime*result)+((transformPatternsInverseHyperbolicFunctions == null)? 0 :transformPatternsInverseHyperbolicFunctions.hashCode()));
         result = ((prime*result)+((transformAnsiJoinToTableLists == null)? 0 :transformAnsiJoinToTableLists.hashCode()));

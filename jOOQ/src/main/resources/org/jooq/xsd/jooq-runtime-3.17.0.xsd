@@ -500,6 +500,16 @@ To enable this feature, {@link #transformPatterns} must be enabled as well.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsTrigonometricFunctions" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>SIN(x) / COS(x)</code> to <code>TAN(x)</code>, and other transformations.
+<p>
+This transformation turns expanded trignonometric function definitions into their shorter equivalents.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsHyperbolicFunctions" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>(EXP(x) - EXP(-x)) / 2</code> to <code>SINH(x)</code>, and other transformations.
 <p>

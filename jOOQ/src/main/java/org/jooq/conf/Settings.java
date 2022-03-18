@@ -159,6 +159,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsArithmeticExpressions = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsTrigonometricFunctions = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsHyperbolicFunctions = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsInverseHyperbolicFunctions = true;
@@ -1841,6 +1843,36 @@ public class Settings
      */
     public void setTransformPatternsArithmeticExpressions(Boolean value) {
         this.transformPatternsArithmeticExpressions = value;
+    }
+
+    /**
+     * Transform <code>SIN(x) / COS(x)</code> to <code>TAN(x)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded trignonometric function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsTrigonometricFunctions() {
+        return transformPatternsTrigonometricFunctions;
+    }
+
+    /**
+     * Sets the value of the transformPatternsTrigonometricFunctions property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsTrigonometricFunctions(Boolean value) {
+        this.transformPatternsTrigonometricFunctions = value;
     }
 
     /**
@@ -4282,6 +4314,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsTrigonometricFunctions(Boolean value) {
+        setTransformPatternsTrigonometricFunctions(value);
+        return this;
+    }
+
     public Settings withTransformPatternsHyperbolicFunctions(Boolean value) {
         setTransformPatternsHyperbolicFunctions(value);
         return this;
@@ -5143,6 +5180,7 @@ public class Settings
         builder.append("transformPatternsBitNotBitNot", transformPatternsBitNotBitNot);
         builder.append("transformPatternsIdempotentFunctionRepetition", transformPatternsIdempotentFunctionRepetition);
         builder.append("transformPatternsArithmeticExpressions", transformPatternsArithmeticExpressions);
+        builder.append("transformPatternsTrigonometricFunctions", transformPatternsTrigonometricFunctions);
         builder.append("transformPatternsHyperbolicFunctions", transformPatternsHyperbolicFunctions);
         builder.append("transformPatternsInverseHyperbolicFunctions", transformPatternsInverseHyperbolicFunctions);
         builder.append("transformAnsiJoinToTableLists", transformAnsiJoinToTableLists);
@@ -5745,6 +5783,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsArithmeticExpressions.equals(other.transformPatternsArithmeticExpressions)) {
+                return false;
+            }
+        }
+        if (transformPatternsTrigonometricFunctions == null) {
+            if (other.transformPatternsTrigonometricFunctions!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsTrigonometricFunctions.equals(other.transformPatternsTrigonometricFunctions)) {
                 return false;
             }
         }
@@ -6691,6 +6738,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsBitNotBitNot == null)? 0 :transformPatternsBitNotBitNot.hashCode()));
         result = ((prime*result)+((transformPatternsIdempotentFunctionRepetition == null)? 0 :transformPatternsIdempotentFunctionRepetition.hashCode()));
         result = ((prime*result)+((transformPatternsArithmeticExpressions == null)? 0 :transformPatternsArithmeticExpressions.hashCode()));
+        result = ((prime*result)+((transformPatternsTrigonometricFunctions == null)? 0 :transformPatternsTrigonometricFunctions.hashCode()));
         result = ((prime*result)+((transformPatternsHyperbolicFunctions == null)? 0 :transformPatternsHyperbolicFunctions.hashCode()));
         result = ((prime*result)+((transformPatternsInverseHyperbolicFunctions == null)? 0 :transformPatternsInverseHyperbolicFunctions.hashCode()));
         result = ((prime*result)+((transformAnsiJoinToTableLists == null)? 0 :transformAnsiJoinToTableLists.hashCode()));

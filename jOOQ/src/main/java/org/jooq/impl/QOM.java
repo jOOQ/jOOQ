@@ -2605,6 +2605,23 @@ public final class QOM {
 
     /**
      * The <code>LN</code> function.
+     * <p>
+     * Get the natural logarithm of a value.
+     */
+    public /*sealed*/ interface Ln
+        extends
+            org.jooq.Field<BigDecimal>
+        //permits
+        //    Ln
+    {
+        @NotNull  Field<? extends Number> $value();
+        @NotNull  Ln $value(Field<? extends Number> value);
+    }
+
+    /**
+     * The <code>LOG</code> function.
+     * <p>
+     * Get the logarithm of a value for a base.
      */
     public /*sealed*/ interface Log
         extends
@@ -2613,13 +2630,15 @@ public final class QOM {
         //    Log
     {
         @NotNull  Field<? extends Number> $value();
-        @Nullable Field<? extends Number> $base();
+        @NotNull  Field<? extends Number> $base();
         @NotNull  Log $value(Field<? extends Number> value);
         @NotNull  Log $base(Field<? extends Number> base);
     }
 
     /**
      * The <code>LOG10</code> function.
+     * <p>
+     * Get the logarithm of a value for base 10.
      */
     public /*sealed*/ interface Log10
         extends

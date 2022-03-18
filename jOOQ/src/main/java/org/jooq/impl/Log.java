@@ -63,7 +63,7 @@ import java.math.BigDecimal;
 
 
 /**
- * The <code>LN</code> statement.
+ * The <code>LOG</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unused" })
 final class Log
@@ -77,23 +77,11 @@ implements
     final Field<? extends Number> base;
 
     Log(
-        Field<? extends Number> value
-    ) {
-        super(
-            N_LN,
-            allNotNull(NUMERIC, value)
-        );
-
-        this.value = nullSafeNotNull(value, INTEGER);
-        this.base = null;
-    }
-
-    Log(
         Field<? extends Number> value,
         Field<? extends Number> base
     ) {
         super(
-            N_LN,
+            N_LOG,
             allNotNull(NUMERIC, value, base)
         );
 
@@ -105,42 +93,9 @@ implements
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
-        if (base == null) {
-            switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                case SQLITE:
-                    ctx.visit(function(N_LOG, NUMERIC, value));
-                    return;
-
-                default:
-                    ctx.visit(function(N_LN, NUMERIC, value));
-                    return;
-            }
-        }
-        else {
-            switch (ctx.family()) {
+        switch (ctx.family()) {
 
 
 
@@ -167,21 +122,28 @@ implements
 
 
 
-                case DERBY:
-                case HSQLDB:
-                case IGNITE:
-                case SQLITE:
-                    ctx.visit(idiv(DSL.ln(value), DSL.ln(base)));
-                    return;
 
-                default:
-                    ctx.visit(function(N_LOG, NUMERIC, base, value));
-                    return;
-            }
+
+
+
+            case DERBY:
+            case HSQLDB:
+            case IGNITE:
+            case SQLITE:
+                ctx.visit(idiv(DSL.ln(value), DSL.ln(base)));
+                break;
+
+
+
+
+
+
+
+            default:
+                ctx.visit(function(N_LOG, NUMERIC, base, value));
+                break;
         }
     }
-
-
 
 
 

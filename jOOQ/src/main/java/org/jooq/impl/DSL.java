@@ -16514,26 +16514,32 @@ public class DSL {
 
     /**
      * The <code>LN</code> function.
+     * <p>
+     * Get the natural logarithm of a value.
      *
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
     public static Field<BigDecimal> ln(Number value) {
-        return new Log(Tools.field(value));
+        return new Ln(Tools.field(value));
     }
 
     /**
      * The <code>LN</code> function.
+     * <p>
+     * Get the natural logarithm of a value.
      */
     @NotNull
     @Support
     public static Field<BigDecimal> ln(Field<? extends Number> value) {
-        return new Log(value);
+        return new Ln(value);
     }
 
     /**
      * The <code>LOG</code> function.
+     * <p>
+     * Get the logarithm of a value for a base.
      *
      * @param value is wrapped as {@link #val(Object)}.
      * @param base is wrapped as {@link #val(Object)}.
@@ -16546,6 +16552,8 @@ public class DSL {
 
     /**
      * The <code>LOG</code> function.
+     * <p>
+     * Get the logarithm of a value for a base.
      *
      * @param value is wrapped as {@link #val(Object)}.
      */
@@ -16557,6 +16565,8 @@ public class DSL {
 
     /**
      * The <code>LOG</code> function.
+     * <p>
+     * Get the logarithm of a value for a base.
      *
      * @param base is wrapped as {@link #val(Object)}.
      */
@@ -16568,6 +16578,8 @@ public class DSL {
 
     /**
      * The <code>LOG</code> function.
+     * <p>
+     * Get the logarithm of a value for a base.
      */
     @NotNull
     @Support
@@ -16577,6 +16589,8 @@ public class DSL {
 
     /**
      * The <code>LOG10</code> function.
+     * <p>
+     * Get the logarithm of a value for base 10.
      *
      * @param value is wrapped as {@link #val(Object)}.
      */
@@ -16588,6 +16602,8 @@ public class DSL {
 
     /**
      * The <code>LOG10</code> function.
+     * <p>
+     * Get the logarithm of a value for base 10.
      */
     @NotNull
     @Support

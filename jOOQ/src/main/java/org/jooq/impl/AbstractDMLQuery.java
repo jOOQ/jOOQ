@@ -48,6 +48,7 @@ import static java.lang.Boolean.TRUE;
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
 import static org.jooq.SQLDialect.H2;
 // ...
 // ...
@@ -183,6 +184,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     private static final Set<SQLDialect>         NATIVE_SUPPORT_DELETE_RETURNING        = SQLDialect.supportedBy(FIREBIRD, MARIADB, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect>         NATIVE_SUPPORT_DATA_CHANGE_DELTA_TABLE = SQLDialect.supportedBy(H2);
     private static final Set<SQLDialect>         NO_SUPPORT_FETCHING_KEYS               = SQLDialect.supportedBy(IGNITE);
+    private static final Set<SQLDialect>         NO_SUPPORT_RETURNING_ASTERISK          = SQLDialect.supportedUntil(MARIADB);
 
 
 
@@ -829,9 +831,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                    .sql(' ')
                    .declareFields(true, c -> c.visit(
 
-                       // Firebird doesn't support asterisks at all here
+                       // Firebird didn't support asterisks at all here until version 4.0
                        // MariaDB doesn't support qualified asterisks: https://jira.mariadb.org/browse/MDEV-23178
-                       c.family() == FIREBIRD || c.family() == MARIADB
+                       NO_SUPPORT_RETURNING_ASTERISK.contains(c.dialect())
                      ? new SelectFieldList<>(returningResolvedAsterisks)
                      : returning
                    ));

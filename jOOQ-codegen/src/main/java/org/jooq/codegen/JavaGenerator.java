@@ -407,40 +407,48 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("");
         log.info("JavaGenerator parameters");
         log.info("----------------------------------------------------------");
-        log.info("  annotations (generated)", generateGeneratedAnnotation()
+        log.info("annotations");
+        log.info("  generated", generateGeneratedAnnotation()
             + ((!generateGeneratedAnnotation && (useSchemaVersionProvider || useCatalogVersionProvider)) ?
                 " (forced to true because of <schemaVersionProvider/> or <catalogVersionProvider/>)" : ""));
-        log.info("  annotations (JPA: any)", generateJPAAnnotations());
-        log.info("  annotations (JPA: version)", generateJPAVersion());
-        log.info("  annotations (validation)", generateValidationAnnotations());
+        log.info("  JPA", generateJPAAnnotations());
+        log.info("  JPA version", generateJPAVersion());
+        log.info("  validation", generateValidationAnnotations());
+        log.info("  spring", generateSpringAnnotations());
+        log.info("comments");
         log.info("  comments", generateComments());
-        log.info("  comments on attributes", generateCommentsOnAttributes());
-        log.info("  comments on catalogs", generateCommentsOnCatalogs());
-        log.info("  comments on columns", generateCommentsOnColumns());
-        log.info("  comments on keys", generateCommentsOnKeys());
-        log.info("  comments on links", generateCommentsOnLinks());
-        log.info("  comments on packages", generateCommentsOnPackages());
-        log.info("  comments on parameters", generateCommentsOnParameters());
-        log.info("  comments on queues", generateCommentsOnQueues());
-        log.info("  comments on routines", generateCommentsOnRoutines());
-        log.info("  comments on schemas", generateCommentsOnSchemas());
-        log.info("  comments on sequences", generateCommentsOnSequences());
-        log.info("  comments on tables", generateCommentsOnTables());
-        log.info("  comments on udts", generateCommentsOnUDTs());
+        log.info("  on attributes", generateCommentsOnAttributes());
+        log.info("  on catalogs", generateCommentsOnCatalogs());
+        log.info("  on columns", generateCommentsOnColumns());
+        log.info("  on embeddables", generateCommentsOnEmbeddables());
+        log.info("  on keys", generateCommentsOnKeys());
+        log.info("  on links", generateCommentsOnLinks());
+        log.info("  on packages", generateCommentsOnPackages());
+        log.info("  on parameters", generateCommentsOnParameters());
+        log.info("  on queues", generateCommentsOnQueues());
+        log.info("  on routines", generateCommentsOnRoutines());
+        log.info("  on schemas", generateCommentsOnSchemas());
+        log.info("  on sequences", generateCommentsOnSequences());
+        log.info("  on tables", generateCommentsOnTables());
+        log.info("  on udts", generateCommentsOnUDTs());
+        log.info("sources");
         log.info("  sources", generateSources());
         log.info("  sources on views", generateSourcesOnViews());
+        log.info("global references");
+        log.info("  global references", generateGlobalObjectReferences());
+        log.info("  catalogs", generateGlobalCatalogReferences());
+        log.info("  domains", generateGlobalDomainReferences());
+        log.info("  indexes", generateGlobalIndexReferences());
+        log.info("  keys", generateGlobalKeyReferences());
+        log.info("  links", generateGlobalLinkReferences());
+        log.info("  queues", generateGlobalQueueReferences());
+        log.info("  routines", generateGlobalRoutineReferences());
+        log.info("  schemas", generateGlobalSchemaReferences());
+        log.info("  sequences", generateGlobalSequenceReferences());
+        log.info("  tables", generateGlobalTableReferences());
+        log.info("  udts", generateGlobalUDTReferences());
+        log.info("object types");
         log.info("  daos", generateDaos());
-        log.info("  deprecated code", generateDeprecated());
-        log.info("  global references (any)", generateGlobalObjectReferences());
-        log.info("  global references (catalogs)", generateGlobalCatalogReferences());
-        log.info("  global references (keys)", generateGlobalKeyReferences());
-        log.info("  global references (links)", generateGlobalLinkReferences());
-        log.info("  global references (queues)", generateGlobalQueueReferences());
-        log.info("  global references (routines)", generateGlobalRoutineReferences());
-        log.info("  global references (schemas)", generateGlobalSchemaReferences());
-        log.info("  global references (sequences)", generateGlobalSequenceReferences());
-        log.info("  global references (tables)", generateGlobalTableReferences());
-        log.info("  global references (udts)", generateGlobalUDTReferences());
         log.info("  indexes", generateIndexes());
         log.info("  instance fields", generateInstanceFields());
         log.info("  interfaces", generateInterfaces()
@@ -468,6 +476,8 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("  relations", generateRelations()
             + ((!generateRelations && generateTables) ? " (forced to true because of <tables/>)" :
               ((!generateRelations && generateDaos) ? " (forced to true because of <daos/>)" : "")));
+        log.info("other");
+        log.info("  deprecated code", generateDeprecated());
         log.info("----------------------------------------------------------");
 
         if (!generateInstanceFields()) {

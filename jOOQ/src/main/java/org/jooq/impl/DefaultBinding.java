@@ -97,6 +97,7 @@ import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.nan;
 import static org.jooq.impl.DefaultBinding.DefaultJSONBBinding.EMULATE_AS_BLOB;
 import static org.jooq.impl.DefaultBinding.DefaultResultBinding.readMultisetJSON;
 import static org.jooq.impl.DefaultBinding.DefaultResultBinding.readMultisetXML;
+import static org.jooq.impl.DefaultDataType.getDataType;
 import static org.jooq.impl.DefaultExecuteContext.localExecuteContext;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Internal.arrayType;
@@ -1183,10 +1184,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#8933] In some cases, we cannot derive the cast type from
                 //         array type directly
-                Class<?> arrayType =
+                DataType<?> arrayType =
                     dataType.getType() == Object[].class
-                  ? deriveArrayTypeFromComponentType(value)
-                  : dataType.getType();
+                  ? getDataType(ctx.dialect(), deriveArrayTypeFromComponentType(value))
+                  : dataType;
 
                 ctx.render().visit(cast(inline(PostgresUtils.toPGArrayString(value)), arrayType));
             }

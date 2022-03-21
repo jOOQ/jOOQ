@@ -2283,6 +2283,10 @@ public class JavaGenerator extends AbstractGenerator {
             if (baseType.equals(getStrategy().getFullJavaClassName(udt, Mode.RECORD)))
                 return true;
 
+        for (TableDefinition table : t.getDatabase().getTables())
+            if (baseType.equals(getStrategy().getFullJavaClassName(table, Mode.RECORD)))
+                return true;
+
         return false;
     }
 

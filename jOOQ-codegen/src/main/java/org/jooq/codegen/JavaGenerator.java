@@ -2105,13 +2105,15 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("%sconstructor([[%s]]): this() {", visibility(), arguments);
             }
             else {
-                if (generateConstructorPropertiesAnnotationOnRecords())
-                    out.println("@%s({ [[%s]] })", out.ref("java.beans.ConstructorProperties"), properties);
-
-                if (pojoArgument)
+                if (pojoArgument) {
                     out.println("%s%s(%s value) {", visibility(), className, out.ref(pojoNameFull));
-                else
+                }
+                else {
+                    if (generateConstructorPropertiesAnnotationOnRecords())
+                        out.println("@%s({ [[%s]] })", out.ref("java.beans.ConstructorProperties"), properties);
+
                     out.println("%s%s([[%s]]) {", visibility(), className, arguments);
+                }
 
                 if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
                     out.println("this();", tableIdentifier);

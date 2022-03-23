@@ -37,18 +37,29 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.UPDATE_SET_ASSIGNMENT;
 // ...
 // ...
 // ...
 // ...
 // ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 // ...
 // ...
 // ...
@@ -61,10 +72,13 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.WriteIfReadonly.IGNORE;
 import static org.jooq.conf.WriteIfReadonly.THROW;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.FieldMapsForInsert.keysAndComputedOnClient;
 import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.collect;
@@ -101,22 +115,25 @@ import org.jooq.impl.QOM.UNotYetImplemented;
  */
 final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRowOrSelect> implements UNotYetImplemented {
 
-    static final Set<SQLDialect>         CASTS_NEEDED             = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-    static final Set<SQLDialect>         NO_SUPPORT_QUALIFY       = SQLDialect.supportedBy(POSTGRES, SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect>         CASTS_NEEDED                      = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>         NO_SUPPORT_QUALIFY                = SQLDialect.supportedBy(POSTGRES, SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect>         EMULATE_RVE_SET_QUERY             = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, IGNITE, MARIADB, MYSQL, SQLITE);
 
 
 
 
 
 
-    static final Set<SQLDialect>         SUPPORT_RVE_SET          = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, YUGABYTEDB);
-    static final Set<SQLDialect>         REQUIRE_RVE_ROW_CLAUSE   = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>         SUPPORT_RVE_SET                   = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>         REQUIRE_RVE_ROW_CLAUSE            = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
-    private final Table<?>               table;
-    private final Clause                 assignmentClause;
+    final Table<?>                       table;
+    final SetClause                      setClause;
+    final Clause                         assignmentClause;
 
-    FieldMapForUpdate(Table<?> table, Clause assignmentClause) {
+    FieldMapForUpdate(Table<?> table, SetClause setClause, Clause assignmentClause) {
         this.table = table;
+        this.setClause = setClause;
         this.assignmentClause = assignmentClause;
     }
 
@@ -157,12 +174,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
 
 
 
-                if (!"".equals(separator))
-                    ctx.sql(separator)
-                       .formatSeparator();
-
-                acceptAssignmentClause(ctx, supportsQualify, key, value);
-                separator = ",";
+                separator = acceptAssignmentClause(ctx, supportsQualify, key, value, separator);
             }
 
             if (!CASTS_NEEDED.contains(ctx.dialect()))
@@ -173,12 +185,17 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
     }
 
     @SuppressWarnings("unchecked")
-    private final void acceptAssignmentClause(
+    private final String acceptAssignmentClause(
         Context<?> ctx,
         boolean supportsQualify,
         FieldOrRow key,
-        FieldOrRowOrSelect value
+        FieldOrRowOrSelect value,
+        String separator
     ) {
+        if (!"".equals(separator))
+            ctx.sql(separator)
+               .formatSeparator();
+
         if (assignmentClause != null)
             ctx.start(assignmentClause);
 
@@ -189,7 +206,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
 
             // [#6884] This syntax can be emulated trivially, if the RHS is not a SELECT subquery
             if (multiValue != null && !SUPPORT_RVE_SET.contains(ctx.dialect())) {
-                FieldMapForUpdate map = new FieldMapForUpdate(table(), null);
+                FieldMapForUpdate map = new FieldMapForUpdate(table(), setClause, null);
 
                 for (int i = 0; i < multiRow.size(); i++) {
                     Field<?> k = multiRow.field(i);
@@ -198,7 +215,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
                     map.put(k, Tools.field(v, k));
                 }
 
-                toSQLUpdateMap(ctx, map);
+                ctx.visit(map);
             }
 
 
@@ -215,6 +232,42 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
 
 
 
+
+            // [#10523] Generic SET ROW = (SELECT ..) emulation that works
+            //          everywhere, but inefficiently duplicates the subquery
+            else if (multiSelect != null && EMULATE_RVE_SET_QUERY.contains(ctx.dialect())) {
+                Row row = removeReadonly(ctx, multiRow);
+                int size = row.size();
+                Select<?> select;
+
+
+
+
+
+
+                select = multiSelect;
+
+                // [#10523] Simplify special case
+                if (size == 1) {
+                    ctx.qualify(false, c -> c.visit(row.field(0)))
+                       .sql(" = ");
+
+                    visitSubquery(ctx, select, false, false, false);
+                }
+                else {
+                    Field<?>[] f = Tools.fields(size);
+
+                    for (int i = 0; i < size; i++) {
+                        FieldMapForUpdate mu = new FieldMapForUpdate(table, setClause, null);
+                        separator = mu.acceptAssignmentClause(ctx,
+                            supportsQualify,
+                            row.field(i),
+                            field(select(f[i]).from(select.asTable(table(name("t")), f))),
+                            separator
+                        );
+                    }
+                }
+            }
             else {
                 Row row = removeReadonly(ctx, multiRow);
 
@@ -270,13 +323,8 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
 
         if (assignmentClause != null)
             ctx.end(assignmentClause);
-    }
 
-    static final void toSQLUpdateMap(Context<?> ctx, FieldMapForUpdate updateMap) {
-        ctx.formatIndentStart()
-           .formatSeparator()
-           .visit(updateMap)
-           .formatIndentEnd();
+        return ",";
     }
 
     static final Row removeReadonly(Context<?> ctx, Row row) {
@@ -293,8 +341,13 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
 
     final void set(Map<?, ?> map) {
         map.forEach((k, v) -> {
-            Field<?> field = Tools.tableField(table, k);
-            put(field, Tools.field(v, field));
+            if (k instanceof Row) { Row r = (Row) k;
+                put(r, (FieldOrRowOrSelect) v);
+            }
+            else {
+                Field<?> field = Tools.tableField(table, k);
+                put(field, Tools.field(v, field));
+            }
         });
     }
 
@@ -315,4 +368,27 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    enum SetClause {
+        UPDATE,
+        INSERT,
+        MERGE
+    }
 }

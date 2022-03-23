@@ -66,6 +66,7 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.FieldMapsForInsert.keysAndComputedOnClient;
 import static org.jooq.impl.FieldMapsForInsert.toSQLInsertSelect;
 import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
@@ -97,6 +98,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -124,6 +126,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.conf.WriteIfReadonly;
+import org.jooq.impl.FieldMapForUpdate.SetClause;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.tools.StringUtils;
@@ -160,7 +163,7 @@ implements
     InsertQueryImpl(Configuration configuration, WithImpl with, Table<R> into) {
         super(configuration, with, into);
 
-        this.updateMap = new FieldMapForUpdate(into, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
+        this.updateMap = new FieldMapForUpdate(into, SetClause.INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
         this.insertMaps = new FieldMapsForInsert(into);
         this.onConflictWhere = new ConditionProviderImpl();
         this.condition = new ConditionProviderImpl();
@@ -224,7 +227,7 @@ implements
         onConflictOnConstraint0(constraint(constraint));
     }
 
-    private void onConflictOnConstraint0(Constraint constraint) {
+    private final void onConflictOnConstraint0(Constraint constraint) {
         this.onConstraint = constraint;
 
         if (onConstraintUniqueKey == null)
@@ -554,7 +557,7 @@ implements
 
                 // CUBRID can emulate this using ON DUPLICATE KEY UPDATE
                 case CUBRID: {
-                    FieldMapForUpdate update = new FieldMapForUpdate(table(), INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
+                    FieldMapForUpdate update = new FieldMapForUpdate(table(), SetClause.INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
                     Field<?> field = table().field(0);
                     update.put(field, field);
 
@@ -876,6 +879,15 @@ implements
                 if (s == null)
                     s = select(map(f, x -> x.getDataType().defaulted() ? x.getDataType().default_() : DSL.NULL(x)));
 
+
+
+
+
+
+
+
+
+
                 // [#6375]  INSERT .. VALUES and INSERT .. SELECT distinction also in MERGE
                 t = s.asTable("t", map(f, Field::getName, String[]::new));
 
@@ -894,10 +906,23 @@ implements
             // [#1295] Use UPDATE clause only when with ON DUPLICATE KEY UPDATE,
             //         not with ON DUPLICATE KEY IGNORE
             MergeNotMatchedStep<R> notMatched = on;
-            if (onDuplicateKeyUpdate)
+            if (onDuplicateKeyUpdate) {
+                final FieldMapForUpdate um;
+
+
+
+
+
+
+
+
+
+                um = updateMap;
+
                 notMatched = condition.hasWhere()
-                    ? on.whenMatchedAnd(condition.getWhere()).thenUpdate().set(updateMap)
-                    : on.whenMatchedThenUpdate().set(updateMap);
+                    ? on.whenMatchedAnd(condition.getWhere()).thenUpdate().set(um)
+                    : on.whenMatchedThenUpdate().set(um);
+            }
 
             return t != null
                 ? notMatched.whenNotMatchedThenInsert(f).values(t.fields())

@@ -185,6 +185,7 @@ import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -5205,6 +5206,11 @@ final class Tools {
             }
         }
     }
+
+
+
+
+
 
 
 

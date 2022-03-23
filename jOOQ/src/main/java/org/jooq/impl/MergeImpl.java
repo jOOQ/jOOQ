@@ -175,6 +175,7 @@ import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataTypeException;
+import org.jooq.impl.FieldMapForUpdate.SetClause;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.tools.StringUtils;
@@ -1796,7 +1797,7 @@ implements
         }
 
         MatchedClause(Condition condition, boolean delete) {
-            this(condition, delete, new FieldMapForUpdate(table, MERGE_SET_ASSIGNMENT));
+            this(condition, delete, new FieldMapForUpdate(table, SetClause.MERGE, MERGE_SET_ASSIGNMENT));
         }
 
         MatchedClause(Condition condition, boolean delete, FieldMapForUpdate updateMap) {

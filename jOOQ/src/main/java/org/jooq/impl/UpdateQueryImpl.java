@@ -157,6 +157,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.UpdateQuery;
+import org.jooq.impl.FieldMapForUpdate.SetClause;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
@@ -193,7 +194,7 @@ implements
     UpdateQueryImpl(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration, with, table);
 
-        this.updateMap = new FieldMapForUpdate(table, UPDATE_SET_ASSIGNMENT);
+        this.updateMap = new FieldMapForUpdate(table, SetClause.UPDATE, UPDATE_SET_ASSIGNMENT);
         this.from = new TableList();
         this.condition = new ConditionProviderImpl();
         this.orderBy = new SortFieldList();
@@ -542,15 +543,6 @@ implements
 
 
 
-
-
-
-
-
-
-
-
-
         accept1(ctx);
     }
 
@@ -598,10 +590,12 @@ implements
         ctx.formatSeparator()
            .start(UPDATE_SET)
            .visit(K_SET)
-           .separatorRequired(true);
-
-        FieldMapForUpdate.toSQLUpdateMap(ctx, updateMap);
-        ctx.end(UPDATE_SET);
+           .separatorRequired(true)
+           .formatIndentStart()
+           .formatSeparator()
+           .visit(updateMap)
+           .formatIndentEnd()
+           .end(UPDATE_SET);
 
 
 

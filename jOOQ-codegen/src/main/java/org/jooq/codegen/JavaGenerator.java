@@ -5661,8 +5661,12 @@ public class JavaGenerator extends AbstractGenerator {
 
         log.info("Generating table", out.file().getName() +
             " [input=" + table.getInputName() +
-            ", output=" + table.getOutputName() +
-            ", pk=" + (table.getPrimaryKey() != null ? table.getPrimaryKey().getName() : "N/A") +
+            (!table.getInputName().equals(table.getOutputName())
+          ? ", output=" + table.getOutputName()
+          : "") +
+            (table.getPrimaryKey() != null
+          ? ", pk=" + table.getPrimaryKey().getName()
+          : "") +
             "]");
 
         if (log.isDebugEnabled())

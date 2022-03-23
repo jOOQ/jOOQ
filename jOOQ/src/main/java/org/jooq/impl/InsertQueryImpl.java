@@ -694,8 +694,15 @@ implements
 
 
 
+
+
+
+
+
+
             // [#8353] TODO: Support overlapping embeddables
             toSQLInsertSelect(ctx, s);
+
             ctx.data().remove(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST);
             ctx.data().remove(DATA_INSERT_SELECT);
         }

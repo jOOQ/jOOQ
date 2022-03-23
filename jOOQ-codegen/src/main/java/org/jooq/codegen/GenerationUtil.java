@@ -548,7 +548,7 @@ class GenerationUtil {
     }
 
     static ExpressionType expressionType(String expression) {
-        if (TYPE_REFERENCE_PATTERN.matcher(expression).matches())
+        if (!"null".equals(expression) && TYPE_REFERENCE_PATTERN.matcher(expression).matches())
             return CONSTRUCTOR_REFERENCE;
         else
             return EXPRESSION;

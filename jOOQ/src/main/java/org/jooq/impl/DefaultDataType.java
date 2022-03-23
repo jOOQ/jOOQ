@@ -94,6 +94,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
 // ...
@@ -105,6 +106,7 @@ import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
+import org.jooq.Generator;
 import org.jooq.Name;
 import org.jooq.Nullability;
 import org.jooq.QualifiedRecord;
@@ -112,6 +114,7 @@ import org.jooq.SQLDialect;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.DefaultBinding.InternalBinding;
+import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -256,8 +259,9 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
     private final Nullability                                   nullability;
     private final boolean                                       readonly;
-    private final Field<T>                                      generatedAlwaysAs;
+    private final Generator<T>                                  generatedAlwaysAs;
     private final GenerationOption                              generationOption;
+    private final GenerationLocation                            generationLocation;
     private final Collation                                     collation;
     private final CharacterSet                                  characterSet;
     private final boolean                                       identity;
@@ -327,10 +331,10 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     }
 
     DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
-        this(dialect, sqlDataType, type, binding, qualifiedTypeName, typeName, castTypeName, precision, scale, length, nullability, false, null, GenerationOption.DEFAULT, null, null, false, defaultValue);
+        this(dialect, sqlDataType, type, binding, qualifiedTypeName, typeName, castTypeName, precision, scale, length, nullability, false, null, GenerationOption.DEFAULT, GenerationLocation.SERVER, null, null, false, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, boolean readonly, Field<T> generatedAlwaysAs, GenerationOption generationOption, Collation collation, CharacterSet characterSet, boolean identity, Field<T> defaultValue) {
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, boolean readonly, Generator<T> generatedAlwaysAs, GenerationOption generationOption, GenerationLocation generationLocation, Collation collation, CharacterSet characterSet, boolean identity, Field<T> defaultValue) {
         super(qualifiedTypeName, NO_COMMENT);
 
         // Initialise final instance members
@@ -352,6 +356,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         this.readonly = readonly;
         this.generatedAlwaysAs = generatedAlwaysAs;
         this.generationOption = generationOption == null ? GenerationOption.DEFAULT : generationOption;
+        this.generationLocation = generationLocation == null ? GenerationLocation.SERVER : generationLocation;
         this.collation = collation;
         this.characterSet = characterSet;
         this.identity = identity;
@@ -396,8 +401,9 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         Integer newLength,
         Nullability newNullability,
         boolean newReadonly,
-        Field<T> newGeneratedAlwaysAs,
+        Generator<T> newGeneratedAlwaysAs,
         GenerationOption newGenerationOption,
+        GenerationLocation newGenerationLocation,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -412,6 +418,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
             newReadonly,
             newGeneratedAlwaysAs,
             newGenerationOption,
+            newGenerationLocation,
             newCollation,
             newCharacterSet,
             newIdentity,
@@ -429,8 +436,9 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         Integer length,
         Nullability nullability,
         boolean readonly,
-        Field<T> generatedAlwaysAs,
+        Generator<T> generatedAlwaysAs,
         GenerationOption generationOption,
+        GenerationLocation generationLocation,
         Collation collation,
         CharacterSet characterSet,
         boolean identity,
@@ -451,6 +459,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         this.readonly = readonly;
         this.generatedAlwaysAs = generatedAlwaysAs;
         this.generationOption = generationOption;
+        this.generationLocation = generationLocation;
         this.collation = collation;
         this.characterSet = characterSet;
         this.identity = identity;
@@ -491,13 +500,18 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     }
 
     @Override
-    public final Field<T> generatedAlwaysAs() {
+    public final Generator<T> generatedAlwaysAsGenerator() {
         return generatedAlwaysAs;
     }
 
     @Override
     public final GenerationOption generationOption() {
         return generationOption;
+    }
+
+    @Override
+    public final GenerationLocation generationLocation() {
+        return generationLocation;
     }
 
     @Override
@@ -556,7 +570,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
                 // ... and then, set them back to the original value
                 // [#2710] TODO: Remove this logic along with cached data types
-                return dataType.construct(precision, scale, length, nullability, readonly, generatedAlwaysAs, generationOption, collation, characterSet, identity, defaultValue);
+                return dataType.construct(precision, scale, length, nullability, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
         }
 
         // If this is already the dialect's specific data type, return this

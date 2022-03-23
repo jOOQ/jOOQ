@@ -38,15 +38,16 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Tools.CONFIG;
-import static org.jooq.impl.Tools.CTX;
 
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Generator;
 import org.jooq.Nullability;
 import org.jooq.SQLDialect;
+import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
 
 /**
@@ -75,14 +76,15 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         Integer length,
         Nullability nullability,
         boolean readonly,
-        Field<T[]> generatedAlwaysAs,
+        Generator<T[]> generatedAlwaysAs,
         GenerationOption generationOption,
+        GenerationLocation generationLocation,
         Collation collation,
         CharacterSet characterSet,
         boolean identity,
         Field<T[]> defaultValue
     ) {
-        super(t, precision, scale, length, nullability, readonly, generatedAlwaysAs, generationOption, collation, characterSet, identity, defaultValue);
+        super(t, precision, scale, length, nullability, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
 
         this.elementType = elementType;
     }
@@ -95,8 +97,9 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         Integer newLength,
         Nullability newNullability,
         boolean newReadonly,
-        Field<T[]> newGeneratedAlwaysAs,
+        Generator<T[]> newGeneratedAlwaysAs,
         GenerationOption newGenerationOption,
+        GenerationLocation newGenerationLocation,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -112,6 +115,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
             newReadonly,
             newGeneratedAlwaysAs,
             newGenerationOption,
+            newGenerationLocation,
             newCollation,
             newCharacterSet,
             newIdentity,

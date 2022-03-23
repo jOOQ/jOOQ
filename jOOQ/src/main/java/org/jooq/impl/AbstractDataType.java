@@ -70,6 +70,7 @@ import java.time.OffsetTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Supplier;
 
 // ...
 // ...
@@ -85,6 +86,7 @@ import org.jooq.Domain;
 import org.jooq.EmbeddableRecord;
 import org.jooq.EnumType;
 import org.jooq.Field;
+import org.jooq.Generator;
 import org.jooq.Geography;
 import org.jooq.Geometry;
 import org.jooq.JSON;
@@ -98,11 +100,13 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.XML;
+import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.types.Interval;
 import org.jooq.types.UNumber;
 
+import jakarta.persistence.GenerationType;
 // ...
 
 /**
@@ -150,11 +154,21 @@ implements
     public abstract boolean readonly();
 
     @Override
+    public final boolean readonlyInternal() {
+        return readonly() && !computedOnClient();
+    }
+
+    @Override
     public abstract DataType<T> readonly(boolean r);
 
     @Override
     public final boolean computed() {
-        return generatedAlwaysAs() != null;
+        return generatedAlwaysAsGenerator() != null;
+    }
+
+    @Override
+    public final boolean computedOnClient() {
+        return computed() && generationLocation() == GenerationLocation.CLIENT;
     }
 
     @Override
@@ -163,10 +177,21 @@ implements
     }
 
     @Override
-    public abstract DataType<T> generatedAlwaysAs(Field<T> generatedAlwaysAsValue);
+    public final DataType<T> generatedAlwaysAs(Field<T> generatedAlwaysAsValue) {
+        return generatedAlwaysAs(() -> generatedAlwaysAsValue);
+    }
 
     @Override
-    public abstract Field<T> generatedAlwaysAs();
+    public abstract DataType<T> generatedAlwaysAs(Generator<T> generatedAlwaysAsValue);
+
+    @Override
+    public final Field<T> generatedAlwaysAs() {
+        Generator<T> s = generatedAlwaysAsGenerator();
+        return s == null ? null : s.get();
+    }
+
+    @Override
+    public abstract Generator<T> generatedAlwaysAsGenerator();
 
     @Override
     public final DataType<T> stored() {
@@ -183,6 +208,12 @@ implements
 
     @Override
     public abstract GenerationOption generationOption();
+
+    @Override
+    public abstract DataType<T> generationLocation(GenerationLocation generationLocation);
+
+    @Override
+    public abstract GenerationLocation generationLocation();
 
     @Override
     public abstract DataType<T> collation(Collation c);

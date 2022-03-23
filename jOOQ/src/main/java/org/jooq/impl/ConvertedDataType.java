@@ -48,6 +48,7 @@ import org.jooq.Converter;
 import org.jooq.Converters;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Generator;
 import org.jooq.Nullability;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -55,10 +56,8 @@ import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DefaultBinding.InternalBinding;
+import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A <code>DataType</code> used for converted types using {@link Converter}
@@ -89,8 +88,9 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
         Integer newLength,
         Nullability newNullability,
         boolean newReadonly,
-        Field<U> newGeneratedAlwaysAs,
+        Generator<U> newGeneratedAlwaysAs,
         GenerationOption newGenerationOption,
+        GenerationLocation newGenerationLocation,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -102,8 +102,9 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
             newLength,
             newNullability,
             newReadonly,
-            (Field) newGeneratedAlwaysAs,
+            (Generator) newGeneratedAlwaysAs,
             newGenerationOption,
+            newGenerationLocation,
             newCollation,
             newCharacterSet,
             newIdentity,
@@ -209,13 +210,18 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     }
 
     @Override
-    public final Field<U> generatedAlwaysAs() {
-        return (Field<U>) delegate.generatedAlwaysAs();
+    public final Generator<U> generatedAlwaysAsGenerator() {
+        return (Generator<U>) delegate.generatedAlwaysAsGenerator();
     }
 
     @Override
     public final GenerationOption generationOption() {
         return delegate.generationOption();
+    }
+
+    @Override
+    public final GenerationLocation generationLocation() {
+        return delegate.generationLocation();
     }
 
     @Override

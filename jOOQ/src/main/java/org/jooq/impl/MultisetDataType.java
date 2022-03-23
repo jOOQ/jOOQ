@@ -49,10 +49,12 @@ import java.util.Map.Entry;
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Field;
+import org.jooq.Generator;
 import org.jooq.Nullability;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
+import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
 
 /**
@@ -86,14 +88,15 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
         Integer length,
         Nullability nullability,
         boolean readonly,
-        Field<Result<R>> generatedAlwaysAs,
+        Generator<Result<R>> generatedAlwaysAs,
         GenerationOption generationOption,
+        GenerationLocation generationLocation,
         Collation collation,
         CharacterSet characterSet,
         boolean identity,
         Field<Result<R>> defaultValue
     ) {
-        super(t, precision, scale, length, nullability, readonly, generatedAlwaysAs, generationOption, collation, characterSet, identity, defaultValue);
+        super(t, precision, scale, length, nullability, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
 
         this.row = row;
         this.recordType = recordType;
@@ -107,8 +110,9 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
         Integer newLength,
         Nullability newNullability,
         boolean newReadonly,
-        Field<Result<R>> newGeneratedAlwaysAs,
+        Generator<Result<R>> newGeneratedAlwaysAs,
         GenerationOption newGenerationOption,
+        GenerationLocation newGenerationLocation,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -125,6 +129,7 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
             newReadonly,
             newGeneratedAlwaysAs,
             newGenerationOption,
+            newGenerationLocation,
             newCollation,
             newCharacterSet,
             newIdentity,

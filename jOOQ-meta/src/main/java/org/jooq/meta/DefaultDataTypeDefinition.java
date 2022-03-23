@@ -51,6 +51,7 @@ import java.util.Set;
 
 import org.jooq.Name;
 import org.jooq.SQLDialect;
+import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -71,6 +72,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     private final String           type;
     private final Name             userType;
     private final String           javaType;
+    private String                 generator;
     private final String           converter;
     private final String           binding;
     private final boolean          nullable;
@@ -196,6 +198,10 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     }
 
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean readonly, String generatedAlwaysAs, String defaultValue, boolean identity, Name userType, String converter, String binding, String javaType) {
+        this(database, schema, typeName, length, precision, scale, nullable, readonly, generatedAlwaysAs, defaultValue, identity, userType, null, converter, binding, javaType);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean readonly, String generatedAlwaysAs, String defaultValue, boolean identity, Name userType, String generator, String converter, String binding, String javaType) {
         this.database = database;
         this.schema = schema;
 
@@ -203,6 +209,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this.type = typeName == null ? "OTHER" : typeName;
         this.userType = userType;
         this.javaType = javaType;
+        this.generator = generator;
         this.converter = converter;
         this.binding = binding;
 
@@ -228,6 +235,9 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this.generatedAlwaysAs = generatedAlwaysAs;
         this.defaultValue = defaultValue;
         this.identity = identity;
+
+        if (generator != null)
+            database.create().configuration().commercial(() -> "Client side computed columns are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
     }
 
     @Override
@@ -284,6 +294,21 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         return generationOption;
     }
 
+    @Override
+    public GenerationLocation getGenerationLocation() {
+        return generator == null ? GenerationLocation.SERVER : GenerationLocation.CLIENT;
+    }
+
+    private static final JooqLogger logGenerator = JooqLogger.getLogger(DefaultDataTypeDefinition.class, "logGenerator", 1);
+
+    public final DefaultDataTypeDefinition generator(String g) {
+        if (g != null && !database.create().configuration().commercial())
+            logGenerator.info("Computed columns", "Client side computed columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
+
+        this.generator = g;
+        return this;
+    }
+
     public final DefaultDataTypeDefinition generationOption(GenerationOption go) {
         this.generationOption = go;
         return this;
@@ -333,6 +358,11 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     @Override
     public final String getType() {
         return type;
+    }
+
+    @Override
+    public final String getGenerator() {
+        return generator;
     }
 
     @Override

@@ -1403,8 +1403,8 @@ public abstract class AbstractDatabase implements Database {
             }
 
             if (StringUtils.isBlank(type.getName())) {
-                if (StringUtils.isBlank(type.getUserType())) {
-                    log.warn("Bad configuration for <forcedType/>. Either <name/> or <userType/> is required: " + type);
+                if (StringUtils.isBlank(type.getUserType()) && StringUtils.isBlank(type.getGenerator())) {
+                    log.warn("Bad configuration for <forcedType/>. Either <name/>, <userType/>, or <generator/> is required: " + type);
 
                     it2.remove();
                     continue;
@@ -1412,9 +1412,10 @@ public abstract class AbstractDatabase implements Database {
 
                 if (StringUtils.isBlank(type.getBinding()) &&
                     StringUtils.isBlank(type.getConverter()) &&
+                    StringUtils.isBlank(type.getGenerator()) &&
                     !Boolean.TRUE.equals(type.isEnumConverter()) &&
                     type.getLambdaConverter() == null) {
-                    log.warn("Bad configuration for <forcedType/>. Either <binding/> or <converter/> or <enumConverter/> or <lambdaConverter/> is required: " + type);
+                    log.warn("Bad configuration for <forcedType/>. Either <binding/>, <converter/>, <enumConverter/>, <lambdaConverter/>, or <generator/> is required: " + type);
 
                     it2.remove();
                     continue;

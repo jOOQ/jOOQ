@@ -40,13 +40,17 @@ package org.jooq.impl;
 import static org.jooq.Nullability.NOT_NULL;
 import static org.jooq.impl.Tools.CONFIG;
 
+import java.util.function.Supplier;
+
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Comment;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Generator;
 import org.jooq.Name;
 import org.jooq.Nullability;
+import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.tools.JooqLogger;
 
@@ -69,8 +73,9 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
         Integer newLength,
         Nullability newNullability,
         boolean newReadonly,
-        Field<T> newGeneratedAlwaysAs,
+        Generator<T> newGeneratedAlwaysAs,
         GenerationOption newGenerationOption,
+        GenerationLocation newGenerationLocation,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -85,8 +90,9 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             n,
             readonly(),
-            generatedAlwaysAs(),
+            generatedAlwaysAsGenerator(),
             generationOption(),
+            generationLocation(),
             collation(),
             characterSet(),
             !n.nullable() && identity(),
@@ -105,8 +111,9 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             nullability(),
             r,
-            generatedAlwaysAs(),
+            generatedAlwaysAsGenerator(),
             generationOption(),
+            generationLocation(),
             collation(),
             characterSet(),
             identity(),
@@ -117,7 +124,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
     private static final JooqLogger logGeneratedAlwaysAs = JooqLogger.getLogger(AbstractDataTypeX.class, "generateAlwaysAs", 1);
 
     @Override
-    public final DataType<T> generatedAlwaysAs(Field<T> g) {
+    public final DataType<T> generatedAlwaysAs(Generator<T> g) {
         if (g != null && !CONFIG.commercial())
             logGeneratedAlwaysAs.info("Computed columns", "Computed columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
 
@@ -129,6 +136,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             g != null ? true : readonly(),
             g,
             generationOption(),
+            generationLocation(),
             collation(),
             characterSet(),
             identity(),
@@ -147,7 +155,29 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             nullability(),
             readonly(),
-            generatedAlwaysAs(),
+            generatedAlwaysAsGenerator(),
+            g,
+            generationLocation(),
+            collation(),
+            characterSet(),
+            identity(),
+            defaultValue()
+        );
+    }
+
+    @Override
+    public final DataType<T> generationLocation(GenerationLocation g) {
+        if (g != null && !CONFIG.commercial())
+            logGeneratedAlwaysAs.info("Computed columns", "Computed columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
+
+        return construct(
+            precision0(),
+            scale0(),
+            length0(),
+            nullability(),
+            readonly(),
+            generatedAlwaysAsGenerator(),
+            generationOption(),
             g,
             collation(),
             characterSet(),
@@ -164,8 +194,9 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             nullability(),
             readonly(),
-            generatedAlwaysAs(),
+            generatedAlwaysAsGenerator(),
             generationOption(),
+            generationLocation(),
             c,
             characterSet(),
             identity(),
@@ -181,8 +212,9 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             nullability(),
             readonly(),
-            generatedAlwaysAs(),
+            generatedAlwaysAsGenerator(),
             generationOption(),
+            generationLocation(),
             collation(),
             c,
             identity(),
@@ -198,8 +230,9 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             i ? NOT_NULL : nullability(),
             readonly(),
-            generatedAlwaysAs(),
+            generatedAlwaysAsGenerator(),
             generationOption(),
+            generationLocation(),
             collation(),
             characterSet(),
             i,
@@ -215,8 +248,9 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             nullability(),
             readonly(),
-            d != null ? null : generatedAlwaysAs(),
+            d != null ? null : generatedAlwaysAsGenerator(),
             generationOption(),
+            generationLocation(),
             collation(),
             characterSet(),
             identity(),
@@ -232,8 +266,9 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             nullability(),
             readonly(),
-            generatedAlwaysAs(),
+            generatedAlwaysAsGenerator(),
             generationOption(),
+            generationLocation(),
             collation(),
             characterSet(),
             identity(),
@@ -249,8 +284,9 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             nullability(),
             readonly(),
-            generatedAlwaysAs(),
+            generatedAlwaysAsGenerator(),
             generationOption(),
+            generationLocation(),
             collation(),
             characterSet(),
             identity(),
@@ -266,8 +302,9 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             l,
             nullability(),
             readonly(),
-            generatedAlwaysAs(),
+            generatedAlwaysAsGenerator(),
             generationOption(),
+            generationLocation(),
             collation(),
             characterSet(),
             identity(),

@@ -37,6 +37,8 @@ public class ForcedType implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String userType;
     @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String generator;
+    @XmlJavaTypeAdapter(StringAdapter.class)
     protected String converter;
     protected Boolean enumConverter;
     protected LambdaConverter lambdaConverter;
@@ -117,6 +119,26 @@ public class ForcedType implements Serializable, XMLAppendable
      */
     public void setUserType(String value) {
         this.userType = value;
+    }
+
+    /**
+     * A {@link org.jooq.Generator} implementation used for client-side computed columns.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public String getGenerator() {
+        return generator;
+    }
+
+    /**
+     * A {@link org.jooq.Generator} implementation used for client-side computed columns.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public void setGenerator(String value) {
+        this.generator = value;
     }
 
     /**
@@ -396,6 +418,17 @@ public class ForcedType implements Serializable, XMLAppendable
     }
 
     /**
+     * A {@link org.jooq.Generator} implementation used for client-side computed columns.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public ForcedType withGenerator(String value) {
+        setGenerator(value);
+        return this;
+    }
+
+    /**
      * A converter implementation for the {@link #getUserType()}.
      * 
      */
@@ -529,6 +562,7 @@ public class ForcedType implements Serializable, XMLAppendable
         builder.append("priority", priority);
         builder.append("name", name);
         builder.append("userType", userType);
+        builder.append("generator", generator);
         builder.append("converter", converter);
         builder.append("enumConverter", enumConverter);
         builder.append("lambdaConverter", lambdaConverter);
@@ -588,6 +622,15 @@ public class ForcedType implements Serializable, XMLAppendable
             }
         } else {
             if (!userType.equals(other.userType)) {
+                return false;
+            }
+        }
+        if (generator == null) {
+            if (other.generator!= null) {
+                return false;
+            }
+        } else {
+            if (!generator.equals(other.generator)) {
                 return false;
             }
         }
@@ -727,6 +770,7 @@ public class ForcedType implements Serializable, XMLAppendable
         result = ((prime*result)+((priority == null)? 0 :priority.hashCode()));
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
         result = ((prime*result)+((userType == null)? 0 :userType.hashCode()));
+        result = ((prime*result)+((generator == null)? 0 :generator.hashCode()));
         result = ((prime*result)+((converter == null)? 0 :converter.hashCode()));
         result = ((prime*result)+((enumConverter == null)? 0 :enumConverter.hashCode()));
         result = ((prime*result)+((lambdaConverter == null)? 0 :lambdaConverter.hashCode()));

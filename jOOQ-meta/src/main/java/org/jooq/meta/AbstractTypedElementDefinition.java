@@ -210,6 +210,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
         ForcedType forcedType = db.getConfiguredForcedType(child, definedType);
         if (forcedType != null) {
             String uType = forcedType.getName();
+            String generator = forcedType.getGenerator();
             String converter = null;
             String binding = result.getBinding();
 
@@ -218,6 +219,9 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                 uType = (!StringUtils.isBlank(customType.getType()))
                     ? customType.getType()
                     : customType.getName();
+
+                if (generator == null)
+                    generator = customType.getGenerator();
 
                 // [#5877] [#6567] EnumConverters profit from simplified configuration
                 if (Boolean.TRUE.equals(customType.isEnumConverter()) ||
@@ -277,7 +281,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                     if (customType != null)
                         log.warn("Custom type conflict", child + " has custom type " + customType + " forced by " + forcedType + " but a data type rewrite applies");
 
-                    result = new DefaultDataTypeDefinition(db, child.getSchema(), uType, l, p, s, n, r, g, d, i, (Name) null, converter, binding, null);
+                    result = new DefaultDataTypeDefinition(db, child.getSchema(), uType, l, p, s, n, r, g, d, i, (Name) null, generator, converter, binding, null);
                 }
 
                 // Other forced types are UDT's, enums, etc.
@@ -287,7 +291,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                     s = result.getScale();
                     String t = result.getType();
                     Name u = result.getQualifiedUserType();
-                    result = new DefaultDataTypeDefinition(db, definedType.getSchema(), t, l, p, s, n, r, g, d, i, u, converter, binding, uType);
+                    result = new DefaultDataTypeDefinition(db, definedType.getSchema(), t, l, p, s, n, r, g, d, i, u, generator, converter, binding, uType);
                 }
 
                 // [#4597] If we don't have a type-rewrite (forcedDataType) or a
@@ -302,6 +306,9 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                         log.warn("Bad configuration for <forcedType/> " + forcedType.getName() + ". No matching <customType/> found, and no matching SQLDataType found: " + forcedType);
                 }
             }
+
+            if (generator != null)
+                ((DefaultDataTypeDefinition) result).generator(generator);
         }
 
         return result;
@@ -341,6 +348,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                 .withBinding(forcedType.getBinding())
                 .withEnumConverter(forcedType.isEnumConverter())
                 .withLambdaConverter(forcedType.getLambdaConverter())
+                .withGenerator(forcedType.getGenerator())
                 .withConverter(forcedType.getConverter())
                 .withName(name)
                 .withType(forcedType.getUserType());

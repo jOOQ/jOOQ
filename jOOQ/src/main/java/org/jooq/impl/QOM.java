@@ -5816,6 +5816,24 @@ public final class QOM {
     }
 
     /**
+     * The <code>GenerationLocation</code> type.
+     * <p>
+     * Specify where a computed column should be computed, i.e. in the client or on the
+     * server.
+     */
+    public enum GenerationLocation {
+        CLIENT(keyword("client")),
+        SERVER(keyword("server")),
+        ;
+
+        final Keyword keyword;
+
+        private GenerationLocation(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
+
+    /**
      * The <code>GenerationOption</code> type.
      * <p>
      * Specify whether a computed column should be stored, or computed virtually / on the

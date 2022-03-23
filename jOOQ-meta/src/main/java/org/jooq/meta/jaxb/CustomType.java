@@ -36,6 +36,8 @@ public class CustomType implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String type;
     @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String generator;
+    @XmlJavaTypeAdapter(StringAdapter.class)
     protected String converter;
     protected Boolean enumConverter;
     protected LambdaConverter lambdaConverter;
@@ -76,6 +78,24 @@ public class CustomType implements Serializable, XMLAppendable
     @Deprecated
     public void setType(String value) {
         this.type = value;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
+    @Deprecated
+    public String getGenerator() {
+        return generator;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
+    @Deprecated
+    public void setGenerator(String value) {
+        this.generator = value;
     }
 
     /**
@@ -183,6 +203,16 @@ public class CustomType implements Serializable, XMLAppendable
      * 
      */
     @Deprecated
+    public CustomType withGenerator(String value) {
+        setGenerator(value);
+        return this;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
+    @Deprecated
     public CustomType withConverter(String value) {
         setConverter(value);
         return this;
@@ -217,6 +247,7 @@ public class CustomType implements Serializable, XMLAppendable
     public final void appendTo(XMLBuilder builder) {
         builder.append("name", name);
         builder.append("type", type);
+        builder.append("generator", generator);
         builder.append("converter", converter);
         builder.append("enumConverter", enumConverter);
         builder.append("lambdaConverter", lambdaConverter);
@@ -257,6 +288,15 @@ public class CustomType implements Serializable, XMLAppendable
             }
         } else {
             if (!type.equals(other.type)) {
+                return false;
+            }
+        }
+        if (generator == null) {
+            if (other.generator!= null) {
+                return false;
+            }
+        } else {
+            if (!generator.equals(other.generator)) {
                 return false;
             }
         }
@@ -305,6 +345,7 @@ public class CustomType implements Serializable, XMLAppendable
         int result = 1;
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
         result = ((prime*result)+((type == null)? 0 :type.hashCode()));
+        result = ((prime*result)+((generator == null)? 0 :generator.hashCode()));
         result = ((prime*result)+((converter == null)? 0 :converter.hashCode()));
         result = ((prime*result)+((enumConverter == null)? 0 :enumConverter.hashCode()));
         result = ((prime*result)+((lambdaConverter == null)? 0 :lambdaConverter.hashCode()));

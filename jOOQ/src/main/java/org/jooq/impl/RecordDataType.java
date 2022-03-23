@@ -40,7 +40,6 @@ package org.jooq.impl;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 import static org.jooq.impl.Tools.CONFIG;
-import static org.jooq.impl.Tools.CTX;
 import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.impl.Tools.recordType;
 
@@ -51,9 +50,11 @@ import java.util.Map.Entry;
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Field;
+import org.jooq.Generator;
 import org.jooq.Nullability;
 import org.jooq.Record;
 import org.jooq.Row;
+import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
 
 /**
@@ -88,14 +89,15 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
         Integer length,
         Nullability nullability,
         boolean readonly,
-        Field<R> generatedAlwaysAs,
+        Generator<R> generatedAlwaysAs,
         GenerationOption generationOption,
+        GenerationLocation generationLocation,
         Collation collation,
         CharacterSet characterSet,
         boolean identity,
         Field<R> defaultValue
     ) {
-        super(t, precision, scale, length, nullability, readonly, generatedAlwaysAs, generationOption, collation, characterSet, identity, defaultValue);
+        super(t, precision, scale, length, nullability, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
 
         this.row = row;
     }
@@ -108,8 +110,9 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
         Integer newLength,
         Nullability newNullability,
         boolean newReadonly,
-        Field<R> newGeneratedAlwaysAs,
+        Generator<R> newGeneratedAlwaysAs,
         GenerationOption newGenerationOption,
+        GenerationLocation newGenerationLocation,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -125,6 +128,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
             newReadonly,
             newGeneratedAlwaysAs,
             newGenerationOption,
+            newGenerationLocation,
             newCollation,
             newCharacterSet,
             newIdentity,

@@ -87,6 +87,7 @@ import org.jooq.DataType;
 import org.jooq.DivideByOnStep;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Generator;
 import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.JoinType;
@@ -118,6 +119,7 @@ import org.jooq.TablePartitionByStep;
 import org.jooq.UniqueKey;
 // ...
 // ...
+import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.tools.JooqLogger;
 
 import org.jetbrains.annotations.NotNull;
@@ -756,16 +758,30 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
      * @param name The name of the field (case-sensitive!)
      * @param type The data type of the field
      */
-    @SuppressWarnings("unchecked")
     protected static final <R extends Record, T, X, U> TableField<R, U> createField(Name name, DataType<T> type, Table<R> table, String comment, Converter<X, U> converter, Binding<T, X> binding) {
-        final Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);
-        final DataType<U> actualType =
+        return createField(name, type, table, comment, converter, binding, null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    @SuppressWarnings("unchecked")
+    protected static final <R extends Record, T, X, U> TableField<R, U> createField(Name name, DataType<T> type, Table<R> table, String comment, Converter<X, U> converter, Binding<T, X> binding, Generator<U> generator) {
+        Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);
+        DataType<U> actualType =
             converter == null && binding == null
           ? (DataType<U>) type
           : type.asConvertedDataType(actualBinding);
 
+        if (generator != null)
+            actualType = actualType.generatedAlwaysAs(generator).generationLocation(GenerationLocation.CLIENT);
+
         // [#5999] TODO: Allow for user-defined Names
-        final TableFieldImpl<R, U> tableField = new TableFieldImpl<>(name, actualType, table, DSL.comment(comment), actualBinding);
+        TableFieldImpl<R, U> tableField = new TableFieldImpl<>(name, actualType, table, DSL.comment(comment), actualBinding);
 
         // [#1199] The public API of Table returns immutable field lists
         if (table instanceof TableImpl)

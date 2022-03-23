@@ -83,6 +83,7 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.FieldMapForUpdate.removeReadonly;
+import static org.jooq.impl.FieldMapsForInsert.keysAndComputedOnClient;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_LIMIT;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
@@ -90,6 +91,7 @@ import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.fieldName;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.unqualified;
@@ -97,9 +99,11 @@ import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -171,6 +175,8 @@ import org.jooq.impl.QOM.UNotYetImplemented;
 final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements UpdateQuery<R>, UNotYetImplemented {
 
     private static final Clause[]        CLAUSES                   = { UPDATE };
+
+
 
 
 
@@ -539,13 +545,54 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         return from;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     final void accept0(Context<?> ctx) {
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        accept1(ctx);
+    }
+
+    private final UpdateQueryImpl<R> copy(Consumer<? super UpdateQueryImpl<R>> consumer) {
+        UpdateQueryImpl<R> u = new UpdateQueryImpl<>(configuration(), with, table);
+
+        if (!returning.isEmpty())
+            u.setReturning(returning);
+
+        u.updateMap.putAll(updateMap);
+        u.multiRow = multiRow;
+        u.multiSelect = multiSelect;
+        u.multiValue = multiValue;
+        u.from.addAll(from);
+        u.condition.setWhere(condition.getWhere());
+        u.orderBy.addAll(orderBy);
+        u.limit = limit;
+        consumer.accept(u);
+        return u;
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    final void accept1(Context<?> ctx) {
         boolean declareTables = ctx.declareTables();
         ctx.start(UPDATE_UPDATE)
            .visit(K_UPDATE)
@@ -589,14 +636,8 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     map.put(k, Tools.field(v, k));
                 }
 
-                ctx.formatIndentStart()
-                   .formatSeparator()
-                   .visit(map)
-                   .formatIndentEnd();
+                toSQLUpdateMap(ctx, map);
             }
-
-
-
 
 
 
@@ -658,12 +699,8 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         }
 
         // A regular (non-multi-row) update was specified
-        else {
-            ctx.formatIndentStart()
-               .formatSeparator()
-               .visit(updateMap)
-               .formatIndentEnd();
-        }
+        else
+            toSQLUpdateMap(ctx, updateMap);
 
         ctx.end(UPDATE_SET);
 
@@ -671,19 +708,9 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
-        switch (ctx.family()) {
 
 
-
-
-
-
-
-
-            default:
-                acceptFrom(ctx);
-                break;
-        }
+        acceptFrom(ctx);
 
         if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.dialect()) || !orderBy.isEmpty() && NO_SUPPORT_ORDER_BY_LIMIT.contains(ctx.dialect())) {
             Field<?>[] keyFields =
@@ -734,6 +761,13 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         ctx.start(UPDATE_RETURNING);
         toSQLReturning(ctx);
         ctx.end(UPDATE_RETURNING);
+    }
+
+    private static final void toSQLUpdateMap(Context<?> ctx, FieldMapForUpdate updateMap) {
+        ctx.formatIndentStart()
+           .formatSeparator()
+           .visit(updateMap)
+           .formatIndentEnd();
     }
 
 

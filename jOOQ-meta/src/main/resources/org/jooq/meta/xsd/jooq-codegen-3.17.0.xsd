@@ -1339,6 +1339,18 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
         </annotation>
       </element>
 
+      <element name="generator" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
+      </element>
+
       <element name="converter" type="string" minOccurs="0" maxOccurs="1">
         <annotation>
           <appinfo>
@@ -1472,6 +1484,12 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 <p>
 If provided, {@link #getName()} will be ignored, and either {@link #getConverter()}
 or {@link #getBinding()} is required]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="generator" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link org.jooq.Generator} implementation used for client-side computed columns.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="converter" type="string" minOccurs="0" maxOccurs="1">

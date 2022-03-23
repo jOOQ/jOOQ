@@ -67,6 +67,7 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.FieldMapsForInsert.toSQLInsertSelect;
 import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_DO_NOTHING;
@@ -654,7 +655,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
            .sql(' ')
            .declareTables(true, c -> c.visit(table(c)));
 
-        List<Field<?>> fields = insertMaps.toSQLReferenceKeys(ctx);
+        Set<Field<?>> fields = insertMaps.toSQLReferenceKeys(ctx);
         ctx.end(INSERT_INSERT_INTO);
 
 
@@ -691,11 +692,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
             // [#8353] TODO: Support overlapping embeddables
-            ctx.formatSeparator()
-               .start(INSERT_SELECT)
-               .visit(s)
-               .end(INSERT_SELECT);
-
+            toSQLInsertSelect(ctx, s);
             ctx.data().remove(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST);
             ctx.data().remove(DATA_INSERT_SELECT);
         }

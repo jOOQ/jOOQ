@@ -77,9 +77,9 @@ import java.util.List;
 import java.util.function.Function;
 
 import org.jooq.Converters.UnknownType;
-import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.SQLDataType;
 import org.jooq.types.DayToSecond;
@@ -468,6 +468,32 @@ public interface DataType<T> extends Named {
     boolean readonly();
 
     /**
+     * Get the readonly attribute of this data type, combined with other flags
+     * that influence readonly behaviour.
+     * <p>
+     * A column may be marked as {@link #readonly()} for various reasons,
+     * including:
+     * <ul>
+     * <li>When it is marked as readonly explicitly by the code generator.</li>
+     * <li>When it is marked as readonly implicitly because it's a computed
+     * column with {@link #generationLocation()} being
+     * {@link GenerationLocation#SERVER}.</li>
+     * </ul>
+     * <p>
+     * Some columns are readonly for users, meaning users of the jOOQ API cannot
+     * write to them, but jOOQ, internally, may still write to those columns.
+     * Such columns may include:
+     * <ul>
+     * <li>Columns that are computed with {@link #generationLocation()} being
+     * {@link GenerationLocation#CLIENT}</li>
+     * <li>Columns used for optimistic locking</li>
+     * </ul>
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    boolean readonlyInternal();
+
+    /**
      * Whether this column is computed.
      * <p>
      * This feature is implemented in commercial distributions only.
@@ -475,7 +501,17 @@ public interface DataType<T> extends Named {
     boolean computed();
 
     /**
-     * Set the computed column expression of this data type.
+     * Whether this column is computed on the client.
+     * <p>
+     * This is true only if {@link #computed()} and
+     * {@link #generationLocation()} == {@link GenerationLocation#CLIENT}.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    boolean computedOnClient();
+
+    /**
+     * Set the computed column expression of this data type to a constant value.
      * <p>
      * This implicitly sets {@link #readonly()} to <code>true</code>.
      * <p>
@@ -486,7 +522,8 @@ public interface DataType<T> extends Named {
     DataType<T> generatedAlwaysAs(T generatedAlwaysAsValue);
 
     /**
-     * Set the computed column expression of this data type.
+     * Set the computed column expression of this data type to a constant
+     * expression.
      * <p>
      * This implicitly sets {@link #readonly()} to <code>true</code>.
      * <p>
@@ -497,12 +534,48 @@ public interface DataType<T> extends Named {
     DataType<T> generatedAlwaysAs(Field<T> generatedAlwaysAsValue);
 
     /**
+     * Set the computed column expression of this data type to a dynamic
+     * expression.
+     * <p>
+     * Unlike {@link #generatedAlwaysAs(Object)} and
+     * {@link #generatedAlwaysAs(Field)}, which produce a constant value or
+     * expression, this allows for generating a dynamic expression if used along
+     * with {@link #generationLocation()} and {@link GenerationLocation#CLIENT},
+     * in order to implement client side computed columns.
+     * <p>
+     * If {@link #generationLocation()} is {@link GenerationLocation#SERVER},
+     * then this does not affect generated DML statements, and will be evaluated
+     * only in DDL statements, when creating the table.
+     * <p>
+     * This implicitly sets {@link #readonly()} to <code>true</code>.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    @NotNull
+    DataType<T> generatedAlwaysAs(Generator<T> generatedAlwaysAsValue);
+
+    /**
      * Get the computed column expression of this data type, if any.
+     * <p>
+     * This eagerly evaluates the {@link #generatedAlwaysAsGenerator()}
+     * generator, which may not produce the same expression upon execution of a
+     * query, in case {@link #generationLocation()} is
+     * {@link GenerationLocation#CLIENT}. The behaviour of
+     * {@link GenerationLocation#SERVER} is not affected. The method has been
+     * left unmodified for backwards compatibility with jOOQ 3.16.
      * <p>
      * This feature is implemented in commercial distributions only.
      */
     @Nullable
     Field<T> generatedAlwaysAs();
+
+    /**
+     * Get the computed column expression of this data type, if any.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    @Nullable
+    Generator<T> generatedAlwaysAsGenerator();
 
     /**
      * Set the {@link #generationOption()} of the computed column expression to
@@ -548,6 +621,46 @@ public interface DataType<T> extends Named {
     @NotNull
     @Support
     GenerationOption generationOption();
+
+    /**
+     * Set the {@link #generationLocation()} of the computed column expression.
+     * <p>
+     * Specifies whether the {@link #generatedAlwaysAs()} expression is computed
+     * on the {@link GenerationLocation#SERVER} (by default) or in the
+     * {@link GenerationLocation#CLIENT}. The latter is supported in all
+     * dialects, the former only in relevant dialects.
+     * <p>
+     * The computation happens in {@link Insert}, {@link Update}, or
+     * {@link Merge} statements in case {@link #generationOption()} is
+     * {@link GenerationOption#STORED}, or in {@link Select} in case the
+     * {@link #generationOption()} is {@link GenerationOption#VIRTUAL}.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    @NotNull
+    @Support
+    DataType<T> generationLocation(GenerationLocation generationOption);
+
+    /**
+     * Get the {@link GenerationLocation} of the computed column expression of
+     * this data type, if any.
+     * <p>
+     * Specifies whether the {@link #generatedAlwaysAs()} expression is computed
+     * on the {@link GenerationLocation#SERVER} (by default) or in the
+     * {@link GenerationLocation#CLIENT}. The latter is supported in all
+     * dialects, the former only in relevant dialects.
+     * <p>
+     * The computation happens in {@link Insert}, {@link Update}, or
+     * {@link Merge} statements in case {@link #generationOption()} is
+     * {@link GenerationOption#STORED}, or in {@link Select} in case the
+     * {@link #generationOption()} is {@link GenerationOption#VIRTUAL}.
+     * <p>
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    @NotNull
+    @Support
+    GenerationLocation generationLocation();
 
     /**
      * Synonym for {@link #nullable(boolean)}, passing <code>true</code> as an

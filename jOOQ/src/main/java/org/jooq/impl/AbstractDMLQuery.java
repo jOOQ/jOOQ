@@ -195,8 +195,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-    private final WithImpl                       with;
-    private final Table<R>                       table;
+    final WithImpl                               with;
+    final Table<R>                               table;
     final SelectFieldList<SelectFieldOrAsterisk> returning;
     final List<Field<?>>                         returningResolvedAsterisks;
     Result<Record>                               returnedResult;

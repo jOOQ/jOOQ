@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 import static java.util.Collections.emptyList;
+import static java.util.Collections.emptySet;
 import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.Clause.INSERT_VALUES;
@@ -49,9 +50,11 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.WriteIfReadonly.IGNORE;
 import static org.jooq.conf.WriteIfReadonly.THROW;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.filter;
@@ -64,10 +67,12 @@ import java.util.AbstractList;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -84,11 +89,14 @@ import org.jooq.Record;
 import org.jooq.RenderContext.CastMode;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
+import org.jooq.SelectJoinStep;
 import org.jooq.Table;
 import org.jooq.conf.WriteIfReadonly;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.AbstractStoreQuery.UnknownField;
 import org.jooq.impl.QOM.UNotYetImplemented;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -123,6 +131,12 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
                .visit(K_DEFAULT_VALUES)
                .end(INSERT_VALUES);
         }
+
+
+
+
+
+
 
         // Single record inserts can use the standard syntax in any dialect
 
@@ -179,19 +193,8 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
-
-
-
-
-
-
-
                 case FIREBIRD: {
-                    ctx.formatSeparator()
-                       .start(INSERT_SELECT)
-                       .visit(insertSelect(ctx))
-                       .end(INSERT_SELECT);
-
+                    toSQLInsertSelect(ctx, insertSelect(ctx));
                     break;
                 }
 
@@ -208,6 +211,38 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
             }
         }
     }
+
+    static final void toSQLInsertSelect(Context<?> ctx, Select<?> select) {
+        ctx.formatSeparator()
+           .start(INSERT_SELECT)
+           .visit(select)
+           .end(INSERT_SELECT);
+    }
+
+    static final Set<Field<?>> keysAndComputedOnClient(Set<Field<?>> keys, Table<?> table) {
+
+
+
+
+
+
+
+
+        return keys;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -521,15 +556,15 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         return rows > 0;
     }
 
-    final List<Field<?>> toSQLReferenceKeys(Context<?> ctx) {
+    final Set<Field<?>> toSQLReferenceKeys(Context<?> ctx) {
 
         // [#1506] with DEFAULT VALUES, we might not have any columns to render
         if (!isExecutable())
-            return emptyList();
+            return emptySet();
 
         // [#2995] Do not generate empty column lists.
         if (values.isEmpty())
-            return emptyList();
+            return emptySet();
 
         // [#4629] Do not generate column lists for unknown columns
         unknownFields: {
@@ -537,11 +572,11 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
                 if (!(field instanceof UnknownField))
                     break unknownFields;
 
-            return emptyList();
+            return emptySet();
         }
 
         // [#989] Avoid qualifying fields in INSERT field declaration
-        List<Field<?>> fields = collect(removeReadonly(ctx, flattenCollection(values.keySet(), true, true), e -> e));
+        Set<Field<?>> fields = keysAndComputedOnClient(keysFlattened(ctx), table);
 
         if (!fields.isEmpty())
             ctx.sql(" (").visit(wrap(fields).qualify(false)).sql(')');

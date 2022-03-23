@@ -41,8 +41,11 @@ import java.util.List;
 
 // ...
 import org.jooq.Name;
+import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.jaxb.ForcedType;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A definition for a data type object.
@@ -57,15 +60,24 @@ public interface DataTypeDefinition {
     String getType();
 
     /**
+     * The generator type that is applied to this data type, or
+     * <code>null</code>, if no such generator type is configured.
+     */
+    @Nullable
+    String getGenerator();
+
+    /**
      * The converter type that is applied to this data type, or
      * <code>null</code>, if no such converter type is configured.
      */
+    @Nullable
     String getConverter();
 
     /**
      * The binding type that is applied to this data type, or
      * <code>null</code>, if no such binding type is configured.
      */
+    @Nullable
     String getBinding();
 
     /**
@@ -130,6 +142,11 @@ public interface DataTypeDefinition {
      * The computed column generation option.
      */
     GenerationOption getGenerationOption();
+
+    /**
+     * The computed column generation location.
+     */
+    GenerationLocation getGenerationLocation();
 
     /**
      * Whether this data type is an identity.

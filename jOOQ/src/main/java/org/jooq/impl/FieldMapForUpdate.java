@@ -179,7 +179,8 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
         FieldOrRow key,
         FieldOrRowOrSelect value
     ) {
-        ctx.start(assignmentClause);
+        if (assignmentClause != null)
+            ctx.start(assignmentClause);
 
         // A multi-row update was specified
         if (key instanceof Row) { Row multiRow = (Row) key;
@@ -188,7 +189,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
 
             // [#6884] This syntax can be emulated trivially, if the RHS is not a SELECT subquery
             if (multiValue != null && !SUPPORT_RVE_SET.contains(ctx.dialect())) {
-                FieldMapForUpdate map = new FieldMapForUpdate(table(), UPDATE_SET_ASSIGNMENT);
+                FieldMapForUpdate map = new FieldMapForUpdate(table(), null);
 
                 for (int i = 0; i < multiRow.size(); i++) {
                     Field<?> k = multiRow.field(i);
@@ -217,8 +218,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
             else {
                 Row row = removeReadonly(ctx, multiRow);
 
-                ctx.start(UPDATE_SET_ASSIGNMENT)
-                   .qualify(false, c -> c.visit(row))
+                ctx.qualify(false, c -> c.visit(row))
                    .sql(" = ");
 
                 // Some dialects don't really support row value expressions on the
@@ -252,8 +252,6 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
 
                     visitSubquery(ctx, select, false, false, false);
                 }
-
-                ctx.end(UPDATE_SET_ASSIGNMENT);
             }
         }
 
@@ -270,7 +268,8 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
                 ctx.visit(value);
         }
 
-        ctx.end(assignmentClause);
+        if (assignmentClause != null)
+            ctx.end(assignmentClause);
     }
 
     static final void toSQLUpdateMap(Context<?> ctx, FieldMapForUpdate updateMap) {

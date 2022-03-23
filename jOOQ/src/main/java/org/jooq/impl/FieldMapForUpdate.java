@@ -218,8 +218,6 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
                 Row row = removeReadonly(ctx, multiRow);
 
                 ctx.start(UPDATE_SET_ASSIGNMENT)
-                   .formatIndentStart()
-                   .formatSeparator()
                    .qualify(false, c -> c.visit(row))
                    .sql(" = ");
 
@@ -255,7 +253,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
                     visitSubquery(ctx, select, false, false, false);
                 }
 
-                ctx.formatIndentEnd().end(UPDATE_SET_ASSIGNMENT);
+                ctx.end(UPDATE_SET_ASSIGNMENT);
             }
         }
 

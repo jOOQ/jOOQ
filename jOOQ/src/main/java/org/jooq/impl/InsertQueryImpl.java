@@ -48,7 +48,6 @@ import static org.jooq.Clause.INSERT_INSERT_INTO;
 import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE;
 import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT;
 import static org.jooq.Clause.INSERT_RETURNING;
-import static org.jooq.Clause.INSERT_SELECT;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -102,7 +101,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -112,7 +110,6 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Identity;
 import org.jooq.InsertQuery;
-import org.jooq.Merge;
 import org.jooq.MergeNotMatchedStep;
 import org.jooq.MergeOnConditionStep;
 import org.jooq.Name;
@@ -134,7 +131,13 @@ import org.jooq.tools.StringUtils;
 /**
  * @author Lukas Eder
  */
-final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements InsertQuery<R>, UNotYetImplemented {
+final class InsertQueryImpl<R extends Record>
+extends
+    AbstractStoreQuery<R, Field<?>, Field<?>>
+implements
+    InsertQuery<R>,
+    UNotYetImplemented
+{
 
     private static final Clause[]        CLAUSES                                       = { INSERT };
     private static final Set<SQLDialect> SUPPORT_INSERT_IGNORE                         = SQLDialect.supportedBy(MARIADB, MYSQL);

@@ -38,7 +38,6 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;
 import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.Clause.INSERT_SELECT;
@@ -56,10 +55,8 @@ import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.anyMatch;
-import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.flatten;
-import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.lazy;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
 
@@ -67,7 +64,6 @@ import java.util.AbstractList;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -83,20 +79,18 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.FieldOrRow;
 import org.jooq.Param;
 // ...
 import org.jooq.Record;
 import org.jooq.RenderContext.CastMode;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
-import org.jooq.SelectJoinStep;
 import org.jooq.Table;
 import org.jooq.conf.WriteIfReadonly;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.AbstractStoreQuery.UnknownField;
 import org.jooq.impl.QOM.UNotYetImplemented;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -219,7 +213,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
            .end(INSERT_SELECT);
     }
 
-    static final Set<Field<?>> keysAndComputedOnClient(Set<Field<?>> keys, Table<?> table) {
+    static final <K extends FieldOrRow> Set<K> keysAndComputedOnClient(Set<K> keys, Table<?> table) {
 
 
 
@@ -230,6 +224,8 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
         return keys;
     }
+
+
 
 
 

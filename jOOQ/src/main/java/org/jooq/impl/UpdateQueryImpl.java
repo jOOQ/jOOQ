@@ -52,7 +52,6 @@ import static org.jooq.Clause.UPDATE_WHERE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
-// ...
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -68,8 +67,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
-// ...
-// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -77,30 +74,22 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.SettingsTools.getExecuteUpdateWithoutWhere;
-import static org.jooq.conf.WriteIfReadonly.THROW;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.trueCondition;
-import static org.jooq.impl.FieldMapForUpdate.removeReadonly;
 import static org.jooq.impl.FieldMapsForInsert.keysAndComputedOnClient;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_LIMIT;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
-import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.Keywords.K_WHERE;
-import static org.jooq.impl.Tools.EMPTY_FIELD;
-import static org.jooq.impl.Tools.fieldName;
-import static org.jooq.impl.Tools.map;
-import static org.jooq.impl.Tools.unqualified;
-import static org.jooq.impl.Tools.visitSubquery;
+import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.findAny;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -110,6 +99,8 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.FieldOrRow;
+import org.jooq.FieldOrRowOrSelect;
 import org.jooq.Operator;
 import org.jooq.OrderField;
 // ...
@@ -166,13 +157,18 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.UpdateQuery;
-import org.jooq.exception.DataTypeException;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder
  */
-final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements UpdateQuery<R>, UNotYetImplemented {
+final class UpdateQueryImpl<R extends Record>
+extends
+    AbstractStoreQuery<R, FieldOrRow, FieldOrRowOrSelect>
+implements
+    UpdateQuery<R>,
+    UNotYetImplemented
+{
 
     private static final Clause[]        CLAUSES                   = { UPDATE };
 
@@ -181,13 +177,6 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
-
-
-
-
-
-    private static final Set<SQLDialect> SUPPORT_RVE_SET           = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect> REQUIRE_RVE_ROW_CLAUSE    = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
     // LIMIT is not supported at all
     private static final Set<SQLDialect> NO_SUPPORT_LIMIT          = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB);
@@ -198,9 +187,6 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private final FieldMapForUpdate      updateMap;
     private final TableList              from;
     private final ConditionProviderImpl  condition;
-    private Row                          multiRow;
-    private Row                          multiValue;
-    private Select<?>                    multiSelect;
     private final SortFieldList          orderBy;
     private Field<? extends Number>      limit;
 
@@ -453,13 +439,11 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
     final void addValues0(Row row, Row value) {
-        multiRow = row;
-        multiValue = value;
+        updateMap.put(row, value);
     }
 
     final void addValues0(Row row, Select<?> select) {
-        multiRow = row;
-        multiSelect = select;
+        updateMap.put(row, select);
     }
 
     @Override
@@ -567,9 +551,6 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
-
-
-
         accept1(ctx);
     }
 
@@ -580,9 +561,6 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             u.setReturning(returning);
 
         u.updateMap.putAll(updateMap);
-        u.multiRow = multiRow;
-        u.multiSelect = multiSelect;
-        u.multiValue = multiValue;
         u.from.addAll(from);
         u.condition.setWhere(condition.getWhere());
         u.orderBy.addAll(orderBy);
@@ -622,86 +600,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
            .visit(K_SET)
            .separatorRequired(true);
 
-        // A multi-row update was specified
-        if (multiRow != null) {
-
-            // [#6884] This syntax can be emulated trivially, if the RHS is not a SELECT subquery
-            if (multiValue != null && !SUPPORT_RVE_SET.contains(ctx.dialect())) {
-                FieldMapForUpdate map = new FieldMapForUpdate(table(), UPDATE_SET_ASSIGNMENT);
-
-                for (int i = 0; i < multiRow.size(); i++) {
-                    Field<?> k = multiRow.field(i);
-                    Field<?> v = multiValue.field(i);
-
-                    map.put(k, Tools.field(v, k));
-                }
-
-                toSQLUpdateMap(ctx, map);
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            else {
-                Row row = removeReadonly(ctx, multiRow);
-
-                ctx.start(UPDATE_SET_ASSIGNMENT)
-                   .formatIndentStart()
-                   .formatSeparator()
-                   .qualify(false, c -> c.visit(row))
-                   .sql(" = ");
-
-                // Some dialects don't really support row value expressions on the
-                // right hand side of a SET clause
-                if (multiValue != null
-
-
-
-                ) {
-
-                    // [#6763] Incompatible change in PostgreSQL 10 requires ROW() constructor for
-                    //         single-degree rows. Let's just always render it, here.
-                    if (REQUIRE_RVE_ROW_CLAUSE.contains(ctx.dialect()))
-                        ctx.visit(K_ROW).sql(" ");
-
-                    ctx.visit(removeReadonly(ctx, multiRow, multiValue));
-                }
-
-                // Subselects or subselect emulations of row value expressions
-                else {
-                    Select<?> select;
-
-                    if (multiValue != null)
-                        select = select(removeReadonly(ctx, multiRow, multiValue).fields());
-
-
-
-
-                    else
-                        select = multiSelect;
-
-                    visitSubquery(ctx, select, false, false, false);
-                }
-
-                ctx.formatIndentEnd().end(UPDATE_SET_ASSIGNMENT);
-            }
-        }
-
-        // A regular (non-multi-row) update was specified
-        else
-            toSQLUpdateMap(ctx, updateMap);
-
+        FieldMapForUpdate.toSQLUpdateMap(ctx, updateMap);
         ctx.end(UPDATE_SET);
 
 
@@ -763,36 +662,12 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         ctx.end(UPDATE_RETURNING);
     }
 
-    private static final void toSQLUpdateMap(Context<?> ctx, FieldMapForUpdate updateMap) {
-        ctx.formatIndentStart()
-           .formatSeparator()
-           .visit(updateMap)
-           .formatIndentEnd();
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private final void acceptFrom(Context<?> ctx) {
         ctx.start(UPDATE_FROM);
 
         TableList f;
+
+
 
 
 
@@ -823,8 +698,15 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         if (!condition.hasWhere())
             executeWithoutWhere("UPDATE without WHERE", getExecuteUpdateWithoutWhere(configuration().settings()));
 
-        return updateMap.size() > 0 || multiRow != null;
+        return updateMap.size() > 0;
     }
+
+
+
+
+
+
+
 
 
 

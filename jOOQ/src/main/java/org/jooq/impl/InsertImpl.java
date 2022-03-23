@@ -56,7 +56,6 @@ import org.jooq.FieldLike;
 import org.jooq.InsertOnConflictConditionStep;
 import org.jooq.InsertOnConflictWhereIndexPredicateStep;
 import org.jooq.InsertOnDuplicateSetMoreStep;
-import org.jooq.InsertQuery;
 import org.jooq.InsertResultStep;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
@@ -822,21 +821,21 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         return values(values.toArray());
     }
 
-    private final <T> void addValue(InsertQuery<R> delegate, Field<T> field, int index, Object object) {
+    private final <T> void addValue(InsertQueryImpl<R> delegate, Field<T> field, int index, Object object) {
 
         // [#1343] Only convert non-jOOQ objects
         // [#8606] The column index is relevant when adding a value to a plain SQL multi row INSERT
         //         statement that does not have any field list.
         if (object instanceof Field)
-            ((AbstractStoreQuery<R>) delegate).addValue(field, index, (Field) object);
+            delegate.addValue(field, index, (Field) object);
         else if (object instanceof FieldLike)
-            ((AbstractStoreQuery<R>) delegate).addValue(field, index, ((FieldLike) object).asField());
+            delegate.addValue(field, index, ((FieldLike) object).asField());
         else if (field != null)
-            ((AbstractStoreQuery<R>) delegate).addValue(field, index, field.getDataType().convert(object));
+            delegate.addValue(field, index, field.getDataType().convert(object));
 
         // [#4629] Plain SQL INSERT INTO t VALUES (a, b, c) statements don't know the insert columns
         else
-            ((AbstractStoreQuery<R>) delegate).addValue(field, index, (T) object);
+            delegate.addValue(field, index, (T) object);
     }
 
     @Override

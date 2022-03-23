@@ -49,8 +49,11 @@ import org.jooq.QueryPart;
  * @author Lukas Eder
  */
 abstract class AbstractQueryPartMap<K extends QueryPart, V extends QueryPart>
-extends AbstractQueryPart
-implements Map<K, V> {
+extends
+    AbstractQueryPart
+implements
+    Map<K, V>
+{
 
     private final Map<K, V> map;
 

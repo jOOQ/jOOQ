@@ -109,6 +109,8 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.FieldOrRow;
+import org.jooq.FieldOrRowOrSelect;
 import org.jooq.MergeKeyStep1;
 import org.jooq.MergeKeyStep10;
 import org.jooq.MergeKeyStep11;
@@ -1627,11 +1629,13 @@ implements
                     if (update == null)
                         update = new MatchedClause(noCondition());
 
-                    for (Entry<Field<?>, Field<?>> e : m.updateMap.entrySet()) {
-                        Field<?> exp = update.updateMap.get(e.getKey());
+                    for (Entry<FieldOrRow, FieldOrRowOrSelect> e : m.updateMap.entrySet()) {
+                        FieldOrRowOrSelect exp = update.updateMap.get(e.getKey());
 
                         if (exp instanceof CaseConditionStepImpl)
                             ((CaseConditionStepImpl) exp).when(negate.and(condition), e.getValue());
+
+                        // [#10523] [#13325] TODO: ClassCastException when we're using Row here, once supported
                         else
                             update.updateMap.put(e.getKey(), when(negate.and(condition), (Field) e.getValue()).else_(e.getKey()));
                     }

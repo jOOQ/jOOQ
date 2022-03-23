@@ -80,7 +80,12 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  *
  * @author Lukas Eder
  */
-public /* non-sealed */ interface Row extends Fields, FieldOrRow {
+public /* non-sealed */ interface Row
+extends
+    Fields,
+    FieldOrRow,
+    FieldOrRowOrSelect
+{
 
     /**
      * Get the degree of this row value expression.

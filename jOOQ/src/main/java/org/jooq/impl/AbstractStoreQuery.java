@@ -43,10 +43,11 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.FieldOrRow;
+import org.jooq.FieldOrRowOrSelect;
 import org.jooq.Record;
 import org.jooq.StoreQuery;
 import org.jooq.Table;
-import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UTransient;
 
 /**
@@ -54,13 +55,18 @@ import org.jooq.impl.QOM.UTransient;
  *
  * @author Lukas Eder
  */
-abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> implements StoreQuery<R> {
+abstract class AbstractStoreQuery<R extends Record, K extends FieldOrRow, V extends FieldOrRowOrSelect>
+extends
+    AbstractDMLQuery<R>
+implements
+    StoreQuery<R>
+{
 
     AbstractStoreQuery(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration, with, table);
     }
 
-    protected abstract Map<Field<?>, Field<?>> getValues();
+    protected abstract Map<K, V> getValues();
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
@@ -87,7 +93,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> 
             else
                 addValue(new UnknownField<T>(getValues().size()), value);
         else
-            getValues().put(field, Tools.field(value, field));
+            getValues().put((K) field, (V) Tools.field(value, field));
     }
 
     final <T> void addValue(Field<T> field, int index, Field<T> value) {
@@ -97,7 +103,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> 
             else
                 addValue(new UnknownField<T>(getValues().size()), value);
         else
-            getValues().put(field, Tools.field(value, field));
+            getValues().put((K) field, (V) Tools.field(value, field));
     }
 
     static class UnknownField<T> extends AbstractField<T> implements UTransient {

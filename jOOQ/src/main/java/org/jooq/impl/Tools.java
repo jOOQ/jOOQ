@@ -268,6 +268,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
+import org.jooq.FieldOrRowOrSelect;
 import org.jooq.Fields;
 import org.jooq.ForeignKey;
 import org.jooq.JSON;
@@ -5676,6 +5677,13 @@ final class Tools {
         return map(orderFields, (OrderField<?> f) -> field(f));
     }
 
+    static final List<Field<?>> fields(FieldOrRow fr) {
+        if (fr instanceof Field)
+            return singletonList((Field<?>) fr);
+        else
+            return asList(((Row) fr).fields());
+    }
+
     static final <T> Field<T> unalias(Field<T> field) {
         Field<T> result = aliased(field);
         return result != null ? result : field;
@@ -6099,23 +6107,25 @@ final class Tools {
      * set iterable, making sure no duplicate keys resulting from overlapping
      * embeddables will be produced.
      */
-    static final Iterable<Entry<Field<?>, Field<?>>> flattenEntrySet(
-        final Iterable<Entry<Field<?>, Field<?>>> iterable,
+    static final Iterable<Entry<FieldOrRow, FieldOrRowOrSelect>> flattenEntrySet(
+        final Iterable<Entry<FieldOrRow, FieldOrRowOrSelect>> iterable,
         final boolean removeDuplicates
     ) {
         // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
         // [#11729] Workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=572873
         return () -> new FlatteningIterator<>(iterable.iterator(), (e, duplicates) -> {
-            if (e.getKey() instanceof EmbeddableTableField) {
-                List<Entry<Field<?>, Field<?>>> result = new ArrayList<>();
-                Field<?>[] keys = embeddedFields(e.getKey());
-                Field<?>[] values = embeddedFields(e.getValue());
+
+            // [#9879] [#13325] TODO: Support also UPDATE .. SET ROW = ...
+            if (e.getKey() instanceof EmbeddableTableField) { EmbeddableTableField<?, ?> key = (EmbeddableTableField<?, ?>) e.getKey();
+                List<Entry<FieldOrRow, FieldOrRowOrSelect>> result = new ArrayList<>();
+                Field<?>[] keys = embeddedFields(key);
+                Field<?>[] values = embeddedFields((Field<?>) e.getValue());
 
                 for (int i = 0; i < keys.length; i++)
 
 
 
-                        result.add(new SimpleImmutableEntry<Field<?>, Field<?>>(
+                        result.add(new SimpleImmutableEntry<FieldOrRow, FieldOrRowOrSelect>(
                             keys[i], values[i]
                         ));
 

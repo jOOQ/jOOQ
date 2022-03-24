@@ -5,13 +5,17 @@ package org.jooq.example.chart.db.tables;
 
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function2;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row2;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -103,6 +107,11 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
         return new SalesByFilmCategory(alias, this);
     }
 
+    @Override
+    public SalesByFilmCategory as(Table alias) {
+        return new SalesByFilmCategory(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -119,6 +128,14 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
         return new SalesByFilmCategory(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public SalesByFilmCategory rename(Table name) {
+        return new SalesByFilmCategory(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row2 type methods
     // -------------------------------------------------------------------------
@@ -126,5 +143,19 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
     @Override
     public Row2<String, BigDecimal> fieldsRow() {
         return (Row2) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function2<? super String, ? super BigDecimal, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function2<? super String, ? super BigDecimal, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

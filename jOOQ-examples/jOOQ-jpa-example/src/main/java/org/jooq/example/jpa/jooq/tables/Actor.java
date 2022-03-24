@@ -4,12 +4,17 @@
 package org.jooq.example.jpa.jooq.tables;
 
 
+import java.util.function.Function;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function3;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row3;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -111,6 +116,11 @@ public class Actor extends TableImpl<ActorRecord> {
         return new Actor(alias, this);
     }
 
+    @Override
+    public Actor as(Table alias) {
+        return new Actor(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -127,6 +137,14 @@ public class Actor extends TableImpl<ActorRecord> {
         return new Actor(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public Actor rename(Table name) {
+        return new Actor(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row3 type methods
     // -------------------------------------------------------------------------
@@ -134,5 +152,19 @@ public class Actor extends TableImpl<ActorRecord> {
     @Override
     public Row3<Integer, String, String> fieldsRow() {
         return (Row3) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function3<? super Integer, ? super String, ? super String, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function3<? super Integer, ? super String, ? super String, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

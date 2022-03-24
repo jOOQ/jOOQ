@@ -4,12 +4,17 @@
 package org.jooq.example.testcontainers.db.tables;
 
 
+import java.util.function.Function;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function8;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row8;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -129,6 +134,11 @@ public class StaffList extends TableImpl<StaffListRecord> {
         return new StaffList(alias, this);
     }
 
+    @Override
+    public StaffList as(Table alias) {
+        return new StaffList(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -145,6 +155,14 @@ public class StaffList extends TableImpl<StaffListRecord> {
         return new StaffList(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public StaffList rename(Table name) {
+        return new StaffList(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row8 type methods
     // -------------------------------------------------------------------------
@@ -152,5 +170,19 @@ public class StaffList extends TableImpl<StaffListRecord> {
     @Override
     public Row8<Long, String, String, String, String, String, String, Long> fieldsRow() {
         return (Row8) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function8<? super Long, ? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? super Long, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function8<? super Long, ? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? super Long, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

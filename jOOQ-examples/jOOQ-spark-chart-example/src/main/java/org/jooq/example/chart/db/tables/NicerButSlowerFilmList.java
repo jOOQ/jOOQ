@@ -5,13 +5,17 @@ package org.jooq.example.chart.db.tables;
 
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function8;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row8;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -72,7 +76,7 @@ public class NicerButSlowerFilmList extends TableImpl<NicerButSlowerFilmListReco
     /**
      * The column <code>public.nicer_but_slower_film_list.length</code>.
      */
-    public final TableField<NicerButSlowerFilmListRecord, Integer> LENGTH = createField(DSL.name("length"), SQLDataType.INTEGER, this, "");
+    public final TableField<NicerButSlowerFilmListRecord, Short> LENGTH = createField(DSL.name("length"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>public.nicer_but_slower_film_list.rating</code>.
@@ -134,6 +138,11 @@ public class NicerButSlowerFilmList extends TableImpl<NicerButSlowerFilmListReco
         return new NicerButSlowerFilmList(alias, this);
     }
 
+    @Override
+    public NicerButSlowerFilmList as(Table alias) {
+        return new NicerButSlowerFilmList(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -150,12 +159,34 @@ public class NicerButSlowerFilmList extends TableImpl<NicerButSlowerFilmListReco
         return new NicerButSlowerFilmList(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public NicerButSlowerFilmList rename(Table name) {
+        return new NicerButSlowerFilmList(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row8 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row8<Integer, String, String, String, BigDecimal, Integer, MpaaRating, String> fieldsRow() {
+    public Row8<Integer, String, String, String, BigDecimal, Short, MpaaRating, String> fieldsRow() {
         return (Row8) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function8<? super Integer, ? super String, ? super String, ? super String, ? super BigDecimal, ? super Short, ? super MpaaRating, ? super String, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function8<? super Integer, ? super String, ? super String, ? super String, ? super BigDecimal, ? super Short, ? super MpaaRating, ? super String, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

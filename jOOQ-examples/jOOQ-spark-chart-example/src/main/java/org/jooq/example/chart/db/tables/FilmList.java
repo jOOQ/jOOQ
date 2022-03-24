@@ -5,13 +5,17 @@ package org.jooq.example.chart.db.tables;
 
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function8;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row8;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -72,7 +76,7 @@ public class FilmList extends TableImpl<FilmListRecord> {
     /**
      * The column <code>public.film_list.length</code>.
      */
-    public final TableField<FilmListRecord, Integer> LENGTH = createField(DSL.name("length"), SQLDataType.INTEGER, this, "");
+    public final TableField<FilmListRecord, Short> LENGTH = createField(DSL.name("length"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>public.film_list.rating</code>.
@@ -132,6 +136,11 @@ public class FilmList extends TableImpl<FilmListRecord> {
         return new FilmList(alias, this);
     }
 
+    @Override
+    public FilmList as(Table alias) {
+        return new FilmList(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -148,12 +157,34 @@ public class FilmList extends TableImpl<FilmListRecord> {
         return new FilmList(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public FilmList rename(Table name) {
+        return new FilmList(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row8 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row8<Integer, String, String, String, BigDecimal, Integer, MpaaRating, String> fieldsRow() {
+    public Row8<Integer, String, String, String, BigDecimal, Short, MpaaRating, String> fieldsRow() {
         return (Row8) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function8<? super Integer, ? super String, ? super String, ? super String, ? super BigDecimal, ? super Short, ? super MpaaRating, ? super String, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function8<? super Integer, ? super String, ? super String, ? super String, ? super BigDecimal, ? super Short, ? super MpaaRating, ? super String, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

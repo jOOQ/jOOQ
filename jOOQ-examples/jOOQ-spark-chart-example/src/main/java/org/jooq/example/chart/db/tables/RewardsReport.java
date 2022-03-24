@@ -7,12 +7,16 @@ package org.jooq.example.chart.db.tables;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.function.Function;
 
 import org.jooq.Field;
+import org.jooq.Function10;
 import org.jooq.Identity;
 import org.jooq.Name;
+import org.jooq.Records;
 import org.jooq.Row10;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -52,7 +56,7 @@ public class RewardsReport extends TableImpl<RewardsReportRecord> {
     /**
      * The column <code>public.rewards_report.store_id</code>.
      */
-    public final TableField<RewardsReportRecord, Integer> STORE_ID = createField(DSL.name("store_id"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<RewardsReportRecord, Short> STORE_ID = createField(DSL.name("store_id"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.rewards_report.first_name</code>.
@@ -72,7 +76,7 @@ public class RewardsReport extends TableImpl<RewardsReportRecord> {
     /**
      * The column <code>public.rewards_report.address_id</code>.
      */
-    public final TableField<RewardsReportRecord, Integer> ADDRESS_ID = createField(DSL.name("address_id"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<RewardsReportRecord, Short> ADDRESS_ID = createField(DSL.name("address_id"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.rewards_report.activebool</code>.
@@ -87,7 +91,7 @@ public class RewardsReport extends TableImpl<RewardsReportRecord> {
     /**
      * The column <code>public.rewards_report.last_update</code>.
      */
-    public final TableField<RewardsReportRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(0).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<RewardsReportRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
 
     /**
      * The column <code>public.rewards_report.active</code>.
@@ -146,6 +150,11 @@ public class RewardsReport extends TableImpl<RewardsReportRecord> {
         return new RewardsReport(alias, this, parameters);
     }
 
+    @Override
+    public RewardsReport as(Table alias) {
+        return new RewardsReport(alias.getQualifiedName(), this, parameters);
+    }
+
     /**
      * Rename this table
      */
@@ -162,12 +171,20 @@ public class RewardsReport extends TableImpl<RewardsReportRecord> {
         return new RewardsReport(name, null, parameters);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public RewardsReport rename(Table name) {
+        return new RewardsReport(name.getQualifiedName(), null, parameters);
+    }
+
     // -------------------------------------------------------------------------
     // Row10 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row10<Integer, Integer, String, String, String, Integer, Boolean, LocalDate, LocalDateTime, Integer> fieldsRow() {
+    public Row10<Integer, Short, String, String, String, Short, Boolean, LocalDate, LocalDateTime, Integer> fieldsRow() {
         return (Row10) super.fieldsRow();
     }
 
@@ -199,5 +216,19 @@ public class RewardsReport extends TableImpl<RewardsReportRecord> {
         });
 
         return aliased() ? result.as(getUnqualifiedName()) : result;
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function10<? super Integer, ? super Short, ? super String, ? super String, ? super String, ? super Short, ? super Boolean, ? super LocalDate, ? super LocalDateTime, ? super Integer, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function10<? super Integer, ? super Short, ? super String, ? super String, ? super String, ? super Short, ? super Boolean, ? super LocalDate, ? super LocalDateTime, ? super Integer, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

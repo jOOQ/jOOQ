@@ -36,7 +36,7 @@ public class GetCustomerBalance extends AbstractRoutine<BigDecimal> {
     /**
      * The parameter <code>public.get_customer_balance.p_effective_date</code>.
      */
-    public static final Parameter<LocalDateTime> P_EFFECTIVE_DATE = Internal.createParameter("p_effective_date", SQLDataType.LOCALDATETIME(0), false, false);
+    public static final Parameter<LocalDateTime> P_EFFECTIVE_DATE = Internal.createParameter("p_effective_date", SQLDataType.LOCALDATETIME(6), false, false);
 
     /**
      * Create a new routine call instance

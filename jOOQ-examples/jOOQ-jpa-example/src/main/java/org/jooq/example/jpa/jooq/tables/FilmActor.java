@@ -6,13 +6,17 @@ package org.jooq.example.jpa.jooq.tables;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function2;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row2;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -137,6 +141,11 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
         return new FilmActor(alias, this);
     }
 
+    @Override
+    public FilmActor as(Table alias) {
+        return new FilmActor(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -153,6 +162,14 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
         return new FilmActor(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public FilmActor rename(Table name) {
+        return new FilmActor(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row2 type methods
     // -------------------------------------------------------------------------
@@ -160,5 +177,19 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
     @Override
     public Row2<Integer, Integer> fieldsRow() {
         return (Row2) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function2<? super Integer, ? super Integer, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function2<? super Integer, ? super Integer, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

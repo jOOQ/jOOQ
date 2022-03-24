@@ -7,13 +7,17 @@ package org.jooq.example.chart.db.tables;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function3;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row3;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -50,12 +54,12 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
     /**
      * The column <code>public.film_category.film_id</code>.
      */
-    public final TableField<FilmCategoryRecord, Integer> FILM_ID = createField(DSL.name("film_id"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<FilmCategoryRecord, Short> FILM_ID = createField(DSL.name("film_id"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.film_category.category_id</code>.
      */
-    public final TableField<FilmCategoryRecord, Integer> CATEGORY_ID = createField(DSL.name("category_id"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<FilmCategoryRecord, Short> CATEGORY_ID = createField(DSL.name("category_id"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.film_category.last_update</code>.
@@ -113,6 +117,9 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
     private transient Film _film;
     private transient Category _category;
 
+    /**
+     * Get the implicit join path to the <code>public.film</code> table.
+     */
     public Film film() {
         if (_film == null)
             _film = new Film(this, Keys.FILM_CATEGORY__FILM_CATEGORY_FILM_ID_FKEY);
@@ -120,6 +127,9 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
         return _film;
     }
 
+    /**
+     * Get the implicit join path to the <code>public.category</code> table.
+     */
     public Category category() {
         if (_category == null)
             _category = new Category(this, Keys.FILM_CATEGORY__FILM_CATEGORY_CATEGORY_ID_FKEY);
@@ -135,6 +145,11 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
     @Override
     public FilmCategory as(Name alias) {
         return new FilmCategory(alias, this);
+    }
+
+    @Override
+    public FilmCategory as(Table alias) {
+        return new FilmCategory(alias.getQualifiedName(), this);
     }
 
     /**
@@ -153,12 +168,34 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
         return new FilmCategory(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public FilmCategory rename(Table name) {
+        return new FilmCategory(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row3 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row3<Integer, Integer, LocalDateTime> fieldsRow() {
+    public Row3<Short, Short, LocalDateTime> fieldsRow() {
         return (Row3) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function3<? super Short, ? super Short, ? super LocalDateTime, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function3<? super Short, ? super Short, ? super LocalDateTime, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

@@ -7,15 +7,19 @@ package org.jooq.example.chart.db.tables;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function8;
 import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row8;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -73,7 +77,7 @@ public class Address extends TableImpl<AddressRecord> {
     /**
      * The column <code>public.address.city_id</code>.
      */
-    public final TableField<AddressRecord, Integer> CITY_ID = createField(DSL.name("city_id"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<AddressRecord, Short> CITY_ID = createField(DSL.name("city_id"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.address.postal_code</code>.
@@ -150,6 +154,9 @@ public class Address extends TableImpl<AddressRecord> {
 
     private transient City _city;
 
+    /**
+     * Get the implicit join path to the <code>public.city</code> table.
+     */
     public City city() {
         if (_city == null)
             _city = new City(this, Keys.ADDRESS__ADDRESS_CITY_ID_FKEY);
@@ -165,6 +172,11 @@ public class Address extends TableImpl<AddressRecord> {
     @Override
     public Address as(Name alias) {
         return new Address(alias, this);
+    }
+
+    @Override
+    public Address as(Table alias) {
+        return new Address(alias.getQualifiedName(), this);
     }
 
     /**
@@ -183,12 +195,34 @@ public class Address extends TableImpl<AddressRecord> {
         return new Address(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public Address rename(Table name) {
+        return new Address(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row8 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row8<Integer, String, String, String, Integer, String, String, LocalDateTime> fieldsRow() {
+    public Row8<Integer, String, String, String, Short, String, String, LocalDateTime> fieldsRow() {
         return (Row8) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function8<? super Integer, ? super String, ? super String, ? super String, ? super Short, ? super String, ? super String, ? super LocalDateTime, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function8<? super Integer, ? super String, ? super String, ? super String, ? super Short, ? super String, ? super String, ? super LocalDateTime, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

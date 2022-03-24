@@ -31,7 +31,7 @@ public class LastDay extends AbstractRoutine<LocalDate> {
     /**
      * The parameter <code>public.last_day._1</code>.
      */
-    public static final Parameter<LocalDateTime> _1 = Internal.createParameter("_1", SQLDataType.LOCALDATETIME(0), false, true);
+    public static final Parameter<LocalDateTime> _1 = Internal.createParameter("_1", SQLDataType.LOCALDATETIME(6), false, true);
 
     /**
      * Create a new routine call instance

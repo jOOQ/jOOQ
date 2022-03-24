@@ -7,14 +7,18 @@ package org.jooq.example.chart.db.tables;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function3;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row3;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -52,12 +56,12 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
     /**
      * The column <code>public.film_actor.actor_id</code>.
      */
-    public final TableField<FilmActorRecord, Integer> ACTOR_ID = createField(DSL.name("actor_id"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<FilmActorRecord, Short> ACTOR_ID = createField(DSL.name("actor_id"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.film_actor.film_id</code>.
      */
-    public final TableField<FilmActorRecord, Integer> FILM_ID = createField(DSL.name("film_id"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<FilmActorRecord, Short> FILM_ID = createField(DSL.name("film_id"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.film_actor.last_update</code>.
@@ -120,6 +124,9 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
     private transient Actor _actor;
     private transient Film _film;
 
+    /**
+     * Get the implicit join path to the <code>public.actor</code> table.
+     */
     public Actor actor() {
         if (_actor == null)
             _actor = new Actor(this, Keys.FILM_ACTOR__FILM_ACTOR_ACTOR_ID_FKEY);
@@ -127,6 +134,9 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
         return _actor;
     }
 
+    /**
+     * Get the implicit join path to the <code>public.film</code> table.
+     */
     public Film film() {
         if (_film == null)
             _film = new Film(this, Keys.FILM_ACTOR__FILM_ACTOR_FILM_ID_FKEY);
@@ -142,6 +152,11 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
     @Override
     public FilmActor as(Name alias) {
         return new FilmActor(alias, this);
+    }
+
+    @Override
+    public FilmActor as(Table alias) {
+        return new FilmActor(alias.getQualifiedName(), this);
     }
 
     /**
@@ -160,12 +175,34 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
         return new FilmActor(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public FilmActor rename(Table name) {
+        return new FilmActor(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row3 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row3<Integer, Integer, LocalDateTime> fieldsRow() {
+    public Row3<Short, Short, LocalDateTime> fieldsRow() {
         return (Row3) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function3<? super Short, ? super Short, ? super LocalDateTime, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function3<? super Short, ? super Short, ? super LocalDateTime, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

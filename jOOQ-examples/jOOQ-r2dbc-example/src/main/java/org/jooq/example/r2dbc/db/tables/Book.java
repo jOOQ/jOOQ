@@ -6,14 +6,18 @@ package org.jooq.example.r2dbc.db.tables;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function3;
 import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row3;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -138,6 +142,11 @@ public class Book extends TableImpl<BookRecord> {
         return new Book(alias, this);
     }
 
+    @Override
+    public Book as(Table alias) {
+        return new Book(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -154,6 +163,14 @@ public class Book extends TableImpl<BookRecord> {
         return new Book(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public Book rename(Table name) {
+        return new Book(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row3 type methods
     // -------------------------------------------------------------------------
@@ -161,5 +178,19 @@ public class Book extends TableImpl<BookRecord> {
     @Override
     public Row3<Integer, Integer, String> fieldsRow() {
         return (Row3) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function3<? super Integer, ? super Integer, ? super String, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function3<? super Integer, ? super Integer, ? super String, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

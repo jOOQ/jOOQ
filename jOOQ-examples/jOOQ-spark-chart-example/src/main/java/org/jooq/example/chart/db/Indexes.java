@@ -21,7 +21,6 @@ import org.jooq.example.chart.db.tables.PaymentP2007_04;
 import org.jooq.example.chart.db.tables.PaymentP2007_05;
 import org.jooq.example.chart.db.tables.PaymentP2007_06;
 import org.jooq.example.chart.db.tables.Rental;
-import org.jooq.example.chart.db.tables.SchemaVersion;
 import org.jooq.example.chart.db.tables.Store;
 import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
@@ -66,7 +65,4 @@ public class Indexes {
     public static final Index IDX_TITLE = Internal.createIndex(DSL.name("idx_title"), Film.FILM, new OrderField[] { Film.FILM.TITLE }, false);
     public static final Index IDX_UNQ_MANAGER_STAFF_ID = Internal.createIndex(DSL.name("idx_unq_manager_staff_id"), Store.STORE, new OrderField[] { Store.STORE.MANAGER_STAFF_ID }, true);
     public static final Index IDX_UNQ_RENTAL_RENTAL_DATE_INVENTORY_ID_CUSTOMER_ID = Internal.createIndex(DSL.name("idx_unq_rental_rental_date_inventory_id_customer_id"), Rental.RENTAL, new OrderField[] { Rental.RENTAL.RENTAL_DATE, Rental.RENTAL.INVENTORY_ID, Rental.RENTAL.CUSTOMER_ID }, true);
-    public static final Index SCHEMA_VERSION_IR_IDX = Internal.createIndex(DSL.name("schema_version_ir_idx"), SchemaVersion.SCHEMA_VERSION, new OrderField[] { SchemaVersion.SCHEMA_VERSION.INSTALLED_RANK }, false);
-    public static final Index SCHEMA_VERSION_S_IDX = Internal.createIndex(DSL.name("schema_version_s_idx"), SchemaVersion.SCHEMA_VERSION, new OrderField[] { SchemaVersion.SCHEMA_VERSION.SUCCESS }, false);
-    public static final Index SCHEMA_VERSION_VR_IDX = Internal.createIndex(DSL.name("schema_version_vr_idx"), SchemaVersion.SCHEMA_VERSION, new OrderField[] { SchemaVersion.SCHEMA_VERSION.VERSION_RANK }, false);
 }

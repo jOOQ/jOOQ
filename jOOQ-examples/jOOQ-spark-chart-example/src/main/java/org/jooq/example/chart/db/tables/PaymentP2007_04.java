@@ -8,16 +8,20 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.Check;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function6;
 import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row6;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -60,12 +64,12 @@ public class PaymentP2007_04 extends TableImpl<PaymentP2007_04Record> {
     /**
      * The column <code>public.payment_p2007_04.customer_id</code>.
      */
-    public final TableField<PaymentP2007_04Record, Integer> CUSTOMER_ID = createField(DSL.name("customer_id"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<PaymentP2007_04Record, Short> CUSTOMER_ID = createField(DSL.name("customer_id"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.payment_p2007_04.staff_id</code>.
      */
-    public final TableField<PaymentP2007_04Record, Integer> STAFF_ID = createField(DSL.name("staff_id"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<PaymentP2007_04Record, Short> STAFF_ID = createField(DSL.name("staff_id"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.payment_p2007_04.rental_id</code>.
@@ -139,6 +143,9 @@ public class PaymentP2007_04 extends TableImpl<PaymentP2007_04Record> {
     private transient Staff _staff;
     private transient Rental _rental;
 
+    /**
+     * Get the implicit join path to the <code>public.customer</code> table.
+     */
     public Customer customer() {
         if (_customer == null)
             _customer = new Customer(this, Keys.PAYMENT_P2007_04__PAYMENT_P2007_04_CUSTOMER_ID_FKEY);
@@ -146,6 +153,9 @@ public class PaymentP2007_04 extends TableImpl<PaymentP2007_04Record> {
         return _customer;
     }
 
+    /**
+     * Get the implicit join path to the <code>public.staff</code> table.
+     */
     public Staff staff() {
         if (_staff == null)
             _staff = new Staff(this, Keys.PAYMENT_P2007_04__PAYMENT_P2007_04_STAFF_ID_FKEY);
@@ -153,6 +163,9 @@ public class PaymentP2007_04 extends TableImpl<PaymentP2007_04Record> {
         return _staff;
     }
 
+    /**
+     * Get the implicit join path to the <code>public.rental</code> table.
+     */
     public Rental rental() {
         if (_rental == null)
             _rental = new Rental(this, Keys.PAYMENT_P2007_04__PAYMENT_P2007_04_RENTAL_ID_FKEY);
@@ -177,6 +190,11 @@ public class PaymentP2007_04 extends TableImpl<PaymentP2007_04Record> {
         return new PaymentP2007_04(alias, this);
     }
 
+    @Override
+    public PaymentP2007_04 as(Table alias) {
+        return new PaymentP2007_04(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -193,12 +211,34 @@ public class PaymentP2007_04 extends TableImpl<PaymentP2007_04Record> {
         return new PaymentP2007_04(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public PaymentP2007_04 rename(Table name) {
+        return new PaymentP2007_04(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row6 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row6<Integer, Integer, Integer, Integer, BigDecimal, LocalDateTime> fieldsRow() {
+    public Row6<Integer, Short, Short, Integer, BigDecimal, LocalDateTime> fieldsRow() {
         return (Row6) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function6<? super Integer, ? super Short, ? super Short, ? super Integer, ? super BigDecimal, ? super LocalDateTime, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function6<? super Integer, ? super Short, ? super Short, ? super Integer, ? super BigDecimal, ? super LocalDateTime, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

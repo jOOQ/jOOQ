@@ -4,12 +4,17 @@
 package org.jooq.example.jpa.jooq.tables;
 
 
+import java.util.function.Function;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function2;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row2;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -106,6 +111,11 @@ public class Language extends TableImpl<LanguageRecord> {
         return new Language(alias, this);
     }
 
+    @Override
+    public Language as(Table alias) {
+        return new Language(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -122,6 +132,14 @@ public class Language extends TableImpl<LanguageRecord> {
         return new Language(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public Language rename(Table name) {
+        return new Language(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row2 type methods
     // -------------------------------------------------------------------------
@@ -129,5 +147,19 @@ public class Language extends TableImpl<LanguageRecord> {
     @Override
     public Row2<Integer, String> fieldsRow() {
         return (Row2) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function2<? super Integer, ? super String, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function2<? super Integer, ? super String, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

@@ -8,15 +8,19 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function14;
 import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row14;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -75,17 +79,17 @@ public class Film extends TableImpl<FilmRecord> {
     /**
      * The column <code>public.film.language_id</code>.
      */
-    public final TableField<FilmRecord, Integer> LANGUAGE_ID = createField(DSL.name("language_id"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<FilmRecord, Short> LANGUAGE_ID = createField(DSL.name("language_id"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.film.original_language_id</code>.
      */
-    public final TableField<FilmRecord, Integer> ORIGINAL_LANGUAGE_ID = createField(DSL.name("original_language_id"), SQLDataType.INTEGER, this, "");
+    public final TableField<FilmRecord, Short> ORIGINAL_LANGUAGE_ID = createField(DSL.name("original_language_id"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>public.film.rental_duration</code>.
      */
-    public final TableField<FilmRecord, Integer> RENTAL_DURATION = createField(DSL.name("rental_duration"), SQLDataType.INTEGER.nullable(false).defaultValue(DSL.field("3", SQLDataType.INTEGER)), this, "");
+    public final TableField<FilmRecord, Short> RENTAL_DURATION = createField(DSL.name("rental_duration"), SQLDataType.SMALLINT.nullable(false).defaultValue(DSL.field("3", SQLDataType.SMALLINT)), this, "");
 
     /**
      * The column <code>public.film.rental_rate</code>.
@@ -95,7 +99,7 @@ public class Film extends TableImpl<FilmRecord> {
     /**
      * The column <code>public.film.length</code>.
      */
-    public final TableField<FilmRecord, Integer> LENGTH = createField(DSL.name("length"), SQLDataType.INTEGER, this, "");
+    public final TableField<FilmRecord, Short> LENGTH = createField(DSL.name("length"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>public.film.replacement_cost</code>.
@@ -118,10 +122,12 @@ public class Film extends TableImpl<FilmRecord> {
     public final TableField<FilmRecord, String[]> SPECIAL_FEATURES = createField(DSL.name("special_features"), SQLDataType.CLOB.getArrayDataType(), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link
-     * org.jooq.Binding} to specify how this type should be handled. Deprecation
-     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
-     * code generator configuration.
+     * @deprecated Unknown data type. If this is a qualified, user-defined type,
+     * it may have been excluded from code generation. If this is a built-in
+     * type, you can define an explicit {@link org.jooq.Binding} to specify how
+     * this type should be handled. Deprecation can be turned off using
+     * {@literal <deprecationOnUnknownTypes/>} in your code generator
+     * configuration.
      */
     @Deprecated
     public final TableField<FilmRecord, Object> FULLTEXT = createField(DSL.name("fulltext"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"tsvector\"").nullable(false), this, "");
@@ -187,6 +193,10 @@ public class Film extends TableImpl<FilmRecord> {
     private transient Language _filmLanguageIdFkey;
     private transient Language _filmOriginalLanguageIdFkey;
 
+    /**
+     * Get the implicit join path to the <code>public.language</code> table, via
+     * the <code>film_language_id_fkey</code> key.
+     */
     public Language filmLanguageIdFkey() {
         if (_filmLanguageIdFkey == null)
             _filmLanguageIdFkey = new Language(this, Keys.FILM__FILM_LANGUAGE_ID_FKEY);
@@ -194,6 +204,10 @@ public class Film extends TableImpl<FilmRecord> {
         return _filmLanguageIdFkey;
     }
 
+    /**
+     * Get the implicit join path to the <code>public.language</code> table, via
+     * the <code>film_original_language_id_fkey</code> key.
+     */
     public Language filmOriginalLanguageIdFkey() {
         if (_filmOriginalLanguageIdFkey == null)
             _filmOriginalLanguageIdFkey = new Language(this, Keys.FILM__FILM_ORIGINAL_LANGUAGE_ID_FKEY);
@@ -209,6 +223,11 @@ public class Film extends TableImpl<FilmRecord> {
     @Override
     public Film as(Name alias) {
         return new Film(alias, this);
+    }
+
+    @Override
+    public Film as(Table alias) {
+        return new Film(alias.getQualifiedName(), this);
     }
 
     /**
@@ -227,12 +246,34 @@ public class Film extends TableImpl<FilmRecord> {
         return new Film(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public Film rename(Table name) {
+        return new Film(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row14 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row14<Integer, String, String, Integer, Integer, Integer, Integer, BigDecimal, Integer, BigDecimal, MpaaRating, LocalDateTime, String[], Object> fieldsRow() {
+    public Row14<Integer, String, String, Integer, Short, Short, Short, BigDecimal, Short, BigDecimal, MpaaRating, LocalDateTime, String[], Object> fieldsRow() {
         return (Row14) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function14<? super Integer, ? super String, ? super String, ? super Integer, ? super Short, ? super Short, ? super Short, ? super BigDecimal, ? super Short, ? super BigDecimal, ? super MpaaRating, ? super LocalDateTime, ? super String[], ? super Object, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function14<? super Integer, ? super String, ? super String, ? super Integer, ? super Short, ? super Short, ? super Short, ? super BigDecimal, ? super Short, ? super BigDecimal, ? super MpaaRating, ? super LocalDateTime, ? super String[], ? super Object, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

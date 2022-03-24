@@ -26,7 +26,6 @@ import org.jooq.example.chart.db.tables.PaymentP2007_04;
 import org.jooq.example.chart.db.tables.PaymentP2007_05;
 import org.jooq.example.chart.db.tables.PaymentP2007_06;
 import org.jooq.example.chart.db.tables.Rental;
-import org.jooq.example.chart.db.tables.SchemaVersion;
 import org.jooq.example.chart.db.tables.Staff;
 import org.jooq.example.chart.db.tables.Store;
 import org.jooq.example.chart.db.tables.records.ActorRecord;
@@ -48,7 +47,6 @@ import org.jooq.example.chart.db.tables.records.PaymentP2007_05Record;
 import org.jooq.example.chart.db.tables.records.PaymentP2007_06Record;
 import org.jooq.example.chart.db.tables.records.PaymentRecord;
 import org.jooq.example.chart.db.tables.records.RentalRecord;
-import org.jooq.example.chart.db.tables.records.SchemaVersionRecord;
 import org.jooq.example.chart.db.tables.records.StaffRecord;
 import org.jooq.example.chart.db.tables.records.StoreRecord;
 import org.jooq.impl.DSL;
@@ -79,7 +77,6 @@ public class Keys {
     public static final UniqueKey<LanguageRecord> LANGUAGE_PKEY = Internal.createUniqueKey(Language.LANGUAGE, DSL.name("language_pkey"), new TableField[] { Language.LANGUAGE.LANGUAGE_ID }, true);
     public static final UniqueKey<PaymentRecord> PAYMENT_PKEY = Internal.createUniqueKey(Payment.PAYMENT, DSL.name("payment_pkey"), new TableField[] { Payment.PAYMENT.PAYMENT_ID }, true);
     public static final UniqueKey<RentalRecord> RENTAL_PKEY = Internal.createUniqueKey(Rental.RENTAL, DSL.name("rental_pkey"), new TableField[] { Rental.RENTAL.RENTAL_ID }, true);
-    public static final UniqueKey<SchemaVersionRecord> SCHEMA_VERSION_PK = Internal.createUniqueKey(SchemaVersion.SCHEMA_VERSION, DSL.name("schema_version_pk"), new TableField[] { SchemaVersion.SCHEMA_VERSION.VERSION }, true);
     public static final UniqueKey<StaffRecord> STAFF_PKEY = Internal.createUniqueKey(Staff.STAFF, DSL.name("staff_pkey"), new TableField[] { Staff.STAFF.STAFF_ID }, true);
     public static final UniqueKey<StoreRecord> STORE_PKEY = Internal.createUniqueKey(Store.STORE, DSL.name("store_pkey"), new TableField[] { Store.STORE.STORE_ID }, true);
 

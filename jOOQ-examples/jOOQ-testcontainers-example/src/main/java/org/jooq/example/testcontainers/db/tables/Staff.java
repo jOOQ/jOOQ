@@ -7,14 +7,18 @@ package org.jooq.example.testcontainers.db.tables;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function11;
 import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row11;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -189,6 +193,11 @@ public class Staff extends TableImpl<StaffRecord> {
         return new Staff(alias, this);
     }
 
+    @Override
+    public Staff as(Table alias) {
+        return new Staff(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -205,6 +214,14 @@ public class Staff extends TableImpl<StaffRecord> {
         return new Staff(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public Staff rename(Table name) {
+        return new Staff(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row11 type methods
     // -------------------------------------------------------------------------
@@ -212,5 +229,19 @@ public class Staff extends TableImpl<StaffRecord> {
     @Override
     public Row11<Long, String, String, Long, String, Long, Boolean, String, String, LocalDateTime, byte[]> fieldsRow() {
         return (Row11) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function11<? super Long, ? super String, ? super String, ? super Long, ? super String, ? super Long, ? super Boolean, ? super String, ? super String, ? super LocalDateTime, ? super byte[], ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function11<? super Long, ? super String, ? super String, ? super Long, ? super String, ? super Long, ? super Boolean, ? super String, ? super String, ? super LocalDateTime, ? super byte[], ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

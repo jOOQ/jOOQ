@@ -37,7 +37,6 @@ import org.jooq.example.chart.db.tables.Rental;
 import org.jooq.example.chart.db.tables.RewardsReport;
 import org.jooq.example.chart.db.tables.SalesByFilmCategory;
 import org.jooq.example.chart.db.tables.SalesByStore;
-import org.jooq.example.chart.db.tables.SchemaVersion;
 import org.jooq.example.chart.db.tables.Staff;
 import org.jooq.example.chart.db.tables.StaffList;
 import org.jooq.example.chart.db.tables.Store;
@@ -311,11 +310,6 @@ public class Tables {
      * The table <code>public.sales_by_store</code>.
      */
     public static final SalesByStore SALES_BY_STORE = SalesByStore.SALES_BY_STORE;
-
-    /**
-     * The table <code>public.schema_version</code>.
-     */
-    public static final SchemaVersion SCHEMA_VERSION = SchemaVersion.SCHEMA_VERSION;
 
     /**
      * The table <code>public.staff</code>.

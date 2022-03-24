@@ -4,12 +4,17 @@
 package org.jooq.example.chart.db.tables;
 
 
+import java.util.function.Function;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function8;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row8;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -79,7 +84,7 @@ public class StaffList extends TableImpl<StaffListRecord> {
     /**
      * The column <code>public.staff_list.sid</code>.
      */
-    public final TableField<StaffListRecord, Integer> SID = createField(DSL.name("sid"), SQLDataType.INTEGER, this, "");
+    public final TableField<StaffListRecord, Short> SID = createField(DSL.name("sid"), SQLDataType.SMALLINT, this, "");
 
     private StaffList(Name alias, Table<StaffListRecord> aliased) {
         this(alias, aliased, null);
@@ -129,6 +134,11 @@ public class StaffList extends TableImpl<StaffListRecord> {
         return new StaffList(alias, this);
     }
 
+    @Override
+    public StaffList as(Table alias) {
+        return new StaffList(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -145,12 +155,34 @@ public class StaffList extends TableImpl<StaffListRecord> {
         return new StaffList(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public StaffList rename(Table name) {
+        return new StaffList(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row8 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row8<Integer, String, String, String, String, String, String, Integer> fieldsRow() {
+    public Row8<Integer, String, String, String, String, String, String, Short> fieldsRow() {
         return (Row8) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function8<? super Integer, ? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? super Short, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function8<? super Integer, ? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? super Short, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

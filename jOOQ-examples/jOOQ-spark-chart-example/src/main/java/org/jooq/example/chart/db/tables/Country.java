@@ -5,14 +5,18 @@ package org.jooq.example.chart.db.tables;
 
 
 import java.time.LocalDateTime;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function3;
 import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row3;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -119,6 +123,11 @@ public class Country extends TableImpl<CountryRecord> {
         return new Country(alias, this);
     }
 
+    @Override
+    public Country as(Table alias) {
+        return new Country(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -135,6 +144,14 @@ public class Country extends TableImpl<CountryRecord> {
         return new Country(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public Country rename(Table name) {
+        return new Country(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row3 type methods
     // -------------------------------------------------------------------------
@@ -142,5 +159,19 @@ public class Country extends TableImpl<CountryRecord> {
     @Override
     public Row3<Integer, String, LocalDateTime> fieldsRow() {
         return (Row3) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function3<? super Integer, ? super String, ? super LocalDateTime, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function3<? super Integer, ? super String, ? super LocalDateTime, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

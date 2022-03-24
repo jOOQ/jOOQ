@@ -8,15 +8,19 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function10;
 import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row10;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -59,7 +63,7 @@ public class Customer extends TableImpl<CustomerRecord> {
     /**
      * The column <code>public.customer.store_id</code>.
      */
-    public final TableField<CustomerRecord, Integer> STORE_ID = createField(DSL.name("store_id"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<CustomerRecord, Short> STORE_ID = createField(DSL.name("store_id"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.customer.first_name</code>.
@@ -79,7 +83,7 @@ public class Customer extends TableImpl<CustomerRecord> {
     /**
      * The column <code>public.customer.address_id</code>.
      */
-    public final TableField<CustomerRecord, Integer> ADDRESS_ID = createField(DSL.name("address_id"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<CustomerRecord, Short> ADDRESS_ID = createField(DSL.name("address_id"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.customer.activebool</code>.
@@ -162,6 +166,9 @@ public class Customer extends TableImpl<CustomerRecord> {
     private transient Store _store;
     private transient Address _address;
 
+    /**
+     * Get the implicit join path to the <code>public.store</code> table.
+     */
     public Store store() {
         if (_store == null)
             _store = new Store(this, Keys.CUSTOMER__CUSTOMER_STORE_ID_FKEY);
@@ -169,6 +176,9 @@ public class Customer extends TableImpl<CustomerRecord> {
         return _store;
     }
 
+    /**
+     * Get the implicit join path to the <code>public.address</code> table.
+     */
     public Address address() {
         if (_address == null)
             _address = new Address(this, Keys.CUSTOMER__CUSTOMER_ADDRESS_ID_FKEY);
@@ -184,6 +194,11 @@ public class Customer extends TableImpl<CustomerRecord> {
     @Override
     public Customer as(Name alias) {
         return new Customer(alias, this);
+    }
+
+    @Override
+    public Customer as(Table alias) {
+        return new Customer(alias.getQualifiedName(), this);
     }
 
     /**
@@ -202,12 +217,34 @@ public class Customer extends TableImpl<CustomerRecord> {
         return new Customer(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public Customer rename(Table name) {
+        return new Customer(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row10 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row10<Integer, Integer, String, String, String, Integer, Boolean, LocalDate, LocalDateTime, Integer> fieldsRow() {
+    public Row10<Integer, Short, String, String, String, Short, Boolean, LocalDate, LocalDateTime, Integer> fieldsRow() {
         return (Row10) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function10<? super Integer, ? super Short, ? super String, ? super String, ? super String, ? super Short, ? super Boolean, ? super LocalDate, ? super LocalDateTime, ? super Integer, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function10<? super Integer, ? super Short, ? super String, ? super String, ? super String, ? super Short, ? super Boolean, ? super LocalDate, ? super LocalDateTime, ? super Integer, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

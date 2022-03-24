@@ -7,15 +7,19 @@ package org.jooq.example.chart.db.tables;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function7;
 import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row7;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -68,7 +72,7 @@ public class Rental extends TableImpl<RentalRecord> {
     /**
      * The column <code>public.rental.customer_id</code>.
      */
-    public final TableField<RentalRecord, Integer> CUSTOMER_ID = createField(DSL.name("customer_id"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<RentalRecord, Short> CUSTOMER_ID = createField(DSL.name("customer_id"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.rental.return_date</code>.
@@ -78,7 +82,7 @@ public class Rental extends TableImpl<RentalRecord> {
     /**
      * The column <code>public.rental.staff_id</code>.
      */
-    public final TableField<RentalRecord, Integer> STAFF_ID = createField(DSL.name("staff_id"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<RentalRecord, Short> STAFF_ID = createField(DSL.name("staff_id"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.rental.last_update</code>.
@@ -147,6 +151,9 @@ public class Rental extends TableImpl<RentalRecord> {
     private transient Customer _customer;
     private transient Staff _staff;
 
+    /**
+     * Get the implicit join path to the <code>public.inventory</code> table.
+     */
     public Inventory inventory() {
         if (_inventory == null)
             _inventory = new Inventory(this, Keys.RENTAL__RENTAL_INVENTORY_ID_FKEY);
@@ -154,6 +161,9 @@ public class Rental extends TableImpl<RentalRecord> {
         return _inventory;
     }
 
+    /**
+     * Get the implicit join path to the <code>public.customer</code> table.
+     */
     public Customer customer() {
         if (_customer == null)
             _customer = new Customer(this, Keys.RENTAL__RENTAL_CUSTOMER_ID_FKEY);
@@ -161,6 +171,9 @@ public class Rental extends TableImpl<RentalRecord> {
         return _customer;
     }
 
+    /**
+     * Get the implicit join path to the <code>public.staff</code> table.
+     */
     public Staff staff() {
         if (_staff == null)
             _staff = new Staff(this, Keys.RENTAL__RENTAL_STAFF_ID_FKEY);
@@ -176,6 +189,11 @@ public class Rental extends TableImpl<RentalRecord> {
     @Override
     public Rental as(Name alias) {
         return new Rental(alias, this);
+    }
+
+    @Override
+    public Rental as(Table alias) {
+        return new Rental(alias.getQualifiedName(), this);
     }
 
     /**
@@ -194,12 +212,34 @@ public class Rental extends TableImpl<RentalRecord> {
         return new Rental(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public Rental rename(Table name) {
+        return new Rental(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row7 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row7<Integer, LocalDateTime, Integer, Integer, LocalDateTime, Integer, LocalDateTime> fieldsRow() {
+    public Row7<Integer, LocalDateTime, Integer, Short, LocalDateTime, Short, LocalDateTime> fieldsRow() {
         return (Row7) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function7<? super Integer, ? super LocalDateTime, ? super Integer, ? super Short, ? super LocalDateTime, ? super Short, ? super LocalDateTime, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function7<? super Integer, ? super LocalDateTime, ? super Integer, ? super Short, ? super LocalDateTime, ? super Short, ? super LocalDateTime, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

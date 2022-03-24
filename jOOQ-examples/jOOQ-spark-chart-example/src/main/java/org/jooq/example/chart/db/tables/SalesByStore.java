@@ -5,13 +5,17 @@ package org.jooq.example.chart.db.tables;
 
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function3;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row3;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -106,6 +110,11 @@ public class SalesByStore extends TableImpl<SalesByStoreRecord> {
         return new SalesByStore(alias, this);
     }
 
+    @Override
+    public SalesByStore as(Table alias) {
+        return new SalesByStore(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -122,6 +131,14 @@ public class SalesByStore extends TableImpl<SalesByStoreRecord> {
         return new SalesByStore(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public SalesByStore rename(Table name) {
+        return new SalesByStore(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row3 type methods
     // -------------------------------------------------------------------------
@@ -129,5 +146,19 @@ public class SalesByStore extends TableImpl<SalesByStoreRecord> {
     @Override
     public Row3<String, String, BigDecimal> fieldsRow() {
         return (Row3) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function3<? super String, ? super String, ? super BigDecimal, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function3<? super String, ? super String, ? super BigDecimal, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

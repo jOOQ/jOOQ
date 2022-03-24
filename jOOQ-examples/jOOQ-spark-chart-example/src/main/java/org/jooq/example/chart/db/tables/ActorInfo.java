@@ -4,12 +4,17 @@
 package org.jooq.example.chart.db.tables;
 
 
+import java.util.function.Function;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function4;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row4;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -109,6 +114,11 @@ public class ActorInfo extends TableImpl<ActorInfoRecord> {
         return new ActorInfo(alias, this);
     }
 
+    @Override
+    public ActorInfo as(Table alias) {
+        return new ActorInfo(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -125,6 +135,14 @@ public class ActorInfo extends TableImpl<ActorInfoRecord> {
         return new ActorInfo(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public ActorInfo rename(Table name) {
+        return new ActorInfo(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row4 type methods
     // -------------------------------------------------------------------------
@@ -132,5 +150,19 @@ public class ActorInfo extends TableImpl<ActorInfoRecord> {
     @Override
     public Row4<Integer, String, String, String> fieldsRow() {
         return (Row4) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function4<? super Integer, ? super String, ? super String, ? super String, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function4<? super Integer, ? super String, ? super String, ? super String, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

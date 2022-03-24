@@ -636,7 +636,7 @@ implements
         ctx.start(Clause.CREATE_TABLE_AS);
 
         if (!$columns().isEmpty() && NO_SUPPORT_CTAS_COLUMN_NAMES.contains(ctx.dialect()))
-            ctx.visit(select(asterisk()).from(select.asTable(table(name("t")), $columns().toArray(EMPTY_FIELD))));
+            ctx.visit(select(asterisk()).from(select.asTable(table(name("t")), $columns())));
         else
             ctx.visit(select);
 

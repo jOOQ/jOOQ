@@ -7084,7 +7084,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             }
 
             if (columnAliases != null)
-                result = t(result, true).as(alias, columnAliases.toArray(EMPTY_NAME));
+                result = t(result, true).as(alias, columnAliases);
             else
                 result = t(result, true).as(alias);
         }

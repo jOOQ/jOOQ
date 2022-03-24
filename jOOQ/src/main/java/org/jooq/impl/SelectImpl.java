@@ -68,13 +68,11 @@ import org.jooq.JoinType;
 import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.OrderField;
-import org.jooq.Param;
 // ...
 import org.jooq.QuantifiedSelect;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.ResultQuery;
 import org.jooq.Results;
 import org.jooq.Row;
 import org.jooq.SQL;
@@ -135,8 +133,6 @@ import org.jooq.TableLike;
 import org.jooq.WindowDefinition;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.With;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A wrapper for a {@link SelectQuery}
@@ -2876,6 +2872,11 @@ implements
     }
 
     @Override
+    public final Table<R> asTable(String alias, Collection<? extends String> fieldAliases) {
+        return getDelegate().asTable(alias, fieldAliases);
+    }
+
+    @Override
     public final Table<R> asTable(Name alias) {
         return getDelegate().asTable(alias);
     }
@@ -2886,12 +2887,22 @@ implements
     }
 
     @Override
+    public final Table<R> asTable(Name alias, Collection<? extends Name> fieldAliases) {
+        return getDelegate().asTable(alias, fieldAliases);
+    }
+
+    @Override
     public final Table<R> asTable(Table<?> alias) {
         return getDelegate().asTable(alias);
     }
 
     @Override
     public final Table<R> asTable(Table<?> alias, Field<?>... fieldAliases) {
+        return getDelegate().asTable(alias, fieldAliases);
+    }
+
+    @Override
+    public final Table<R> asTable(Table<?> alias, Collection<? extends Field<?>> fieldAliases) {
         return getDelegate().asTable(alias, fieldAliases);
     }
 

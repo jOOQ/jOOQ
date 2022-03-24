@@ -449,6 +449,61 @@ extends
     /**
      * Create an alias for this table and its fields.
      * <p>
+     * Note that the case-sensitivity of the returned table and columns depends
+     * on {@link Settings#getRenderQuotedNames()}. By default, table aliases are
+     * quoted, and thus case-sensitive in many SQL dialects!
+     * <p>
+     * <h5>Derived column lists for table references</h5>
+     * <p>
+     * Note, not all databases support derived column lists for their table
+     * aliases. On the other hand, some databases do support derived column
+     * lists, but only for derived tables. jOOQ will try to turn table
+     * references into derived tables to make this syntax work. In other words,
+     * the following statements are equivalent: <code><pre>
+     * -- Using derived column lists to rename columns (e.g. Postgres)
+     * SELECT t.a, t.b
+     * FROM my_table t(a, b)
+     *
+     * -- Nesting table references within derived tables (e.g. SQL Server)
+     * SELECT t.a, t.b
+     * FROM (
+     *   SELECT * FROM my_table
+     * ) t(a, b)
+     * </pre></code>
+     * <p>
+     * <h5>Derived column lists for derived tables</h5>
+     * <p>
+     * Other databases may not support derived column lists at all, but they do
+     * support common table expressions. The following statements are
+     * equivalent: <code><pre>
+     * -- Using derived column lists to rename columns (e.g. Postgres)
+     * SELECT t.a, t.b
+     * FROM (
+     *   SELECT 1, 2
+     * ) AS t(a, b)
+     *
+     * -- Using UNION ALL to produce column names (e.g. MySQL)
+     * SELECT t.a, t.b
+     * FROM (
+     *   SELECT null a, null b FROM DUAL WHERE 1 = 0
+     *   UNION ALL
+     *   SELECT 1, 2 FROM DUAL
+     * ) t
+     * </pre></code>
+     *
+     * @param alias The alias name
+     * @param fieldAliases The field aliases. Excess aliases are ignored,
+     *            missing aliases will be substituted by this table's field
+     *            names.
+     * @return The table alias
+     */
+    @NotNull
+    @Support
+    Table<R> as(String alias, Collection<? extends String> fieldAliases);
+
+    /**
+     * Create an alias for this table and its fields.
+     * <p>
      * This works like {@link #as(String, String...)}, except that field aliases
      * are provided by a function. This is useful, for instance, to prefix all
      * columns with a common prefix:
@@ -577,6 +632,65 @@ extends
     /**
      * Create an alias for this table and its fields.
      * <p>
+     * Note that the case-sensitivity of the returned table depends on
+     * {@link Settings#getRenderQuotedNames()} and the {@link Name}. By default,
+     * table aliases are quoted, and thus case-sensitive in many SQL dialects -
+     * use {@link DSL#unquotedName(String...)} for case-insensitive aliases.
+     * <p>
+     * If the argument {@link Name#getName()} is qualified, then the
+     * {@link Name#last()} part will be used.
+     * <p>
+     * <h5>Derived column lists for table references</h5>
+     * <p>
+     * Note, not all databases support derived column lists for their table
+     * aliases. On the other hand, some databases do support derived column
+     * lists, but only for derived tables. jOOQ will try to turn table
+     * references into derived tables to make this syntax work. In other words,
+     * the following statements are equivalent: <code><pre>
+     * -- Using derived column lists to rename columns (e.g. Postgres)
+     * SELECT t.a, t.b
+     * FROM my_table t(a, b)
+     *
+     * -- Nesting table references within derived tables (e.g. SQL Server)
+     * SELECT t.a, t.b
+     * FROM (
+     *   SELECT * FROM my_table
+     * ) t(a, b)
+     * </pre></code>
+     * <p>
+     * <h5>Derived column lists for derived tables</h5>
+     * <p>
+     * Other databases may not support derived column lists at all, but they do
+     * support common table expressions. The following statements are
+     * equivalent: <code><pre>
+     * -- Using derived column lists to rename columns (e.g. Postgres)
+     * SELECT t.a, t.b
+     * FROM (
+     *   SELECT 1, 2
+     * ) AS t(a, b)
+     *
+     * -- Using UNION ALL to produce column names (e.g. MySQL)
+     * SELECT t.a, t.b
+     * FROM (
+     *   SELECT null a, null b FROM DUAL WHERE 1 = 0
+     *   UNION ALL
+     *   SELECT 1, 2 FROM DUAL
+     * ) t
+     * </pre></code>
+     *
+     * @param alias The alias name
+     * @param fieldAliases The field aliases. Excess aliases are ignored,
+     *            missing aliases will be substituted by this table's field
+     *            names.
+     * @return The table alias
+     */
+    @NotNull
+    @Support
+    Table<R> as(Name alias, Collection<? extends Name> fieldAliases);
+
+    /**
+     * Create an alias for this table and its fields.
+     * <p>
      * This works like {@link #as(Name, Name...)}, except that field aliases
      * are provided by a function. This is useful, for instance, to prefix all
      * columns with a common prefix:
@@ -645,6 +759,18 @@ extends
     @NotNull
     @Support
     Table<R> as(Table<?> otherTable, Field<?>... otherFields);
+
+    /**
+     * Create an alias for this table based on another table's name.
+     *
+     * @param otherTable The other table whose name this table is aliased with.
+     * @param otherFields The other fields whose field name this table's fields
+     *            are aliased with.
+     * @return The table alias.
+     */
+    @NotNull
+    @Support
+    Table<R> as(Table<?> otherTable, Collection<? extends Field<?>> otherFields);
 
     /**
      * Create an alias for this table and its fields.

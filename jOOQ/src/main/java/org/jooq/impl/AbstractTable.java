@@ -61,6 +61,7 @@ import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.traverseJoins;
 
@@ -316,6 +317,11 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     }
 
     @Override
+    public final Table<R> asTable(String alias, Collection<? extends String> fieldAliases) {
+        return as(alias, fieldAliases);
+    }
+
+    @Override
     public final Table<R> asTable(Name alias) {
         return as(alias);
     }
@@ -326,12 +332,22 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     }
 
     @Override
+    public final Table<R> asTable(Name alias, Collection<? extends Name> fieldAliases) {
+        return as(alias, fieldAliases);
+    }
+
+    @Override
     public final Table<R> asTable(Table<?> alias) {
         return as(alias);
     }
 
     @Override
     public final Table<R> asTable(Table<?> alias, Field<?>... fieldAliases) {
+        return as(alias, fieldAliases);
+    }
+
+    @Override
+    public final Table<R> asTable(Table<?> alias, Collection<? extends Field<?>> fieldAliases) {
         return as(alias, fieldAliases);
     }
 
@@ -356,6 +372,11 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     }
 
     @Override
+    public /* non-final for covariant overriding */ Table<R> as(String alias, Collection<? extends String> fieldAliases) {
+        return as(DSL.name(alias), Tools.names(fieldAliases));
+    }
+
+    @Override
     public final Table<R> as(String alias, Function<? super Field<?>, ? extends String> aliasFunction) {
         return as(alias, map(fields(), f -> aliasFunction.apply(f), String[]::new));
     }
@@ -373,6 +394,11 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     @Override
     public /* non-final for covariant overriding */ Table<R> as(Name alias, Name... fieldAliases) {
         return new TableAlias<>(this, alias, fieldAliases);
+    }
+
+    @Override
+    public /* non-final for covariant overriding */ Table<R> as(Name alias, Collection<? extends Name> fieldAliases) {
+        return new TableAlias<>(this, alias, fieldAliases == null ? null : fieldAliases.toArray(EMPTY_NAME));
     }
 
     @Override
@@ -958,6 +984,11 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     @Override
     public final Table<R> as(Table<?> otherTable, Field<?>... otherFields) {
         return as(otherTable.getUnqualifiedName(), Tools.map(otherFields, Field::getUnqualifiedName, Name[]::new));
+    }
+
+    @Override
+    public final Table<R> as(Table<?> otherTable, Collection<? extends Field<?>> otherFields) {
+        return as(otherTable.getUnqualifiedName(), Tools.map(otherFields, Field::getUnqualifiedName));
     }
 
     @Override

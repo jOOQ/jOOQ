@@ -279,7 +279,6 @@ import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
 // ...
 // ...
-// ...
 import org.jooq.WindowDefinition;
 import org.jooq.XML;
 import org.jooq.exception.DataAccessException;
@@ -666,6 +665,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
+    public final Table<R> asTable(String alias, Collection<? extends String> fieldAliases) {
+        return new DerivedTable<>(this).as(alias, fieldAliases);
+    }
+
+    @Override
     public final Table<R> asTable(Name alias) {
         return new DerivedTable<>(this).as(alias);
     }
@@ -676,12 +680,22 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
+    public final Table<R> asTable(Name alias, Collection<? extends Name> fieldAliases) {
+        return new DerivedTable<>(this).as(alias, fieldAliases);
+    }
+
+    @Override
     public final Table<R> asTable(Table<?> alias) {
         return new DerivedTable<>(this).as(alias);
     }
 
     @Override
     public final Table<R> asTable(Table<?> alias, Field<?>... fieldAliases) {
+        return new DerivedTable<>(this).as(alias, fieldAliases);
+    }
+
+    @Override
+    public final Table<R> asTable(Table<?> alias, Collection<? extends Field<?>> fieldAliases) {
         return new DerivedTable<>(this).as(alias, fieldAliases);
     }
 

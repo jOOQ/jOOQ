@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import java.util.Collection;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -90,6 +91,15 @@ extends
     /**
      * The underlying aliased table representation of this object.
      *
+     * @see Table#as(String, Collection)
+     */
+    @NotNull
+    @Support
+    Table<R> asTable(String alias, Collection<? extends String> fieldAliases);
+
+    /**
+     * The underlying aliased table representation of this object.
+     *
      * @see Table#as(Name)
      */
     @NotNull
@@ -99,7 +109,7 @@ extends
     /**
      * The underlying aliased table representation of this object.
      *
-     * @see Table#as(String, String...)
+     * @see Table#as(Name, Name...)
      */
     @NotNull
     @Support
@@ -108,7 +118,16 @@ extends
     /**
      * The underlying aliased table representation of this object.
      *
-     * @see Table#as(Name)
+     * @see Table#as(Name, Collection)
+     */
+    @NotNull
+    @Support
+    Table<R> asTable(Name alias, Collection<? extends Name> fieldAliases);
+
+    /**
+     * The underlying aliased table representation of this object.
+     *
+     * @see Table#as(Table)
      */
     @NotNull
     @Support
@@ -117,11 +136,20 @@ extends
     /**
      * The underlying aliased table representation of this object.
      *
-     * @see Table#as(String, String...)
+     * @see Table#as(Table, Field...)
      */
     @NotNull
     @Support
     Table<R> asTable(Table<?> alias, Field<?>... fieldAliases);
+
+    /**
+     * The underlying aliased table representation of this object.
+     *
+     * @see Table#as(Table, Collection)
+     */
+    @NotNull
+    @Support
+    Table<R> asTable(Table<?> alias, Collection<? extends Field<?>> fieldAliases);
 
     /**
      * The underlying aliased table representation of this object.

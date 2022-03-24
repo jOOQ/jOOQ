@@ -56,7 +56,6 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
-// ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.IGNITE;
 // ...
@@ -65,6 +64,7 @@ import static org.jooq.SQLDialect.IGNITE;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
+// ...
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -83,7 +83,6 @@ import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.combine;
-import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
@@ -104,7 +103,6 @@ import org.jooq.Name;
 import org.jooq.Name.Quoted;
 // ...
 import org.jooq.QueryPart;
-import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -122,7 +120,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
     private static final Clause[]        CLAUSES_FIELD_ALIAS                   = { FIELD, FIELD_ALIAS };
     private static final Set<SQLDialect> SUPPORT_AS_REQUIRED                   = SQLDialect.supportedBy(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
     private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1 = SQLDialect.supportedBy(CUBRID, FIREBIRD, MYSQL);
-    private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2 = SQLDialect.supportedBy(IGNITE, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2 = SQLDialect.supportedUntil(IGNITE, MARIADB, SQLITE);
 
 
 

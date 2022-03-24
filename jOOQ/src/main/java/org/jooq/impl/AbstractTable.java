@@ -367,12 +367,12 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     }
 
     @Override
-    public /* non-final for covariant overriding */ Table<R> as(String alias, String... fieldAliases) {
+    public final Table<R> as(String alias, String... fieldAliases) {
         return as(DSL.name(alias), Tools.names(fieldAliases));
     }
 
     @Override
-    public /* non-final for covariant overriding */ Table<R> as(String alias, Collection<? extends String> fieldAliases) {
+    public final Table<R> as(String alias, Collection<? extends String> fieldAliases) {
         return as(DSL.name(alias), Tools.names(fieldAliases));
     }
 
@@ -397,8 +397,8 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     }
 
     @Override
-    public /* non-final for covariant overriding */ Table<R> as(Name alias, Collection<? extends Name> fieldAliases) {
-        return new TableAlias<>(this, alias, fieldAliases == null ? null : fieldAliases.toArray(EMPTY_NAME));
+    public final Table<R> as(Name alias, Collection<? extends Name> fieldAliases) {
+        return as(alias, fieldAliases == null ? null : fieldAliases.toArray(EMPTY_NAME));
     }
 
     @Override

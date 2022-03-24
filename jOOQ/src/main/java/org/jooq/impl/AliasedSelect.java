@@ -90,6 +90,7 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> implements 
 
         // [#11473] In the presence of ORDER BY, AliasedSelect tends not to work
         //          correctly if ORDER BY references names available prior to the aliasing only
+        // [#10521] TODO: Reuse avoidAliasPushdown here
         if (q != null && (ignoreOrderBy && !q.getOrderBy().isEmpty() || Tools.hasEmbeddedFields(q.getSelect())))
             return query.asTable(alias, aliases);
         else
@@ -119,10 +120,25 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> implements 
         //                  Derby projects column indexes 1, 2, 3 as names, but
         //                  they cannot be referenced. In that case, revert to
         //                  actual derived table usage.
+        // [#10521] TODO: Reuse avoidAliasPushdown here
         if (ctx.family() == DERBY && q != null && q.hasUnions())
             visitSubquery(ctx, selectFrom(query.asTable(DSL.name("t"), aliases)), true, false, false, false);
         else
             ctx.data(DATA_SELECT_ALIASES, aliases, subquery ? c -> visitSubquery(c, query, true, false, false, false) : c -> c.visit(query));
+    }
+
+    static final boolean avoidAliasPushdown(Context<?> ctx, Select<?> query) {
+        SelectQueryImpl<?> q = selectQueryImpl(query);
+        return q != null && (
+
+            // [#3679] [#10540] Without standardised UNION subquery column names,
+            //                  Derby projects column indexes 1, 2, 3 as names, but
+            //                  they cannot be referenced. In that case, revert to
+            //                  actual derived table usage.
+               ctx.family() == DERBY && q.hasUnions()
+            || !q.getOrderBy().isEmpty()
+            || Tools.hasEmbeddedFields(q.getSelect())
+        );
     }
 
     @Override // Avoid AbstractTable implementation

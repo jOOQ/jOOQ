@@ -260,9 +260,16 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
 
 
                 if (emulatedDerivedColumnList) {
-                    SelectFieldList<Field<?>> fields = new SelectFieldList<>();
-                    for (int i = 0; i < fieldAliases.length; i++) {
-                        switch (family) {
+                    if (AliasedSelect.avoidAliasPushdown(context, wrappedAsSelect)
+
+                        // [#10521] If the object being aliased does not allow for alias pushdowns
+                        //          (e.g. VALUES()), then we must avoid the pushdown and use the
+                        //          classic derived column list emulation using UNION ALL
+                        || !(wrapped instanceof Select || wrapped instanceof DerivedTable)
+                    ) {
+                        SelectFieldList<Field<?>> fields = new SelectFieldList<>();
+                        for (int i = 0; i < fieldAliases.length; i++) {
+                            switch (family) {
 
 
 
@@ -281,13 +288,20 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
 
 
 
-                            default:
-                                fields.add(field("null").as(fieldAliases[i]));
-                                break;
+                                default:
+                                    fields.add(field("null").as(fieldAliases[i]));
+                                    break;
+                            }
                         }
+
+                        visitSubquery(context, select(fields).where(falseCondition()).unionAll(wrappedAsSelect), true, false, false);
                     }
 
-                    visitSubquery(context, select(fields).where(falseCondition()).unionAll(wrappedAsSelect), true, false, false);
+                    // [#10521] Avoid the clumsy UNION ALL emulation if possible
+                    //          by pushing down projection aliases into the
+                    //          derived table
+                    else
+                        context.sql('(').visit(new AliasedSelect<>(wrappedAsSelect, true, false, fieldAliases)).sql(')');
                 }
             }
         }

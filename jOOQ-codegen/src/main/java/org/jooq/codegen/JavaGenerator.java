@@ -6664,6 +6664,13 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("new %s(alias, null, null, this, parameters)", className);
             else
                 out.println("new %s(alias, this)", className);
+
+            out.print("%soverride def as(alias: %s[_]): %s = ", visibilityPublic(), Table.class, className);
+
+            if (table.isTableValuedFunction())
+                out.println("new %s(alias.getQualifiedName(), null, null, this, parameters)", className);
+            else
+                out.println("new %s(alias.getQualifiedName(), this)", className);
         }
         else if (kotlin) {
             out.print("%soverride fun `as`(alias: %s): %s = ", visibilityPublic(), String.class, className);
@@ -6679,6 +6686,13 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("%s(alias, this, parameters)", className);
             else
                 out.println("%s(alias, this)", className);
+
+            out.print("%soverride fun `as`(alias: %s<*>): %s = ", visibilityPublic(), Table.class, className);
+
+            if (table.isTableValuedFunction())
+                out.println("%s(alias.getQualifiedName(), this, parameters)", className);
+            else
+                out.println("%s(alias.getQualifiedName(), this)", className);
         }
 
         // [#117] With instance fields, it makes sense to create a
@@ -6706,6 +6720,18 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("return new %s(alias, this);", className);
 
             out.println("}");
+
+
+            out.overrideInherit();
+            printNonnullAnnotation(out);
+            out.println("%s%s as(%s<?> alias) {", visibilityPublic(), className, Table.class);
+
+            if (table.isTableValuedFunction())
+                out.println("return new %s(alias.getQualifiedName(), this, parameters);", className);
+            else
+                out.println("return new %s(alias.getQualifiedName(), this);", className);
+
+            out.println("}");
         }
 
         if (scala) {
@@ -6724,6 +6750,14 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("new %s(name, null, null, null, parameters)", className);
             else
                 out.println("new %s(name, null)", className);
+
+            out.javadoc("Rename this table");
+            out.print("%soverride def rename(name: %s[_]): %s = ", visibilityPublic(), Table.class, className);
+
+            if (table.isTableValuedFunction())
+                out.println("new %s(name.getQualifiedName(), null, null, null, parameters)", className);
+            else
+                out.println("new %s(name.getQualifiedName(), null)", className);
         }
 
         else if (kotlin) {
@@ -6742,6 +6776,14 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("%s(name, null, parameters)", className);
             else
                 out.println("%s(name, null)", className);
+
+            out.javadoc("Rename this table");
+            out.print("%soverride fun rename(name: %s<*>): %s = ", visibilityPublic(), Table.class, className);
+
+            if (table.isTableValuedFunction())
+                out.println("%s(name.getQualifiedName(), null, parameters)", className);
+            else
+                out.println("%s(name.getQualifiedName(), null)", className);
         }
 
         // [#2921] With instance fields, tables can be renamed.
@@ -6767,6 +6809,18 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("return new %s(name, null, parameters);", className);
             else
                 out.println("return new %s(name, null);", className);
+
+            out.println("}");
+
+            out.javadoc("Rename this table");
+            out.override();
+            printNonnullAnnotation(out);
+            out.println("%s%s rename(%s<?> name) {", visibilityPublic(), className, Table.class);
+
+            if (table.isTableValuedFunction())
+                out.println("return new %s(name.getQualifiedName(), null, parameters);", className);
+            else
+                out.println("return new %s(name.getQualifiedName(), null);", className);
 
             out.println("}");
         }

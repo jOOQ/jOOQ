@@ -656,11 +656,15 @@ implements
     }
 
     public Table<R> rename(String rename) {
-        return new TableImpl<>(rename, getSchema());
+        return rename(DSL.name(rename));
     }
 
     public Table<R> rename(Name rename) {
         return new TableImpl<>(rename, getSchema());
+    }
+
+    public Table<R> rename(Table<?> rename) {
+        return rename(rename.getQualifiedName());
     }
 
     /**

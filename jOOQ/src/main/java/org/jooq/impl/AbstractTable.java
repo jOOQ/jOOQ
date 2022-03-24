@@ -977,7 +977,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     // ------------------------------------------------------------------------
 
     @Override
-    public final Table<R> as(Table<?> otherTable) {
+    public /* non-final for covariant overriding */ Table<R> as(Table<?> otherTable) {
         return as(otherTable.getUnqualifiedName());
     }
 

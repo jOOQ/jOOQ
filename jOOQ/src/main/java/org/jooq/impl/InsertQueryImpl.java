@@ -391,7 +391,7 @@ implements
                        .visit(K_SET)
                        .formatIndentStart()
                        .formatSeparator()
-                       .visit(updateMapComputedOnClient())
+                       .visit(updateMapComputedOnClient(ctx))
                        .formatIndentEnd();
 
                     if (condition.hasWhere())
@@ -451,7 +451,7 @@ implements
                     if (condition.hasWhere())
                         ctx.data(DATA_ON_DUPLICATE_KEY_WHERE, condition.getWhere());
 
-                    ctx.visit(updateMap);
+                    ctx.visit(updateMapComputedOnClient(ctx));
 
                     if (condition.hasWhere())
                         ctx.data().remove(DATA_ON_DUPLICATE_KEY_WHERE);
@@ -907,7 +907,7 @@ implements
             //         not with ON DUPLICATE KEY IGNORE
             MergeNotMatchedStep<R> notMatched = on;
             if (onDuplicateKeyUpdate) {
-                final FieldMapForUpdate um = updateMapComputedOnClient();
+                final FieldMapForUpdate um = updateMapComputedOnClient(ctx);
 
                 notMatched = condition.hasWhere()
                     ? on.whenMatchedAnd(condition.getWhere()).thenUpdate().set(um)
@@ -922,7 +922,20 @@ implements
             return DSL.sql("[ The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into non-updatable tables : " + table() + " ]");
     }
 
-    private final FieldMapForUpdate updateMapComputedOnClient() {
+    private final FieldMapForUpdate updateMapComputedOnClient(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

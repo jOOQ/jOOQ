@@ -5683,13 +5683,6 @@ final class Tools {
         return map(orderFields, (OrderField<?> f) -> field(f));
     }
 
-    static final List<Field<?>> fields(FieldOrRow fr) {
-        if (fr instanceof Field)
-            return singletonList((Field<?>) fr);
-        else
-            return asList(((Row) fr).fields());
-    }
-
     static final <T> Field<T> unalias(Field<T> field) {
         Field<T> result = aliased(field);
         return result != null ? result : field;
@@ -6048,6 +6041,20 @@ final class Tools {
 
     static final <E> Iterable<E> filter(E[] array, ObjIntPredicate<? super E> predicate) {
         return filter(asList(array), predicate);
+    }
+
+    static final List<Field<?>> flattenFieldOrRow(FieldOrRow fr) {
+        if (fr instanceof Field)
+            return singletonList((Field<?>) fr);
+        else
+            return asList(((Row) fr).fields());
+    }
+
+    static final <C extends Collection<Field<?>>> C flattenFieldOrRows(Collection<? extends FieldOrRow> frs, C c) {
+        for (FieldOrRow fr : frs)
+            c.addAll(flattenFieldOrRow(fr));
+
+        return c;
     }
 
     /**

@@ -53,10 +53,10 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
-import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.flatten;
+import static org.jooq.impl.Tools.flattenFieldOrRows;
 import static org.jooq.impl.Tools.lazy;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
 
@@ -213,7 +213,6 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
            .end(INSERT_SELECT);
     }
 
-    static final <K extends FieldOrRow> Set<K> keysAndComputedOnClient(Set<K> keys, Table<?> table) {
 
 
 
@@ -222,8 +221,8 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
-        return keys;
-    }
+
+
 
 
 
@@ -577,7 +576,12 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         }
 
         // [#989] Avoid qualifying fields in INSERT field declaration
-        Set<Field<?>> fields = keysAndComputedOnClient(keysFlattened(ctx), table);
+        Set<Field<?>> fields = keysFlattened(ctx);
+
+
+
+
+
 
         if (!fields.isEmpty())
             ctx.sql(" (").visit(wrap(fields).qualify(false)).sql(')');

@@ -78,7 +78,6 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.when;
-import static org.jooq.impl.FieldMapsForInsert.keysAndComputedOnClient;
 import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.collect;
@@ -91,6 +90,8 @@ import static org.jooq.impl.Tools.unqualified;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.DataKey.DATA_ON_DUPLICATE_KEY_WHERE;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -352,6 +353,9 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
             }
         });
     }
+
+
+
 
 
 

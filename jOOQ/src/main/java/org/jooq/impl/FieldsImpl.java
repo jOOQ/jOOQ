@@ -201,7 +201,7 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
      * needed.
      */
     static final Row fieldsRow0(FieldsTrait fields) {
-        return fields instanceof Select<?> s ? s.asTable("t").fieldsRow() : fields.fieldsRow();
+        return fields instanceof Select ? ((Select<?>) fields).asTable("t").fieldsRow() : fields.fieldsRow();
     }
 
     private static final ThrowingFunction<SelectField<?>, Field<?>, RuntimeException> toField() {

@@ -5076,15 +5076,15 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
-                out.println("if (%s == null) {", columnMember);
+                out.println("if (this.%s == null) {", columnMember);
                 out.println("if (other.%s != null)", columnMember);
                 out.println("return false");
                 out.println("}");
 
                 if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
-                    out.println("else if (!(%s sameElements other.%s))", columnMember, columnMember);
+                    out.println("else if (!(this.%s sameElements other.%s))", columnMember, columnMember);
                 else
-                    out.println("else if (!%s.equals(other.%s))", columnMember, columnMember);
+                    out.println("else if (!this.%s.equals(other.%s))", columnMember, columnMember);
 
                 out.println("return false");
             }
@@ -5106,15 +5106,15 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
-                out.println("if (%s === null) {", columnMember);
+                out.println("if (this.%s === null) {", columnMember);
                 out.println("if (o.%s !== null)", columnMember);
                 out.println("return false");
                 out.println("}");
 
                 if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
-                    out.println("else if (!%s.equals(%s, o.%s))", Arrays.class, columnMember, columnMember);
+                    out.println("else if (!%s.equals(this.%s, o.%s))", Arrays.class, columnMember, columnMember);
                 else
-                    out.println("else if (%s != o.%s)", columnMember, columnMember);
+                    out.println("else if (this.%s != o.%s)", columnMember, columnMember);
 
                 out.println("return false");
             }
@@ -5137,15 +5137,15 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
-                out.println("if (%s == null) {", columnMember);
+                out.println("if (this.%s == null) {", columnMember);
                 out.println("if (other.%s != null)", columnMember);
                 out.println("return false;");
                 out.println("}");
 
                 if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
-                    out.println("else if (!%s.equals(%s, other.%s))", Arrays.class, columnMember, columnMember);
+                    out.println("else if (!%s.equals(this.%s, other.%s))", Arrays.class, columnMember, columnMember);
                 else
-                    out.println("else if (!%s.equals(other.%s))", columnMember, columnMember);
+                    out.println("else if (!this.%s.equals(other.%s))", columnMember, columnMember);
 
                 out.println("return false;");
             }

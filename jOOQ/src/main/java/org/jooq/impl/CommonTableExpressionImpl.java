@@ -155,7 +155,9 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
     }
 
     final FieldsImpl<R> fields1() {
-        Field<?>[] s = query.fields();
+        Field<?>[] s = FieldsImpl.fieldsRow0((FieldsTrait) query).fields();
+
+        // [#10565] Can't reuse s.length, see explanation below
         Field<?>[] f = new Field[Tools.degree(query)];
 
         for (int i = 0; i < f.length; i++) {
@@ -167,6 +169,9 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
                     name.fieldNames.length > 0
                         ? name.fieldNames[i]
                         : s[i].getUnqualifiedName()),
+
+                // [#10565] The "scalar type" can be different for a query than the first column's type
+                //          e.g. when projecting FOR XML or FOR JSON
                 (DataType<?>) (f.length == 1 ? Tools.scalarType(query) : s[i].getDataType())
             );
         }

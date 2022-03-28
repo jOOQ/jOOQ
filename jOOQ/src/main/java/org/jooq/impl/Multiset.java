@@ -252,7 +252,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
                         XMLAggOrderByStep<XML> order;
                         AggregateFilterStep<XML> filter;
 
-                        filter = order = xmlaggEmulation(select, false);
+                        filter = order = xmlaggEmulation(t, false);
 
                         // TODO: Re-apply derived table's ORDER BY clause as aggregate ORDER BY
                         if (multisetCondition)

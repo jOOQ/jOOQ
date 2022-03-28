@@ -177,7 +177,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                         JSONArrayAggOrderByStep<JSON> order;
                         JSONArrayAggReturningStep<JSON> returning;
 
-                        returning = order = jsonArrayaggEmulation(ctx, select, false);
+                        returning = order = jsonArrayaggEmulation(ctx, t, false);
 
                         // TODO: Re-apply derived table's ORDER BY clause as aggregate ORDER BY
                         if (multisetCondition)
@@ -231,7 +231,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                         JSONArrayAggOrderByStep<JSONB> order;
                         JSONArrayAggReturningStep<JSONB> returning;
 
-                        returning = order = jsonbArrayaggEmulation(ctx, select, false);
+                        returning = order = jsonbArrayaggEmulation(ctx, t, false);
 
                         // TODO: Re-apply derived table's ORDER BY clause as aggregate ORDER BY
                         if (multisetCondition)

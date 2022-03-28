@@ -87,6 +87,7 @@ import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Condition;
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -112,6 +113,7 @@ import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.tools.StringUtils;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A common base type for tables
@@ -592,7 +594,7 @@ implements
 
     }
 
-    private void accept0(Context<?> ctx) {
+    private final void accept0(Context<?> ctx) {
         if (ctx.declareTables())
             ctx.scopeMarkStart(this);
 
@@ -684,6 +686,40 @@ implements
     @Override
     public boolean declaresTables() {
         return true;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: FieldsTrait "undeprecations" for generated code
+    // -------------------------------------------------------------------------
+
+    @Override
+    public Field<?> field(String name) {
+        return super.field(name);
+    }
+
+    @Override
+    public <T> Field<T> field(String name, Class<T> type) {
+        return super.field(name, type);
+    }
+
+    @Override
+    public <T> Field<T> field(String name, DataType<T> dataType) {
+        return super.field(name, dataType);
+    }
+
+    @Override
+    public Field<?> field(Name name) {
+        return super.field(name);
+    }
+
+    @Override
+    public <T> Field<T> field(Name name, Class<T> type) {
+        return super.field(name, type);
+    }
+
+    @Override
+    public <T> Field<T> field(Name name, DataType<T> dataType) {
+        return super.field(name, dataType);
     }
 
 

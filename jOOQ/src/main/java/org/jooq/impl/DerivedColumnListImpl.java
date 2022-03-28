@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.FieldsImpl.fieldsRow0;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.map;
 
@@ -135,7 +136,7 @@ implements
         if (fieldNameFunction != null)
             return new CommonTableExpressionImpl(
                 new DerivedColumnListImpl(name, map(
-                    q.fields(),
+                    fieldsRow0((FieldsTrait) q).fields(),
                     (f, i) -> DSL.name(fieldNameFunction.apply(f, i)),
                     Name[]::new
                 )),

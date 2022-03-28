@@ -46,12 +46,8 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonArray;
-import static org.jooq.impl.DSL.jsonArrayAgg;
 import static org.jooq.impl.DSL.jsonEntry;
-import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.jsonbArray;
-import static org.jooq.impl.DSL.jsonbArrayAgg;
-import static org.jooq.impl.DSL.jsonbObject;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.when;
@@ -79,8 +75,10 @@ import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.jooq.AggregateFilterStep;
 import org.jooq.Context;
@@ -89,8 +87,11 @@ import org.jooq.Fields;
 import org.jooq.JSON;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONArrayAggReturningStep;
+import org.jooq.JSONArrayNullStep;
 import org.jooq.JSONArrayReturningStep;
 import org.jooq.JSONB;
+import org.jooq.JSONEntry;
+import org.jooq.JSONObjectNullStep;
 import org.jooq.JSONObjectReturningStep;
 import org.jooq.Name;
 import org.jooq.QueryPart;
@@ -360,32 +361,21 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
     // - The JSON never leaks outside of the emulation into user code
 
     static final JSONArrayAggOrderByStep<JSON> jsonArrayaggEmulation(Context<?> ctx, Fields fields, boolean agg) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-            default:
-                return jsonArrayAgg(
-                    returningClob(ctx, jsonArray(
-                        map(fields.fields(), (f, i) -> JSONEntryImpl.unescapeNestedJSON(ctx,
-                            (Field<?>) (agg ? f : DSL.field(fieldName(i), f.getDataType()))
-                        ))
-                    ).nullOnNull())
-                );
-        }
+        return jsonxArrayaggEmulation(ctx, fields, agg, DSL::jsonArrayAgg, DSL::jsonObject, DSL::jsonArray);
     }
 
     static final JSONArrayAggOrderByStep<JSONB> jsonbArrayaggEmulation(Context<?> ctx, Fields fields, boolean agg) {
+        return jsonxArrayaggEmulation(ctx, fields, agg, DSL::jsonbArrayAgg, DSL::jsonbObject, DSL::jsonbArray);
+    }
+
+    static final <J> JSONArrayAggOrderByStep<J> jsonxArrayaggEmulation(
+        Context<?> ctx,
+        Fields fields,
+        boolean agg,
+        Function<? super Field<?>, ? extends JSONArrayAggOrderByStep<J>> jsonxArrayAgg,
+        Function<? super Collection<? extends JSONEntry<?>>, ? extends JSONObjectNullStep<J>> jsonxObject,
+        Function<? super Collection<? extends Field<?>>, ? extends JSONArrayNullStep<J>> jsonxArray
+    ) {
         switch (ctx.family()) {
 
 
@@ -401,8 +391,8 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
 
             default:
-                return jsonbArrayAgg(
-                    returningClob(ctx, jsonbArray(
+                return jsonxArrayAgg.apply(
+                    returningClob(ctx, jsonxArray.apply(
                         map(fields.fields(), (f, i) -> JSONEntryImpl.unescapeNestedJSON(ctx,
                             (Field<?>) (agg ? f : DSL.field(fieldName(i), f.getDataType()))
                         ))

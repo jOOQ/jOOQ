@@ -67,6 +67,7 @@ import java.util.stream.Stream;
 import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -337,7 +338,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> implements Sco
 
     }
 
-    private void accept0(Context<?> ctx) {
+    private final void accept0(Context<?> ctx) {
         if (ctx.declareTables())
             ctx.scopeMarkStart(this);
 
@@ -425,6 +426,40 @@ public class TableImpl<R extends Record> extends AbstractTable<R> implements Sco
     @Override
     public boolean declaresTables() {
         return true;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: FieldsTrait "undeprecations" for generated code
+    // -------------------------------------------------------------------------
+
+    @Override
+    public Field<?> field(String name) {
+        return super.field(name);
+    }
+
+    @Override
+    public <T> Field<T> field(String name, Class<T> type) {
+        return super.field(name, type);
+    }
+
+    @Override
+    public <T> Field<T> field(String name, DataType<T> dataType) {
+        return super.field(name, dataType);
+    }
+
+    @Override
+    public Field<?> field(Name name) {
+        return super.field(name);
+    }
+
+    @Override
+    public <T> Field<T> field(Name name, Class<T> type) {
+        return super.field(name, type);
+    }
+
+    @Override
+    public <T> Field<T> field(Name name, DataType<T> dataType) {
+        return super.field(name, dataType);
     }
 
     // ------------------------------------------------------------------------

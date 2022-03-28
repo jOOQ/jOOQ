@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.FieldsImpl.fieldsRow0;
+
 import java.util.stream.Stream;
 
 import org.jooq.DataType;
@@ -174,41 +176,41 @@ interface FieldsTrait extends Fields {
 
     @Override
     default Class<?>[] types() {
-        return fieldsRow().types();
+        return fieldsRow0(this).types();
     }
 
     @Override
     default Class<?> type(int index) {
-        return fieldsRow().type(index);
+        return fieldsRow0(this).type(index);
     }
 
     @Override
     default Class<?> type(String name) {
-        return fieldsRow().type(name);
+        return fieldsRow0(this).type(name);
     }
 
     @Override
     default Class<?> type(Name name) {
-        return fieldsRow().type(name);
+        return fieldsRow0(this).type(name);
     }
 
     @Override
     default DataType<?>[] dataTypes() {
-        return fieldsRow().dataTypes();
+        return fieldsRow0(this).dataTypes();
     }
 
     @Override
     default DataType<?> dataType(int index) {
-        return fieldsRow().dataType(index);
+        return fieldsRow0(this).dataType(index);
     }
 
     @Override
     default DataType<?> dataType(String name) {
-        return fieldsRow().dataType(name);
+        return fieldsRow0(this).dataType(name);
     }
 
     @Override
     default DataType<?> dataType(Name name) {
-        return fieldsRow().dataType(name);
+        return fieldsRow0(this).dataType(name);
     }
 }

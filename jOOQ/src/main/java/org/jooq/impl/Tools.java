@@ -3450,7 +3450,7 @@ final class Tools {
 
 
 
-        return query.fields().length;
+        return query.types().length;
     }
 
     static final List<DataType<?>> dataTypes(ResultQuery<?> query) {

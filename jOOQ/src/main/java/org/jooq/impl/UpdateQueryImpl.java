@@ -78,14 +78,12 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.trueCondition;
-import static org.jooq.impl.FieldMapsForInsert.keysAndComputedOnClient;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_LIMIT;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.Keywords.K_WHERE;
-import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.findAny;
 
 import java.util.Arrays;

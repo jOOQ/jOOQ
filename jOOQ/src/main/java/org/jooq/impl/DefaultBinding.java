@@ -2685,6 +2685,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, EnumType value) throws SQLException {
             binding(VARCHAR).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), value.getLiteral()));
+
+            if (REQUIRE_ENUM_CAST.contains(ctx.dialect()))
+                pgRenderEnumCast(ctx.render(), dataType.getType());
         }
 
         @Override

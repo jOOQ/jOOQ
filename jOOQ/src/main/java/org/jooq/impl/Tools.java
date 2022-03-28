@@ -3579,7 +3579,7 @@ final class Tools {
 
 
 
-        return map(query.fields(), f -> f.getDataType());
+        return asList(query.dataTypes());
     }
 
     static final DataType<?> scalarType(ResultQuery<?> query) {

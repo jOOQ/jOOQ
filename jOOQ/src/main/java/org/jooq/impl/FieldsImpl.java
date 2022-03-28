@@ -62,6 +62,7 @@ import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.jooq.RecordType;
 import org.jooq.Row;
+import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -194,6 +195,14 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     // -------------------------------------------------------------------------
     // RecordType API
     // -------------------------------------------------------------------------
+
+    /**
+     * [#13341] Prevent costly calls to Select.asTable() where not strictly
+     * needed.
+     */
+    static final Row fieldsRow0(FieldsTrait fields) {
+        return fields instanceof Select<?> s ? s.asTable("t").fieldsRow() : fields.fieldsRow();
+    }
 
     private static final ThrowingFunction<SelectField<?>, Field<?>, RuntimeException> toField() {
         return f -> f instanceof Row ? new RowField<>((Row) f) : (Field<?>) f;

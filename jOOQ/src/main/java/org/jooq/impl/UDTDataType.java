@@ -52,7 +52,11 @@ final class UDTDataType<R extends UDTRecord<R>> extends DefaultDataType<R> {
 
     @SuppressWarnings("unchecked")
     UDTDataType(UDT<R> udt) {
-        super(SQLDialect.DEFAULT, (Class<R>) udt.getRecordType(), Tools.asString(udt.getQualifiedName()));
+        super(
+            SQLDialect.DEFAULT,
+            (Class<R>) udt.getRecordType(),
+            new LazyName(() -> lazyName(udt::getSchema, udt::getUnqualifiedName))
+        );
 
         this.udt = udt;
     }

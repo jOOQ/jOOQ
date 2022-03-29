@@ -48,6 +48,10 @@ final class TableDataType<R extends Record> extends DefaultDataType<R> {
 
     @SuppressWarnings("unchecked")
     TableDataType(Table<R> table) {
-        super(SQLDialect.DEFAULT, (Class<R>) table.getRecordType(), Tools.asString(table.getQualifiedName()));
+        super(
+            SQLDialect.DEFAULT,
+            (Class<R>) table.getRecordType(),
+            new LazyName(() -> lazyName(table::getSchema, table::getUnqualifiedName))
+        );
     }
 }

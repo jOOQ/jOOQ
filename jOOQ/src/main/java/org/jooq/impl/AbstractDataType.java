@@ -501,8 +501,8 @@ implements
 
     private final String getTypeName0(Configuration configuration) {
 
-        // [#10277] Enum types
-        if (isEnum())
+        // [#10277] Various qualified, user defined types
+        if (isEnum() || isUDT())
             return renderedTypeName0(configuration);
         else
             return typeName0();
@@ -521,8 +521,8 @@ implements
     private final String getCastTypeName0(Configuration configuration) {
         SQLDialect dialect = configuration.dialect();
 
-        // [#10277] Enum types
-        if (isEnum()) {
+        // [#10277] Various qualified, user defined types
+        if (isEnum() || isUDT()) {
             return renderedTypeName0(configuration);
         }
 
@@ -622,16 +622,18 @@ implements
 
         // [#10476] TODO: EnumType should extend Qualified
         E e = Tools.enums(enumDataType)[0];
-        return new DefaultDataType<>(getDialect(), (DataType<E>) null, enumDataType, name(e), e.getName(), e.getName(), precision0(), scale0(), length0(), nullability(), (Field) defaultValue());
+        return new DefaultDataType<>(getDialect(), (DataType<E>) null, enumDataType, lazyName(e), e.getName(), e.getName(), precision0(), scale0(), length0(), nullability(), (Field) defaultValue());
     }
 
-    private static final <E extends EnumType> Name name(E e) {
-        return new LazyName(() -> {
+    static final <E extends EnumType> Name lazyName(E e) {
+        return new LazyName(() -> lazyName(e::getSchema, () -> DSL.name(e.getName())));
+    }
 
-            // [#10277] The schema may not yet have been initialised in generated code
-            Schema s = e.getSchema();
-            return s == null ? DSL.name(e.getName()) : s.getQualifiedName().append(e.getName());
-        });
+    static final Name lazyName(Supplier<Schema> schema, Supplier<Name> name) {
+
+        // [#10277] The schema may not yet have been initialised in generated code
+        Schema s = schema.get();
+        return s == null ? name.get() : s.getQualifiedName().append(name.get());
     }
 
     @Override

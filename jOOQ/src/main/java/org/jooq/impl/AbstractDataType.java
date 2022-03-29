@@ -51,8 +51,10 @@ import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.NCHAR;
 import static org.jooq.impl.SQLDataType.NCLOB;
 import static org.jooq.impl.SQLDataType.NVARCHAR;
+import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.NO_SUPPORT_BINARY_TYPE_LENGTH;
 import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Tools.visitMappedSchema;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
@@ -99,6 +101,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
+import org.jooq.Schema;
 import org.jooq.XML;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
@@ -498,21 +501,32 @@ implements
 
     @Override
     public /* non-final */ String getTypeName(Configuration configuration) {
-        return getDataType(configuration).getTypeName();
+
+        // [#10277] Enum types
+        if (isEnum())
+            return renderedTypeName0(configuration);
+        else
+            return getDataType(configuration).getTypeName();
     }
 
     @Override
     public /* final */ String getCastTypeName() {
-        return getCastTypeName0(SQLDialect.DEFAULT);
+        return getCastTypeName0(CONFIG);
     }
 
-    private String getCastTypeName0(SQLDialect dialect) {
+    private final String getCastTypeName0(Configuration configuration) {
+        SQLDialect dialect = configuration.dialect();
+
+        // [#10277] Enum types
+        if (isEnum()) {
+            return renderedTypeName0(configuration);
+        }
 
         // [#9958] We should be able to avoid checking for x > 0, but there may
         //         be a lot of data types constructed with a 0 value instead of
         //         a null value, historically, so removing this check would
         //         introduce a lot of regressions!
-        if (lengthDefined() && length() > 0) {
+        else if (lengthDefined() && length() > 0) {
             if (isBinary() && NO_SUPPORT_BINARY_TYPE_LENGTH.contains(dialect))
                 return castTypeName0();
 
@@ -548,7 +562,11 @@ implements
 
     @Override
     public /* non-final */ String getCastTypeName(Configuration configuration) {
-        return ((AbstractDataType<T>) getDataType(configuration)).getCastTypeName0(configuration.dialect());
+        return ((AbstractDataType<T>) getDataType(configuration)).getCastTypeName0(configuration);
+    }
+
+    private final String renderedTypeName0(Configuration configuration) {
+        return configuration.dsl().render(this);
     }
 
     @Override
@@ -597,9 +615,19 @@ implements
 
     @Override
     public final <E extends EnumType> DataType<E> asEnumDataType(Class<E> enumDataType) {
-        // TODO: Make EnumTypes implement Named
-        String enumTypeName = Tools.enums(enumDataType)[0].getName();
-        return new DefaultDataType<>(getDialect(), (DataType<E>) null, enumDataType, unquotedName(enumTypeName), enumTypeName, enumTypeName, precision0(), scale0(), length0(), nullability(), (Field) defaultValue());
+
+        // [#10476] TODO: EnumType should extend Qualified
+        E e = Tools.enums(enumDataType)[0];
+        return new DefaultDataType<>(getDialect(), (DataType<E>) null, enumDataType, name(e), e.getName(), e.getName(), precision0(), scale0(), length0(), nullability(), (Field) defaultValue());
+    }
+
+    private static final <E extends EnumType> Name name(E e) {
+        return new LazyName(() -> {
+
+            // [#10277] The schema may not yet have been initialised in generated code
+            Schema s = e.getSchema();
+            return s == null ? DSL.name(e.getName()) : s.getQualifiedName().append(e.getName());
+        });
     }
 
     @Override
@@ -817,9 +845,10 @@ implements
 
 
 
-            default:
-                ctx.visit(getQualifiedName());
+            default: {
+                visitMappedSchema(ctx, getQualifiedName());
                 break;
+            }
         }
     }
 

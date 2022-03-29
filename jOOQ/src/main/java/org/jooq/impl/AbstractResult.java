@@ -543,7 +543,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     if (format.format())
                         writer.append(' ');
 
-                    JSONValue.writeJSONString(field.getDataType().getTypeName().toUpperCase(renderLocale(configuration.settings())), writer);
+                    JSONValue.writeJSONString(formatTypeName(field), writer);
 
                     if (format.format())
                         writer.append(format.newline()).append(format.indentString(2));
@@ -616,6 +616,10 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing JSON", e);
         }
+    }
+
+    private final String formatTypeName(Field<?> field) {
+        return ((AbstractDataType<?>) field.getDataType()).typeName0().toUpperCase(renderLocale(configuration.settings()));
     }
 
     static final void formatJSON0(Object value, Writer writer, JSONFormat format) throws java.io.IOException {
@@ -797,7 +801,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     writer.append(escapeXML(field.getName()));
                     writer.append("\"");
                     writer.append(" type=\"");
-                    writer.append(field.getDataType().getTypeName().toUpperCase(renderLocale(configuration.settings())));
+                    writer.append(escapeXML(formatTypeName(field)));
                     writer.append("\"/>");
                 }
 
@@ -1177,7 +1181,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     }
 
                     eField.setAttribute("name", field.getName());
-                    eField.setAttribute("type", field.getDataType().getTypeName().toUpperCase(renderLocale(configuration.settings())));
+                    eField.setAttribute("type", formatTypeName(field));
                     eFields.appendChild(eField);
                 }
 
@@ -1306,7 +1310,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 }
 
                 attrs.addAttribute("", "", "name", "CDATA", field.getName());
-                attrs.addAttribute("", "", "type", "CDATA", field.getDataType().getTypeName().toUpperCase(renderLocale(configuration.settings())));
+                attrs.addAttribute("", "", "type", "CDATA", formatTypeName(field));
 
                 handler.startElement("", "", "field", attrs);
                 handler.endElement("", "", "field");

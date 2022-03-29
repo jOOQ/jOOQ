@@ -41,9 +41,7 @@ import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
-import org.jooq.Replacer;
 import org.jooq.Schema;
-import org.jooq.Traverser;
 
 /**
  * A qualified {@link Name} that is evaluated lazily, e.g. to prevent cycles in
@@ -136,18 +134,4 @@ final class LazyName extends AbstractName {
     public final String[] getName() {
         return name().getName();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

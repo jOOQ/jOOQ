@@ -310,6 +310,7 @@ import org.jooq.conf.BackslashEscaping;
 import org.jooq.conf.NestedCollectionEmulation;
 import org.jooq.conf.ParseNameCase;
 import org.jooq.conf.RenderDefaultNullability;
+import org.jooq.conf.RenderMapping;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
@@ -2538,7 +2539,7 @@ final class Tools {
     /**
      * Visit each query part from a collection, given a context.
      */
-    static final <C extends Context<? super C>> C visitAll(C ctx, Collection<? extends QueryPart> parts) {
+    static final <C extends Context<?>> C visitAll(C ctx, Collection<? extends QueryPart> parts) {
         if (parts != null)
             for (QueryPart part : parts)
                 ctx.visit(part);
@@ -2549,10 +2550,29 @@ final class Tools {
     /**
      * Visit each query part from an array, given a context.
      */
-    static final <C extends Context<? super C>> C visitAll(C ctx, QueryPart[] parts) {
+    static final <C extends Context<?>> C visitAll(C ctx, QueryPart[] parts) {
         if (parts != null)
             for (QueryPart part : parts)
                 ctx.visit(part);
+
+        return ctx;
+    }
+
+    /**
+     * Apply {@link RenderMapping} to a qualified {@link Name}, assuming the
+     * {@link Name#qualifier()} describes the schema, if available.
+     */
+    static final <C extends Context<?>> C visitMappedSchema(C ctx, Name qualifiedName) {
+        if (qualifiedName.qualified()) {
+            Schema s = getMappedSchema(ctx, new SchemaImpl(qualifiedName.qualifier()));
+
+            if (s != null)
+                ctx.visit(s).sql('.');
+
+            ctx.visit(qualifiedName.unqualifiedName());
+        }
+        else
+            ctx.visit(qualifiedName);
 
         return ctx;
     }
@@ -3387,7 +3407,8 @@ final class Tools {
 
 
 
-    static final DSLContext CTX = DSL.using(new DefaultConfiguration());
+    static final Configuration CONFIG = new DefaultConfiguration();
+    static final DSLContext    CTX    = DSL.using(CONFIG);
 
     /**
      * A possibly inefficient but stable way to generate an alias for any

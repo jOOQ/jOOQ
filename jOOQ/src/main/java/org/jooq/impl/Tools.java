@@ -1493,32 +1493,6 @@ final class Tools {
             return field.cast(type);
     }
 
-    /**
-     * Be sure that a given object is a field.
-     *
-     * @param value The argument object
-     * @return The argument object itself, if it is a {@link Field}, or a bind
-     *         value created from the argument object.
-     */
-    @SuppressWarnings("unchecked")
-    static final <T> Field<T> field(T value) {
-
-        // Fields can be mixed with constant values
-        if (value instanceof Field<?>)
-            return (Field<T>) value;
-
-        // [#6362] [#8220] Single-column selects can be considered fields, too
-        else if (value instanceof Select && Tools.degree((Select<?>) value) == 1)
-            return DSL.field((Select<Record1<T>>) value);
-
-        // [#4771] Any other QueryPart type is not supported here
-        else if (value instanceof QueryPart)
-            throw fieldExpected(value);
-
-        else
-            return val(value);
-    }
-
     // The following overloads help performance by avoiding runtime data type lookups
     // ------------------------------------------------------------------------------
 
@@ -1671,60 +1645,42 @@ final class Tools {
     }
 
     @SuppressWarnings("unchecked")
+    private static final <T> Field<T> field(Object value, Supplier<Field<T>> defaultValue) {
+
+        // Fields can be mixed with constant values
+        if (value instanceof Field<?>)
+            return (Field<T>) value;
+
+        // [#6362] [#8220] Single-column selects can be considered fields, too
+        else if (value instanceof Select && Tools.degree((Select<?>) value) == 1)
+            return DSL.field((Select<Record1<T>>) value);
+
+        // [#13251] Rows can be mixed with values in ROW constructors
+        else if (value instanceof AbstractRow<?> r)
+            return (Field<T>) r.rf();
+
+        // [#4771] Any other QueryPart type is not supported here
+        else if (value instanceof QueryPart)
+            throw fieldExpected(value);
+
+        else
+            return defaultValue.get();
+    }
+
+    static final <T> Field<T> field(T value) {
+        return field(value, () -> val(value));
+    }
+
     static final <T> Field<T> field(Object value, Field<T> field) {
-
-        // Fields can be mixed with constant values
-        if (value instanceof Field<?>)
-            return (Field<T>) value;
-
-        // [#6362] [#8220] Single-column selects can be considered fields, too
-        else if (value instanceof Select && Tools.degree((Select<?>) value) == 1)
-            return DSL.field((Select<Record1<T>>) value);
-
-        // [#4771] Any other QueryPart type is not supported here
-        else if (value instanceof QueryPart)
-            throw fieldExpected(value);
-
-        else
-            return val(value, field);
+        return field(value, () -> val(value, field));
     }
 
-    @SuppressWarnings("unchecked")
     static final <T> Field<T> field(Object value, Class<T> type) {
-
-        // Fields can be mixed with constant values
-        if (value instanceof Field<?>)
-            return (Field<T>) value;
-
-        // [#6362] [#8220] Single-column selects can be considered fields, too
-        else if (value instanceof Select && Tools.degree((Select<?>) value) == 1)
-            return DSL.field((Select<Record1<T>>) value);
-
-        // [#4771] Any other QueryPart type is not supported here
-        else if (value instanceof QueryPart)
-            throw fieldExpected(value);
-
-        else
-            return val(value, type);
+        return field(value, () -> val(value, type));
     }
 
-    @SuppressWarnings("unchecked")
     static final <T> Field<T> field(Object value, DataType<T> type) {
-
-        // Fields can be mixed with constant values
-        if (value instanceof Field<?>)
-            return (Field<T>) value;
-
-        // [#6362] [#8220] Single-column selects can be considered fields, too
-        else if (value instanceof Select && Tools.degree((Select<?>) value) == 1)
-            return DSL.field((Select<Record1<T>>) value);
-
-        // [#4771] Any other QueryPart type is not supported here
-        else if (value instanceof QueryPart)
-            throw fieldExpected(value);
-
-        else
-            return val(value, type);
+        return field(value, () -> val(value, type));
     }
 
     static final <T> List<Field<T>> fields(T[] values) {

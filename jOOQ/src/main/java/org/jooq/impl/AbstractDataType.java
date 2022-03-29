@@ -465,17 +465,21 @@ implements
 
     @Override
     public /* non-final */ String getTypeName() {
-        return typeName0();
+        return getTypeName0(CONFIG);
     }
 
-    @Override
-    public /* non-final */ String getTypeName(Configuration configuration) {
+    private final String getTypeName0(Configuration configuration) {
 
         // [#10277] Enum types
         if (isEnum())
             return renderedTypeName0(configuration);
         else
-            return getDataType(configuration).getTypeName();
+            return typeName0();
+    }
+
+    @Override
+    public /* non-final */ String getTypeName(Configuration configuration) {
+        return ((AbstractDataType<T>) getDataType(configuration)).getTypeName0(configuration);
     }
 
     @Override
@@ -660,15 +664,15 @@ implements
 
     @Override
     public final boolean isNString() {
-        DataType<T> t = getSQLDataType();
+        AbstractDataType<T> t = (AbstractDataType<T>) getSQLDataType();
         return t == NCHAR
             || t == NCLOB
             || t == NVARCHAR
 
             // [#9540] [#10368] In case the constant literals haven't been initialised yet
-            || NCHAR == null && "nchar".equals(t.getTypeName())
-            || NCLOB == null && "nclob".equals(t.getTypeName())
-            || NVARCHAR == null && "nvarchar".equals(t.getTypeName());
+            || NCHAR == null && "nchar".equals(t.typeName0())
+            || NCLOB == null && "nclob".equals(t.typeName0())
+            || NVARCHAR == null && "nvarchar".equals(t.typeName0());
     }
 
     @Override
@@ -715,19 +719,19 @@ implements
 
     @Override
     public final boolean isLob() {
-        DataType<T> t = getSQLDataType();
+        AbstractDataType<T> t = (AbstractDataType<T>) getSQLDataType();
 
         if (t == this)
-            return getTypeName().endsWith("lob");
+            return typeName0().endsWith("lob");
         else
             return t == BLOB
                 || t == CLOB
                 || t == NCLOB
 
                 // [#9540] [#10368] In case the constant literals haven't been initialised yet
-                || BLOB == null && "blob".equals(t.getTypeName())
-                || CLOB == null && "clob".equals(t.getTypeName())
-                || NCLOB == null && "nclob".equals(t.getTypeName());
+                || BLOB == null && "blob".equals(t.typeName0())
+                || CLOB == null && "clob".equals(t.typeName0())
+                || NCLOB == null && "nclob".equals(t.typeName0());
     }
 
     @Override

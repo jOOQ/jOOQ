@@ -67,6 +67,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.FieldMapsForInsert.toSQLInsertSelect;
+import static org.jooq.impl.FieldsImpl.fieldsRow0;
 import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_DO_NOTHING;
@@ -84,6 +85,7 @@ import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.collect;
+import static org.jooq.impl.Tools.degree;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.unqualified;
@@ -811,7 +813,7 @@ implements
             // [#10989] INSERT .. SELECT .. ON DUPLICATE KEY IGNORE
             if (select != null) {
                 Map<Field<?>, Field<?>> map = new HashMap<>();
-                Field<?>[] names = Tools.fields(select.fields().length);
+                Field<?>[] names = Tools.fields(degree(select));
                 List<Field<?>> f = new ArrayList<>(fields);
                 for (int i = 0; i < fields.size() && i < names.length; i++)
                     map.put(f.get(i), names[i]);

@@ -58,7 +58,6 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.impl.DSL.constraint;
-import static org.jooq.impl.DSL.dual;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
@@ -82,6 +81,7 @@ import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.degree;
 import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
@@ -755,7 +755,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             // [#10989] INSERT .. SELECT .. ON DUPLICATE KEY IGNORE
             if (select != null) {
                 Map<Field<?>, Field<?>> map = new HashMap<>();
-                Field<?>[] names = Tools.fields(select.fields().length);
+                Field<?>[] names = Tools.fields(degree(select));
                 List<Field<?>> fields = new ArrayList<>(insertMaps.fields());
                 for (int i = 0; i < fields.size() && i < names.length; i++)
                     map.put(fields.get(i), names[i]);

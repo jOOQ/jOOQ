@@ -1223,10 +1223,11 @@ implements
 
         // [#5110] This is not yet supported by Derby
         if (upsertSelect != null) {
+            Table<?> s = upsertSelect.asTable("s");
 
             // [#579] TODO: Currently, this syntax may require aliasing
             // on the call-site
-            src = DSL.select(map(upsertSelect.fieldsRow().fields(), (f, i) -> f.as("s" + (i + 1)))).from(upsertSelect).asTable("src");
+            src = DSL.select(map(s.fieldsRow().fields(), (f, i) -> f.as("s" + (i + 1)))).from(s).asTable("src");
             srcFields = Arrays.asList(src.fields());
         }
         else if (usingSubqueries) {

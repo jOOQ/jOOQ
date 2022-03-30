@@ -52,6 +52,7 @@ import static org.jooq.impl.SQLDataType.NCLOB;
 import static org.jooq.impl.SQLDataType.NVARCHAR;
 import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.CTX;
+import static org.jooq.impl.Tools.CONFIG_UNQUOTED;
 import static org.jooq.impl.Tools.NO_SUPPORT_BINARY_TYPE_LENGTH;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitMappedSchema;
@@ -414,7 +415,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
 
     @Override
     public /* non-final */ String getTypeName() {
-        return getTypeName0(CONFIG);
+        return getTypeName0(CONFIG_UNQUOTED);
     }
 
     private final String getTypeName0(Configuration configuration) {
@@ -433,7 +434,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
 
     @Override
     public /* final */ String getCastTypeName() {
-        return getCastTypeName0(CONFIG);
+        return getCastTypeName0(CONFIG_UNQUOTED);
     }
 
     private final String getCastTypeName0(Configuration configuration) {

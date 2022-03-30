@@ -52,9 +52,11 @@ import static org.jooq.Clause.UPDATE_WHERE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -74,6 +76,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.SettingsTools.getExecuteUpdateWithoutWhere;
+import static org.jooq.impl.DSL.mergeInto;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
@@ -89,8 +92,10 @@ import static org.jooq.impl.Tools.findAny;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -102,6 +107,7 @@ import org.jooq.FieldOrRowOrSelect;
 import org.jooq.Operator;
 import org.jooq.OrderField;
 // ...
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record10;
@@ -153,6 +159,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.UpdateQuery;
 import org.jooq.impl.FieldMapForUpdate.SetClause;
@@ -176,6 +183,8 @@ implements
 
 
 
+
+    private static final Set<SQLDialect> EMULATE_FROM_WITH_MERGE   = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB);
 
     // LIMIT is not supported at all
     private static final Set<SQLDialect> NO_SUPPORT_LIMIT          = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB);
@@ -530,6 +539,11 @@ implements
 
     @Override
     final void accept0(Context<?> ctx) {
+        if (!from.isEmpty() && EMULATE_FROM_WITH_MERGE.contains(ctx.dialect())) {
+            acceptFromAsMerge(ctx);
+            return;
+        }
+
 
 
 
@@ -542,6 +556,45 @@ implements
 
 
         accept1(ctx);
+    }
+
+    private final void acceptFromAsMerge(Context<?> ctx) {
+        // TODO: What about RETURNING?
+        // TODO: What if there are multiple FROM tables?
+        // TODO: What if there are SET ROW = ROW assignment(s)?
+        // TODO: What if there are SET ROW = (SELECT ..) assignment(s)?
+
+        Table<?> s;
+        boolean patchSource = true;
+        Condition c = condition;
+        FieldMapForUpdate um = updateMap;
+
+        if (orderBy.isEmpty() && limit == null) {
+            if (from.size() == 1 && from.get(0) instanceof TableImpl && !(patchSource = false))
+                s = from.get(0);
+            else
+                s = select().from(from).asTable("s");
+        }
+        else
+            s = select().from(from).orderBy(orderBy).limit(limit).asTable("s");
+
+        if (patchSource && ctx.configuration().requireCommercial(() -> "The UPDATE .. FROM to MERGE transformation requires commercial only logic. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition")) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+        ctx.visit(mergeInto(table).using(s).on(c).whenMatchedThenUpdate().set(um));
     }
 
     private final UpdateQueryImpl<R> copy(Consumer<? super UpdateQueryImpl<R>> consumer) {

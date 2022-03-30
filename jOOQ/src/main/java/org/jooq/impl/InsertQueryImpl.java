@@ -84,6 +84,7 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.collect;
+import static org.jooq.impl.Tools.degree;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.unqualified;
@@ -801,7 +802,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             // [#10989] INSERT .. SELECT .. ON DUPLICATE KEY IGNORE
             if (select != null) {
                 Map<Field<?>, Field<?>> map = new HashMap<>();
-                Field<?>[] names = Tools.fields(select.fields().length);
+                Field<?>[] names = Tools.fields(degree(select));
                 List<Field<?>> f = new ArrayList<>(fields);
                 for (int i = 0; i < fields.size() && i < names.length; i++)
                     map.put(f.get(i), names[i]);

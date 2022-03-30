@@ -258,14 +258,12 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
                     visitSubquery(ctx, select, false, false, false);
                 }
                 else {
-                    Field<?>[] f = Tools.fields(size);
-
                     for (int i = 0; i < size; i++) {
                         FieldMapForUpdate mu = new FieldMapForUpdate(table, setClause, null);
                         separator = mu.acceptAssignmentClause(ctx,
                             supportsQualify,
                             row.field(i),
-                            field(select(f[i]).from(select.asTable(table(name("t")), f))),
+                            new ProjectSingleScalarSubquery<>(select, i),
                             separator
                         );
                     }

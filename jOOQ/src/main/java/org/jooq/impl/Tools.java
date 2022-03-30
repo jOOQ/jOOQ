@@ -3363,8 +3363,14 @@ final class Tools {
 
 
 
-    static final Configuration CONFIG = new DefaultConfiguration();
-    static final DSLContext    CTX    = DSL.using(CONFIG);
+    static final Configuration CONFIG          = new DefaultConfiguration();
+    static final Configuration CONFIG_UNQUOTED = new DefaultConfiguration();
+
+    static {
+        CONFIG_UNQUOTED.settings().setRenderQuotedNames(RenderQuotedNames.NEVER);
+    }
+
+    static final DSLContext    CTX             = DSL.using(CONFIG);
 
     /**
      * A possibly inefficient but stable way to generate an alias for any

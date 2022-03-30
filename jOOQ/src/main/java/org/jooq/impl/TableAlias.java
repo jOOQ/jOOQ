@@ -59,8 +59,8 @@ import org.jooq.UniqueKey;
  */
 final class TableAlias<R extends Record> extends AbstractTable<R> implements QOM.TableAlias<R> {
 
-    final Alias<Table<R>> alias;
-    final FieldsImpl<R>   aliasedFields;
+    final Alias<Table<R>>   alias;
+    transient FieldsImpl<R> aliasedFields;
 
     TableAlias(Table<R> table, Name alias) {
         this(table, alias, null, c -> false);
@@ -78,17 +78,16 @@ final class TableAlias<R extends Record> extends AbstractTable<R> implements QOM
         super(table.getOptions(), alias, table.getSchema());
 
         this.alias = new Alias<>(table, this, alias, fieldAliases, wrapInParentheses);
-        this.aliasedFields = init(fieldAliases);
     }
 
     /**
      * Register fields for this table alias
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    private final FieldsImpl<R> init(Name[] fieldAliases) {
+    private final FieldsImpl<R> initFieldAliases() {
         List<Field<?>> result = Tools.map(this.alias.wrapped().fieldsRow().fields(), (f, i) -> new TableFieldImpl(
-              fieldAliases != null && fieldAliases.length > i
-            ? fieldAliases[i]
+              alias.fieldAliases != null && alias.fieldAliases.length > i
+            ? alias.fieldAliases[i]
             : f.getUnqualifiedName(), f.getDataType(), this, f.getCommentPart(), f.getBinding()
         ));
 
@@ -157,6 +156,9 @@ final class TableAlias<R extends Record> extends AbstractTable<R> implements QOM
 
     @Override
     final FieldsImpl<R> fields0() {
+        if (aliasedFields == null)
+            aliasedFields = initFieldAliases();
+
         return aliasedFields;
     }
 

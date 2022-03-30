@@ -649,9 +649,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final Table<R> asTable() {
-        // Its usually better to alias nested selects that are used in
-        // the FROM clause of a query
-        return new DerivedTable<>(this).as(autoAlias(this));
+        // [#13349] Delay the possibly expensive computation of the auto alias,
+        //          possibly making the computation unnecessary
+        return new DerivedTable<>(this).as(new LazyName(() -> DSL.name(autoAlias(this))));
     }
 
     @Override

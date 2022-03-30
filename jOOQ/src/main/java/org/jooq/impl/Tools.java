@@ -1656,8 +1656,8 @@ final class Tools {
             return DSL.field((Select<Record1<T>>) value);
 
         // [#13251] Rows can be mixed with values in ROW constructors
-        else if (value instanceof AbstractRow<?> r)
-            return (Field<T>) r.rf();
+        else if (value instanceof AbstractRow<?>)
+            return (Field<T>) ((AbstractRow<?>) value).rf();
 
         // [#4771] Any other QueryPart type is not supported here
         else if (value instanceof QueryPart)

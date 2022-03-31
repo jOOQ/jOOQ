@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.quotedName;
 import static org.jooq.impl.DSL.systemName;
 
 import org.jooq.Name;
@@ -49,6 +50,10 @@ import org.jooq.Name;
  * @author Lukas Eder
  */
 final class Names {
+
+    // [#13383] These names must never be unquoted to prevent conflicts with keywords
+    static final Name N_CASE                   = quotedName("case");
+    static final Name N_SELECT                 = quotedName("select");
 
     static final Name N_ARRAY_TABLE            = name("array_table");
     static final Name N_COLUMN_VALUE           = name("COLUMN_VALUE");
@@ -92,7 +97,6 @@ final class Names {
     static final Name N_BOOLAND_AGG            = systemName("booland_agg");
     static final Name N_BOOLOR_AGG             = systemName("boolor_agg");
     static final Name N_BYTE_LENGTH            = systemName("byte_length");
-    static final Name N_CASE                   = systemName("case");
     static final Name N_CAST                   = systemName("cast");
     static final Name N_CEILING                = systemName("ceiling");
     static final Name N_CHAR                   = systemName("char");
@@ -251,7 +255,6 @@ final class Names {
     static final Name N_RSHIFT                 = systemName("rshift");
     static final Name N_SCHEMA_NAME            = systemName("schema_name");
     static final Name N_SECONDS_BETWEEN        = systemName("seconds_between");
-    static final Name N_SELECT                 = systemName("select");
     static final Name N_SEQ4                   = systemName("seq4");
     static final Name N_SEQ8                   = systemName("seq8");
     static final Name N_SGN                    = systemName("sgn");

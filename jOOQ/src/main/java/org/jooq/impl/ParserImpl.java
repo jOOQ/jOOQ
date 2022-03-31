@@ -1459,6 +1459,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+
+
             }
             else if (!ignoreProEdition() && (jsonb = parseKeywordIf("JSONB") || parseKeywordIf("JSON")) && requireProEdition()) {
 

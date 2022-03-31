@@ -3601,6 +3601,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
     @Override
     public final List<Field<?>> getSelect() {
         return getSelectResolveAllAsterisks(Tools.configuration(configuration()));

@@ -69,11 +69,13 @@ final class Keywords {
     static final Keyword K_AUTO                     = keyword("auto");
     static final Keyword K_AUTOINCREMENT            = keyword("autoincrement");
     static final Keyword K_AUTO_INCREMENT           = keyword("auto_increment");
+    static final Keyword K_BASE64                   = keyword("base64");
     static final Keyword K_BEFORE                   = keyword("before");
     static final Keyword K_BEGIN                    = keyword("begin");
     static final Keyword K_BEGIN_CATCH              = keyword("begin catch");
     static final Keyword K_BEGIN_TRY                = keyword("begin try");
     static final Keyword K_BETWEEN                  = keyword("between");
+    static final Keyword K_BINARY                   = keyword("binary");
     static final Keyword K_BLOB                     = keyword("blob");
     static final Keyword K_BOOLEAN                  = keyword("boolean");
     static final Keyword K_BOTH                     = keyword("both");

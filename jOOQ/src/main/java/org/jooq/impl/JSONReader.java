@@ -88,11 +88,13 @@ final class JSONReader<R extends Record> {
     private final DSLContext         ctx;
     private final AbstractRow<R>     row;
     private final Class<? extends R> recordType;
+    private final boolean            multiset;
 
-    JSONReader(DSLContext ctx, AbstractRow<R> row, Class<? extends R> recordType) {
+    JSONReader(DSLContext ctx, AbstractRow<R> row, Class<? extends R> recordType, boolean multiset) {
         this.ctx = ctx;
         this.row = row;
         this.recordType = recordType != null ? recordType : (Class<? extends R>) Record.class;
+        this.multiset = multiset;
     }
 
     final Result<R> read(String string) {
@@ -249,20 +251,25 @@ final class JSONReader<R extends Record> {
             if (field.getType() == byte[].class && record.get(i) instanceof String) {
                 String s = (String) record.get(i);
 
-                // [#12134] PostgreSQL encodes binary data as hex
-                if (ENCODE_BINARY_AS_HEX.contains(ctx.dialect()))
-                    if (s.startsWith("\\x"))
-                        record.set(i, convertHexToBytes(s, 1, Integer.MAX_VALUE));
+                if (multiset) {
+
+                    // [#12134] PostgreSQL encodes binary data as hex
+                    if (ENCODE_BINARY_AS_HEX.contains(ctx.dialect()))
+                        if (s.startsWith("\\x"))
+                            record.set(i, convertHexToBytes(s, 1, Integer.MAX_VALUE));
+                        else
+                            record.set(i, convertHexToBytes(s));
+
+                    // [#12134] MariaDB encodes binary data as text (?)
+                    else if (ENCODE_BINARY_AS_TEXT.contains(ctx.dialect()))
+                        record.set(i, s);
+
+                    // [#12134] MySQL encodes binary data as prefixed base64
+                    else if (s.startsWith("base64:type15:"))
+                        record.set(i, Base64.getDecoder().decode(s.substring(14)));
                     else
-                        record.set(i, convertHexToBytes(s));
-
-                // [#12134] MariaDB encodes binary data as text (?)
-                else if (ENCODE_BINARY_AS_TEXT.contains(ctx.dialect()))
-                    record.set(i, s);
-
-                // [#12134] MySQL encodes binary data as prefixed base64
-                else if (s.startsWith("base64:type15:"))
-                    record.set(i, Base64.getDecoder().decode(s.substring(14)));
+                        record.set(i, Base64.getDecoder().decode(s));
+                }
                 else
                     record.set(i, Base64.getDecoder().decode(s));
             }

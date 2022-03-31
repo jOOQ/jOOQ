@@ -4087,7 +4087,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         static <R extends Record> Result<R> readMultisetJSON(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {
             if (s.startsWith("{") || s.startsWith("["))
-                return new JSONReader<>(ctx.dsl(), row, recordType).read(new StringReader(s), true);
+                return new JSONReader<>(ctx.dsl(), row, recordType, true).read(new StringReader(s), true);
             else
                 return readMultisetScalar(ctx, row, recordType, s);
         }

@@ -44,6 +44,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.AbstractRowAsField.forceMultisetContent;
 import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.case_;
+import static org.jooq.impl.DSL.castNull;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
@@ -51,17 +52,22 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.inlined;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.toChar;
+import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.DSL.xmlelement;
+import static org.jooq.impl.DSL.xmlquery;
 import static org.jooq.impl.Keywords.K_FORMAT;
 import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_KEY;
 import static org.jooq.impl.Keywords.K_VALUE;
+import static org.jooq.impl.Names.N_HEX;
 import static org.jooq.impl.Names.N_JSON;
 import static org.jooq.impl.Names.N_JSON_EXTRACT;
 import static org.jooq.impl.Names.N_JSON_MERGE;
 import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
 import static org.jooq.impl.Names.N_JSON_QUERY;
+import static org.jooq.impl.Names.N_RAWTOHEX;
 import static org.jooq.impl.RowAsField.NO_NATIVE_SUPPORT;
-import static org.jooq.impl.SQLDataType.BIT;
+import static org.jooq.impl.SQLDataType.*;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.combine;
@@ -192,6 +198,10 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
                 else if (type.isTemporal())
                     return field.cast(VARCHAR);
 
+                // [#12134] No auto conversion available yet
+                else if (type.isBinary())
+                    return function(N_RAWTOHEX, VARCHAR, field);
+
                 break;
 
             // [#11025] These don't have boolean support outside of JSON
@@ -210,8 +220,16 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
             case SQLITE:
                 if (isType(type, Boolean.class))
                     return function(N_JSON, SQLDataType.JSON, case_((Field<Boolean>) field).when(inline(true), inline("true")).when(inline(false), inline("false")));
+                else if (type.isBinary())
+                    return when(field.isNotNull(), function(N_HEX, VARCHAR, field));
 
                 break;
+
+
+
+
+
+
 
 
 

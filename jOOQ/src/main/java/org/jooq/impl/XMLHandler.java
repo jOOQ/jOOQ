@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DefaultDataType.getDataType;
@@ -83,6 +84,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
     private State<R>                s;
 
     private static class State<R extends Record> {
+        final DSLContext         ctx;
         AbstractRow<R>           row;
         final Class<? extends R> recordType;
         boolean                  inResult;
@@ -95,7 +97,8 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
         int                      column;
 
         @SuppressWarnings("unchecked")
-        State(AbstractRow<R> row, Class<? extends R> recordType) {
+        State(DSLContext ctx, AbstractRow<R> row, Class<? extends R> recordType) {
+            this.ctx = ctx;
             this.row = row;
             this.recordType = recordType != null ? recordType : (Class<? extends R>) Record.class;
             this.fields = new ArrayList<>();
@@ -108,6 +111,11 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
             for (int i = 0; i < fields.size(); i++) {
                 if (fields.get(i).getDataType().isBinary()) {
                     if (values.get(i) instanceof String) { String s = (String) values.get(i);
+
+
+
+
+
                         values.set(i, Base64.getDecoder().decode(s));
                     }
                 }
@@ -121,7 +129,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
     XMLHandler(DSLContext ctx, AbstractRow<R> row, Class<? extends R> recordType) {
         this.ctx = ctx;
         this.states = new ArrayDeque<>();
-        this.s = new State<>(row, recordType);
+        this.s = new State<>(ctx, row, recordType);
     }
 
     Result<R> read(String string) {
@@ -180,7 +188,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
 
             if (f.getDataType().isMultiset()) {
                 states.push(s);
-                s = new State<>((AbstractRow<R>) f.getDataType().getRow(), (Class<R>) f.getDataType().getRecordType());
+                s = new State<>(ctx, (AbstractRow<R>) f.getDataType().getRow(), (Class<R>) f.getDataType().getRecordType());
                 s.inResult = true;
             }
             else
@@ -207,7 +215,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
 
                 if (f.getDataType().isRecord()) {
                     states.push(s);
-                    s = new State<>((AbstractRow<R>) f.getDataType().getRow(), (Class<R>) f.getDataType().getRecordType());
+                    s = new State<>(ctx, (AbstractRow<R>) f.getDataType().getRow(), (Class<R>) f.getDataType().getRecordType());
                     s.inResult = true;
                 }
                 else

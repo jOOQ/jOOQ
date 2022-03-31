@@ -39,6 +39,15 @@ package org.jooq.impl;
 
 import static java.lang.Integer.parseInt;
 import static java.util.Arrays.asList;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DefaultDataType.getDataType;
@@ -56,12 +65,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Fields;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.tools.json.ContainerFactory;
 import org.jooq.tools.json.JSONParser;
 
@@ -226,6 +237,9 @@ final class JSONReader<R extends Record> {
         return result;
     }
 
+    private static final Set<SQLDialect> ENCODE_BINARY_AS_HEX  = SQLDialect.supportedBy(H2, POSTGRES, SQLITE, YUGABYTEDB);
+    private static final Set<SQLDialect> ENCODE_BINARY_AS_TEXT = SQLDialect.supportedBy(MARIADB);
+
     private static final List<Object> patchRecord(DSLContext ctx, boolean multiset, Fields result, List<Object> record) {
         for (int i = 0; i < result.fields().length; i++) {
             Field<?> field = result.field(i);
@@ -235,9 +249,20 @@ final class JSONReader<R extends Record> {
             if (field.getType() == byte[].class && record.get(i) instanceof String) {
                 String s = (String) record.get(i);
 
-                // [#12134] SQL/JSON MULTISET and other forms of serialisation may produce hex encoded binary data
-                if (s.startsWith("\\x"))
-                    record.set(i, convertHexToBytes(s, 1, Integer.MAX_VALUE));
+                // [#12134] PostgreSQL encodes binary data as hex
+                if (ENCODE_BINARY_AS_HEX.contains(ctx.dialect()))
+                    if (s.startsWith("\\x"))
+                        record.set(i, convertHexToBytes(s, 1, Integer.MAX_VALUE));
+                    else
+                        record.set(i, convertHexToBytes(s));
+
+                // [#12134] MariaDB encodes binary data as text (?)
+                else if (ENCODE_BINARY_AS_TEXT.contains(ctx.dialect()))
+                    record.set(i, s);
+
+                // [#12134] MySQL encodes binary data as prefixed base64
+                else if (s.startsWith("base64:type15:"))
+                    record.set(i, Base64.getDecoder().decode(s.substring(14)));
                 else
                     record.set(i, Base64.getDecoder().decode(s));
             }

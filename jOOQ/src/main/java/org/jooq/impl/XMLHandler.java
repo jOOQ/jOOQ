@@ -51,6 +51,7 @@ import static org.jooq.tools.StringUtils.defaultIfBlank;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Deque;
 import java.util.List;
 
@@ -99,6 +100,21 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
             this.recordType = recordType != null ? recordType : (Class<? extends R>) Record.class;
             this.fields = new ArrayList<>();
             this.values = new ArrayList<>();
+        }
+
+        final R into(R r) {
+
+            // [#12134] Patch base64 encoded binary values
+            for (int i = 0; i < fields.size(); i++) {
+                if (fields.get(i).getDataType().isBinary()) {
+                    if (values.get(i) instanceof String) { String s = (String) values.get(i);
+                        values.set(i, Base64.getDecoder().decode(s));
+                    }
+                }
+            }
+
+            r.from(values);
+            return r;
         }
     }
 
@@ -247,11 +263,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
             s.inRecord--;
 
             initResult();
-            s.result.add(newRecord(true, s.recordType, s.row, ctx.configuration()).operate(r -> {
-                r.from(s.values);
-                return r;
-            }));
-
+            s.result.add(newRecord(true, s.recordType, s.row, ctx.configuration()).operate(s::into));
             s.values.clear();
             s.column = 0;
         }
@@ -262,11 +274,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
                 Field<?> f = peek.row.field(peek.column);
 
                 if ("record".equalsIgnoreCase(qName) && f.getDataType().isRecord()) {
-                    peek.values.add(newRecord(true, s.recordType, s.row, ctx.configuration()).operate(r -> {
-                        r.from(s.values);
-                        return r;
-                    }));
-
+                    peek.values.add(newRecord(true, s.recordType, s.row, ctx.configuration()).operate(s::into));
                     s = states.pop();
                     break x;
                 }

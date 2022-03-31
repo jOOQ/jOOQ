@@ -57,6 +57,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.HashMap;
@@ -65,8 +66,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
-
-import jakarta.xml.bind.DatatypeConverter;
 
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
@@ -805,7 +804,7 @@ final class LoaderImpl<R extends Record> implements
                             row[i] = null;
                         else if (i < fields.length && fields[i] != null)
                             if (fields[i].getType() == byte[].class && row[i] instanceof String)
-                                row[i] = DatatypeConverter.parseBase64Binary((String) row[i]);
+                                row[i] = Base64.getDecoder().decode((String) row[i]);
 
                     // [#10583] Pad row to the fields length
                     if (row.length < fields.length)

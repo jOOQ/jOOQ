@@ -39,7 +39,6 @@ package org.jooq.codegen;
 
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.nCopies;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
@@ -71,9 +70,9 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -85,14 +84,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TimeZone;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import org.jooq.AggregateFunction;
@@ -105,7 +102,6 @@ import org.jooq.Domain;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Function2;
 import org.jooq.Identity;
 import org.jooq.Index;
 // ...
@@ -196,8 +192,6 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
 // ...
-
-import jakarta.xml.bind.DatatypeConverter;
 
 
 /**
@@ -398,7 +392,7 @@ public class JavaGenerator extends AbstractGenerator {
 
     @Override
     public final void generate0(Database db) {
-        this.isoDate = DatatypeConverter.printDateTime(Calendar.getInstance(TimeZone.getTimeZone("UTC")));
+        this.isoDate = Instant.now().toString();
         this.schemaVersions = new LinkedHashMap<>();
         this.catalogVersions = new LinkedHashMap<>();
         this.database.addFilter(new AvoidAmbiguousClassesFilter());

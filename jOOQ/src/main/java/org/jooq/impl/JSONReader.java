@@ -43,6 +43,7 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DefaultDataType.getDataType;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.convertHexToBytes;
 import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
@@ -50,6 +51,7 @@ import static org.jooq.tools.StringUtils.defaultIfBlank;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,8 +64,6 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.tools.json.ContainerFactory;
 import org.jooq.tools.json.JSONParser;
-
-import jakarta.xml.bind.DatatypeConverter;
 
 /**
  * A very simple JSON reader based on Simple JSON.
@@ -232,8 +232,15 @@ final class JSONReader<R extends Record> {
 
             // [#8829] LoaderImpl expects binary data to be encoded in base64,
             //         not according to org.jooq.tools.Convert
-            if (field.getType() == byte[].class && record.get(i) instanceof String)
-                record.set(i, DatatypeConverter.parseBase64Binary((String) record.get(i)));
+            if (field.getType() == byte[].class && record.get(i) instanceof String) {
+                String s = (String) record.get(i);
+
+                // [#12134] SQL/JSON MULTISET and other forms of serialisation may produce hex encoded binary data
+                if (s.startsWith("\\x"))
+                    record.set(i, convertHexToBytes(s, 1, Integer.MAX_VALUE));
+                else
+                    record.set(i, Base64.getDecoder().decode(s));
+            }
 
             // [#12155] Recurse for nested data types
             else if (multiset && field.getDataType().isMultiset())

@@ -184,6 +184,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Struct;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
@@ -3801,8 +3802,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             AbstractRow<R> row = (AbstractRow<R>) type.getRow();
             Result<R> result;
 
-            // [#12930] AbstractRowAsSubquery doesn't unnecessarily nest Row1
-            if (row.size() == 1) {
+            // [#12930] AbstractRowAsField doesn't unnecessarily nest Row1
+            if (row.size() == 1 && emulateMultiset(ctx.configuration()) != NestedCollectionEmulation.NATIVE) {
                 result = new ResultImpl<>(ctx.configuration(), row);
                 result.add(newRecord(true, (Class<R>) type.getRecordType(), row, ctx.configuration()).operate(r -> {
                     DefaultBindingGetResultSetContext<?> c = new DefaultBindingGetResultSetContext<>(ctx.executeContext(), ctx.resultSet(), ctx.index());
@@ -3813,8 +3814,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
             else
                 result = DefaultResultBinding.readMultiset(ctx, row, type.getType(),
-                    s -> s != null && (s.startsWith("[") || s.startsWith("{")) ? "[" + s + "]" : s,
-                    s -> s != null && (s.startsWith("<")) ? "<result>" + s + "</result>" : s
+                    s -> s != null && (s.startsWith("[") || s.startsWith("{")) ? "[" + s + "]" : null,
+                    s -> s != null && (s.startsWith("<")) ? "<result>" + s + "</result>" : null,
+                    s -> s instanceof Struct ? asList((Struct) s) : null
                 );
 
             return isEmpty(result) ? null : result.get(0);
@@ -4035,7 +4037,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @SuppressWarnings("unchecked")
         static final <R extends Record> Result<R> readMultiset(BindingGetResultSetContext<?> ctx, DataType<Result<R>> type) throws SQLException {
-            return readMultiset(ctx, (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType(), identity(), identity());
+            return readMultiset(ctx, (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType(), identity(), identity(), (Function) identity());
         }
 
         static final <R extends Record> Result<R> readMultiset(
@@ -4043,7 +4045,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             AbstractRow<R> row,
             Class<R> recordType,
             Function<String, String> jsonStringPatch,
-            Function<String, String> xmlStringPatch
+            Function<String, String> xmlStringPatch,
+            Function<Object, List<Struct>> nativePatch
         )
         throws SQLException {
             NestedCollectionEmulation emulation = emulateMultiset(ctx.configuration());
@@ -4073,26 +4076,42 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         xmlStringPatch.apply(ctx.resultSet().getString(ctx.index())),
                         s -> readMultisetXML(ctx, row, recordType, s)
                     );
+
+
+
+
+
+
+
+
+
             }
 
             throw new UnsupportedOperationException("Multiset emulation not yet supported: " + emulation);
         }
 
-        static <R extends Record> Result<R> readMultisetXML(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {
+
+
+
+
+
+
+
+        static final <R extends Record> Result<R> readMultisetXML(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {
             if (s.startsWith("<"))
                 return new XMLHandler<>(ctx.dsl(), row, recordType).read(s);
             else
                 return readMultisetScalar(ctx, row, recordType, s);
         }
 
-        static <R extends Record> Result<R> readMultisetJSON(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {
+        static final <R extends Record> Result<R> readMultisetJSON(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {
             if (s.startsWith("{") || s.startsWith("["))
                 return new JSONReader<>(ctx.dsl(), row, recordType, true).read(new StringReader(s), true);
             else
                 return readMultisetScalar(ctx, row, recordType, s);
         }
 
-        static <R extends Record> Result<R> readMultisetScalar(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {
+        static final <R extends Record> Result<R> readMultisetScalar(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {
             Result<R> result = new ResultImpl<>(ctx.configuration(), row);
 
             result.add(newRecord(true, recordType, row, ctx.configuration()).operate(r -> {

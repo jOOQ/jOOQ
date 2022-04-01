@@ -1895,7 +1895,7 @@ final class Tools {
         return it instanceof Collection ? new ArrayList<>(((Collection<?>) it).size()) : new ArrayList<>();
     }
 
-    static final <T, R> R apply(@Nullable T t, Function<? super @NotNull T, ? extends R> f) {
+    static final <T, R, X extends Throwable> R apply(@Nullable T t, ThrowingFunction<? super @NotNull T, ? extends R, ? extends X> f) throws X {
         return t == null ? null : f.apply(t);
     }
 

@@ -3939,13 +3939,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 fields = Tools.row0(Tools.fields(values.size(), SQLDataType.VARCHAR));
 
             return Tools.newRecord(true, (Class<Record>) type, (AbstractRow<Record>) fields)
-                        .operate(record -> {
-                            Row row = record.fieldsRow();
+                        .operate(r -> {
+                            Row row = r.fieldsRow();
 
                             for (int i = 0; i < row.size(); i++)
-                                pgSetValue(ctx, record, row.field(i), values.get(i));
+                                pgSetValue(ctx, r, row.field(i), values.get(i));
 
-                            return record;
+                            r.changed(false);
+                            return r;
                         });
         }
 

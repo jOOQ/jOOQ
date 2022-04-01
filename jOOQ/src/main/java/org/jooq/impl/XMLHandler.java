@@ -243,6 +243,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
             initResult();
             s.result.add(newRecord(true, s.recordType, s.row, ctx.configuration()).operate(r -> {
                 r.from(s.values);
+                r.changed(false);
                 return r;
             }));
 
@@ -258,6 +259,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
                 if ("record".equalsIgnoreCase(qName) && f.getDataType().isRecord()) {
                     peek.values.add(newRecord(true, s.recordType, s.row, ctx.configuration()).operate(r -> {
                         r.from(s.values);
+                        r.changed(false);
                         return r;
                     }));
 

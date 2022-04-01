@@ -145,8 +145,12 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
     @Override
     public R convert(Object object) {
 
+        // [#12269] [#13403] Don't re-copy perfectly fine results.
+        if (object instanceof Record && ((Record) object).fieldsRow().equals(row))
+            return (R) object;
+
         // [#12116] TODO: Move this logic into JSONReader to make it more generally useful
-        if (object instanceof Record || object instanceof Map || object instanceof List) {
+        else if (object instanceof Record || object instanceof Map || object instanceof List) {
             return newRecord(true, getRecordType(), row, CTX.configuration())
                 .operate(r -> {
 

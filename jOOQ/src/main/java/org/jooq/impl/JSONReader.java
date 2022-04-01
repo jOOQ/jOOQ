@@ -183,6 +183,7 @@ final class JSONReader<R extends Record> {
                         else
                             r.fromMap(record);
 
+                        r.changed(false);
                         return r;
                     }));
                 }
@@ -199,6 +200,7 @@ final class JSONReader<R extends Record> {
                     patchRecord(ctx, multiset, actualRow, record);
                     result.add(newRecord(true, recordType, actualRow, ctx.configuration()).operate(r -> {
                         r.from(record);
+                        r.changed(false);
                         return r;
                     }));
                 }

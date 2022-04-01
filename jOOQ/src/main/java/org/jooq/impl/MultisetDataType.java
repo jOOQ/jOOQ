@@ -137,8 +137,12 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
     @Override
     public Result<R> convert(Object object) {
 
+        // [#12269] [#13403] Don't re-copy perfectly fine results.
+        if (object instanceof Result && ((Result<?>) object).fieldsRow().equals(row))
+            return (Result<R>) object;
+
         // [#3884] TODO: Move this logic into JSONReader to make it more generally useful
-        if (object instanceof List) {
+        else if (object instanceof List) {
             ResultImpl<R> result = new ResultImpl<>(CTX.configuration(), row);
 
             for (Object record : (List) object)

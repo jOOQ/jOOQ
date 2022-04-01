@@ -37,8 +37,6 @@
  */
 package org.jooq;
 
-import org.jooq.impl.DefaultRecordMapper;
-
 /**
  * A record type for {@link Table}, {@link Cursor}, {@link Result} and other
  * objects.

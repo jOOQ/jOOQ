@@ -43,7 +43,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Names.N_SELECT;
+import static org.jooq.impl.Names.NQ_SELECT;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
@@ -67,7 +67,7 @@ final class ScalarSubquery<T> extends AbstractField<T> implements QOM.ScalarSubq
     final boolean                predicandSubquery;
 
     ScalarSubquery(Select<?> query, DataType<T> type, boolean predicandSubquery) {
-        super(N_SELECT, type);
+        super(NQ_SELECT, type);
 
         this.query = query;
         this.predicandSubquery = predicandSubquery;

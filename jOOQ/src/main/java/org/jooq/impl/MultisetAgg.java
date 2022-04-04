@@ -46,6 +46,7 @@ import static org.jooq.impl.Multiset.NO_SUPPORT_JSON_COMPARE;
 import static org.jooq.impl.Multiset.NO_SUPPORT_XML_COMPARE;
 import static org.jooq.impl.Multiset.jsonArrayaggEmulation;
 import static org.jooq.impl.Multiset.jsonbArrayaggEmulation;
+import static org.jooq.impl.Multiset.nResult;
 import static org.jooq.impl.Multiset.returningClob;
 import static org.jooq.impl.Multiset.xmlaggEmulation;
 import static org.jooq.impl.Names.N_MULTISET_AGG;
@@ -145,9 +146,9 @@ final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Resu
             }
 
             case XML: {
-                XMLAggOrderByStep<XML> order = xmlaggEmulation(row, true);
+                XMLAggOrderByStep<XML> order = xmlaggEmulation(ctx, row, true);
 
-                Field<XML> f = xmlelement(N_RESULT,
+                Field<XML> f = xmlelement(nResult(ctx),
                     multisetCondition
                         ? fo((AbstractAggregateFunction<?>) order.orderBy(row.fields()))
                         : ofo((AbstractAggregateFunction<?>) order)

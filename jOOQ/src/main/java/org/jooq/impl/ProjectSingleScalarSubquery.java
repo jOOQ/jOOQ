@@ -41,7 +41,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.Names.N_SELECT;
+import static org.jooq.impl.Names.NQ_SELECT;
 
 import java.util.Arrays;
 
@@ -64,7 +64,7 @@ final class ProjectSingleScalarSubquery<T> extends AbstractField<T> implements Q
     final int       index;
 
     ProjectSingleScalarSubquery(Select<?> query, int index) {
-        super(N_SELECT, (DataType<T>) query.getSelect().get(index).getDataType());
+        super(NQ_SELECT, (DataType<T>) query.getSelect().get(index).getDataType());
 
         this.query = query;
         this.index = index;

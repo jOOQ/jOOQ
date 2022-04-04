@@ -46,7 +46,7 @@ import static org.jooq.impl.Keywords.K_SWITCH;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_WHEN;
-import static org.jooq.impl.Names.N_CASE;
+import static org.jooq.impl.Names.NQ_CASE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
 
 import java.util.ArrayList;
@@ -82,7 +82,7 @@ final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenS
     }
 
     private CaseWhenStepImpl(Field<V> value, DataType<T> type) {
-        super(N_CASE, type);
+        super(NQ_CASE, type);
 
         this.value = value;
         this.compareValues = new ArrayList<>();

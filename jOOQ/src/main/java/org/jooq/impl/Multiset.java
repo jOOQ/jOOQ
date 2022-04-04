@@ -42,12 +42,14 @@ import static java.lang.Boolean.TRUE;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonEntry;
 import static org.jooq.impl.DSL.jsonbArray;
+import static org.jooq.impl.DSL.quotedName;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.when;
@@ -57,6 +59,7 @@ import static org.jooq.impl.DSL.xmlelement;
 import static org.jooq.impl.DSL.xmlserializeContent;
 import static org.jooq.impl.JSONArrayAgg.patchOracleArrayAggBug;
 import static org.jooq.impl.Keywords.K_MULTISET;
+import static org.jooq.impl.Names.NQ_RESULT;
 import static org.jooq.impl.Names.N_JSON_QUERY;
 import static org.jooq.impl.Names.N_MULTISET;
 import static org.jooq.impl.Names.N_RECORD;
@@ -284,13 +287,13 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                         XMLAggOrderByStep<XML> order;
                         AggregateFilterStep<XML> filter;
 
-                        filter = order = xmlaggEmulation(t, false);
+                        filter = order = xmlaggEmulation(ctx, t, false);
 
                         // TODO: Re-apply derived table's ORDER BY clause as aggregate ORDER BY
                         if (multisetCondition)
                             filter = order.orderBy(t.fields());
 
-                        Select<Record1<XML>> s = select(xmlelement(N_RESULT, filter)).from(t);
+                        Select<Record1<XML>> s = select(xmlelement(nResult(ctx), filter)).from(t);
 
                         if (multisetCondition && NO_SUPPORT_XML_COMPARE.contains(ctx.dialect()))
                             ctx.visit(xmlserializeContent(DSL.field(s), VARCHAR));
@@ -307,6 +310,28 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
             case NATIVE:
                 visitSubquery(ctx.visit(K_MULTISET), select, false, false, false);
                 break;
+        }
+    }
+
+    static final Name nResult(Scope ctx) {
+        switch (ctx.family()) {
+
+
+
+
+            default:
+                return N_RESULT;
+        }
+    }
+
+    static final Name xsiNil(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+            default:
+                return DSL.name("xsi:nil");
         }
     }
 
@@ -401,7 +426,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
         }
     }
 
-    static final XMLAggOrderByStep<XML> xmlaggEmulation(Fields fields, boolean agg) {
+    static final XMLAggOrderByStep<XML> xmlaggEmulation(Context<?> ctx, Fields fields, boolean agg) {
         return xmlagg(
             xmlelement(N_RECORD,
                 map(fields.fields(), (f, i) -> {
@@ -410,7 +435,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
                     // [#13181] We must make the '' vs NULL distinction explicit in XML
                     if (v.getDataType().isString())
-                        return xmlelement(n, xmlattributes(when(v.isNull(), inline("true")).as("xsi:nil")), v);
+                        return xmlelement(n, xmlattributes(when(v.isNull(), inline("true")).as(xsiNil(ctx))), v);
                     else
                         return xmlelement(n, v);
                 })

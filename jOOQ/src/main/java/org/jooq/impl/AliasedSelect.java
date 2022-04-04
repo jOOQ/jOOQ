@@ -39,7 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.impl.DSL.selectFrom;
-import static org.jooq.impl.Names.N_SELECT;
+import static org.jooq.impl.Names.NQ_SELECT;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_ALIASES;
@@ -72,7 +72,7 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> implements 
     }
 
     AliasedSelect(Select<R> query, boolean subquery, boolean ignoreOrderBy, Name... aliases) {
-        super(TableOptions.expression(), N_SELECT);
+        super(TableOptions.expression(), NQ_SELECT);
 
         this.query = query;
         this.subquery = subquery;

@@ -52,8 +52,9 @@ import org.jooq.Name;
 final class Names {
 
     // [#13383] These names must never be unquoted to prevent conflicts with keywords
-    static final Name N_CASE                   = quotedName("case");
-    static final Name N_SELECT                 = quotedName("select");
+    static final Name NQ_CASE                  = quotedName("case");
+    static final Name NQ_RESULT                = quotedName("result");
+    static final Name NQ_SELECT                = quotedName("select");
 
     static final Name N_ARRAY_TABLE            = name("array_table");
     static final Name N_COLUMN_VALUE           = name("COLUMN_VALUE");

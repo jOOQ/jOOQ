@@ -97,7 +97,7 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
      * <li>Otherwise, take the string value of <code>value</code></li>
      * </ul>
      */
-    static Name name(Object value, String paramName) {
+    static final Name name(Object value, String paramName) {
         return DSL.name(
                paramName != null
              ? paramName
@@ -112,8 +112,19 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
 
 
 
-             : String.valueOf(value)
+             : name(value)
         );
+    }
+
+    private final static String name(Object value) {
+
+        // [#13392] The generated name of a byte[] value shouldn't depend on the
+        //          identity of the value, but on the value itself
+        if (value instanceof byte[]) { byte[] b = (byte[]) value;
+            return "b_" + Internal.hash0(Arrays.hashCode(Arrays.copyOf(b, 16)));
+        }
+        else
+            return String.valueOf(value);
     }
 
     // ------------------------------------------------------------------------

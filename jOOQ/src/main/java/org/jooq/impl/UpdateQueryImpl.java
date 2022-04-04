@@ -578,7 +578,7 @@ implements
         else
             s = select().from(from).orderBy(orderBy).limit(limit).asTable("s");
 
-        if (patchSource && ctx.configuration().requireCommercial(() -> "The UPDATE .. FROM to MERGE transformation requires commercial only logic. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition")) {
+        if (patchSource && ctx.configuration().requireCommercial(() -> "The UPDATE .. FROM to MERGE transformation requires commercial only logic for non-trivial FROM clauses. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition")) {
 
 
 

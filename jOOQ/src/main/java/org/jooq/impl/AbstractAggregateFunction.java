@@ -255,20 +255,21 @@ implements
     }
 
     final void acceptArguments1(Context<?> ctx, QueryPartCollectionView<Field<?>> args) {
+        boolean parens = false;
         if (distinct) {
             ctx.visit(K_DISTINCT).sql(' ');
 
             // [#2883][#9109] PostgreSQL and H2 can use the DISTINCT keyword with formal row value expressions.
-            if (args.size() > 1 && SUPPORT_DISTINCT_RVE.contains(ctx.dialect()))
+            // [#13415] ListAgg is a special case, where the second argument is the separator
+            if (parens |= (args.size() > 1 && SUPPORT_DISTINCT_RVE.contains(ctx.dialect()) && !(this instanceof ListAgg)))
                 ctx.sql('(');
         }
 
         if (!args.isEmpty())
             acceptArguments2(ctx, args);
 
-        if (distinct)
-            if (args.size() > 1 && SUPPORT_DISTINCT_RVE.contains(ctx.dialect()))
-                ctx.sql(')');
+        if (parens)
+            ctx.sql(')');
     }
 
     final void acceptArguments2(Context<?> ctx, QueryPartCollectionView<Field<?>> args) {

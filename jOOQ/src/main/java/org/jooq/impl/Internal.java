@@ -41,6 +41,7 @@ import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.DIVIDE;
 import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
+import static org.jooq.impl.Tools.CTX;
 import static org.jooq.impl.Tools.nullSafe;
 
 import java.lang.reflect.Array;
@@ -61,6 +62,7 @@ import org.jooq.OrderField;
 import org.jooq.ParamMode;
 import org.jooq.Parameter;
 // ...
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
@@ -464,5 +466,24 @@ public final class Internal {
      */
     public static final <R extends Record> Result<R> result(R record) {
         return new ResultImpl<>(Tools.configuration(record), ((AbstractRecord) record).fields);
+    }
+
+    /**
+     * Return a non-negative hash code for a {@link QueryPart}, taking into
+     * account FindBugs' <code>RV_ABSOLUTE_VALUE_OF_HASHCODE</code> pattern
+     */
+    public static final int hash(QueryPart part) {
+        return hash0(CTX.render(part));
+    }
+
+    static final int hash0(Object object) {
+        if (object == null)
+            return 0;
+
+        // [#6025] Prevent unstable alias generation for derived tables due to
+        //         inlined bind variables in hashCode() calculation
+        // [#6175] TODO: Speed this up with a faster way to calculate a hash code
+        else
+            return 0x7FFFFFF & object.hashCode();
     }
 }

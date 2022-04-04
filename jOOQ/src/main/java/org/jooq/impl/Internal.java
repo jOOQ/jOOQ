@@ -615,10 +615,17 @@ public final class Internal {
      * account FindBugs' <code>RV_ABSOLUTE_VALUE_OF_HASHCODE</code> pattern
      */
     public static final int hash(QueryPart part) {
+        return hash0(CTX.render(part));
+    }
+
+    static final int hash0(Object object) {
+        if (object == null)
+            return 0;
 
         // [#6025] Prevent unstable alias generation for derived tables due to
         //         inlined bind variables in hashCode() calculation
         // [#6175] TODO: Speed this up with a faster way to calculate a hash code
-        return 0x7FFFFFF & CTX.render(part).hashCode();
+        else
+            return 0x7FFFFFF & object.hashCode();
     }
 }

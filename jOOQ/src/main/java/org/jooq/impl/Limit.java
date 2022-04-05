@@ -39,7 +39,13 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 import static org.jooq.RenderContext.CastMode.NEVER;
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
 // ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.one;
@@ -67,12 +73,12 @@ import org.jooq.Field;
 import org.jooq.Param;
 // ...
 import org.jooq.RenderContext.CastMode;
+import org.jooq.SQLDialect;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.QOM.UTransient;
 import org.jooq.impl.Tools.BooleanDataKey;
 
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -96,10 +102,19 @@ final class Limit extends AbstractQueryPart implements UTransient {
         ParamType paramType = ctx.paramType();
         CastMode castMode = ctx.castMode();
 
-        switch (ctx.dialect()) {
+        switch (ctx.family()) {
 
             // True LIMIT / OFFSET support provided by the following dialects
             // -----------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 
 
@@ -131,8 +146,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
                 break;
             }
 
-            // ROWS .. TO ..
-            // -------------
+            case FIREBIRD: {
 
 
 
@@ -144,39 +158,11 @@ final class Limit extends AbstractQueryPart implements UTransient {
 
 
 
+                acceptStandard(ctx, castMode);
+                break;
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case MARIADB:
-            case POSTGRES: {
+            case H2: {
 
                 // [#8415] For backwards compatibility reasons, we generate standard
                 //         OFFSET .. FETCH syntax on H2 only when strictly needed
@@ -188,13 +174,21 @@ final class Limit extends AbstractQueryPart implements UTransient {
                 break;
             }
 
+            case POSTGRES: {
 
 
 
 
 
+                acceptStandard(ctx, castMode);
+                break;
+            }
 
 
+            case DERBY: {
+                acceptStandard(ctx, castMode);
+                break;
+            }
 
 
 
@@ -265,27 +259,16 @@ final class Limit extends AbstractQueryPart implements UTransient {
 
 
 
+            case MARIADB: {
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-            // [#4785] OFFSET cannot be without LIMIT
-
+                acceptStandard(ctx, castMode);
+                break;
+            }
 
 
 
@@ -293,13 +276,11 @@ final class Limit extends AbstractQueryPart implements UTransient {
 
             case MYSQL:
             case SQLITE: {
+
+                // [#4785] OFFSET cannot be without LIMIT
                 acceptDefaultLimitMandatory(ctx, castMode);
                 break;
             }
-
-
-
-
 
 
 

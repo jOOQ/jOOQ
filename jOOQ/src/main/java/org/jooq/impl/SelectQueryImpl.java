@@ -1732,7 +1732,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-                case MARIADB:
+                case MARIADB: {
+                    if (getLimit().isApplicable() && getLimit().isExpression())
+                        toSQLReferenceLimitWithWindowFunctions(context);
+
+
+
+
+                    else
+                        toSQLReferenceLimitDefault(context, originalFields, alternativeFields);
+
+                    break;
+                }
                 case POSTGRES: {
 
 
@@ -1745,6 +1756,16 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+                case FIREBIRD:
+                case MYSQL: {
+                    if (getLimit().isApplicable() && (getLimit().withTies() || getLimit().isExpression()))
+                        toSQLReferenceLimitWithWindowFunctions(context);
+                    else
+                        toSQLReferenceLimitDefault(context, originalFields, alternativeFields);
+
+                    break;
+                }
+
 
 
 
@@ -1753,8 +1774,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
                 case CUBRID:
-                case FIREBIRD:
-                case MYSQL:
                 case YUGABYTEDB: {
                     if (getLimit().isApplicable() && getLimit().withTies())
                         toSQLReferenceLimitWithWindowFunctions(context);

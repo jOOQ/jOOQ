@@ -74,6 +74,7 @@ import org.jooq.Param;
 // ...
 import org.jooq.RenderContext.CastMode;
 import org.jooq.SQLDialect;
+import org.jooq.Select;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.QOM.UTransient;
@@ -418,6 +419,23 @@ final class Limit extends AbstractQueryPart implements UTransient {
      */
     final boolean isApplicable() {
         return offset != null || limit != null;
+    }
+
+    /**
+     * Whether the LIMIT or OFFSET clause is an expression as opposed to a bind
+     * variable.
+     */
+    final boolean isExpression() {
+        return isApplicable()
+            && !((limit == null || limit instanceof Param) && (offset == null || offset instanceof Param));
+    }
+
+    /**
+     * Whether the LIMIT or OFFSET clause is a subquery.
+     */
+    final boolean isSubquery() {
+        return isApplicable()
+            && (limit instanceof Select || offset instanceof Select);
     }
 
     final void setOffset(Number offset) {

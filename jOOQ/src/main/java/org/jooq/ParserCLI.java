@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -48,6 +50,7 @@ import java.util.regex.Pattern;
 import org.jooq.conf.ParseNameCase;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.ParseUnsupportedSyntax;
+import org.jooq.conf.ParseWithMetaLookups;
 import org.jooq.conf.RenderKeywordCase;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderOptionalKeyword;
@@ -57,6 +60,7 @@ import org.jooq.conf.TransformUnneededArithmeticExpressions;
 import org.jooq.conf.Transformation;
 import org.jooq.impl.DSL;
 import org.jooq.impl.ParserException;
+import org.jooq.tools.StringUtils;
 
 /**
  * A command line interface to the Parser API, which works in a similar way as
@@ -66,7 +70,7 @@ import org.jooq.impl.ParserException;
  */
 public final class ParserCLI {
 
-    private static final Pattern FLAG = Pattern.compile("^/([\\w\\-]+)(?:\\s+(\\w+))?\\s*$");
+    private static final Pattern FLAG = Pattern.compile("^/([\\w\\-]+)(?:\\s+([^\\r\\n]+))?\\s*$");
 
     public static final void main(String... args) throws Exception {
         CLIUtil.main("https://www.jooq.org/doc/latest/manual/sql-building/sql-parser/sql-parser-cli/", () -> {
@@ -217,6 +221,10 @@ public final class ParserCLI {
                                 parseInteractive(RenderQuotedNames.class, arg, e -> { a.quoted = e; }, () -> displayQuoted(a));
                             else if ("F".equals(flag) || "from-dialect".equals(flag))
                                 parseInteractive(SQLDialect.class, arg, e -> { a.fromDialect = e; }, () -> displayFromDialect(a));
+                            else if ("S".equals(flag) || "schema".equals(flag)) {
+                                a.schema = arg;
+                                displaySchema(a);
+                            }
                             else if ("render-coalesce-to-empty-string-in-concat".equals(flag)) {
                                 if (arg != null)
                                     a.renderCoalesceToEmptyStringInConcat = Boolean.parseBoolean(arg.toLowerCase());
@@ -361,6 +369,11 @@ public final class ParserCLI {
         displayTransformRownum(a);
         displayTransformTableListsToAnsiJoin(a);
         displayTransformUnneededArithmetic(a);
+        displaySchema(a);
+    }
+
+    private static void displaySchema(Args a) {
+        System.out.println("Schema                             : " + a.schema);
     }
 
     private static void displayIdentifiers(Args a) {
@@ -482,6 +495,15 @@ public final class ParserCLI {
     private static final void render(DSLContext ctx, Args a) {
         String sql = a.sql.trim();
 
+        if (!StringUtils.isBlank(a.schema)) {
+            DSLContext c = ctx;
+
+            ctx = ctx.configuration()
+                     .derive((MetaProvider) () -> c.meta(a.schema))
+                     .deriveSettings(s -> s.withParseWithMetaLookups(THROW_ON_FAILURE))
+                     .dsl();
+        }
+
         try {
 
 
@@ -586,6 +608,8 @@ public final class ParserCLI {
                     result.transformTableListsToAnsiJoin = true;
                 else if ("--transform-unneeded-arithmetic".equals(args[i]))
                     result.transformUnneededArithmetic = parse((Class<TransformUnneededArithmeticExpressions>) (enumArgument = TransformUnneededArithmeticExpressions.class), args[++i]);
+                else if ("-S".equals(args[i]) || "--schema".equals(args[i]))
+                    result.schema = args[++i];
                 else if ("-s".equals(args[i]) || "--sql".equals(args[i]))
                     result.sql = args[++i];
                 else if ("-I".equals(args[i]) || "--interactive".equals(args[i]))
@@ -700,6 +724,7 @@ public final class ParserCLI {
         boolean                                interactive;
         boolean                                done;
 
+        String                                 schema;
         String                                 sql;
         RenderKeywordCase                      keywords                               = RenderKeywordCase.LOWER;
         RenderNameCase                         name                                   = RenderNameCase.LOWER;

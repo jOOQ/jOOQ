@@ -468,7 +468,7 @@ implements
         // ON DUPLICATE KEY IGNORE clause
         // ------------------------------
         else if (onDuplicateKeyIgnore) {
-            switch (ctx.dialect()) {
+            switch (ctx.family()) {
 
                 // The default emulation
 
@@ -480,33 +480,13 @@ implements
 
 
 
+
+
                 case FIREBIRD:
-
-
-
-
-                case IGNITE:
-
-
-
-
-
-{
+                case IGNITE: {
                     ctx.visit(toInsertSelect(ctx));
                     break;
                 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -573,27 +553,6 @@ implements
                 }
 
                 // Some databases allow for emulating this clause using a MERGE statement
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

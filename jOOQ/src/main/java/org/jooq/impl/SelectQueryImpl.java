@@ -87,13 +87,16 @@ import static org.jooq.SQLDialect.IGNITE;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 // ...
 // ...
 // ...
@@ -1630,7 +1633,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                        .data().remove(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);
             }
 
-            switch (dialect) {
+            switch (context.family()) {
 
 
 
@@ -1729,40 +1732,16 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+                case MARIADB:
+                case POSTGRES: {
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    toSQLReferenceLimitDefault(context, originalFields, alternativeFields);
+                    break;
+                }
 
 
 
@@ -1788,7 +1767,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 // By default, render the dialect's limit clause
                 default: {
                     toSQLReferenceLimitDefault(context, originalFields, alternativeFields);
-
                     break;
                 }
             }

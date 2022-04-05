@@ -575,8 +575,16 @@ implements
             else
                 s = select().from(from).asTable("s");
         }
+
+        // TODO [#13326]: Avoid the JOIN if it isn't strictly necessary
+        //                (i.e. if ORDER BY references only from, not table)
         else
-            s = select().from(from).orderBy(orderBy).limit(limit).asTable("s");
+            s = select(from.fields())
+                .from(from)
+                .join(table).on(condition)
+                .orderBy(orderBy)
+                .limit(limit)
+                .asTable("s");
 
         if (patchSource && ctx.configuration().requireCommercial(() -> "The UPDATE .. FROM to MERGE transformation requires commercial only logic for non-trivial FROM clauses. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition")) {
 

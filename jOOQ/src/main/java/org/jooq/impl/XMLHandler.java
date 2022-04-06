@@ -205,7 +205,8 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
             String name = attributes.getValue("name");
             String type = attributes.getValue("type");
 
-            s.fields.add(field(name(catalog, schema, table, name), getDataType(ctx.dialect(), defaultIfBlank(type, "VARCHAR"))));
+            // [#13426] Don't use the dialect specific data type, because that isn't what's being exported, either.
+            s.fields.add(field(name(catalog, schema, table, name), getDataType(null, defaultIfBlank(type, "VARCHAR"))));
         }
         else if (s.inResult && "records".equalsIgnoreCase(qName)) {}
         else if (s.inResult && "record".equalsIgnoreCase(qName)) {

@@ -645,6 +645,9 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     }
 
     public static final DataType<?> getDataType(SQLDialect dialect, String typeName) {
+        if (dialect == null)
+            dialect = SQLDialect.DEFAULT;
+
         SQLDialect family = dialect.family();
         int ordinal = family.ordinal();
         String upper = typeName.toUpperCase();

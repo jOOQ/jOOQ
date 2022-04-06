@@ -150,7 +150,8 @@ final class JSONReader<R extends Record> {
                     String name = field.get("name");
                     String type = field.get("type");
 
-                    header.add(field(name(catalog, schema, table, name), getDataType(ctx.dialect(), defaultIfBlank(type, "VARCHAR"))));
+                    // [#13426] Don't use the dialect specific data type, because that isn't what's being exported, either.
+                    header.add(field(name(catalog, schema, table, name), getDataType(null, defaultIfBlank(type, "VARCHAR"))));
                 }
             }
 

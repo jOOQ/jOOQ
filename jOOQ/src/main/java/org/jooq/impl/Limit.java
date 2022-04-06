@@ -67,6 +67,7 @@ import static org.jooq.impl.Keywords.K_TO;
 import static org.jooq.impl.Keywords.K_TOP;
 import static org.jooq.impl.Keywords.K_WITH_TIES;
 import static org.jooq.impl.SQLDataType.BIGINT;
+import static org.jooq.impl.Tools.isScalarSubquery;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -435,7 +436,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
      */
     final boolean isSubquery() {
         return isApplicable()
-            && (limit instanceof Select || offset instanceof Select);
+            && (isScalarSubquery(limit) || isScalarSubquery(offset));
     }
 
     final void setOffset(Number offset) {

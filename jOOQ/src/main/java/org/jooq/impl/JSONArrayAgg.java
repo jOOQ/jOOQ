@@ -138,7 +138,7 @@ implements
                 ctx.sql(')');
 
                 if (onNull == ABSENT_ON_NULL)
-                    acceptFilterClause(ctx, (filter == null ? noCondition() : filter).and(arguments.get(0).isNotNull()));
+                    acceptFilterClause(ctx, f(arguments.get(0).isNotNull()));
                 else
                     acceptFilterClause(ctx);
 
@@ -152,7 +152,7 @@ implements
                 ctx.sql(')');
 
                 if (onNull == ABSENT_ON_NULL)
-                    acceptFilterClause(ctx, (filter == null ? noCondition() : filter).and(arguments.get(0).isNotNull()));
+                    acceptFilterClause(ctx, f(arguments.get(0).isNotNull()));
                 else
                     acceptFilterClause(ctx);
 

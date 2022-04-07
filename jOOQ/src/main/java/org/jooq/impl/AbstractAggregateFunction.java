@@ -118,7 +118,7 @@ implements
     // Other attributes
     final QueryPartList<Field<?>> arguments;
     final boolean                 distinct;
-    Condition                     filter;
+    final ConditionProviderImpl   filter;
 
     // Other attributes
     SortFieldList                 withinGroupOrderBy;
@@ -143,6 +143,7 @@ implements
 
         this.distinct = distinct;
         this.arguments = new QueryPartList<>(arguments);
+        this.filter = new ConditionProviderImpl();
     }
 
     // -------------------------------------------------------------------------
@@ -276,7 +277,7 @@ implements
     }
 
     final void acceptArguments3(Context<?> ctx, QueryPartCollectionView<Field<?>> args, Function<? super Field<?>, ? extends Field<?>> fun) {
-        if (filter == null || SUPPORT_FILTER.contains(ctx.dialect()))
+        if (!filter.hasWhere() || SUPPORT_FILTER.contains(ctx.dialect()))
             ctx.visit(wrap(args).map(fun));
 
 
@@ -304,29 +305,28 @@ implements
 
 
     final void acceptFilterClause(Context<?> ctx) {
-        acceptFilterClause(ctx, filter);
+        if (filter.hasWhere())
+            acceptFilterClause(ctx, filter);
     }
 
     static final void acceptFilterClause(Context<?> ctx, Condition filter) {
-        if (filter != null) {
-            switch (ctx.family()) {
+        switch (ctx.family()) {
 
 
 
 
 
 
-                default:
-                    if (SUPPORT_FILTER.contains(ctx.dialect()))
-                        ctx.sql(' ')
-                           .visit(K_FILTER)
-                           .sql(" (")
-                           .visit(K_WHERE)
-                           .sql(' ')
-                           .visit(filter)
-                           .sql(')');
-                    break;
-            }
+            default:
+                if (SUPPORT_FILTER.contains(ctx.dialect()))
+                    ctx.sql(' ')
+                       .visit(K_FILTER)
+                       .sql(" (")
+                       .visit(K_WHERE)
+                       .sql(' ')
+                       .visit(filter)
+                       .sql(')');
+                break;
         }
     }
 
@@ -356,7 +356,7 @@ implements
 
     @Override
     public final WindowBeforeOverStep<T> filterWhere(Condition c) {
-        filter = c;
+        filter.addConditions(c);
         return this;
     }
 
@@ -467,7 +467,7 @@ implements
     }
 
     final Condition f(Condition c) {
-        return filter != null ? filter.and(c) : c;
+        return filter.hasWhere() ? filter.and(c) : c;
     }
 
     @SuppressWarnings("unchecked")
@@ -489,7 +489,7 @@ implements
      * clauses to an argument aggregate function.
      */
     final <U> Field<U> fo(AggregateFunction<U> function) {
-        return o(filter != null ? function.filterWhere(filter) : function);
+        return o(filter.hasWhere() ? function.filterWhere(filter) : function);
     }
 
     /**
@@ -552,7 +552,7 @@ implements
 
     @Override
     public final Condition $filterWhere() {
-        return filter;
+        return filter.getWhereOrNull();
     }
 
 

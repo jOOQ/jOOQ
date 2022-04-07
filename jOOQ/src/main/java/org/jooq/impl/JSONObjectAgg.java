@@ -104,7 +104,7 @@ implements JSONObjectAggNullStep<J> {
             case MYSQL:
 
                 // [#11238] FILTER cannot be emulated with the standard syntax
-                if (onNull == ABSENT_ON_NULL || filter != null)
+                if (onNull == ABSENT_ON_NULL || filter.hasWhere())
                     acceptGroupConcat(ctx);
 
 
@@ -127,7 +127,7 @@ implements JSONObjectAggNullStep<J> {
         ctx.sql(')');
 
         if (onNull == ABSENT_ON_NULL)
-            acceptFilterClause(ctx, (filter == null ? noCondition() : filter).and(entry.value().isNotNull()));
+            acceptFilterClause(ctx, f(entry.value().isNotNull()));
         else
             acceptFilterClause(ctx);
 

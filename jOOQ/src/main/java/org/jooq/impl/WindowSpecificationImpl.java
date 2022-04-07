@@ -124,28 +124,28 @@ implements
     WindowSpecificationExcludeStep
 {
 
-    private static final Set<SQLDialect>  OMIT_PARTITION_BY_ONE                       = SQLDialect.supportedBy(CUBRID, MYSQL, SQLITE);
+    private static final Set<SQLDialect> OMIT_PARTITION_BY_ONE                       = SQLDialect.supportedBy(CUBRID, MYSQL, SQLITE);
 
-    private static final Set<SQLDialect>  REQUIRES_ORDER_BY_IN_LEAD_LAG               = SQLDialect.supportedBy(H2, MARIADB);
-    private static final Set<SQLDialect>  REQUIRES_ORDER_BY_IN_NTILE                  = SQLDialect.supportedBy(H2);
-    private static final Set<SQLDialect>  REQUIRES_ORDER_BY_IN_RANK_DENSE_RANK        = SQLDialect.supportedBy(H2, MARIADB);
-    private static final Set<SQLDialect>  REQUIRES_ORDER_BY_IN_PERCENT_RANK_CUME_DIST = SQLDialect.supportedBy(MARIADB);
-
-
+    private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_LEAD_LAG               = SQLDialect.supportedBy(H2, MARIADB);
+    private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_NTILE                  = SQLDialect.supportedBy(H2);
+    private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_RANK_DENSE_RANK        = SQLDialect.supportedBy(H2, MARIADB);
+    private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_PERCENT_RANK_CUME_DIST = SQLDialect.supportedBy(MARIADB);
 
 
 
 
 
 
-    private final WindowDefinitionImpl    windowDefinition;
-    private final QueryPartList<Field<?>> partitionBy;
-    private final SortFieldList           orderBy;
-    private Integer                       frameStart;
-    private Integer                       frameEnd;
-    private FrameUnits                    frameUnits;
-    private FrameExclude                  exclude;
-    private boolean                       partitionByOne;
+
+
+    private final WindowDefinitionImpl   windowDefinition;
+    private final GroupFieldList         partitionBy;
+    private final SortFieldList          orderBy;
+    private Integer                      frameStart;
+    private Integer                      frameEnd;
+    private FrameUnits                   frameUnits;
+    private FrameExclude                 exclude;
+    private boolean                      partitionByOne;
 
     WindowSpecificationImpl() {
         this(null);
@@ -153,7 +153,7 @@ implements
 
     WindowSpecificationImpl(WindowDefinitionImpl windowDefinition) {
         this.windowDefinition = windowDefinition;
-        this.partitionBy = new QueryPartList<>();
+        this.partitionBy = new GroupFieldList();
         this.orderBy = new SortFieldList();
     }
 
@@ -699,7 +699,7 @@ implements
 
     @Override
     public final UnmodifiableList<? extends Field<?>> $partitionBy() {
-        return QOM.unmodifiable(partitionBy);
+        return QOM.unmodifiable((QueryPartList) partitionBy);
     }
 
     @Override

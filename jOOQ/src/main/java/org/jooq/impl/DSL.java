@@ -110,6 +110,7 @@ import static org.jooq.impl.Names.N_PERCENT_RANK;
 import static org.jooq.impl.Names.N_RANK;
 import static org.jooq.impl.Names.N_SYSTEM_TIME;
 import static org.jooq.impl.Names.N_VALUE;
+import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.DATE;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
@@ -361,6 +362,10 @@ import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SelectForStep;
+import org.jooq.SelectGroupByStep;
+import org.jooq.SelectLimitStep;
+import org.jooq.SelectOffsetStep;
+import org.jooq.SelectOrderByStep;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.Sequence;
@@ -12069,6 +12074,132 @@ public class DSL {
     }
 
     /**
+     * Return a {@link Field} that behaves like no field being present.
+     * <p>
+     * When creating dynamic SQL queries using expressions, it is often useful
+     * to be able to decide dynamically whether a clause is being added to a
+     * query or not. In case that clause accepts fields, the {@link #noField()}
+     * can be used to avoid creating a clause, which is useful for the following
+     * {@link Select} clauses, for example:
+     * <ul>
+     * <li>{@link SelectGroupByStep#groupBy(GroupField...)}</li>
+     * <li>{@link SelectOrderByStep#orderBy(OrderField...)}</li>
+     * <li>{@link SelectLimitStep#limit(Field)}</li>
+     * <li>{@link SelectOffsetStep#offset(Field)}</li>
+     * </ul>
+     * It can also be useful for other, similar clauses, e.g. when passing
+     * optional expressions to window function clauses, such as:
+     * <ul>
+     * <li>{@link DSL#partitionBy(Field...)}</li>
+     * <li>{@link DSL#orderBy(Field...)}</li>
+     * </ul>
+     * In clauses that project fields to a given {@link Record} type, the
+     * {@link #noField()} simply projects <code>NULL</code> and cannot be used
+     * to avoid the clause.
+     */
+    @NotNull
+    @Support
+    public static Field<?> noField() {
+        return NoField.INSTANCE;
+    }
+
+    /**
+     * Return a {@link Field} that behaves like no field being present.
+     * <p>
+     * When creating dynamic SQL queries using expressions, it is often useful
+     * to be able to decide dynamically whether a clause is being added to a
+     * query or not. In case that clause accepts fields, the {@link #noField()}
+     * can be used to avoid creating a clause, which is useful for the following
+     * {@link Select} clauses, for example:
+     * <ul>
+     * <li>{@link SelectGroupByStep#groupBy(GroupField...)}</li>
+     * <li>{@link SelectOrderByStep#orderBy(OrderField...)}</li>
+     * <li>{@link SelectLimitStep#limit(Field)}</li>
+     * <li>{@link SelectOffsetStep#offset(Field)}</li>
+     * </ul>
+     * It can also be useful for other, similar clauses, e.g. when passing
+     * optional expressions to window function clauses, such as:
+     * <ul>
+     * <li>{@link DSL#partitionBy(Field...)}</li>
+     * <li>{@link DSL#orderBy(Field...)}</li>
+     * </ul>
+     * In clauses that project fields to a given {@link Record} type, the
+     * {@link #noField()} simply projects <code>NULL</code> and cannot be used
+     * to avoid the clause.
+     *
+     * @param type A class to derive the {@link Field#getDataType()} from.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> noField(Class<T> type) {
+        return noField(getDataType(type));
+    }
+
+    /**
+     * Return a {@link Field} that behaves like no field being present.
+     * <p>
+     * When creating dynamic SQL queries using expressions, it is often useful
+     * to be able to decide dynamically whether a clause is being added to a
+     * query or not. In case that clause accepts fields, the {@link #noField()}
+     * can be used to avoid creating a clause, which is useful for the following
+     * {@link Select} clauses, for example:
+     * <ul>
+     * <li>{@link SelectGroupByStep#groupBy(GroupField...)}</li>
+     * <li>{@link SelectOrderByStep#orderBy(OrderField...)}</li>
+     * <li>{@link SelectLimitStep#limit(Field)}</li>
+     * <li>{@link SelectOffsetStep#offset(Field)}</li>
+     * </ul>
+     * It can also be useful for other, similar clauses, e.g. when passing
+     * optional expressions to window function clauses, such as:
+     * <ul>
+     * <li>{@link DSL#partitionBy(Field...)}</li>
+     * <li>{@link DSL#orderBy(Field...)}</li>
+     * </ul>
+     * In clauses that project fields to a given {@link Record} type, the
+     * {@link #noField()} simply projects <code>NULL</code> and cannot be used
+     * to avoid the clause.
+     *
+     * @param type A type to derive the {@link Field#getDataType()} from.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> noField(DataType<T> type) {
+        return new NoField<>(type);
+    }
+
+    /**
+     * Return a {@link Field} that behaves like no field being present.
+     * <p>
+     * When creating dynamic SQL queries using expressions, it is often useful
+     * to be able to decide dynamically whether a clause is being added to a
+     * query or not. In case that clause accepts fields, the {@link #noField()}
+     * can be used to avoid creating a clause, which is useful for the following
+     * {@link Select} clauses, for example:
+     * <ul>
+     * <li>{@link SelectGroupByStep#groupBy(GroupField...)}</li>
+     * <li>{@link SelectOrderByStep#orderBy(OrderField...)}</li>
+     * <li>{@link SelectLimitStep#limit(Field)}</li>
+     * <li>{@link SelectOffsetStep#offset(Field)}</li>
+     * </ul>
+     * It can also be useful for other, similar clauses, e.g. when passing
+     * optional expressions to window function clauses, such as:
+     * <ul>
+     * <li>{@link DSL#partitionBy(Field...)}</li>
+     * <li>{@link DSL#orderBy(Field...)}</li>
+     * </ul>
+     * In clauses that project fields to a given {@link Record} type, the
+     * {@link #noField()} simply projects <code>NULL</code> and cannot be used
+     * to avoid the clause.
+     *
+     * @param type A field to derive the {@link Field#getDataType()} from.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> noField(Field<T> field) {
+        return noField(field.getDataType());
+    }
+
+    /**
      * Create a qualified catalog, given its catalog name.
      * <p>
      * This constructs a catalog reference given the catalog's qualified name.
@@ -20075,7 +20206,11 @@ public class DSL {
     @NotNull
     @Support
     public static Field<Boolean> field(Condition condition) {
-        return condition instanceof FieldCondition ? ((FieldCondition) condition).field : new ConditionAsField(condition);
+        return condition instanceof NoCondition
+             ? noField(BOOLEAN)
+             : condition instanceof FieldCondition
+             ? ((FieldCondition) condition).field
+             : new ConditionAsField(condition);
     }
 
     /**
@@ -20094,7 +20229,11 @@ public class DSL {
     @NotNull
     @Support
     public static Condition condition(Field<Boolean> field) {
-        return field instanceof ConditionAsField ? ((ConditionAsField) field).condition : new FieldCondition(field);
+        return field instanceof NoField
+             ? noCondition()
+             : field instanceof ConditionAsField
+             ? ((ConditionAsField) field).condition
+             : new FieldCondition(field);
     }
 
     // -------------------------------------------------------------------------

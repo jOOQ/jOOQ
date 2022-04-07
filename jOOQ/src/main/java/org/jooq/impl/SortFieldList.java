@@ -65,6 +65,11 @@ final class SortFieldList extends QueryPartList<SortField<?>> {
         addAll(Tools.map(fields, f -> f.asc()));
     }
 
+    @Override
+    final boolean canAdd(SortField<?> e) {
+        return super.canAdd(e) && !(e instanceof NoField);
+    }
+
     /**
      * Whether the {@link SortField}s in this list are uniformly sorted, e.g.
      * all {@link SortOrder#ASC} or all {@link SortOrder#DESC}.

@@ -284,9 +284,13 @@ implements
         return wrapped.toArray(a);
     }
 
+    /* non-final */ boolean canAdd(T e) {
+        return e != null;
+    }
+
     @Override
     public final boolean add(T e) {
-        if (e != null)
+        if (canAdd(e))
             return wrapped.add(e);
 
         return false;
@@ -302,40 +306,20 @@ implements
         return wrapped.containsAll(c);
     }
 
-    final void addAll(Iterable<? extends T> c) {
+    final boolean addAll0(Iterable<? extends T> c) {
+        boolean modified = false;
+
         if (c != null)
-            for (T t : c)
-                if (t != null)
-                    add(t);
+            for (T e : c)
+                if (add(e))
+                    modified = true;
+
+        return modified;
     }
 
     @Override
     public final boolean addAll(Collection<? extends T> c) {
-        return wrapped.addAll(removeNulls(c));
-    }
-
-    final Collection<? extends T> removeNulls(Collection<? extends T> c) {
-
-        // [#2145] Collections that contain nulls are quite rare, so it is wise
-        // to add a relatively cheap defender check to avoid unnecessary loops
-        boolean containsNulls;
-
-        try {
-            containsNulls = c.contains(null);
-        }
-
-        // [#7991] Some immutable collections do not allow for nulls to be contained
-        catch (NullPointerException ignore) {
-            containsNulls = false;
-        }
-
-        if (containsNulls) {
-            List<T> list = new ArrayList<>(c);
-            list.removeIf(Objects::isNull);
-            return list;
-        }
-        else
-            return c;
+        return addAll0(c);
     }
 
     @Override

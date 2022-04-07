@@ -194,6 +194,7 @@ import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.camelCase;
 import static org.jooq.impl.Tools.containsUnaliasedTable;
 import static org.jooq.impl.Tools.fieldArray;
+import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.isNotEmpty;
@@ -4128,8 +4129,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         //          semantics
         if (fields.isEmpty())
             groupBy.add(emptyGroupingSet());
-
-        groupBy.addAll(fields);
+        else
+            groupBy.addAll(fields);
     }
 
     @Override

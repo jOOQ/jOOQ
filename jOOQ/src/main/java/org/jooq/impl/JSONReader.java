@@ -257,6 +257,7 @@ final class JSONReader<R extends Record> {
                 if (multiset) {
 
                     // [#12134] PostgreSQL encodes binary data as hex
+                    // TODO [#13427] This doesn't work if bytea_output is set to escape
                     if (ENCODE_BINARY_AS_HEX.contains(ctx.dialect()))
                         if (s.startsWith("\\x"))
                             record.set(i, convertHexToBytes(s, 1, Integer.MAX_VALUE));

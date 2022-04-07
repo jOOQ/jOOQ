@@ -92,6 +92,11 @@ final class GroupFieldList extends QueryPartList<GroupField> {
     }
 
     @Override
+    final boolean canAdd(GroupField e) {
+        return super.canAdd(e) && !(e instanceof NoField);
+    }
+
+    @Override
     public final boolean rendersContent(Context<?> ctx) {
         return true;
     }

@@ -119,7 +119,13 @@ implements
 
     @Override
     public final boolean addAll(int index, Collection<? extends T> c) {
-        return wrapped().addAll(index, removeNulls(c));
+        boolean modified = false;
+
+        for (T e : c)
+            if (canAdd(e) && (modified |= true))
+                wrapped().add(index++, e);
+
+        return modified;
     }
 
     @Override
@@ -129,7 +135,7 @@ implements
 
     @Override
     public final T set(int index, T element) {
-        if (element != null)
+        if (canAdd(element))
             return wrapped().set(index, element);
 
         return null;
@@ -137,7 +143,7 @@ implements
 
     @Override
     public final void add(int index, T element) {
-        if (element != null)
+        if (canAdd(element))
             wrapped().add(index, element);
     }
 

@@ -446,6 +446,9 @@ final class Limit extends AbstractQueryPart implements UTransient {
     }
 
     final void setOffset(Field<? extends Number> offset) {
+        if (offset instanceof NoField)
+            return;
+
         this.offset = offset;
         this.offsetOrZero = offset == null ? ZERO : offset;
     }
@@ -456,6 +459,9 @@ final class Limit extends AbstractQueryPart implements UTransient {
     }
 
     final void setLimit(Field<? extends Number> l) {
+        if (l instanceof NoField)
+            return;
+
         this.limit = l;
         this.limitOrMax = l == null ? MAX : l;
     }

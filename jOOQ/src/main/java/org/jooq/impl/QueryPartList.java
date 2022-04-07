@@ -75,7 +75,7 @@ extends
     QueryPartList(Iterable<? extends T> wrappedList) {
         super(new ArrayList<>());
 
-        addAll(wrappedList);
+        addAll0(wrappedList);
     }
 
     @Override

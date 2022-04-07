@@ -224,6 +224,7 @@ final class Names {
     static final Name N_NOW                    = systemName("now");
     static final Name N_NTH_VALUE              = systemName("nth_value");
     static final Name N_NTILE                  = systemName("ntile");
+    static final Name N_NULL                   = systemName("null");
     static final Name N_NVL2                   = systemName("nvl2");
     static final Name N_OPENJSON               = systemName("openjson");
     static final Name N_OPENXML                = systemName("openxml");

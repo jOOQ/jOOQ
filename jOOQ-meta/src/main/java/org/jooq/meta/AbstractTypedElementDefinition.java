@@ -348,6 +348,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                 .withBinding(forcedType.getBinding())
                 .withEnumConverter(forcedType.isEnumConverter())
                 .withLambdaConverter(forcedType.getLambdaConverter())
+                .withVisibilityModifier(forcedType.getVisibilityModifier())
                 .withGenerator(forcedType.getGenerator())
                 .withConverter(forcedType.getConverter())
                 .withName(name)

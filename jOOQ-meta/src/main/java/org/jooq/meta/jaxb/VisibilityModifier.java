@@ -16,6 +16,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="NONE"/&gt;
  *     &lt;enumeration value="PUBLIC"/&gt;
  *     &lt;enumeration value="INTERNAL"/&gt;
+ *     &lt;enumeration value="PRIVATE"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -28,7 +29,8 @@ public enum VisibilityModifier {
     DEFAULT,
     NONE,
     PUBLIC,
-    INTERNAL;
+    INTERNAL,
+    PRIVATE;
 
     public String value() {
         return name();

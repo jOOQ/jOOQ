@@ -347,7 +347,10 @@ abstract class AbstractGenerator implements Generator {
 
     @Override
     public void setGenerateVisibilityModifier(VisibilityModifier generateVisibilityModifier) {
-        this.generateVisibilityModifier = generateVisibilityModifier;
+        if (generateVisibilityModifier == VisibilityModifier.PRIVATE)
+            log.warn("Visibility", "The private visibility modifier cannot be used globally, to be applied to classes. It can only be used on <forcedType/> configurations.");
+        else
+            this.generateVisibilityModifier = generateVisibilityModifier;
     }
 
     @Override

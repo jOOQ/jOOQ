@@ -329,6 +329,18 @@ public abstract class AbstractDatabase implements Database {
         return connection;
     }
 
+    public boolean commercial() {
+        return create().configuration().commercial();
+    }
+
+    public boolean commercial(Supplier<String> logMessage) {
+        return create().configuration().commercial(logMessage);
+    }
+
+    public boolean requireCommercial(Supplier<String> logMessage) {
+        return create().configuration().requireCommercial(logMessage);
+    }
+
     @Override
     public final DSLContext create() {
         return create(false);
@@ -1404,17 +1416,27 @@ public abstract class AbstractDatabase implements Database {
 
             if (StringUtils.isBlank(type.getName())) {
                 if (StringUtils.isBlank(type.getUserType()) && StringUtils.isBlank(type.getGenerator())) {
-                    log.warn("Bad configuration for <forcedType/>. Either <name/>, <userType/>, or <generator/> is required: " + type);
+                    if (type.getVisibilityModifier() == null) {
+                        log.warn("Bad configuration for <forcedType/>. Either <name/>, <userType/>, <generator/>, or <visibilityModifier/> is required: " + type);
 
-                    it2.remove();
-                    continue;
+                        it2.remove();
+                        continue;
+                    }
+                    else if (!commercial()) {
+                        log.warn("<visibilityModifier/> is a commercial only feature. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition: " + type);
+
+                        it2.remove();
+                        continue;
+                    }
                 }
 
                 if (StringUtils.isBlank(type.getBinding()) &&
                     StringUtils.isBlank(type.getConverter()) &&
                     StringUtils.isBlank(type.getGenerator()) &&
+                    type.getVisibilityModifier() == null &&
                     !Boolean.TRUE.equals(type.isEnumConverter()) &&
-                    type.getLambdaConverter() == null) {
+                    type.getLambdaConverter() == null
+                ) {
                     log.warn("Bad configuration for <forcedType/>. Either <binding/>, <converter/>, <enumConverter/>, <lambdaConverter/>, or <generator/> is required: " + type);
 
                     it2.remove();

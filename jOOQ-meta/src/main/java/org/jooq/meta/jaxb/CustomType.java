@@ -5,6 +5,7 @@ import java.io.Serializable;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
@@ -35,6 +36,8 @@ public class CustomType implements Serializable, XMLAppendable
     protected String name;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String type;
+    @XmlSchemaType(name = "string")
+    protected VisibilityModifier visibilityModifier;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String generator;
     @XmlJavaTypeAdapter(StringAdapter.class)
@@ -78,6 +81,24 @@ public class CustomType implements Serializable, XMLAppendable
     @Deprecated
     public void setType(String value) {
         this.type = value;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
+    @Deprecated
+    public VisibilityModifier getVisibilityModifier() {
+        return visibilityModifier;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
+    @Deprecated
+    public void setVisibilityModifier(VisibilityModifier value) {
+        this.visibilityModifier = value;
     }
 
     /**
@@ -203,6 +224,16 @@ public class CustomType implements Serializable, XMLAppendable
      * 
      */
     @Deprecated
+    public CustomType withVisibilityModifier(VisibilityModifier value) {
+        setVisibilityModifier(value);
+        return this;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
+    @Deprecated
     public CustomType withGenerator(String value) {
         setGenerator(value);
         return this;
@@ -247,6 +278,7 @@ public class CustomType implements Serializable, XMLAppendable
     public final void appendTo(XMLBuilder builder) {
         builder.append("name", name);
         builder.append("type", type);
+        builder.append("visibilityModifier", visibilityModifier);
         builder.append("generator", generator);
         builder.append("converter", converter);
         builder.append("enumConverter", enumConverter);
@@ -288,6 +320,15 @@ public class CustomType implements Serializable, XMLAppendable
             }
         } else {
             if (!type.equals(other.type)) {
+                return false;
+            }
+        }
+        if (visibilityModifier == null) {
+            if (other.visibilityModifier!= null) {
+                return false;
+            }
+        } else {
+            if (!visibilityModifier.equals(other.visibilityModifier)) {
                 return false;
             }
         }
@@ -345,6 +386,7 @@ public class CustomType implements Serializable, XMLAppendable
         int result = 1;
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
         result = ((prime*result)+((type == null)? 0 :type.hashCode()));
+        result = ((prime*result)+((visibilityModifier == null)? 0 :visibilityModifier.hashCode()));
         result = ((prime*result)+((generator == null)? 0 :generator.hashCode()));
         result = ((prime*result)+((converter == null)? 0 :converter.hashCode()));
         result = ((prime*result)+((enumConverter == null)? 0 :enumConverter.hashCode()));

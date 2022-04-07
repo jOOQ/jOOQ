@@ -36,6 +36,8 @@ public class ForcedType implements Serializable, XMLAppendable
     protected String name;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String userType;
+    @XmlSchemaType(name = "string")
+    protected VisibilityModifier visibilityModifier;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String generator;
     @XmlJavaTypeAdapter(StringAdapter.class)
@@ -122,7 +124,33 @@ public class ForcedType implements Serializable, XMLAppendable
     }
 
     /**
+     * The visibility modifier to be used in generated code for the column that is matched by this forced type, if applicable.
+     * <p>
+     * This has no effect on matched objects that are not columns.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public VisibilityModifier getVisibilityModifier() {
+        return visibilityModifier;
+    }
+
+    /**
+     * The visibility modifier to be used in generated code for the column that is matched by this forced type, if applicable.
+     * <p>
+     * This has no effect on matched objects that are not columns.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public void setVisibilityModifier(VisibilityModifier value) {
+        this.visibilityModifier = value;
+    }
+
+    /**
      * A {@link org.jooq.Generator} implementation used for client-side computed columns.
+     * <p>
+     * This has no effect on matched objects that are not columns.
      * <p>
      * This feature is available in the commercial distribution only.
      * 
@@ -133,6 +161,8 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * A {@link org.jooq.Generator} implementation used for client-side computed columns.
+     * <p>
+     * This has no effect on matched objects that are not columns.
      * <p>
      * This feature is available in the commercial distribution only.
      * 
@@ -418,7 +448,22 @@ public class ForcedType implements Serializable, XMLAppendable
     }
 
     /**
+     * The visibility modifier to be used in generated code for the column that is matched by this forced type, if applicable.
+     * <p>
+     * This has no effect on matched objects that are not columns.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public ForcedType withVisibilityModifier(VisibilityModifier value) {
+        setVisibilityModifier(value);
+        return this;
+    }
+
+    /**
      * A {@link org.jooq.Generator} implementation used for client-side computed columns.
+     * <p>
+     * This has no effect on matched objects that are not columns.
      * <p>
      * This feature is available in the commercial distribution only.
      * 
@@ -562,6 +607,7 @@ public class ForcedType implements Serializable, XMLAppendable
         builder.append("priority", priority);
         builder.append("name", name);
         builder.append("userType", userType);
+        builder.append("visibilityModifier", visibilityModifier);
         builder.append("generator", generator);
         builder.append("converter", converter);
         builder.append("enumConverter", enumConverter);
@@ -622,6 +668,15 @@ public class ForcedType implements Serializable, XMLAppendable
             }
         } else {
             if (!userType.equals(other.userType)) {
+                return false;
+            }
+        }
+        if (visibilityModifier == null) {
+            if (other.visibilityModifier!= null) {
+                return false;
+            }
+        } else {
+            if (!visibilityModifier.equals(other.visibilityModifier)) {
                 return false;
             }
         }
@@ -770,6 +825,7 @@ public class ForcedType implements Serializable, XMLAppendable
         result = ((prime*result)+((priority == null)? 0 :priority.hashCode()));
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
         result = ((prime*result)+((userType == null)? 0 :userType.hashCode()));
+        result = ((prime*result)+((visibilityModifier == null)? 0 :visibilityModifier.hashCode()));
         result = ((prime*result)+((generator == null)? 0 :generator.hashCode()));
         result = ((prime*result)+((converter == null)? 0 :converter.hashCode()));
         result = ((prime*result)+((enumConverter == null)? 0 :enumConverter.hashCode()));

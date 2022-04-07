@@ -1339,6 +1339,18 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
         </annotation>
       </element>
 
+      <element name="visibilityModifier" type="tns:VisibilityModifier" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
+      </element>
+      
       <element name="generator" type="string" minOccurs="0" maxOccurs="1">
         <annotation>
           <appinfo>
@@ -1486,8 +1498,18 @@ If provided, {@link #getName()} will be ignored, and either {@link #getConverter
 or {@link #getBinding()} is required]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="visibilityModifier" type="tns:VisibilityModifier" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The visibility modifier to be used in generated code for the column that is matched by this forced type, if applicable.
+<p>
+This has no effect on matched objects that are not columns.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="generator" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link org.jooq.Generator} implementation used for client-side computed columns.
+<p>
+This has no effect on matched objects that are not columns.
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -2121,6 +2143,7 @@ e.g. org.jooq.generated.schema1, org.jooq.generated.schema2]]></jxb:javadoc></jx
       <enumeration value="NONE"/>
       <enumeration value="PUBLIC"/>
       <enumeration value="INTERNAL"/>
+      <enumeration value="PRIVATE"/>
     </restriction>
   </simpleType>
   

@@ -179,7 +179,9 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.TypedElementDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.UniqueKeyDefinition;
+import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
+import org.jooq.meta.jaxb.VisibilityModifier;
 // ...
 // ...
 // ...
@@ -369,25 +371,26 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private String visibility() {
-        if (visibility == null) {
-            switch (generateVisibilityModifier()) {
-                case NONE:
-                    visibility = "";
-                    break;
-                case PUBLIC:
-                    visibility = scala ? "" : "public ";
-                    break;
-                case INTERNAL:
-                    visibility = scala ? "" : kotlin ? "internal " : "public ";
-                    break;
-                case DEFAULT:
-                default:
-                    visibility = scala || kotlin ? "" : "public ";
-                    break;
-            }
-        }
+        if (visibility == null)
+            visibility = visibility(generateVisibilityModifier());
 
         return visibility;
+    }
+
+    private String visibility(VisibilityModifier modifier) {
+        switch (modifier) {
+            case NONE:
+                return "";
+            case PUBLIC:
+                return scala ? "" : "public ";
+            case INTERNAL:
+                return scala ? "" : kotlin ? "internal " : "public ";
+            case PRIVATE:
+                return "private ";
+            case DEFAULT:
+            default:
+                return scala || kotlin ? "" : "public ";
+        }
     }
 
     @Override
@@ -5808,12 +5811,21 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
-            final String columnVisibility =
+
+
+            final String columnVisibility;
 
 
 
 
-                visibility();
+
+
+
+
+
+
+
+            columnVisibility = visibility();
 
             if (!printDeprecationIfUnknownType(out, columnTypeFull))
                 out.javadoc("The column <code>%s</code>.[[before= ][%s]]", column.getQualifiedOutputName(), list(escapeEntities(comment(column))));

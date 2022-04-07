@@ -20206,11 +20206,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<Boolean> field(Condition condition) {
-        return condition instanceof NoCondition
-             ? noField(BOOLEAN)
-             : condition instanceof FieldCondition
-             ? ((FieldCondition) condition).field
-             : new ConditionAsField(condition);
+        return condition instanceof NoCondition ? noField(BOOLEAN) : condition instanceof FieldCondition ? ((FieldCondition) condition).field : new ConditionAsField(condition);
     }
 
     /**
@@ -20229,11 +20225,7 @@ public class DSL {
     @NotNull
     @Support
     public static Condition condition(Field<Boolean> field) {
-        return field instanceof NoField
-             ? noCondition()
-             : field instanceof ConditionAsField
-             ? ((ConditionAsField) field).condition
-             : new FieldCondition(field);
+        return field instanceof NoField ? noCondition() : field instanceof ConditionAsField ? ((ConditionAsField) field).condition : new FieldCondition(field);
     }
 
     // -------------------------------------------------------------------------

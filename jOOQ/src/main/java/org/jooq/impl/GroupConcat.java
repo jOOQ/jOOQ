@@ -81,7 +81,7 @@ implements GroupConcatOrderByStep {
         else
             result = new ListAgg(distinct, field, inline(separator));
 
-        if (filter != null)
+        if (filter.hasWhere())
             result.filterWhere(filter);
 
 

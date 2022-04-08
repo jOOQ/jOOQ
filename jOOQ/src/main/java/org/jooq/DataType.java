@@ -503,12 +503,40 @@ public interface DataType<T> extends Named {
     /**
      * Whether this column is computed on the client.
      * <p>
-     * This is true only if {@link #computed()} and
-     * {@link #generationLocation()} == {@link GenerationLocation#CLIENT}.
+     * This is true only if all of these hold true:
+     * <ul>
+     * <li>{@link #computed()}</li>
+     * <li>{@link #generationLocation()} == {@link GenerationLocation#CLIENT}</li>
      * <p>
      * This feature is implemented in commercial distributions only.
      */
     boolean computedOnClient();
+
+    /**
+     * Whether this column is computed on the client.
+     * <p>
+     * This is true only if all of these hold true:
+     * <ul>
+     * <li>{@link #computed()}</li>
+     * <li>{@link #generationLocation()} == {@link GenerationLocation#CLIENT}</li>
+     * <li>{@link #generationOption()} == {@link GenerationOption#STORED}</li>
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    boolean computedOnClientStored();
+
+    /**
+     * Whether this column is computed on the client.
+     * <p>
+     * This is true only if all of these hold true:
+     * <ul>
+     * <li>{@link #computed()}</li>
+     * <li>{@link #generationLocation()} == {@link GenerationLocation#CLIENT}</li>
+     * <li>{@link #generationOption()} == {@link GenerationOption#VIRTUAL}</li>
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    boolean computedOnClientVirtual();
 
     /**
      * Set the computed column expression of this data type to a constant value.

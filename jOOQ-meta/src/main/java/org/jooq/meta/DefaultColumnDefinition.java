@@ -61,6 +61,7 @@ public class DefaultColumnDefinition
     private final boolean                        identity;
     private final boolean                        readonly;
     private transient List<EmbeddableDefinition> replacedByEmbeddables;
+    private boolean                              synthetic;
 
     public DefaultColumnDefinition(
         TableDefinition table,
@@ -131,6 +132,16 @@ public class DefaultColumnDefinition
 
 
         return false;
+    }
+
+    final DefaultColumnDefinition synthetic(boolean s) {
+        this.synthetic = s;
+        return this;
+    }
+
+    @Override
+    public final boolean isSynthetic() {
+        return synthetic;
     }
 
     @Override

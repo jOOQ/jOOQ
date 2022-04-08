@@ -176,6 +176,16 @@ implements
     }
 
     @Override
+    public final boolean computedOnClientStored() {
+        return computedOnClient() && generationOption() == GenerationOption.STORED;
+    }
+
+    @Override
+    public final boolean computedOnClientVirtual() {
+        return computedOnClient() && generationOption() == GenerationOption.VIRTUAL;
+    }
+
+    @Override
     public final DataType<T> generatedAlwaysAs(T g) {
         return generatedAlwaysAs(Tools.field(g, this));
     }

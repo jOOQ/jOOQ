@@ -9146,6 +9146,7 @@ public class JavaGenerator extends AbstractGenerator {
                 null,
                 null,
                 null,
+                null,
                 baseType
             ) + ".getArrayDataType()";
         }
@@ -9163,6 +9164,7 @@ public class JavaGenerator extends AbstractGenerator {
                 type.isReadonly(),
                 type.getGeneratedAlwaysAs(),
                 type.getGenerationOption(),
+                type.getGenerator(),
                 type.getDefaultValue(),
                 type.getQualifiedUserType()
             );
@@ -9421,6 +9423,7 @@ public class JavaGenerator extends AbstractGenerator {
         boolean r,
         String g,
         GenerationOption go,
+        String ge,
         String d,
         Name u
     ) {
@@ -9533,6 +9536,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (dataType.identity())
                 sb.append(".identity(true)");
+
 
 
 

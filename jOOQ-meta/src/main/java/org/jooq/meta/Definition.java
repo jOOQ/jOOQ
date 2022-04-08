@@ -41,6 +41,7 @@ package org.jooq.meta;
 import java.util.List;
 
 import org.jooq.Name;
+import org.jooq.meta.jaxb.SyntheticObjectsType;
 
 /**
  * A general interface defining any database object, such as tables, views,
@@ -148,4 +149,13 @@ public interface Definition {
      *         <code>null</code>, if no such source code is available.
      */
     String getSource();
+
+    /**
+     * Whether the object has been created "synthetically", i.e. from
+     * {@link SyntheticObjectsType}, rather than from the underlying meta data
+     * source.
+     */
+    default boolean isSynthetic() {
+        return false;
+    }
 }

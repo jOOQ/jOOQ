@@ -1017,6 +1017,10 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       <element name="readonlyRowids" type="tns:SyntheticReadonlyRowidsType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic ROWIDs configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="columns" type="tns:SyntheticColumnsType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic columns configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="identities" type="tns:SyntheticIdentitiesType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic identity configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
@@ -1080,6 +1084,33 @@ Use this along with the synthetic primary key feature to replace existing primar
 
       <element name="tables" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all tables on which to apply this synthetic ROWID.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+  
+  <complexType name="SyntheticColumnsType">
+    <sequence>
+      <element name="column" type="tns:SyntheticColumnType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  
+  <complexType name="SyntheticColumnType">
+    <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic column configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
+    <all>
+      <element name="tables" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all tables on which to apply this synthetic readonly column.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="name" type="string" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The column name.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="type" type="string" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The column type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="comment" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The column comment.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>

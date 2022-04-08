@@ -49,7 +49,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jooq.DataType;
 // ...
+import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.DefaultDataType;
+import org.jooq.impl.ParserException;
+import org.jooq.impl.SQLDataType;
+import org.jooq.meta.jaxb.SyntheticColumnType;
 import org.jooq.meta.jaxb.SyntheticReadonlyRowidType;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -112,6 +118,35 @@ extends AbstractDefinition {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 }
 
                 // [#2603] Filter exclude / include also for table columns
@@ -131,6 +166,22 @@ extends AbstractDefinition {
 
         return elements;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

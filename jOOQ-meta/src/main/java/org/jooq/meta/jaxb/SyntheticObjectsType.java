@@ -37,6 +37,9 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "readonlyRowids")
     @XmlElement(name = "readonlyRowid")
     protected List<SyntheticReadonlyRowidType> readonlyRowids;
+    @XmlElementWrapper(name = "columns")
+    @XmlElement(name = "column")
+    protected List<SyntheticColumnType> columns;
     @XmlElementWrapper(name = "identities")
     @XmlElement(name = "identity")
     protected List<SyntheticIdentityType> identities;
@@ -73,6 +76,17 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
 
     public void setReadonlyRowids(List<SyntheticReadonlyRowidType> readonlyRowids) {
         this.readonlyRowids = readonlyRowids;
+    }
+
+    public List<SyntheticColumnType> getColumns() {
+        if (columns == null) {
+            columns = new ArrayList<SyntheticColumnType>();
+        }
+        return columns;
+    }
+
+    public void setColumns(List<SyntheticColumnType> columns) {
+        this.columns = columns;
     }
 
     public List<SyntheticIdentityType> getIdentities() {
@@ -169,6 +183,27 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
 
     public SyntheticObjectsType withReadonlyRowids(List<SyntheticReadonlyRowidType> readonlyRowids) {
         setReadonlyRowids(readonlyRowids);
+        return this;
+    }
+
+    public SyntheticObjectsType withColumns(SyntheticColumnType... values) {
+        if (values!= null) {
+            for (SyntheticColumnType value: values) {
+                getColumns().add(value);
+            }
+        }
+        return this;
+    }
+
+    public SyntheticObjectsType withColumns(Collection<SyntheticColumnType> values) {
+        if (values!= null) {
+            getColumns().addAll(values);
+        }
+        return this;
+    }
+
+    public SyntheticObjectsType withColumns(List<SyntheticColumnType> columns) {
+        setColumns(columns);
         return this;
     }
 
@@ -281,6 +316,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
     public final void appendTo(XMLBuilder builder) {
         builder.append("readonlyColumns", "readonlyColumn", readonlyColumns);
         builder.append("readonlyRowids", "readonlyRowid", readonlyRowids);
+        builder.append("columns", "column", columns);
         builder.append("identities", "identity", identities);
         builder.append("primaryKeys", "primaryKey", primaryKeys);
         builder.append("uniqueKeys", "uniqueKey", uniqueKeys);
@@ -322,6 +358,15 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
             }
         } else {
             if (!readonlyRowids.equals(other.readonlyRowids)) {
+                return false;
+            }
+        }
+        if (columns == null) {
+            if (other.columns!= null) {
+                return false;
+            }
+        } else {
+            if (!columns.equals(other.columns)) {
                 return false;
             }
         }
@@ -379,6 +424,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
         int result = 1;
         result = ((prime*result)+((readonlyColumns == null)? 0 :readonlyColumns.hashCode()));
         result = ((prime*result)+((readonlyRowids == null)? 0 :readonlyRowids.hashCode()));
+        result = ((prime*result)+((columns == null)? 0 :columns.hashCode()));
         result = ((prime*result)+((identities == null)? 0 :identities.hashCode()));
         result = ((prime*result)+((primaryKeys == null)? 0 :primaryKeys.hashCode()));
         result = ((prime*result)+((uniqueKeys == null)? 0 :uniqueKeys.hashCode()));

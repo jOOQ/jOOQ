@@ -190,6 +190,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SyntheticColumnType }
+     * 
+     */
+    public SyntheticColumnType createSyntheticColumnType() {
+        return new SyntheticColumnType();
+    }
+
+    /**
      * Create an instance of {@link SyntheticIdentityType }
      * 
      */

@@ -926,6 +926,7 @@ public class GenerationTool {
             logUnused("forced type", "forced types", database.getUnusedForcedTypes());
             logUnused("embeddable", "embeddables", database.getUnusedEmbeddables());
             logUnused("comment", "comments", database.getUnusedComments());
+            logUnused("synthetic column", "synthetic columns", database.getUnusedSyntheticColumns());
             logUnused("synthetic readonly column", "synthetic readonly columns", database.getUnusedSyntheticReadonlyColumns());
             logUnused("synthetic readonly rowid", "synthetic readonly rowids", database.getUnusedSyntheticReadonlyRowids());
             logUnused("synthetic identity", "synthetic identities", database.getUnusedSyntheticIdentities());

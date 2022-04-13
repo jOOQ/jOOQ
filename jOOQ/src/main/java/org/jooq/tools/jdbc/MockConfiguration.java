@@ -45,6 +45,7 @@ import java.util.function.Function;
 
 import javax.sql.DataSource;
 
+// ...
 import org.jooq.CacheProvider;
 import org.jooq.CharsetProvider;
 import org.jooq.CommitProvider;
@@ -205,6 +206,11 @@ public class MockConfiguration extends AbstractConfiguration {
     public DiagnosticsListenerProvider[] diagnosticsListenerProviders() {
         return delegate.diagnosticsListenerProviders();
     }
+
+
+
+
+
 
 
 
@@ -393,6 +399,12 @@ public class MockConfiguration extends AbstractConfiguration {
 
 
 
+
+
+
+
+
+
     @Override
     public Configuration set(Unwrapper newUnwrapper) {
         delegate.set(newUnwrapper);
@@ -544,6 +556,12 @@ public class MockConfiguration extends AbstractConfiguration {
     public Configuration derive(DiagnosticsListenerProvider... newDiagnosticsListenerProviders) {
         return new MockConfiguration(delegate.derive(newDiagnosticsListenerProviders), provider);
     }
+
+
+
+
+
+
 
 
 

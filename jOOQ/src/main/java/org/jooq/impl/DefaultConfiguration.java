@@ -54,6 +54,7 @@ import java.util.function.Function;
 
 import javax.sql.DataSource;
 
+// ...
 import org.jooq.CacheProvider;
 import org.jooq.CharsetProvider;
 import org.jooq.CommitProvider;
@@ -61,6 +62,7 @@ import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.ConverterProvider;
 import org.jooq.DSLContext;
+import org.jooq.DefaultAuditProvider;
 import org.jooq.DiagnosticsListener;
 import org.jooq.DiagnosticsListenerProvider;
 import org.jooq.ExecuteListener;
@@ -138,6 +140,8 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
+
     // [#7062] Apart from the possibility of containing user defined objects, the data
     //         map also contains the reflection cache, which isn't serializable (and
     //         should not be serialized anyway).
@@ -197,6 +201,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             null,
             dialect,
             settings,
@@ -235,6 +240,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             configuration.charsetProvider,
             configuration.converterProvider,
             configuration.formattingProvider,
+
 
 
 
@@ -278,6 +284,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
         Clock clock,
         SQLDialect dialect,
         Settings settings,
@@ -304,6 +311,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         set(charsetProvider);
         set(converterProvider);
         set(formattingProvider);
+
 
 
 
@@ -371,6 +379,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -402,6 +411,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+
 
 
 
@@ -439,6 +449,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -470,6 +481,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+
 
 
 
@@ -512,6 +524,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -546,6 +559,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -577,6 +591,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+
 
 
 
@@ -619,6 +634,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -658,6 +674,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -689,6 +706,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+
 
 
 
@@ -726,6 +744,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -757,6 +776,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+
 
 
 
@@ -794,6 +814,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -828,6 +849,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -859,6 +881,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+
 
 
 
@@ -901,6 +924,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -932,6 +956,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             newCharsetProvider,
             converterProvider,
             formattingProvider,
+
 
 
 
@@ -969,6 +994,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -1003,12 +1029,48 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
             data
         );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1074,6 +1136,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             newClock,
             dialect,
             settings,
@@ -1108,6 +1171,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             newDialect,
             settings,
@@ -1139,6 +1203,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+
 
 
 
@@ -1341,6 +1406,12 @@ public class DefaultConfiguration extends AbstractConfiguration {
         this.formattingProvider = newFormattingProvider;
         return this;
     }
+
+
+
+
+
+
 
 
 
@@ -1592,6 +1663,14 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
+
+
+
+
+
+
+
     /**
      * @see #set(Unwrapper)
      */
@@ -1785,6 +1864,13 @@ public class DefaultConfiguration extends AbstractConfiguration {
             ? formattingProvider
             : new DefaultFormattingProvider();
     }
+
+
+
+
+
+
+
 
 
 

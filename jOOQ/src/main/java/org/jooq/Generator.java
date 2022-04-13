@@ -43,6 +43,11 @@ import java.util.function.Function;
 /**
  * A generator can be used with {@link DataType#generatedAlwaysAs(Generator)} to
  * implement dynamic, client side computed columns.
+ * <p>
+ * This API is part of a commercial only feature. To use this feature, please
+ * use the jOOQ Professional Edition or the jOOQ Enterprise Edition.
+ *
+ * @author Lukas Eder
  */
 @FunctionalInterface
 public interface Generator<T> extends Function<GeneratorContext, Field<T>>, Serializable {}

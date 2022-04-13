@@ -55,6 +55,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Generator;
+import org.jooq.GeneratorStatementType;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.RowId;

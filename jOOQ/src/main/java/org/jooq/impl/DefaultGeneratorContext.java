@@ -39,13 +39,23 @@ package org.jooq.impl;
 
 import org.jooq.Configuration;
 import org.jooq.GeneratorContext;
+import org.jooq.GeneratorStatementType;
 
 /**
  * @author Lukas Eder
  */
 final class DefaultGeneratorContext extends AbstractScope implements GeneratorContext {
 
-    DefaultGeneratorContext(Configuration configuration) {
+    final GeneratorStatementType statementType;
+
+    DefaultGeneratorContext(Configuration configuration, GeneratorStatementType statementType) {
         super(configuration);
+
+        this.statementType = statementType;
+    }
+
+    @Override
+    public final GeneratorStatementType statementType() {
+        return statementType;
     }
 }

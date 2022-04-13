@@ -62,7 +62,6 @@ import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.ConverterProvider;
 import org.jooq.DSLContext;
-import org.jooq.DefaultAuditProvider;
 import org.jooq.DiagnosticsListener;
 import org.jooq.DiagnosticsListenerProvider;
 import org.jooq.ExecuteListener;

@@ -80,6 +80,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
+import org.jooq.GeneratorStatementType;
 import org.jooq.Param;
 // ...
 import org.jooq.Record;

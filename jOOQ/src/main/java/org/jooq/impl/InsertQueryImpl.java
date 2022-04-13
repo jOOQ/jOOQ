@@ -110,6 +110,7 @@ import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.GeneratorStatementType;
 import org.jooq.Identity;
 import org.jooq.InsertQuery;
 import org.jooq.MergeNotMatchedStep;

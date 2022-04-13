@@ -37,8 +37,23 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A generator context is an argument object that is passed to a
  * {@link Generator} when generating client side computed columns.
+ * <p>
+ * This API is part of a commercial only feature. To use this feature, please
+ * use the jOOQ Professional Edition or the jOOQ Enterprise Edition.
+ *
+ * @author Lukas Eder
  */
-public interface GeneratorContext extends Scope {}
+public interface GeneratorContext extends Scope {
+
+    /**
+     * The statement type in which the {@link Generator} is being invoked, or
+     * <code>null</code> when the statement type is unknown / not applicable.
+     */
+    @Nullable
+    GeneratorStatementType statementType();
+}

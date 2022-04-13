@@ -199,7 +199,7 @@ implements
     @Override
     public final Field<T> generatedAlwaysAs() {
         Generator<T> s = generatedAlwaysAsGenerator();
-        return s == null ? null : s.apply(new DefaultGeneratorContext(CONFIG));
+        return s == null ? null : s.apply(new DefaultGeneratorContext(CONFIG, null));
     }
 
     @Override

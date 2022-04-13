@@ -43,8 +43,10 @@ import java.util.function.Predicate;
 
 import org.jooq.Clause;
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Generator;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -53,6 +55,8 @@ import org.jooq.Table;
 import org.jooq.TableField;
 // ...
 import org.jooq.UniqueKey;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -88,10 +92,23 @@ final class TableAlias<R extends Record> extends AbstractTable<R> implements QOM
         List<Field<?>> result = Tools.map(this.alias.wrapped().fieldsRow().fields(), (f, i) -> new TableFieldImpl(
               alias.fieldAliases != null && alias.fieldAliases.length > i
             ? alias.fieldAliases[i]
-            : f.getUnqualifiedName(), f.getDataType(), this, f.getCommentPart(), f.getBinding()
+            : f.getUnqualifiedName(), removeGenerator(f.getDataType()), this, f.getCommentPart(), f.getBinding()
         ));
 
         return new FieldsImpl<>(result);
+    }
+
+    static final <T> DataType<T> removeGenerator(DataType<T> dataType) {
+
+
+
+
+
+
+
+
+
+        return dataType;
     }
 
     /**

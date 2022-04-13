@@ -42,7 +42,6 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
-import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
@@ -110,7 +109,6 @@ import org.jooq.impl.QOM.UEmpty;
 import org.jooq.types.Interval;
 import org.jooq.types.UNumber;
 
-import jakarta.persistence.GenerationType;
 // ...
 
 /**
@@ -192,7 +190,7 @@ implements
 
     @Override
     public final DataType<T> generatedAlwaysAs(Field<T> generatedAlwaysAsValue) {
-        return generatedAlwaysAs(() -> generatedAlwaysAsValue);
+        return generatedAlwaysAs(ctx -> generatedAlwaysAsValue);
     }
 
     @Override
@@ -201,7 +199,7 @@ implements
     @Override
     public final Field<T> generatedAlwaysAs() {
         Generator<T> s = generatedAlwaysAsGenerator();
-        return s == null ? null : s.get();
+        return s == null ? null : s.apply(new DefaultGeneratorContext(CONFIG));
     }
 
     @Override

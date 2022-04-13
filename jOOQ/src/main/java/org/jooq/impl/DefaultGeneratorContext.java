@@ -35,14 +35,17 @@
  *
  *
  */
-package org.jooq;
+package org.jooq.impl;
 
-import java.io.Serializable;
-import java.util.function.Function;
+import org.jooq.Configuration;
+import org.jooq.GeneratorContext;
 
 /**
- * A generator can be used with {@link DataType#generatedAlwaysAs(Generator)} to
- * implement dynamic, client side computed columns.
+ * @author Lukas Eder
  */
-@FunctionalInterface
-public interface Generator<T> extends Function<GeneratorContext, Field<T>>, Serializable {}
+final class DefaultGeneratorContext extends AbstractScope implements GeneratorContext {
+
+    DefaultGeneratorContext(Configuration configuration) {
+        super(configuration);
+    }
+}

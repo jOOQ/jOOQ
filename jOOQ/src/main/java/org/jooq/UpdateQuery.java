@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.H2;
 // ...
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
@@ -459,7 +460,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * SQL dialects
      */
     @Override
-    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, POSTGRES, YUGABYTEDB })
     void setReturning();
 
     /**
@@ -469,7 +470,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * SQL dialects
      */
     @Override
-    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, POSTGRES, YUGABYTEDB })
     void setReturning(Identity<R, ?> identity);
 
     /**
@@ -479,7 +480,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * SQL dialects
      */
     @Override
-    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, POSTGRES, YUGABYTEDB })
     void setReturning(SelectFieldOrAsterisk... fields);
 
     /**
@@ -489,7 +490,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * SQL dialects
      */
     @Override
-    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, POSTGRES, YUGABYTEDB })
     void setReturning(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
@@ -500,7 +501,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      */
     @Override
     @Nullable
-    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, POSTGRES, YUGABYTEDB })
     R getReturnedRecord();
 
     /**
@@ -511,7 +512,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      */
     @Override
     @NotNull
-    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, POSTGRES, YUGABYTEDB })
     Result<R> getReturnedRecords();
 
 }

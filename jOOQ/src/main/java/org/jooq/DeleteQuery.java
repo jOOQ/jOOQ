@@ -44,6 +44,7 @@ package org.jooq;
 // ...
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -54,6 +55,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import java.util.Collection;
 
@@ -162,7 +164,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      *
      * @see #getReturnedRecords()
      */
-    @Support({ FIREBIRD, MARIADB, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
     void setReturning();
 
     /**
@@ -172,7 +174,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      * @param fields Fields to be returned
      * @see #getReturnedRecords()
      */
-    @Support({ FIREBIRD, MARIADB, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
     void setReturning(SelectFieldOrAsterisk... fields);
 
     /**
@@ -182,7 +184,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      * @param fields Fields to be returned
      * @see #getReturnedRecords()
      */
-    @Support({ FIREBIRD, MARIADB, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
     void setReturning(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
@@ -205,7 +207,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      * @see #getReturnedRecords()
      */
     @Nullable
-    @Support({ FIREBIRD, MARIADB, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
     R getReturnedRecord();
 
     /**
@@ -231,7 +233,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      *         </ul>
      */
     @NotNull
-    @Support({ FIREBIRD, MARIADB, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
     Result<R> getReturnedRecords();
 
 }

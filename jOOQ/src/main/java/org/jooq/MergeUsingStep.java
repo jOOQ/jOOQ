@@ -134,8 +134,8 @@ public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
      * <tr>
      * <td>H2</td>
      * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * <td><a href="https://www.h2database.com/html/commands.html#merge_into"
+     * >https://www.h2database.com/html/commands.html#merge_into</a></td>
      * </tr>
      * <tr>
      * <td>HANA</td>

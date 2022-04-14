@@ -8515,8 +8515,8 @@ public interface DSLContext extends Scope {
      * <tr>
      * <td>H2</td>
      * <td>H2 natively supports this special syntax</td>
-     * <td><a href="http://www.h2database.com/html/grammar.html#merge"
-     * >http://www.h2database.com/html/grammar.html#merge</a></td>
+     * <td><a href="https://www.h2database.com/html/commands.html#merge_into"
+     * >https://www.h2database.com/html/commands.html#merge_into</a></td>
      * </tr>
      * <tr>
      * <td>HANA</td>

@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -48,7 +49,14 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-public interface GeneratorContext extends Scope {
+public interface GeneratorContext<T> extends Scope {
+
+    /**
+     * The target field whose contents are being generated, or <code>null</code>
+     * when the field is unknown / not applicable.
+     */
+    @Nullable
+    Field<T> field();
 
     /**
      * The statement type in which the {@link Generator} is being invoked, or

@@ -38,20 +38,28 @@
 package org.jooq.impl;
 
 import org.jooq.Configuration;
+import org.jooq.Field;
 import org.jooq.GeneratorContext;
 import org.jooq.GeneratorStatementType;
 
 /**
  * @author Lukas Eder
  */
-final class DefaultGeneratorContext extends AbstractScope implements GeneratorContext {
+final class DefaultGeneratorContext<T> extends AbstractScope implements GeneratorContext<T> {
 
+    final Field<T>               field;
     final GeneratorStatementType statementType;
 
-    DefaultGeneratorContext(Configuration configuration, GeneratorStatementType statementType) {
+    DefaultGeneratorContext(Configuration configuration, Field<T> field, GeneratorStatementType statementType) {
         super(configuration);
 
+        this.field = field;
         this.statementType = statementType;
+    }
+
+    @Override
+    public final Field<T> field() {
+        return field;
     }
 
     @Override

@@ -506,7 +506,8 @@ public interface DataType<T> extends Named {
      * This is true only if all of these hold true:
      * <ul>
      * <li>{@link #computed()}</li>
-     * <li>{@link #generationLocation()} == {@link GenerationLocation#CLIENT}</li>
+     * <li>{@link #generationLocation()} ==
+     * {@link GenerationLocation#CLIENT}</li>
      * <p>
      * This feature is implemented in commercial distributions only.
      */
@@ -518,8 +519,13 @@ public interface DataType<T> extends Named {
      * This is true only if all of these hold true:
      * <ul>
      * <li>{@link #computed()}</li>
-     * <li>{@link #generationLocation()} == {@link GenerationLocation#CLIENT}</li>
+     * <li>{@link #generationLocation()} ==
+     * {@link GenerationLocation#CLIENT}</li>
      * <li>{@link #generationOption()} == {@link GenerationOption#STORED}</li>
+     * <li>{@link #generatedAlwaysAsGenerator()} produces a generator that
+     * {@link Generator#supports(GeneratorStatementType)} any of
+     * {@link GeneratorStatementType#INSERT} or
+     * {@link GeneratorStatementType#UPDATE}</li>
      * <p>
      * This feature is implemented in commercial distributions only.
      */
@@ -531,8 +537,29 @@ public interface DataType<T> extends Named {
      * This is true only if all of these hold true:
      * <ul>
      * <li>{@link #computed()}</li>
-     * <li>{@link #generationLocation()} == {@link GenerationLocation#CLIENT}</li>
+     * <li>{@link #generationLocation()} ==
+     * {@link GenerationLocation#CLIENT}</li>
+     * <li>{@link #generationOption()} == {@link GenerationOption#STORED}</li>
+     * <li>{@link #generatedAlwaysAsGenerator()} produces a generator that
+     * {@link Generator#supports(GeneratorStatementType)} the argument
+     * <code>statementType</code></li>
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    boolean computedOnClientStoredOn(GeneratorStatementType statementType);
+
+    /**
+     * Whether this column is computed on the client.
+     * <p>
+     * This is true only if all of these hold true:
+     * <ul>
+     * <li>{@link #computed()}</li>
+     * <li>{@link #generationLocation()} ==
+     * {@link GenerationLocation#CLIENT}</li>
      * <li>{@link #generationOption()} == {@link GenerationOption#VIRTUAL}</li>
+     * <li>{@link #generatedAlwaysAsGenerator()} produces a generator that
+     * {@link Generator#supports(GeneratorStatementType)} the type
+     * {@link GeneratorStatementType#SELECT}</li>
      * <p>
      * This feature is implemented in commercial distributions only.
      */

@@ -89,6 +89,7 @@ import org.jooq.EmbeddableRecord;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.Generator;
+import org.jooq.GeneratorStatementType;
 import org.jooq.Geography;
 import org.jooq.Geometry;
 import org.jooq.JSON;
@@ -175,12 +176,24 @@ implements
 
     @Override
     public final boolean computedOnClientStored() {
-        return computedOnClient() && generationOption() == GenerationOption.STORED;
+        return computedOnClient()
+            && generationOption() == GenerationOption.STORED
+            && (generatedAlwaysAsGenerator().supports(GeneratorStatementType.INSERT) ||
+                generatedAlwaysAsGenerator().supports(GeneratorStatementType.UPDATE));
+    }
+
+    @Override
+    public final boolean computedOnClientStoredOn(GeneratorStatementType statementType) {
+        return computedOnClient()
+            && generationOption() == GenerationOption.STORED
+            && generatedAlwaysAsGenerator().supports(statementType);
     }
 
     @Override
     public final boolean computedOnClientVirtual() {
-        return computedOnClient() && generationOption() == GenerationOption.VIRTUAL;
+        return computedOnClient()
+            && generationOption() == GenerationOption.VIRTUAL
+            && generatedAlwaysAsGenerator().supports(GeneratorStatementType.SELECT);
     }
 
     @Override
@@ -199,7 +212,7 @@ implements
     @Override
     public final Field<T> generatedAlwaysAs() {
         Generator<T> s = generatedAlwaysAsGenerator();
-        return s == null ? null : s.apply(new DefaultGeneratorContext(CONFIG, null));
+        return s == null ? null : s.apply(new DefaultGeneratorContext(CONFIG, null, null));
     }
 
     @Override

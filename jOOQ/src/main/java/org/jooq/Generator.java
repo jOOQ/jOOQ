@@ -50,4 +50,18 @@ import java.util.function.Function;
  * @author Lukas Eder
  */
 @FunctionalInterface
-public interface Generator<T> extends Function<GeneratorContext, Field<T>>, Serializable {}
+public interface Generator<T> extends Function<GeneratorContext<T>, Field<T>>, Serializable {
+
+    /**
+     * Whether this generator supports a given statement type.
+     * <p>
+     * Implementations may choose to deactivate themselves for some statement
+     * types, e.g. if they want to be invoked only for
+     * {@link GeneratorStatementType#INSERT}.
+     *
+     * @param statementType The statement type.
+     */
+    default boolean supports(GeneratorStatementType statementType) {
+        return true;
+    }
+}

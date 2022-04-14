@@ -40,6 +40,10 @@ public class CustomType implements Serializable, XMLAppendable
     protected VisibilityModifier visibilityModifier;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String generator;
+    protected Boolean auditInsertTimestamp;
+    protected Boolean auditInsertUser;
+    protected Boolean auditUpdateTimestamp;
+    protected Boolean auditUpdateUser;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String converter;
     protected Boolean enumConverter;
@@ -117,6 +121,110 @@ public class CustomType implements Serializable, XMLAppendable
     @Deprecated
     public void setGenerator(String value) {
         this.generator = value;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public Boolean isAuditInsertTimestamp() {
+        return auditInsertTimestamp;
+    }
+
+    /**
+     * Sets the value of the auditInsertTimestamp property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public void setAuditInsertTimestamp(Boolean value) {
+        this.auditInsertTimestamp = value;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public Boolean isAuditInsertUser() {
+        return auditInsertUser;
+    }
+
+    /**
+     * Sets the value of the auditInsertUser property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public void setAuditInsertUser(Boolean value) {
+        this.auditInsertUser = value;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public Boolean isAuditUpdateTimestamp() {
+        return auditUpdateTimestamp;
+    }
+
+    /**
+     * Sets the value of the auditUpdateTimestamp property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public void setAuditUpdateTimestamp(Boolean value) {
+        this.auditUpdateTimestamp = value;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public Boolean isAuditUpdateUser() {
+        return auditUpdateUser;
+    }
+
+    /**
+     * Sets the value of the auditUpdateUser property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public void setAuditUpdateUser(Boolean value) {
+        this.auditUpdateUser = value;
     }
 
     /**
@@ -239,6 +347,26 @@ public class CustomType implements Serializable, XMLAppendable
         return this;
     }
 
+    public CustomType withAuditInsertTimestamp(Boolean value) {
+        setAuditInsertTimestamp(value);
+        return this;
+    }
+
+    public CustomType withAuditInsertUser(Boolean value) {
+        setAuditInsertUser(value);
+        return this;
+    }
+
+    public CustomType withAuditUpdateTimestamp(Boolean value) {
+        setAuditUpdateTimestamp(value);
+        return this;
+    }
+
+    public CustomType withAuditUpdateUser(Boolean value) {
+        setAuditUpdateUser(value);
+        return this;
+    }
+
     /**
      * @deprecated Use ForcedType only
      * 
@@ -280,6 +408,10 @@ public class CustomType implements Serializable, XMLAppendable
         builder.append("type", type);
         builder.append("visibilityModifier", visibilityModifier);
         builder.append("generator", generator);
+        builder.append("auditInsertTimestamp", auditInsertTimestamp);
+        builder.append("auditInsertUser", auditInsertUser);
+        builder.append("auditUpdateTimestamp", auditUpdateTimestamp);
+        builder.append("auditUpdateUser", auditUpdateUser);
         builder.append("converter", converter);
         builder.append("enumConverter", enumConverter);
         builder.append("lambdaConverter", lambdaConverter);
@@ -341,6 +473,42 @@ public class CustomType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (auditInsertTimestamp == null) {
+            if (other.auditInsertTimestamp!= null) {
+                return false;
+            }
+        } else {
+            if (!auditInsertTimestamp.equals(other.auditInsertTimestamp)) {
+                return false;
+            }
+        }
+        if (auditInsertUser == null) {
+            if (other.auditInsertUser!= null) {
+                return false;
+            }
+        } else {
+            if (!auditInsertUser.equals(other.auditInsertUser)) {
+                return false;
+            }
+        }
+        if (auditUpdateTimestamp == null) {
+            if (other.auditUpdateTimestamp!= null) {
+                return false;
+            }
+        } else {
+            if (!auditUpdateTimestamp.equals(other.auditUpdateTimestamp)) {
+                return false;
+            }
+        }
+        if (auditUpdateUser == null) {
+            if (other.auditUpdateUser!= null) {
+                return false;
+            }
+        } else {
+            if (!auditUpdateUser.equals(other.auditUpdateUser)) {
+                return false;
+            }
+        }
         if (converter == null) {
             if (other.converter!= null) {
                 return false;
@@ -388,6 +556,10 @@ public class CustomType implements Serializable, XMLAppendable
         result = ((prime*result)+((type == null)? 0 :type.hashCode()));
         result = ((prime*result)+((visibilityModifier == null)? 0 :visibilityModifier.hashCode()));
         result = ((prime*result)+((generator == null)? 0 :generator.hashCode()));
+        result = ((prime*result)+((auditInsertTimestamp == null)? 0 :auditInsertTimestamp.hashCode()));
+        result = ((prime*result)+((auditInsertUser == null)? 0 :auditInsertUser.hashCode()));
+        result = ((prime*result)+((auditUpdateTimestamp == null)? 0 :auditUpdateTimestamp.hashCode()));
+        result = ((prime*result)+((auditUpdateUser == null)? 0 :auditUpdateUser.hashCode()));
         result = ((prime*result)+((converter == null)? 0 :converter.hashCode()));
         result = ((prime*result)+((enumConverter == null)? 0 :enumConverter.hashCode()));
         result = ((prime*result)+((lambdaConverter == null)? 0 :lambdaConverter.hashCode()));

@@ -39,6 +39,7 @@ package org.jooq.meta;
 
 
 import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static org.jooq.tools.Convert.convert;
 import static org.jooq.tools.StringUtils.isEmpty;
 
@@ -49,10 +50,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// ...
 import org.jooq.Converter;
 import org.jooq.DataType;
+import org.jooq.GeneratorStatementType;
 import org.jooq.Name;
+// ...
 import org.jooq.exception.SQLDialectNotSupportedException;
+// ...
 import org.jooq.impl.DateAsTimestampBinding;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.EnumConverter;
@@ -215,6 +220,12 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
             String converter = null;
             String binding = result.getBinding();
 
+
+
+
+
+
+
             CustomType customType = customType(db, forcedType);
             if (customType != null) {
                 uType = (!StringUtils.isBlank(customType.getType()))
@@ -224,8 +235,15 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                 if (generator == null)
                     generator = customType.getGenerator();
 
+
+
+
+
+
+
+
                 // [#5877] [#6567] EnumConverters profit from simplified configuration
-                if (Boolean.TRUE.equals(customType.isEnumConverter()) ||
+                if (TRUE.equals(customType.isEnumConverter()) ||
                     EnumConverter.class.getName().equals(customType.getConverter())) {
                     String tType = tType(db, resolver, definedType);
                     converter = resolver.constructorCall(EnumConverter.class.getName() + "<" + resolver.ref(tType) + ", " + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(tType) + ", " + resolver.classLiteral(uType) + ")";
@@ -242,6 +260,19 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                 if (!StringUtils.isBlank(customType.getBinding()))
                     binding = customType.getBinding();
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             if (uType != null) {
                 db.markUsed(forcedType);
@@ -360,6 +391,10 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                 .withLambdaConverter(forcedType.getLambdaConverter())
                 .withVisibilityModifier(forcedType.getVisibilityModifier())
                 .withGenerator(forcedType.getGenerator())
+                .withAuditInsertTimestamp(forcedType.isAuditInsertTimestamp())
+                .withAuditInsertUser(forcedType.isAuditInsertUser())
+                .withAuditUpdateTimestamp(forcedType.isAuditUpdateTimestamp())
+                .withAuditUpdateUser(forcedType.isAuditUpdateUser())
                 .withConverter(forcedType.getConverter())
                 .withName(name)
                 .withType(forcedType.getUserType());

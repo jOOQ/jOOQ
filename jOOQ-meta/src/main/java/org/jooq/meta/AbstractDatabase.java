@@ -1418,27 +1418,36 @@ public abstract class AbstractDatabase implements Database {
             }
 
             if (StringUtils.isBlank(type.getName())) {
-                if (StringUtils.isBlank(type.getUserType()) && StringUtils.isBlank(type.getGenerator())) {
-                    if (type.getVisibilityModifier() == null) {
-                        log.warn("Bad configuration for <forcedType/>. Either <name/>, <userType/>, <generator/>, or <visibilityModifier/> is required: " + type);
+                if (StringUtils.isBlank(type.getUserType())) {
+                    if (type.getVisibilityModifier() == null
+                            && StringUtils.isBlank(type.getGenerator())
+                            && !TRUE.equals(type.isAuditInsertTimestamp())
+                            && !TRUE.equals(type.isAuditInsertUser())
+                            && !TRUE.equals(type.isAuditUpdateTimestamp())
+                            && !TRUE.equals(type.isAuditUpdateUser())) {
+                        log.warn("Bad configuration for <forcedType/>. Any of <name/>, <userType/>, <generator/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, or <visibilityModifier/> is required: " + type);
 
                         it2.remove();
                         continue;
                     }
                     else if (!commercial()) {
-                        log.warn("<visibilityModifier/> is a commercial only feature. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition: " + type);
+                        log.warn("<generator/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, and <visibilityModifier/> are commercial only features. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition: " + type);
 
                         it2.remove();
                         continue;
                     }
                 }
 
-                if (StringUtils.isBlank(type.getBinding()) &&
-                    StringUtils.isBlank(type.getConverter()) &&
-                    StringUtils.isBlank(type.getGenerator()) &&
-                    type.getVisibilityModifier() == null &&
-                    !Boolean.TRUE.equals(type.isEnumConverter()) &&
-                    type.getLambdaConverter() == null
+                if (StringUtils.isBlank(type.getBinding())
+                    && StringUtils.isBlank(type.getConverter())
+                    && StringUtils.isBlank(type.getGenerator())
+                    && !TRUE.equals(type.isAuditInsertTimestamp())
+                    && !TRUE.equals(type.isAuditInsertUser())
+                    && !TRUE.equals(type.isAuditUpdateTimestamp())
+                    && !TRUE.equals(type.isAuditUpdateUser())
+                    && type.getVisibilityModifier() == null
+                    && !Boolean.TRUE.equals(type.isEnumConverter())
+                    && type.getLambdaConverter() == null
                 ) {
                     log.warn("Bad configuration for <forcedType/>. Either <binding/>, <converter/>, <enumConverter/>, <lambdaConverter/>, or <generator/> is required: " + type);
 

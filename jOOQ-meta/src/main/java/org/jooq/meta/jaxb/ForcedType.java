@@ -40,6 +40,10 @@ public class ForcedType implements Serializable, XMLAppendable
     protected VisibilityModifier visibilityModifier;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String generator;
+    protected Boolean auditInsertTimestamp;
+    protected Boolean auditInsertUser;
+    protected Boolean auditUpdateTimestamp;
+    protected Boolean auditUpdateUser;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String converter;
     protected Boolean enumConverter;
@@ -169,6 +173,118 @@ public class ForcedType implements Serializable, XMLAppendable
      */
     public void setGenerator(String value) {
         this.generator = value;
+    }
+
+    /**
+     * Whether this column acts as an audit {@link org.jooq.GeneratorStatementType#INSERT} timestamp.
+     * <p>
+     * This flag produces a {@link #generator} configuration, so it cannot be combined with a custom generator. The different audit flags are mutually exclusive.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isAuditInsertTimestamp() {
+        return auditInsertTimestamp;
+    }
+
+    /**
+     * Sets the value of the auditInsertTimestamp property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setAuditInsertTimestamp(Boolean value) {
+        this.auditInsertTimestamp = value;
+    }
+
+    /**
+     * Whether this column acts as an audit {@link org.jooq.GeneratorStatementType#INSERT} timestamp.
+     * <p>
+     * This flag produces a {@link #generator} configuration, so it cannot be combined with a custom generator. The different audit flags are mutually exclusive.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isAuditInsertUser() {
+        return auditInsertUser;
+    }
+
+    /**
+     * Sets the value of the auditInsertUser property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setAuditInsertUser(Boolean value) {
+        this.auditInsertUser = value;
+    }
+
+    /**
+     * Whether this column acts as an audit {@link org.jooq.GeneratorStatementType#UPDATE} timestamp.
+     * <p>
+     * This flag produces a {@link #generator} configuration, so it cannot be combined with a custom generator. The different audit flags are mutually exclusive.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isAuditUpdateTimestamp() {
+        return auditUpdateTimestamp;
+    }
+
+    /**
+     * Sets the value of the auditUpdateTimestamp property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setAuditUpdateTimestamp(Boolean value) {
+        this.auditUpdateTimestamp = value;
+    }
+
+    /**
+     * Whether this column acts as an audit {@link org.jooq.GeneratorStatementType#UPDATE} timestamp.
+     * <p>
+     * This flag produces a {@link #generator} configuration, so it cannot be combined with a custom generator. The different audit flags are mutually exclusive.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isAuditUpdateUser() {
+        return auditUpdateUser;
+    }
+
+    /**
+     * Sets the value of the auditUpdateUser property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setAuditUpdateUser(Boolean value) {
+        this.auditUpdateUser = value;
     }
 
     /**
@@ -473,6 +589,26 @@ public class ForcedType implements Serializable, XMLAppendable
         return this;
     }
 
+    public ForcedType withAuditInsertTimestamp(Boolean value) {
+        setAuditInsertTimestamp(value);
+        return this;
+    }
+
+    public ForcedType withAuditInsertUser(Boolean value) {
+        setAuditInsertUser(value);
+        return this;
+    }
+
+    public ForcedType withAuditUpdateTimestamp(Boolean value) {
+        setAuditUpdateTimestamp(value);
+        return this;
+    }
+
+    public ForcedType withAuditUpdateUser(Boolean value) {
+        setAuditUpdateUser(value);
+        return this;
+    }
+
     /**
      * A converter implementation for the {@link #getUserType()}.
      * 
@@ -609,6 +745,10 @@ public class ForcedType implements Serializable, XMLAppendable
         builder.append("userType", userType);
         builder.append("visibilityModifier", visibilityModifier);
         builder.append("generator", generator);
+        builder.append("auditInsertTimestamp", auditInsertTimestamp);
+        builder.append("auditInsertUser", auditInsertUser);
+        builder.append("auditUpdateTimestamp", auditUpdateTimestamp);
+        builder.append("auditUpdateUser", auditUpdateUser);
         builder.append("converter", converter);
         builder.append("enumConverter", enumConverter);
         builder.append("lambdaConverter", lambdaConverter);
@@ -686,6 +826,42 @@ public class ForcedType implements Serializable, XMLAppendable
             }
         } else {
             if (!generator.equals(other.generator)) {
+                return false;
+            }
+        }
+        if (auditInsertTimestamp == null) {
+            if (other.auditInsertTimestamp!= null) {
+                return false;
+            }
+        } else {
+            if (!auditInsertTimestamp.equals(other.auditInsertTimestamp)) {
+                return false;
+            }
+        }
+        if (auditInsertUser == null) {
+            if (other.auditInsertUser!= null) {
+                return false;
+            }
+        } else {
+            if (!auditInsertUser.equals(other.auditInsertUser)) {
+                return false;
+            }
+        }
+        if (auditUpdateTimestamp == null) {
+            if (other.auditUpdateTimestamp!= null) {
+                return false;
+            }
+        } else {
+            if (!auditUpdateTimestamp.equals(other.auditUpdateTimestamp)) {
+                return false;
+            }
+        }
+        if (auditUpdateUser == null) {
+            if (other.auditUpdateUser!= null) {
+                return false;
+            }
+        } else {
+            if (!auditUpdateUser.equals(other.auditUpdateUser)) {
                 return false;
             }
         }
@@ -827,6 +1003,10 @@ public class ForcedType implements Serializable, XMLAppendable
         result = ((prime*result)+((userType == null)? 0 :userType.hashCode()));
         result = ((prime*result)+((visibilityModifier == null)? 0 :visibilityModifier.hashCode()));
         result = ((prime*result)+((generator == null)? 0 :generator.hashCode()));
+        result = ((prime*result)+((auditInsertTimestamp == null)? 0 :auditInsertTimestamp.hashCode()));
+        result = ((prime*result)+((auditInsertUser == null)? 0 :auditInsertUser.hashCode()));
+        result = ((prime*result)+((auditUpdateTimestamp == null)? 0 :auditUpdateTimestamp.hashCode()));
+        result = ((prime*result)+((auditUpdateUser == null)? 0 :auditUpdateUser.hashCode()));
         result = ((prime*result)+((converter == null)? 0 :converter.hashCode()));
         result = ((prime*result)+((enumConverter == null)? 0 :enumConverter.hashCode()));
         result = ((prime*result)+((lambdaConverter == null)? 0 :lambdaConverter.hashCode()));

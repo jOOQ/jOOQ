@@ -80,6 +80,7 @@ import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.fieldName;
 import static org.jooq.impl.Tools.filter;

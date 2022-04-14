@@ -846,7 +846,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <li><a href=
      * "http://db.apache.org/derby/docs/10.7/ref/rrefsqlj31783.html"> Derby's
      * FOR UPDATE clause</a></li>
-     * <li><a href="http://www.h2database.com/html/grammar.html#select">H2's FOR
+     * <li><a href="https://www.h2database.com/html/grammar.html#select">H2's FOR
      * UPDATE clause</a></li>
      * <li><a href=
      * "http://www.hsqldb.org/doc/2.0/guide/dataaccess-chapt.html#N11DA9"

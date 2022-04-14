@@ -2035,8 +2035,8 @@ extends
      * <td><code>[search] REGEXP [pattern]</code></td>
      * <td>Java</td>
      * <td><a href=
-     * "http://www.h2database.com/html/grammar.html#condition_right_hand_side"
-     * >http
+     * "https://www.h2database.com/html/grammar.html#condition_right_hand_side"
+     * >https
      * ://www.h2database.com/html/grammar.html#condition_right_hand_side</a></td>
      * </tr>
      * <tr>

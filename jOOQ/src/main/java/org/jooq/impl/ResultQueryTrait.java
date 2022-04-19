@@ -1578,7 +1578,7 @@ extends
      * @throws SQLException If something goes wrong when accessing
      *             {@link ResultSetMetaData}.
      */
-    default Field<?>[] getFields(ResultSetMetaData rs) throws SQLException {
+    default Field<?>[] getFields(ThrowingSupplier<? extends ResultSetMetaData, SQLException> rs) throws SQLException {
         return getFields();
     }
 

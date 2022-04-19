@@ -303,7 +303,7 @@ final class R2DBC {
             r.map((row, meta) -> {
                 try {
                     // TODO: Cache this getFields() call
-                    Field<?>[] fields = query.getFields(new R2DBCResultSetMetaData(query.configuration(), meta));
+                    Field<?>[] fields = query.getFields(() -> new R2DBCResultSetMetaData(query.configuration(), meta));
 
                     // TODO: This call is duplicated from CursorImpl and related classes.
                     // Refactor this call to make sure code is re-used, especially when

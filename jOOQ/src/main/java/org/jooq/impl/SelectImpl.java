@@ -3365,7 +3365,7 @@ implements
     }
 
     @Override
-    public final Field<?>[] getFields(ResultSetMetaData rs) throws SQLException {
+    public final Field<?>[] getFields(ThrowingSupplier<? extends ResultSetMetaData, SQLException> rs) throws SQLException {
         return getDelegate().getFields(rs);
     }
 

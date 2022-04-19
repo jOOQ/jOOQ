@@ -41,6 +41,7 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.isEmpty;
 
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.Collection;
 
 import org.jooq.Clause;
@@ -102,13 +103,13 @@ final class SQLResultQuery extends AbstractResultQuery<Record> implements UEmpty
     }
 
     @Override
-    public final Field<?>[] getFields(ResultSetMetaData meta) {
+    public final Field<?>[] getFields(ThrowingSupplier<? extends ResultSetMetaData, SQLException> rs) throws SQLException {
         Field<?>[] result = getFields();
 
         if (!isEmpty(result))
             return result;
         else
-            return new MetaDataFieldProvider(configuration(), meta).getFields();
+            return new MetaDataFieldProvider(configuration(), rs.get()).getFields();
     }
 
     @Override

@@ -226,6 +226,7 @@ import static org.jooq.impl.Transformations.transformQualify;
 import static org.jooq.impl.Transformations.transformRownum;
 
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -714,13 +715,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final Field<?>[] getFields(ResultSetMetaData meta) {
+    public final Field<?>[] getFields(ThrowingSupplier<? extends ResultSetMetaData, SQLException> rs) throws SQLException {
         Field<?>[] fields = getFields();
 
         // If no projection was specified explicitly, create fields from result
         // set meta data instead. This is typically the case for SELECT * ...
         if (fields.length == 0)
-            return new MetaDataFieldProvider(configuration(), meta).getFields();
+            return new MetaDataFieldProvider(configuration(), rs.get()).getFields();
 
         return fields;
     }

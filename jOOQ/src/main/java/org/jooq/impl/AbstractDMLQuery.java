@@ -1320,7 +1320,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
             : Tools.findAny(returningResolvedAsterisks, f -> f.getDataType().identity());
     }
 
-    public final Field<?>[] getFields(ResultSetMetaData rs) throws SQLException {
+    public final Field<?>[] getFields(ThrowingSupplier<? extends ResultSetMetaData, SQLException> rs) throws SQLException {
         return returningResolvedAsterisks.toArray(EMPTY_FIELD);
     }
 

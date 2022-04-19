@@ -258,7 +258,7 @@ implements
                 ctx.resultSet(new MockResultSet(r));
             }
 
-            Field<?>[] fields = getFields(ctx.resultSet().getMetaData());
+            Field<?>[] fields = getFields(() -> ctx.resultSet().getMetaData());
             cursor = new CursorImpl<>(ctx, listener, fields, intern.internIndexes(fields), keepStatement(), keepResultSet(), getRecordType(), SettingsTools.getMaxRows(maxRows, ctx.settings()), autoclosing);
 
             if (!lazy) {

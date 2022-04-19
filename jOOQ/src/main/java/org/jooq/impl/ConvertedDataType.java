@@ -88,7 +88,7 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
         Integer newLength,
         Nullability newNullability,
         boolean newReadonly,
-        Generator<U> newGeneratedAlwaysAs,
+        Generator<?, ?, U> newGeneratedAlwaysAs,
         GenerationOption newGenerationOption,
         GenerationLocation newGenerationLocation,
         Collation newCollation,
@@ -210,8 +210,8 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     }
 
     @Override
-    public final Generator<U> generatedAlwaysAsGenerator() {
-        return (Generator<U>) delegate.generatedAlwaysAsGenerator();
+    public final Generator<?, ?, U> generatedAlwaysAsGenerator() {
+        return (Generator<?, ?, U>) delegate.generatedAlwaysAsGenerator();
     }
 
     @Override

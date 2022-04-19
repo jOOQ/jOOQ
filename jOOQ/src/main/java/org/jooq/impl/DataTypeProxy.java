@@ -66,7 +66,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
     private final Integer            overrideLength;
     private final Nullability        overrideNullability;
     private final Boolean            overrideReadonly;
-    private final Generator<T>       overrideGeneratedAlwaysAs;
+    private final Generator<?, ?, T> overrideGeneratedAlwaysAs;
     private final GenerationOption   overrideGenerationOption;
     private final GenerationLocation overrideGenerationLocation;
     private final Collation          overrideCollation;
@@ -86,7 +86,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
         Integer overrideLength,
         Nullability overrideNullability,
         Boolean overrideReadonly,
-        Generator<T> overrideGeneratedAlwaysAs,
+        Generator<?, ?, T> overrideGeneratedAlwaysAs,
         GenerationOption overrideGenerationOption,
         GenerationLocation overrideGenerationLocation,
         Collation overrideCollation,
@@ -198,12 +198,12 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
     }
 
     @Override
-    public final Generator<T> generatedAlwaysAsGenerator() {
+    public final Generator<?, ?, T> generatedAlwaysAsGenerator() {
         return defaultIfNull(overrideGeneratedAlwaysAs, type.generatedAlwaysAsGenerator());
     }
 
     @Override
-    public final DataType<T> generatedAlwaysAs(Generator<T> g) {
+    public final DataType<T> generatedAlwaysAs(Generator<?, ?, T> g) {
         return new DataTypeProxy<>(
             this,
             overridePrecision,

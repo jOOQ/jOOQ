@@ -103,6 +103,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.Table;
 import org.jooq.XML;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
@@ -203,20 +204,20 @@ implements
 
     @Override
     public final DataType<T> generatedAlwaysAs(Field<T> generatedAlwaysAsValue) {
-        return generatedAlwaysAs(ctx -> generatedAlwaysAsValue);
+        return generatedAlwaysAs((Generator<Record, Table<Record>, T>) t -> generatedAlwaysAsValue);
     }
 
     @Override
-    public abstract DataType<T> generatedAlwaysAs(Generator<T> generatedAlwaysAsValue);
+    public abstract DataType<T> generatedAlwaysAs(Generator<?, ?, T> generatedAlwaysAsValue);
 
     @Override
     public final Field<T> generatedAlwaysAs() {
-        Generator<T> s = generatedAlwaysAsGenerator();
-        return s == null ? null : s.apply(new DefaultGeneratorContext(CONFIG, null, null));
+        Generator<?, ?, T> s = generatedAlwaysAsGenerator();
+        return s == null ? null : s.apply(new DefaultGeneratorContext(CONFIG, null, null, null));
     }
 
     @Override
-    public abstract Generator<T> generatedAlwaysAsGenerator();
+    public abstract Generator<?, ?, T> generatedAlwaysAsGenerator();
 
     @Override
     public final DataType<T> stored() {

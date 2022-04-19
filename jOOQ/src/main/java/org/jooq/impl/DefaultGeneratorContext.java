@@ -41,20 +41,29 @@ import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.GeneratorContext;
 import org.jooq.GeneratorStatementType;
+import org.jooq.Record;
+import org.jooq.Table;
 
 /**
  * @author Lukas Eder
  */
-final class DefaultGeneratorContext<T> extends AbstractScope implements GeneratorContext<T> {
+final class DefaultGeneratorContext<R extends Record, X extends Table<R>, T> extends AbstractScope implements GeneratorContext<R, X, T> {
 
+    final X                      table;
     final Field<T>               field;
     final GeneratorStatementType statementType;
 
-    DefaultGeneratorContext(Configuration configuration, Field<T> field, GeneratorStatementType statementType) {
+    DefaultGeneratorContext(Configuration configuration, X table, Field<T> field, GeneratorStatementType statementType) {
         super(configuration);
 
+        this.table = table;
         this.field = field;
         this.statementType = statementType;
+    }
+
+    @Override
+    public final X table() {
+        return table;
     }
 
     @Override

@@ -259,7 +259,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
     private final Nullability                                   nullability;
     private final boolean                                       readonly;
-    private final Generator<T>                                  generatedAlwaysAs;
+    private final Generator<?, ?, T>                            generatedAlwaysAs;
     private final GenerationOption                              generationOption;
     private final GenerationLocation                            generationLocation;
     private final Collation                                     collation;
@@ -334,7 +334,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         this(dialect, sqlDataType, type, binding, qualifiedTypeName, typeName, castTypeName, precision, scale, length, nullability, false, null, GenerationOption.DEFAULT, GenerationLocation.SERVER, null, null, false, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, boolean readonly, Generator<T> generatedAlwaysAs, GenerationOption generationOption, GenerationLocation generationLocation, Collation collation, CharacterSet characterSet, boolean identity, Field<T> defaultValue) {
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, boolean readonly, Generator<?, ?, T> generatedAlwaysAs, GenerationOption generationOption, GenerationLocation generationLocation, Collation collation, CharacterSet characterSet, boolean identity, Field<T> defaultValue) {
         super(qualifiedTypeName, NO_COMMENT);
 
         // Initialise final instance members
@@ -401,7 +401,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         Integer newLength,
         Nullability newNullability,
         boolean newReadonly,
-        Generator<T> newGeneratedAlwaysAs,
+        Generator<?, ?, T> newGeneratedAlwaysAs,
         GenerationOption newGenerationOption,
         GenerationLocation newGenerationLocation,
         Collation newCollation,
@@ -436,7 +436,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         Integer length,
         Nullability nullability,
         boolean readonly,
-        Generator<T> generatedAlwaysAs,
+        Generator<?, ?, T> generatedAlwaysAs,
         GenerationOption generationOption,
         GenerationLocation generationLocation,
         Collation collation,
@@ -500,7 +500,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     }
 
     @Override
-    public final Generator<T> generatedAlwaysAsGenerator() {
+    public final Generator<?, ?, T> generatedAlwaysAsGenerator() {
         return generatedAlwaysAs;
     }
 

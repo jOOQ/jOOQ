@@ -37,7 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -49,7 +48,14 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-public interface GeneratorContext<T> extends Scope {
+public interface GeneratorContext<R extends Record, X extends Table<R>, T> extends Scope {
+
+    /**
+     * The target table whose contents are being generated, or <code>null</code>
+     * when the table is unknown / not applicable.
+     */
+    @Nullable
+    X table();
 
     /**
      * The target field whose contents are being generated, or <code>null</code>

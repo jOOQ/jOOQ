@@ -796,7 +796,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
      * @param type The data type of the field
      */
     @SuppressWarnings("unchecked")
-    protected static final <R extends Record, T, X, U> TableField<R, U> createField(Name name, DataType<T> type, Table<R> table, String comment, Converter<X, U> converter, Binding<T, X> binding, Generator<U> generator) {
+    protected static final <R extends Record, TR extends Table<R>, T, X, U> TableField<R, U> createField(Name name, DataType<T> type, TR table, String comment, Converter<X, U> converter, Binding<T, X> binding, Generator<R, TR, U> generator) {
         Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);
         DataType<U> actualType =
             converter == null && binding == null

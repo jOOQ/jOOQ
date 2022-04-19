@@ -88,6 +88,7 @@ import org.jooq.RenderContext.CastMode;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.conf.WriteIfReadonly;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.AbstractStoreQuery.UnknownField;
@@ -213,6 +214,11 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
            .visit(select)
            .end(INSERT_SELECT);
     }
+
+
+
+
+
 
 
 

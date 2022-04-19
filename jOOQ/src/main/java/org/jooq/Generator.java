@@ -50,7 +50,7 @@ import java.util.function.Function;
  * @author Lukas Eder
  */
 @FunctionalInterface
-public interface Generator<T> extends Function<GeneratorContext<T>, Field<T>>, Serializable {
+public interface Generator<R extends Record, X extends Table<R>, T> extends Function<GeneratorContext<R, X, T>, Field<T>>, Serializable {
 
     /**
      * Whether this generator supports a given statement type.

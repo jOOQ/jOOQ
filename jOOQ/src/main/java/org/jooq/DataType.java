@@ -607,7 +607,7 @@ public interface DataType<T> extends Named {
      * This feature is implemented in commercial distributions only.
      */
     @NotNull
-    DataType<T> generatedAlwaysAs(Generator<T> generatedAlwaysAsValue);
+    DataType<T> generatedAlwaysAs(Generator<?, ?, T> generatedAlwaysAsValue);
 
     /**
      * Get the computed column expression of this data type, if any.
@@ -630,7 +630,7 @@ public interface DataType<T> extends Named {
      * This feature is implemented in commercial distributions only.
      */
     @Nullable
-    Generator<T> generatedAlwaysAsGenerator();
+    Generator<?, ?, T> generatedAlwaysAsGenerator();
 
     /**
      * Set the {@link #generationOption()} of the computed column expression to

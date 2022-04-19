@@ -73,7 +73,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
         Integer newLength,
         Nullability newNullability,
         boolean newReadonly,
-        Generator<T> newGeneratedAlwaysAs,
+        Generator<?, ?, T> newGeneratedAlwaysAs,
         GenerationOption newGenerationOption,
         GenerationLocation newGenerationLocation,
         Collation newCollation,
@@ -124,7 +124,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
     private static final JooqLogger logGeneratedAlwaysAs = JooqLogger.getLogger(AbstractDataTypeX.class, "generateAlwaysAs", 1);
 
     @Override
-    public final DataType<T> generatedAlwaysAs(Generator<T> g) {
+    public final DataType<T> generatedAlwaysAs(Generator<?, ?, T> g) {
         if (g != null && !CONFIG.commercial())
             logGeneratedAlwaysAs.info("Computed columns", "Computed columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
 

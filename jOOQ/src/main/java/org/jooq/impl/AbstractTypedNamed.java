@@ -58,9 +58,9 @@ abstract class AbstractTypedNamed<T> extends AbstractNamed implements Typed<T> {
         super(name, comment);
 
         // [#13465] Only field references are allowed to be computed or defaulted
-        this.type = type.computed() && !(this instanceof FieldReference)
+        this.type = type.computed() && !(this instanceof TypedReference)
             ? type.generatedAlwaysAs((Field<T>) null)
-            : type.defaulted() && !(this instanceof FieldReference)
+            : type.defaulted() && !(this instanceof TypedReference)
             ? type.default_((Field<T>) null)
             : type;
     }

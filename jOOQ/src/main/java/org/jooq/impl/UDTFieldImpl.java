@@ -53,7 +53,7 @@ import org.jooq.impl.QOM.UNotYetImplemented;
  *
  * @author Lukas Eder
  */
-final class UDTFieldImpl<R extends UDTRecord<R>, T> extends AbstractField<T> implements UDTField<R, T>, UNotYetImplemented {
+final class UDTFieldImpl<R extends UDTRecord<R>, T> extends AbstractField<T> implements UDTField<R, T>, UNotYetImplemented, TypedReference<T> {
 
     private final UDT<R> udt;
 

@@ -69,7 +69,7 @@ import org.jooq.impl.QOM.UEmpty;
  *
  * @author Lukas Eder
  */
-final class ParameterImpl<T> extends AbstractField<T> implements Parameter<T>, UEmpty {
+final class ParameterImpl<T> extends AbstractField<T> implements Parameter<T>, UEmpty, TypedReference<T> {
 
     private final ParamMode   paramMode;
     private final boolean     isDefaulted;

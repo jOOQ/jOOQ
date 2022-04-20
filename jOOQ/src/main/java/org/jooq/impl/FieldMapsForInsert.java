@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
 import static java.util.Collections.emptySet;
 import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.Clause.INSERT_SELECT;
@@ -56,6 +57,7 @@ import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.flatten;
+import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.flattenFieldOrRows;
 import static org.jooq.impl.Tools.lazy;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_EMULATE_BULK_INSERT_RETURNING;

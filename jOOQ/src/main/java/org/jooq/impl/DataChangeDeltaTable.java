@@ -163,7 +163,7 @@ implements
 
         // [#12925] Workaround for https://github.com/h2database/h2database/issues/3398
         if (requiresWorkaroundFor12925(ctx))
-            ctx.sql("/* [#12925] ").sql(UUID.randomUUID().toString()).sql(" */ ");
+            ctx.sql("/* [#12925] ").sql(UUID.randomUUID().toString()).sql(" */").formatSeparator();
 
         ctx.visit(query)
            .sqlIndentEnd(')');

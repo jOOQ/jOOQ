@@ -141,6 +141,8 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
 
 
 
+
+
         ctx.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true, c -> {
             if (c.qualify() && getTable() != null)
                 c.visit(getTable()).sql('.');

@@ -5960,7 +5960,7 @@ final class Tools {
 
     static final Row embeddedFieldsRow(Row row) {
         if (hasEmbeddedFields(row.fields()))
-            return row(map(flattenCollection(Arrays.asList(row.fields()), false, false), f -> f));
+            return row(map(flattenCollection(Arrays.asList(row.fields())), f -> f));
         else
             return row;
     }
@@ -5973,7 +5973,7 @@ final class Tools {
         // [#8353] [#10522] [#10523] TODO: Factor out some of this logic and
         // reuse it for the emulation of UPDATE .. SET row = (SELECT ..)
         List<Field<?>> select = field.query.getSelect();
-        List<Field<?>> result = collect(flattenCollection(select, false, false));
+        List<Field<?>> result = collect(flattenCollection(select));
         Name tableName = name("t");
         Name[] fieldNames = fieldNames(result.size());
         Table<?> t = new AliasedSelect<>(field.query, true, true, fieldNames).as("t");
@@ -6104,10 +6104,18 @@ final class Tools {
      * Flatten out {@link EmbeddableTableField} elements contained in an
      * ordinary iterable.
      */
+    static final Iterable<Field<?>> flattenCollection(Iterable<? extends Field<?>> iterable) {
+        return flattenCollection(iterable, false, false);
+    }
+
+    /**
+     * Flatten out {@link EmbeddableTableField} elements contained in an
+     * ordinary iterable.
+     */
     static final Iterable<Field<?>> flattenCollection(
-        final Iterable<? extends Field<?>> iterable,
-        final boolean removeDuplicates,
-        final boolean flattenRowFields
+        Iterable<? extends Field<?>> iterable,
+        boolean removeDuplicates,
+        boolean flattenRowFields
     ) {
         // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
         return () -> new FlatteningIterator<>(iterable.iterator(), (e, duplicates) -> {

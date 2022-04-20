@@ -250,6 +250,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.GeneratorStatementType;
 import org.jooq.GroupField;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectNullStep;
@@ -3706,6 +3707,21 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final Field<?> getResolveProjection(Configuration c, Field<?> f) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

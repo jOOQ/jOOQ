@@ -43,6 +43,8 @@ import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.DataType;
+import org.jooq.Field;
+import org.jooq.Generator;
 import org.jooq.Name;
 import org.jooq.Typed;
 
@@ -56,7 +58,12 @@ abstract class AbstractTypedNamed<T> extends AbstractNamed implements Typed<T> {
     AbstractTypedNamed(Name name, Comment comment, DataType<T> type) {
         super(name, comment);
 
-        this.type = type;
+        // [#13465] Only field references are allowed to be computed or defaulted
+        this.type = type.computed() && !(this instanceof FieldReference)
+            ? type.generatedAlwaysAs((Generator<?, ?, T>) null)
+            : type.defaulted() && !(this instanceof FieldReference)
+            ? type.default_((Field<T>) null)
+            : type;
     }
 
     // -------------------------------------------------------------------------

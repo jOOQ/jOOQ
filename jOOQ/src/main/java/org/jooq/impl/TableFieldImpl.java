@@ -65,7 +65,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements TableField<R, T>, SimpleQueryPart, UNotYetImplemented {
+class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements TableField<R, T>, SimpleQueryPart, UNotYetImplemented, FieldReference<T> {
 
     private static final Clause[] CLAUSES = { FIELD, FIELD_REFERENCE };
 

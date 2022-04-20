@@ -52,6 +52,7 @@ import java.sql.SQLException;
 import java.sql.SQLOutput;
 import java.sql.SQLWarning;
 import java.sql.SQLXML;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -93,6 +94,7 @@ class DefaultExecuteContext implements ExecuteContext {
     private static final JooqLogger                       log       = JooqLogger.getLogger(DefaultExecuteContext.class);
 
     // Persistent attributes (repeatable)
+    private final Instant                                 executionTime;
     private final Configuration                           originalConfiguration;
     private final Configuration                           derivedConfiguration;
     private final Map<Object, Object>                     data;
@@ -326,6 +328,7 @@ class DefaultExecuteContext implements ExecuteContext {
         // [#4277] The ExecuteContext's Configuration will always return the same Connection,
         //         e.g. when running statements from sub-ExecuteContexts
         // [#7569] The original configuration is attached to Record and Result instances
+        this.executionTime = configuration.clock().instant();
         this.connectionProvider = configuration.connectionProvider();
         this.originalConfiguration = configuration;
         this.derivedConfiguration = configuration.derive(new ExecuteContextConnectionProvider());
@@ -361,6 +364,11 @@ class DefaultExecuteContext implements ExecuteContext {
         }
 
         clean();
+    }
+
+    @Override
+    public final Instant executionTime() {
+        return executionTime;
     }
 
     @Override

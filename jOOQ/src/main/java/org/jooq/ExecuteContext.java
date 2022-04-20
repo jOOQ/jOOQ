@@ -43,6 +43,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
+import java.time.Instant;
 import java.util.stream.Collector;
 
 import org.jooq.conf.Settings;
@@ -61,6 +62,13 @@ import org.jetbrains.annotations.Nullable;
  * @see ExecuteListener
  */
 public interface ExecuteContext extends Scope {
+
+    /**
+     * The time, according to {@link Configuration#clock()}, when this
+     * {@link ExecuteContext} was created.
+     */
+    @NotNull
+    Instant executionTime();
 
     /**
      * The connection to be used in this execute context.
@@ -82,6 +90,7 @@ public interface ExecuteContext extends Scope {
      *
      * @see ExecuteType
      */
+    @NotNull
     ExecuteType type();
 
     /**

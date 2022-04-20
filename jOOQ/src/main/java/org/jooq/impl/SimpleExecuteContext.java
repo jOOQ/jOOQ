@@ -42,22 +42,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
+import java.time.Instant;
 import java.util.Map;
 
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
-import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteType;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Routine;
-import org.jooq.SQLDialect;
-import org.jooq.conf.Settings;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A simple implementation of {@link ExecuteContext} containing
@@ -68,8 +63,17 @@ import org.jetbrains.annotations.Nullable;
  */
 final class SimpleExecuteContext extends AbstractScope implements ExecuteContext {
 
+    final Instant executionTime;
+
     SimpleExecuteContext(Configuration configuration, Map<Object, Object> data) {
         super(configuration, data);
+
+        this.executionTime = configuration.clock().instant();
+    }
+
+    @Override
+    public final Instant executionTime() {
+        return executionTime;
     }
 
     @Override

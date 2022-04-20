@@ -37,11 +37,11 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Field;
+import org.jooq.Typed;
 
 /**
  * A marker interface for field references.
  *
  * @author Lukas Eder
  */
-interface FieldReference<T> extends Field<T> {}
+interface TypedReference<T> extends Typed<T> {}

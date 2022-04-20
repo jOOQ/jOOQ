@@ -37,38 +37,11 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Context;
-import org.jooq.DataType;
-import org.jooq.QueryPart;
-import org.jooq.SQL;
-import org.jooq.impl.QOM.UEmptyField;
+import org.jooq.Field;
 
-final class SQLField<T> extends AbstractField<T> implements UEmptyField<T>, FieldReference<T> {
-
-    private final QueryPart delegate;
-
-    SQLField(DataType<T> type, SQL delegate) {
-        super(DSL.unquotedName(delegate.toString()), type);
-
-        this.delegate = delegate;
-    }
-
-    // ------------------------------------------------------------------------
-    // Field API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-            default:
-                ctx.visit(delegate);
-                break;
-        }
-    }
-}
+/**
+ * A marker interface for field references.
+ *
+ * @author Lukas Eder
+ */
+interface FieldReference<T> extends Field<T> {}

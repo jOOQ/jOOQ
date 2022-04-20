@@ -45,7 +45,6 @@ import static org.jooq.Clause.FIELD_REFERENCE;
 import static org.jooq.impl.DefaultMetaProvider.meta;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.jooq.Binding;
@@ -54,7 +53,6 @@ import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Generator;
 import org.jooq.GeneratorStatementType;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -64,14 +62,12 @@ import org.jooq.TableField;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.tools.StringUtils;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * A common base type for table fields.
  *
  * @author Lukas Eder
  */
-class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements TableField<R, T>, SimpleQueryPart, UNotYetImplemented {
+class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements TableField<R, T>, SimpleQueryPart, UNotYetImplemented, FieldReference<T> {
 
     private static final Clause[] CLAUSES = { FIELD, FIELD_REFERENCE };
 

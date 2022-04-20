@@ -136,6 +136,7 @@ import org.jooq.Delete;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
+import org.jooq.GeneratorStatementType;
 import org.jooq.Identity;
 import org.jooq.Insert;
 import org.jooq.Name;

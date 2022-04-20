@@ -192,7 +192,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
                 case FIREBIRD: {
-                    toSQLInsertSelect(ctx, insertSelect(ctx));
+                    toSQLInsertSelect(ctx, insertSelect(ctx, GeneratorStatementType.INSERT));
                     break;
                 }
 
@@ -313,10 +313,10 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
-    final Select<Record> insertSelect(Context<?> ctx) {
+    final Select<Record> insertSelect(Context<?> ctx, GeneratorStatementType statementType) {
         Select<Record> select = null;
 
-        Map<Field<?>, List<Field<?>>> v = valuesFlattened(ctx);
+        Map<Field<?>, List<Field<?>>> v = valuesFlattened(ctx, statementType);
         for (int i = 0; i < rows; i++) {
             int row = i;
             Select<Record> iteration = DSL.select(Tools.map(v.values(), l -> l.get(row)));
@@ -357,7 +357,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
             String separator = "";
             int i = 0;
 
-            for (List<Field<?>> list : valuesFlattened(ctx).values()) {
+            for (List<Field<?>> list : valuesFlattened(ctx, GeneratorStatementType.INSERT).values()) {
                 ctx.sql(separator);
 
                 if (indent)
@@ -597,7 +597,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         }
 
         // [#989] Avoid qualifying fields in INSERT field declaration
-        Set<Field<?>> fields = keysFlattened(ctx);
+        Set<Field<?>> fields = keysFlattened(ctx, GeneratorStatementType.INSERT);
 
 
 
@@ -619,27 +619,36 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         return it;
     }
 
-    final Set<Field<?>> keysFlattened(Context<?> ctx) {
+    final Set<Field<?>> keysFlattened(Context<?> ctx, GeneratorStatementType statementType) {
 
         // [#9864] TODO: Refactor and optimise these flattening algorithms
-        return valuesFlattened(ctx).keySet();
+        return valuesFlattened(ctx, statementType).keySet();
     }
 
-    final Map<Field<?>, List<Field<?>>> valuesFlattened(Context<?> ctx) {
+    final Map<Field<?>, List<Field<?>>> valuesFlattened(Context<?> ctx, GeneratorStatementType statementType) {
         Map<Field<?>, List<Field<?>>> result = new LinkedHashMap<>();
 
         // [#2530] [#6124] [#10481] TODO: Shortcut for performance, when there are no embeddables
         Set<Field<?>> overlapping = null;
         for (Entry<Field<?>, List<Field<?>>> entry : removeReadonly(ctx, values.entrySet(), Entry::getKey)) {
+            Field<?> key = entry.getKey();
+            DataType<?> keyType = key.getDataType();
+            List<Field<?>> value = entry.getValue();
 
             // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
-            if (entry.getKey().getDataType().isEmbeddable()) {
-                List<Iterator<? extends Field<?>>> value = new ArrayList<>(entry.getValue().size());
+            if (keyType.isEmbeddable()) {
+                List<Iterator<? extends Field<?>>> valueFlattened = new ArrayList<>(value.size());
 
-                for (Field<?> f : entry.getValue())
-                    value.add(flatten(f).iterator());
+                for (Field<?> v : value)
+                    valueFlattened.add(flatten(v).iterator());
 
-                for (Field<?> key : flatten(entry.getKey())) {
+                for (Field<?> k : flatten(key)) {
+
+
+
+
+
+
 
 
 
@@ -650,17 +659,23 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
                     {
-                        List<Field<?>> list = new ArrayList<>(entry.getValue().size());
+                        List<Field<?>> list = new ArrayList<>(value.size());
 
-                        for (Iterator<? extends Field<?>> v : value)
+                        for (Iterator<? extends Field<?>> v : valueFlattened)
                             list.add(v.hasNext() ? v.next() : null);
 
-                        result.put(key, list);
+                        result.put(k, list);
                     }
                 }
             }
+
+
+
+
+
+
             else
-                result.put(entry.getKey(), entry.getValue());
+                result.put(key, value);
         }
 
         return result;

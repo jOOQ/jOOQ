@@ -629,11 +629,12 @@ implements
 
 
         if (select != null) {
+            Set<Field<?>> keysFlattened = insertMaps.keysFlattened(ctx, GeneratorStatementType.INSERT);
 
             // [#2995] Prevent the generation of wrapping parentheses around the
             //         INSERT .. SELECT statement's SELECT because they would be
             //         interpreted as the (missing) INSERT column list's parens.
-            if (insertMaps.keysFlattened(ctx).size() == 0)
+            if (keysFlattened.size() == 0)
                 ctx.data(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST, true);
 
 
@@ -650,7 +651,6 @@ implements
             ctx.data(DATA_INSERT_SELECT, true);
 
             Select<?> s = select;
-
 
 
 
@@ -768,7 +768,7 @@ implements
 
         if (!keys.isEmpty()) {
             Select<Record> rows = null;
-            Set<Field<?>> fields = insertMaps.keysFlattened(ctx);
+            Set<Field<?>> fields = insertMaps.keysFlattened(ctx, GeneratorStatementType.INSERT);
 
             // [#10989] INSERT .. SELECT .. ON DUPLICATE KEY IGNORE
             if (select != null) {
@@ -822,7 +822,7 @@ implements
             || !table().getKeys().isEmpty()) {
 
             Table<?> t = null;
-            Set<Field<?>> k = insertMaps.keysFlattened(ctx);
+            Set<Field<?>> k = insertMaps.keysFlattened(ctx, null);
             Collection<Field<?>> f = null;
 
             if (!NO_SUPPORT_SUBQUERY_IN_MERGE_USING.contains(ctx.dialect())) {
@@ -832,7 +832,7 @@ implements
                 // [#11770] [#11880] Single row inserts also do, in some dialects
                 Select<?> s = select != null
                     ? select
-                    : insertMaps.insertSelect(ctx);
+                    : insertMaps.insertSelect(ctx, null);
 
                 // [#8937] With DEFAULT VALUES, there is no SELECT. Create one from
                 //         known DEFAULT expressions, or use NULL.

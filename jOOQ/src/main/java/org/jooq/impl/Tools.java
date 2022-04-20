@@ -6069,16 +6069,17 @@ final class Tools {
         return filter(asList(array), predicate);
     }
 
-    static final List<Field<?>> flattenFieldOrRow(FieldOrRow fr) {
+    static final Iterable<Field<?>> flattenFieldOrRow(FieldOrRow fr) {
         if (fr instanceof Field)
-            return singletonList((Field<?>) fr);
+            return flatten((Field<?>) fr);
         else
             return asList(((Row) fr).fields());
     }
 
     static final <C extends Collection<Field<?>>> C flattenFieldOrRows(Collection<? extends FieldOrRow> frs, C c) {
         for (FieldOrRow fr : frs)
-            c.addAll(flattenFieldOrRow(fr));
+            for (Field<?> f : flattenFieldOrRow(fr))
+                c.add(f);
 
         return c;
     }

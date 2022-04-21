@@ -64,13 +64,6 @@ import org.jetbrains.annotations.Nullable;
 public interface ExecuteContext extends Scope {
 
     /**
-     * The time, according to {@link Configuration#clock()}, when this
-     * {@link ExecuteContext} was created.
-     */
-    @NotNull
-    Instant executionTime();
-
-    /**
      * The connection to be used in this execute context.
      * <p>
      * This returns a proxy to the {@link Configuration#connectionProvider()}

@@ -315,6 +315,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
+
     final Select<Record> insertSelect(Context<?> ctx, GeneratorStatementType statementType) {
         Select<Record> select = null;
 

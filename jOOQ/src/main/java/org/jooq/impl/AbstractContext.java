@@ -56,6 +56,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION
 import java.sql.PreparedStatement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.time.Instant;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -441,6 +442,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
      * {@link RenderContext}.
      */
     private class DefaultVisitContext implements VisitContext {
+
+        @Override
+        public final Instant creationTime() {
+            return AbstractContext.this.creationTime();
+        }
 
         @Override
         public final Map<Object, Object> data() {

@@ -94,7 +94,7 @@ class DefaultExecuteContext implements ExecuteContext {
     private static final JooqLogger                       log       = JooqLogger.getLogger(DefaultExecuteContext.class);
 
     // Persistent attributes (repeatable)
-    private final Instant                                 executionTime;
+    private final Instant                                 creationTime;
     private final Configuration                           originalConfiguration;
     private final Configuration                           derivedConfiguration;
     private final Map<Object, Object>                     data;
@@ -328,7 +328,7 @@ class DefaultExecuteContext implements ExecuteContext {
         // [#4277] The ExecuteContext's Configuration will always return the same Connection,
         //         e.g. when running statements from sub-ExecuteContexts
         // [#7569] The original configuration is attached to Record and Result instances
-        this.executionTime = configuration.clock().instant();
+        this.creationTime = configuration.clock().instant();
         this.connectionProvider = configuration.connectionProvider();
         this.originalConfiguration = configuration;
         this.derivedConfiguration = configuration.derive(new ExecuteContextConnectionProvider());
@@ -367,8 +367,8 @@ class DefaultExecuteContext implements ExecuteContext {
     }
 
     @Override
-    public final Instant executionTime() {
-        return executionTime;
+    public final Instant creationTime() {
+        return creationTime;
     }
 
     @Override

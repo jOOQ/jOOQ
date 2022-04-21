@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import java.time.Instant;
+
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -49,6 +52,14 @@ import org.jetbrains.annotations.Nullable;
  * @author Lukas Eder
  */
 public interface GeneratorContext<R extends Record, X extends Table<R>, T> extends Scope {
+
+    /**
+     * The time, according to {@link Configuration#clock()}, when the rendering
+     * {@link Context} was created, or when this {@link GeneratorContext} was
+     * created in case no rendering {@link Context} was available.
+     */
+    @NotNull
+    Instant renderTime();
 
     /**
      * The target table whose contents are being generated, or <code>null</code>

@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import java.time.Instant;
 import java.util.Map;
 
 import org.jooq.Configuration;
@@ -51,22 +52,36 @@ import org.jooq.Table;
  */
 final class DefaultGeneratorContext<R extends Record, X extends Table<R>, T> extends AbstractScope implements GeneratorContext<R, X, T> {
 
+    final Instant                renderTime;
     final X                      table;
     final Field<T>               field;
     final GeneratorStatementType statementType;
 
     DefaultGeneratorContext(
+        Configuration configuration
+    ) {
+        this(configuration, null, null, null, null, null);
+    }
+
+    DefaultGeneratorContext(
         Configuration configuration,
         Map<Object, Object> data,
+        Instant renderTime,
         X table,
         Field<T> field,
         GeneratorStatementType statementType
     ) {
         super(configuration, data);
 
+        this.renderTime = renderTime != null ? renderTime : creationTime();
         this.table = table;
         this.field = field;
         this.statementType = statementType;
+    }
+
+    @Override
+    public final Instant renderTime() {
+        return renderTime;
     }
 
     @Override

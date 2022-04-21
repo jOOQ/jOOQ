@@ -213,7 +213,7 @@ implements
     @Override
     public final Field<T> generatedAlwaysAs() {
         Generator<?, ?, T> s = generatedAlwaysAsGenerator();
-        return s == null ? null : s.apply(new DefaultGeneratorContext(CONFIG, null, null, null, null));
+        return s == null ? null : s.apply(new DefaultGeneratorContext(CONFIG));
     }
 
     @Override

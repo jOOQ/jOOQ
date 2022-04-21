@@ -37,8 +37,8 @@
  */
 package org.jooq;
 
+import java.time.Instant;
 import java.util.Map;
-import java.util.function.Consumer;
 
 import org.jooq.conf.Settings;
 
@@ -97,6 +97,13 @@ import org.jetbrains.annotations.Nullable;
  * @author Lukas Eder
  */
 public interface Scope {
+
+    /**
+     * The time, according to {@link Configuration#clock()}, when this
+     * {@link Scope} was created.
+     */
+    @NotNull
+    Instant creationTime();
 
     /**
      * The configuration of the current scope.

@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import java.time.Instant;
 import java.util.Map;
 
 import org.jooq.Configuration;
@@ -52,6 +53,7 @@ abstract class AbstractScope implements Scope {
 
     final Configuration       configuration;
     final Map<Object, Object> data;
+    final Instant             creationTime;
 
     AbstractScope(Configuration configuration) {
         this(configuration, null);
@@ -69,11 +71,17 @@ abstract class AbstractScope implements Scope {
 
         this.configuration = configuration;
         this.data = data;
+        this.creationTime = configuration.clock().instant();
     }
 
     // ------------------------------------------------------------------------
     // XXX Scope API
     // ------------------------------------------------------------------------
+
+    @Override
+    public final Instant creationTime() {
+        return creationTime;
+    }
 
     @Override
     public final Configuration configuration() {

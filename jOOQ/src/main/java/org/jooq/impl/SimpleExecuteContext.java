@@ -63,17 +63,8 @@ import org.jooq.Routine;
  */
 final class SimpleExecuteContext extends AbstractScope implements ExecuteContext {
 
-    final Instant executionTime;
-
     SimpleExecuteContext(Configuration configuration, Map<Object, Object> data) {
         super(configuration, data);
-
-        this.executionTime = configuration.clock().instant();
-    }
-
-    @Override
-    public final Instant executionTime() {
-        return executionTime;
     }
 
     @Override

@@ -2387,7 +2387,7 @@ public class JavaGenerator extends AbstractGenerator {
                 printValidationAnnotation(out, column);
                 printKotlinSetterAnnotation(out, column, Mode.RECORD);
 
-                out.println("%s%svar %s: %s?", visibility(generateInterfaces()), (generateInterfaces() ? "override " : ""), member, type);
+                out.println("%sopen %svar %s: %s?", visibility(generateInterfaces()), (generateInterfaces() ? "override " : ""), member, type);
                 out.tab(1).println("set(value): %s = set(%s, value)", setterReturnType, index);
             }
             else {
@@ -2492,7 +2492,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else if (kotlin) {
             out.println();
-            out.println("%s%svar %s: %s", visibility(override), (generateInterfaces() ? "override " : ""), member, type);
+            out.println("%sopen %svar %s: %s", visibility(override), (generateInterfaces() ? "override " : ""), member, type);
             out.tab(1).println("set(value): %s {", setterReturnType);
         }
         else {

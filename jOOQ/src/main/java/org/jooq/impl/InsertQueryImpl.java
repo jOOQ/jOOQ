@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
+// ...
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.name;
@@ -67,7 +68,6 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.FieldMapsForInsert.toSQLInsertSelect;
-import static org.jooq.impl.FieldsImpl.fieldsRow0;
 import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_DO_NOTHING;
@@ -92,13 +92,13 @@ import static org.jooq.impl.Tools.unqualified;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_MANDATORY_WHERE_CLAUSE;
 import static org.jooq.impl.Tools.DataKey.DATA_ON_DUPLICATE_KEY_WHERE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -338,7 +338,8 @@ implements
                 case POSTGRES:
                 case SQLITE:
                 case YUGABYTEDB: {
-                    toSQLInsert(ctx);
+                    ctx.data(DATA_MANDATORY_WHERE_CLAUSE, ctx.family() == SQLITE, c -> toSQLInsert(c));
+
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                        .visit(K_ON_CONFLICT)
@@ -494,7 +495,8 @@ implements
                 case POSTGRES:
                 case SQLITE:
                 case YUGABYTEDB: {
-                    toSQLInsert(ctx);
+                    ctx.data(DATA_MANDATORY_WHERE_CLAUSE, ctx.family() == SQLITE, c -> toSQLInsert(c));
+
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                        .visit(K_ON_CONFLICT);
@@ -848,11 +850,11 @@ implements
 
 
 
-                // [#6375]  INSERT .. VALUES and INSERT .. SELECT distinction also in MERGE
-                t = s.asTable("t", map(f, Field::getName, String[]::new));
-
+                // [#6375] INSERT .. VALUES and INSERT .. SELECT distinction also in MERGE
                 if (NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING.contains(ctx.dialect()))
-                    t = selectFrom(t).asTable("t");
+                    t = new AliasedSelect<Record>((Select<Record>) s, true, true, map(f, Field::getUnqualifiedName, Name[]::new)).as("t");
+                else
+                    t = s.asTable("t", map(f, Field::getName, String[]::new));
             }
 
             MergeOnConditionStep<R> on = t != null

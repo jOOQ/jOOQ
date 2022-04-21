@@ -2341,7 +2341,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                    .visit(K_WHERE)
                    .sql(' ')
                    .visit(falseCondition());
-        else if (!where.hasWhere() && semiAntiJoinPredicates == null)
+        else if (!where.hasWhere() && semiAntiJoinPredicates == null && !TRUE.equals(context.data().get(BooleanDataKey.DATA_MANDATORY_WHERE_CLAUSE)))
             ;
         else {
             ConditionProviderImpl actual = new ConditionProviderImpl();

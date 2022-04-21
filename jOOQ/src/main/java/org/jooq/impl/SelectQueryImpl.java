@@ -2209,7 +2209,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         // The default behaviour
         else
-            context.visit(getSelectResolveUnsupportedAsterisks(context.configuration()));
+            context.visit(getSelectResolveUnsupportedAsterisks(context));
 
         if (TRUE.equals(context.data(BooleanDataKey.DATA_RENDERING_DATA_CHANGE_DELTA_TABLE)))
             context.qualify(qualify);
@@ -3611,7 +3611,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final List<Field<?>> getSelect() {
-        return getSelectResolveAllAsterisks(Tools.configuration(configuration()));
+        return getSelectResolveAllAsterisks(Tools.configuration(configuration()).dsl());
     }
 
     private final Collection<? extends Field<?>> subtract(List<Field<?>> left, List<Field<?>> right) {
@@ -3648,8 +3648,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
      * The select list with resolved explicit asterisks (if they contain the
      * except clause and that is not supported).
      */
-    final SelectFieldList<SelectFieldOrAsterisk> getSelectResolveUnsupportedAsterisks(Configuration c) {
-        return getSelectResolveSomeAsterisks0(c, false);
+    final SelectFieldList<SelectFieldOrAsterisk> getSelectResolveUnsupportedAsterisks(Context<?> ctx) {
+        return getSelectResolveSomeAsterisks0(ctx, false);
     }
 
     /**
@@ -3657,23 +3657,23 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
      * except clause and that is not supported).
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    final SelectFieldList<Field<?>> getSelectResolveAllAsterisks(Configuration c) {
-        return (SelectFieldList) getSelectResolveSomeAsterisks0(c, true);
+    final SelectFieldList<Field<?>> getSelectResolveAllAsterisks(Scope ctx) {
+        return (SelectFieldList) getSelectResolveSomeAsterisks0(ctx, true);
     }
 
-    private final SelectFieldList<SelectFieldOrAsterisk> getSelectResolveSomeAsterisks0(Configuration c, boolean resolveSupported) {
+    private final SelectFieldList<SelectFieldOrAsterisk> getSelectResolveSomeAsterisks0(Scope ctx, boolean resolveSupported) {
         SelectFieldList<SelectFieldOrAsterisk> result = new SelectFieldList<>();
 
         // [#7921] Only H2 supports the * EXCEPT (..) syntax
-        boolean resolveExcept = resolveSupported || !SUPPORT_NATIVE_EXCEPT.contains(c.dialect());
-        boolean resolveUnqualifiedCombined = resolveSupported || NO_SUPPORT_UNQUALIFIED_COMBINED.contains(c.dialect());
+        boolean resolveExcept = resolveSupported || !SUPPORT_NATIVE_EXCEPT.contains(ctx.dialect());
+        boolean resolveUnqualifiedCombined = resolveSupported || NO_SUPPORT_UNQUALIFIED_COMBINED.contains(ctx.dialect());
 
         // [#7921] TODO Find a better, more efficient way to resolve asterisks
         SelectFieldList<SelectFieldOrAsterisk> list = getSelectResolveImplicitAsterisks();
 
         for (SelectFieldOrAsterisk s : list)
             if (s instanceof Field)
-                result.add(getResolveProjection(c, (Field<?>) s));
+                result.add(getResolveProjection(ctx, (Field<?>) s));
             else if (s instanceof QualifiedAsteriskImpl) { QualifiedAsteriskImpl q = (QualifiedAsteriskImpl) s;
                 if (q.fields.isEmpty())
                     if (resolveSupported)
@@ -3697,16 +3697,17 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     result.add(s);
             }
             else if (s instanceof Row)
-                result.add(getResolveProjection(c, new RowAsField<Row, Record>((Row) s)));
+                result.add(getResolveProjection(ctx, new RowAsField<Row, Record>((Row) s)));
             else if (s instanceof Table)
-                result.add(getResolveProjection(c, new TableAsField<>((Table<?>) s)));
+                result.add(getResolveProjection(ctx, new TableAsField<>((Table<?>) s)));
             else
                 throw new AssertionError("Type not supported: " + s);
 
         return result;
     }
 
-    private final Field<?> getResolveProjection(Configuration c, Field<?> f) {
+    private final Field<?> getResolveProjection(Scope ctx, Field<?> f) {
+
 
 
 

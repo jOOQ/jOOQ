@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import java.util.Map;
+
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.GeneratorContext;
@@ -53,8 +55,14 @@ final class DefaultGeneratorContext<R extends Record, X extends Table<R>, T> ext
     final Field<T>               field;
     final GeneratorStatementType statementType;
 
-    DefaultGeneratorContext(Configuration configuration, X table, Field<T> field, GeneratorStatementType statementType) {
-        super(configuration);
+    DefaultGeneratorContext(
+        Configuration configuration,
+        Map<Object, Object> data,
+        X table,
+        Field<T> field,
+        GeneratorStatementType statementType
+    ) {
+        super(configuration, data);
 
         this.table = table;
         this.field = field;

@@ -272,6 +272,7 @@ import org.jooq.FieldOrRow;
 import org.jooq.FieldOrRowOrSelect;
 import org.jooq.Fields;
 import org.jooq.ForeignKey;
+import org.jooq.Generator;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.JSONEntry;
@@ -660,6 +661,12 @@ final class Tools {
          * </pre></code>
          */
         DATA_APPEND_SQL,
+
+
+
+
+
+
 
 
 

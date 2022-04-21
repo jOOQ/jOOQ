@@ -40,9 +40,29 @@ package org.jooq;
 import java.io.Serializable;
 import java.util.function.Function;
 
+import org.jooq.impl.QOM.GenerationLocation;
+import org.jooq.impl.QOM.GenerationOption;
+
 /**
  * A generator can be used with {@link DataType#generatedAlwaysAs(Generator)} to
- * implement dynamic, client side computed columns.
+ * implement dynamic, client side computed columns, i.e. computed columns with
+ * {@link GenerationLocation#CLIENT}.
+ * <p>
+ * There are two types of client side computed columns:
+ * <ul>
+ * <li>{@link GenerationOption#STORED}: The computation is performed when
+ * writing to a record via {@link Insert}, {@link Update}, or {@link Merge}</li>
+ * <li>{@link GenerationOption#VIRTUAL}: The computation is performed when
+ * reading a record via {@link Select}, or the <code>RETURNING</code> clause of
+ * {@link Insert}, {@link Update}, {@link Delete}.</li>
+ * </ul>
+ * <p>
+ * Depending on the type of client side computed column, the exact time when the
+ * computation is performed may differ, practically. It is not specified, when
+ * it happens, but users may assume that it happens only once per query
+ * rendering and {@link Field} expression which references a {@link Generator},
+ * independently of how many times the resulting expression is repeated in the
+ * resulting SQL query.
  * <p>
  * This API is part of a commercial only feature. To use this feature, please
  * use the jOOQ Professional Edition or the jOOQ Enterprise Edition.

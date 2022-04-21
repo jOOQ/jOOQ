@@ -501,7 +501,11 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
     @Override
     public final Generator<?, ?, T> generatedAlwaysAsGenerator() {
-        return generatedAlwaysAs;
+        return generatedAlwaysAs == null
+            ? null
+            : generatedAlwaysAs instanceof DefaultGenerator
+            ? generatedAlwaysAs
+            : new DefaultGenerator<>(generatedAlwaysAs);
     }
 
     @Override

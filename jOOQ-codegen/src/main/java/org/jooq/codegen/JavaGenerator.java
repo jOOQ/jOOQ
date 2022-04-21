@@ -8007,9 +8007,8 @@ public class JavaGenerator extends AbstractGenerator {
                 && P_IS.matcher(getStrategy().getJavaMemberName(column, mode)).matches()) {
 
             // [#12440] And if we have interfaces, we'll run into https://youtrack.jetbrains.com/issue/KT-31420
-            if (generateInterfaces())
-                out.println("@Suppress(\"INAPPLICABLE_JVM_NAME\")");
-
+            // [#13467] Since jOOQ 3.17, all these properties are open, so this applies everywhere
+            out.println("@Suppress(\"INAPPLICABLE_JVM_NAME\")");
             out.println("@set:JvmName(\"%s\")", getStrategy().getJavaSetterName(column, mode));
         }
     }

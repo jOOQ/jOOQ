@@ -376,8 +376,14 @@ final class Tools {
     enum BooleanDataKey {
 
         /**
-         * [#1520] Count the number of bind values, and potentially enforce a static
-         * statement.
+         * [#13468] The WHERE clause in a SELECT is mandatory for the current
+         * scope.
+         */
+        DATA_MANDATORY_WHERE_CLAUSE,
+
+        /**
+         * [#1520] Count the number of bind values, and potentially enforce a
+         * static statement.
          */
         DATA_COUNT_BIND_VALUES,
 

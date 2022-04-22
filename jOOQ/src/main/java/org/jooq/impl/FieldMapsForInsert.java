@@ -661,6 +661,8 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
+
+
                     {
                         List<Field<?>> list = new ArrayList<>(value.size());
 
@@ -671,6 +673,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
                     }
                 }
             }
+
 
 
 

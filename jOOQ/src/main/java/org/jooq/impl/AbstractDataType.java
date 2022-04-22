@@ -159,7 +159,7 @@ implements
 
     @Override
     public final boolean readonlyInternal() {
-        return readonly() && !computedOnClient();
+        return readonly() && !computedOnClientStored();
     }
 
     @Override

@@ -476,16 +476,17 @@ public interface DataType<T> extends Named {
      * <ul>
      * <li>When it is marked as readonly explicitly by the code generator.</li>
      * <li>When it is marked as readonly implicitly because it's a computed
-     * column with {@link #generationLocation()} being
-     * {@link GenerationLocation#SERVER}.</li>
+     * column with {@link GenerationLocation#SERVER} or with
+     * {@link GenerationLocation#CLIENT} and
+     * {@link GenerationOption#VIRTUAL}.</li>
      * </ul>
      * <p>
      * Some columns are readonly for users, meaning users of the jOOQ API cannot
      * write to them, but jOOQ, internally, may still write to those columns.
      * Such columns may include:
      * <ul>
-     * <li>Columns that are computed with {@link #generationLocation()} being
-     * {@link GenerationLocation#CLIENT}</li>
+     * <li>Columns that are computed with {@link GenerationLocation#CLIENT} and
+     * {@link GenerationOption#STORED}</li>
      * <li>Columns used for optimistic locking</li>
      * </ul>
      * <p>

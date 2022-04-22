@@ -75,6 +75,7 @@ import org.jooq.BindingGetResultSetContext;
 import org.jooq.Converter;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
+import org.jooq.ExecuteType;
 import org.jooq.Field;
 // ...
 import org.jooq.Record;

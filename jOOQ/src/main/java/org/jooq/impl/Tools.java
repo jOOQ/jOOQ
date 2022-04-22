@@ -474,6 +474,12 @@ final class Tools {
 
 
 
+
+
+
+
+
+
         /**
          * [#1629] The {@link Connection#getAutoCommit()} flag value before starting
          * a new transaction.
@@ -538,11 +544,6 @@ final class Tools {
          * {@link Select} scope.
          */
         DATA_NESTED_SET_OPERATIONS,
-
-        /**
-         * [#5191] Whether INSERT RETURNING is being emulated for bulk insertions.
-         */
-        DATA_EMULATE_BULK_INSERT_RETURNING,
 
         /**
          * [#9925] In some cases the <code>AS</code> keyword is required for

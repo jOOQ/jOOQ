@@ -60,7 +60,6 @@ import static org.jooq.impl.Tools.flatten;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.flattenFieldOrRows;
 import static org.jooq.impl.Tools.lazy;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
 
 import java.util.AbstractList;
 import java.util.AbstractMap;
@@ -95,6 +94,7 @@ import org.jooq.conf.WriteIfReadonly;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.AbstractStoreQuery.UnknownField;
 import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
  * @author Lukas Eder
@@ -136,12 +136,22 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // Single record inserts can use the standard syntax in any dialect
-
-
-
-
-        else if (rows == 1 ) {
+        else if (rows == 1 && supportsValues(ctx)) {
             ctx.formatSeparator()
                .start(INSERT_VALUES)
                .visit(K_VALUES)
@@ -155,16 +165,6 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
             switch (ctx.family()) {
 
                 // Some dialects don't support multi-record inserts
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -302,6 +302,8 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
+    private final boolean supportsValues(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
@@ -315,6 +317,15 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
+
+
+
+
+
+            default:
+                return true;
+        }
+    }
 
     final Select<Record> insertSelect(Context<?> ctx, GeneratorStatementType statementType) {
         Select<Record> select = null;
@@ -334,12 +345,10 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
     }
 
     final void toSQL92Values(Context<?> ctx) {
-        toSQL92Values(ctx, false);
-    }
-
-    final void toSQL92Values(Context<?> ctx, boolean emulateBulkInsertReturning) {
         boolean indent = (values.size() > 1);
-        boolean castFirstRowNumericValues = false ;
+
+
+
 
         // [#2823] [#10033] Few dialects need bind value casts for INSERT .. VALUES(?, ?)
         //                  Some regressions have been observed e.g. in PostgreSQL with JSON types, so let's be careful.
@@ -347,7 +356,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         if (!CASTS_NEEDED.contains(ctx.dialect()))
             ctx.castMode(CastMode.NEVER);
 
-        for (int row = 0; row < rows ; row++) {
+        for (int row = 0; row < rows; row++) {
             if (row > 0)
                 ctx.sql(", ");
 
@@ -358,16 +367,11 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
                 ctx.formatIndentStart();
 
             String separator = "";
-            int i = 0;
-
             for (List<Field<?>> list : valuesFlattened(ctx, GeneratorStatementType.INSERT).values()) {
                 ctx.sql(separator);
 
                 if (indent)
                     ctx.formatNewLine();
-
-
-
 
 
 
@@ -397,6 +401,51 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         if (!CASTS_NEEDED.contains(ctx.dialect()))
             ctx.castMode(previous);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The FieldMapsForInsert API
@@ -600,12 +649,14 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         }
 
         // [#989] Avoid qualifying fields in INSERT field declaration
-        Set<Field<?>> fields = keysFlattened(ctx, GeneratorStatementType.INSERT);
+        Set<Field<?>> fields;
 
 
 
 
 
+
+        fields = keysFlattened(ctx, GeneratorStatementType.INSERT);
 
         if (!fields.isEmpty())
             ctx.sql(" (").visit(wrap(fields).qualify(false)).sql(')');

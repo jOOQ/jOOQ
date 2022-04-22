@@ -129,6 +129,7 @@ import org.jooq.UniqueKey;
 import org.jooq.conf.WriteIfReadonly;
 import org.jooq.impl.FieldMapForUpdate.SetClause;
 import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.tools.StringUtils;
 
@@ -989,6 +990,11 @@ implements
     public final boolean isExecutable() {
         return insertMaps.isExecutable() || defaultValues(configuration()) || select != null;
     }
+
+
+
+
+
 
 
 

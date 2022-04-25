@@ -1591,10 +1591,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         SQLDialect dialect = context.dialect();
 
-        // [#2791] TODO: Instead of explicitly manipulating these data() objects, future versions
-        // of jOOQ should implement a push / pop semantics to clearly delimit such scope.
+        // [#2791] [#9981] TODO: We have an automatic way of pushing / popping
+        //                 these values onto the scope stack. Use that, instead
         Object renderTrailingLimit = context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
-        Object localWindowDefinitions = context.data(DATA_WINDOW_DEFINITIONS);
         Name[] selectAliases = (Name[]) context.data(DATA_SELECT_ALIASES);
 
         try {
@@ -1610,10 +1609,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             if (TRUE.equals(renderTrailingLimit))
                 context.data().remove(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
-
-            // [#5127] Lazy initialise this map
-            if (localWindowDefinitions != null)
-                context.data(DATA_WINDOW_DEFINITIONS, null);
 
             if (intoTable != null
                     && !TRUE.equals(context.data(DATA_OMIT_INTO_CLAUSE))
@@ -1850,7 +1845,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         }
         finally {
-            context.data(DATA_WINDOW_DEFINITIONS, localWindowDefinitions);
             if (renderTrailingLimit != null)
                 context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, renderTrailingLimit);
             if (selectAliases != null)

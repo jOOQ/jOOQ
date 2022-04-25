@@ -678,7 +678,7 @@ final class Tools {
          * needed in the <code>SELECT</code> clause when emulating them by inlining
          * window specifications.
          */
-        DATA_WINDOW_DEFINITIONS,
+        DATA_WINDOW_DEFINITIONS(true, null, 0),
 
         /**
          * [#1629] The {@link Connection#getAutoCommit()} flag value before starting

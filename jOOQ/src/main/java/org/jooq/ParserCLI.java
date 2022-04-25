@@ -649,6 +649,7 @@ public final class ParserCLI {
         System.out.println("  -Q / --quoted                                   <RenderQuotedNames> Specify the output identifier quoting (org.jooq.conf.RenderQuotedNames)");
         System.out.println("  -F / --from-dialect                             <SQLDialect>        Specify the input dialect (org.jooq.SQLDialect)");
         System.out.println("  -T / --to-dialect                               <SQLDialect>        Specify the output dialect (org.jooq.SQLDialect)");
+        System.out.println("  -S / --schema                                   <String>            Specify the input SQL schema");
         System.out.println("  -s / --sql                                      <String>            Specify the input SQL string");
         System.out.println("");
         System.out.println("Additional flags:");
@@ -688,6 +689,7 @@ public final class ParserCLI {
         System.out.println("  /Q  or  /quoted                                <RenderQuotedNames> Specify the output identifier quoting (org.jooq.conf.RenderQuotedNames)");
         System.out.println("  /F  or  /from-dialect                          <SQLDialect>        Specify the input dialect (org.jooq.SQLDialect)");
         System.out.println("  /T  or  /to-dialect                            <SQLDialect>        Specify the output dialect (org.jooq.SQLDialect)");
+        System.out.println("  /S  or  /schema                                <String>            Specify the input SQL schema");
         System.out.println("                                                 <String>            Specify the input SQL string");
         System.out.println("");
         System.out.println("Additional flags:");

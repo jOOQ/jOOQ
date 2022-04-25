@@ -42,7 +42,7 @@ import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.Names.NQ_SELECT;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.visitSubquery;
-import static org.jooq.impl.Tools.DataKey.DATA_SELECT_ALIASES;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_SELECT_ALIASES;
 
 import org.jooq.Clause;
 import org.jooq.Context;

@@ -46,7 +46,7 @@ import org.jooq.GeneratorContext;
 import org.jooq.GeneratorStatementType;
 import org.jooq.Record;
 import org.jooq.Table;
-import org.jooq.impl.Tools.DataKey;
+import org.jooq.impl.Tools.SimpleDataKey;
 
 /**
  * A {@link Generator} proxy implementing "exactly once" computation semantics.

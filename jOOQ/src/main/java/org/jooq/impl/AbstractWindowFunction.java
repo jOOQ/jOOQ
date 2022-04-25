@@ -53,7 +53,7 @@ import static org.jooq.impl.Keywords.K_LAST;
 import static org.jooq.impl.Keywords.K_OVER;
 import static org.jooq.impl.Keywords.K_RESPECT_NULLS;
 import static org.jooq.impl.SelectQueryImpl.NO_SUPPORT_WINDOW_CLAUSE;
-import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_WINDOW_DEFINITIONS;
 
 import java.util.Collection;
 import java.util.Set;
@@ -81,7 +81,7 @@ import org.jooq.WindowSpecification;
 import org.jooq.impl.QOM.FromFirstOrLast;
 import org.jooq.impl.QOM.NullTreatment;
 import org.jooq.impl.QOM.WindowFunction;
-import org.jooq.impl.Tools.DataExtendedKey;
+import org.jooq.impl.Tools.ExtendedDataKey;
 
 /**
  * @author Lukas Eder
@@ -190,7 +190,7 @@ implements
                    .visit(K_OVER)
                    .sql(' ');
 
-                ctx.data(DataExtendedKey.DATA_WINDOW_FUNCTION, this, c -> c.visit(window));
+                ctx.data(ExtendedDataKey.DATA_WINDOW_FUNCTION, this, c -> c.visit(window));
                 break;
         }
     }

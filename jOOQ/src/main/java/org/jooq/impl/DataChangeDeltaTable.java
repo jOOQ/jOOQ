@@ -52,7 +52,7 @@ import static org.jooq.impl.Keywords.K_OLD;
 import static org.jooq.impl.Keywords.K_RETURNING;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Tools.abstractDMLQuery;
-import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_TOP_LEVEL_CTE;
 
 import java.util.Set;
 import java.util.UUID;

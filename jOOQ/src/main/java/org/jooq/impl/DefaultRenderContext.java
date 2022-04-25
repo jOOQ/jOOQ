@@ -46,9 +46,11 @@ import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
+import static org.jooq.impl.Tools.DATAKEY_RESET_IN_SUBQUERY_SCOPE;
+import static org.jooq.impl.Tools.lazy;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
-import static org.jooq.impl.Tools.DataKey.DATA_APPEND_SQL;
-import static org.jooq.impl.Tools.DataKey.DATA_PREPEND_SQL;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_APPEND_SQL;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_PREPEND_SQL;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -80,7 +82,9 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.AbstractContext.ScopeStackElement;
 import org.jooq.impl.ScopeMarker.ScopeContent;
+import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 

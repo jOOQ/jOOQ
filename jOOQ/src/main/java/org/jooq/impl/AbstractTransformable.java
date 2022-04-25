@@ -43,7 +43,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Name;
 import org.jooq.conf.TransformUnneededArithmeticExpressions;
-import org.jooq.impl.Tools.DataExtendedKey;
+import org.jooq.impl.Tools.ExtendedDataKey;
 
 abstract class AbstractTransformable<T> extends AbstractField<T> implements Transformable<T> {
 

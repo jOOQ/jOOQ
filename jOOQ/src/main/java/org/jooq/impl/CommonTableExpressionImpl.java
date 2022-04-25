@@ -67,7 +67,7 @@ import org.jooq.Select;
 import org.jooq.TableOptions;
 // ...
 import org.jooq.impl.QOM.Materialized;
-import org.jooq.impl.Tools.DataKey;
+import org.jooq.impl.Tools.SimpleDataKey;
 
 /**
  * @author Lukas Eder

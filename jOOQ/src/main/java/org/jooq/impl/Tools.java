@@ -42,6 +42,7 @@ import static java.lang.Boolean.TRUE;
 import static java.lang.Character.isJavaIdentifierPart;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
+import static java.util.Collections.nCopies;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.joining;
 // ...
@@ -186,7 +187,7 @@ import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.Tools.anyMatch;
-import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.lang.annotation.Annotation;
@@ -216,6 +217,7 @@ import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -290,6 +292,7 @@ import org.jooq.Record1;
 import org.jooq.RecordQualifier;
 import org.jooq.RenderContext;
 import org.jooq.RenderContext.CastMode;
+// ...
 import org.jooq.Result;
 import org.jooq.ResultOrRows;
 import org.jooq.ResultQuery;
@@ -306,6 +309,7 @@ import org.jooq.Source;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
+// ...
 import org.jooq.UDT;
 import org.jooq.UpdatableRecord;
 import org.jooq.WindowSpecification;
@@ -328,6 +332,7 @@ import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TemplatingException;
 import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
@@ -393,18 +398,60 @@ final class Tools {
     // Some constants for use with Context.data()
     // ------------------------------------------------------------------------
 
+    static final class DataKeyScopeStackPart extends AbstractQueryPart implements UEmpty {
+
+        static final DataKeyScopeStackPart INSTANCE = new DataKeyScopeStackPart();
+
+        private DataKeyScopeStackPart() {}
+
+        @Override
+        public final void accept(Context<?> ctx) {}
+
+        @Override
+        public boolean equals(Object that) {
+            return this == that;
+        }
+
+        @Override
+        public int hashCode() {
+            return 0;
+        }
+    }
+
+    /**
+     * A common super types for {@link BooleanDataKey}, {@link SimpleDataKey} and {@link ExtendedDataKey}
+     */
+    /* sealed */ interface DataKey {
+
+        /**
+         * Whether this data key resets itself to {@link #resetValue()} when
+         * entering in a new scope of depth {@link #resetThreshold()}.
+         */
+        boolean resetInSubqueryScope();
+
+        /**
+         * The value to reset itself to.
+         */
+        Object resetValue();
+
+        /**
+         * The depth after which the key resets itself.
+         */
+        int resetThreshold();
+    }
+
     /**
      * Keys for {@link Configuration#data()}, which may be referenced frequently
      * and represent a {@code boolean} value and are thus stored in an
      * {@link EnumSet} for speedier access.
      */
-    enum BooleanDataKey {
+    enum BooleanDataKey implements DataKey {
 
         /**
          * [#13468] The WHERE clause in a SELECT is mandatory for the current
          * scope.
          */
-        DATA_MANDATORY_WHERE_CLAUSE,
+        DATA_MANDATORY_WHERE_CLAUSE(true, null, 1),
 
         /**
          * [#1520] Count the number of bind values, and potentially enforce a
@@ -549,7 +596,7 @@ final class Tools {
          * [#9925] In some cases the <code>AS</code> keyword is required for
          * aliasing, e.g. XML.
          */
-        DATA_AS_REQUIRED,
+        DATA_AS_REQUIRED(true, null, 0),
 
         /**
          * [#12030] MULTISET conditions need to render the MULTISET emulation
@@ -579,15 +626,45 @@ final class Tools {
          * [#11543] Whether the @@innodb_lock_wait_timeout value has already
          * been set.
          */
-        DATA_LOCK_WAIT_TIMEOUT_SET
+        DATA_LOCK_WAIT_TIMEOUT_SET,
 
+        ;
+
+        private final boolean resetInSubqueryScope;
+        private final Object  resetValue;
+        private final int     resetThreshold;
+
+        private BooleanDataKey() {
+            this(false, null, 0);
+        }
+
+        private BooleanDataKey(boolean resetInSubqueryScope, Object resetValue, int resetThreshold) {
+            this.resetInSubqueryScope = resetInSubqueryScope;
+            this.resetValue = resetValue;
+            this.resetThreshold = resetThreshold;
+        }
+
+        @Override
+        public final boolean resetInSubqueryScope() {
+            return resetInSubqueryScope;
+        }
+
+        @Override
+        public final Object resetValue() {
+            return resetValue;
+        }
+
+        @Override
+        public final int resetThreshold() {
+            return resetThreshold;
+        }
     }
 
     /**
      * Keys for {@link Configuration#data()}, which may be referenced frequently
      * and are thus stored in an {@link EnumMap} for speedier access.
      */
-    enum DataKey {
+    enum SimpleDataKey implements DataKey {
 
         /**
          * The level of anonymous block nesting, in case we're generating a block.
@@ -717,6 +794,37 @@ final class Tools {
          * statement.
          */
         DATA_SELECT_ALIASES,
+
+        ;
+
+        private final boolean resetInSubqueryScope;
+        private final Object  resetValue;
+        private final int     resetThreshold;
+
+        private SimpleDataKey() {
+            this(false, null, 0);
+        }
+
+        private SimpleDataKey(boolean resetInSubqueryScope, Object resetValue, int resetThreshold) {
+            this.resetInSubqueryScope = resetInSubqueryScope;
+            this.resetValue = resetValue;
+            this.resetThreshold = resetThreshold;
+        }
+
+        @Override
+        public final boolean resetInSubqueryScope() {
+            return resetInSubqueryScope;
+        }
+
+        @Override
+        public final Object resetValue() {
+            return resetValue;
+        }
+
+        @Override
+        public final int resetThreshold() {
+            return resetThreshold;
+        }
     }
 
     /**
@@ -724,7 +832,7 @@ final class Tools {
      * infrequently and are thus stored in an ordinary {@link HashMap} for a
      * more optimal memory layout.
      */
-    enum DataExtendedKey {
+    enum ExtendedDataKey implements DataKey {
 
 
 
@@ -799,6 +907,47 @@ final class Tools {
          */
         DATA_WINDOW_FUNCTION,
 
+        ;
+
+        private final boolean resetInSubqueryScope;
+        private final Object  resetValue;
+        private final int     resetThreshold;
+
+        private ExtendedDataKey() {
+            this(false, null, 0);
+        }
+
+        private ExtendedDataKey(boolean resetInSubqueryScope, Object resetValue, int resetThreshold) {
+            this.resetInSubqueryScope = resetInSubqueryScope;
+            this.resetValue = resetValue;
+            this.resetThreshold = resetThreshold;
+        }
+
+        @Override
+        public final boolean resetInSubqueryScope() {
+            return resetInSubqueryScope;
+        }
+
+        @Override
+        public final Object resetValue() {
+            return resetValue;
+        }
+
+        @Override
+        public final int resetThreshold() {
+            return resetThreshold;
+        }
+    }
+
+    static final DataKey[] DATAKEY_RESET_IN_SUBQUERY_SCOPE;
+
+    static {
+        DATAKEY_RESET_IN_SUBQUERY_SCOPE = Stream
+            .concat(
+                Stream.concat(Stream.of(BooleanDataKey.values()), Stream.of(SimpleDataKey.values())),
+                Stream.of(ExtendedDataKey.values()))
+            .filter(t -> t.resetInSubqueryScope())
+            .toArray(DataKey[]::new);
     }
 
     // ------------------------------------------------------------------------
@@ -5566,14 +5715,14 @@ final class Tools {
     }
 
     static final <C extends Context<? extends C>> C prependSQL(C ctx, Query... queries) {
-        return preOrAppendSQL(DataKey.DATA_PREPEND_SQL, ctx, queries);
+        return preOrAppendSQL(SimpleDataKey.DATA_PREPEND_SQL, ctx, queries);
     }
 
     static final <C extends Context<? extends C>> C appendSQL(C ctx, Query... queries) {
-        return preOrAppendSQL(DataKey.DATA_APPEND_SQL, ctx, queries);
+        return preOrAppendSQL(SimpleDataKey.DATA_APPEND_SQL, ctx, queries);
     }
 
-    private static final <C extends Context<? extends C>> C preOrAppendSQL(DataKey key, C ctx, Query... queries) {
+    private static final <C extends Context<? extends C>> C preOrAppendSQL(SimpleDataKey key, C ctx, Query... queries) {
         ctx.data().compute(key, (k, v) -> {
             String sql = ctx.dsl().renderInlined(ctx.dsl().queries(queries));
 
@@ -5770,10 +5919,10 @@ final class Tools {
     /**
      * Whether a counter is currently at the top level or not.
      *
-     * @see #increment(Map, DataKey)
-     * @see #decrement(Map, DataKey)
+     * @see #increment(Map, SimpleDataKey)
+     * @see #decrement(Map, SimpleDataKey)
      */
-    static final boolean toplevel(Map<Object, Object> data, DataKey key) {
+    static final boolean toplevel(Map<Object, Object> data, SimpleDataKey key) {
         Integer updateCounts = (Integer) data.get(key);
 
         if (updateCounts == null)
@@ -5785,7 +5934,7 @@ final class Tools {
     /**
      * Increment a counter, run a runnable, and decrement the counter again.
      */
-    static final void increment(Map<Object, Object> data, DataKey key, Runnable runnable) {
+    static final void increment(Map<Object, Object> data, SimpleDataKey key, Runnable runnable) {
         increment(data, key);
         runnable.run();
         decrement(data, key);
@@ -5795,7 +5944,7 @@ final class Tools {
      * Increment a counter and return true if the counter was zero prior to
      * incrementing.
      */
-    static final boolean increment(Map<Object, Object> data, DataKey key) {
+    static final boolean increment(Map<Object, Object> data, SimpleDataKey key) {
         boolean result = true;
         Integer updateCounts = (Integer) data.get(key);
 
@@ -5812,7 +5961,7 @@ final class Tools {
      * Decrement a counter and return true if the counter is zero after
      * decrementing.
      */
-    static final boolean decrement(Map<Object, Object> data, DataKey key) {
+    static final boolean decrement(Map<Object, Object> data, SimpleDataKey key) {
         boolean result = false;
         Integer updateCounts = (Integer) data.get(key);
 
@@ -6200,6 +6349,19 @@ final class Tools {
 
     static final <T> Set<T> lazy(Set<T> set) {
         return set == null ? new HashSet<>() : set;
+    }
+
+    static final <T> List<T> lazy(List<T> list) {
+        return list == null ? new ArrayList<>() : list;
+    }
+
+    static final <T> List<T> lazy(List<T> list, int size) {
+        List<T> result = lazy(list);
+
+        if (result.size() < size)
+            result.addAll(nCopies(size - result.size(), null));
+
+        return result;
     }
 
     /**

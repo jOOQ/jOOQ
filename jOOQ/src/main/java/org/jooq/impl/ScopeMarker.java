@@ -42,7 +42,7 @@ package org.jooq.impl;
 // ...
 import static org.jooq.impl.Keywords.K_DECLARE;
 import static org.jooq.impl.Tools.increment;
-import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_TOP_LEVEL_CTE;
 import static org.jooq.impl.WithImpl.acceptWithRecursive;
 
 import org.jooq.Clause;
@@ -53,8 +53,8 @@ import org.jooq.Statement;
 import org.jooq.impl.AbstractContext.ScopeStackElement;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UTransient;
-import org.jooq.impl.Tools.DataExtendedKey;
-import org.jooq.impl.Tools.DataKey;
+import org.jooq.impl.Tools.ExtendedDataKey;
+import org.jooq.impl.Tools.SimpleDataKey;
 
 /**
  * A set of markers for use with the {@link ScopeStack}.

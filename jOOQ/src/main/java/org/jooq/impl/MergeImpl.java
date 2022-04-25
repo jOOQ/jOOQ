@@ -177,7 +177,7 @@ import org.jooq.UniqueKey;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.FieldMapForUpdate.SetClause;
 import org.jooq.impl.QOM.UNotYetImplemented;
-import org.jooq.impl.Tools.DataExtendedKey;
+import org.jooq.impl.Tools.ExtendedDataKey;
 import org.jooq.tools.StringUtils;
 
 /**

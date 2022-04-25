@@ -44,8 +44,8 @@ import static org.jooq.impl.Names.*;
 import static org.jooq.impl.SQLDataType.*;
 import static org.jooq.impl.Tools.*;
 import static org.jooq.impl.Tools.BooleanDataKey.*;
-import static org.jooq.impl.Tools.DataExtendedKey.*;
-import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.impl.Tools.ExtendedDataKey.*;
+import static org.jooq.impl.Tools.SimpleDataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;

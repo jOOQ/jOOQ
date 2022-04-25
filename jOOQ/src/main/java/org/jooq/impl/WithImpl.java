@@ -52,7 +52,7 @@ import static org.jooq.impl.Keywords.K_RECURSIVE;
 import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
-import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_TOP_LEVEL_CTE;
 
 import java.util.Arrays;
 import java.util.Collection;

@@ -88,7 +88,7 @@ import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
-import static org.jooq.impl.Tools.DataKey.DATA_SELECT_ALIASES;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_SELECT_ALIASES;
 import static org.jooq.impl.Values.NO_SUPPORT_VALUES;
 
 import java.util.HashSet;

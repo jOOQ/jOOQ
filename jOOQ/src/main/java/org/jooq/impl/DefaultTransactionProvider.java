@@ -39,8 +39,8 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_AUTOCOMMIT;
-import static org.jooq.impl.Tools.DataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION;
-import static org.jooq.impl.Tools.DataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS;
 
 import java.sql.Connection;
 import java.sql.SQLException;

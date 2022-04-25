@@ -82,7 +82,7 @@ import static org.jooq.impl.QOM.FrameUnits.ROWS;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.isEmpty;
-import static org.jooq.impl.Tools.DataExtendedKey.DATA_WINDOW_FUNCTION;
+import static org.jooq.impl.Tools.ExtendedDataKey.DATA_WINDOW_FUNCTION;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.Arrays;

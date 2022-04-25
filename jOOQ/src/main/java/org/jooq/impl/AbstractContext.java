@@ -48,8 +48,10 @@ import static org.jooq.JoinType.LEFT_OUTER_JOIN;
 // ...
 import static org.jooq.conf.InvocationOrder.REVERSE;
 import static org.jooq.conf.ParamType.INDEXED;
+import static org.jooq.impl.Tools.DATAKEY_RESET_IN_SUBQUERY_SCOPE;
 import static org.jooq.impl.Tools.EMPTY_CLAUSE;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
+import static org.jooq.impl.Tools.lazy;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
@@ -62,6 +64,7 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Deque;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -94,6 +97,9 @@ import org.jooq.conf.RenderImplicitJoinType;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
+import org.jooq.impl.AbstractContext.ScopeStackElement;
+import org.jooq.impl.Tools.DataKey;
+import org.jooq.impl.Tools.DataKeyScopeStackPart;
 import org.jooq.tools.StringUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -740,6 +746,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     public final C scopeStart() {
         scopeStack.scopeStart();
         scopeStart0();
+        resetDataKeys(scopeStack.getOrCreate(DataKeyScopeStackPart.INSTANCE));
 
         return (C) this;
     }
@@ -787,6 +794,8 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C scopeEnd() {
+        restoreDataKeys(scopeStack.getOrCreate(DataKeyScopeStackPart.INSTANCE));
+
         scopeEnd0();
         scopeStack.scopeEnd();
 
@@ -797,6 +806,24 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     void scopeMarkStart0(@SuppressWarnings("unused") QueryPart part) {}
     void scopeMarkEnd0(@SuppressWarnings("unused") QueryPart part) {}
     void scopeEnd0() {}
+
+    final void resetDataKeys(ScopeStackElement e) {
+        for (int i = 0; i < DATAKEY_RESET_IN_SUBQUERY_SCOPE.length; i++) {
+            DataKey key = DATAKEY_RESET_IN_SUBQUERY_SCOPE[i];
+
+            if (subqueryLevel() >= key.resetThreshold() && data().containsKey(key))
+                (e.restoreDataKeys = lazy(e.restoreDataKeys, i + 1)).set(i, data().put(key, key.resetValue()));
+        }
+    }
+
+    final void restoreDataKeys(ScopeStackElement e) {
+        for (int i = 0; i < DATAKEY_RESET_IN_SUBQUERY_SCOPE.length; i++) {
+            DataKey key = DATAKEY_RESET_IN_SUBQUERY_SCOPE[i];
+
+            if (subqueryLevel() >= key.resetThreshold() && e.restoreDataKeys != null && i < e.restoreDataKeys.size())
+                data().put(key, e.restoreDataKeys.get(i));
+        }
+    }
 
     String applyNameCase(String literal) {
         return literal;
@@ -1117,6 +1144,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         int             bindIndex;
         int             indent;
         JoinNode        joinNode;
+        List<Object>    restoreDataKeys;
 
         ScopeStackElement(QueryPart part, int scopeLevel) {
             this.part = part;

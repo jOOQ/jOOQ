@@ -85,7 +85,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.Tools.BooleanDataKey;
-import org.jooq.impl.Tools.DataExtendedKey;
+import org.jooq.impl.Tools.ExtendedDataKey;
 
 /**
  * A class wrapping a {@link Select} query's <code>FOR UPDATE</code> and other

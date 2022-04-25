@@ -51,7 +51,7 @@ import java.util.Set;
 
 import org.jooq.Scope;
 import org.jooq.impl.Tools.BooleanDataKey;
-import org.jooq.impl.Tools.DataKey;
+import org.jooq.impl.Tools.SimpleDataKey;
 
 /**
  * The {@link Map} implementation for use with {@link Scope#data()}.
@@ -60,14 +60,14 @@ import org.jooq.impl.Tools.DataKey;
  */
 final class DataMap extends AbstractMap<Object, Object> {
 
-    final EnumSet<BooleanDataKey>    internalSet;
-    final EnumMap<DataKey, Object>   internalMap;
-    Map<Object, Object>              externalMap;
-    final Set<Entry<Object, Object>> entrySet;
+    final EnumSet<BooleanDataKey>        internalSet;
+    final EnumMap<SimpleDataKey, Object> internalMap;
+    Map<Object, Object>                  externalMap;
+    final Set<Entry<Object, Object>>     entrySet;
 
     DataMap() {
         internalSet = EnumSet.noneOf(BooleanDataKey.class);
-        internalMap = new EnumMap<>(DataKey.class);
+        internalMap = new EnumMap<>(SimpleDataKey.class);
         entrySet = new EntrySet();
     }
 
@@ -160,7 +160,7 @@ final class DataMap extends AbstractMap<Object, Object> {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private final Map<Object, Object> delegate(Object key, boolean initialise) {
-        return key instanceof DataKey ? (Map) internalMap() : external(initialise);
+        return key instanceof SimpleDataKey ? (Map) internalMap() : external(initialise);
     }
 
     private class EntrySet extends AbstractSet<Entry<Object, Object>> {

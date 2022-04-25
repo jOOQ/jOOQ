@@ -99,7 +99,7 @@ import static org.jooq.impl.Tools.configurationOrThrow;
 import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
 import static org.jooq.impl.Tools.settings;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclaration;
-import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_TOP_LEVEL_CTE;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;

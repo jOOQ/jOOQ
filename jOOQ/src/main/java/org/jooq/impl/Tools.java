@@ -2704,7 +2704,10 @@ final class Tools {
                             for (int j = i; i - j <= candidate.length; i++)
                                 render.sql(sqlChars[i]);
 
-                            render.sql(sqlChars[i]);
+                            // [#13489] The operator could be the last thing in the template
+                            if (i < sqlChars.length)
+                                render.sql(sqlChars[i]);
+
                             continue characterLoop;
                         }
                     }

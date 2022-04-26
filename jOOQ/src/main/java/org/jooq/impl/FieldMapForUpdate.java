@@ -120,21 +120,23 @@ import org.jooq.impl.QOM.UNotYetImplemented;
  */
 final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRowOrSelect> implements UNotYetImplemented {
 
-    static final Set<SQLDialect>         CASTS_NEEDED                      = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-    static final Set<SQLDialect>         NO_SUPPORT_QUALIFY                = SQLDialect.supportedBy(POSTGRES, SQLITE, YUGABYTEDB);
-    static final Set<SQLDialect>         EMULATE_RVE_SET_QUERY             = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, IGNITE, MARIADB, MYSQL, SQLITE);
+    static final Set<SQLDialect> CASTS_NEEDED                      = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect> NO_SUPPORT_QUALIFY                = SQLDialect.supportedBy(POSTGRES, SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect> EMULATE_RVE_SET_QUERY             = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, IGNITE, MARIADB, MYSQL, SQLITE);
 
 
 
 
 
 
-    static final Set<SQLDialect>         SUPPORT_RVE_SET                   = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, YUGABYTEDB);
-    static final Set<SQLDialect>         REQUIRE_RVE_ROW_CLAUSE            = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
-    final Table<?>                       table;
-    final SetClause                      setClause;
-    final Clause                         assignmentClause;
+
+    static final Set<SQLDialect> SUPPORT_RVE_SET                   = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect> REQUIRE_RVE_ROW_CLAUSE            = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+
+    final Table<?>               table;
+    final SetClause              setClause;
+    final Clause                 assignmentClause;
 
     FieldMapForUpdate(Table<?> table, SetClause setClause, Clause assignmentClause) {
         this.table = table;
@@ -353,6 +355,8 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
             }
         });
     }
+
+
 
 
 

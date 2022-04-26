@@ -2062,6 +2062,10 @@ final class Tools {
         return t == null ? null : f.apply(t);
     }
 
+    static final <T, R, X extends Throwable> R applyOrElse(@Nullable T t, ThrowingFunction<? super @NotNull T, ? extends R, ? extends X> f, ThrowingSupplier<? extends R, ? extends X> s) throws X {
+        return t == null ? s.get() : f.apply(t);
+    }
+
     static final <T> T let(T t, Consumer<? super T> consumer) {
         consumer.accept(t);
         return t;

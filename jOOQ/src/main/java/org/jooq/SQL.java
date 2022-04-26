@@ -87,9 +87,10 @@ import org.jooq.impl.DSL;
  * <li><strong>JDBC bind variables</strong>: in case bind variables should be
  * inlined (as in {@link DSL#inline(CharSequence)}, {@link ParamType#INLINED},
  * or {@link StatementType#STATIC_STATEMENT}), plain SQL query parts will
- * discover question marks (<code>?</code>) at syntactically appropriate
- * positions (outside of comments, string literals, quoted name literals) and
- * substitute the appropriate bind value into the template.</li>
+ * discover question marks (<code>?</code>) and named parameters
+ * (<code>:identifier</code>) at syntactically appropriate positions, e.g.
+ * outside of comments, string literals, quoted name literals, and substitute
+ * the appropriate bind value into the template.</li>
  * </ul>
  * <p>
  * Instances can be created using {@link DSL#sql(String)} and overloads.

@@ -299,7 +299,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final SortField<T> sort(SortOrder order) {
-        return new SortFieldImpl<>(this, order);
+        return this instanceof NoField ? (NoField<T>) this : new SortFieldImpl<>(this, order);
     }
 
     @Override
@@ -337,13 +337,11 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    public final <Z> SortField<Z> sort(Map<T, Z> sortMap) {
-        return sortMap == null || sortMap.isEmpty() ? sortConstant() : DSL.case_(this).mapValues(sortMap).asc();
-    }
-
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private final <Z> SortField<Z> sortConstant() {
-        return new SortFieldImpl<>(new ConstantSortField<>((Field) this), SortOrder.DEFAULT);
+    public final <Z> SortField<Z> sort(Map<T, Z> sortMap) {
+        return sortMap == null || sortMap.isEmpty()
+             ? DSL.noField((Field) this).sortDefault()
+             : DSL.case_(this).mapValues(sortMap).asc();
     }
 
 

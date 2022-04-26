@@ -48,6 +48,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.impl.QOM.UEmptyField;
+import org.jooq.impl.QOM.UOpaque;
 
 /**
  * A base class for custom {@link Field} implementations in client code.
@@ -62,7 +63,13 @@ import org.jooq.impl.QOM.UEmptyField;
  *
  * @author Lukas Eder
  */
-public abstract class CustomField<T> extends AbstractField<T> implements UEmptyField<T> {
+public non-sealed abstract class CustomField<T>
+extends
+    AbstractField<T>
+implements
+    UEmptyField<T>,
+    UOpaque
+{
 
     private static final Clause[] CLAUSES = { CUSTOM };
 

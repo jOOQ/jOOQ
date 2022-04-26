@@ -6266,6 +6266,24 @@ public final class QOM {
     interface UTransient extends UEmpty {}
 
     /**
+     * A marker interface for {@link QueryPart} implementations that are mainly
+     * used to render SQL, but unlike {@link UTransient} parts, can also appear
+     * in user expression trees.
+     */
+    /* sealed */ interface UOpaque
+        extends
+            UEmpty
+        /* permits
+
+
+
+            CustomField,
+            CustomTable,
+            CustomCondition,
+            CustomQueryPart */ 
+    {}
+
+    /**
      * A marker interface for {@link QueryPart} implementations whose
      * {@link QueryPart} semantics has not yet been implemented.
      *

@@ -45,6 +45,7 @@ import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.impl.QOM.UEmptyCondition;
+import org.jooq.impl.QOM.UOpaque;
 
 /**
  * A base class for custom {@link Condition} implementations in client code.
@@ -59,7 +60,13 @@ import org.jooq.impl.QOM.UEmptyCondition;
  *
  * @author Lukas Eder
  */
-public abstract class CustomCondition extends AbstractCondition implements UEmptyCondition {
+public non-sealed abstract class CustomCondition
+extends
+    AbstractCondition
+implements
+    UEmptyCondition,
+    UOpaque
+{
 
     private static final Clause[] CLAUSES = { CUSTOM };
 

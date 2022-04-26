@@ -50,6 +50,7 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UniqueKey;
+import org.jooq.impl.QOM.UOpaque;
 
 /**
  * A base class for custom {@link Table} implementations in client code.
@@ -74,7 +75,12 @@ import org.jooq.UniqueKey;
  *
  * @author Lukas Eder
  */
-public abstract class CustomTable<R extends TableRecord<R>> extends TableImpl<R> {
+public non-sealed abstract class CustomTable<R extends TableRecord<R>>
+extends
+    TableImpl<R>
+implements
+    UOpaque
+{
 
     protected CustomTable(Name name) {
         super(name);

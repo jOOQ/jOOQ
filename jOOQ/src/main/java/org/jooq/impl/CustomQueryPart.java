@@ -46,6 +46,7 @@ import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.impl.QOM.UEmpty;
+import org.jooq.impl.QOM.UOpaque;
 
 /**
  * A base class for custom {@link QueryPart} implementations in client code.
@@ -72,7 +73,7 @@ import org.jooq.impl.QOM.UEmpty;
  *
  * @author Lukas Eder
  */
-public abstract class CustomQueryPart extends AbstractQueryPart implements UEmpty {
+public non-sealed abstract class CustomQueryPart extends AbstractQueryPart implements UOpaque {
 
     private static final Clause[] CLAUSES = { CUSTOM };
 

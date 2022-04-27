@@ -80,6 +80,7 @@ import org.jooq.BindingGetResultSetContext;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.Cursor;
+import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.JSON;
@@ -89,6 +90,7 @@ import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
+import org.jooq.TransactionalPublishable;
 import org.jooq.XML;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
@@ -514,6 +516,7 @@ final class R2DBC {
 
     static abstract class AbstractNonBlockingSubscription<T> extends AbstractSubscription<T> {
 
+        final Configuration                         configuration;
         final AtomicBoolean                         subscribed;
         final Publisher<? extends Connection>       connection;
         final AtomicInteger                         nextForwarderIndex;
@@ -525,6 +528,7 @@ final class R2DBC {
         ) {
             super(subscriber);
 
+            this.configuration = configuration;
             this.subscribed = new AtomicBoolean();
             this.connection = configuration.connectionFactory().create();
             this.nextForwarderIndex = new AtomicInteger();
@@ -578,13 +582,16 @@ final class R2DBC {
         @Override
         final void cancel0(boolean cancelled) {
 
+            // [#12977] Correctly sequence the delegation to run after close completion
+            cancel0(cancelled ? () -> {} : () -> subscriber.onComplete());
+        }
+
+        final void cancel0(Runnable onComplete) {
+
             // [#12108] Must pass along cancellation to forwarding subscriptions
             forAllForwardingSubscriptions(Subscription::cancel);
 
             delegate().connection.updateAndGet(c -> {
-
-                // [#12977] Correctly sequence the delegation to run after close completion
-                Runnable onComplete = cancelled ? () -> {} : () -> subscriber.onComplete();
 
                 // close() calls on already closed resources have no effect, so
                 // the side-effect is OK with the AtomicReference contract
@@ -657,6 +664,60 @@ final class R2DBC {
         @Override
         final String sql() {
             return batch.toString();
+        }
+    }
+
+    static final class TransactionSubscription<T> extends AbstractNonBlockingSubscription<T> {
+        final TransactionalPublishable<T> transactional;
+
+        TransactionSubscription(
+            DSLContext ctx,
+            Subscriber<? super T> subscriber,
+            TransactionalPublishable<T> transactional
+        ) {
+            super(ctx.configuration(), subscriber);
+
+            this.transactional = transactional;
+        }
+
+        @Override
+        String sql() {
+            return "TransactionSubscription";
+        }
+
+        @Override
+        ConnectionSubscriber<T> delegate() {
+            return new ConnectionSubscriber<>(this) {
+                @Override
+                void onNext0(Connection c) {
+                    c.beginTransaction().subscribe(subscriber(
+                        s -> s.request(1),
+                        v -> {},
+                        subscriber::onError,
+
+                        // [#13502] TODO: Savepoint support
+                        () -> transactional.run(configuration.derive(new DefaultConnectionFactory(c))).subscribe(subscriber(
+
+                            // [#13502] TODO: Continue requesting items
+                            // [#13502] TODO: Cancel subscription when appropriate
+                            s1 -> s1.request(Long.MAX_VALUE),
+                            subscriber::onNext,
+                            e -> c.rollbackTransaction().subscribe(subscriber(
+                                s2 -> s2.request(1),
+                                v -> {},
+                                t -> cancel0(() -> subscriber.onError(t)),
+                                () -> cancel0(() -> subscriber.onError(e))
+                            )),
+                            () -> c.commitTransaction().subscribe(subscriber(
+                                s2 -> s2.request(1),
+                                v -> {},
+                                t -> cancel0(() -> subscriber.onError(t)),
+                                () -> cancel0(false)
+                            ))
+                        ))
+                    ));
+                }
+            };
         }
     }
 

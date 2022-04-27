@@ -183,6 +183,7 @@ import org.jooq.Param;
 import org.jooq.Parser;
 import org.jooq.Privilege;
 // ...
+import org.jooq.Publisher;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
@@ -234,6 +235,7 @@ import org.jooq.TableLike;
 import org.jooq.TableRecord;
 import org.jooq.TransactionProvider;
 import org.jooq.TransactionalCallable;
+import org.jooq.TransactionalPublishable;
 import org.jooq.TransactionalRunnable;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
@@ -274,6 +276,10 @@ import org.jooq.exception.DetachedException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
+import org.jooq.impl.R2DBC.BlockingRecordSubscription;
+import org.jooq.impl.R2DBC.QuerySubscription;
+import org.jooq.impl.R2DBC.ResultSubscriber;
+import org.jooq.impl.R2DBC.TransactionSubscription;
 import org.jooq.tools.csv.CSVReader;
 import org.jooq.tools.jdbc.BatchedConnection;
 import org.jooq.tools.jdbc.MockCallable;
@@ -643,6 +649,18 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             () -> transactionResult(transactional), executor),
             () -> executor
         );
+    }
+
+    @Override
+    public <T> Publisher<T> transactionPublisher(TransactionalPublishable<T> transactional) {
+        return subscriber -> {
+            ConnectionFactory cf = configuration().connectionFactory();
+
+            if (!(cf instanceof NoConnectionFactory))
+                subscriber.onSubscribe(new TransactionSubscription<>(this, subscriber, transactional));
+            else
+                throw new UnsupportedOperationException("Blocking implementation of reactive transactions");
+        };
     }
 
     @Override

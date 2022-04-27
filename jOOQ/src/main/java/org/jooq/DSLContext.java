@@ -664,6 +664,17 @@ public interface DSLContext extends Scope {
     CompletionStage<Void> transactionAsync(Executor executor, TransactionalRunnable transactional) throws ConfigurationException;
 
     /**
+     * Run a {@link TransactionalPublishable} reactively.
+     *
+     * @param transactional The transactional code
+     * @return The transactional outcome
+     * @throws ConfigurationException If this is run with a
+     *             {@link ThreadLocalTransactionProvider}.
+     */
+    @NotNull
+    <T> Publisher<T> transactionPublisher(TransactionalPublishable<T> transactional);
+
+    /**
      * Run a {@link ConnectionCallable} in the context of this
      * <code>DSLContext</code>'s underlying {@link #configuration()}'s
      * {@link Configuration#connectionProvider()}.

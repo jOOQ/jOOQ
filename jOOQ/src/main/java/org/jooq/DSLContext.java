@@ -509,6 +509,7 @@ public interface DSLContext extends Scope {
      *             <code>transactional</code> logic, indicating that a rollback
      *             has occurred.
      */
+    @Blocking
     <T> T transactionResult(TransactionalCallable<T> transactional);
 
     /**
@@ -537,6 +538,7 @@ public interface DSLContext extends Scope {
      *             <code>transactional</code> logic, indicating that a rollback
      *             has occurred.
      */
+    @Blocking
     <T> T transactionResult(ContextTransactionalCallable<T> transactional) throws ConfigurationException;
 
     /**
@@ -559,6 +561,7 @@ public interface DSLContext extends Scope {
      *             <code>transactional</code> logic, indicating that a rollback
      *             has occurred.
      */
+    @Blocking
     void transaction(TransactionalRunnable transactional);
 
     /**
@@ -585,6 +588,7 @@ public interface DSLContext extends Scope {
      *             <code>transactional</code> logic, indicating that a rollback
      *             has occurred.
      */
+    @Blocking
     void transaction(ContextTransactionalRunnable transactional) throws ConfigurationException;
 
     /**
@@ -668,6 +672,7 @@ public interface DSLContext extends Scope {
      *            <code>connection</code>.
      * @return The outcome of the callable
      */
+    @Blocking
     <T> T connectionResult(ConnectionCallable<T> callable);
 
     /**
@@ -678,6 +683,7 @@ public interface DSLContext extends Scope {
      * @param runnable The code running statements against the
      *            <code>connection</code>.
      */
+    @Blocking
     void connection(ConnectionRunnable runnable);
 
     /**

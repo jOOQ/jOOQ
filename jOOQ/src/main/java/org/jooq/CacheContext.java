@@ -42,6 +42,13 @@ import org.jooq.impl.CacheType;
 /**
  * The parameter object passed to the
  * {@link CacheProvider#provide(CacheContext)} method.
+ * <p>
+ * This {@link Scope} is very short lived, for the duration of a cache
+ * implementation lookup of one of the various internal {@link CacheType}
+ * caches.
+ * <p>
+ * It does not live in the context of a parent {@link Scope}, and as such, does
+ * not have access to any {@link #data()} from another {@link Scope}.
  *
  * @author Lukas Eder
  */

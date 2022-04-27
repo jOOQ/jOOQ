@@ -41,6 +41,8 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
+import org.jooq.impl.CacheType;
+
 import org.jetbrains.annotations.Nullable;
 
 /**

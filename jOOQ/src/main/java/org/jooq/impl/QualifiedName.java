@@ -44,6 +44,8 @@ import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.stringLiteral;
 
+import java.util.function.Supplier;
+
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.tools.StringUtils;
@@ -66,7 +68,7 @@ final class QualifiedName extends AbstractName {
     }
 
     QualifiedName(Name[] qualifiedName) {
-        this.qualifiedName = last(nonEmpty(qualifiedName));
+        this(last(nonEmpty(qualifiedName)));
     }
 
     private QualifiedName(UnqualifiedName[] qualifiedName) {
@@ -251,5 +253,28 @@ final class QualifiedName extends AbstractName {
     @Override
     public final Name[] parts() {
         return qualifiedName.clone();
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    // The assumption is that race conditions for the assignment are
+    // acceptable because the computation is idempotent, so memory
+    // barriers or synchronization aren't necessary.
+    private transient Integer hash;
+
+    @Override
+    public int hashCode() {
+        if (hash == null) {
+            int h = 1;
+
+            for (int i = 0; i < qualifiedName.length; i++)
+                h = 31 * h + qualifiedName[i].name.hashCode();
+
+            hash = h;
+        }
+
+        return hash;
     }
 }

@@ -353,10 +353,9 @@ abstract class AbstractName extends AbstractQueryPart implements Name, SimpleQue
     // XXX: Object API
     // ------------------------------------------------------------------------
 
+    // [#13499] Enforce an optimised implementation
     @Override
-    public int hashCode() {
-        return Arrays.hashCode(getName());
-    }
+    public abstract int hashCode();
 
     @Override
     public boolean equals(Object that) {

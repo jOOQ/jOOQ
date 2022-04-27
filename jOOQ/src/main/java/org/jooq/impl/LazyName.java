@@ -150,4 +150,13 @@ final class LazyName extends AbstractName {
 
 
 
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+        return name().hashCode();
+    }
 }

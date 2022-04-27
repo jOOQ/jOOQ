@@ -6371,6 +6371,24 @@ final class Tools {
         return result;
     }
 
+    static final <T> Supplier<T> cached(Supplier<T> s) {
+        return new Supplier<>() {
+
+            // The assumption is that race conditions for the assignment are
+            // acceptable because the computation is idempotent, so memory
+            // barriers or synchronization isn't necessary.
+            transient T cached;
+
+            @Override
+            public T get() {
+                if (cached == null)
+                    cached = s.get();
+
+                return cached;
+            }
+        };
+    }
+
     /**
      * A base implementation for {@link EmbeddableTableField} flattening
      * iterators with a default implementation for {@link Iterator#remove()} for

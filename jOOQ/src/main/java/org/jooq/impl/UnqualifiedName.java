@@ -44,6 +44,8 @@ import static org.jooq.Name.Quoted.UNQUOTED;
 // ...
 import static org.jooq.impl.Tools.stringLiteral;
 
+import java.util.Arrays;
+
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.conf.RenderQuotedNames;
@@ -57,8 +59,8 @@ import org.jooq.tools.StringUtils;
  */
 final class UnqualifiedName extends AbstractName {
 
-    private final String      name;
-    private final Quoted      quoted;
+    final String name;
+    final Quoted quoted;
 
     UnqualifiedName(String name) {
         this(name, DEFAULT);
@@ -159,5 +161,17 @@ final class UnqualifiedName extends AbstractName {
     @Override
     public final Name[] parts() {
         return new Name[] { this };
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+
+        // [#13499] Since QualifiedName and UnqualifiedName can be equal, both
+        //          need the same hashCode() computation
+        return 31 * 1 + name.hashCode();
     }
 }

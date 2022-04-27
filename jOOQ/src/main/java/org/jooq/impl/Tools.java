@@ -42,6 +42,7 @@ import static java.lang.Boolean.TRUE;
 import static java.lang.Character.isJavaIdentifierPart;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
+import static java.util.Collections.nCopies;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.joining;
 // ...
@@ -187,7 +188,6 @@ import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -323,7 +323,6 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TemplatingException;
 import org.jooq.exception.TooManyRowsException;
-import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
@@ -6159,6 +6158,37 @@ final class Tools {
 
     static final <T> Set<T> lazy(Set<T> set) {
         return set == null ? new HashSet<>() : set;
+    }
+
+    static final <T> List<T> lazy(List<T> list) {
+        return list == null ? new ArrayList<>() : list;
+    }
+
+    static final <T> List<T> lazy(List<T> list, int size) {
+        List<T> result = lazy(list);
+
+        if (result.size() < size)
+            result.addAll(nCopies(size - result.size(), null));
+
+        return result;
+    }
+
+    static final <T> Supplier<T> cached(Supplier<T> s) {
+        return new Supplier<>() {
+
+            // The assumption is that race conditions for the assignment are
+            // acceptable because the computation is idempotent, so memory
+            // barriers or synchronization isn't necessary.
+            transient T cached;
+
+            @Override
+            public T get() {
+                if (cached == null)
+                    cached = s.get();
+
+                return cached;
+            }
+        };
     }
 
     /**

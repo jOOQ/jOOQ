@@ -68,6 +68,9 @@ import java.sql.SQLXML;
  *     }
  * }
  * </pre></code>
+ * <p>
+ * This type is a {@link Scope} with whose lifecycle is typically tied to an
+ * {@link ExecuteContext}, sharing the latter's {@link #data()} map.
  *
  * @author Lukas Eder
  */

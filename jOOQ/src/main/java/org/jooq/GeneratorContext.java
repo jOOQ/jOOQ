@@ -43,8 +43,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * A generator context is an argument object that is passed to a
+ * A {@link GeneratorContext} is an argument object that is passed to a
  * {@link Generator} when generating client side computed columns.
+ * <p>
+ * It is a {@link Scope} that models the short lived lifecycle of the generation
+ * of the client side computed column. Its {@link #data()} map is inherited from
+ * the parent {@link Context} scope, if available, or it is an empty map in case
+ * no rendering {@link Context} was available.
  * <p>
  * This API is part of a commercial only feature. To use this feature, please
  * use the jOOQ Professional Edition or the jOOQ Enterprise Edition.

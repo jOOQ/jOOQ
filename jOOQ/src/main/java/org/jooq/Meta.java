@@ -82,6 +82,9 @@ import org.jetbrains.annotations.NotNull;
  * objects, not JDBC {@link ResultSet} objects with hard-to-remember API
  * constraints</li>
  * </ol>
+ * <p>
+ * This type is a {@link Scope} with independent lifecycle and its own
+ * {@link #data()} map.
  *
  * @author Lukas Eder
  */

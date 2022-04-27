@@ -47,6 +47,9 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
 /**
  * An executable migration between two {@link Commit} instances.
  * <p>
+ * This type is a {@link Scope} with independent lifecycle and its own
+ * {@link #data()} map.
+ * <p>
  * This is EXPERIMENTAL functionality and subject to change in future jOOQ
  * versions.
  *

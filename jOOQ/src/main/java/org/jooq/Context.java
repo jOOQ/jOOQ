@@ -53,6 +53,18 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * A context type that is used for rendering SQL or for binding.
+ * <p>
+ * This type implements {@link Scope} and thus has a lifecycle defined by the
+ * rendering or binding operation.
+ * <p>
+ * The {@link #data()} map contents are maintained for the entirety of the
+ * rendering or binding operation, and are passed along to child {@link Scope}
+ * types, including e.g.
+ * <ul>
+ * <li>{@link GeneratorContext}: When computing client side computed column
+ * values</li>
+ * <li>{@link BindingSQLContext}: When generating the SQL for bind values</li>
+ * </ul>
  *
  * @author Lukas Eder
  * @see BindContext

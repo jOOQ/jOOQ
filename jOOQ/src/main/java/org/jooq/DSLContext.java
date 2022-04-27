@@ -127,13 +127,12 @@ import io.r2dbc.spi.ConnectionFactory;
  * A contextual DSL providing "attached" implementations to the
  * <code>org.jooq</code> interfaces.
  * <p>
- * Apart from the {@link DSL}, this contextual DSL is the main entry point
- * for client code, to access jOOQ classes and functionality that are related to
- * {@link Query} execution. Unlike objects created through the
- * <code>DSL</code> type, objects created from a <code>DSLContext</code> will be
- * "attached" to the <code>DSLContext</code>'s {@link #configuration()}, such
- * that they can be executed immediately in a fluent style. An example is given
- * here:
+ * Apart from the {@link DSL}, this contextual DSL is the main entry point for
+ * client code, to access jOOQ classes and functionality that are related to
+ * {@link Query} execution. Unlike objects created through the <code>DSL</code>
+ * type, objects created from a <code>DSLContext</code> will be "attached" to
+ * the <code>DSLContext</code>'s {@link #configuration()}, such that they can be
+ * executed immediately in a fluent style. An example is given here:
  * <p>
  * <code><pre>
  * DSLContext create = DSL.using(connection, dialect);
@@ -152,6 +151,11 @@ import io.r2dbc.spi.ConnectionFactory;
  * constructor. Please consider thread-safety concerns documented in
  * {@link Configuration}, should you want to reuse the same
  * <code>Configuration</code> instance in various threads and / or transactions.
+ * <p>
+ * {@link DSLContext} is a {@link Scope} type, mostly for convenience access to
+ * its underlying {@link Configuration} properties, including the
+ * {@link #data()} map, which it shares with the {@link Configuration}. It does
+ * not have an independent lifecycle.
  *
  * @see DSL
  * @see Configuration

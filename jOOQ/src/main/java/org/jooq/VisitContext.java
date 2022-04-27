@@ -43,6 +43,10 @@ import org.jetbrains.annotations.Nullable;
 /**
  * A context object for {@link QueryPart} traversal passed to registered
  * {@link VisitListener}'s.
+ * <p>
+ * This type is a {@link Scope} with whose lifecycle is shared with the parent
+ * rendering {@link Context} scope. It also shares the latter's {@link #data()}
+ * map.
  *
  * @author Lukas Eder
  * @see VisitListener

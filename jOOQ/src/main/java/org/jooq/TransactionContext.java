@@ -43,6 +43,9 @@ import org.jetbrains.annotations.Nullable;
 /**
  * A context object that is used to pass arguments to the various methods of
  * {@link TransactionProvider}.
+ * <p>
+ * This type is a {@link Scope} with independent lifecycle and its own
+ * {@link #data()} map.
  *
  * @author Lukas Eder
  */

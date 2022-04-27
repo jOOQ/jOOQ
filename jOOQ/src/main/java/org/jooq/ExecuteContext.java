@@ -43,7 +43,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
-import java.time.Instant;
 import java.util.stream.Collector;
 
 import org.jooq.conf.Settings;
@@ -57,6 +56,15 @@ import org.jetbrains.annotations.Nullable;
 /**
  * A context object for {@link Query} execution passed to registered
  * {@link ExecuteListener}'s.
+ * <p>
+ * This type implements {@link Scope} and thus has a lifecycle defined by the
+ * query execution.
+ * <p>
+ * The {@link #data()} map contents are maintained for the entirety of the
+ * execution, and are passed along to child {@link Scope} types, including e.g.
+ * <ul>
+ * <li>{@link BindingScope}: When passing bind values or reading results.</li>
+ * </ul>
  *
  * @author Lukas Eder
  * @see ExecuteListener

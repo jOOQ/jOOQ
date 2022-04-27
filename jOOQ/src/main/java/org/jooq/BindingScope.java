@@ -46,6 +46,7 @@ import java.sql.SQLOutput;
 /**
  * A {@link Scope} that lives in the context of a data type {@link Binding}
  * operation.
+ * <h3>Known subtypes of various binding operations</h3>
  * <p>
  * The various {@link Binding} operations and their corresponding
  * {@link BindingScope} subtypes include:
@@ -71,8 +72,20 @@ import java.sql.SQLOutput;
  * {@link BindingGetStatementContext} to read a procedural <code>OUT</code>
  * argument from a JDBC {@link CallableStatement}.</li>
  * </ul>
- * The various {@link Binding} operations are very short lived operations and
- * thus this scope is also very short lived.
+ * <h3>Lifecycle</h3> The various {@link Binding} operations are very short
+ * lived operations and thus this scope is also very short lived, although some
+ * implementations (e.g. {@link BindingGetResultSetContext}) may be cached for
+ * the duration of an {@link ExecuteScope} for performance reasons.
+ * <p>
+ * The {@link BindingScope#data()} map is that of the parent scope, which is:
+ * <ul>
+ * <li>The {@link Context} for {@link BindingSQLContext}</li>
+ * <li>The {@link ExecuteScope} for all the others</li>
+ * </ul>
+ * <p>
+ * This allows for interacting with the rendering lifecycle or the execution
+ * lifecycle from within a custom data type {@link Binding}.
+ * <h3>Interactions with other {@link Scope} types</h3>
  * <p>
  * Most but not all {@link BindingScope} types are also {@link ExecuteScope}.
  * Specifically, the {@link BindingSQLContext} type isn't an

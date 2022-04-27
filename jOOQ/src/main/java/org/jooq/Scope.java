@@ -41,6 +41,7 @@ import java.time.Instant;
 import java.util.Map;
 
 import org.jooq.conf.Settings;
+import org.jooq.impl.DSL;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -54,18 +55,26 @@ import org.jetbrains.annotations.Nullable;
  * dependent and will be specified by the concrete subtype of
  * <code>Scope</code>. Examples of such scope types are:
  * <ul>
- * <li>{@link ExecuteContext}: A scope that covers a single execution of a
- * {@link Query}</li>
- * <li>{@link Context}: A scope that covers a single traversal of a
- * {@link QueryPart} expression tree to produce a SQL string and / or a list of
- * bind variables.</li>
- * <li>{@link VisitContext}: A scope that that covers a single traversal of a
- * {@link QueryPart} expression tree (just like {@link Context}), in the
- * presence of at least one {@link VisitListener}.</li>
- * <li>{@link RecordContext}: A scope that covers a single record operation,
- * such as {@link UpdatableRecord#store()}.</li>
+ * <li>{@link Context}: Used for a single traversal of a {@link QueryPart}
+ * expression tree to produce a SQL string and / or a list of bind
+ * variables.</li>
+ * <li>{@link DSLContext}: The {@link DSL} API that creates {@link Query}
+ * instances in the context of a {@link Configuration}. It shares the wrapped
+ * {@link Configuration}'s lifecycle.</li>
+ * <li>{@link ExecuteContext}: Used for a single execution of a {@link Query},
+ * containing JDBC resources and other execution relevant objects. Can be
+ * accessed by the {@link ExecuteListener} SPI.</li>
+ * <li>{@link ParseContext}: Used for a single parse call. Can be accessed by
+ * the {@link ParseListener} SPI.</li>
+ * <li>{@link RecordContext}: Used a single record operation, such as
+ * {@link UpdatableRecord#store()}. Can be accessed by the
+ * {@link RecordListener} SPI.</li>
  * <li>{@link TransactionContext}: A scope that covers the execution (or
- * nesting) of a single transaction.</li>
+ * nesting) of a single transaction. Can be accessed by the
+ * {@link TransactionListener} SPI.</li>
+ * <li>{@link VisitContext}: A scope that that covers a single traversal of a
+ * {@link QueryPart} expression tree (just like {@link Context}). Can be
+ * accessed by the {@link VisitListener} SPI.</li>
  * </ul>
  * <p>
  * One of <code>Scope</code>'s most interesting features for client code

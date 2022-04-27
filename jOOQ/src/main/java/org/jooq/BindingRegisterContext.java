@@ -47,7 +47,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface BindingRegisterContext<U> extends ExecuteScope {
+public interface BindingRegisterContext<U> extends ExecuteScope, BindingScope {
 
     /**
      * The {@link CallableStatement} on which a bind variable should be

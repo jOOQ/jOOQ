@@ -47,7 +47,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface BindingGetResultSetContext<U> extends ExecuteScope {
+public interface BindingGetResultSetContext<U> extends ExecuteScope, BindingScope {
 
     /**
      * The {@link ResultSet} from which a value is retrieved.

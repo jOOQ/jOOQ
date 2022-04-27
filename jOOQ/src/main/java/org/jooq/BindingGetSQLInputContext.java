@@ -47,7 +47,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface BindingGetSQLInputContext<U> extends ExecuteScope {
+public interface BindingGetSQLInputContext<U> extends ExecuteScope, BindingScope {
 
     /**
      * The {@link SQLInput} from which a value is retrieved.

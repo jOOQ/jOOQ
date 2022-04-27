@@ -47,7 +47,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface BindingSetSQLOutputContext<U> extends ResourceManagingScope, ExecuteScope {
+public interface BindingSetSQLOutputContext<U> extends ResourceManagingScope, ExecuteScope, BindingScope {
 
     /**
      * The {@link SQLOutput} to which a bind variable should be bound.

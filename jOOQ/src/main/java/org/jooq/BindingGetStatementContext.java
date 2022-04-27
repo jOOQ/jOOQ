@@ -47,7 +47,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface BindingGetStatementContext<U> extends ExecuteScope {
+public interface BindingGetStatementContext<U> extends ExecuteScope, BindingScope {
 
     /**
      * The {@link CallableStatement} from which a value is retrieved.

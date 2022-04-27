@@ -44,7 +44,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface BindingSQLContext<U> extends Scope {
+public interface BindingSQLContext<U> extends BindingScope {
 
     /**
      * The {@link RenderContext} that contains the generated SQL and the current

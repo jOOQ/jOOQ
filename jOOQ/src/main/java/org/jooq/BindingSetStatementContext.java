@@ -47,7 +47,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface BindingSetStatementContext<U> extends ResourceManagingScope, ExecuteScope {
+public interface BindingSetStatementContext<U> extends ResourceManagingScope, ExecuteScope, BindingScope {
 
     /**
      * The {@link PreparedStatement} to which a bind variable should be bound.

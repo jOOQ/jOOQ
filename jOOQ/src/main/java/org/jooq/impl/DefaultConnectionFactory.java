@@ -40,6 +40,10 @@ package org.jooq.impl;
 import static org.jooq.impl.R2DBC.AbstractSubscription.onRequest;
 
 import java.time.Duration;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.IntFunction;
+import java.util.function.IntSupplier;
+import java.util.function.Supplier;
 
 import org.jooq.exception.DetachedException;
 
@@ -61,16 +65,19 @@ import io.r2dbc.spi.ValidationDepth;
  */
 final class DefaultConnectionFactory implements ConnectionFactory {
 
-    Connection    connection;
-    final boolean finalize;
+    Connection          connection;
+    final boolean       finalize;
+    final boolean       nested;
+    final AtomicInteger savepoints = new AtomicInteger();
 
     DefaultConnectionFactory(Connection connection) {
-        this(connection, false);
+        this(connection, false, true);
     }
 
-    DefaultConnectionFactory(Connection connection, boolean finalize) {
+    DefaultConnectionFactory(Connection connection, boolean finalize, boolean nested) {
         this.connection = connection;
         this.finalize = finalize;
+        this.nested = nested;
     }
 
     final Connection connectionOrThrow() {
@@ -93,20 +100,39 @@ final class DefaultConnectionFactory implements ConnectionFactory {
         return () -> connectionOrThrow().getMetadata().getDatabaseProductName();
     }
 
-    private final class NonClosingConnection implements Connection {
+    final class NonClosingConnection implements Connection {
 
         // ---------------------------------------------------------------------
         // 0.9.0.M1 API
         // ---------------------------------------------------------------------
 
+        private <T> T nest(IntSupplier level, Supplier<T> toplevelAction, IntFunction<T> nestedAction) {
+            if (nested)
+                return nestedAction.apply(level.getAsInt());
+            else
+                return toplevelAction.get();
+        }
+
+        private String savepoint(int i) {
+            return "S" + i;
+        }
+
         @Override
         public Publisher<Void> beginTransaction() {
-            return connectionOrThrow().beginTransaction();
+            return nest(
+                savepoints::getAndIncrement,
+                () -> connectionOrThrow().beginTransaction(),
+                i -> connectionOrThrow().createSavepoint(savepoint(i))
+            );
         }
 
         @Override
         public Publisher<Void> beginTransaction(TransactionDefinition definition) {
-            return connectionOrThrow().beginTransaction(definition);
+            return nest(
+                savepoints::getAndIncrement,
+                () -> connectionOrThrow().beginTransaction(definition),
+                i -> connectionOrThrow().createSavepoint(savepoint(i))
+            );
         }
 
         @Override
@@ -116,7 +142,11 @@ final class DefaultConnectionFactory implements ConnectionFactory {
 
         @Override
         public Publisher<Void> commitTransaction() {
-            return connectionOrThrow().commitTransaction();
+            return nest(
+                savepoints::decrementAndGet,
+                () -> connectionOrThrow().commitTransaction(),
+                i -> connectionOrThrow().releaseSavepoint(savepoint(i))
+            );
         }
 
         @Override
@@ -156,7 +186,10 @@ final class DefaultConnectionFactory implements ConnectionFactory {
 
         @Override
         public Publisher<Void> rollbackTransaction() {
-            return connectionOrThrow().rollbackTransaction();
+            return nest(
+                savepoints::decrementAndGet,
+                () -> connectionOrThrow().rollbackTransaction(),
+                i -> connectionOrThrow().rollbackTransactionToSavepoint(savepoint(i)));
         }
 
         @Override

@@ -96,6 +96,7 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
+import org.jooq.impl.DefaultConnectionFactory.NonClosingConnection;
 import org.jooq.impl.DefaultRenderContext.Rendered;
 import org.jooq.impl.ThreadGuard.Guard;
 import org.jooq.tools.JooqLogger;
@@ -695,11 +696,10 @@ final class R2DBC {
                         v -> {},
                         subscriber::onError,
 
-                        // [#13502] TODO: Savepoint support
-                        () -> transactional.run(configuration.derive(new DefaultConnectionFactory(c))).subscribe(subscriber(
-
-                            // [#13502] TODO: Continue requesting items
-                            // [#13502] TODO: Cancel subscription when appropriate
+                        // [#13502] Implement Savepoint logic for nested transactions
+                        () -> transactional.run(c instanceof NonClosingConnection
+                                ? configuration
+                                : configuration.derive(new DefaultConnectionFactory(c))).subscribe(subscriber(
                             s1 -> s1.request(Long.MAX_VALUE),
                             subscriber::onNext,
                             e -> c.rollbackTransaction().subscribe(subscriber(

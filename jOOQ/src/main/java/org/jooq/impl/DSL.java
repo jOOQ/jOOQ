@@ -547,7 +547,7 @@ public class DSL {
     public static CloseableDSLContext using(String url) {
         if (url.startsWith("r2dbc")) {
             io.r2dbc.spi.Connection connection = R2DBC.getConnection(url);
-            return new DefaultCloseableDSLContext(new DefaultConnectionFactory(connection, true), JDBCUtils.dialect(connection));
+            return new DefaultCloseableDSLContext(new DefaultConnectionFactory(connection, true, false), JDBCUtils.dialect(connection));
         }
         else {
             try {
@@ -588,7 +588,7 @@ public class DSL {
     public static CloseableDSLContext using(String url, String username, String password) {
         if (url.startsWith("r2dbc")) {
             io.r2dbc.spi.Connection connection = R2DBC.getConnection(url, username, password);
-            return new DefaultCloseableDSLContext(new DefaultConnectionFactory(connection, true), JDBCUtils.dialect(connection));
+            return new DefaultCloseableDSLContext(new DefaultConnectionFactory(connection, true, false), JDBCUtils.dialect(connection));
         }
         else {
             try {
@@ -628,7 +628,7 @@ public class DSL {
     public static CloseableDSLContext using(String url, Properties properties) {
         if (url.startsWith("r2dbc")) {
             io.r2dbc.spi.Connection connection = R2DBC.getConnection(url, properties);
-            return new DefaultCloseableDSLContext(new DefaultConnectionFactory(connection, true), JDBCUtils.dialect(connection));
+            return new DefaultCloseableDSLContext(new DefaultConnectionFactory(connection, true, false), JDBCUtils.dialect(connection));
         }
         else {
             try {

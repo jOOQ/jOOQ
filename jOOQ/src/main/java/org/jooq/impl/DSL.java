@@ -433,6 +433,7 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 
+import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 
 import io.r2dbc.spi.ConnectionFactory;
@@ -543,6 +544,7 @@ public class DSL {
      * @see DefaultConnectionProvider
      * @see JDBCUtils#dialect(String)
      */
+    @Blocking
     @NotNull
     public static CloseableDSLContext using(String url) {
         if (url.startsWith("r2dbc")) {
@@ -584,6 +586,7 @@ public class DSL {
      * @see DefaultConnectionProvider
      * @see JDBCUtils#dialect(String)
      */
+    @Blocking
     @NotNull
     public static CloseableDSLContext using(String url, String username, String password) {
         if (url.startsWith("r2dbc")) {
@@ -624,6 +627,7 @@ public class DSL {
      * @see DefaultConnectionProvider
      * @see JDBCUtils#dialect(String)
      */
+    @Blocking
     @NotNull
     public static CloseableDSLContext using(String url, Properties properties) {
         if (url.startsWith("r2dbc")) {

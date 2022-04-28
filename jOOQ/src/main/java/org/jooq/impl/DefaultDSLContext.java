@@ -210,7 +210,6 @@ import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Record8;
 import org.jooq.Record9;
-import org.jooq.Records;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
@@ -276,9 +275,7 @@ import org.jooq.exception.DetachedException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
-import org.jooq.impl.R2DBC.BlockingRecordSubscription;
-import org.jooq.impl.R2DBC.QuerySubscription;
-import org.jooq.impl.R2DBC.ResultSubscriber;
+import org.jooq.impl.R2DBC.BlockingTransactionSubscription;
 import org.jooq.impl.R2DBC.TransactionSubscription;
 import org.jooq.tools.csv.CSVReader;
 import org.jooq.tools.jdbc.BatchedConnection;
@@ -659,7 +656,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             if (!(cf instanceof NoConnectionFactory))
                 subscriber.onSubscribe(new TransactionSubscription<>(this, subscriber, transactional));
             else
-                throw new UnsupportedOperationException("Blocking implementation of reactive transactions");
+                subscriber.onSubscribe(new BlockingTransactionSubscription<>(this, subscriber, transactional));
         };
     }
 

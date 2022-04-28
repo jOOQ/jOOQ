@@ -1473,6 +1473,33 @@ final class R2DBC {
         }
     }
 
+    static final class BlockingTransactionSubscription<T> extends AbstractSubscription<T> {
+        final DSLContext                  ctx;
+        final TransactionalPublishable<T> transactional;
+
+        BlockingTransactionSubscription(
+            DSLContext ctx,
+            Subscriber<? super T> subscriber,
+            TransactionalPublishable<T> transactional
+        ) {
+            super(subscriber);
+
+            this.ctx = ctx;
+            this.transactional = transactional;
+        }
+
+        @Override
+        final void request0() {
+            try {
+                subscriber.onNext(ctx.transactionResult(c -> block(transactional.run(c))));
+                subscriber.onComplete();
+            }
+            catch (Throwable t) {
+                subscriber.onError(t);
+            }
+        }
+    }
+
     static final boolean isR2dbc(java.sql.Statement statement) {
         return statement instanceof R2DBCPreparedStatement;
     }

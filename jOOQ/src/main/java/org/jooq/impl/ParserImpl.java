@@ -1058,7 +1058,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (done())
             return null;
 
-        scopeStart();
+        scope.scopeStart();
         boolean previousMetaLookupsForceIgnore = metaLookupsForceIgnore();
         Query result = null;
         LanguageContext previous = languageContext;
@@ -1233,12 +1233,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         catch (ParserException e) {
 
             // [#9061] Don't hide this pre-existing exceptions in scopeResolve()
-            scopeClear();
+            scope.scopeClear();
             throw e;
         }
         finally {
-            scopeEnd(result);
-            scopeResolve();
+            scope.scopeEnd(result);
+            scope.scopeResolve();
             metaLookupsForceIgnore(previousMetaLookupsForceIgnore);
             languageContext = previous;
         }
@@ -1330,13 +1330,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final SelectQueryImpl<Record> parseSelect(Integer degree, WithImpl with) {
-        scopeStart();
+        scope.scopeStart();
         SelectQueryImpl<Record> result = parseQueryExpressionBody(degree, with, null);
         List<SortField<?>> orderBy = null;
 
         for (Field<?> field : result.getSelect())
             if (aliased(field) != null)
-                scope(field);
+                scope.scope(field);
 
         if (parseKeywordIf("ORDER")) {
             if (parseKeywordIf("SIBLINGS BY") && requireProEdition()) {
@@ -1478,7 +1478,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 result.setForUpdateSkipLocked();
         }
 
-        scopeEnd(result);
+        scope.scopeEnd(result);
         return result;
     }
 
@@ -1567,8 +1567,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         CombineOperator combine;
         while ((combine = parseCombineOperatorIf(false)) != null) {
-            scopeEnd(local);
-            scopeStart();
+            scope.scopeEnd(local);
+            scope.scopeStart();
 
             if (degree == null)
                 degree = Tools.degree(lhs);
@@ -1601,8 +1601,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         CombineOperator combine;
         while ((combine = parseCombineOperatorIf(true)) != null) {
-            scopeEnd(local);
-            scopeStart();
+            scope.scopeEnd(local);
+            scope.scopeStart();
 
             if (degree == null)
                 degree = Tools.degree(lhs);
@@ -1748,7 +1748,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         // TODO: Move this into parseTables() so lateral joins can profit from lookups (?)
         if (from != null)
             for (Table<?> table : from)
-                scope(table);
+                scope.scope(table);
 
         SelectQueryImpl<Record> result = new SelectQueryImpl<>(dsl.configuration(), with);
 
@@ -2149,7 +2149,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         parseKeywordIf("FROM");
         Table<?> table = parseTable(() -> peekKeyword(KEYWORDS_IN_DELETE_FROM));
 
-        scope(table);
+        scope.scope(table);
 
         DeleteUsingStep<?> s1 = with == null ? dsl.delete(table) : with.delete(table);
         DeleteWhereStep<?> s2 = parseKeywordIf("USING", "FROM") ? s1.using(parseList(',', t -> parseTable(() -> peekKeyword(KEYWORDS_IN_DELETE_FROM)))) : s1;
@@ -2168,7 +2168,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Query parseInsert(WithImpl with, boolean parseResultQuery) {
-        scopeStart();
+        scope.scopeStart();
         parseKeyword("INSERT", "INS");
         parseKeywordIf("INTO");
         Table<?> table = parseTableNameIf();
@@ -2182,7 +2182,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             && (alias = parseIdentifierIf()) != null)
             table = table.as(alias);
 
-        scope(table);
+        scope.scope(table);
 
         InsertSetStep<?> s1 = (with == null ? dsl.insertInto(table) : with.insertInto(table));
         Field<?>[] fields = null;
@@ -2243,18 +2243,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 returning = onDuplicate =  s1.set(map);
             }
-            else if (peekSelectOrWith(true)){
+            else if (peekSelectOrWith(true)) {
+                Field<?>[] f = fields;
 
-                // [#10954] These are moved into the INSERT .. SELECT clause handling. They should not be necessary here
-                //          either, but it seems we currently don't correctly implement nesting scopes?
-                scopeEnd(null);
-                scopeStart();
+                // [#13503] The SELECT in INSERT .. SELECT has its own, independent scope
+                returning = onDuplicate = newScope(() -> {
+                    Select<?> select = parseWithOrSelect();
 
-                Select<?> select = parseWithOrSelect();
-
-                returning = onDuplicate = (fields == null)
-                    ? s1.select(select)
-                    : s1.columns(fields).select(select);
+                    return (f == null)
+                        ? s1.select(select)
+                        : s1.columns(f).select(select);
+                });
             }
             else if (parseKeywordIf("DEFAULT VALUES")) {
                 if (fields != null)
@@ -2321,7 +2320,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 : returning;
         }
         finally {
-            scopeEnd(((InsertImpl) s1).getDelegate());
+            scope.scopeEnd(((InsertImpl) s1).getDelegate());
         }
     }
 
@@ -2339,7 +2338,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         Table<?> table = parseTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM));
 
-        scope(table);
+        scope.scope(table);
 
         UpdateSetFirstStep<?> s1 = (with == null ? dsl.update(table) : with.update(table));
         List<Table<?>> from = parseKeywordIf("FROM") ? parseList(',', t -> parseTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM))) : null;
@@ -13867,28 +13866,23 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
-    private final DSLContext                      dsl;
-    private final Locale                          locale;
-    private final Meta                            meta;
-    private char[]                                sql;
-    private final ParseWithMetaLookups            metaLookups;
-    private boolean                               metaLookupsForceIgnore;
-    private final Consumer<Param<?>>              bindParamListener;
-    private int                                   positionBeforeWhitespace;
-    private int                                   position               = 0;
-    private boolean                               ignoreHints            = true;
-    private final Object[]                        bindings;
-    private int                                   bindIndex              = 0;
-    private final Map<String, Param<?>>           bindParams             = new LinkedHashMap<>();
-    private String                                delimiter              = ";";
-    private final ScopeStack<Name, Table<?>>      tableScope             = new ScopeStack<>(null);
-    private final ScopeStack<Name, Field<?>>      fieldScope             = new ScopeStack<>(null);
-    private final ScopeStack<Name, FieldProxy<?>> lookupFields           = new ScopeStack<>(null);
-    private boolean                               scopeClear             = false;
-    private LanguageContext                       languageContext        = LanguageContext.QUERY;
-    private EnumSet<FunctionKeyword>              forbidden              = EnumSet.noneOf(FunctionKeyword.class);
-
-
+    private final DSLContext            dsl;
+    private final Locale                locale;
+    private final Meta                  meta;
+    private char[]                      sql;
+    private final ParseWithMetaLookups  metaLookups;
+    private boolean                     metaLookupsForceIgnore;
+    private final Consumer<Param<?>>    bindParamListener;
+    private int                         positionBeforeWhitespace;
+    private int                         position        = 0;
+    private boolean                     ignoreHints     = true;
+    private final Object[]              bindings;
+    private int                         bindIndex       = 0;
+    private final Map<String, Param<?>> bindParams      = new LinkedHashMap<>();
+    private String                      delimiter       = ";";
+    private LanguageContext             languageContext = LanguageContext.QUERY;
+    private EnumSet<FunctionKeyword>    forbidden       = EnumSet.noneOf(FunctionKeyword.class);
+    private ParseScope                  scope           = new ParseScope();
 
 
 
@@ -14275,60 +14269,131 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
               + (sql.length > position + 80 ? "..." : "");
     }
 
-    private final void scope(Table<?> table) {
-        tableScope.set(table.getQualifiedName(), table);
+    private final <T> T newScope(Supplier<T> scoped) {
+        ParseScope old = scope;
+
+        try {
+            scope = new ParseScope();
+            return scoped.get();
+        }
+        finally {
+            scope = old;
+        }
     }
 
-    private final void scope(Field<?> field) {
-        fieldScope.set(field.getQualifiedName(), field);
-    }
+    private class ParseScope {
+        private boolean                               scopeClear      = false;
+        private final ScopeStack<Name, Table<?>>      tableScope      = new ScopeStack<>();
+        private final ScopeStack<Name, Field<?>>      fieldScope      = new ScopeStack<>();
+        private final ScopeStack<Name, FieldProxy<?>> lookupFields    = new ScopeStack<>();
 
-    private final void scopeStart() {
-        tableScope.scopeStart();
-        fieldScope.scopeStart();
-        lookupFields.scopeStart();
-        lookupFields.setAll(null);
-    }
 
-    private final void scopeEnd(Query scopeOwner) {
-        List<FieldProxy<?>> retain = new ArrayList<>();
 
-        for (FieldProxy<?> lookup : lookupFields) {
-            Value<Field<?>> found = null;
 
-            for (Field<?> f : fieldScope) {
-                if (f.getName().equals(lookup.getName())) {
-                    if (found != null) {
-                        position(lookup.position());
-                        throw exception("Ambiguous field identifier");
+
+        private final void scope(Table<?> table) {
+            tableScope.set(table.getQualifiedName(), table);
+        }
+
+        private final void scope(Field<?> field) {
+            fieldScope.set(field.getQualifiedName(), field);
+        }
+
+        private final void scopeResolve() {
+            if (!lookupFields.isEmpty())
+                unknownField(lookupFields.iterator().next());
+        }
+
+        private final void scopeStart() {
+            tableScope.scopeStart();
+            fieldScope.scopeStart();
+            lookupFields.scopeStart();
+            lookupFields.setAll(null);
+        }
+
+        private final void scopeEnd(Query scopeOwner) {
+            List<FieldProxy<?>> retain = new ArrayList<>();
+
+            for (FieldProxy<?> lookup : scope.lookupFields) {
+                Value<Field<?>> found = null;
+
+                for (Field<?> f : scope.fieldScope) {
+                    if (f.getName().equals(lookup.getName())) {
+                        if (found != null) {
+                            position(lookup.position());
+                            throw exception("Ambiguous field identifier");
+                        }
+
+                        // TODO: Does this instance of "found" really interact with the one below?
+                        found = new Value<>(0, f);
                     }
+                }
 
-                    // TODO: Does this instance of "found" really interact with the one below?
-                    found = new Value<>(0, f);
+                found = resolveInTableScope(scope.tableScope.valueIterable(), lookup.getQualifiedName(), lookup, found);
+
+                if (found != null && !(found.value() instanceof FieldProxy)) {
+                    lookup.delegate((AbstractField) found.value());
+                }
+                else {
+                    lookup.scopeOwner(scopeOwner);
+                    retain.add(lookup);
                 }
             }
 
-            found = resolveInTableScope(tableScope.valueIterable(), lookup.getQualifiedName(), lookup, found);
+            scope.lookupFields.scopeEnd();
+            scope.tableScope.scopeEnd();
+            scope.fieldScope.scopeEnd();
 
-            if (found != null && !(found.value() instanceof FieldProxy)) {
-                lookup.delegate((AbstractField) found.value());
-            }
-            else {
-                lookup.scopeOwner(scopeOwner);
-                retain.add(lookup);
-            }
+            for (FieldProxy<?> r : retain)
+                if (scope.lookupFields.get(r.getQualifiedName()) == null)
+                    if (scope.lookupFields.inScope())
+                        scope.lookupFields.set(r.getQualifiedName(), r);
+                    else
+                        unknownField(r);
         }
 
-        lookupFields.scopeEnd();
-        tableScope.scopeEnd();
-        fieldScope.scopeEnd();
+        private final void scopeClear() {
+            scopeClear = true;
+        }
 
-        for (FieldProxy<?> r : retain)
-            if (lookupFields.get(r.getQualifiedName()) == null)
-                if (lookupFields.inScope())
-                    lookupFields.set(r.getQualifiedName(), r);
-                else
-                    unknownField(r);
+        private final void unknownField(FieldProxy<?> field) {
+            if (!scopeClear) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                if (metaLookups() == THROW_ON_FAILURE) {
+                    position(field.position());
+                    throw exception("Unknown field identifier");
+                }
+            }
+        }
     }
 
     private final Value<Field<?>> resolveInTableScope(Iterable<Value<Table<?>>> tables, Name lookupName, FieldProxy<?> lookup, Value<Field<?>> found) {
@@ -14380,54 +14445,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return found;
     }
 
-    private final void scopeClear() {
-        scopeClear = true;
-    }
-
-    private final void scopeResolve() {
-        if (!lookupFields.isEmpty())
-            unknownField(lookupFields.iterator().next());
-    }
-
-    private final void unknownField(FieldProxy<?> field) {
-        if (!scopeClear) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            if (metaLookups() == THROW_ON_FAILURE) {
-                position(field.position());
-                throw exception("Unknown field identifier");
-            }
-        }
-    }
-
     private final Table<?> lookupTable(int positionBeforeName, Name name) {
         if (meta != null) {
             List<Table<?>> tables;
@@ -14455,12 +14472,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> lookupField(int positionBeforeName, Name name) {
-        if (metaLookups() == ParseWithMetaLookups.OFF || lookupFields.scopeLevel() < 0)
+        if (metaLookups() == ParseWithMetaLookups.OFF || scope.lookupFields.scopeLevel() < 0)
             return field(name);
 
-        FieldProxy<?> field = lookupFields.get(name);
+        FieldProxy<?> field = scope.lookupFields.get(name);
         if (field == null)
-            lookupFields.set(name, field = new FieldProxy<>((AbstractField<Object>) field(name), positionBeforeName));
+            scope.lookupFields.set(name, field = new FieldProxy<>((AbstractField<Object>) field(name), positionBeforeName));
 
         return field;
     }

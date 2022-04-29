@@ -688,7 +688,7 @@ final class R2DBC {
 
         @Override
         ConnectionSubscriber<T> delegate() {
-            return new ConnectionSubscriber<>(this) {
+            return new ConnectionSubscriber<T>(this) {
                 @Override
                 void onNext0(Connection c) {
                     c.beginTransaction().subscribe(subscriber(

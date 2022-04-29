@@ -63,6 +63,10 @@ final class ScopeStack<K, V> implements Iterable<V> {
     private Map<K, List<V>>            stack;
     private final ObjIntFunction<K, V> constructor;
 
+    ScopeStack() {
+        this((ObjIntFunction<K, V>) null);
+    }
+
     ScopeStack(V defaultValue) {
         this((part, scopeLevel) -> defaultValue);
     }

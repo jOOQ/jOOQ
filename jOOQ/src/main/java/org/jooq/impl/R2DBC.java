@@ -133,7 +133,7 @@ final class R2DBC {
     // Utilities to pass the TCK
     // -------------------------------------------------------------------------
 
-    static abstract class AbstractSubscription<T> implements Subscription {
+    static abstract class AbstractSubscription<T> implements org.reactivestreams.Subscription {
 
         final AtomicBoolean         completed;
         final AtomicLong            requested;

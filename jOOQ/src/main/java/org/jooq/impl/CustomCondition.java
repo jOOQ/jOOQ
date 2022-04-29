@@ -60,7 +60,7 @@ import org.jooq.impl.QOM.UOpaque;
  *
  * @author Lukas Eder
  */
-public non-sealed abstract class CustomCondition
+public /* non-sealed */ abstract class CustomCondition
 extends
     AbstractCondition
 implements

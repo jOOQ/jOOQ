@@ -268,8 +268,14 @@ final class QualifiedName extends AbstractName {
         if (hash == null) {
             int h = 1;
 
-            for (int i = 0; i < qualifiedName.length; i++)
-                h = 31 * h + qualifiedName[i].name.hashCode();
+            for (int i = 0; i < qualifiedName.length; i++) {
+                UnqualifiedName n = qualifiedName[i];
+
+                if (n.name == null)
+                    h = 31 * h + 0;
+                else
+                    h = 31 * h + n.name.hashCode();
+            }
 
             hash = h;
         }

@@ -691,6 +691,15 @@ public class GenerationTool {
             if (isBlank(g.getTarget().getEncoding()))
                 g.getTarget().setEncoding(DEFAULT_TARGET_ENCODING);
 
+            if (DEFAULT_TARGET_PACKAGENAME.equals(g.getTarget().getPackageName()) && System.getProperty("jooq.codegen.target.packageName") != null)
+                g.getTarget().setPackageName(System.getProperty("jooq.codegen.target.packageName"));
+            if (DEFAULT_TARGET_DIRECTORY.equals(g.getTarget().getDirectory()) && System.getProperty("jooq.codegen.target.directory") != null)
+                g.getTarget().setDirectory(System.getProperty("jooq.codegen.target.directory"));
+            if (DEFAULT_TARGET_ENCODING.equals(g.getTarget().getEncoding()) && System.getProperty("jooq.codegen.target.encoding") != null)
+                g.getTarget().setEncoding(System.getProperty("jooq.codegen.target.encoding"));
+            if (isBlank(g.getTarget().getLocale()) && System.getProperty("jooq.codegen.target.locale") != null)
+                g.getTarget().setLocale(System.getProperty("jooq.codegen.target.locale"));
+
             // [#2887] [#9727] Patch relative paths to take plugin execution basedir into account
             if (!new File(g.getTarget().getDirectory()).isAbsolute())
                 g.getTarget().setDirectory(new File(configuration.getBasedir(), g.getTarget().getDirectory()).getCanonicalPath());

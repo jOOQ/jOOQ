@@ -5762,7 +5762,7 @@ final class Tools {
     }
 
     static final <T> Supplier<T> cached(Supplier<T> s) {
-        return new Supplier<>() {
+        return new Supplier<T>() {
 
             // The assumption is that race conditions for the assignment are
             // acceptable because the computation is idempotent, so memory

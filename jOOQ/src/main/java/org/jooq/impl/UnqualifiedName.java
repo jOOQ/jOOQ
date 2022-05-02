@@ -172,6 +172,9 @@ final class UnqualifiedName extends AbstractName {
 
         // [#13499] Since QualifiedName and UnqualifiedName can be equal, both
         //          need the same hashCode() computation
-        return 31 * 1 + name.hashCode();
+        if (name == null)
+            return 0;
+        else
+            return 31 * 1 + name.hashCode();
     }
 }

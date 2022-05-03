@@ -115,7 +115,7 @@ final class SelectIsNull extends AbstractCondition implements QOM.SelectIsNull {
                 acceptStandard(ctx);
             }
             else {
-                Table<?> t = new AliasedSelect<>(select, true, true).as("t");
+                Table<?> t = new AliasedSelect<>(select, true, true, false).as("t");
                 ctx.visit(inline(1).eq(selectCount().from(t).where(allNull(t.fields()))));
             }
         }

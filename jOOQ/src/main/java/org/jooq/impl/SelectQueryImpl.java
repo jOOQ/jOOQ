@@ -200,6 +200,7 @@ import static org.jooq.impl.Tools.traverseJoins;
 import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.unqualified;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_LIMIT_WITH_ORDER_BY;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
@@ -3029,8 +3030,16 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                .formatNewLine()
                .sql(") x");
 
-        if (TRUE.equals(ctx.data().get(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE)) && actualLimit.isApplicable())
-            ctx.visit(actualLimit);
+        if (TRUE.equals(ctx.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE))) {
+            if (actualLimit.isApplicable()) {
+                ctx.visit(actualLimit);
+            }
+            else if (!actualOrderBy.isEmpty() && TRUE.equals(ctx.data(DATA_FORCE_LIMIT_WITH_ORDER_BY))) {
+                Limit l = new Limit();
+                l.setNumberOfRows(Integer.MAX_VALUE);
+                ctx.visit(l);
+            }
+        }
     }
 
     private final boolean applySeekOnDerivedTable() {

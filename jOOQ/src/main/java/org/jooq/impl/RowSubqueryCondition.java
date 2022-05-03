@@ -190,7 +190,7 @@ final class RowSubqueryCondition extends AbstractCondition implements UNotYetImp
         Name[] names = fieldNames(l.size());
 
         return select()
-              .from(new AliasedSelect<>(s, true, true, names).as(table))
+              .from(new AliasedSelect<>(s, true, true, false, names).as(table))
               .where(c == null
                   ? noCondition()
                   : new RowCondition(l, row(fieldsByName(table, names)), c));

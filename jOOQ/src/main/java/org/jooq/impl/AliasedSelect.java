@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.Names.N_SELECT;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.visitSubquery;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_LIMIT_WITH_ORDER_BY;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_ALIASES;
 
 import org.jooq.Clause;
@@ -64,18 +65,20 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> {
     private final Select<R> query;
     private final boolean   subquery;
     private final boolean   ignoreOrderBy;
+    private final boolean   forceLimit;
     private final Name[]    aliases;
 
-    AliasedSelect(Select<R> query, boolean subquery, boolean ignoreOrderBy) {
-        this(query, subquery, ignoreOrderBy, Tools.fieldNames(Tools.degree(query)));
+    AliasedSelect(Select<R> query, boolean subquery, boolean ignoreOrderBy, boolean forceLimit) {
+        this(query, subquery, ignoreOrderBy, forceLimit, Tools.fieldNames(Tools.degree(query)));
     }
 
-    AliasedSelect(Select<R> query, boolean subquery, boolean ignoreOrderBy, Name... aliases) {
+    AliasedSelect(Select<R> query, boolean subquery, boolean ignoreOrderBy, boolean forceLimit, Name... aliases) {
         super(TableOptions.expression(), N_SELECT);
 
         this.query = query;
         this.subquery = subquery;
         this.ignoreOrderBy = ignoreOrderBy;
+        this.forceLimit = forceLimit;
         this.aliases = aliases;
     }
 
@@ -112,6 +115,13 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void accept(Context<?> ctx) {
+        if (forceLimit)
+            ctx.data(DATA_FORCE_LIMIT_WITH_ORDER_BY, true, c -> accept0(c));
+        else
+            accept0(ctx);
+    }
+
+    private final void accept0(Context<?> ctx) {
         SelectQueryImpl<R> q = selectQueryImpl(query);
 
         // [#3679] [#10540] Without standardised UNION subquery column names,

@@ -65,7 +65,7 @@ final class FetchCount extends AbstractResultQuery<Record1<Integer>> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(select(count).from(new AliasedSelect<>(query, true, true).as("t")));
+        ctx.visit(select(count).from(new AliasedSelect<>(query, true, true, false).as("t")));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 // ...
 // ...
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.jsonArray;
@@ -140,7 +141,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
     private final void accept0(Context<?> ctx, boolean multisetCondition) {
         switch (emulateMultiset(ctx.configuration())) {
             case JSON: {
-                Table<?> t = new AliasedSelect<>(select, true, false, fieldNames(select.getSelect().size())).as(DSL.name("t"), (Name[]) null);
+                Table<?> t = new AliasedSelect<>(select, true, false, ctx.family() == MYSQL, fieldNames(select.getSelect().size())).as(DSL.name("t"), (Name[]) null);
 
                 switch (ctx.family()) {
 
@@ -183,7 +184,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
             }
 
             case JSONB: {
-                Table<?> t = new AliasedSelect<>(select, true, false, fieldNames(select.getSelect().size())).as(DSL.name("t"), (Name[]) null);
+                Table<?> t = new AliasedSelect<>(select, true, false, ctx.family() == MYSQL, fieldNames(select.getSelect().size())).as(DSL.name("t"), (Name[]) null);
 
                 switch (ctx.family()) {
 
@@ -227,7 +228,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
 
             case XML: {
                 List<Field<?>> fields = select.getSelect();
-                Table<?> t = new AliasedSelect<>(select, true, false, fieldNames(fields.size())).as(DSL.name("t"), (Name[]) null);
+                Table<?> t = new AliasedSelect<>(select, true, false, ctx.family() == MYSQL, fieldNames(fields.size())).as(DSL.name("t"), (Name[]) null);
 
                 switch (ctx.family()) {
 

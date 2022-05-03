@@ -558,6 +558,14 @@ final class Tools {
         DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE,
 
         /**
+         * [#13509] In some cases, it may be desirable to enforce appending a
+         * <code>LIMIT</code> clause, when there's an <code>ORDER BY</code>
+         * clause, e.g. to prevent the optimiser from removing the seemingly
+         * unnecessary sort.
+         */
+        DATA_FORCE_LIMIT_WITH_ORDER_BY,
+
+        /**
          * [#3886] Whether a list has already been indented.
          */
         DATA_LIST_ALREADY_INDENTED,
@@ -6146,7 +6154,7 @@ final class Tools {
         List<Field<?>> result = collect(flattenCollection(select));
         Name tableName = name("t");
         Name[] fieldNames = fieldNames(result.size());
-        Table<?> t = new AliasedSelect<>(field.query, true, true, fieldNames).as("t");
+        Table<?> t = new AliasedSelect<>(field.query, true, true, false, fieldNames).as("t");
         for (int i = 0; i < result.size(); i++)
             result.set(i, DSL.field(DSL.select(DSL.field(tableName.append(fieldNames[i]), result.get(i).getDataType())).from(t)));
 

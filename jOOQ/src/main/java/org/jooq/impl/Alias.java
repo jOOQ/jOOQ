@@ -299,7 +299,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
                     //          by pushing down projection aliases into the
                     //          derived table
                     else
-                        context.sql('(').visit(new AliasedSelect<>(wrappedAsSelect, true, false, fieldAliases)).sql(')');
+                        context.sql('(').visit(new AliasedSelect<>(wrappedAsSelect, true, false, false, fieldAliases)).sql(')');
                 }
             }
         }

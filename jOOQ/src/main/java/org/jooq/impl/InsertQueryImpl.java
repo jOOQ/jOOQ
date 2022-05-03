@@ -853,7 +853,7 @@ implements
 
                 // [#6375] INSERT .. VALUES and INSERT .. SELECT distinction also in MERGE
                 if (NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING.contains(ctx.dialect()))
-                    t = new AliasedSelect<Record>((Select<Record>) s, true, true, map(f, Field::getUnqualifiedName, Name[]::new)).as("t");
+                    t = new AliasedSelect<Record>((Select<Record>) s, true, true, false, map(f, Field::getUnqualifiedName, Name[]::new)).as("t");
                 else
                     t = s.asTable("t", map(f, Field::getName, String[]::new));
             }

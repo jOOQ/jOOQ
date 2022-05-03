@@ -39,7 +39,7 @@ package org.jooq;
 
 import org.jetbrains.annotations.*;
 
-
+// ...
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -102,7 +103,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictConditionStep<R> where(Condition condition);
 
     /**
@@ -111,7 +112,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * connecting them with each other using {@link Operator#AND}.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictConditionStep<R> where(Condition... conditions);
 
     /**
@@ -120,7 +121,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * connecting them with each other using {@link Operator#AND}.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictConditionStep<R> where(Collection<? extends Condition> conditions);
 
     /**
@@ -128,7 +129,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictConditionStep<R> where(Field<Boolean> field);
 
     /**
@@ -144,7 +145,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
     InsertOnConflictConditionStep<R> where(SQL sql);
 
@@ -161,7 +162,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
     InsertOnConflictConditionStep<R> where(String sql);
 
@@ -179,7 +180,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
     InsertOnConflictConditionStep<R> where(String sql, Object... bindings);
 
@@ -197,7 +198,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
     InsertOnConflictConditionStep<R> where(String sql, QueryPart... parts);
 
@@ -206,7 +207,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictConditionStep<R> whereExists(Select<?> select);
 
     /**
@@ -214,6 +215,6 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictConditionStep<R> whereNotExists(Select<?> select);
 }

@@ -279,7 +279,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
      * @param condition The condition
      */
     @Override
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void addConditions(Condition condition);
 
     /**
@@ -292,7 +292,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
      * @param conditions The condition
      */
     @Override
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void addConditions(Condition... conditions);
 
     /**
@@ -305,7 +305,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
      * @param conditions The condition
      */
     @Override
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void addConditions(Collection<? extends Condition> conditions);
 
     /**
@@ -318,7 +318,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
      * @param condition The condition
      */
     @Override
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void addConditions(Operator operator, Condition condition);
 
     /**
@@ -331,7 +331,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
      * @param conditions The condition
      */
     @Override
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void addConditions(Operator operator, Condition... conditions);
 
     /**
@@ -344,7 +344,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
      * @param conditions The condition
      */
     @Override
-    @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void addConditions(Operator operator, Collection<? extends Condition> conditions);
 
     /**

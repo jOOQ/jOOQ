@@ -6318,6 +6318,12 @@ public class JavaGenerator extends AbstractGenerator {
                             out.println();
                             out.println("return _%s;", unquotedKeyMethodName);
                             out.println("}");
+
+                            if (generateImplicitJoinPathsAsKotlinProperties()) {
+                                out.println();
+                                out.println("%sval %s: %s", visibility(), keyMethodName, referencedTableClassName);
+                                out.tab(1).println("get(): %s = %s()", referencedTableClassName, keyMethodName);
+                            }
                         }
                         else {
                             out.println("%s%s %s() {", visibility(), referencedTableClassName, keyMethodName);

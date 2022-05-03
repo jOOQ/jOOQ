@@ -1738,6 +1738,10 @@ This is a prerequisite for various advanced features]]></jxb:javadoc></jxb:prope
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate implicit join path constructors on generated tables for outgoing foreign key relationships (to-one relationships)]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="implicitJoinPathsAsKotlinProperties" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether implicit join path constructors should be offered as properties in Kotlin.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="rowConvenienceToOne" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate <code>ROW</code> convenience syntax for to-one relationships.
 <p>

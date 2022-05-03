@@ -39,6 +39,8 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean implicitJoinPathsToOne = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean implicitJoinPathsAsKotlinProperties = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean rowConvenienceToOne = true;
     @XmlElement(defaultValue = "true")
     protected Boolean multisetConvenienceOneToMany = true;
@@ -325,6 +327,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setImplicitJoinPathsToOne(Boolean value) {
         this.implicitJoinPathsToOne = value;
+    }
+
+    /**
+     * Whether implicit join path constructors should be offered as properties in Kotlin.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isImplicitJoinPathsAsKotlinProperties() {
+        return implicitJoinPathsAsKotlinProperties;
+    }
+
+    /**
+     * Sets the value of the implicitJoinPathsAsKotlinProperties property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setImplicitJoinPathsAsKotlinProperties(Boolean value) {
+        this.implicitJoinPathsAsKotlinProperties = value;
     }
 
     /**
@@ -2536,6 +2562,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withImplicitJoinPathsAsKotlinProperties(Boolean value) {
+        setImplicitJoinPathsAsKotlinProperties(value);
+        return this;
+    }
+
     public Generate withRowConvenienceToOne(Boolean value) {
         setRowConvenienceToOne(value);
         return this;
@@ -3056,6 +3087,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("relations", relations);
         builder.append("sequenceFlags", sequenceFlags);
         builder.append("implicitJoinPathsToOne", implicitJoinPathsToOne);
+        builder.append("implicitJoinPathsAsKotlinProperties", implicitJoinPathsAsKotlinProperties);
         builder.append("rowConvenienceToOne", rowConvenienceToOne);
         builder.append("multisetConvenienceOneToMany", multisetConvenienceOneToMany);
         builder.append("multisetConvenienceManyToMany", multisetConvenienceManyToMany);
@@ -3203,6 +3235,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!implicitJoinPathsToOne.equals(other.implicitJoinPathsToOne)) {
+                return false;
+            }
+        }
+        if (implicitJoinPathsAsKotlinProperties == null) {
+            if (other.implicitJoinPathsAsKotlinProperties!= null) {
+                return false;
+            }
+        } else {
+            if (!implicitJoinPathsAsKotlinProperties.equals(other.implicitJoinPathsAsKotlinProperties)) {
                 return false;
             }
         }
@@ -4054,6 +4095,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((relations == null)? 0 :relations.hashCode()));
         result = ((prime*result)+((sequenceFlags == null)? 0 :sequenceFlags.hashCode()));
         result = ((prime*result)+((implicitJoinPathsToOne == null)? 0 :implicitJoinPathsToOne.hashCode()));
+        result = ((prime*result)+((implicitJoinPathsAsKotlinProperties == null)? 0 :implicitJoinPathsAsKotlinProperties.hashCode()));
         result = ((prime*result)+((rowConvenienceToOne == null)? 0 :rowConvenienceToOne.hashCode()));
         result = ((prime*result)+((multisetConvenienceOneToMany == null)? 0 :multisetConvenienceOneToMany.hashCode()));
         result = ((prime*result)+((multisetConvenienceManyToMany == null)? 0 :multisetConvenienceManyToMany.hashCode()));

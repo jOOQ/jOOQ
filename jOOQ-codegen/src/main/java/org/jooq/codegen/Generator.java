@@ -128,6 +128,18 @@ public interface Generator {
     void setGenerateImplicitJoinPathsToOne(boolean generateImplicitJoinPathsToOne);
 
     /**
+     * Whether implicit join path constructors should be offered as properties
+     * in Kotlin.
+     */
+    boolean generateImplicitJoinPathsAsKotlinProperties();
+
+    /**
+     * Whether implicit join path constructors should be offered as properties
+     * in Kotlin.
+     */
+    void setGenerateImplicitJoinPathsAsKotlinProperties(boolean generateImplicitJoinPathsAsKotlinProperties);
+
+    /**
      * Whether <code>ROW</code> convenience syntax for to-one relationships
      * should be generated.
      */

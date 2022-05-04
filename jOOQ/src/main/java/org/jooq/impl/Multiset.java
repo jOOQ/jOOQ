@@ -41,7 +41,7 @@ import static java.lang.Boolean.TRUE;
 // ...
 // ...
 import static org.jooq.SQLDialect.MYSQL;
-// ...
+import static org.jooq.SQLDialect.*;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonEntry;
@@ -102,9 +102,10 @@ import org.jooq.XMLAggOrderByStep;
  */
 final class Multiset<R extends Record> extends AbstractField<Result<R>> {
 
-    static final Set<SQLDialect> NO_SUPPORT_JSON_COMPARE  = SQLDialect.supportedBy(POSTGRES);
-    static final Set<SQLDialect> NO_SUPPORT_JSONB_COMPARE = SQLDialect.supportedBy();
-    static final Set<SQLDialect> NO_SUPPORT_XML_COMPARE   = SQLDialect.supportedBy(POSTGRES);
+    static final Set<SQLDialect> NO_SUPPORT_JSON_COMPARE      = SQLDialect.supportedBy(POSTGRES);
+    static final Set<SQLDialect> NO_SUPPORT_JSONB_COMPARE     = SQLDialect.supportedBy();
+    static final Set<SQLDialect> NO_SUPPORT_XML_COMPARE       = SQLDialect.supportedBy(POSTGRES);
+    static final Set<SQLDialect> FORCE_LIMIT_IN_DERIVED_TABLE = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     final Select<R>              select;
 
@@ -141,7 +142,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
     private final void accept0(Context<?> ctx, boolean multisetCondition) {
         switch (emulateMultiset(ctx.configuration())) {
             case JSON: {
-                Table<?> t = new AliasedSelect<>(select, true, false, ctx.family() == MYSQL, fieldNames(select.getSelect().size())).as(DSL.name("t"), (Name[]) null);
+                Table<?> t = new AliasedSelect<>(select, true, false, FORCE_LIMIT_IN_DERIVED_TABLE.contains(ctx.dialect()), fieldNames(select.getSelect().size())).as(DSL.name("t"), (Name[]) null);
 
                 switch (ctx.family()) {
 
@@ -184,7 +185,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
             }
 
             case JSONB: {
-                Table<?> t = new AliasedSelect<>(select, true, false, ctx.family() == MYSQL, fieldNames(select.getSelect().size())).as(DSL.name("t"), (Name[]) null);
+                Table<?> t = new AliasedSelect<>(select, true, false, FORCE_LIMIT_IN_DERIVED_TABLE.contains(ctx.dialect()), fieldNames(select.getSelect().size())).as(DSL.name("t"), (Name[]) null);
 
                 switch (ctx.family()) {
 
@@ -228,7 +229,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
 
             case XML: {
                 List<Field<?>> fields = select.getSelect();
-                Table<?> t = new AliasedSelect<>(select, true, false, ctx.family() == MYSQL, fieldNames(fields.size())).as(DSL.name("t"), (Name[]) null);
+                Table<?> t = new AliasedSelect<>(select, true, false, FORCE_LIMIT_IN_DERIVED_TABLE.contains(ctx.dialect()), fieldNames(fields.size())).as(DSL.name("t"), (Name[]) null);
 
                 switch (ctx.family()) {
 

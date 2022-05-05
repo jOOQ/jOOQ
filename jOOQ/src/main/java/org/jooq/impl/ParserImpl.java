@@ -11754,17 +11754,24 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         // Avoid .. token in indexed for loops:
         // FOR i IN identifier1 .. identifier2 LOOP <...> END LOOP;
-        if (peek('.') && !peek("..")) {
-            List<Name> result = new ArrayList<>();
-            result.add(identifier);
+        if (peek('.') && !peek(".."))
+            return parseNameQualified('.', identifier);
 
-            while (parseIf('.'))
-                result.add(parseIdentifier());
 
-            return DSL.name(result.toArray(EMPTY_NAME));
-        }
+
+
         else
             return identifier;
+    }
+
+    private final Name parseNameQualified(char separator, Name firstPart) {
+        List<Name> result = new ArrayList<>();
+        result.add(firstPart);
+
+        while (parseIf(separator))
+            result.add(parseIdentifier());
+
+        return DSL.name(result.toArray(EMPTY_NAME));
     }
 
     private final QualifiedAsterisk parseQualifiedAsteriskIf() {

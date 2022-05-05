@@ -39,6 +39,8 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean implicitJoinPathsToOne = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean implicitJoinPathsUseTableNameForUnambiguousFKs = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean implicitJoinPathsAsKotlinProperties = true;
     @XmlElement(defaultValue = "true")
     protected Boolean rowConvenienceToOne = true;
@@ -327,6 +329,40 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setImplicitJoinPathsToOne(Boolean value) {
         this.implicitJoinPathsToOne = value;
+    }
+
+    /**
+     * Whether names of unambiguous {@link org.jooq.meta.ForeignKeyDefinition} should be based
+     * on the referenced {@link org.jooq.meta.TableDefinition}.
+     * <p>
+     * When a child table has only one {@link org.jooq.meta.ForeignKeyDefinition} towards a
+     * parent table, then that path is "unambiguous." In that case, some
+     * {@link GeneratorStrategy} implementations may choose to use the parent
+     * table's {@link org.jooq.meta.TableDefinition} for implementations of
+     * {@link org.jooq.codegen.GeneratorStrategy#getJavaMethodName(Definition)}, instead of the
+     * {@link org.jooq.meta.ForeignKeyDefinition}, e.g. for implicit join paths.
+     * <p>
+     * This flag allows for turning off this default behaviour.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isImplicitJoinPathsUseTableNameForUnambiguousFKs() {
+        return implicitJoinPathsUseTableNameForUnambiguousFKs;
+    }
+
+    /**
+     * Sets the value of the implicitJoinPathsUseTableNameForUnambiguousFKs property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setImplicitJoinPathsUseTableNameForUnambiguousFKs(Boolean value) {
+        this.implicitJoinPathsUseTableNameForUnambiguousFKs = value;
     }
 
     /**
@@ -2562,6 +2598,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withImplicitJoinPathsUseTableNameForUnambiguousFKs(Boolean value) {
+        setImplicitJoinPathsUseTableNameForUnambiguousFKs(value);
+        return this;
+    }
+
     public Generate withImplicitJoinPathsAsKotlinProperties(Boolean value) {
         setImplicitJoinPathsAsKotlinProperties(value);
         return this;
@@ -3087,6 +3128,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("relations", relations);
         builder.append("sequenceFlags", sequenceFlags);
         builder.append("implicitJoinPathsToOne", implicitJoinPathsToOne);
+        builder.append("implicitJoinPathsUseTableNameForUnambiguousFKs", implicitJoinPathsUseTableNameForUnambiguousFKs);
         builder.append("implicitJoinPathsAsKotlinProperties", implicitJoinPathsAsKotlinProperties);
         builder.append("rowConvenienceToOne", rowConvenienceToOne);
         builder.append("multisetConvenienceOneToMany", multisetConvenienceOneToMany);
@@ -3235,6 +3277,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!implicitJoinPathsToOne.equals(other.implicitJoinPathsToOne)) {
+                return false;
+            }
+        }
+        if (implicitJoinPathsUseTableNameForUnambiguousFKs == null) {
+            if (other.implicitJoinPathsUseTableNameForUnambiguousFKs!= null) {
+                return false;
+            }
+        } else {
+            if (!implicitJoinPathsUseTableNameForUnambiguousFKs.equals(other.implicitJoinPathsUseTableNameForUnambiguousFKs)) {
                 return false;
             }
         }
@@ -4095,6 +4146,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((relations == null)? 0 :relations.hashCode()));
         result = ((prime*result)+((sequenceFlags == null)? 0 :sequenceFlags.hashCode()));
         result = ((prime*result)+((implicitJoinPathsToOne == null)? 0 :implicitJoinPathsToOne.hashCode()));
+        result = ((prime*result)+((implicitJoinPathsUseTableNameForUnambiguousFKs == null)? 0 :implicitJoinPathsUseTableNameForUnambiguousFKs.hashCode()));
         result = ((prime*result)+((implicitJoinPathsAsKotlinProperties == null)? 0 :implicitJoinPathsAsKotlinProperties.hashCode()));
         result = ((prime*result)+((rowConvenienceToOne == null)? 0 :rowConvenienceToOne.hashCode()));
         result = ((prime*result)+((multisetConvenienceOneToMany == null)? 0 :multisetConvenienceOneToMany.hashCode()));

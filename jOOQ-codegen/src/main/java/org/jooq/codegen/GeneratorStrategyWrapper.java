@@ -152,6 +152,16 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     }
 
     @Override
+    public void setUseTableNameForUnambiguousFKs(boolean useTableNameForUnambiguousFKs) {
+        delegate.setUseTableNameForUnambiguousFKs(useTableNameForUnambiguousFKs);
+    }
+
+    @Override
+    public boolean getUseTableNameForUnambiguousFKs() {
+        return delegate.getUseTableNameForUnambiguousFKs();
+    }
+
+    @Override
     public String getGlobalReferencesFileHeader(Definition container, Class<? extends Definition> objectType) {
         return delegate.getGlobalReferencesFileHeader(container, objectType);
     }

@@ -152,6 +152,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateSourcesOnViews                           = true;
     boolean                            generateFluentSetters                            = false;
     boolean                            generateJavaBeansGettersAndSetters               = false;
+    boolean                            generateUseTableNameForUnambiguousFKs            = true;
     boolean                            generateVarargsSetters                           = true;
     String                             generateFullyQualifiedTypes                      = "";
     boolean                            generateJavaTimeTypes                            = true;
@@ -1148,6 +1149,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateJavaBeansGettersAndSetters(boolean javaBeansGettersAndSetters) {
         this.generateJavaBeansGettersAndSetters = javaBeansGettersAndSetters;
+    }
+
+    @Override
+    public boolean generateUseTableNameForUnambiguousFKs() {
+        return generateUseTableNameForUnambiguousFKs;
+    }
+
+    @Override
+    public void setGenerateUseTableNameForUnambiguousFKs(boolean useTableNameForUnambiguousFKs) {
+        this.generateUseTableNameForUnambiguousFKs = useTableNameForUnambiguousFKs;
     }
 
     @Override

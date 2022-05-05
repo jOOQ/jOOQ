@@ -1738,6 +1738,20 @@ This is a prerequisite for various advanced features]]></jxb:javadoc></jxb:prope
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate implicit join path constructors on generated tables for outgoing foreign key relationships (to-one relationships)]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="implicitJoinPathsUseTableNameForUnambiguousFKs" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether names of unambiguous {@link org.jooq.meta.ForeignKeyDefinition} should be based
+on the referenced {@link org.jooq.meta.TableDefinition}.
+<p>
+When a child table has only one {@link org.jooq.meta.ForeignKeyDefinition} towards a
+parent table, then that path is "unambiguous." In that case, some
+{@link GeneratorStrategy} implementations may choose to use the parent
+table's {@link org.jooq.meta.TableDefinition} for implementations of
+{@link org.jooq.codegen.GeneratorStrategy#getJavaMethodName(Definition)}, instead of the
+{@link org.jooq.meta.ForeignKeyDefinition}, e.g. for implicit join paths.
+<p>
+This flag allows for turning off this default behaviour.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="implicitJoinPathsAsKotlinProperties" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether implicit join path constructors should be offered as properties in Kotlin.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

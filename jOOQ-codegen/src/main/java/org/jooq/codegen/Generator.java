@@ -48,6 +48,9 @@ import org.jooq.Spatial;
 import org.jooq.XML;
 import org.jooq.impl.DAOImpl;
 import org.jooq.meta.Database;
+import org.jooq.meta.Definition;
+import org.jooq.meta.ForeignKeyDefinition;
+import org.jooq.meta.TableDefinition;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
 import org.jooq.meta.jaxb.GeneratedSerialVersionUID;
 import org.jooq.meta.jaxb.VisibilityModifier;
@@ -1011,14 +1014,46 @@ public interface Generator {
     void setGenerateFluentSetters(boolean fluentSetters);
 
     /**
-     * Whether getters and setters should be generated JavaBeans style (or jOOQ style).
+     * Whether getters and setters should be generated JavaBeans style (or jOOQ
+     * style).
      */
     boolean generateJavaBeansGettersAndSetters();
 
     /**
-     * Whether getters and setters should be generated JavaBeans style (or jOOQ style).
+     * Whether getters and setters should be generated JavaBeans style (or jOOQ
+     * style).
      */
     void setGenerateJavaBeansGettersAndSetters(boolean javaBeansGettersAndSetters);
+
+    /**
+     * Whether names of unambiguous {@link ForeignKeyDefinition} should be based
+     * on the referenced {@link TableDefinition}.
+     * <p>
+     * When a child table has only one {@link ForeignKeyDefinition} towards a
+     * parent table, then that path is "unambiguous." In that case, some
+     * {@link GeneratorStrategy} implementations may choose to use the parent
+     * table's {@link TableDefinition} for implementations of
+     * {@link GeneratorStrategy#getJavaMethodName(Definition)}, instead of the
+     * {@link ForeignKeyDefinition}, e.g. for implicit join paths.
+     * <p>
+     * This flag allows for turning off this default behaviour.
+     */
+    boolean generateUseTableNameForUnambiguousFKs();
+
+    /**
+     * Whether names of unambiguous {@link ForeignKeyDefinition} should be based
+     * on the referenced {@link TableDefinition}.
+     * <p>
+     * When a child table has only one {@link ForeignKeyDefinition} towards a
+     * parent table, then that path is "unambiguous." In that case, some
+     * {@link GeneratorStrategy} implementations may choose to use the parent
+     * table's {@link TableDefinition} for implementations of
+     * {@link GeneratorStrategy#getJavaMethodName(Definition)}, instead of the
+     * {@link ForeignKeyDefinition}, e.g. for implicit join paths.
+     * <p>
+     * This flag allows for turning off this default behaviour.
+     */
+    void setGenerateUseTableNameForUnambiguousFKs(boolean useTableNameForUnambiguousFKs);
 
     /**
      * Whether varargs setters should be generated for array types.

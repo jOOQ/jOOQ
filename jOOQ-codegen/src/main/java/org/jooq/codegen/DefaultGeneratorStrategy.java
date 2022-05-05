@@ -89,10 +89,11 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
     private String   targetDirectory;
     private String   targetPackage;
-    private Locale   targetLocale               = Locale.getDefault();
-    private Language targetLanguage             = Language.JAVA;
-    private boolean  instanceFields             = true;
-    private boolean  javaBeansGettersAndSetters = false;
+    private Locale   targetLocale                  = Locale.getDefault();
+    private Language targetLanguage                = Language.JAVA;
+    private boolean  instanceFields                = true;
+    private boolean  javaBeansGettersAndSetters    = false;
+    private boolean  useTableNameForUnambiguousFKs = true;
 
     // -------------------------------------------------------------------------
     // Initialisation
@@ -116,6 +117,16 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
     @Override
     public boolean getJavaBeansGettersAndSetters() {
         return javaBeansGettersAndSetters;
+    }
+
+    @Override
+    public void setUseTableNameForUnambiguousFKs(boolean useTableNameForUnambiguousFKs) {
+        this.useTableNameForUnambiguousFKs = useTableNameForUnambiguousFKs;
+    }
+
+    @Override
+    public boolean getUseTableNameForUnambiguousFKs() {
+        return useTableNameForUnambiguousFKs;
     }
 
     @Override
@@ -262,8 +273,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
     public String getJavaMethodName(Definition definition, Mode mode) {
         // [#7148] If table A references table B only once, then B is the ideal name
         //         for the implicit JOIN path. Otherwise, fall back to the foreign key name
-        if (definition instanceof ForeignKeyDefinition) {
-            ForeignKeyDefinition fk = (ForeignKeyDefinition) definition;
+        if (getUseTableNameForUnambiguousFKs() && definition instanceof ForeignKeyDefinition) { ForeignKeyDefinition fk = (ForeignKeyDefinition) definition;
             TableDefinition referenced = fk.getReferencedTable();
 
             if (fk.getKeyTable().getForeignKeys(referenced).size() == 1)

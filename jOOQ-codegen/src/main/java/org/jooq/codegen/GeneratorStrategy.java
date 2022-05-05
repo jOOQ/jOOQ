@@ -47,6 +47,7 @@ import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.Definition;
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
+import org.jooq.meta.ForeignKeyDefinition;
 import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.TableDefinition;
@@ -114,14 +115,46 @@ public interface GeneratorStrategy {
     boolean getInstanceFields();
 
     /**
-     * Whether getters and setters should be generated JavaBeans style (or jOOQ style).
+     * Whether getters and setters should be generated JavaBeans style (or jOOQ
+     * style).
      */
     void setJavaBeansGettersAndSetters(boolean javaBeansGettersAndSetters);
 
     /**
-     * Whether getters and setters should be generated JavaBeans style (or jOOQ style).
+     * Whether getters and setters should be generated JavaBeans style (or jOOQ
+     * style).
      */
     boolean getJavaBeansGettersAndSetters();
+
+    /**
+     * Whether names of unambiguous {@link ForeignKeyDefinition} should be based
+     * on the referenced {@link TableDefinition}.
+     * <p>
+     * When a child table has only one {@link ForeignKeyDefinition} towards a
+     * parent table, then that path is "unambiguous." In that case, some
+     * {@link GeneratorStrategy} implementations may choose to use the parent
+     * table's {@link TableDefinition} for implementations of
+     * {@link #getJavaMethodName(Definition)}, instead of the
+     * {@link ForeignKeyDefinition}, e.g. for implicit join paths.
+     * <p>
+     * This flag allows for turning off this default behaviour.
+     */
+    void setUseTableNameForUnambiguousFKs(boolean useTableNameForUnambiguousFKs);
+
+    /**
+     * Whether names of unambiguous {@link ForeignKeyDefinition} should be based
+     * on the referenced {@link TableDefinition}.
+     * <p>
+     * When a child table has only one {@link ForeignKeyDefinition} towards a
+     * parent table, then that path is "unambiguous." In that case, some
+     * {@link GeneratorStrategy} implementations may choose to use the parent
+     * table's {@link TableDefinition} for implementations of
+     * {@link #getJavaMethodName(Definition)}, instead of the
+     * {@link ForeignKeyDefinition}, e.g. for implicit join paths.
+     * <p>
+     * This flag allows for turning off this default behaviour.
+     */
+    boolean getUseTableNameForUnambiguousFKs();
 
     // -------------------------------------------------------------------------
     // XXX: The SPI

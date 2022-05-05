@@ -880,6 +880,8 @@ public class GenerationTool {
                 generator.setGenerateFluentSetters(g.getGenerate().isFluentSetters());
             if (g.getGenerate().isJavaBeansGettersAndSetters() != null)
                 generator.setGenerateJavaBeansGettersAndSetters(g.getGenerate().isJavaBeansGettersAndSetters());
+            if (g.getGenerate().isImplicitJoinPathsUseTableNameForUnambiguousFKs() != null)
+                generator.setGenerateUseTableNameForUnambiguousFKs(g.getGenerate().isImplicitJoinPathsUseTableNameForUnambiguousFKs());
             if (g.getGenerate().isVarargSetters() != null)
                 generator.setGenerateVarargsSetters(g.getGenerate().isVarargSetters());
             if (g.getGenerate().isPojosEqualsAndHashCode() != null)
@@ -930,6 +932,7 @@ public class GenerationTool {
             // Generator properties that should in fact be strategy properties
             strategy.setInstanceFields(generator.generateInstanceFields());
             strategy.setJavaBeansGettersAndSetters(generator.generateJavaBeansGettersAndSetters());
+            strategy.setUseTableNameForUnambiguousFKs(generator.generateUseTableNameForUnambiguousFKs());
 
             verifyVersions();
             generator.generate(database);

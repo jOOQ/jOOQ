@@ -226,7 +226,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Depending on your JDBC driver's default behaviour, this may load the
      * whole database result into the driver's memory. In order to indicate to
      * the driver that you may not want to fetch all records at once, use
-     * {@link ResultQuery#fetchSize(int)} prior to calling this method.
+     * {@link ResultQuery#fetchSize(int)} or
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
      *
      * @return The result.
      * @throws DataAccessException if something went wrong executing the query
@@ -258,7 +259,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Depending on your JDBC driver's default behaviour, this may load the
      * whole database result into the driver's memory. In order to indicate to
      * the driver that you may not want to fetch all records at once, use
-     * {@link ResultQuery#fetchSize(int)} prior to calling this method.
+     * {@link ResultQuery#fetchSize(int)} or
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
      *
      * @param <E> The generic entity type.
      * @param type The entity type.
@@ -300,7 +302,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Depending on your JDBC driver's default behaviour, this may load the
      * whole database result into the driver's memory. In order to indicate to
      * the driver that you may not want to fetch all records at once, use
-     * {@link ResultQuery#fetchSize(int)} prior to calling this method.
+     * {@link ResultQuery#fetchSize(int)} or
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
      *
      * @param <Z> The generic table record type.
      * @param table The table type.
@@ -333,7 +336,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Depending on your JDBC driver's default behaviour, this may load the
      * whole database result into the driver's memory. In order to indicate to
      * the driver that you may not want to fetch all records at once, use
-     * {@link ResultQuery#fetchSize(int)} prior to calling this method.
+     * {@link ResultQuery#fetchSize(int)} or
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
      *
      * @return The result.
      * @throws DataAccessException if something went wrong executing the query
@@ -381,7 +385,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Depending on your JDBC driver's default behaviour, this may load the
      * whole database result into the driver's memory. In order to indicate to
      * the driver that you may not want to fetch all records at once, use
-     * {@link ResultQuery#fetchSize(int)} prior to calling this method.
+     * {@link ResultQuery#fetchSize(int)} or
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
      * <p>
      * Client code is responsible for closing the cursor after use.
      *

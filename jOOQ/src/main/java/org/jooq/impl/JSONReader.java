@@ -51,6 +51,7 @@ import static org.jooq.tools.StringUtils.defaultIfBlank;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -217,7 +218,7 @@ final class JSONReader<R extends Record> {
             // [#8829] LoaderImpl expects binary data to be encoded in base64,
             //         not according to org.jooq.tools.Convert
             if (field.getType() == byte[].class && record.get(i) instanceof String)
-                record.set(i, DatatypeConverter.parseBase64Binary((String) record.get(i)));
+                record.set(i, Base64.getDecoder().decode((String) record.get(i)));
 
             // [#12155] Recurse for nested data types
             else if (multiset && field.getDataType().isMultiset())

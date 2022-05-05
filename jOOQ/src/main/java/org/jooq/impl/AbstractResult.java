@@ -57,6 +57,7 @@ import java.sql.Timestamp;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.Iterator;
@@ -107,7 +108,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 import org.xml.sax.helpers.DefaultHandler;
 
-import jakarta.xml.bind.DatatypeConverter;
 
 /**
  * @author Lukas Eder
@@ -619,7 +619,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
         // [#2741] TODO: This logic will be externalised in new SPI
         if (value instanceof byte[]) { byte[] a = (byte[]) value;
-            JSONValue.writeJSONString(DatatypeConverter.printBase64Binary(a), writer);
+            JSONValue.writeJSONString(Base64.getEncoder().encodeToString(a), writer);
         }
 
         // [#6563] Arrays can be serialised natively in JSON
@@ -1368,12 +1368,12 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         if (value == null) {
             formatted += visual ? "{null}" : null;
         }
-        else if (value.getClass() == byte[].class) {
-            formatted += DatatypeConverter.printBase64Binary((byte[]) value);
+        else if (value instanceof byte[]) { byte[] a = (byte[]) value;
+            formatted += Base64.getEncoder().encodeToString(a);
         }
-        else if (value.getClass().isArray()) {
+        else if (value instanceof Object[]) { Object[] a = (Object[]) value;
             // [#6545] Nested arrays are handled recursively
-            formatted += Arrays.stream((Object[]) value).map(f -> format0(f, false, visual)).collect(joining(", ", "[", "]"));
+            formatted += Arrays.stream(a).map(f -> format0(f, false, visual)).collect(joining(", ", "[", "]"));
         }
         else if (value instanceof EnumType) { EnumType e = (EnumType) value;
             formatted += e.getLiteral();
@@ -1388,8 +1388,8 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 .collect(joining(", ", "(", ")"));
         }
         // [#6080] Support formatting of nested ROWs
-        else if (value instanceof Param) {
-            formatted += format0(((Param<?>) value).getValue(), false, visual);
+        else if (value instanceof Param) { Param<?> p = (Param<?>) value;
+            formatted += format0(p.getValue(), false, visual);
         }
 
         // [#5238] Oracle DATE is really a TIMESTAMP(0)...

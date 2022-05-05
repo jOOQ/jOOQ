@@ -1202,6 +1202,15 @@ public interface DSLContext extends Scope {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link ResultQuery#fetchSize(int)} and run
+     * {@link ResultQuery#fetchLazy()} instead, or specify
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
+     * <p>
+     * Client code is responsible for closing the cursor after use.
      *
      * @param sql The SQL
      * @return The cursor. This will never be <code>null</code>.
@@ -1236,6 +1245,15 @@ public interface DSLContext extends Scope {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link ResultQuery#fetchSize(int)} and run
+     * {@link ResultQuery#fetchLazy()} instead, or specify
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
+     * <p>
+     * Client code is responsible for closing the cursor after use.
      *
      * @param sql The SQL
      * @return The cursor. This will never be <code>null</code>.
@@ -1273,6 +1291,15 @@ public interface DSLContext extends Scope {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link ResultQuery#fetchSize(int)} and run
+     * {@link ResultQuery#fetchLazy()} instead, or specify
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
+     * <p>
+     * Client code is responsible for closing the cursor after use.
      *
      * @param sql The SQL
      * @param bindings The bindings
@@ -1312,6 +1339,15 @@ public interface DSLContext extends Scope {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses! One way to escape
      * literals is to use {@link DSL#name(String...)} and similar methods
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link ResultQuery#fetchSize(int)} and run
+     * {@link ResultQuery#fetchLazy()} instead, or specify
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
+     * <p>
+     * Client code is responsible for closing the cursor after use.
      *
      * @param sql The SQL clause, containing {numbered placeholders} where query
      *            parts can be injected
@@ -1610,6 +1646,15 @@ public interface DSLContext extends Scope {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link ResultQuery#fetchSize(int)} and run
+     * {@link ResultQuery#fetchStream()} instead, or specify
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
+     * <p>
+     * Client code is responsible for closing the stream after use.
      *
      * @param sql The SQL
      * @return The results from the executed query. This is never
@@ -1646,6 +1691,15 @@ public interface DSLContext extends Scope {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link ResultQuery#fetchSize(int)} and run
+     * {@link ResultQuery#fetchStream()} instead, or specify
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
+     * <p>
+     * Client code is responsible for closing the stream after use.
      *
      * @param sql The SQL
      * @return The results from the executed query. This is never
@@ -1685,6 +1739,15 @@ public interface DSLContext extends Scope {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link ResultQuery#fetchSize(int)} and run
+     * {@link ResultQuery#fetchStream()} instead, or specify
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
+     * <p>
+     * Client code is responsible for closing the stream after use.
      *
      * @param sql The SQL
      * @param bindings The bindings
@@ -1726,6 +1789,15 @@ public interface DSLContext extends Scope {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses! One way to escape
      * literals is to use {@link DSL#name(String...)} and similar methods
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link ResultQuery#fetchSize(int)} and run
+     * {@link ResultQuery#fetchStream()} instead, or specify
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
+     * <p>
+     * Client code is responsible for closing the stream after use.
      *
      * @param sql The SQL clause, containing {numbered placeholders} where query
      *            parts can be injected
@@ -12523,8 +12595,17 @@ public interface DSLContext extends Scope {
     <R extends Record> Result<R> fetch(ResultQuery<R> query) throws DataAccessException;
 
     /**
-     * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
-     * a cursor.
+     * Execute a {@link ResultQuery} in the context of this
+     * <code>DSLContext</code> and return a cursor.
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link ResultQuery#fetchSize(int)} and run
+     * {@link ResultQuery#fetchLazy()} instead, or specify
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
+     * <p>
+     * Client code is responsible for closing the cursor after use.
      *
      * @param query The query to execute
      * @return The cursor. This will never be <code>null</code>.
@@ -12566,8 +12647,17 @@ public interface DSLContext extends Scope {
     <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, ResultQuery<R> query);
 
     /**
-     * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
-     * a stream.
+     * Execute a {@link ResultQuery} in the context of this
+     * <code>DSLContext</code> and return a stream.
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link ResultQuery#fetchSize(int)} and run
+     * {@link ResultQuery#fetchStream()} instead, or specify
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
+     * <p>
+     * Client code is responsible for closing the stream after use.
      *
      * @param query The query to execute
      * @return The stream
@@ -13845,6 +13935,15 @@ public interface DSLContext extends Scope {
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
      * to override this behaviour.
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link ResultQuery#fetchSize(int)} and run
+     * {@link ResultQuery#fetchLazy()} instead, or specify
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
+     * <p>
+     * Client code is responsible for closing the cursor after use.
      *
      * @return The cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -13861,6 +13960,15 @@ public interface DSLContext extends Scope {
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
      * to override this behaviour.
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link ResultQuery#fetchSize(int)} and run
+     * {@link ResultQuery#fetchLazy()} instead, or specify
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
+     * <p>
+     * Client code is responsible for closing the cursor after use.
      *
      * @return The cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -13880,6 +13988,15 @@ public interface DSLContext extends Scope {
      * <p>
      * Convenience API for calling {@link #fetchLazy(Table, Condition)} with
      * {@link DSL#and(Condition...)}.
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link ResultQuery#fetchSize(int)} and run
+     * {@link ResultQuery#fetchLazy()} instead, or specify
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
+     * <p>
+     * Client code is responsible for closing the cursor after use.
      *
      * @return The cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -13899,6 +14016,15 @@ public interface DSLContext extends Scope {
      * <p>
      * Convenience API for calling {@link #fetchLazy(Table, Condition)} with
      * {@link DSL#and(Collection)}.
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link ResultQuery#fetchSize(int)} and run
+     * {@link ResultQuery#fetchLazy()} instead, or specify
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
+     * <p>
+     * Client code is responsible for closing the cursor after use.
      *
      * @return The cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -14047,6 +14173,15 @@ public interface DSLContext extends Scope {
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
      * to override this behaviour.
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link ResultQuery#fetchSize(int)} and run
+     * {@link ResultQuery#fetchStream()} instead, or specify
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
+     * <p>
+     * Client code is responsible for closing the stream after use.
      *
      * @throws DataAccessException if something went wrong executing the query
      */
@@ -14062,6 +14197,15 @@ public interface DSLContext extends Scope {
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
      * to override this behaviour.
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link ResultQuery#fetchSize(int)} and run
+     * {@link ResultQuery#fetchStream()} instead, or specify
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
+     * <p>
+     * Client code is responsible for closing the stream after use.
      *
      * @throws DataAccessException if something went wrong executing the query
      */
@@ -14080,6 +14224,15 @@ public interface DSLContext extends Scope {
      * <p>
      * Convenience API for calling {@link #fetchStream(Table, Condition)} with
      * {@link DSL#and(Condition...)}.
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link ResultQuery#fetchSize(int)} and run
+     * {@link ResultQuery#fetchStream()} instead, or specify
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
+     * <p>
+     * Client code is responsible for closing the stream after use.
      *
      * @throws DataAccessException if something went wrong executing the query
      */
@@ -14098,6 +14251,15 @@ public interface DSLContext extends Scope {
      * <p>
      * Convenience API for calling {@link #fetchStream(Table, Condition)} with
      * {@link DSL#and(Collection)}.
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link ResultQuery#fetchSize(int)} and run
+     * {@link ResultQuery#fetchStream()} instead, or specify
+     * {@link Settings#setFetchSize(Integer)} prior to calling this method.
+     * <p>
+     * Client code is responsible for closing the stream after use.
      *
      * @throws DataAccessException if something went wrong executing the query
      */

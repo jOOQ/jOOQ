@@ -63,6 +63,7 @@ import java.net.URL;
 import java.nio.ByteBuffer;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Struct;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -644,6 +645,16 @@ final class Convert {
                         return (U) new MockArray(null, fromArray, fromClass);
                     else
                         return (U) convertArray(fromArray, toClass);
+                }
+
+                // [#6454] From JDBC Array to any other type of collection
+                else if (java.sql.Array.class.isAssignableFrom(fromClass)) {
+                    try {
+                        return (U) convertArray((Object[]) ((java.sql.Array) from).getArray(), toClass);
+                    }
+                    catch (SQLException e) {
+                        throw new DataTypeException("Cannot convert from JDBC array: ", e);
+                    }
                 }
 
                 // [#12308] Result serialised as XML or JSON string

@@ -51,7 +51,6 @@ import java.util.List;
 
 import org.jooq.Converter;
 import org.jooq.EnumType;
-// ...
 import org.jooq.Record;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.StringUtils;
@@ -59,9 +58,8 @@ import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 
-import org.postgresql.util.PGInterval;
+import org.jetbrains.annotations.ApiStatus.Internal;
 
-// ...
 
 /**
  * A collection of utilities to cover the Postgres JDBC driver's missing
@@ -73,6 +71,7 @@ import org.postgresql.util.PGInterval;
  * @author Lukas Eder
  * @author Peter Ertl
  */
+@Internal
 public class PostgresUtils {
 
     private static final String     POSTGRESQL_HEX_STRING_PREFIX = "\\x";
@@ -84,12 +83,6 @@ public class PostgresUtils {
     private static final int        PG_OBJECT_UNQUOTED_VALUE     = 3;
     private static final int        PG_OBJECT_AFTER_VALUE        = 4;
     private static final int        PG_OBJECT_END                = 5;
-
-    private static volatile Boolean pgIntervalAvailable;
-
-
-
-
 
     /**
      * Parse a Postgres-encoded <code>bytea</code> string
@@ -209,7 +202,7 @@ public class PostgresUtils {
     /**
      * Convert a jOOQ <code>DAY TO SECOND</code> interval to a Postgres representation
      */
-    public static Object toPGInterval(DayToSecond interval) {
+    public static PGInterval toPGInterval(DayToSecond interval) {
         return new PGInterval(0, 0,
             interval.getSign() * interval.getDays(),
             interval.getSign() * interval.getHours(),
@@ -222,7 +215,7 @@ public class PostgresUtils {
     /**
      * Convert a jOOQ <code>YEAR TO SECOND</code> interval to a Postgres representation
      */
-    public static Object toPGInterval(YearToSecond interval) {
+    public static PGInterval toPGInterval(YearToSecond interval) {
         return new PGInterval(
             interval.getSign() * interval.getYears(),
             interval.getSign() * interval.getMonths(),
@@ -237,7 +230,7 @@ public class PostgresUtils {
     /**
      * Convert a jOOQ <code>YEAR TO MONTH</code> interval to a Postgres representation
      */
-    public static Object toPGInterval(YearToMonth interval) {
+    public static PGInterval toPGInterval(YearToMonth interval) {
         return new PGInterval(
             interval.getSign() * interval.getYears(),
             interval.getSign() * interval.getMonths(),
@@ -245,136 +238,69 @@ public class PostgresUtils {
         );
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Convert a Postgres interval to a jOOQ <code>DAY TO SECOND</code> interval
      */
     public static DayToSecond toDayToSecond(Object pgInterval) {
+        if (pgInterval == null)
+            return null;
+        else if (pgInterval instanceof PGInterval)
+            return toDayToSecond((PGInterval) pgInterval);
+        else
+            return toDayToSecond(new PGInterval(pgInterval.toString()));
+    }
+
+    /**
+     * Convert a Postgres interval to a jOOQ <code>DAY TO SECOND</code> interval
+     */
+    public static DayToSecond toDayToSecond(PGInterval pgInterval) {
         boolean negative = pgInterval.toString().contains("-");
 
-        if (pgIntervalAvailable() && pgInterval instanceof PGInterval) {
-            PGInterval i = (PGInterval) pgInterval;
-            if (negative)
-                i.scale(-1);
+        if (negative)
+            pgInterval.scale(-1);
 
-            Double seconds = i.getSeconds();
-            DayToSecond result = new DayToSecond(
-                i.getDays(),
-                i.getHours(),
-                i.getMinutes(),
-                seconds.intValue(),
-                (int) (1000000000 * (seconds - seconds.intValue()))
-            );
+        Double seconds = pgInterval.getSeconds();
+        DayToSecond result = new DayToSecond(
+            pgInterval.getDays(),
+            pgInterval.getHours(),
+            pgInterval.getMinutes(),
+            seconds.intValue(),
+            (int) (1000000000 * (seconds - seconds.intValue()))
+        );
 
-            if (negative)
-                result = result.neg();
+        if (negative)
+            result = result.neg();
 
-            return result;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        else
-            throw new IllegalArgumentException("Unsupported interval type. Make sure you have the pgjdbc or redshift driver on your classpath: " + pgInterval);
+        return result;
     }
 
     /**
      * Convert a Postgres interval to a jOOQ <code>YEAR TO MONTH</code> interval
      */
     public static YearToMonth toYearToMonth(Object pgInterval) {
+        if (pgInterval == null)
+            return null;
+        else if (pgInterval instanceof PGInterval)
+            return toYearToMonth((PGInterval) pgInterval);
+        else
+            return toYearToMonth(new PGInterval(pgInterval.toString()));
+    }
+
+    /**
+     * Convert a Postgres interval to a jOOQ <code>YEAR TO MONTH</code> interval
+     */
+    public static YearToMonth toYearToMonth(PGInterval pgInterval) {
         boolean negative = pgInterval.toString().contains("-");
 
-        if (pgIntervalAvailable() && pgInterval instanceof PGInterval) {
-            PGInterval i = (PGInterval) pgInterval;
-            if (negative)
-                i.scale(-1);
+        if (negative)
+            pgInterval.scale(-1);
 
-            YearToMonth result = new YearToMonth(i.getYears(), i.getMonths());
+        YearToMonth result = new YearToMonth(pgInterval.getYears(), pgInterval.getMonths());
 
-            if (negative)
-                result = result.neg();
+        if (negative)
+            result = result.neg();
 
-            return result;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        else
-            throw new IllegalArgumentException("Unsupported interval type. Make sure you have the pgjdbc or redshift driver on your classpath: " + pgInterval);
+        return result;
     }
 
     /**
@@ -638,37 +564,4 @@ public class PostgresUtils {
 
         return sb.toString();
     }
-
-    private static final boolean pgIntervalAvailable() {
-        if (pgIntervalAvailable == null) {
-            try {
-                new PGInterval();
-                pgIntervalAvailable = true;
-            }
-            catch (NoClassDefFoundError e) {
-                pgIntervalAvailable = false;
-            }
-        }
-
-        return pgIntervalAvailable;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

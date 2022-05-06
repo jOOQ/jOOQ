@@ -44,8 +44,6 @@ module org.jooq {
 
 
 
-    requires static org.postgresql.jdbc;
-
     exports org.jooq;
     exports org.jooq.conf;
     exports org.jooq.exception;

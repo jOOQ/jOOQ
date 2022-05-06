@@ -163,12 +163,12 @@ import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
 import static org.jooq.tools.reflect.Reflect.onClass;
 import static org.jooq.tools.reflect.Reflect.wrapper;
+import static org.jooq.util.postgres.PostgresUtils.toDayToSecond;
 import static org.jooq.util.postgres.PostgresUtils.toPGArray;
 import static org.jooq.util.postgres.PostgresUtils.toPGArrayString;
 import static org.jooq.util.postgres.PostgresUtils.toPGInterval;
+import static org.jooq.util.postgres.PostgresUtils.toYearToMonth;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.io.StringReader;
 import java.lang.reflect.Modifier;
@@ -2429,12 +2429,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#566] Interval data types are best bound as Strings
             if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
-
-
-
-
-
-
                 ctx.render().visit(inline(toPGInterval(value).toString()));
             else
                 super.sqlInline0(ctx, value);
@@ -2445,13 +2439,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#566] Interval data types are best bound as Strings
             if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
-
-
-
-
-
-
-                ctx.statement().setObject(ctx.index(), toPGInterval(value));
+                ctx.statement().setString(ctx.index(), toPGInterval(value).toString());
             else
                 ctx.statement().setString(ctx.index(), renderDTS(ctx, value));
         }
@@ -2463,20 +2451,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final DayToSecond get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect())) {
-                Object object = ctx.resultSet().getObject(ctx.index());
-                return object == null ? null : PostgresUtils.toDayToSecond(object);
-            }
+            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
+                return toDayToSecond(ctx.resultSet().getString(ctx.index()));
             else
                 return parseDTS(ctx, ctx.resultSet().getString(ctx.index()));
         }
 
         @Override
         final DayToSecond get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect())) {
-                Object object = ctx.statement().getObject(ctx.index());
-                return object == null ? null : PostgresUtils.toDayToSecond(object);
-            }
+            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
+                return toDayToSecond(ctx.statement().getString(ctx.index()));
             else
                 return parseDTS(ctx, ctx.statement().getString(ctx.index()));
         }
@@ -5548,12 +5532,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#566] Interval data types are best bound as Strings
             if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
-
-
-
-
-
-
                 ctx.render().visit(inline(toPGInterval(value).toString()));
             else
                 super.sqlInline0(ctx, value);
@@ -5564,13 +5542,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#566] Interval data types are best bound as Strings
             if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
-
-
-
-
-
-
-                ctx.statement().setObject(ctx.index(), toPGInterval(value));
+                ctx.statement().setString(ctx.index(), toPGInterval(value).toString());
             else
                 ctx.statement().setString(ctx.index(), value.toString());
         }
@@ -5629,12 +5601,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#566] Interval data types are best bound as Strings
             if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
-
-
-
-
-
-
                 ctx.render().visit(inline(toPGInterval(value).toString()));
             else
                 super.sqlInline0(ctx, value);
@@ -5645,13 +5611,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#566] Interval data types are best bound as Strings
             if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
-
-
-
-
-
-
-                ctx.statement().setObject(ctx.index(), toPGInterval(value));
+                ctx.statement().setString(ctx.index(), toPGInterval(value).toString());
             else
                 ctx.statement().setString(ctx.index(), renderYTM(ctx, value));
         }
@@ -5663,20 +5623,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final YearToMonth get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect())) {
-                Object object = ctx.resultSet().getObject(ctx.index());
-                return object == null ? null : PostgresUtils.toYearToMonth(object);
-            }
+            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
+                return toYearToMonth(ctx.resultSet().getString(ctx.index()));
             else
                 return parseYTM(ctx, ctx.resultSet().getString(ctx.index()));
         }
 
         @Override
         final YearToMonth get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect())) {
-                Object object = ctx.statement().getObject(ctx.index());
-                return object == null ? null : PostgresUtils.toYearToMonth(object);
-            }
+            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
+                return toYearToMonth(ctx.statement().getString(ctx.index()));
             else
                 return parseYTM(ctx, ctx.statement().getString(ctx.index()));
         }

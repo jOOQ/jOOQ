@@ -37,6 +37,36 @@
  */
 package org.jooq;
 
+import java.util.function.BiConsumer;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

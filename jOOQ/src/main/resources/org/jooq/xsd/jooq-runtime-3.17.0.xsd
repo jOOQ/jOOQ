@@ -284,6 +284,10 @@ default.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsLogging" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Activate debug logging of the {@link #transformPatterns} feature.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsTrim" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>LTRIM(RTRIM(x))</code> or <code>RTRIM(LTRIM(x))</code> to <code>TRIM(x)</code>.
 <p>

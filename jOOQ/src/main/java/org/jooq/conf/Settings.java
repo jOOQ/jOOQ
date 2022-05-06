@@ -117,6 +117,8 @@ public class Settings
     @XmlElement(defaultValue = "false")
     protected Boolean transformPatterns = false;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsLogging = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrim = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNotNot = true;
@@ -1209,6 +1211,30 @@ public class Settings
      */
     public void setTransformPatterns(Boolean value) {
         this.transformPatterns = value;
+    }
+
+    /**
+     * Activate debug logging of the {@link #transformPatterns} feature.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsLogging() {
+        return transformPatternsLogging;
+    }
+
+    /**
+     * Sets the value of the transformPatternsLogging property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsLogging(Boolean value) {
+        this.transformPatternsLogging = value;
     }
 
     /**
@@ -4241,6 +4267,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsLogging(Boolean value) {
+        setTransformPatternsLogging(value);
+        return this;
+    }
+
     public Settings withTransformPatternsTrim(Boolean value) {
         setTransformPatternsTrim(value);
         return this;
@@ -5196,6 +5227,7 @@ public class Settings
         builder.append("fetchTriggerValuesAfterSQLServerOutput", fetchTriggerValuesAfterSQLServerOutput);
         builder.append("fetchIntermediateResult", fetchIntermediateResult);
         builder.append("transformPatterns", transformPatterns);
+        builder.append("transformPatternsLogging", transformPatternsLogging);
         builder.append("transformPatternsTrim", transformPatternsTrim);
         builder.append("transformPatternsNotNot", transformPatternsNotNot);
         builder.append("transformPatternsNotComparison", transformPatternsNotComparison);
@@ -5632,6 +5664,15 @@ public class Settings
             }
         } else {
             if (!transformPatterns.equals(other.transformPatterns)) {
+                return false;
+            }
+        }
+        if (transformPatternsLogging == null) {
+            if (other.transformPatternsLogging!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsLogging.equals(other.transformPatternsLogging)) {
                 return false;
             }
         }
@@ -6764,6 +6805,7 @@ public class Settings
         result = ((prime*result)+((fetchTriggerValuesAfterSQLServerOutput == null)? 0 :fetchTriggerValuesAfterSQLServerOutput.hashCode()));
         result = ((prime*result)+((fetchIntermediateResult == null)? 0 :fetchIntermediateResult.hashCode()));
         result = ((prime*result)+((transformPatterns == null)? 0 :transformPatterns.hashCode()));
+        result = ((prime*result)+((transformPatternsLogging == null)? 0 :transformPatternsLogging.hashCode()));
         result = ((prime*result)+((transformPatternsTrim == null)? 0 :transformPatternsTrim.hashCode()));
         result = ((prime*result)+((transformPatternsNotNot == null)? 0 :transformPatternsNotNot.hashCode()));
         result = ((prime*result)+((transformPatternsNotComparison == null)? 0 :transformPatternsNotComparison.hashCode()));

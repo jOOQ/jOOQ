@@ -93,6 +93,11 @@ implements
     private static final Clause[] CLAUSES = { Clause.CONDITION, Clause.CONDITION_AND };
 
     @Override
+    final boolean parenthesised(Context<?> ctx) {
+        return true;
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
 
 

@@ -84,6 +84,7 @@ final class XMLExists extends AbstractCondition implements XMLExistsPassingStep,
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
+
     @Override
     public final Condition passing(XML xml) {
         return passing(Tools.field(xml));
@@ -117,6 +118,11 @@ final class XMLExists extends AbstractCondition implements XMLExistsPassingStep,
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
+
+    @Override
+    final boolean parenthesised(Context<?> ctx) {
+        return true;
+    }
 
     @Override
     public final void accept(Context<?> ctx) {

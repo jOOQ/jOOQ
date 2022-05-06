@@ -95,6 +95,11 @@ implements
     }
 
     @Override
+    final boolean parenthesised(Context<?> ctx) {
+        return true;
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
@@ -104,7 +109,11 @@ implements
 
 
             default:
-                ctx.visit(K_NOT).sql(" (").visit(condition).sql(')');
+                if (condition instanceof AbstractCondition && ((AbstractCondition) condition).parenthesised(ctx))
+                    ctx.visit(K_NOT).sql(' ').visit(condition);
+                else
+                    ctx.visit(K_NOT).sql(" (").visit(condition).sql(')');
+
                 break;
         }
     }

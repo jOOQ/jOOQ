@@ -151,6 +151,10 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrivialPredicates = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsScalarSubqueryCountAsteriskGtZero = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsScalarSubqueryCountExpressionGtZero = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsEmptyScalarSubquery = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNegNeg = true;
@@ -1713,6 +1717,62 @@ public class Settings
      */
     public void setTransformPatternsTrivialPredicates(Boolean value) {
         this.transformPatternsTrivialPredicates = value;
+    }
+
+    /**
+     * Transform predicates comparing scalar subqueries with a count <code>(SELECT COUNT(*) ..) > 0</code> to equivalent <code>EXISTS (SELECT 1 ..)</code>.
+     * <p>
+     * Scalar subqueries that count rows and whose count is compared to 0 can be transformed into equivalent, but likely cheaper to execute EXISTS queries.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsScalarSubqueryCountAsteriskGtZero() {
+        return transformPatternsScalarSubqueryCountAsteriskGtZero;
+    }
+
+    /**
+     * Sets the value of the transformPatternsScalarSubqueryCountAsteriskGtZero property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsScalarSubqueryCountAsteriskGtZero(Boolean value) {
+        this.transformPatternsScalarSubqueryCountAsteriskGtZero = value;
+    }
+
+    /**
+     * Transform predicates comparing scalar subqueries with a count <code>(SELECT COUNT(expr) ..) > 0</code> to equivalent <code>EXISTS (SELECT 1 .. WHERE expr IS NOT NULL)</code>.
+     * <p>
+     * Scalar subqueries that count non-null expressions and whose count is compared to 0 can be transformed into equivalent, but likely cheaper to execute EXISTS queries.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsScalarSubqueryCountExpressionGtZero() {
+        return transformPatternsScalarSubqueryCountExpressionGtZero;
+    }
+
+    /**
+     * Sets the value of the transformPatternsScalarSubqueryCountExpressionGtZero property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsScalarSubqueryCountExpressionGtZero(Boolean value) {
+        this.transformPatternsScalarSubqueryCountExpressionGtZero = value;
     }
 
     /**
@@ -4352,6 +4412,16 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsScalarSubqueryCountAsteriskGtZero(Boolean value) {
+        setTransformPatternsScalarSubqueryCountAsteriskGtZero(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsScalarSubqueryCountExpressionGtZero(Boolean value) {
+        setTransformPatternsScalarSubqueryCountExpressionGtZero(value);
+        return this;
+    }
+
     public Settings withTransformPatternsEmptyScalarSubquery(Boolean value) {
         setTransformPatternsEmptyScalarSubquery(value);
         return this;
@@ -5244,6 +5314,8 @@ public class Settings
         builder.append("transformPatternsMergeBetweenSymmetricPredicates", transformPatternsMergeBetweenSymmetricPredicates);
         builder.append("transformPatternsTrivialCaseAbbreviation", transformPatternsTrivialCaseAbbreviation);
         builder.append("transformPatternsTrivialPredicates", transformPatternsTrivialPredicates);
+        builder.append("transformPatternsScalarSubqueryCountAsteriskGtZero", transformPatternsScalarSubqueryCountAsteriskGtZero);
+        builder.append("transformPatternsScalarSubqueryCountExpressionGtZero", transformPatternsScalarSubqueryCountExpressionGtZero);
         builder.append("transformPatternsEmptyScalarSubquery", transformPatternsEmptyScalarSubquery);
         builder.append("transformPatternsNegNeg", transformPatternsNegNeg);
         builder.append("transformPatternsBitNotBitNot", transformPatternsBitNotBitNot);
@@ -5817,6 +5889,24 @@ public class Settings
             }
         } else {
             if (!transformPatternsTrivialPredicates.equals(other.transformPatternsTrivialPredicates)) {
+                return false;
+            }
+        }
+        if (transformPatternsScalarSubqueryCountAsteriskGtZero == null) {
+            if (other.transformPatternsScalarSubqueryCountAsteriskGtZero!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsScalarSubqueryCountAsteriskGtZero.equals(other.transformPatternsScalarSubqueryCountAsteriskGtZero)) {
+                return false;
+            }
+        }
+        if (transformPatternsScalarSubqueryCountExpressionGtZero == null) {
+            if (other.transformPatternsScalarSubqueryCountExpressionGtZero!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsScalarSubqueryCountExpressionGtZero.equals(other.transformPatternsScalarSubqueryCountExpressionGtZero)) {
                 return false;
             }
         }
@@ -6822,6 +6912,8 @@ public class Settings
         result = ((prime*result)+((transformPatternsMergeBetweenSymmetricPredicates == null)? 0 :transformPatternsMergeBetweenSymmetricPredicates.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialCaseAbbreviation == null)? 0 :transformPatternsTrivialCaseAbbreviation.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialPredicates == null)? 0 :transformPatternsTrivialPredicates.hashCode()));
+        result = ((prime*result)+((transformPatternsScalarSubqueryCountAsteriskGtZero == null)? 0 :transformPatternsScalarSubqueryCountAsteriskGtZero.hashCode()));
+        result = ((prime*result)+((transformPatternsScalarSubqueryCountExpressionGtZero == null)? 0 :transformPatternsScalarSubqueryCountExpressionGtZero.hashCode()));
         result = ((prime*result)+((transformPatternsEmptyScalarSubquery == null)? 0 :transformPatternsEmptyScalarSubquery.hashCode()));
         result = ((prime*result)+((transformPatternsNegNeg == null)? 0 :transformPatternsNegNeg.hashCode()));
         result = ((prime*result)+((transformPatternsBitNotBitNot == null)? 0 :transformPatternsBitNotBitNot.hashCode()));

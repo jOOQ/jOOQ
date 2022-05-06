@@ -446,6 +446,22 @@ This transformation removes any trivial predicates.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsScalarSubqueryCountAsteriskGtZero" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform predicates comparing scalar subqueries with a count <code>(SELECT COUNT(*) ..) > 0</code> to equivalent <code>EXISTS (SELECT 1 ..)</code>.
+<p>
+Scalar subqueries that count rows and whose count is compared to 0 can be transformed into equivalent, but likely cheaper to execute EXISTS queries.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformPatternsScalarSubqueryCountExpressionGtZero" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform predicates comparing scalar subqueries with a count <code>(SELECT COUNT(expr) ..) > 0</code> to equivalent <code>EXISTS (SELECT 1 .. WHERE expr IS NOT NULL)</code>.
+<p>
+Scalar subqueries that count non-null expressions and whose count is compared to 0 can be transformed into equivalent, but likely cheaper to execute EXISTS queries.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsEmptyScalarSubquery" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform empty scalar subqueries like <code>(SELECT 1 WHERE FALSE)</code> to <code>NULL</code>.
 <p>

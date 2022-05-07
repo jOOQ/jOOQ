@@ -39,6 +39,7 @@ package org.jooq.checker;
 
 import static com.sun.source.util.TreePath.getPath;
 
+import com.google.auto.service.AutoService;
 import org.jooq.Require;
 import org.jooq.SQLDialect;
 import org.jooq.Support;
@@ -47,12 +48,15 @@ import org.checkerframework.framework.source.SourceVisitor;
 
 import com.sun.source.tree.MethodInvocationTree;
 
+import javax.annotation.processing.Processor;
+
 /**
  * A checker to compare {@link SQLDialect} from a use-site {@link Require}
  * annotation with a declaration-site {@link Support} annotation.
  *
  * @author Lukas Eder
  */
+@AutoService(Processor.class)
 public class SQLDialectChecker extends AbstractChecker {
 
     @Override

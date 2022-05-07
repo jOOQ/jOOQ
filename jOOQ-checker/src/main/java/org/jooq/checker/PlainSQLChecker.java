@@ -39,11 +39,14 @@ package org.jooq.checker;
 
 import static com.sun.source.util.TreePath.getPath;
 
+import com.google.auto.service.AutoService;
 import org.jooq.PlainSQL;
 
 import org.checkerframework.framework.source.SourceVisitor;
 
 import com.sun.source.tree.MethodInvocationTree;
+
+import javax.annotation.processing.Processor;
 
 /**
  * A checker to disallow usage of {@link PlainSQL} API, except where allowed
@@ -51,6 +54,7 @@ import com.sun.source.tree.MethodInvocationTree;
  *
  * @author Lukas Eder
  */
+@AutoService(Processor.class)
 public class PlainSQLChecker extends AbstractChecker {
 
     @Override

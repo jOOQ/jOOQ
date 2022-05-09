@@ -2,6 +2,43 @@ package org.jooq.kotlin
 
 import org.jooq.*
 import org.jooq.impl.DSL.*
+import java.util.stream.Collector
+
+// ----------------------------------------------------------------------------
+// Extensions to collect Field<Result<Record[N]>> into other types
+// ----------------------------------------------------------------------------
+
+fun <E, R : Record> Field<Result<R>>.collecting(collector: Collector<R, *, E>): Field<E> = convertFrom { it.collect(collector) }
+
+inline fun <reified E> Field<Result<Record1<E>>>.intoArray(): Field<Array<E>> = collecting(Records.intoArray(E::class.java))
+
+inline fun <R : Record, reified E> Field<Result<R>>.intoArray(noinline mapper: (R) -> E): Field<Array<E>> = collecting(Records.intoArray(E::class.java, mapper))
+
+fun <K, V, R : Record2<K, V>> Field<Result<R>>.intoGroups(): Field<Map<K, List<V>>> = collecting(Records.intoGroups())
+
+fun <K, R : Record> Field<Result<R>>.intoGroups(keyMapper: (R) -> K): Field<Map<K, List<R>>> = collecting(Records.intoGroups(keyMapper))
+
+fun <K, V, R : Record> Field<Result<R>>.intoGroups(keyMapper: (R) -> K, valueMapper: (R) -> V): Field<Map<K, List<V>>> = collecting(Records.intoGroups(keyMapper, valueMapper))
+
+fun <E, R : Record1<E>> Field<Result<R>>.intoList(): Field<List<E>> = collecting(Records.intoList())
+
+fun <E, R : Record> Field<Result<R>>.intoList(mapper: (R) -> E): Field<List<E>> = collecting(Records.intoList(mapper))
+
+fun <K, V> Field<Result<Record2<K, V>>>.intoMap(): Field<Map<K, V>> = collecting(Records.intoMap())
+
+fun <K, R : Record> Field<Result<R>>.intoMap(keyMapper: (R) -> K): Field<Map<K, R>> = collecting(Records.intoMap(keyMapper))
+
+fun <K, V, R : Record> Field<Result<R>>.intoMap(keyMapper: (R) -> K, valueMapper: (R) -> V): Field<Map<K, V>> = collecting(Records.intoMap(keyMapper, valueMapper))
+
+fun <K, R : Record> Field<Result<R>>.intoResultGroups(keyMapper: (R) -> K): Field<Map<K, Result<R>>> = collecting(Records.intoResultGroups(keyMapper))
+
+fun <K, V : Record, R : Record> Field<Result<R>>.intoResultGroups(keyMapper: (R) -> K, valueMapper: (R) -> V): Field<Map<K, Result<V>>> = collecting(Records.intoResultGroups(keyMapper, valueMapper))
+
+fun <E, R : Record1<E>> Field<Result<R>>.intoSet(): Field<Set<E>> = collecting(Records.intoSet())
+
+fun <E, R : Record> Field<Result<R>>.intoSet(mapper: (R) -> E): Field<Set<E>> = collecting(Records.intoSet(mapper))
+
+
 
 // ----------------------------------------------------------------------------
 // Extensions to map Field<Result<Record[N]>> to more convenient Field<List<E>>

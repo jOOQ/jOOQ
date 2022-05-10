@@ -102,16 +102,18 @@ public interface VisitListener extends EventListener {
     /**
      * Called before entering a {@link Clause}.
      *
+     * @param context The context containing information about the traversal.
      * @see Context#start(Clause)
      */
-    void clauseStart(VisitContext context);
+    default void clauseStart(VisitContext context) {}
 
     /**
      * Called after leaving a {@link Clause}.
      *
+     * @param context The context containing information about the traversal.
      * @see Context#end(Clause)
      */
-    void clauseEnd(VisitContext context);
+    default void clauseEnd(VisitContext context) {}
 
     /**
      * Called before visiting a {@link QueryPart}.
@@ -136,16 +138,18 @@ public interface VisitListener extends EventListener {
      * new books for authors other than those with
      * <code>author_id IN (1, 2, 3)</code>
      *
+     * @param context The context containing information about the traversal.
      * @see Context#visit(QueryPart)
      */
-    void visitStart(VisitContext context);
+    default void visitStart(VisitContext context) {}
 
     /**
      * Called after visiting a {@link QueryPart}.
      *
+     * @param context The context containing information about the traversal.
      * @see Context#visit(QueryPart)
      */
-    void visitEnd(VisitContext context);
+    default void visitEnd(VisitContext context) {}
 
     /**
      * Create a {@link VisitListener} with a {@link #onClauseStart(Consumer)}

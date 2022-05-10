@@ -54,31 +54,45 @@ public interface MigrationListener extends EventListener {
 
     /**
      * Invoked at the start of a {@link Migration}.
+     *
+     * @param ctx The context containing information about the migration.
      */
-    void migrationStart(MigrationContext ctx);
+    default void migrationStart(MigrationContext ctx) {}
 
     /**
      * Invoked at the end of a {@link Migration}.
+     *
+     * @param ctx The context containing information about the migration.
      */
-    void migrationEnd(MigrationContext ctx);
+    default void migrationEnd(MigrationContext ctx) {}
 
     /**
-     * Invoked at the start of a set of {@link Queries} that describe a single version increment.
+     * Invoked at the start of a set of {@link Queries} that describe a single
+     * version increment.
+     *
+     * @param ctx The context containing information about the migration.
      */
-    void queriesStart(MigrationContext ctx);
+    default void queriesStart(MigrationContext ctx) {}
 
     /**
-     * Invoked at the end of a set of {@link Queries} that describe a single version increment.
+     * Invoked at the end of a set of {@link Queries} that describe a single
+     * version increment.
+     *
+     * @param ctx The context containing information about the migration.
      */
-    void queriesEnd(MigrationContext ctx);
+    default void queriesEnd(MigrationContext ctx) {}
 
     /**
      * Invoked at the start of an individual {@link Query}.
+     *
+     * @param ctx The context containing information about the migration.
      */
-    void queryStart(MigrationContext ctx);
+    default void queryStart(MigrationContext ctx) {}
 
     /**
      * Invoked at the start of an individual {@link Query}.
+     *
+     * @param ctx The context containing information about the migration.
      */
-    void queryEnd(MigrationContext ctx);
+    default void queryEnd(MigrationContext ctx) {}
 }

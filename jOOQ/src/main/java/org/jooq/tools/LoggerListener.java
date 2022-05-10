@@ -61,9 +61,8 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Routine;
 import org.jooq.VisitContext;
+import org.jooq.VisitListener;
 import org.jooq.impl.DSL;
-import org.jooq.impl.DefaultExecuteListener;
-import org.jooq.impl.DefaultVisitListener;
 
 /**
  * A default {@link ExecuteListener} that just logs events to java.util.logging,
@@ -71,7 +70,7 @@ import org.jooq.impl.DefaultVisitListener;
  *
  * @author Lukas Eder
  */
-public class LoggerListener extends DefaultExecuteListener {
+public class LoggerListener implements ExecuteListener {
 
     private static final JooqLogger log        = JooqLogger.getLogger(LoggerListener.class);
     private static final String     BUFFER     = "org.jooq.tools.LoggerListener.BUFFER";
@@ -284,7 +283,7 @@ public class LoggerListener extends DefaultExecuteListener {
 
     private static final int maxLength = 2000;
 
-    private static class BindValueAbbreviator extends DefaultVisitListener {
+    private static class BindValueAbbreviator implements VisitListener {
 
         private boolean anyAbbreviations = false;
 

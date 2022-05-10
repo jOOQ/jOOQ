@@ -59,10 +59,12 @@ public interface DiagnosticsListener {
      * were consumed.
      * <p>
      * Typically, this problem can be remedied by applying the appropriate
-     * <code>LIMIT</code> clause in SQL, or {@link SelectLimitStep#limit(int)}
-     * clause in jOOQ.
+     * <code>LIMIT</code> clause in SQL, or
+     * {@link SelectLimitStep#limit(Number)} clause in jOOQ.
+     *
+     * @param ctx The context containing information about the diagnostic.
      */
-    void tooManyRowsFetched(DiagnosticsContext ctx);
+    default void tooManyRowsFetched(DiagnosticsContext ctx) {}
 
     /**
      * The fetched JDBC {@link ResultSet} returned more columns than necessary.
@@ -73,22 +75,28 @@ public interface DiagnosticsListener {
      * <p>
      * Typically, this problem can be remedied by not running a
      * <code>SELECT *</code> query when this isn't strictly required.
+     *
+     * @param ctx The context containing information about the diagnostic.
      */
-    void tooManyColumnsFetched(DiagnosticsContext ctx);
+    default void tooManyColumnsFetched(DiagnosticsContext ctx) {}
 
     /**
      * The fetched JDBC {@link ResultSet} returned a value for a column, on
      * which {@link ResultSet#wasNull()} was called unnecessarily (more than
      * once, or for a non-primitive type).
+     *
+     * @param ctx The context containing information about the diagnostic.
      */
-    void unnecessaryWasNullCall(DiagnosticsContext ctx);
+    default void unnecessaryWasNullCall(DiagnosticsContext ctx) {}
 
     /**
      * The fetched JDBC {@link ResultSet} returned a primitive type value for a
      * column, which could have been null, but {@link ResultSet#wasNull()} was
      * not called.
+     *
+     * @param ctx The context containing information about the diagnostic.
      */
-    void missingWasNullCall(DiagnosticsContext ctx);
+    default void missingWasNullCall(DiagnosticsContext ctx) {}
 
     /**
      * The executed JDBC statement has duplicates.
@@ -136,8 +144,10 @@ public interface DiagnosticsListener {
      * <p>
      * This is a system-wide diagnostic that is not specific to individual
      * {@link Connection} instances.
+     *
+     * @param ctx The context containing information about the diagnostic.
      */
-    void duplicateStatements(DiagnosticsContext ctx);
+    default void duplicateStatements(DiagnosticsContext ctx) {}
 
     /**
      * The executed JDBC statement is repeated consecutively on the same JDBC
@@ -175,8 +185,12 @@ public interface DiagnosticsListener {
      * <p>
      * This is a {@link Connection}-specific diagnostic that is reset every time
      * {@link Connection#close()} is called.
+     *
+     * @param ctx The context containing information about the diagnostic.
      */
-    void repeatedStatements(DiagnosticsContext ctx);
+    default void repeatedStatements(DiagnosticsContext ctx) {}
+
+
 
 
 
@@ -216,6 +230,8 @@ public interface DiagnosticsListener {
      * <li>A user exception from a custom {@link DiagnosticsListener}
      * implementation.</li>
      * </ul>
+     *
+     * @param ctx The context containing information about the diagnostic.
      */
-    void exception(DiagnosticsContext ctx);
+    default void exception(DiagnosticsContext ctx) {}
 }

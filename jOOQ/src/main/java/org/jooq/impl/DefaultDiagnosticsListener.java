@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jooq.DiagnosticsContext;
 import org.jooq.DiagnosticsListener;
 
 /**
@@ -47,32 +46,8 @@ import org.jooq.DiagnosticsListener;
  * <code>DiagnosticsListener</code>)
  *
  * @author Lukas Eder
+ * @deprecated - 3.17.0 - [#13542] - This class is no longer needed. Implement
+ *             the {@link DiagnosticsListener} SPI directly, instead.
  */
-public class DefaultDiagnosticsListener implements DiagnosticsListener {
-
-    @Override
-    public void tooManyRowsFetched(DiagnosticsContext ctx) {}
-
-    @Override
-    public void tooManyColumnsFetched(DiagnosticsContext ctx) {}
-
-    @Override
-    public void unnecessaryWasNullCall(DiagnosticsContext ctx) {}
-
-    @Override
-    public void missingWasNullCall(DiagnosticsContext ctx) {}
-
-    @Override
-    public void duplicateStatements(DiagnosticsContext ctx) {}
-
-    @Override
-    public void repeatedStatements(DiagnosticsContext ctx) {}
-
-
-
-
-
-
-    @Override
-    public void exception(DiagnosticsContext ctx) {}
-}
+@Deprecated
+public class DefaultDiagnosticsListener implements DiagnosticsListener {}

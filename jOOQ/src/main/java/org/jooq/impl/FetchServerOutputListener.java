@@ -60,13 +60,11 @@ import org.jooq.tools.jdbc.JDBCUtils;
  *
  * @author Lukas Eder
  */
-final class FetchServerOutputListener extends DefaultExecuteListener {
+final class FetchServerOutputListener implements ExecuteListener {
     private static final JooqLogger log              = JooqLogger.getLogger(FetchServerOutputListener.class);
 
     @Override
     public final void executeStart(ExecuteContext ctx) {
-        super.executeStart(ctx);
-
         switch (ctx.family()) {
 
 
@@ -139,7 +137,5 @@ final class FetchServerOutputListener extends DefaultExecuteListener {
             default:
                 break;
         }
-
-        super.executeEnd(ctx);
     }
 }

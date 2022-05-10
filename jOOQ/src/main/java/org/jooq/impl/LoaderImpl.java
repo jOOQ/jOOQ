@@ -71,6 +71,7 @@ import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
 import org.jooq.Loader;
@@ -721,7 +722,7 @@ final class LoaderImpl<R extends Record> implements
         executeSQL(arrays);
     }
 
-    private static final class CachedPSListener extends DefaultExecuteListener implements AutoCloseable {
+    private static final class CachedPSListener implements ExecuteListener, AutoCloseable {
 
         final Map<String, CachedPS> map              = new HashMap<>();
 

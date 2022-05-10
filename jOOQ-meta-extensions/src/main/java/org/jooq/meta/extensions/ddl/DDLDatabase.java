@@ -56,15 +56,14 @@ import org.jooq.Name;
 import org.jooq.Name.Quoted;
 import org.jooq.Queries;
 import org.jooq.Query;
-// ...
 import org.jooq.ResultQuery;
 import org.jooq.Source;
 import org.jooq.VisitContext;
+import org.jooq.VisitListener;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
-import org.jooq.impl.DefaultVisitListener;
 import org.jooq.impl.ParserException;
 import org.jooq.meta.extensions.AbstractInterpretingDatabase;
 import org.jooq.tools.JooqLogger;
@@ -125,7 +124,7 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
             ctx.data("org.jooq.ddl.parse-for-ddldatabase", true);
 
             if (!"AS_IS".equals(defaultNameCase)) {
-                ctx.configuration().set(new DefaultVisitListener() {
+                ctx.configuration().set(new VisitListener() {
                     @Override
                     public void visitStart(VisitContext vc) {
                         if (vc.queryPart() instanceof Name) { Name n = (Name) vc.queryPart();

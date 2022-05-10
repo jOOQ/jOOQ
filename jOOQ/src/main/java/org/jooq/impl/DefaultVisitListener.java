@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jooq.VisitContext;
 import org.jooq.VisitListener;
 
 /**
@@ -47,19 +46,8 @@ import org.jooq.VisitListener;
  * <code>VisitListener</code>)
  *
  * @author Lukas Eder
+ * @deprecated - 3.17.0 - [#13542] - This class is no longer needed. Implement
+ *             the {@link VisitListener} SPI directly, instead.
  */
-public class DefaultVisitListener implements VisitListener {
-
-    @Override
-    public void clauseStart(VisitContext context) {}
-
-    @Override
-    public void clauseEnd(VisitContext context) {}
-
-    @Override
-    public void visitStart(VisitContext context) {}
-
-    @Override
-    public void visitEnd(VisitContext context) {}
-
-}
+@Deprecated
+public class DefaultVisitListener implements VisitListener {}

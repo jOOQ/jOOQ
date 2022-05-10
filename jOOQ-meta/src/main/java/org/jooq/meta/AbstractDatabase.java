@@ -385,7 +385,7 @@ public abstract class AbstractDatabase implements Database {
             return DSL.using(configuration);
         }
         else {
-            final ExecuteListener newListener = new DefaultExecuteListener() {
+            final ExecuteListener newListener = new ExecuteListener() {
 
                 class SQLPerformanceWarning extends Exception {}
 

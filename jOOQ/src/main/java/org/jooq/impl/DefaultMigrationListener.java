@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jooq.MigrationContext;
 import org.jooq.MigrationListener;
 
 /**
@@ -47,24 +46,8 @@ import org.jooq.MigrationListener;
  * <code>MigrationListener</code>)
  *
  * @author Lukas Eder
+ * @deprecated - 3.17.0 - [#13542] - This class is no longer needed. Implement
+ *             the {@link MigrationListener} SPI directly, instead.
  */
-public class DefaultMigrationListener implements MigrationListener {
-
-    @Override
-    public void migrationStart(MigrationContext ctx) {}
-
-    @Override
-    public void migrationEnd(MigrationContext ctx) {}
-
-    @Override
-    public void queriesStart(MigrationContext ctx) {}
-
-    @Override
-    public void queriesEnd(MigrationContext ctx) { }
-
-    @Override
-    public void queryStart(MigrationContext ctx) {}
-
-    @Override
-    public void queryEnd(MigrationContext ctx) {}
-}
+@Deprecated
+public class DefaultMigrationListener implements MigrationListener {}

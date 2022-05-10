@@ -47,6 +47,7 @@ import java.util.Map;
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
 import org.jooq.Query;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
@@ -255,7 +256,7 @@ final class BatchCRUD extends AbstractBatch {
      * allows for rendering SQL according to the specific logic contained in
      * TableRecords without actually executing that SQL
      */
-    private static class QueryCollector extends DefaultExecuteListener {
+    private static class QueryCollector implements ExecuteListener {
 
         @Override
         public void renderEnd(ExecuteContext ctx) {

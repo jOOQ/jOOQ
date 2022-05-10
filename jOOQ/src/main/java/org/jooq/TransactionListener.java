@@ -51,33 +51,45 @@ public interface TransactionListener {
 
     /**
      * Called before {@link TransactionProvider#begin(TransactionContext)}.
+     *
+     * @param ctx The context containing information about the transaction.
      */
-    void beginStart(TransactionContext ctx);
+    default void beginStart(TransactionContext ctx) {}
 
     /**
      * Called after {@link TransactionProvider#begin(TransactionContext)}.
+     *
+     * @param ctx The context containing information about the transaction.
      */
-    void beginEnd(TransactionContext ctx);
+    default void beginEnd(TransactionContext ctx) {}
 
     /**
      * Called before {@link TransactionProvider#commit(TransactionContext)}.
+     *
+     * @param ctx The context containing information about the transaction.
      */
-    void commitStart(TransactionContext ctx);
+    default void commitStart(TransactionContext ctx) {}
 
     /**
      * Called after {@link TransactionProvider#commit(TransactionContext)}.
+     *
+     * @param ctx The context containing information about the transaction.
      */
-    void commitEnd(TransactionContext ctx);
+    default void commitEnd(TransactionContext ctx) {}
 
     /**
      * Called before {@link TransactionProvider#rollback(TransactionContext)}.
+     *
+     * @param ctx The context containing information about the transaction.
      */
-    void rollbackStart(TransactionContext ctx);
+    default void rollbackStart(TransactionContext ctx) {}
 
     /**
      * Called after {@link TransactionProvider#rollback(TransactionContext)}.
+     *
+     * @param ctx The context containing information about the transaction.
      */
-    void rollbackEnd(TransactionContext ctx);
+    default void rollbackEnd(TransactionContext ctx) {}
 
     /**
      * Create a {@link TransactionListener} with a

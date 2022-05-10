@@ -38,8 +38,8 @@
 package org.jooq.example.spring.exception;
 
 import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
 import org.jooq.SQLDialect;
-import org.jooq.impl.DefaultExecuteListener;
 
 import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
 import org.springframework.jdbc.support.SQLExceptionTranslator;
@@ -57,7 +57,7 @@ import org.springframework.jdbc.support.SQLStateSQLExceptionTranslator;
  * @see <a
  *      href="https://gist.github.com/azell/5655888">https://gist.github.com/azell/5655888</a>
  */
-public class ExceptionTranslator extends DefaultExecuteListener {
+public class ExceptionTranslator implements ExecuteListener {
 
     /**
      * Generated UID

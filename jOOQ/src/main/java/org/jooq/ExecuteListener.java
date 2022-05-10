@@ -50,7 +50,6 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.impl.CallbackExecuteListener;
 import org.jooq.impl.DSL;
-import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.tools.LoggerListener;
 
 import org.reactivestreams.Subscriber;
@@ -72,10 +71,6 @@ import org.reactivestreams.Subscriber;
  * implementations of {@link Connection}, {@link PreparedStatement},
  * {@link ResultSet}, {@link SQLException} or {@link RuntimeException} to jOOQ
  * in appropriate methods.
- * <p>
- * For convenience, consider extending {@link DefaultExecuteListener} instead of
- * implementing this interface. This will prevent compilation errors in future
- * versions of jOOQ, when this interface might get new methods.
  * <p>
  * The following table explains how every type of statement / operation invokes
  * callback methods in the correct order for all registered
@@ -317,8 +312,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * interesting if a {@link Query} was de-serialised and is thus lacking the
      * underlying connection</li>
      * </ul>
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void start(ExecuteContext ctx);
+    default void start(ExecuteContext ctx) {}
 
     /**
      * Called before rendering SQL from a <code>QueryPart</code>.
@@ -334,8 +331,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * </ul>
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void renderStart(ExecuteContext ctx);
+    default void renderStart(ExecuteContext ctx) {}
 
     /**
      * Called after rendering SQL from a <code>QueryPart</code>.
@@ -361,8 +360,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * statement that is about to be executed. You can modify this statement
      * freely.</li>
      * </ul>
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void renderEnd(ExecuteContext ctx);
+    default void renderEnd(ExecuteContext ctx) {}
 
     /**
      * Called before preparing / creating the SQL statement.
@@ -394,8 +395,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * cache.
      * <p>
      * A custom {@link PreparedStatement} needs to take into account
-     * {@link Settings#getStatementType()}, and avoid bind variable markers for
-     * {@link StatementType#STATIC_STATEMENT}.
+     * {@link Settings#getStatementType()}, and adefault void bind variable
+     * markers for {@link StatementType#STATIC_STATEMENT}.
      * <p>
      * Flags such as {@link Query#queryTimeout(int)},
      * {@link Query#poolable(boolean)}, {@link ResultQuery#maxRows(int)}, which
@@ -408,8 +409,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * flags that are set on the statement at statement creation are not set on
      * a statement provided by a listener.</li>
      * </ul>
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void prepareStart(ExecuteContext ctx);
+    default void prepareStart(ExecuteContext ctx) {}
 
     /**
      * Called after preparing / creating the SQL statement.
@@ -453,8 +456,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * modify this statement freely, or wrap {@link ExecuteContext#statement()}
      * with your enriched statement wrapper</li>
      * </ul>
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void prepareEnd(ExecuteContext ctx);
+    default void prepareEnd(ExecuteContext ctx) {}
 
     /**
      * Called before bind variables to the <code>PreparedStatement</code>.
@@ -498,8 +503,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Note that this method is not called when executing queries of type
      * {@link StatementType#STATIC_STATEMENT}
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void bindStart(ExecuteContext ctx);
+    default void bindStart(ExecuteContext ctx) {}
 
     /**
      * Called after bind variables to the <code>PreparedStatement</code>.
@@ -543,8 +550,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Note that this method is not called when executing queries of type
      * {@link StatementType#STATIC_STATEMENT}
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void bindEnd(ExecuteContext ctx);
+    default void bindEnd(ExecuteContext ctx) {}
 
     /**
      * Called before executing a statement.
@@ -594,8 +603,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <ul>
      * <li>{@link ExecuteContext#statementExecutionCount()} is incremented.</li>
      * </ul>
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void executeStart(ExecuteContext ctx);
+    default void executeStart(ExecuteContext ctx) {}
 
     /**
      * Called after executing a statement.
@@ -648,8 +659,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * result set freely, or wrap {@link ExecuteContext#resultSet()} with your
      * enriched result set wrapper</li>
      * </ul>
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void executeEnd(ExecuteContext ctx);
+    default void executeEnd(ExecuteContext ctx) {}
 
     /**
      * Called before fetching out parameter values from a
@@ -683,8 +696,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Note that this method is called only when executing standalone routine
      * calls.
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void outStart(ExecuteContext ctx);
+    default void outStart(ExecuteContext ctx) {}
 
     /**
      * Called after fetching out parameter values from a
@@ -717,8 +732,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Note that this method is called only when executing standalone routine
      * calls.
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void outEnd(ExecuteContext ctx);
+    default void outEnd(ExecuteContext ctx) {}
 
     /**
      * Called before fetching data from a <code>ResultSet</code> into a
@@ -774,8 +791,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Note that this method is not called when executing queries that do not
      * return a result, or when executing routines.
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void fetchStart(ExecuteContext ctx);
+    default void fetchStart(ExecuteContext ctx) {}
 
     /**
      * Called before fetching a set of records from a <code>ResultSet</code>.
@@ -842,8 +861,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * not return a result, or when executing routines. This is also not called
      * when fetching single records, with {@link Cursor#fetchNext()} for
      * instance.
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void resultStart(ExecuteContext ctx);
+    default void resultStart(ExecuteContext ctx) {}
 
     /**
      * Called before fetching a record from a <code>ResultSet</code>.
@@ -892,8 +913,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Note that this method is not called when executing queries that do not
      * return a result, or when executing routines.
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void recordStart(ExecuteContext ctx);
+    default void recordStart(ExecuteContext ctx) {}
 
     /**
      * Called after fetching a record from a <code>ResultSet</code>.
@@ -942,8 +965,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Note that this method is not called when executing queries that do not
      * return a result, or when executing routines.
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void recordEnd(ExecuteContext ctx);
+    default void recordEnd(ExecuteContext ctx) {}
 
     /**
      * Called after fetching a set of records from a <code>ResultSet</code>.
@@ -1012,8 +1037,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * not return a result, or when executing routines. This is also not called
      * when fetching single records, with {@link Cursor#fetchNext()} for
      * instance.
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void resultEnd(ExecuteContext ctx);
+    default void resultEnd(ExecuteContext ctx) {}
 
     /**
      * Called after fetching data from a <code>ResultSet</code>.
@@ -1069,8 +1096,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Note that this method is not called when executing queries that do not
      * return a result, or when executing routines.
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void fetchEnd(ExecuteContext ctx);
+    default void fetchEnd(ExecuteContext ctx) {}
 
     /**
      * Called at the end of the execution lifecycle.
@@ -1120,8 +1149,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * emitted by the database or <code>null</code> if no warning was
      * emitted.</li>
      * </ul>
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void end(ExecuteContext ctx);
+    default void end(ExecuteContext ctx) {}
 
     /**
      * Called in the event of an exception at any moment of the execution
@@ -1173,8 +1204,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#sqlException()}: The {@link SQLException} that
      * was thrown by the database</li>
      * </ul>
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void exception(ExecuteContext ctx);
+    default void exception(ExecuteContext ctx) {}
 
     /**
      * Called in the event of a warning at any moment of the execution
@@ -1233,8 +1266,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * This method is only invoked if a warning appears. Note that fetching of
      * warnings can be disabled using {@link Settings#isFetchWarnings()}
+     *
+     * @param ctx The context containing information about the execution.
      */
-    void warning(ExecuteContext ctx);
+    default void warning(ExecuteContext ctx) {}
 
     /**
      * Create an {@link ExecuteListener} with a {@link #start(ExecuteContext)}
@@ -1325,8 +1360,8 @@ public interface ExecuteListener extends EventListener, Serializable {
     }
 
     /**
-     * Create an {@link ExecuteListener} with a
-     * {@link #outEnd(ExecuteContext)} implementation.
+     * Create an {@link ExecuteListener} with a {@link #outEnd(ExecuteContext)}
+     * implementation.
      */
     static CallbackExecuteListener onOutEnd(ExecuteEventHandler handler) {
         return new CallbackExecuteListener().onOutEnd(handler);
@@ -1389,8 +1424,8 @@ public interface ExecuteListener extends EventListener, Serializable {
     }
 
     /**
-     * Create an {@link ExecuteListener} with a
-     * {@link #warning(ExecuteContext)} implementation.
+     * Create an {@link ExecuteListener} with a {@link #warning(ExecuteContext)}
+     * implementation.
      */
     static CallbackExecuteListener onWarning(ExecuteEventHandler handler) {
         return new CallbackExecuteListener().onWarning(handler);

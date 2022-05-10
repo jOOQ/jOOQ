@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jooq.RecordContext;
 import org.jooq.RecordListener;
 
 /**
@@ -47,52 +46,8 @@ import org.jooq.RecordListener;
  * <code>RecordListener</code>)
  *
  * @author Lukas Eder
+ * @deprecated - 3.17.0 - [#13542] - This class is no longer needed. Implement
+ *             the {@link RecordListener} SPI directly, instead.
  */
-public class DefaultRecordListener implements RecordListener {
-
-    @Override
-    public void storeStart(RecordContext ctx) {}
-
-    @Override
-    public void storeEnd(RecordContext ctx) {}
-
-    @Override
-    public void insertStart(RecordContext ctx) {}
-
-    @Override
-    public void insertEnd(RecordContext ctx) {}
-
-    @Override
-    public void updateStart(RecordContext ctx) {}
-
-    @Override
-    public void updateEnd(RecordContext ctx) {}
-
-    @Override
-    public void mergeStart(RecordContext ctx) {}
-
-    @Override
-    public void mergeEnd(RecordContext ctx) {}
-
-    @Override
-    public void deleteStart(RecordContext ctx) {}
-
-    @Override
-    public void deleteEnd(RecordContext ctx) {}
-
-    @Override
-    public void loadStart(RecordContext ctx) {}
-
-    @Override
-    public void loadEnd(RecordContext ctx) {}
-
-    @Override
-    public void refreshStart(RecordContext ctx) {}
-
-    @Override
-    public void refreshEnd(RecordContext ctx) {}
-
-    @Override
-    public void exception(RecordContext ctx) {}
-
-}
+@Deprecated
+public class DefaultRecordListener implements RecordListener {}

@@ -48,6 +48,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
@@ -94,7 +95,7 @@ public class SakilaReportService {
         dsl = DSL.using(new DefaultConfiguration()
             .set(ds)
             .set(SQLDialect.POSTGRES)
-            .set(DefaultExecuteListenerProvider.providers(new DefaultExecuteListener() {
+            .set(DefaultExecuteListenerProvider.providers(new ExecuteListener() {
                 @Override
                 public void executeEnd(ExecuteContext ctx) {
                     Configuration config = ctx.configuration().derive();

@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jooq.TransactionContext;
 import org.jooq.TransactionListener;
 
 /**
@@ -47,25 +46,8 @@ import org.jooq.TransactionListener;
  * <code>TransactionListener</code>)
  *
  * @author Lukas Eder
+ * @deprecated - 3.17.0 - [#13542] - This class is no longer needed. Implement
+ *             the {@link TransactionListener} SPI directly, instead.
  */
-public class DefaultTransactionListener implements TransactionListener {
-
-    @Override
-    public void beginStart(TransactionContext ctx) {}
-
-    @Override
-    public void beginEnd(TransactionContext ctx) {}
-
-    @Override
-    public void commitStart(TransactionContext ctx) {}
-
-    @Override
-    public void commitEnd(TransactionContext ctx) {}
-
-    @Override
-    public void rollbackStart(TransactionContext ctx) {}
-
-    @Override
-    public void rollbackEnd(TransactionContext ctx) {}
-
-}
+@Deprecated
+public class DefaultTransactionListener implements TransactionListener {}

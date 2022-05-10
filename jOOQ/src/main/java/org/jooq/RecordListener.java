@@ -80,9 +80,10 @@ public interface RecordListener extends EventListener {
      * A store event will generate a nested {@link #insertStart(RecordContext)}
      * or {@link #updateStart(RecordContext)} event.
      *
+     * @param ctx The context containing information about the record operation.
      * @see UpdatableRecord#store()
      */
-    void storeStart(RecordContext ctx);
+    default void storeStart(RecordContext ctx) {}
 
     /**
      * Called after storing an <code>UpdatableRecord</code>.
@@ -95,9 +96,10 @@ public interface RecordListener extends EventListener {
      * A store event will generate a nested {@link #insertEnd(RecordContext)}
      * or {@link #updateEnd(RecordContext)} event.
      *
+     * @param ctx The context containing information about the record operation.
      * @see UpdatableRecord#store()
      */
-    void storeEnd(RecordContext ctx);
+    default void storeEnd(RecordContext ctx) {}
 
     /**
      * Called before inserting an <code>UpdatableRecord</code>.
@@ -105,9 +107,10 @@ public interface RecordListener extends EventListener {
      * Implementations are allowed to modify {@link RecordContext#record()}
      * prior to inserting.
      *
+     * @param ctx The context containing information about the record operation.
      * @see UpdatableRecord#insert()
      */
-    void insertStart(RecordContext ctx);
+    default void insertStart(RecordContext ctx) {}
 
     /**
      * Called after inserting an <code>UpdatableRecord</code>.
@@ -115,9 +118,10 @@ public interface RecordListener extends EventListener {
      * Implementations are allowed to modify {@link RecordContext#record()}
      * after inserting.
      *
+     * @param ctx The context containing information about the record operation.
      * @see UpdatableRecord#insert()
      */
-    void insertEnd(RecordContext ctx);
+    default void insertEnd(RecordContext ctx) {}
 
     /**
      * Called before updating an <code>UpdatableRecord</code>.
@@ -125,9 +129,10 @@ public interface RecordListener extends EventListener {
      * Implementations are allowed to modify {@link RecordContext#record()}
      * prior to updating.
      *
+     * @param ctx The context containing information about the record operation.
      * @see UpdatableRecord#update()
      */
-    void updateStart(RecordContext ctx);
+    default void updateStart(RecordContext ctx) {}
 
     /**
      * Called after updating an <code>UpdatableRecord</code>.
@@ -135,9 +140,10 @@ public interface RecordListener extends EventListener {
      * Implementations are allowed to modify {@link RecordContext#record()}
      * after updating.
      *
+     * @param ctx The context containing information about the record operation.
      * @see UpdatableRecord#update()
      */
-    void updateEnd(RecordContext ctx);
+    default void updateEnd(RecordContext ctx) {}
 
     /**
      * Called before merging an <code>UpdatableRecord</code>.
@@ -145,9 +151,10 @@ public interface RecordListener extends EventListener {
      * Implementations are allowed to modify {@link RecordContext#record()}
      * prior to merging.
      *
+     * @param ctx The context containing information about the record operation.
      * @see UpdatableRecord#merge()
      */
-    void mergeStart(RecordContext ctx);
+    default void mergeStart(RecordContext ctx) {}
 
     /**
      * Called after merging an <code>UpdatableRecord</code>.
@@ -155,9 +162,10 @@ public interface RecordListener extends EventListener {
      * Implementations are allowed to modify {@link RecordContext#record()}
      * after merging.
      *
+     * @param ctx The context containing information about the record operation.
      * @see UpdatableRecord#merge()
      */
-    void mergeEnd(RecordContext ctx);
+    default void mergeEnd(RecordContext ctx) {}
 
     /**
      * Called before deleting an <code>UpdatableRecord</code>.
@@ -165,9 +173,10 @@ public interface RecordListener extends EventListener {
      * Implementations are allowed to modify {@link RecordContext#record()}
      * prior to deleting.
      *
+     * @param ctx The context containing information about the record operation.
      * @see UpdatableRecord#delete()
      */
-    void deleteStart(RecordContext ctx);
+    default void deleteStart(RecordContext ctx) {}
 
     /**
      * Called after deleting an <code>UpdatableRecord</code>.
@@ -175,25 +184,30 @@ public interface RecordListener extends EventListener {
      * Implementations are allowed to modify {@link RecordContext#record()}
      * after deleting.
      *
+     * @param ctx The context containing information about the record operation.
      * @see UpdatableRecord#delete()
      */
-    void deleteEnd(RecordContext ctx);
+    default void deleteEnd(RecordContext ctx) {}
 
     /**
      * Called before loading an <code>UpdatableRecord</code>.
      * <p>
      * Implementations are allowed to modify {@link RecordContext#record()}
      * prior to loading.
+     *
+     * @param ctx The context containing information about the record operation.
      */
-    void loadStart(RecordContext ctx);
+    default void loadStart(RecordContext ctx) {}
 
     /**
      * Called after loading an <code>UpdatableRecord</code>.
      * <p>
      * Implementations are allowed to modify {@link RecordContext#record()}
      * after loading.
+     *
+     * @param ctx The context containing information about the record operation.
      */
-    void loadEnd(RecordContext ctx);
+    default void loadEnd(RecordContext ctx) {}
 
     /**
      * Called before refreshing an <code>UpdatableRecord</code>.
@@ -201,9 +215,10 @@ public interface RecordListener extends EventListener {
      * Implementations are allowed to modify {@link RecordContext#record()}
      * prior to refreshing.
      *
+     * @param ctx The context containing information about the record operation.
      * @see UpdatableRecord#refresh()
      */
-    void refreshStart(RecordContext ctx);
+    default void refreshStart(RecordContext ctx) {}
 
     /**
      * Called after refreshing an <code>UpdatableRecord</code>.
@@ -211,14 +226,17 @@ public interface RecordListener extends EventListener {
      * Implementations are allowed to modify {@link RecordContext#record()}
      * after refreshing.
      *
+     * @param ctx The context containing information about the record operation.
      * @see UpdatableRecord#refresh()
      */
-    void refreshEnd(RecordContext ctx);
+    default void refreshEnd(RecordContext ctx) {}
 
     /**
      * Called when an exception occurs.
+     *
+     * @param ctx The context containing information about the record operation.
      */
-    void exception(RecordContext ctx);
+    default void exception(RecordContext ctx) {}
 
     /**
      * Create a {@link RecordListener} with a

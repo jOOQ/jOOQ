@@ -136,16 +136,18 @@ implements
 
     private final void acceptCte(Context<?> ctx) {
         TopLevelCte cte = (TopLevelCte) ctx.data(DATA_TOP_LEVEL_CTE);
-        cte.add(name(alias).as(
-            resultQuery("{0}",
 
-                // TODO: Immutable QueryParts would be really useful here, to add a RETURNING clause to a query without mutating it
-                CustomQueryPart.of(c2 -> {
-                    c2.visit(query).formatSeparator()
-                        .visit(K_RETURNING).sql(' ').visit(new SelectFieldList<>(table.fields()));
-                })
-            )
-        ));
+        if (cte != null)
+            cte.add(name(alias).as(
+                resultQuery("{0}",
+
+                    // TODO: Immutable QueryParts would be really useful here, to add a RETURNING clause to a query without mutating it
+                    CustomQueryPart.of(c2 -> {
+                        c2.visit(query).formatSeparator()
+                            .visit(K_RETURNING).sql(' ').visit(new SelectFieldList<>(table.fields()));
+                    })
+                )
+            ));
 
         ctx.visit(DSL.table(alias));
     }

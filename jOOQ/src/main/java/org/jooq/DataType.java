@@ -272,11 +272,11 @@ public interface DataType<T> extends Named {
      * Convenience method for converting this type to a read-only type using
      * {@link Converter#from(Class, Class, Function)}.
      * <p>
-     * EXPERIMENTAL. Unlike {@link #asConvertedDataTypeFrom(Class, Function)},
-     * this method attempts to work without an explicit {@link Class} reference
-     * for the underlying {@link Converter#toType()}. There may be some edge
-     * cases where this doesn't work. Please report any bugs here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/new/choose">https://github.com/jOOQ/jOOQ/issues/new/choose</a>
+     * Unlike {@link #asConvertedDataTypeFrom(Class, Function)}, this method
+     * attempts to work without an explicit {@link Class} reference for the
+     * underlying {@link Converter#toType()}. There may be some edge cases where
+     * this doesn't work (e.g. when arrays are involved), in case of which, an
+     * explicit class literal should be passed.
      */
     @SuppressWarnings("unchecked")
     @NotNull
@@ -302,11 +302,11 @@ public interface DataType<T> extends Named {
      * Convenience method for converting this type to a write-only type using
      * {@link Converter#to(Class, Class, Function)}.
      * <p>
-     * EXPERIMENTAL. Unlike {@link #asConvertedDataTypeTo(Class, Function)},
-     * this method attempts to work without an explicit {@link Class} reference
-     * for the underlying {@link Converter#toType()}. There may be some edge
-     * cases where this doesn't work. Please report any bugs here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/new/choose">https://github.com/jOOQ/jOOQ/issues/new/choose</a>
+     * Unlike {@link #asConvertedDataTypeTo(Class, Function)}, this method
+     * attempts to work without an explicit {@link Class} reference for the
+     * underlying {@link Converter#toType()}. There may be some edge cases where
+     * this doesn't work (e.g. when arrays are involved), in case of which, an
+     * explicit class literal should be passed.
      */
     @SuppressWarnings("unchecked")
     @NotNull

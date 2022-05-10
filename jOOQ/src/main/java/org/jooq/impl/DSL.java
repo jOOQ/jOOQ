@@ -25570,8 +25570,7 @@ public class DSL {
     /**
      * Get the <code>MULTISET</code> operator to nest subqueries.
      * <p>
-     * EXPERIMENTAL: The standard SQL <code>MULTISET</code> operator is poorly
-     * supported by most dialects. As such, it needs to be emulated using
+     * The standard SQL <code>MULTISET</code> operator is emulated using
      * elaborate mappings to any of:
      * <p>
      * <ul>
@@ -25619,9 +25618,6 @@ public class DSL {
      * "https://github.com/jOOQ/jOOQ/issues/12045">https://github.com/jOOQ/jOOQ/issues/12045</a>.
      * The various {@link #multisetAgg(Field...)} overloads are not affected
      * from this limitation.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -25724,9 +25720,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -25759,9 +25755,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -25773,9 +25766,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -25808,9 +25801,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -25824,9 +25814,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -25859,9 +25849,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -25873,9 +25860,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -25908,9 +25895,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -25922,9 +25906,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -25957,9 +25941,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -25971,9 +25952,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26006,9 +25987,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26020,9 +25998,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26055,9 +26033,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26069,9 +26044,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26104,9 +26079,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26118,9 +26090,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26153,9 +26125,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26167,9 +26136,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26202,9 +26171,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26216,9 +26182,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26251,9 +26217,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26265,9 +26228,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26300,9 +26263,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26314,9 +26274,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26349,9 +26309,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26363,9 +26320,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26398,9 +26355,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26412,9 +26366,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26447,9 +26401,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26461,9 +26412,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26496,9 +26447,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26510,9 +26458,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26545,9 +26493,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26559,9 +26504,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26594,9 +26539,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26608,9 +26550,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26643,9 +26585,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26657,9 +26596,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26692,9 +26631,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26706,9 +26642,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26741,9 +26677,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26755,9 +26688,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26790,9 +26723,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26804,9 +26734,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26839,9 +26769,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26853,9 +26780,9 @@ public class DSL {
      * Get the <code>MULTISET_AGG</code> aggregate function to nest group
      * contents.
      * <p>
-     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
-     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
-     * function. It is emulated using mappings to any of:
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
      * <p>
      * <ul>
      * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
@@ -26888,9 +26815,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
-     * Please report any issues you may encounter on the above issue, or in a
-     * new issue on github.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })

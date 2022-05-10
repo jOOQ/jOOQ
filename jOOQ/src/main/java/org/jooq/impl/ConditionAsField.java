@@ -122,7 +122,11 @@ implements
             }
 
             default:
-                ctx.sql('(').visit(condition).sql(')');
+                if (condition instanceof AbstractCondition && ((AbstractCondition) condition).parenthesised(ctx))
+                    ctx.visit(condition);
+                else
+                    ctx.sql('(').visit(condition).sql(')');
+
                 break;
         }
     }

@@ -126,7 +126,6 @@ implements
                     ctx.visit(condition);
                 else
                     ctx.sql('(').visit(condition).sql(')');
-
                 break;
         }
     }

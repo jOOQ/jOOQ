@@ -40,21 +40,19 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.impl.Cast.renderCastIf;
 import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Keywords.K_INT;
 import static org.jooq.impl.Names.N_ARRAY;
 
 import java.util.Collection;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...
@@ -95,15 +93,23 @@ final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
 
 
             default:
-                boolean squareBrackets = true;
+                renderCastIf(ctx,
+                    c -> {
+                        switch (ctx.family()) {
 
-                ctx.visit(K_ARRAY)
-                   .sql(squareBrackets ? '[' : '(')
-                   .visit(fields)
-                   .sql(squareBrackets ? ']' : ')');
 
-                if (fields.fields.length == 0 && REQUIRES_CAST.contains(ctx.dialect()))
-                    ctx.sql("::").visit(K_INT).sql("[]");
+
+
+
+
+                            default:
+                                ctx.visit(K_ARRAY).sql('[').visit(fields).sql(']');
+                                break;
+                        }
+                    },
+                    c -> c.visit(K_INT).sql("[]"),
+                    () -> fields.fields.length == 0 && REQUIRES_CAST.contains(ctx.dialect())
+                );
 
                 break;
         }

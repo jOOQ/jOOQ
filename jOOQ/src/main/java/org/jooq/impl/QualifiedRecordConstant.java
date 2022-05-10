@@ -40,6 +40,7 @@ package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.DefaultBinding.DefaultRecordBinding.REQUIRE_RECORD_CAST;
 import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Tools.getMappedUDTName;
 
@@ -129,40 +130,38 @@ final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends Abstra
     }
 
     private final void toSQLInline(RenderContext ctx) {
-        switch (ctx.family()) {
+        Cast.renderCastIf(ctx,
+            c -> {
+                switch (c.family()) {
 
 
-            case POSTGRES:
-            case YUGABYTEDB:
-                ctx.visit(K_ROW);
-                break;
+                    case POSTGRES:
+                    case YUGABYTEDB:
+                        c.visit(K_ROW);
+                        break;
 
-            default: {
-                ctx.visit(value.getQualifier());
-                break;
-            }
-        }
+                    default: {
+                        c.visit(value.getQualifier());
+                        break;
+                    }
+                }
 
-        ctx.sql('(');
+                c.sql('(');
 
-        String separator = "";
-        for (Field<?> field : value.fields()) {
-            ctx.sql(separator);
-            ctx.visit(val(value.get(field), field));
-            separator = ", ";
-        }
+                String separator = "";
+                for (Field<?> field : value.fields()) {
+                    c.sql(separator);
+                    c.visit(val(value.get(field), field));
+                    separator = ", ";
+                }
 
-        ctx.sql(')');
+                c.sql(')');
+            },
 
-        // [#13174] Need to cast inline UDT ROW expressions to the UDT type
-        switch (ctx.family()) {
-
-
-            case POSTGRES:
-            case YUGABYTEDB:
-                ctx.sql("::").visit(value.getQualifier());
-                break;
-        }
+            // [#13174] Need to cast inline UDT ROW expressions to the UDT type
+            c -> c.visit(value.getQualifier()),
+            () -> REQUIRE_RECORD_CAST.contains(ctx.dialect())
+        );
     }
 
     @Deprecated

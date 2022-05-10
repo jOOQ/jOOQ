@@ -186,6 +186,33 @@ final class Extract extends AbstractField<Integer> implements QOM.Extract {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case DERBY:
                 switch (datePart) {
                     case YEAR:

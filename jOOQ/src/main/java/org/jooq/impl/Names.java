@@ -97,6 +97,7 @@ final class Names {
     static final Name N_BIT_X_NOR              = systemName("bit_xnor");
     static final Name N_BOOLAND_AGG            = systemName("booland_agg");
     static final Name N_BOOLOR_AGG             = systemName("boolor_agg");
+    static final Name N_BYTEA                  = systemName("bytea");
     static final Name N_BYTE_LENGTH            = systemName("byte_length");
     static final Name N_CAST                   = systemName("cast");
     static final Name N_CEILING                = systemName("ceiling");
@@ -173,6 +174,7 @@ final class Names {
     static final Name N_JSONB_OBJECT_AGG       = systemName("jsonb_object_agg");
     static final Name N_JSONB_PATH_EXISTS      = systemName("jsonb_path_exists");
     static final Name N_JSONB_PATH_QUERY_FIRST = systemName("jsonb_path_query_first");
+    static final Name N_JSONPATH               = systemName("jsonpath");
     static final Name N_JSON_AGG               = systemName("json_agg");
     static final Name N_JSON_ARRAYAGG          = systemName("json_arrayagg");
     static final Name N_JSON_BUILD_ARRAY       = systemName("json_build_array");

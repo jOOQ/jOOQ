@@ -219,7 +219,7 @@ implements
 
                     // [#3824] Ensure that the output for DATE arithmetic will also be of type DATE, not TIMESTAMP
                     else
-                        ctx.sql('(').visit(date).sql(" + ").visit(interval).sql(" * ").visit(K_INTERVAL).sql(' ').visit(inline(string)).sql(")::date");
+                        ctx.sql("cast((").visit(date).sql(" + ").visit(interval).sql(" * ").visit(K_INTERVAL).sql(' ').visit(inline(string)).sql(") as date)");
 
                 else
                     ctx.sql('(').visit(date).sql(" + ").visit(interval).sql(" * ").visit(K_INTERVAL).sql(' ').visit(inline(string)).sql(")");

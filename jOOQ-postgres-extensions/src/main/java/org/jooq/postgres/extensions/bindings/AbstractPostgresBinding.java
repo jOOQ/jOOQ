@@ -45,6 +45,7 @@ import java.sql.SQLFeatureNotSupportedException;
 import org.jooq.BindingGetSQLInputContext;
 import org.jooq.BindingSQLContext;
 import org.jooq.BindingSetSQLOutputContext;
+import org.jooq.Context;
 import org.jooq.impl.AbstractBinding;
 import org.jooq.impl.DSL;
 
@@ -66,34 +67,48 @@ public abstract class AbstractPostgresBinding<T, U> extends AbstractBinding<T, U
         return null;
     }
 
-    @Override
-    protected void sqlInline(BindingSQLContext<U> ctx) throws SQLException {
-        if (ctx.value() instanceof Object[]) {
-            ctx.render().visit(keyword("ARRAY")).sql('[');
+    /**
+     * A checked exception throwing {@link Consumer}.
+     */
+    @FunctionalInterface
+    private interface ThrowingRunnable {
+        void run() throws SQLException;
+    }
 
-            String separator = "";
-            for (Object value : ((Object[]) ctx.value())) {
-                ctx.render().sql(separator).visit(value == null ? keyword("NULL") : DSL.inline("" + value));
-                separator = ", ";
-            }
+    private void castIfNeeded(Context<?> ctx, ThrowingRunnable content) throws SQLException {
+        String castType = castType();
 
-            ctx.render().sql(']');
+        if (castType != null) {
+            ctx.visit(keyword("cast")).sql('(');
+            content.run();
+            ctx.sql(' ').visit(keyword("as")).sql(' ').sql(castType).sql(')');
         }
         else
-            super.sqlInline(ctx);
+            content.run();
+    }
 
-        String castType = castType();
-        if (castType != null)
-            ctx.render().sql("::").sql(castType);
+    @Override
+    protected void sqlInline(BindingSQLContext<U> ctx) throws SQLException {
+        castIfNeeded(ctx.render(), () -> {
+            if (ctx.value() instanceof Object[]) {
+                ctx.render().visit(keyword("ARRAY")).sql('[');
+
+                String separator = "";
+                for (Object value : ((Object[]) ctx.value())) {
+                    ctx.render().sql(separator).visit(value == null ? keyword("NULL") : DSL.inline("" + value));
+                    separator = ", ";
+                }
+
+                ctx.render().sql(']');
+            }
+            else
+                super.sqlInline(ctx);
+        });
     }
 
     @Override
     protected void sqlBind(BindingSQLContext<U> ctx) throws SQLException {
-        super.sqlBind(ctx);
-
-        String castType = castType();
-        if (castType != null)
-            ctx.render().sql("::").sql(castType);
+        castIfNeeded(ctx.render(), () -> super.sqlBind(ctx));
     }
 
     // -------------------------------------------------------------------------

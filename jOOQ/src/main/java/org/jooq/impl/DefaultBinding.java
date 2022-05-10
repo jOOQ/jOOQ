@@ -94,6 +94,8 @@ import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.REQUIRES_LITERAL_CAST;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.infinity;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.nan;
+import static org.jooq.impl.DefaultBinding.DefaultEnumTypeBinding.pgEnumValue;
+import static org.jooq.impl.DefaultBinding.DefaultEnumTypeBinding.pgRenderEnumCast;
 import static org.jooq.impl.DefaultBinding.DefaultJSONBBinding.EMULATE_AS_BLOB;
 import static org.jooq.impl.DefaultBinding.DefaultResultBinding.readMultisetJSON;
 import static org.jooq.impl.DefaultBinding.DefaultResultBinding.readMultisetXML;
@@ -123,6 +125,7 @@ import static org.jooq.impl.Keywords.K_TIME_WITH_TIME_ZONE;
 import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
 import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
+import static org.jooq.impl.Names.N_BYTEA;
 import static org.jooq.impl.Names.N_ST_GEOMFROMTEXT;
 import static org.jooq.impl.Names.N_ST_GEOMFROMWKB;
 import static org.jooq.impl.R2DBC.isR2dbc;
@@ -1223,11 +1226,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 }
 
                 ctx.render().sql(squareBrackets ? ']' : ')');
-
-                // [#3214] Some PostgreSQL array type literals need explicit casting
-                // TODO: This seems mutually exclusive with the previous branch. Still needed?
-                if ((REQUIRES_ARRAY_CAST.contains(ctx.dialect())) && dataType.getArrayComponentDataType().isEnum())
-                    DefaultEnumTypeBinding.pgRenderEnumCast(ctx.render(), dataType.getType());
             }
         }
 
@@ -1243,24 +1241,22 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void sqlBind0(BindingSQLContext<U> ctx, Object[] value) throws SQLException {
-            super.sqlBind0(ctx, value);
-
-            // In Postgres, some additional casting must be done in some cases...
-            switch (ctx.family()) {
-
-
-                case POSTGRES:
-                case YUGABYTEDB:
+            Cast.renderCastIf(ctx.render(),
+                c -> super.sqlBind0(ctx, value),
+                c -> {
 
                     // Postgres needs explicit casting for enum (array) types
                     if (EnumType.class.isAssignableFrom(dataType.getType().getComponentType()))
-                        DefaultEnumTypeBinding.pgRenderEnumCast(ctx.render(), dataType.getType());
+                        pgRenderEnumCast(ctx.render(), dataType.getType(), pgEnumValue(dataType.getType()));
 
                     // ... and also for other array types
                     else
-                        ctx.render().sql("::")
-                                    .sql(dataType.getCastTypeName(ctx.render().configuration()));
-            }
+                        ctx.render().sql(dataType.getCastTypeName(ctx.render().configuration()));
+                },
+
+                // In Postgres, some additional casting must be done in some cases...
+                () -> REQUIRES_ARRAY_CAST.contains(ctx.family())
+            );
         }
 
         @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -2063,11 +2059,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 case POSTGRES:
                 case YUGABYTEDB:
-                    ctx.render()
-                       .sql("E'")
-                       .sql(PostgresUtils.toPGString(value))
-                       .sql("'::bytea");
-
+                    Cast.renderCast(ctx.render(),
+                        c -> c.sql("E'").sql(PostgresUtils.toPGString(value)).sql("'"),
+                        c -> c.visit(N_BYTEA)
+                    );
                     break;
 
                 default:
@@ -2673,19 +2668,28 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, EnumType value) throws SQLException {
-            binding(VARCHAR).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), value.getLiteral()));
+            EnumType enumValue = pgEnumValue(dataType.getType());
 
-            if (REQUIRE_ENUM_CAST.contains(ctx.dialect()))
-                pgRenderEnumCast(ctx.render(), dataType.getType());
+            Cast.renderCastIf(ctx.render(),
+                c -> binding(VARCHAR).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), value.getLiteral())),
+                c -> pgRenderEnumCast(c, dataType.getType(), enumValue),
+
+                // Postgres needs explicit casting for enum (array) types
+                () -> REQUIRE_ENUM_CAST.contains(ctx.dialect()) && enumValue.getSchema() != null
+            );
         }
 
         @Override
         final void sqlBind0(BindingSQLContext<U> ctx, EnumType value) throws SQLException {
-            super.sqlBind0(ctx, value);
+            EnumType enumValue = pgEnumValue(dataType.getType());
 
-            // Postgres needs explicit casting for enum (array) types
-            if (REQUIRE_ENUM_CAST.contains(ctx.dialect()))
-                pgRenderEnumCast(ctx.render(), dataType.getType());
+            Cast.renderCastIf(ctx.render(),
+                c -> super.sqlBind0(ctx, value),
+                c -> pgRenderEnumCast(c, dataType.getType(), enumValue),
+
+                // Postgres needs explicit casting for enum (array) types
+                () -> REQUIRE_ENUM_CAST.contains(ctx.dialect()) && enumValue.getSchema() != null
+            );
         }
 
         @Override
@@ -2718,7 +2722,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return Types.VARCHAR;
         }
 
-        static final void pgRenderEnumCast(RenderContext render, Class<?> type) {
+        static final EnumType pgEnumValue(Class<?> type) {
 
             @SuppressWarnings("unchecked")
             Class<? extends EnumType> enumType = (Class<? extends EnumType>) (
@@ -2731,21 +2735,23 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (enums == null || enums.length == 0)
                 throw new IllegalArgumentException("Not a valid EnumType : " + type);
 
-            Schema schema = enums[0].getSchema();
-            if (schema != null) {
-                render.sql("::");
+            return enums[0];
+        }
 
-                schema = using(render.configuration()).map(schema);
-                if (schema != null && TRUE.equals(render.configuration().settings().isRenderSchema())) {
-                    render.visit(schema);
-                    render.sql('.');
+        static final void pgRenderEnumCast(Context<?> ctx, Class<?> type, EnumType value) {
+            Schema schema = value.getSchema();
+            if (schema != null) {
+                schema = using(ctx.configuration()).map(schema);
+                if (schema != null && TRUE.equals(ctx.configuration().settings().isRenderSchema())) {
+                    ctx.visit(schema);
+                    ctx.sql('.');
                 }
 
-                render.visit(name(enums[0].getName()));
-            }
+                ctx.visit(name(value.getName()));
 
-            if (type.isArray())
-                render.sql("[]");
+                if (type.isArray())
+                    ctx.sql("[]");
+            }
         }
 
         static final <E extends EnumType> E getEnumType(Class<? extends E> type, String literal) {
@@ -3678,7 +3684,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultRecordBinding<U> extends InternalBinding<Record, U> {
-        private static final Set<SQLDialect> REQUIRE_RECORD_CAST = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+        static final Set<SQLDialect> REQUIRE_RECORD_CAST = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
         DefaultRecordBinding(DataType<Record> dataType, Converter<Record, U> converter) {
             super(dataType, converter);
@@ -3686,20 +3692,25 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         void sqlBind0(BindingSQLContext<U> ctx, Record value) throws SQLException {
-            super.sqlBind0(ctx, value);
-
-            if (REQUIRE_RECORD_CAST.contains(ctx.dialect()) && value != null)
-                pgRenderRecordCast(ctx.render(), value);
+            Cast.renderCastIf(ctx.render(),
+                c -> super.sqlBind0(ctx, value),
+                c -> pgRenderRecordCast(ctx.render(), value),
+                () -> REQUIRE_RECORD_CAST.contains(ctx.dialect()) && value != null
+            );
         }
 
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Record value) throws SQLException {
-            if (REQUIRE_RECORD_CAST.contains(ctx.dialect())) {
-                ctx.render().visit(inline(PostgresUtils.toPGString(value)));
-                pgRenderRecordCast(ctx.render(), value);
-            }
-            else
-                ctx.render().sql("[UDT]");
+            Cast.renderCastIf(ctx.render(),
+                c -> {
+                    if (REQUIRE_RECORD_CAST.contains(ctx.dialect()))
+                        ctx.render().visit(inline(PostgresUtils.toPGString(value)));
+                    else
+                        ctx.render().sql("[UDT]");
+                },
+                c -> pgRenderRecordCast(ctx.render(), value),
+                () -> REQUIRE_RECORD_CAST.contains(ctx.dialect())
+            );
         }
 
         @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -3817,11 +3828,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         // interfaces. Instead, a string representation of a UDT has to be parsed
         // -------------------------------------------------------------------------
 
-        static final void pgRenderRecordCast(RenderContext render, Record value) {
+        static final void pgRenderRecordCast(Context<?> ctx, Record value) {
             if (value instanceof UDTRecord)
-                render.sql("::").visit(((UDTRecord<?>) value).getUDT().getQualifiedName());
+                ctx.visit(((UDTRecord<?>) value).getUDT().getQualifiedName());
             else if (value instanceof TableRecord)
-                render.sql("::").visit(((TableRecord<?>) value).getTable().getQualifiedName());
+                ctx.visit(((TableRecord<?>) value).getTable().getQualifiedName());
         }
 
         @SuppressWarnings("unchecked")

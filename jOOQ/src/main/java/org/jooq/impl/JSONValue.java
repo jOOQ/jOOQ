@@ -184,7 +184,7 @@ implements
 
             case POSTGRES:
             case YUGABYTEDB:
-                ctx.visit(function(N_JSONB_PATH_QUERY_FIRST, json.getDataType(), castIfNeeded(json, JSONB), DSL.field("{0}::jsonpath", path)));
+                ctx.visit(function(N_JSONB_PATH_QUERY_FIRST, json.getDataType(), castIfNeeded(json, JSONB), DSL.field("cast({0} as jsonpath)", path)));
                 break;
 
             default: {

@@ -219,13 +219,13 @@ implements
             ctx,
             select(map(columns, col -> col.forOrdinality
                 ? DSL.field("o").as(col.field)
-                : DSL.field("(jsonb_path_query_first(j, {0}::jsonpath)->>0)::{1}",
+                : DSL.field("cast((jsonb_path_query_first(j, cast({0} as jsonpath))->>0) as {1})",
                     col.path != null ? val(col.path) : inline("$." + col.field.getName()),
                     keyword(col.type.getCastTypeName(ctx.configuration()))
                   ).as(col.field)))
             .from(hasOrdinality
-                ? "jsonb_path_query({0}, {1}::jsonpath) {with} {ordinality} {as} t(j, o)"
-                : "jsonb_path_query({0}, {1}::jsonpath) {as} t(j)",
+                ? "jsonb_path_query({0}, cast({1} as jsonpath)) {with} {ordinality} {as} t(j, o)"
+                : "jsonb_path_query({0}, cast({1} as jsonpath)) {as} t(j)",
                 json.getType() == JSONB.class ? json : json.cast(JSONB),
                 path
             ),

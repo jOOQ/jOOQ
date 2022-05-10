@@ -58,13 +58,11 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
+import java.util.function.BooleanSupplier;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.Keyword;
 import org.jooq.LanguageContext;
 // ...
@@ -330,29 +328,55 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
 
         @Override
         public void accept(Context<?> ctx) {
-
-            // Avoid casting bind values inside an explicit cast...
-            CastMode castMode = ctx.castMode();
-
-            // Default rendering, if no special case has applied yet
-            ctx.visit(K_CAST).sql('(')
-               .castMode(CastMode.NEVER)
-               .visit(expression)
-               .castMode(castMode)
-               .sql(' ').visit(K_AS).sql(' ');
-
-            if (typeAsKeyword != null)
-                ctx.visit(typeAsKeyword);
+            renderCast(ctx,
+                c -> c.visit(expression),
+                c -> {
+                    if (typeAsKeyword != null)
+                        c.visit(typeAsKeyword);
 
 
 
 
 
-            else
-                ctx.sql(type.getCastTypeName(ctx.configuration()));
-
-            ctx.sql(')');
+                    else
+                        c.sql(type.getCastTypeName(c.configuration()));
+                }
+            );
         }
+    }
+
+    static <E extends Throwable> void renderCast(
+        Context<?> ctx,
+        ThrowingConsumer<? super Context<?>, E> expression,
+        ThrowingConsumer<? super Context<?>, E> type
+    ) throws E {
+
+        // Avoid casting bind values inside an explicit cast...
+        CastMode castMode = ctx.castMode();
+
+        // Default rendering, if no special case has applied yet
+        ctx.visit(K_CAST).sql('(')
+           .castMode(CastMode.NEVER);
+
+        expression.accept(ctx);
+
+        ctx.castMode(castMode)
+           .sql(' ').visit(K_AS).sql(' ');
+
+        type.accept(ctx);
+        ctx.sql(')');
+    }
+
+    static <E extends Throwable> void renderCastIf(
+        Context<?> ctx,
+        ThrowingConsumer<? super Context<?>, E> expression,
+        ThrowingConsumer<? super Context<?>, E> type,
+        BooleanSupplier test
+    ) throws E {
+        if (test.getAsBoolean())
+            renderCast(ctx, expression, type);
+        else
+            expression.accept(ctx);
     }
 
     // -------------------------------------------------------------------------

@@ -2659,7 +2659,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultEnumTypeBinding<U> extends InternalBinding<EnumType, U> {
+    static final class DefaultEnumTypeBinding<U> extends InternalBinding<org.jooq.EnumType, U> {
         private static final Set<SQLDialect> REQUIRE_ENUM_CAST = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
         DefaultEnumTypeBinding(DataType<EnumType> dataType, Converter<EnumType, U> converter) {

@@ -138,6 +138,14 @@ public class Plugin extends AbstractMojo {
     private org.jooq.meta.jaxb.OnError   onError;
 
     /**
+     * The on-unused behavior.
+     */
+    @Parameter(
+        property = "jooq.codegen.onUnused"
+    )
+    private org.jooq.meta.jaxb.OnError   onUnused;
+
+    /**
      * The jdbc settings.
      */
     @Parameter
@@ -197,6 +205,7 @@ public class Plugin extends AbstractMojo {
             Configuration configuration = new Configuration();
             configuration.setLogging(logging);
             configuration.setOnError(onError);
+            configuration.setOnUnused(onUnused);
             configuration.setJdbc(jdbc);
             configuration.setGenerator(generator);
             configuration.setBasedir(actualBasedir);
@@ -239,6 +248,7 @@ public class Plugin extends AbstractMojo {
             Configuration configuration = GenerationTool.load(in);
             logging = MiniJAXB.append(logging, configuration.getLogging());
             onError = MiniJAXB.append(onError, configuration.getOnError());
+            onUnused = MiniJAXB.append(onUnused, configuration.getOnUnused());
             jdbc = MiniJAXB.append(jdbc, configuration.getJdbc());
             generator = MiniJAXB.append(generator, configuration.getGenerator());
         }

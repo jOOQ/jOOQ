@@ -937,17 +937,24 @@ public class GenerationTool {
             verifyVersions();
             generator.generate(database);
 
-            logUnused("forced type", "forced types", database.getUnusedForcedTypes());
-            logUnused("embeddable", "embeddables", database.getUnusedEmbeddables());
-            logUnused("comment", "comments", database.getUnusedComments());
-            logUnused("synthetic column", "synthetic columns", database.getUnusedSyntheticColumns());
-            logUnused("synthetic readonly column", "synthetic readonly columns", database.getUnusedSyntheticReadonlyColumns());
-            logUnused("synthetic readonly rowid", "synthetic readonly rowids", database.getUnusedSyntheticReadonlyRowids());
-            logUnused("synthetic identity", "synthetic identities", database.getUnusedSyntheticIdentities());
-            logUnused("synthetic primary key", "synthetic primary keys", database.getUnusedSyntheticPrimaryKeys());
-            logUnused("synthetic unique key", "synthetic unique keys", database.getUnusedSyntheticUniqueKeys());
-            logUnused("synthetic foreign key", "synthetic foreign keys", database.getUnusedSyntheticForeignKeys());
-            logUnused("synthetic view", "synthetic views", database.getUnusedSyntheticViews());
+            if (configuration.getOnUnused() != OnError.SILENT) {
+                boolean anyUnused = false;
+
+                anyUnused = anyUnused | logUnused("forced type", "forced types", database.getUnusedForcedTypes());
+                anyUnused = anyUnused | logUnused("embeddable", "embeddables", database.getUnusedEmbeddables());
+                anyUnused = anyUnused | logUnused("comment", "comments", database.getUnusedComments());
+                anyUnused = anyUnused | logUnused("synthetic column", "synthetic columns", database.getUnusedSyntheticColumns());
+                anyUnused = anyUnused | logUnused("synthetic readonly column", "synthetic readonly columns", database.getUnusedSyntheticReadonlyColumns());
+                anyUnused = anyUnused | logUnused("synthetic readonly rowid", "synthetic readonly rowids", database.getUnusedSyntheticReadonlyRowids());
+                anyUnused = anyUnused | logUnused("synthetic identity", "synthetic identities", database.getUnusedSyntheticIdentities());
+                anyUnused = anyUnused | logUnused("synthetic primary key", "synthetic primary keys", database.getUnusedSyntheticPrimaryKeys());
+                anyUnused = anyUnused | logUnused("synthetic unique key", "synthetic unique keys", database.getUnusedSyntheticUniqueKeys());
+                anyUnused = anyUnused | logUnused("synthetic foreign key", "synthetic foreign keys", database.getUnusedSyntheticForeignKeys());
+                anyUnused = anyUnused | logUnused("synthetic view", "synthetic views", database.getUnusedSyntheticViews());
+
+                if (anyUnused && configuration.getOnUnused() == OnError.FAIL)
+                    throw new GeneratorException("Unused configuration elements encountered");
+            }
         }
         finally {
             if (database != null)
@@ -1012,7 +1019,7 @@ public class GenerationTool {
         }
     }
 
-    private void logUnused(String objectType, String objectTypes, List<?> list) {
+    private boolean logUnused(String objectType, String objectTypes, List<?> list) {
         if (!list.isEmpty() && Boolean.parseBoolean(System.getProperty("jooq.codegen.logunused", "true"))) {
             unusedLogger.warn(
                   "Unused " + objectTypes,
@@ -1027,7 +1034,11 @@ public class GenerationTool {
 
             for (Object o : list)
                 unusedLogger.warn("Unused " + objectType, o);
+
+            return true;
         }
+        else
+            return false;
     }
 
     private static void setGlobalLoggingThreshold(Configuration configuration) {

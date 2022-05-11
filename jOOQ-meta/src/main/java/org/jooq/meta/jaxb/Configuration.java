@@ -26,6 +26,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *       &lt;all&gt;
  *         &lt;element name="logging" type="{http://www.jooq.org/xsd/jooq-codegen-3.17.0.xsd}Logging" minOccurs="0"/&gt;
  *         &lt;element name="onError" type="{http://www.jooq.org/xsd/jooq-codegen-3.17.0.xsd}OnError" minOccurs="0"/&gt;
+ *         &lt;element name="onUnused" type="{http://www.jooq.org/xsd/jooq-codegen-3.17.0.xsd}OnError" minOccurs="0"/&gt;
  *         &lt;element name="jdbc" type="{http://www.jooq.org/xsd/jooq-codegen-3.17.0.xsd}Jdbc" minOccurs="0"/&gt;
  *         &lt;element name="generator" type="{http://www.jooq.org/xsd/jooq-codegen-3.17.0.xsd}Generator"/&gt;
  *         &lt;element name="basedir" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
@@ -54,6 +55,9 @@ public class Configuration implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "FAIL")
     @XmlSchemaType(name = "string")
     protected OnError onError = OnError.FAIL;
+    @XmlElement(defaultValue = "LOG")
+    @XmlSchemaType(name = "string")
+    protected OnError onUnused = OnError.LOG;
     protected Jdbc jdbc;
     @XmlElement(required = true)
     protected Generator generator;
@@ -90,6 +94,22 @@ public class Configuration implements Serializable, XMLAppendable
      */
     public void setOnError(OnError value) {
         this.onError = value;
+    }
+
+    /**
+     * The action to be taken by the generator as the consequence of unused objects being encountered. Defaults to LOG.
+     * 
+     */
+    public OnError getOnUnused() {
+        return onUnused;
+    }
+
+    /**
+     * The action to be taken by the generator as the consequence of unused objects being encountered. Defaults to LOG.
+     * 
+     */
+    public void setOnUnused(OnError value) {
+        this.onUnused = value;
     }
 
     /**
@@ -159,6 +179,15 @@ public class Configuration implements Serializable, XMLAppendable
     }
 
     /**
+     * The action to be taken by the generator as the consequence of unused objects being encountered. Defaults to LOG.
+     * 
+     */
+    public Configuration withOnUnused(OnError value) {
+        setOnUnused(value);
+        return this;
+    }
+
+    /**
      * The JDBC configuration element contains information about how to set up the database connection used for source code generation.
      * 
      */
@@ -189,6 +218,7 @@ public class Configuration implements Serializable, XMLAppendable
     public final void appendTo(XMLBuilder builder) {
         builder.append("logging", logging);
         builder.append("onError", onError);
+        builder.append("onUnused", onUnused);
         builder.append("jdbc", jdbc);
         builder.append("generator", generator);
         builder.append("basedir", basedir);
@@ -231,6 +261,15 @@ public class Configuration implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (onUnused == null) {
+            if (other.onUnused!= null) {
+                return false;
+            }
+        } else {
+            if (!onUnused.equals(other.onUnused)) {
+                return false;
+            }
+        }
         if (jdbc == null) {
             if (other.jdbc!= null) {
                 return false;
@@ -267,6 +306,7 @@ public class Configuration implements Serializable, XMLAppendable
         int result = 1;
         result = ((prime*result)+((logging == null)? 0 :logging.hashCode()));
         result = ((prime*result)+((onError == null)? 0 :onError.hashCode()));
+        result = ((prime*result)+((onUnused == null)? 0 :onUnused.hashCode()));
         result = ((prime*result)+((jdbc == null)? 0 :jdbc.hashCode()));
         result = ((prime*result)+((generator == null)? 0 :generator.hashCode()));
         result = ((prime*result)+((basedir == null)? 0 :basedir.hashCode()));

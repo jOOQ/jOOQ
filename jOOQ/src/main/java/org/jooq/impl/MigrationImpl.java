@@ -315,7 +315,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
                 record
                     .setJooqVersion(Constants.VERSION)
-                    .setMigratedAt(new Timestamp(System.currentTimeMillis()))
+                    .setMigratedAt(new Timestamp(dsl().configuration().clock().instant().toEpochMilli()))
                     .setMigratedFrom(from().id())
                     .setMigratedTo(to().id())
                     .setMigrationTime(0L)

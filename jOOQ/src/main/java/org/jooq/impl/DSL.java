@@ -11814,7 +11814,10 @@ public class DSL {
     @NotNull
     @Support
     public static Name quotedName(String... qualifiedName) {
-        return new QualifiedName(qualifiedName, Quoted.QUOTED);
+        if (qualifiedName == null || qualifiedName.length != 1)
+            return new QualifiedName(qualifiedName, Quoted.QUOTED);
+        else
+            return new UnqualifiedName(qualifiedName[0], Quoted.QUOTED);
     }
 
     /**

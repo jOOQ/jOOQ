@@ -37,9 +37,26 @@
  */
 package org.jooq;
 
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.impl.DSL.selectFrom;
+
 import java.util.Collection;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+
+import org.jooq.impl.DSL;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -59,6 +76,14 @@ extends
     Select,
     Table */ 
 {
+
+    /**
+     * Turn this {@link TableLike} expression into a
+     * {@link DSL#multiset(TableLike)}.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    Field<Result<R>> asMultiset();
 
     /**
      * The underlying table representation of this object.

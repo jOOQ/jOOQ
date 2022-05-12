@@ -25624,8 +25624,8 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static <R extends Record> Field<Result<R>> multiset(Select<R> select) {
-        return new Multiset<>(select);
+    public static <R extends Record> Field<Result<R>> multiset(TableLike<R> table) {
+        return new Multiset<>(table);
     }
 
     // -------------------------------------------------------------------------

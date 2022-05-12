@@ -105,6 +105,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.TableLike;
 // ...
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
@@ -119,13 +120,19 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
     static final Set<SQLDialect> NO_SUPPORT_XML_COMPARE       = SQLDialect.supportedBy(POSTGRES);
     static final Set<SQLDialect> FORCE_LIMIT_IN_DERIVED_TABLE = SQLDialect.supportedBy(MARIADB, MYSQL);
 
+    final TableLike<R>           table;
     final Select<R>              select;
 
+    Multiset(TableLike<R> table) {
+        this(table, table instanceof Select ? (Select<R>) table : selectFrom(table));
+    }
+
     @SuppressWarnings("unchecked")
-    Multiset(Select<R> select) {
+    private Multiset(TableLike<R> table, Select<R> select) {
         // [#12100] Can't use select.fieldsRow() here.
         super(N_MULTISET, new MultisetDataType<>((AbstractRow<R>) DSL.row(select.getSelect()), select.getRecordType()));
 
+        this.table = table;
         this.select = select;
     }
 
@@ -448,8 +455,8 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
     // -------------------------------------------------------------------------
 
     @Override
-    public final Select<R> $select() {
-        return select;
+    public final TableLike<R> $table() {
+        return table;
     }
 
 

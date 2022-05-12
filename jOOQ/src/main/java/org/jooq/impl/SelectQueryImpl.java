@@ -265,6 +265,7 @@ import org.jooq.QualifiedAsterisk;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...
+import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
@@ -654,6 +655,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final Row fieldsRow() {
         return asTable().fieldsRow();
+    }
+
+    @Override
+    public final Field<Result<R>> asMultiset() {
+        return DSL.multiset(this);
     }
 
     @Override

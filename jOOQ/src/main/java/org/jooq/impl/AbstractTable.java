@@ -102,6 +102,7 @@ import org.jooq.QualifiedAsterisk;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RecordType;
+import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.RowId;
 import org.jooq.SQL;
@@ -299,6 +300,11 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     @Override
     public final Field<?>[] fields() {
         return fieldsRow().fields();
+    }
+
+    @Override
+    public final Field<Result<R>> asMultiset() {
+        return DSL.multiset(this);
     }
 
     @Override

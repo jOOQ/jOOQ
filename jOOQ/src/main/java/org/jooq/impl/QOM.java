@@ -118,6 +118,7 @@ import org.jooq.Spatial;
 import org.jooq.Statement;
 import org.jooq.Table;
 import org.jooq.TableElement;
+import org.jooq.TableLike;
 // ...
 // ...
 import org.jooq.WindowDefinition;
@@ -855,7 +856,7 @@ public final class QOM {
         /*permits
             Multiset*/
     {
-        @NotNull Select<R> $select();
+        @NotNull TableLike<R> $table();
     }
 
     public /*sealed*/ interface ScalarSubquery<T>

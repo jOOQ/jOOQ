@@ -2867,6 +2867,11 @@ implements
     }
 
     @Override
+    public final Field<Result<R>> asMultiset() {
+        return getDelegate().asMultiset();
+    }
+
+    @Override
     public final Table<R> asTable() {
         return getDelegate().asTable();
     }

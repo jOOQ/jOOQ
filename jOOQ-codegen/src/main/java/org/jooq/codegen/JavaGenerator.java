@@ -4824,11 +4824,6 @@ public class JavaGenerator extends AbstractGenerator {
         if (tableUdtOrEmbeddable instanceof TableDefinition)
             printTableJPAAnnotation(out, (TableDefinition) tableUdtOrEmbeddable);
 
-        int maxLength0 = 0;
-        for (TypedElementDefinition<?> column : getTypedElements(tableUdtOrEmbeddable))
-            maxLength0 = Math.max(maxLength0, out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)).length());
-        int maxLength = maxLength0;
-
         if (scala) {
             out.println("%s%sclass %s(", visibility(), (generatePojosAsScalaCaseClasses() ? "case " : ""), className);
 
@@ -4875,7 +4870,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 forEach(getTypedElements(tableUdtOrEmbeddable), (column, separator) -> {
                     out.println("%s %s%s",
-                        StringUtils.rightPad(out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)), maxLength),
+                        out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)),
                         getStrategy().getJavaMemberName(column, Mode.POJO),
                         separator);
                 });
@@ -4895,7 +4890,7 @@ public class JavaGenerator extends AbstractGenerator {
                 for (TypedElementDefinition<?> column : getTypedElements(tableUdtOrEmbeddable))
                     out.println("private %s%s %s;",
                         generateImmutablePojos() ? "final " : "",
-                        StringUtils.rightPad(out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)), maxLength0),
+                        out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)),
                         getStrategy().getJavaMemberName(column, Mode.POJO));
         }
 
@@ -4973,11 +4968,8 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.POJO);
         final List<String> properties = new ArrayList<>();
 
-        int maxLength = 0;
-        for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
-            maxLength = Math.max(maxLength, out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)).length());
+        for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT))
             properties.add("\"" + escapeString(getStrategy().getJavaMemberName(column, Mode.POJO)) + "\"");
-        }
 
         if (scala) {
         }
@@ -5000,7 +4992,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println(separator1);
                 out.print("[[before=@][after= ][%s]]%s %s",
                     list(nullableAnnotation),
-                    StringUtils.rightPad(out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)), maxLength),
+                    out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)),
                     getStrategy().getJavaMemberName(column, Mode.POJO));
                 separator1 = ",";
             }

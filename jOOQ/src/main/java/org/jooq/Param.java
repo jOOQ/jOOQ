@@ -184,4 +184,19 @@ public /* non-sealed */ interface Param<T> extends ParamOrVariable<T> {
      */
     @Experimental
     @NotNull Param<T> $value(T value);
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
+    boolean $inline();
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
+    @NotNull Param<T> $inline(boolean inline);
+
 }

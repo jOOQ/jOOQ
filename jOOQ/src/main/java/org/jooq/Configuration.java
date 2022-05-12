@@ -569,6 +569,13 @@ public interface Configuration extends Serializable {
 
 
 
+
+
+
+
+
+
+
     /**
      * Retrieve the configured schema mapping.
      *
@@ -1302,6 +1309,20 @@ public interface Configuration extends Serializable {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Change this configuration to hold a new dialect.
      * <p>
@@ -1852,6 +1873,18 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration derive(FormattingProvider newFormattingProvider);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -58,7 +58,7 @@ import org.jooq.conf.ParamType;
  *
  * @author Lukas Eder
  */
-final class LazyVal<T> extends AbstractParamX<T> implements QOM.Val<T> {
+final class LazyVal<T> extends AbstractParamX<T> {
 
     private final Field<T>              field;
     private transient AbstractParamX<T> delegate;
@@ -157,6 +157,16 @@ final class LazyVal<T> extends AbstractParamX<T> implements QOM.Val<T> {
     @Override
     public final Param<T> $value(T value) {
         return delegate.$value(value);
+    }
+
+    @Override
+    public final boolean $inline() {
+        return delegate.$inline();
+    }
+
+    @Override
+    public final Param<T> $inline(boolean inline) {
+        return delegate.$inline(inline);
     }
 
 

@@ -99,8 +99,15 @@ implements
 
 
 
-        ScalarSubquery<T> f = new ScalarSubquery<>(arg2, arg1.getDataType(), true);
-        Eq.acceptCompareCondition(ctx, this, arg1, org.jooq.Comparator.NOT_IN, f, RowN::notIn, RowN::notIn, c -> c.visit(arg1).sql(' ').visit(K_NOT_IN).sql(' ').visit(f));
+        Eq.acceptCompareCondition(ctx,
+            this,
+            arg1,
+            org.jooq.Comparator.NOT_IN,
+            new ScalarSubquery<>(arg2, arg1.getDataType(), true),
+            RowN::notIn,
+            RowN::notIn,
+            (c, a1, a2) -> c.visit(a1).sql(' ').visit(K_NOT_IN).sql(' ').visit(a2)
+        );
     }
 
 

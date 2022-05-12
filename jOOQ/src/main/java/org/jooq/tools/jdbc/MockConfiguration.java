@@ -69,6 +69,7 @@ import org.jooq.RecordUnmapperProvider;
 import org.jooq.SQLDialect;
 import org.jooq.TransactionListenerProvider;
 import org.jooq.TransactionProvider;
+// ...
 import org.jooq.Unwrapper;
 import org.jooq.UnwrapperProvider;
 import org.jooq.VisitListenerProvider;
@@ -206,6 +207,11 @@ public class MockConfiguration extends AbstractConfiguration {
     public DiagnosticsListenerProvider[] diagnosticsListenerProviders() {
         return delegate.diagnosticsListenerProviders();
     }
+
+
+
+
+
 
 
 
@@ -405,6 +411,12 @@ public class MockConfiguration extends AbstractConfiguration {
 
 
 
+
+
+
+
+
+
     @Override
     public Configuration set(Unwrapper newUnwrapper) {
         delegate.set(newUnwrapper);
@@ -556,6 +568,12 @@ public class MockConfiguration extends AbstractConfiguration {
     public Configuration derive(DiagnosticsListenerProvider... newDiagnosticsListenerProviders) {
         return new MockConfiguration(delegate.derive(newDiagnosticsListenerProviders), provider);
     }
+
+
+
+
+
+
 
 
 

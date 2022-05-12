@@ -101,7 +101,7 @@ implements
 
 
 
-        Eq.acceptCompareCondition(ctx, this, arg1, org.jooq.Comparator.EQUALS, arg2, RowN::eq, RowN::eq, c -> c.visit(arg1).sql(" = ").visit(arg2));
+        Eq.acceptCompareCondition(ctx, this, arg1, org.jooq.Comparator.EQUALS, arg2, RowN::eq, RowN::eq, (c, a1, a2) -> c.visit(a1).sql(" = ").visit(a2));
     }
 
     @Override
@@ -121,7 +121,7 @@ implements
         Field<T> arg2,
         BiFunction<RowN, Select<?>, Condition> compareRowSubquery,
         BiFunction<RowN, RowN, Condition> compareRowRow,
-        Consumer<? super Context<?>> acceptDefault
+        Function3<? super Context<?>, ? super Field<T>, ? super Field<T>, ? extends Context<?>> acceptDefault
     ) {
         boolean field1Embeddable = arg1.getDataType().isEmbeddable();
         SelectQueryImpl<?> s;
@@ -141,8 +141,20 @@ implements
                 && arg2.getDataType().isMultiset()
                 && !Boolean.TRUE.equals(ctx.data(DATA_MULTISET_CONDITION)))
             ctx.data(DATA_MULTISET_CONDITION, true, c -> c.visit(condition));
+
+
+
+
+
+
+
+
+
+
+
+
         else
-            acceptDefault.accept(ctx);
+            acceptDefault.apply(ctx, arg1, arg2);
     }
 
     /**

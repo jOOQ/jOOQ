@@ -173,6 +173,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsInverseHyperbolicFunctions = true;
     @XmlElement(defaultValue = "false")
+    protected Boolean transformInlineBindValuesForFieldComparisons = false;
+    @XmlElement(defaultValue = "false")
     protected Boolean transformAnsiJoinToTableLists = false;
     @XmlElement(defaultValue = "WHEN_NEEDED")
     @XmlSchemaType(name = "string")
@@ -2051,6 +2053,42 @@ public class Settings
      */
     public void setTransformPatternsInverseHyperbolicFunctions(Boolean value) {
         this.transformPatternsInverseHyperbolicFunctions = value;
+    }
+
+    /**
+     * Transform {@link org.jooq.impl.QOM.CompareCondition} and a few other types of condition to inline their bind values, in case they match
+     *          
+     * <p>
+     * Historically, prior to ANSI join syntax, joins were implemented by listing tables in 
+     * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
+     * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
+     * support. For backwards compatibility with older RDBMS versions, ANSI joins in jOOQ code may be
+     * converted to equivalent table lists in generated SQL using this flag.
+     * <p>
+     * This flag has a limited implementation that supports inner joins (in most cases) and outer joins
+     * (only for simple comparison predicates).
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformInlineBindValuesForFieldComparisons() {
+        return transformInlineBindValuesForFieldComparisons;
+    }
+
+    /**
+     * Sets the value of the transformInlineBindValuesForFieldComparisons property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformInlineBindValuesForFieldComparisons(Boolean value) {
+        this.transformInlineBindValuesForFieldComparisons = value;
     }
 
     /**
@@ -4467,6 +4505,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformInlineBindValuesForFieldComparisons(Boolean value) {
+        setTransformInlineBindValuesForFieldComparisons(value);
+        return this;
+    }
+
     public Settings withTransformAnsiJoinToTableLists(Boolean value) {
         setTransformAnsiJoinToTableLists(value);
         return this;
@@ -5325,6 +5368,7 @@ public class Settings
         builder.append("transformPatternsLogarithmicFunctions", transformPatternsLogarithmicFunctions);
         builder.append("transformPatternsHyperbolicFunctions", transformPatternsHyperbolicFunctions);
         builder.append("transformPatternsInverseHyperbolicFunctions", transformPatternsInverseHyperbolicFunctions);
+        builder.append("transformInlineBindValuesForFieldComparisons", transformInlineBindValuesForFieldComparisons);
         builder.append("transformAnsiJoinToTableLists", transformAnsiJoinToTableLists);
         builder.append("transformInConditionSubqueryWithLimitToDerivedTable", transformInConditionSubqueryWithLimitToDerivedTable);
         builder.append("transformQualify", transformQualify);
@@ -5988,6 +6032,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsInverseHyperbolicFunctions.equals(other.transformPatternsInverseHyperbolicFunctions)) {
+                return false;
+            }
+        }
+        if (transformInlineBindValuesForFieldComparisons == null) {
+            if (other.transformInlineBindValuesForFieldComparisons!= null) {
+                return false;
+            }
+        } else {
+            if (!transformInlineBindValuesForFieldComparisons.equals(other.transformInlineBindValuesForFieldComparisons)) {
                 return false;
             }
         }
@@ -6923,6 +6976,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsLogarithmicFunctions == null)? 0 :transformPatternsLogarithmicFunctions.hashCode()));
         result = ((prime*result)+((transformPatternsHyperbolicFunctions == null)? 0 :transformPatternsHyperbolicFunctions.hashCode()));
         result = ((prime*result)+((transformPatternsInverseHyperbolicFunctions == null)? 0 :transformPatternsInverseHyperbolicFunctions.hashCode()));
+        result = ((prime*result)+((transformInlineBindValuesForFieldComparisons == null)? 0 :transformInlineBindValuesForFieldComparisons.hashCode()));
         result = ((prime*result)+((transformAnsiJoinToTableLists == null)? 0 :transformAnsiJoinToTableLists.hashCode()));
         result = ((prime*result)+((transformInConditionSubqueryWithLimitToDerivedTable == null)? 0 :transformInConditionSubqueryWithLimitToDerivedTable.hashCode()));
         result = ((prime*result)+((transformQualify == null)? 0 :transformQualify.hashCode()));

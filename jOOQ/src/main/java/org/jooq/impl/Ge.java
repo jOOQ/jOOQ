@@ -99,7 +99,7 @@ implements
 
 
 
-        Eq.acceptCompareCondition(ctx, this, arg1, org.jooq.Comparator.GREATER_OR_EQUAL, arg2, RowN::ge, RowN::ge, c -> c.visit(arg1).sql(" >= ").visit(arg2));
+        Eq.acceptCompareCondition(ctx, this, arg1, org.jooq.Comparator.GREATER_OR_EQUAL, arg2, RowN::ge, RowN::ge, (c, a1, a2) -> c.visit(a1).sql(" >= ").visit(a2));
     }
 
     @Override

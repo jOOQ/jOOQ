@@ -99,7 +99,7 @@ implements
 
 
 
-        Eq.acceptCompareCondition(ctx, this, arg1, org.jooq.Comparator.NOT_EQUALS, arg2, RowN::ne, RowN::ne, c -> c.visit(arg1).sql(" <> ").visit(arg2));
+        Eq.acceptCompareCondition(ctx, this, arg1, org.jooq.Comparator.NOT_EQUALS, arg2, RowN::ne, RowN::ne, (c, a1, a2) -> c.visit(a1).sql(" <> ").visit(a2));
     }
 
     @Override

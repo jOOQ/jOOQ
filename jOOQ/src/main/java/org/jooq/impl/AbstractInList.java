@@ -84,6 +84,7 @@ import static org.jooq.impl.Keywords.K_NOT_IN;
 import static org.jooq.impl.Keywords.K_OR;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
@@ -97,8 +98,10 @@ import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function2;
+import org.jooq.Param;
 import org.jooq.RowN;
 import org.jooq.SQLDialect;
+// ...
 import org.jooq.impl.QOM.InList;
 import org.jooq.impl.QOM.UnmodifiableList;
 
@@ -128,12 +131,28 @@ abstract class AbstractInList<T> extends AbstractCondition {
             ctx.visit(rowCondition().apply(row(embeddedFields(field)), rows(values)));
         else if (field.getDataType().isMultiset() && !TRUE.equals(ctx.data(DATA_MULTISET_CONDITION)))
             ctx.data(DATA_MULTISET_CONDITION, true, c -> c.visit(this));
+
+
+
+
+
+
+
+
+
+
+
+
+
         else
             accept0(ctx);
     }
 
     private final void accept0(Context<?> ctx) {
-        boolean in = this instanceof InList;
+        accept1(ctx, this instanceof InList, field, values);
+    }
+
+    private static final <T> void accept1(Context<?> ctx, boolean in, Field<T> field, QueryPartList<Field<T>> values) {
 
 
 

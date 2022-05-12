@@ -90,7 +90,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Lukas Eder
  */
-final class Val<T> extends AbstractParam<T> implements QOM.Val<T>, UEmpty {
+final class Val<T> extends AbstractParam<T> implements UEmpty {
 
     private static final JooqLogger                          log              = JooqLogger.getLogger(Val.class);
     private static final ConcurrentHashMap<Class<?>, Object> legacyWarnings   = new ConcurrentHashMap<>();
@@ -351,5 +351,12 @@ final class Val<T> extends AbstractParam<T> implements QOM.Val<T>, UEmpty {
     @Override
     public final Param<T> $value(T newValue) {
         return copy(newValue);
+    }
+
+    @Override
+    public final Param<T> $inline(boolean inline) {
+        Val<T> w = new Val<>(value, getDataType(), getParamName());
+        w.setInline0(inline);
+        return w;
     }
 }

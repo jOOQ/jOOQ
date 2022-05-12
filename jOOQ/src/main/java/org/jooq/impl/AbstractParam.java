@@ -209,7 +209,18 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
     }
 
     @Override
+    public final boolean $inline() {
+        return inline;
+    }
+
+    @Override
     public /* non-final */ Param<T> $value(T newValue) {
+        // TODO [#12425] Only Val implements this, so far.
+        throw new NotYetImplementedException();
+    }
+
+    @Override
+    public /* non-final */ Param<T> $inline(boolean inline) {
         // TODO [#12425] Only Val implements this, so far.
         throw new NotYetImplementedException();
     }

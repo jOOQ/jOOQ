@@ -42,6 +42,7 @@ import org.jooq.DataType;
 import org.jooq.Param;
 import org.jooq.ParamMode;
 import org.jooq.conf.ParamType;
+import org.jooq.impl.QOM.NotYetImplementedException;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
@@ -126,6 +127,16 @@ final class ConvertedVal<T> extends AbstractParamX<T> implements UNotYetImplemen
     @Override
     public final Param<T> $value(T value) {
         return ((AbstractParamX) delegate).$value(delegate.getDataType().convert(value));
+    }
+
+    @Override
+    public final boolean $inline() {
+        return delegate.$inline();
+    }
+
+    @Override
+    public final Param<T> $inline(boolean inline) {
+        throw new NotYetImplementedException();
     }
 
     // -------------------------------------------------------------------------

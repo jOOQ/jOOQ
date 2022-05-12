@@ -813,9 +813,6 @@ public final class QOM {
         @NotNull Field<?> $field();
     }
 
-    public interface Inline<T> extends Param<T> {}
-    public interface Val<T> extends Param<T> {}
-
     public /*sealed*/ interface Default<T>
         extends
             Field<T>,

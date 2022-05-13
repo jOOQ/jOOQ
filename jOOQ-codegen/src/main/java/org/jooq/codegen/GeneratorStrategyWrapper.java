@@ -49,7 +49,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -79,96 +78,15 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
+class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
 
     private final Map<Class<?>, Map<Integer, Set<String>>> reservedColumns = new HashMap<>();
-
     final Generator                                        generator;
-    final GeneratorStrategy                                delegate;
 
     GeneratorStrategyWrapper(Generator generator, GeneratorStrategy delegate) {
+        super(delegate);
+
         this.generator = generator;
-        this.delegate = delegate;
-    }
-
-    @Override
-    public String getTargetDirectory() {
-        return delegate.getTargetDirectory();
-    }
-
-    @Override
-    public void setTargetDirectory(String directory) {
-        delegate.setTargetDirectory(directory);
-    }
-
-    @Override
-    public String getTargetPackage() {
-        return delegate.getTargetPackage();
-    }
-
-    @Override
-    public void setTargetPackage(String packageName) {
-        delegate.setTargetPackage(packageName);
-    }
-
-    @Override
-    public Locale getTargetLocale() {
-        return delegate.getTargetLocale();
-    }
-
-    @Override
-    public void setTargetLocale(Locale targetLocale) {
-        delegate.setTargetLocale(targetLocale);
-    }
-
-    @Override
-    public Language getTargetLanguage() {
-        return delegate.getTargetLanguage();
-    }
-
-    @Override
-    public void setTargetLanguage(Language targetLanguage) {
-        delegate.setTargetLanguage(targetLanguage);
-    }
-
-    @Override
-    public void setInstanceFields(boolean instanceFields) {
-        delegate.setInstanceFields(instanceFields);
-    }
-
-    @Override
-    public boolean getInstanceFields() {
-        return delegate.getInstanceFields();
-    }
-
-    @Override
-    public void setJavaBeansGettersAndSetters(boolean javaBeansGettersAndSetters) {
-        delegate.setJavaBeansGettersAndSetters(javaBeansGettersAndSetters);
-    }
-
-    @Override
-    public boolean getJavaBeansGettersAndSetters() {
-        return delegate.getJavaBeansGettersAndSetters();
-    }
-
-    @Override
-    public void setUseTableNameForUnambiguousFKs(boolean useTableNameForUnambiguousFKs) {
-        delegate.setUseTableNameForUnambiguousFKs(useTableNameForUnambiguousFKs);
-    }
-
-    @Override
-    public boolean getUseTableNameForUnambiguousFKs() {
-        return delegate.getUseTableNameForUnambiguousFKs();
-    }
-
-    @Override
-    public String getGlobalReferencesFileHeader(Definition container, Class<? extends Definition> objectType) {
-        return delegate.getGlobalReferencesFileHeader(container, objectType);
-    }
-
-    @Override
-    public String getFileHeader(Definition definition, Mode mode) {
-        return delegate.getFileHeader(definition, mode);
     }
 
     @Override
@@ -345,23 +263,6 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     }
 
     @Override
-    public String getGlobalReferencesJavaClassExtends(Definition container, Class<? extends Definition> objectType) {
-        return delegate.getGlobalReferencesJavaClassExtends(container, objectType);
-    }
-
-    @Override
-    public String getJavaClassExtends(Definition definition, Mode mode) {
-
-        // [#1243] Only POJO mode can accept super classes
-        return delegate.getJavaClassExtends(definition, mode);
-    }
-
-    @Override
-    public List<String> getGlobalReferencesJavaClassImplements(Definition container, Class<? extends Definition> objectType) {
-        return delegate.getGlobalReferencesJavaClassImplements(container, objectType);
-    }
-
-    @Override
     public List<String> getJavaClassImplements(Definition definition, Mode mode) {
 
         // [#1243] All generation modes can accept interfaces
@@ -452,10 +353,5 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
         }
 
         return identifier;
-    }
-
-    @Override
-    public String getOverloadSuffix(Definition definition, Mode mode, String overloadIndex) {
-        return delegate.getOverloadSuffix(definition, mode, overloadIndex);
     }
 }

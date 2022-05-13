@@ -6702,6 +6702,16 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
+
+
+
+
+
+
+
+
+
+
         }
 
         List<CheckConstraintDefinition> cc = table.getCheckConstraints();

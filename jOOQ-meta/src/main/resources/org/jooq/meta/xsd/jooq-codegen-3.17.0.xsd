@@ -1760,6 +1760,18 @@ This flag allows for turning off this default behaviour.]]></jxb:javadoc></jxb:p
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether implicit join path constructors should be offered as properties in Kotlin.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="existsConvenienceOneToMany" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate <code>EXISTS</code> convenience syntax for one-to-many relationships.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="existsConvenienceManyToMany" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate <code>EXISTS</code> convenience syntax for many-to-many relationships. A many-to-many relationship is achieved when a child table has 2 non-nullable foreign keys that are part of a unique key.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="rowConvenienceToOne" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate <code>ROW</code> convenience syntax for to-one relationships.
 <p>

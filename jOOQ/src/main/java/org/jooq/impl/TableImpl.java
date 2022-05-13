@@ -57,12 +57,15 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.and;
+import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.multiset;
 import static org.jooq.impl.DSL.multisetAgg;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
+import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultMetaProvider.meta;
 import static org.jooq.impl.DerivedTable.NO_SUPPORT_CORRELATED_DERIVED_TABLE;
@@ -385,6 +388,77 @@ implements
         }
 
         throw new DataAccessException("The many-to-many MULTISET convenience feature is available in the commercial jOOQ distribution only. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
+    }
+
+    /**
+     * Create a <code>MULTISET</code> one-to-many child table expression from
+     * this table.
+     */
+    @org.jooq.Internal
+    @NotNull
+    protected <O1 extends Record> Condition oneToManyExists(
+        ForeignKey<O1, R> path,
+        Function<? super Table<O1>, ? extends TableLike<?>> f
+    ) {
+        if (CONFIG.commercial()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+        throw new DataAccessException("The one-to-many EXISTS convenience feature is available in the commercial jOOQ distribution only. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
+    }
+
+    /**
+     * Create a <code>MULTISET</code> many-to-many child table expression from
+     * this table.
+     */
+    @org.jooq.Internal
+    @NotNull
+    protected <O1 extends Record, X extends Record> Condition manyToManyExists(
+        ForeignKey<O1, R> path1,
+        ForeignKey<O1, X> path2,
+        Function<? super Table<X>, ? extends TableLike<?>> f
+    ) {
+        if (CONFIG.commercial()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+        throw new DataAccessException("The many-to-many EXISTS convenience feature is available in the commercial jOOQ distribution only. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
     }
 
 

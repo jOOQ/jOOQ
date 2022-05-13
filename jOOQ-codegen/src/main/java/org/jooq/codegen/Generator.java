@@ -143,6 +143,30 @@ public interface Generator {
     void setGenerateImplicitJoinPathsAsKotlinProperties(boolean generateImplicitJoinPathsAsKotlinProperties);
 
     /**
+     * Whether <code>EXISTS</code> convenience syntax for one-to-many
+     * relationships should be generated.
+     */
+    boolean generateExistsConvenienceOneToMany();
+
+    /**
+     * Whether <code>EXISTS</code> convenience syntax for one-to-many
+     * relationships should be generated.
+     */
+    void setGenerateExistsConvenienceOneToMany(boolean generateExistsConvenienceOneToMany);
+
+    /**
+     * Whether <code>EXISTS</code> convenience syntax for many-to-many
+     * relationships should be generated.
+     */
+    boolean generateExistsConvenienceManyToMany();
+
+    /**
+     * Whether <code>EXISTS</code> convenience syntax for many-to-many
+     * relationships should be generated.
+     */
+    void setGenerateExistsConvenienceManyToMany(boolean generateExistsConvenienceManyToMany);
+
+    /**
      * Whether <code>ROW</code> convenience syntax for to-one relationships
      * should be generated.
      */

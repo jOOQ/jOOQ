@@ -720,6 +720,10 @@ public class GenerationTool {
                 generator.setGenerateImplicitJoinPathsToOne(g.getGenerate().isImplicitJoinPathsToOne());
             if (g.getGenerate().isImplicitJoinPathsAsKotlinProperties() != null)
                 generator.setGenerateImplicitJoinPathsAsKotlinProperties(g.getGenerate().isImplicitJoinPathsAsKotlinProperties());
+            if (g.getGenerate().isExistsConvenienceOneToMany() != null)
+                generator.setGenerateExistsConvenienceOneToMany(g.getGenerate().isExistsConvenienceOneToMany());
+            if (g.getGenerate().isExistsConvenienceManyToMany() != null)
+                generator.setGenerateExistsConvenienceManyToMany(g.getGenerate().isExistsConvenienceManyToMany());
             if (g.getGenerate().isRowConvenienceToOne() != null)
                 generator.setGenerateRowConvenienceToOne(g.getGenerate().isRowConvenienceToOne());
             if (g.getGenerate().isMultisetConvenienceOneToMany() != null)

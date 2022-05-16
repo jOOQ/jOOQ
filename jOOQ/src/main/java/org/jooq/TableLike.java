@@ -50,7 +50,6 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
-import static org.jooq.impl.DSL.selectFrom;
 
 import java.util.Collection;
 import java.util.function.BiFunction;
@@ -84,6 +83,30 @@ extends
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Field<Result<R>> asMultiset();
+
+    /**
+     * Turn this {@link TableLike} expression into a
+     * {@link DSL#multiset(TableLike)}.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    Field<Result<R>> asMultiset(String alias);
+
+    /**
+     * Turn this {@link TableLike} expression into a
+     * {@link DSL#multiset(TableLike)}.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    Field<Result<R>> asMultiset(Name alias);
+
+    /**
+     * Turn this {@link TableLike} expression into a
+     * {@link DSL#multiset(TableLike)}.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    Field<Result<R>> asMultiset(Field<?> alias);
 
     /**
      * The underlying table representation of this object.

@@ -663,6 +663,21 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
+    public final Field<Result<R>> asMultiset(String alias) {
+        return DSL.multiset(this).as(alias);
+    }
+
+    @Override
+    public final Field<Result<R>> asMultiset(Name alias) {
+        return DSL.multiset(this).as(alias);
+    }
+
+    @Override
+    public final Field<Result<R>> asMultiset(Field<?> alias) {
+        return DSL.multiset(this).as(alias);
+    }
+
+    @Override
     public final Table<R> asTable() {
         // [#13349] Delay the possibly expensive computation of the auto alias,
         //          possibly making the computation unnecessary

@@ -2872,6 +2872,21 @@ implements
     }
 
     @Override
+    public final Field<Result<R>> asMultiset(String alias) {
+        return getDelegate().asMultiset(alias);
+    }
+
+    @Override
+    public final Field<Result<R>> asMultiset(Name alias) {
+        return getDelegate().asMultiset(alias);
+    }
+
+    @Override
+    public final Field<Result<R>> asMultiset(Field<?> alias) {
+        return getDelegate().asMultiset(alias);
+    }
+
+    @Override
     public final Table<R> asTable() {
         return getDelegate().asTable();
     }

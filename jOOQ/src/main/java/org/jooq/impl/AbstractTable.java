@@ -308,6 +308,21 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     }
 
     @Override
+    public final Field<Result<R>> asMultiset(String alias) {
+        return DSL.multiset(this).as(alias);
+    }
+
+    @Override
+    public final Field<Result<R>> asMultiset(Name alias) {
+        return DSL.multiset(this).as(alias);
+    }
+
+    @Override
+    public final Field<Result<R>> asMultiset(Field<?> alias) {
+        return DSL.multiset(this).as(alias);
+    }
+
+    @Override
     public final Table<R> asTable() {
         return this;
     }

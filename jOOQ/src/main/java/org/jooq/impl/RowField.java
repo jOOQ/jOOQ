@@ -114,7 +114,7 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
     final ROW                    row;
 
     RowField(ROW row) {
-        this(row, N_ROW);
+        this(row, DSL.name("nested"));
     }
 
     RowField(final ROW row, Name as) {

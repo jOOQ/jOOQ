@@ -56,6 +56,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.QueryPart;
@@ -240,7 +241,15 @@ implements
      * Subclasses may override this method
      */
     protected void acceptElement(Context<?> ctx, T part) {
-        ctx.visit(part);
+        // [#11969] As of jOOQ 3.17, *all* QueryPartCollectionView<Field<?>> are
+        //          declared as such, there are no QueryPartCollectionView<Condition>
+        //          declarations. Hence, it is currently safe to assume that
+        //          if (part instanceof Condition), then it must have been passed
+        //          as a subtype of Field<?> and must be wrapped
+        if (part instanceof Condition)
+            ctx.visit((QueryPart) DSL.field((Condition) part));
+        else
+            ctx.visit(part);
     }
 
     /**

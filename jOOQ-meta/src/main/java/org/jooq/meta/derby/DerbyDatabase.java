@@ -372,7 +372,7 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
                         .when(inline("INTEGER"), inline((long) Integer.MAX_VALUE))
                         .when(inline("BIGINT"), inline(Long.MAX_VALUE))
                     ).coerce(NUMERIC).as(SYSSEQUENCES.MAXIMUMVALUE),
-                    field(SYSSEQUENCES.CYCLEOPTION.eq(inline("Y"))).as(SYSSEQUENCES.CYCLEOPTION),
+                    SYSSEQUENCES.CYCLEOPTION.eq(inline("Y")).as(SYSSEQUENCES.CYCLEOPTION),
                     inline(null, BIGINT).cast(BIGINT).as("cache")
                 )
                 .from(SYSSEQUENCES)

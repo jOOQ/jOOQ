@@ -38,7 +38,6 @@
 
 package org.jooq.impl;
 
-import static java.util.Collections.emptyList;
 import static org.jooq.SortOrder.DESC;
 import static org.jooq.impl.Tools.anyMatch;
 

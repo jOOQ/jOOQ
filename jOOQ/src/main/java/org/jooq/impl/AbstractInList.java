@@ -265,11 +265,11 @@ abstract class AbstractInList<T> extends AbstractCondition {
         private final int     padSize;
 
         PaddedList(List<T> delegate, int maxPadding, int padBase) {
-            int b = max(2, padBase);
+            int b = Math.max(2, padBase);
 
             this.delegate = delegate;
             this.realSize = delegate.size();
-            this.padSize = min(maxPadding, (int) round(pow(b, ceil(log(realSize) / log(b)))));
+            this.padSize = Math.min(maxPadding, (int) Math.round(Math.pow(b, Math.ceil(Math.log(realSize) / Math.log(b)))));
         }
 
         @Override

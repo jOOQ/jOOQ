@@ -193,19 +193,19 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
         }
         else if ((query.array != null || query.query != null) && emulateOperator) {
             Field<String> pattern = DSL.field(name("pattern"), VARCHAR);
-            Condition cond;
+            Condition condition;
             Field<Boolean> lhs;
             switch (comparator) {
                 case NOT_LIKE:
                 case NOT_SIMILAR_TO:
                 case NOT_LIKE_IGNORE_CASE:
-                    cond = comparisonCondition(inverse(comparator), pattern);
+                    condition = comparisonCondition(inverse(comparator), pattern);
                     lhs = inline(false);
                     break;
                 case LIKE:
                 case SIMILAR_TO:
                 case LIKE_IGNORE_CASE:
-                    cond = comparisonCondition(comparator, pattern);
+                    condition = comparisonCondition(comparator, pattern);
                     lhs = inline(true);
                     break;
                 default:
@@ -215,7 +215,7 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
             Table<?> t = query.array != null
                 ? new ArrayTable(query.array).asTable("t", "pattern")
                 : new AliasedSelect<>(query.query, true, true, false, name("pattern")).as("t");
-            Select<Record1<Boolean>> select = select(DSL.field(cond)).from(t);
+            Select<Record1<Boolean>> select = select(condition).from(t);
             ctx.visit(lhs.eq(query.quantifier.apply(select)));
         }
         else {
@@ -296,22 +296,22 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
     private Condition comparisonCondition(Comparator operator, Object value) {
         switch (operator) {
             case LIKE:
-                return escape != null ? field.like(convert(value, String.class), escape) : field.like(convert(value, String.class));
+                return escape != null ? field.like(Convert.convert(value, String.class), escape) : field.like(Convert.convert(value, String.class));
 
             case NOT_LIKE:
-                return escape != null ? field.notLike(convert(value, String.class), escape) : field.notLike(convert(value, String.class));
+                return escape != null ? field.notLike(Convert.convert(value, String.class), escape) : field.notLike(Convert.convert(value, String.class));
 
             case SIMILAR_TO:
-                return escape != null ? field.similarTo(convert(value, String.class), escape) : field.similarTo(convert(value, String.class));
+                return escape != null ? field.similarTo(Convert.convert(value, String.class), escape) : field.similarTo(Convert.convert(value, String.class));
 
             case NOT_SIMILAR_TO:
-                return escape != null ? field.notSimilarTo(convert(value, String.class), escape) : field.notSimilarTo(convert(value, String.class));
+                return escape != null ? field.notSimilarTo(Convert.convert(value, String.class), escape) : field.notSimilarTo(Convert.convert(value, String.class));
 
             case LIKE_IGNORE_CASE:
-                return escape != null ? field.likeIgnoreCase(convert(value, String.class), escape) : field.likeIgnoreCase(convert(value, String.class));
+                return escape != null ? field.likeIgnoreCase(Convert.convert(value, String.class), escape) : field.likeIgnoreCase(Convert.convert(value, String.class));
 
             case NOT_LIKE_IGNORE_CASE:
-                return escape != null ? field.notLikeIgnoreCase(convert(value, String.class), escape) : field.notLikeIgnoreCase(convert(value, String.class));
+                return escape != null ? field.notLikeIgnoreCase(Convert.convert(value, String.class), escape) : field.notLikeIgnoreCase(Convert.convert(value, String.class));
 
             default:
                 return ((Field) field).compare(operator, value);

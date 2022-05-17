@@ -61,12 +61,17 @@ import org.jetbrains.annotations.Nullable;
 /**
  * @author Lukas Eder
  */
-final class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvider, Condition, UProxy<Condition> {
+final class ConditionProviderImpl extends AbstractField<Boolean> implements ConditionProvider, Condition, UProxy<Condition> {
 
     private Condition condition;
 
-    ConditionProviderImpl() {}
+    ConditionProviderImpl() {
+        this(null);
+    }
+
     ConditionProviderImpl(Condition condition) {
+        super(DSL.name("condition"), SQLDataType.BOOLEAN);
+
         this.condition = condition;
     }
 

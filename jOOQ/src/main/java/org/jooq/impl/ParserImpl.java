@@ -7524,8 +7524,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return null;
         else if (part instanceof Field)
             return (Field<?>) part;
-        else if (part instanceof Condition)
-            return field((Condition) part);
         else if (part instanceof Row)
             return (Row) part;
         else
@@ -7537,8 +7535,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return null;
         else if (part instanceof Field)
             return (Field<?>) part;
-        else if (part instanceof Condition)
-            return field((Condition) part);
         else
             throw expected("Field");
     }
@@ -8317,7 +8313,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("IFNULL"))
                     return parseFunctionArgs2((f1, f2) -> ifnull((Field<?>) f1, (Field<?>) f2));
                 else if (parseFunctionNameIf("ISNULL"))
-                    return parseFunctionArgs2(f -> field(f.isNull()), (f1, f2) -> isnull((Field<?>) f1, (Field<?>) f2));
+                    return parseFunctionArgs2(f -> f.isNull(), (f1, f2) -> isnull((Field<?>) f1, (Field<?>) f2));
                 else if ((field = parseFieldIfIf()) != null)
                     return field;
                 else

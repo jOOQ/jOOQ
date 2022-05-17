@@ -57,11 +57,13 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractCondition extends AbstractQueryPart implements Condition {
+abstract class AbstractCondition extends AbstractField<Boolean> implements Condition {
 
     private static final Clause[] CLAUSES = { CONDITION };
 
-    AbstractCondition() {}
+    AbstractCondition() {
+        super(DSL.name("condition"), SQLDataType.BOOLEAN);
+    }
 
     /**
      * [#10179] Subclasses may override this method to indicate that the

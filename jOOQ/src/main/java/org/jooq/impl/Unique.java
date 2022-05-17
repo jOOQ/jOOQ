@@ -113,7 +113,7 @@ implements
                     .from(queryTable)
                     .where(row(queryFields).isNotNull())
                     .groupBy(queryFields)
-                    .having(count().gt(one()));
+                    .having(DSL.count().gt(one()));
 
                 // TODO: [#7362] [#10304] Find a better way to prevent double negation and unnecessary parentheses
                 ctx.visit(notExists(subquery));

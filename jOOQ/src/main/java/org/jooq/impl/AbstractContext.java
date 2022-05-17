@@ -75,9 +75,11 @@ import java.util.function.Supplier;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.JoinType;
 import org.jooq.LanguageContext;
@@ -97,12 +99,9 @@ import org.jooq.conf.RenderImplicitJoinType;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
-import org.jooq.impl.AbstractContext.ScopeStackElement;
 import org.jooq.impl.Tools.DataKey;
 import org.jooq.impl.Tools.DataKeyScopeStackPart;
 import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -229,6 +228,16 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     // ------------------------------------------------------------------------
     // VisitListener API
     // ------------------------------------------------------------------------
+
+    @Override
+    public final C visit(Condition part) {
+        return visit((QueryPart) part);
+    }
+
+    @Override
+    public final C visit(Field<?> part) {
+        return part instanceof Condition ? visit((QueryPart) DSL.field((Condition) part)) : visit((QueryPart) part);
+    }
 
     @Override
     public final C visit(QueryPart part) {

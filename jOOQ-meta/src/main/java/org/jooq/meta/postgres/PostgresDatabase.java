@@ -935,7 +935,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
         // [#7785] The pg_proc.proisagg column has been replaced incompatibly in PostgreSQL 11
         Field<Boolean> isAgg = (is11()
-            ? field(PG_PROC.PROKIND.eq(inline("a")))
+            ? PG_PROC.PROKIND.eq(inline("a"))
             : field("{0}.proisagg", SQLDataType.BOOLEAN, PG_PROC)
         ).as("is_agg");
 

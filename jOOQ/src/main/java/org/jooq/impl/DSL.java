@@ -20232,7 +20232,7 @@ public class DSL {
     @NotNull
     @Support
     public static Condition condition(Field<Boolean> field) {
-        return field instanceof NoField ? noCondition() : field instanceof ConditionAsField ? ((ConditionAsField) field).condition : new FieldCondition(field);
+        return field instanceof Condition ? (Condition) field : field instanceof NoField ? noCondition() : field instanceof ConditionAsField ? ((ConditionAsField) field).condition : new FieldCondition(field);
     }
 
     // -------------------------------------------------------------------------

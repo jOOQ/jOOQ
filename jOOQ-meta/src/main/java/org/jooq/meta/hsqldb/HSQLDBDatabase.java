@@ -566,7 +566,7 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
                     nvl(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER, ROUTINES.DATA_TYPE).as("datatype"),
                     ROUTINES.NUMERIC_PRECISION,
                     ROUTINES.NUMERIC_SCALE,
-                    field(ROUTINES.ROUTINE_DEFINITION.likeRegex(".*(?i:(\\w+\\s+)+aggregate\\s+function).*")).as("aggregate"))
+                    ROUTINES.ROUTINE_DEFINITION.likeRegex(".*(?i:(\\w+\\s+)+aggregate\\s+function).*").as("aggregate"))
                 .from(ROUTINES)
                 .leftOuterJoin(ELEMENT_TYPES)
                 .on(ROUTINES.ROUTINE_SCHEMA.equal(ELEMENT_TYPES.OBJECT_SCHEMA))

@@ -91,6 +91,30 @@ public interface Context<C extends Context<C>> extends Scope {
     C visit(QueryPart part) throws DataAccessException;
 
     /**
+     * Visit a {@link Condition} as an ordinary {@link QueryPart}.
+     */
+    @NotNull
+    C visit(Condition part) throws DataAccessException;
+
+    /**
+     * Visit a {@link Field} as a {@link DSL#field(Condition)}, if it is a
+     * {@link Condition}, or as an ordinery {@link QueryPart}, otherwise.
+     * <p>
+     * [#11969] Not all RDBMS support {@link Condition} in the form of
+     * {@link Field} of type {@link Boolean}, natively. As such, we must wrap
+     * any such {@link Condition} using {@link DSL#field(Condition)} to make
+     * sure the appropriate emulations are implemented. This applies to
+     * conditions that are declared as {@link Field}, e.g. the arguments of a
+     * function like {@link DSL#nvl(Field, Field)}.
+     * <p>
+     * If a {@link Condition} is declared as a condition, then this doesn't
+     * apply and {@link #visit(Condition)} is invoked, instead, e.g. the
+     * arguments of {@link AggregateFunction#filterWhere(Condition)}.
+     */
+    @NotNull
+    C visit(Field<?> part) throws DataAccessException;
+
+    /**
      * Visit a <code>QueryPart</code> as a subquery in the current
      * <code>Context</code>.
      * <p>

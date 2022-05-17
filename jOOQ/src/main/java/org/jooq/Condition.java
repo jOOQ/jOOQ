@@ -81,7 +81,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface Condition extends QueryPart {
+public interface Condition extends Field<Boolean> {
 
     /**
      * Combine this condition with another one using the {@link Operator#AND}

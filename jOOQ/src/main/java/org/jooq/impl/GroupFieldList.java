@@ -64,6 +64,7 @@ import static org.jooq.impl.DSL.emptyGroupingSet;
 
 import java.util.Set;
 
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.GroupField;

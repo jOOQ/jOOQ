@@ -124,11 +124,11 @@ public class H2TableDefinition extends AbstractTableDefinition {
                     COLUMNS.NUMERIC_PRECISION).as(COLUMNS.NUMERIC_PRECISION),
                 nvl(ELEMENT_TYPES.NUMERIC_SCALE, COLUMNS.NUMERIC_SCALE).as(COLUMNS.NUMERIC_SCALE),
                 COLUMNS.IS_NULLABLE,
-                field(Tables.COLUMNS.IS_GENERATED.eq(inline("ALWAYS"))).as(COLUMNS.IS_COMPUTED),
+                Tables.COLUMNS.IS_GENERATED.eq(inline("ALWAYS")).as(COLUMNS.IS_COMPUTED),
                 Tables.COLUMNS.GENERATION_EXPRESSION,
                 COLUMNS.COLUMN_DEFAULT,
                 COLUMNS.REMARKS,
-                field(Tables.COLUMNS.IS_IDENTITY.eq(inline("YES"))).as(Tables.COLUMNS.IS_IDENTITY),
+                Tables.COLUMNS.IS_IDENTITY.eq(inline("YES")).as(Tables.COLUMNS.IS_IDENTITY),
                 COLUMNS.DOMAIN_SCHEMA,
                 COLUMNS.DOMAIN_NAME
             )
@@ -220,7 +220,7 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 COLUMNS.COLUMN_DEFAULT.as("GENERATION_EXPRESSION"),
                 COLUMNS.COLUMN_DEFAULT,
                 COLUMNS.REMARKS,
-                field(COLUMNS.SEQUENCE_NAME.isNotNull()).as("IS_IDENTITY"),
+                COLUMNS.SEQUENCE_NAME.isNotNull().as("IS_IDENTITY"),
                 db.is1_4_198() ? COLUMNS.DOMAIN_SCHEMA : inline("").as(COLUMNS.DOMAIN_SCHEMA),
                 db.is1_4_198() ? COLUMNS.DOMAIN_NAME : inline("").as(COLUMNS.DOMAIN_NAME)
             )

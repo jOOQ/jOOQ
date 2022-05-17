@@ -6751,6 +6751,8 @@ final class Tools {
     static final <T> Field<T> nullSafe(Field<T> field, DataType<?> type) {
         return field == null
              ? (Field<T>) DSL.val((T) null, type)
+             : field instanceof Condition
+             ? (Field<T>) DSL.field((Condition) field)
              : convertVal(field, type);
     }
 

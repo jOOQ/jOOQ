@@ -46,6 +46,7 @@ import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
@@ -241,7 +242,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 INDEXES.TABLE_SCHEMA,
                 INDEXES.TABLE_NAME,
                 INDEXES.INDEX_NAME,
-                field(field(INDEXES.getQualifiedName().append("INDEX_TYPE_NAME")).ne(inline("UNIQUE INDEX"))).as(INDEXES.NON_UNIQUE),
+                field(INDEXES.getQualifiedName().append("INDEX_TYPE_NAME")).ne(inline("UNIQUE INDEX")).as(INDEXES.NON_UNIQUE),
                 field("i.column_name", INDEXES.COLUMN_NAME).as(INDEXES.COLUMN_NAME),
                 field("i.ordinal_position", INDEXES.ORDINAL_POSITION).as(INDEXES.ORDINAL_POSITION),
                 field("i.ordering_specification", INDEXES.ASC_OR_DESC).as(INDEXES.ASC_OR_DESC))
@@ -599,7 +600,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
             : SEQUENCES.MAX_VALUE;
 
         Field<Boolean> isCycle = is2_0_202()
-            ? field(field(SEQUENCES.getQualifiedName().append("CYCLE_OPTION")).eq(inline("YES")))
+            ? field(SEQUENCES.getQualifiedName().append("CYCLE_OPTION")).eq(inline("YES"))
             : SEQUENCES.IS_CYCLE;
 
         return create()
@@ -748,13 +749,13 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
     private List<RoutineDefinition> getRoutines1_4() {
         List<RoutineDefinition> result = new ArrayList<>();
 
-        Field<Boolean> overloaded = field(select(field(DSL.exists(
+        Field<Boolean> overloaded = field(select(DSL.exists(
             select(one())
             .from(FUNCTION_ALIASES.as("a"))
             .where(field(name("a", FUNCTION_ALIASES.ALIAS_SCHEMA.getName())).eq(FUNCTION_ALIASES.ALIAS_SCHEMA))
             .and(field(name("a", FUNCTION_ALIASES.ALIAS_NAME.getName())).eq(FUNCTION_ALIASES.ALIAS_NAME))
             .and(field(name("a", FUNCTION_ALIASES.COLUMN_COUNT.getName())).ne(FUNCTION_ALIASES.COLUMN_COUNT))
-        )))).as("overloaded");
+        ))).as("overloaded");
 
         for (Record record : create()
                 .select(

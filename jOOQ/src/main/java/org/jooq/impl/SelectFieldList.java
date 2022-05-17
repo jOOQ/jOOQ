@@ -38,6 +38,7 @@
 
 package org.jooq.impl;
 
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.SelectFieldOrAsterisk;
 

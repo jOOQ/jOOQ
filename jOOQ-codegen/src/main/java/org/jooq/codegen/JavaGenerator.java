@@ -8807,7 +8807,10 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else if (db.getEnum(schema, u) != null) {
             sb.append(getJavaTypeReference(db, new DefaultDataTypeDefinition(
-                db, schema, DefaultDataType.getDataType(db.getDialect(), String.class).getTypeName(), l, p, s, n, d, (Name) null
+                db,
+                schema,
+                DefaultDataType.getDataType(db.getDialect(), String.class).getTypeName(),
+                l, p, s, n, r, g, d, i, (Name) null, null, null, null
             ), out));
             sb.append(".asEnumDataType(");
             sb.append(classOf(getStrategy().getFullJavaClassName(db.getEnum(schema, u), Mode.ENUM)));

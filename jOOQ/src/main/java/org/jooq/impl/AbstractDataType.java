@@ -593,7 +593,26 @@ implements
 
         // [#10476] TODO: EnumType should extend Qualified
         E e = Tools.enums(enumDataType)[0];
-        return new DefaultDataType<>(getDialect(), (DataType<E>) null, enumDataType, lazyName(e), e.getName(), e.getName(), precision0(), scale0(), length0(), nullability(), (Field) defaultValue());
+        return new DefaultDataType<>(
+            getDialect(),
+            (DataType<E>) null,
+            enumDataType,
+            null,
+            lazyName(e),
+            e.getName(),
+            e.getName(),
+            precision0(),
+            scale0(),
+            length0(),
+            nullability(),
+            readonly(),
+            (Field) generatedAlwaysAs(),
+            generationOption(),
+            collation(),
+            characterSet(),
+            identity(),
+            (Field) defaultValue()
+        );
     }
 
     static final <E extends EnumType> Name lazyName(E e) {

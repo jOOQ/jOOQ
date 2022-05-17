@@ -2203,6 +2203,30 @@ public final class QOM {
     }
 
     /**
+     * The <code>EXCLUDED</code> function.
+     * <p>
+     * Provide "EXCLUDED" qualification for a column for use in ON CONFLICT or ON DUPLICATE
+     * KEY UPDATE.
+     */
+    public /*sealed*/ interface Excluded<T>
+        extends
+            org.jooq.Field<T>
+        //permits
+        //    Excluded
+    {
+
+        /**
+         * The excluded field.
+         */
+        @NotNull  Field<T> $field();
+
+        /**
+         * The excluded field.
+         */
+        @NotNull  Excluded<T> $field(Field<T> field);
+    }
+
+    /**
      * The <code>ROWID</code> operator.
      * <p>
      * Get a <code>table.rowid</code> reference from this table.

@@ -15957,6 +15957,24 @@ public class DSL {
     }
 
     // -------------------------------------------------------------------------
+    // Table functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * The <code>EXCLUDED</code> function.
+     * <p>
+     * Provide "EXCLUDED" qualification for a column for use in ON CONFLICT or ON DUPLICATE
+     * KEY UPDATE.
+     *
+     * @param field The excluded field.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> excluded(Field<T> field) {
+        return new Excluded<>(field);
+    }
+
+    // -------------------------------------------------------------------------
     // Numeric functions
     // -------------------------------------------------------------------------
 

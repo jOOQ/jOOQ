@@ -379,6 +379,7 @@ final class Names {
     static final Name N_DELETING               = systemName("deleting");
     static final Name N_DIGITS                 = systemName("digits");
     static final Name N_E                      = systemName("e");
+    static final Name N_EXCLUDED               = systemName("excluded");
     static final Name N_EXECUTE                = systemName("execute");
     static final Name N_EXISTS                 = systemName("exists");
     static final Name N_EXP                    = systemName("exp");

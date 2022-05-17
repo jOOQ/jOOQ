@@ -50,9 +50,12 @@ import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.Select;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder

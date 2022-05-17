@@ -38,13 +38,9 @@
 
 package org.jooq.impl;
 
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
-
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 // ...

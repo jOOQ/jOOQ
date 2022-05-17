@@ -225,9 +225,10 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return as(DSL.name(alias));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Field<T> as(Name alias) {
-        return new FieldAlias<>(this, alias);
+        return new FieldAlias<>((Field<T>) (this instanceof Condition ? DSL.field((Condition) this) : this), alias);
     }
 
     @Override

@@ -93,6 +93,7 @@ import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ConfigurationException;
+import org.jooq.impl.DefaultExecuteContext.ExecuteContextConnectionProvider;
 import org.jooq.impl.ThreadLocalTransactionProvider.ThreadLocalConnectionProvider;
 import org.jooq.migrations.xml.jaxb.MigrationsType;
 
@@ -1309,9 +1310,8 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
             this.connectionProvider = newConnectionProvider;
         }
-        else {
+        else
             this.connectionProvider = new NoConnectionProvider();
-        }
 
         return this;
     }
@@ -1353,7 +1353,9 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
     @Override
     public final Configuration set(TransactionProvider newTransactionProvider) {
-        if (newTransactionProvider != null) {
+        // [#4277] [#13563] We're already in an ExecuteContext, no further
+        //                  transactions are needed.
+        if (newTransactionProvider != null && !(this.connectionProvider instanceof ExecuteContextConnectionProvider)) {
             this.transactionProvider = newTransactionProvider;
 
             if (newTransactionProvider instanceof ThreadLocalTransactionProvider)

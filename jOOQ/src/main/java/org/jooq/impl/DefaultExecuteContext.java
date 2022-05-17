@@ -698,7 +698,7 @@ class DefaultExecuteContext implements ExecuteContext {
         this.serverOutput = output;
     }
 
-    private final class ExecuteContextConnectionProvider implements ConnectionProvider {
+    final class ExecuteContextConnectionProvider implements ConnectionProvider {
 
         @NotNull
         @Override

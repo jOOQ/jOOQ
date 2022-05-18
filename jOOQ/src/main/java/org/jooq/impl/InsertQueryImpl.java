@@ -824,7 +824,7 @@ implements
             || onConstraint != null
             || !table().getKeys().isEmpty()) {
 
-            Table<?> t = null;
+            Table<?> t;
             Set<Field<?>> k = insertMaps.keysFlattened(ctx, null);
             Collection<Field<?>> f = null;
 
@@ -857,6 +857,8 @@ implements
                 else
                     t = s.asTable("t", map(f, Field::getName, String[]::new));
             }
+            else
+                t = null;
 
             MergeOnConditionStep<R> on = t != null
                 ? ctx.dsl().mergeInto(table())
@@ -871,6 +873,19 @@ implements
             MergeNotMatchedStep<R> notMatched = on;
             if (onDuplicateKeyUpdate) {
                 final FieldMapForUpdate um = updateMapComputedOnClientStored(ctx);
+
+                // [#5214] [#13571] PostgreSQL EXCLUDED pseudo table emulation
+                //                  The InsertQueryImpl uses "t" as table name
+                um.replaceAll((key, v) -> {
+                    if (t != null && v instanceof Excluded<?> e) {
+                        if (t.field(e.$field()) != null)
+                            return Tools.qualify(t, e.$field());
+                        else
+                            return Tools.qualify(table(), e.$field());
+                    }
+                    else
+                        return v;
+                });
 
                 notMatched = condition.hasWhere()
                     ? on.whenMatchedAnd(condition.getWhere()).thenUpdate().set(um)

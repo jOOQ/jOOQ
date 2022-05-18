@@ -163,13 +163,22 @@ implements
         // VARCHAR when applying a LIKE predicate
         switch (op) {
             case LIKE:
-            case LIKE_IGNORE_CASE:
             case SIMILAR_TO:
             case NOT_LIKE:
-            case NOT_LIKE_IGNORE_CASE:
             case NOT_SIMILAR_TO:
                 if (arg1.getType() != String.class && REQUIRES_CAST_ON_LIKE.contains(ctx.dialect()))
                     arg1 = castIfNeeded(arg1, String.class);
+                if (arg2.getType() != String.class && REQUIRES_CAST_ON_LIKE.contains(ctx.dialect()))
+                    arg2 = castIfNeeded(arg2, String.class);
+
+                break;
+
+            case LIKE_IGNORE_CASE:
+            case NOT_LIKE_IGNORE_CASE:
+                if (arg1.getType() != String.class)
+                    arg1 = castIfNeeded(arg1, String.class);
+                if (arg2.getType() != String.class)
+                    arg2 = castIfNeeded(arg2, String.class);
 
                 break;
         }

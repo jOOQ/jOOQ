@@ -97,9 +97,11 @@ import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.flattenCollection;
+import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_DML_TARGET_TABLE;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_RENDERING_DATA_CHANGE_DELTA_TABLE;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_TOP_LEVEL_CTE;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
@@ -367,14 +369,14 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         boolean previousDeclareFields = ctx.declareFields();
 
         if (NATIVE_SUPPORT_DATA_CHANGE_DELTA_TABLE.contains(ctx.dialect())
-                && !returning.isEmpty()
-                && !TRUE.equals(ctx.data(BooleanDataKey.DATA_RENDERING_DATA_CHANGE_DELTA_TABLE))) {
-            ctx.data(BooleanDataKey.DATA_RENDERING_DATA_CHANGE_DELTA_TABLE,
-                true,
-                c -> c.visit(select(returning).from(
+            && !returning.isEmpty()
+            && ctx.data(DATA_RENDERING_DATA_CHANGE_DELTA_TABLE) == null
+        ) {
+            increment(ctx.data(), DATA_RENDERING_DATA_CHANGE_DELTA_TABLE, () -> {
+                ctx.visit(select(returning).from(
                     new DataChangeDeltaTable<>(this instanceof Delete ? ResultOption.OLD : ResultOption.FINAL, this).as(table().getUnqualifiedName())
-                ))
-            );
+                ));
+            });
         }
 
 

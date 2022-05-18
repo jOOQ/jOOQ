@@ -52,19 +52,17 @@ import static org.jooq.impl.Keywords.K_OLD;
 import static org.jooq.impl.Keywords.K_RETURNING;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Tools.abstractDMLQuery;
+import static org.jooq.impl.Tools.increment;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_RENDERING_DATA_CHANGE_DELTA_TABLE;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_TOP_LEVEL_CTE;
 
 import java.util.Set;
 import java.util.UUID;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.DMLQuery;
 import org.jooq.Delete;
-import org.jooq.Function1;
 import org.jooq.Insert;
-import org.jooq.Merge;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -167,8 +165,7 @@ implements
         if (requiresWorkaroundFor12925(ctx))
             ctx.sql("/* [#12925] ").sql(UUID.randomUUID().toString()).sql(" */").formatSeparator();
 
-        ctx.visit(query)
-           .sqlIndentEnd(')');
+        increment(ctx.data(), DATA_RENDERING_DATA_CHANGE_DELTA_TABLE, () -> ctx.visit(query).sqlIndentEnd(')'));
     }
 
     private final boolean requiresWorkaroundFor12925(Context<?> ctx) {

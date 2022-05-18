@@ -169,7 +169,6 @@ import static org.jooq.impl.Keywords.K_MATERIALIZE;
 import static org.jooq.impl.Keywords.K_NOCYCLE;
 import static org.jooq.impl.Keywords.K_ORDER;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
-import static org.jooq.impl.Keywords.K_PERCENT;
 import static org.jooq.impl.Keywords.K_QUALIFY;
 import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_SIBLINGS;
@@ -194,7 +193,6 @@ import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.camelCase;
 import static org.jooq.impl.Tools.containsUnaliasedTable;
 import static org.jooq.impl.Tools.fieldArray;
-import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.isNotEmpty;
@@ -219,6 +217,7 @@ import static org.jooq.impl.Tools.ExtendedDataKey.DATA_TRANSFORM_ROWNUM_TO_LIMIT
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_DML_TARGET_TABLE;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_RENDERING_DATA_CHANGE_DELTA_TABLE;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_SELECT_ALIASES;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_SELECT_INTO_TABLE;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_TOP_LEVEL_CTE;
@@ -2212,7 +2211,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-        if (TRUE.equals(context.data(BooleanDataKey.DATA_RENDERING_DATA_CHANGE_DELTA_TABLE)))
+        if (Integer.valueOf(1).equals(context.data(DATA_RENDERING_DATA_CHANGE_DELTA_TABLE)))
             context.qualify(false);
 
         context.declareFields(true);
@@ -2229,7 +2228,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         else
             context.visit(getSelectResolveUnsupportedAsterisks(context));
 
-        if (TRUE.equals(context.data(BooleanDataKey.DATA_RENDERING_DATA_CHANGE_DELTA_TABLE)))
+        if (Integer.valueOf(1).equals(context.data(DATA_RENDERING_DATA_CHANGE_DELTA_TABLE)))
             context.qualify(qualify);
 
         context.declareFields(false)

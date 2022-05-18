@@ -100,9 +100,18 @@ implements
 
 
 
-            case MARIADB:
-            case MYSQL: {
+            case MARIADB: {
                 ctx.visit(K_VALUES).sql('(').qualify(false, c -> c.visit(field)).sql(')');
+                break;
+            }
+
+            case MYSQL: {
+
+
+
+
+
+                ctx.visit(N_EXCLUDED).sql('.').qualify(false, c -> c.visit(field));
                 break;
             }
 

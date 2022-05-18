@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -68,6 +69,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.FieldMapsForInsert.toSQLInsertSelect;
+import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_DO_NOTHING;
@@ -81,6 +83,7 @@ import static org.jooq.impl.Keywords.K_ON_DUPLICATE_KEY_UPDATE;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.Names.N_EXCLUDED;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.anyMatch;
@@ -151,6 +154,7 @@ implements
     private static final Set<SQLDialect> SUPPORTS_OPTIONAL_DO_UPDATE_CONFLICT_TARGETS  = SQLDialect.supportedBy(SQLITE);
     private static final Set<SQLDialect> NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING = SQLDialect.supportedBy(DERBY, H2);
     private static final Set<SQLDialect> NO_SUPPORT_SUBQUERY_IN_MERGE_USING            = SQLDialect.supportedBy(DERBY);
+    static final Set<SQLDialect>         REQUIRE_NEW_MYSQL_EXCLUDED_EMULATION          = SQLDialect.supportedBy(MYSQL);
 
     final FieldMapForUpdate              updateMap;
     final FieldMapsForInsert             insertMaps;
@@ -443,8 +447,16 @@ implements
                     //         wasn't supported (see https://github.com/h2database/h2database/issues/1027)
                     boolean oldQualify = ctx.qualify();
                     boolean newQualify = ctx.family() != H2 && oldQualify;
+                    FieldMapForUpdate um = updateMapComputedOnClientStored(ctx);
 
-                    toSQLInsert(ctx);
+                    Set<Field<?>> keys = toSQLInsert(ctx);
+
+                    // [#5214] TODO: This is incorrect for INSERT .. SELECT
+                    boolean requireNewMySQLExcludedEmulation = REQUIRE_NEW_MYSQL_EXCLUDED_EMULATION.contains(ctx.dialect()) && anyMatch(um.values(), v -> v instanceof Excluded);
+                    if (requireNewMySQLExcludedEmulation)
+                        ctx.formatSeparator()
+                           .visit(K_AS).sql(' ').visit(N_EXCLUDED);
+
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                        .visit(K_ON_DUPLICATE_KEY_UPDATE)
@@ -456,7 +468,17 @@ implements
                     if (condition.hasWhere())
                         ctx.data(DATA_ON_DUPLICATE_KEY_WHERE, condition.getWhere());
 
-                    ctx.visit(updateMapComputedOnClientStored(ctx));
+                    if (requireNewMySQLExcludedEmulation) {
+                        um.replaceAll((k, v) -> {
+                            if (v instanceof Excluded) { Excluded<?> e = (Excluded<?>) v;
+                                return keys.contains(e.$field()) ? v : qualify(table(), e.$field());
+                            }
+                            else
+                                return v;
+                        });
+                    }
+
+                    ctx.visit(um);
 
                     if (condition.hasWhere())
                         ctx.data().remove(DATA_ON_DUPLICATE_KEY_WHERE);
@@ -610,7 +632,7 @@ implements
         return CLAUSES;
     }
 
-    private final void toSQLInsert(Context<?> ctx) {
+    private final Set<Field<?>> toSQLInsert(Context<?> ctx) {
         ctx.start(INSERT_INSERT_INTO)
            .visit(K_INSERT)
            .sql(' ');
@@ -714,6 +736,8 @@ implements
 
         else
             ctx.visit(insertMaps);
+
+        return fields;
     }
 
     private final void acceptDefaultValuesEmulation(Context<?> ctx, int length) {
@@ -909,6 +933,9 @@ implements
 
     private final FieldMapForUpdate updateMapComputedOnClientStored(Context<?> ctx) {
 
+        // [#5214] Always make a copy to benefit other emulations
+        FieldMapForUpdate um = new FieldMapForUpdate(updateMap.table, SetClause.INSERT, updateMap.assignmentClause);
+        um.putAll(updateMap);
 
 
 
@@ -921,9 +948,7 @@ implements
 
 
 
-
-
-        return updateMap;
+        return um;
     }
 
     /**

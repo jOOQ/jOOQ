@@ -138,6 +138,12 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
     final SetClause              setClause;
     final Clause                 assignmentClause;
 
+    FieldMapForUpdate(FieldMapForUpdate um, SetClause setClause) {
+        this(um.table, setClause, um.assignmentClause);
+
+        putAll(um);
+    }
+
     FieldMapForUpdate(Table<?> table, SetClause setClause, Clause assignmentClause) {
         this.table = table;
         this.setClause = setClause;

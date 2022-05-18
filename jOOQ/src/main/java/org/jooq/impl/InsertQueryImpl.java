@@ -901,7 +901,7 @@ implements
             //         not with ON DUPLICATE KEY IGNORE
             MergeNotMatchedStep<R> notMatched = on;
             if (onDuplicateKeyUpdate) {
-                final FieldMapForUpdate um = updateMapComputedOnClientStored(ctx);
+                FieldMapForUpdate um = new FieldMapForUpdate(updateMap, SetClause.INSERT);
 
                 // [#5214] [#13571] PostgreSQL EXCLUDED pseudo table emulation
                 //                  The InsertQueryImpl uses "t" as table name
@@ -921,6 +921,10 @@ implements
                         return v;
                 });
 
+                // [#9879] EXCLUDED emulation must happen before client side
+                //         computed column emulation
+                um = updateMapComputedOnClientStored(ctx, um);
+
                 notMatched = condition.hasWhere()
                     ? on.whenMatchedAnd(condition.getWhere()).thenUpdate().set(um)
                     : on.whenMatchedThenUpdate().set(um);
@@ -937,8 +941,10 @@ implements
     private final FieldMapForUpdate updateMapComputedOnClientStored(Context<?> ctx) {
 
         // [#5214] Always make a copy to benefit other emulations
-        FieldMapForUpdate um = new FieldMapForUpdate(updateMap.table, SetClause.INSERT, updateMap.assignmentClause);
-        um.putAll(updateMap);
+        return updateMapComputedOnClientStored(ctx, new FieldMapForUpdate(updateMap, SetClause.INSERT));
+    }
+
+    private final FieldMapForUpdate updateMapComputedOnClientStored(Context<?> ctx, FieldMapForUpdate um) {
 
 
 

@@ -330,7 +330,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualified
         store.addValue(field, Tools.field(value, field));
 
         if (forUpdate)
-            ((InsertQuery<?>) store).addValueForUpdate(field, Tools.field(value, field));
+            ((InsertQuery<?>) store).addValueForUpdate(field, DSL.excluded(field));
     }
 
     /**

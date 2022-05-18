@@ -85,6 +85,7 @@ import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Names.N_EXCLUDED;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.collect;
@@ -345,7 +346,7 @@ implements
                 case POSTGRES:
                 case SQLITE:
                 case YUGABYTEDB: {
-                    ctx.data(DATA_MANDATORY_WHERE_CLAUSE, ctx.family() == SQLITE, c -> toSQLInsert(c));
+                    ctx.data(DATA_MANDATORY_WHERE_CLAUSE, ctx.family() == SQLITE, c -> toSQLInsert(c, false));
 
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
@@ -448,12 +449,12 @@ implements
                     boolean oldQualify = ctx.qualify();
                     boolean newQualify = ctx.family() != H2 && oldQualify;
                     FieldMapForUpdate um = updateMapComputedOnClientStored(ctx);
-
-                    Set<Field<?>> keys = toSQLInsert(ctx);
-
-                    // [#5214] TODO: This is incorrect for INSERT .. SELECT
                     boolean requireNewMySQLExcludedEmulation = REQUIRE_NEW_MYSQL_EXCLUDED_EMULATION.contains(ctx.dialect()) && anyMatch(um.values(), v -> v instanceof Excluded);
-                    if (requireNewMySQLExcludedEmulation)
+
+                    Set<Field<?>> keys = toSQLInsert(ctx, requireNewMySQLExcludedEmulation);
+
+                    // [#5214] The alias only applies with INSERT .. VALUES
+                    if (requireNewMySQLExcludedEmulation && select == null)
                         ctx.formatSeparator()
                            .visit(K_AS).sql(' ').visit(N_EXCLUDED);
 
@@ -520,7 +521,7 @@ implements
                 case POSTGRES:
                 case SQLITE:
                 case YUGABYTEDB: {
-                    ctx.data(DATA_MANDATORY_WHERE_CLAUSE, ctx.family() == SQLITE, c -> toSQLInsert(c));
+                    ctx.data(DATA_MANDATORY_WHERE_CLAUSE, ctx.family() == SQLITE, c -> toSQLInsert(c, false));
 
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
@@ -569,7 +570,7 @@ implements
                     Field<?> field = table().field(0);
                     update.put(field, field);
 
-                    toSQLInsert(ctx);
+                    toSQLInsert(ctx, false);
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                        .visit(K_ON_DUPLICATE_KEY_UPDATE)
@@ -606,7 +607,7 @@ implements
 
                 // MySQL has a nice, native syntax for this
                 default: {
-                    toSQLInsert(ctx);
+                    toSQLInsert(ctx, false);
                     ctx.start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                        .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
                     break;
@@ -617,7 +618,7 @@ implements
         // Default mode
         // ------------
         else {
-            toSQLInsert(ctx);
+            toSQLInsert(ctx, false);
             ctx.start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
         }
@@ -632,7 +633,7 @@ implements
         return CLAUSES;
     }
 
-    private final Set<Field<?>> toSQLInsert(Context<?> ctx) {
+    private final Set<Field<?>> toSQLInsert(Context<?> ctx, boolean requireNewMySQLExcludedEmulation) {
         ctx.start(INSERT_INSERT_INTO)
            .visit(K_INSERT)
            .sql(' ');
@@ -689,6 +690,8 @@ implements
 
 
 
+            if (requireNewMySQLExcludedEmulation)
+                s = selectFrom(s.asTable(DSL.table(N_EXCLUDED), keysFlattened));
 
             // [#8353] TODO: Support overlapping embeddables
             toSQLInsertSelect(ctx, s);

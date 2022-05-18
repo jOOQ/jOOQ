@@ -877,7 +877,7 @@ implements
                 // [#5214] [#13571] PostgreSQL EXCLUDED pseudo table emulation
                 //                  The InsertQueryImpl uses "t" as table name
                 um.replaceAll((key, v) -> {
-                    if (t != null && v instanceof Excluded<?> e) {
+                    if (t != null && v instanceof Excluded) { Excluded<?> e = (Excluded<?>) v;
                         if (t.field(e.$field()) != null)
                             return Tools.qualify(t, e.$field());
                         else

@@ -1182,7 +1182,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
             // [#5408] Other dialects may fall through the switch above (PostgreSQL, Firebird, Oracle) and must
             //         execute this logic
             if (!returnedResult.isEmpty() || ctx.family() != HSQLDB) {
-                result = returnedResult.size();
+
+                // [#13574] The DML statement itself may have produced a rowcount
+                //          but the returned results might be empty, so keep the
+                //          higher value of the two
+                result = Math.max(result, returnedResult.size());
                 ctx.rows(result);
             }
 

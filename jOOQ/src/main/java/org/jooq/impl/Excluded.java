@@ -111,7 +111,7 @@ implements
 
 
 
-                ctx.visit(N_EXCLUDED).sql('.').qualify(false, c -> c.visit(field));
+                ctx.visit(name("t")).sql('.').qualify(false, c -> c.visit(field));
                 break;
             }
 

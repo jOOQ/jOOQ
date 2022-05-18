@@ -63,6 +63,8 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import java.util.Map;
 
+import org.jooq.impl.DSL;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -171,5 +173,13 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnDuplicateSetMoreStep<R> set(Record record);
+
+    /**
+     * Sets all columns from the insert column list to
+     * {@link DSL#excluded(Field)}.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    InsertOnDuplicateSetMoreStep<R> setAllToExcluded();
 
 }

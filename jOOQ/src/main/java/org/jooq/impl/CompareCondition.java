@@ -176,13 +176,22 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
         // VARCHAR when applying a LIKE predicate
         switch (op) {
             case LIKE:
-            case LIKE_IGNORE_CASE:
             case SIMILAR_TO:
             case NOT_LIKE:
-            case NOT_LIKE_IGNORE_CASE:
             case NOT_SIMILAR_TO:
                 if (lhs.getType() != String.class && REQUIRES_CAST_ON_LIKE.contains(ctx.dialect()))
                     lhs = castIfNeeded(lhs, String.class);
+                if (rhs.getType() != String.class && REQUIRES_CAST_ON_LIKE.contains(ctx.dialect()))
+                    rhs = castIfNeeded(rhs, String.class);
+
+                break;
+
+            case LIKE_IGNORE_CASE:
+            case NOT_LIKE_IGNORE_CASE:
+                if (lhs.getType() != String.class)
+                    lhs = castIfNeeded(lhs, String.class);
+                if (rhs.getType() != String.class)
+                    rhs = castIfNeeded(rhs, String.class);
 
                 break;
         }

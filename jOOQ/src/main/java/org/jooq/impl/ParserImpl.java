@@ -2303,7 +2303,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (parseKeywordIf("DUPLICATE KEY UPDATE")) {
                     parseKeywordIf("SET");
 
-                    InsertOnConflictWhereStep<?> where = onDuplicate.onDuplicateKeyUpdate().set(parseSetClauseList());
+                    InsertOnConflictWhereStep<?> where = parseKeywordIf("ALL TO EXCLUDED")
+                        ? onDuplicate.onDuplicateKeyUpdate().setAllToExcluded()
+                        : onDuplicate.onDuplicateKeyUpdate().set(parseSetClauseList());
 
                     if (parseKeywordIf("WHERE"))
                         returning = where.where(parseCondition());
@@ -2336,7 +2338,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         returning = doUpdate.doNothing();
                     }
                     else if (parseKeywordIf("UPDATE SET")) {
-                        InsertOnConflictWhereStep<?> where = doUpdate.doUpdate().set(parseSetClauseList());
+                        InsertOnConflictWhereStep<?> where = parseKeywordIf("ALL TO EXCLUDED")
+                            ? doUpdate.doUpdate().setAllToExcluded()
+                            : doUpdate.doUpdate().set(parseSetClauseList());
 
                         if (parseKeywordIf("WHERE"))
                             returning = where.where(parseCondition());

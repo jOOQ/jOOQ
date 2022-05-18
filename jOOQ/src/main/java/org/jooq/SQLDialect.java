@@ -266,9 +266,17 @@ public enum SQLDialect {
     /**
      * The MySQL dialect family.
      * <p>
-     * This family behaves like the versioned dialect {@link #MYSQL_8_0_19}.
+     * This family behaves like the versioned dialect {@link #MYSQL_8_0_20}.
      */
     MYSQL("MySQL", false, true),
+
+
+
+
+
+
+
+
 
 
 

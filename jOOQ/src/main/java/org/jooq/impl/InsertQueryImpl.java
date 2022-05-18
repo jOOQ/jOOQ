@@ -88,6 +88,8 @@ import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.degree;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Tools.orElse;
+import static org.jooq.impl.Tools.qualify;
 import static org.jooq.impl.Tools.unqualified;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT;
@@ -877,11 +879,16 @@ implements
                 // [#5214] [#13571] PostgreSQL EXCLUDED pseudo table emulation
                 //                  The InsertQueryImpl uses "t" as table name
                 um.replaceAll((key, v) -> {
-                    if (t != null && v instanceof Excluded) { Excluded<?> e = (Excluded<?>) v;
-                        if (t.field(e.$field()) != null)
-                            return Tools.qualify(t, e.$field());
+                    if (v instanceof Excluded) { Excluded<?> e = (Excluded<?>) v;
+                        if (t != null)
+
+                            // If the field isn't part of the USING clause, just
+                            // set the field to itself to maintain the user's
+                            // intended (?) touch semantics, which might affect
+                            // triggers
+                            return orElse(t.field(e.$field()), () -> qualify(table(), e.$field()));
                         else
-                            return Tools.qualify(table(), e.$field());
+                            return orElse(insertMaps.lastMap().get(e.$field()), () -> qualify(table(), e.$field()));
                     }
                     else
                         return v;

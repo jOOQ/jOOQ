@@ -121,7 +121,6 @@ implements
                     ctx.sql('~').visit(arg1);
                 else
                     ctx.sql("~(").visit(arg1).sql(')');
-
                 break;
         }
     }

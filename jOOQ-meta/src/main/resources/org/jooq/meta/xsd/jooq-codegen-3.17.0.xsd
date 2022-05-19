@@ -2278,6 +2278,10 @@ This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+ ]]></jxb
       <element name="printMarginForBlockComment" type="int" minOccurs="0" maxOccurs="1" default="80">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The print margin to apply to generated Javadoc and other block comments, for automatic line wrapping. The feature is turned off if the print margin is <code>0</code>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="textBlocks" type="tns:GeneratedTextBlocks" minOccurs="0" maxOccurs="1" default="DETECT_FROM_JDK">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to generate String in text block format.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
@@ -2359,6 +2363,14 @@ e.g. org.jooq.generated.schema1, org.jooq.generated.schema2]]></jxb:javadoc></jx
       <enumeration value="DETECT_FROM_JDK"/>
       <enumeration value="JAVAX_ANNOTATION_GENERATED"/>
       <enumeration value="JAVAX_ANNOTATION_PROCESSING_GENERATED"/>
+    </restriction>
+  </simpleType>
+  
+  <simpleType name="GeneratedTextBlocks">
+    <restriction base="string">
+      <enumeration value="DETECT_FROM_JDK"/>
+      <enumeration value="ON"/>
+      <enumeration value="OFF"/>
     </restriction>
   </simpleType>
   

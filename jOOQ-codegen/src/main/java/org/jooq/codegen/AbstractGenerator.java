@@ -51,6 +51,7 @@ import java.util.stream.Stream;
 import org.jooq.meta.Database;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
 import org.jooq.meta.jaxb.GeneratedSerialVersionUID;
+import org.jooq.meta.jaxb.GeneratedTextBlocks;
 import org.jooq.meta.jaxb.VisibilityModifier;
 import org.jooq.tools.JooqLogger;
 
@@ -168,6 +169,7 @@ abstract class AbstractGenerator implements Generator {
     String                             generateNewline                                  = "\n";
     String                             generateIndentation;
     int                                generatePrintMarginForBlockComment               = 80;
+    GeneratedTextBlocks                generateTextBlocks                               = GeneratedTextBlocks.DETECT_FROM_JDK;
 
     protected GeneratorStrategyWrapper strategy;
     protected String                   targetEncoding                                   = "UTF-8";
@@ -1335,6 +1337,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGeneratePrintMarginForBlockComment(int printMarginForBlockComment) {
         this.generatePrintMarginForBlockComment = printMarginForBlockComment;
+    }
+
+    @Override
+    public GeneratedTextBlocks generateTextBlocks() {
+        return generateTextBlocks;
+    }
+
+    @Override
+    public void setGenerateTextBlocks(GeneratedTextBlocks textBlocks) {
+        this.generateTextBlocks = textBlocks;
     }
 
     // ----

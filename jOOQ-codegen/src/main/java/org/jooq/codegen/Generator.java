@@ -53,6 +53,7 @@ import org.jooq.meta.ForeignKeyDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
 import org.jooq.meta.jaxb.GeneratedSerialVersionUID;
+import org.jooq.meta.jaxb.GeneratedTextBlocks;
 import org.jooq.meta.jaxb.VisibilityModifier;
 import org.jooq.types.Interval;
 
@@ -1253,6 +1254,16 @@ public interface Generator {
      * The print margin for Javadoc and other block comments to be used in generated code.
      */
     void setGeneratePrintMarginForBlockComment(int printMarginForBlockComment);
+
+    /**
+     * Whether to generate String in text block format.
+     */
+    GeneratedTextBlocks generateTextBlocks();
+
+    /**
+     * Whether to generate String in text block format.
+     */
+    void setGenerateTextBlocks(GeneratedTextBlocks textBlocks);
 
     /**
      * The target directory

@@ -914,6 +914,8 @@ public class GenerationTool {
                 generator.setGenerateIndentation(g.getGenerate().getIndentation());
             if (g.getGenerate().getPrintMarginForBlockComment() != null)
                 generator.setGeneratePrintMarginForBlockComment(g.getGenerate().getPrintMarginForBlockComment());
+            if (g.getGenerate().getTextBlocks() != null)
+                generator.setGenerateTextBlocks(g.getGenerate().getTextBlocks());
 
 
             if (!isBlank(d.getSchemaVersionProvider()))

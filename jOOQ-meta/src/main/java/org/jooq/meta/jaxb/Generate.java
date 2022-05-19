@@ -237,6 +237,9 @@ public class Generate implements Serializable, XMLAppendable
     protected String indentation;
     @XmlElement(defaultValue = "80")
     protected Integer printMarginForBlockComment = 80;
+    @XmlElement(defaultValue = "DETECT_FROM_JDK")
+    @XmlSchemaType(name = "string")
+    protected GeneratedTextBlocks textBlocks = GeneratedTextBlocks.DETECT_FROM_JDK;
 
     /**
      * Generate index information.
@@ -2634,6 +2637,22 @@ public class Generate implements Serializable, XMLAppendable
         this.printMarginForBlockComment = value;
     }
 
+    /**
+     * Whether to generate String in text block format.
+     * 
+     */
+    public GeneratedTextBlocks getTextBlocks() {
+        return textBlocks;
+    }
+
+    /**
+     * Whether to generate String in text block format.
+     * 
+     */
+    public void setTextBlocks(GeneratedTextBlocks value) {
+        this.textBlocks = value;
+    }
+
     public Generate withIndexes(Boolean value) {
         setIndexes(value);
         return this;
@@ -3188,6 +3207,15 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Whether to generate String in text block format.
+     * 
+     */
+    public Generate withTextBlocks(GeneratedTextBlocks value) {
+        setTextBlocks(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("indexes", indexes);
@@ -3291,6 +3319,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("newline", newline);
         builder.append("indentation", indentation);
         builder.append("printMarginForBlockComment", printMarginForBlockComment);
+        builder.append("textBlocks", textBlocks);
     }
 
     @Override
@@ -4221,6 +4250,15 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (textBlocks == null) {
+            if (other.textBlocks!= null) {
+                return false;
+            }
+        } else {
+            if (!textBlocks.equals(other.textBlocks)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -4329,6 +4367,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((newline == null)? 0 :newline.hashCode()));
         result = ((prime*result)+((indentation == null)? 0 :indentation.hashCode()));
         result = ((prime*result)+((printMarginForBlockComment == null)? 0 :printMarginForBlockComment.hashCode()));
+        result = ((prime*result)+((textBlocks == null)? 0 :textBlocks.hashCode()));
         return result;
     }
 

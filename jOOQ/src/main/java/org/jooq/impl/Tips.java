@@ -92,6 +92,7 @@ final class Tips {
         "Want to exclude some columns from your write operations? No problem, specify them as 'readonly' in the code generator: https://www.jooq.org/doc/latest/manual/sql-building/column-expressions/readonly-columns/",
         "Need to frequently calculate the same expressions based on other columns from the same table? Many dialects support computed columns: https://www.jooq.org/doc/latest/manual/sql-building/column-expressions/computed-columns/",
         "You can use Table<R> references as SelectField<R> to project nested TableRecords in any query: https://blog.jooq.org/projecting-type-safe-nested-tablerecords-with-jooq-3-17/",
+        "Just like in SQL, a Condition is just a Field<Boolean>, so you can use conditions wherever you can use fields, e.g. in SELECT, GROUP BY, ORDER BY, etc.",
         ""
     };
 

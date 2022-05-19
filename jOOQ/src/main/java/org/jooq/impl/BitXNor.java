@@ -101,8 +101,46 @@ implements
 
 
 
-            default:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            case CUBRID:
+            case FIREBIRD:
+            case HSQLDB:
+            case MARIADB:
+            case MYSQL:
+            case POSTGRES:
+            case SQLITE:
+            case YUGABYTEDB:
                 ctx.visit(DSL.bitNot(DSL.bitXor((Field<Number>) arg1, (Field<Number>) arg2)));
+                break;
+
+            case H2: {
+
+
+
+
+
+                ctx.visit(function(N_BITXNOR, getDataType(), arg1, arg2));
+                break;
+            }
+
+            default:
+                ctx.visit(function(N_BIT_XNOR, getDataType(), arg1, arg2));
                 break;
         }
     }

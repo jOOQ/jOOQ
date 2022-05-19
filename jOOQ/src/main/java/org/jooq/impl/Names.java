@@ -88,6 +88,7 @@ final class Names {
     static final Name N_BITSHIFTLEFT           = systemName("bitshiftleft");
     static final Name N_BITSHIFTRIGHT          = systemName("bitshiftright");
     static final Name N_BITXOR                 = systemName("bitxor");
+    static final Name N_BITXNOR                = systemName("bitxnor");
     static final Name N_BIT_AND                = systemName("bit_and");
     static final Name N_BIT_NAND               = systemName("bit_nand");
     static final Name N_BIT_NOR                = systemName("bit_nor");

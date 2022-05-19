@@ -122,7 +122,7 @@ implements
             }
 
             default:
-                if (condition instanceof AbstractCondition && ((AbstractCondition) condition).parenthesised(ctx))
+                if (condition instanceof AbstractField && ((AbstractField<?>) condition).parenthesised(ctx))
                     ctx.visit(condition);
                 else
                     ctx.sql('(').visit(condition).sql(')');

@@ -117,7 +117,11 @@ implements
                 break;
 
             default:
-                ctx.sql("~(").visit(arg1).sql(')');
+                if (arg1 instanceof AbstractField && ((AbstractField<?>) arg1).parenthesised(ctx))
+                    ctx.sql('~').visit(arg1);
+                else
+                    ctx.sql("~(").visit(arg1).sql(')');
+
                 break;
         }
     }

@@ -138,6 +138,18 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return 1;
     }
 
+    /**
+     * [#7362] Subclasses may override this method to indicate that the
+     * condition is already parenthesised, or produces syntax that render
+     * parentheses around this condition unnecessary.
+     * <p>
+     * This can help prevent excess parentheses, e.g. when this condition is
+     * wrapped in {@link QOM.Not}, {@link QOM.BitNot}, or {@link QOM.Neg}
+     */
+    /* non-final */ boolean parenthesised(Context<?> ctx) {
+        return false;
+    }
+
     // ------------------------------------------------------------------------
     // [#5518] Record method inversions, e.g. for use as method references
     // ------------------------------------------------------------------------

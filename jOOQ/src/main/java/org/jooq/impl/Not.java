@@ -104,7 +104,7 @@ implements
 
 
             default:
-                if (condition instanceof AbstractCondition && ((AbstractCondition) condition).parenthesised(ctx))
+                if (condition instanceof AbstractField && ((AbstractField<?>) condition).parenthesised(ctx))
                     ctx.visit(K_NOT).sql(' ').visit(condition);
                 else
                     ctx.visit(K_NOT).sql(" (").visit(condition).sql(')');

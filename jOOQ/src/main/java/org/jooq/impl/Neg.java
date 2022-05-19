@@ -92,9 +92,11 @@ final class Neg<T> extends AbstractTransformable<T> implements QOM.Neg<T> {
 
 
 
-        ctx.sql("-(")
-           .visit(field)
-           .sql(')');
+
+        if (field instanceof AbstractField && ((AbstractField<?>) field).parenthesised(ctx))
+            ctx.sql('-').visit(field);
+        else
+            ctx.sql("-(").visit(field).sql(')');
     }
 
     // -------------------------------------------------------------------------

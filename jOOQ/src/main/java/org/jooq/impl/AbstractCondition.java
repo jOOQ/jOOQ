@@ -77,18 +77,6 @@ abstract class AbstractCondition extends AbstractField<Boolean> implements Condi
         return true;
     }
 
-    /**
-     * [#7362] Subclasses may override this method to indicate that the
-     * condition is already parenthesised, or produces syntax that render
-     * parentheses around this condition unnecessary.
-     * <p>
-     * This can help produce excess parentheses, e.g. when this condition is
-     * wrapped in {@link QOM.Not}
-     */
-    boolean parenthesised(Context<?> ctx) {
-        return false;
-    }
-
     @Override
     public Clause[] clauses(Context<?> ctx) {
         return CLAUSES;

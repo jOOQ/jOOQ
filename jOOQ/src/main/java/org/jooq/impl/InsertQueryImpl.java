@@ -452,7 +452,7 @@ implements
                     Set<Field<?>> keys = toSQLInsert(ctx, requireNewMySQLExcludedEmulation);
 
                     // [#5214] The alias only applies with INSERT .. VALUES
-                    if (requireNewMySQLExcludedEmulation && select == null && !Tools.anyComputedOnClientStoredFields(table))
+                    if (requireNewMySQLExcludedEmulation && select == null)
                         ctx.formatSeparator()
                            .visit(K_AS).sql(' ').visit(name("t"));
 

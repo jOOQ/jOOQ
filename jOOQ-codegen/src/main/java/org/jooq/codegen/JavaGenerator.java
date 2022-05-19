@@ -194,6 +194,7 @@ import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.UniqueKeyDefinition;
 import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
+import org.jooq.meta.jaxb.GeneratedTextBlocks;
 import org.jooq.meta.jaxb.SyntheticDaoMethodType;
 import org.jooq.meta.jaxb.SyntheticDaoType;
 import org.jooq.meta.jaxb.VisibilityModifier;
@@ -4308,16 +4309,21 @@ public class JavaGenerator extends AbstractGenerator {
             List<String> bindDeclarations = new ArrayList<>();
             List<String> bindNames = new ArrayList<>();
 
+            // TODO: Multiple occurrences of the same bind value
             for (Entry<String, Param<?>> param : query.getParams().entrySet()) {
-                bindNames.add(param.getKey());
-                bindDeclarations.add(out.ref(param.getValue().getType()) + " " + param.getKey());
+                String key = param.getKey();
+
+                if (Character.isDigit(key.charAt(0)))
+                    key = "_" + key;
+
+                bindNames.add(key);
+                bindDeclarations.add(out.ref(param.getValue().getType()) + " " + key);
             }
 
             out.println("public %s %s([[%s]]) {", returnType, method.getName(), bindDeclarations);
             out.println("return dsl");
-            // TODO: Text blocks
             // TODO: Parse the query and cache it
-            out.tab(1).println(".resultQuery(\"%s\"[[before=, ][%s]])", escapeString(method.getSql()), bindNames);
+            out.tab(1).println(".resultQuery(%s[[before=, ][%s]])", textBlock(method.getSql()), bindNames);
             // TODO: Type safe mapping
             out.tab(1).println(".fetchInto(%s.class);", recordType);
             out.println("}");
@@ -5917,9 +5923,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%s.comment(\"%s\"),", DSL.class, escapeString(comment(table)));
 
             if ((generateSourcesOnViews() || table.isSynthetic()) && table.isView() && table.getSource() != null)
-                out.println("%s.%s(\"%s\")", TableOptions.class, tableType, escapeString(table.getSource()));
+                out.println("%s.%s(%s)", TableOptions.class, tableType, textBlock(table.getSource()));
             else if (table.isSynthetic() && table.isTableValuedFunction() && table.getSource() != null)
-                out.println("%s.%s(\"%s\")", TableOptions.class, tableType, escapeString(table.getSource()));
+                out.println("%s.%s(%s)", TableOptions.class, tableType, textBlock(table.getSource()));
             else
                 out.println("%s.%s", TableOptions.class, tableType);
 
@@ -5942,9 +5948,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%s.comment(\"%s\"),", DSL.class, escapeString(comment(table)));
 
             if ((generateSourcesOnViews() || table.isSynthetic()) && table.isView() && table.getSource() != null)
-                out.println("%s.%s(\"%s\")", TableOptions.class, tableType, escapeString(table.getSource()));
+                out.println("%s.%s(%s)", TableOptions.class, tableType, textBlock(table.getSource()));
             else if (table.isSynthetic() && table.isTableValuedFunction() && table.getSource() != null)
-                out.println("%s.%s(\"%s\")", TableOptions.class, tableType, escapeString(table.getSource()));
+                out.println("%s.%s(%s)", TableOptions.class, tableType, textBlock(table.getSource()));
             else
                 out.println("%s.%s()", TableOptions.class, tableType);
 
@@ -6129,9 +6135,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters) {", className, Name.class, Table.class, recordType, Field.class);
 
             if ((generateSourcesOnViews() || table.isSynthetic()) && table.isView() && table.getSource() != null)
-                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(\"%s\"));", DSL.class, escapeString(comment(table)), TableOptions.class, tableType, escapeString(table.getSource()));
+                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(%s));", DSL.class, escapeString(comment(table)), TableOptions.class, tableType, textBlock(table.getSource()));
             else if (table.isSynthetic() && table.isTableValuedFunction() && table.getSource() != null)
-                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(\"%s\"));", DSL.class, escapeString(comment(table)), TableOptions.class, tableType, escapeString(table.getSource()));
+                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(%s));", DSL.class, escapeString(comment(table)), TableOptions.class, tableType, textBlock(table.getSource()));
             else
                 out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s());", DSL.class, escapeString(comment(table)), TableOptions.class, tableType);
 
@@ -7516,8 +7522,64 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
-    private String escapeString(String string) {
+    private boolean generateTextBlocks0() {
+        switch (StringUtils.defaultIfNull(generateTextBlocks(), GeneratedTextBlocks.DETECT_FROM_JDK)) {
+            case ON:
+                return true;
+            case OFF:
+                return false;
+            default:
 
+
+
+
+                return false;
+        }
+    }
+
+    private static final Pattern P_LEADING_WHITESPACE = Pattern.compile("\\r?\\n( +)");
+    private static final int     MAX_STRING_LENGTH    = 16384;
+
+    private String textBlock(String string) {
+        if (string == null)
+            return null;
+
+        // [#10007] [#10318] Very long strings cannot be handled by the javac compiler.
+        if (string.length() > MAX_STRING_LENGTH) {
+            return "\"" + escapeString(string) + "\"";
+        }
+
+        // [#9817] Generate text blocks only if there are newlines or quotes
+        else if (generateTextBlocks0() && (string.contains("\n") || string.contains("\r") || string.contains("\""))) {
+            // TODO [#3450] Escape sequences?
+            // TODO [#10007] [#10318] Long textblocks?
+            // TODO [#10869] String interpolation in kotlin?
+            String result = string.replace("\"\"\"", "\\\"\\\"\\\"");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            return "\"\"\"\n" + result + "\n\"\"\"";
+        }
+        else
+            return "\"" + escapeString(string) + "\"";
+    }
+
+    private String escapeString(String string) {
         if (string == null)
             return null;
 

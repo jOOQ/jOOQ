@@ -80,7 +80,7 @@ implements
         Field<T> arg2
     ) {
         super(
-            N_BIT_X_NOR,
+            N_BIT_XNOR,
             allNotNull((DataType) dataType(INTEGER, arg1, false), arg1, arg2)
         );
 

@@ -16398,7 +16398,7 @@ public class DSL {
     }
 
     /**
-     * The <code>BIT_X_NOR</code> function.
+     * The <code>BIT_XNOR</code> function.
      *
      * @param arg1 is wrapped as {@link #val(Object)}.
      * @param arg2 is wrapped as {@link #val(Object)}.
@@ -16410,7 +16410,7 @@ public class DSL {
     }
 
     /**
-     * The <code>BIT_X_NOR</code> function.
+     * The <code>BIT_XNOR</code> function.
      *
      * @param arg1 is wrapped as {@link #val(Object)}.
      */
@@ -16421,7 +16421,7 @@ public class DSL {
     }
 
     /**
-     * The <code>BIT_X_NOR</code> function.
+     * The <code>BIT_XNOR</code> function.
      *
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
@@ -16432,7 +16432,7 @@ public class DSL {
     }
 
     /**
-     * The <code>BIT_X_NOR</code> function.
+     * The <code>BIT_XNOR</code> function.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -20317,6 +20317,39 @@ public class DSL {
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static <T extends Number> AggregateFunction<T> bitXorAgg(Field<T> value) {
         return new BitXorAgg<>(value);
+    }
+
+    /**
+     * The <code>BIT_NAND_AGG</code> function.
+     * <p>
+     * Calculate the bitwise <code>NAND</code> aggregate value.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static <T extends Number> AggregateFunction<T> bitNandAgg(Field<T> value) {
+        return new BitNandAgg<>(value);
+    }
+
+    /**
+     * The <code>BIT_NOR_AGG</code> function.
+     * <p>
+     * Calculate the bitwise <code>NOR</code> aggregate value.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static <T extends Number> AggregateFunction<T> bitNorAgg(Field<T> value) {
+        return new BitNorAgg<>(value);
+    }
+
+    /**
+     * The <code>BIT_XNOR_AGG</code> function.
+     * <p>
+     * Calculate the bitwise <code>XNOR</code> aggregate value.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static <T extends Number> AggregateFunction<T> bitXNorAgg(Field<T> value) {
+        return new BitXNorAgg<>(value);
     }
 
     /**

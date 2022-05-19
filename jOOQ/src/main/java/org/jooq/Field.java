@@ -1196,7 +1196,7 @@ extends
     Field<T> bitOr(Field<T> arg2);
 
     /**
-     * The <code>BIT_X_NOR</code> operator.
+     * The <code>BIT_XNOR</code> operator.
      *
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
@@ -1205,7 +1205,7 @@ extends
     Field<T> bitXNor(T arg2);
 
     /**
-     * The <code>BIT_X_NOR</code> operator.
+     * The <code>BIT_XNOR</code> operator.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })

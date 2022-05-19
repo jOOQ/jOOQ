@@ -94,11 +94,14 @@ import static org.jooq.impl.DSL.bitAndAgg;
 import static org.jooq.impl.DSL.bitCount;
 import static org.jooq.impl.DSL.bitLength;
 import static org.jooq.impl.DSL.bitNand;
+import static org.jooq.impl.DSL.bitNandAgg;
 import static org.jooq.impl.DSL.bitNor;
+import static org.jooq.impl.DSL.bitNorAgg;
 import static org.jooq.impl.DSL.bitNot;
 import static org.jooq.impl.DSL.bitOr;
 import static org.jooq.impl.DSL.bitOrAgg;
 import static org.jooq.impl.DSL.bitXNor;
+import static org.jooq.impl.DSL.bitXNorAgg;
 import static org.jooq.impl.DSL.bitXor;
 import static org.jooq.impl.DSL.bitXorAgg;
 import static org.jooq.impl.DSL.boolOr;
@@ -8985,9 +8988,18 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             return bitAnd((Field) x, (Field) y);
         }
-        else if (parseKeywordIf("BIT_NAND") || parseKeywordIf("BITNAND") || parseKeywordIf("BIN_NAND")) {
+        else if (parseKeywordIf("BIT_NAND") ||
+            parseKeywordIf("BITNAND") ||
+            parseKeywordIf("BIN_NAND") ||
+            (agg = parseKeywordIf("BIT_NAND_AGG")) ||
+            (agg = parseKeywordIf("BITNAND_AGG")) ||
+            (agg = parseKeywordIf("BIN_NAND_AGG"))) {
             parse('(');
             Field<?> x = toField(parseNumericOp());
+
+            if (agg && parse(')') || parseIf(')'))
+                return parseAggregateFunctionIf(false, bitNandAgg((Field) x));
+
             parse(',');
             Field<?> y = toField(parseNumericOp());
             parse(')');
@@ -9012,9 +9024,18 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             return bitOr((Field) x, (Field) y);
         }
-        else if (parseKeywordIf("BIT_NOR") || parseKeywordIf("BITNOR") || parseKeywordIf("BIN_NOR")) {
+        else if (parseKeywordIf("BIT_NOR") ||
+            parseKeywordIf("BITNOR") ||
+            parseKeywordIf("BIN_NOR") ||
+            (agg = parseKeywordIf("BIT_NOR_AGG")) ||
+            (agg = parseKeywordIf("BITNOR_AGG")) ||
+            (agg = parseKeywordIf("BIN_NOR_AGG"))) {
             parse('(');
             Field<?> x = toField(parseNumericOp());
+
+            if (agg && parse(')') || parseIf(')'))
+                return parseAggregateFunctionIf(false, bitNorAgg((Field) x));
+
             parse(',');
             Field<?> y = toField(parseNumericOp());
             parse(')');
@@ -9039,9 +9060,18 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             return bitXor((Field) x, (Field) y);
         }
-        else if (parseKeywordIf("BIT_XNOR") || parseKeywordIf("BITXNOR") || parseKeywordIf("BIN_XNOR")) {
+        else if (parseKeywordIf("BIT_XNOR") ||
+            parseKeywordIf("BITXNOR") ||
+            parseKeywordIf("BIN_XNOR") ||
+            (agg = parseKeywordIf("BIT_XNOR_AGG")) ||
+            (agg = parseKeywordIf("BITXNOR_AGG")) ||
+            (agg = parseKeywordIf("BIN_XNOR_AGG"))) {
             parse('(');
             Field<?> x = toField(parseNumericOp());
+
+            if (agg && parse(')') || parseIf(')'))
+                return parseAggregateFunctionIf(false, bitXNorAgg((Field) x));
+
             parse(',');
             Field<?> y = toField(parseNumericOp());
             parse(')');

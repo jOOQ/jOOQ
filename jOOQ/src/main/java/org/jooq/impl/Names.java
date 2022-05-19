@@ -94,7 +94,7 @@ final class Names {
     static final Name N_BIT_NOT                = systemName("bit_not");
     static final Name N_BIT_OR                 = systemName("bit_or");
     static final Name N_BIT_XOR                = systemName("bit_xor");
-    static final Name N_BIT_X_NOR              = systemName("bit_xnor");
+    static final Name N_BIT_XNOR               = systemName("bit_xnor");
     static final Name N_BOOLAND_AGG            = systemName("booland_agg");
     static final Name N_BOOLOR_AGG             = systemName("boolor_agg");
     static final Name N_BYTEA                  = systemName("bytea");
@@ -351,7 +351,10 @@ final class Names {
     static final Name N_BIT_AND_AGG            = systemName("bit_and_agg");
     static final Name N_BIT_COUNT              = systemName("bit_count");
     static final Name N_BIT_LENGTH             = systemName("bit_length");
+    static final Name N_BIT_NAND_AGG           = systemName("bit_nand_agg");
+    static final Name N_BIT_NOR_AGG            = systemName("bit_nor_agg");
     static final Name N_BIT_OR_AGG             = systemName("bit_or_agg");
+    static final Name N_BIT_XNOR_AGG           = systemName("bit_xnor_agg");
     static final Name N_BIT_XOR_AGG            = systemName("bit_xor_agg");
     static final Name N_BOOL_AND               = systemName("bool_and");
     static final Name N_BOOL_OR                = systemName("bool_or");
@@ -434,7 +437,7 @@ final class Names {
     static final Name N_RPAD                   = systemName("rpad");
     static final Name N_RTRIM                  = systemName("rtrim");
     static final Name N_SIGN                   = systemName("sign");
-    static final Name N_SIGNAL_SQL_STATE       = systemName("signal_sql_state");
+    static final Name N_SIGNAL_SQLSTATE        = systemName("signal_sqlstate");
     static final Name N_SIN                    = systemName("sin");
     static final Name N_SINH                   = systemName("sinh");
     static final Name N_SPACE                  = systemName("space");

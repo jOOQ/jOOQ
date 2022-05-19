@@ -4664,6 +4664,51 @@ public final class QOM {
     }
 
     /**
+     * The <code>BIT NAND AGG</code> function.
+     * <p>
+     * Calculate the bitwise <code>NAND</code> aggregate value.
+     */
+    public /*sealed*/ interface BitNandAgg<T extends Number>
+        extends
+            org.jooq.AggregateFunction<T>
+        //permits
+        //    BitNandAgg
+    {
+        @NotNull  Field<T> $value();
+        @NotNull  BitNandAgg<T> $value(Field<T> value);
+    }
+
+    /**
+     * The <code>BIT NOR AGG</code> function.
+     * <p>
+     * Calculate the bitwise <code>NOR</code> aggregate value.
+     */
+    public /*sealed*/ interface BitNorAgg<T extends Number>
+        extends
+            org.jooq.AggregateFunction<T>
+        //permits
+        //    BitNorAgg
+    {
+        @NotNull  Field<T> $value();
+        @NotNull  BitNorAgg<T> $value(Field<T> value);
+    }
+
+    /**
+     * The <code>BIT X NOR AGG</code> function.
+     * <p>
+     * Calculate the bitwise <code>XNOR</code> aggregate value.
+     */
+    public /*sealed*/ interface BitXNorAgg<T extends Number>
+        extends
+            org.jooq.AggregateFunction<T>
+        //permits
+        //    BitXNorAgg
+    {
+        @NotNull  Field<T> $value();
+        @NotNull  BitXNorAgg<T> $value(Field<T> value);
+    }
+
+    /**
      * The <code>BOOL AND</code> function.
      */
     public /*sealed*/ interface BoolAnd

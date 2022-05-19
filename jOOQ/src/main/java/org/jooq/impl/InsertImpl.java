@@ -140,8 +140,6 @@ import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * @author Lukas Eder
  */

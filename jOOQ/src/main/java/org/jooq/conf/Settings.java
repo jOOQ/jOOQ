@@ -36,7 +36,7 @@ public class Settings
     implements Serializable, Cloneable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31600L;
+    private final static long serialVersionUID = 31700L;
     @XmlElement(defaultValue = "true")
     protected Boolean forceIntegerTypesOnZeroScaleDecimals = true;
     @XmlElement(defaultValue = "true")
@@ -160,6 +160,12 @@ public class Settings
     protected Boolean transformPatternsNegNeg = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsBitNotBitNot = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsBitNotBitNand = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsBitNotBitNor = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsBitNotBitXNor = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsIdempotentFunctionRepetition = true;
     @XmlElement(defaultValue = "true")
@@ -1863,6 +1869,96 @@ public class Settings
      */
     public void setTransformPatternsBitNotBitNot(Boolean value) {
         this.transformPatternsBitNotBitNot = value;
+    }
+
+    /**
+     * Transform <code>~(bitnand(x, y))</code> to <code>bitand(x, y)</code> and <code>~(bitand(x, y)</code> to <code>bitnand(x, y)</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsBitNotBitNand() {
+        return transformPatternsBitNotBitNand;
+    }
+
+    /**
+     * Sets the value of the transformPatternsBitNotBitNand property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsBitNotBitNand(Boolean value) {
+        this.transformPatternsBitNotBitNand = value;
+    }
+
+    /**
+     * Transform <code>~(bitnor(x, y))</code> to <code>bitor(x, y)</code> and <code>~(bitor(x, y)</code> to <code>bitnor(x, y)</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsBitNotBitNor() {
+        return transformPatternsBitNotBitNor;
+    }
+
+    /**
+     * Sets the value of the transformPatternsBitNotBitNor property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsBitNotBitNor(Boolean value) {
+        this.transformPatternsBitNotBitNor = value;
+    }
+
+    /**
+     * Transform <code>~(bitxnor(x, y))</code> to <code>bitxor(x, y)</code> and <code>~(bitxor(x, y)</code> to <code>bitxnor(x, y)</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsBitNotBitXNor() {
+        return transformPatternsBitNotBitXNor;
+    }
+
+    /**
+     * Sets the value of the transformPatternsBitNotBitXNor property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsBitNotBitXNor(Boolean value) {
+        this.transformPatternsBitNotBitXNor = value;
     }
 
     /**
@@ -4475,6 +4571,21 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsBitNotBitNand(Boolean value) {
+        setTransformPatternsBitNotBitNand(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsBitNotBitNor(Boolean value) {
+        setTransformPatternsBitNotBitNor(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsBitNotBitXNor(Boolean value) {
+        setTransformPatternsBitNotBitXNor(value);
+        return this;
+    }
+
     public Settings withTransformPatternsIdempotentFunctionRepetition(Boolean value) {
         setTransformPatternsIdempotentFunctionRepetition(value);
         return this;
@@ -5362,6 +5473,9 @@ public class Settings
         builder.append("transformPatternsEmptyScalarSubquery", transformPatternsEmptyScalarSubquery);
         builder.append("transformPatternsNegNeg", transformPatternsNegNeg);
         builder.append("transformPatternsBitNotBitNot", transformPatternsBitNotBitNot);
+        builder.append("transformPatternsBitNotBitNand", transformPatternsBitNotBitNand);
+        builder.append("transformPatternsBitNotBitNor", transformPatternsBitNotBitNor);
+        builder.append("transformPatternsBitNotBitXNor", transformPatternsBitNotBitXNor);
         builder.append("transformPatternsIdempotentFunctionRepetition", transformPatternsIdempotentFunctionRepetition);
         builder.append("transformPatternsArithmeticExpressions", transformPatternsArithmeticExpressions);
         builder.append("transformPatternsTrigonometricFunctions", transformPatternsTrigonometricFunctions);
@@ -5978,6 +6092,33 @@ public class Settings
             }
         } else {
             if (!transformPatternsBitNotBitNot.equals(other.transformPatternsBitNotBitNot)) {
+                return false;
+            }
+        }
+        if (transformPatternsBitNotBitNand == null) {
+            if (other.transformPatternsBitNotBitNand!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsBitNotBitNand.equals(other.transformPatternsBitNotBitNand)) {
+                return false;
+            }
+        }
+        if (transformPatternsBitNotBitNor == null) {
+            if (other.transformPatternsBitNotBitNor!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsBitNotBitNor.equals(other.transformPatternsBitNotBitNor)) {
+                return false;
+            }
+        }
+        if (transformPatternsBitNotBitXNor == null) {
+            if (other.transformPatternsBitNotBitXNor!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsBitNotBitXNor.equals(other.transformPatternsBitNotBitXNor)) {
                 return false;
             }
         }
@@ -6970,6 +7111,9 @@ public class Settings
         result = ((prime*result)+((transformPatternsEmptyScalarSubquery == null)? 0 :transformPatternsEmptyScalarSubquery.hashCode()));
         result = ((prime*result)+((transformPatternsNegNeg == null)? 0 :transformPatternsNegNeg.hashCode()));
         result = ((prime*result)+((transformPatternsBitNotBitNot == null)? 0 :transformPatternsBitNotBitNot.hashCode()));
+        result = ((prime*result)+((transformPatternsBitNotBitNand == null)? 0 :transformPatternsBitNotBitNand.hashCode()));
+        result = ((prime*result)+((transformPatternsBitNotBitNor == null)? 0 :transformPatternsBitNotBitNor.hashCode()));
+        result = ((prime*result)+((transformPatternsBitNotBitXNor == null)? 0 :transformPatternsBitNotBitXNor.hashCode()));
         result = ((prime*result)+((transformPatternsIdempotentFunctionRepetition == null)? 0 :transformPatternsIdempotentFunctionRepetition.hashCode()));
         result = ((prime*result)+((transformPatternsArithmeticExpressions == null)? 0 :transformPatternsArithmeticExpressions.hashCode()));
         result = ((prime*result)+((transformPatternsTrigonometricFunctions == null)? 0 :transformPatternsTrigonometricFunctions.hashCode()));

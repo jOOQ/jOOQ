@@ -490,6 +490,36 @@ To enable this feature, {@link #transformPatterns} must be enabled as well.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsBitNotBitNand" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>~(bitnand(x, y))</code> to <code>bitand(x, y)</code> and <code>~(bitand(x, y)</code> to <code>bitnand(x, y)</code>.
+<p>
+This transformation removes a redundant bitwise negation.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformPatternsBitNotBitNor" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>~(bitnor(x, y))</code> to <code>bitor(x, y)</code> and <code>~(bitor(x, y)</code> to <code>bitnor(x, y)</code>.
+<p>
+This transformation removes a redundant bitwise negation.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformPatternsBitNotBitXNor" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>~(bitxnor(x, y))</code> to <code>bitxor(x, y)</code> and <code>~(bitxor(x, y)</code> to <code>bitxnor(x, y)</code>.
+<p>
+This transformation removes a redundant bitwise negation.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsIdempotentFunctionRepetition" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform all repetitions of idempotent functions, such as <code>UPPER(UPPER(s))</code> to <code>UPPER(s)</code>.
 <p>

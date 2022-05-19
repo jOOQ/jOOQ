@@ -55,6 +55,9 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "views")
     @XmlElement(name = "view")
     protected List<SyntheticViewType> views;
+    @XmlElementWrapper(name = "daos")
+    @XmlElement(name = "view")
+    protected List<SyntheticDaoType> daos;
 
     public List<SyntheticReadonlyColumnType> getReadonlyColumns() {
         if (readonlyColumns == null) {
@@ -142,6 +145,17 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
 
     public void setViews(List<SyntheticViewType> views) {
         this.views = views;
+    }
+
+    public List<SyntheticDaoType> getDaos() {
+        if (daos == null) {
+            daos = new ArrayList<SyntheticDaoType>();
+        }
+        return daos;
+    }
+
+    public void setDaos(List<SyntheticDaoType> daos) {
+        this.daos = daos;
     }
 
     public SyntheticObjectsType withReadonlyColumns(SyntheticReadonlyColumnType... values) {
@@ -312,6 +326,27 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
         return this;
     }
 
+    public SyntheticObjectsType withDaos(SyntheticDaoType... values) {
+        if (values!= null) {
+            for (SyntheticDaoType value: values) {
+                getDaos().add(value);
+            }
+        }
+        return this;
+    }
+
+    public SyntheticObjectsType withDaos(Collection<SyntheticDaoType> values) {
+        if (values!= null) {
+            getDaos().addAll(values);
+        }
+        return this;
+    }
+
+    public SyntheticObjectsType withDaos(List<SyntheticDaoType> daos) {
+        setDaos(daos);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("readonlyColumns", "readonlyColumn", readonlyColumns);
@@ -322,6 +357,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
         builder.append("uniqueKeys", "uniqueKey", uniqueKeys);
         builder.append("foreignKeys", "foreignKey", foreignKeys);
         builder.append("views", "view", views);
+        builder.append("daos", "view", daos);
     }
 
     @Override
@@ -415,6 +451,15 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (daos == null) {
+            if (other.daos!= null) {
+                return false;
+            }
+        } else {
+            if (!daos.equals(other.daos)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -430,6 +475,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
         result = ((prime*result)+((uniqueKeys == null)? 0 :uniqueKeys.hashCode()));
         result = ((prime*result)+((foreignKeys == null)? 0 :foreignKeys.hashCode()));
         result = ((prime*result)+((views == null)? 0 :views.hashCode()));
+        result = ((prime*result)+((daos == null)? 0 :daos.hashCode()));
         return result;
     }
 

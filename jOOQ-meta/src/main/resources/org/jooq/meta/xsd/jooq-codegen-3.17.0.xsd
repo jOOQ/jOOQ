@@ -1049,6 +1049,10 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       <element name="views" type="tns:SyntheticViewsType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic view configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="daos" type="tns:SyntheticDaosType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic DAOs configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
   
@@ -1258,6 +1262,64 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       
       <element name="comment" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining comment on the view.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="sql" type="string" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining SQL query.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+  
+  <complexType name="SyntheticDaosType">
+    <sequence>
+      <element name="view" type="tns:SyntheticDaoType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  
+  <complexType name="SyntheticDaoType">
+    <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic DAO configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
+    <all>
+      <element name="catalog" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining catalog of the DAO.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="schema" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining schema of the DAO.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="name" type="string" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining name of the DAO.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="comment" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining comment on the DAO.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="methods" type="tns:SyntheticDaoMethodsType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The methods on the DAO.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+  
+  <complexType name="SyntheticDaoMethodsType">
+    <sequence>
+      <element name="method" type="tns:SyntheticDaoMethodType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  
+  <complexType name="SyntheticDaoMethodType">
+    <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic DAO method configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
+    <all>
+      <element name="name" type="string" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining name of the DAO method.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="comment" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining comment on the DAO method.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="returnType" type="string" minOccurs="0" maxOccurs="1" default="void">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The return type of the DAO method, defaulting to <code>void</code>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="sql" type="string" minOccurs="1" maxOccurs="1">

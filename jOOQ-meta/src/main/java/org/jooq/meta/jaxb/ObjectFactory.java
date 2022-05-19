@@ -238,6 +238,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SyntheticDaoType }
+     * 
+     */
+    public SyntheticDaoType createSyntheticDaoType() {
+        return new SyntheticDaoType();
+    }
+
+    /**
+     * Create an instance of {@link SyntheticDaoMethodType }
+     * 
+     */
+    public SyntheticDaoMethodType createSyntheticDaoMethodType() {
+        return new SyntheticDaoMethodType();
+    }
+
+    /**
      * Create an instance of {@link CatalogMappingType }
      * 
      */

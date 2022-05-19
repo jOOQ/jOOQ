@@ -60,6 +60,7 @@ import org.jooq.meta.jaxb.OnError;
 import org.jooq.meta.jaxb.RegexFlag;
 import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.meta.jaxb.SyntheticColumnType;
+import org.jooq.meta.jaxb.SyntheticDaoType;
 import org.jooq.meta.jaxb.SyntheticForeignKeyType;
 import org.jooq.meta.jaxb.SyntheticIdentityType;
 import org.jooq.meta.jaxb.SyntheticObjectsType;
@@ -1195,6 +1196,11 @@ public interface Database extends AutoCloseable {
      * Get the configured synthetic views.
      */
     List<SyntheticViewType> getConfiguredSyntheticViews();
+
+    /**
+     * Get the configured synthetic DAOs.
+     */
+    List<SyntheticDaoType> getConfiguredSyntheticDaos();
 
     /**
      * Mark a synthetic column as used.

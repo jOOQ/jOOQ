@@ -124,6 +124,7 @@ import org.jooq.meta.jaxb.OnError;
 import org.jooq.meta.jaxb.RegexFlag;
 import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.meta.jaxb.SyntheticColumnType;
+import org.jooq.meta.jaxb.SyntheticDaoType;
 import org.jooq.meta.jaxb.SyntheticForeignKeyType;
 import org.jooq.meta.jaxb.SyntheticIdentityType;
 import org.jooq.meta.jaxb.SyntheticObjectsType;
@@ -229,6 +230,7 @@ public abstract class AbstractDatabase implements Database {
     private Set<SyntheticForeignKeyType>                                     unusedSyntheticForeignKeys              = new HashSet<>();
     private List<SyntheticViewType>                                          configuredSyntheticViews                = new ArrayList<>();
     private Set<SyntheticViewType>                                           unusedSyntheticViews                    = new HashSet<>();
+    private List<SyntheticDaoType>                                           configuredSyntheticDaos                 = new ArrayList<>();
     private SchemaVersionProvider                                            schemaVersionProvider;
     private CatalogVersionProvider                                           catalogVersionProvider;
     private Comparator<Definition>                                           orderProvider;
@@ -3104,6 +3106,7 @@ public abstract class AbstractDatabase implements Database {
             getConfiguredSyntheticUniqueKeys().addAll(configuredSyntheticObjects.getUniqueKeys());
             getConfiguredSyntheticForeignKeys().addAll(configuredSyntheticObjects.getForeignKeys());
             getConfiguredSyntheticViews().addAll(configuredSyntheticObjects.getViews());
+            getConfiguredSyntheticDaos().addAll(configuredSyntheticObjects.getDaos());
 
             unusedSyntheticColumns.addAll(configuredSyntheticObjects.getColumns());
             unusedSyntheticReadonlyColumns.addAll(configuredSyntheticObjects.getReadonlyColumns());
@@ -3194,6 +3197,14 @@ public abstract class AbstractDatabase implements Database {
             configuredSyntheticViews = new ArrayList<>();
 
         return configuredSyntheticViews;
+    }
+
+    @Override
+    public List<SyntheticDaoType> getConfiguredSyntheticDaos() {
+        if (configuredSyntheticDaos == null)
+            configuredSyntheticDaos = new ArrayList<>();
+
+        return configuredSyntheticDaos;
     }
 
     @Override

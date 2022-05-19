@@ -82,6 +82,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiConsumer;
@@ -98,6 +99,7 @@ import org.jooq.Check;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Constants;
+import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Domain;
 import org.jooq.EnumType;
@@ -108,15 +110,20 @@ import org.jooq.Index;
 // ...
 import org.jooq.Name;
 import org.jooq.OrderField;
+import org.jooq.Param;
 import org.jooq.Parameter;
+import org.jooq.Parser;
 // ...
+import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Result;
+import org.jooq.ResultQuery;
 import org.jooq.Row;
 import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.Sequence;
 import org.jooq.SortOrder;
@@ -130,6 +137,8 @@ import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 import org.jooq.codegen.GeneratorStrategy.Mode;
 import org.jooq.codegen.GeneratorWriter.CloseResult;
+import org.jooq.conf.ParseSearchSchema;
+import org.jooq.conf.ParseWithMetaLookups;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.AbstractRoutine;
 // ...
@@ -161,6 +170,8 @@ import org.jooq.meta.ConstraintDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.Database;
 import org.jooq.meta.DefaultDataTypeDefinition;
+import org.jooq.meta.DefaultMetaTableDefinition;
+import org.jooq.meta.DefaultSyntheticDaoDefinition;
 import org.jooq.meta.Definition;
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EmbeddableColumnDefinition;
@@ -176,12 +187,15 @@ import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
+import org.jooq.meta.SyntheticDaoDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.TypedElementDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.UniqueKeyDefinition;
 import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
+import org.jooq.meta.jaxb.SyntheticDaoMethodType;
+import org.jooq.meta.jaxb.SyntheticDaoType;
 import org.jooq.meta.jaxb.VisibilityModifier;
 // ...
 // ...
@@ -646,6 +660,9 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (generatePojos() && database.getTables(schema).size() > 0)
             generatePojos(schema);
+
+        if (database.getConfiguredSyntheticDaos().size() > 0)
+            generateSyntheticDaos(schema);
 
         if (generateDaos() && database.getTables(schema).size() > 0)
             generateDaos(schema);
@@ -4152,6 +4169,187 @@ public class JavaGenerator extends AbstractGenerator {
 
     private String schemaNameOrDefault(Definition schema) {
         return StringUtils.isEmpty(schema.getOutputName()) ? "the default schema" : schema.getOutputName();
+    }
+
+    protected void generateSyntheticDaos(SchemaDefinition schema) {
+        log.info("Generating synthetic DAOs");
+        log.warn("Experimental", "Synthetic daos are experimental functionality and subject to change.");
+
+        for (SyntheticDaoType dao : database.getConfiguredSyntheticDaos()) {
+            if (schema.getQualifiedInputNamePart().equals(name(dao.getCatalog(), dao.getSchema()))) {
+                try {
+                    generateSyntheticDao(new DefaultSyntheticDaoDefinition(database, schema, dao));
+                }
+                catch (Exception e) {
+                    log.error("Error while generating synthetic DAO " + dao, e);
+                }
+            }
+        }
+
+        watch.splitInfo("Synthetic DAOs generated");
+    }
+
+    protected void generateSyntheticDao(DefaultSyntheticDaoDefinition dao) {
+        JavaWriter out = newJavaWriter(getFile(dao, Mode.SYNTHETIC_DAO));
+        log.info("Generating Synthetic DAO", out.file().getName());
+        generateSyntheticDao(dao, out);
+        closeJavaWriter(out);
+    }
+
+    protected void generateSyntheticDao(SyntheticDaoDefinition dao, JavaWriter out) {
+        final String className = getStrategy().getJavaClassName(dao, Mode.SYNTHETIC_DAO);
+        final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(dao, Mode.SYNTHETIC_DAO));
+        final Parser parser = database
+            .create()
+            .configuration()
+            .derive(() -> database.create().meta())
+            .deriveSettings(s -> s
+                .withParseSearchPath(new ParseSearchSchema().withCatalog(dao.getDao().getCatalog()).withSchema(dao.getDao().getSchema()))
+                .withParseWithMetaLookups(ParseWithMetaLookups.THROW_ON_FAILURE))
+            .dsl()
+            .parser();
+
+        printPackage(out, dao, Mode.SYNTHETIC_DAO);
+        generateSyntheticDaoClassJavadoc(dao, out);
+        printClassAnnotations(out, dao, Mode.SYNTHETIC_DAO);
+
+        if (generateSpringAnnotations())
+            out.println("@%s", out.ref("org.springframework.stereotype.Repository"));
+
+        if (scala) {}
+        else if (kotlin) {}
+        else
+            out.println("%sclass %s[[before= implements ][%s]] {",
+                visibility(), className, interfaces);
+
+        // Initialising constructor
+        // ------------------------
+
+        out.println();
+        out.println("final %s dsl;", DSLContext.class);
+
+        if (!scala && !kotlin) {
+            out.javadoc("Create a new %s with an attached configuration", className);
+
+            printDaoConstructorAnnotations(dao, out);
+            out.println("%s%s(%s configuration) {", visibility(), className, Configuration.class);
+            out.println("this.dsl = configuration.dsl();");
+            out.println("}");
+        }
+
+        for (SyntheticDaoMethodType method : dao.getDao().getMethods()) {
+            String returnType = out.ref(method.getReturnType());
+            String recordType = "?";
+
+            // TODO: Parser error handling (don't fail all after only one failure)
+            Query query = parser.parseQuery(method.getSql());
+
+            // TODO: ResultQuery (e.g. RETURNING clause)
+            if (query instanceof Select) { Select<?> select = (Select<?>) query;
+                final String namespace = StringUtils.toUC(method.getName(), getTargetLocale());
+                final List<Field<?>> fields = select.getSelect();
+                final TableDefinition table = new DefaultMetaTableDefinition(dao.getSchema(), new TableImpl<>("t") {{
+                    for (Field<?> field : fields)
+                        createField(field.getUnqualifiedName(), field.getDataType());
+                }});
+                // TODO: Other data types
+                // TODO: Single results
+                // TODO: Reactive execution
+                if (returnType.startsWith("List<")) {
+                    out.ref(List.class);
+                    recordType = returnType.replaceFirst("^List<(.*)>$", "$1");
+                }
+                else if (returnType.startsWith("Set<")) {
+                    out.ref(Set.class);
+                    recordType = returnType.replaceFirst("^Set<(.*)>$", "$1");
+                }
+
+                // TODO: Error
+                else
+                    ;
+
+                if (!"?".equals(recordType)) {
+                    out.javadoc("Result type for {@link #%s()}", method.getName());
+                    out.println("public final class %s {", namespace);
+
+                    // TODO: Reuse these POJOs?
+                    // TODO: Support also non-records
+                    out.println("public record %s(", recordType);
+
+                    forEach(fields, (field, separator) -> {
+                        out.println("%s %s%s",
+                            out.ref(field.getType()),
+                            getStrategy().getJavaMemberName(table.getColumn(field.getName(), true)),
+                            separator
+                        );
+                    });
+
+                    out.println(") {}");
+                    out.println("}");
+
+                    returnType = returnType.replace(recordType, namespace + "." + recordType);
+                    recordType = namespace + "." + recordType;
+                }
+            }
+            else {
+                // TODO: Other acceptable types?
+                if (!returnType.matches("void|int|long|Integer|Long")) {
+
+                    // TODO: Error
+                    returnType = "void";
+                }
+            }
+
+            if (method.getComment() != null)
+                out.javadoc(method.getComment());
+            else
+                out.println();
+
+            List<String> bindDeclarations = new ArrayList<>();
+            List<String> bindNames = new ArrayList<>();
+
+            for (Entry<String, Param<?>> param : query.getParams().entrySet()) {
+                bindNames.add(param.getKey());
+                bindDeclarations.add(out.ref(param.getValue().getType()) + " " + param.getKey());
+            }
+
+            out.println("public %s %s([[%s]]) {", returnType, method.getName(), bindDeclarations);
+            out.println("return dsl");
+            // TODO: Text blocks
+            // TODO: Parse the query and cache it
+            out.tab(1).println(".resultQuery(\"%s\"[[before=, ][%s]])", escapeString(method.getSql()), bindNames);
+            // TODO: Type safe mapping
+            out.tab(1).println(".fetchInto(%s.class);", recordType);
+            out.println("}");
+        }
+
+        generateSyntheticDaoClassFooter(dao, out);
+        out.println("}");
+    }
+
+    /**
+     * Subclasses may override this method to provide alternative DAO
+     * constructor annotations, such as DI annotations. [#10801]
+     */
+    protected void printDaoConstructorAnnotations(SyntheticDaoDefinition dao, JavaWriter out) {
+        if (generateSpringAnnotations())
+            out.println("@%s", out.ref("org.springframework.beans.factory.annotation.Autowired"));
+    }
+
+    /**
+     * Subclasses may override this method to provide dao class footer code.
+     */
+    @SuppressWarnings("unused")
+    protected void generateSyntheticDaoClassFooter(SyntheticDaoDefinition dao, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateSyntheticDaoClassJavadoc(SyntheticDaoDefinition dao, JavaWriter out) {
+        if (generateCommentsOnTables())
+            printClassJavadoc(out, dao);
+        else
+            printClassJavadoc(out, "The synthetic DAO <code>" + dao.getQualifiedInputName() + "</code>.");
     }
 
     protected void generateDaos(SchemaDefinition schema) {

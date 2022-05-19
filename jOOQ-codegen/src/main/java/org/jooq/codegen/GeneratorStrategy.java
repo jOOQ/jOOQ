@@ -50,6 +50,7 @@ import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.ForeignKeyDefinition;
 import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.RoutineDefinition;
+import org.jooq.meta.SyntheticDaoDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 
@@ -545,6 +546,12 @@ public interface GeneratorStrategy {
          * is being rendered
          */
         DAO,
+
+        /**
+         * The synthetic dao mode. This is used when a
+         * {@link SyntheticDaoDefinition}'s dao class is being rendered
+         */
+        SYNTHETIC_DAO,
 
         /**
          * The enum mode. This is used when a {@link EnumDefinition}'s class is

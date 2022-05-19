@@ -73,6 +73,7 @@ import org.jooq.meta.PackageDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
+import org.jooq.meta.SyntheticDaoDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.UniqueKeyDefinition;
@@ -480,57 +481,47 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
     }
 
     private String getSubPackage(Definition definition) {
-        if (definition instanceof TableDefinition) {
+        if (definition instanceof TableDefinition)
             return "tables";
-        }
 
         // [#2530] Embeddable types
-        else if (definition instanceof EmbeddableDefinition) {
+        else if (definition instanceof EmbeddableDefinition)
             return "embeddables";
-        }
 
         // [#799] UDT's are also packages
-        else if (definition instanceof UDTDefinition) {
-            UDTDefinition udt = (UDTDefinition) definition;
+        else if (definition instanceof UDTDefinition) { UDTDefinition u = (UDTDefinition) definition;
 
             // [#330] [#6529] A UDT inside of a package is a PL/SQL RECORD type
-            if (udt.getPackage() != null)
-                return "packages." + getJavaIdentifier(udt.getPackage()).toLowerCase(targetLocale) + ".udt";
+            if (u.getPackage() != null)
+                return "packages." + getJavaIdentifier(u.getPackage()).toLowerCase(targetLocale) + ".udt";
             else
                 return "udt";
         }
-        else if (definition instanceof PackageDefinition) {
+        else if (definition instanceof PackageDefinition)
             return "packages";
-        }
-        else if (definition instanceof RoutineDefinition) {
-            RoutineDefinition routine = (RoutineDefinition) definition;
-
-            if (routine.getPackage() instanceof UDTDefinition) {
-                return "udt." + getJavaIdentifier(routine.getPackage()).toLowerCase(targetLocale);
-            }
-            else if (routine.getPackage() != null) {
-                return "packages." + getJavaIdentifier(routine.getPackage()).toLowerCase(targetLocale);
-            }
-            else {
+        else if (definition instanceof RoutineDefinition) { RoutineDefinition r = (RoutineDefinition) definition;
+            if (r.getPackage() instanceof UDTDefinition)
+                return "udt." + getJavaIdentifier(r.getPackage()).toLowerCase(targetLocale);
+            else if (r.getPackage() != null)
+                return "packages." + getJavaIdentifier(r.getPackage()).toLowerCase(targetLocale);
+            else
                 return "routines";
-            }
         }
-        else if (definition instanceof EnumDefinition) {
+        else if (definition instanceof EnumDefinition)
             return "enums";
-        }
-        else if (definition instanceof DomainDefinition) {
+        else if (definition instanceof DomainDefinition)
             return "domains";
-        }
-
-        else if (definition instanceof ArrayDefinition) {
-            ArrayDefinition array = (ArrayDefinition) definition;
+        else if (definition instanceof ArrayDefinition) { ArrayDefinition a = (ArrayDefinition) definition;
 
             // [#7125] An array inside of a package is a PL/SQL TABLE type
-            if (array.getPackage() != null)
-                return "packages." + getJavaIdentifier(array.getPackage()).toLowerCase(targetLocale) + ".udt";
+            if (a.getPackage() != null)
+                return "packages." + getJavaIdentifier(a.getPackage()).toLowerCase(targetLocale) + ".udt";
             else
                 return "udt";
         }
+
+        else if (definition instanceof SyntheticDaoDefinition)
+            return "daos";
 
         // Default always to the main package
         return "";

@@ -80,7 +80,7 @@ public class DefaultMetaTableDefinition extends AbstractTableDefinition {
             );
 
             result.add(new DefaultColumnDefinition(
-                getDatabase().getTable(getSchema(), getName()),
+                this,
                 field.getName(),
                 result.size() + 1,
                 type,

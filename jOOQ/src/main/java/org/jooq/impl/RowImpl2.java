@@ -65,7 +65,11 @@ import org.jetbrains.annotations.NotNull;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-final class RowImpl2<T1, T2> extends AbstractRow<Record2<T1, T2>> implements Row2<T1, T2> {
+final class RowImpl2<T1, T2>
+extends
+    AbstractRow<Record2<T1, T2>>
+implements
+    Row2<T1, T2> {
 
     RowImpl2(SelectField<T1> field1, SelectField<T2> field2) {
         super(field1, field2);

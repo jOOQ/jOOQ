@@ -65,7 +65,11 @@ import org.jetbrains.annotations.NotNull;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-final class RowImpl8<T1, T2, T3, T4, T5, T6, T7, T8> extends AbstractRow<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> implements Row8<T1, T2, T3, T4, T5, T6, T7, T8> {
+final class RowImpl8<T1, T2, T3, T4, T5, T6, T7, T8>
+extends
+    AbstractRow<Record8<T1, T2, T3, T4, T5, T6, T7, T8>>
+implements
+    Row8<T1, T2, T3, T4, T5, T6, T7, T8> {
 
     RowImpl8(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8) {
         super(field1, field2, field3, field4, field5, field6, field7, field8);

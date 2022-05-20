@@ -62,7 +62,11 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Lukas Eder
  */
-final class RowImplN extends AbstractRow<Record> implements RowN {
+final class RowImplN
+extends
+    AbstractRow<Record>
+implements
+    RowN {
 
     RowImplN(SelectField<?>... fields) {
         super(fields);

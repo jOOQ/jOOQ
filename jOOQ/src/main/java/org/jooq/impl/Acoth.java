@@ -125,6 +125,7 @@ implements
             case SQLITE:
             case YUGABYTEDB:
                 return false;
+
             default:
                 return true;
         }

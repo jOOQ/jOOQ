@@ -90,6 +90,30 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
+    final boolean parenthesised(Context<?> ctx) {
+        switch (ctx.family()) {
+            case MARIADB:
+            case MYSQL:
+                return true;
+
+
+            case H2:
+                return false;
+
+            case SQLITE:
+                return false;
+
+
+
+
+
+
+            default:
+                return true;
+        }
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 

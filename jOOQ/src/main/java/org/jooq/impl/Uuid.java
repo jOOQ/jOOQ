@@ -85,6 +85,70 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
+    final boolean parenthesised(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+            case POSTGRES:
+                return true;
+
+
+
+
+
+
+            case FIREBIRD:
+                return false;
+
+
+
+
+
+
+            case H2:
+                return true;
+
+            case HSQLDB:
+            case IGNITE:
+            case MARIADB:
+            case MYSQL:
+                return true;
+
+
+
+
+
+
+
+
+
+            case SQLITE:
+                return false;
+
+
+
+
+
+
+
+
+
+            default:
+                return true;
+        }
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 

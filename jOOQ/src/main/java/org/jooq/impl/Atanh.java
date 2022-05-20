@@ -115,6 +115,7 @@ implements
             case MYSQL:
             case YUGABYTEDB:
                 return false;
+
             default:
                 return true;
         }

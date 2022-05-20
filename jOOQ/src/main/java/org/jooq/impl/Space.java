@@ -90,6 +90,34 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
+    final boolean parenthesised(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+            case FIREBIRD:
+            case SQLITE:
+                return false;
+
+
+
+
+
+            case DERBY:
+            case HSQLDB:
+            case POSTGRES:
+            case YUGABYTEDB:
+                return false;
+
+            default:
+                return true;
+        }
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 

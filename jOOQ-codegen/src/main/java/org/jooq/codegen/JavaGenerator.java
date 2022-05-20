@@ -4271,7 +4271,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (!"?".equals(recordType)) {
                     out.javadoc("Result type for {@link #%s()}", method.getName());
-                    out.println("public final class %s {", namespace);
+                    out.println("public static final class %s {", namespace);
 
                     // TODO: Reuse these POJOs?
                     // TODO: Support also non-records

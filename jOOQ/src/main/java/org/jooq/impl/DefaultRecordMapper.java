@@ -369,6 +369,8 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         Boolean debugKSettings = null;
         Boolean debugMatchDegreeFlat = null;
         Boolean debugMatchDegreeNested = null;
+        Boolean debugTopLevelClass = null;
+        Boolean debugStaticNestedClass = null;
 
         // Arrays can be mapped easily
         if (type.isArray()) {
@@ -562,6 +564,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
         }
 
+        debugTopLevelClass = !type.isMemberClass();
+        debugStaticNestedClass = type.isMemberClass() && Modifier.isStatic(type.getModifiers());
+
         throw new MappingException(
             ("" +
             "No DefaultRecordMapper strategy applies to type $type for row type $rowType. Attempted strategies include (in this order):\n" +
@@ -575,6 +580,8 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             "- Is type a java.lang.Record ($debugRC) and is Settings.mapRecordComponentParameterNames enabled ($debugRCSettings)?\n" +
             "- Is type a kotlin class ($debugKClass) and is Settings.mapConstructorParameterNamesInKotlin enabled ($debugKSettings)?\n" +
             "- Is there a constructor that matches row type's degrees with nested fields ($debugMatchDegreeNested) or flat fields ($debugMatchDegreeFlat)\n" +
+            "- Is the type a top level class ($debugTopLevelClass) or static nested class ($debugStaticNestedClass)?\n" +
+            "-   (Inner classes cannot be created via reflection)\n" +
             "- Is Settings.mapConstructorParameterNames enabled ($debugMatchNames)\n" +
             "").replace("$type", type.toString())
                .replace("$rowType", rowType.toString())
@@ -590,6 +597,8 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                .replace("$debugMatchDegreeNested", debug(debugMatchDegreeNested))
                .replace("$debugMatchDegreeFlat", debug(debugMatchDegreeFlat))
                .replace("$debugMatchNames", debug(mapConstructorParameterNames))
+               .replace("$debugTopLevelClass", debug(debugTopLevelClass))
+               .replace("$debugStaticNestedClass", debug(debugStaticNestedClass))
         );
     }
 

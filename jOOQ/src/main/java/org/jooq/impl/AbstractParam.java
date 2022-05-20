@@ -137,7 +137,13 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
 
         // [#13581] User defined Binding implementations can generate any type
         //          of SQL, including SQL that isn't parenthesised.
-        return getBinding() instanceof InternalBinding;
+        // [#8681]  Negative values (e.g. "-1") can't be considered parenthesised
+        //          just like inline(1).neg() is not parenthesised
+        return getBinding() instanceof InternalBinding && positive(value);
+    }
+
+    private static boolean positive(Object value) {
+        return value instanceof Number ? ((Number) value).doubleValue() >= 0 : false;
     }
 
     @Override

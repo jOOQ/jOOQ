@@ -65,7 +65,11 @@ import org.jetbrains.annotations.NotNull;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-final class RowImpl1<T1> extends AbstractRow<Record1<T1>> implements Row1<T1> {
+final class RowImpl1<T1>
+extends
+    AbstractRow<Record1<T1>>
+implements
+    Row1<T1> {
 
     RowImpl1(SelectField<T1> field1) {
         super(field1);
@@ -114,7 +118,7 @@ final class RowImpl1<T1> extends AbstractRow<Record1<T1>> implements Row1<T1> {
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1) {
-        return compare(comparator, row(Tools.field(t1, (DataType) dataType(0))));
+        return compare(comparator, row(Tools.field(t1, (DataType<T1>) dataType(0))));
     }
 
     @Override

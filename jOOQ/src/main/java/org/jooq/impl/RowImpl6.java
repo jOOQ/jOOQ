@@ -65,7 +65,11 @@ import org.jetbrains.annotations.NotNull;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-final class RowImpl6<T1, T2, T3, T4, T5, T6> extends AbstractRow<Record6<T1, T2, T3, T4, T5, T6>> implements Row6<T1, T2, T3, T4, T5, T6> {
+final class RowImpl6<T1, T2, T3, T4, T5, T6>
+extends
+    AbstractRow<Record6<T1, T2, T3, T4, T5, T6>>
+implements
+    Row6<T1, T2, T3, T4, T5, T6> {
 
     RowImpl6(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6) {
         super(field1, field2, field3, field4, field5, field6);
@@ -139,7 +143,7 @@ final class RowImpl6<T1, T2, T3, T4, T5, T6> extends AbstractRow<Record6<T1, T2,
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
-        return compare(comparator, row(Tools.field(t1, (DataType) dataType(0)), Tools.field(t2, (DataType) dataType(1)), Tools.field(t3, (DataType) dataType(2)), Tools.field(t4, (DataType) dataType(3)), Tools.field(t5, (DataType) dataType(4)), Tools.field(t6, (DataType) dataType(5))));
+        return compare(comparator, row(Tools.field(t1, (DataType<T1>) dataType(0)), Tools.field(t2, (DataType<T2>) dataType(1)), Tools.field(t3, (DataType<T3>) dataType(2)), Tools.field(t4, (DataType<T4>) dataType(3)), Tools.field(t5, (DataType<T5>) dataType(4)), Tools.field(t6, (DataType<T6>) dataType(5))));
     }
 
     @Override

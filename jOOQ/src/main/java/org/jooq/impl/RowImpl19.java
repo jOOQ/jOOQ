@@ -65,7 +65,11 @@ import org.jetbrains.annotations.NotNull;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-final class RowImpl19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> extends AbstractRow<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> implements Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> {
+final class RowImpl19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>
+extends
+    AbstractRow<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>
+implements
+    Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> {
 
     RowImpl19(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19) {
         super(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19);
@@ -204,7 +208,7 @@ final class RowImpl19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T1
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
-        return compare(comparator, row(Tools.field(t1, (DataType) dataType(0)), Tools.field(t2, (DataType) dataType(1)), Tools.field(t3, (DataType) dataType(2)), Tools.field(t4, (DataType) dataType(3)), Tools.field(t5, (DataType) dataType(4)), Tools.field(t6, (DataType) dataType(5)), Tools.field(t7, (DataType) dataType(6)), Tools.field(t8, (DataType) dataType(7)), Tools.field(t9, (DataType) dataType(8)), Tools.field(t10, (DataType) dataType(9)), Tools.field(t11, (DataType) dataType(10)), Tools.field(t12, (DataType) dataType(11)), Tools.field(t13, (DataType) dataType(12)), Tools.field(t14, (DataType) dataType(13)), Tools.field(t15, (DataType) dataType(14)), Tools.field(t16, (DataType) dataType(15)), Tools.field(t17, (DataType) dataType(16)), Tools.field(t18, (DataType) dataType(17)), Tools.field(t19, (DataType) dataType(18))));
+        return compare(comparator, row(Tools.field(t1, (DataType<T1>) dataType(0)), Tools.field(t2, (DataType<T2>) dataType(1)), Tools.field(t3, (DataType<T3>) dataType(2)), Tools.field(t4, (DataType<T4>) dataType(3)), Tools.field(t5, (DataType<T5>) dataType(4)), Tools.field(t6, (DataType<T6>) dataType(5)), Tools.field(t7, (DataType<T7>) dataType(6)), Tools.field(t8, (DataType<T8>) dataType(7)), Tools.field(t9, (DataType<T9>) dataType(8)), Tools.field(t10, (DataType<T10>) dataType(9)), Tools.field(t11, (DataType<T11>) dataType(10)), Tools.field(t12, (DataType<T12>) dataType(11)), Tools.field(t13, (DataType<T13>) dataType(12)), Tools.field(t14, (DataType<T14>) dataType(13)), Tools.field(t15, (DataType<T15>) dataType(14)), Tools.field(t16, (DataType<T16>) dataType(15)), Tools.field(t17, (DataType<T17>) dataType(16)), Tools.field(t18, (DataType<T18>) dataType(17)), Tools.field(t19, (DataType<T19>) dataType(18))));
     }
 
     @Override

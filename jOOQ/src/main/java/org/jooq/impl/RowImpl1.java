@@ -118,7 +118,7 @@ implements
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1) {
-        return compare(comparator, row(Tools.field(t1, (DataType) dataType(0))));
+        return compare(comparator, row(Tools.field(t1, (DataType<T1>) dataType(0))));
     }
 
     @Override

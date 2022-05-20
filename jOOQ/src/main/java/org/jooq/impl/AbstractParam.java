@@ -57,6 +57,7 @@ import org.jooq.Param;
 import org.jooq.ParamMode;
 import org.jooq.QualifiedRecord;
 import org.jooq.conf.ParamType;
+import org.jooq.impl.DefaultBinding.InternalBinding;
 import org.jooq.impl.QOM.NotYetImplementedException;
 import org.jooq.tools.StringUtils;
 
@@ -130,6 +131,14 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
     // ------------------------------------------------------------------------
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
+
+    @Override
+    final boolean parenthesised(Context<?> ctx) {
+
+        // [#13581] User defined Binding implementations can generate any type
+        //          of SQL, including SQL that isn't parenthesised.
+        return getBinding() instanceof InternalBinding;
+    }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {

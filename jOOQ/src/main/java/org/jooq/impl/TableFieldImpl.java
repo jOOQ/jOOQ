@@ -98,6 +98,11 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
     // ------------------------------------------------------------------------
 
     @Override
+    final boolean parenthesised(Context<?> ctx) {
+        return true;
+    }
+
+    @Override
     public boolean declaresFields() {
         return  super.declaresFields();
     }

@@ -156,6 +156,7 @@ import static org.jooq.impl.DSL.digits;
 import static org.jooq.impl.DSL.domain;
 import static org.jooq.impl.DSL.epoch;
 import static org.jooq.impl.DSL.every;
+import static org.jooq.impl.DSL.excluded;
 // ...
 import static org.jooq.impl.DSL.exists;
 // ...
@@ -462,6 +463,7 @@ import static org.jooq.impl.Tools.deleteQueryImpl;
 import static org.jooq.impl.Tools.normaliseNameCase;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.updateQueryImpl;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_PARSE_ON_CONFLICT;
 import static org.jooq.impl.Transformations.transformAppendMissingTableReferences;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -700,6 +702,7 @@ import org.jooq.impl.QOM.JSONOnNull;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.XMLPassingMechanism;
 import org.jooq.impl.ScopeStack.Value;
+import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
@@ -2308,7 +2311,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                     InsertOnConflictWhereStep<?> where = parseKeywordIf("ALL TO EXCLUDED")
                         ? onDuplicate.onDuplicateKeyUpdate().setAllToExcluded()
-                        : onDuplicate.onDuplicateKeyUpdate().set(parseSetClauseList());
+                        : onDuplicate.onDuplicateKeyUpdate().set((Map<?, ?>) data(DATA_PARSE_ON_CONFLICT, true, c -> c.parseSetClauseList()));
 
                     if (parseKeywordIf("WHERE"))
                         returning = where.where(parseCondition());
@@ -2343,7 +2346,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     else if (parseKeywordIf("UPDATE SET")) {
                         InsertOnConflictWhereStep<?> where = parseKeywordIf("ALL TO EXCLUDED")
                             ? doUpdate.doUpdate().setAllToExcluded()
-                            : doUpdate.doUpdate().set(parseSetClauseList());
+                            : doUpdate.doUpdate().set((Map<?, ?>) data(DATA_PARSE_ON_CONFLICT, true, c -> c.parseSetClauseList()));
 
                         if (parseKeywordIf("WHERE"))
                             returning = where.where(parseCondition());
@@ -7851,7 +7854,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return r;
     }
 
-    private FieldOrRow parseMethodCallIf(FieldOrRow r) {
+    private final FieldOrRow parseMethodCallIf(FieldOrRow r) {
 
 
 
@@ -7863,7 +7866,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return r;
     }
 
-    private FieldOrRow parseMethodCallIf0(FieldOrRow r) {
+    private final FieldOrRow parseMethodCallIf0(FieldOrRow r) {
 
 
 
@@ -8778,6 +8781,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return epoch(parseFieldParenthesised());
 
                 break;
+
+            case 'V':
+                if (TRUE.equals(data(DATA_PARSE_ON_CONFLICT)) && (parseFunctionNameIf("VALUES") || parseFunctionNameIf("VALUE")))
+                    return excluded(parseFieldParenthesised());
 
             case 'W':
                 if (parseFunctionNameIf("WIDTH_BUCKET"))
@@ -11684,12 +11691,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Name name = parseName();
 
         if (name.qualified()) {
+            String first = name.first();
             String last = name.last();
 
             if ("NEXTVAL".equalsIgnoreCase(last))
                 return sequence(name.qualifier()).nextval();
             else if ("CURRVAL".equalsIgnoreCase(last))
                 return sequence(name.qualifier()).currval();
+            else if (TRUE.equals(data(DATA_PARSE_ON_CONFLICT)) && "EXCLUDED".equalsIgnoreCase(first))
+                return excluded(field(name.unqualifiedName()));
         }
 
         unknownFunctions:
@@ -14577,5 +14587,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     @Override
     public String toString() {
         return mark();
+    }
+
+    public final <T> T data(Object key, Object value, Function<? super DefaultParseContext, ? extends T> function) {
+        Object previous = data(key, value);
+
+        try {
+            return function.apply(this);
+        }
+        finally {
+            if (previous == null)
+                data().remove(key);
+            else
+                data(key, previous);
+        }
     }
 }

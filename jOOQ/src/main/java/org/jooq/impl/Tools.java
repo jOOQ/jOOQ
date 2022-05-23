@@ -628,6 +628,13 @@ final class Tools {
          */
         DATA_LOCK_WAIT_TIMEOUT_SET,
 
+        /**
+         * [#13573] We're parsing the <code>ON CONFLICT</code> clause, in which
+         * the <code>VALUES()</code> function or <code>EXCLUDED</code> pseudo
+         * table have a special semantics.
+         */
+        DATA_PARSE_ON_CONFLICT,
+
         ;
 
         private final boolean resetInSubqueryScope;

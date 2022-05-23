@@ -362,6 +362,14 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
         });
     }
 
+    @Override
+    public FieldOrRowOrSelect put(FieldOrRow key, FieldOrRowOrSelect value) {
+        if (key instanceof NoField || value instanceof NoField)
+            return null;
+        else
+            return super.put(key, value);
+    }
+
 
 
 

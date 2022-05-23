@@ -98,7 +98,7 @@ implements
     }
 
     @Override
-    public final V put(K key, V value) {
+    public /* non-final */ V put(K key, V value) {
         return map.put(key, value);
     }
 
@@ -109,7 +109,7 @@ implements
 
     @Override
     public final void putAll(Map<? extends K, ? extends V> m) {
-        map.putAll(m);
+        m.forEach(this::put);
     }
 
     @Override

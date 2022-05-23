@@ -221,6 +221,9 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
     @Override
     public final void addLimit(Field<? extends Number> numberOfRows) {
+        if (numberOfRows instanceof NoField)
+            return;
+
         limit = numberOfRows;
     }
 

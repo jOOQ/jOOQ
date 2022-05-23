@@ -522,6 +522,9 @@ implements
 
     @Override
     public final void addLimit(Field<? extends Number> l) {
+        if (l instanceof NoField)
+            return;
+
         limit = l;
     }
 

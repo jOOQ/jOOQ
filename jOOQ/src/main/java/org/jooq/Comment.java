@@ -66,7 +66,7 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  *
  * @author Lukas Eder
  */
-public interface Comment extends QueryPart {
+public /* non-sealed */ interface Comment extends ColumnElement {
 
     /**
      * Get the comment.

@@ -193,7 +193,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.ToDate) { QOM.ToDate o = (QOM.ToDate) that;
+        if (that instanceof QOM.ToDate o) {
             return
                 StringUtils.equals($value(), o.$value()) &&
                 StringUtils.equals($formatMask(), o.$formatMask())

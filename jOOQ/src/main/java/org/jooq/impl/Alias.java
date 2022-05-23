@@ -236,10 +236,10 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
                 // [#3156] Do not SELECT * from derived tables to prevent ambiguously defined columns
                 // in those derived tables
                 Select<?> wrappedAsSelect =
-                    wrapped instanceof Select
-                  ? (Select<?>) wrapped
-                  : wrapped instanceof DerivedTable
-                  ? ((DerivedTable<?>) wrapped).query()
+                    wrapped instanceof Select<?> s
+                  ? s
+                  : wrapped instanceof DerivedTable<?> d
+                  ? d.query()
                   : select(asterisk()).from(((Table<?>) wrapped).as(alias));
 
                 List<Field<?>> select = wrappedAsSelect.getSelect();

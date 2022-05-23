@@ -1059,8 +1059,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         /* non-final */ void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
-            if (ctx.statement() instanceof R2DBCPreparedStatement)
-                ((R2DBCPreparedStatement) ctx.statement()).setNull(ctx.index(), dataType);
+            if (ctx.statement() instanceof R2DBCPreparedStatement s)
+                s.setNull(ctx.index(), dataType);
             else
                 ctx.statement().setNull(ctx.index(), sqltype(ctx.statement(), ctx.configuration()));
         }
@@ -1395,8 +1395,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final Object[] convertArray(Object array, Class<? extends Object[]> type) throws SQLException {
             if (array instanceof Object[])
                 return Convert.convert(array, type);
-            else if (array instanceof Array)
-                return convertArray((Array) array, type);
+            else if (array instanceof Array a)
+                return convertArray(a, type);
 
             return null;
         }
@@ -3625,7 +3625,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * LOB, if the argument is a lob.
          */
         private static final Object unlob(Object object) throws SQLException {
-            if (object instanceof Blob) { Blob blob = (Blob) object;
+            if (object instanceof Blob blob) {
                 try {
                     return blob.getBytes(1, asInt(blob.length()));
                 }
@@ -3633,7 +3633,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     JDBCUtils.safeFree(blob);
                 }
             }
-            else if (object instanceof Clob) { Clob clob = (Clob) object;
+            else if (object instanceof Clob clob) {
                 try {
                     return clob.getSubString(1, asInt(clob.length()));
                 }
@@ -3750,8 +3750,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, Record value) throws SQLException {
-            if (value instanceof QualifiedRecord)
-                ctx.output().writeObject((QualifiedRecord<?>) value);
+            if (value instanceof QualifiedRecord<?> q)
+                ctx.output().writeObject(q);
             else
                 throw new UnsupportedOperationException("Type " + dataType + " is not supported");
         }
@@ -3811,7 +3811,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 result = DefaultResultBinding.readMultiset(ctx, row, type.getType(),
                     s -> s != null && (s.startsWith("[") || s.startsWith("{")) ? "[" + s + "]" : null,
                     s -> s != null && (s.startsWith("<")) ? "<result>" + s + "</result>" : null,
-                    s -> s instanceof Struct ? asList((Struct) s) : null
+                    s -> s instanceof Struct x ? asList(x) : null
                 );
 
             return isEmpty(result) ? null : result.get(0);
@@ -3829,10 +3829,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         // -------------------------------------------------------------------------
 
         static final void pgRenderRecordCast(Context<?> ctx, Record value) {
-            if (value instanceof UDTRecord)
-                ctx.visit(((UDTRecord<?>) value).getUDT().getQualifiedName());
-            else if (value instanceof TableRecord)
-                ctx.visit(((TableRecord<?>) value).getTable().getQualifiedName());
+            if (value instanceof UDTRecord<?> u)
+                ctx.visit(u.getUDT().getQualifiedName());
+            else if (value instanceof TableRecord<?> t)
+                ctx.visit(t.getTable().getQualifiedName());
         }
 
         @SuppressWarnings("unchecked")

@@ -469,7 +469,7 @@ implements
 
                     if (requireNewMySQLExcludedEmulation) {
                         um.replaceAll((k, v) -> {
-                            if (v instanceof Excluded) { Excluded<?> e = (Excluded<?>) v;
+                            if (v instanceof Excluded<?> e) {
                                 return keys.contains(e.$field()) ? v : qualify(table(), e.$field());
                             }
                             else
@@ -904,7 +904,7 @@ implements
                 // [#5214] [#13571] PostgreSQL EXCLUDED pseudo table emulation
                 //                  The InsertQueryImpl uses "t" as table name
                 um.replaceAll((key, v) -> {
-                    if (v instanceof Excluded) { Excluded<?> e = (Excluded<?>) v;
+                    if (v instanceof Excluded<?> e) {
                         if (t != null)
 
                             // If the field isn't part of the USING clause, just

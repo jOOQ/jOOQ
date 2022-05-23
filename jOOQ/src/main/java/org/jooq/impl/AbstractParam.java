@@ -104,8 +104,8 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
              ? paramName
 
              // [#3707] Protect value.toString call for certain jOOQ types.
-             : value instanceof QualifiedRecord
-             ? ((QualifiedRecord<?>) value).getQualifier().getName()
+             : value instanceof QualifiedRecord<?> q
+             ? q.getQualifier().getName()
 
 
 
@@ -121,7 +121,7 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
 
         // [#13392] The generated name of a byte[] value shouldn't depend on the
         //          identity of the value, but on the value itself
-        if (value instanceof byte[]) { byte[] b = (byte[]) value;
+        if (value instanceof byte[] b) {
             return "b_" + Internal.hash0(Arrays.hashCode(Arrays.copyOf(b, 16)));
         }
         else
@@ -143,7 +143,7 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
     }
 
     private static boolean positive(Object value) {
-        return value instanceof Number ? ((Number) value).doubleValue() >= 0 : false;
+        return value instanceof Number n ? n.doubleValue() >= 0 : false;
     }
 
     @Override
@@ -249,7 +249,7 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
         if (this == that)
             return true;
 
-        if (that instanceof Param) { Param<?> p = (Param<?>) that;
+        if (that instanceof Param<?> p) {
             Object thatValue = p.getValue();
 
             if (value == null)
@@ -269,10 +269,10 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
     public int hashCode() {
         return value == null
             ? 0
-            : value instanceof byte[]
-            ? Arrays.hashCode((byte[]) value)
-            : value instanceof Object[]
-            ? Arrays.hashCode((Object[]) value)
+            : value instanceof byte[] a
+            ? Arrays.hashCode(a)
+            : value instanceof Object[] a
+            ? Arrays.hashCode(a)
             : value.hashCode();
     }
 }

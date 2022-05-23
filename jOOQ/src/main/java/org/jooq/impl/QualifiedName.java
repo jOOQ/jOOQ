@@ -80,17 +80,17 @@ final class QualifiedName extends AbstractName {
     }
 
     private static final UnqualifiedName[] last(Name[] qualifiedName) {
-        if (qualifiedName instanceof UnqualifiedName[])
-            return (UnqualifiedName[]) qualifiedName;
+        if (qualifiedName instanceof UnqualifiedName[] u)
+            return u;
 
         UnqualifiedName[] result = new UnqualifiedName[qualifiedName.length];
 
         for (int i = 0; i < qualifiedName.length; i++)
-            if (qualifiedName[i] instanceof QualifiedName) { QualifiedName q = (QualifiedName) qualifiedName[i];
+            if (qualifiedName[i] instanceof QualifiedName q) {
                 result[i] = q.qualifiedName[q.qualifiedName.length - 1];
             }
-            else if (qualifiedName[i] instanceof UnqualifiedName)
-                result[i] = (UnqualifiedName) qualifiedName[i];
+            else if (qualifiedName[i] instanceof UnqualifiedName u)
+                result[i] = u;
             else
                 result[i] = new UnqualifiedName(qualifiedName[i].last());
 

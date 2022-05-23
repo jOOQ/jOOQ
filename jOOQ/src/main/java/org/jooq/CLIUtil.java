@@ -56,12 +56,12 @@ final class CLIUtil {
         }
         catch (NoClassDefFoundError e) {
             throw new RuntimeException(
-                ("" +
-                "A class definition could not be found when running the CLI utility.\n" +
-                "\n" +
-                "This is mostly due to a missing dependency. Make sure you have added the right dependencies\n" +
-                "as according to the manual for {url}\n" +
-                "").replace("{url}", url.replace("/latest/", "/" + MINOR_VERSION + "/")),
+                """
+                A class definition could not be found when running the CLI utility.
+
+                This is mostly due to a missing dependency. Make sure you have added the right dependencies
+                as according to the manual for {url}
+                """.replace("{url}", url.replace("/latest/", "/" + MINOR_VERSION + "/")),
                 e
             );
         }

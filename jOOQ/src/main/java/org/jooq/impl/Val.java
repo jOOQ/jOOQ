@@ -119,7 +119,7 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
 
         // [#10438] A user defined data type could was not provided explicitly,
         //          when wrapping a bind value in DSL::val or DSL::inline
-        if (getDataType() instanceof DataTypeProxy) { DataTypeProxy<?> p = (DataTypeProxy<?>) getDataType();
+        if (getDataType() instanceof DataTypeProxy<?> p) {
 
             // [#9492] Maintain legacy static type registry behaviour for now
             if (p.type() instanceof LegacyConvertedDataType && type == SQLDataType.OTHER) {
@@ -168,7 +168,7 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
             else
                 acceptDefaultEmbeddable(ctx);
         }
-        else if (ctx instanceof RenderContext) { RenderContext r = (RenderContext) ctx;
+        else if (ctx instanceof RenderContext r) {
             ParamType paramType = ctx.paramType();
 
             if (isInline(ctx))

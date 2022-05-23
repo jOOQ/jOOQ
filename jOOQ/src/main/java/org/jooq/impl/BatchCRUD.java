@@ -213,8 +213,8 @@ final class BatchCRUD extends AbstractBatch {
 
             // [#3362] If new records (fetched = false) are batch-stored twice in a row, the second
             // batch-store needs to generate an UPDATE statement.
-            if (record instanceof AbstractRecord)
-                ((AbstractRecord) record).fetched = action != Action.DELETE;
+            if (record instanceof AbstractRecord r)
+                r.fetched = action != Action.DELETE;
         }
     }
 

@@ -831,8 +831,8 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
         TableFieldImpl<R, U> tableField = new TableFieldImpl<>(name, actualType, table, DSL.comment(comment), actualBinding);
 
         // [#1199] The public API of Table returns immutable field lists
-        if (table instanceof TableImpl)
-            ((TableImpl<?>) table).fields0().add(tableField);
+        if (table instanceof TableImpl<?> t)
+            t.fields0().add(tableField);
 
         return tableField;
     }

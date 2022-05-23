@@ -227,7 +227,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.BitXNor) { QOM.BitXNor<?> o = (QOM.BitXNor<?>) that;
+        if (that instanceof QOM.BitXNor<?> o) {
             return
                 StringUtils.equals($arg1(), o.$arg1()) &&
                 StringUtils.equals($arg2(), o.$arg2())

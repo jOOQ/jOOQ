@@ -827,10 +827,10 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         // [#1343] Only convert non-jOOQ objects
         // [#8606] The column index is relevant when adding a value to a plain SQL multi row INSERT
         //         statement that does not have any field list.
-        if (object instanceof Field)
-            delegate.addValue(field, index, (Field) object);
-        else if (object instanceof FieldLike)
-            delegate.addValue(field, index, ((FieldLike) object).asField());
+        if (object instanceof Field f)
+            delegate.addValue(field, index, f);
+        else if (object instanceof FieldLike f)
+            delegate.addValue(field, index, f.asField());
         else if (field != null)
             delegate.addValue(field, index, field.getDataType().convert(object));
 

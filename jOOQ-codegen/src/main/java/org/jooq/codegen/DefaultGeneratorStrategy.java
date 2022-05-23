@@ -274,7 +274,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
     public String getJavaMethodName(Definition definition, Mode mode) {
         // [#7148] If table A references table B only once, then B is the ideal name
         //         for the implicit JOIN path. Otherwise, fall back to the foreign key name
-        if (getUseTableNameForUnambiguousFKs() && definition instanceof ForeignKeyDefinition) { ForeignKeyDefinition fk = (ForeignKeyDefinition) definition;
+        if (getUseTableNameForUnambiguousFKs() && definition instanceof ForeignKeyDefinition fk) {
             TableDefinition referenced = fk.getReferencedTable();
 
             if (fk.getKeyTable().getForeignKeys(referenced).size() == 1)
@@ -489,7 +489,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             return "embeddables";
 
         // [#799] UDT's are also packages
-        else if (definition instanceof UDTDefinition) { UDTDefinition u = (UDTDefinition) definition;
+        else if (definition instanceof UDTDefinition u) {
 
             // [#330] [#6529] A UDT inside of a package is a PL/SQL RECORD type
             if (u.getPackage() != null)
@@ -499,7 +499,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         }
         else if (definition instanceof PackageDefinition)
             return "packages";
-        else if (definition instanceof RoutineDefinition) { RoutineDefinition r = (RoutineDefinition) definition;
+        else if (definition instanceof RoutineDefinition r) {
             if (r.getPackage() instanceof UDTDefinition)
                 return "udt." + getJavaIdentifier(r.getPackage()).toLowerCase(targetLocale);
             else if (r.getPackage() != null)
@@ -511,7 +511,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             return "enums";
         else if (definition instanceof DomainDefinition)
             return "domains";
-        else if (definition instanceof ArrayDefinition) { ArrayDefinition a = (ArrayDefinition) definition;
+        else if (definition instanceof ArrayDefinition a) {
 
             // [#7125] An array inside of a package is a PL/SQL TABLE type
             if (a.getPackage() != null)

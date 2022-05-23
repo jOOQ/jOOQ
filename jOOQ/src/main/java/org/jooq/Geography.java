@@ -104,8 +104,8 @@ public final class Geography implements Spatial {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj instanceof Geography)
-            return data.equals(((Geography) obj).data);
+        if (obj instanceof Geography j)
+            return data.equals(j.data);
         return false;
 
     }

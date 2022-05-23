@@ -191,8 +191,8 @@ public final class Internal {
     public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(Table<R> table, Name name, TableField<R, ?>[] fkFields, UniqueKey<U> uk, TableField<U, ?>[] ukFields, boolean enforced) {
         ForeignKey<R, U> result = new ReferenceImpl<>(table, name, fkFields, uk, ukFields == null ? uk.getFieldsArray() : ukFields, enforced);
 
-        if (uk instanceof UniqueKeyImpl)
-            ((UniqueKeyImpl<U>) uk).references.add(result);
+        if (uk instanceof UniqueKeyImpl<U> u)
+            u.references.add(result);
 
         return result;
     }
@@ -263,7 +263,7 @@ public final class Internal {
     public static final Name createPathAlias(Table<?> child, ForeignKey<?, ?> path) {
         Name name = DSL.name(path.getName());
 
-        if (child instanceof TableImpl) { TableImpl<?> t = (TableImpl<?>) child;
+        if (child instanceof TableImpl<?> t) {
             Table<?> ancestor = t.child;
 
             if (ancestor != null)
@@ -473,9 +473,9 @@ public final class Internal {
     @SuppressWarnings({ "unchecked", "unused" })
     public static final <T> Class<T[]> arrayType(Class<T> type) {
 
-
-
-
+        if (true)
+            return (Class<T[]>) type.arrayType();
+        else
 
         return (Class<T[]>) Array.newInstance(type, 0).getClass();
     }

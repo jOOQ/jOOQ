@@ -659,7 +659,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
         return result;
     }
 
-    static final /* record */ class TableRecord { private final String schema; private final String table; private final TableType type; private final String comment; private final String source; public TableRecord(String schema, String table, TableType type, String comment, String source) { this.schema = schema; this.table = table; this.type = type; this.comment = comment; this.source = source; } public String schema() { return schema; } public String table() { return table; } public TableType type() { return type; } public String comment() { return comment; } public String source() { return source; } @Override public boolean equals(Object o) { if (!(o instanceof TableRecord)) return false; TableRecord other = (TableRecord) o; if (!java.util.Objects.equals(this.schema, other.schema)) return false; if (!java.util.Objects.equals(this.table, other.table)) return false; if (!java.util.Objects.equals(this.type, other.type)) return false; if (!java.util.Objects.equals(this.comment, other.comment)) return false; if (!java.util.Objects.equals(this.source, other.source)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.schema, this.table, this.type, this.comment, this.source); } @Override public String toString() { return new StringBuilder("TableRecord[").append("schema=").append(this.schema).append(", table=").append(this.table).append(", type=").append(this.type).append(", comment=").append(this.comment).append(", source=").append(this.source).append("]").toString(); } }
+    static record TableRecord(String schema, String table, TableType type, String comment, String source) {}
 
     @Override
     protected List<TableDefinition> getTables0() throws SQLException {
@@ -826,18 +826,18 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
     private void getInlineEnums2_0(List<EnumDefinition> result) {
         // TODO: Re-generate the H2 schema and use generated code to run this query
 
-        create().resultQuery(("" +
-                "select c.TABLE_SCHEMA , c.TABLE_NAME , c.COLUMN_NAME , array_agg(ev.value_name order by ev.VALUE_ORDINAL)\n" +
-                "from INFORMATION_SCHEMA.ENUM_VALUES ev\n" +
-                "join INFORMATION_SCHEMA.COLUMNS c\n" +
-                "on ev.OBJECT_SCHEMA = c.TABLE_SCHEMA\n" +
-                "and ev.OBJECT_NAME = c.TABLE_NAME\n" +
-                "and ev.ENUM_IDENTIFIER = c.DTD_IDENTIFIER\n" +
-                "where ev.OBJECT_TYPE = 'TABLE'\n" +
-                "and c.DOMAIN_NAME IS NULL\n" +
-                "group by c.TABLE_SCHEMA , c.TABLE_NAME , c.COLUMN_NAME\n" +
-                "order by 1, 2, 3\n" +
-                ""))
+        create().resultQuery("""
+                select c.TABLE_SCHEMA , c.TABLE_NAME , c.COLUMN_NAME , array_agg(ev.value_name order by ev.VALUE_ORDINAL)
+                from INFORMATION_SCHEMA.ENUM_VALUES ev
+                join INFORMATION_SCHEMA.COLUMNS c
+                on ev.OBJECT_SCHEMA = c.TABLE_SCHEMA
+                and ev.OBJECT_NAME = c.TABLE_NAME
+                and ev.ENUM_IDENTIFIER = c.DTD_IDENTIFIER
+                where ev.OBJECT_TYPE = 'TABLE'
+                and c.DOMAIN_NAME IS NULL
+                group by c.TABLE_SCHEMA , c.TABLE_NAME , c.COLUMN_NAME
+                order by 1, 2, 3
+                """)
             .coerce(COLUMNS.TABLE_SCHEMA, COLUMNS.TABLE_NAME, COLUMNS.COLUMN_NAME, arrayAgg(COLUMNS.COLUMN_NAME))
             .forEach(r -> {
                 SchemaDefinition schema = getSchema(r.value1());
@@ -868,7 +868,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
             });
     }
 
-    static final /* record */ class EnumRecord { private final String schema; private final String table; private final String column; private final String type; public EnumRecord(String schema, String table, String column, String type) { this.schema = schema; this.table = table; this.column = column; this.type = type; } public String schema() { return schema; } public String table() { return table; } public String column() { return column; } public String type() { return type; } @Override public boolean equals(Object o) { if (!(o instanceof EnumRecord)) return false; EnumRecord other = (EnumRecord) o; if (!java.util.Objects.equals(this.schema, other.schema)) return false; if (!java.util.Objects.equals(this.table, other.table)) return false; if (!java.util.Objects.equals(this.column, other.column)) return false; if (!java.util.Objects.equals(this.type, other.type)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.schema, this.table, this.column, this.type); } @Override public String toString() { return new StringBuilder("EnumRecord[").append("schema=").append(this.schema).append(", table=").append(this.table).append(", column=").append(this.column).append(", type=").append(this.type).append("]").toString(); } }
+    static record EnumRecord (String schema, String table, String column, String type) {}
 
     private void getInlineEnums1_4(List<EnumDefinition> result) {
 
@@ -928,13 +928,13 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
     private void getDomainEnums2_0(List<EnumDefinition> result) {
         // TODO: Re-generate the H2 schema and use generated code to run this query
 
-        create().resultQuery(("" +
-                    "select object_schema, object_name, array_agg(ev.value_name order by ev.VALUE_ORDINAL)\n" +
-                    "from INFORMATION_SCHEMA.ENUM_VALUES ev\n" +
-                    "where ev.OBJECT_TYPE = 'DOMAIN'\n" +
-                    "group by object_schema, object_name\n" +
-                    "order by 1, 2\n" +
-                    ""))
+        create().resultQuery("""
+                    select object_schema, object_name, array_agg(ev.value_name order by ev.VALUE_ORDINAL)
+                    from INFORMATION_SCHEMA.ENUM_VALUES ev
+                    where ev.OBJECT_TYPE = 'DOMAIN'
+                    group by object_schema, object_name
+                    order by 1, 2
+                    """)
                 .coerce(COLUMNS.TABLE_SCHEMA, COLUMNS.TABLE_NAME, arrayAgg(COLUMNS.COLUMN_NAME))
                 .forEach(r -> {
 
@@ -950,7 +950,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
         });
     }
 
-    static final /* record */ class DomainRecord { private final String schema; private final String name; private final String sql; public DomainRecord(String schema, String name, String sql) { this.schema = schema; this.name = name; this.sql = sql; } public String schema() { return schema; } public String name() { return name; } public String sql() { return sql; } @Override public boolean equals(Object o) { if (!(o instanceof DomainRecord)) return false; DomainRecord other = (DomainRecord) o; if (!java.util.Objects.equals(this.schema, other.schema)) return false; if (!java.util.Objects.equals(this.name, other.name)) return false; if (!java.util.Objects.equals(this.sql, other.sql)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.schema, this.name, this.sql); } @Override public String toString() { return new StringBuilder("DomainRecord[").append("schema=").append(this.schema).append(", name=").append(this.name).append(", sql=").append(this.sql).append("]").toString(); } }
+    static record DomainRecord (String schema, String name, String sql) {}
 
     private void getDomainEnums1_4(List<EnumDefinition> result) {
 

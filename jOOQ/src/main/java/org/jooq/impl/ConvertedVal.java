@@ -64,7 +64,7 @@ final class ConvertedVal<T> extends AbstractParamX<T> implements UNotYetImplemen
     ConvertedVal(AbstractParamX<?> delegate, DataType<T> type) {
         super(delegate.getUnqualifiedName(), type);
 
-        this.delegate = delegate instanceof ConvertedVal ? ((ConvertedVal<?>) delegate).delegate : delegate;
+        this.delegate = delegate instanceof ConvertedVal<?> c ? c.delegate : delegate;
     }
 
     // ------------------------------------------------------------------------

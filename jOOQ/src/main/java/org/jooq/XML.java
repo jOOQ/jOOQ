@@ -101,8 +101,8 @@ public final class XML implements Serializable {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj instanceof XML)
-            return data.equals(((XML) obj).data);
+        if (obj instanceof XML x)
+            return data.equals(x.data);
         return false;
 
     }

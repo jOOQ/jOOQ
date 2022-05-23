@@ -197,7 +197,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Nullif) { QOM.Nullif<?> o = (QOM.Nullif<?>) that;
+        if (that instanceof QOM.Nullif<?> o) {
             return
                 StringUtils.equals($value(), o.$value()) &&
                 StringUtils.equals($other(), o.$other())

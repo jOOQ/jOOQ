@@ -211,7 +211,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Radians) { QOM.Radians o = (QOM.Radians) that;
+        if (that instanceof QOM.Radians o) {
             return
                 StringUtils.equals($degrees(), o.$degrees())
             ;

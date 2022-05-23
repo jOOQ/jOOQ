@@ -186,7 +186,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.ConditionAsField) { QOM.ConditionAsField o = (QOM.ConditionAsField) that;
+        if (that instanceof QOM.ConditionAsField o) {
             return
                 StringUtils.equals($condition(), o.$condition())
             ;

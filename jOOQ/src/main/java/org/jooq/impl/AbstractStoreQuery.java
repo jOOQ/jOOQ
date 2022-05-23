@@ -128,8 +128,8 @@ implements
 
         @Override
         public boolean equals(Object that) {
-            if (that instanceof UnknownField)
-                return index == ((UnknownField<?>) that).index;
+            if (that instanceof UnknownField<?> f)
+                return index == f.index;
             else
                 return false;
         }

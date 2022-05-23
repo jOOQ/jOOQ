@@ -861,7 +861,7 @@ final class Expression<T> extends AbstractTransformable<T> implements UOperator2
         }
     }
 
-    static final /* record */ class Expr<Q extends QueryPart> { private final Q lhs; private final QueryPart op; private final Q rhs; public Expr(Q lhs, QueryPart op, Q rhs) { this.lhs = lhs; this.op = op; this.rhs = rhs; } public Q lhs() { return lhs; } public QueryPart op() { return op; } public Q rhs() { return rhs; } @Override public boolean equals(Object o) { if (!(o instanceof Expr)) return false; Expr other = (Expr) o; if (!java.util.Objects.equals(this.lhs, other.lhs)) return false; if (!java.util.Objects.equals(this.op, other.op)) return false; if (!java.util.Objects.equals(this.rhs, other.rhs)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.lhs, this.op, this.rhs); } @Override public String toString() { return new StringBuilder("Expr[").append("lhs=").append(this.lhs).append(", op=").append(this.op).append(", rhs=").append(this.rhs).append("]").toString(); } }
+    static final record Expr<Q extends QueryPart>(Q lhs, QueryPart op, Q rhs) {}
 
     @SuppressWarnings("unchecked")
     static final <Q1 extends QueryPart, Q2 extends Q1> void acceptAssociative(

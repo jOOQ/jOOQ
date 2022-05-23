@@ -53,7 +53,7 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  *
  * @author Lukas Eder
  */
-public /* non-sealed */ interface Index extends TableElement {
+public non-sealed interface Index extends TableElement {
 
     /**
      * The table on which this index is defined.

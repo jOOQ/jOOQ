@@ -216,7 +216,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Atanh) { QOM.Atanh o = (QOM.Atanh) that;
+        if (that instanceof QOM.Atanh o) {
             return
                 StringUtils.equals($value(), o.$value())
             ;

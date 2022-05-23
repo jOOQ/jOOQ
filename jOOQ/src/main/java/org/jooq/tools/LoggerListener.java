@@ -292,7 +292,7 @@ public class LoggerListener implements ExecuteListener {
             if (context.renderContext() != null) {
                 QueryPart part = context.queryPart();
 
-                if (part instanceof Param) { Param<?> param = (Param<?>) part;
+                if (part instanceof Param<?> param) {
                     Object value = param.getValue();
 
                     if (value instanceof String && ((String) value).length() > maxLength) {

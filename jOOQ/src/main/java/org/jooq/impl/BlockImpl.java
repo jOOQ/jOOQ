@@ -410,8 +410,8 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
             }
         }
         else {
-            DefaultRenderContext r = ctx instanceof DefaultRenderContext
-                ? (DefaultRenderContext) ctx
+            DefaultRenderContext r = ctx instanceof DefaultRenderContext d
+                ? d
                 : null;
 
             statementLoop:

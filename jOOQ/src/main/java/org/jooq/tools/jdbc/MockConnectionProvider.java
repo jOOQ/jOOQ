@@ -77,8 +77,8 @@ public class MockConnectionProvider implements ConnectionProvider {
 
     @Override
     public final void release(Connection connection) {
-        if (connection instanceof MockConnectionWrapper)
-            delegate.release(((MockConnectionWrapper) connection).connection);
+        if (connection instanceof MockConnectionWrapper w)
+            delegate.release(w.connection);
         else
             throw new IllegalArgumentException("Argument connection must be a MockConnectionWrapper");
     }

@@ -220,7 +220,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Trim) { QOM.Trim o = (QOM.Trim) that;
+        if (that instanceof QOM.Trim o) {
             return
                 StringUtils.equals($string(), o.$string()) &&
                 StringUtils.equals($characters(), o.$characters())

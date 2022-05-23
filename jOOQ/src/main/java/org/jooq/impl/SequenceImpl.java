@@ -317,8 +317,8 @@ implements
 
         @Override
         public boolean equals(Object that) {
-            if (that instanceof SequenceFunction)
-                return method == ((SequenceFunction<?>) that).method && sequence.equals(((SequenceFunction<?>) that).sequence);
+            if (that instanceof SequenceFunction<?> s)
+                return method == s.method && sequence.equals(s.sequence);
             else
                 return super.equals(that);
         }
@@ -375,8 +375,8 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof SequenceImpl)
-            return getQualifiedName().equals(((SequenceImpl<?>) that).getQualifiedName());
+        if (that instanceof SequenceImpl<?> s)
+            return getQualifiedName().equals(s.getQualifiedName());
         else
             return super.equals(that);
     }

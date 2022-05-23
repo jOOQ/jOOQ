@@ -225,7 +225,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.BitLength) { QOM.BitLength o = (QOM.BitLength) that;
+        if (that instanceof QOM.BitLength o) {
             return
                 StringUtils.equals($string(), o.$string())
             ;

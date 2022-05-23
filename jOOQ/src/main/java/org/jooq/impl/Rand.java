@@ -176,7 +176,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Rand) { QOM.Rand o = (QOM.Rand) that;
+        if (that instanceof QOM.Rand o) {
             return true;
         }
         else

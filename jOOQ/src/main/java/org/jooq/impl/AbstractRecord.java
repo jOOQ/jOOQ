@@ -159,7 +159,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
         int size = size();
         for (int i = 0; i < size; i++) {
-            if (values[i] instanceof Attachable) { Attachable a = (Attachable) values[i];
+            if (values[i] instanceof Attachable a) {
                 if (result == null)
                     result = new ArrayList<>();
 
@@ -416,8 +416,8 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             set(index, field, value);
         else if (Tools.nonReplacingEmbeddable(field)) {
             Field<?>[] f = embeddedFields(field);
-            Object[] v = value instanceof EmbeddableRecord
-                ? ((EmbeddableRecord) value).intoArray()
+            Object[] v = value instanceof EmbeddableRecord e
+                ? e.intoArray()
                 : new Object[f.length];
 
             for (int i = 0; i < f.length; i++)
@@ -860,7 +860,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             try {
 
                 // [#1522] [#2989] If possible the complete state of this record should be copied onto the other record
-                if (target instanceof AbstractRecord) { AbstractRecord t = (AbstractRecord) target;
+                if (target instanceof AbstractRecord t) {
 
                     // Iterate over target fields, to avoid ambiguities when two source fields share the same name.
                     // [#3634] If external targetFields are provided, use those instead of the target record's fields.

@@ -165,7 +165,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Cardinality) { QOM.Cardinality o = (QOM.Cardinality) that;
+        if (that instanceof QOM.Cardinality o) {
             return
                 StringUtils.equals($array(), o.$array())
             ;

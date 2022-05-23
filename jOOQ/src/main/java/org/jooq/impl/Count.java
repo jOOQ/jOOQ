@@ -145,7 +145,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Count) { QOM.Count o = (QOM.Count) that;
+        if (that instanceof QOM.Count o) {
             return
                 StringUtils.equals($field(), o.$field()) &&
                 $distinct() == o.$distinct()

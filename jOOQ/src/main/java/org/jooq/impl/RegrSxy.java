@@ -194,7 +194,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.RegrSxy) { QOM.RegrSxy o = (QOM.RegrSxy) that;
+        if (that instanceof QOM.RegrSxy o) {
             return
                 StringUtils.equals($y(), o.$y()) &&
                 StringUtils.equals($x(), o.$x())

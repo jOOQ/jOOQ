@@ -212,7 +212,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Space) { QOM.Space o = (QOM.Space) that;
+        if (that instanceof QOM.Space o) {
             return
                 StringUtils.equals($count(), o.$count())
             ;

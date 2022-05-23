@@ -175,7 +175,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Ascii) { QOM.Ascii o = (QOM.Ascii) that;
+        if (that instanceof QOM.Ascii o) {
             return
                 StringUtils.equals($string(), o.$string())
             ;

@@ -71,18 +71,18 @@ import org.jooq.impl.QOM.UnmodifiableCollection;
  *
  * @author Lukas Eder
  */
-/* sealed */ class QueryPartCollectionView<T extends QueryPart>
+sealed class QueryPartCollectionView<T extends QueryPart>
 extends
     AbstractQueryPart
 implements
     UnmodifiableCollection<T>,
     SimpleQueryPart,
     SeparatedQueryPart
-/* permits
+permits
 
 
 
-    QueryPartListView */ 
+    QueryPartListView
 {
 
     final Collection<T>                    wrapped;
@@ -97,7 +97,7 @@ implements
     QueryPartCollectionView(Collection<T> wrapped) {
         this.wrapped = wrapped != null ? wrapped : Collections.emptyList();
 
-        if (wrapped instanceof QueryPartCollectionView) { QueryPartCollectionView<T> v = (QueryPartCollectionView<T>) wrapped;
+        if (wrapped instanceof QueryPartCollectionView<T> v) {
             this.qualify = v.qualify;
             this.separator = v.separator;
             this.mapper = v.mapper;
@@ -246,8 +246,8 @@ implements
         //          declarations. Hence, it is currently safe to assume that
         //          if (part instanceof Condition), then it must have been passed
         //          as a subtype of Field<?> and must be wrapped
-        if (part instanceof Condition)
-            ctx.visit((QueryPart) DSL.field((Condition) part));
+        if (part instanceof Condition c)
+            ctx.visit((QueryPart) DSL.field(c));
         else
             ctx.visit(part);
     }
@@ -388,8 +388,8 @@ implements
         // Maintain List::equals and Set::equals contracts
         else if (that instanceof List && !(this instanceof List))
             return false;
-        else if (that instanceof QueryPartCollectionView)
-            return wrapped.equals(((QueryPartCollectionView<?>) that).wrapped);
+        else if (that instanceof QueryPartCollectionView<?> q)
+            return wrapped.equals(q.wrapped);
         else
             return super.equals(that);
     }

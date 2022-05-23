@@ -119,7 +119,7 @@ final class TranslatingMetaProvider implements MetaProvider {
                 final Locale locale = SettingsTools.interpreterLocale(ctx.settings());
                 if (nameCase != null && nameCase != RenderNameCase.AS_IS) {
                     ctx.configuration().set(onVisitStart(c -> {
-                        if (c.queryPart() instanceof Name) { Name n = (Name) c.queryPart();
+                        if (c.queryPart() instanceof Name n) {
                             Name[] parts = n.parts();
                             boolean changed = false;
 
@@ -217,16 +217,16 @@ final class TranslatingMetaProvider implements MetaProvider {
 
                 // [#9138] Make users aware of the new parse ignore comment syntax
                 log.error("DDL interpretation",
-                    ("" +
-                    "Your SQL string could not be parsed or interpreted. This may have a variety of reasons, including:\n" +
-                    "- The jOOQ parser doesn't understand your SQL\n" +
-                    "- The jOOQ DDL interpretation logic (translating to H2) cannot simulate your SQL\n" +
-                    "\n" +
-                    "If you think this is a bug or a feature worth requesting, please report it here: https://github.com/jOOQ/jOOQ/issues/new/choose\n" +
-                    "\n" +
-                    "As a workaround, you can use the Settings.parseIgnoreComments syntax documented here:\n" +
-                    "https://www.jooq.org/doc/latest/manual/sql-building/dsl-context/custom-settings/settings-parser/\n" +
-                    "")
+                    """
+                    Your SQL string could not be parsed or interpreted. This may have a variety of reasons, including:
+                    - The jOOQ parser doesn't understand your SQL
+                    - The jOOQ DDL interpretation logic (translating to H2) cannot simulate your SQL
+
+                    If you think this is a bug or a feature worth requesting, please report it here: https://github.com/jOOQ/jOOQ/issues/new/choose
+
+                    As a workaround, you can use the Settings.parseIgnoreComments syntax documented here:
+                    https://www.jooq.org/doc/latest/manual/sql-building/dsl-context/custom-settings/settings-parser/
+                    """
                 );
 
                 throw e;

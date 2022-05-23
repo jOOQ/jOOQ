@@ -171,7 +171,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Upper) { QOM.Upper o = (QOM.Upper) that;
+        if (that instanceof QOM.Upper o) {
             return
                 StringUtils.equals($string(), o.$string())
             ;

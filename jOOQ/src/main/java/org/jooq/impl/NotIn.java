@@ -156,7 +156,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.NotIn) { QOM.NotIn<?> o = (QOM.NotIn<?>) that;
+        if (that instanceof QOM.NotIn<?> o) {
             return
                 StringUtils.equals($arg1(), o.$arg1()) &&
                 StringUtils.equals($arg2(), o.$arg2())

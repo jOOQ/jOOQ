@@ -179,7 +179,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Unique) { QOM.Unique o = (QOM.Unique) that;
+        if (that instanceof QOM.Unique o) {
             return
                 StringUtils.equals($query(), o.$query())
             ;

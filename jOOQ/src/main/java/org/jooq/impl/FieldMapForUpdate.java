@@ -213,7 +213,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
             ctx.start(assignmentClause);
 
         // A multi-row update was specified
-        if (key instanceof Row) { Row multiRow = (Row) key;
+        if (key instanceof Row multiRow) {
             Row multiValue = value instanceof Row ? (Row) value : null;
             Select<?> multiSelect = value instanceof Select ? (Select<?>) value : null;
 
@@ -352,7 +352,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
 
     final void set(Map<?, ?> map) {
         map.forEach((k, v) -> {
-            if (k instanceof Row) { Row r = (Row) k;
+            if (k instanceof Row r) {
                 put(r, (FieldOrRowOrSelect) v);
             }
             else {

@@ -219,24 +219,24 @@ public final class QOM {
     /**
      * An unmodifiable {@link Collection} of {@link QueryPart} elements.
      */
-    public /* sealed */ interface UnmodifiableCollection<Q extends org.jooq.QueryPart>
+    public sealed interface UnmodifiableCollection<Q extends org.jooq.QueryPart>
         extends
             org.jooq.QueryPart,
             java.util.Collection<Q>
-        /* permits
+        permits
             UnmodifiableList,
-            QueryPartCollectionView */ 
+            QueryPartCollectionView
     {}
 
     /**
      * An unmodifiable {@link List} of {@link QueryPart} elements.
      */
-    public /* sealed */ interface UnmodifiableList<Q extends org.jooq.QueryPart>
+    public sealed interface UnmodifiableList<Q extends org.jooq.QueryPart>
         extends
             UnmodifiableCollection<Q>,
             java.util.List<Q>
-        /* permits
-            QueryPartListView */ 
+        permits
+            QueryPartListView
     {}
 
     public /*sealed*/ interface With
@@ -541,7 +541,7 @@ public final class QOM {
 
     // Can't seal these types yet because of https://bugs.eclipse.org/bugs/show_bug.cgi?id=577872
 
-    public /* non-sealed */ interface EmptyGroupingSet
+    public non-sealed interface EmptyGroupingSet
         extends
             GroupField,
             UEmpty
@@ -549,7 +549,7 @@ public final class QOM {
             org.jooq.impl.EmptyGroupingSet*/
     {}
 
-    public /* non-sealed */ interface Rollup
+    public non-sealed interface Rollup
         extends
             GroupField,
             UOperator1<UnmodifiableList<? extends FieldOrRow>, GroupField>
@@ -557,7 +557,7 @@ public final class QOM {
             Rollup*/
     {}
 
-    public /* non-sealed */ interface Cube
+    public non-sealed interface Cube
         extends
             GroupField,
             UOperator1<UnmodifiableList<? extends FieldOrRow>, GroupField>
@@ -565,7 +565,7 @@ public final class QOM {
             Cube*/
     {}
 
-    public /* non-sealed */ interface GroupingSets
+    public non-sealed interface GroupingSets
         extends
             GroupField,
             UOperator1<UnmodifiableList<? extends UnmodifiableList<? extends FieldOrRow>>, GroupField>
@@ -6337,17 +6337,17 @@ public final class QOM {
      * used to render SQL, but unlike {@link UTransient} parts, can also appear
      * in user expression trees.
      */
-    /* sealed */ interface UOpaque
+    sealed interface UOpaque
         extends
             UEmpty
-        /* permits
+        permits
 
 
 
             CustomField,
             CustomTable,
             CustomCondition,
-            CustomQueryPart */ 
+            CustomQueryPart
     {}
 
     /**

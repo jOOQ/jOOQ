@@ -176,58 +176,58 @@ final class Interpreter {
         if (log.isDebugEnabled())
             log.debug(query);
 
-        if (query instanceof CreateSchemaImpl)
-            accept0((CreateSchemaImpl) query);
-        else if (query instanceof AlterSchemaImpl)
-            accept0((AlterSchemaImpl) query);
-        else if (query instanceof DropSchemaImpl)
-            accept0((DropSchemaImpl) query);
+        if (query instanceof CreateSchemaImpl q)
+            accept0(q);
+        else if (query instanceof AlterSchemaImpl q)
+            accept0(q);
+        else if (query instanceof DropSchemaImpl q)
+            accept0(q);
 
-        else if (query instanceof CreateTableImpl)
-            accept0((CreateTableImpl) query);
-        else if (query instanceof AlterTableImpl)
-            accept0((AlterTableImpl) query);
-        else if (query instanceof DropTableImpl)
-            accept0((DropTableImpl) query);
-        else if (query instanceof TruncateImpl)
-            accept0((TruncateImpl<?>) query);
+        else if (query instanceof CreateTableImpl q)
+            accept0(q);
+        else if (query instanceof AlterTableImpl q)
+            accept0(q);
+        else if (query instanceof DropTableImpl q)
+            accept0(q);
+        else if (query instanceof TruncateImpl<?> q)
+            accept0(q);
 
-        else if (query instanceof CreateViewImpl)
-            accept0((CreateViewImpl<?>) query);
-        else if (query instanceof AlterViewImpl)
-            accept0((AlterViewImpl) query);
-        else if (query instanceof DropViewImpl)
-            accept0((DropViewImpl) query);
+        else if (query instanceof CreateViewImpl<?> q)
+            accept0(q);
+        else if (query instanceof AlterViewImpl q)
+            accept0(q);
+        else if (query instanceof DropViewImpl q)
+            accept0(q);
 
-        else if (query instanceof CreateSequenceImpl)
-            accept0((CreateSequenceImpl) query);
-        else if (query instanceof AlterSequenceImpl)
-            accept0((AlterSequenceImpl<?>) query);
-        else if (query instanceof DropSequenceImpl)
-            accept0((DropSequenceImpl) query);
+        else if (query instanceof CreateSequenceImpl q)
+            accept0(q);
+        else if (query instanceof AlterSequenceImpl<?> q)
+            accept0(q);
+        else if (query instanceof DropSequenceImpl q)
+            accept0(q);
 
-        else if (query instanceof CreateIndexImpl)
-            accept0((CreateIndexImpl) query);
-        else if (query instanceof AlterIndexImpl)
-            accept0((AlterIndexImpl) query);
-        else if (query instanceof DropIndexImpl)
-            accept0((DropIndexImpl) query);
+        else if (query instanceof CreateIndexImpl q)
+            accept0(q);
+        else if (query instanceof AlterIndexImpl q)
+            accept0(q);
+        else if (query instanceof DropIndexImpl q)
+            accept0(q);
 
-        else if (query instanceof CreateDomainImpl)
-            accept0((CreateDomainImpl<?>) query);
-        else if (query instanceof AlterDomainImpl)
-            accept0((AlterDomainImpl<?>) query);
-        else if (query instanceof DropDomainImpl)
-            accept0((DropDomainImpl) query);
+        else if (query instanceof CreateDomainImpl<?> q)
+            accept0(q);
+        else if (query instanceof AlterDomainImpl<?> q)
+            accept0(q);
+        else if (query instanceof DropDomainImpl q)
+            accept0(q);
 
-        else if (query instanceof CommentOnImpl)
-            accept0((CommentOnImpl) query);
+        else if (query instanceof CommentOnImpl q)
+            accept0(q);
 
         // TODO: Add support for catalogs
-        // else if (query instanceof SetCatalog)
-        //     accept0((SetCatalog) query);
-        else if (query instanceof SetSchema)
-            accept0((SetSchema) query);
+        // else if (query instanceof SetCatalog q)
+        //     accept0(q);
+        else if (query instanceof SetSchema q)
+            accept0(q);
 
         // The interpreter cannot handle DML statements. We're ignoring these for now.
         else if (query instanceof Select)
@@ -241,8 +241,8 @@ final class Interpreter {
         else if (query instanceof Merge)
             ;
 
-        else if (query instanceof SetCommand)
-            accept0((SetCommand) query);
+        else if (query instanceof SetCommand q)
+            accept0(q);
 
         // [#12538] E.g. if comments are retained, or SET commands are ignored
         else if (query instanceof IgnoreQuery)
@@ -456,8 +456,8 @@ final class Interpreter {
             MutableKey key = it2.next();
 
             if (fields == null || anyMatch(key.fields, t1 -> fields.contains(t1))) {
-                if (key instanceof MutableUniqueKey)
-                    cascade((MutableUniqueKey) key, fields, check ? RESTRICT : CASCADE);
+                if (key instanceof MutableUniqueKey k)
+                    cascade(k, fields, check ? RESTRICT : CASCADE);
 
                 if (!check)
                     it2.remove();
@@ -526,10 +526,10 @@ final class Interpreter {
             }
             else {
                 for (TableElement fc : query.$add())
-                    if (fc instanceof Field)
-                        addField(existing, Integer.MAX_VALUE, (UnqualifiedName) fc.getUnqualifiedName(), ((Field<?>) fc).getDataType());
-                    else if (fc instanceof ConstraintImpl)
-                        addConstraint(query, (ConstraintImpl) fc, existing);
+                    if (fc instanceof Field<?> f)
+                        addField(existing, Integer.MAX_VALUE, (UnqualifiedName) fc.getUnqualifiedName(), f.getDataType());
+                    else if (fc instanceof ConstraintImpl c)
+                        addConstraint(query, c, existing);
                     else
                         throw unsupportedQuery(query);
             }
@@ -716,8 +716,8 @@ final class Interpreter {
             public Field<?> next() {
                 TableElement next = it.next();
 
-                if (next instanceof Field)
-                    return (Field<?>) next;
+                if (next instanceof Field<?> f)
+                    return f;
                 else
                     throw unsupportedQuery(query);
             }

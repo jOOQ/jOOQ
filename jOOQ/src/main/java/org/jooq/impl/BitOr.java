@@ -203,7 +203,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.BitOr) { QOM.BitOr<?> o = (QOM.BitOr<?>) that;
+        if (that instanceof QOM.BitOr<?> o) {
             return
                 StringUtils.equals($arg1(), o.$arg1()) &&
                 StringUtils.equals($arg2(), o.$arg2())

@@ -45,13 +45,13 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public /* sealed */ interface FieldOrRowOrSelect
+public sealed interface FieldOrRowOrSelect
 extends
     QueryPart
-/* permits
+permits
     Field,
     Row,
-    Select */ 
+    Select
 {
 
 }

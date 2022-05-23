@@ -1629,8 +1629,8 @@ implements
                     for (Entry<FieldOrRow, FieldOrRowOrSelect> e : m.updateMap.entrySet()) {
                         FieldOrRowOrSelect exp = update.updateMap.get(e.getKey());
 
-                        if (exp instanceof CaseConditionStepImpl)
-                            ((CaseConditionStepImpl) exp).when(negate.and(condition), e.getValue());
+                        if (exp instanceof CaseConditionStepImpl c)
+                            c.when(negate.and(condition), e.getValue());
 
                         // [#10523] [#13325] TODO: ClassCastException when we're using Row here, once supported
                         else

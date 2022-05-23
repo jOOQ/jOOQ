@@ -114,7 +114,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Tau) { QOM.Tau o = (QOM.Tau) that;
+        if (that instanceof QOM.Tau o) {
             return true;
         }
         else

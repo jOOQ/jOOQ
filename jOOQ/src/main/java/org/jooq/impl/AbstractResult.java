@@ -431,8 +431,8 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             return format.emptyString();
 
         // [#7802] Nested records should generate nested CSV data structures
-        String result = value instanceof Formattable
-            ? ((Formattable) value).formatCSV(format)
+        String result = value instanceof Formattable f
+            ? f.formatCSV(format)
             : format0(value, false, false);
 
         switch (format.quote()) {
@@ -490,7 +490,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     if (format.format())
                         writer.append(format.newline()).append(format.indentString(3));
 
-                    if (field instanceof TableField) { TableField<?, ?> f = (TableField<?, ?>) field;
+                    if (field instanceof TableField<?, ?> f) {
                         Table<?> table = f.getTable();
 
                         if (table != null) {
@@ -620,12 +620,12 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
     static final void formatJSON0(Object value, Writer writer, JSONFormat format) throws java.io.IOException {
 
         // [#2741] TODO: This logic will be externalised in new SPI
-        if (value instanceof byte[]) { byte[] a = (byte[]) value;
+        if (value instanceof byte[] a) {
             JSONValue.writeJSONString(Base64.getEncoder().encodeToString(a), writer);
         }
 
         // [#6563] Arrays can be serialised natively in JSON
-        else if (value instanceof Object[]) { Object[] array = (Object[]) value;
+        else if (value instanceof Object[] array) {
             writer.append('[');
 
             for (int i = 0; i < array.length; i++) {
@@ -639,7 +639,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         }
 
         // [#7782] Nested records should generate nested JSON data structures
-        else if (value instanceof Formattable) { Formattable f = (Formattable) value;
+        else if (value instanceof Formattable f) {
             f.formatJSON(writer, format);
         }
 
@@ -779,7 +779,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 for (Field<?> field : fields.fields.fields) {
                     writer.append(newline).append(format.indentString(2)).append("<field");
 
-                    if (field instanceof TableField) { TableField<?, ?> f = (TableField<?, ?>) field;
+                    if (field instanceof TableField<?, ?> f) {
                         Table<?> table = f.getTable();
 
                         if (table != null) {
@@ -870,7 +870,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             else {
                 writer.append(">");
 
-                if (value instanceof Formattable) { Formattable f = (Formattable) value;
+                if (value instanceof Formattable f) {
                     writer.append(newline).append(format.indentString(recordLevel + 2));
                     int previous = format.globalIndent();
                     f.formatXML(writer, format.globalIndent(format.globalIndent() + format.indent() * (recordLevel + 2)));
@@ -1092,8 +1092,8 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         try {
             for (R record : this) {
                 if (table == null)
-                    if (record instanceof TableRecord)
-                        table = ((TableRecord<?>) record).getTable();
+                    if (record instanceof TableRecord<?> r)
+                        table = r.getTable();
                     else
                         table = table(name("UNKNOWN_TABLE"));
 
@@ -1171,7 +1171,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 for (Field<?> field : fields.fields.fields) {
                     Element eField = document.createElement("field");
 
-                    if (field instanceof TableField) { TableField<?, ?> f = (TableField<?, ?>) field;
+                    if (field instanceof TableField<?, ?> f) {
                         Table<?> table = f.getTable();
 
                         if (table != null) {
@@ -1300,7 +1300,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             for (Field<?> field : fields.fields.fields) {
                 AttributesImpl attrs = new AttributesImpl();
 
-                if (field instanceof TableField) { TableField<?, ?> f = (TableField<?, ?>) field;
+                if (field instanceof TableField<?, ?> f) {
                     Table<?> table = f.getTable();
 
                     if (table != null) {
@@ -1378,32 +1378,32 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         if (value == null) {
             formatted += visual ? "{null}" : null;
         }
-        else if (value instanceof byte[]) { byte[] a = (byte[]) value;
+        else if (value instanceof byte[] a) {
             formatted += Base64.getEncoder().encodeToString(a);
         }
-        else if (value instanceof Object[]) { Object[] a = (Object[]) value;
+        else if (value instanceof Object[] a) {
             // [#6545] Nested arrays are handled recursively
             formatted += Arrays.stream(a).map(f -> format0(f, false, visual)).collect(joining(", ", "[", "]"));
         }
-        else if (value instanceof EnumType) { EnumType e = (EnumType) value;
+        else if (value instanceof EnumType e) {
             formatted += e.getLiteral();
         }
-        else if (value instanceof List) { List<?> l = (List<?>) value;
+        else if (value instanceof List<?> l) {
             formatted += l.stream().map(f -> format0(f, false, visual)).collect(joining(", ", "[", "]"));
         }
-        else if (value instanceof Record) { Record r = (Record) value;
+        else if (value instanceof Record r) {
             formatted += Arrays
                 .stream(r.intoArray())
                 .map(f -> format0(f, false, visual))
                 .collect(joining(", ", "(", ")"));
         }
         // [#6080] Support formatting of nested ROWs
-        else if (value instanceof Param) { Param<?> p = (Param<?>) value;
+        else if (value instanceof Param<?> p) {
             formatted += format0(p.getValue(), false, visual);
         }
 
         // [#5238] Oracle DATE is really a TIMESTAMP(0)...
-        else if (value instanceof Date) { Date d = (Date) value;
+        else if (value instanceof Date d) {
             String date = value.toString();
 
             if (Date.valueOf(date).equals(value))

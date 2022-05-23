@@ -171,7 +171,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Reverse) { QOM.Reverse o = (QOM.Reverse) that;
+        if (that instanceof QOM.Reverse o) {
             return
                 StringUtils.equals($string(), o.$string())
             ;

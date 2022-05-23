@@ -156,7 +156,7 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
             return (Result<R>) object;
 
         // [#3884] TODO: Move this logic into JSONReader to make it more generally useful
-        else if (object instanceof List) { List l = (List) object;
+        else if (object instanceof List l) {
             ResultImpl<R> result = new ResultImpl<>(CONFIG, row);
 
             for (Object record : l)

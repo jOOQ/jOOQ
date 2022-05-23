@@ -204,7 +204,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.ToHex) { QOM.ToHex o = (QOM.ToHex) that;
+        if (that instanceof QOM.ToHex o) {
             return
                 StringUtils.equals($value(), o.$value())
             ;

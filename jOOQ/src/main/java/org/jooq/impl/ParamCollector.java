@@ -75,7 +75,7 @@ final class ParamCollector extends AbstractBindContext {
 
     @Override
     protected final void bindInternal(QueryPartInternal internal) {
-        if (internal instanceof Param) { Param<?> param = (Param<?>) internal;
+        if (internal instanceof Param<?> param) {
 
             // [#3131] Inlined parameters should not be returned in some contexts
             if (includeInlinedParams || !param.isInline()) {

@@ -80,10 +80,10 @@ final class DefaultUnwrapperProvider implements UnwrapperProvider {
 
         @Override
         public <T> T unwrap(Wrapper wrapper, Class<T> iface) {
-            if (wrapper instanceof Connection)
-                return unwrap((Connection) wrapper, iface);
-            else if (wrapper instanceof Statement)
-                return unwrap((Statement) wrapper, iface);
+            if (wrapper instanceof Connection c)
+                return unwrap(c, iface);
+            else if (wrapper instanceof Statement s)
+                return unwrap(s, iface);
             else
                 throw new IllegalArgumentException("Cannot unwrap: " + wrapper);
         }

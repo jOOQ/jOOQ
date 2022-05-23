@@ -104,8 +104,8 @@ public final class Geometry implements Spatial {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj instanceof Geometry)
-            return data.equals(((Geometry) obj).data);
+        if (obj instanceof Geometry j)
+            return data.equals(j.data);
         return false;
 
     }

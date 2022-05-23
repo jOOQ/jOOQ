@@ -127,7 +127,7 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
                 ctx.configuration().set(new VisitListener() {
                     @Override
                     public void visitStart(VisitContext vc) {
-                        if (vc.queryPart() instanceof Name) { Name n = (Name) vc.queryPart();
+                        if (vc.queryPart() instanceof Name n) {
                             Name[] parts = n.parts();
                             boolean changed = false;
 

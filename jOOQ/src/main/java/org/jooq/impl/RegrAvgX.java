@@ -190,7 +190,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.RegrAvgX) { QOM.RegrAvgX o = (QOM.RegrAvgX) that;
+        if (that instanceof QOM.RegrAvgX o) {
             return
                 StringUtils.equals($y(), o.$y()) &&
                 StringUtils.equals($x(), o.$x())

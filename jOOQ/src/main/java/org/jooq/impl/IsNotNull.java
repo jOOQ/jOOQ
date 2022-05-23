@@ -148,7 +148,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.IsNotNull) { QOM.IsNotNull o = (QOM.IsNotNull) that;
+        if (that instanceof QOM.IsNotNull o) {
             return
                 StringUtils.equals($field(), o.$field())
             ;

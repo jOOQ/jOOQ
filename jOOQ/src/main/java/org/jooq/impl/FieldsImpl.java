@@ -202,14 +202,14 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
      * needed.
      */
     static final Row fieldsRow0(FieldsTrait fields) {
-        return fields instanceof Select ? ((Select<?>) fields).asTable("t").fieldsRow() : fields.fieldsRow();
+        return fields instanceof Select<?> s ? s.asTable("t").fieldsRow() : fields.fieldsRow();
     }
 
     private static final ThrowingFunction<SelectField<?>, Field<?>, RuntimeException> toField() {
-        return f -> f instanceof Row
-                  ? new RowAsField<>((Row) f)
-                  : f instanceof Table
-                  ? new TableAsField<>((Table<?>) f)
+        return f -> f instanceof Row r
+                  ? new RowAsField<>(r)
+                  : f instanceof Table<?> t
+                  ? new TableAsField<>(t)
                   : (Field<?>) f;
     }
 
@@ -288,7 +288,7 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     }
 
     private final String tableName(Field<?> field) {
-        if (field instanceof TableField) { TableField<?, ?> f = (TableField<?, ?>) field;
+        if (field instanceof TableField<?, ?> f) {
             Table<?> table = f.getTable();
 
             if (table != null)
@@ -596,8 +596,8 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
         if (this == that)
             return true;
 
-        if (that instanceof FieldsImpl)
-            return Arrays.equals(fields, ((FieldsImpl<?>) that).fields);
+        if (that instanceof FieldsImpl<?> f)
+            return Arrays.equals(fields, f.fields);
 
         return false;
     }

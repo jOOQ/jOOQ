@@ -46,13 +46,13 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public /* sealed */ interface SelectFieldOrAsterisk
+public sealed interface SelectFieldOrAsterisk
 extends
     QueryPart
-/* permits
+permits
     SelectField,
     Asterisk,
-    QualifiedAsterisk */ 
+    QualifiedAsterisk
 {
 
 }

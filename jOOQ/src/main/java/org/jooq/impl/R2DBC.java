@@ -752,8 +752,8 @@ final class R2DBC {
         try {
             Object result = queue.take();
 
-            if (result instanceof Throwable)
-                throw new DataAccessException("Exception when blocking on publisher", (Throwable) result);
+            if (result instanceof Throwable t)
+                throw new DataAccessException("Exception when blocking on publisher", t);
             else if (result == complete)
                 return null;
             else
@@ -1172,7 +1172,7 @@ final class R2DBC {
             return new MockArray<>(c.dialect(), (Object[]) nullable(columnIndex, Object.class), Object[].class);
         }
 
-        private static final /* record */ class DefaultRow implements Row { private final Configuration c; private final Row r; public DefaultRow(Configuration c, Row r) { this.c = c; this.r = r; } public Configuration c() { return c; } public Row r() { return r; } @Override public boolean equals(Object o) { if (!(o instanceof DefaultRow)) return false; DefaultRow other = (DefaultRow) o; if (!java.util.Objects.equals(this.c, other.c)) return false; if (!java.util.Objects.equals(this.r, other.r)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.c, this.r); } @Override public String toString() { return new StringBuilder("DefaultRow[").append("c=").append(this.c).append(", r=").append(this.r).append("]").toString(); }
+        private static final record DefaultRow(Configuration c, Row r) implements Row {
 
             // ---------------------------------------------------------------------
             // 0.9.0.M1 API
@@ -1230,7 +1230,7 @@ final class R2DBC {
         }
     }
 
-    static final /* record */ class R2DBCResultSetMetaData implements ResultSetMetaData { private final Configuration c; private final RowMetadata m; public R2DBCResultSetMetaData(Configuration c, RowMetadata m) { this.c = c; this.m = m; } public Configuration c() { return c; } public RowMetadata m() { return m; } @Override public boolean equals(Object o) { if (!(o instanceof R2DBCResultSetMetaData)) return false; R2DBCResultSetMetaData other = (R2DBCResultSetMetaData) o; if (!java.util.Objects.equals(this.c, other.c)) return false; if (!java.util.Objects.equals(this.m, other.m)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.c, this.m); } @Override public String toString() { return new StringBuilder("R2DBCResultSetMetaData[").append("c=").append(this.c).append(", m=").append(this.m).append("]").toString(); }
+    static final record R2DBCResultSetMetaData(Configuration c, RowMetadata m) implements ResultSetMetaData {
 
         private final ColumnMetadata meta(int column) {
             return m.getColumnMetadata(column - 1);

@@ -189,7 +189,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Mod) { QOM.Mod<?> o = (QOM.Mod<?>) that;
+        if (that instanceof QOM.Mod<?> o) {
             return
                 StringUtils.equals($dividend(), o.$dividend()) &&
                 StringUtils.equals($divisor(), o.$divisor())

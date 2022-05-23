@@ -244,8 +244,8 @@ public class PostgresUtils {
     public static DayToSecond toDayToSecond(Object pgInterval) {
         if (pgInterval == null)
             return null;
-        else if (pgInterval instanceof PGInterval)
-            return toDayToSecond((PGInterval) pgInterval);
+        else if (pgInterval instanceof PGInterval i)
+            return toDayToSecond(i);
         else
             return toDayToSecond(new PGInterval(pgInterval.toString()));
     }
@@ -280,8 +280,8 @@ public class PostgresUtils {
     public static YearToMonth toYearToMonth(Object pgInterval) {
         if (pgInterval == null)
             return null;
-        else if (pgInterval instanceof PGInterval)
-            return toYearToMonth((PGInterval) pgInterval);
+        else if (pgInterval instanceof PGInterval i)
+            return toYearToMonth(i);
         else
             return toYearToMonth(new PGInterval(pgInterval.toString()));
     }

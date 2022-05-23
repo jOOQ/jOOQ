@@ -42,12 +42,12 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public /* sealed */ interface ParamOrVariable<T>
+public sealed interface ParamOrVariable<T>
 extends
     Field<T>
-/* permits
+permits
     Param,
-    Variable */ 
+    Variable
 {
 
 }

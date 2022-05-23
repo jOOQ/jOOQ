@@ -334,7 +334,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.JSONObject) { QOM.JSONObject<?> o = (QOM.JSONObject<?>) that;
+        if (that instanceof QOM.JSONObject<?> o) {
             return
                 StringUtils.equals($type(), o.$type()) &&
                 StringUtils.equals($entries(), o.$entries()) &&

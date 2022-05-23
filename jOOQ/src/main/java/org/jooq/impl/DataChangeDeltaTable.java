@@ -114,8 +114,8 @@ implements
     private static final <R extends Record> Table<R> table(DMLQuery<R> query) {
         if (query instanceof Insert || query instanceof Update || query instanceof Delete)
             return (Table<R>) abstractDMLQuery(query).table();
-        else if (query instanceof MergeImpl)
-            return ((MergeImpl) query).table();
+        else if (query instanceof MergeImpl m)
+            return m.table();
         else
             throw new IllegalStateException("Unsupported query type: " + query);
     }

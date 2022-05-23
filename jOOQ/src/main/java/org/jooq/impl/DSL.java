@@ -14832,12 +14832,12 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> field(SelectField<T> field) {
-        return field instanceof Field
-             ? (Field<T>) field
-             : field instanceof AbstractRow
-             ? (Field<T>) ((AbstractRow<?>) field).rf()
-             : field instanceof AbstractTable
-             ? (Field<T>) ((AbstractTable<?>) field).tf()
+        return field instanceof Field<T> f
+             ? f
+             : field instanceof AbstractRow<?> r
+             ? (Field<T>) r.rf()
+             : field instanceof AbstractTable<?> t
+             ? (Field<T>) t.tf()
              : field("{0}", field.getDataType(), field);
     }
 
@@ -20231,7 +20231,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<Boolean> field(Condition condition) {
-        return condition instanceof NoCondition ? noField(BOOLEAN) : condition instanceof FieldCondition ? ((FieldCondition) condition).field : new ConditionAsField(condition);
+        return condition instanceof NoCondition ? noField(BOOLEAN) : condition instanceof FieldCondition f ? f.field : new ConditionAsField(condition);
     }
 
     /**
@@ -20250,7 +20250,7 @@ public class DSL {
     @NotNull
     @Support
     public static Condition condition(Field<Boolean> field) {
-        return field instanceof Condition ? (Condition) field : field instanceof NoField ? noCondition() : field instanceof ConditionAsField ? ((ConditionAsField) field).condition : new FieldCondition(field);
+        return field instanceof Condition ? (Condition) field : field instanceof NoField ? noCondition() : field instanceof ConditionAsField c ? c.condition : new FieldCondition(field);
     }
 
     // -------------------------------------------------------------------------
@@ -31851,8 +31851,8 @@ public class DSL {
     static <T> DataType<T> getDataType0(Class<T> type) {
         DataType t = DefaultDataType.getDataType(DEFAULT, type, (DataType) SQLDataType.OTHER);
 
-        if (t instanceof LegacyConvertedDataType)
-            return new DataTypeProxy((LegacyConvertedDataType) t);
+        if (t instanceof LegacyConvertedDataType l)
+            return new DataTypeProxy(l);
         else if (t != SQLDataType.OTHER)
             return t;
         else

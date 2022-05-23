@@ -469,8 +469,8 @@ final class Limit extends AbstractQueryPart implements UTransient {
     final Long getLimit() {
         Field<?> l = limit != null ? limit : limitOrMax;
 
-        if (l instanceof Param)
-            return Convert.convert(((Param<?>) l).getValue(), long.class);
+        if (l instanceof Param<?> p)
+            return Convert.convert(p.getValue(), long.class);
         else
             return Convert.convert(MAX.getValue(), long.class);
     }

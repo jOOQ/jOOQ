@@ -207,7 +207,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.ArrayGet) { QOM.ArrayGet<?> o = (QOM.ArrayGet<?>) that;
+        if (that instanceof QOM.ArrayGet<?> o) {
             return
                 StringUtils.equals($array(), o.$array()) &&
                 StringUtils.equals($index(), o.$index())

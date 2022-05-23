@@ -90,7 +90,7 @@ public class DefaultColumnDefinition
         this.readonly = readonly || isSyntheticReadonlyColumn(this, this.identity);
 
         // [#6222] Copy the column's identity flag to the data type definition
-        if (type instanceof DefaultDataTypeDefinition) { DefaultDataTypeDefinition dd = (DefaultDataTypeDefinition) type;
+        if (type instanceof DefaultDataTypeDefinition dd) {
             dd.identity(this.identity);
             dd.readonly(this.readonly);
         }

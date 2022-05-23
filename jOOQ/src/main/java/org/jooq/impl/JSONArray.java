@@ -323,7 +323,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.JSONArray) { QOM.JSONArray<?> o = (QOM.JSONArray<?>) that;
+        if (that instanceof QOM.JSONArray<?> o) {
             return
                 StringUtils.equals($type(), o.$type()) &&
                 StringUtils.equals($fields(), o.$fields()) &&

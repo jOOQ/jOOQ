@@ -278,7 +278,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Position) { QOM.Position o = (QOM.Position) that;
+        if (that instanceof QOM.Position o) {
             return
                 StringUtils.equals($in(), o.$in()) &&
                 StringUtils.equals($search(), o.$search()) &&

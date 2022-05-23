@@ -67,13 +67,13 @@ import org.jetbrains.annotations.NotNull;
  * @param <R> The record type
  * @author Lukas Eder
  */
-public /* sealed */ interface TableLike<R extends Record>
+public sealed interface TableLike<R extends Record>
 extends
     Fields,
     QueryPart
-/* permits
+permits
     Select,
-    Table */ 
+    Table
 {
 
     /**

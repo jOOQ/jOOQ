@@ -177,7 +177,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Excluded) { QOM.Excluded<?> o = (QOM.Excluded<?>) that;
+        if (that instanceof QOM.Excluded<?> o) {
             return
                 StringUtils.equals($field(), o.$field())
             ;

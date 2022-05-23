@@ -138,7 +138,7 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
         @SuppressWarnings({ "unchecked" })
         @Override
         public final R unmap(E source) {
-            if (source instanceof Object[]) { Object[] array = (Object[]) source;
+            if (source instanceof Object[] array) {
                 int size = rowType.size();
                 AbstractRecord record = (AbstractRecord) newRecord();
 
@@ -157,7 +157,7 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
         @SuppressWarnings({ "unchecked" })
         @Override
         public final R unmap(E source) {
-            if (source instanceof Iterable) { Iterable<?> iterable = (Iterable<?>) source;
+            if (source instanceof Iterable<?> iterable) {
                 Iterator<?> it = iterable.iterator();
                 int size = rowType.size();
                 AbstractRecord record = (AbstractRecord) newRecord();
@@ -180,7 +180,7 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
 
             // [#1987] Distinguish between various types to load data from
             // Maps are loaded using a {field-name -> value} convention
-            if (source instanceof Map) { Map<?, ?> map = (Map<?, ?>) source;
+            if (source instanceof Map<?, ?> map) {
                 Record record = newRecord();
 
                 for (int i = 0; i < fields.length; i++) {

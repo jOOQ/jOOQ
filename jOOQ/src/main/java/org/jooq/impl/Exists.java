@@ -178,7 +178,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Exists) { QOM.Exists o = (QOM.Exists) that;
+        if (that instanceof QOM.Exists o) {
             return
                 StringUtils.equals($query(), o.$query())
             ;

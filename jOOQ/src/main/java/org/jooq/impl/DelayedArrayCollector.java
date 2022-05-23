@@ -78,8 +78,8 @@ final class DelayedArrayCollector<R extends Record, E> implements Collector<R, L
     }
 
     static final <F extends Fields> F patch(Collector<?, ?, ?> collector, F fields) {
-        if (collector instanceof DelayedArrayCollector)
-            ((DelayedArrayCollector<?, ?>) collector).fields = fields;
+        if (collector instanceof DelayedArrayCollector<?, ?> d)
+            d.fields = fields;
 
         return fields;
     }

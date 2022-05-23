@@ -126,8 +126,8 @@ final class QueriesImpl extends AbstractAttachableQueryPart implements Queries {
         DSLContext ctx = c.dsl();
 
         for (Query query : this)
-            if (query instanceof ResultQuery)
-                results.resultsOrRows.addAll(ctx.fetchMany((ResultQuery<?>) query).resultsOrRows());
+            if (query instanceof ResultQuery<?> q)
+                results.resultsOrRows.addAll(ctx.fetchMany(q).resultsOrRows());
             else
                 results.resultsOrRows.add(new ResultOrRowsImpl(ctx.execute(query)));
 

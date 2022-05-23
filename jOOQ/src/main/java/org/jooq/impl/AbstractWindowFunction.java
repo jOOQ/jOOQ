@@ -320,8 +320,8 @@ implements
 
     @Override
     public final WindowFinalStep<T> over(WindowSpecification specification) {
-        this.windowSpecification = specification instanceof WindowSpecificationImpl
-            ? (WindowSpecificationImpl) specification
+        this.windowSpecification = specification instanceof WindowSpecificationImpl w
+            ? w
             : new WindowSpecificationImpl((WindowDefinitionImpl) specification);
 
         return this;

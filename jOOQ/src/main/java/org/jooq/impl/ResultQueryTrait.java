@@ -1280,10 +1280,10 @@ extends
         Class<? extends R> recordType;
 
         // TODO [#3185] Pull up getRecordType()
-        if (this instanceof AbstractResultQuery)
-            recordType = ((AbstractResultQuery<R>) this).getRecordType();
-        else if (this instanceof SelectImpl)
-            recordType = ((SelectImpl) this).getRecordType();
+        if (this instanceof AbstractResultQuery<R> a)
+            recordType = a.getRecordType();
+        else if (this instanceof SelectImpl s)
+            recordType = s.getRecordType();
         else
             throw new DataAccessException("Attempt to call fetchArray() on " + getClass());
 
@@ -1466,7 +1466,7 @@ extends
     }
 
     default boolean hasLimit1() {
-        if (this instanceof Select) { Select<?> q = (Select<?>) this;
+        if (this instanceof Select<?> q) {
             SelectQueryImpl<?> s = Tools.selectQueryImpl(q);
 
             if (s != null) {

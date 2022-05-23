@@ -240,7 +240,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @SuppressWarnings("unchecked")
     @Override
     public Field<T> as(Name alias) {
-        return new FieldAlias<>((Field<T>) (this instanceof Condition ? DSL.field((Condition) this) : this), alias);
+        return new FieldAlias<>((Field<T>) (this instanceof Condition c ? DSL.field(c) : this), alias);
     }
 
     @Override
@@ -312,7 +312,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final SortField<T> sort(SortOrder order) {
-        return this instanceof NoField ? (NoField<T>) this : new SortFieldImpl<>(this, order);
+        return this instanceof NoField<T> n ? n : new SortFieldImpl<>(this, order);
     }
 
     @Override
@@ -1482,14 +1482,14 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
                 return new IsNotDistinctFrom<>(this, nullSafe(field, getDataType()));
 
             case IN:
-                if (field instanceof ScalarSubquery)
-                    return new In<>(this, (Select<? extends Record1<T>>) ((ScalarSubquery<?>) field).query);
+                if (field instanceof ScalarSubquery<?> s)
+                    return new In<>(this, (Select<? extends Record1<T>>) s.query);
 
                 break;
 
             case NOT_IN:
-                if (field instanceof ScalarSubquery)
-                    return new NotIn<>(this, (Select<? extends Record1<T>>) ((ScalarSubquery<?>) field).query);
+                if (field instanceof ScalarSubquery<?> s)
+                    return new NotIn<>(this, (Select<? extends Record1<T>>) s.query);
 
                 break;
         }

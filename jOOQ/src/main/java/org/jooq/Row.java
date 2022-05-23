@@ -80,7 +80,7 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  *
  * @author Lukas Eder
  */
-public /* non-sealed */ interface Row
+public non-sealed interface Row
 extends
     Fields,
     FieldOrRow,

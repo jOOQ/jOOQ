@@ -566,8 +566,8 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
                 // [#8413] Avoid rollback logic if commit was successful (exception in commitEnd())
                 if (!committed) {
-                    if (cause instanceof Exception)
-                        ctx.cause((Exception) cause);
+                    if (cause instanceof Exception e)
+                        ctx.cause(e);
                     else
                         ctx.causeThrowable(cause);
 
@@ -584,10 +584,10 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
                 }
 
                 // [#6608] [#7167] Errors are no longer handled differently
-                if (cause instanceof RuntimeException)
-                    throw (RuntimeException) cause;
-                else if (cause instanceof Error)
-                    throw (Error) cause;
+                if (cause instanceof RuntimeException e)
+                    throw e;
+                else if (cause instanceof Error e)
+                    throw e;
                 else
                     throw new DataAccessException(committed
                         ? "Exception after commit"

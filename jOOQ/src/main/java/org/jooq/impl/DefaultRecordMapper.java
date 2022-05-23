@@ -70,7 +70,7 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
-// ...
+import java.lang.reflect.RecordComponent;
 import java.lang.reflect.Type;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -440,26 +440,26 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
 
 
+        // [#11778] Java 16 record types expose their component names
+        if ((debugRCSettings = TRUE.equals(configuration.settings().isMapRecordComponentParameterNames())) && (debugRC = type.isRecord())) {
+            RecordComponent[] rc = type.getRecordComponents();
+            List<?> types = Tools.map(rc, RecordComponent::getType);
 
+            for (Constructor<E> constructor : constructors) {
+                Class<?>[] parameterTypes = constructor.getParameterTypes();
 
+                if (types.equals(Arrays.asList(parameterTypes))) {
+                    delegate = new ImmutablePOJOMapper(
+                        constructor,
+                        parameterTypes,
+                        Tools.map(rc, RecordComponent::getName),
+                        true
+                    );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    return;
+                }
+            }
+        }
 
 
         // [#7324] Map immutable Kotlin classes by parameter names if kotlin-reflect is on the classpath
@@ -568,22 +568,22 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         debugStaticNestedClass = type.isMemberClass() && Modifier.isStatic(type.getModifiers());
 
         throw new MappingException(
-            ("" +
-            "No DefaultRecordMapper strategy applies to type $type for row type $rowType. Attempted strategies include (in this order):\n" +
-            "- Is type an array (false)?\n" +
-            "- Is type a Stream (false)?\n" +
-            "- Does row type have only 1 column ($debugVTFL) and did ConverterProvider provide a Converter for type ($debugVTCP)?\n" +
-            "- Is type abstract (false)?\n" +
-            "- Is type a org.jooq.Record (false)?\n" +
-            "- Is type a mutable POJO (a POJO with setters or non-final members: $debugMutable) and has a no-args constructor ($debugMutableConstructors)?\n" +
-            "- Does type have a @ConstructorProperties annotated constructor (false) and is Settings.mapConstructorPropertiesParameterNames enabled ($debugCPSettings)?\n" +
-            "- Is type a java.lang.Record ($debugRC) and is Settings.mapRecordComponentParameterNames enabled ($debugRCSettings)?\n" +
-            "- Is type a kotlin class ($debugKClass) and is Settings.mapConstructorParameterNamesInKotlin enabled ($debugKSettings)?\n" +
-            "- Is there a constructor that matches row type's degrees with nested fields ($debugMatchDegreeNested) or flat fields ($debugMatchDegreeFlat)\n" +
-            "- Is the type a top level class ($debugTopLevelClass) or static nested class ($debugStaticNestedClass)?\n" +
-            "-   (Inner classes cannot be created via reflection)\n" +
-            "- Is Settings.mapConstructorParameterNames enabled ($debugMatchNames)\n" +
-            "").replace("$type", type.toString())
+            """
+            No DefaultRecordMapper strategy applies to type $type for row type $rowType. Attempted strategies include (in this order):
+            - Is type an array (false)?
+            - Is type a Stream (false)?
+            - Does row type have only 1 column ($debugVTFL) and did ConverterProvider provide a Converter for type ($debugVTCP)?
+            - Is type abstract (false)?
+            - Is type a org.jooq.Record (false)?
+            - Is type a mutable POJO (a POJO with setters or non-final members: $debugMutable) and has a no-args constructor ($debugMutableConstructors)?
+            - Does type have a @ConstructorProperties annotated constructor (false) and is Settings.mapConstructorPropertiesParameterNames enabled ($debugCPSettings)?
+            - Is type a java.lang.Record ($debugRC) and is Settings.mapRecordComponentParameterNames enabled ($debugRCSettings)?
+            - Is type a kotlin class ($debugKClass) and is Settings.mapConstructorParameterNamesInKotlin enabled ($debugKSettings)?
+            - Is there a constructor that matches row type's degrees with nested fields ($debugMatchDegreeNested) or flat fields ($debugMatchDegreeFlat)
+            - Is the type a top level class ($debugTopLevelClass) or static nested class ($debugStaticNestedClass)?
+            -   (Inner classes cannot be created via reflection)
+            - Is Settings.mapConstructorParameterNames enabled ($debugMatchNames)
+            """.replace("$type", type.toString())
                .replace("$rowType", rowType.toString())
                .replace("$debugVTFL", debug(debugVTFL))
                .replace("$debugVTCP", debug(debugVTCP))
@@ -753,8 +753,8 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         @Override
         public final AbstractRecord map(R record) {
             try {
-                if (record instanceof AbstractRecord)
-                    return ((AbstractRecord) record).intoRecord((Class<AbstractRecord>) type);
+                if (record instanceof AbstractRecord a)
+                    return a.intoRecord((Class<AbstractRecord>) type);
 
                 throw new MappingException("Cannot map record " + record + " to type " + type);
             }
@@ -764,7 +764,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
     }
 
-    private static final /* record */ class ConstructorCall<E> implements Callable<E> { private final Constructor<? extends E> constructor; public ConstructorCall(Constructor<? extends E> constructor) { this.constructor = constructor; } public Constructor<? extends E> constructor() { return constructor; } @Override public boolean equals(Object o) { if (!(o instanceof ConstructorCall)) return false; ConstructorCall other = (ConstructorCall) o; if (!java.util.Objects.equals(this.constructor, other.constructor)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.constructor); } @Override public String toString() { return new StringBuilder("ConstructorCall[").append("constructor=").append(this.constructor).append("]").toString(); }
+    private static final record ConstructorCall<E>(Constructor<? extends E> constructor) implements Callable<E> {
         @Override
         public E call() throws Exception {
             return constructor.newInstance();
@@ -1207,9 +1207,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
     private static <E> E attach(E attachable, Record record) {
         // [#2869] Attach the mapped outcome if it is Attachable and if the context's
         // Settings.attachRecords flag is set
-        if (attachable instanceof Attachable)
+        if (attachable instanceof Attachable a)
             if (Tools.attachRecords(record.configuration()))
-                ((Attachable) attachable).attach(record.configuration());
+                a.attach(record.configuration());
 
         return attachable;
     }

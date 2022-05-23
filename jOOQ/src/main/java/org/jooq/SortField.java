@@ -73,7 +73,7 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  * @see Field#asc()
  * @see Field#desc()
  */
-public /* non-sealed */ interface SortField<T> extends OrderField<T> {
+public non-sealed interface SortField<T> extends OrderField<T> {
 
     /**
      * The name of this sort field

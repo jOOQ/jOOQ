@@ -176,7 +176,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.RegrCount) { QOM.RegrCount o = (QOM.RegrCount) that;
+        if (that instanceof QOM.RegrCount o) {
             return
                 StringUtils.equals($y(), o.$y()) &&
                 StringUtils.equals($x(), o.$x())

@@ -55,13 +55,13 @@ import org.jooq.impl.QOM.UnmodifiableList;
  *
  * @author Lukas Eder
  */
-/* sealed */ class QueryPartListView<T extends QueryPart>
+sealed class QueryPartListView<T extends QueryPart>
 extends
     QueryPartCollectionView<T>
 implements
     UnmodifiableList<T>
-/* permits
-    QueryPartList */ 
+permits
+    QueryPartList
 {
 
     @SafeVarargs

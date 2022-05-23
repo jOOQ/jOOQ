@@ -182,7 +182,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.LikeIgnoreCase) { QOM.LikeIgnoreCase o = (QOM.LikeIgnoreCase) that;
+        if (that instanceof QOM.LikeIgnoreCase o) {
             return
                 StringUtils.equals($value(), o.$value()) &&
                 StringUtils.equals($pattern(), o.$pattern()) &&

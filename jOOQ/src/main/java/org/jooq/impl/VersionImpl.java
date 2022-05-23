@@ -258,7 +258,7 @@ final class VersionImpl extends AbstractNode<Version> implements Version {
         return "-- Version: " + id() + "\n" + meta();
     }
 
-    private static final /* record */ class Parent { private final VersionImpl version; private final Queries queries; public Parent(VersionImpl version, Queries queries) { this.version = version; this.queries = queries; } public VersionImpl version() { return version; } public Queries queries() { return queries; } @Override public boolean equals(Object o) { if (!(o instanceof Parent)) return false; Parent other = (Parent) o; if (!java.util.Objects.equals(this.version, other.version)) return false; if (!java.util.Objects.equals(this.queries, other.queries)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.version, this.queries); }
+    private static final record Parent(VersionImpl version, Queries queries) {
         @Override
         public String toString() {
             return version.toString();

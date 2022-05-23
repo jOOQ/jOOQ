@@ -76,12 +76,12 @@ public class DefaultCloseableDSLContext extends DefaultDSLContext implements Clo
         ConnectionProvider cp = configuration().connectionProvider();
         ConnectionFactory cf = configuration().connectionFactory();
 
-        if (cp instanceof DefaultCloseableConnectionProvider) { DefaultCloseableConnectionProvider dcp = (DefaultCloseableConnectionProvider) cp;
+        if (cp instanceof DefaultCloseableConnectionProvider dcp) {
             JDBCUtils.safeClose(dcp.connection);
             dcp.connection = null;
         }
 
-        if (cf instanceof DefaultConnectionFactory) { DefaultConnectionFactory dcf = (DefaultConnectionFactory) cf;
+        if (cf instanceof DefaultConnectionFactory dcf) {
             if (dcf.finalize) {
                 R2DBC.block(dcf.connection.close());
                 dcf.connection = null;

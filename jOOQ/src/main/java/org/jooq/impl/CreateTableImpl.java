@@ -613,8 +613,8 @@ implements
     }
 
     private final boolean matchingPrimaryKey(Constraint constraint, Field<?> identity) {
-        if (constraint instanceof ConstraintImpl)
-            return ((ConstraintImpl) constraint).matchingPrimaryKey(identity);
+        if (constraint instanceof ConstraintImpl c)
+            return c.matchingPrimaryKey(identity);
 
         return false;
     }

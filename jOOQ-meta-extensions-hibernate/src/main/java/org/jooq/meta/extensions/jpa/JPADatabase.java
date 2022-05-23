@@ -157,13 +157,13 @@ public class JPADatabase extends AbstractInterpretingDatabase {
         if (count > 0)
             log.info("Entities added", "Number of entities added: " + count);
         else
-            log.warn("No entities added", ("" +
-                "No entities were added to the MetadataSources\n" +
-                "\n" +
-                "This can have several reasons, including:\n" +
-                "- The packages you've listed do not exist ({packages})\n" +
-                "- The entities in the listed packages are not on the JPADatabase classpath (you must compile them before running jOOQ's codegen, see \"how to organise your dependencies\" in the manual: https://www.jooq.org/doc/latest/manual/code-generation/codegen-jpa/!)\n" +
-                "").replace("{packages}", packages)
+            log.warn("No entities added", """
+                No entities were added to the MetadataSources
+
+                This can have several reasons, including:
+                - The packages you've listed do not exist ({packages})
+                - The entities in the listed packages are not on the JPADatabase classpath (you must compile them before running jOOQ's codegen, see "how to organise your dependencies" in the manual: https://www.jooq.org/doc/latest/manual/code-generation/codegen-jpa/!)
+                """.replace("{packages}", packages)
             );
 
         // This seems to be the way to do this in idiomatic Hibernate 5.0 API

@@ -223,7 +223,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.SubstringIndex) { QOM.SubstringIndex o = (QOM.SubstringIndex) that;
+        if (that instanceof QOM.SubstringIndex o) {
             return
                 StringUtils.equals($string(), o.$string()) &&
                 StringUtils.equals($delimiter(), o.$delimiter()) &&

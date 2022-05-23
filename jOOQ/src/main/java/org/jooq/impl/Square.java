@@ -238,7 +238,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Square) { QOM.Square<?> o = (QOM.Square<?>) that;
+        if (that instanceof QOM.Square<?> o) {
             return
                 StringUtils.equals($value(), o.$value())
             ;

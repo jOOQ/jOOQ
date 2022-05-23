@@ -149,7 +149,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.CurrentUser) { QOM.CurrentUser o = (QOM.CurrentUser) that;
+        if (that instanceof QOM.CurrentUser o) {
             return true;
         }
         else

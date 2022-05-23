@@ -120,7 +120,7 @@ implements
 
                     return;
                 }
-                else if (decimals instanceof Param) { Param<Integer> p = (Param<Integer>) decimals;
+                else if (decimals instanceof Param<Integer> p) {
                     Integer decimalsValue = p.getValue();
                     Field<?> factor = DSL.val(java.math.BigDecimal.ONE.movePointRight(decimalsValue));
                     Field<T> mul = imul(value, factor);
@@ -253,7 +253,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Round) { QOM.Round<?> o = (QOM.Round<?>) that;
+        if (that instanceof QOM.Round<?> o) {
             return
                 StringUtils.equals($value(), o.$value()) &&
                 StringUtils.equals($decimals(), o.$decimals())

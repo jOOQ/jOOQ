@@ -176,7 +176,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.BoolOr) { QOM.BoolOr o = (QOM.BoolOr) that;
+        if (that instanceof QOM.BoolOr o) {
             return
                 StringUtils.equals($condition(), o.$condition())
             ;

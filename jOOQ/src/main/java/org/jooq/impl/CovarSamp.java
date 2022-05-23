@@ -180,7 +180,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.CovarSamp) { QOM.CovarSamp o = (QOM.CovarSamp) that;
+        if (that instanceof QOM.CovarSamp o) {
             return
                 StringUtils.equals($y(), o.$y()) &&
                 StringUtils.equals($x(), o.$x())

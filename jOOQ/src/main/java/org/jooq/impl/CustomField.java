@@ -63,7 +63,7 @@ import org.jooq.impl.QOM.UOpaque;
  *
  * @author Lukas Eder
  */
-public /* non-sealed */ abstract class CustomField<T>
+public non-sealed abstract class CustomField<T>
 extends
     AbstractField<T>
 implements

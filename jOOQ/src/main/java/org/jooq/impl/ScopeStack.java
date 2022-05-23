@@ -114,7 +114,7 @@ final class ScopeStack<K, V> implements Iterable<V> {
         return () -> new ScopeStackIterator<>(list -> list.get(list.size() - 1), filter);
     }
 
-    static final /* record */ class Value<V> { private final int scopeLevel; private final V value; public Value(int scopeLevel, V value) { this.scopeLevel = scopeLevel; this.value = value; } public int scopeLevel() { return scopeLevel; } public V value() { return value; } @Override public boolean equals(Object o) { if (!(o instanceof Value)) return false; Value other = (Value) o; if (!java.util.Objects.equals(this.scopeLevel, other.scopeLevel)) return false; if (!java.util.Objects.equals(this.value, other.value)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.scopeLevel, this.value); } @Override public String toString() { return new StringBuilder("Value[").append("scopeLevel=").append(this.scopeLevel).append(", value=").append(this.value).append("]").toString(); }
+    static final record Value<V>(int scopeLevel, V value) {
         static <V> Value<V> of(int scopeLevel, V value) {
             return value == null ? null : new Value<>(scopeLevel, value);
         }

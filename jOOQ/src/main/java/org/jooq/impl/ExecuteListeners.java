@@ -186,8 +186,8 @@ final class ExecuteListeners implements ExecuteListener {
 
     @Override
     public final void executeStart(ExecuteContext ctx) {
-        if (ctx instanceof DefaultExecuteContext)
-            ((DefaultExecuteContext) ctx).incrementStatementExecutionCount();
+        if (ctx instanceof DefaultExecuteContext d)
+            d.incrementStatementExecutionCount();
 
         for (ExecuteListener listener : listeners[0])
             listener.executeStart(ctx);

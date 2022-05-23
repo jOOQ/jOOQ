@@ -187,7 +187,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.OctetLength) { QOM.OctetLength o = (QOM.OctetLength) that;
+        if (that instanceof QOM.OctetLength o) {
             return
                 StringUtils.equals($string(), o.$string())
             ;

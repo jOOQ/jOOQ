@@ -507,7 +507,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.BitCount) { QOM.BitCount o = (QOM.BitCount) that;
+        if (that instanceof QOM.BitCount o) {
             return
                 StringUtils.equals($value(), o.$value())
             ;

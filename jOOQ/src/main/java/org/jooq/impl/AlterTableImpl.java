@@ -469,11 +469,11 @@ implements
         if (fields.size() == 1) {
             TableElement first = fields.iterator().next();
 
-            if (first instanceof Field)
-                return add((Field<?>) first);
-            else if (first instanceof Constraint)
-                return add((Constraint) first);
-            else if (first instanceof Index)
+            if (first instanceof Field<?> f)
+                return add(f);
+            else if (first instanceof Constraint c)
+                return add(c);
+            else if (first instanceof Index i)
                 throw new UnsupportedOperationException("ALTER TABLE .. ADD INDEX not yet supported, see https://github.com/jOOQ/jOOQ/issues/13006");
         }
 
@@ -1301,7 +1301,7 @@ implements
                 TableElement part = add.get(i);
                 ctx.qualify(false, c -> c.visit(part));
 
-                if (part instanceof Field) { Field<?> f = (Field<?>) part;
+                if (part instanceof Field<?> f) {
                     ctx.sql(' ');
                     toSQLDDLTypeDeclarationForAddition(ctx, f.getDataType());
                 }

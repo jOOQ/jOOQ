@@ -171,7 +171,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.XMLConcat) { QOM.XMLConcat o = (QOM.XMLConcat) that;
+        if (that instanceof QOM.XMLConcat o) {
             return
                 StringUtils.equals($args(), o.$args())
             ;

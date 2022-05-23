@@ -73,7 +73,7 @@ import org.jooq.impl.QOM.UOpaque;
  *
  * @author Lukas Eder
  */
-public /* non-sealed */ abstract class CustomQueryPart extends AbstractQueryPart implements UOpaque {
+public non-sealed abstract class CustomQueryPart extends AbstractQueryPart implements UOpaque {
 
     private static final Clause[] CLAUSES = { CUSTOM };
 

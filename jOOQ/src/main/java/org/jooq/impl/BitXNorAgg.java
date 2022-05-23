@@ -148,7 +148,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.BitXNorAgg) { QOM.BitXNorAgg<?> o = (QOM.BitXNorAgg<?>) that;
+        if (that instanceof QOM.BitXNorAgg<?> o) {
             return
                 StringUtils.equals($value(), o.$value())
             ;

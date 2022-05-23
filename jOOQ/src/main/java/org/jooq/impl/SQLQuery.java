@@ -80,8 +80,8 @@ final class SQLQuery extends AbstractRowCountQuery implements UEmptyQuery {
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        if (delegate instanceof QueryPartInternal)
-            return ((QueryPartInternal) delegate).clauses(ctx);
+        if (delegate instanceof QueryPartInternal q)
+            return q.clauses(ctx);
 
         return null;
     }

@@ -695,8 +695,8 @@ final class Convert {
 
                 // All types can be converted into String
                 else if (toClass == String.class) {
-                    if (from instanceof EnumType)
-                        return (U) ((EnumType) from).getLiteral();
+                    if (from instanceof EnumType e)
+                        return (U) e.getLiteral();
 
                     return (U) from.toString();
                 }
@@ -705,14 +705,14 @@ final class Convert {
                 else if (toClass == byte[].class) {
 
                     // [#5824] UUID's most significant bits in byte[] are first
-                    if (from instanceof UUID) { UUID u = (UUID) from;
+                    if (from instanceof UUID u) {
                         ByteBuffer b = ByteBuffer.wrap(new byte[16]);
                         b.putLong(u.getMostSignificantBits());
                         b.putLong(u.getLeastSignificantBits());
                         return (U) b.array();
                     }
-                    else if (from instanceof ByteBuffer)
-                        return (U) ((ByteBuffer) from).array();
+                    else if (from instanceof ByteBuffer b)
+                        return (U) b.array();
                     else
                         return (U) from.toString().getBytes();
                 }
@@ -1090,7 +1090,7 @@ final class Convert {
                     try {
                         String fromString =
                             (fromClass == String.class) ? (String) from
-                          : from instanceof EnumType ? ((EnumType) from).getLiteral()
+                          : from instanceof EnumType e ? e.getLiteral()
                           : ((Enum) from).name();
 
                         if (fromString == null)
@@ -1441,12 +1441,12 @@ final class Convert {
         private static final long millis(Temporal temporal) {
 
             // java.sql.* temporal types:
-            if (temporal instanceof LocalDate)
-                return Date.valueOf((LocalDate) temporal).getTime();
-            else if (temporal instanceof LocalTime)
-                return Time.valueOf((LocalTime) temporal).getTime();
-            else if (temporal instanceof LocalDateTime)
-                return Timestamp.valueOf((LocalDateTime) temporal).getTime();
+            if (temporal instanceof LocalDate ld)
+                return Date.valueOf(ld).getTime();
+            else if (temporal instanceof LocalTime lt)
+                return Time.valueOf(lt).getTime();
+            else if (temporal instanceof LocalDateTime ldt)
+                return Timestamp.valueOf(ldt).getTime();
 
             // OffsetDateTime
             else if (temporal.isSupported(INSTANT_SECONDS))

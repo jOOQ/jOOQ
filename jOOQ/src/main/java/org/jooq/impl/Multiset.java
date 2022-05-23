@@ -124,7 +124,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
     final Select<R>              select;
 
     Multiset(TableLike<R> table) {
-        this(table, table instanceof Select ? (Select<R>) table : selectFrom(table));
+        this(table, table instanceof Select<R> s ? s : selectFrom(table));
     }
 
     @SuppressWarnings("unchecked")

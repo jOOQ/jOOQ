@@ -164,7 +164,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Contains) { QOM.Contains<?> o = (QOM.Contains<?>) that;
+        if (that instanceof QOM.Contains<?> o) {
             return
                 StringUtils.equals($value(), o.$value()) &&
                 StringUtils.equals($content(), o.$content())

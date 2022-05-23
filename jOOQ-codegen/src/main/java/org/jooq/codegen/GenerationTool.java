@@ -618,8 +618,8 @@ public class GenerationTool {
             if (d.getRegexFlags() != null) {
                 database.setRegexFlags(d.getRegexFlags());
 
-                if (strategy instanceof MatcherStrategy)
-                    ((MatcherStrategy) strategy).getPatterns().setRegexFlags(d.getRegexFlags());
+                if (strategy instanceof MatcherStrategy s)
+                    s.getPatterns().setRegexFlags(d.getRegexFlags());
             }
 
             database.setRegexMatchesPartialQualification(!FALSE.equals(d.isRegexMatchesPartialQualification()));

@@ -158,11 +158,11 @@ final class ExplainQuery {
         return new ExplainImpl(rows, cost, result.format());
     }
 
-    private static final /* record */ class ExplainImpl implements Explain { private final double rows; private final double cost; private final String plan; public ExplainImpl(double rows, double cost, String plan) { this.rows = rows; this.cost = cost; this.plan = plan; } public double rows() { return rows; } public double cost() { return cost; } public String plan() { return plan; } @Override public boolean equals(Object o) { if (!(o instanceof ExplainImpl)) return false; ExplainImpl other = (ExplainImpl) o; if (!java.util.Objects.equals(this.rows, other.rows)) return false; if (!java.util.Objects.equals(this.cost, other.cost)) return false; if (!java.util.Objects.equals(this.plan, other.plan)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.rows, this.cost, this.plan); }
+    private static final record ExplainImpl(double rows, double cost, String plan) implements Explain {
 
         @Override
         public String toString() {
-            return String.format("Explain [cost=%.2f, rows=%.2f]nn", cost, rows) + plan;
+            return String.format("Explain [cost=%.2f, rows=%.2f]\n\n", cost, rows) + plan;
         }
     }
 }

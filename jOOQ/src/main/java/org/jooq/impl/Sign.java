@@ -188,7 +188,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Sign) { QOM.Sign o = (QOM.Sign) that;
+        if (that instanceof QOM.Sign o) {
             return
                 StringUtils.equals($value(), o.$value())
             ;

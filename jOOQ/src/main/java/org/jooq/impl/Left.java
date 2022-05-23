@@ -196,7 +196,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Left) { QOM.Left o = (QOM.Left) that;
+        if (that instanceof QOM.Left o) {
             return
                 StringUtils.equals($string(), o.$string()) &&
                 StringUtils.equals($length(), o.$length())

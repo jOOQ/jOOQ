@@ -262,7 +262,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Substring) { QOM.Substring o = (QOM.Substring) that;
+        if (that instanceof QOM.Substring o) {
             return
                 StringUtils.equals($string(), o.$string()) &&
                 StringUtils.equals($startingPosition(), o.$startingPosition()) &&

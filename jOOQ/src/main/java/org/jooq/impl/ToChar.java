@@ -208,7 +208,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.ToChar) { QOM.ToChar o = (QOM.ToChar) that;
+        if (that instanceof QOM.ToChar o) {
             return
                 StringUtils.equals($value(), o.$value()) &&
                 StringUtils.equals($formatMask(), o.$formatMask())

@@ -235,7 +235,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Rpad) { QOM.Rpad o = (QOM.Rpad) that;
+        if (that instanceof QOM.Rpad o) {
             return
                 StringUtils.equals($string(), o.$string()) &&
                 StringUtils.equals($length(), o.$length()) &&

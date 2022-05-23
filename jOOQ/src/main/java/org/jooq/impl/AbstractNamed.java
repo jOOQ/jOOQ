@@ -112,8 +112,8 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
 
         // [#2144] Non-equality can be decided early, without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof AbstractNamed)
-            if (!getQualifiedName().equals(((AbstractNamed) that).getQualifiedName()))
+        if (that instanceof AbstractNamed n)
+            if (!getQualifiedName().equals(n.getQualifiedName()))
                 return false;
 
         return super.equals(that);

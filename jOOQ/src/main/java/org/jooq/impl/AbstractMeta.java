@@ -641,8 +641,8 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Meta)
-            return ddl().equals(((Meta) obj).ddl());
+        if (obj instanceof Meta m)
+            return ddl().equals(m.ddl());
 
         return false;
     }

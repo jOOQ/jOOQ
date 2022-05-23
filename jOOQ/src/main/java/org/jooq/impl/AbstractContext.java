@@ -236,7 +236,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C visit(Field<?> part) {
-        return part instanceof Condition ? visit((QueryPart) DSL.field((Condition) part)) : visit((QueryPart) part);
+        return part instanceof Condition c ? visit((QueryPart) DSL.field(c)) : visit((QueryPart) part);
     }
 
     @Override
@@ -546,12 +546,12 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         @Override
         public final RenderContext renderContext() {
-            return context() instanceof RenderContext ? (RenderContext) context() : null;
+            return context() instanceof RenderContext c ? c : null;
         }
 
         @Override
         public final BindContext bindContext() {
-            return context() instanceof BindContext ? (BindContext) context() : null;
+            return context() instanceof BindContext c ? c : null;
         }
     }
 

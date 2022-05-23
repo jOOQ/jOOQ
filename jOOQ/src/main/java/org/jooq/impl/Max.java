@@ -146,7 +146,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Max) { QOM.Max<?> o = (QOM.Max<?>) that;
+        if (that instanceof QOM.Max<?> o) {
             return
                 StringUtils.equals($field(), o.$field()) &&
                 $distinct() == o.$distinct()

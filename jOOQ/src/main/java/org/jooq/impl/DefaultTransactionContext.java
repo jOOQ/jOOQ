@@ -66,7 +66,7 @@ class DefaultTransactionContext extends AbstractScope implements TransactionCont
 
     @Override
     public final Exception cause() {
-        return cause instanceof Exception ? (Exception) cause : null;
+        return cause instanceof Exception e ? e : null;
     }
 
     @Override

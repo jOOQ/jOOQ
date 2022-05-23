@@ -249,16 +249,16 @@ final class InformationSchemaExport {
             iq.setNumericScale(q.getDataType().scale());
 
         if (q.getStartWith() != null)
-            iq.setStartValue(Convert.convert(q.getStartWith() instanceof Param ? ((Param<?>) q.getStartWith()).getValue() : q.getStartWith().toString(), BigInteger.class));
+            iq.setStartValue(Convert.convert(q.getStartWith() instanceof Param<?> p ? p.getValue() : q.getStartWith().toString(), BigInteger.class));
         if (q.getIncrementBy() != null)
-            iq.setIncrement(Convert.convert(q.getIncrementBy() instanceof Param ? ((Param<?>) q.getIncrementBy()).getValue() : q.getIncrementBy().toString(), BigInteger.class));
+            iq.setIncrement(Convert.convert(q.getIncrementBy() instanceof Param<?> p ? p.getValue() : q.getIncrementBy().toString(), BigInteger.class));
         if (q.getMinvalue() != null)
-            iq.setMinimumValue(Convert.convert(q.getMinvalue() instanceof Param ? ((Param<?>) q.getMinvalue()).getValue() : q.getMinvalue().toString(), BigInteger.class));
+            iq.setMinimumValue(Convert.convert(q.getMinvalue() instanceof Param<?> p ? p.getValue() : q.getMinvalue().toString(), BigInteger.class));
         if (q.getMaxvalue() != null)
-            iq.setMaximumValue(Convert.convert(q.getMaxvalue() instanceof Param ? ((Param<?>) q.getMaxvalue()).getValue() : q.getMaxvalue().toString(), BigInteger.class));
+            iq.setMaximumValue(Convert.convert(q.getMaxvalue() instanceof Param<?> p ? p.getValue() : q.getMaxvalue().toString(), BigInteger.class));
         iq.setCycleOption(q.getCycle());
         if (q.getCache() != null)
-            iq.setCache(Convert.convert(q.getCache() instanceof Param ? ((Param<?>) q.getCache()).getValue() : q.getCache().toString(), BigInteger.class));
+            iq.setCache(Convert.convert(q.getCache() instanceof Param<?> p ? p.getValue() : q.getCache().toString(), BigInteger.class));
 
         result.getSequences().add(iq);
     }

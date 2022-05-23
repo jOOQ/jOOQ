@@ -185,7 +185,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Asin) { QOM.Asin o = (QOM.Asin) that;
+        if (that instanceof QOM.Asin o) {
             return
                 StringUtils.equals($value(), o.$value())
             ;

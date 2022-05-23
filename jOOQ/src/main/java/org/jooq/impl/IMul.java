@@ -141,7 +141,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Mul) { QOM.Mul<?> o = (QOM.Mul<?>) that;
+        if (that instanceof QOM.Mul<?> o) {
             return
                 StringUtils.equals($arg1(), o.$arg1()) &&
                 StringUtils.equals($arg2(), o.$arg2())

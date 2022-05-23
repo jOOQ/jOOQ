@@ -218,7 +218,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Asinh) { QOM.Asinh o = (QOM.Asinh) that;
+        if (that instanceof QOM.Asinh o) {
             return
                 StringUtils.equals($value(), o.$value())
             ;

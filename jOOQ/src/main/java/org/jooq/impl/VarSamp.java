@@ -162,7 +162,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.VarSamp) { QOM.VarSamp o = (QOM.VarSamp) that;
+        if (that instanceof QOM.VarSamp o) {
             return
                 StringUtils.equals($field(), o.$field())
             ;

@@ -121,8 +121,8 @@ public final class JSONB implements Serializable {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj instanceof JSONB)
-            return Objects.equals(parsed(), (((JSONB) obj).parsed()));
+        if (obj instanceof JSONB j)
+            return Objects.equals(parsed(), (j.parsed()));
         return false;
     }
 

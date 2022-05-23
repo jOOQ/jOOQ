@@ -126,8 +126,8 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results 
         if (this == obj)
             return true;
 
-        if (obj instanceof ResultsImpl)
-            return resultsOrRows.equals(((ResultsImpl) obj).resultsOrRows);
+        if (obj instanceof ResultsImpl r)
+            return resultsOrRows.equals(r.resultsOrRows);
 
         return false;
     }
@@ -185,7 +185,7 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results 
         return translated;
     }
 
-    static final /* record */ class ResultOrRowsImpl implements ResultOrRows { private final Result<Record> result; private final int rows; private final DataAccessException exception; public ResultOrRowsImpl(Result<Record> result, int rows, DataAccessException exception) { this.result = result; this.rows = rows; this.exception = exception; } public Result<Record> result() { return result; } public int rows() { return rows; } public DataAccessException exception() { return exception; } @Override public boolean equals(Object o) { if (!(o instanceof ResultOrRowsImpl)) return false; ResultOrRowsImpl other = (ResultOrRowsImpl) o; if (!java.util.Objects.equals(this.result, other.result)) return false; if (!java.util.Objects.equals(this.rows, other.rows)) return false; if (!java.util.Objects.equals(this.exception, other.exception)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.result, this.rows, this.exception); }
+    static final record ResultOrRowsImpl(Result<Record> result, int rows, DataAccessException exception) implements ResultOrRows {
         ResultOrRowsImpl(Result<Record> result) {
             this(result, result != null ? result.size() : 0, null);
         }

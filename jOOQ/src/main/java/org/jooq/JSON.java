@@ -101,8 +101,8 @@ public final class JSON implements Serializable {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj instanceof JSON)
-            return data.equals(((JSON) obj).data);
+        if (obj instanceof JSON j)
+            return data.equals(j.data);
         return false;
 
     }

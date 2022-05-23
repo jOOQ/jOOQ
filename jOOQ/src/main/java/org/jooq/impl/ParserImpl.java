@@ -4615,7 +4615,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return storageStep;
     }
 
-    private static final /* record */ class ParseInlineConstraints { private final DataType<?> type; private final Comment fieldComment; private final boolean primary; private final boolean identity; private final boolean readonly; public ParseInlineConstraints(DataType<?> type, Comment fieldComment, boolean primary, boolean identity, boolean readonly) { this.type = type; this.fieldComment = fieldComment; this.primary = primary; this.identity = identity; this.readonly = readonly; } public DataType<?> type() { return type; } public Comment fieldComment() { return fieldComment; } public boolean primary() { return primary; } public boolean identity() { return identity; } public boolean readonly() { return readonly; } @Override public boolean equals(Object o) { if (!(o instanceof ParseInlineConstraints)) return false; ParseInlineConstraints other = (ParseInlineConstraints) o; if (!java.util.Objects.equals(this.type, other.type)) return false; if (!java.util.Objects.equals(this.fieldComment, other.fieldComment)) return false; if (!java.util.Objects.equals(this.primary, other.primary)) return false; if (!java.util.Objects.equals(this.identity, other.identity)) return false; if (!java.util.Objects.equals(this.readonly, other.readonly)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.type, this.fieldComment, this.primary, this.identity, this.readonly); } @Override public String toString() { return new StringBuilder("ParseInlineConstraints[").append("type=").append(this.type).append(", fieldComment=").append(this.fieldComment).append(", primary=").append(this.primary).append(", identity=").append(this.identity).append(", readonly=").append(this.readonly).append("]").toString(); } }
+    private static final record ParseInlineConstraints(DataType<?> type, Comment fieldComment, boolean primary, boolean identity, boolean readonly) {}
 
     private final ParseInlineConstraints parseInlineConstraints(
         Name fieldName,
@@ -5354,8 +5354,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         if (list.size() == 1)
-            if (list.get(0) instanceof Constraint)
-                return s1.add((Constraint) list.get(0));
+            if (list.get(0) instanceof Constraint c)
+                return s1.add(c);
             else
                 return parseAlterTableAddFieldFirstBeforeLast(s1.add((Field<?>) list.get(0)));
         else
@@ -6479,7 +6479,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     : ((Field) left).isDocument();
 
             not = parseKeywordIf("DISTINCT FROM") == not;
-            if (left instanceof Field) { Field f = (Field) left;
+            if (left instanceof Field f) {
                 Field right = toField(parseConcat());
                 return not ? f.isNotDistinctFrom(right) : f.isDistinctFrom(right);
             }
@@ -6725,8 +6725,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final <R extends Record> Table<R> t(TableLike<R> table, boolean dummyAlias) {
         return
-            table instanceof Table
-          ? (Table<R>) table
+            table instanceof Table<R> t
+          ? t
           : dummyAlias
           ? table.asTable("x")
           : table.asTable();
@@ -6748,12 +6748,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             Query query = parseQuery(false, false);
             parse(')');
 
-            if (query instanceof Merge)
-                result = oldTable((Merge<?>) query);
-            else if (query instanceof Update)
-                result = oldTable((Update<?>) query);
-            else if (query instanceof Delete)
-                result = oldTable((Delete<?>) query);
+            if (query instanceof Merge<?> q)
+                result = oldTable(q);
+            else if (query instanceof Update<?> q)
+                result = oldTable(q);
+            else if (query instanceof Delete<?> q)
+                result = oldTable(q);
             else
                 throw expected("UPDATE", "DELETE", "MERGE");
         }
@@ -6762,12 +6762,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             Query query = parseQuery(false, false);
             parse(')');
 
-            if (query instanceof Merge)
-                result = newTable((Merge<?>) query);
-            else if (query instanceof Insert)
-                result = newTable((Insert<?>) query);
-            else if (query instanceof Update)
-                result = newTable((Update<?>) query);
+            if (query instanceof Merge<?> q)
+                result = newTable(q);
+            else if (query instanceof Insert<?> q)
+                result = newTable(q);
+            else if (query instanceof Update<?> q)
+                result = newTable(q);
             else
                 throw expected("INSERT", "UPDATE", "MERGE");
         }
@@ -6776,12 +6776,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             Query query = parseQuery(false, false);
             parse(')');
 
-            if (query instanceof Merge)
-                result = finalTable((Merge<?>) query);
-            else if (query instanceof Insert)
-                result = finalTable((Insert<?>) query);
-            else if (query instanceof Update)
-                result = finalTable((Update<?>) query);
+            if (query instanceof Merge<?> q)
+                result = finalTable(q);
+            else if (query instanceof Insert<?> q)
+                result = finalTable(q);
+            else if (query instanceof Update<?> q)
+                result = finalTable(q);
             else
                 throw expected("INSERT", "UPDATE", "MERGE");
         }
@@ -7506,9 +7506,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Condition toCondition(QueryPart part) {
         if (part == null)
             return null;
-        else if (part instanceof Condition)
-            return (Condition) part;
-        else if (part instanceof Field) { Field f = (Field) part;
+        else if (part instanceof Condition c)
+            return c;
+        else if (part instanceof Field f) {
             DataType dataType = f.getDataType();
             Class<?> type = dataType.getType();
 
@@ -7532,10 +7532,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final FieldOrRow toFieldOrRow(QueryPart part) {
         if (part == null)
             return null;
-        else if (part instanceof Field)
-            return (Field<?>) part;
-        else if (part instanceof Row)
-            return (Row) part;
+        else if (part instanceof Field<?> f)
+            return f;
+        else if (part instanceof Row r)
+            return r;
         else
             throw expected("Field or row");
     }
@@ -7543,8 +7543,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> toField(QueryPart part) {
         if (part == null)
             return null;
-        else if (part instanceof Field)
-            return (Field<?>) part;
+        else if (part instanceof Field<?> f)
+            return f;
         else
             throw expected("Field");
     }
@@ -8907,7 +8907,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     r = parseFieldOrRow();
                     List<Field<?>> list = null;
 
-                    if (r instanceof Field) { Field<?> f = (Field<?>) r;
+                    if (r instanceof Field<?> f) {
                         while (parseIf(',')) {
                             if (list == null) {
                                 list = new ArrayList<>();
@@ -11057,10 +11057,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (!basic && parseKeywordIf("OVER")) {
             Object nameOrSpecification = parseWindowNameOrSpecification(filter != null);
 
-            if (nameOrSpecification instanceof Name)
-                result = over.over((Name) nameOrSpecification);
-            else if (nameOrSpecification instanceof WindowSpecification)
-                result = over.over((WindowSpecification) nameOrSpecification);
+            if (nameOrSpecification instanceof Name n)
+                result = over.over(n);
+            else if (nameOrSpecification instanceof WindowSpecification w)
+                result = over.over(w);
             else
                 result = over.over();
         }
@@ -11273,10 +11273,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         parseKeyword("OVER");
         Object nameOrSpecification = parseWindowNameOrSpecification(true);
 
-        return nameOrSpecification instanceof Name
-            ? s3.over((Name) nameOrSpecification)
-            : nameOrSpecification instanceof WindowSpecification
-            ? s3.over((WindowSpecification) nameOrSpecification)
+        return nameOrSpecification instanceof Name n
+            ? s3.over(n)
+            : nameOrSpecification instanceof WindowSpecification w
+            ? s3.over(w)
             : s3.over();
     }
 
@@ -12501,8 +12501,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         // [#11074] Bindings can be Param or even Field types
         Object binding = nextBinding();
 
-        if (binding instanceof Field)
-            return (Field<?>) binding;
+        if (binding instanceof Field<?> f)
+            return f;
 
         Param<?> param = DSL.param(paramName, binding);
 
@@ -14344,9 +14344,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             // [#11054] Use a VisitListener to find actual Params in the expression tree,
             //          which may have more refined DataTypes attached to them, from context
             dsl.configuration().deriveAppending(onVisitStart(ctx -> {
-                if (ctx.queryPart() instanceof Param)
-                    if (!params.containsKey(((Param<?>) ctx.queryPart()).getParamName()))
-                        params.put(((Param<?>) ctx.queryPart()).getParamName(), (Param<?>) ctx.queryPart());
+                if (ctx.queryPart() instanceof Param<?> p)
+                    if (!params.containsKey(p.getParamName()))
+                        params.put(p.getParamName(), p);
             })).dsl().render(result);
 
             for (String name : bindParams.keySet())
@@ -14504,7 +14504,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         for (Value<Table<?>> t : tables) {
             Value<Field<?>> f;
 
-            if (t.value() instanceof JoinTable) { JoinTable j = (JoinTable) t.value();
+            if (t.value() instanceof JoinTable j) {
                 found = resolveInTableScope(
                     asList(
                         new Value<>(t.scopeLevel(), j.lhs),

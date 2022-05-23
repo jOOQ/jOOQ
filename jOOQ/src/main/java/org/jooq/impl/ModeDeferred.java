@@ -53,10 +53,10 @@ final class ModeDeferred implements OrderedAggregateFunctionOfDeferredType {
     @SuppressWarnings("unchecked")
     @Override
     public final <T> AggregateFilterStep<T> withinGroupOrderBy(OrderField<T> field) {
-        DataType<T> type = field instanceof SortFieldImpl
-            ? ((SortFieldImpl<T>) field).getField().getDataType()
-            : field instanceof AbstractField
-            ? ((AbstractField<T>) field).getDataType()
+        DataType<T> type = field instanceof SortFieldImpl<T> s
+            ? s.getField().getDataType()
+            : field instanceof AbstractField<T> f
+            ? f.getDataType()
             : (DataType<T>) SQLDataType.NUMERIC;
 
         return new DefaultAggregateFunction<>(N_MODE, type).withinGroupOrderBy(field);

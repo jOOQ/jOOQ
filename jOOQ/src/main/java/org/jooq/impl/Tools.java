@@ -421,7 +421,7 @@ final class Tools {
     /**
      * A common super types for {@link BooleanDataKey}, {@link SimpleDataKey} and {@link ExtendedDataKey}
      */
-    /* sealed */ interface DataKey {
+    sealed interface DataKey {
 
         /**
          * Whether this data key resets itself to {@link #resetValue()} when
@@ -1556,17 +1556,17 @@ final class Tools {
     }
 
     static final <T> SortField<T> sortField(OrderField<T> field) {
-        if (field instanceof SortField)
-            return (SortField<T>) field;
-        else if (field instanceof Field)
-            return ((Field<T>) field).sortDefault();
+        if (field instanceof SortField<T> s)
+            return s;
+        else if (field instanceof Field<T> f)
+            return f.sortDefault();
         else
             throw new IllegalArgumentException("Field not supported : " + field);
     }
 
     static final SortField<?>[] sortFields(OrderField<?>[] fields) {
-        if (fields instanceof SortField[])
-            return (SortField<?>[]) fields;
+        if (fields instanceof SortField<?>[] s)
+            return s;
         else
             return map(fields, o -> sortField(o), SortField[]::new);
     }
@@ -1699,7 +1699,7 @@ final class Tools {
     }
 
     static final List<Name> names(Collection<?> names) {
-        return map(names, n -> n instanceof Name ? (Name) n : DSL.name(String.valueOf(n)));
+        return map(names, n -> n instanceof Name name ? name : DSL.name(String.valueOf(n)));
     }
 
     static final String sanitiseName(Configuration configuration, String name) {
@@ -1945,8 +1945,8 @@ final class Tools {
             return DSL.field((Select<Record1<T>>) value);
 
         // [#13251] Rows can be mixed with values in ROW constructors
-        else if (value instanceof AbstractRow)
-            return (Field<T>) ((AbstractRow<?>) value).rf();
+        else if (value instanceof AbstractRow<?> r)
+            return (Field<T>) r.rf();
 
         // [#4771] Any other QueryPart type is not supported here
         else if (value instanceof QueryPart)
@@ -2070,7 +2070,7 @@ final class Tools {
     }
 
     private static final <T> List<T> newListWithCapacity(Iterable<?> it) {
-        return it instanceof Collection ? new ArrayList<>(((Collection<?>) it).size()) : new ArrayList<>();
+        return it instanceof Collection<?> c ? new ArrayList<>(c.size()) : new ArrayList<>();
     }
 
     static final <T, R, X extends Throwable> R apply(@Nullable T t, ThrowingFunction<? super @NotNull T, ? extends R, ? extends X> f) throws X {
@@ -2497,8 +2497,8 @@ final class Tools {
     static final <T> T last(Collection<T> collection) {
         if (collection.isEmpty())
             return null;
-        else if (collection instanceof List)
-            return ((List<T>) collection).get(collection.size() - 1);
+        else if (collection instanceof List<T> l)
+            return l.get(collection.size() - 1);
 
         T last = null;
         for (Iterator<T> it = collection.iterator(); it.hasNext(); last = it.next());
@@ -2656,7 +2656,7 @@ final class Tools {
     private static final RuntimeException exception(Cursor<?> cursor, RuntimeException e) {
 
         // [#8877] Make sure these exceptions pass through ExecuteListeners as well
-        if (cursor instanceof CursorImpl) { CursorImpl<?> c = (CursorImpl<?>) cursor;
+        if (cursor instanceof CursorImpl<?> c) {
             c.ctx.exception(e);
             c.listener.exception(c.ctx);
             return c.ctx.exception();
@@ -2769,8 +2769,8 @@ final class Tools {
      */
     @SuppressWarnings("null")
     static final void renderAndBind(Context<?> ctx, String sql, List<QueryPart> substitutes) {
-        RenderContext render = ctx instanceof RenderContext ? (RenderContext) ctx : null;
-        BindContext   bind   = ctx instanceof BindContext   ? (BindContext) ctx : null;
+        RenderContext render = ctx instanceof RenderContext r ? r : null;
+        BindContext   bind   = ctx instanceof BindContext b   ? b : null;
 
         int substituteIndex = 0;
         char[] sqlChars = sql.toCharArray();
@@ -3177,7 +3177,7 @@ final class Tools {
             for (Object substitute : substitutes) {
 
                 // [#1432] Distinguish between QueryParts and other objects
-                if (substitute instanceof QueryPart) { QueryPart q = (QueryPart) substitute;
+                if (substitute instanceof QueryPart q) {
                     result.add(q);
                 }
                 else {
@@ -3265,12 +3265,12 @@ final class Tools {
      * Translate a {@link R2dbcException} to a {@link DataAccessException}
      */
     static final RuntimeException translate(String sql, Throwable t) {
-        if (t instanceof R2dbcException)
-            return translate(sql, (R2dbcException) t);
-        else if (t instanceof SQLException)
-            return translate(sql, (SQLException) t);
-        else if (t instanceof RuntimeException)
-            return translate(sql, (RuntimeException) t);
+        if (t instanceof R2dbcException e)
+            return translate(sql, e);
+        else if (t instanceof SQLException e)
+            return translate(sql, e);
+        else if (t instanceof RuntimeException e)
+            return translate(sql, e);
         else if (t != null)
             return new DataAccessException("SQL [" + sql + "]; Unspecified Throwable", t);
         else
@@ -3660,10 +3660,10 @@ final class Tools {
     }
 
     static final Val<?> extractVal(Field<?> field) {
-        return field instanceof Val
-             ? (Val<?>) field
-             : field instanceof ConvertedVal
-             ? (Val<?>) ((ConvertedVal<?>) field).delegate
+        return field instanceof Val<?> v
+             ? v
+             : field instanceof ConvertedVal<?> v
+             ? (Val<?>) v.delegate
              : null;
     }
 
@@ -3712,23 +3712,23 @@ final class Tools {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     static final <R extends Record> SelectQueryImpl<R> selectQueryImpl(QueryPart part) {
-        if (part instanceof SelectQueryImpl)
-            return (SelectQueryImpl) part;
-        else if (part instanceof SelectImpl)
-            return (SelectQueryImpl<R>) ((SelectImpl) part).getDelegate();
-        else if (part instanceof ScalarSubquery)
-            return selectQueryImpl(((ScalarSubquery<?>) part).query);
-        else if (part instanceof QuantifiedSelectImpl)
-            return selectQueryImpl(((QuantifiedSelectImpl<?>) part).query);
+        if (part instanceof SelectQueryImpl s)
+            return s;
+        else if (part instanceof SelectImpl s)
+            return (SelectQueryImpl<R>) s.getDelegate();
+        else if (part instanceof ScalarSubquery<?> s)
+            return selectQueryImpl(s.query);
+        else if (part instanceof QuantifiedSelectImpl<?> s)
+            return selectQueryImpl(s.query);
         else
             return null;
     }
 
     static final AbstractResultQuery<?> abstractResultQuery(Query query) {
-        if (query instanceof AbstractResultQuery)
-            return (AbstractResultQuery<?>) query;
-        else if (query instanceof AbstractDelegatingQuery)
-            return abstractResultQuery(((AbstractDelegatingQuery<?, ?>) query).getDelegate());
+        if (query instanceof AbstractResultQuery<?> q)
+            return q;
+        else if (query instanceof AbstractDelegatingQuery<?, ?> q)
+            return abstractResultQuery(q.getDelegate());
         else
             return null;
     }
@@ -3736,8 +3736,8 @@ final class Tools {
     static final InsertQueryImpl<?> insertQueryImpl(Query query) {
         AbstractDMLQuery<?> result = abstractDMLQuery(query);
 
-        if (result instanceof InsertQueryImpl)
-            return (InsertQueryImpl<?>) result;
+        if (result instanceof InsertQueryImpl<?> q)
+            return q;
         else
             return null;
     }
@@ -3745,8 +3745,8 @@ final class Tools {
     static final UpdateQueryImpl<?> updateQueryImpl(Query query) {
         AbstractDMLQuery<?> result = abstractDMLQuery(query);
 
-        if (result instanceof UpdateQueryImpl)
-            return (UpdateQueryImpl<?>) result;
+        if (result instanceof UpdateQueryImpl<?> q)
+            return q;
         else
             return null;
     }
@@ -3754,19 +3754,19 @@ final class Tools {
     static final DeleteQueryImpl<?> deleteQueryImpl(Query query) {
         AbstractDMLQuery<?> result = abstractDMLQuery(query);
 
-        if (result instanceof DeleteQueryImpl)
-            return (DeleteQueryImpl<?>) result;
+        if (result instanceof DeleteQueryImpl<?> q)
+            return q;
         else
             return null;
     }
 
     static final AbstractDMLQuery<?> abstractDMLQuery(Query query) {
-        if (query instanceof AbstractDMLQuery)
-            return (AbstractDMLQuery<?>) query;
-        else if (query instanceof AbstractDelegatingDMLQuery)
-            return abstractDMLQuery(((AbstractDelegatingDMLQuery<?, ?>) query).getDelegate());
-        else if (query instanceof DMLQueryAsResultQuery)
-            return ((DMLQueryAsResultQuery<?, ?>) query).getDelegate();
+        if (query instanceof AbstractDMLQuery<?> q)
+            return q;
+        else if (query instanceof AbstractDelegatingDMLQuery<?, ?> q)
+            return abstractDMLQuery(q.getDelegate());
+        else if (query instanceof DMLQueryAsResultQuery<?, ?> q)
+            return q.getDelegate();
         else
             return null;
     }
@@ -4267,7 +4267,7 @@ final class Tools {
 
         @Override
         public boolean equals(Object obj) {
-            if (obj instanceof SourceMethod) { SourceMethod s = (SourceMethod) obj;
+            if (obj instanceof SourceMethod s) {
                 Method other = s.method;
 
                 if (method.getName().equals(other.getName())) {
@@ -5541,8 +5541,8 @@ final class Tools {
 
 
 
-        DataType<?> elementType = type instanceof ArrayDataType
-            ? ((ArrayDataType<?>) type).elementType
+        DataType<?> elementType = type instanceof ArrayDataType<?> t
+            ? t.elementType
             : type;
 
         // In some databases, identity is a type, not a flag.
@@ -5858,8 +5858,8 @@ final class Tools {
     }
 
     static final SelectFieldOrAsterisk qualify(Table<?> table, SelectFieldOrAsterisk field) {
-        if (field instanceof Field)
-            return qualify(table, (Field<?>) field);
+        if (field instanceof Field<?> f)
+            return qualify(table, f);
         else if (field instanceof Asterisk)
             return table.asterisk();
         else if (field instanceof QualifiedAsterisk)
@@ -5884,8 +5884,8 @@ final class Tools {
     }
 
     static final <T> Field<T> field(OrderField<T> orderField) {
-        if (orderField instanceof Field)
-            return (Field<T>) orderField;
+        if (orderField instanceof Field<T> f)
+            return f;
         else
             return ((SortFieldImpl<T>) orderField).getField();
     }
@@ -5904,8 +5904,8 @@ final class Tools {
     }
 
     static final <T> Field<T> aliased(Field<T> field) {
-        if (field instanceof FieldAlias)
-            return ((FieldAlias<T>) field).getAliasedField();
+        if (field instanceof FieldAlias<T> f)
+            return f.getAliasedField();
         else
             return null;
     }
@@ -5921,23 +5921,23 @@ final class Tools {
     }
 
     static final Field<?> uncoerce(Field<?> field) {
-        return field instanceof Coerce ? ((Coerce<?>) field).field : field;
+        return field instanceof Coerce<?> f ? f.field : field;
     }
 
     static final <R extends Record> Table<R> aliased(Table<R> table) {
-        if (table instanceof TableImpl)
-            return ((TableImpl<R>) table).getAliasedTable();
-        else if (table instanceof TableAlias)
-            return ((TableAlias<R>) table).getAliasedTable();
+        if (table instanceof TableImpl<R> t)
+            return t.getAliasedTable();
+        else if (table instanceof TableAlias<R> t)
+            return t.getAliasedTable();
         else
             return null;
     }
 
     static final <R extends Record> Alias<Table<R>> alias(Table<R> table) {
-        if (table instanceof TableImpl)
-            return ((TableImpl<R>) table).alias;
-        else if (table instanceof TableAlias)
-            return ((TableAlias<R>) table).alias;
+        if (table instanceof TableImpl<R> t)
+            return t.alias;
+        else if (table instanceof TableAlias<R> t)
+            return t.alias;
         else
             return null;
     }
@@ -6004,15 +6004,15 @@ final class Tools {
      * Look up a field in a table, or create a new qualified field from the table.
      */
     static final Field<?> tableField(Table<?> table, Object field) {
-        if (field instanceof Field)
-            return (Field<?>) field;
-        else if (field instanceof Name) { Name n = (Name) field;
+        if (field instanceof Field<?> f)
+            return f;
+        else if (field instanceof Name n) {
             if (table.fieldsRow().size() == 0)
                 return DSL.field(table.getQualifiedName().append(n.unqualifiedName())) ;
             else
                 return table.field(n);
         }
-        else if (field instanceof String) { String s = (String) field;
+        else if (field instanceof String s) {
             if (table.fieldsRow().size() == 0)
                 return DSL.field(table.getQualifiedName().append(s));
             else
@@ -6104,8 +6104,8 @@ final class Tools {
     static final boolean isEmpty(Iterable<?> it) {
         if (it == null)
             return true;
-        else if (it instanceof Collection)
-            return isEmpty((Collection<?>) it);
+        else if (it instanceof Collection<?> c)
+            return isEmpty(c);
 
         Iterator<?> i = it.iterator();
         return !i.hasNext();
@@ -6125,8 +6125,8 @@ final class Tools {
 
     @SuppressWarnings("unchecked")
     static final Class<? extends AbstractRecord> embeddedRecordType(Field<?> field) {
-        return field instanceof EmbeddableTableField
-             ? (Class<AbstractRecord>) ((EmbeddableTableField<?, ?>) field).recordType
+        return field instanceof EmbeddableTableField<?, ?> e
+             ? (Class<AbstractRecord>) e.recordType
              : field instanceof Val && ((Val<?>) field).value instanceof EmbeddableRecord
              ? ((AbstractRecord) ((Val<?>) field).value).getClass()
              : field.getDataType().isEmbeddable()
@@ -6136,12 +6136,12 @@ final class Tools {
 
     @SuppressWarnings("unchecked")
     static final Field<?>[] embeddedFields(Field<?> field) {
-        return field instanceof EmbeddableTableField
-             ? ((EmbeddableTableField<?, ?>) field).fields
+        return field instanceof EmbeddableTableField<?, ?> e
+             ? e.fields
              : field instanceof Val && ((Val<?>) field).value instanceof EmbeddableRecord
              ? ((EmbeddableRecord<?>) ((Val<?>) field).value).valuesRow().fields()
-             : field instanceof ScalarSubquery
-             ? embeddedFields((ScalarSubquery<?>) field)
+             : field instanceof ScalarSubquery<?> s
+             ? embeddedFields(s)
              : field.getDataType().isEmbeddable()
              ? newInstance(((Field<EmbeddableRecord<?>>) field).getType()).valuesRow().fields()
              : null;
@@ -6190,8 +6190,8 @@ final class Tools {
     }
 
     static final <E> List<E> collect(Iterable<E> iterable) {
-        if (iterable instanceof List)
-            return (List<E>) iterable;
+        if (iterable instanceof List<E> l)
+            return l;
 
         List<E> result = new ArrayList<>();
         for (E e : iterable)
@@ -6259,8 +6259,8 @@ final class Tools {
     }
 
     static final Iterable<Field<?>> flattenFieldOrRow(FieldOrRow fr) {
-        if (fr instanceof Field)
-            return flatten((Field<?>) fr);
+        if (fr instanceof Field<?> f)
+            return flatten(f);
         else
             return asList(((Row) fr).fields());
     }
@@ -6324,7 +6324,7 @@ final class Tools {
 
             // TODO [#10525] Should embedded records be emulated as RowField?
             if (flattenRowFields) {
-                if (e instanceof AbstractRowAsField) { AbstractRowAsField<?> r = (AbstractRowAsField<?>) e;
+                if (e instanceof AbstractRowAsField<?> r) {
                     List<Field<?>> result = new ArrayList<>();
 
                     for (Field<?> field : flattenCollection(asList(r.fields0().fields()), removeDuplicates, flattenRowFields))
@@ -6353,7 +6353,7 @@ final class Tools {
         return () -> new FlatteningIterator<>(iterable.iterator(), (e, duplicates) -> {
 
             // [#9879] [#13325] TODO: Support also UPDATE .. SET ROW = ...
-            if (e.getKey() instanceof EmbeddableTableField) { EmbeddableTableField<?, ?> key = (EmbeddableTableField<?, ?>) e.getKey();
+            if (e.getKey() instanceof EmbeddableTableField<?, ?> key) {
                 List<Entry<FieldOrRow, FieldOrRowOrSelect>> result = new ArrayList<>();
                 Field<?>[] keys = embeddedFields(key);
                 Field<?>[] values = embeddedFields((Field<?>) e.getValue());
@@ -6762,8 +6762,8 @@ final class Tools {
     static final <T> Field<T> nullSafe(Field<T> field, DataType<?> type) {
         return field == null
              ? (Field<T>) DSL.val((T) null, type)
-             : field instanceof Condition
-             ? (Field<T>) DSL.field((Condition) field)
+             : field instanceof Condition c
+             ? (Field<T>) DSL.field(c)
              : convertVal(field, type);
     }
 
@@ -6916,7 +6916,7 @@ final class Tools {
         if (abort != null && abort.test(result))
             return result;
 
-        if (t instanceof JoinTable) { JoinTable j = (JoinTable) t;
+        if (t instanceof JoinTable j) {
             if (recurseLhs == null || recurseLhs.test(j)) {
                 result = traverseJoins(j.lhs, result, abort, recurseLhs, recurseRhs, joinTypeFunction, tableFunction);
 

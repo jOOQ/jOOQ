@@ -1265,8 +1265,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         List<Field<?>> partitionBy = new ArrayList<>(distinctOn.size());
 
         for (SelectFieldOrAsterisk s : distinctOn)
-            if (s instanceof Field)
-                partitionBy.add((Field<?>) s);
+            if (s instanceof Field<?> f)
+                partitionBy.add(f);
 
         Field<Integer> rn = rowNumber().over(partitionBy(partitionBy).orderBy(orderBy)).as("rn");
 
@@ -2561,7 +2561,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final void transformInlineDerivedTable0(Table<?> table, TableList result, ConditionProviderImpl where) {
-        if (table instanceof InlineDerivedTable) { InlineDerivedTable<?> t = (InlineDerivedTable<?>) table;
+        if (table instanceof InlineDerivedTable<?> t) {
             result.add(t.table);
             where.addConditions(t.condition);
         }
@@ -2572,14 +2572,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final Table<?> transformInlineDerivedTables0(Table<?> table, ConditionProviderImpl where, boolean keepDerivedTable) {
-        if (table instanceof InlineDerivedTable) { InlineDerivedTable<?> t = (InlineDerivedTable<?>) table;
+        if (table instanceof InlineDerivedTable<?> t) {
             if (keepDerivedTable)
                 return t.query().asTable(t.table);
 
             where.addConditions(t.condition);
             return t.table;
         }
-        else if (table instanceof JoinTable) { JoinTable j = (JoinTable) table;
+        else if (table instanceof JoinTable j) {
             Table<?> lhs;
             Table<?> rhs;
 
@@ -3698,9 +3698,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         SelectFieldList<SelectFieldOrAsterisk> list = getSelectResolveImplicitAsterisks();
 
         for (SelectFieldOrAsterisk s : list)
-            if (s instanceof Field)
-                result.add(getResolveProjection(ctx, (Field<?>) s));
-            else if (s instanceof QualifiedAsteriskImpl) { QualifiedAsteriskImpl q = (QualifiedAsteriskImpl) s;
+            if (s instanceof Field<?> f)
+                result.add(getResolveProjection(ctx, f));
+            else if (s instanceof QualifiedAsteriskImpl q) {
                 if (q.fields.isEmpty())
                     if (resolveSupported)
                         result.addAll(Arrays.asList(q.qualifier().fields()));
@@ -3711,7 +3711,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 else
                     result.add(s);
             }
-            else if (s instanceof AsteriskImpl) { AsteriskImpl a = (AsteriskImpl) s;
+            else if (s instanceof AsteriskImpl a) {
                 if (a.fields.isEmpty())
                     if (resolveSupported || resolveUnqualifiedCombined && list.size() > 1)
                         result.addAll(resolveAsterisk(new QueryPartList<>()));
@@ -3722,10 +3722,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 else
                     result.add(s);
             }
-            else if (s instanceof Row)
-                result.add(getResolveProjection(ctx, new RowAsField<Row, Record>((Row) s)));
-            else if (s instanceof Table)
-                result.add(getResolveProjection(ctx, new TableAsField<>((Table<?>) s)));
+            else if (s instanceof Row r)
+                result.add(getResolveProjection(ctx, new RowAsField<Row, Record>(r)));
+            else if (s instanceof Table<?> t)
+                result.add(getResolveProjection(ctx, new TableAsField<>(t)));
             else
                 throw new AssertionError("Type not supported: " + s);
 
@@ -3809,7 +3809,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return result;
     }
 
-    private static final /* record */ class SelectFieldIndexes { private final boolean mapped; private final int[] mapping; private final int[] projectionSizes; public SelectFieldIndexes(boolean mapped, int[] mapping, int[] projectionSizes) { this.mapped = mapped; this.mapping = mapping; this.projectionSizes = projectionSizes; } public boolean mapped() { return mapped; } public int[] mapping() { return mapping; } public int[] projectionSizes() { return projectionSizes; } @Override public boolean equals(Object o) { if (!(o instanceof SelectFieldIndexes)) return false; SelectFieldIndexes other = (SelectFieldIndexes) o; if (!java.util.Objects.equals(this.mapped, other.mapped)) return false; if (!java.util.Objects.equals(this.mapping, other.mapping)) return false; if (!java.util.Objects.equals(this.projectionSizes, other.projectionSizes)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.mapped, this.mapping, this.projectionSizes); } @Override public String toString() { return new StringBuilder("SelectFieldIndexes[").append("mapped=").append(this.mapped).append(", mapping=").append(this.mapping).append(", projectionSizes=").append(this.projectionSizes).append("]").toString(); } }
+    private static record SelectFieldIndexes(boolean mapped, int[] mapping, int[] projectionSizes) {}
 
     /**
      * [#11904] Get a mapping { projected field index -> generated field index }
@@ -4360,8 +4360,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             case FULL_OUTER_JOIN: {
                 TableOptionalOnStep<Record> o = getFrom().get(index).join(table, type);
 
-                if (conditions instanceof Condition)
-                    joined = o.on((Condition) conditions);
+                if (conditions instanceof Condition c)
+                    joined = o.on(c);
                 else
                     joined = o.on((Condition[]) conditions);
 
@@ -4376,8 +4376,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-                if (conditions instanceof Condition)
-                    joined = o.on((Condition) conditions);
+                if (conditions instanceof Condition c)
+                    joined = o.on(c);
                 else
                     joined = o.on((Condition[]) conditions);
 

@@ -184,7 +184,7 @@ final class RowSubqueryCondition extends AbstractCondition implements UNotYetImp
     }
 
     private static final SelectOrderByStep<Record> emulatedSubselect(Context<?> ctx, Row row, Select<?> s, Comparator c) {
-        RenderContext render = ctx instanceof RenderContext ? (RenderContext) ctx : null;
+        RenderContext render = ctx instanceof RenderContext r ? r : null;
         Row l = embeddedFieldsRow(row);
         Name table = name(render == null ? "t" : render.nextAlias());
         Name[] names = fieldNames(l.size());

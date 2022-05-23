@@ -70,14 +70,14 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
      * A pattern to be used with "list" expressions
      */
     private static final Pattern PATTERN_LIST = Pattern.compile(
-        ("" +
-        "\\[\n" +
-        "   (?:\\[before=([^]]+)])?\n" +
-        "   (?:\\[separator=([^]]+)])?\n" +
-        "   (?:\\[after=([^]]+)])?\n" +
-        "   (?:\\[(.*)])\n" +
-        "]\n" +
-        ""),
+        """
+        \\[
+           (?:\\[before=([^]]+)])?
+           (?:\\[separator=([^]]+)])?
+           (?:\\[after=([^]]+)])?
+           (?:\\[(.*)])
+        ]
+        """,
         Pattern.DOTALL | Pattern.COMMENTS
     );
 

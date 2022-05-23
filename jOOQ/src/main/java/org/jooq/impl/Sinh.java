@@ -213,7 +213,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Sinh) { QOM.Sinh o = (QOM.Sinh) that;
+        if (that instanceof QOM.Sinh o) {
             return
                 StringUtils.equals($value(), o.$value())
             ;

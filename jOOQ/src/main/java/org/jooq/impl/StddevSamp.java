@@ -163,7 +163,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.StddevSamp) { QOM.StddevSamp o = (QOM.StddevSamp) that;
+        if (that instanceof QOM.StddevSamp o) {
             return
                 StringUtils.equals($field(), o.$field())
             ;

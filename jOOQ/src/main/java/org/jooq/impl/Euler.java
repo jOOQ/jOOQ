@@ -200,7 +200,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Euler) { QOM.Euler o = (QOM.Euler) that;
+        if (that instanceof QOM.Euler o) {
             return true;
         }
         else

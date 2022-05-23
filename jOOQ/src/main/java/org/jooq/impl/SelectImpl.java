@@ -1584,9 +1584,9 @@ implements
 
 
     private final List<? extends Field<?>> seekValues(Object[] values) {
-        if (getQuery() instanceof SelectQueryImpl)
+        if (getQuery() instanceof SelectQueryImpl<R> s)
             return Tools.fields(values, map(
-                ((SelectQueryImpl<R>) getQuery()).getOrderBy().fields(),
+                s.getOrderBy().fields(),
                 (Field<?> f) -> f.getDataType(),
                 DataType[]::new
             ));

@@ -745,7 +745,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         return result;
     }
 
-    static final /* record */ class Identifier { private final String schema; private final String name; public Identifier(String schema, String name) { this.schema = schema; this.name = name; } public String schema() { return schema; } public String name() { return name; } @Override public boolean equals(Object o) { if (!(o instanceof Identifier)) return false; Identifier other = (Identifier) o; if (!java.util.Objects.equals(this.schema, other.schema)) return false; if (!java.util.Objects.equals(this.name, other.name)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.schema, this.name); } @Override public String toString() { return new StringBuilder("Identifier[").append("schema=").append(this.schema).append(", name=").append(this.name).append("]").toString(); } }
+    static record Identifier(String schema, String name) {}
 
     @Override
     protected List<EnumDefinition> getEnums0() throws SQLException {

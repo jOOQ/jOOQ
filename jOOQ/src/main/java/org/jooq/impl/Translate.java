@@ -219,7 +219,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Translate) { QOM.Translate o = (QOM.Translate) that;
+        if (that instanceof QOM.Translate o) {
             return
                 StringUtils.equals($string(), o.$string()) &&
                 StringUtils.equals($from(), o.$from()) &&

@@ -79,10 +79,10 @@ final class SelectFieldList<F extends SelectFieldOrAsterisk> extends QueryPartLi
 
         // [#4727] Various SelectFieldList references containing Table<?> cannot
         //         resolve the instance in time for the rendering, e.g. RETURNING
-        if (part instanceof AbstractTable)
-            ctx.visit(((AbstractTable<?>) part).tf());
-        else if (part instanceof AbstractRow)
-            ctx.visit(((AbstractRow<?>) part).rf());
+        if (part instanceof AbstractTable<?> t)
+            ctx.visit(t.tf());
+        else if (part instanceof AbstractRow<?> r)
+            ctx.visit(r.rf());
         else
             super.acceptElement(ctx, part);
     }

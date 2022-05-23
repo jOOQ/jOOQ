@@ -94,8 +94,8 @@ public final class XMLBuilder {
         if (list != null) {
             openTag(wrappingElementName).newLine().indent();
             for (Object o : list) {
-                if (o instanceof XMLAppendable)
-                    append(elementName, (XMLAppendable) o);
+                if (o instanceof XMLAppendable x)
+                    append(elementName, x);
                 else
                     append(elementName, o);
             }

@@ -1358,8 +1358,8 @@ public class DefaultConfiguration extends AbstractConfiguration {
         if (newTransactionProvider != null && !(this.connectionProvider instanceof ExecuteContextConnectionProvider)) {
             this.transactionProvider = newTransactionProvider;
 
-            if (newTransactionProvider instanceof ThreadLocalTransactionProvider)
-                this.connectionProvider = ((ThreadLocalTransactionProvider) newTransactionProvider).localConnectionProvider;
+            if (newTransactionProvider instanceof ThreadLocalTransactionProvider t)
+                this.connectionProvider = t.localConnectionProvider;
         }
         else
             this.transactionProvider = new NoTransactionProvider();
@@ -1797,8 +1797,8 @@ public class DefaultConfiguration extends AbstractConfiguration {
         // [#3229] [#5377] If we're currently in a transaction, return that transaction's
         // local DefaultConnectionProvider, not the one from this configuration
         TransactionProvider tp = transactionProvider();
-        ConnectionProvider transactional = tp instanceof ThreadLocalTransactionProvider
-            ? ((ThreadLocalTransactionProvider) tp).localConnectionProvider
+        ConnectionProvider transactional = tp instanceof ThreadLocalTransactionProvider t
+            ? t.localConnectionProvider
             : (ConnectionProvider) data(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION);
 
         return transactional != null

@@ -179,7 +179,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Power) { QOM.Power o = (QOM.Power) that;
+        if (that instanceof QOM.Power o) {
             return
                 StringUtils.equals($base(), o.$base()) &&
                 StringUtils.equals($exponent(), o.$exponent())

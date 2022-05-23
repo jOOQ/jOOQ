@@ -189,7 +189,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Acos) { QOM.Acos o = (QOM.Acos) that;
+        if (that instanceof QOM.Acos o) {
             return
                 StringUtils.equals($value(), o.$value())
             ;

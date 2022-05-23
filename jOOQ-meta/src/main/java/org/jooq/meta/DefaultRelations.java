@@ -446,5 +446,5 @@ public class DefaultRelations implements Relations {
     /**
      * A simple local wrapper for a key definition (table + key name)
      */
-    private static final /* record */ class Key { private final TableDefinition table; private final String keyName; public Key(TableDefinition table, String keyName) { this.table = table; this.keyName = keyName; } public TableDefinition table() { return table; } public String keyName() { return keyName; } @Override public boolean equals(Object o) { if (!(o instanceof Key)) return false; Key other = (Key) o; if (!java.util.Objects.equals(this.table, other.table)) return false; if (!java.util.Objects.equals(this.keyName, other.keyName)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.table, this.keyName); } @Override public String toString() { return new StringBuilder("Key[").append("table=").append(this.table).append(", keyName=").append(this.keyName).append("]").toString(); } }
+    private static record Key(TableDefinition table, String keyName) {}
 }

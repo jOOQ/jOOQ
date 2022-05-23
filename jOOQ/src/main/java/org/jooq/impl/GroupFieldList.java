@@ -109,7 +109,7 @@ final class GroupFieldList extends QueryPartList<GroupField> {
 
     @Override
     protected final void acceptElement(Context<?> ctx, GroupField part) {
-        if (part instanceof Table) { Table<?> t = (Table<?>) part;
+        if (part instanceof Table<?> t) {
             if (NO_SUPPORT_GROUP_BY_TABLE.contains(ctx.dialect())) {
                 Field<?>[] f = fields(ctx, t);
 

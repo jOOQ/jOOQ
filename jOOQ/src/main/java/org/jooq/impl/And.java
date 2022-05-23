@@ -181,7 +181,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.And) { QOM.And o = (QOM.And) that;
+        if (that instanceof QOM.And o) {
             return
                 StringUtils.equals($arg1(), o.$arg1()) &&
                 StringUtils.equals($arg2(), o.$arg2())

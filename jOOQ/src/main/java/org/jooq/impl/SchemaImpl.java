@@ -376,7 +376,7 @@ public class SchemaImpl extends AbstractNamed implements Schema {
 
         // [#2144] SchemaImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof SchemaImpl) { SchemaImpl other = (SchemaImpl) that;
+        if (that instanceof SchemaImpl other) {
             return
 
                 // [#7172] [#10274] Cannot use getQualifiedName() yet here

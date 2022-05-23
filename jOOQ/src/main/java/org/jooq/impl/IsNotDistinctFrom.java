@@ -175,7 +175,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.IsNotDistinctFrom) { QOM.IsNotDistinctFrom<?> o = (QOM.IsNotDistinctFrom<?>) that;
+        if (that instanceof QOM.IsNotDistinctFrom<?> o) {
             return
                 StringUtils.equals($arg1(), o.$arg1()) &&
                 StringUtils.equals($arg2(), o.$arg2())

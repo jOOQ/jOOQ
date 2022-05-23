@@ -4246,7 +4246,7 @@ public class JavaGenerator extends AbstractGenerator {
             Query query = parser.parseQuery(method.getSql());
 
             // TODO: ResultQuery (e.g. RETURNING clause)
-            if (query instanceof Select) { Select<?> select = (Select<?>) query;
+            if (query instanceof Select<?> select) {
                 final String namespace = StringUtils.toUC(method.getName(), getTargetLocale());
                 final List<Field<?>> fields = select.getSelect();
                 final TableDefinition table = new DefaultMetaTableDefinition(dao.getSchema(), new TableImpl<Record>("t") {{
@@ -7530,8 +7530,8 @@ public class JavaGenerator extends AbstractGenerator {
                 return false;
             default:
 
-
-
+                if (true)
+                    return true;
 
                 return false;
         }
@@ -7557,20 +7557,20 @@ public class JavaGenerator extends AbstractGenerator {
             String result = string.replace("\"\"\"", "\\\"\\\"\\\"");
 
 
+            // Only Java has incidental whitespace support (?)
+            // The first line may be ill-indented, because we read it from XML.
+            // Depending on the reader, the content may have been trimmed.
+            if (!result.startsWith(" ")) {
+                Matcher matcher = P_LEADING_WHITESPACE.matcher(result);
+                int indent = Integer.MAX_VALUE;
 
+                while (matcher.find())
+                    indent = Math.min(indent, matcher.group(1).length());
 
+                result = (indent != Integer.MAX_VALUE ? " ".repeat(indent) : "") + result;
+            }
 
-
-
-
-
-
-
-
-
-
-
-
+            result = result.stripIndent();
 
 
             return "\"\"\"\n" + result + "\n\"\"\"";
@@ -8700,8 +8700,8 @@ public class JavaGenerator extends AbstractGenerator {
         if (routine.getOverload() != null)
             out.println("setOverloaded(true)%s", semicolon);
 
-        if (routine instanceof PostgresRoutineDefinition)
-            if (((PostgresRoutineDefinition) routine).isProcedure())
+        if (routine instanceof PostgresRoutineDefinition p)
+            if (p.isProcedure())
                 out.println("setSQLUsable(false)%s", semicolon);
 
 

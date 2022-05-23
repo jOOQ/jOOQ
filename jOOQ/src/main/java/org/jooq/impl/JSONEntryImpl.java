@@ -310,15 +310,15 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
     }
 
     static final boolean isType(DataType<?> t, Class<?> type) {
-        if (t instanceof ConvertedDataType)
-            t = ((ConvertedDataType<?, ?>) t).delegate();
+        if (t instanceof ConvertedDataType<?, ?> c)
+            t = c.delegate();
 
         return t.getType() == type;
     }
 
     static final boolean isJSON(Context<?> ctx, DataType<?> type) {
-        DataType<?> t = type instanceof ConvertedDataType
-            ? ((ConvertedDataType<?, ?>) type).delegate()
+        DataType<?> t = type instanceof ConvertedDataType<?, ?> c
+            ? c.delegate()
             : type;
 
         return t.isJSON()
@@ -333,7 +333,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
     }
 
     static final Field<?> booleanValAsVarchar(Field<?> field) {
-        return field instanceof Val ? ((Val<?>) field).convertTo0(VARCHAR) : field;
+        return field instanceof Val<?> v ? v.convertTo0(VARCHAR) : field;
     }
 
     static final Field<?> jsonMerge(Scope scope, String empty, Field<?>... fields) {

@@ -1139,8 +1139,8 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
         if (this == obj)
             return true;
 
-        if (obj instanceof ResultImpl)
-            return records.equals(((ResultImpl<?>) obj).records);
+        if (obj instanceof ResultImpl<?> r)
+            return records.equals(r.records);
 
         return false;
     }

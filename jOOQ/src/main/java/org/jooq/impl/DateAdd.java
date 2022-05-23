@@ -485,7 +485,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.DateAdd) { QOM.DateAdd<?> o = (QOM.DateAdd<?>) that;
+        if (that instanceof QOM.DateAdd<?> o) {
             return
                 StringUtils.equals($date(), o.$date()) &&
                 StringUtils.equals($interval(), o.$interval()) &&

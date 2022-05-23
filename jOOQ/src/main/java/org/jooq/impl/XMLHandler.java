@@ -110,7 +110,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
             // [#12134] Patch base64 encoded binary values
             for (int i = 0; i < fields.size(); i++) {
                 if (fields.get(i).getDataType().isBinary()) {
-                    if (values.get(i) instanceof String) { String s = (String) values.get(i);
+                    if (values.get(i) instanceof String s) {
 
 
 

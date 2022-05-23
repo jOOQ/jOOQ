@@ -163,7 +163,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.XMLForest) { QOM.XMLForest o = (QOM.XMLForest) that;
+        if (that instanceof QOM.XMLForest o) {
             return
                 StringUtils.equals($fields(), o.$fields())
             ;

@@ -195,7 +195,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.XMLPi) { QOM.XMLPi o = (QOM.XMLPi) that;
+        if (that instanceof QOM.XMLPi o) {
             return
                 StringUtils.equals($target(), o.$target()) &&
                 StringUtils.equals($content(), o.$content())

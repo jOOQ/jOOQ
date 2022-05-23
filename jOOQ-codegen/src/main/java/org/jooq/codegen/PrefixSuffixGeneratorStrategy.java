@@ -70,8 +70,8 @@ public class PrefixSuffixGeneratorStrategy extends AbstractDelegatingGeneratorSt
         GeneratorStrategy delegate,
         Function<? super PrefixSuffixGeneratorStrategy, ? extends PrefixSuffixGeneratorStrategy> configuration
     ) {
-        return delegate instanceof GeneratorStrategyWrapper
-             ? new GeneratorStrategyWrapper(((GeneratorStrategyWrapper) delegate).generator, configuration.apply(new PrefixSuffixGeneratorStrategy(((GeneratorStrategyWrapper) delegate).delegate)))
+        return delegate instanceof GeneratorStrategyWrapper w
+             ? new GeneratorStrategyWrapper(w.generator, configuration.apply(new PrefixSuffixGeneratorStrategy(w.delegate)))
              : configuration.apply(new PrefixSuffixGeneratorStrategy(delegate));
     }
 

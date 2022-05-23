@@ -163,7 +163,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.Pi) { QOM.Pi o = (QOM.Pi) that;
+        if (that instanceof QOM.Pi o) {
             return true;
         }
         else

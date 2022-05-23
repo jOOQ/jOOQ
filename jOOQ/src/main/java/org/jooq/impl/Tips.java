@@ -93,6 +93,12 @@ final class Tips {
         "Need to frequently calculate the same expressions based on other columns from the same table? Many dialects support computed columns: https://www.jooq.org/doc/latest/manual/sql-building/column-expressions/computed-columns/",
         "You can use Table<R> references as SelectField<R> to project nested TableRecords in any query: https://blog.jooq.org/projecting-type-safe-nested-tablerecords-with-jooq-3-17/",
         "Just like in SQL, a Condition is just a Field<Boolean>, so you can use conditions wherever you can use fields, e.g. in SELECT, GROUP BY, ORDER BY, etc.",
+        "For dynamic SQL, DSL.noCondition() helps create optional conditions, just like DSL.noField() helps create optional fields in the fluent API.",
+        "In order to improve cardinality estimates, it can be valuable to auto-inline bind variables on certain columns, e.g. on enum types: https://www.jooq.org/doc/dev/manual/sql-building/dsl-context/custom-settings/settings-auto-inline-bind-values/",
+        "Kotlin users can profit from a variety of convenient extension functions available from the jooq-kotlin module",
+        "jOOQ offers out of the box functionality for common scenarios related to audit columns: https://www.jooq.org/doc/dev/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-forced-types/codegen-database-forced-types-audit/",
+        "Client side computed columns are very useful if you have redundant behaviour in your queries and data: https://www.jooq.org/doc/dev/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-forced-types/codegen-database-forced-types-computed/",
+        "A list of common anti patterns in jOOQ or SQL is available here: https://www.jooq.org/doc/latest/manual/reference/dont-do-this/",
         ""
     };
 

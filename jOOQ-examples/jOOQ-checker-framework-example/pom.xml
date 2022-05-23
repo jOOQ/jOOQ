@@ -87,8 +87,8 @@
                             <compilerId>javac-with-errorprone</compilerId>
                             <forceJavacCompilerUse>true</forceJavacCompilerUse>
                             <fork>false</fork>
-                            <source>16</source>
-                            <target>16</target>
+                            <source>17</source>
+                            <target>17</target>
                             <annotationProcessorPaths>
                                 <path>
                                     <groupId>org.jooq</groupId>

@@ -208,6 +208,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_LIMIT_WITH_ORDER_BY;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_INTO_CLAUSE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
@@ -216,6 +217,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PAR
 import static org.jooq.impl.Tools.ExtendedDataKey.DATA_TRANSFORM_ROWNUM_TO_LIMIT;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_DML_TARGET_TABLE;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_EXECUTE_CONTEXT;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_RENDERING_DATA_CHANGE_DELTA_TABLE;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_SELECT_ALIASES;
@@ -248,6 +250,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.GeneratorStatementType;
@@ -1987,6 +1990,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                .sql(' ')
                .visit(name("rn"));
     }
+
+
+
 
 
 

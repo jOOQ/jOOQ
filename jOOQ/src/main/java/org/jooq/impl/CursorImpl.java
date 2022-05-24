@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.Collections.emptyList;
 // ...
 import static org.jooq.impl.RowAsField.NO_NATIVE_SUPPORT;
@@ -44,6 +45,7 @@ import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.embeddedRecordType;
 import static org.jooq.impl.Tools.recordFactory;
 import static org.jooq.impl.Tools.uncoerce;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -78,7 +80,6 @@ import org.jooq.BindingGetResultSetContext;
 import org.jooq.Converter;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
-import org.jooq.ExecuteType;
 import org.jooq.Field;
 // ...
 import org.jooq.Record;
@@ -1548,7 +1549,11 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
                     //         RowField may have a Row[N].mapping(...) applied
                     Field<?> f = uncoerce(field);
 
-                    if (f instanceof AbstractRowAsField && NO_NATIVE_SUPPORT.contains(ctx.dialect())) {
+                    // [#13560] Queries may decide themselves to replace the
+                    //          flattening emulation by the MULTISET emulation
+                    if (f instanceof AbstractRowAsField
+                            && NO_NATIVE_SUPPORT.contains(ctx.dialect())
+                            && !TRUE.equals(ctx.data(DATA_MULTISET_CONTENT))) {
                         nested = ((AbstractRowAsField<?>) f).emulatedFields(configuration);
                         recordType = (Class<? extends AbstractRecord>) ((AbstractRowAsField<?>) f).getRecordType();
                     }

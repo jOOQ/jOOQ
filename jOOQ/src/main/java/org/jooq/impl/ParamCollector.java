@@ -68,7 +68,7 @@ final class ParamCollector extends AbstractBindContext {
     private final boolean               includeInlinedParams;
 
     ParamCollector(Configuration configuration, boolean includeInlinedParams) {
-        super(configuration, null);
+        super(configuration, null, null);
 
         this.includeInlinedParams = includeInlinedParams;
     }

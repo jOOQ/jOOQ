@@ -400,7 +400,7 @@ final class R2DBC {
             try {
                 Rendered rendered = rendered(configuration, query);
                 Statement stmt = c.createStatement(sql = rendered.sql);
-                new DefaultBindContext(configuration, new R2DBCPreparedStatement(configuration, stmt)).visit(rendered.bindValues);
+                new DefaultBindContext(configuration, null, new R2DBCPreparedStatement(configuration, stmt)).visit(rendered.bindValues);
 
                 // TODO: Reuse org.jooq.impl.Tools.setFetchSize(ExecuteContext ctx, int fetchSize)
                 AbstractResultQuery<?> q1 = abstractResultQuery(query);
@@ -501,7 +501,7 @@ final class R2DBC {
                     //                 list to preserve type information
                     // [#3547]         The original query may have no Params specified - e.g. when it was constructed with
                     //                 plain SQL. In that case, infer the bind value type directly from the bind value
-                    visitAll(new DefaultBindContext(batch.configuration, new R2DBCPreparedStatement(batch.query.configuration(), stmt)),
+                    visitAll(new DefaultBindContext(batch.configuration, null, new R2DBCPreparedStatement(batch.query.configuration(), stmt)),
                         (params.length > 0)
                             ? fields(bindValues, params)
                             : fields(bindValues));
@@ -728,7 +728,7 @@ final class R2DBC {
     static final Rendered rendered(Configuration configuration, Query query) {
         DefaultRenderContext render = new DefaultRenderContext(configuration.deriveSettings(s ->
             setParamType(configuration.dialect(), s)
-        ));
+        ), null);
 
         return new Rendered(render.paramType(NAMED).visit(query).render(), render.bindValues(), render.skipUpdateCounts());
     }

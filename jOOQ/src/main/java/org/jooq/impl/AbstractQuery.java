@@ -465,23 +465,23 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
         // [#6474] [#6929] Can this be communicated in a leaner way?
         if (ctx.type() == DDL) {
             ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
-            render = new DefaultRenderContext(c);
+            render = new DefaultRenderContext(c, ctx);
             result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.skipUpdateCounts());
         }
         else if (executePreparedStatements(configuration().settings())) {
             try {
-                render = new DefaultRenderContext(c);
+                render = new DefaultRenderContext(c, ctx);
                 render.data(DATA_COUNT_BIND_VALUES, true);
                 result = new Rendered(render.visit(this).render(), render.bindValues(), render.skipUpdateCounts());
             }
             catch (DefaultRenderContext.ForceInlineSignal e) {
                 ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
-                render = new DefaultRenderContext(c);
+                render = new DefaultRenderContext(c, ctx);
                 result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.skipUpdateCounts());
             }
         }
         else {
-            render = new DefaultRenderContext(c);
+            render = new DefaultRenderContext(c, ctx);
             result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.skipUpdateCounts());
         }
 

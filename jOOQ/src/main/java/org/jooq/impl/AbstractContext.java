@@ -54,6 +54,7 @@ import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.lazy;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_EXECUTE_CONTEXT;
 
 import java.sql.PreparedStatement;
 import java.text.DecimalFormat;
@@ -79,6 +80,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DSLContext;
+import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.JoinType;
@@ -159,8 +161,12 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     private transient DecimalFormat                doubleFormat;
     private transient DecimalFormat                floatFormat;
 
-    AbstractContext(Configuration configuration, PreparedStatement stmt) {
+    AbstractContext(Configuration configuration, ExecuteContext ctx, PreparedStatement stmt) {
         super(configuration);
+
+        if (ctx != null)
+            data(DATA_EXECUTE_CONTEXT, ctx);
+
         this.stmt = stmt;
 
         VisitListenerProvider[] providers = configuration.visitListenerProviders();

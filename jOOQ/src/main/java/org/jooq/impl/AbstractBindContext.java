@@ -42,6 +42,7 @@ import java.sql.SQLException;
 
 import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
@@ -54,8 +55,8 @@ import org.jooq.exception.DataAccessException;
  */
 abstract class AbstractBindContext extends AbstractContext<BindContext> implements BindContext {
 
-    AbstractBindContext(Configuration configuration, PreparedStatement stmt) {
-        super(configuration, stmt);
+    AbstractBindContext(Configuration configuration, ExecuteContext ctx, PreparedStatement stmt) {
+        super(configuration, ctx, stmt);
     }
 
     // ------------------------------------------------------------------------

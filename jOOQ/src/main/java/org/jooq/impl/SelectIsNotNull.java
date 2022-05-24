@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.selectCount;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
+import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
 import static org.jooq.impl.Tools.allNotNull;
 import static org.jooq.impl.Tools.visitSubquery;
 
@@ -90,7 +91,7 @@ final class SelectIsNotNull extends AbstractCondition implements QOM.SelectIsNot
     }
 
     private final void acceptStandard(Context<?> ctx) {
-        visitSubquery(ctx, select, false, false, true);
+        visitSubquery(ctx, select, PREDICAND);
 
         switch (ctx.family()) {
 

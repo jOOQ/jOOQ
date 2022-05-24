@@ -68,6 +68,7 @@ import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_IS;
 import static org.jooq.impl.Keywords.K_NOT;
+import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
@@ -138,7 +139,7 @@ final class RowIsDistinctFrom extends AbstractCondition implements UNotYetImplem
             if (rhsRow != null)
                 ctx.visit(rhsRow);
             else
-                visitSubquery(ctx, rhsSelect, false, false, true);
+                visitSubquery(ctx, rhsSelect, PREDICAND);
 
             if (!not)
                 ctx.sql(')');
@@ -154,7 +155,7 @@ final class RowIsDistinctFrom extends AbstractCondition implements UNotYetImplem
             if (rhsRow != null)
                 ctx.visit(rhsRow);
             else
-                visitSubquery(ctx, rhsSelect, false, false, true);
+                visitSubquery(ctx, rhsSelect, PREDICAND);
         }
 
 

@@ -43,6 +43,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Quantifier.ANY;
+import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import org.jooq.Configuration;
@@ -111,7 +112,7 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
             default:
                 ctx.visit(quantifier.toKeyword());
                 ctx.sql(extraParentheses ? " ((" : " (");
-                visitSubquery(ctx, delegate(ctx.configuration()), false, false, true, false);
+                visitSubquery(ctx, delegate(ctx.configuration()), PREDICAND, false);
                 ctx.sql(extraParentheses ? "))" : ")");
                 break;
         }

@@ -346,7 +346,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C visitSubquery(QueryPart part) {
-        Tools.visitSubquery(this, part, false, false, false);
+        Tools.visitSubquery(this, part);
         return (C) this;
     }
 

@@ -82,7 +82,7 @@ final class ArrayQuery<T> extends AbstractField<T[]> implements QOM.ArrayQuery<T
 
                 // [#11053] TODO: Move ORDER BY clause from subquery to ARRAY_AGG
                 // See https://github.com/jOOQ/jOOQ/issues/11053#issuecomment-735773248
-                visitSubquery(ctx, DSL.select(arrayAgg(c)).from(t), false, false, false);
+                visitSubquery(ctx, DSL.select(arrayAgg(c)).from(t));
                 break;
             }
 

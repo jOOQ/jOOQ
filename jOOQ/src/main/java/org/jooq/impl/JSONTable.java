@@ -60,6 +60,7 @@ import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.Names.N_JSON_TABLE;
 import static org.jooq.impl.Names.N_OPENJSON;
 import static org.jooq.impl.SQLDataType.JSONB;
+import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 
@@ -229,9 +230,7 @@ implements
                 json.getType() == JSONB.class ? json : json.cast(JSONB),
                 path
             ),
-            true,
-            false,
-            false
+            DERIVED_TABLE
         );
     }
 

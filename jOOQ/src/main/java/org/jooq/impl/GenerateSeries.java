@@ -76,6 +76,7 @@ import static org.jooq.impl.Names.N_GENERATOR;
 import static org.jooq.impl.Names.N_SYSTEM_RANGE;
 import static org.jooq.impl.Names.N_UNNEST;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.visitSubquery;
 
@@ -157,9 +158,7 @@ implements
                 withRecursive(name, name)
                     .as(select(from).unionAll(select(iadd(f, step == null ? inline(1) : step)).from(name).where(f.lt(to))))
                     .select(f).from(name),
-                true,
-                false,
-                false
+                DERIVED_TABLE
             );
         }
         else if (EMULATE_SYSTEM_RANGE.contains(ctx.dialect())) {
@@ -174,10 +173,6 @@ implements
                 ctx.sql(')');
             }
         }
-
-
-
-
 
 
 

@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.Names.NQ_SELECT;
+import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_LIMIT_WITH_ORDER_BY;
@@ -132,9 +133,9 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> implements 
         //                  actual derived table usage.
         // [#10521] TODO: Reuse avoidAliasPushdown here
         if (ctx.family() == DERBY && q != null && q.hasUnions())
-            visitSubquery(ctx, selectFrom(query.asTable(DSL.name("t"), aliases)), true, false, false, false);
+            visitSubquery(ctx, selectFrom(query.asTable(DSL.name("t"), aliases)), DERIVED_TABLE, false);
         else
-            ctx.data(DATA_SELECT_ALIASES, aliases, subquery ? c -> visitSubquery(c, query, true, false, false, false) : c -> c.visit(query));
+            ctx.data(DATA_SELECT_ALIASES, aliases, subquery ? c -> visitSubquery(c, query, DERIVED_TABLE, false) : c -> c.visit(query));
     }
 
     static final boolean avoidAliasPushdown(Context<?> ctx, Select<?> query) {

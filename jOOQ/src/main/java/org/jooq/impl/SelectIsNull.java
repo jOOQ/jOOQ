@@ -69,6 +69,7 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.selectCount;
 import static org.jooq.impl.Keywords.K_IS_NULL;
+import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
 import static org.jooq.impl.Tools.allNull;
 import static org.jooq.impl.Tools.visitSubquery;
 
@@ -124,7 +125,7 @@ final class SelectIsNull extends AbstractCondition implements QOM.SelectIsNull {
     }
 
     private final void acceptStandard(Context<?> ctx) {
-        visitSubquery(ctx, select, false, false, true);
+        visitSubquery(ctx, select, PREDICAND);
 
         switch (ctx.family()) {
 

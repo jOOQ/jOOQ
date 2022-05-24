@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.impl.Names.N_T;
+import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
@@ -108,7 +109,7 @@ class DerivedTable<R extends Record> extends AbstractTable<R> implements QOM.Der
 
 
 
-        visitSubquery(ctx, query, true, false, false, false);
+        visitSubquery(ctx, query, DERIVED_TABLE, false);
     }
 
     @Override // Avoid AbstractTable implementation

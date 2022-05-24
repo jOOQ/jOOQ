@@ -59,6 +59,7 @@ import static org.jooq.impl.Names.N_XMLTABLE;
 import static org.jooq.impl.QOM.XMLPassingMechanism.BY_REF;
 import static org.jooq.impl.QOM.XMLPassingMechanism.BY_VALUE;
 import static org.jooq.impl.SQLDataType.XML;
+import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 
@@ -234,8 +235,6 @@ implements
                 break;
         }
     }
-
-
 
 
 

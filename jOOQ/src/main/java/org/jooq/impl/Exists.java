@@ -110,7 +110,7 @@ implements
 
             default:
                 ctx.visit(K_EXISTS).sql(' ');
-                visitSubquery(ctx, query, false, false, true);
+                visitSubquery(ctx, query, SubqueryCharacteristics.PREDICAND);
                 break;
         }
     }

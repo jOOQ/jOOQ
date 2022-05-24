@@ -66,7 +66,6 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -81,6 +80,7 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.map;
@@ -212,7 +212,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
                 && (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1.contains(dialect))
                 && (wrapped instanceof TableImpl || wrapped instanceof CommonTableExpressionImpl)) {
 
-            visitSubquery(context, select(asterisk()).from(((Table<?>) wrapped).as(alias)), true, false, false);
+            visitSubquery(context, select(asterisk()).from(((Table<?>) wrapped).as(alias)), DERIVED_TABLE);
         }
 
         // [#1801] Some databases do not support "derived column names".
@@ -292,7 +292,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
                             }
                         }
 
-                        visitSubquery(context, select(fields).where(falseCondition()).unionAll(wrappedAsSelect), true, false, false);
+                        visitSubquery(context, select(fields).where(falseCondition()).unionAll(wrappedAsSelect), DERIVED_TABLE);
                     }
 
                     // [#10521] Avoid the clumsy UNION ALL emulation if possible

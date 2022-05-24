@@ -67,6 +67,7 @@ import static org.jooq.impl.Keywords.K_UNNEST;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Names.N_VALUES;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.EMPTY_ROW;
 import static org.jooq.impl.Tools.visitSubquery;
 
@@ -183,7 +184,7 @@ final class Values<R extends Record> extends AbstractTable<R> implements QOM.Val
                     selects = selects.unionAll(select);
             }
 
-            visitSubquery(ctx, selects, true, false, false, false);
+            visitSubquery(ctx, selects, DERIVED_TABLE, false);
         }
 
 

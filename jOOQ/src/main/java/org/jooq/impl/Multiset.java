@@ -180,9 +180,6 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
 
 
-
-
-
                     default: {
                         JSONArrayAggOrderByStep<JSON> order;
                         JSONArrayAggReturningStep<JSON> returning;
@@ -204,7 +201,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                         if (multisetCondition && NO_SUPPORT_JSON_COMPARE.contains(ctx.dialect()))
                             ctx.visit(DSL.field(s).cast(VARCHAR));
                         else
-                            visitSubquery(ctx, s, false, false, false);
+                            visitSubquery(ctx, s);
 
                         break;
                     }
@@ -217,9 +214,6 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                 Table<?> t = new AliasedSelect<>(select, true, false, FORCE_LIMIT_IN_DERIVED_TABLE.contains(ctx.dialect()), fieldNames(select.getSelect().size())).as(DSL.name("t"), (Name[]) null);
 
                 switch (ctx.family()) {
-
-
-
 
 
 
@@ -258,7 +252,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                         if (multisetCondition && NO_SUPPORT_JSONB_COMPARE.contains(ctx.dialect()))
                             ctx.visit(DSL.field(s).cast(VARCHAR));
                         else
-                            visitSubquery(ctx, s, false, false, false);
+                            visitSubquery(ctx, s);
 
                         break;
                     }
@@ -305,7 +299,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                         if (multisetCondition && NO_SUPPORT_XML_COMPARE.contains(ctx.dialect()))
                             ctx.visit(xmlserializeContent(DSL.field(s), VARCHAR));
                         else
-                            visitSubquery(ctx, s, false, false, false);
+                            visitSubquery(ctx, s);
 
                         break;
                     }
@@ -315,7 +309,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
             }
 
             case NATIVE:
-                visitSubquery(ctx.visit(K_MULTISET), select, false, false, false);
+                visitSubquery(ctx.visit(K_MULTISET), select);
                 break;
         }
     }

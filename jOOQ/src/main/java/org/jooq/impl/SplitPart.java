@@ -202,9 +202,7 @@ implements
                 visitSubquery(
                     ctx,
                     withRecursive(s1, s2).select(DSL.coalesce(DSL.max(DSL.field(name("x"))), inline(""))).from(s2).where(s2.field("n").eq((Field) n)),
-                    true,
-                    false,
-                    false
+                    SubqueryCharacteristics.DERIVED_TABLE
                 );
                 break;
             }

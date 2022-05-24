@@ -50,6 +50,7 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Quantifier.ALL;
 import static org.jooq.impl.Quantifier.ANY;
+import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
 import static org.jooq.impl.Tools.embeddedFieldsRow;
 import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.fieldsByName;
@@ -251,7 +252,7 @@ final class RowSubqueryCondition extends AbstractCondition implements UNotYetImp
                         boolean extraParentheses = false ;
 
                         ctx.sql(extraParentheses ? "((" : "(")
-                           .data(BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true, c -> visitSubquery(c, right, false, false, true, false))
+                           .data(BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true, c -> visitSubquery(c, right, PREDICAND, false))
                            .sql(extraParentheses ? "))" : ")");
                     }
 

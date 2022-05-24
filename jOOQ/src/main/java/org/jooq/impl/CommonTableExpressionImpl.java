@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_MATERIALIZED;
 import static org.jooq.impl.Keywords.K_NOT;
+import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
@@ -139,7 +140,7 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
 
             }
 
-            visitSubquery(ctx, s, true, false, false);
+            visitSubquery(ctx, s, DERIVED_TABLE);
 
 
 

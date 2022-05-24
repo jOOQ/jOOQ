@@ -186,6 +186,9 @@ import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
+import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
+import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
+import static org.jooq.impl.SubqueryCharacteristics.SET_OPERATION;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -2664,20 +2667,23 @@ final class Tools {
 
     static final void visitSubquery(
         Context<?> ctx,
-        QueryPart query,
-        boolean derivedTableSubquery,
-        boolean setOperationSubquery,
-        boolean predicandSubquery
+        QueryPart query
     ) {
-        visitSubquery(ctx, query, derivedTableSubquery, setOperationSubquery, predicandSubquery, true);
+        visitSubquery(ctx, query, 0, true);
     }
 
     static final void visitSubquery(
         Context<?> ctx,
         QueryPart query,
-        boolean derivedTableSubquery,
-        boolean setOperationSubquery,
-        boolean predicandSubquery,
+        int characteristics
+    ) {
+        visitSubquery(ctx, query, characteristics, true);
+    }
+
+    static final void visitSubquery(
+        Context<?> ctx,
+        QueryPart query,
+        int characteristics,
         boolean parentheses
     ) {
 
@@ -2693,9 +2699,9 @@ final class Tools {
         boolean previousSetOperationSubquery = ctx.setOperationSubquery();
 
         ctx.subquery(true)
-           .predicandSubquery(predicandSubquery)
-           .derivedTableSubquery(derivedTableSubquery)
-           .setOperationSubquery(setOperationSubquery)
+           .predicandSubquery((characteristics & PREDICAND) != 0)
+           .derivedTableSubquery((characteristics & DERIVED_TABLE) != 0)
+           .setOperationSubquery((characteristics & SET_OPERATION) != 0)
            .formatIndentStart()
            .formatNewLine()
            .visit(query)

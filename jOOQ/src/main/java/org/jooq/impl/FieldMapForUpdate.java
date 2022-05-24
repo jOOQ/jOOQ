@@ -265,7 +265,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
                     ctx.qualify(false, c -> c.visit(row.field(0)))
                        .sql(" = ");
 
-                    visitSubquery(ctx, select, false, false, false);
+                    visitSubquery(ctx, select);
                 }
                 else {
                     for (int i = 0; i < size; i++) {
@@ -314,7 +314,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
                     else
                         select = multiSelect;
 
-                    visitSubquery(ctx, select, false, false, false);
+                    visitSubquery(ctx, select);
                 }
             }
         }

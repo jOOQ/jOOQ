@@ -70,7 +70,7 @@ import org.jetbrains.annotations.Nullable;
  * @see BindContext
  * @see RenderContext
  */
-public interface Context<C extends Context<C>> extends Scope {
+public interface Context<C extends Context<C>> extends ExecuteScope {
 
     // ------------------------------------------------------------------------
     // Methods specifying the scope of the SQL being rendered

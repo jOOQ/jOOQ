@@ -48,7 +48,6 @@ import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_APPEND_SQL;
-import static org.jooq.impl.Tools.SimpleDataKey.DATA_EXECUTE_CONTEXT;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_PREPEND_SQL;
 
 import java.util.ArrayDeque;
@@ -146,7 +145,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     DefaultRenderContext(RenderContext context, boolean copyLocalState) {
-        this(context.configuration(), (ExecuteContext) context.data(DATA_EXECUTE_CONTEXT));
+        this(context.configuration(), context.executeContext());
 
         paramType(context.paramType());
         qualifyCatalog(context.qualifyCatalog());

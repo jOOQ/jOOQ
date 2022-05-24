@@ -54,7 +54,6 @@ import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.lazy;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
-import static org.jooq.impl.Tools.SimpleDataKey.DATA_EXECUTE_CONTEXT;
 
 import java.sql.PreparedStatement;
 import java.text.DecimalFormat;
@@ -105,6 +104,8 @@ import org.jooq.impl.Tools.DataKey;
 import org.jooq.impl.Tools.DataKeyScopeStackPart;
 import org.jooq.tools.StringUtils;
 
+import org.jetbrains.annotations.Nullable;
+
 
 /**
  * @author Lukas Eder
@@ -117,6 +118,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
 
 
+    final ExecuteContext                           ctx;
     final PreparedStatement                        stmt;
 
     boolean                                        declareFields;
@@ -164,9 +166,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     AbstractContext(Configuration configuration, ExecuteContext ctx, PreparedStatement stmt) {
         super(configuration);
 
-        if (ctx != null)
-            data(DATA_EXECUTE_CONTEXT, ctx);
-
+        this.ctx = ctx;
         this.stmt = stmt;
 
         VisitListenerProvider[] providers = configuration.visitListenerProviders();
@@ -229,6 +229,15 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             : CastMode.DEFAULT;
         this.languageContext = LanguageContext.QUERY;
         this.scopeStack = new ScopeStack<QueryPart, ScopeStackElement>(ScopeStackElement::new);
+    }
+
+    // ------------------------------------------------------------------------
+    // ExecuteScope API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final ExecuteContext executeContext() {
+        return ctx;
     }
 
     // ------------------------------------------------------------------------

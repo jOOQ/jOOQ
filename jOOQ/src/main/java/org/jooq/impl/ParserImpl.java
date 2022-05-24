@@ -2309,6 +2309,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (parseKeywordIf("DUPLICATE KEY UPDATE")) {
                     parseKeywordIf("SET");
 
+                    // Cast is necessary, see https://github.com/eclipse-jdt/eclipse.jdt.core/issues/99
                     InsertOnConflictWhereStep<?> where = parseKeywordIf("ALL TO EXCLUDED")
                         ? onDuplicate.onDuplicateKeyUpdate().setAllToExcluded()
                         : onDuplicate.onDuplicateKeyUpdate().set((Map<?, ?>) data(DATA_PARSE_ON_CONFLICT, true, c -> c.parseSetClauseList()));
@@ -2344,6 +2345,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         returning = doUpdate.doNothing();
                     }
                     else if (parseKeywordIf("UPDATE SET")) {
+
+                        // Cast is necessary, see https://github.com/eclipse-jdt/eclipse.jdt.core/issues/99
                         InsertOnConflictWhereStep<?> where = parseKeywordIf("ALL TO EXCLUDED")
                             ? doUpdate.doUpdate().setAllToExcluded()
                             : doUpdate.doUpdate().set((Map<?, ?>) data(DATA_PARSE_ON_CONFLICT, true, c -> c.parseSetClauseList()));

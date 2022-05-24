@@ -46,8 +46,10 @@ public sealed interface ParamOrVariable<T>
 extends
     Field<T>
 permits
-    Param,
-    Variable
+
+
+
+    Param
 {
 
 }

@@ -49,6 +49,9 @@ import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
 import static org.jooq.impl.Tools.DataKey.DATA_APPEND_SQL;
 import static org.jooq.impl.Tools.DataKey.DATA_PREPEND_SQL;
+import static org.jooq.impl.Tools.DataKey.DATA_APPEND_SQL;
+import static org.jooq.impl.Tools.DataKey.DATA_EXECUTE_CONTEXT;
+import static org.jooq.impl.Tools.DataKey.DATA_PREPEND_SQL;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -62,6 +65,7 @@ import java.util.regex.Pattern;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Constants;
+import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.LanguageContext;
@@ -118,8 +122,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     String                                cachedNewline;
     int                                   cachedPrintMargin;
 
-    DefaultRenderContext(Configuration configuration) {
-        super(configuration, null);
+    DefaultRenderContext(Configuration configuration, ExecuteContext ctx) {
+        super(configuration, ctx, null);
 
         Settings settings = configuration.settings();
 
@@ -145,7 +149,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     DefaultRenderContext(RenderContext context, boolean copyLocalState) {
-        this(context.configuration());
+        this(context.configuration(), (ExecuteContext) context.data(DATA_EXECUTE_CONTEXT));
 
         paramType(context.paramType());
         qualifyCatalog(context.qualifyCatalog());

@@ -702,7 +702,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public RenderContext renderContext() {
-        return new DefaultRenderContext(configuration());
+        return new DefaultRenderContext(configuration(), null);
     }
 
     @Override
@@ -746,7 +746,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public BindContext bindContext(PreparedStatement stmt) {
-        return new DefaultBindContext(configuration(), stmt);
+        return new DefaultBindContext(configuration(), null, stmt);
     }
 
     // -------------------------------------------------------------------------

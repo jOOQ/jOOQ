@@ -195,7 +195,7 @@ final class ParsingConnection extends DefaultConnection {
                 if (i > 0)
                     rendered = translate(configuration, sql, p.get(i).toArray(EMPTY_PARAM));
 
-                new DefaultBindContext(configuration, s).visit(rendered.bindValues);
+                new DefaultBindContext(configuration, null, s).visit(rendered.bindValues);
 
                 // TODO: Find a less hacky way to signal that we're batching. Currently:
                 // - ArrayList<Arraylist<Param<?>>> = batching

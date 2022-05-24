@@ -218,7 +218,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
                 //                 list to preserve type information
                 // [#3547]         The original query may have no Params specified - e.g. when it was constructed with
                 //                 plain SQL. In that case, infer the bind value type directly from the bind value
-                visitAll(new DefaultBindContext(configuration, ctx.statement()),
+                visitAll(new DefaultBindContext(configuration, ctx, ctx.statement()),
                     (params.length > 0)
                         ? fields(bindValues, params)
                         : fields(bindValues));

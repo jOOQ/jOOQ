@@ -78,7 +78,7 @@ final class Finder extends AbstractBindContext {
         Predicate<? super QueryPart> find,
         Predicate<? super QueryPart> enter
     ) {
-        super(configuration, null);
+        super(configuration, null, null);
 
         this.find = find;
         this.enter = enter;

@@ -42,6 +42,7 @@ import java.sql.SQLException;
 
 import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.ExecuteContext;
 import org.jooq.Field;
 
 /**
@@ -49,8 +50,8 @@ import org.jooq.Field;
  */
 final class DefaultBindContext extends AbstractBindContext {
 
-    DefaultBindContext(Configuration configuration, PreparedStatement stmt) {
-        super(configuration, stmt);
+    DefaultBindContext(Configuration configuration, ExecuteContext ctx, PreparedStatement stmt) {
+        super(configuration, ctx, stmt);
     }
 
     @Override

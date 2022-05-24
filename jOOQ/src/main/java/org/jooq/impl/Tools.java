@@ -186,6 +186,9 @@ import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
+import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
+import static org.jooq.impl.Tools.DataKey.DATA_EXECUTE_CONTEXT;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.lang.reflect.AccessibleObject;
@@ -590,6 +593,12 @@ final class Tools {
      * and are thus stored in an {@link EnumMap} for speedier access.
      */
     enum DataKey {
+
+        /**
+         * [#13560] [#13599] The {@link ExecuteContext} in whose scope another
+         * {@link Scope} may have been created.
+         */
+        DATA_EXECUTE_CONTEXT,
 
         /**
          * The level of anonymous block nesting, in case we're generating a block.
@@ -2568,8 +2577,7 @@ final class Tools {
         char[] sqlChars = sql.toCharArray();
 
         // [#1593] Create a dummy renderer if we're in bind mode
-        if (render == null) render = new DefaultRenderContext(bind.configuration());
-
+        if (render == null) render = new DefaultRenderContext(bind.configuration(), (ExecuteContext) ctx.data(DATA_EXECUTE_CONTEXT));
         SQLDialect family = render.family();
         boolean mysql = SUPPORTS_HASH_COMMENT_SYNTAX.contains(render.dialect());
         char[][][] quotes = QUOTES.get(family);

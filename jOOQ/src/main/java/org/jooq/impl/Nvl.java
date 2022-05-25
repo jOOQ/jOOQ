@@ -103,6 +103,9 @@ implements
 
 
 
+            case DERBY:
+                return false;
+
 
 
 
@@ -116,7 +119,6 @@ implements
 
 
             case CUBRID:
-            case DERBY:
             case FIREBIRD:
             case IGNITE:
             case POSTGRES:
@@ -163,6 +165,10 @@ implements
 
 
 
+            case DERBY:
+                ctx.visit(DSL.coalesce(value, defaultValue));
+                break;
+
 
 
 
@@ -176,7 +182,6 @@ implements
 
 
             case CUBRID:
-            case DERBY:
             case FIREBIRD:
             case IGNITE:
             case POSTGRES:

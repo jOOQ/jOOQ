@@ -1531,6 +1531,30 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
           </appinfo>
         </annotation>
       </element>
+
+      <element name="xmlConverter" type="boolean" minOccurs="0" maxOccurs="1" fixed="true">
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
+      </element>
+
+      <element name="jsonConverter" type="boolean" minOccurs="0" maxOccurs="1" fixed="true">
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
+      </element>
       
       <element name="lambdaConverter" type="tns:LambdaConverter" minOccurs="0" maxOccurs="1">
         <annotation>
@@ -1697,6 +1721,14 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 
       <element name="enumConverter" type="boolean" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the converter is an {@link org.jooq.impl.EnumConverter}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="xmlConverter" type="boolean" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the converter is an {@link org.jooq.impl.XMLtoJAXBConverter}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="jsonConverter" type="boolean" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the converter is an {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter} or a {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="lambdaConverter" type="tns:LambdaConverter" minOccurs="0" maxOccurs="1">

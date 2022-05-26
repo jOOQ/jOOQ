@@ -47,6 +47,8 @@ public class CustomType implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String converter;
     protected Boolean enumConverter;
+    protected Boolean xmlConverter;
+    protected Boolean jsonConverter;
     protected LambdaConverter lambdaConverter;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String binding;
@@ -274,6 +276,58 @@ public class CustomType implements Serializable, XMLAppendable
     /**
      * @deprecated Use ForcedType only
      * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public Boolean isXmlConverter() {
+        return xmlConverter;
+    }
+
+    /**
+     * Sets the value of the xmlConverter property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public void setXmlConverter(Boolean value) {
+        this.xmlConverter = value;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public Boolean isJsonConverter() {
+        return jsonConverter;
+    }
+
+    /**
+     * Sets the value of the jsonConverter property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public void setJsonConverter(Boolean value) {
+        this.jsonConverter = value;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
      */
     @Deprecated
     public LambdaConverter getLambdaConverter() {
@@ -382,6 +436,16 @@ public class CustomType implements Serializable, XMLAppendable
         return this;
     }
 
+    public CustomType withXmlConverter(Boolean value) {
+        setXmlConverter(value);
+        return this;
+    }
+
+    public CustomType withJsonConverter(Boolean value) {
+        setJsonConverter(value);
+        return this;
+    }
+
     /**
      * @deprecated Use ForcedType only
      * 
@@ -414,6 +478,8 @@ public class CustomType implements Serializable, XMLAppendable
         builder.append("auditUpdateUser", auditUpdateUser);
         builder.append("converter", converter);
         builder.append("enumConverter", enumConverter);
+        builder.append("xmlConverter", xmlConverter);
+        builder.append("jsonConverter", jsonConverter);
         builder.append("lambdaConverter", lambdaConverter);
         builder.append("binding", binding);
     }
@@ -527,6 +593,24 @@ public class CustomType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (xmlConverter == null) {
+            if (other.xmlConverter!= null) {
+                return false;
+            }
+        } else {
+            if (!xmlConverter.equals(other.xmlConverter)) {
+                return false;
+            }
+        }
+        if (jsonConverter == null) {
+            if (other.jsonConverter!= null) {
+                return false;
+            }
+        } else {
+            if (!jsonConverter.equals(other.jsonConverter)) {
+                return false;
+            }
+        }
         if (lambdaConverter == null) {
             if (other.lambdaConverter!= null) {
                 return false;
@@ -562,6 +646,8 @@ public class CustomType implements Serializable, XMLAppendable
         result = ((prime*result)+((auditUpdateUser == null)? 0 :auditUpdateUser.hashCode()));
         result = ((prime*result)+((converter == null)? 0 :converter.hashCode()));
         result = ((prime*result)+((enumConverter == null)? 0 :enumConverter.hashCode()));
+        result = ((prime*result)+((xmlConverter == null)? 0 :xmlConverter.hashCode()));
+        result = ((prime*result)+((jsonConverter == null)? 0 :jsonConverter.hashCode()));
         result = ((prime*result)+((lambdaConverter == null)? 0 :lambdaConverter.hashCode()));
         result = ((prime*result)+((binding == null)? 0 :binding.hashCode()));
         return result;

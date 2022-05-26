@@ -63,6 +63,7 @@ import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.EnumConverter;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.SQLDataType;
+import org.jooq.impl.XMLtoJAXBConverter;
 import org.jooq.meta.jaxb.CustomType;
 import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.LambdaConverter;
@@ -248,6 +249,25 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                     String tType = tType(db, resolver, definedType);
                     converter = resolver.constructorCall(EnumConverter.class.getName() + "<" + resolver.ref(tType) + ", " + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(tType) + ", " + resolver.classLiteral(uType) + ")";
                 }
+
+                // [#13607] So do XML and JSON converters
+                else if (TRUE.equals(customType.isXmlConverter()) ||
+                    XMLtoJAXBConverter.class.getName().equals(customType.getConverter())) {
+                    converter = resolver.constructorCall(XMLtoJAXBConverter.class.getName() + "<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
+                }
+                else if (TRUE.equals(customType.isJsonConverter())) {
+                    if (tType(db, resolver, definedType).endsWith("JSONB"))
+                        converter = resolver.constructorCall("org.jooq.jackson.extensions.converters.JSONBtoJacksonConverter<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
+                    else
+                        converter = resolver.constructorCall("org.jooq.jackson.extensions.converters.JSONtoJacksonConverter<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
+                }
+                else if ("org.jooq.jackson.extensions.converters.JSONtoJacksonConverter".equals(customType.getConverter())) {
+                    converter = resolver.constructorCall("org.jooq.jackson.extensions.converters.JSONtoJacksonConverter<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
+                }
+                else if ("org.jooq.jackson.extensions.converters.JSONBtoJacksonConverter".equals(customType.getConverter())) {
+                    converter = resolver.constructorCall("org.jooq.jackson.extensions.converters.JSONBtoJacksonConverter<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
+                }
+
                 else if (customType.getLambdaConverter() != null) {
                     LambdaConverter c = customType.getLambdaConverter();
                     String tType = tType(db, resolver, definedType);
@@ -388,6 +408,8 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
             return new CustomType()
                 .withBinding(forcedType.getBinding())
                 .withEnumConverter(forcedType.isEnumConverter())
+                .withXmlConverter(forcedType.isXmlConverter())
+                .withJsonConverter(forcedType.isJsonConverter())
                 .withLambdaConverter(forcedType.getLambdaConverter())
                 .withVisibilityModifier(forcedType.getVisibilityModifier())
                 .withGenerator(forcedType.getGenerator())

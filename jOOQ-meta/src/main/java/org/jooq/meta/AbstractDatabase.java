@@ -1449,9 +1449,11 @@ public abstract class AbstractDatabase implements Database {
                     && !TRUE.equals(type.isAuditUpdateUser())
                     && type.getVisibilityModifier() == null
                     && !Boolean.TRUE.equals(type.isEnumConverter())
+                    && !Boolean.TRUE.equals(type.isXmlConverter())
+                    && !Boolean.TRUE.equals(type.isJsonConverter())
                     && type.getLambdaConverter() == null
                 ) {
-                    log.warn("Bad configuration for <forcedType/>. Either <binding/>, <converter/>, <enumConverter/>, <lambdaConverter/>, or <generator/> is required: " + type);
+                    log.warn("Bad configuration for <forcedType/>. Either <binding/>, <converter/>, <enumConverter/>, <xmlConverter/>, <jsonConverter/>, <lambdaConverter/>, or <generator/> is required: " + type);
 
                     it2.remove();
                     continue;
@@ -1473,6 +1475,14 @@ public abstract class AbstractDatabase implements Database {
                 if (Boolean.TRUE.equals(type.isEnumConverter())) {
                     log.warn("Bad configuration for <forcedType/>. <enumConverter/> is not allowed when <name/> is provided: " + type);
                     type.setEnumConverter(null);
+                }
+                if (Boolean.TRUE.equals(type.isXmlConverter())) {
+                    log.warn("Bad configuration for <forcedType/>. <xmlConverter/> is not allowed when <name/> is provided: " + type);
+                    type.setXmlConverter(null);
+                }
+                if (Boolean.TRUE.equals(type.isJsonConverter())) {
+                    log.warn("Bad configuration for <forcedType/>. <jsonConverter/> is not allowed when <name/> is provided: " + type);
+                    type.setJsonConverter(null);
                 }
                 if (type.getLambdaConverter() != null) {
                     log.warn("Bad configuration for <forcedType/>. <lambdaConverter/> is not allowed when <name/> is provided: " + type);

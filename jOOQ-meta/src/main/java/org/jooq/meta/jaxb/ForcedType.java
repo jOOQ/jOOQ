@@ -47,6 +47,8 @@ public class ForcedType implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String converter;
     protected Boolean enumConverter;
+    protected Boolean xmlConverter;
+    protected Boolean jsonConverter;
     protected LambdaConverter lambdaConverter;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String binding;
@@ -325,6 +327,54 @@ public class ForcedType implements Serializable, XMLAppendable
      */
     public void setEnumConverter(Boolean value) {
         this.enumConverter = value;
+    }
+
+    /**
+     * Whether the converter is an {@link org.jooq.impl.XMLtoJAXBConverter}.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isXmlConverter() {
+        return xmlConverter;
+    }
+
+    /**
+     * Sets the value of the xmlConverter property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setXmlConverter(Boolean value) {
+        this.xmlConverter = value;
+    }
+
+    /**
+     * Whether the converter is an {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter} or a {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter}.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isJsonConverter() {
+        return jsonConverter;
+    }
+
+    /**
+     * Sets the value of the jsonConverter property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setJsonConverter(Boolean value) {
+        this.jsonConverter = value;
     }
 
     /**
@@ -623,6 +673,16 @@ public class ForcedType implements Serializable, XMLAppendable
         return this;
     }
 
+    public ForcedType withXmlConverter(Boolean value) {
+        setXmlConverter(value);
+        return this;
+    }
+
+    public ForcedType withJsonConverter(Boolean value) {
+        setJsonConverter(value);
+        return this;
+    }
+
     /**
      * A lambda converter implementation for the {@link #getUserType()}.
      * 
@@ -751,6 +811,8 @@ public class ForcedType implements Serializable, XMLAppendable
         builder.append("auditUpdateUser", auditUpdateUser);
         builder.append("converter", converter);
         builder.append("enumConverter", enumConverter);
+        builder.append("xmlConverter", xmlConverter);
+        builder.append("jsonConverter", jsonConverter);
         builder.append("lambdaConverter", lambdaConverter);
         builder.append("binding", binding);
         builder.append("excludeExpression", excludeExpression);
@@ -883,6 +945,24 @@ public class ForcedType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (xmlConverter == null) {
+            if (other.xmlConverter!= null) {
+                return false;
+            }
+        } else {
+            if (!xmlConverter.equals(other.xmlConverter)) {
+                return false;
+            }
+        }
+        if (jsonConverter == null) {
+            if (other.jsonConverter!= null) {
+                return false;
+            }
+        } else {
+            if (!jsonConverter.equals(other.jsonConverter)) {
+                return false;
+            }
+        }
         if (lambdaConverter == null) {
             if (other.lambdaConverter!= null) {
                 return false;
@@ -1009,6 +1089,8 @@ public class ForcedType implements Serializable, XMLAppendable
         result = ((prime*result)+((auditUpdateUser == null)? 0 :auditUpdateUser.hashCode()));
         result = ((prime*result)+((converter == null)? 0 :converter.hashCode()));
         result = ((prime*result)+((enumConverter == null)? 0 :enumConverter.hashCode()));
+        result = ((prime*result)+((xmlConverter == null)? 0 :xmlConverter.hashCode()));
+        result = ((prime*result)+((jsonConverter == null)? 0 :jsonConverter.hashCode()));
         result = ((prime*result)+((lambdaConverter == null)? 0 :lambdaConverter.hashCode()));
         result = ((prime*result)+((binding == null)? 0 :binding.hashCode()));
         result = ((prime*result)+((excludeExpression == null)? 0 :excludeExpression.hashCode()));

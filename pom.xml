@@ -109,6 +109,11 @@
             </dependency>
             <dependency>
                 <groupId>org.jooq</groupId>
+                <artifactId>jooq-jackson-extensions</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -154,6 +159,18 @@
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-test</artifactId>
                 <version>3.4.7</version>
+            </dependency>
+
+            <!-- Data binding -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.13.3</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.module</groupId>
+                <artifactId>jackson-module-kotlin</artifactId>
+                <version>2.12.3</version>
             </dependency>
 
             <!-- At the point of release 3.16, it seems not all drivers have been upgraded to 0.9.0.RELEASE yet -->
@@ -830,6 +847,7 @@
         <module>jOOQ-checker</module>
 
 
+        <module>jOOQ-jackson-extensions</module>
         <module>jOOQ-postgres-extensions</module>
 
         <module>jOOQ-meta</module>

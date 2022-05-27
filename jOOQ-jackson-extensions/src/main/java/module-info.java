@@ -6,6 +6,8 @@ module org.jooq.jackson.extensions {
     // Other jOOQ modules
     requires transitive org.jooq;
     requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.datatype.jsr310;
+    requires com.fasterxml.jackson.kotlin;
 
     // Nullability annotations for better Kotlin interop
     requires static org.jetbrains.annotations;

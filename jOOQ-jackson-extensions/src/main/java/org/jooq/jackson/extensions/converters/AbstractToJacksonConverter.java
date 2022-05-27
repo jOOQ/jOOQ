@@ -45,6 +45,8 @@ import org.jooq.impl.AbstractConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.kotlin.KotlinModule;
 
 /**
  * A base class for {@link JSON} or {@link JSONB} to Jackson POJO conversion.
@@ -60,12 +62,12 @@ abstract class AbstractToJacksonConverter<J, U> extends AbstractConverter<J, U> 
 
         mapper = JsonMapper
             .builder()
-            .findAndAddModules()
+            .addModule(new JavaTimeModule())
+            .addModule(new KotlinModule())
             .build();
     }
 
     abstract String data(J json);
-
     abstract J json(String string);
 
     @Override

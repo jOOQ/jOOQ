@@ -38,9 +38,10 @@
 package org.jooq.scalaextensions
 
 import java.sql.ResultSet
-
 import org.jooq._
 import org.jooq.impl._
+
+import java.util.stream.Collector
 
 // Avoid ambiguity with the internal org.jooq.impl.Array type.
 import scala.Array
@@ -311,6 +312,187 @@ object Conversions {
   }
 
   // --------------------------------------------------------------------------
+  // Multiset convenience
+  // --------------------------------------------------------------------------
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField[R <: Record](val field: Field[Result[R]]) {
+    def collecting[E](collector: Collector[R, _, E]): Field[E] = field.convertFrom(_.collect(collector))
+    def intoGroups[K](keyMapper: R => K): Field[java.util.Map[K, java.util.List[R]]] = collecting(Records.intoGroups[K, R](keyMapper))
+    def intoGroups[K, V](keyMapper: R => K, valueMapper: R => V): Field[java.util.Map[K, java.util.List[V]]] = collecting(Records.intoGroups[K, V, R](keyMapper, valueMapper))
+    def intoList[E](mapper: R => E): Field[java.util.List[E]] = collecting(Records.intoList[E, R](mapper))
+    def intoMap[K](keyMapper: R => K): Field[java.util.Map[K, R]] = collecting(Records.intoMap[K, R](keyMapper))
+    def intoMap[K, V](keyMapper: R => K, valueMapper: R => V): Field[java.util.Map[K, V]] = collecting(Records.intoMap[K, V, R](keyMapper, valueMapper))
+    def intoResultGroups[K](keyMapper: R => K): Field[java.util.Map[K, Result[R]]] = collecting(Records.intoResultGroups[K, R](keyMapper))
+    def intoResultGroups[K, V <: Record](keyMapper: R => K, valueMapper: R => V): Field[java.util.Map[K, Result[V]]] = collecting(Records.intoResultGroups[K, V, R](keyMapper, valueMapper))
+    def intoSet[E](mapper: R => E): Field[java.util.Set[E]] = collecting(Records.intoSet[E, R](mapper))
+  }
+
+  // [jooq-tools] START [multiset]
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField1[T1](override val field: Field[Result[Record1[T1]]]) extends ScalaResultField[Record1[T1]](field) {
+    def mapping[E](f: (T1) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+    def intoList(): Field[java.util.List[T1]] = collecting(Records.intoList())
+    def intoSet(): Field[java.util.Set[T1]] = collecting(Records.intoSet())
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField2[T1, T2](override val field: Field[Result[Record2[T1, T2]]]) extends ScalaResultField[Record2[T1, T2]](field) {
+    def mapping[E](f: (T1, T2) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+    def intoGroups(): Field[java.util.Map[T1, java.util.List[T2]]] = collecting(Records.intoGroups())
+    def intoMap(): Field[java.util.Map[T1, T2]] = collecting(Records.intoMap())
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField3[T1, T2, T3](override val field: Field[Result[Record3[T1, T2, T3]]]) extends ScalaResultField[Record3[T1, T2, T3]](field) {
+    def mapping[E](f: (T1, T2, T3) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField4[T1, T2, T3, T4](override val field: Field[Result[Record4[T1, T2, T3, T4]]]) extends ScalaResultField[Record4[T1, T2, T3, T4]](field) {
+    def mapping[E](f: (T1, T2, T3, T4) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField5[T1, T2, T3, T4, T5](override val field: Field[Result[Record5[T1, T2, T3, T4, T5]]]) extends ScalaResultField[Record5[T1, T2, T3, T4, T5]](field) {
+    def mapping[E](f: (T1, T2, T3, T4, T5) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField6[T1, T2, T3, T4, T5, T6](override val field: Field[Result[Record6[T1, T2, T3, T4, T5, T6]]]) extends ScalaResultField[Record6[T1, T2, T3, T4, T5, T6]](field) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField7[T1, T2, T3, T4, T5, T6, T7](override val field: Field[Result[Record7[T1, T2, T3, T4, T5, T6, T7]]]) extends ScalaResultField[Record7[T1, T2, T3, T4, T5, T6, T7]](field) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField8[T1, T2, T3, T4, T5, T6, T7, T8](override val field: Field[Result[Record8[T1, T2, T3, T4, T5, T6, T7, T8]]]) extends ScalaResultField[Record8[T1, T2, T3, T4, T5, T6, T7, T8]](field) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField9[T1, T2, T3, T4, T5, T6, T7, T8, T9](override val field: Field[Result[Record9[T1, T2, T3, T4, T5, T6, T7, T8, T9]]]) extends ScalaResultField[Record9[T1, T2, T3, T4, T5, T6, T7, T8, T9]](field) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10](override val field: Field[Result[Record10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]]]) extends ScalaResultField[Record10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]](field) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](override val field: Field[Result[Record11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11]]]) extends ScalaResultField[Record11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11]](field) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](override val field: Field[Result[Record12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12]]]) extends ScalaResultField[Record12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12]](field) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](override val field: Field[Result[Record13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13]]]) extends ScalaResultField[Record13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13]](field) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14](override val field: Field[Result[Record14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14]]]) extends ScalaResultField[Record14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14]](field) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15](override val field: Field[Result[Record15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15]]]) extends ScalaResultField[Record15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15]](field) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16](override val field: Field[Result[Record16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16]]]) extends ScalaResultField[Record16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16]](field) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17](override val field: Field[Result[Record17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17]]]) extends ScalaResultField[Record17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17]](field) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18](override val field: Field[Result[Record18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18]]]) extends ScalaResultField[Record18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18]](field) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19](override val field: Field[Result[Record19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19]]]) extends ScalaResultField[Record19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19]](field) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20](override val field: Field[Result[Record20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20]]]) extends ScalaResultField[Record20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20]](field) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21](override val field: Field[Result[Record21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21]]]) extends ScalaResultField[Record21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21]](field) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  /**
+   * Enrich multiset expressions with convenience methods
+   */
+  implicit class ScalaResultField22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22](override val field: Field[Result[Record22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22]]]) extends ScalaResultField[Record22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22]](field) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
+  }
+
+  // [jooq-tools] END [multiset]
+
+  // --------------------------------------------------------------------------
   // Conversions from jOOQ Record[N] types to Scala Tuple[N] types
   // --------------------------------------------------------------------------
 
@@ -508,310 +690,222 @@ object Conversions {
   /**
    * Wrap a Scala <code>Tuple1 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList1[T1, E](f: (T1) => E): RecordMapper[Record1[T1], E] = new RecordMapper[Record1[T1], E] {
-    def map(record: Record1[T1]) = f(record.value1)
-  }
+  implicit def asMapperFromArgList1[T1, E](f: (T1) => E): RecordMapper[Record1[T1], E] = r => f(r.value1)
 
   /**
    * Wrap a Scala <code>Tuple2 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList2[T1, T2, E](f: (T1, T2) => E): RecordMapper[Record2[T1, T2], E] = new RecordMapper[Record2[T1, T2], E] {
-    def map(record: Record2[T1, T2]) = f(record.value1, record.value2)
-  }
+  implicit def asMapperFromArgList2[T1, T2, E](f: (T1, T2) => E): RecordMapper[Record2[T1, T2], E] = r => f(r.value1, r.value2)
 
   /**
    * Wrap a Scala <code>Tuple3 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList3[T1, T2, T3, E](f: (T1, T2, T3) => E): RecordMapper[Record3[T1, T2, T3], E] = new RecordMapper[Record3[T1, T2, T3], E] {
-    def map(record: Record3[T1, T2, T3]) = f(record.value1, record.value2, record.value3)
-  }
+  implicit def asMapperFromArgList3[T1, T2, T3, E](f: (T1, T2, T3) => E): RecordMapper[Record3[T1, T2, T3], E] = r => f(r.value1, r.value2, r.value3)
 
   /**
    * Wrap a Scala <code>Tuple4 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList4[T1, T2, T3, T4, E](f: (T1, T2, T3, T4) => E): RecordMapper[Record4[T1, T2, T3, T4], E] = new RecordMapper[Record4[T1, T2, T3, T4], E] {
-    def map(record: Record4[T1, T2, T3, T4]) = f(record.value1, record.value2, record.value3, record.value4)
-  }
+  implicit def asMapperFromArgList4[T1, T2, T3, T4, E](f: (T1, T2, T3, T4) => E): RecordMapper[Record4[T1, T2, T3, T4], E] = r => f(r.value1, r.value2, r.value3, r.value4)
 
   /**
    * Wrap a Scala <code>Tuple5 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList5[T1, T2, T3, T4, T5, E](f: (T1, T2, T3, T4, T5) => E): RecordMapper[Record5[T1, T2, T3, T4, T5], E] = new RecordMapper[Record5[T1, T2, T3, T4, T5], E] {
-    def map(record: Record5[T1, T2, T3, T4, T5]) = f(record.value1, record.value2, record.value3, record.value4, record.value5)
-  }
+  implicit def asMapperFromArgList5[T1, T2, T3, T4, T5, E](f: (T1, T2, T3, T4, T5) => E): RecordMapper[Record5[T1, T2, T3, T4, T5], E] = r => f(r.value1, r.value2, r.value3, r.value4, r.value5)
 
   /**
    * Wrap a Scala <code>Tuple6 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList6[T1, T2, T3, T4, T5, T6, E](f: (T1, T2, T3, T4, T5, T6) => E): RecordMapper[Record6[T1, T2, T3, T4, T5, T6], E] = new RecordMapper[Record6[T1, T2, T3, T4, T5, T6], E] {
-    def map(record: Record6[T1, T2, T3, T4, T5, T6]) = f(record.value1, record.value2, record.value3, record.value4, record.value5, record.value6)
-  }
+  implicit def asMapperFromArgList6[T1, T2, T3, T4, T5, T6, E](f: (T1, T2, T3, T4, T5, T6) => E): RecordMapper[Record6[T1, T2, T3, T4, T5, T6], E] = r => f(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6)
 
   /**
    * Wrap a Scala <code>Tuple7 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList7[T1, T2, T3, T4, T5, T6, T7, E](f: (T1, T2, T3, T4, T5, T6, T7) => E): RecordMapper[Record7[T1, T2, T3, T4, T5, T6, T7], E] = new RecordMapper[Record7[T1, T2, T3, T4, T5, T6, T7], E] {
-    def map(record: Record7[T1, T2, T3, T4, T5, T6, T7]) = f(record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7)
-  }
+  implicit def asMapperFromArgList7[T1, T2, T3, T4, T5, T6, T7, E](f: (T1, T2, T3, T4, T5, T6, T7) => E): RecordMapper[Record7[T1, T2, T3, T4, T5, T6, T7], E] = r => f(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7)
 
   /**
    * Wrap a Scala <code>Tuple8 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList8[T1, T2, T3, T4, T5, T6, T7, T8, E](f: (T1, T2, T3, T4, T5, T6, T7, T8) => E): RecordMapper[Record8[T1, T2, T3, T4, T5, T6, T7, T8], E] = new RecordMapper[Record8[T1, T2, T3, T4, T5, T6, T7, T8], E] {
-    def map(record: Record8[T1, T2, T3, T4, T5, T6, T7, T8]) = f(record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8)
-  }
+  implicit def asMapperFromArgList8[T1, T2, T3, T4, T5, T6, T7, T8, E](f: (T1, T2, T3, T4, T5, T6, T7, T8) => E): RecordMapper[Record8[T1, T2, T3, T4, T5, T6, T7, T8], E] = r => f(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8)
 
   /**
    * Wrap a Scala <code>Tuple9 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList9[T1, T2, T3, T4, T5, T6, T7, T8, T9, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9) => E): RecordMapper[Record9[T1, T2, T3, T4, T5, T6, T7, T8, T9], E] = new RecordMapper[Record9[T1, T2, T3, T4, T5, T6, T7, T8, T9], E] {
-    def map(record: Record9[T1, T2, T3, T4, T5, T6, T7, T8, T9]) = f(record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9)
-  }
+  implicit def asMapperFromArgList9[T1, T2, T3, T4, T5, T6, T7, T8, T9, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9) => E): RecordMapper[Record9[T1, T2, T3, T4, T5, T6, T7, T8, T9], E] = r => f(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9)
 
   /**
    * Wrap a Scala <code>Tuple10 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10) => E): RecordMapper[Record10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10], E] = new RecordMapper[Record10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10], E] {
-    def map(record: Record10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]) = f(record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10)
-  }
+  implicit def asMapperFromArgList10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10) => E): RecordMapper[Record10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10], E] = r => f(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10)
 
   /**
    * Wrap a Scala <code>Tuple11 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11) => E): RecordMapper[Record11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11], E] = new RecordMapper[Record11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11], E] {
-    def map(record: Record11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11]) = f(record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11)
-  }
+  implicit def asMapperFromArgList11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11) => E): RecordMapper[Record11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11], E] = r => f(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11)
 
   /**
    * Wrap a Scala <code>Tuple12 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12) => E): RecordMapper[Record12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12], E] = new RecordMapper[Record12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12], E] {
-    def map(record: Record12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12]) = f(record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12)
-  }
+  implicit def asMapperFromArgList12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12) => E): RecordMapper[Record12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12], E] = r => f(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12)
 
   /**
    * Wrap a Scala <code>Tuple13 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13) => E): RecordMapper[Record13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13], E] = new RecordMapper[Record13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13], E] {
-    def map(record: Record13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13]) = f(record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13)
-  }
+  implicit def asMapperFromArgList13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13) => E): RecordMapper[Record13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13], E] = r => f(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13)
 
   /**
    * Wrap a Scala <code>Tuple14 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14) => E): RecordMapper[Record14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14], E] = new RecordMapper[Record14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14], E] {
-    def map(record: Record14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14]) = f(record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13, record.value14)
-  }
+  implicit def asMapperFromArgList14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14) => E): RecordMapper[Record14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14], E] = r => f(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14)
 
   /**
    * Wrap a Scala <code>Tuple15 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15) => E): RecordMapper[Record15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15], E] = new RecordMapper[Record15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15], E] {
-    def map(record: Record15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15]) = f(record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13, record.value14, record.value15)
-  }
+  implicit def asMapperFromArgList15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15) => E): RecordMapper[Record15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15], E] = r => f(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15)
 
   /**
    * Wrap a Scala <code>Tuple16 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16) => E): RecordMapper[Record16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16], E] = new RecordMapper[Record16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16], E] {
-    def map(record: Record16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16]) = f(record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13, record.value14, record.value15, record.value16)
-  }
+  implicit def asMapperFromArgList16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16) => E): RecordMapper[Record16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16], E] = r => f(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16)
 
   /**
    * Wrap a Scala <code>Tuple17 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17) => E): RecordMapper[Record17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17], E] = new RecordMapper[Record17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17], E] {
-    def map(record: Record17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17]) = f(record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13, record.value14, record.value15, record.value16, record.value17)
-  }
+  implicit def asMapperFromArgList17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17) => E): RecordMapper[Record17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17], E] = r => f(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16, r.value17)
 
   /**
    * Wrap a Scala <code>Tuple18 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18) => E): RecordMapper[Record18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18], E] = new RecordMapper[Record18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18], E] {
-    def map(record: Record18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18]) = f(record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13, record.value14, record.value15, record.value16, record.value17, record.value18)
-  }
+  implicit def asMapperFromArgList18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18) => E): RecordMapper[Record18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18], E] = r => f(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16, r.value17, r.value18)
 
   /**
    * Wrap a Scala <code>Tuple19 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19) => E): RecordMapper[Record19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19], E] = new RecordMapper[Record19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19], E] {
-    def map(record: Record19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19]) = f(record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13, record.value14, record.value15, record.value16, record.value17, record.value18, record.value19)
-  }
+  implicit def asMapperFromArgList19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19) => E): RecordMapper[Record19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19], E] = r => f(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16, r.value17, r.value18, r.value19)
 
   /**
    * Wrap a Scala <code>Tuple20 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20) => E): RecordMapper[Record20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20], E] = new RecordMapper[Record20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20], E] {
-    def map(record: Record20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20]) = f(record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13, record.value14, record.value15, record.value16, record.value17, record.value18, record.value19, record.value20)
-  }
+  implicit def asMapperFromArgList20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20) => E): RecordMapper[Record20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20], E] = r => f(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16, r.value17, r.value18, r.value19, r.value20)
 
   /**
    * Wrap a Scala <code>Tuple21 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21) => E): RecordMapper[Record21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21], E] = new RecordMapper[Record21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21], E] {
-    def map(record: Record21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21]) = f(record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13, record.value14, record.value15, record.value16, record.value17, record.value18, record.value19, record.value20, record.value21)
-  }
+  implicit def asMapperFromArgList21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21) => E): RecordMapper[Record21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21], E] = r => f(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16, r.value17, r.value18, r.value19, r.value20, r.value21)
 
   /**
    * Wrap a Scala <code>Tuple22 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromArgList22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22) => E): RecordMapper[Record22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22], E] = new RecordMapper[Record22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22], E] {
-    def map(record: Record22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22]) = f(record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13, record.value14, record.value15, record.value16, record.value17, record.value18, record.value19, record.value20, record.value21, record.value22)
-  }
+  implicit def asMapperFromArgList22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22) => E): RecordMapper[Record22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22], E] = r => f(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16, r.value17, r.value18, r.value19, r.value20, r.value21, r.value22)
 
   /**
    * Wrap a Scala <code>Tuple1 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple1[T1, E](f: Tuple1[T1] => E): RecordMapper[Record1[T1], E] = new RecordMapper[Record1[T1], E] {
-    def map(record: Record1[T1]) = f(Tuple1(record.value1))
-  }
+  implicit def asMapperFromTuple1[T1, E](f: Tuple1[T1] => E): RecordMapper[Record1[T1], E] = r => f(Tuple1(r.value1))
 
   /**
    * Wrap a Scala <code>Tuple2 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple2[T1, T2, E](f: ((T1, T2)) => E): RecordMapper[Record2[T1, T2], E] = new RecordMapper[Record2[T1, T2], E] {
-    def map(record: Record2[T1, T2]) = f((record.value1, record.value2))
-  }
+  implicit def asMapperFromTuple2[T1, T2, E](f: ((T1, T2)) => E): RecordMapper[Record2[T1, T2], E] = r => f((r.value1, r.value2))
 
   /**
    * Wrap a Scala <code>Tuple3 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple3[T1, T2, T3, E](f: ((T1, T2, T3)) => E): RecordMapper[Record3[T1, T2, T3], E] = new RecordMapper[Record3[T1, T2, T3], E] {
-    def map(record: Record3[T1, T2, T3]) = f((record.value1, record.value2, record.value3))
-  }
+  implicit def asMapperFromTuple3[T1, T2, T3, E](f: ((T1, T2, T3)) => E): RecordMapper[Record3[T1, T2, T3], E] = r => f((r.value1, r.value2, r.value3))
 
   /**
    * Wrap a Scala <code>Tuple4 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple4[T1, T2, T3, T4, E](f: ((T1, T2, T3, T4)) => E): RecordMapper[Record4[T1, T2, T3, T4], E] = new RecordMapper[Record4[T1, T2, T3, T4], E] {
-    def map(record: Record4[T1, T2, T3, T4]) = f((record.value1, record.value2, record.value3, record.value4))
-  }
+  implicit def asMapperFromTuple4[T1, T2, T3, T4, E](f: ((T1, T2, T3, T4)) => E): RecordMapper[Record4[T1, T2, T3, T4], E] = r => f((r.value1, r.value2, r.value3, r.value4))
 
   /**
    * Wrap a Scala <code>Tuple5 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple5[T1, T2, T3, T4, T5, E](f: ((T1, T2, T3, T4, T5)) => E): RecordMapper[Record5[T1, T2, T3, T4, T5], E] = new RecordMapper[Record5[T1, T2, T3, T4, T5], E] {
-    def map(record: Record5[T1, T2, T3, T4, T5]) = f((record.value1, record.value2, record.value3, record.value4, record.value5))
-  }
+  implicit def asMapperFromTuple5[T1, T2, T3, T4, T5, E](f: ((T1, T2, T3, T4, T5)) => E): RecordMapper[Record5[T1, T2, T3, T4, T5], E] = r => f((r.value1, r.value2, r.value3, r.value4, r.value5))
 
   /**
    * Wrap a Scala <code>Tuple6 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple6[T1, T2, T3, T4, T5, T6, E](f: ((T1, T2, T3, T4, T5, T6)) => E): RecordMapper[Record6[T1, T2, T3, T4, T5, T6], E] = new RecordMapper[Record6[T1, T2, T3, T4, T5, T6], E] {
-    def map(record: Record6[T1, T2, T3, T4, T5, T6]) = f((record.value1, record.value2, record.value3, record.value4, record.value5, record.value6))
-  }
+  implicit def asMapperFromTuple6[T1, T2, T3, T4, T5, T6, E](f: ((T1, T2, T3, T4, T5, T6)) => E): RecordMapper[Record6[T1, T2, T3, T4, T5, T6], E] = r => f((r.value1, r.value2, r.value3, r.value4, r.value5, r.value6))
 
   /**
    * Wrap a Scala <code>Tuple7 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple7[T1, T2, T3, T4, T5, T6, T7, E](f: ((T1, T2, T3, T4, T5, T6, T7)) => E): RecordMapper[Record7[T1, T2, T3, T4, T5, T6, T7], E] = new RecordMapper[Record7[T1, T2, T3, T4, T5, T6, T7], E] {
-    def map(record: Record7[T1, T2, T3, T4, T5, T6, T7]) = f((record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7))
-  }
+  implicit def asMapperFromTuple7[T1, T2, T3, T4, T5, T6, T7, E](f: ((T1, T2, T3, T4, T5, T6, T7)) => E): RecordMapper[Record7[T1, T2, T3, T4, T5, T6, T7], E] = r => f((r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7))
 
   /**
    * Wrap a Scala <code>Tuple8 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple8[T1, T2, T3, T4, T5, T6, T7, T8, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8)) => E): RecordMapper[Record8[T1, T2, T3, T4, T5, T6, T7, T8], E] = new RecordMapper[Record8[T1, T2, T3, T4, T5, T6, T7, T8], E] {
-    def map(record: Record8[T1, T2, T3, T4, T5, T6, T7, T8]) = f((record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8))
-  }
+  implicit def asMapperFromTuple8[T1, T2, T3, T4, T5, T6, T7, T8, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8)) => E): RecordMapper[Record8[T1, T2, T3, T4, T5, T6, T7, T8], E] = r => f((r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8))
 
   /**
    * Wrap a Scala <code>Tuple9 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple9[T1, T2, T3, T4, T5, T6, T7, T8, T9, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9)) => E): RecordMapper[Record9[T1, T2, T3, T4, T5, T6, T7, T8, T9], E] = new RecordMapper[Record9[T1, T2, T3, T4, T5, T6, T7, T8, T9], E] {
-    def map(record: Record9[T1, T2, T3, T4, T5, T6, T7, T8, T9]) = f((record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9))
-  }
+  implicit def asMapperFromTuple9[T1, T2, T3, T4, T5, T6, T7, T8, T9, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9)) => E): RecordMapper[Record9[T1, T2, T3, T4, T5, T6, T7, T8, T9], E] = r => f((r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9))
 
   /**
    * Wrap a Scala <code>Tuple10 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10)) => E): RecordMapper[Record10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10], E] = new RecordMapper[Record10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10], E] {
-    def map(record: Record10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]) = f((record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10))
-  }
+  implicit def asMapperFromTuple10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10)) => E): RecordMapper[Record10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10], E] = r => f((r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10))
 
   /**
    * Wrap a Scala <code>Tuple11 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11)) => E): RecordMapper[Record11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11], E] = new RecordMapper[Record11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11], E] {
-    def map(record: Record11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11]) = f((record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11))
-  }
+  implicit def asMapperFromTuple11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11)) => E): RecordMapper[Record11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11], E] = r => f((r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11))
 
   /**
    * Wrap a Scala <code>Tuple12 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12)) => E): RecordMapper[Record12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12], E] = new RecordMapper[Record12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12], E] {
-    def map(record: Record12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12]) = f((record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12))
-  }
+  implicit def asMapperFromTuple12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12)) => E): RecordMapper[Record12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12], E] = r => f((r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12))
 
   /**
    * Wrap a Scala <code>Tuple13 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13)) => E): RecordMapper[Record13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13], E] = new RecordMapper[Record13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13], E] {
-    def map(record: Record13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13]) = f((record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13))
-  }
+  implicit def asMapperFromTuple13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13)) => E): RecordMapper[Record13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13], E] = r => f((r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13))
 
   /**
    * Wrap a Scala <code>Tuple14 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14)) => E): RecordMapper[Record14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14], E] = new RecordMapper[Record14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14], E] {
-    def map(record: Record14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14]) = f((record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13, record.value14))
-  }
+  implicit def asMapperFromTuple14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14)) => E): RecordMapper[Record14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14], E] = r => f((r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14))
 
   /**
    * Wrap a Scala <code>Tuple15 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15)) => E): RecordMapper[Record15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15], E] = new RecordMapper[Record15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15], E] {
-    def map(record: Record15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15]) = f((record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13, record.value14, record.value15))
-  }
+  implicit def asMapperFromTuple15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15)) => E): RecordMapper[Record15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15], E] = r => f((r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15))
 
   /**
    * Wrap a Scala <code>Tuple16 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16)) => E): RecordMapper[Record16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16], E] = new RecordMapper[Record16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16], E] {
-    def map(record: Record16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16]) = f((record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13, record.value14, record.value15, record.value16))
-  }
+  implicit def asMapperFromTuple16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16)) => E): RecordMapper[Record16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16], E] = r => f((r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16))
 
   /**
    * Wrap a Scala <code>Tuple17 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17)) => E): RecordMapper[Record17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17], E] = new RecordMapper[Record17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17], E] {
-    def map(record: Record17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17]) = f((record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13, record.value14, record.value15, record.value16, record.value17))
-  }
+  implicit def asMapperFromTuple17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17)) => E): RecordMapper[Record17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17], E] = r => f((r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16, r.value17))
 
   /**
    * Wrap a Scala <code>Tuple18 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18)) => E): RecordMapper[Record18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18], E] = new RecordMapper[Record18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18], E] {
-    def map(record: Record18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18]) = f((record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13, record.value14, record.value15, record.value16, record.value17, record.value18))
-  }
+  implicit def asMapperFromTuple18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18)) => E): RecordMapper[Record18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18], E] = r => f((r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16, r.value17, r.value18))
 
   /**
    * Wrap a Scala <code>Tuple19 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19)) => E): RecordMapper[Record19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19], E] = new RecordMapper[Record19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19], E] {
-    def map(record: Record19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19]) = f((record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13, record.value14, record.value15, record.value16, record.value17, record.value18, record.value19))
-  }
+  implicit def asMapperFromTuple19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19)) => E): RecordMapper[Record19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19], E] = r => f((r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16, r.value17, r.value18, r.value19))
 
   /**
    * Wrap a Scala <code>Tuple20 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20)) => E): RecordMapper[Record20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20], E] = new RecordMapper[Record20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20], E] {
-    def map(record: Record20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20]) = f((record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13, record.value14, record.value15, record.value16, record.value17, record.value18, record.value19, record.value20))
-  }
+  implicit def asMapperFromTuple20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20)) => E): RecordMapper[Record20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20], E] = r => f((r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16, r.value17, r.value18, r.value19, r.value20))
 
   /**
    * Wrap a Scala <code>Tuple21 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21)) => E): RecordMapper[Record21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21], E] = new RecordMapper[Record21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21], E] {
-    def map(record: Record21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21]) = f((record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13, record.value14, record.value15, record.value16, record.value17, record.value18, record.value19, record.value20, record.value21))
-  }
+  implicit def asMapperFromTuple21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21)) => E): RecordMapper[Record21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21], E] = r => f((r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16, r.value17, r.value18, r.value19, r.value20, r.value21))
 
   /**
    * Wrap a Scala <code>Tuple22 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
-  implicit def asMapperFromTuple22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22)) => E): RecordMapper[Record22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22], E] = new RecordMapper[Record22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22], E] {
-    def map(record: Record22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22]) = f((record.value1, record.value2, record.value3, record.value4, record.value5, record.value6, record.value7, record.value8, record.value9, record.value10, record.value11, record.value12, record.value13, record.value14, record.value15, record.value16, record.value17, record.value18, record.value19, record.value20, record.value21, record.value22))
-  }
+  implicit def asMapperFromTuple22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E](f: ((T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22)) => E): RecordMapper[Record22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22], E] = r => f((r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16, r.value17, r.value18, r.value19, r.value20, r.value21, r.value22))
 
 // [jooq-tools] END [mapper]
 

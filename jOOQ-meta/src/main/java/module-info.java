@@ -7,7 +7,7 @@ module org.jooq.meta {
     requires transitive org.jooq;
 
     // Nullability annotations for better Kotlin interop
-    requires static transitive org.jetbrains.annotations;
+    requires static org.jetbrains.annotations;
 
     // JAXB is used optionally for loading a variety of XML content, including
     // - Settings (org.jooq.conf)

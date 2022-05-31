@@ -7,7 +7,7 @@ module org.jooq.postgres.extensions {
     requires transitive org.jooq;
 
     // Nullability annotations for better Kotlin interop
-    requires static transitive org.jetbrains.annotations;
+    requires static org.jetbrains.annotations;
 
     // Vendor specific JDBC drivers
     requires static org.postgresql.jdbc;

@@ -63,7 +63,7 @@ abstract class AbstractToJacksonConverter<J, U> extends AbstractConverter<J, U> 
         mapper = JsonMapper
             .builder()
             .addModule(new JavaTimeModule())
-            .addModule(new KotlinModule())
+            .addModule(new KotlinModule.Builder().build())
             .build();
     }
 

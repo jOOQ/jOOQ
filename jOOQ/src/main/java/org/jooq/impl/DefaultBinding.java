@@ -3886,6 +3886,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 return converter.from((T) OffsetDateTimeParser.offsetDateTime(string));
             else if (type == Instant.class)
                 return converter.from((T) OffsetDateTimeParser.offsetDateTime(string).toInstant());
+            else if (type == JSON.class)
+                return converter.from((T) JSON.json(string));
+            else if (type == JSONB.class)
+                return converter.from((T) JSONB.jsonb(string));
             else if (type == UByte.class)
                 return converter.from((T) UByte.valueOf(string));
             else if (type == UShort.class)
@@ -3896,6 +3900,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 return converter.from((T) ULong.valueOf(string));
             else if (type == UUID.class)
                 return converter.from((T) UUID.fromString(string));
+            else if (type == XML.class)
+                return converter.from((T) XML.xml(string));
             else if (type.isArray())
                 return converter.from((T) pgNewArray(ctx, field, type, string));
 

@@ -337,8 +337,8 @@ object Conversions {
    */
   implicit class ScalaResultField1[T1](override val field: Field[Result[Record1[T1]]]) extends ScalaResultField[Record1[T1]](field) {
     def mapping[E](f: (T1) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
-    def intoList(): Field[java.util.List[T1]] = collecting(Records.intoList())
-    def intoSet(): Field[java.util.Set[T1]] = collecting(Records.intoSet())
+    def intoList(): Field[java.util.List[T1]] = collecting(Records.intoList[T1, Record1[T1]]())
+    def intoSet(): Field[java.util.Set[T1]] = collecting(Records.intoSet[T1, Record1[T1]]())
   }
 
   /**
@@ -346,8 +346,8 @@ object Conversions {
    */
   implicit class ScalaResultField2[T1, T2](override val field: Field[Result[Record2[T1, T2]]]) extends ScalaResultField[Record2[T1, T2]](field) {
     def mapping[E](f: (T1, T2) => E): Field[java.util.List[E]] = field.convertFrom(r => r.map(f))
-    def intoGroups(): Field[java.util.Map[T1, java.util.List[T2]]] = collecting(Records.intoGroups())
-    def intoMap(): Field[java.util.Map[T1, T2]] = collecting(Records.intoMap())
+    def intoGroups(): Field[java.util.Map[T1, java.util.List[T2]]] = collecting(Records.intoGroups[T1, T2, Record2[T1, T2]]())
+    def intoMap(): Field[java.util.Map[T1, T2]] = collecting(Records.intoMap[T1, T2, Record2[T1, T2]]())
   }
 
   /**

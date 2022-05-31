@@ -55,6 +55,7 @@
         <!-- [#12884] TODO: Remove explicit upgrade of protobuf-java again when https://github.com/google/error-prone/pull/2819 is released  -->
         <errorprone.version>2.11.0</errorprone.version>
         <testcontainers.version>1.16.3</testcontainers.version>
+        <jackson.version>2.13.3</jackson.version>
     </properties>
 
     <licenses>
@@ -165,17 +166,22 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>2.13.3</version>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.datatype</groupId>
                 <artifactId>jackson-datatype-jsr310</artifactId>
-                <version>2.13.3</version>
+                <version>${jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.module</groupId>
                 <artifactId>jackson-module-kotlin</artifactId>
-                <version>2.12.3</version>
+                <version>${jackson.version}</version>
             </dependency>
 
             <!-- At the point of release 3.16, it seems not all drivers have been upgraded to 0.9.0.RELEASE yet -->

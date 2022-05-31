@@ -33,7 +33,7 @@ module org.jooq {
     requires static java.logging;
 
     // Nullability annotations for better Kotlin interop
-    requires static org.jetbrains.annotations;
+    requires static transitive org.jetbrains.annotations;
 
     requires transitive org.reactivestreams;
     requires transitive r2dbc.spi;

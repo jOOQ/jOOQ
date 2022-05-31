@@ -96,9 +96,10 @@ public interface EnumType {
      * <p>
      * This is similar to {@link Enum#valueOf(Class, String)}, but uses
      * {@link EnumType#getLiteral()} (the database enum value) as a lookup key
-     * instead of {@link Enum#name()} (the generated Java value).
+     * instead of {@link Enum#name()} (the generated Java value), and returns
+     * <code>null</code> if the literal wasn't found.
      */
-    static <E extends Enum<E> & EnumType> E lookupLiteral(Class<E> enumType, String literal) {
+    static <E extends Enum<E> & EnumType> @Nullable E lookupLiteral(Class<E> enumType, String literal) {
         return EnumTypes.lookupLiteral(enumType, literal);
     }
 }

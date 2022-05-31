@@ -3705,6 +3705,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 return (T) OffsetDateTimeParser.offsetDateTime(string);
             else if (type == Instant.class)
                 return (T) OffsetDateTimeParser.offsetDateTime(string).toInstant();
+            else if (type == JSON.class)
+                return (T) JSON.json(string);
+            else if (type == JSONB.class)
+                return (T) JSONB.jsonb(string);
             else if (type == UByte.class)
                 return (T) UByte.valueOf(string);
             else if (type == UShort.class)
@@ -3715,6 +3719,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 return (T) ULong.valueOf(string);
             else if (type == UUID.class)
                 return (T) UUID.fromString(string);
+            else if (type == XML.class)
+                return (T) XML.xml(string);
             else if (type.isArray())
                 return (T) pgNewArray(ctx, field, type, string);
 

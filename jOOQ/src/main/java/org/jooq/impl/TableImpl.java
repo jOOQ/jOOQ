@@ -275,8 +275,24 @@ implements
     }
 
     /**
+     * Get the root child if this is an implicit join path expression, or
+     * <code>null</code> if not
+     */
+    @Nullable
+    final Table<?> rootChild() {
+        if (child instanceof TableImpl<?> t)
+            if (t.child != null)
+                return t.rootChild();
+            else
+                return child;
+        else
+            return null;
+    }
+
+    /**
      * Get the aliased table wrapped by this table.
      */
+    @Nullable
     Table<R> getAliasedTable() {
         if (alias != null)
             return alias.wrapped();

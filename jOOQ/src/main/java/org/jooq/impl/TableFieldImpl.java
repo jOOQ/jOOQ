@@ -128,6 +128,8 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        Table<?> root;
+
 
 
 
@@ -167,9 +169,15 @@ implements
         // [#7508] Implicit join path references inside of DML queries have to
         //         be emulated differently
         else if (ctx.topLevelForLanguageContext() instanceof DMLQuery
-            && !ctx.subquery()
             && table instanceof TableImpl
-            && ((TableImpl<?>) table).childPath != null) {
+            && (root = ((TableImpl<?>) table).rootChild()) != null
+
+            // [#7508] Apply the emulation only in the DML statement itself, or
+            //         when the root child is the DML target table. Implicit
+            //         joins declared in a subquery without correlation to the
+            //         DML statement can be generated normally.
+            && (!ctx.subquery() || root.equals(ctx.data(SimpleDataKey.DATA_DML_TARGET_TABLE)))
+        ) {
 
             // [#7508] MySQL supports UPDATE .. JOIN, so the default implicit
             //         JOIN emulation works out of the box.

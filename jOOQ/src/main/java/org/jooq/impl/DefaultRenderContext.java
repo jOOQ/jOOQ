@@ -104,7 +104,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private boolean                       separatorRequired;
     private boolean                       separator;
     private boolean                       newline;
-    private Boolean                       isQuery;
 
     // [#1632] Cached values from Settings
     RenderKeywordCase                     cachedRenderKeywordCase;
@@ -385,7 +384,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         String prepend = null;
         String append = null;
 
-        if (TRUE.equals(isQuery)) {
+        if (topLevel instanceof Query) {
             prepend = (String) data(DATA_PREPEND_SQL);
             append = (String) data(DATA_APPEND_SQL);
         }
@@ -712,15 +711,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     protected final void visit0(QueryPartInternal internal) {
-        if (isQuery == null) {
-            isQuery = internal instanceof Query;
-
-            if (TRUE.equals(settings().isTransformPatterns()) && configuration().requireCommercial(() -> "SQL transformations are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.")) {
-
-
-
-            }
-        }
 
 
 

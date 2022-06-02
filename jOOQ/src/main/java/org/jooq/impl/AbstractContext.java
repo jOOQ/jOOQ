@@ -104,8 +104,6 @@ import org.jooq.impl.Tools.DataKey;
 import org.jooq.impl.Tools.DataKeyScopeStackPart;
 import org.jooq.tools.StringUtils;
 
-import org.jetbrains.annotations.Nullable;
-
 
 /**
  * @author Lukas Eder
@@ -158,6 +156,8 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     boolean                                        quote                       = true;
     boolean                                        qualifySchema               = true;
     boolean                                        qualifyCatalog              = true;
+    QueryPart                                      topLevel;
+    QueryPart                                      topLevelForLanguageContext;
 
     // [#11711] Enforcing scientific notation
     private transient DecimalFormat                doubleFormat;
@@ -257,6 +257,15 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public final C visit(QueryPart part) {
         if (part != null) {
+            if (topLevel == null) {
+                topLevel = topLevelForLanguageContext = part;
+
+                if (TRUE.equals(settings().isTransformPatterns()) && configuration().requireCommercial(() -> "SQL transformations are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.")) {
+
+
+
+                }
+            }
 
             // Issue start clause events
             // -----------------------------------------------------------------
@@ -681,6 +690,28 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
+    public final QueryPart topLevel() {
+        return topLevel;
+    }
+
+    @Override
+    public final C topLevel(QueryPart t) {
+        topLevel = t;
+        return (C) this;
+    }
+
+    @Override
+    public final QueryPart topLevelForLanguageContext() {
+        return topLevelForLanguageContext;
+    }
+
+    @Override
+    public final C topLevelForLanguageContext(QueryPart t) {
+        topLevelForLanguageContext = t;
+        return (C) this;
+    }
+
+    @Override
     public final int subqueryLevel() {
         return subquery;
     }
@@ -1034,6 +1065,20 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public final C languageContext(LanguageContext context, Consumer<? super C> consumer) {
         return toggle(context, this::languageContext, this::languageContext, consumer);
+    }
+
+    @Override
+    public final C languageContext(LanguageContext context, QueryPart newTopLevelForLanguageContext, Consumer<? super C> consumer) {
+        return toggle(context,
+            this::languageContext,
+            this::languageContext,
+            c -> toggle(
+                newTopLevelForLanguageContext,
+                this::topLevelForLanguageContext,
+                this::topLevelForLanguageContext,
+                consumer
+            )
+        );
     }
 
     @Override

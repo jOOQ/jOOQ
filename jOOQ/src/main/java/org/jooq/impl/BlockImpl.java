@@ -410,71 +410,70 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
             }
         }
         else {
-            DefaultRenderContext r = ctx instanceof DefaultRenderContext d
-                ? d
-                : null;
 
             statementLoop:
             for (Statement s : statements) {
                 if (s instanceof NullStatement && !SUPPORTS_NULL_STATEMENT.contains(ctx.dialect()))
                     continue statementLoop;
 
-                LanguageContext language = ctx.languageContext();
-                ctx.languageContextIf(LanguageContext.QUERY, s instanceof Query && !(s instanceof Block));
-
-                ctx.formatSeparator();
-                int position = r != null ? r.sql.length() : 0;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    ctx.visit(s);
-
-
-
-
-
-
-                // [#11374] [#11367] TODO Improve this clunky semi colon decision logic
-                if (position < (r != null ? r.sql.length() : 0))
-                    semicolonAfterStatement(ctx, s);
-
-                ctx.languageContext(language);
+                if (s instanceof Query && !(s instanceof Block))
+                    ctx.languageContext(LanguageContext.QUERY, s, c -> accept2(c, s));
+                else
+                    accept2(ctx, s);
             }
         }
+    }
+
+    private static final void accept2(Context<?> ctx, Statement s) {
+        ctx.formatSeparator();
+        int position = ctx instanceof DefaultRenderContext d ? d.sql.length() : 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            ctx.visit(s);
+
+
+
+
+
+
+        // [#11374] [#11367] TODO Improve this clunky semi colon decision logic
+        if (position < (ctx instanceof DefaultRenderContext d ? d.sql.length() : 0))
+            semicolonAfterStatement(ctx, s);
     }
 
     private static final void semicolonAfterStatement(Context<?> ctx, Statement s) {

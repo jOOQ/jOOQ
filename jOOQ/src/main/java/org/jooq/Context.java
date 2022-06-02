@@ -273,6 +273,32 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
     C declareCTE(boolean declareCTE, Consumer<? super C> consumer);
 
     /**
+     * The top level {@link QueryPart} that is being rendered.
+     */
+    @Nullable
+    QueryPart topLevel();
+
+    /**
+     * Set the top level {@link QueryPart} that is being rendered.
+     */
+    @NotNull
+    C topLevel(QueryPart topLevel);
+
+    /**
+     * The top level {@link QueryPart} that is being rendered in the current
+     * {@link #languageContext()}.
+     */
+    @Nullable
+    QueryPart topLevelForLanguageContext();
+
+    /**
+     * Set the top level {@link QueryPart} that is being rendered in the current
+     * {@link #languageContext()}.
+     */
+    @NotNull
+    C topLevelForLanguageContext(QueryPart topLevelForLanguageContext);
+
+    /**
      * Whether the current context is rendering a subquery (nested query).
      */
     boolean subquery();
@@ -894,6 +920,13 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
      */
     @NotNull
     C languageContext(LanguageContext languageContext, Consumer<? super C> consumer);
+
+    /**
+     * Set the new language context for {@link #languageContext()} for the scope
+     * of a {@link Consumer}.
+     */
+    @NotNull
+    C languageContext(LanguageContext languageContext, QueryPart topLevelForLanguageContext, Consumer<? super C> consumer);
 
     /**
      * Set the new language context for {@link #languageContext()}, if a

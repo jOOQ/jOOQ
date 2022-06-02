@@ -68,6 +68,9 @@
                                 <annotationProcessor>org.jooq.checker.SQLDialectChecker</annotationProcessor>
                                 <!-- <annotationProcessor>org.jooq.checker.PlainSQLChecker</annotationProcessor> -->
                             </annotationProcessors>
+                            <compilerArgs>
+                                <arg>-J-Dorg.jooq.checker.dialects.allow=HSQLDB</arg>
+                            </compilerArgs>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -99,6 +102,7 @@
                             <compilerArgs>
                                 <arg>-XDcompilePolicy=simple</arg>
                                 <arg>-Xplugin:ErrorProne</arg>
+                                <arg>-XDorg.jooq.checker.dialects.allow=HSQLDB</arg>
                             </compilerArgs>
                         </configuration>
                         <dependencies>

@@ -47,6 +47,7 @@ import java.io.PrintWriter;
 import java.util.EnumSet;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
@@ -91,6 +92,9 @@ final class Tools {
 
                 EnumSet<SQLDialect> allowed = EnumSet.noneOf(SQLDialect.class);
                 EnumSet<SQLDialect> required = EnumSet.noneOf(SQLDialect.class);
+
+                defaults("org.jooq.checker.dialects.allow", allowed);
+                defaults("org.jooq.checker.dialects.require", required);
 
                 boolean evaluateRequire = true;
                 while (enclosing != null) {
@@ -155,6 +159,14 @@ final class Tools {
         }
 
         return null;
+    }
+
+    private static void defaults(String property, EnumSet<SQLDialect> set) {
+        Stream.of(System.getProperty(property, "").split(","))
+              .map(String::trim)
+              .filter(s -> !s.isEmpty())
+              .map(s -> SQLDialect.valueOf(s.toUpperCase()))
+              .forEach(set::add);
     }
 
     static final <T> T checkPlainSQL(

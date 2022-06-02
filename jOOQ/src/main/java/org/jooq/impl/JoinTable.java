@@ -96,6 +96,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.Keywords.K_CROSS_JOIN_LATERAL;
@@ -744,9 +745,13 @@ implements
         throw onKeyException(OnKeyExceptionReason.NOT_FOUND, null, null);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     private final JoinTable onKey(ForeignKey<?, ?> key, Table<?> fk, Table<?> pk) {
-        JoinTable result = this;
+        return and(onKey0(key, fk, pk));
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    static final Condition onKey0(ForeignKey<?, ?> key, Table<?> fk, Table<?> pk) {
+        Condition result = noCondition();
 
         TableField<?, ?>[] references = key.getFieldsArray();
         TableField<?, ?>[] referenced = key.getKeyFieldsArray();
@@ -756,7 +761,7 @@ implements
             Field f2 = pk.field(referenced[i]);
 
             // [#2870] TODO: If lhs or rhs are aliased tables, extract the appropriate fields from them
-            result.and(f1.equal(f2));
+            result = result.and(f1.equal(f2));
         }
 
         return result;

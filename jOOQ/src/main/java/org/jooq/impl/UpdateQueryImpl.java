@@ -191,6 +191,7 @@ implements
 
     // LIMIT is supported but not ORDER BY
     private static final Set<SQLDialect> NO_SUPPORT_ORDER_BY_LIMIT = SQLDialect.supportedBy(IGNITE);
+    static final Set<SQLDialect>         NO_SUPPORT_UPDATE_JOIN    = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, POSTGRES, SQLITE, YUGABYTEDB);
 
     private final FieldMapForUpdate      updateMap;
     private final TableList              from;

@@ -42,8 +42,11 @@ import static java.util.stream.Collectors.joining;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_REFERENCE;
 // ...
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DefaultMetaProvider.meta;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_DML_TARGET_TABLE;
+import static org.jooq.impl.UpdateQueryImpl.NO_SUPPORT_UPDATE_JOIN;
 
 import java.util.stream.Stream;
 
@@ -51,6 +54,7 @@ import org.jooq.Binding;
 import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Context;
+import org.jooq.DMLQuery;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.GeneratorStatementType;
@@ -59,7 +63,9 @@ import org.jooq.Record;
 import org.jooq.RowId;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.Update;
 import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.Tools.SimpleDataKey;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -67,7 +73,15 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements TableField<R, T>, SimpleQueryPart, UNotYetImplemented, TypedReference<T> {
+class TableFieldImpl<R extends Record, T>
+extends
+     AbstractField<T>
+implements
+    TableField<R, T>,
+    SimpleQueryPart,
+    UNotYetImplemented,
+    TypedReference<T>
+{
 
     private static final Clause[] CLAUSES = { FIELD, FIELD_REFERENCE };
 
@@ -150,7 +164,30 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
 
 
 
+        // [#7508] Implicit join path references inside of DML queries have to
+        //         be emulated differently
+        else if (ctx.topLevelForLanguageContext() instanceof DMLQuery
+            && !ctx.subquery()
+            && table instanceof TableImpl
+            && ((TableImpl<?>) table).childPath != null) {
 
+            // [#7508] MySQL supports UPDATE .. JOIN, so the default implicit
+            //         JOIN emulation works out of the box.
+            if (ctx.topLevelForLanguageContext() instanceof Update && !NO_SUPPORT_UPDATE_JOIN.contains(ctx.dialect())) {
+                accept1(ctx);
+            }
+            else {
+                TableImpl<?> t = (TableImpl<?>) table;
+                Table<?> parent = t.alias.wrapped;
+                Field<T> parentField = parent.field(this);
+                ctx.visit(DSL.field(select(parentField).from(parent).where(JoinTable.onKey0(t.childPath, t.child, parent))));
+            }
+        }
+        else
+            accept1(ctx);
+    }
+
+    private final void accept1(Context<?> ctx) {
         ctx.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true, c -> {
             if (c.qualify() && getTable() != null)
                 c.visit(getTable()).sql('.');

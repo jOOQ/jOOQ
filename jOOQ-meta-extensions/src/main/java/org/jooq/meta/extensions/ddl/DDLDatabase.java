@@ -95,6 +95,7 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
     protected void export() throws Exception {
         Settings defaultSettings = new Settings();
         String scripts = getProperties().getProperty("scripts");
+        String sql = getProperties().getProperty("sql");
         String encoding = getProperties().getProperty("encoding", "UTF-8");
         String sort = getProperties().getProperty("sort", "semantic").toLowerCase();
         final String defaultNameCase = getProperties().getProperty("defaultNameCase", "as_is").toUpperCase();
@@ -104,8 +105,9 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
         logExecutedQueries = !"false".equalsIgnoreCase(getProperties().getProperty("logExecutedQueries"));
         logExecutionResults = !"false".equalsIgnoreCase(getProperties().getProperty("logExecutionResults"));
 
-        if (isBlank(scripts)) {
+        if (isBlank(scripts) && isBlank(sql)) {
             scripts = "";
+            sql = "";
             log.warn("No scripts defined", "It is recommended that you provide an explicit script directory to scan");
         }
 
@@ -152,12 +154,16 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
                 });
             }
 
-            new FilePattern()
-                    .encoding(encoding)
-                    .basedir(new File(getBasedir()))
-                    .pattern(scripts)
-                    .sort(Sort.of(sort))
-                    .load(source -> DDLDatabase.this.load(ctx, source));
+            if (!isBlank(sql))
+                load(ctx, Source.of(sql));
+
+            if (!isBlank(scripts))
+                new FilePattern()
+                        .encoding(encoding)
+                        .basedir(new File(getBasedir()))
+                        .pattern(scripts)
+                        .sort(Sort.of(sort))
+                        .load(source -> DDLDatabase.this.load(ctx, source));
         }
         catch (ParserException e) {
             log.error("An exception occurred while parsing script source : " + scripts + ". Please report this error to https://github.com/jOOQ/jOOQ/issues/new", e);

@@ -42,9 +42,76 @@ fun <E, R : Record> Field<Result<R>>.intoSet(mapper: (R) -> E): Field<Set<E>> = 
 
 // ----------------------------------------------------------------------------
 // Extensions to map Field<Result<Record[N]>> to more convenient Field<List<E>>
+// As well as Field<Record[N]> to Field<E>
 // ----------------------------------------------------------------------------
 
 // [jooq-tools] START [mapping]
+
+@JvmName("mappingRecord")
+fun <T1, E> Field<Record1<T1>>.mapping(f: Function1<T1, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, E> Field<Record2<T1, T2>>.mapping(f: Function2<T1, T2, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, E> Field<Record3<T1, T2, T3>>.mapping(f: Function3<T1, T2, T3, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, E> Field<Record4<T1, T2, T3, T4>>.mapping(f: Function4<T1, T2, T3, T4, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, T5, E> Field<Record5<T1, T2, T3, T4, T5>>.mapping(f: Function5<T1, T2, T3, T4, T5, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, T5, T6, E> Field<Record6<T1, T2, T3, T4, T5, T6>>.mapping(f: Function6<T1, T2, T3, T4, T5, T6, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, T5, T6, T7, E> Field<Record7<T1, T2, T3, T4, T5, T6, T7>>.mapping(f: Function7<T1, T2, T3, T4, T5, T6, T7, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, E> Field<Record8<T1, T2, T3, T4, T5, T6, T7, T8>>.mapping(f: Function8<T1, T2, T3, T4, T5, T6, T7, T8, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, E> Field<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>.mapping(f: Function9<T1, T2, T3, T4, T5, T6, T7, T8, T9, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, E> Field<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>.mapping(f: Function10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, E> Field<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>.mapping(f: Function11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, E> Field<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>.mapping(f: Function12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, E> Field<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>.mapping(f: Function13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, E> Field<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>.mapping(f: Function14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, E> Field<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>.mapping(f: Function15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, E> Field<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>.mapping(f: Function16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, E> Field<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>.mapping(f: Function17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, E> Field<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>.mapping(f: Function18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, E> Field<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>.mapping(f: Function19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, E> Field<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>.mapping(f: Function20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, E> Field<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>.mapping(f: Function21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
+
+@JvmName("mappingRecord")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E> Field<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>.mapping(f: Function22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
 
 fun <T1, E> Field<Result<Record1<T1>>>.mapping(f: Function1<T1, E>): Field<List<E>> = convertFrom { it.map(Records.mapping(f)) }
 

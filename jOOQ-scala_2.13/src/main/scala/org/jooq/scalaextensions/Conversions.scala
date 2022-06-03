@@ -312,6 +312,168 @@ object Conversions {
   }
 
   // --------------------------------------------------------------------------
+  // Row convenience
+  // --------------------------------------------------------------------------
+
+  // [jooq-tools] START [record]
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField1[T1](val field: Field[Record1[T1]]) {
+    def mapping[E](f: (T1) => E): Field[E] = field.convertFrom(Records.mapping((t1) => f(t1))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField2[T1, T2](val field: Field[Record2[T1, T2]]) {
+    def mapping[E](f: (T1, T2) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2) => f(t1, t2))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField3[T1, T2, T3](val field: Field[Record3[T1, T2, T3]]) {
+    def mapping[E](f: (T1, T2, T3) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3) => f(t1, t2, t3))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField4[T1, T2, T3, T4](val field: Field[Record4[T1, T2, T3, T4]]) {
+    def mapping[E](f: (T1, T2, T3, T4) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4) => f(t1, t2, t3, t4))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField5[T1, T2, T3, T4, T5](val field: Field[Record5[T1, T2, T3, T4, T5]]) {
+    def mapping[E](f: (T1, T2, T3, T4, T5) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4, t5) => f(t1, t2, t3, t4, t5))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField6[T1, T2, T3, T4, T5, T6](val field: Field[Record6[T1, T2, T3, T4, T5, T6]]) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4, t5, t6) => f(t1, t2, t3, t4, t5, t6))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField7[T1, T2, T3, T4, T5, T6, T7](val field: Field[Record7[T1, T2, T3, T4, T5, T6, T7]]) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4, t5, t6, t7) => f(t1, t2, t3, t4, t5, t6, t7))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField8[T1, T2, T3, T4, T5, T6, T7, T8](val field: Field[Record8[T1, T2, T3, T4, T5, T6, T7, T8]]) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4, t5, t6, t7, t8) => f(t1, t2, t3, t4, t5, t6, t7, t8))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField9[T1, T2, T3, T4, T5, T6, T7, T8, T9](val field: Field[Record9[T1, T2, T3, T4, T5, T6, T7, T8, T9]]) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4, t5, t6, t7, t8, t9) => f(t1, t2, t3, t4, t5, t6, t7, t8, t9))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10](val field: Field[Record10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]]) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4, t5, t6, t7, t8, t9, t10) => f(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](val field: Field[Record11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11]]) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11) => f(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](val field: Field[Record12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12]]) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12) => f(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](val field: Field[Record13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13]]) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13) => f(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14](val field: Field[Record14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14]]) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14) => f(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15](val field: Field[Record15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15]]) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15) => f(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16](val field: Field[Record16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16]]) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16) => f(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17](val field: Field[Record17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17]]) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17) => f(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18](val field: Field[Record18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18]]) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18) => f(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19](val field: Field[Record19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19]]) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19) => f(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20](val field: Field[Record20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20]]) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20) => f(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21](val field: Field[Record21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21]]) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21) => f(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21))(_))
+  }
+
+  /**
+   * Enrich record expressions with convenience methods
+   */
+  implicit class ScalaRecordField22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22](val field: Field[Record22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22]]) {
+    def mapping[E](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22) => E): Field[E] = field.convertFrom(Records.mapping((t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22) => f(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22))(_))
+  }
+
+  // [jooq-tools] END [record]
+
+  // --------------------------------------------------------------------------
   // Multiset convenience
   // --------------------------------------------------------------------------
 

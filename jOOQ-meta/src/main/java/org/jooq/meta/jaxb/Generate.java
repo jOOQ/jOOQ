@@ -42,16 +42,16 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean implicitJoinPathsUseTableNameForUnambiguousFKs = true;
     @XmlElement(defaultValue = "true")
     protected Boolean implicitJoinPathsAsKotlinProperties = true;
-    @XmlElement(defaultValue = "true")
-    protected Boolean existsConvenienceOneToMany = true;
-    @XmlElement(defaultValue = "true")
-    protected Boolean existsConvenienceManyToMany = true;
-    @XmlElement(defaultValue = "true")
-    protected Boolean rowConvenienceToOne = true;
-    @XmlElement(defaultValue = "true")
-    protected Boolean multisetConvenienceOneToMany = true;
-    @XmlElement(defaultValue = "true")
-    protected Boolean multisetConvenienceManyToMany = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean existsConvenienceOneToMany = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean existsConvenienceManyToMany = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean rowConvenienceToOne = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean multisetConvenienceOneToMany = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean multisetConvenienceManyToMany = false;
     @XmlElement(defaultValue = "true")
     protected Boolean deprecated = true;
     @XmlElement(defaultValue = "true")
@@ -399,6 +399,8 @@ public class Generate implements Serializable, XMLAppendable
     /**
      * Generate <code>EXISTS</code> convenience syntax for one-to-many relationships.
      * <p>
+     * This is EXPERIMENTAL functionality. Please expect the API and implementations to change, in the future.
+     * <p>
      * This feature is available in the commercial distribution only.
      * 
      * @return
@@ -424,6 +426,8 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate <code>EXISTS</code> convenience syntax for many-to-many relationships. A many-to-many relationship is achieved when a child table has 2 non-nullable foreign keys that are part of a unique key.
+     * <p>
+     * This is EXPERIMENTAL functionality. Please expect the API and implementations to change, in the future.
      * <p>
      * This feature is available in the commercial distribution only.
      * 
@@ -451,6 +455,8 @@ public class Generate implements Serializable, XMLAppendable
     /**
      * Generate <code>ROW</code> convenience syntax for to-one relationships.
      * <p>
+     * This is EXPERIMENTAL functionality. Please expect the API and implementations to change, in the future.
+     * <p>
      * This feature is available in the commercial distribution only.
      * 
      * @return
@@ -477,6 +483,8 @@ public class Generate implements Serializable, XMLAppendable
     /**
      * Generate <code>MULTISET</code> convenience syntax for one-to-many relationships.
      * <p>
+     * This is EXPERIMENTAL functionality. Please expect the API and implementations to change, in the future.
+     * <p>
      * This feature is available in the commercial distribution only.
      * 
      * @return
@@ -502,6 +510,8 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate <code>MULTISET</code> convenience syntax for many-to-many relationships. A many-to-many relationship is achieved when a child table has 2 non-nullable foreign keys that are part of a unique key.
+     * <p>
+     * This is EXPERIMENTAL functionality. Please expect the API and implementations to change, in the future.
      * <p>
      * This feature is available in the commercial distribution only.
      * 

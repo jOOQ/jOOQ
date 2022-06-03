@@ -71,11 +71,11 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateRelations                                = true;
     boolean                            generateImplicitJoinPathsToOne                   = true;
     boolean                            generateImplicitJoinPathsAsKotlinProperties      = true;
-    boolean                            generateExistsConvenienceOneToMany               = true;
-    boolean                            generateExistsConvenienceManyToMany              = true;
-    boolean                            generateRowConvenienceToOne                      = true;
-    boolean                            generateMultisetConvenienceOneToMany             = true;
-    boolean                            generateMultisetConvenienceManyToMany            = true;
+    boolean                            generateExistsConvenienceOneToMany               = false;
+    boolean                            generateExistsConvenienceManyToMany              = false;
+    boolean                            generateRowConvenienceToOne                      = false;
+    boolean                            generateMultisetConvenienceOneToMany             = false;
+    boolean                            generateMultisetConvenienceManyToMany            = false;
     boolean                            generateInstanceFields                           = true;
     VisibilityModifier                 generateVisibilityModifier                       = VisibilityModifier.DEFAULT;
     boolean                            generateGeneratedAnnotation                      = false;

@@ -25655,9 +25655,6 @@ public class DSL {
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
      * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <p>
      * An important limitation is that correlating <code>MULTISET</code>
      * subqueries currently only works on dialects that support correlating
      * derived tables. This excludes:
@@ -25805,10 +25802,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -25851,10 +25844,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -25899,10 +25888,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -25945,10 +25930,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -25991,10 +25972,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26037,10 +26014,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26083,10 +26056,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26129,10 +26098,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26175,10 +26140,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26221,10 +26182,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26267,10 +26224,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26313,10 +26266,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26359,10 +26308,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26405,10 +26350,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26451,10 +26392,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26497,10 +26434,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26543,10 +26476,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26589,10 +26518,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26635,10 +26560,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26681,10 +26602,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26727,10 +26644,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26773,10 +26686,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26819,10 +26728,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -26865,10 +26770,6 @@ public class DSL {
      * <p>
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
-     * <p>
-     * <p>
-     * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })

@@ -166,9 +166,10 @@ implements
 
 
 
+
         // [#7508] Implicit join path references inside of DML queries have to
         //         be emulated differently
-        else if (ctx.topLevelForLanguageContext() instanceof DMLQuery
+        if (ctx.topLevelForLanguageContext() instanceof DMLQuery
             && table instanceof TableImpl
             && (root = ((TableImpl<?>) table).rootChild()) != null
 

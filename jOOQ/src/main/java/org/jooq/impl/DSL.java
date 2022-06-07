@@ -25656,7 +25656,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      * <p>
      * A set of known limitations can be found here: <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * "https://github.com/jOOQ/jOOQ/issues/13589">https://github.com/jOOQ/jOOQ/issues/13589</a>.
      * <p>
      * An important limitation is that correlating <code>MULTISET</code>
      * subqueries currently only works on dialects that support correlating

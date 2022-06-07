@@ -71,11 +71,6 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateRelations                                = true;
     boolean                            generateImplicitJoinPathsToOne                   = true;
     boolean                            generateImplicitJoinPathsAsKotlinProperties      = true;
-    boolean                            generateExistsConvenienceOneToMany               = false;
-    boolean                            generateExistsConvenienceManyToMany              = false;
-    boolean                            generateRowConvenienceToOne                      = false;
-    boolean                            generateMultisetConvenienceOneToMany             = false;
-    boolean                            generateMultisetConvenienceManyToMany            = false;
     boolean                            generateInstanceFields                           = true;
     VisibilityModifier                 generateVisibilityModifier                       = VisibilityModifier.DEFAULT;
     boolean                            generateGeneratedAnnotation                      = false;
@@ -309,56 +304,6 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateImplicitJoinPathsAsKotlinProperties(boolean generateImplicitJoinPathsAsKotlinProperties) {
         this.generateImplicitJoinPathsAsKotlinProperties = generateImplicitJoinPathsAsKotlinProperties;
-    }
-
-    @Override
-    public boolean generateExistsConvenienceOneToMany() {
-        return generateExistsConvenienceOneToMany && generateRelations();
-    }
-
-    @Override
-    public void setGenerateExistsConvenienceOneToMany(boolean generateExistsConvenienceOneToMany) {
-        this.generateExistsConvenienceOneToMany = generateExistsConvenienceOneToMany;
-    }
-
-    @Override
-    public boolean generateExistsConvenienceManyToMany() {
-        return generateExistsConvenienceManyToMany && generateRelations();
-    }
-
-    @Override
-    public void setGenerateExistsConvenienceManyToMany(boolean generateExistsConvenienceManyToMany) {
-        this.generateExistsConvenienceManyToMany = generateExistsConvenienceManyToMany;
-    }
-
-    @Override
-    public boolean generateRowConvenienceToOne() {
-        return generateRowConvenienceToOne && generateRelations();
-    }
-
-    @Override
-    public void setGenerateRowConvenienceToOne(boolean generateRowConvenienceToOne) {
-        this.generateRowConvenienceToOne = generateRowConvenienceToOne;
-    }
-
-    @Override
-    public boolean generateMultisetConvenienceOneToMany() {
-        return generateMultisetConvenienceOneToMany && generateRelations();
-    }
-
-    @Override
-    public void setGenerateMultisetConvenienceOneToMany(boolean generateMultisetConvenienceOneToMany) {
-        this.generateMultisetConvenienceOneToMany = generateMultisetConvenienceOneToMany;
-    }
-
-    @Override
-    public boolean generateMultisetConvenienceManyToMany() {
-        return generateMultisetConvenienceManyToMany && generateRelations();
-    }
-
-    @Override
-    public void setGenerateMultisetConvenienceManyToMany(boolean generateMultisetConvenienceManyToMany) {
-        this.generateMultisetConvenienceManyToMany = generateMultisetConvenienceManyToMany;
     }
 
     @Override

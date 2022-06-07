@@ -144,66 +144,6 @@ public interface Generator {
     void setGenerateImplicitJoinPathsAsKotlinProperties(boolean generateImplicitJoinPathsAsKotlinProperties);
 
     /**
-     * Whether <code>EXISTS</code> convenience syntax for one-to-many
-     * relationships should be generated.
-     */
-    boolean generateExistsConvenienceOneToMany();
-
-    /**
-     * Whether <code>EXISTS</code> convenience syntax for one-to-many
-     * relationships should be generated.
-     */
-    void setGenerateExistsConvenienceOneToMany(boolean generateExistsConvenienceOneToMany);
-
-    /**
-     * Whether <code>EXISTS</code> convenience syntax for many-to-many
-     * relationships should be generated.
-     */
-    boolean generateExistsConvenienceManyToMany();
-
-    /**
-     * Whether <code>EXISTS</code> convenience syntax for many-to-many
-     * relationships should be generated.
-     */
-    void setGenerateExistsConvenienceManyToMany(boolean generateExistsConvenienceManyToMany);
-
-    /**
-     * Whether <code>ROW</code> convenience syntax for to-one relationships
-     * should be generated.
-     */
-    boolean generateRowConvenienceToOne();
-
-    /**
-     * Whether <code>ROW</code> convenience syntax for to-one relationships
-     * should be generated.
-     */
-    void setGenerateRowConvenienceToOne(boolean generateRowConvenienceToOne);
-
-    /**
-     * Whether <code>MULTISET</code> convenience syntax for one-to-many
-     * relationships should be generated.
-     */
-    boolean generateMultisetConvenienceOneToMany();
-
-    /**
-     * Whether <code>MULTISET</code> convenience syntax for one-to-many
-     * relationships should be generated.
-     */
-    void setGenerateMultisetConvenienceOneToMany(boolean generateMultisetConvenienceOneToMany);
-
-    /**
-     * Whether <code>MULTISET</code> convenience syntax for many-to-many
-     * relationships should be generated.
-     */
-    boolean generateMultisetConvenienceManyToMany();
-
-    /**
-     * Whether <code>MULTISET</code> convenience syntax for many-to-many
-     * relationships should be generated.
-     */
-    void setGenerateMultisetConvenienceManyToMany(boolean generateMultisetConvenienceManyToMany);
-
-    /**
      * Whether table-valued functions should be generated as tables.
      */
     boolean generateTableValuedFunctions();

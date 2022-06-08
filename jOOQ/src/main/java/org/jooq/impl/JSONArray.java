@@ -193,13 +193,21 @@ implements
 
             default: {
                 JSONNull jsonNull;
-                JSONReturning jsonReturning = new JSONReturning(returning);
+                JSONReturning jsonReturning;
 
                 // Workaround for https://github.com/h2database/h2database/issues/2496
                 if (ctx.family() == H2 && fields.isEmpty())
                     jsonNull = new JSONNull(JSONOnNull.NULL_ON_NULL);
                 else
                     jsonNull = new JSONNull(onNull);
+
+
+
+
+
+
+
+                jsonReturning = new JSONReturning(returning);
 
                 Field<T> jsonArray = CustomField.of(N_JSON_ARRAY, getDataType(), c ->
                     c.visit(N_JSON_ARRAY).sql('(').visit(QueryPartListView.wrap(mapped, jsonNull, jsonReturning).separator("")).sql(')')

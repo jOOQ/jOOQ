@@ -91,6 +91,7 @@
                 <version>2.1.1</version>
                 <executions>
                     <execution>
+                        <id>testcontainer-start</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>execute</goal>
@@ -104,9 +105,29 @@
                                     
                                 db.start();
                                 project.properties.setProperty('db.url', db.getJdbcUrl());
+                                project.properties.setProperty('testcontainer.containerid', db.getContainerId());
+                                project.properties.setProperty('testcontainer.imageName', db.getDockerImageName());
                             </source>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>testcontainer-stop</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <source>
+                                containerId = "${testcontainer.containerid}"
+                                imageName = "${testcontainer.imageName}"
+                                println("Stopping testcontainer $containerId - $imageName")
+                                org.testcontainers.utility.ResourceReaper
+                                    .instance()
+                                    .stopAndRemoveContainer(containerId, imageName);
+                            </source>
+                        </configuration>
+                    </execution>
+
                 </executions>
                 
                 <dependencies>
@@ -171,7 +192,7 @@
                     </execution>
                 </executions>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>

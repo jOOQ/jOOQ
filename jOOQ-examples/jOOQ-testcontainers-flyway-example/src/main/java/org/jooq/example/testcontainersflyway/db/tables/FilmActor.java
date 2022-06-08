@@ -7,14 +7,18 @@ package org.jooq.example.testcontainersflyway.db.tables;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function3;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row3;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -150,6 +154,11 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
         return new FilmActor(alias, this);
     }
 
+    @Override
+    public FilmActor as(Table<?> alias) {
+        return new FilmActor(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -166,6 +175,14 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
         return new FilmActor(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public FilmActor rename(Table<?> name) {
+        return new FilmActor(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row3 type methods
     // -------------------------------------------------------------------------
@@ -173,5 +190,19 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
     @Override
     public Row3<Long, Long, LocalDateTime> fieldsRow() {
         return (Row3) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function3<? super Long, ? super Long, ? super LocalDateTime, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function3<? super Long, ? super Long, ? super LocalDateTime, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

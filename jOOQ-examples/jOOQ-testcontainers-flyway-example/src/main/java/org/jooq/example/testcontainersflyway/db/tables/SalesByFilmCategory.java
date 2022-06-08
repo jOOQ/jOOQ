@@ -5,13 +5,17 @@ package org.jooq.example.testcontainersflyway.db.tables;
 
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function2;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row2;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -58,7 +62,18 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
     }
 
     private SalesByFilmCategory(Name alias, Table<SalesByFilmCategoryRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("create view \"sales_by_film_category\" as  SELECT c.name AS category,\n    sum(p.amount) AS total_sales\n   FROM (((((payment p\n     JOIN rental r ON ((p.rental_id = r.rental_id)))\n     JOIN inventory i ON ((r.inventory_id = i.inventory_id)))\n     JOIN film f ON ((i.film_id = f.film_id)))\n     JOIN film_category fc ON ((f.film_id = fc.film_id)))\n     JOIN category c ON ((fc.category_id = c.category_id)))\n  GROUP BY c.name\n  ORDER BY (sum(p.amount)) DESC;"));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("""
+        create view "sales_by_film_category" as  SELECT c.name AS category,
+          sum(p.amount) AS total_sales
+         FROM (((((payment p
+           JOIN rental r ON ((p.rental_id = r.rental_id)))
+           JOIN inventory i ON ((r.inventory_id = i.inventory_id)))
+           JOIN film f ON ((i.film_id = f.film_id)))
+           JOIN film_category fc ON ((f.film_id = fc.film_id)))
+           JOIN category c ON ((fc.category_id = c.category_id)))
+        GROUP BY c.name
+        ORDER BY (sum(p.amount)) DESC;
+        """));
     }
 
     /**
@@ -103,6 +118,11 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
         return new SalesByFilmCategory(alias, this);
     }
 
+    @Override
+    public SalesByFilmCategory as(Table<?> alias) {
+        return new SalesByFilmCategory(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -119,6 +139,14 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
         return new SalesByFilmCategory(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public SalesByFilmCategory rename(Table<?> name) {
+        return new SalesByFilmCategory(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row2 type methods
     // -------------------------------------------------------------------------
@@ -126,5 +154,19 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
     @Override
     public Row2<String, BigDecimal> fieldsRow() {
         return (Row2) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function2<? super String, ? super BigDecimal, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function2<? super String, ? super BigDecimal, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

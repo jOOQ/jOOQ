@@ -7,12 +7,16 @@ package org.jooq.example.testcontainersflyway.db.tables;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.function.Function;
 
 import org.jooq.Field;
+import org.jooq.Function10;
 import org.jooq.Identity;
 import org.jooq.Name;
+import org.jooq.Records;
 import org.jooq.Row10;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -146,6 +150,11 @@ public class RewardsReport extends TableImpl<RewardsReportRecord> {
         return new RewardsReport(alias, this, parameters);
     }
 
+    @Override
+    public RewardsReport as(Table<?> alias) {
+        return new RewardsReport(alias.getQualifiedName(), this, parameters);
+    }
+
     /**
      * Rename this table
      */
@@ -160,6 +169,14 @@ public class RewardsReport extends TableImpl<RewardsReportRecord> {
     @Override
     public RewardsReport rename(Name name) {
         return new RewardsReport(name, null, parameters);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public RewardsReport rename(Table<?> name) {
+        return new RewardsReport(name.getQualifiedName(), null, parameters);
     }
 
     // -------------------------------------------------------------------------
@@ -199,5 +216,19 @@ public class RewardsReport extends TableImpl<RewardsReportRecord> {
         });
 
         return aliased() ? result.as(getUnqualifiedName()) : result;
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function10<? super Long, ? super Long, ? super String, ? super String, ? super String, ? super Long, ? super Boolean, ? super LocalDate, ? super LocalDateTime, ? super Integer, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function10<? super Long, ? super Long, ? super String, ? super String, ? super String, ? super Long, ? super Boolean, ? super LocalDate, ? super LocalDateTime, ? super Integer, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

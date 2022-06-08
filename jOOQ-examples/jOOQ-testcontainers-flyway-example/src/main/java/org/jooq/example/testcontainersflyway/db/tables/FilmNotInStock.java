@@ -4,10 +4,15 @@
 package org.jooq.example.testcontainersflyway.db.tables;
 
 
+import java.util.function.Function;
+
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.Name;
+import org.jooq.Records;
 import org.jooq.Row1;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -91,6 +96,11 @@ public class FilmNotInStock extends TableImpl<FilmNotInStockRecord> {
         return new FilmNotInStock(alias, this, parameters);
     }
 
+    @Override
+    public FilmNotInStock as(Table<?> alias) {
+        return new FilmNotInStock(alias.getQualifiedName(), this, parameters);
+    }
+
     /**
      * Rename this table
      */
@@ -105,6 +115,14 @@ public class FilmNotInStock extends TableImpl<FilmNotInStockRecord> {
     @Override
     public FilmNotInStock rename(Name name) {
         return new FilmNotInStock(name, null, parameters);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public FilmNotInStock rename(Table<?> name) {
+        return new FilmNotInStock(name.getQualifiedName(), null, parameters);
     }
 
     // -------------------------------------------------------------------------
@@ -144,5 +162,19 @@ public class FilmNotInStock extends TableImpl<FilmNotInStockRecord> {
         });
 
         return aliased() ? result.as(getUnqualifiedName()) : result;
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function1<? super Integer, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function1<? super Integer, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

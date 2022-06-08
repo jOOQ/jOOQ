@@ -5,13 +5,17 @@ package org.jooq.example.testcontainersflyway.db.tables;
 
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function8;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row8;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -89,7 +93,22 @@ public class FilmList extends TableImpl<FilmListRecord> {
     }
 
     private FilmList(Name alias, Table<FilmListRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("create view \"film_list\" as  SELECT film.film_id AS fid,\n    film.title,\n    film.description,\n    category.name AS category,\n    film.rental_rate AS price,\n    film.length,\n    film.rating,\n    group_concat((((actor.first_name)::text || ' '::text) || (actor.last_name)::text)) AS actors\n   FROM ((((category\n     LEFT JOIN film_category ON ((category.category_id = film_category.category_id)))\n     LEFT JOIN film ON ((film_category.film_id = film.film_id)))\n     JOIN film_actor ON ((film.film_id = film_actor.film_id)))\n     JOIN actor ON ((film_actor.actor_id = actor.actor_id)))\n  GROUP BY film.film_id, film.title, film.description, category.name, film.rental_rate, film.length, film.rating;"));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("""
+        create view "film_list" as  SELECT film.film_id AS fid,
+          film.title,
+          film.description,
+          category.name AS category,
+          film.rental_rate AS price,
+          film.length,
+          film.rating,
+          group_concat((((actor.first_name)::text || ' '::text) || (actor.last_name)::text)) AS actors
+         FROM ((((category
+           LEFT JOIN film_category ON ((category.category_id = film_category.category_id)))
+           LEFT JOIN film ON ((film_category.film_id = film.film_id)))
+           JOIN film_actor ON ((film.film_id = film_actor.film_id)))
+           JOIN actor ON ((film_actor.actor_id = actor.actor_id)))
+        GROUP BY film.film_id, film.title, film.description, category.name, film.rental_rate, film.length, film.rating;
+        """));
     }
 
     /**
@@ -132,6 +151,11 @@ public class FilmList extends TableImpl<FilmListRecord> {
         return new FilmList(alias, this);
     }
 
+    @Override
+    public FilmList as(Table<?> alias) {
+        return new FilmList(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -148,6 +172,14 @@ public class FilmList extends TableImpl<FilmListRecord> {
         return new FilmList(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public FilmList rename(Table<?> name) {
+        return new FilmList(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row8 type methods
     // -------------------------------------------------------------------------
@@ -155,5 +187,19 @@ public class FilmList extends TableImpl<FilmListRecord> {
     @Override
     public Row8<Long, String, String, String, BigDecimal, Short, MpaaRating, String> fieldsRow() {
         return (Row8) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function8<? super Long, ? super String, ? super String, ? super String, ? super BigDecimal, ? super Short, ? super MpaaRating, ? super String, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function8<? super Long, ? super String, ? super String, ? super String, ? super BigDecimal, ? super Short, ? super MpaaRating, ? super String, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

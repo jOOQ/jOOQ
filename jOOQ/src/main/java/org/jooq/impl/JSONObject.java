@@ -223,7 +223,7 @@ implements
 
     private final void acceptStandard(Context<?> ctx) {
         JSONNull jsonNull;
-        JSONReturning jsonReturning = new JSONReturning(returning);
+        JSONReturning jsonReturning;
 
         // Workaround for https://github.com/h2database/h2database/issues/2496
         if (entries.isEmpty() && ctx.family() == H2)
@@ -235,6 +235,14 @@ implements
 
         else
             jsonNull = new JSONNull(onNull);
+
+
+
+
+
+
+
+        jsonReturning = new JSONReturning(returning);
 
         ctx.visit(N_JSON_OBJECT).sql('(').visit(QueryPartListView.wrap(QueryPartCollectionView.wrap(entries), jsonNull, jsonReturning).separator("")).sql(')');
     }

@@ -71,15 +71,19 @@ import org.jooq.exception.MappingException;
  */
 public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmapper<E, R> {
 
-    private final Class<? extends E> type;
-    private final RecordType<R>      rowType;
-    private final Field<?>[]         fields;
-    private final Configuration      configuration;
-    private RecordUnmapper<E, R>     delegate;
+    private final Class<? extends E>              type;
+    private final RecordType<R>                   rowType;
+    private final AbstractRow<R>                  row;
+    private final Class<? extends AbstractRecord> recordType;
+    private final Field<?>[]                      fields;
+    private final Configuration                   configuration;
+    private RecordUnmapper<E, R>                  delegate;
 
     public DefaultRecordUnmapper(Class<? extends E> type, RecordType<R> rowType, Configuration configuration) {
         this.type = type;
         this.rowType = rowType;
+        this.row = Tools.row0((FieldsImpl<R>) rowType);
+        this.recordType = Tools.recordType(rowType.size());
         this.fields = rowType.fields();
         this.configuration = configuration;
 
@@ -103,7 +107,7 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
     }
 
     private final Record newRecord() {
-        return DSL.using(configuration).newRecord(rowType.fields());
+        return Tools.newRecord(false, recordType, row, configuration).operate(null);
     }
 
     private static final void setValue(Record record, Object source, java.lang.reflect.Field member, Field<?> field)

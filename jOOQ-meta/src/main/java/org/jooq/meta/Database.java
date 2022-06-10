@@ -108,6 +108,21 @@ public interface Database extends AutoCloseable {
     SchemaDefinition getSchema(String name);
 
     /**
+     * The XML schema collections generated from this database.
+     */
+    List<XMLSchemaCollectionDefinition> getXMLSchemaCollections();
+
+    /**
+     * The XML schema collections generated from this database.
+     */
+    List<XMLSchemaCollectionDefinition> getXMLSchemaCollections(SchemaDefinition schema);
+
+    /**
+     * The XML schema collection generated from this database by name
+     */
+    XMLSchemaCollectionDefinition getXMLSchemaCollection(SchemaDefinition schema, String name);
+
+    /**
      * Retrieve the schema's primary key / foreign key relations.
      */
     Relations getRelations();
@@ -605,6 +620,16 @@ public interface Database extends AutoCloseable {
     boolean getIncludeSequences();
 
     /**
+     * whether XML schema collections should be included.
+     */
+    boolean getIncludeXMLSchemaCollections();
+
+    /**
+     * whether XML schema collections should be included.
+     */
+    void setIncludeXMLSchemaCollections(boolean includeXMLSchemaCollections);
+
+    /**
      * whether user defined types should be included.
      */
     void setIncludeUDTs(boolean includeUDTs);
@@ -942,6 +967,26 @@ public interface Database extends AutoCloseable {
      * such as the ones from <code>jooq-codegen-postgres</code> should be added.
      */
     void setForcedTypesForBuiltinDataTypeExtensions(boolean forcedTypesForBuiltinDataTypeExtensions);
+
+    /**
+     * Whether some additional forced types for
+     * {@link XMLSchemaCollectionDefinition} types should be created
+     * automatically for columns that have non-ambiguous references to an
+     * {@link XMLTypeDefinition}.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     */
+    boolean getForcedTypesForXMLSchemaCollections();
+
+    /**
+     * Whether some additional forced types for
+     * {@link XMLSchemaCollectionDefinition} types should be created
+     * automatically for columns that have non-ambiguous references to an
+     * {@link XMLTypeDefinition}.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     */
+    void setForcedTypesForXMLSchemaCollections(boolean forcedTypesForXMLSchemaCollections);
 
     /**
      * Log slow queries after this amount of seconds.

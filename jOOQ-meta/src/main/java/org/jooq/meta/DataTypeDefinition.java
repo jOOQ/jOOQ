@@ -144,6 +144,11 @@ public interface DataTypeDefinition {
     GenerationOption getGenerationOption();
 
     /**
+     * The XML type definition, if available.
+     */
+    XMLTypeDefinition getXMLTypeDefinition();
+
+    /**
      * The computed column generation location.
      */
     GenerationLocation getGenerationLocation();

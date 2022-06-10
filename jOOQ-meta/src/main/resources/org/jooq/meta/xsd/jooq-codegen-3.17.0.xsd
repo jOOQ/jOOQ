@@ -634,6 +634,10 @@ Excludes match before includes, i.e. excludes have a higher priority.]]></jxb:ja
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether constants contained in packages should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="includeXMLSchemaCollections" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether XML schema collections should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="includeUDTs" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether udts should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -955,7 +959,13 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       <element name="forcedTypesForBuiltinDataTypeExtensions" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Enable some default forced type configurations for built in data type extensions, such as the ones from the jooq-postgres-extensions module.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
+      <element name="forcedTypesForXMLSchemaCollections" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Enable some default forced type configurations for XML schema collections, mapping them to JAXB annotated types using the {@link org.jooq.impl.XMLtoJAXBConverter}
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="forceIntegerTypesOnZeroScaleDecimals" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Historically, zero-scale decimal types are generated as their most appropriate, corresponding integer type (e.g. NUMBER(2, 0) and less: Byte). This allows for turning off this feature. In case of conflict between this rule and actual {@link #getForcedTypes()}, the latter will win.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

@@ -591,6 +591,7 @@ public class GenerationTool {
             database.setIncludeTables(!FALSE.equals(d.isIncludeTables()));
             database.setIncludeEmbeddables(!FALSE.equals(d.isIncludeEmbeddables()));
             database.setIncludeTriggerRoutines(TRUE.equals(d.isIncludeTriggerRoutines()));
+            database.setIncludeXMLSchemaCollections(!FALSE.equals(d.isIncludeXMLSchemaCollections()));
             database.setIncludeUDTs(!FALSE.equals(d.isIncludeUDTs()));
             database.setIncludeUniqueKeys(!FALSE.equals(d.isIncludeUniqueKeys()));
             database.setForceIntegerTypesOnZeroScaleDecimals(!FALSE.equals(d.isForceIntegerTypesOnZeroScaleDecimals()));
@@ -603,6 +604,7 @@ public class GenerationTool {
             database.setConfiguredEnumTypes(d.getEnumTypes());
             database.setConfiguredForcedTypes(d.getForcedTypes());
             database.setForcedTypesForBuiltinDataTypeExtensions(d.isForcedTypesForBuiltinDataTypeExtensions());
+            database.setForcedTypesForXMLSchemaCollections(d.isForcedTypesForXMLSchemaCollections());
             database.setConfiguredEmbeddables(d.getEmbeddables());
             database.setConfiguredComments(d.getComments());
             database.setConfiguredSyntheticObjects(d.getSyntheticObjects());

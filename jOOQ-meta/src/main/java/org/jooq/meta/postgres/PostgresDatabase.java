@@ -160,6 +160,7 @@ import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
+import org.jooq.meta.XMLSchemaCollectionDefinition;
 import org.jooq.meta.hsqldb.HSQLDBDatabase;
 import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.postgres.information_schema.tables.CheckConstraints;
@@ -888,6 +889,12 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             }
         }
 
+        return result;
+    }
+
+    @Override
+    protected List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException {
+        List<XMLSchemaCollectionDefinition> result = new ArrayList<>();
         return result;
     }
 

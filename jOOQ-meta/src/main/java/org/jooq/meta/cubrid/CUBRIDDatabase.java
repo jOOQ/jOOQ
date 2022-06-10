@@ -79,6 +79,7 @@ import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
+import org.jooq.meta.XMLSchemaCollectionDefinition;
 
 /**
  * @author Lukas Eder
@@ -263,6 +264,12 @@ public class CUBRIDDatabase extends AbstractDatabase {
     @Override
     protected List<DomainDefinition> getDomains0() throws SQLException {
         List<DomainDefinition> result = new ArrayList<>();
+        return result;
+    }
+
+    @Override
+    protected List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException {
+        List<XMLSchemaCollectionDefinition> result = new ArrayList<>();
         return result;
     }
 

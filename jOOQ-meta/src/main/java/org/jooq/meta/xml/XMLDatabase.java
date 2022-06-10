@@ -104,6 +104,7 @@ import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
+import org.jooq.meta.XMLSchemaCollectionDefinition;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
@@ -580,6 +581,12 @@ public class XMLDatabase extends AbstractDatabase {
     @Override
     protected List<DomainDefinition> getDomains0() throws SQLException {
         List<DomainDefinition> result = new ArrayList<>();
+        return result;
+    }
+
+    @Override
+    protected List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException {
+        List<XMLSchemaCollectionDefinition> result = new ArrayList<>();
         return result;
     }
 

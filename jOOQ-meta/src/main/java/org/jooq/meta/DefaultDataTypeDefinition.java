@@ -79,6 +79,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     private boolean                readonly;
     private String                 generatedAlwaysAs;
     private GenerationOption       generationOption;
+    private XMLTypeDefinition      xmlTypeDefinition;
     private boolean                identity;
     private final String           defaultValue;
     private final int              length;
@@ -295,6 +296,11 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     }
 
     @Override
+    public XMLTypeDefinition getXMLTypeDefinition() {
+        return xmlTypeDefinition;
+    }
+
+    @Override
     public GenerationLocation getGenerationLocation() {
         return generator == null ? GenerationLocation.SERVER : GenerationLocation.CLIENT;
     }
@@ -311,6 +317,11 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
     public final DefaultDataTypeDefinition generationOption(GenerationOption go) {
         this.generationOption = go;
+        return this;
+    }
+
+    public final DefaultDataTypeDefinition xmlTypeDefinition(XMLTypeDefinition x) {
+        this.xmlTypeDefinition = x;
         return this;
     }
 

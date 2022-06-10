@@ -130,6 +130,7 @@ import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
+import org.jooq.meta.XMLSchemaCollectionDefinition;
 import org.jooq.meta.hsqldb.information_schema.Tables;
 import org.jooq.meta.hsqldb.information_schema.tables.CheckConstraints;
 import org.jooq.meta.hsqldb.information_schema.tables.DomainConstraints;
@@ -1101,6 +1102,12 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
             result.add(domain);
         }
 
+        return result;
+    }
+
+    @Override
+    protected List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException {
+        List<XMLSchemaCollectionDefinition> result = new ArrayList<>();
         return result;
     }
 

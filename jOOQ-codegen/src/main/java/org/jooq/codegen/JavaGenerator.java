@@ -192,6 +192,7 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.TypedElementDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.UniqueKeyDefinition;
+import org.jooq.meta.XMLTypeDefinition;
 import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
 import org.jooq.meta.jaxb.GeneratedTextBlocks;
@@ -9314,7 +9315,8 @@ public class JavaGenerator extends AbstractGenerator {
             type.getQualifiedUserType(),
             type.getJavaType(),
             Object.class.getName(),
-            udtMode
+            udtMode,
+            type.getXMLTypeDefinition()
         );
     }
 
@@ -9339,10 +9341,19 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected String getType(Database db, SchemaDefinition schema, JavaWriter out, String t, int p, int s, Name u, String javaType, String defaultType, Mode udtMode) {
+        return getType(db, schema, out, t, p, s, u, javaType, defaultType, udtMode, null);
+    }
+
+    protected String getType(Database db, SchemaDefinition schema, JavaWriter out, String t, int p, int s, Name u, String javaType, String defaultType, Mode udtMode, XMLTypeDefinition xmlType) {
         String type = defaultType;
 
+        // XML types
+        if (xmlType != null) {
+            type = getStrategy().getJavaClassName(xmlType);
+        }
+
         // Custom types
-        if (javaType != null) {
+        else if (javaType != null) {
             type = javaType;
         }
 

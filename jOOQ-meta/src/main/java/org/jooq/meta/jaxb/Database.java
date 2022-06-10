@@ -70,6 +70,8 @@ public class Database implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean includePackageConstants = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean includeXMLSchemaCollections = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean includeUDTs = true;
     @XmlElement(defaultValue = "true")
     protected Boolean includeDomains = true;
@@ -158,6 +160,8 @@ public class Database implements Serializable, XMLAppendable
     protected Boolean readonlyNonUpdatableColumns = true;
     @XmlElement(defaultValue = "true")
     protected Boolean forcedTypesForBuiltinDataTypeExtensions = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean forcedTypesForXMLSchemaCollections = true;
     @XmlElement(defaultValue = "true")
     protected Boolean forceIntegerTypesOnZeroScaleDecimals = true;
     protected Boolean tableValuedFunctions;
@@ -665,6 +669,30 @@ public class Database implements Serializable, XMLAppendable
      */
     public void setIncludePackageConstants(Boolean value) {
         this.includePackageConstants = value;
+    }
+
+    /**
+     * This flag indicates whether XML schema collections should be included in output produced by this database
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIncludeXMLSchemaCollections() {
+        return includeXMLSchemaCollections;
+    }
+
+    /**
+     * Sets the value of the includeXMLSchemaCollections property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIncludeXMLSchemaCollections(Boolean value) {
+        this.includeXMLSchemaCollections = value;
     }
 
     /**
@@ -1684,6 +1712,32 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
+     * Enable some default forced type configurations for XML schema collections, mapping them to JAXB annotated types using the {@link org.jooq.impl.XMLtoJAXBConverter}
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isForcedTypesForXMLSchemaCollections() {
+        return forcedTypesForXMLSchemaCollections;
+    }
+
+    /**
+     * Sets the value of the forcedTypesForXMLSchemaCollections property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setForcedTypesForXMLSchemaCollections(Boolean value) {
+        this.forcedTypesForXMLSchemaCollections = value;
+    }
+
+    /**
      * Historically, zero-scale decimal types are generated as their most appropriate, corresponding integer type (e.g. NUMBER(2, 0) and less: Byte). This allows for turning off this feature. In case of conflict between this rule and actual {@link #getForcedTypes()}, the latter will win.
      * 
      * @return
@@ -2069,6 +2123,11 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    public Database withIncludeXMLSchemaCollections(Boolean value) {
+        setIncludeXMLSchemaCollections(value);
+        return this;
+    }
+
     public Database withIncludeUDTs(Boolean value) {
         setIncludeUDTs(value);
         return this;
@@ -2416,6 +2475,11 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    public Database withForcedTypesForXMLSchemaCollections(Boolean value) {
+        setForcedTypesForXMLSchemaCollections(value);
+        return this;
+    }
+
     public Database withForceIntegerTypesOnZeroScaleDecimals(Boolean value) {
         setForceIntegerTypesOnZeroScaleDecimals(value);
         return this;
@@ -2636,6 +2700,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("includePackageRoutines", includePackageRoutines);
         builder.append("includePackageUDTs", includePackageUDTs);
         builder.append("includePackageConstants", includePackageConstants);
+        builder.append("includeXMLSchemaCollections", includeXMLSchemaCollections);
         builder.append("includeUDTs", includeUDTs);
         builder.append("includeDomains", includeDomains);
         builder.append("includeSequences", includeSequences);
@@ -2676,6 +2741,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("readonlyComputedColumns", readonlyComputedColumns);
         builder.append("readonlyNonUpdatableColumns", readonlyNonUpdatableColumns);
         builder.append("forcedTypesForBuiltinDataTypeExtensions", forcedTypesForBuiltinDataTypeExtensions);
+        builder.append("forcedTypesForXMLSchemaCollections", forcedTypesForXMLSchemaCollections);
         builder.append("forceIntegerTypesOnZeroScaleDecimals", forceIntegerTypesOnZeroScaleDecimals);
         builder.append("tableValuedFunctions", tableValuedFunctions);
         builder.append("logSlowQueriesAfterSeconds", logSlowQueriesAfterSeconds);
@@ -2850,6 +2916,15 @@ public class Database implements Serializable, XMLAppendable
             }
         } else {
             if (!includePackageConstants.equals(other.includePackageConstants)) {
+                return false;
+            }
+        }
+        if (includeXMLSchemaCollections == null) {
+            if (other.includeXMLSchemaCollections!= null) {
+                return false;
+            }
+        } else {
+            if (!includeXMLSchemaCollections.equals(other.includeXMLSchemaCollections)) {
                 return false;
             }
         }
@@ -3213,6 +3288,15 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (forcedTypesForXMLSchemaCollections == null) {
+            if (other.forcedTypesForXMLSchemaCollections!= null) {
+                return false;
+            }
+        } else {
+            if (!forcedTypesForXMLSchemaCollections.equals(other.forcedTypesForXMLSchemaCollections)) {
+                return false;
+            }
+        }
         if (forceIntegerTypesOnZeroScaleDecimals == null) {
             if (other.forceIntegerTypesOnZeroScaleDecimals!= null) {
                 return false;
@@ -3344,6 +3428,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((includePackageRoutines == null)? 0 :includePackageRoutines.hashCode()));
         result = ((prime*result)+((includePackageUDTs == null)? 0 :includePackageUDTs.hashCode()));
         result = ((prime*result)+((includePackageConstants == null)? 0 :includePackageConstants.hashCode()));
+        result = ((prime*result)+((includeXMLSchemaCollections == null)? 0 :includeXMLSchemaCollections.hashCode()));
         result = ((prime*result)+((includeUDTs == null)? 0 :includeUDTs.hashCode()));
         result = ((prime*result)+((includeDomains == null)? 0 :includeDomains.hashCode()));
         result = ((prime*result)+((includeSequences == null)? 0 :includeSequences.hashCode()));
@@ -3384,6 +3469,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((readonlyComputedColumns == null)? 0 :readonlyComputedColumns.hashCode()));
         result = ((prime*result)+((readonlyNonUpdatableColumns == null)? 0 :readonlyNonUpdatableColumns.hashCode()));
         result = ((prime*result)+((forcedTypesForBuiltinDataTypeExtensions == null)? 0 :forcedTypesForBuiltinDataTypeExtensions.hashCode()));
+        result = ((prime*result)+((forcedTypesForXMLSchemaCollections == null)? 0 :forcedTypesForXMLSchemaCollections.hashCode()));
         result = ((prime*result)+((forceIntegerTypesOnZeroScaleDecimals == null)? 0 :forceIntegerTypesOnZeroScaleDecimals.hashCode()));
         result = ((prime*result)+((tableValuedFunctions == null)? 0 :tableValuedFunctions.hashCode()));
         result = ((prime*result)+((logSlowQueriesAfterSeconds == null)? 0 :logSlowQueriesAfterSeconds.hashCode()));

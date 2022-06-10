@@ -109,7 +109,6 @@ import org.jooq.conf.RenderQuotedNames;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DSL;
-import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.CommentType;
@@ -147,156 +146,160 @@ import org.jooq.tools.jdbc.JDBCUtils;
  */
 public abstract class AbstractDatabase implements Database {
 
-    private static final JooqLogger                                          log                                  = JooqLogger.getLogger(AbstractDatabase.class);
-    private static final Set<SQLDialect>                                     NO_SUPPORT_SCHEMATA                  = SQLDialect.supportedBy(CUBRID, FIREBIRD, SQLITE);
+    private static final JooqLogger                                              log                                  = JooqLogger.getLogger(AbstractDatabase.class);
+    private static final Set<SQLDialect>                                         NO_SUPPORT_SCHEMATA                  = SQLDialect.supportedBy(CUBRID, FIREBIRD, SQLITE);
 
     // -------------------------------------------------------------------------
     // Configuration elements
     // -------------------------------------------------------------------------
 
-    private Properties                                                       properties;
-    private String                                                           basedir;
-    private SQLDialect                                                       dialect;
-    private Connection                                                       connection;
-    private boolean                                                          regexMatchesPartialQualification;
-    private boolean                                                          sqlMatchesPartialQualification;
-    private OnError                                                          onError                                 = OnError.FAIL;
-    private List<Filter>                                                     filters;
-    private String[]                                                         excludes;
-    private String[]                                                         includes                                = { ".*" };
-    private boolean                                                          includeExcludeColumns                   = false;
-    private boolean                                                          includeExcludePackageRoutines           = false;
-    private boolean                                                          includeInvisibleColumns                 = true;
-    private boolean                                                          includeTables                           = true;
-    private boolean                                                          includeEmbeddables                      = true;
-    private boolean                                                          includeRoutines                         = true;
-    private boolean                                                          includeTriggerRoutines                  = false;
-    private boolean                                                          includePackages                         = true;
-    private boolean                                                          includePackageRoutines                  = true;
-    private boolean                                                          includePackageUDTs                      = true;
-    private boolean                                                          includePackageConstants                 = true;
-    private boolean                                                          includeUDTs                             = true;
-    private boolean                                                          includeDomains                          = true;
-    private boolean                                                          includeSequences                        = true;
-    private boolean                                                          includeIndexes                          = true;
-    private boolean                                                          includeCheckConstraints                 = true;
-    private boolean                                                          includeSystemTables                     = false;
-    private boolean                                                          includeSystemIndexes                    = false;
-    private boolean                                                          includeSystemCheckConstraints           = false;
-    private boolean                                                          includeSystemSequences                  = false;
-    private boolean                                                          includeSystemUDTs                       = false;
-    private boolean                                                          includePrimaryKeys                      = true;
-    private boolean                                                          includeUniqueKeys                       = true;
-    private boolean                                                          includeForeignKeys                      = true;
-    private boolean                                                          forceIntegerTypesOnZeroScaleDecimals    = true;
-    private String[]                                                         recordVersionFields;
-    private String[]                                                         recordTimestampFields;
-    private String                                                           embeddablePrimaryKeys                   = null;
-    private String                                                           embeddableUniqueKeys                    = null;
-    private String                                                           embeddableDomains                       = null;
-    private boolean                                                          readonlyIdentities                      = false;
-    private boolean                                                          readonlyComputedColumns                 = true;
-    private boolean                                                          readonlyNonUpdatableColumns             = true;
-    private boolean                                                          supportsUnsignedTypes;
-    private boolean                                                          integerDisplayWidths;
-    private boolean                                                          ignoreProcedureReturnValues;
-    private boolean                                                          dateAsTimestamp;
-    private boolean                                                          javaTimeTypes                           = true;
-    private List<CatalogMappingType>                                         configuredCatalogs                      = new ArrayList<>();
-    private List<SchemaMappingType>                                          configuredSchemata                      = new ArrayList<>();
-    private List<CustomType>                                                 configuredCustomTypes                   = new ArrayList<>();
-    private List<EnumType>                                                   configuredEnumTypes                     = new ArrayList<>();
-    private boolean                                                          forcedTypesForBuiltinDataTypeExtensions = true;
-    private boolean                                                          builtInForcedTypesInitialised           = false;
-    private List<ForcedType>                                                 configuredForcedTypes;
-    private Set<ForcedType>                                                  unusedForcedTypes                       = new HashSet<>();
-    private List<EmbeddableDefinitionType>                                   configuredEmbeddables                   = new ArrayList<>();
-    private Set<EmbeddableDefinitionType>                                    unusedEmbeddables                       = new HashSet<>();
-    private List<CommentType>                                                configuredComments                      = new ArrayList<>();
-    private Set<CommentType>                                                 unusedComments                          = new HashSet<>();
-    private List<SyntheticColumnType>                                        configuredSyntheticColumns              = new ArrayList<>();
-    private Set<SyntheticColumnType>                                         unusedSyntheticColumns                  = new HashSet<>();
-    private List<SyntheticReadonlyColumnType>                                configuredSyntheticReadonlyColumns      = new ArrayList<>();
-    private Set<SyntheticReadonlyColumnType>                                 unusedSyntheticReadonlyColumns          = new HashSet<>();
-    private List<SyntheticReadonlyRowidType>                                 configuredSyntheticReadonlyRowids       = new ArrayList<>();
-    private Set<SyntheticReadonlyRowidType>                                  unusedSyntheticReadonlyRowids           = new HashSet<>();
-    private List<SyntheticIdentityType>                                      configuredSyntheticIdentities           = new ArrayList<>();
-    private Set<SyntheticIdentityType>                                       unusedSyntheticIdentities               = new HashSet<>();
-    private List<SyntheticPrimaryKeyType>                                    configuredSyntheticPrimaryKeys          = new ArrayList<>();
-    private Set<SyntheticPrimaryKeyType>                                     unusedSyntheticPrimaryKeys              = new HashSet<>();
-    private List<SyntheticUniqueKeyType>                                     configuredSyntheticUniqueKeys           = new ArrayList<>();
-    private Set<SyntheticUniqueKeyType>                                      unusedSyntheticUniqueKeys               = new HashSet<>();
-    private List<SyntheticForeignKeyType>                                    configuredSyntheticForeignKeys          = new ArrayList<>();
-    private Set<SyntheticForeignKeyType>                                     unusedSyntheticForeignKeys              = new HashSet<>();
-    private List<SyntheticViewType>                                          configuredSyntheticViews                = new ArrayList<>();
-    private Set<SyntheticViewType>                                           unusedSyntheticViews                    = new HashSet<>();
-    private List<SyntheticDaoType>                                           configuredSyntheticDaos                 = new ArrayList<>();
-    private SchemaVersionProvider                                            schemaVersionProvider;
-    private CatalogVersionProvider                                           catalogVersionProvider;
-    private Comparator<Definition>                                           orderProvider;
-    private boolean                                                          includeRelations                        = true;
-    private boolean                                                          tableValuedFunctions                    = true;
-    private int                                                              logSlowQueriesAfterSeconds;
-    private int                                                              logSlowResultsAfterSeconds;
+    private Properties                                                           properties;
+    private String                                                               basedir;
+    private SQLDialect                                                           dialect;
+    private Connection                                                           connection;
+    private boolean                                                              regexMatchesPartialQualification;
+    private boolean                                                              sqlMatchesPartialQualification;
+    private OnError                                                              onError                                 = OnError.FAIL;
+    private List<Filter>                                                         filters;
+    private String[]                                                             excludes;
+    private String[]                                                             includes                                = { ".*" };
+    private boolean                                                              includeExcludeColumns                   = false;
+    private boolean                                                              includeExcludePackageRoutines           = false;
+    private boolean                                                              includeInvisibleColumns                 = true;
+    private boolean                                                              includeXMLSchemaCollections             = true;
+    private boolean                                                              includeTables                           = true;
+    private boolean                                                              includeEmbeddables                      = true;
+    private boolean                                                              includeRoutines                         = true;
+    private boolean                                                              includeTriggerRoutines                  = false;
+    private boolean                                                              includePackages                         = true;
+    private boolean                                                              includePackageRoutines                  = true;
+    private boolean                                                              includePackageUDTs                      = true;
+    private boolean                                                              includePackageConstants                 = true;
+    private boolean                                                              includeUDTs                             = true;
+    private boolean                                                              includeDomains                          = true;
+    private boolean                                                              includeSequences                        = true;
+    private boolean                                                              includeIndexes                          = true;
+    private boolean                                                              includeCheckConstraints                 = true;
+    private boolean                                                              includeSystemTables                     = false;
+    private boolean                                                              includeSystemIndexes                    = false;
+    private boolean                                                              includeSystemCheckConstraints           = false;
+    private boolean                                                              includeSystemSequences                  = false;
+    private boolean                                                              includeSystemUDTs                       = false;
+    private boolean                                                              includePrimaryKeys                      = true;
+    private boolean                                                              includeUniqueKeys                       = true;
+    private boolean                                                              includeForeignKeys                      = true;
+    private boolean                                                              forceIntegerTypesOnZeroScaleDecimals    = true;
+    private String[]                                                             recordVersionFields;
+    private String[]                                                             recordTimestampFields;
+    private String                                                               embeddablePrimaryKeys                   = null;
+    private String                                                               embeddableUniqueKeys                    = null;
+    private String                                                               embeddableDomains                       = null;
+    private boolean                                                              readonlyIdentities                      = false;
+    private boolean                                                              readonlyComputedColumns                 = true;
+    private boolean                                                              readonlyNonUpdatableColumns             = true;
+    private boolean                                                              supportsUnsignedTypes;
+    private boolean                                                              integerDisplayWidths;
+    private boolean                                                              ignoreProcedureReturnValues;
+    private boolean                                                              dateAsTimestamp;
+    private boolean                                                              javaTimeTypes                           = true;
+    private List<CatalogMappingType>                                             configuredCatalogs                      = new ArrayList<>();
+    private List<SchemaMappingType>                                              configuredSchemata                      = new ArrayList<>();
+    private List<CustomType>                                                     configuredCustomTypes                   = new ArrayList<>();
+    private List<EnumType>                                                       configuredEnumTypes                     = new ArrayList<>();
+    private boolean                                                              forcedTypesForBuiltinDataTypeExtensions = true;
+    private boolean                                                              forcedTypesForXMLSchemaCollections      = true;
+    private boolean                                                              builtInForcedTypesInitialised           = false;
+    private List<ForcedType>                                                     configuredForcedTypes;
+    private Set<ForcedType>                                                      unusedForcedTypes                       = new HashSet<>();
+    private List<EmbeddableDefinitionType>                                       configuredEmbeddables                   = new ArrayList<>();
+    private Set<EmbeddableDefinitionType>                                        unusedEmbeddables                       = new HashSet<>();
+    private List<CommentType>                                                    configuredComments                      = new ArrayList<>();
+    private Set<CommentType>                                                     unusedComments                          = new HashSet<>();
+    private List<SyntheticColumnType>                                            configuredSyntheticColumns              = new ArrayList<>();
+    private Set<SyntheticColumnType>                                             unusedSyntheticColumns                  = new HashSet<>();
+    private List<SyntheticReadonlyColumnType>                                    configuredSyntheticReadonlyColumns      = new ArrayList<>();
+    private Set<SyntheticReadonlyColumnType>                                     unusedSyntheticReadonlyColumns          = new HashSet<>();
+    private List<SyntheticReadonlyRowidType>                                     configuredSyntheticReadonlyRowids       = new ArrayList<>();
+    private Set<SyntheticReadonlyRowidType>                                      unusedSyntheticReadonlyRowids           = new HashSet<>();
+    private List<SyntheticIdentityType>                                          configuredSyntheticIdentities           = new ArrayList<>();
+    private Set<SyntheticIdentityType>                                           unusedSyntheticIdentities               = new HashSet<>();
+    private List<SyntheticPrimaryKeyType>                                        configuredSyntheticPrimaryKeys          = new ArrayList<>();
+    private Set<SyntheticPrimaryKeyType>                                         unusedSyntheticPrimaryKeys              = new HashSet<>();
+    private List<SyntheticUniqueKeyType>                                         configuredSyntheticUniqueKeys           = new ArrayList<>();
+    private Set<SyntheticUniqueKeyType>                                          unusedSyntheticUniqueKeys               = new HashSet<>();
+    private List<SyntheticForeignKeyType>                                        configuredSyntheticForeignKeys          = new ArrayList<>();
+    private Set<SyntheticForeignKeyType>                                         unusedSyntheticForeignKeys              = new HashSet<>();
+    private List<SyntheticViewType>                                              configuredSyntheticViews                = new ArrayList<>();
+    private Set<SyntheticViewType>                                               unusedSyntheticViews                    = new HashSet<>();
+    private List<SyntheticDaoType>                                               configuredSyntheticDaos                 = new ArrayList<>();
+    private SchemaVersionProvider                                                schemaVersionProvider;
+    private CatalogVersionProvider                                               catalogVersionProvider;
+    private Comparator<Definition>                                               orderProvider;
+    private boolean                                                              includeRelations                        = true;
+    private boolean                                                              tableValuedFunctions                    = true;
+    private int                                                                  logSlowQueriesAfterSeconds;
+    private int                                                                  logSlowResultsAfterSeconds;
 
     // -------------------------------------------------------------------------
     // Loaded definitions
     // -------------------------------------------------------------------------
 
-    private Map<Definition, String>                                          sources;
-    private List<String>                                                     inputCatalogs;
-    private List<String>                                                     inputSchemata;
-    private Map<String, List<String>>                                        inputSchemataPerCatalog;
-    private List<CatalogDefinition>                                          catalogs;
-    private List<SchemaDefinition>                                           schemata;
-    private List<SequenceDefinition>                                         sequences;
-    private List<IdentityDefinition>                                         identities;
-    private List<IndexDefinition>                                            indexes;
-    private List<UniqueKeyDefinition>                                        primaryKeys;
-    private List<UniqueKeyDefinition>                                        uniqueKeys;
-    private List<UniqueKeyDefinition>                                        keys;
-    private List<ForeignKeyDefinition>                                       foreignKeys;
-    private List<CheckConstraintDefinition>                                  checkConstraints;
-    private List<TableDefinition>                                            tables;
-    private List<EmbeddableDefinition>                                       embeddables;
-    private List<EnumDefinition>                                             enums;
-    private List<DomainDefinition>                                           domains;
-    private List<UDTDefinition>                                              udts;
-    private List<ArrayDefinition>                                            arrays;
-    private List<RoutineDefinition>                                          routines;
-    private List<PackageDefinition>                                          packages;
-    private Relations                                                        relations;
+    private Map<Definition, String>                                              sources;
+    private List<String>                                                         inputCatalogs;
+    private List<String>                                                         inputSchemata;
+    private Map<String, List<String>>                                            inputSchemataPerCatalog;
+    private List<CatalogDefinition>                                              catalogs;
+    private List<SchemaDefinition>                                               schemata;
+    private List<SequenceDefinition>                                             sequences;
+    private List<IdentityDefinition>                                             identities;
+    private List<IndexDefinition>                                                indexes;
+    private List<UniqueKeyDefinition>                                            primaryKeys;
+    private List<UniqueKeyDefinition>                                            uniqueKeys;
+    private List<UniqueKeyDefinition>                                            keys;
+    private List<ForeignKeyDefinition>                                           foreignKeys;
+    private List<CheckConstraintDefinition>                                      checkConstraints;
+    private List<TableDefinition>                                                tables;
+    private List<EmbeddableDefinition>                                           embeddables;
+    private List<EnumDefinition>                                                 enums;
+    private List<DomainDefinition>                                               domains;
+    private List<XMLSchemaCollectionDefinition>                                  xmlSchemaCollections;
+    private List<UDTDefinition>                                                  udts;
+    private List<ArrayDefinition>                                                arrays;
+    private List<RoutineDefinition>                                              routines;
+    private List<PackageDefinition>                                              packages;
+    private Relations                                                            relations;
 
-    private transient Map<SchemaDefinition, List<SequenceDefinition>>        sequencesBySchema;
-    private transient Map<SchemaDefinition, List<IdentityDefinition>>        identitiesBySchema;
-    private transient Map<SchemaDefinition, List<IndexDefinition>>           indexesBySchema;
-    private transient Map<TableDefinition, List<IndexDefinition>>            indexesByTable;
-    private transient Map<SchemaDefinition, List<UniqueKeyDefinition>>       primaryKeysBySchema;
-    private transient Map<SchemaDefinition, List<UniqueKeyDefinition>>       uniqueKeysBySchema;
-    private transient Map<SchemaDefinition, List<UniqueKeyDefinition>>       keysBySchema;
-    private transient Map<SchemaDefinition, List<ForeignKeyDefinition>>      foreignKeysBySchema;
-    private transient Map<SchemaDefinition, List<CheckConstraintDefinition>> checkConstraintsBySchema;
-    private transient Map<SchemaDefinition, List<TableDefinition>>           tablesBySchema;
-    private transient Map<SchemaDefinition, List<EmbeddableDefinition>>      embeddablesByDefiningSchema;
-    private transient Map<TableDefinition, List<EmbeddableDefinition>>       embeddablesByDefiningTable;
-    private transient Map<TableDefinition, List<EmbeddableDefinition>>       embeddablesByReferencingTable;
-    private transient Map<SchemaDefinition, List<EnumDefinition>>            enumsBySchema;
-    private transient Map<SchemaDefinition, List<DomainDefinition>>          domainsBySchema;
-    private transient Map<SchemaDefinition, List<UDTDefinition>>             udtsBySchema;
-    private transient Map<PackageDefinition, List<UDTDefinition>>            udtsByPackage;
-    private transient Map<SchemaDefinition, List<ArrayDefinition>>           arraysBySchema;
-    private transient Map<SchemaDefinition, List<RoutineDefinition>>         routinesBySchema;
-    private transient Map<SchemaDefinition, List<PackageDefinition>>         packagesBySchema;
-    private transient boolean                                                initialised;
+    private transient Map<SchemaDefinition, List<SequenceDefinition>>            sequencesBySchema;
+    private transient Map<SchemaDefinition, List<IdentityDefinition>>            identitiesBySchema;
+    private transient Map<SchemaDefinition, List<IndexDefinition>>               indexesBySchema;
+    private transient Map<TableDefinition, List<IndexDefinition>>                indexesByTable;
+    private transient Map<SchemaDefinition, List<UniqueKeyDefinition>>           primaryKeysBySchema;
+    private transient Map<SchemaDefinition, List<UniqueKeyDefinition>>           uniqueKeysBySchema;
+    private transient Map<SchemaDefinition, List<UniqueKeyDefinition>>           keysBySchema;
+    private transient Map<SchemaDefinition, List<ForeignKeyDefinition>>          foreignKeysBySchema;
+    private transient Map<SchemaDefinition, List<CheckConstraintDefinition>>     checkConstraintsBySchema;
+    private transient Map<SchemaDefinition, List<TableDefinition>>               tablesBySchema;
+    private transient Map<SchemaDefinition, List<EmbeddableDefinition>>          embeddablesByDefiningSchema;
+    private transient Map<TableDefinition, List<EmbeddableDefinition>>           embeddablesByDefiningTable;
+    private transient Map<TableDefinition, List<EmbeddableDefinition>>           embeddablesByReferencingTable;
+    private transient Map<SchemaDefinition, List<EnumDefinition>>                enumsBySchema;
+    private transient Map<SchemaDefinition, List<DomainDefinition>>              domainsBySchema;
+    private transient Map<SchemaDefinition, List<XMLSchemaCollectionDefinition>> xmlSchemaCollectionsBySchema;
+    private transient Map<SchemaDefinition, List<UDTDefinition>>                 udtsBySchema;
+    private transient Map<PackageDefinition, List<UDTDefinition>>                udtsByPackage;
+    private transient Map<SchemaDefinition, List<ArrayDefinition>>               arraysBySchema;
+    private transient Map<SchemaDefinition, List<RoutineDefinition>>             routinesBySchema;
+    private transient Map<SchemaDefinition, List<PackageDefinition>>             packagesBySchema;
+    private transient boolean                                                    initialised;
 
     // Other caches
-    private final List<Definition>                                           all;
-    private final List<Definition>                                           included;
-    private final List<Definition>                                           excluded;
-    private final Map<Table<?>, Boolean>                                     existTables;
-    private final Map<TableField<?, ?>, Boolean>                             existFields;
-    private final Patterns                                                   patterns;
-    private final Statements                                                 statements;
+    private final List<Definition>                                               all;
+    private final List<Definition>                                               included;
+    private final List<Definition>                                               excluded;
+    private final Map<Table<?>, Boolean>                                         existTables;
+    private final Map<TableField<?, ?>, Boolean>                                 existFields;
+    private final Patterns                                                       patterns;
+    private final Statements                                                     statements;
 
     protected AbstractDatabase() {
         existTables = new HashMap<>();
@@ -756,6 +759,43 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final List<XMLSchemaCollectionDefinition> getXMLSchemaCollections() {
+        if (xmlSchemaCollections == null) {
+            xmlSchemaCollections = new ArrayList<>();
+
+            if (getIncludeXMLSchemaCollections()) {
+                onError(ERROR, "Error while fetching XML schema collections", () -> {
+                    List<XMLSchemaCollectionDefinition> sc = getXMLSchemaCollections0();
+
+                    xmlSchemaCollections = sort(filterExcludeInclude(sc));
+                    log.info("XML schema collections fetched", fetchedSize(sc, xmlSchemaCollections));
+                });
+            }
+            else
+                log.info("XML schema collections excluded");
+        }
+
+        return xmlSchemaCollections;
+    }
+
+    @Override
+    public final List<XMLSchemaCollectionDefinition> getXMLSchemaCollections(SchemaDefinition schema) {
+        if (xmlSchemaCollectionsBySchema == null)
+            xmlSchemaCollectionsBySchema = new LinkedHashMap<>();
+
+        return filterSchema(getXMLSchemaCollections(), schema, xmlSchemaCollectionsBySchema);
+    }
+
+    @Override
+    public final XMLSchemaCollectionDefinition getXMLSchemaCollection(SchemaDefinition schema, String inputName) {
+        for (XMLSchemaCollectionDefinition sc : getXMLSchemaCollections(schema))
+            if (sc.getName().equals(inputName))
+                return sc;
+
+        return null;
+    }
+
+    @Override
     public final List<String> getInputCatalogs() {
         if (inputCatalogs == null) {
             inputCatalogs = new ArrayList<>();
@@ -1093,6 +1133,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final void setIncludePackageConstants(boolean includePackageConstants) {
         this.includePackageConstants = includePackageConstants;
+    }
+
+    @Override
+    public final boolean getIncludeXMLSchemaCollections() {
+        return includeXMLSchemaCollections;
+    }
+
+    @Override
+    public final void setIncludeXMLSchemaCollections(boolean includeXMLSchemaCollections) {
+        this.includeXMLSchemaCollections = includeXMLSchemaCollections;
     }
 
     @Override
@@ -1537,6 +1587,16 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public boolean getForcedTypesForXMLSchemaCollections() {
+        return this.forcedTypesForXMLSchemaCollections;
+    }
+
+    @Override
+    public void setForcedTypesForXMLSchemaCollections(boolean forcedTypesForXMLSchemaCollections) {
+        this.forcedTypesForXMLSchemaCollections = forcedTypesForXMLSchemaCollections;
+    }
+
+    @Override
     public final int getLogSlowQueriesAfterSeconds() {
         return logSlowQueriesAfterSeconds;
     }
@@ -1977,186 +2037,188 @@ public abstract class AbstractDatabase implements Database {
     }
 
     private void initBuiltinForcedTypes() {
-        if (forcedTypesForBuiltinDataTypeExtensions && !builtInForcedTypesInitialised) {
+        if (!builtInForcedTypesInitialised) {
             builtInForcedTypesInitialised = true;
 
-            try {
-                ClassUtils.loadClass("org.jooq.postgres.extensions.types.Hstore");
+            if (forcedTypesForBuiltinDataTypeExtensions) {
+                try {
+                    ClassUtils.loadClass("org.jooq.postgres.extensions.types.Hstore");
 
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("java.lang.String")
-                    .withBinding("org.jooq.postgres.extensions.bindings.CitextBinding")
-                    .withIncludeTypes("citext")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("java.lang.String[]")
-                    .withBinding("org.jooq.postgres.extensions.bindings.CitextArrayBinding")
-                    .withIncludeTypes("_citext")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.Ltree")
-                    .withBinding("org.jooq.postgres.extensions.bindings.LtreeBinding")
-                    .withIncludeTypes("ltree")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.Ltree[]")
-                    .withBinding("org.jooq.postgres.extensions.bindings.LtreeArrayBinding")
-                    .withIncludeTypes("_ltree")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.Hstore")
-                    .withBinding("org.jooq.postgres.extensions.bindings.HstoreBinding")
-                    .withIncludeTypes("hstore")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.Hstore[]")
-                    .withBinding("org.jooq.postgres.extensions.bindings.HstoreArrayBinding")
-                    .withIncludeTypes("_hstore")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.Inet")
-                    .withBinding("org.jooq.postgres.extensions.bindings.InetBinding")
-                    .withIncludeTypes("inet")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.Inet[]")
-                    .withBinding("org.jooq.postgres.extensions.bindings.InetArrayBinding")
-                    .withIncludeTypes("_inet")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.Cidr")
-                    .withBinding("org.jooq.postgres.extensions.bindings.CidrBinding")
-                    .withIncludeTypes("cidr")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.Cidr[]")
-                    .withBinding("org.jooq.postgres.extensions.bindings.CidrArrayBinding")
-                    .withIncludeTypes("_cidr")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.IntegerRange")
-                    .withBinding("org.jooq.postgres.extensions.bindings.IntegerRangeBinding")
-                    .withIncludeTypes("int4range")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.IntegerRange[]")
-                    .withBinding("org.jooq.postgres.extensions.bindings.IntegerRangeArrayBinding")
-                    .withIncludeTypes("_int4range")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.LongRange")
-                    .withBinding("org.jooq.postgres.extensions.bindings.LongRangeBinding")
-                    .withIncludeTypes("int8range")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.LongRange[]")
-                    .withBinding("org.jooq.postgres.extensions.bindings.LongRangeArrayBinding")
-                    .withIncludeTypes("_int8range")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.BigDecimalRange")
-                    .withBinding("org.jooq.postgres.extensions.bindings.BigDecimalRangeBinding")
-                    .withIncludeTypes("numrange")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.BigDecimalRange[]")
-                    .withBinding("org.jooq.postgres.extensions.bindings.BigDecimalRangeArrayBinding")
-                    .withIncludeTypes("_numrange")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-
-                if (javaTimeTypes()) {
                     getConfiguredForcedTypes().add(new ForcedType()
-                        .withUserType("org.jooq.postgres.extensions.types.LocalDateRange")
-                        .withBinding("org.jooq.postgres.extensions.bindings.LocalDateRangeBinding")
-                        .withIncludeTypes("daterange")
+                        .withUserType("java.lang.String")
+                        .withBinding("org.jooq.postgres.extensions.bindings.CitextBinding")
+                        .withIncludeTypes("citext")
                         .withPriority(Integer.MIN_VALUE)
                     );
                     getConfiguredForcedTypes().add(new ForcedType()
-                        .withUserType("org.jooq.postgres.extensions.types.LocalDateRange[]")
-                        .withBinding("org.jooq.postgres.extensions.bindings.LocalDateRangeArrayBinding")
-                        .withIncludeTypes("_daterange")
+                        .withUserType("java.lang.String[]")
+                        .withBinding("org.jooq.postgres.extensions.bindings.CitextArrayBinding")
+                        .withIncludeTypes("_citext")
                         .withPriority(Integer.MIN_VALUE)
                     );
 
                     getConfiguredForcedTypes().add(new ForcedType()
-                        .withUserType("org.jooq.postgres.extensions.types.LocalDateTimeRange")
-                        .withBinding("org.jooq.postgres.extensions.bindings.LocalDateTimeRangeBinding")
-                        .withIncludeTypes("tsrange")
+                        .withUserType("org.jooq.postgres.extensions.types.Ltree")
+                        .withBinding("org.jooq.postgres.extensions.bindings.LtreeBinding")
+                        .withIncludeTypes("ltree")
                         .withPriority(Integer.MIN_VALUE)
                     );
                     getConfiguredForcedTypes().add(new ForcedType()
-                        .withUserType("org.jooq.postgres.extensions.types.LocalDateTimeRange[]")
-                        .withBinding("org.jooq.postgres.extensions.bindings.LocalDateTimeRangeArrayBinding")
-                        .withIncludeTypes("_tsrange")
+                        .withUserType("org.jooq.postgres.extensions.types.Ltree[]")
+                        .withBinding("org.jooq.postgres.extensions.bindings.LtreeArrayBinding")
+                        .withIncludeTypes("_ltree")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.Hstore")
+                        .withBinding("org.jooq.postgres.extensions.bindings.HstoreBinding")
+                        .withIncludeTypes("hstore")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.Hstore[]")
+                        .withBinding("org.jooq.postgres.extensions.bindings.HstoreArrayBinding")
+                        .withIncludeTypes("_hstore")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.Inet")
+                        .withBinding("org.jooq.postgres.extensions.bindings.InetBinding")
+                        .withIncludeTypes("inet")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.Inet[]")
+                        .withBinding("org.jooq.postgres.extensions.bindings.InetArrayBinding")
+                        .withIncludeTypes("_inet")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.Cidr")
+                        .withBinding("org.jooq.postgres.extensions.bindings.CidrBinding")
+                        .withIncludeTypes("cidr")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.Cidr[]")
+                        .withBinding("org.jooq.postgres.extensions.bindings.CidrArrayBinding")
+                        .withIncludeTypes("_cidr")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.IntegerRange")
+                        .withBinding("org.jooq.postgres.extensions.bindings.IntegerRangeBinding")
+                        .withIncludeTypes("int4range")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.IntegerRange[]")
+                        .withBinding("org.jooq.postgres.extensions.bindings.IntegerRangeArrayBinding")
+                        .withIncludeTypes("_int4range")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.LongRange")
+                        .withBinding("org.jooq.postgres.extensions.bindings.LongRangeBinding")
+                        .withIncludeTypes("int8range")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.LongRange[]")
+                        .withBinding("org.jooq.postgres.extensions.bindings.LongRangeArrayBinding")
+                        .withIncludeTypes("_int8range")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.BigDecimalRange")
+                        .withBinding("org.jooq.postgres.extensions.bindings.BigDecimalRangeBinding")
+                        .withIncludeTypes("numrange")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.BigDecimalRange[]")
+                        .withBinding("org.jooq.postgres.extensions.bindings.BigDecimalRangeArrayBinding")
+                        .withIncludeTypes("_numrange")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+
+                    if (javaTimeTypes()) {
+                        getConfiguredForcedTypes().add(new ForcedType()
+                            .withUserType("org.jooq.postgres.extensions.types.LocalDateRange")
+                            .withBinding("org.jooq.postgres.extensions.bindings.LocalDateRangeBinding")
+                            .withIncludeTypes("daterange")
+                            .withPriority(Integer.MIN_VALUE)
+                        );
+                        getConfiguredForcedTypes().add(new ForcedType()
+                            .withUserType("org.jooq.postgres.extensions.types.LocalDateRange[]")
+                            .withBinding("org.jooq.postgres.extensions.bindings.LocalDateRangeArrayBinding")
+                            .withIncludeTypes("_daterange")
+                            .withPriority(Integer.MIN_VALUE)
+                        );
+
+                        getConfiguredForcedTypes().add(new ForcedType()
+                            .withUserType("org.jooq.postgres.extensions.types.LocalDateTimeRange")
+                            .withBinding("org.jooq.postgres.extensions.bindings.LocalDateTimeRangeBinding")
+                            .withIncludeTypes("tsrange")
+                            .withPriority(Integer.MIN_VALUE)
+                        );
+                        getConfiguredForcedTypes().add(new ForcedType()
+                            .withUserType("org.jooq.postgres.extensions.types.LocalDateTimeRange[]")
+                            .withBinding("org.jooq.postgres.extensions.bindings.LocalDateTimeRangeArrayBinding")
+                            .withIncludeTypes("_tsrange")
+                            .withPriority(Integer.MIN_VALUE)
+                        );
+                    }
+                    else {
+                        getConfiguredForcedTypes().add(new ForcedType()
+                            .withUserType("org.jooq.postgres.extensions.types.DateRange")
+                            .withBinding("org.jooq.postgres.extensions.bindings.DateRangeBinding")
+                            .withIncludeTypes("daterange")
+                            .withPriority(Integer.MIN_VALUE)
+                        );
+                        getConfiguredForcedTypes().add(new ForcedType()
+                            .withUserType("org.jooq.postgres.extensions.types.DateRange[]")
+                            .withBinding("org.jooq.postgres.extensions.bindings.DateRangeArrayBinding")
+                            .withIncludeTypes("_daterange")
+                            .withPriority(Integer.MIN_VALUE)
+                        );
+
+                        getConfiguredForcedTypes().add(new ForcedType()
+                            .withUserType("org.jooq.postgres.extensions.types.TimestampRange")
+                            .withBinding("org.jooq.postgres.extensions.bindings.TimestampRangeBinding")
+                            .withIncludeTypes("tsrange")
+                            .withPriority(Integer.MIN_VALUE)
+                        );
+                        getConfiguredForcedTypes().add(new ForcedType()
+                            .withUserType("org.jooq.postgres.extensions.types.TimestampRange[]")
+                            .withBinding("org.jooq.postgres.extensions.bindings.TimestampRangeArrayBinding")
+                            .withIncludeTypes("_tsrange")
+                            .withPriority(Integer.MIN_VALUE)
+                        );
+                    }
+
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.OffsetDateTimeRange")
+                        .withBinding("org.jooq.postgres.extensions.bindings.OffsetDateTimeRangeBinding")
+                        .withIncludeTypes("tstzrange")
+                        .withPriority(Integer.MIN_VALUE)
+                    );
+                    getConfiguredForcedTypes().add(new ForcedType()
+                        .withUserType("org.jooq.postgres.extensions.types.OffsetDateTimeRange[]")
+                        .withBinding("org.jooq.postgres.extensions.bindings.OffsetDateTimeRangeArrayBinding")
+                        .withIncludeTypes("_tstzrange")
                         .withPriority(Integer.MIN_VALUE)
                     );
                 }
-                else {
-                    getConfiguredForcedTypes().add(new ForcedType()
-                        .withUserType("org.jooq.postgres.extensions.types.DateRange")
-                        .withBinding("org.jooq.postgres.extensions.bindings.DateRangeBinding")
-                        .withIncludeTypes("daterange")
-                        .withPriority(Integer.MIN_VALUE)
-                    );
-                    getConfiguredForcedTypes().add(new ForcedType()
-                        .withUserType("org.jooq.postgres.extensions.types.DateRange[]")
-                        .withBinding("org.jooq.postgres.extensions.bindings.DateRangeArrayBinding")
-                        .withIncludeTypes("_daterange")
-                        .withPriority(Integer.MIN_VALUE)
-                    );
-
-                    getConfiguredForcedTypes().add(new ForcedType()
-                        .withUserType("org.jooq.postgres.extensions.types.TimestampRange")
-                        .withBinding("org.jooq.postgres.extensions.bindings.TimestampRangeBinding")
-                        .withIncludeTypes("tsrange")
-                        .withPriority(Integer.MIN_VALUE)
-                    );
-                    getConfiguredForcedTypes().add(new ForcedType()
-                        .withUserType("org.jooq.postgres.extensions.types.TimestampRange[]")
-                        .withBinding("org.jooq.postgres.extensions.bindings.TimestampRangeArrayBinding")
-                        .withIncludeTypes("_tsrange")
-                        .withPriority(Integer.MIN_VALUE)
-                    );
+                catch (ClassNotFoundException ignore) {
+                    log.debug("Built in data types", "org.jooq.postgres.extensions.types.Hstore not found on classpath, ignoring built in data type extensions");
                 }
-
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.OffsetDateTimeRange")
-                    .withBinding("org.jooq.postgres.extensions.bindings.OffsetDateTimeRangeBinding")
-                    .withIncludeTypes("tstzrange")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-                getConfiguredForcedTypes().add(new ForcedType()
-                    .withUserType("org.jooq.postgres.extensions.types.OffsetDateTimeRange[]")
-                    .withBinding("org.jooq.postgres.extensions.bindings.OffsetDateTimeRangeArrayBinding")
-                    .withIncludeTypes("_tstzrange")
-                    .withPriority(Integer.MIN_VALUE)
-                );
-            }
-            catch (ClassNotFoundException ignore) {
-                log.debug("Built in data types", "org.jooq.postgres.extensions.types.Hstore not found on classpath, ignoring built in data type extensions");
             }
         }
     }
@@ -3594,6 +3656,12 @@ public abstract class AbstractDatabase implements Database {
      * {@link #getDomains(SchemaDefinition)}
      */
     protected abstract List<DomainDefinition> getDomains0() throws SQLException;
+
+    /**
+     * Retrieve ALL XML schema collections from the database. This will be
+     * filtered in {@link #getXMLSchemaCollections()}
+     */
+    protected abstract List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException;
 
     /**
      * Retrieve ALL UDTs from the database. This will be filtered in

@@ -54,15 +54,15 @@ import org.jooq.impl.QOM.UnmodifiableList;
  */
 final class Least<T> extends AbstractField<T> implements QOM.Least<T> {
 
-    private final QueryPartListView<? extends Field<?>> args;
+    private final QueryPartListView<Field<T>> args;
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     Least(Field<?>... args) {
         super(N_LEAST, (DataType<T>) Tools.nullSafeDataType(args[0]));
 
-        this.args = QueryPartListView.wrap(args);
+        this.args = (QueryPartListView) QueryPartListView.wrap(args);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final void accept(Context<?> ctx) {
 
@@ -73,8 +73,11 @@ final class Least<T> extends AbstractField<T> implements QOM.Least<T> {
         }
 
         switch (ctx.family()) {
-            // This implementation has O(2^n) complexity. Better implementations
-            // are very welcome
+
+
+
+
+
 
 
 
@@ -83,21 +86,7 @@ final class Least<T> extends AbstractField<T> implements QOM.Least<T> {
 
 
             case DERBY: {
-                Field<T> first = (Field<T>) args.get(0);
-                Field<T> other = (Field<T>) args.get(1);
-
-                if (args.size() > 2) {
-                    Field<?>[] remaining = args.subList(2, args.size()).toArray(Tools.EMPTY_FIELD);
-
-                    ctx.visit(DSL
-                       .when(first.lt(other), DSL.least(first, remaining))
-                       .otherwise(DSL.least(other, remaining)));
-                }
-                else
-                    ctx.visit(DSL
-                       .when(first.lt(other), first)
-                       .otherwise(other));
-
+                GreatestLeast.acceptCaseEmulation(ctx, args, DSL::least, Field::lt);
                 return;
             }
 

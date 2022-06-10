@@ -54,15 +54,15 @@ import org.jooq.impl.QOM.UnmodifiableList;
  */
 final class Greatest<T> extends AbstractField<T> implements QOM.Greatest<T> {
 
-    private final QueryPartListView<? extends Field<?>> args;
+    private final QueryPartListView<Field<T>> args;
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     Greatest(Field<?>... args) {
         super(N_GREATEST, (DataType<T>) Tools.nullSafeDataType(args[0]));
 
-        this.args = QueryPartListView.wrap(args);
+        this.args = (QueryPartListView) QueryPartListView.wrap(args);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final void accept(Context<?> ctx) {
 
@@ -73,9 +73,11 @@ final class Greatest<T> extends AbstractField<T> implements QOM.Greatest<T> {
         }
 
         switch (ctx.family()) {
-            // This implementation has O(2^n) complexity. Better implementations
-            // are very welcome
-            // [#1049] TODO Fix this!
+
+
+
+
+
 
 
 
@@ -84,22 +86,7 @@ final class Greatest<T> extends AbstractField<T> implements QOM.Greatest<T> {
 
 
             case DERBY: {
-                Field<T> first = (Field<T>) args.get(0);
-                Field<T> other = (Field<T>) args.get(1);
-
-                if (args.size() > 2) {
-                    Field<?>[] remaining = args.subList(2, args.size()).toArray(Tools.EMPTY_FIELD);
-
-                    ctx.visit(DSL
-                       .when(first.gt(other), DSL.greatest(first, remaining))
-                       .otherwise(DSL.greatest(other, remaining)));
-                }
-                else
-                    ctx.visit(DSL
-                       .when(first.gt(other), first)
-                       .otherwise(other));
-
-                return;
+                GreatestLeast.acceptCaseEmulation(ctx, args, DSL::greatest, Field::gt);
             }
 
             case FIREBIRD:

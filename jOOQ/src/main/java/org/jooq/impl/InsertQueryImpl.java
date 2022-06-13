@@ -351,12 +351,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                         ctx.sql(')');
                     }
 
-                    if (onConflictWhere.hasWhere())
-                        ctx.qualify(false, c -> c
-                                .formatSeparator()
-                                .visit(K_WHERE)
-                                .sql(' ')
-                                .visit(onConflictWhere.getWhere()));
+                    acceptOnConflictWhere(ctx);
 
                     ctx.formatSeparator()
                        .visit(K_DO_UPDATE)
@@ -491,12 +486,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     else {
                         if (onConflict != null && onConflict.size() > 0) {
                             ctx.sql(" (").visit(onConflict).sql(')');
-
-                            if (onConflictWhere.hasWhere())
-                                ctx.formatSeparator()
-                                   .visit(K_WHERE)
-                                   .sql(' ')
-                                   .visit(onConflictWhere.getWhere());
+                            acceptOnConflictWhere(ctx);
                         }
 
 
@@ -596,6 +586,17 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         ctx.start(INSERT_RETURNING);
         toSQLReturning(ctx);
         ctx.end(INSERT_RETURNING);
+    }
+
+    private final void acceptOnConflictWhere(Context<?> ctx) {
+        if (onConflictWhere.hasWhere())
+
+            // [#11732] [#13660] Avoid qualification, which wasn't supported in older PG versions
+            ctx.qualify(false, c -> c
+                    .formatSeparator()
+                    .visit(K_WHERE)
+                    .sql(' ')
+                    .visit(onConflictWhere.getWhere()));
     }
 
     @Override

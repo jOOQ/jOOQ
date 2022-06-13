@@ -114,7 +114,7 @@ implements
 
             default:
                 ctx.visit(K_NOT)
-                   .sql('(')
+                   .sql(" (")
                    .visit((QueryPart) (Tools.hasDefaultConverter(field) ? field : condition(field)))
                    .sql(')');
                 break;

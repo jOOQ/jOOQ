@@ -62,7 +62,7 @@ final class FalseCondition extends AbstractCondition implements False, UEmpty {
     }
 
     @Override
-    boolean parenthesised(Context<?> ctx) {
+    final boolean parenthesised(Context<?> ctx) {
         return !NO_SUPPORT_BOOLEAN.contains(ctx.dialect());
     }
 

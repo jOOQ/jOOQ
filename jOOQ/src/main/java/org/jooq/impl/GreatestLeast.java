@@ -70,7 +70,6 @@ final class GreatestLeast<T> {
 
 
 
-
     static final <T> void acceptCaseEmulation(
         Context<?> ctx,
         QueryPartListView<Field<T>> args,

@@ -65,6 +65,10 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_CAST;
+import static org.jooq.impl.Keywords.K_ROW;
+import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import java.util.Set;
@@ -137,8 +141,10 @@ implements
 
 
 
+        // [#13664] Because of risk of ambiguity between table and column names,
+        //          we can't just render the table name here.
         else
-            ctx.qualify(false, c -> c.visit(table));
+            ctx.qualify(false, c -> c.visit(K_CAST).sql(" (").visit(K_ROW).sql(" (").visit(table).sql(".*) ").visit(K_AS).sql(' ').visit(unalias(table)).sql(')'));
     }
 
     @Override

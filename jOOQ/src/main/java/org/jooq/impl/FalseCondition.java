@@ -62,6 +62,11 @@ final class FalseCondition extends AbstractCondition implements False, UEmpty {
     }
 
     @Override
+    boolean parenthesised(Context<?> ctx) {
+        return !NO_SUPPORT_BOOLEAN.contains(ctx.dialect());
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         if (NO_SUPPORT_BOOLEAN.contains(ctx.dialect()))
             ctx.sql("1 = 0");

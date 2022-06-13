@@ -69,6 +69,12 @@ final class NullCondition extends AbstractCondition implements Null, UEmpty {
     }
 
     @Override
+    boolean parenthesised(Context<?> ctx) {
+        return !NO_SUPPORT_UNTYPED_NULL.contains(ctx.dialect())
+            && !NO_SUPPORT_BOOLEAN.contains(ctx.dialect());
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         if (NO_SUPPORT_UNTYPED_NULL.contains(ctx.dialect()))
             ctx.visit(castNull(BOOLEAN));

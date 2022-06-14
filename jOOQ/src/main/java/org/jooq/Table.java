@@ -382,6 +382,12 @@ extends
      * Note that the case-sensitivity of the returned table depends on
      * {@link Settings#getRenderQuotedNames()}. By default, table aliases are
      * quoted, and thus case-sensitive in many SQL dialects!
+     * <p>
+     * This method works both to alias the table as well as alias the table in
+     * its {@link SelectField} form via the {@link SelectField#as(String)}
+     * override. In order to alias only the projected table expression, use
+     * {@link DSL#field(SelectField)} to wrap this table into a {@link Field}
+     * first.
      *
      * @param alias The alias name
      * @return The table alias
@@ -561,6 +567,11 @@ extends
      * <p>
      * If the argument {@link Name#getName()} is qualified, then the
      * {@link Name#last()} part will be used.
+     * <p>
+     * This method works both to alias the table as well as alias the table in
+     * its {@link SelectField} form via the {@link SelectField#as(String)}
+     * override. In order to alias only the projected table expression, use
+     * {@link DSL#field(SelectField)} to wrap this table into a {@link Field}
      *
      * @param alias The alias name
      * @return The table alias

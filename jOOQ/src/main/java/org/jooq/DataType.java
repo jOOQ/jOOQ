@@ -502,6 +502,19 @@ public interface DataType<T> extends Named {
     boolean computed();
 
     /**
+     * Whether this column is computed on the server.
+     * <p>
+     * This is true only if all of these hold true:
+     * <ul>
+     * <li>{@link #computed()}</li>
+     * <li>{@link #generationLocation()} ==
+     * {@link GenerationLocation#SERVER}</li>
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    boolean computedOnServer();
+
+    /**
      * Whether this column is computed on the client.
      * <p>
      * This is true only if all of these hold true:

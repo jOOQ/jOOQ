@@ -171,6 +171,11 @@ implements
     }
 
     @Override
+    public final boolean computedOnServer() {
+        return computed() && generationLocation() == GenerationLocation.SERVER;
+    }
+
+    @Override
     public final boolean computedOnClient() {
         return computed() && generationLocation() == GenerationLocation.CLIENT;
     }

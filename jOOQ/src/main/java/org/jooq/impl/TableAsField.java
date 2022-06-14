@@ -144,7 +144,7 @@ implements
         // [#13664] Because of risk of ambiguity between table and column names,
         //          we can't just render the table name here.
         else
-            ctx.qualify(false, c -> c.visit(K_CAST).sql(" (").visit(K_ROW).sql(" (").visit(table).sql(".*) ").visit(K_AS).sql(' ').visit(unalias(table)).sql(')'));
+            ctx.visit(K_CAST).sql(" (").visit(K_ROW).sql(" (").visit(table).sql(".*) ").visit(K_AS).sql(' ').visit(unalias(table)).sql(')');
     }
 
     @Override

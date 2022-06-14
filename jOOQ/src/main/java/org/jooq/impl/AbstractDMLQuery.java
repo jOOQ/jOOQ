@@ -121,6 +121,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import org.jooq.Asterisk;
@@ -378,6 +379,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 ));
             });
         }
+
+
+
 
 
 

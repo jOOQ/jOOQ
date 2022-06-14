@@ -70,8 +70,8 @@ import org.jooq.tools.StringUtils;
  * @author Lukas Eder
  */
 final class MetaDataFieldProvider implements Serializable {
-    private static final JooqLogger  log              = JooqLogger.getLogger(MetaDataFieldProvider.class);
 
+    private static final JooqLogger  log = JooqLogger.getLogger(MetaDataFieldProvider.class);
     private final FieldsImpl<Record> fields;
 
     MetaDataFieldProvider(Configuration configuration, ResultSetMetaData meta) {

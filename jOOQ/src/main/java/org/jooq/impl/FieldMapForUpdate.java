@@ -131,7 +131,8 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
 
 
 
-    static final Set<SQLDialect> SUPPORT_RVE_SET                   = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect> NO_SUPPORT_RVE_SET                = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, IGNITE, MARIADB, MYSQL, SQLITE);
+    static final Set<SQLDialect> NO_SUPPORT_RVE_SET_IN_MERGE       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, IGNITE, MARIADB, MYSQL, SQLITE);
     static final Set<SQLDialect> REQUIRE_RVE_ROW_CLAUSE            = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
     final Table<?>               table;
@@ -218,7 +219,10 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
             Select<?> multiSelect = value instanceof Select ? (Select<?>) value : null;
 
             // [#6884] This syntax can be emulated trivially, if the RHS is not a SELECT subquery
-            if (multiValue != null && !SUPPORT_RVE_SET.contains(ctx.dialect())) {
+            if (multiValue != null
+                && (NO_SUPPORT_RVE_SET.contains(ctx.dialect())
+                        || (NO_SUPPORT_RVE_SET_IN_MERGE.contains(ctx.dialect()) && setClause == SetClause.MERGE))
+            ) {
                 FieldMapForUpdate map = new FieldMapForUpdate(table(), setClause, null);
 
                 for (int i = 0; i < multiRow.size(); i++) {
@@ -246,9 +250,15 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
 
 
 
+
+
+
             // [#10523] Generic SET ROW = (SELECT ..) emulation that works
             //          everywhere, but inefficiently duplicates the subquery
-            else if (multiSelect != null && EMULATE_RVE_SET_QUERY.contains(ctx.dialect())) {
+            else if (multiSelect != null
+                && (EMULATE_RVE_SET_QUERY.contains(ctx.dialect())
+                        || (NO_SUPPORT_RVE_SET_IN_MERGE.contains(ctx.dialect()) && setClause == SetClause.MERGE))
+            ) {
                 Row row = removeReadonly(ctx, multiRow);
                 int size = row.size();
                 Select<?> select;
@@ -285,20 +295,22 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
                 ctx.qualify(false, c -> c.visit(row))
                    .sql(" = ");
 
-                // Some dialects don't really support row value expressions on the
-                // right hand side of a SET clause
-                if (multiValue != null
+                if (multiValue != null) {
 
 
 
-                ) {
 
-                    // [#6763] Incompatible change in PostgreSQL 10 requires ROW() constructor for
-                    //         single-degree rows. Let's just always render it, here.
-                    if (REQUIRE_RVE_ROW_CLAUSE.contains(ctx.dialect()))
-                        ctx.visit(K_ROW).sql(" ");
 
-                    ctx.visit(removeReadonly(ctx, multiRow, multiValue));
+
+                    {
+
+                        // [#6763] Incompatible change in PostgreSQL 10 requires ROW() constructor for
+                        //         single-degree rows. Let's just always render it, here.
+                        if (REQUIRE_RVE_ROW_CLAUSE.contains(ctx.dialect()))
+                            ctx.visit(K_ROW).sql(" ");
+
+                        ctx.visit(removeReadonly(ctx, multiRow, multiValue));
+                    }
                 }
 
                 // Subselects or subselect emulations of row value expressions

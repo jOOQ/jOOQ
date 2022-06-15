@@ -162,7 +162,11 @@ public abstract class AbstractDatabase implements Database {
     private OnError                                                              onError                                 = OnError.FAIL;
     private List<Filter>                                                         filters;
     private String[]                                                             excludes;
-    private String[]                                                             includes                                = { ".*" };
+    private String[]                                                             excludesResult;
+    private String                                                               excludeSql;
+    private String[]                                                             includes;
+    private String[]                                                             includesResult;
+    private String                                                               includeSql;
     private boolean                                                              includeExcludeColumns                   = false;
     private boolean                                                              includeExcludePackageRoutines           = false;
     private boolean                                                              includeInvisibleColumns                 = true;
@@ -1009,7 +1013,20 @@ public abstract class AbstractDatabase implements Database {
         if (excludes == null)
             excludes = new String[0];
 
-        return excludes;
+        if (excludesResult == null)
+            excludesResult = includeExcludeResult(excludes, excludeSql);
+
+        return excludesResult;
+    }
+
+    @Override
+    public final void setExcludeSql(String sql) {
+        this.excludeSql = sql;
+    }
+
+    @Override
+    public final String getExcludeSql() {
+        return excludeSql;
     }
 
     @Override
@@ -1022,7 +1039,29 @@ public abstract class AbstractDatabase implements Database {
         if (includes == null)
             includes = new String[0];
 
-        return includes;
+        if (includesResult == null)
+            includesResult = includeExcludeResult(includes, includeSql);
+
+        return includesResult;
+    }
+
+    @Override
+    public final void setIncludeSql(String sql) {
+        this.includeSql = sql;
+    }
+
+    @Override
+    public final String getIncludeSql() {
+        return includeSql;
+    }
+
+    private final String[] includeExcludeResult(String[] a, String sql) {
+        List<String> list = new ArrayList<>(Arrays.asList(a));
+
+        if (!StringUtils.isBlank(sql))
+            list.addAll(statements.fetchSet(sql, String.class));
+
+        return list.toArray(new String[0]);
     }
 
     @Override
@@ -2959,7 +2998,7 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions) {
-        List<T> result = filterExcludeInclude(definitions, excludes, includes, filters);
+        List<T> result = filterExcludeInclude(definitions, getExcludes(), getIncludes(), filters);
 
         this.all.addAll(definitions);
         this.included.addAll(result);
@@ -3011,6 +3050,10 @@ public abstract class AbstractDatabase implements Database {
 
     protected final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String[] e, String[] i, List<Filter> f) {
         List<T> result = new ArrayList<>();
+
+        // [#6489] By default, exclude nothing and include everything
+        if (i == null || i.length == 0)
+            i = new String[] { ".*" };
 
         definitionsLoop: for (T definition : definitions) {
             if (e != null) {

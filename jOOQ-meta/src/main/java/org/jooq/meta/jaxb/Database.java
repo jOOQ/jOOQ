@@ -43,12 +43,14 @@ public class Database implements Serializable, XMLAppendable
     protected Boolean regexMatchesPartialQualification = true;
     @XmlElement(defaultValue = "true")
     protected Boolean sqlMatchesPartialQualification = true;
-    @XmlElement(defaultValue = ".*")
     @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String includes = ".*";
-    @XmlElement(defaultValue = "")
+    protected String includes;
     @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String excludes = "";
+    protected String includeSql;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String excludes;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String excludeSql;
     @XmlElement(defaultValue = "false")
     protected Boolean includeExcludeColumns = false;
     @XmlElement(defaultValue = "false")
@@ -410,6 +412,44 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
+     * All elements that are generated from your schema.
+     * <p>
+     * This is a query that produces Java regular expressions, which are appended to the ones produced by includes.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * <p>
+     * Excludes match before includes, i.e. excludes have a higher priority.
+     * 
+     */
+    public String getIncludeSql() {
+        return includeSql;
+    }
+
+    /**
+     * All elements that are generated from your schema.
+     * <p>
+     * This is a query that produces Java regular expressions, which are appended to the ones produced by includes.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * <p>
+     * Excludes match before includes, i.e. excludes have a higher priority.
+     * 
+     */
+    public void setIncludeSql(String value) {
+        this.includeSql = value;
+    }
+
+    /**
      * All elements that are excluded from your schema.
      * <p>
      * This is a Java regular expression. Use the pipe to separate several expressions.
@@ -429,6 +469,44 @@ public class Database implements Serializable, XMLAppendable
      */
     public void setExcludes(String value) {
         this.excludes = value;
+    }
+
+    /**
+     * All elements that are excluded from your schema.
+     * <p>
+     * This is a query that produces Java regular expressions, which are appended to the ones produced by excludes.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * <p>
+     * Excludes match before includes, i.e. excludes have a higher priority.
+     * 
+     */
+    public String getExcludeSql() {
+        return excludeSql;
+    }
+
+    /**
+     * All elements that are excluded from your schema.
+     * <p>
+     * This is a query that produces Java regular expressions, which are appended to the ones produced by excludes.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * <p>
+     * Excludes match before includes, i.e. excludes have a higher priority.
+     * 
+     */
+    public void setExcludeSql(String value) {
+        this.excludeSql = value;
     }
 
     /**
@@ -2062,6 +2140,26 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
+     * All elements that are generated from your schema.
+     * <p>
+     * This is a query that produces Java regular expressions, which are appended to the ones produced by includes.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * <p>
+     * Excludes match before includes, i.e. excludes have a higher priority.
+     * 
+     */
+    public Database withIncludeSql(String value) {
+        setIncludeSql(value);
+        return this;
+    }
+
+    /**
      * All elements that are excluded from your schema.
      * <p>
      * This is a Java regular expression. Use the pipe to separate several expressions.
@@ -2070,6 +2168,26 @@ public class Database implements Serializable, XMLAppendable
      */
     public Database withExcludes(String value) {
         setExcludes(value);
+        return this;
+    }
+
+    /**
+     * All elements that are excluded from your schema.
+     * <p>
+     * This is a query that produces Java regular expressions, which are appended to the ones produced by excludes.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * <p>
+     * Excludes match before includes, i.e. excludes have a higher priority.
+     * 
+     */
+    public Database withExcludeSql(String value) {
+        setExcludeSql(value);
         return this;
     }
 
@@ -2689,7 +2807,9 @@ public class Database implements Serializable, XMLAppendable
         builder.append("regexMatchesPartialQualification", regexMatchesPartialQualification);
         builder.append("sqlMatchesPartialQualification", sqlMatchesPartialQualification);
         builder.append("includes", includes);
+        builder.append("includeSql", includeSql);
         builder.append("excludes", excludes);
+        builder.append("excludeSql", excludeSql);
         builder.append("includeExcludeColumns", includeExcludeColumns);
         builder.append("includeExcludePackageRoutines", includeExcludePackageRoutines);
         builder.append("includeTables", includeTables);
@@ -2820,12 +2940,30 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (includeSql == null) {
+            if (other.includeSql!= null) {
+                return false;
+            }
+        } else {
+            if (!includeSql.equals(other.includeSql)) {
+                return false;
+            }
+        }
         if (excludes == null) {
             if (other.excludes!= null) {
                 return false;
             }
         } else {
             if (!excludes.equals(other.excludes)) {
+                return false;
+            }
+        }
+        if (excludeSql == null) {
+            if (other.excludeSql!= null) {
+                return false;
+            }
+        } else {
+            if (!excludeSql.equals(other.excludeSql)) {
                 return false;
             }
         }
@@ -3417,7 +3555,9 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((regexMatchesPartialQualification == null)? 0 :regexMatchesPartialQualification.hashCode()));
         result = ((prime*result)+((sqlMatchesPartialQualification == null)? 0 :sqlMatchesPartialQualification.hashCode()));
         result = ((prime*result)+((includes == null)? 0 :includes.hashCode()));
+        result = ((prime*result)+((includeSql == null)? 0 :includeSql.hashCode()));
         result = ((prime*result)+((excludes == null)? 0 :excludes.hashCode()));
+        result = ((prime*result)+((excludeSql == null)? 0 :excludeSql.hashCode()));
         result = ((prime*result)+((includeExcludeColumns == null)? 0 :includeExcludeColumns.hashCode()));
         result = ((prime*result)+((includeExcludePackageRoutines == null)? 0 :includeExcludePackageRoutines.hashCode()));
         result = ((prime*result)+((includeTables == null)? 0 :includeTables.hashCode()));

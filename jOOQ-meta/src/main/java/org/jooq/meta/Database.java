@@ -458,10 +458,24 @@ public interface Database extends AutoCloseable {
     void setExcludes(String[] excludes);
 
     /**
+     * Database objects matching any of the regular expressions produced by this
+     * SQL query will not be generated, in addition to the ones specified by
+     * {@link #getExcludes()}.
+     */
+    void setExcludeSql(String sql);
+
+    /**
      * Database objects matching any of these regular expressions will not be
      * generated.
      */
     String[] getExcludes();
+
+    /**
+     * Database objects matching any of the regular expressions produced by this
+     * SQL query will not be generated, in addition to the ones specified by
+     * {@link #getExcludes()}.
+     */
+    String getExcludeSql();
 
     /**
      * Only database objects matching any of these regular expressions will be
@@ -470,10 +484,24 @@ public interface Database extends AutoCloseable {
     void setIncludes(String[] includes);
 
     /**
+     * Only database objects matching any of the regular expressions produced by
+     * this SQL query will be generated, in addition to the ones specified by
+     * {@link #getIncludes()}.
+     */
+    void setIncludeSql(String sql);
+
+    /**
      * Only database objects matching any of these regular expressions will be
      * generated.
      */
     String[] getIncludes();
+
+    /**
+     * Only database objects matching any of the regular expressions produced by
+     * this SQL query will be generated, in addition to the ones specified by
+     * {@link #getIncludes()}.
+     */
+    String getIncludeSql();
 
     /**
      * Indicate whether include / exclude regular expression shall also match

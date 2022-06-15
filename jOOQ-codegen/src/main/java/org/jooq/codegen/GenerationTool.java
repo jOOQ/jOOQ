@@ -553,8 +553,14 @@ public class GenerationTool {
             database.setConnection(connection);
             database.setConfiguredCatalogs(catalogs);
             database.setConfiguredSchemata(schemata);
-            database.setIncludes(new String[] { defaultString(d.getIncludes()) });
-            database.setExcludes(new String[] { defaultString(d.getExcludes()) });
+
+            if (!isBlank(d.getIncludes()))
+                database.setIncludes(new String[] { d.getIncludes() });
+            if (!isBlank(d.getExcludes()))
+                database.setExcludes(new String[] { d.getExcludes() });
+
+            database.setIncludeSql(d.getIncludeSql());
+            database.setExcludeSql(d.getExcludeSql());
 
             // [#10763] Currently, the javaTimeTypes flag needs to be set before
             //          the forcedTypesForBuiltinDataTypeExtensions flag.

@@ -72,4 +72,9 @@ final class Statements {
     final Set<?> fetchSet(String sql) {
         return sqlCacheSingleColumnSet.computeIfAbsent(sql, s -> fetch(s).intoSet(0));
     }
+
+    @SuppressWarnings("unchecked")
+    final <T> Set<T> fetchSet(String sql, Class<T> type) {
+        return (Set<T>) sqlCacheSingleColumnSet.computeIfAbsent(sql, s -> fetch(s).intoSet(0, type));
+    }
 }

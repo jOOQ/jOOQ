@@ -574,7 +574,7 @@ The default value is "COMMENTS CASE_INSENSITIVE"]]></jxb:javadoc></jxb:property>
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether SQL queries that match qualified object names also match partial qualifications (e.g. `table\.column` matches `schema.table.column`) or only full and/or no qualifications (e.g. `schema\.table\.column` and `column` match `schema.table.column`)]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="includes" type="string" default=".*" minOccurs="0" maxOccurs="1">
+      <element name="includes" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All elements that are generated from your schema.
 <p>
 This is a Java regular expression. Use the pipe to separate several expressions.
@@ -587,10 +587,40 @@ using this syntax: <code>(?i:expr)</code>
 Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="excludes" type="string" default="" minOccurs="0" maxOccurs="1">
+      <element name="includeSql" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All elements that are generated from your schema.
+<p>
+This is a query that produces Java regular expressions, which are appended to the ones produced by includes.
+Watch out for case-sensitivity. Depending on your database, this might be
+important!
+<p>
+You can create case-insensitive regular expressions
+using this syntax: <code>(?i:expr)</code>
+<p>
+Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+<p>
+Excludes match before includes, i.e. excludes have a higher priority.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="excludes" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All elements that are excluded from your schema.
 <p>
 This is a Java regular expression. Use the pipe to separate several expressions.
+Excludes match before includes, i.e. excludes have a higher priority.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="excludeSql" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All elements that are excluded from your schema.
+<p>
+This is a query that produces Java regular expressions, which are appended to the ones produced by excludes.
+Watch out for case-sensitivity. Depending on your database, this might be
+important!
+<p>
+You can create case-insensitive regular expressions
+using this syntax: <code>(?i:expr)</code>
+<p>
+Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+<p>
 Excludes match before includes, i.e. excludes have a higher priority.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 

@@ -87,6 +87,7 @@ final class Greatest<T> extends AbstractField<T> implements QOM.Greatest<T> {
 
             case DERBY: {
                 GreatestLeast.acceptCaseEmulation(ctx, args, DSL::greatest, Field::gt);
+                return;
             }
 
             case FIREBIRD:

@@ -42,6 +42,7 @@ import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -76,6 +77,7 @@ import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
+import org.jooq.Update;
 import org.jooq.tools.JooqLogger;
 
 /**
@@ -87,8 +89,9 @@ import org.jooq.tools.JooqLogger;
  */
 @org.jooq.Internal
 public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualifiedRecord<R> implements TableRecord<R> {
-    private static final JooqLogger      log                    = JooqLogger.getLogger(TableRecordImpl.class);
-    private static final Set<SQLDialect> REFRESH_GENERATED_KEYS = SQLDialect.supportedBy(DERBY, H2, MARIADB, MYSQL);
+    private static final JooqLogger      log                              = JooqLogger.getLogger(TableRecordImpl.class);
+    private static final Set<SQLDialect> REFRESH_GENERATED_KEYS           = SQLDialect.supportedBy(DERBY, H2, MARIADB, MYSQL);
+    private static final Set<SQLDialect> REFRESH_GENERATED_KEYS_ON_UPDATE = SQLDialect.supportedBy(HSQLDB);
 
     public TableRecordImpl(Table<R> table) {
         super(table);
@@ -204,8 +207,10 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualified
             }
 
             // [#1859] In some databases, not all fields can be fetched via getGeneratedKeys()
-            if (TRUE.equals(configuration().settings().isReturnAllOnUpdatableRecord())
-                    && (REFRESH_GENERATED_KEYS.contains(configuration().dialect())
+            Configuration c = configuration();
+            if (TRUE.equals(c.settings().isReturnAllOnUpdatableRecord())
+                    && (REFRESH_GENERATED_KEYS.contains(c.dialect())
+                    || REFRESH_GENERATED_KEYS_ON_UPDATE.contains(c.dialect()) && query instanceof Update
 
 
 

@@ -24,7 +24,7 @@
         <h2.version>2.1.212</h2.version>
         <sqlite.version>3.36.0.3</sqlite.version>
         <derby.version>10.14.2.0</derby.version>
-        <hsqldb.version>2.5.1</hsqldb.version>
+        <hsqldb.version>2.6.1</hsqldb.version>
 
         <!-- JDBC drivers for jOOQ-xyz-extensions modules and vendor-specific API access -->
         <postgres.version>42.3.3</postgres.version>

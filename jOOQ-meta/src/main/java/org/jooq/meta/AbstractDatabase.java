@@ -698,7 +698,7 @@ public abstract class AbstractDatabase implements Database {
                 if (onlyDefaultCatalog)
                     log.warn(
                         "No catalogs were loaded",
-                        "Your database reported only a default catalog, which was filtered by your <inputCatalog/> configurations. jOOQ does not support catalogs for all databases, in case of which <inputCatalog/> configurations will not work.");
+                        "Your database reported only a default catalog, which was filtered out by your <inputCatalog/> configurations. jOOQ does not support catalogs for all databases, in case of which <inputCatalog/> configurations will not work. E.g. a catalog works on SQL Server to qualify tables as [catalog].[schema].[table]. Perhaps you meant to configure an <inputSchema/> instead?");
                 else
                     log.warn(
                         "No catalogs were loaded",

@@ -148,24 +148,24 @@ implements
     UNotYetImplemented
 {
 
-    private static final Clause[]        CLAUSES                                       = { INSERT };
-    private static final Set<SQLDialect> SUPPORT_INSERT_IGNORE                         = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect> SUPPORTS_OPTIONAL_DO_UPDATE_CONFLICT_TARGETS  = SQLDialect.supportedBy(SQLITE);
-    private static final Set<SQLDialect> NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING = SQLDialect.supportedBy(DERBY, H2);
-    private static final Set<SQLDialect> NO_SUPPORT_SUBQUERY_IN_MERGE_USING            = SQLDialect.supportedBy(DERBY);
-    static final Set<SQLDialect>         REQUIRE_NEW_MYSQL_EXCLUDED_EMULATION          = SQLDialect.supportedBy(MYSQL);
+    static final Clause[]        CLAUSES                                       = { INSERT };
+    static final Set<SQLDialect> SUPPORT_INSERT_IGNORE                         = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect> SUPPORTS_OPTIONAL_DO_UPDATE_CONFLICT_TARGETS  = SQLDialect.supportedBy(SQLITE);
+    static final Set<SQLDialect> NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING = SQLDialect.supportedBy(DERBY, H2);
+    static final Set<SQLDialect> NO_SUPPORT_SUBQUERY_IN_MERGE_USING            = SQLDialect.supportedBy(DERBY);
+    static final Set<SQLDialect> REQUIRE_NEW_MYSQL_EXCLUDED_EMULATION          = SQLDialect.supportedBy(MYSQL);
 
-    final FieldMapForUpdate              updateMap;
-    final FieldMapsForInsert             insertMaps;
-    Select<?>                            select;
-    boolean                              defaultValues;
-    boolean                              onDuplicateKeyUpdate;
-    boolean                              onDuplicateKeyIgnore;
-    Constraint                           onConstraint;
-    UniqueKey<R>                         onConstraintUniqueKey;
-    QueryPartList<Field<?>>              onConflict;
-    final ConditionProviderImpl          onConflictWhere;
-    final ConditionProviderImpl          condition;
+    final FieldMapForUpdate      updateMap;
+    final FieldMapsForInsert     insertMaps;
+    Select<?>                    select;
+    boolean                      defaultValues;
+    boolean                      onDuplicateKeyUpdate;
+    boolean                      onDuplicateKeyIgnore;
+    Constraint                   onConstraint;
+    UniqueKey<R>                 onConstraintUniqueKey;
+    QueryPartList<Field<?>>      onConflict;
+    final ConditionProviderImpl  onConflictWhere;
+    final ConditionProviderImpl  condition;
 
     InsertQueryImpl(Configuration configuration, WithImpl with, Table<R> into) {
         super(configuration, with, into);

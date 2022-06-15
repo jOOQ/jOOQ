@@ -44,13 +44,9 @@ package org.jooq.impl;
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
-// ...
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
@@ -72,7 +68,6 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.WriteIfReadonly.IGNORE;
 import static org.jooq.conf.WriteIfReadonly.THROW;
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
@@ -315,18 +310,13 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
 
                 // Subselects or subselect emulations of row value expressions
                 else if (multiSelect != null) {
-                    Select<?> select;
-
-                    if (multiValue != null)
-                        select = select(removeReadonly(ctx, multiRow, multiValue).fields());
 
 
 
 
-                    else
-                        select = multiSelect;
 
-                    visitSubquery(ctx, select);
+
+                    visitSubquery(ctx, multiSelect);
                 }
             }
         }

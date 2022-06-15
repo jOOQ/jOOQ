@@ -84,6 +84,7 @@ import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.row0;
 import static org.jooq.impl.Tools.unqualified;
 import static org.jooq.impl.Tools.visitSubquery;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_LIMIT_WITH_ORDER_BY;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_ON_DUPLICATE_KEY_WHERE;
 
 import java.util.ArrayList;
@@ -316,6 +317,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
 
 
 
+
                     visitSubquery(ctx, multiSelect);
                 }
             }
@@ -330,6 +332,10 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
             Condition condition = (Condition) ctx.data(DATA_ON_DUPLICATE_KEY_WHERE);
             if (condition != null)
                 ctx.visit(when(condition, (Field) value).else_(key));
+
+
+
+
             else
                 ctx.visit(value);
         }
@@ -338,6 +344,15 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
             ctx.end(assignmentClause);
 
         return ",";
+    }
+
+    private static final void visitSubquery(Context<?> ctx, Select<?> select) {
+
+
+
+
+
+        Tools.visitSubquery(ctx, select);
     }
 
     static final Row removeReadonly(Context<?> ctx, Row row) {

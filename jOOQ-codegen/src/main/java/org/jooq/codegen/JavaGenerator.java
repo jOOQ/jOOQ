@@ -6002,15 +6002,6 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
-
-
-
-
-
-
-
-
-
             final String columnVisibility;
 
 
@@ -6029,8 +6020,16 @@ public class JavaGenerator extends AbstractGenerator {
                 out.javadoc("The column <code>%s</code>.[[before= ][%s]]", column.getQualifiedOutputName(), list(escapeEntities(comment(column))));
 
             if (scala) {
-                out.println("%sval %s: %s[%s, %s] = createField(%s.name(\"%s\"), %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ")",
-                    columnVisibility, scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding, generator);
+                // [#9879] In scala, subclasses cannot call a superclass protected static method
+                //         only a superclass protected instance method. But to capture the Generator<?, TR, ?>
+                //         type variable, we need to pass it explicitly. The relevant createField0() method
+                //         can't be overloaded, so it has that "0" suffix...
+                if (generator.isEmpty())
+                    out.println("%sval %s: %s[%s, %s] = createField(%s.name(\"%s\"), %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ")",
+                        columnVisibility, scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding, generator);
+                else
+                    out.println("%sval %s: %s[%s, %s] = createField0(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ")",
+                        columnVisibility, scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding, generator);
             }
             else if (kotlin) {
                 out.println("%sval %s: %s<%s, %s?> = createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ")",

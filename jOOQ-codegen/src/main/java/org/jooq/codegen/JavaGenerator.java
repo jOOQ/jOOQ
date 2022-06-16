@@ -9349,7 +9349,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         // XML types
         if (xmlType != null) {
-            type = getStrategy().getJavaClassName(xmlType);
+            type = out.ref(getStrategy().getFullJavaClassName(xmlType));
         }
 
         // Custom types

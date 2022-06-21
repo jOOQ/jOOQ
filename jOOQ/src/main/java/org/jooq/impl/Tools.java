@@ -7019,4 +7019,17 @@ final class Tools {
                 throw e;
         }
     }
+
+    static final <T> DataType<T> removeGenerator(DataType<T> dataType) {
+
+
+
+
+
+
+
+
+
+        return dataType;
+    }
 }

@@ -99,6 +99,7 @@ import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Tools.removeGenerator;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_DML_TARGET_TABLE;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_RENDERING_DATA_CHANGE_DELTA_TABLE;

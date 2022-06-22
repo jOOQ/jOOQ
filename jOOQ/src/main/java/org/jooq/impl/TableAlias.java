@@ -38,15 +38,15 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.removeGenerator;
+
 import java.util.List;
 import java.util.function.Predicate;
 
 import org.jooq.Clause;
 import org.jooq.Context;
-import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Generator;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -55,8 +55,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 // ...
 import org.jooq.UniqueKey;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -96,19 +94,6 @@ final class TableAlias<R extends Record> extends AbstractTable<R> implements QOM
         ));
 
         return new FieldsImpl<>(result);
-    }
-
-    static final <T> DataType<T> removeGenerator(DataType<T> dataType) {
-
-
-
-
-
-
-
-
-
-        return dataType;
     }
 
     /**

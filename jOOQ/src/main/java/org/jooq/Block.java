@@ -56,7 +56,7 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
  * // Wrapping SQL statements only
@@ -77,7 +77,7 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  *        )
  *    )
  *    .execute();
- * </pre></code>
+ * </code></pre>
  * <p>
  * Instances can be created using {@link DSL#begin(Statement...)} and overloads.
  *

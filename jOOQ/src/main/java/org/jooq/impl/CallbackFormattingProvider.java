@@ -55,11 +55,11 @@ import org.jetbrains.annotations.NotNull;
 /**
  * A {@link FormattingProvider} that allows for functional composition.
  * <p>
- * For example: <code><pre>
+ * For example: <pre><code>
  * FormattingProvider listener = FormattingProvider
  *   .on(ctx -&gt; something())
  *   .onVisitEnd(ctx -&gt; something());
- * </pre></code>
+ * </code></pre>
  *
  * @author Lukas Eder
  */

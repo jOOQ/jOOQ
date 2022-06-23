@@ -47,7 +47,7 @@ import org.jooq.tools.jdbc.MockDataProvider;
  * accordance with the specified number of rows. I.e. it not be allowed for the
  * file-based {@link MockDataProvider} to have this content:
  * <p>
- * <code><pre>
+ * <pre><code>
  * select "TABLE2"."ID2", "TABLE2"."NAME2" from "TABLE2"
  * &gt; +---+-----+
  * &gt; |ID2|NAME2|
@@ -56,7 +56,7 @@ import org.jooq.tools.jdbc.MockDataProvider;
  * &gt; |2  |Y    |
  * &gt; +---+-----+
  * &#64; rows: 1000
- * </pre></code>
+ * </code></pre>
  *
  * @author Samy Deghou
  * @author Lukas Eder

@@ -62,7 +62,7 @@ extends
      * Procedures and functions with defaulted parameters behave slightly
      * different from ones without defaulted parameters. In PL/SQL and other
      * procedural languages, it is possible to pass parameters by name,
-     * reordering names and omitting defaulted parameters: <code><pre>
+     * reordering names and omitting defaulted parameters: <pre><code>
      * CREATE PROCEDURE MY_PROCEDURE (P_DEFAULTED IN NUMBER := 0
      *                                P_MANDATORY IN NUMBER);
      *
@@ -78,7 +78,7 @@ extends
      *   -- Omitting defaulted parameters
      *   MY_PROCEDURE(P_MANDATORY =&gt; 2);
      * END;
-     * </pre></code>
+     * </code></pre>
      * <p>
      * If a procedure has defaulted parameters, jOOQ binds them by name, rather
      * than by index.

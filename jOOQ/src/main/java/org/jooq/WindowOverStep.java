@@ -69,7 +69,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * This type is used for the window function DSL API.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * field.firstValue()
  *      .ignoreNulls()
  *      .over()
@@ -77,7 +77,7 @@ import org.jetbrains.annotations.NotNull;
  *      .orderBy(PUBLISHED_IN.asc())
  *      .rowsBetweenUnboundedPreceding()
  *      .andUnboundedFollowing()
- * </pre></code>
+ * </code></pre>
  * <p>
  * Unlike in {@link WindowBeforeOverStep}, <code>OVER()</code> is a mandatory
  * clause.
@@ -90,10 +90,9 @@ public interface WindowOverStep<T> {
     /**
      * Turn this aggregate function into a window function.
      * <p>
-     * An example: <code><pre>
+     * An example: <pre><code>
      * MAX(id) OVER (PARTITION BY 1)
-     * </code>
-     * </pre>
+     * </code></pre>
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -103,10 +102,9 @@ public interface WindowOverStep<T> {
      * Turn this aggregate function into a window function referencing a window
      * name.
      * <p>
-     * An example: <code><pre>
+     * An example: <pre><code>
      * MAX(id) OVER my_window
-     * </code>
-     * </pre>
+     * </code></pre>
      * <p>
      * If the <code>WINDOW</code> clause is not supported (see
      * {@link SelectWindowStep#window(WindowDefinition...)}, then referenced
@@ -120,10 +118,9 @@ public interface WindowOverStep<T> {
      * Turn this aggregate function into a window function referencing a window
      * name.
      * <p>
-     * An example: <code><pre>
+     * An example: <pre><code>
      * MAX(id) OVER my_window
-     * </code>
-     * </pre>
+     * </code></pre>
      * <p>
      * If the <code>WINDOW</code> clause is not supported (see
      * {@link SelectWindowStep#window(WindowDefinition...)}, then referenced
@@ -136,10 +133,9 @@ public interface WindowOverStep<T> {
     /**
      * Turn this aggregate function into a window function.
      * <p>
-     * An example: <code><pre>
+     * An example: <pre><code>
      * MAX(id) OVER (PARTITION BY 1)
-     * </code>
-     * </pre>
+     * </code></pre>
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -149,10 +145,9 @@ public interface WindowOverStep<T> {
      * Turn this aggregate function into a window function referencing a window
      * definition.
      * <p>
-     * An example: <code><pre>
+     * An example: <pre><code>
      * MAX(id) OVER my_window
-     * </code>
-     * </pre>
+     * </code></pre>
      * <p>
      * If the <code>WINDOW</code> clause is not supported (see
      * {@link SelectWindowStep#window(WindowDefinition...)}, then referenced

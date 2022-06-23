@@ -51,7 +51,7 @@ import org.jooq.impl.DSL;
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
  * Field&lt;Integer&gt; field = field(
@@ -59,7 +59,7 @@ import org.jooq.impl.DSL;
  *     SQLDataType.INTEGER,
  *     keyword("extract"), keyword("year"), keyword("from"), ACTOR.LAST_UPDATE
  * );
- * </pre></code>
+ * </code></pre>
  * <p>
  * Instances can be created using {@link DSL#keyword(String)} and overloads.
  *

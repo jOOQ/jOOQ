@@ -55,13 +55,13 @@ import org.jetbrains.annotations.NotNull;
 /**
  * This type is used for the {@link Delete}'s DSL API.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * DSLContext create = DSL.using(configuration);
  *
  * create.delete(table)
  *       .where(field1.greaterThan(100))
  *       .execute();
- * </pre></code>
+ * </code></pre>
  * <p>
  * This implemented differently for every dialect:
  * <ul>

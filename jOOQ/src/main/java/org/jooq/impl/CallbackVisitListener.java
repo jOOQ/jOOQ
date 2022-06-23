@@ -46,11 +46,11 @@ import org.jooq.VisitListener;
 /**
  * A {@link VisitListener} that allows for functional composition.
  * <p>
- * For example: <code><pre>
+ * For example: <pre><code>
  * VisitListener listener = VisitListener
  *   .onVisitStart(ctx -&gt; something())
  *   .onVisitEnd(ctx -&gt; something());
- * </pre></code>
+ * </code></pre>
  *
  * @author Lukas Eder
  */

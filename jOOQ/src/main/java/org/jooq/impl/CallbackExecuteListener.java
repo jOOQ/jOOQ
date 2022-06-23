@@ -44,11 +44,11 @@ import org.jooq.ExecuteListener;
 /**
  * An {@link ExecuteListener} that allows for functional composition.
  * <p>
- * For example: <code><pre>
+ * For example: <pre><code>
  * ExecuteListener listener = ExecuteListener
  *   .onExecuteStart(ctx -&gt; something())
  *   .onExecuteEnd(ctx -&gt; something());
- * </pre></code>
+ * </code></pre>
  *
  * @author Lukas Eder
  */

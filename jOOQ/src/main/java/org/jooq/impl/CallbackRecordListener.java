@@ -46,11 +46,11 @@ import org.jooq.RecordListener;
 /**
  * A {@link RecordListener} that allows for functional composition.
  * <p>
- * For example: <code><pre>
+ * For example: <pre><code>
  * ParseListener listener = RecordListener
  *   .onLoadStart(ctx -&gt; something())
  *   .onLoadEnd(ctx -&gt; something());
- * </pre></code>
+ * </code></pre>
  *
  * @author Lukas Eder
  */

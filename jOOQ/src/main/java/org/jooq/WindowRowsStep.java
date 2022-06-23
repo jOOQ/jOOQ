@@ -68,7 +68,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * This type is used for the window function DSL API.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * field.firstValue()
  *      .ignoreNulls()
  *      .over()
@@ -76,7 +76,7 @@ import org.jetbrains.annotations.NotNull;
  *      .orderBy(PUBLISHED_IN.asc())
  *      .rowsBetweenUnboundedPreceding()
  *      .andUnboundedFollowing()
- * </pre></code>
+ * </code></pre>
  *
  * @param <T> The function return type
  * @author Lukas Eder

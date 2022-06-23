@@ -50,21 +50,21 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
  * <p>
  * An ordered-set aggregate function is an aggregate function with a mandatory
  * Oracle-specific <code>WITHIN GROUP (ORDER BY ..)</code> clause. An example is
- * <code>LISTAGG</code>: <code><pre>
+ * <code>LISTAGG</code>: <pre><code>
  * SELECT   LISTAGG(TITLE, ', ')
  *          WITHIN GROUP (ORDER BY TITLE)
  * FROM     T_BOOK
  * GROUP BY AUTHOR_ID
- * </pre></code> The above function groups books by author and aggregates titles
+ * </code></pre> The above function groups books by author and aggregates titles
  * into a concatenated string.
  * <p>
  * Ordered-set aggregate functions can be further converted into window functions
- * using the <code>OVER(PARTITION BY ..)</code> clause. For example: <code><pre>
+ * using the <code>OVER(PARTITION BY ..)</code> clause. For example: <pre><code>
  * SELECT LISTAGG(TITLE, ', ')
  *        WITHIN GROUP (ORDER BY TITLE)
  *        OVER (PARTITION BY AUTHOR_ID)
  * FROM   T_BOOK
- * </pre></code>
+ * </code></pre>
  *
  * @author Lukas Eder
  */

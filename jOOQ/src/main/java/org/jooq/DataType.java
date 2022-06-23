@@ -184,7 +184,7 @@ public interface DataType<T> extends Named {
      * {@link #getBinding()} cannot be translated to an array data type. Use
      * this idiom, instead:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * // Doesn't work
      * DataType<UserType[]> t1 =
      *   SQLDataType.INTEGER.asConvertedDataType(binding).getArrayDataType();
@@ -192,7 +192,7 @@ public interface DataType<T> extends Named {
      * // Works
      * DataType<UserType[]> t2 =
      *   SQLDataType.INTEGER.getArrayDataType().asConvertedDataType(arrayBinding);
-     * </pre></code>
+     * </code></pre>
      *
      * @throws DataTypeException When this data type has a custom
      *             {@link #getBinding()}, which cannot be automatically
@@ -509,6 +509,7 @@ public interface DataType<T> extends Named {
      * <li>{@link #computed()}</li>
      * <li>{@link #generationLocation()} ==
      * {@link GenerationLocation#SERVER}</li>
+     * </ul>
      * <p>
      * This feature is implemented in commercial distributions only.
      */
@@ -522,6 +523,7 @@ public interface DataType<T> extends Named {
      * <li>{@link #computed()}</li>
      * <li>{@link #generationLocation()} ==
      * {@link GenerationLocation#CLIENT}</li>
+     * </ul>
      * <p>
      * This feature is implemented in commercial distributions only.
      */
@@ -540,6 +542,7 @@ public interface DataType<T> extends Named {
      * {@link Generator#supports(GeneratorStatementType)} any of
      * {@link GeneratorStatementType#INSERT} or
      * {@link GeneratorStatementType#UPDATE}</li>
+     * </ul>
      * <p>
      * This feature is implemented in commercial distributions only.
      */
@@ -557,6 +560,7 @@ public interface DataType<T> extends Named {
      * <li>{@link #generatedAlwaysAsGenerator()} produces a generator that
      * {@link Generator#supports(GeneratorStatementType)} the argument
      * <code>statementType</code></li>
+     * </ul>
      * <p>
      * This feature is implemented in commercial distributions only.
      */
@@ -574,6 +578,7 @@ public interface DataType<T> extends Named {
      * <li>{@link #generatedAlwaysAsGenerator()} produces a generator that
      * {@link Generator#supports(GeneratorStatementType)} the type
      * {@link GeneratorStatementType#SELECT}</li>
+     * </ul>
      * <p>
      * This feature is implemented in commercial distributions only.
      */

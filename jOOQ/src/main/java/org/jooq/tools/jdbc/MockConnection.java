@@ -68,7 +68,7 @@ import java.util.Properties;
  * round-trip of using an actual in-memory test database, such as Derby, H2 or
  * HSQLDB. A usage example:
  * <p>
- * <code><pre>
+ * <pre><code>
  * MockDataProvider provider = new MockDataProvider() {
  *     public MockResult[] execute(MockExecuteContext context) throws SQLException {
  *         Result&lt;MyTableRecord&gt; result = executor.newResult(MY_TABLE);
@@ -82,7 +82,7 @@ import java.util.Properties;
  * Connection connection = new MockConnection(provider);
  * DSLContext create = DSL.using(connection, dialect);
  * assertEquals(1, create.selectOne().fetch().size());
- * </pre></code>
+ * </code></pre>
  * <p>
  * While this <code>MockConnection</code> can be used independently of jOOQ, it
  * has been optimised for usage with jOOQ. JDBC features that are not used by

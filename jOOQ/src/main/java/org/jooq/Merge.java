@@ -44,7 +44,7 @@ import org.jooq.impl.DSL;
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
  * using(configuration)
@@ -57,7 +57,7 @@ import org.jooq.impl.DSL;
  *    .whenNotMatchedThenInsert(CUSTOMER.FIRST_NAME, CUSTOMER.LAST_NAME)
  *    .values(CUSTOMER_IMPORT.FIRST_NAME, CUSTOMER_IMPORT.LAST_NAME)
  *    .execute();
- * </pre></code>
+ * </code></pre>
  * <p>
  * Instances can be created using {@link DSL#mergeInto(Table)} and overloads.
  *

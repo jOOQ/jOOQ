@@ -54,14 +54,14 @@ import org.jetbrains.annotations.NotNull;
  * <code>WITH</code> clause and with {@link CommonTableExpression}s.
  * <p>
  * Example:
- * <code><pre>
+ * <pre><code>
  * DSL.with("table", "col1", "col2")
  *    .as(
  *        select(one(), two())
  *    )
  *    .select()
  *    .from("table")
- * </pre></code>
+ * </code></pre>
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -524,9 +524,9 @@ public interface WithStep extends QueryPart {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT table.col1, table.col2 FROM table
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -540,9 +540,9 @@ public interface WithStep extends QueryPart {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM table
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#table(Name)
      */
@@ -558,9 +558,9 @@ public interface WithStep extends QueryPart {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM table
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -583,9 +583,9 @@ public interface WithStep extends QueryPart {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM table
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -609,9 +609,9 @@ public interface WithStep extends QueryPart {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM table
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -635,9 +635,9 @@ public interface WithStep extends QueryPart {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM table
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -662,7 +662,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(Collection)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.select(fields)
@@ -670,7 +670,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#select(Collection)
      */
@@ -687,7 +687,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectFieldOrAsterisk...)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.select(field1, field2)
@@ -696,7 +696,7 @@ public interface WithStep extends QueryPart {
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#select(SelectFieldOrAsterisk...)
      */
@@ -720,7 +720,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(field1).as(subselect))
      *       .select(field1)
@@ -728,7 +728,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -751,7 +751,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(field1, field2).as(subselect))
      *       .select(field1, field2)
@@ -759,7 +759,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -782,7 +782,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(field1, field2, field3).as(subselect))
      *       .select(field1, field2, field3)
@@ -790,7 +790,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -813,7 +813,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(field1, field2, field3, field4).as(subselect))
      *       .select(field1, field2, field3, field4)
@@ -821,7 +821,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -844,7 +844,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(field1, field2, field3, field4, field5).as(subselect))
      *       .select(field1, field2, field3, field4, field5)
@@ -852,7 +852,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -875,7 +875,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f5, f6).as(subselect))
      *       .select(field1, field2, field3, .., field5, field6)
@@ -883,7 +883,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -906,7 +906,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f6, f7).as(subselect))
      *       .select(field1, field2, field3, .., field6, field7)
@@ -914,7 +914,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -937,7 +937,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f7, f8).as(subselect))
      *       .select(field1, field2, field3, .., field7, field8)
@@ -945,7 +945,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -968,7 +968,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f8, f9).as(subselect))
      *       .select(field1, field2, field3, .., field8, field9)
@@ -976,7 +976,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -999,7 +999,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f9, f10).as(subselect))
      *       .select(field1, field2, field3, .., field9, field10)
@@ -1007,7 +1007,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1030,7 +1030,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f10, f11).as(subselect))
      *       .select(field1, field2, field3, .., field10, field11)
@@ -1038,7 +1038,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1061,7 +1061,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f11, f12).as(subselect))
      *       .select(field1, field2, field3, .., field11, field12)
@@ -1069,7 +1069,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1092,7 +1092,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f12, f13).as(subselect))
      *       .select(field1, field2, field3, .., field12, field13)
@@ -1100,7 +1100,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1123,7 +1123,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f13, f14).as(subselect))
      *       .select(field1, field2, field3, .., field13, field14)
@@ -1131,7 +1131,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1154,7 +1154,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f14, f15).as(subselect))
      *       .select(field1, field2, field3, .., field14, field15)
@@ -1162,7 +1162,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1185,7 +1185,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f15, f16).as(subselect))
      *       .select(field1, field2, field3, .., field15, field16)
@@ -1193,7 +1193,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1216,7 +1216,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f16, f17).as(subselect))
      *       .select(field1, field2, field3, .., field16, field17)
@@ -1224,7 +1224,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1247,7 +1247,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f17, f18).as(subselect))
      *       .select(field1, field2, field3, .., field17, field18)
@@ -1255,7 +1255,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1278,7 +1278,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f18, f19).as(subselect))
      *       .select(field1, field2, field3, .., field18, field19)
@@ -1286,7 +1286,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1309,7 +1309,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f19, f20).as(subselect))
      *       .select(field1, field2, field3, .., field19, field20)
@@ -1317,7 +1317,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1340,7 +1340,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f20, f21).as(subselect))
      *       .select(field1, field2, field3, .., field20, field21)
@@ -1348,7 +1348,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1371,7 +1371,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f21, f22).as(subselect))
      *       .select(field1, field2, field3, .., field21, field22)
@@ -1379,7 +1379,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1399,7 +1399,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(Collection)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.selectDistinct(fields)
@@ -1407,7 +1407,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(Collection)
      */
@@ -1424,7 +1424,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectFieldOrAsterisk...)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.selectDistinct(field1, field2)
@@ -1432,7 +1432,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      */
@@ -1456,7 +1456,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(field1).as(subselect))
      *       .selectDistinct(field1)
@@ -1464,7 +1464,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1487,7 +1487,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(field1, field2).as(subselect))
      *       .selectDistinct(field1, field2)
@@ -1495,7 +1495,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1518,7 +1518,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(field1, field2, field3).as(subselect))
      *       .selectDistinct(field1, field2, field3)
@@ -1526,7 +1526,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1549,7 +1549,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(field1, field2, field3, field4).as(subselect))
      *       .selectDistinct(field1, field2, field3, field4)
@@ -1557,7 +1557,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1580,7 +1580,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(field1, field2, field3, field4, field5).as(subselect))
      *       .selectDistinct(field1, field2, field3, field4, field5)
@@ -1588,7 +1588,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1611,7 +1611,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f5, f6).as(subselect))
      *       .selectDistinct(field1, field2, field3, .., field5, field6)
@@ -1619,7 +1619,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1642,7 +1642,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f6, f7).as(subselect))
      *       .selectDistinct(field1, field2, field3, .., field6, field7)
@@ -1650,7 +1650,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1673,7 +1673,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f7, f8).as(subselect))
      *       .selectDistinct(field1, field2, field3, .., field7, field8)
@@ -1681,7 +1681,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1704,7 +1704,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f8, f9).as(subselect))
      *       .selectDistinct(field1, field2, field3, .., field8, field9)
@@ -1712,7 +1712,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1735,7 +1735,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f9, f10).as(subselect))
      *       .selectDistinct(field1, field2, field3, .., field9, field10)
@@ -1743,7 +1743,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1766,7 +1766,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f10, f11).as(subselect))
      *       .selectDistinct(field1, field2, field3, .., field10, field11)
@@ -1774,7 +1774,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1797,7 +1797,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f11, f12).as(subselect))
      *       .selectDistinct(field1, field2, field3, .., field11, field12)
@@ -1805,7 +1805,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1828,7 +1828,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f12, f13).as(subselect))
      *       .selectDistinct(field1, field2, field3, .., field12, field13)
@@ -1836,7 +1836,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1859,7 +1859,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f13, f14).as(subselect))
      *       .selectDistinct(field1, field2, field3, .., field13, field14)
@@ -1867,7 +1867,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1890,7 +1890,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f14, f15).as(subselect))
      *       .selectDistinct(field1, field2, field3, .., field14, field15)
@@ -1898,7 +1898,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1921,7 +1921,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f15, f16).as(subselect))
      *       .selectDistinct(field1, field2, field3, .., field15, field16)
@@ -1929,7 +1929,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1952,7 +1952,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f16, f17).as(subselect))
      *       .selectDistinct(field1, field2, field3, .., field16, field17)
@@ -1960,7 +1960,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -1983,7 +1983,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f17, f18).as(subselect))
      *       .selectDistinct(field1, field2, field3, .., field17, field18)
@@ -1991,7 +1991,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -2014,7 +2014,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f18, f19).as(subselect))
      *       .selectDistinct(field1, field2, field3, .., field18, field19)
@@ -2022,7 +2022,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -2045,7 +2045,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f19, f20).as(subselect))
      *       .selectDistinct(field1, field2, field3, .., field19, field20)
@@ -2053,7 +2053,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -2076,7 +2076,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f20, f21).as(subselect))
      *       .selectDistinct(field1, field2, field3, .., field20, field21)
@@ -2084,7 +2084,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -2107,7 +2107,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f21, f22).as(subselect))
      *       .selectDistinct(field1, field2, field3, .., field21, field22)
@@ -2115,7 +2115,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -2135,7 +2135,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectZero()} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.selectZero()
@@ -2143,7 +2143,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#zero()
      * @see DSL#selectZero()
@@ -2161,7 +2161,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectOne()} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.selectOne()
@@ -2169,7 +2169,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#one()
      * @see DSL#selectOne()
@@ -2187,7 +2187,7 @@ public interface WithStep extends QueryPart {
      * create a subselect), consider using the static
      * {@link DSL#selectCount()} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.selectCount()
@@ -2195,7 +2195,7 @@ public interface WithStep extends QueryPart {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectCount()
      */
@@ -2209,7 +2209,7 @@ public interface WithStep extends QueryPart {
      * This type of insert may feel more convenient to some users, as it uses
      * the <code>UPDATE</code> statement's <code>SET a = b</code> syntax.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.insertInto(table)
@@ -2222,7 +2222,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2233,7 +2233,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(field1).as(subselect))
      *       .insertInto(table, field1)
@@ -2243,7 +2243,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2252,7 +2252,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(field1, field2).as(subselect))
      *       .insertInto(table, field1, field2)
@@ -2262,7 +2262,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2271,7 +2271,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(field1, field2, field3).as(subselect))
      *       .insertInto(table, field1, field2, field3)
@@ -2281,7 +2281,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2290,7 +2290,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(field1, field2, field3, field4).as(subselect))
      *       .insertInto(table, field1, field2, field3, field4)
@@ -2300,7 +2300,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2309,7 +2309,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(field1, field2, field3, field4, field5).as(subselect))
      *       .insertInto(table, field1, field2, field3, field4, field5)
@@ -2319,7 +2319,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2328,7 +2328,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f5, f6).as(subselect))
      *       .insertInto(table, field1, field2, field3, .., field5, field6)
@@ -2338,7 +2338,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2347,7 +2347,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f6, f7).as(subselect))
      *       .insertInto(table, field1, field2, field3, .., field6, field7)
@@ -2357,7 +2357,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2366,7 +2366,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f7, f8).as(subselect))
      *       .insertInto(table, field1, field2, field3, .., field7, field8)
@@ -2376,7 +2376,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2385,7 +2385,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f8, f9).as(subselect))
      *       .insertInto(table, field1, field2, field3, .., field8, field9)
@@ -2395,7 +2395,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2404,7 +2404,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f9, f10).as(subselect))
      *       .insertInto(table, field1, field2, field3, .., field9, field10)
@@ -2414,7 +2414,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2423,7 +2423,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f10, f11).as(subselect))
      *       .insertInto(table, field1, field2, field3, .., field10, field11)
@@ -2433,7 +2433,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2442,7 +2442,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f11, f12).as(subselect))
      *       .insertInto(table, field1, field2, field3, .., field11, field12)
@@ -2452,7 +2452,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2461,7 +2461,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f12, f13).as(subselect))
      *       .insertInto(table, field1, field2, field3, .., field12, field13)
@@ -2471,7 +2471,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2480,7 +2480,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f13, f14).as(subselect))
      *       .insertInto(table, field1, field2, field3, .., field13, field14)
@@ -2490,7 +2490,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2499,7 +2499,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f14, f15).as(subselect))
      *       .insertInto(table, field1, field2, field3, .., field14, field15)
@@ -2509,7 +2509,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2518,7 +2518,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f15, f16).as(subselect))
      *       .insertInto(table, field1, field2, field3, .., field15, field16)
@@ -2528,7 +2528,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2537,7 +2537,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f16, f17).as(subselect))
      *       .insertInto(table, field1, field2, field3, .., field16, field17)
@@ -2547,7 +2547,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2556,7 +2556,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f17, f18).as(subselect))
      *       .insertInto(table, field1, field2, field3, .., field17, field18)
@@ -2566,7 +2566,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2575,7 +2575,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f18, f19).as(subselect))
      *       .insertInto(table, field1, field2, field3, .., field18, field19)
@@ -2585,7 +2585,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2594,7 +2594,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f19, f20).as(subselect))
      *       .insertInto(table, field1, field2, field3, .., field19, field20)
@@ -2604,7 +2604,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2613,7 +2613,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f20, f21).as(subselect))
      *       .insertInto(table, field1, field2, field3, .., field20, field21)
@@ -2623,7 +2623,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2632,7 +2632,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .with(name("t").fields(f1, f2, f3, .., f21, f22).as(subselect))
      *       .insertInto(table, field1, field2, field3, .., field21, field22)
@@ -2642,7 +2642,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2653,7 +2653,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.insertInto(table, field1, field2)
@@ -2663,7 +2663,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2672,7 +2672,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.insertInto(table, field1, field2)
@@ -2682,7 +2682,7 @@ public interface WithStep extends QueryPart {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2691,7 +2691,7 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL update statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.update(table)
@@ -2699,17 +2699,17 @@ public interface WithStep extends QueryPart {
      *       .set(field2, value2)
      *       .where(field1.greaterThan(100))
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note that some databases support table expressions more complex than
      * simple table references. In MySQL, for instance, you can write
-     * <code><pre>
+     * <pre><code>
      * create.update(t1.join(t2).on(t1.id.eq(t2.id)))
      *       .set(t1.value, value1)
      *       .set(t2.value, value2)
      *       .where(t1.id.eq(10))
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -2764,7 +2764,7 @@ public interface WithStep extends QueryPart {
      * </tr>
      * </table>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.mergeInto(table)
@@ -2776,7 +2776,7 @@ public interface WithStep extends QueryPart {
      *       .whenNotMatchedThenInsert(field1, field2)
      *       .values(value1, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note: Using this method, you can also create an H2-specific MERGE
      * statement without field specification. See also
@@ -3398,13 +3398,13 @@ public interface WithStep extends QueryPart {
     /**
      * Create a new DSL delete statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.delete(table)
      *       .where(field1.greaterThan(100))
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Some but not all databases support aliased tables in delete statements.
      */

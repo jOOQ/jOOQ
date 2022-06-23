@@ -55,13 +55,13 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  * <code>OVER</code> clause of window functions. This makes window
  * specifications highly reusable across several queries.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * WindowSpecification spec =
  * DSL.partitionBy(BOOK.AUTHOR_ID)
  *    .orderBy(BOOK.ID)
  *    .rowsBetweenUnboundedPreceding()
  *    .andCurrentRow();
- * </pre></code>
+ * </code></pre>
  * <p>
  * Instances can be created using {@link DSL#partitionBy(Field...)},
  * {@link DSL#orderBy(OrderField...)}, and overloads as well as rows / range /

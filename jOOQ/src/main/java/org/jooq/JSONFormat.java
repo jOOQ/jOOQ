@@ -46,22 +46,22 @@ import org.jetbrains.annotations.NotNull;
  * exports.
  * <p>
  * The default format is the following, using {@link #header()} equal to
- * <code>true</code> and applying {@link RecordFormat#ARRAY}: <code><pre>
+ * <code>true</code> and applying {@link RecordFormat#ARRAY}: <pre><code>
  * {"fields":[{"name":"field-1","type":"type-1"},
  *            {"name":"field-2","type":"type-2"},
  *             ...,
  *            {"name":"field-n","type":"type-n"}],
  * "records":[[value-1-1,value-1-2,...,value-1-n],
- *            [value-2-1,value-2-2,...,value-2-n]]}</pre></code>
+ *            [value-2-1,value-2-2,...,value-2-n]]}</code></pre>
  * <p>
  * If {@link #header()} is set to <code>false</code>, then the result is simply
- * the records array, either using {@link RecordFormat#ARRAY}: <code><pre>
+ * the records array, either using {@link RecordFormat#ARRAY}: <pre><code>
  * [[value-1-1,value-1-2,...,value-1-n],
- *  [value-2-1,value-2-2,...,value-2-n]]</pre></code>
+ *  [value-2-1,value-2-2,...,value-2-n]]</code></pre>
  * <p>
- * or, using {@link RecordFormat#OBJECT}: <code><pre>
+ * or, using {@link RecordFormat#OBJECT}: <pre><code>
  * [{"field-1": value-1-1, "field-2": value-1-2,..., "field-n": value-1-n},
- *  {"field-1": value-2-1, "field-2": value-2-2,..., "field-n": value-2-n}]</pre></code>
+ *  {"field-1": value-2-1, "field-2": value-2-2,..., "field-n": value-2-n}]</code></pre>
  * <p>
  * The type is immutable, meaning calls to setters like {@link #header(boolean)}
  * do not modify the original reference, but return a new one instead.

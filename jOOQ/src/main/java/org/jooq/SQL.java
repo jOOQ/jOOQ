@@ -60,22 +60,22 @@ import org.jooq.impl.DSL;
  * The following expression will embed <code>expr1</code> and <code>expr2</code>
  * at the appropriate locations:
  * <p>
- * <code><pre>
+ * <pre><code>
  * DSL.field("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC SEPARATOR '-')", expr1, expr2);
- * </pre></code> Query part indexes may be referenced multiple times from within
+ * </code></pre> Query part indexes may be referenced multiple times from within
  * a template.</li>
  * <li><strong>Keywords</strong>: Curly braces are also used to delimit
  * keywords, which expose the behaviour specified in {@link DSL#keyword(String)}
  * (e.g. upper-casing, lower-casing, etc.) . The following expression makes use
  * of embedded keywords in a plain SQL template:
  * <p>
- * <code><pre>DSL.field("{current_timestamp}");</pre></code></li>
+ * <pre><code>DSL.field("{current_timestamp}");</code></pre></li>
  * <li><strong>JDBC escape syntax</strong>: JDBC also allows for using curly
  * braces to embed escape expressions in SQL statements, such as date literals,
  * for instance. JDBC escape syntax is left untouched by jOOQ's plain SQL query
  * part renderings. The following example shows such usage:
  * <p>
- * <code><pre>DSL.field("{d '2015-01-01'}");</pre></code> The following JDBC
+ * <pre><code>DSL.field("{d '2015-01-01'}");</code></pre> The following JDBC
  * escape syntax elements are recognised:
  * <ul>
  * <li><code>{d [date literal]}</code></li>

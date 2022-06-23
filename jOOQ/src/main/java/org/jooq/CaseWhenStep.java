@@ -43,12 +43,12 @@ import org.jetbrains.annotations.*;
 import java.util.Map;
 
 /**
- * The final step in creating a case statement of the type <code><pre>
+ * The final step in creating a case statement of the type <pre><code>
  * CASE x WHEN 1 THEN 'one'
  *        WHEN 2 THEN 'two'
  *        ELSE        'three'
  * END
- * </pre></code>
+ * </code></pre>
  *
  * @param <V> The type of values being compared in this case statement
  * @param <T> The type returned by this case statement

@@ -47,7 +47,7 @@ import org.jooq.impl.DSL;
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * -- get all authors' first and last names, and the number
  * -- of books they've written in German, if they have written
  * -- more than five books in German in the last three years
@@ -67,7 +67,7 @@ import org.jooq.impl.DSL;
  *      FOR UPDATE
  *       OF FIRST_NAME, LAST_NAME
  *       NO WAIT
- * </pre></code> Its equivalent in jOOQ <code><pre>
+ * </code></pre> Its equivalent in jOOQ <pre><code>
  * create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
  *       .from(T_AUTHOR)
  *       .join(T_BOOK).on(TBook.AUTHOR_ID.equal(TAuthor.ID))
@@ -81,7 +81,7 @@ import org.jooq.impl.DSL;
  *       .forUpdate()
  *       .of(TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
  *       .noWait();
- * </pre></code> Refer to the manual for more details
+ * </code></pre> Refer to the manual for more details
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>

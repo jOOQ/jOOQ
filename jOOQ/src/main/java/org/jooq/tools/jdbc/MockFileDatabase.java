@@ -64,7 +64,7 @@ import org.jooq.tools.JooqLogger;
  * A file-based {@link MockDataProvider}.
  * <p>
  * This data provider reads a database model from a text file, as documented in
- * the below sample file: <code><pre>
+ * the below sample file: <pre><code>
  * # Comments start off with a hash
  *
  * # Statement strings have no prefix and should be ended with a semi-colon
@@ -102,7 +102,7 @@ import org.jooq.tools.JooqLogger;
  * &gt; - - -----
  * &gt; x y z
  * &#64; rows: 1
- * </pre></code>
+ * </code></pre>
  * <p>
  * Results can be loaded using several techniques:
  * <ul>

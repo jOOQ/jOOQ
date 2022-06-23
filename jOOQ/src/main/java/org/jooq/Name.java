@@ -84,7 +84,7 @@ import org.jetbrains.annotations.Nullable;
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
  * using(configuration)
@@ -93,7 +93,7 @@ import org.jetbrains.annotations.Nullable;
  *         field(name("LAST_NAME"), SQLDataType.VARCHAR))
  *    .from(table(name("ACTOR")))
  *    .fetch();
- * </pre></code>
+ * </code></pre>
  * <p>
  * Instances can be created using {@link DSL#name(String)} and overloads.
  *

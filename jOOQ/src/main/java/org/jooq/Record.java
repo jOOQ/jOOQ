@@ -596,10 +596,10 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * The resulting array has the same number of elements as this record has
      * fields. The resulting array contains data as such:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * // For arbitrary values of i
      * record.getValue(i) == record.intoArray()[i]
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is the same as calling <code>into(Object[].class)</code>
      *
@@ -615,10 +615,10 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * The resulting list has the same number of elements as this record has
      * fields. The resulting array contains data as such:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * // For arbitrary values of i
      * record.getValue(i) == record.intoList().get(i)
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is the same as calling <code>Arrays.asList(intoArray())</code>
      */
@@ -1324,12 +1324,12 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * </ul>
      * <p>
      * Note, that the above rules correspond to the SQL comparison predicate
-     * behaviour as illustrated in the following example: <code><pre>
+     * behaviour as illustrated in the following example: <pre><code>
      * -- A row value expression comparison predicate
      * SELECT *
      * FROM my_table
      * WHERE (1, 'A') = (1, 'A')
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Unlike SQL, jOOQ allows to compare also incompatible records, e.g.
      * records
@@ -1380,25 +1380,25 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * Then, for two comparable Records <code>r1</code> and <code>r2</code>,
      * <code>x = r1.compareTo(r2)</code> yields:
      * <ul>
-     * <li><strong><code>x = -1</code></strong>: if <code><pre>
+     * <li><strong><code>x = -1</code></strong>: if <pre><code>
      *    (r1[0] &lt; r2[0])
      * OR (r1[0] = r2[0] AND r1[1] &lt; r2[1])
      * OR  ...
-     * OR (r1[0] = r2[0] AND ... AND r1[N-1] = r2[N-1] AND r1[N] &lt; r2[N])</pre></code>
+     * OR (r1[0] = r2[0] AND ... AND r1[N-1] = r2[N-1] AND r1[N] &lt; r2[N])</code></pre>
      * </li>
-     * <li><strong><code>x = 0</code></strong>: if <code><pre>
-     * OR (r1[0] = r2[0] AND ... AND r1[N-1] = r2[N-1] AND r1[N] = r2[N])</pre></code>
+     * <li><strong><code>x = 0</code></strong>: if <pre><code>
+     * OR (r1[0] = r2[0] AND ... AND r1[N-1] = r2[N-1] AND r1[N] = r2[N])</code></pre>
      * </li>
-     * <li><strong><code>x = 1</code></strong>: if <code><pre>
+     * <li><strong><code>x = 1</code></strong>: if <pre><code>
      *    (r1[0] &gt; r2[0])
      * OR (r1[0] = r2[0] AND r1[1] &gt; r2[1])
      * OR  ...
-     * OR (r1[0] = r2[0] AND ... AND r1[N-1] = r2[N-1] AND r1[N] &gt; r2[N])</pre></code>
+     * OR (r1[0] = r2[0] AND ... AND r1[N-1] = r2[N-1] AND r1[N] &gt; r2[N])</code></pre>
      * </li>
      * </ul>
      * <p>
      * Note, that the above rules correspond to the SQL ordering behaviour as
-     * illustrated in the following examples: <code><pre>
+     * illustrated in the following examples: <pre><code>
      * -- A SQL ORDER BY clause, ordering all records by columns in their order
      * SELECT a, b, c
      * FROM my_table
@@ -1408,7 +1408,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * SELECT *
      * FROM my_table
      * WHERE (a, b, c) &lt; (1, 2, 3)
-     * </pre></code>
+     * </code></pre>
      * <p>
      * See {@link Row1#lessThan(Row1)}, {@link Row2#lessThan(Row2)}, ...,
      * {@link Row22#lessThan(Row22)} for more details about row value expression

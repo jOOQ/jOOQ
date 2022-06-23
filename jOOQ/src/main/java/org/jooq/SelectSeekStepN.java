@@ -44,7 +44,7 @@ import org.jetbrains.annotations.NotNull;
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * -- get all authors' first and last names, and the number
  * -- of books they've written in German, if they have written
  * -- more than five books in German in the last three years
@@ -64,7 +64,7 @@ import org.jetbrains.annotations.NotNull;
  *      FOR UPDATE
  *       OF FIRST_NAME, LAST_NAME
  *       NO WAIT
- * </pre></code> Its equivalent in jOOQ <code><pre>
+ * </code></pre> Its equivalent in jOOQ <pre><code>
  * create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
  *       .from(T_AUTHOR)
  *       .join(T_BOOK).on(TBook.AUTHOR_ID.equal(TAuthor.ID))
@@ -78,7 +78,7 @@ import org.jetbrains.annotations.NotNull;
  *       .forUpdate()
  *       .of(TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
  *       .noWait();
- * </pre></code> Refer to the manual for more details
+ * </code></pre> Refer to the manual for more details
  *
  * @author Lukas Eder
  */
@@ -100,28 +100,28 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * inserted or data being deleted while paging through pages.</li>
      * </ol>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSL.using(configuration)
      *    .selectFrom(TABLE)
      *    .orderBy(ID, CODE)
      *    .seek(3, "abc")
      *    .fetch();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The above query will render the following SQL statement:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT table.col1, table.col2, ... FROM table
      * WHERE (id, code) &gt; (3, 'abc')
      * ORDER BY id ASC, code ASC
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The actual row value expression predicate may be expanded into this
      * equivalent predicate:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * WHERE (id &gt; 3) OR (id = 3 AND code &gt; 'abc')
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The <code>SEEK AFTER</code> method currently does not support seeking
      * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
@@ -153,28 +153,28 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * inserted or data being deleted while paging through pages.</li>
      * </ol>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSL.using(configuration)
      *    .selectFrom(TABLE)
      *    .orderBy(ID, CODE)
      *    .seek(3, "abc")
      *    .fetch();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The above query will render the following SQL statement:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT table.col1, table.col2, ... FROM table
      * WHERE (id, code) &gt; (3, 'abc')
      * ORDER BY id ASC, code ASC
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The actual row value expression predicate may be expanded into this
      * equivalent predicate:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * WHERE (id &gt; 3) OR (id = 3 AND code &gt; 'abc')
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The <code>SEEK AFTER</code> method currently does not support seeking
      * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
@@ -206,28 +206,28 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * inserted or data being deleted while paging through pages.</li>
      * </ol>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSL.using(configuration)
      *    .selectFrom(TABLE)
      *    .orderBy(ID, CODE)
      *    .seekAfter(3, "abc")
      *    .fetch();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The above query will render the following SQL statement:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT table.col1, table.col2, ... FROM table
      * WHERE (id, code) &gt; (3, 'abc')
      * ORDER BY id ASC, code ASC
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The actual row value expression predicate may be expanded into this
      * equivalent predicate:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * WHERE (id &gt; 3) OR (id = 3 AND code &gt; 'abc')
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The <code>SEEK AFTER</code> method currently does not support seeking
      * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
@@ -258,28 +258,28 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * inserted or data being deleted while paging through pages.</li>
      * </ol>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSL.using(configuration)
      *    .selectFrom(TABLE)
      *    .orderBy(ID, CODE)
      *    .seekAfter(3, "abc")
      *    .fetch();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The above query will render the following SQL statement:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT table.col1, table.col2, ... FROM table
      * WHERE (id, code) &gt; (3, 'abc')
      * ORDER BY id ASC, code ASC
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The actual row value expression predicate may be expanded into this
      * equivalent predicate:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * WHERE (id &gt; 3) OR (id = 3 AND code &gt; 'abc')
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The <code>SEEK AFTER</code> method currently does not support seeking
      * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
@@ -310,28 +310,28 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * inserted or data being deleted while paging through pages.</li>
      * </ol>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSL.using(configuration)
      *    .selectFrom(TABLE)
      *    .orderBy(ID, CODE)
      *    .seekBefore(3, "abc")
      *    .fetch();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The above query will render the following SQL statement:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT table.col1, table.col2, ... FROM table
      * WHERE (id, code) &lt; (3, 'abc')
      * ORDER BY id ASC, code ASC
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The actual row value expression predicate may be expanded into this
      * equivalent predicate:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * WHERE (id &lt; 3) OR (id = 3 AND code &lt; 'abc')
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The <code>SEEK BEFORE</code> method currently does not support seeking
      * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
@@ -364,28 +364,28 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * inserted or data being deleted while paging through pages.</li>
      * </ol>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSL.using(configuration)
      *    .selectFrom(TABLE)
      *    .orderBy(ID, CODE)
      *    .seekBefore(3, "abc")
      *    .fetch();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The above query will render the following SQL statement:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT table.col1, table.col2, ... FROM table
      * WHERE (id, code) &lt; (3, 'abc')
      * ORDER BY id ASC, code ASC
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The actual row value expression predicate may be expanded into this
      * equivalent predicate:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * WHERE (id &lt; 3) OR (id = 3 AND code &lt; 'abc')
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The <code>SEEK BEFORE</code> method currently does not support seeking
      * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,

@@ -48,7 +48,7 @@ import org.jooq.impl.DSL;
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
  * using(configuration)
@@ -58,7 +58,7 @@ import org.jooq.impl.DSL;
  *        ACTOR.FIRST_NAME.collate(collation("utf8_german2_ci")),
  *        ACTOR.LAST_NAME.collate(collation("utf8_german2_ci")))
  *    .fetch();
- * </pre></code>
+ * </code></pre>
  * <p>
  * Instances can be created using {@link DSL#collation(Name)} and overloads.
  *

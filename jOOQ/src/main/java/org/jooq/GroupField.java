@@ -50,7 +50,7 @@ import org.jooq.impl.QOM;
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
  * using(configuration)
@@ -58,7 +58,7 @@ import org.jooq.impl.QOM;
  *    .from(ACTOR)
  *    .groupBy(ACTOR.LAST_NAME) // GroupField reference here
  *    .fetch();
- * </pre></code>
+ * </code></pre>
  * <p>
  * Instances can be created using {@link DSL#groupingSets(Field[][])} and
  * related methods, or by creating a subtype.

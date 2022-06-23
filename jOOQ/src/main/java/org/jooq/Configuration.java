@@ -183,8 +183,6 @@ import io.r2dbc.spi.ConnectionFactory;
  * <br/>
  * jOOQ does not provide any implementations.</li>
  * </ul>
- * </li>
- * </ul>
  * <p>
  * <h3>Thread safety</h3>
  * <p>

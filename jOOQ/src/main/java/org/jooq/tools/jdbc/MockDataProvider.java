@@ -114,11 +114,11 @@ public interface MockDataProvider {
      * <li>It is recommended to return as many <code>MockResult</code> objects
      * as batch executions. In other words, you should guarantee that:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * int multiSize = context.getBatchSQL().length;
      * int singleSize = context.getBatchBindings().length;
      * assertEquals(result.length, Math.max(multiSize, singleSize))
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This holds true also for non-batch executions (where both sizes are equal
      * to <code>1</code>)</li>

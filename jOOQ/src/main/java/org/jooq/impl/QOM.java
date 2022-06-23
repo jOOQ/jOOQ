@@ -2235,7 +2235,7 @@ public final class QOM {
      * can be used as a replacement for a primary key in some situations -
      * especially within a query, e.g. to self-join a table:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * -- Emulating this MySQL statement...
      * DELETE FROM x ORDER BY x.y LIMIT 1
      *
@@ -2244,7 +2244,7 @@ public final class QOM {
      * WHERE x.rowid IN (
      *   SELECT x.rowid FROM x ORDER BY x.a LIMIT 1
      * )
-     * </pre></code>
+     * </code></pre>
      * <p>
      * It is <em>not</em> recommended to use <code>rowid</code> values in client
      * applications as actual row identifiers as the database system may move a
@@ -3114,13 +3114,13 @@ public final class QOM {
      * <code>val(1133).contains(13)</code>
      * <p>
      * If you're using {@link SQLDialect#POSTGRES}, then you can use this method
-     * also to express the "ARRAY contains" operator. For example: <code><pre>
+     * also to express the "ARRAY contains" operator. For example: <pre><code>
      * // Use this expression
      * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
      *
      * // ... to render this SQL
      * ARRAY[1, 2, 3] @&gt; ARRAY[1, 2]
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note, this does not correspond to the Oracle Text <code>CONTAINS()</code>
      * function. Refer to {@link OracleDSL#contains(Field, String)} instead.
@@ -4574,9 +4574,9 @@ public final class QOM {
      * as predicates or as columns interchangeably. This extends to any type
      * of field, including functions. A Postgres example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * select 1 where texteq('a', 'a');
-     * </pre></code>
+     * </code></pre>
      */
     public /*sealed*/ interface FieldCondition
         extends

@@ -80,7 +80,7 @@ import org.jetbrains.annotations.NotNull;
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * -- get all authors' first and last names, and the number
  * -- of books they've written in German, if they have written
  * -- more than five books in German in the last three years
@@ -100,7 +100,7 @@ import org.jetbrains.annotations.NotNull;
  *      FOR UPDATE
  *       OF FIRST_NAME, LAST_NAME
  *       NO WAIT
- * </pre></code> Its equivalent in jOOQ <code><pre>
+ * </code></pre> Its equivalent in jOOQ <pre><code>
  * create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
  *       .from(T_AUTHOR)
  *       .join(T_BOOK).on(TBook.AUTHOR_ID.equal(TAuthor.ID))
@@ -114,7 +114,7 @@ import org.jetbrains.annotations.NotNull;
  *       .forUpdate()
  *       .of(TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
  *       .noWait();
- * </pre></code> Refer to the manual for more details
+ * </code></pre> Refer to the manual for more details
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -373,10 +373,10 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * <p>
      * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
-     * <code><pre>
+     * <pre><code>
      * A cross join B
      * A join B on 1 = 1
-     * </pre></code>
+     * </code></pre>
      *
      * @see Table#crossJoin(TableLike)
      */
@@ -391,10 +391,10 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * <p>
      * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
-     * <code><pre>
+     * <pre><code>
      * A cross join B
      * A join B on 1 = 1
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -417,10 +417,10 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * <p>
      * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
-     * <code><pre>
+     * <pre><code>
      * A cross join B
      * A join B on 1 = 1
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -443,10 +443,10 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * <p>
      * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
-     * <code><pre>
+     * <pre><code>
      * A cross join B
      * A join B on 1 = 1
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -470,10 +470,10 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * <p>
      * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
-     * <code><pre>
+     * <pre><code>
      * A cross join B
      * A join B on 1 = 1
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -497,10 +497,10 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * <p>
      * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
-     * <code><pre>
+     * <pre><code>
      * A cross join B
      * A join B on 1 = 1
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#table(Name)
      * @see Table#crossJoin(Name)
@@ -1661,7 +1661,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * equivalent <code>EXISTS</code> predicate.
      * <p>
      * The following two SQL snippets are semantically equivalent:
-     * <code><pre>
+     * <pre><code>
      * -- Using LEFT SEMI JOIN
      * FROM A
      *     LEFT SEMI JOIN B
@@ -1672,7 +1672,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * WHERE EXISTS (
      *     SELECT 1 FROM B WHERE A.ID = B.ID
      * )
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Notice that according to
      * <a href="https://en.wikipedia.org/wiki/Relational_algebra">Relational
@@ -1692,7 +1692,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * equivalent <code>NOT EXISTS</code> predicate.
      * <p>
      * The following two SQL snippets are semantically equivalent:
-     * <code><pre>
+     * <pre><code>
      * -- Using LEFT ANTI JOIN
      * FROM A
      *     LEFT ANTI JOIN B
@@ -1703,7 +1703,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * WHERE NOT EXISTS (
      *     SELECT 1 FROM B WHERE A.ID = B.ID
      * )
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Notice that according to
      * <a href="https://en.wikipedia.org/wiki/Relational_algebra">Relational

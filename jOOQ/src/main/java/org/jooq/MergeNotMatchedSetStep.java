@@ -60,7 +60,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * This type is used for the {@link Merge}'s DSL API.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * DSLContext create = DSL.using(configuration);
  *
  * create.mergeInto(table)
@@ -72,7 +72,7 @@ import org.jetbrains.annotations.NotNull;
  *       .whenNotMatchedThenInsert(field1, field2)
  *       .values(value1, value2)
  *       .execute();
- * </pre></code>
+ * </code></pre>
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -106,7 +106,7 @@ public interface MergeNotMatchedSetStep<R extends Record> {
 
     /**
      * Set values for <code>INSERT</code> in the <code>MERGE</code> statement's
-     * <code>WHEN NOT MATCHED</INSERT> clause.
+     * <code>WHEN NOT MATCHED</code> clause.
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
@@ -114,7 +114,7 @@ public interface MergeNotMatchedSetStep<R extends Record> {
 
     /**
      * Set values for <code>INSERT</code> in the <code>MERGE</code> statement's
-     * <code>WHEN NOT MATCHED</INSERT> clause.
+     * <code>WHEN NOT MATCHED</code> clause.
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
@@ -122,7 +122,7 @@ public interface MergeNotMatchedSetStep<R extends Record> {
 
     /**
      * Set a <code>null</code> value for <code>INSERT</code> in the
-     * <code>MERGE</code> statement's <code>WHEN NOT MATCHED</INSERT> clause.
+     * <code>MERGE</code> statement's <code>WHEN NOT MATCHED</code> clause.
      * <p>
      * This method is convenience for calling {@link #set(Field, Object)},
      * without the necessity of casting the Java <code>null</code> literal to

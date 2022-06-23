@@ -44,14 +44,14 @@ import org.jooq.impl.DSL;
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
  * using(configuration)
  *    .deleteFrom(ACTOR)
  *    .where(ACTOR.ACTOR_ID.in(1, 2, 3))
  *    .execute();
- * </pre></code>
+ * </code></pre>
  * <p>
  * Instances can be created using {@link DSL#deleteFrom(Table)},
  * {@link DSLContext#deleteFrom(Table)}, or

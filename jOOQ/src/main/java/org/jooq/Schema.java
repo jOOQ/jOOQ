@@ -59,14 +59,14 @@ import org.jetbrains.annotations.Nullable;
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
  * using(configuration)
  *    .select(SCHEMA.ACTOR.FIRST_NAME, SCHEMA.ACTOR.LAST_NAME)
  *    .from(SCHEMA.ACTOR)
  *    .fetch();
- * </pre></code>
+ * </code></pre>
  * <p>
  * <strong>Compatibility:</strong>
  * <p>

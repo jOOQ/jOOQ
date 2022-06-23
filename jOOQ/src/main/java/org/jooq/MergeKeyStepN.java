@@ -62,14 +62,14 @@ import org.jetbrains.annotations.NotNull;
 /**
  * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * DSLContext create = DSL.using(configuration);
  *
  * create.mergeInto(table, field1, field2)
  *       .key(id)
  *       .values(value1, value2)
  *       .execute();
- * </pre></code>
+ * </code></pre>
  *
  * @author Lukas Eder
  */

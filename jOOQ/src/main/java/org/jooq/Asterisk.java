@@ -56,14 +56,14 @@ import org.jooq.impl.QOM.UnmodifiableList;
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
  * using(configuration)
  *    .select(asterisk())
  *    .from(ACTOR)
  *    .fetch();
- * </pre></code>
+ * </code></pre>
  * <p>
  * Instances can be created using {@link DSL#asterisk()}.
  *

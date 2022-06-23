@@ -53,7 +53,7 @@ public final class Constants {
     /**
      * The latest jOOQ minor version.
      */
-    public static final String MINOR_VERSION  = "3.17";
+    public static final String MINOR_VERSION  = "3.18";
 
     /**
      * The latest jOOQ version.
@@ -61,7 +61,7 @@ public final class Constants {
      * This is the same as {@link #MINOR_VERSION}, but it may include patch
      * version suffixes.
      */
-    public static final String VERSION        = "3.17.1-SNAPSHOT";
+    public static final String VERSION        = "3.18.0-SNAPSHOT";
 
     /**
      * The latest jOOQ full version.
@@ -69,7 +69,7 @@ public final class Constants {
      * This is the same as {@link #VERSION}, but it may include release
      * candidate and other suffixes.
      */
-    public static final String FULL_VERSION   = "3.17.1-SNAPSHOT";
+    public static final String FULL_VERSION   = "3.18.0-SNAPSHOT";
 
     /**
      * The current jooq-runtime XSD file name.
@@ -169,6 +169,11 @@ public final class Constants {
      * The minor release 3.17.
      */
     public static final String VERSION_3_17   = "3.17";
+
+    /**
+     * The minor release 3.18.
+     */
+    public static final String VERSION_3_18   = "3.18";
 
     /**
      * No further instances

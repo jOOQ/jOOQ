@@ -56,14 +56,14 @@ import org.jetbrains.annotations.NotNull;
  * true for non-equality predicates. For instance, the following two predicates
  * are equivalent in SQL:
  * <p>
- * <code><pre>
+ * <pre><code>
  * (A, B) &gt; (X, Y)
  * (A &gt; X) OR (A = X AND B &gt; Y)
- * </pre></code>
+ * </code></pre>
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
  * using(configuration)
@@ -73,7 +73,7 @@ import org.jetbrains.annotations.NotNull;
  *        select(ACTOR.FIRST_NAME, ACTOR.LAST_NAME).from(ACTOR)
  *    ))
  *    .fetch();
- * </pre></code>
+ * </code></pre>
  * <p>
  * Note: Not all databases support row value expressions, but many row value
  * expression operations can be emulated on all databases. See relevant row
@@ -1632,13 +1632,13 @@ public interface Row2<T1, T2> extends Row, SelectField<Record2<T1, T2>> {
      * </ul>
      * <p>
      * jOOQ also supports arbitrary 2-degree row value expression comparisons,
-     * by emulating them as such <code><pre>
+     * by emulating them as such <pre><code>
      * -- This predicate
      * (A, B) OVERLAPS (C, D)
      *
      * -- can be emulated as such
      * (C &lt;= B) AND (A &lt;= D)
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -1655,13 +1655,13 @@ public interface Row2<T1, T2> extends Row, SelectField<Record2<T1, T2>> {
      * </ul>
      * <p>
      * jOOQ also supports arbitrary 2-degree row value expression comparisons,
-     * by emulating them as such <code><pre>
+     * by emulating them as such <pre><code>
      * -- This predicate
      * (A, B) OVERLAPS (C, D)
      *
      * -- can be emulated as such
      * (C &lt;= B) AND (A &lt;= D)
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -1678,13 +1678,13 @@ public interface Row2<T1, T2> extends Row, SelectField<Record2<T1, T2>> {
      * </ul>
      * <p>
      * jOOQ also supports arbitrary 2-degree row value expression comparisons,
-     * by emulating them as such <code><pre>
+     * by emulating them as such <pre><code>
      * -- This predicate
      * (A, B) OVERLAPS (C, D)
      *
      * -- can be emulated as such
      * (C &lt;= B) AND (A &lt;= D)
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support

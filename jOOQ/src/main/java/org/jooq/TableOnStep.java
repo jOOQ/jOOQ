@@ -214,7 +214,7 @@ public interface TableOnStep<R extends Record> {
      * Join the table on a non-ambiguous foreign key relationship between the
      * two joined tables.
      * <p>
-     * An example: <code><pre>
+     * An example: <pre><code>
      * // There is a single foreign key relationship between A and B and it can
      * // be obtained by A.getReferencesTo(B) or vice versa. The order of A and
      * // B is not important
@@ -228,7 +228,7 @@ public interface TableOnStep<R extends Record> {
      * // There are several foreign key relationships between A and B. In order
      * // to disambiguate, you can provide any non-ambiguous foreign key column
      * A.join(B).onKey(B.A_ID);
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support

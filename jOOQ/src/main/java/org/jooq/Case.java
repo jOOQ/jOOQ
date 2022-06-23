@@ -45,17 +45,17 @@ import org.jetbrains.annotations.NotNull;
 /**
  * The SQL case statement.
  * <p>
- * This construct can be used to create expressions of the type <code><pre>
+ * This construct can be used to create expressions of the type <pre><code>
  * CASE x WHEN 1 THEN 'one'
  *        WHEN 2 THEN 'two'
  *        ELSE        'three'
  * END
- * </pre></code> or of the type <code><pre>
+ * </code></pre> or of the type <pre><code>
  * CASE WHEN x &lt; 1  THEN 'one'
  *      WHEN x &gt;= 2 THEN 'two'
  *      ELSE            'three'
  * END
- * </pre></code> Instances of Case are created through the
+ * </code></pre> Instances of Case are created through the
  * {@link DSL#decode()} method
  *
  * @author Lukas Eder
@@ -63,12 +63,12 @@ import org.jetbrains.annotations.NotNull;
 public interface Case {
 
     /**
-     * This construct can be used to create expressions of the type <code><pre>
+     * This construct can be used to create expressions of the type <pre><code>
      * CASE value WHEN 1 THEN 'one'
      *            WHEN 2 THEN 'two'
      *            ELSE        'three'
      * END
-     * </pre></code>
+     * </code></pre>
      *
      * @param <V> The generic value type parameter
      * @param value The value to do the case statement on
@@ -79,12 +79,12 @@ public interface Case {
     <V> CaseValueStep<V> value(V value);
 
     /**
-     * This construct can be used to create expressions of the type <code><pre>
+     * This construct can be used to create expressions of the type <pre><code>
      * CASE value WHEN 1 THEN 'one'
      *            WHEN 2 THEN 'two'
      *            ELSE        'three'
      * END
-     * </pre></code>
+     * </code></pre>
      *
      * @param <V> The generic value type parameter
      * @param value The value to do the case statement on
@@ -95,12 +95,12 @@ public interface Case {
     <V> CaseValueStep<V> value(Field<V> value);
 
     /**
-     * This construct can be used to create expressions of the type <code><pre>
+     * This construct can be used to create expressions of the type <pre><code>
      * CASE WHEN x &lt; 1  THEN 'one'
      *      WHEN x &gt;= 2 THEN 'two'
      *      ELSE            'three'
      * END
-     * </pre></code>
+     * </code></pre>
      *
      * @param <T> The generic field type parameter
      * @param condition A condition to check in the case statement
@@ -112,12 +112,12 @@ public interface Case {
     <T> CaseConditionStep<T> when(Condition condition, T result);
 
     /**
-     * This construct can be used to create expressions of the type <code><pre>
+     * This construct can be used to create expressions of the type <pre><code>
      * CASE WHEN x &lt; 1  THEN 'one'
      *      WHEN x &gt;= 2 THEN 'two'
      *      ELSE            'three'
      * END
-     * </pre></code>
+     * </code></pre>
      *
      * @param <T> The generic field type parameter
      * @param condition A condition to check in the case statement
@@ -129,12 +129,12 @@ public interface Case {
     <T> CaseConditionStep<T> when(Condition condition, Field<T> result);
 
     /**
-     * This construct can be used to create expressions of the type <code><pre>
+     * This construct can be used to create expressions of the type <pre><code>
      * CASE WHEN x &lt; 1  THEN 'one'
      *      WHEN x &gt;= 2 THEN 'two'
      *      ELSE            'three'
      * END
-     * </pre></code>
+     * </code></pre>
      *
      * @param <T> The generic field type parameter
      * @param condition A condition to check in the case statement
@@ -146,12 +146,12 @@ public interface Case {
     <T> CaseConditionStep<T> when(Condition condition, Select<? extends Record1<T>> result);
 
     /**
-     * This construct can be used to create expressions of the type <code><pre>
+     * This construct can be used to create expressions of the type <pre><code>
      * CASE WHEN x &lt; 1  THEN 'one'
      *      WHEN x &gt;= 2 THEN 'two'
      *      ELSE            'three'
      * END
-     * </pre></code>
+     * </code></pre>
      *
      * @param <T> The generic field type parameter
      * @param condition A condition to check in the case statement
@@ -163,12 +163,12 @@ public interface Case {
     <T> CaseConditionStep<T> when(Field<Boolean> condition, T result);
 
     /**
-     * This construct can be used to create expressions of the type <code><pre>
+     * This construct can be used to create expressions of the type <pre><code>
      * CASE WHEN x &lt; 1  THEN 'one'
      *      WHEN x &gt;= 2 THEN 'two'
      *      ELSE            'three'
      * END
-     * </pre></code>
+     * </code></pre>
      *
      * @param <T> The generic field type parameter
      * @param condition A condition to check in the case statement
@@ -180,12 +180,12 @@ public interface Case {
     <T> CaseConditionStep<T> when(Field<Boolean> condition, Field<T> result);
 
     /**
-     * This construct can be used to create expressions of the type <code><pre>
+     * This construct can be used to create expressions of the type <pre><code>
      * CASE WHEN x &lt; 1  THEN 'one'
      *      WHEN x &gt;= 2 THEN 'two'
      *      ELSE            'three'
      * END
-     * </pre></code>
+     * </code></pre>
      *
      * @param <T> The generic field type parameter
      * @param condition A condition to check in the case statement

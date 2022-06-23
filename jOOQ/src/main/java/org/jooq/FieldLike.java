@@ -92,15 +92,15 @@ public interface FieldLike {
      * provided by a function. This is useful, for instance, to prefix all
      * columns with a common prefix (on {@link Table#as(String, Function)}):
      * <p>
-     * <code><pre>
+     * <pre><code>
      * MY_TABLE.as("t1", f -&gt; "prefix_" + f.getName());
-     * </pre></code>
+     * </code></pre>
      * <p>
      * And then to use the same function also for individual fields:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * MY_TABLE.MY_COLUMN.as(f -&gt; "prefix_" + f.getName());
-     * </pre></code>
+     * </code></pre>
      *
      * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
      *             replacement from a future jOOQ. They offer convenience that

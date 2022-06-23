@@ -42,12 +42,12 @@ import java.util.Map;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * An intermediary step in creating a case statement of the type <code><pre>
+ * An intermediary step in creating a case statement of the type <pre><code>
  * CASE x WHEN 1 THEN 'one'
  *        WHEN 2 THEN 'two'
  *        ELSE        'three'
  * END
- * </pre></code>
+ * </code></pre>
  *
  * @param <V> The type of values being compared in this case statement
  * @author Lukas Eder

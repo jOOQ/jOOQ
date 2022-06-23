@@ -4707,7 +4707,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
-                else if (!identity && !computed && parseKeywordIf("GENERATED")) {
+                else if ((!identity || !computed) && parseKeywordIf("GENERATED")) {
                     boolean always;
                     if (!(always = parseKeywordIf("ALWAYS"))) {
                         parseKeyword("BY DEFAULT");

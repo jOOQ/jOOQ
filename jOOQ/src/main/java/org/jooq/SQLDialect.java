@@ -1048,11 +1048,11 @@ public enum SQLDialect {
      * The dialect family.
      * <p>
      * This returns the dialect itself, if it has no "parent family". E.g.
-     * <code><pre>
+     * <pre><code>
      * SQLSERVER == SQLSERVER2012.family();
      * SQLSERVER == SQLSERVER2008.family();
      * SQLSERVER == SQLSERVER.family();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     public final SQLDialect family() {
@@ -1132,7 +1132,7 @@ public enum SQLDialect {
      * </ul>
      * <p>
      * This is useful to see if some feature is supported by <em>"at least"</em>
-     * a given dialect version. Example: <code><pre>
+     * a given dialect version. Example: <pre><code>
      * // Do this block only if the chosen dialect supports PostgreSQL 9.4+ features
      * if (POSTGRES_9_4.precedes(dialect)) {
      * }
@@ -1144,7 +1144,7 @@ public enum SQLDialect {
      * // Fall back to pre-PostgreSQL 9.3 behaviour
      * else {
      * }
-     * </pre></code>
+     * </code></pre>
      */
     public final boolean precedes(SQLDialect other) {
         if (family != other.family)

@@ -48,11 +48,11 @@ import org.jooq.TransactionListener;
 /**
  * A {@link TransactionListener} that allows for functional composition.
  * <p>
- * For example: <code><pre>
+ * For example: <pre><code>
  * TransactionListener listener = TransactionListener
  *   .onCommitStart(ctx -&gt; something())
  *   .onCommitEnd(ctx -&gt; something());
- * </pre></code>
+ * </code></pre>
  *
  * @author Lukas Eder
  */

@@ -44,7 +44,7 @@ import org.jooq.impl.DSL;
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
  * using(configuration)
@@ -52,7 +52,7 @@ import org.jooq.impl.DSL;
  *    .on(ACTOR)
  *    .to(user("MY_USER"))
  *    .execute();
- * </pre></code>
+ * </code></pre>
  * <p>
  * Instances can be created using {@link DSL#user(Name)} and overloads.
  *

@@ -528,7 +528,7 @@ public class MySQLDSL extends DSL {
      * @deprecated - 3.15.0 - [#12099] - MySQL 8.0.20 has deprecated this clause
      *             and replaced it by something new, which we'll support soon,
      *             see <a href=
-     *             "https://dev.mysql.com/doc/refman/8.0/en/insert-on-duplicate.html">https://dev.mysql.com/doc/refman/8.0/en/insert-on-duplicate.html/<a>
+     *             "https://dev.mysql.com/doc/refman/8.0/en/insert-on-duplicate.html">https://dev.mysql.com/doc/refman/8.0/en/insert-on-duplicate.html/</a>
      *             and <a href=
      *             "https://github.com/jOOQ/jOOQ/issues/12099">https://github.com/jOOQ/jOOQ/issues/12099</a>
      */

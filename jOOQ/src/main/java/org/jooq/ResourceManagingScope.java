@@ -59,7 +59,7 @@ import java.sql.SQLXML;
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ * <pre><code>
  * class StreamingLobBinding implements Binding&lt;String, File&gt; {
  *     ...
  *     public void set(BindingSetStatementContext&lt;File&gt; ctx) {
@@ -67,7 +67,7 @@ import java.sql.SQLXML;
  *            .setBinaryStream(ctx.index(), ctx.closeAfterExecution(new FileInputStream(ctx.value())));
  *     }
  * }
- * </pre></code>
+ * </code></pre>
  * <p>
  * This type is a {@link Scope} with whose lifecycle is typically tied to an
  * {@link ExecuteContext}, sharing the latter's {@link #data()} map.

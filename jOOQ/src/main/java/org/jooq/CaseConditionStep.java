@@ -41,12 +41,12 @@ import org.jetbrains.annotations.NotNull;
 
 
 /**
- * The final step in creating a case statement of the type <code><pre>
+ * The final step in creating a case statement of the type <pre><code>
  * CASE WHEN x &lt; 1  THEN 'one'
  *      WHEN x &gt;= 2 THEN 'two'
  *      ELSE            'three'
  * END
- * </pre></code>
+ * </code></pre>
  *
  * @param <T> The type returned by this case statement
  * @author Lukas Eder

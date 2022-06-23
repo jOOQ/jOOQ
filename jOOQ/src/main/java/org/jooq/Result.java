@@ -80,7 +80,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @param field The value's field
      * @return The value
      * @throws IndexOutOfBoundsException if the index is out of range (
-     *             <tt>index &lt; 0 || index &gt;= size()</tt>)
+     *             <code>index &lt; 0 || index &gt;= size()</code>)
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
@@ -93,7 +93,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @param fieldIndex The value's field index
      * @return The value
      * @throws IndexOutOfBoundsException if the index is out of range (
-     *             <tt>index &lt; 0 || index &gt;= size()</tt>)
+     *             <code>index &lt; 0 || index &gt;= size()</code>)
      * @throws IllegalArgumentException If the argument fieldIndex is not
      *             contained in {@link #fieldsRow()}
      */
@@ -107,7 +107,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @param fieldName The value's field name
      * @return The value
      * @throws IndexOutOfBoundsException if the index is out of range (
-     *             <tt>index &lt; 0 || index &gt;= size()</tt>)
+     *             <code>index &lt; 0 || index &gt;= size()</code>)
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}
      */
@@ -2191,10 +2191,10 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * elements as this result's records have fields. The resulting array
      * contains data as such:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * // For arbitrary values of i, j
      * result.getValue(i, j) == result.intoArray()[i][j]
-     * </pre></code>
+     * </code></pre>
      *
      * @return This result as an array of arrays
      * @see Record#intoArray()
@@ -2206,7 +2206,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Return all values for a field index from the result.
      * <p>
      * You can access data like this
-     * <code><pre>result.intoArray(fieldIndex)[recordIndex]</pre></code>
+     * <pre><code>result.intoArray(fieldIndex)[recordIndex]</code></pre>
      *
      * @param fieldIndex The 0-based field index
      * @return The resulting values. This may be an array type more concrete
@@ -2223,7 +2223,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Return all values for a field index from the result.
      * <p>
      * You can access data like this
-     * <code><pre>result.intoArray(fieldIndex)[recordIndex]</pre></code>
+     * <pre><code>result.intoArray(fieldIndex)[recordIndex]</code></pre>
      *
      * @param fieldIndex The 0-based field index
      * @return The resulting values.
@@ -2239,7 +2239,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Return all values for a field index from the result.
      * <p>
      * You can access data like this
-     * <code><pre>result.intoArray(fieldIndex)[recordIndex]</pre></code>
+     * <pre><code>result.intoArray(fieldIndex)[recordIndex]</code></pre>
      *
      * @param fieldIndex The 0-based field index
      * @return The resulting values.
@@ -2255,7 +2255,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Return all values for a field name from the result.
      * <p>
      * You can access data like this
-     * <code><pre>result.intoArray(fieldName)[recordIndex]</pre></code>
+     * <pre><code>result.intoArray(fieldName)[recordIndex]</code></pre>
      *
      * @return The resulting values. This may be an array type more concrete
      *         than <code>Object[]</code>, depending on whether jOOQ has any
@@ -2271,7 +2271,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Return all values for a field name from the result.
      * <p>
      * You can access data like this
-     * <code><pre>result.intoArray(fieldName)[recordIndex]</pre></code>
+     * <pre><code>result.intoArray(fieldName)[recordIndex]</code></pre>
      *
      * @return The resulting values.
      * @see #getValues(String, Class)
@@ -2286,7 +2286,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Return all values for a field name from the result.
      * <p>
      * You can access data like this
-     * <code><pre>result.intoArray(fieldName)[recordIndex]</pre></code>
+     * <pre><code>result.intoArray(fieldName)[recordIndex]</code></pre>
      *
      * @return The resulting values.
      * @see #getValues(String, Converter)
@@ -2301,7 +2301,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Return all values for a field name from the result.
      * <p>
      * You can access data like this
-     * <code><pre>result.intoArray(fieldName)[recordIndex]</pre></code>
+     * <pre><code>result.intoArray(fieldName)[recordIndex]</code></pre>
      *
      * @return The resulting values. This may be an array type more concrete
      *         than <code>Object[]</code>, depending on whether jOOQ has any
@@ -2317,7 +2317,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Return all values for a field name from the result.
      * <p>
      * You can access data like this
-     * <code><pre>result.intoArray(fieldName)[recordIndex]</pre></code>
+     * <pre><code>result.intoArray(fieldName)[recordIndex]</code></pre>
      *
      * @return The resulting values.
      * @see #getValues(Name, Class)
@@ -2332,7 +2332,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Return all values for a field name from the result.
      * <p>
      * You can access data like this
-     * <code><pre>result.intoArray(fieldName)[recordIndex]</pre></code>
+     * <pre><code>result.intoArray(fieldName)[recordIndex]</code></pre>
      *
      * @return The resulting values.
      * @see #getValues(Name, Converter)
@@ -2347,7 +2347,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Return all values for a field from the result.
      * <p>
      * You can access data like this
-     * <code><pre>result.intoArray(field)[recordIndex]</pre></code>
+     * <pre><code>result.intoArray(field)[recordIndex]</code></pre>
      *
      * @return The resulting values.
      * @see #getValues(Field)
@@ -2360,7 +2360,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Return all values for a field from the result.
      * <p>
      * You can access data like this
-     * <code><pre>result.intoArray(field)[recordIndex]</pre></code>
+     * <pre><code>result.intoArray(field)[recordIndex]</code></pre>
      *
      * @return The resulting values.
      * @see #getValues(Field, Class)
@@ -2375,7 +2375,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Return all values for a field from the result.
      * <p>
      * You can access data like this
-     * <code><pre>result.intoArray(field)[recordIndex]</pre></code>
+     * <pre><code>result.intoArray(field)[recordIndex]</code></pre>
      *
      * @return The resulting values.
      * @see #getValues(Field, Converter)

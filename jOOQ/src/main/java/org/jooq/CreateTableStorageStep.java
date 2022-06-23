@@ -88,13 +88,13 @@ public interface CreateTableStorageStep extends CreateTableFinalStep {
      * <p>
      * Example usage:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * DSL.using(configuration)
      *    .createTable("t")
      *    .column(field("i", SQLDataType.INTEGER))
      *    .storage("TABLESPACE my_tablespace")
      *    .execute();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -128,13 +128,13 @@ public interface CreateTableStorageStep extends CreateTableFinalStep {
      * <p>
      * Example usage:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * DSL.using(configuration)
      *    .createTable("t")
      *    .column(field("i", SQLDataType.INTEGER))
      *    .storage("TABLESPACE my_tablespace")
      *    .execute();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -168,13 +168,13 @@ public interface CreateTableStorageStep extends CreateTableFinalStep {
      * <p>
      * Example usage:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * DSL.using(configuration)
      *    .createTable("t")
      *    .column(field("i", SQLDataType.INTEGER))
      *    .storage("TABLESPACE my_tablespace")
      *    .execute();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -208,13 +208,13 @@ public interface CreateTableStorageStep extends CreateTableFinalStep {
      * <p>
      * Example usage:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * DSL.using(configuration)
      *    .createTable("t")
      *    .column(field("i", SQLDataType.INTEGER))
      *    .storage("TABLESPACE my_tablespace")
      *    .execute();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of

@@ -91,7 +91,7 @@ import java.lang.annotation.Target;
  * ANY of the supplied {@link SQLDialect} to be supported by all usage of jOOQ
  * API within the scope. For example:
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Allow only MYSQL or ORACLE dialect support to be used within the class scope
  * &#64;Allow(MYSQL, ORACLE)
  * public class MySQLAndOracleDAO {
@@ -121,7 +121,7 @@ import java.lang.annotation.Target;
  *            .execute();
  *     }
  * }
- * </pre></code>
+ * </code></pre>
  * <p>
  * Type checking for these annotations can be supplied by
  * <code>org.jooq.checker.SQLDialectChecker</code> from the jOOQ-checker module.

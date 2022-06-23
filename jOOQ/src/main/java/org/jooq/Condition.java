@@ -65,7 +65,7 @@ import org.jetbrains.annotations.NotNull;
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
  * using(configuration)
@@ -73,7 +73,7 @@ import org.jetbrains.annotations.NotNull;
  *    .from(ACTOR)
  *    .where(ACTOR.ACTOR_ID.eq(1)) // The eq operator produces a Condition from two Fields
  *    .fetch();
- * </pre></code>
+ * </code></pre>
  * <p>
  * Instances can be created using {@link DSL#condition(Field)} and overloads, or
  * by calling a comparison operator method on {@link Field}, such as

@@ -60,13 +60,13 @@ import org.jetbrains.annotations.NotNull;
  * Some databases support raising several errors or exceptions per statement
  * batch (e.g. {@link SQLDialect#SQLSERVER}):
  * <p>
- * <code><pre>
+ * <pre><code>
  * INSERT INTO t VALUES (1),(2),(3);
  * RAISERROR('message 1', 16, 2, 3);
  * RAISERROR('message 2', 16, 2, 3);
  * SELECT * FROM t;
  * RAISERROR('message 3', 16, 2, 3);
- * </pre></code>
+ * </code></pre>
  * <p>
  * The above batch will produce:
  * <ul>
@@ -104,14 +104,14 @@ public interface Results extends List<Result<Record>>, Attachable {
      * includes update counts that may have occurred between two results.
      * <p>
      * It can be safely assumed that:
-     * <code><pre>
+     * <pre><code>
      * result.resultsOrRows()
      *       .stream()
      *       .filter(r -&gt; r.result() != null)
      *       .map(r -&gt; r.result())
      *       .collect(Collectors.toList())
      *       .equals(result);
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     List<ResultOrRows> resultsOrRows();

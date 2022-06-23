@@ -51,7 +51,7 @@ import scala.jdk.CollectionConverters
  * <p>
  * Import this object and all of its attributes to profit from an enhanced jOOQ
  * API in Scala client code. Here is an example:
- * <code><pre>
+ * <pre><code>
  * import java.sql.DriverManager
  * import org.jooq._
  * import org.jooq.impl._
@@ -79,7 +79,7 @@ import scala.jdk.CollectionConverters
  *     }
  *   }
  * }
- * </pre></code>
+ * </code></pre>
  *
  * @author Lukas Eder
  * @author Eric Peters

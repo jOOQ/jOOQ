@@ -17,9 +17,9 @@ import org.springframework.boot.autoconfigure.r2dbc.R2dbcAutoConfiguration;
  * connection. To work around this, use {@link SpringBootApplication#exclude()}
  * to explicitly exclude the {@link R2dbcAutoConfiguration}:
  * <p>
- * <code><pre>
+ * <pre><code>
  * &#64;SpringBootApplication(exclude = { R2dbcAutoConfiguration.class })
- * </pre></code>
+ * </code></pre>
  * <p>
  * However, it is recommended you upgrade to Spring Boot 2.6 instead.
  *

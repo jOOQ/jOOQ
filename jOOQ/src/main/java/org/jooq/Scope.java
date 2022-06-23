@@ -75,7 +75,7 @@ import org.jetbrains.annotations.Nullable;
  * implementation that measures time for fetching data, it is perfectly possible
  * to store timestamps in that map:
  * <p>
- * <code><pre>
+ * <pre><code>
  * class FetchTimeMeasuringListener extends DefaultExecuteListener {
  *     &#64;Override
  *     public void fetchStart(ExecuteContext ctx) {
@@ -92,7 +92,7 @@ import org.jetbrains.annotations.Nullable;
  *         System.out.println("Time taken: " + (System.nanoTime() - startTime) / 1000 / 1000.0 + " ms");
  *     }
  * }
- * </pre></code>
+ * </code></pre>
  *
  * @author Lukas Eder
  */

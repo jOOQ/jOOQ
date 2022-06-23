@@ -72,9 +72,9 @@ public interface LikeEscapeStep extends Condition {
      * <p>
      * For example:
      *
-     * <code><pre>
+     * <pre><code>
      * some_column LIKE 'A!%%' ESCAPE '!'
-     * </pre></code>
+     * </code></pre>
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     @NotNull @CheckReturnValue

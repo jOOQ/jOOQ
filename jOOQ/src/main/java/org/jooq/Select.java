@@ -81,14 +81,14 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
  * using(configuration)
  *    .select(ACTOR.FIRST_NAME, ACTOR.LAST_NAME)
  *    .from(ACTOR)
  *    .fetch();
- * </pre></code>
+ * </code></pre>
  * <p>
  * Instances can be created using {@link DSL#select(SelectFieldOrAsterisk...)},
  * or {@link DSLContext#selectQuery()} and overloads.

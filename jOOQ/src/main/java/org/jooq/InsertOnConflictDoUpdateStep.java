@@ -62,7 +62,7 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 /**
  * This type is used for the {@link Insert}'s DSL API.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * DSLContext create = DSL.using(configuration);
  *
  * create.insertInto(table, field1, field2)
@@ -71,7 +71,7 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
  *       .doUpdate()
  *       .set(field2, value2)
  *       .execute();
- * </pre></code>
+ * </code></pre>
  *
  * @author Lukas Eder
  * @author Fabrice Le Roy

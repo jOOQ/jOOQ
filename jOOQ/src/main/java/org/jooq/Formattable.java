@@ -110,7 +110,7 @@ public interface Formattable {
     /**
      * Get a simple formatted representation of this result as HTML.
      * <p>
-     * The HTML code is formatted as follows: <code><pre>
+     * The HTML code is formatted as follows: <pre><code>
      * &lt;table&gt;
      *   &lt;thead&gt;
      *     &lt;tr&gt;
@@ -136,7 +136,7 @@ public interface Formattable {
      *     ...
      *   &lt;/tbody&gt;
      * &lt;/table&gt;
-     * </pre></code>
+     * </code></pre>
      *
      * @return The formatted result
      */
@@ -222,14 +222,14 @@ public interface Formattable {
      * Get a simple formatted representation of this result as a JSON array of
      * array.
      * <p>
-     * The format is the following: <code><pre>
+     * The format is the following: <pre><code>
      * {"fields":[{"name":"field-1","type":"type-1"},
      *            {"name":"field-2","type":"type-2"},
      *            ...,
      *            {"name":"field-n","type":"type-n"}],
      *  "records":[[value-1-1,value-1-2,...,value-1-n],
      *             [value-2-1,value-2-2,...,value-2-n]]}
-     * </pre></code>
+     * </code></pre>
      *
      * @return The formatted result
      */
@@ -275,7 +275,7 @@ public interface Formattable {
     /**
      * Get this result as an ASCII chart.
      * <p>
-     * When running a query like this: <code><pre>
+     * When running a query like this: <pre><code>
      * String chart =
      * create.select(
      *            BOOK_TO_BOOK_STORE.BOOK_STORE_NAME,
@@ -285,7 +285,7 @@ public interface Formattable {
      *        .groupBy(BOOK_TO_BOOK_STORE.BOOK_STORE_NAME)
      *        .fetch()
      *        .formatChart();
-     * </pre></code> Where the formatted result would look like this:
+     * </code></pre> Where the formatted result would look like this:
      *
      * <pre>
      * +-------------------------+-----+

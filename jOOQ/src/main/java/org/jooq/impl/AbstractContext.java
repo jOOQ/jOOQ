@@ -373,7 +373,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
      * after visiting a query part. This is needed for all reusable query parts,
      * whose clause type is ambiguous at the container site. An example:
      * <p>
-     * <code><pre>SELECT * FROM [A CROSS JOIN B]</pre></code>
+     * <pre><code>SELECT * FROM [A CROSS JOIN B]</code></pre>
      * <p>
      * The type of the above <code>JoinTable</code> modelling
      * <code>A CROSS JOIN B</code> is not known to the surrounding

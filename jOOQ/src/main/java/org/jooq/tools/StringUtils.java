@@ -621,8 +621,6 @@ public final class StringUtils {
      *   <li>In no case will it return a String of length greater than
      *       <code>maxWidth</code>.</li>
      * </ul>
-     * </p>
-     *
      * <pre>
      * StringUtils.abbreviate(null, *)      = null
      * StringUtils.abbreviate("", 4)        = ""
@@ -1419,11 +1417,11 @@ public final class StringUtils {
      * A custom adaptation of {@link Pattern#split(CharSequence, int)}.
      * <p>
      * This is useful if the matched split-tokens should be returned as well.
-     * For example: <code><pre>
+     * For example: <pre><code>
      * split("e", "hello world")    // ["h", "e", "llo world"]
      * split("o", "hello world")    // ["hell", "o", " w", "o", "rld"]
      * split("[eo]", "hello world") // ["h", "e", "ll", "o", " w", "o", "rld"]
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The result will always be an odd-length array.
      */

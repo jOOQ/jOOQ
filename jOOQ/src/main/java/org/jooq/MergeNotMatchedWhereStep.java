@@ -50,7 +50,7 @@ import org.jooq.impl.DSL;
 /**
  * This type is used for the {@link Merge}'s DSL API.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * DSLContext create = DSL.using(configuration);
  *
  * create.mergeInto(table)
@@ -62,7 +62,7 @@ import org.jooq.impl.DSL;
  *       .whenNotMatchedThenInsert(field1, field2)
  *       .values(value1, value2)
  *       .execute();
- * </pre></code>
+ * </code></pre>
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>

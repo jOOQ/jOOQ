@@ -65,13 +65,13 @@ import org.jetbrains.annotations.NotNull;
 /**
  * An intermediate step in the construction of a {@link WindowSpecification}.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * WindowSpecification spec =
  * DSL.partitionBy(BOOK.AUTHOR_ID)
  *    .orderBy(BOOK.ID)
  *    .rowsBetweenUnboundedPreceding()
  *    .andCurrentRow();
- * </pre></code>
+ * </code></pre>
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>

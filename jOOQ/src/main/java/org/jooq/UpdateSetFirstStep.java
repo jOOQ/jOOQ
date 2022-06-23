@@ -44,14 +44,14 @@ import org.jetbrains.annotations.NotNull;
 /**
  * This type is used for the {@link Update}'s DSL API.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * using(configuration)
  *       .update(table)
  *       .set(field1, value1)
  *       .set(field2, value2)
  *       .where(field1.greaterThan(100))
  *       .execute();
- * </pre></code>
+ * </code></pre>
  *
  * @author Lukas Eder
  */

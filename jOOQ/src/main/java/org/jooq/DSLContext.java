@@ -132,7 +132,7 @@ import io.r2dbc.spi.ConnectionFactory;
  * that they can be executed immediately in a fluent style. An example is given
  * here:
  * <p>
- * <code><pre>
+ * <pre><code>
  * DSLContext create = DSL.using(connection, dialect);
  *
  * // Immediately fetch results after constructing a query
@@ -140,7 +140,7 @@ import io.r2dbc.spi.ConnectionFactory;
  *
  * // The above is equivalent to this "non-fluent" style
  * create.fetch(DSL.selectFrom(MY_TABLE).where(MY_TABLE.ID.eq(1)));
- * </pre></code>
+ * </code></pre>
  * <p>
  * The <code>DSL</code> provides convenient constructors to create a
  * {@link Configuration}, which will be shared among all <code>Query</code>
@@ -931,8 +931,8 @@ public interface DSLContext extends Scope {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
-     * String sql = "SET SCHEMA 'abc'";</pre></code>
+     * <pre><code>
+     * String sql = "SET SCHEMA 'abc'";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -954,8 +954,8 @@ public interface DSLContext extends Scope {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
-     * String sql = "SET SCHEMA 'abc'";</pre></code>
+     * <pre><code>
+     * String sql = "SET SCHEMA 'abc'";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -977,8 +977,8 @@ public interface DSLContext extends Scope {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
-     * String sql = "SET SCHEMA 'abc'";</pre></code>
+     * <pre><code>
+     * String sql = "SET SCHEMA 'abc'";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1002,13 +1002,13 @@ public interface DSLContext extends Scope {
      * Unlike {@link #query(String, Object...)}, the SQL passed to this method
      * should not contain any bind variables. Instead, you can pass
      * {@link QueryPart} objects to the method which will be rendered at indexed
-     * locations of your SQL string as such: <code><pre>
+     * locations of your SQL string as such: <pre><code>
      * // The following query
      * query("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
      * // Will render this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1034,12 +1034,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1062,12 +1062,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1093,12 +1093,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1123,13 +1123,13 @@ public interface DSLContext extends Scope {
      * Unlike {@link #fetch(String, Object...)}, the SQL passed to this method
      * should not contain any bind variables. Instead, you can pass
      * {@link QueryPart} objects to the method which will be rendered at indexed
-     * locations of your SQL string as such: <code><pre>
+     * locations of your SQL string as such: <pre><code>
      * // The following query
      * fetch("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
      * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1163,12 +1163,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1205,12 +1205,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1250,12 +1250,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1295,13 +1295,13 @@ public interface DSLContext extends Scope {
      * Unlike {@link #fetchLazy(String, Object...)}, the SQL passed to this
      * method should not contain any bind variables. Instead, you can pass
      * {@link QueryPart} objects to the method which will be rendered at indexed
-     * locations of your SQL string as such: <code><pre>
+     * locations of your SQL string as such: <pre><code>
      * // The following query
      * fetchLazy("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
      * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1341,12 +1341,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1372,12 +1372,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1406,12 +1406,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1440,13 +1440,13 @@ public interface DSLContext extends Scope {
      * Unlike {@link #fetchLazy(String, Object...)}, the SQL passed to this
      * method should not contain any bind variables. Instead, you can pass
      * {@link QueryPart} objects to the method which will be rendered at indexed
-     * locations of your SQL string as such: <code><pre>
+     * locations of your SQL string as such: <pre><code>
      * // The following query
      * fetchLazy("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
      * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1474,12 +1474,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1502,12 +1502,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1533,12 +1533,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1564,13 +1564,13 @@ public interface DSLContext extends Scope {
      * Unlike {@link #fetchLazy(String, Object...)}, the SQL passed to this
      * method should not contain any bind variables. Instead, you can pass
      * {@link QueryPart} objects to the method which will be rendered at indexed
-     * locations of your SQL string as such: <code><pre>
+     * locations of your SQL string as such: <pre><code>
      * // The following query
      * fetchLazy("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
      * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1603,12 +1603,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1647,12 +1647,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1694,12 +1694,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1741,13 +1741,13 @@ public interface DSLContext extends Scope {
      * Unlike {@link #fetchStream(String, Object...)}, the SQL passed to this
      * method should not contain any bind variables. Instead, you can pass
      * {@link QueryPart} objects to the method which will be rendered at indexed
-     * locations of your SQL string as such: <code><pre>
+     * locations of your SQL string as such: <pre><code>
      * // The following query
      * fetchLazy("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
      * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1786,8 +1786,8 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Sybase ASE):
      * <p>
-     * <code><pre>
-     * String sql = "sp_help 'my_table'";</pre></code>
+     * <pre><code>
+     * String sql = "sp_help 'my_table'";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1810,8 +1810,8 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Sybase ASE):
      * <p>
-     * <code><pre>
-     * String sql = "sp_help 'my_table'";</pre></code>
+     * <pre><code>
+     * String sql = "sp_help 'my_table'";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1837,8 +1837,8 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Sybase ASE):
      * <p>
-     * <code><pre>
-     * String sql = "sp_help 'my_table'";</pre></code>
+     * <pre><code>
+     * String sql = "sp_help 'my_table'";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1864,13 +1864,13 @@ public interface DSLContext extends Scope {
      * Unlike {@link #fetchMany(String, Object...)}, the SQL passed to this
      * method should not contain any bind variables. Instead, you can pass
      * {@link QueryPart} objects to the method which will be rendered at indexed
-     * locations of your SQL string as such: <code><pre>
+     * locations of your SQL string as such: <pre><code>
      * // The following query
      * fetchMany("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
      * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1897,12 +1897,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1925,12 +1925,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1956,12 +1956,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1987,13 +1987,13 @@ public interface DSLContext extends Scope {
      * Unlike {@link #fetchOne(String, Object...)}, the SQL passed to this
      * method should not contain any bind variables. Instead, you can pass
      * {@link QueryPart} objects to the method which will be rendered at indexed
-     * locations of your SQL string as such: <code><pre>
+     * locations of your SQL string as such: <pre><code>
      * // The following query
      * fetchOne("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
      * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2021,12 +2021,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2050,12 +2050,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2082,12 +2082,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2114,13 +2114,13 @@ public interface DSLContext extends Scope {
      * Unlike {@link #fetchOne(String, Object...)}, the SQL passed to this
      * method should not contain any bind variables. Instead, you can pass
      * {@link QueryPart} objects to the method which will be rendered at indexed
-     * locations of your SQL string as such: <code><pre>
+     * locations of your SQL string as such: <pre><code>
      * // The following query
      * fetchOne("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
      * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2149,12 +2149,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2177,12 +2177,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2208,12 +2208,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2239,13 +2239,13 @@ public interface DSLContext extends Scope {
      * Unlike {@link #fetchOne(String, Object...)}, the SQL passed to this
      * method should not contain any bind variables. Instead, you can pass
      * {@link QueryPart} objects to the method which will be rendered at indexed
-     * locations of your SQL string as such: <code><pre>
+     * locations of your SQL string as such: <pre><code>
      * // The following query
      * fetchOne("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
      * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2273,12 +2273,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2303,12 +2303,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2336,12 +2336,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2369,13 +2369,13 @@ public interface DSLContext extends Scope {
      * Unlike {@link #fetchValue(String, Object...)}, the SQL passed to this
      * method should not contain any bind variables. Instead, you can pass
      * {@link QueryPart} objects to the method which will be rendered at indexed
-     * locations of your SQL string as such: <code><pre>
+     * locations of your SQL string as such: <pre><code>
      * // The following query
      * fetchOne("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
      * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2405,12 +2405,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2435,12 +2435,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2468,12 +2468,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2501,13 +2501,13 @@ public interface DSLContext extends Scope {
      * Unlike {@link #fetchValue(String, Object...)}, the SQL passed to this
      * method should not contain any bind variables. Instead, you can pass
      * {@link QueryPart} objects to the method which will be rendered at indexed
-     * locations of your SQL string as such: <code><pre>
+     * locations of your SQL string as such: <pre><code>
      * // The following query
      * fetchOne("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
      * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2537,12 +2537,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2566,12 +2566,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2598,12 +2598,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2630,13 +2630,13 @@ public interface DSLContext extends Scope {
      * Unlike {@link #fetchValue(String, Object...)}, the SQL passed to this
      * method should not contain any bind variables. Instead, you can pass
      * {@link QueryPart} objects to the method which will be rendered at indexed
-     * locations of your SQL string as such: <code><pre>
+     * locations of your SQL string as such: <pre><code>
      * // The following query
      * fetchOne("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
      * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2722,13 +2722,13 @@ public interface DSLContext extends Scope {
      * Unlike {@link #execute(String, Object...)}, the SQL passed to this method
      * should not contain any bind variables. Instead, you can pass
      * {@link QueryPart} objects to the method which will be rendered at indexed
-     * locations of your SQL string as such: <code><pre>
+     * locations of your SQL string as such: <pre><code>
      * // The following query
      * execute("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
      * // Will execute this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2775,12 +2775,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2822,12 +2822,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2870,12 +2870,12 @@ public interface DSLContext extends Scope {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2899,13 +2899,13 @@ public interface DSLContext extends Scope {
      * Unlike {@link #resultQuery(String, Object...)}, the SQL passed to this
      * method should not contain any bind variables. Instead, you can pass
      * {@link QueryPart} objects to the method which will be rendered at indexed
-     * locations of your SQL string as such: <code><pre>
+     * locations of your SQL string as such: <pre><code>
      * // The following query
      * resultQuery("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
      * // Will render this SQL by default, using SQLDialect.ORACLE:
      * select ?, 'test' from "DUAL"
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -3774,14 +3774,14 @@ public interface DSLContext extends Scope {
      * <h3>The jOOQ {@link Result#format()}</h3>
      * <p>
      * This format is recognised by the fact that the first line starts with a
-     * "plus" sign: <code><pre>
+     * "plus" sign: <pre><code>
      * +-----+-----+--------------------------+
      * |COL1 |COL2 |COL3 containing whitespace|
      * +-----+-----+--------------------------+
      * |val1 |1    |some text                 |
      * |val2 | 2   | more text                |
      * +-----+-----+--------------------------+
-     * </pre></code> This method will decode the above formatted string
+     * </code></pre> This method will decode the above formatted string
      * according to the following rules:
      * <ul>
      * <li>The number of columns is defined by the number of dash groups in the
@@ -3796,12 +3796,12 @@ public interface DSLContext extends Scope {
      * <h3>The H2 database test data format</h3>
      * <p>
      * The supplied string is supposed to be formatted in the following,
-     * human-readable way: <code><pre>
+     * human-readable way: <pre><code>
      * COL1  COL2   COL3 containing whitespace
      * ----- ----   --------------------------
      * val1  1      some text
      * val2   2      more text
-     * </pre></code> This method will decode the above formatted string
+     * </code></pre> This method will decode the above formatted string
      * according to the following rules:
      * <ul>
      * <li>The number of columns is defined by the number of dash groups in the
@@ -3853,7 +3853,7 @@ public interface DSLContext extends Scope {
      * <li>Nested tables are not supported</li>
      * </ul>
      * <p>
-     * Ideal input looks like this: <code><pre>
+     * Ideal input looks like this: <pre><code>
      * &lt;table&gt;
      * &lt;tr&gt;&lt;th&gt;COL1&lt;/th&gt;&lt;th&gt;COL2&lt;/th&gt;&lt;/tr&gt;
      * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;a&lt;/td&gt;&lt;/tr&gt;
@@ -6042,9 +6042,9 @@ public interface DSLContext extends Scope {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT table.col1, table.col2 FROM table
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -6058,9 +6058,9 @@ public interface DSLContext extends Scope {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM table
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#table(Name)
      */
@@ -6076,9 +6076,9 @@ public interface DSLContext extends Scope {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM table
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -6101,9 +6101,9 @@ public interface DSLContext extends Scope {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM table
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -6127,9 +6127,9 @@ public interface DSLContext extends Scope {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM table
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -6153,9 +6153,9 @@ public interface DSLContext extends Scope {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM table
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -6180,7 +6180,7 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(Collection)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.select(fields)
@@ -6188,7 +6188,7 @@ public interface DSLContext extends Scope {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note that passing an empty collection conveniently produces
      * <code>SELECT *</code> semantics, i.e. it:
@@ -6214,7 +6214,7 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectFieldOrAsterisk...)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.select(field1, field2)
@@ -6223,7 +6223,7 @@ public interface DSLContext extends Scope {
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note that passing an empty collection conveniently produces
      * <code>SELECT *</code> semantics, i.e. it:
@@ -6256,14 +6256,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6286,14 +6286,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6316,14 +6316,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6346,14 +6346,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, field4)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6376,14 +6376,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, field4, field5)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6406,14 +6406,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, .., field5, field6)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6436,14 +6436,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, .., field6, field7)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6466,14 +6466,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, .., field7, field8)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6496,14 +6496,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, .., field8, field9)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6526,14 +6526,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, .., field9, field10)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6556,14 +6556,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, .., field10, field11)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6586,14 +6586,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, .., field11, field12)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6616,14 +6616,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, .., field12, field13)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6646,14 +6646,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, .., field13, field14)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6676,14 +6676,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, .., field14, field15)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6706,14 +6706,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, .., field15, field16)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6736,14 +6736,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, .., field16, field17)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6766,14 +6766,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, .., field17, field18)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6796,14 +6796,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, .., field18, field19)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6826,14 +6826,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, .., field19, field20)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6856,14 +6856,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, .., field20, field21)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6886,14 +6886,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .select(field1, field2, field3, .., field21, field22)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -6913,7 +6913,7 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(Collection)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.selectDistinct(fields)
@@ -6921,7 +6921,7 @@ public interface DSLContext extends Scope {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note that passing an empty collection conveniently produces
      * <code>SELECT DISTINCT *</code> semantics, i.e. it:
@@ -6947,7 +6947,7 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectFieldOrAsterisk...)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.selectDistinct(field1, field2)
@@ -6955,7 +6955,7 @@ public interface DSLContext extends Scope {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note that passing an empty collection conveniently produces
      * <code>SELECT DISTINCT *</code> semantics, i.e. it:
@@ -6988,14 +6988,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7018,14 +7018,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7048,14 +7048,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7078,14 +7078,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, field4)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7108,14 +7108,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, field4, field5)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7138,14 +7138,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, .., field5, field6)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7168,14 +7168,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, .., field6, field7)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7198,14 +7198,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, .., field7, field8)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7228,14 +7228,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, .., field8, field9)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7258,14 +7258,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, .., field9, field10)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7288,14 +7288,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, .., field10, field11)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7318,14 +7318,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, .., field11, field12)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7348,14 +7348,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, .., field12, field13)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7378,14 +7378,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, .., field13, field14)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7408,14 +7408,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, .., field14, field15)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7438,14 +7438,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, .., field15, field16)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7468,14 +7468,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, .., field16, field17)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7498,14 +7498,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, .., field17, field18)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7528,14 +7528,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, .., field18, field19)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7558,14 +7558,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, .., field19, field20)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7588,14 +7588,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, .., field20, field21)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7618,14 +7618,14 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .selectDistinct(field1, field2, field3, .., field21, field22)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -7645,7 +7645,7 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectZero()} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.selectZero()
@@ -7653,7 +7653,7 @@ public interface DSLContext extends Scope {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#zero()
      * @see DSL#selectZero()
@@ -7671,7 +7671,7 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectOne()} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.selectOne()
@@ -7679,7 +7679,7 @@ public interface DSLContext extends Scope {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#one()
      * @see DSL#selectOne()
@@ -7697,7 +7697,7 @@ public interface DSLContext extends Scope {
      * create a subselect), consider using the static
      * {@link DSL#selectCount()} instead.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.selectCount()
@@ -7705,7 +7705,7 @@ public interface DSLContext extends Scope {
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#selectCount()
      */
@@ -7746,7 +7746,7 @@ public interface DSLContext extends Scope {
      * This type of insert may feel more convenient to some users, as it uses
      * the <code>UPDATE</code> statement's <code>SET a = b</code> syntax.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.insertInto(table)
@@ -7759,7 +7759,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -7770,7 +7770,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1)
      *       .values(field1)
@@ -7779,7 +7779,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -7788,7 +7788,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2)
      *       .values(field1, field2)
@@ -7797,7 +7797,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -7806,7 +7806,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3)
      *       .values(field1, field2, field3)
@@ -7815,7 +7815,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -7824,7 +7824,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, field4)
      *       .values(field1, field2, field3, field4)
@@ -7833,7 +7833,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -7842,7 +7842,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, field4, field5)
      *       .values(field1, field2, field3, field4, field5)
@@ -7851,7 +7851,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -7860,7 +7860,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, .., field5, field6)
      *       .values(valueA1, valueA2, valueA3, .., valueA5, valueA6)
@@ -7869,7 +7869,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -7878,7 +7878,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, .., field6, field7)
      *       .values(valueA1, valueA2, valueA3, .., valueA6, valueA7)
@@ -7887,7 +7887,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -7896,7 +7896,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, .., field7, field8)
      *       .values(valueA1, valueA2, valueA3, .., valueA7, valueA8)
@@ -7905,7 +7905,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -7914,7 +7914,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, .., field8, field9)
      *       .values(valueA1, valueA2, valueA3, .., valueA8, valueA9)
@@ -7923,7 +7923,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -7932,7 +7932,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, .., field9, field10)
      *       .values(valueA1, valueA2, valueA3, .., valueA9, valueA10)
@@ -7941,7 +7941,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -7950,7 +7950,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, .., field10, field11)
      *       .values(valueA1, valueA2, valueA3, .., valueA10, valueA11)
@@ -7959,7 +7959,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -7968,7 +7968,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, .., field11, field12)
      *       .values(valueA1, valueA2, valueA3, .., valueA11, valueA12)
@@ -7977,7 +7977,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -7986,7 +7986,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, .., field12, field13)
      *       .values(valueA1, valueA2, valueA3, .., valueA12, valueA13)
@@ -7995,7 +7995,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -8004,7 +8004,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, .., field13, field14)
      *       .values(valueA1, valueA2, valueA3, .., valueA13, valueA14)
@@ -8013,7 +8013,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -8022,7 +8022,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, .., field14, field15)
      *       .values(valueA1, valueA2, valueA3, .., valueA14, valueA15)
@@ -8031,7 +8031,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -8040,7 +8040,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, .., field15, field16)
      *       .values(valueA1, valueA2, valueA3, .., valueA15, valueA16)
@@ -8049,7 +8049,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -8058,7 +8058,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, .., field16, field17)
      *       .values(valueA1, valueA2, valueA3, .., valueA16, valueA17)
@@ -8067,7 +8067,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -8076,7 +8076,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, .., field17, field18)
      *       .values(valueA1, valueA2, valueA3, .., valueA17, valueA18)
@@ -8085,7 +8085,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -8094,7 +8094,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, .., field18, field19)
      *       .values(valueA1, valueA2, valueA3, .., valueA18, valueA19)
@@ -8103,7 +8103,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -8112,7 +8112,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, .., field19, field20)
      *       .values(valueA1, valueA2, valueA3, .., valueA19, valueA20)
@@ -8121,7 +8121,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -8130,7 +8130,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, .., field20, field21)
      *       .values(valueA1, valueA2, valueA3, .., valueA20, valueA21)
@@ -8139,7 +8139,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -8148,7 +8148,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * using(configuration)
      *       .insertInto(table, field1, field2, field3, .., field21, field22)
      *       .values(valueA1, valueA2, valueA3, .., valueA21, valueA22)
@@ -8157,7 +8157,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -8168,7 +8168,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.insertInto(table, field1, field2)
@@ -8178,7 +8178,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -8187,7 +8187,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL insert statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.insertInto(table, field1, field2)
@@ -8197,7 +8197,7 @@ public interface DSLContext extends Scope {
      *       .set(field1, value1)
      *       .set(field2, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -8216,7 +8216,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL update statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.update(table)
@@ -8224,17 +8224,17 @@ public interface DSLContext extends Scope {
      *       .set(field2, value2)
      *       .where(field1.greaterThan(100))
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note that some databases support table expressions more complex than
      * simple table references. In MySQL, for instance, you can write
-     * <code><pre>
+     * <pre><code>
      * create.update(t1.join(t2).on(t1.id.eq(t2.id)))
      *       .set(t1.value, value1)
      *       .set(t2.value, value2)
      *       .where(t1.id.eq(10))
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -8289,7 +8289,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * </table>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.mergeInto(table)
@@ -8301,7 +8301,7 @@ public interface DSLContext extends Scope {
      *       .whenNotMatchedThenInsert(field1, field2)
      *       .values(value1, value2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note: Using this method, you can also create an H2-specific MERGE
      * statement without field specification. See also
@@ -8641,13 +8641,13 @@ public interface DSLContext extends Scope {
     /**
      * Create a new DSL delete statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.deleteFrom(table)
      *       .where(field1.greaterThan(100))
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Some but not all databases support aliased tables in delete statements.
      * <p>
@@ -8655,22 +8655,22 @@ public interface DSLContext extends Scope {
      * simple table references. In MySQL, for instance, you can write this to
      * form a multi table <code>DELETE</code> statement:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * create.delete(t1.join(t2).on(t1.id.eq(t2.id)))
      *       .where(t1.id.eq(10))
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * For single table delete statements that depend on multiple tables, use
      * the {@link DeleteUsingStep#using(TableLike)} clause, instead:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * create.delete(t1)
      *       .using(t2)
      *       .where(t1.id.eq(t2.id))
      *       .and(t1.id.eq(10))
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -8709,7 +8709,7 @@ public interface DSLContext extends Scope {
      * Create a batch statement to execute a set of queries in batch mode
      * (without bind values).
      * <p>
-     * This essentially runs the following logic: <code><pre>
+     * This essentially runs the following logic: <pre><code>
      * Statement s = connection.createStatement();
      *
      * for (Query query : queries) {
@@ -8717,7 +8717,7 @@ public interface DSLContext extends Scope {
      * }
      *
      * s.execute();
-     * </pre></code>
+     * </code></pre>
      *
      * @see java.sql.Statement#executeBatch()
      */
@@ -8729,7 +8729,7 @@ public interface DSLContext extends Scope {
      * Create a batch statement to execute a set of queries in batch mode
      * (without bind values).
      * <p>
-     * This essentially runs the following logic: <code><pre>
+     * This essentially runs the following logic: <pre><code>
      * Statement s = connection.createStatement();
      *
      * for (Query query : queries) {
@@ -8737,7 +8737,7 @@ public interface DSLContext extends Scope {
      * }
      *
      * s.execute();
-     * </pre></code>
+     * </code></pre>
      *
      * @see java.sql.Statement#executeBatch()
      */
@@ -8750,7 +8750,7 @@ public interface DSLContext extends Scope {
      * (without bind values).
      * <p>
      * This is a convenience method for calling
-     * <code><pre>batch(query(queries[0]), query(queries[1]), ...)</pre></code>.
+     * <pre><code>batch(query(queries[0]), query(queries[1]), ...)</code></pre>.
      *
      * @see #query(String)
      * @see #batch(Query...)
@@ -8765,7 +8765,7 @@ public interface DSLContext extends Scope {
      * Create a batch statement to execute a set of queries in batch mode
      * (without bind values).
      * <p>
-     * This essentially runs the following logic: <code><pre>
+     * This essentially runs the following logic: <pre><code>
      * Statement s = connection.createStatement();
      *
      * for (Query query : queries) {
@@ -8773,7 +8773,7 @@ public interface DSLContext extends Scope {
      * }
      *
      * s.execute();
-     * </pre></code>
+     * </code></pre>
      *
      * @see java.sql.Statement#executeBatch()
      */
@@ -8785,14 +8785,14 @@ public interface DSLContext extends Scope {
      * Create a batch statement to execute a set of queries in batch mode (with
      * bind values).
      * <p>
-     * When running <code><pre>
+     * When running <pre><code>
      * create.batch(query)
      *       .bind(valueA1, valueA2)
      *       .bind(valueB1, valueB2)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      * <p>
-     * This essentially runs the following logic: <code><pre>
+     * This essentially runs the following logic: <pre><code>
      * Statement s = connection.prepareStatement(query.getSQL(false));
      *
      * for (Object[] bindValues : allBindValues) {
@@ -8804,7 +8804,7 @@ public interface DSLContext extends Scope {
      * }
      *
      * s.execute();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note: bind values will be inlined to a static batch query as in
      * {@link #batch(Query...)}, if you choose to execute queries with
@@ -8821,7 +8821,7 @@ public interface DSLContext extends Scope {
      * bind values).
      * <p>
      * This is a convenience method for calling
-     * <code><pre>batch(query(sql))</pre></code>.
+     * <pre><code>batch(query(sql))</code></pre>.
      *
      * @see #query(String)
      * @see #batch(Query)
@@ -8855,7 +8855,7 @@ public interface DSLContext extends Scope {
      * bind values).
      * <p>
      * This is a convenience method for calling
-     * <code><pre>batch(query(sql), bindings)</pre></code>.
+     * <pre><code>batch(query(sql), bindings)</code></pre>.
      *
      * @see #query(String)
      * @see #batch(Query, Object[][])
@@ -8884,12 +8884,12 @@ public interface DSLContext extends Scope {
      * case, this corresponds to the number of total records.
      * <p>
      * The record type order is preserved in the way they are passed to this
-     * method. This is an example of how statements will be ordered: <code><pre>
+     * method. This is an example of how statements will be ordered: <pre><code>
      * // Let's assume, odd numbers result in INSERTs and even numbers in UPDATES
      * // Let's also assume a[n] are all of the same type, just as b[n], c[n]...
      * int[] result = create.batchStore(a1, a2, a3, b1, a4, c1, b3, a5)
      *                      .execute();
-     * </pre></code> The above results in <code>result.length == 8</code> and
+     * </code></pre> The above results in <code>result.length == 8</code> and
      * the following 4 separate batch statements:
      * <ol>
      * <li>INSERT a1, a3, a5</li>
@@ -9028,11 +9028,11 @@ public interface DSLContext extends Scope {
      * case, this corresponds to the number of total records.
      * <p>
      * The record type order is preserved in the way they are passed to this
-     * method. This is an example of how statements will be ordered: <code><pre>
+     * method. This is an example of how statements will be ordered: <pre><code>
      * // Let's assume a[n] are all of the same type, just as b[n], c[n]...
      * int[] result = create.batchDelete(a1, a2, a3, b1, a4, c1, c2, a5)
      *                      .execute();
-     * </pre></code> The above results in <code>result.length == 8</code> and
+     * </code></pre> The above results in <code>result.length == 8</code> and
      * the following 5 separate batch statements:
      * <ol>
      * <li>DELETE a1, a2, a3</li>
@@ -12764,7 +12764,7 @@ public interface DSLContext extends Scope {
      * <p>
      * This wraps a pre-existing <code>SELECT</code> query in another one to
      * calculate the <code>COUNT(*)</code> value, without modifying the original
-     * <code>SELECT</code>. An example: <code><pre>
+     * <code>SELECT</code>. An example: <pre><code>
      * -- Original query:
      * SELECT id, title FROM book WHERE title LIKE '%a%'
      *
@@ -12772,7 +12772,7 @@ public interface DSLContext extends Scope {
      * SELECT count(*) FROM (
      *   SELECT id, title FROM book WHERE title LIKE '%a%'
      * )
-     * </pre></code> This is particularly useful for those databases that do not
+     * </code></pre> This is particularly useful for those databases that do not
      * support the <code>COUNT(*) OVER()</code> window function to calculate
      * total results in paged queries.
      *
@@ -12786,7 +12786,7 @@ public interface DSLContext extends Scope {
     /**
      * Count the number of records in a table.
      * <p>
-     * This executes <code><pre>SELECT COUNT(*) FROM table</pre></code>
+     * This executes <pre><code>SELECT COUNT(*) FROM table</code></pre>
      *
      * @param table The table whose records to count
      * @return The number of records in the table
@@ -12798,7 +12798,7 @@ public interface DSLContext extends Scope {
     /**
      * Count the number of records in a table that satisfy a condition.
      * <p>
-     * This executes <code><pre>SELECT COUNT(*) FROM table WHERE condition</pre></code>
+     * This executes <pre><code>SELECT COUNT(*) FROM table WHERE condition</code></pre>
      *
      * @param table The table whose records to count
      * @param condition The condition to apply
@@ -12812,7 +12812,7 @@ public interface DSLContext extends Scope {
      * Count the number of records in a table that satisfy a condition.
      * <p>
      * This executes
-     * <code><pre>SELECT COUNT(*) FROM table WHERE condition</pre></code>
+     * <pre><code>SELECT COUNT(*) FROM table WHERE condition</code></pre>
      * <p>
      * Convenience API for calling {@link #fetchCount(Table, Condition)} with
      * {@link DSL#and(Condition...)}.
@@ -12829,7 +12829,7 @@ public interface DSLContext extends Scope {
      * Count the number of records in a table that satisfy a condition.
      * <p>
      * This executes
-     * <code><pre>SELECT COUNT(*) FROM table WHERE condition</pre></code>
+     * <pre><code>SELECT COUNT(*) FROM table WHERE condition</code></pre>
      * <p>
      * Convenience API for calling {@link #fetchCount(Table, Condition)} with
      * {@link DSL#and(Collection)}.
@@ -12847,7 +12847,7 @@ public interface DSLContext extends Scope {
      * <p>
      * This wraps a pre-existing <code>SELECT</code> query in another one to
      * check for result existence, without modifying the original
-     * <code>SELECT</code>. An example: <code><pre>
+     * <code>SELECT</code>. An example: <pre><code>
      * -- Original query:
      * SELECT id, title FROM book WHERE title LIKE '%a%'
      *
@@ -12855,7 +12855,7 @@ public interface DSLContext extends Scope {
      * SELECT EXISTS (
      *   SELECT id, title FROM book WHERE title LIKE '%a%'
      * )
-     * </pre></code>
+     * </code></pre>
      *
      * @param query The wrapped query
      * @return The <code>EXISTS(...)</code> result
@@ -12867,7 +12867,7 @@ public interface DSLContext extends Scope {
     /**
      * Check if a table has any records.
      * <p>
-     * This executes <code><pre>SELECT EXISTS(SELECT * FROM table)</pre></code>
+     * This executes <pre><code>SELECT EXISTS(SELECT * FROM table)</code></pre>
      *
      * @param table The table whose records to count
      * @return Whether the table contains any records
@@ -12879,7 +12879,7 @@ public interface DSLContext extends Scope {
     /**
      * Check if a table has any records that satisfy a condition.
      * <p>
-     * This executes <code><pre>SELECT EXISTS(SELECT * FROM table WHERE condition)</pre></code>
+     * This executes <pre><code>SELECT EXISTS(SELECT * FROM table WHERE condition)</code></pre>
      *
      * @param table The table whose records to count
      * @return Whether the table contains any records that satisfy a condition
@@ -12891,7 +12891,7 @@ public interface DSLContext extends Scope {
     /**
      * Check if a table has any records that satisfy a condition.
      * <p>
-     * This executes <code><pre>SELECT EXISTS(SELECT * FROM table WHERE condition)</pre></code>
+     * This executes <pre><code>SELECT EXISTS(SELECT * FROM table WHERE condition)</code></pre>
      * <p>
      * Convenience API for calling {@link #fetchExists(Table, Condition)} with
      * {@link DSL#and(Condition...)}.
@@ -12906,7 +12906,7 @@ public interface DSLContext extends Scope {
     /**
      * Check if a table has any records that satisfy a condition.
      * <p>
-     * This executes <code><pre>SELECT EXISTS(SELECT * FROM table WHERE condition)</pre></code>
+     * This executes <pre><code>SELECT EXISTS(SELECT * FROM table WHERE condition)</code></pre>
      * <p>
      * Convenience API for calling {@link #fetchExists(Table, Condition)} with
      * {@link DSL#and(Collection)}.
@@ -12935,7 +12935,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records for
-     * <code><pre>SELECT table.col1, table.col2 FROM table</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -12951,7 +12951,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -12967,7 +12967,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -12986,7 +12986,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -13005,7 +13005,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT table.col1, table.col2 FROM table</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13021,7 +13021,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13037,7 +13037,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13056,7 +13056,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13075,7 +13075,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT table.col1, table.col2 FROM table</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13092,7 +13092,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13109,7 +13109,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13129,7 +13129,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13149,7 +13149,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13167,7 +13167,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13187,7 +13187,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13205,7 +13205,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13223,7 +13223,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13241,7 +13241,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13259,7 +13259,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13277,7 +13277,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13295,7 +13295,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13313,7 +13313,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13331,7 +13331,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13349,7 +13349,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13367,7 +13367,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13385,7 +13385,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13403,7 +13403,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13421,7 +13421,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13439,7 +13439,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13457,7 +13457,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13475,7 +13475,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13493,7 +13493,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13511,7 +13511,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13529,7 +13529,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13547,7 +13547,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13565,7 +13565,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT F1, F2, ..., FN</pre></code>.
+     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13585,7 +13585,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT table.col1, table.col2 FROM table</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13601,7 +13601,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13617,7 +13617,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13636,7 +13636,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13655,7 +13655,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT table.col1, table.col2 FROM table LIMIT 1</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table LIMIT 1</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13670,7 +13670,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition LIMIT 1</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition LIMIT 1</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13685,7 +13685,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return zero or on e record for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition LIMIT 1</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition LIMIT 1</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13703,7 +13703,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition LIMIT 1</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition LIMIT 1</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13721,7 +13721,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records lazily for
-     * <code><pre>SELECT table.col1, table.col2 FROM table</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -13745,7 +13745,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records lazily for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -13769,7 +13769,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records lazily for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -13796,7 +13796,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records lazily for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -13823,7 +13823,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records asynchronously for
-     * <code><pre>SELECT table.col1, table.col2 FROM table</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -13838,7 +13838,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records asynchronously for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -13853,7 +13853,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records asynchronously for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -13871,7 +13871,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records asynchronously for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -13889,7 +13889,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records asynchronously for
-     * <code><pre>SELECT table.col1, table.col2 FROM table</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -13904,7 +13904,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records asynchronously for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -13919,7 +13919,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records asynchronously for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -13937,7 +13937,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records asynchronously for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -13955,7 +13955,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records lazily for
-     * <code><pre>SELECT table.col1, table.col2 FROM table</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -13978,7 +13978,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records lazily for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -14001,7 +14001,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records lazily for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -14027,7 +14027,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return all records lazily for
-     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
+     * <pre><code>SELECT table.col1, table.col2 FROM table WHERE condition</code></pre>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -14055,7 +14055,7 @@ public interface DSLContext extends Scope {
      * Insert one record.
      * <p>
      * This executes something like the following statement:
-     * <code><pre>INSERT INTO [table] ... VALUES [record] </pre></code>
+     * <pre><code>INSERT INTO [table] ... VALUES [record] </code></pre>
      * <p>
      * Unlike {@link UpdatableRecord#store()}, this does not change any of the
      * argument <code>record</code>'s internal "changed" flags, such that a
@@ -14070,7 +14070,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Update a table.
-     * <code><pre>UPDATE [table] SET [modified values in record] WHERE [record is supplied record] </pre></code>
+     * <pre><code>UPDATE [table] SET [modified values in record] WHERE [record is supplied record] </code></pre>
      *
      * @return The number of updated records
      * @throws DataAccessException if something went wrong executing the query
@@ -14080,7 +14080,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Update a table.
-     * <code><pre>UPDATE [table] SET [modified values in record] WHERE [condition]</pre></code>
+     * <pre><code>UPDATE [table] SET [modified values in record] WHERE [condition]</code></pre>
      *
      * @return The number of updated records
      * @throws DataAccessException if something went wrong executing the query
@@ -14090,7 +14090,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Delete a record from a table.
-     * <code><pre>DELETE FROM [table] WHERE [record is supplied record]</pre></code>
+     * <pre><code>DELETE FROM [table] WHERE [record is supplied record]</code></pre>
      *
      * @return The number of deleted records
      * @throws DataAccessException if something went wrong executing the query
@@ -14100,7 +14100,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Delete a record from a table.
-     * <code><pre>DELETE FROM [table] WHERE [condition]</pre></code>
+     * <pre><code>DELETE FROM [table] WHERE [condition]</code></pre>
      *
      * @return The number of deleted records
      * @throws DataAccessException if something went wrong executing the query

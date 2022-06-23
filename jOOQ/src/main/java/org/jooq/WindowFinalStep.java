@@ -42,7 +42,7 @@ package org.jooq;
 /**
  * This type is used for the window function DSL API.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * field.firstValue()
  *      .ignoreNulls()
  *      .over()
@@ -50,7 +50,7 @@ package org.jooq;
  *      .orderBy(PUBLISHED_IN.asc())
  *      .rowsBetweenUnboundedPreceding()
  *      .andUnboundedFollowing()
- * </pre></code>
+ * </code></pre>
  * <p>
  * Note, that the functionality provided by this interface is not supported in
  * {@link SQLDialect#SQLSERVER}

@@ -217,14 +217,14 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * Possible statements are
      * <ul>
-     * <li><code><pre>
+     * <li><pre><code>
      * INSERT INTO [table] ([modified fields, including keys])
-     * VALUES ([modified values, including keys])</pre></code></li>
-     * <li><code><pre>
+     * VALUES ([modified values, including keys])</code></pre></li>
+     * <li><pre><code>
      * UPDATE [table]
      * SET [modified fields = modified values, excluding keys]
      * WHERE [key fields = key values]
-     * AND [version/timestamp fields = version/timestamp values]</pre></code></li>
+     * AND [version/timestamp fields = version/timestamp values]</code></pre></li>
      * </ul>
      * <p>
      * <h3>Statement execution enforcement</h3>
@@ -478,10 +478,10 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * </ul>
      * <h5>Statement examples</h5>
      * <p>
-     * The executed statement is <code><pre>
+     * The executed statement is <pre><code>
      * DELETE FROM [table]
      * WHERE [key fields = key values]
-     * AND [version/timestamp fields = version/timestamp values]</pre></code>
+     * AND [version/timestamp fields = version/timestamp values]</code></pre>
      * <p>
      * This is in fact the same as calling
      * <code>delete(getTable().getPrimaryKey().getFieldsArray())</code>

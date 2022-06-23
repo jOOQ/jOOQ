@@ -65,10 +65,10 @@ public class CUBRIDDSL extends DSL {
      * Use the CUBRID-specific <code>INCR()</code> function.
      * <p>
      * This function can be used to increment a field value in a
-     * <code>SELECT</code> statement as such: <code><pre>
+     * <code>SELECT</code> statement as such: <pre><code>
      * SELECT article, INCR(read_count)
      * FROM article_table
-     * WHERE article_id = 130,987</pre></code>
+     * WHERE article_id = 130,987</code></pre>
      */
     public static <T> Field<T> incr(Field<T> field) {
         return function("incr", field.getDataType(), field);
@@ -78,10 +78,10 @@ public class CUBRIDDSL extends DSL {
      * Use the CUBRID-specific <code>DECR()</code> function.
      * <p>
      * This function can be used to increment a field value in a
-     * <code>SELECT</code> statement as such: <code><pre>
+     * <code>SELECT</code> statement as such: <pre><code>
      * SELECT article, DECR(read_count)
      * FROM article_table
-     * WHERE article_id = 130,987</pre></code>
+     * WHERE article_id = 130,987</code></pre>
      */
     public static <T> Field<T> decr(Field<T> field) {
         return function("decr", field.getDataType(), field);

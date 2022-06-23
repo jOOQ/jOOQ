@@ -62,7 +62,7 @@ import org.jooq.impl.CallbackVisitListener;
  * </ul>
  * <p>
  * An example is given here:
- * <code><pre>SELECT 1 FROM [A CROSS JOIN B]</pre></code>
+ * <pre><code>SELECT 1 FROM [A CROSS JOIN B]</code></pre>
  * <p>
  * The above example will create the following set of events:
  *
@@ -120,7 +120,7 @@ public interface VisitListener extends EventListener {
      * the {@link QueryPart} contained in the argument {@link VisitContext}
      * through {@link VisitContext#queryPart(QueryPart)}. This can be used for
      * many use-cases, for example to add a <code>CHECK OPTION</code> to an
-     * Oracle <code>INSERT</code> statement: <code><pre>
+     * Oracle <code>INSERT</code> statement: <pre><code>
      * -- Original query
      * INSERT INTO book (id, author_id, title)
      * VALUES (10, 15, '1984')
@@ -132,7 +132,7 @@ public interface VisitListener extends EventListener {
      *   WITH CHECK OPTION
      * ) (id, author_id, title)
      * VALUES (10, 15, '1984')
-     * </pre></code> The above SQL transformation allows to prevent inserting
+     * </code></pre> The above SQL transformation allows to prevent inserting
      * new books for authors other than those with
      * <code>author_id IN (1, 2, 3)</code>
      *

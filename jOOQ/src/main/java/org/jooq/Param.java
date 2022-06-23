@@ -69,7 +69,7 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
  * // The bind value is the first operand of an expression, in case of which it
@@ -86,7 +86,7 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  *    .columns(ACTOR.FIRST_NAME, ACTOR.LAST_NAME, ACTOR.LAST_UPDATE)
  *    .values(val("John"), val("Doe"), currentTimestamp())
  *    .execute();
- * </pre></code>
+ * </code></pre>
  * <p>
  * Instances can be created using {@link DSL#param(String, Object)},
  * {@link DSL#val(Object)}, {@link DSL#inline(Object)} and respective overloads.

@@ -47,7 +47,7 @@ import org.jooq.impl.DSL;
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
  * using(configuration)
@@ -55,7 +55,7 @@ import org.jooq.impl.DSL;
  *    .add(constraint("actor_unique_name")
  *        .unique(ACTOR.FIRST_NAME, ACTOR.LAST_NAME))
  *    .execute();
- * </pre></code>
+ * </code></pre>
  * <p>
  * Instances can be created using {@link DSL#constraint(Name)} and overloads.
  *

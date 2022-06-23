@@ -46,14 +46,14 @@ import org.jetbrains.annotations.NotNull;
 /**
  * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * DSLContext create = DSL.using(configuration);
  *
  * create.mergeInto(table, field1, field2, field3, .., field20, field21)
  *       .key(id)
  *       .values(value1, value2, value3, .., value20, value21)
  *       .execute();
- * </pre></code>
+ * </code></pre>
  *
  * @author Lukas Eder
  * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}

@@ -655,7 +655,8 @@ public interface Context<C extends Context<C>> extends Scope {
      * <p>
      * The print margin is applied to any of these <code>QueryParts</code>:
      * <ul>
-     * <li> {@link Field#in(Field...)} and related expressions</li>
+     * <li>{@link Field#in(Field...)} and related expressions</li>
+     * </ul>
      */
     @NotNull
     C formatPrintMargin(int margin);

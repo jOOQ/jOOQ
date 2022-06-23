@@ -111,14 +111,14 @@ import org.jetbrains.annotations.Nullable;
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
  * using(configuration)
  *    .select(ACTOR.FIRST_NAME, ACTOR.LAST_NAME)
  *    .from(ACTOR) // Table reference
  *    .fetch();
- * </pre></code>
+ * </code></pre>
  * <p>
  * Instances can be created using {@link DSL#table(Name)} and overloads.
  *
@@ -388,7 +388,7 @@ extends
      * aliases. On the other hand, some databases do support derived column
      * lists, but only for derived tables. jOOQ will try to turn table
      * references into derived tables to make this syntax work. In other words,
-     * the following statements are equivalent: <code><pre>
+     * the following statements are equivalent: <pre><code>
      * -- Using derived column lists to rename columns (e.g. Postgres)
      * SELECT t.a, t.b
      * FROM my_table t(a, b)
@@ -398,13 +398,13 @@ extends
      * FROM (
      *   SELECT * FROM my_table
      * ) t(a, b)
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <h5>Derived column lists for derived tables</h5>
      * <p>
      * Other databases may not support derived column lists at all, but they do
      * support common table expressions. The following statements are
-     * equivalent: <code><pre>
+     * equivalent: <pre><code>
      * -- Using derived column lists to rename columns (e.g. Postgres)
      * SELECT t.a, t.b
      * FROM (
@@ -418,7 +418,7 @@ extends
      *   UNION ALL
      *   SELECT 1, 2 FROM DUAL
      * ) t
-     * </pre></code>
+     * </code></pre>
      *
      * @param alias The alias name
      * @param fieldAliases The field aliases. Excess aliases are ignored,
@@ -437,9 +437,9 @@ extends
      * are provided by a function. This is useful, for instance, to prefix all
      * columns with a common prefix:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * MY_TABLE.as("t1", f -&gt;"prefix_" + f.getName());
-     * </pre></code>
+     * </code></pre>
      *
      * @param alias The alias name
      * @param aliasFunction The function providing field aliases.
@@ -462,9 +462,9 @@ extends
      * are provided by a function. This is useful, for instance, to prefix all
      * columns with a common prefix:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * MY_TABLE.as("t1", (f, i) -&gt;"column" + i);
-     * </pre></code>
+     * </code></pre>
      *
      * @param alias The alias name
      * @param aliasFunction The function providing field aliases.
@@ -515,7 +515,7 @@ extends
      * aliases. On the other hand, some databases do support derived column
      * lists, but only for derived tables. jOOQ will try to turn table
      * references into derived tables to make this syntax work. In other words,
-     * the following statements are equivalent: <code><pre>
+     * the following statements are equivalent: <pre><code>
      * -- Using derived column lists to rename columns (e.g. Postgres)
      * SELECT t.a, t.b
      * FROM my_table t(a, b)
@@ -525,13 +525,13 @@ extends
      * FROM (
      *   SELECT * FROM my_table
      * ) t(a, b)
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <h5>Derived column lists for derived tables</h5>
      * <p>
      * Other databases may not support derived column lists at all, but they do
      * support common table expressions. The following statements are
-     * equivalent: <code><pre>
+     * equivalent: <pre><code>
      * -- Using derived column lists to rename columns (e.g. Postgres)
      * SELECT t.a, t.b
      * FROM (
@@ -545,7 +545,7 @@ extends
      *   UNION ALL
      *   SELECT 1, 2 FROM DUAL
      * ) t
-     * </pre></code>
+     * </code></pre>
      *
      * @param alias The alias name
      * @param fieldAliases The field aliases. Excess aliases are ignored,
@@ -564,9 +564,9 @@ extends
      * are provided by a function. This is useful, for instance, to prefix all
      * columns with a common prefix:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * MY_TABLE.as("t1", f -&gt;"prefix_" + f.getName());
-     * </pre></code>
+     * </code></pre>
      *
      * @param alias The alias name
      * @param aliasFunction The function providing field aliases.
@@ -589,9 +589,9 @@ extends
      * are provided by a function. This is useful, for instance, to prefix all
      * columns with a common prefix:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * MY_TABLE.as("t1", (f, i) -&gt;"column" + i);
-     * </pre></code>
+     * </code></pre>
      *
      * @param alias The alias name
      * @param aliasFunction The function providing field aliases.
@@ -636,9 +636,9 @@ extends
      * are provided by a function. This is useful, for instance, to prefix all
      * columns with a common prefix:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * MY_TABLE.as(MY_OTHER_TABLE, f -&gt;MY_OTHER_TABLE.field(f));
-     * </pre></code>
+     * </code></pre>
      *
      * @param otherTable The other table whose name is used as alias name
      * @param aliasFunction The function providing field aliases.
@@ -661,9 +661,9 @@ extends
      * are provided by a function. This is useful, for instance, to prefix all
      * columns with a common prefix:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * MY_TABLE.as("t1", (f, i) -&gt;"column" + i);
-     * </pre></code>
+     * </code></pre>
      *
      * @param otherTable The other table whose name is used as alias name
      * @param aliasFunction The function providing field aliases.
@@ -1633,10 +1633,10 @@ extends
      * <p>
      * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
-     * <code><pre>
+     * <pre><code>
      * A cross join B
      * A join B on 1 = 1
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -1647,10 +1647,10 @@ extends
      * <p>
      * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
-     * <code><pre>
+     * <pre><code>
      * A cross join B
      * A join B on 1 = 1
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1670,10 +1670,10 @@ extends
      * <p>
      * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
-     * <code><pre>
+     * <pre><code>
      * A cross join B
      * A join B on 1 = 1
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1693,10 +1693,10 @@ extends
      * <p>
      * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
-     * <code><pre>
+     * <pre><code>
      * A cross join B
      * A join B on 1 = 1
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1717,10 +1717,10 @@ extends
      * <p>
      * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
-     * <code><pre>
+     * <pre><code>
      * A cross join B
      * A join B on 1 = 1
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1741,10 +1741,10 @@ extends
      * <p>
      * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
-     * <code><pre>
+     * <pre><code>
      * A cross join B
      * A join B on 1 = 1
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#table(Name)
      */
@@ -2451,7 +2451,7 @@ extends
      * can be used as a replacement for a primary key in some situations -
      * especially within a query, e.g. to self-join a table:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * -- Emulating this MySQL statement...
      * DELETE FROM x ORDER BY x.y LIMIT 1
      *
@@ -2460,7 +2460,7 @@ extends
      * WHERE x.rowid IN (
      *   SELECT x.rowid FROM x ORDER BY x.a LIMIT 1
      * )
-     * </pre></code>
+     * </code></pre>
      * <p>
      * It is <em>not</em> recommended to use <code>rowid</code> values in client
      * applications as actual row identifiers as the database system may move a
@@ -2491,11 +2491,11 @@ extends
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * create.select()
      *       .from(BOOK.as("b").useIndex("MY_INDEX")
      *       .fetch();
-     * </pre></code>
+     * </code></pre>
      *
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
@@ -2509,11 +2509,11 @@ extends
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * create.select()
      *       .from(BOOK.as("b").useIndexForJoin("MY_INDEX")
      *       .fetch();
-     * </pre></code>
+     * </code></pre>
      *
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
@@ -2527,11 +2527,11 @@ extends
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * create.select()
      *       .from(BOOK.as("b").useIndexForOrderBy("MY_INDEX")
      *       .fetch();
-     * </pre></code>
+     * </code></pre>
      *
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
@@ -2545,11 +2545,11 @@ extends
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * create.select()
      *       .from(BOOK.as("b").useIndexForGroupBy("MY_INDEX")
      *       .fetch();
-     * </pre></code>
+     * </code></pre>
      *
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
@@ -2563,11 +2563,11 @@ extends
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * create.select()
      *       .from(BOOK.as("b").useIndex("MY_INDEX")
      *       .fetch();
-     * </pre></code>
+     * </code></pre>
      *
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
@@ -2581,11 +2581,11 @@ extends
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * create.select()
      *       .from(BOOK.as("b").useIndexForJoin("MY_INDEX")
      *       .fetch();
-     * </pre></code>
+     * </code></pre>
      *
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
@@ -2599,11 +2599,11 @@ extends
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * create.select()
      *       .from(BOOK.as("b").useIndexForOrderBy("MY_INDEX")
      *       .fetch();
-     * </pre></code>
+     * </code></pre>
      *
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
@@ -2617,11 +2617,11 @@ extends
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * create.select()
      *       .from(BOOK.as("b").useIndexForGroupBy("MY_INDEX")
      *       .fetch();
-     * </pre></code>
+     * </code></pre>
      *
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
@@ -2635,11 +2635,11 @@ extends
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * create.select()
      *       .from(BOOK.as("b").useIndex("MY_INDEX")
      *       .fetch();
-     * </pre></code>
+     * </code></pre>
      *
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
@@ -2653,11 +2653,11 @@ extends
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * create.select()
      *       .from(BOOK.as("b").useIndexForJoin("MY_INDEX")
      *       .fetch();
-     * </pre></code>
+     * </code></pre>
      *
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
@@ -2671,11 +2671,11 @@ extends
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * create.select()
      *       .from(BOOK.as("b").useIndexForOrderBy("MY_INDEX")
      *       .fetch();
-     * </pre></code>
+     * </code></pre>
      *
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
@@ -2689,11 +2689,11 @@ extends
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * create.select()
      *       .from(BOOK.as("b").useIndexForGroupBy("MY_INDEX")
      *       .fetch();
-     * </pre></code>
+     * </code></pre>
      *
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
@@ -2880,21 +2880,21 @@ extends
      * <p>
      * Relational division is the inverse of a cross join operation. The
      * following is an approximate definition of a relational division:
-     * <code><pre>
+     * <pre><code>
      * Assume the following cross join / cartesian product
      * C = A × B
      *
      * Then it can be said that
      * A = C ÷ B
      * B = C ÷ A
-     * </pre></code>
+     * </code></pre>
      * <p>
      * With jOOQ, you can simplify using relational divisions by using the
-     * following syntax: <code><pre>
+     * following syntax: <pre><code>
      * C.divideBy(B).on(C.ID.equal(B.C_ID)).returning(C.TEXT)
-     * </pre></code>
+     * </code></pre>
      * <p>
-     * The above roughly translates to <code><pre>
+     * The above roughly translates to <pre><code>
      * SELECT DISTINCT C.TEXT FROM C "c1"
      * WHERE NOT EXISTS (
      *   SELECT 1 FROM B
@@ -2904,7 +2904,7 @@ extends
      *     AND "c2".ID = B.C_ID
      *   )
      * )
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Or in plain text: Find those TEXT values in C whose ID's correspond to
      * all ID's in B. Note that from the above SQL statement, it is immediately
@@ -2935,7 +2935,7 @@ extends
      * equivalent <code>EXISTS</code> predicate.
      * <p>
      * The following two SQL snippets are semantically equivalent:
-     * <code><pre>
+     * <pre><code>
      * -- Using LEFT SEMI JOIN
      * FROM A
      *     LEFT SEMI JOIN B
@@ -2946,7 +2946,7 @@ extends
      * WHERE EXISTS (
      *     SELECT 1 FROM B WHERE A.ID = B.ID
      * )
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Notice that according to
      * <a href="https://en.wikipedia.org/wiki/Relational_algebra">Relational
@@ -2964,7 +2964,7 @@ extends
      * equivalent <code>NOT EXISTS</code> predicate.
      * <p>
      * The following two SQL snippets are semantically equivalent:
-     * <code><pre>
+     * <pre><code>
      * -- Using LEFT ANTI JOIN
      * FROM A
      *     LEFT ANTI JOIN B
@@ -2975,7 +2975,7 @@ extends
      * WHERE NOT EXISTS (
      *     SELECT 1 FROM B WHERE A.ID = B.ID
      * )
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Notice that according to
      * <a href="https://en.wikipedia.org/wiki/Relational_algebra">Relational
@@ -3112,13 +3112,13 @@ extends
      * <p>
      * This method can be used in its method reference form conveniently on a
      * generated table, for instance, when mapping records in a stream:
-     * <code><pre>
+     * <pre><code>
      * DSL.using(configuration)
      *    .fetch("select * from t")
      *    .stream()
      *    .map(MY_TABLE::into)
      *    .forEach(System.out::println);
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     R from(Record record);

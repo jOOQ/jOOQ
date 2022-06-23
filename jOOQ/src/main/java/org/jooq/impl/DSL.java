@@ -441,22 +441,22 @@ import io.r2dbc.spi.ConnectionFactory;
  * objects. For example, to create a {@link Field} representing a constant
  * value, you can write:
  * <p>
- * <code><pre>
+ * <pre><code>
  * Field&lt;String&gt; field = DSL.val("Hello World")
- * </pre></code>
+ * </code></pre>
  * <p>
  * Another example is the <code>EXISTS</code> clause, which you can apply to any
  * <code>SELECT</code> to form a {@link Condition}:
  * <p>
- * <code><pre>
+ * <pre><code>
  * Condition condition = DSL.exists(DSL.select(...));
- * </pre></code>
+ * </code></pre>
  * <p>
  * <h5>DSL and static imports</h5>
  * <p>
  * For increased fluency and readability of your jOOQ client code, it is
  * recommended that you static import all methods from the <code>DSL</code>. For
- * example: <code><pre>
+ * example: <pre><code>
  * import static org.jooq.impl.DSL.*;
  *
  * public class Main {
@@ -465,17 +465,17 @@ import io.r2dbc.spi.ConnectionFactory;
  *     // DSL.val ^^^           ^^^^^^ DSL.inline
  *   }
  * }
- * </pre></code>
+ * </code></pre>
  * <p>
  * In order to use the "contextual DSL", call one of the various overloaded
  * {@link #using(Configuration)} methods:
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Create and immediately execute a SELECT statement:
  * DSL.using(connection, dialect)
  *    .selectOne()
  *    .fetch();
- * </pre></code>
+ * </code></pre>
  *
  * @see DSLContext
  * @author Lukas Eder
@@ -522,13 +522,13 @@ public class DSL {
      * {@link CloseableDSLContext#close()} on the resulting {@link DSLContext}.
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * // Auto-closing DSLContext instance to free resources
      * try (CloseableDSLContext ctx = DSL.using("jdbc:h2:~/test")) {
      *
      *     // ...
      * }
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Both acquisition and release of JDBC and R2DBC connection URLs are
      * blocking.
@@ -561,13 +561,13 @@ public class DSL {
      * {@link CloseableDSLContext#close()} on the resulting {@link DSLContext}.
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * // Auto-closing DSLContext instance to free resources
      * try (CloseableDSLContext ctx = DSL.using("jdbc:h2:~/test", "sa", "")) {
      *
      *     // ...
      * }
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Both acquisition and release of JDBC and R2DBC connection URLs are
      * blocking.
@@ -602,13 +602,13 @@ public class DSL {
      * {@link CloseableDSLContext#close()} on the resulting {@link DSLContext}.
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * // Auto-closing DSLContext instance to free resources
      * try (CloseableDSLContext ctx = DSL.using("jdbc:h2:~/test", properties)) {
      *
      *     // ...
      * }
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Both acquisition and release of JDBC and R2DBC connection URLs are
      * blocking.
@@ -2996,9 +2996,9 @@ public class DSL {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT table.col1, table.col2 FROM table
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -3022,9 +3022,9 @@ public class DSL {
      * </ul>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM table
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#table(Name)
      */
@@ -3050,9 +3050,9 @@ public class DSL {
      * </ul>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM table
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -3085,9 +3085,9 @@ public class DSL {
      * </ul>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM table
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -3121,9 +3121,9 @@ public class DSL {
      * </ul>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM table
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -3157,9 +3157,9 @@ public class DSL {
      * </ul>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM table
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -3189,7 +3189,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3199,7 +3199,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note that passing an empty collection conveniently produces
      * <code>SELECT *</code> semantics, i.e. it:
@@ -3230,7 +3230,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3240,7 +3240,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note that passing an empty collection conveniently produces
      * <code>SELECT *</code> semantics, i.e. it:
@@ -3278,7 +3278,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3288,7 +3288,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -3316,7 +3316,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3326,7 +3326,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -3354,7 +3354,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3364,7 +3364,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -3392,7 +3392,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3402,7 +3402,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -3430,7 +3430,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3440,7 +3440,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -3468,7 +3468,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3478,7 +3478,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -3506,7 +3506,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3516,7 +3516,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -3544,7 +3544,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3554,7 +3554,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -3582,7 +3582,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3592,7 +3592,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -3620,7 +3620,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3630,7 +3630,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -3658,7 +3658,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3668,7 +3668,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -3696,7 +3696,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3706,7 +3706,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -3734,7 +3734,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3744,7 +3744,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -3772,7 +3772,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3782,7 +3782,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -3810,7 +3810,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3820,7 +3820,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -3848,7 +3848,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3858,7 +3858,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -3886,7 +3886,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3896,7 +3896,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -3924,7 +3924,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3934,7 +3934,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -3962,7 +3962,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -3972,7 +3972,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -4000,7 +4000,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4010,7 +4010,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -4038,7 +4038,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4048,7 +4048,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -4076,7 +4076,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4086,7 +4086,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
@@ -4111,7 +4111,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4121,7 +4121,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note that passing an empty collection conveniently produces
      * <code>SELECT DISTINCT *</code> semantics, i.e. it:
@@ -4152,7 +4152,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4162,7 +4162,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note that passing an empty collection conveniently produces
      * <code>SELECT DISTINCT *</code> semantics, i.e. it:
@@ -4200,7 +4200,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4210,7 +4210,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4238,7 +4238,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4248,7 +4248,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4276,7 +4276,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4286,7 +4286,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4314,7 +4314,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4324,7 +4324,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4352,7 +4352,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4362,7 +4362,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4390,7 +4390,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4400,7 +4400,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4428,7 +4428,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4438,7 +4438,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4466,7 +4466,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4476,7 +4476,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4504,7 +4504,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4514,7 +4514,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4542,7 +4542,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4552,7 +4552,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4580,7 +4580,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4590,7 +4590,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4618,7 +4618,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4628,7 +4628,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4656,7 +4656,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4666,7 +4666,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4694,7 +4694,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4704,7 +4704,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4732,7 +4732,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4742,7 +4742,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4770,7 +4770,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4780,7 +4780,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4808,7 +4808,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4818,7 +4818,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4846,7 +4846,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4856,7 +4856,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4884,7 +4884,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4894,7 +4894,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4922,7 +4922,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4932,7 +4932,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4960,7 +4960,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -4970,7 +4970,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -4998,7 +4998,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5008,7 +5008,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
@@ -5034,7 +5034,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5044,7 +5044,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#zero()
      * @see DSLContext#selectZero()
@@ -5068,7 +5068,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5078,7 +5078,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#one()
      * @see DSLContext#selectOne()
@@ -5101,7 +5101,7 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5111,7 +5111,7 @@ public class DSL {
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSL#count()
      * @see DSLContext#selectCount()
@@ -5132,7 +5132,7 @@ public class DSL {
      * This type of insert may feel more convenient to some users, as it uses
      * the <code>UPDATE</code> statement's <code>SET a = b</code> syntax.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5146,7 +5146,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table)
      */
@@ -5165,7 +5165,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5176,7 +5176,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field)
      */
@@ -5193,7 +5193,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5204,7 +5204,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field)
      */
@@ -5221,7 +5221,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5232,7 +5232,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field)
      */
@@ -5249,7 +5249,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5260,7 +5260,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field)
      */
@@ -5277,7 +5277,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5288,7 +5288,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field)
      */
@@ -5305,7 +5305,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5316,7 +5316,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field)
      */
@@ -5333,7 +5333,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5344,7 +5344,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field)
      */
@@ -5361,7 +5361,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5372,7 +5372,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field)
      */
@@ -5389,7 +5389,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5400,7 +5400,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
@@ -5417,7 +5417,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5428,7 +5428,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
@@ -5445,7 +5445,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5456,7 +5456,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
@@ -5473,7 +5473,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5484,7 +5484,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
@@ -5501,7 +5501,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5512,7 +5512,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
@@ -5529,7 +5529,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5540,7 +5540,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
@@ -5557,7 +5557,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5568,7 +5568,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
@@ -5585,7 +5585,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5596,7 +5596,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
@@ -5613,7 +5613,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5624,7 +5624,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
@@ -5641,7 +5641,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5652,7 +5652,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
@@ -5669,7 +5669,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5680,7 +5680,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
@@ -5697,7 +5697,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5708,7 +5708,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
@@ -5725,7 +5725,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5736,7 +5736,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
@@ -5753,7 +5753,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5764,7 +5764,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
@@ -5783,7 +5783,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5794,7 +5794,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Field...)
      */
@@ -5811,7 +5811,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>INSERT</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5822,7 +5822,7 @@ public class DSL {
      *   .onDuplicateKeyUpdate()
      *   .set(field1, value1)
      *   .set(field2, value2)
-     * </pre></code>
+     * </code></pre>
      *
      * @see DSLContext#insertInto(Table, Collection)
      */
@@ -5839,7 +5839,7 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>UPDATE</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5848,16 +5848,16 @@ public class DSL {
      *   .set(field1, value1)
      *   .set(field2, value2)
      *   .where(field1.greaterThan(100))
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note that some databases support table expressions more complex than
      * simple table references. In MySQL, for instance, you can write
-     * <code><pre>
+     * <pre><code>
      * update(t1.join(t2).on(t1.id.eq(t2.id)))
      *   .set(t1.value, value1)
      *   .set(t2.value, value2)
      *   .where(t1.id.eq(10))
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -5918,7 +5918,7 @@ public class DSL {
      * </tr>
      * </table>
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
@@ -5931,7 +5931,7 @@ public class DSL {
      *   .set(field2, value2)
      *   .whenNotMatchedThenInsert(field1, field2)
      *   .values(value1, value2)
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note: Using this method, you can also create an H2-specific MERGE
      * statement without field specification. See also
@@ -6315,14 +6315,14 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * <code>DELETE</code> statement.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
      * deleteFrom(table)
      *   .where(field1.greaterThan(100))
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Some but not all databases support aliased tables in delete statements.
      *
@@ -11221,13 +11221,13 @@ public class DSL {
      * generated SQL. You may still wish to explicitly use a <code>DUAL</code>
      * construct in jOOQ code for various reasons. This <code>DUAL</code> table
      * will always contain a single record with a single varchar(1) value:
-     * <code><pre>
+     * <pre><code>
      * +-------+
      * | DUMMY |
      * +-------+
      * | X     |
      * +-------+
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -11241,13 +11241,13 @@ public class DSL {
      * <p>
      * This function is inspired by PostgreSQL's
      * <code>GENERATE_SERIES(from, to)</code> function. Other SQL dialects may
-     * be capable of emulating this behaviour, e.g. Oracle: <code><pre>
+     * be capable of emulating this behaviour, e.g. Oracle: <pre><code>
      * -- PostgreSQL
      * SELECT * FROM GENERATE_SERIES(a, b)
      *
      * -- Oracle
      * SELECT * FROM (SELECT a + LEVEL - 1 FROM DUAL CONNECT BY a + LEVEL - 1 &lt;= b)
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -11261,13 +11261,13 @@ public class DSL {
      * <p>
      * This function is inspired by PostgreSQL's
      * <code>GENERATE_SERIES(from, to)</code> function. Other SQL dialects may
-     * be capable of emulating this behaviour, e.g. Oracle: <code><pre>
+     * be capable of emulating this behaviour, e.g. Oracle: <pre><code>
      * -- PostgreSQL
      * SELECT * FROM GENERATE_SERIES(a, b)
      *
      * -- Oracle
      * SELECT * FROM (SELECT a + LEVEL - 1 FROM DUAL CONNECT BY a + LEVEL - 1 &lt;= b)
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -11281,13 +11281,13 @@ public class DSL {
      * <p>
      * This function is inspired by PostgreSQL's
      * <code>GENERATE_SERIES(from, to)</code> function. Other SQL dialects may
-     * be capable of emulating this behaviour, e.g. Oracle: <code><pre>
+     * be capable of emulating this behaviour, e.g. Oracle: <pre><code>
      * -- PostgreSQL
      * SELECT * FROM GENERATE_SERIES(a, b)
      *
      * -- Oracle
      * SELECT * FROM (SELECT a + LEVEL - 1 FROM DUAL CONNECT BY a + LEVEL - 1 &lt;= b)
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -11301,13 +11301,13 @@ public class DSL {
      * <p>
      * This function is inspired by PostgreSQL's
      * <code>GENERATE_SERIES(from, to)</code> function. Other SQL dialects may
-     * be capable of emulating this behaviour, e.g. Oracle: <code><pre>
+     * be capable of emulating this behaviour, e.g. Oracle: <pre><code>
      * -- PostgreSQL
      * SELECT * FROM GENERATE_SERIES(a, b)
      *
      * -- Oracle
      * SELECT * FROM (SELECT a + LEVEL - 1 FROM DUAL CONNECT BY a + LEVEL - 1 &lt;= b)
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -11321,13 +11321,13 @@ public class DSL {
      * <p>
      * This function is inspired by PostgreSQL's
      * <code>GENERATE_SERIES(from, to, step)</code> function. Other SQL dialects
-     * may be capable of emulating this behaviour, e.g. Oracle: <code><pre>
+     * may be capable of emulating this behaviour, e.g. Oracle: <pre><code>
      * -- PostgreSQL
      * SELECT * FROM GENERATE_SERIES(a, b, c)
      *
      * -- Oracle
      * SELECT * FROM (SELECT a + LEVEL * c- 1 FROM DUAL CONNECT BY a + LEVEL * c - 1 &lt;= b)
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -11341,13 +11341,13 @@ public class DSL {
      * <p>
      * This function is inspired by PostgreSQL's
      * <code>GENERATE_SERIES(from, to, step)</code> function. Other SQL dialects may
-     * be capable of emulating this behaviour, e.g. Oracle: <code><pre>
+     * be capable of emulating this behaviour, e.g. Oracle: <pre><code>
      * -- PostgreSQL
      * SELECT * FROM GENERATE_SERIES(a, b, c)
      *
      * -- Oracle
      * SELECT * FROM (SELECT a + LEVEL * c - 1 FROM DUAL CONNECT BY a + LEVEL * c - 1 &lt;= b)
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -11361,13 +11361,13 @@ public class DSL {
      * <p>
      * This function is inspired by PostgreSQL's
      * <code>GENERATE_SERIES(from, to, step)</code> function. Other SQL dialects may
-     * be capable of emulating this behaviour, e.g. Oracle: <code><pre>
+     * be capable of emulating this behaviour, e.g. Oracle: <pre><code>
      * -- PostgreSQL
      * SELECT * FROM GENERATE_SERIES(a, b, c)
      *
      * -- Oracle
      * SELECT * FROM (SELECT a + LEVEL * c - 1 FROM DUAL CONNECT BY a + LEVEL * c - 1 &lt;= b)
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -11381,13 +11381,13 @@ public class DSL {
      * <p>
      * This function is inspired by PostgreSQL's
      * <code>GENERATE_SERIES(from, to, step)</code> function. Other SQL dialects may
-     * be capable of emulating this behaviour, e.g. Oracle: <code><pre>
+     * be capable of emulating this behaviour, e.g. Oracle: <pre><code>
      * -- PostgreSQL
      * SELECT * FROM GENERATE_SERIES(a, b, c)
      *
      * -- Oracle
      * SELECT * FROM (SELECT a + LEVEL * c - 1 FROM DUAL CONNECT BY a + LEVEL * c - 1 &lt;= b)
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -11401,13 +11401,13 @@ public class DSL {
      * <p>
      * This function is inspired by PostgreSQL's
      * <code>GENERATE_SERIES(from, to, step)</code> function. Other SQL dialects
-     * may be capable of emulating this behaviour, e.g. Oracle: <code><pre>
+     * may be capable of emulating this behaviour, e.g. Oracle: <pre><code>
      * -- PostgreSQL
      * SELECT * FROM GENERATE_SERIES(a, b, c)
      *
      * -- Oracle
      * SELECT * FROM (SELECT a + LEVEL * c- 1 FROM DUAL CONNECT BY a + LEVEL * c - 1 &lt;= b)
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -11421,13 +11421,13 @@ public class DSL {
      * <p>
      * This function is inspired by PostgreSQL's
      * <code>GENERATE_SERIES(from, to, step)</code> function. Other SQL dialects may
-     * be capable of emulating this behaviour, e.g. Oracle: <code><pre>
+     * be capable of emulating this behaviour, e.g. Oracle: <pre><code>
      * -- PostgreSQL
      * SELECT * FROM GENERATE_SERIES(a, b, c)
      *
      * -- Oracle
      * SELECT * FROM (SELECT a + LEVEL * c - 1 FROM DUAL CONNECT BY a + LEVEL * c - 1 &lt;= b)
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -11441,13 +11441,13 @@ public class DSL {
      * <p>
      * This function is inspired by PostgreSQL's
      * <code>GENERATE_SERIES(from, to, step)</code> function. Other SQL dialects may
-     * be capable of emulating this behaviour, e.g. Oracle: <code><pre>
+     * be capable of emulating this behaviour, e.g. Oracle: <pre><code>
      * -- PostgreSQL
      * SELECT * FROM GENERATE_SERIES(a, b, c)
      *
      * -- Oracle
      * SELECT * FROM (SELECT a + LEVEL * c - 1 FROM DUAL CONNECT BY a + LEVEL * c - 1 &lt;= b)
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -11461,13 +11461,13 @@ public class DSL {
      * <p>
      * This function is inspired by PostgreSQL's
      * <code>GENERATE_SERIES(from, to, step)</code> function. Other SQL dialects may
-     * be capable of emulating this behaviour, e.g. Oracle: <code><pre>
+     * be capable of emulating this behaviour, e.g. Oracle: <pre><code>
      * -- PostgreSQL
      * SELECT * FROM GENERATE_SERIES(a, b, c)
      *
      * -- Oracle
      * SELECT * FROM (SELECT a + LEVEL * c - 1 FROM DUAL CONNECT BY a + LEVEL * c - 1 &lt;= b)
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -11479,12 +11479,12 @@ public class DSL {
      * Create a <code>LATERAL</code> joined table.
      * <p>
      * Example:
-     * <code><pre>
+     * <pre><code>
      * SELECT *
      * FROM employees e,
      *      LATERAL(SELECT * FROM departments d
      *              WHERE e.department_id = d.department_id);
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support({ FIREBIRD, MYSQL, POSTGRES, YUGABYTEDB })
@@ -11495,10 +11495,10 @@ public class DSL {
     /**
      * Create a <code>ROWS FROM (tables...)</code> expression.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * SELECT *
      * FROM ROWS FROM (function1('a', 'b'), function2('c', 'd'));
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This allows for full outer joining several table-valued functions on the
      * row number of each function's produced rows.
@@ -11521,13 +11521,13 @@ public class DSL {
      * {@link Settings#getRenderKeywordCase()}. It can be embedded in other
      * plain SQL <code>QueryParts</code> as shown in this example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Condition c = condition("{0} {1} {2} {3} {4}",
      *     value1, keyword("between")
      *     value2, keyword("and")
      *     value3
      * );
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -11551,13 +11551,13 @@ public class DSL {
      * <li> {@link #field(Name, DataType)}</li>
      * </ul>
      * <p>
-     * An example: <code><pre>
+     * An example: <pre><code>
      * // This unqualified name here
      * name("book");
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [book].[title]
-     * </pre></code>
+     * </code></pre>
      *
      * @param unqualifiedName The SQL identifier's unqualified name
      * @return A {@link QueryPart} that will render the SQL identifier
@@ -11580,13 +11580,13 @@ public class DSL {
      * <li> {@link #field(Name, DataType)}</li>
      * </ul>
      * <p>
-     * An example: <code><pre>
+     * An example: <pre><code>
      * // This qualified name here
      * name("book", "title");
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [book].[title]
-     * </pre></code>
+     * </code></pre>
      *
      * @param qualifiedName The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
@@ -11616,13 +11616,13 @@ public class DSL {
      * <li>{@link #field(Name, DataType)}</li>
      * </ul>
      * <p>
-     * An example: <code><pre>
+     * An example: <pre><code>
      * // This qualified name here
      * name(quotedName("book"), unquotedName("title"));
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [book].title
-     * </pre></code>
+     * </code></pre>
      *
      * @param nameParts The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
@@ -11645,13 +11645,13 @@ public class DSL {
      * <li> {@link #field(Name, DataType)}</li>
      * </ul>
      * <p>
-     * An example: <code><pre>
+     * An example: <pre><code>
      * // This qualified name here
      * name("book", "title");
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [book].[title]
-     * </pre></code>
+     * </code></pre>
      *
      * @param qualifiedName The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
@@ -11963,13 +11963,13 @@ public class DSL {
      * <p>
      * This constructs a catalog reference given the catalog's qualified name.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * // This catalog...
      * catalog(name("MY_CATALOG"));
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_CATALOG]
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -11982,13 +11982,13 @@ public class DSL {
      * <p>
      * This constructs a catalog reference given the catalog's qualified name.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * // This catalog...
      * catalog(name("MY_CATALOG"));
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_CATALOG]
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -12001,13 +12001,13 @@ public class DSL {
      * <p>
      * This constructs a schema reference given the schema's qualified name.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * // This schema...
      * schema(name("MY_CATALOG", "MY_SCHEMA"));
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_CATALOG].[MY_SCHEMA]
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -12020,13 +12020,13 @@ public class DSL {
      * <p>
      * This constructs a schema reference given the schema's qualified name.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * // This schema...
      * schema(name("MY_CATALOG", "MY_SCHEMA"));
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_CATALOG].[MY_SCHEMA]
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -12039,13 +12039,13 @@ public class DSL {
      * <p>
      * This constructs a sequence reference given the sequence's qualified name.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * // This sequence...
      * sequence(name("MY_SCHEMA", "MY_SEQUENCE"));
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_SEQUENCE]
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
@@ -12058,13 +12058,13 @@ public class DSL {
      * <p>
      * This constructs a sequence reference given the sequence's qualified name.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * // This sequence...
      * sequence(name("MY_SCHEMA", "MY_SEQUENCE"));
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_SEQUENCE]
-     * </pre></code>
+     * </code></pre>
      *
      * @param name The sequence name
      * @param type The sequence type (a type that is supported by
@@ -12081,13 +12081,13 @@ public class DSL {
      * <p>
      * This constructs a sequence reference given the sequence's qualified name.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * // This sequence...
      * sequence(name("MY_SCHEMA", "MY_SEQUENCE"));
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_SEQUENCE]
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
@@ -12105,13 +12105,13 @@ public class DSL {
      * <p>
      * This constructs a table reference given the table's qualified name. jOOQ
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * // This table...
      * tableByName("MY_SCHEMA", "MY_TABLE");
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE]
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The returned table does not know its field references, i.e.
      * {@link Table#fields()} returns an empty array.
@@ -12127,13 +12127,13 @@ public class DSL {
      * <p>
      * This constructs a table reference given the table's qualified name. jOOQ
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * // This table...
      * tableByName("MY_SCHEMA", "MY_TABLE");
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE]
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The returned table does not know its field references, i.e.
      * {@link Table#fields()} returns an empty array.
@@ -12149,22 +12149,22 @@ public class DSL {
      * <p>
      * This constructs a field reference given the field's qualified name. jOOQ
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * // This field...
      * field(name("MY_SCHEMA", "MY_TABLE", "MY_FIELD"));
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
-     * </pre></code>
+     * </code></pre>
      * <p>
-     * Another example: <code><pre>
+     * Another example: <pre><code>
      * create.select(field("length({1})", Integer.class, field(name("TITLE"))))
      *       .from(table(name("T_BOOK")))
      *       .fetch();
      *
      * // ... will execute this SQL on SQL Server:
      * select length([TITLE]) from [T_BOOK]
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -12177,22 +12177,22 @@ public class DSL {
      * <p>
      * This constructs a field reference given the field's qualified name. jOOQ
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * // This field...
      * field(name("MY_SCHEMA", "MY_TABLE", "MY_FIELD"));
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
-     * </pre></code>
+     * </code></pre>
      * <p>
-     * Another example: <code><pre>
+     * Another example: <pre><code>
      * create.select(field("length({1})", Integer.class, field(name("TITLE"))))
      *       .from(table(name("T_BOOK")))
      *       .fetch();
      *
      * // ... will execute this SQL on SQL Server:
      * select length([TITLE]) from [T_BOOK]
-     * </pre></code>
+     * </code></pre>
      *
      * @param name The field name
      * @param type The field type (a type that is supported by
@@ -12209,22 +12209,22 @@ public class DSL {
      * <p>
      * This constructs a field reference given the field's qualified name. jOOQ
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * // This field...
      * field(name("MY_SCHEMA", "MY_TABLE", "MY_FIELD"));
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
-     * </pre></code>
+     * </code></pre>
      * <p>
-     * Another example: <code><pre>
+     * Another example: <pre><code>
      * create.select(field("length({1})", Integer.class, field(name("TITLE"))))
      *       .from(table(name("T_BOOK")))
      *       .fetch();
      *
      * // ... will execute this SQL on SQL Server:
      * select length([TITLE]) from [T_BOOK]
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -12237,22 +12237,22 @@ public class DSL {
      * <p>
      * This constructs a field reference given the field's qualified name. jOOQ
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * // This field...
      * field(name("MY_SCHEMA", "MY_TABLE", "MY_FIELD"));
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
-     * </pre></code>
+     * </code></pre>
      * <p>
-     * Another example: <code><pre>
+     * Another example: <pre><code>
      * create.select(field("length({1})", Integer.class, field(name("TITLE"))))
      *       .from(table(name("T_BOOK")))
      *       .fetch();
      *
      * // ... will execute this SQL on SQL Server:
      * select length([TITLE]) from [T_BOOK]
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -12969,13 +12969,13 @@ public class DSL {
      * This overload takes a set of {@link QueryPart} arguments which are
      * replaced into the SQL string template at the appropriate index. Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * // Argument QueryParts are replaced into the SQL string at the appropriate index
      * sql("select {0}, {1} from {2}", TABLE.COL1, TABLE.COL2, TABLE);
      *
      * // Bind variables are supported as well, for backwards compatibility
      * sql("select col1, col2 from table where col1 = ?", val(1));
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13008,9 +13008,9 @@ public class DSL {
      * This overload takes a set of bind value arguments which are replaced our
      * bound into the SQL string template at the appropriate index. Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * sql("select col1, col2 from table where col1 = ?", 1);
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13039,8 +13039,8 @@ public class DSL {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
-     * String sql = "SET SCHEMA 'abc'";</pre></code>
+     * <pre><code>
+     * String sql = "SET SCHEMA 'abc'";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13064,8 +13064,8 @@ public class DSL {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
-     * String sql = "SET SCHEMA 'abc'";</pre></code>
+     * <pre><code>
+     * String sql = "SET SCHEMA 'abc'";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13089,8 +13089,8 @@ public class DSL {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
-     * String sql = "SET SCHEMA 'abc'";</pre></code>
+     * <pre><code>
+     * String sql = "SET SCHEMA 'abc'";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13116,13 +13116,13 @@ public class DSL {
      * Unlike {@link #query(String, Object...)}, the SQL passed to this method
      * should not contain any bind variables. Instead, you can pass
      * {@link QueryPart} objects to the method which will be rendered at indexed
-     * locations of your SQL string as such: <code><pre>
+     * locations of your SQL string as such: <pre><code>
      * // The following query
      * query("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
      * // Will render this SQL by default, using Oracle SQL dialect
      * select ?, 'test' from "DUAL"
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13167,12 +13167,12 @@ public class DSL {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13212,12 +13212,12 @@ public class DSL {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13258,12 +13258,12 @@ public class DSL {
      * <p>
      * Example (Postgres):
      * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
+     * <pre><code>
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</code></pre> Example
      * (SQLite):
      * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <pre><code>
+     * String sql = "pragma table_info('my_table')";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13289,13 +13289,13 @@ public class DSL {
      * Unlike {@link #resultQuery(String, Object...)}, the SQL passed to this
      * method should not contain any bind variables. Instead, you can pass
      * {@link QueryPart} objects to the method which will be rendered at indexed
-     * locations of your SQL string as such: <code><pre>
+     * locations of your SQL string as such: <pre><code>
      * // The following query
      * resultQuery("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
      *
      * // Will render this SQL by default, using Oracle SQL dialect
      * select ?, 'test' from "DUAL"
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13327,9 +13327,9 @@ public class DSL {
      * <p>
      * Example
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String sql = "(SELECT * FROM USER_TABLES WHERE OWNER = 'MY_SCHEMA')";
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The returned table does not know its field references, i.e.
      * {@link Table#fields()} returns an empty array.
@@ -13359,9 +13359,9 @@ public class DSL {
      * <p>
      * Example
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String sql = "(SELECT * FROM USER_TABLES WHERE OWNER = 'MY_SCHEMA')";
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The returned table does not know its field references, i.e.
      * {@link Table#fields()} returns an empty array.
@@ -13393,10 +13393,10 @@ public class DSL {
      * <p>
      * Example
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String sql = "(SELECT * FROM USER_TABLES WHERE OWNER = ?)";
      * Object[] bindings = new Object[] { "MY_SCHEMA" };
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The returned table does not know its field references, i.e.
      * {@link Table#fields()} returns an empty array.
@@ -13427,10 +13427,10 @@ public class DSL {
      * <p>
      * Example
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String sql = "(SELECT * FROM USER_TABLES WHERE {0})";
      * QueryPart[] parts = new QueryPart[] { USER_TABLES.OWNER.equal("MY_SCHEMA") };
-     * </pre></code>
+     * </code></pre>
      * <p>
      * The returned table does not know its field references, i.e.
      * {@link Table#fields()} returns an empty array.
@@ -13574,9 +13574,9 @@ public class DSL {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String sql = "DECODE(MY_FIELD, 1, 100, 200)";
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13604,9 +13604,9 @@ public class DSL {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String sql = "DECODE(MY_FIELD, 1, 100, 200)";
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13634,9 +13634,9 @@ public class DSL {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String sql = "DECODE(MY_FIELD, ?, ?, ?)";
-     * Object[] bindings = new Object[] { 1, 100, 200 };</pre></code>
+     * Object[] bindings = new Object[] { 1, 100, 200 };</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13666,9 +13666,9 @@ public class DSL {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String sql = "DECODE(MY_FIELD, 1, 100, 200)";
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13698,9 +13698,9 @@ public class DSL {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String sql = "DECODE(MY_FIELD, 1, 100, 200)";
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13730,9 +13730,9 @@ public class DSL {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String sql = "DECODE(MY_FIELD, ?, ?, ?)";
-     * Object[] bindings = new Object[] { 1, 100, 200 };</pre></code>
+     * Object[] bindings = new Object[] { 1, 100, 200 };</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13764,9 +13764,9 @@ public class DSL {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String sql = "DECODE(MY_FIELD, 1, 100, 200)";
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13795,9 +13795,9 @@ public class DSL {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String sql = "DECODE(MY_FIELD, 1, 100, 200)";
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13826,9 +13826,9 @@ public class DSL {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String sql = "DECODE(MY_FIELD, ?, ?, ?)";
-     * Object[] bindings = new Object[] { 1, 100, 200 };</pre></code>
+     * Object[] bindings = new Object[] { 1, 100, 200 };</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13855,16 +13855,16 @@ public class DSL {
      * This is useful for constructing more complex SQL syntax elements wherever
      * <code>Field</code> types are expected. An example for this is MySQL's
      * <code>GROUP_CONCAT</code> aggregate function, which has MySQL-specific
-     * keywords that are hard to reflect in jOOQ's DSL: <code><pre>
+     * keywords that are hard to reflect in jOOQ's DSL: <pre><code>
      * GROUP_CONCAT([DISTINCT] expr [,expr ...]
      *       [ORDER BY {unsigned_integer | col_name | expr}
      *           [ASC | DESC] [,col_name ...]]
      *       [SEPARATOR str_val])
-     *       </pre></code>
+     *       </code></pre>
      * <p>
-     * The above MySQL function can be expressed as such: <code><pre>
+     * The above MySQL function can be expressed as such: <pre><code>
      * field("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC SEPARATOR '-')", expr1, expr2);
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13893,16 +13893,16 @@ public class DSL {
      * This is useful for constructing more complex SQL syntax elements wherever
      * <code>Field</code> types are expected. An example for this is MySQL's
      * <code>GROUP_CONCAT</code> aggregate function, which has MySQL-specific
-     * keywords that are hard to reflect in jOOQ's DSL: <code><pre>
+     * keywords that are hard to reflect in jOOQ's DSL: <pre><code>
      * GROUP_CONCAT([DISTINCT] expr [,expr ...]
      *       [ORDER BY {unsigned_integer | col_name | expr}
      *           [ASC | DESC] [,col_name ...]]
      *       [SEPARATOR str_val])
-     *       </pre></code>
+     *       </code></pre>
      * <p>
-     * The above MySQL function can be expressed as such: <code><pre>
+     * The above MySQL function can be expressed as such: <pre><code>
      * field("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC SEPARATOR '-')", expr1, expr2);
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13931,16 +13931,16 @@ public class DSL {
      * This is useful for constructing more complex SQL syntax elements wherever
      * <code>Field</code> types are expected. An example for this is MySQL's
      * <code>GROUP_CONCAT</code> aggregate function, which has MySQL-specific
-     * keywords that are hard to reflect in jOOQ's DSL: <code><pre>
+     * keywords that are hard to reflect in jOOQ's DSL: <pre><code>
      * GROUP_CONCAT([DISTINCT] expr [,expr ...]
      *       [ORDER BY {unsigned_integer | col_name | expr}
      *           [ASC | DESC] [,col_name ...]]
      *       [SEPARATOR str_val])
-     *       </pre></code>
+     *       </code></pre>
      * <p>
-     * The above MySQL function can be expressed as such: <code><pre>
+     * The above MySQL function can be expressed as such: <pre><code>
      * field("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC SEPARATOR '-')", expr1, expr2);
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -14208,8 +14208,8 @@ public class DSL {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
-     * String sql = "(X = 1 and Y = 2)";</pre></code>
+     * <pre><code>
+     * String sql = "(X = 1 and Y = 2)";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -14234,8 +14234,8 @@ public class DSL {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
-     * String sql = "(X = 1 and Y = 2)";</pre></code>
+     * <pre><code>
+     * String sql = "(X = 1 and Y = 2)";</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -14261,9 +14261,9 @@ public class DSL {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String sql = "(X = ? and Y = ?)";
-     * Object[] bindings = new Object[] { 1, 2 };</pre></code>
+     * Object[] bindings = new Object[] { 1, 2 };</code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -14290,11 +14290,11 @@ public class DSL {
      * <code>Condition</code> types are expected. An example for this are
      * Postgres's various operators, some of which are missing in the jOOQ API.
      * For instance, the "overlap" operator for arrays:
-     * <code><pre>ARRAY[1,4,3] &amp;&amp; ARRAY[2,1]</pre></code>
+     * <pre><code>ARRAY[1,4,3] &amp;&amp; ARRAY[2,1]</code></pre>
      * <p>
-     * The above Postgres operator can be expressed as such: <code><pre>
+     * The above Postgres operator can be expressed as such: <pre><code>
      * condition("{0} &amp;&amp; {1}", array1, array2);
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -14323,9 +14323,9 @@ public class DSL {
      * as predicates or as columns interchangeably. This extends to any type
      * of field, including functions. A Postgres example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * select 1 where texteq('a', 'a');
-     * </pre></code>
+     * </code></pre>
      *
      * @param value The boolean expression.
      * @return A condition wrapping the boolean expression
@@ -14341,9 +14341,9 @@ public class DSL {
      * <p>
      * The result is a condition generated from keys and values of the argument <code>map</code>, such that:
      *
-     * <code><pre>
+     * <pre><code>
      * key1 = value1 AND key2 = value2 AND ... AND keyN = valueN
-     * </pre></code>
+     * </code></pre>
      *
      * @param map A map containing keys and values to form predicates.
      * @return A condition comparing keys with values.
@@ -14385,24 +14385,24 @@ public class DSL {
      * This is useful as an "identity" condition for reduction operations, for
      * both <code>AND</code> and <code>OR</code> reductions, e.g.
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Condition combined =
      * Stream.of(cond1, cond2, cond3)
      *       .reduce(noCondition(), Condition::and);
-     * </pre></code>
+     * </code></pre>
      * <p>
      * When this condition is passed to SQL clauses, such as the
      * <code>WHERE</code> clause, the entire clause is omitted:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * selectFrom(T).where(noCondition())
-     * </pre></code>
+     * </code></pre>
      * <p>
      * ... will produce
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM t
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -14878,12 +14878,12 @@ public class DSL {
     /**
      * Initialise a {@link Case} statement.
      * <p>
-     * This API can be used to create expressions of the type <code><pre>
+     * This API can be used to create expressions of the type <pre><code>
      * CASE value WHEN 1 THEN 'one'
      *            WHEN 2 THEN 'two'
      *            ELSE        'three'
      * END
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Choose is used as a method name to avoid name clashes with Java's
      * reserved literal "case".
@@ -14899,12 +14899,12 @@ public class DSL {
     /**
      * Initialise a {@link Case} statement.
      * <p>
-     * This API can be used to create expressions of the type <code><pre>
+     * This API can be used to create expressions of the type <pre><code>
      * CASE value WHEN 1 THEN 'one'
      *            WHEN 2 THEN 'two'
      *            ELSE        'three'
      * END
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Choose is used as a method name to avoid name clashes with Java's
      * reserved literal "case".
@@ -14969,12 +14969,12 @@ public class DSL {
     /**
      * Initialise a {@link Case} statement.
      * <p>
-     * This API can be used to create expressions of the type <code><pre>
+     * This API can be used to create expressions of the type <pre><code>
      * CASE value WHEN 1 THEN 'one'
      *            WHEN 2 THEN 'two'
      *            ELSE        'three'
      * END
-     * </pre></code>
+     * </code></pre>
      *
      * @see Case
      */
@@ -14987,12 +14987,12 @@ public class DSL {
     /**
      * Initialise a {@link Case} statement.
      * <p>
-     * This API can be used to create expressions of the type <code><pre>
+     * This API can be used to create expressions of the type <pre><code>
      * CASE value WHEN 1 THEN 'one'
      *            WHEN 2 THEN 'two'
      *            ELSE        'three'
      * END
-     * </pre></code>
+     * </code></pre>
      *
      * @see Case
      */
@@ -15005,12 +15005,12 @@ public class DSL {
     /**
      * Initialise a {@link Case} statement.
      * <p>
-     * This API can be used to create expressions of the type <code><pre>
+     * This API can be used to create expressions of the type <pre><code>
      * CASE WHEN x &lt; 1  THEN 'one'
      *      WHEN x &gt;= 2 THEN 'two'
      *      ELSE            'three'
      * END
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -15021,12 +15021,12 @@ public class DSL {
     /**
      * Initialise a {@link Case} statement.
      * <p>
-     * This API can be used to create expressions of the type <code><pre>
+     * This API can be used to create expressions of the type <pre><code>
      * CASE WHEN x &lt; 1  THEN 'one'
      *      WHEN x &gt;= 2 THEN 'two'
      *      ELSE            'three'
      * END
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -15037,12 +15037,12 @@ public class DSL {
     /**
      * Initialise a {@link Case} statement.
      * <p>
-     * This API can be used to create expressions of the type <code><pre>
+     * This API can be used to create expressions of the type <pre><code>
      * CASE WHEN x &lt; 1  THEN 'one'
      *      WHEN x &gt;= 2 THEN 'two'
      *      ELSE            'three'
      * END
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -15053,12 +15053,12 @@ public class DSL {
     /**
      * Initialise a {@link Case} statement.
      * <p>
-     * This API can be used to create expressions of the type <code><pre>
+     * This API can be used to create expressions of the type <pre><code>
      * CASE WHEN x &lt; 1  THEN 'one'
      *      WHEN x &gt;= 2 THEN 'two'
      *      ELSE            'three'
      * END
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -15069,12 +15069,12 @@ public class DSL {
     /**
      * Initialise a {@link Case} statement.
      * <p>
-     * This API can be used to create expressions of the type <code><pre>
+     * This API can be used to create expressions of the type <pre><code>
      * CASE WHEN x &lt; 1  THEN 'one'
      *      WHEN x &gt;= 2 THEN 'two'
      *      ELSE            'three'
      * END
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -15085,12 +15085,12 @@ public class DSL {
     /**
      * Initialise a {@link Case} statement.
      * <p>
-     * This API can be used to create expressions of the type <code><pre>
+     * This API can be used to create expressions of the type <pre><code>
      * CASE WHEN x &lt; 1  THEN 'one'
      *      WHEN x &gt;= 2 THEN 'two'
      *      ELSE            'three'
      * END
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -15163,12 +15163,12 @@ public class DSL {
      * </li>
      * </ul>
      * <p>
-     * Other dialects: <code><pre>
+     * Other dialects: <pre><code>
      * CASE WHEN [this IS NOT DISTINCT FROM search] THEN [result],
      *     [WHEN more...                            THEN more...]
      *     [ELSE more...]
      * END
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note the use of the <code>DISTINCT</code> predicate to produce the same,
      * conveniently <code>NULL</code>-agnostic behaviour as Oracle.
@@ -15228,22 +15228,22 @@ public class DSL {
      * <p>
      * Unlike with casting, coercing doesn't affect the way the database sees a
      * <code>Field</code>'s type. This is how coercing affects your SQL:
-     * <h3>Bind values</h3> <code><pre>
+     * <h3>Bind values</h3> <pre><code>
      * // This binds an int value to a JDBC PreparedStatement
      * DSL.val(1).coerce(String.class);
      *
      * // This binds an int value to a JDBC PreparedStatement
      * // and casts it to VARCHAR in SQL
      * DSL.val(1).cast(String.class);
-     * </pre></code>
-     * <h3>Other Field types</h3> <code><pre>
+     * </code></pre>
+     * <h3>Other Field types</h3> <pre><code>
      * // This fetches a String value for the BOOK.ID field from JDBC
      * BOOK.ID.coerce(String.class);
      *
      * // This fetches a String value for the BOOK.ID field from JDBC
      * // after casting it to VARCHAR in the database
      * BOOK.ID.cast(String.class);
-     * </pre></code>
+     * </code></pre>
      *
      * @param <T> The generic type of the coerced field
      * @param field The field to be coerced
@@ -15263,22 +15263,22 @@ public class DSL {
      * <p>
      * Unlike with casting, coercing doesn't affect the way the database sees a
      * <code>Field</code>'s type. This is how coercing affects your SQL:
-     * <h3>Bind values</h3> <code><pre>
+     * <h3>Bind values</h3> <pre><code>
      * // This binds an int value to a JDBC PreparedStatement
      * DSL.val(1).coerce(String.class);
      *
      * // This binds an int value to a JDBC PreparedStatement
      * // and casts it to VARCHAR in SQL
      * DSL.val(1).cast(String.class);
-     * </pre></code>
-     * <h3>Other Field types</h3> <code><pre>
+     * </code></pre>
+     * <h3>Other Field types</h3> <pre><code>
      * // This fetches a String value for the BOOK.ID field from JDBC
      * BOOK.ID.coerce(String.class);
      *
      * // This fetches a String value for the BOOK.ID field from JDBC
      * // after casting it to VARCHAR in the database
      * BOOK.ID.cast(String.class);
-     * </pre></code>
+     * </code></pre>
      *
      * @param <T> The generic type of the coerced field
      * @param value The value to be coerced
@@ -15299,22 +15299,22 @@ public class DSL {
      * <p>
      * Unlike with casting, coercing doesn't affect the way the database sees a
      * <code>Field</code>'s type. This is how coercing affects your SQL:
-     * <h3>Bind values</h3> <code><pre>
+     * <h3>Bind values</h3> <pre><code>
      * // This binds an int value to a JDBC PreparedStatement
      * DSL.val(1).coerce(String.class);
      *
      * // This binds an int value to a JDBC PreparedStatement
      * // and casts it to VARCHAR in SQL
      * DSL.val(1).cast(String.class);
-     * </pre></code>
-     * <h3>Other Field types</h3> <code><pre>
+     * </code></pre>
+     * <h3>Other Field types</h3> <pre><code>
      * // This fetches a String value for the BOOK.ID field from JDBC
      * BOOK.ID.coerce(String.class);
      *
      * // This fetches a String value for the BOOK.ID field from JDBC
      * // after casting it to VARCHAR in the database
      * BOOK.ID.cast(String.class);
-     * </pre></code>
+     * </code></pre>
      *
      * @param <T> The generic type of the coerced field
      * @param field The field to be coerced
@@ -19867,9 +19867,9 @@ public class DSL {
      * as predicates or as columns interchangeably. This extends to any type
      * of field, including functions. A Postgres example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * select 1 where texteq('a', 'a');
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support
@@ -25228,9 +25228,9 @@ public class DSL {
     /**
      * The PostgreSQL <code>array(select)</code> function.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * {1, 2, 3} = array(select 1 union select 2 union select 3)
-     * </pre></code>
+     * </code></pre>
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })

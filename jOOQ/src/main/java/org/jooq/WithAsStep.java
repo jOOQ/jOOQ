@@ -70,14 +70,14 @@ import org.jetbrains.annotations.NotNull;
  * <code>WITH</code> clause and with {@link CommonTableExpression}s.
  * <p>
  * Example:
- * <code><pre>
+ * <pre><code>
  * DSL.with("table", "col1", "col2")
  *    .as(
  *        select(one(), two())
  *    )
  *    .select()
  *    .from("table")
- * </pre></code>
+ * </code></pre>
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>

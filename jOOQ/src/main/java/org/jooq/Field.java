@@ -103,7 +103,7 @@ import org.jetbrains.annotations.Nullable;
  * {@link SelectGroupByStep#groupBy(GroupField...)} (every {@link Field} is a
  * subtype of {@link GroupField})</li>
  * <li><code>HAVING</code> clause, e.g. through
- * {@link SelectHavingStep#having(Field)}<code></li>
+ * {@link SelectHavingStep#having(Field)}</li>
  * <li><code>ORDER BY</code> clause, e.g. through
  * {@link SelectOrderByStep#orderBy(OrderField)} (every {@link Field} is a
  * subtype of {@link OrderField})</li>
@@ -115,7 +115,9 @@ import org.jetbrains.annotations.Nullable;
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ *
+ * <pre>
+ * <code>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
  * using(configuration)
@@ -124,7 +126,8 @@ import org.jetbrains.annotations.Nullable;
  *    .groupBy(ACTOR.LAST_NAME) // Field reference
  *    .orderBy(ACTOR.LAST_NAME) // Field reference
  *    .fetch();
- * </pre></code>
+ * </code>
+ * </pre>
  * <p>
  * Instances can be created using a variety of ways, including:
  * <ul>
@@ -196,15 +199,15 @@ extends
      * provided by a function. This is useful, for instance, to prefix all
      * columns with a common prefix (on {@link Table#as(String, Function)}):
      * <p>
-     * <code><pre>
+     * <pre><code>
      * MY_TABLE.as("t1", f -&gt; "prefix_" + f.getName());
-     * </pre></code>
+     * </code></pre>
      * <p>
      * And then to use the same function also for individual fields:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * MY_TABLE.MY_COLUMN.as(f -&gt; "prefix_" + f.getName());
-     * </pre></code>
+     * </code></pre>
      *
      * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
      *             replacement from a future jOOQ. They offer convenience that
@@ -420,22 +423,22 @@ extends
      * <p>
      * Unlike with casting, coercing doesn't affect the way the database sees a
      * <code>Field</code>'s type. This is how coercing affects your SQL:
-     * <h3>Bind values</h3> <code><pre>
+     * <h3>Bind values</h3> <pre><code>
      * // This binds an int value to a JDBC PreparedStatement
      * DSL.val(1).coerce(String.class);
      *
      * // This binds an int value to a JDBC PreparedStatement
      * // and casts it to VARCHAR in SQL
      * DSL.val(1).cast(String.class);
-     * </pre></code>
-     * <h3>Other Field types</h3> <code><pre>
+     * </code></pre>
+     * <h3>Other Field types</h3> <pre><code>
      * // This fetches a String value for the BOOK.ID field from JDBC
      * BOOK.ID.coerce(String.class);
      *
      * // This fetches a String value for the BOOK.ID field from JDBC
      * // after casting it to VARCHAR in the database
      * BOOK.ID.cast(String.class);
-     * </pre></code>
+     * </code></pre>
      *
      * @param <Z> The generic type of the coerced field
      * @param field The field whose type is used for the coercion
@@ -452,22 +455,22 @@ extends
      * <p>
      * Unlike with casting, coercing doesn't affect the way the database sees a
      * <code>Field</code>'s type. This is how coercing affects your SQL:
-     * <h3>Bind values</h3> <code><pre>
+     * <h3>Bind values</h3> <pre><code>
      * // This binds an int value to a JDBC PreparedStatement
      * DSL.val(1).coerce(String.class);
      *
      * // This binds an int value to a JDBC PreparedStatement
      * // and casts it to VARCHAR in SQL
      * DSL.val(1).cast(String.class);
-     * </pre></code>
-     * <h3>Other Field types</h3> <code><pre>
+     * </code></pre>
+     * <h3>Other Field types</h3> <pre><code>
      * // This fetches a String value for the BOOK.ID field from JDBC
      * BOOK.ID.coerce(String.class);
      *
      * // This fetches a String value for the BOOK.ID field from JDBC
      * // after casting it to VARCHAR in the database
      * BOOK.ID.cast(String.class);
-     * </pre></code>
+     * </code></pre>
      *
      * @param <Z> The generic type of the coerced field
      * @param type The data type that is used for the coercion
@@ -483,22 +486,22 @@ extends
      * <p>
      * Unlike with casting, coercing doesn't affect the way the database sees a
      * <code>Field</code>'s type. This is how coercing affects your SQL:
-     * <h3>Bind values</h3> <code><pre>
+     * <h3>Bind values</h3> <pre><code>
      * // This binds an int value to a JDBC PreparedStatement
      * DSL.val(1).coerce(String.class);
      *
      * // This binds an int value to a JDBC PreparedStatement
      * // and casts it to VARCHAR in SQL
      * DSL.val(1).cast(String.class);
-     * </pre></code>
-     * <h3>Other Field types</h3> <code><pre>
+     * </code></pre>
+     * <h3>Other Field types</h3> <pre><code>
      * // This fetches a String value for the BOOK.ID field from JDBC
      * BOOK.ID.coerce(String.class);
      *
      * // This fetches a String value for the BOOK.ID field from JDBC
      * // after casting it to VARCHAR in the database
      * BOOK.ID.cast(String.class);
-     * </pre></code>
+     * </code></pre>
      *
      * @param <Z> The generic type of the coerced field
      * @param type The type that is used for the coercion
@@ -563,14 +566,14 @@ extends
     /**
      * Create an indirected sort field.
      * <p>
-     * Create a sort field of the form <code><pre>
+     * Create a sort field of the form <pre><code>
      * CASE [this] WHEN [sortList.get(0)] THEN 0
      *             WHEN [sortList.get(1)] THEN 1
      *             ...
      *             WHEN [sortList.get(n)] THEN n
      *                                    ELSE null
      * END ASC
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note: You can use this in combination with {@link SortField#nullsFirst()}
      * or {@link SortField#nullsLast()} to specify whether the default should
@@ -586,14 +589,14 @@ extends
     /**
      * Create an indirected sort field.
      * <p>
-     * Create a sort field of the form <code><pre>
+     * Create a sort field of the form <pre><code>
      * CASE [this] WHEN [sortList[0]] THEN 0
      *             WHEN [sortList[1]] THEN 1
      *             ...
      *             WHEN [sortList[n]] THEN n
      *                                ELSE null
      * END ASC
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note: You can use this in combination with {@link SortField#nullsFirst()}
      * or {@link SortField#nullsLast()} to specify whether the default should
@@ -609,14 +612,14 @@ extends
     /**
      * Create an indirected sort field.
      * <p>
-     * Create a sort field of the form <code><pre>
+     * Create a sort field of the form <pre><code>
      * CASE [this] WHEN [sortList.get(0)] THEN 0
      *             WHEN [sortList.get(1)] THEN 1
      *             ...
      *             WHEN [sortList.get(n)] THEN n
      *                                    ELSE null
      * END DESC
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note: You can use this in combination with {@link SortField#nullsFirst()}
      * or {@link SortField#nullsLast()} to specify whether the default should
@@ -632,14 +635,14 @@ extends
     /**
      * Create an indirected sort field.
      * <p>
-     * Create a sort field of the form <code><pre>
+     * Create a sort field of the form <pre><code>
      * CASE [this] WHEN [sortList[0]] THEN 0
      *             WHEN [sortList[1]] THEN 1
      *             ...
      *             WHEN [sortList[n]] THEN n
      *                                    ELSE null
      * END DESC
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note: You can use this in combination with {@link SortField#nullsFirst()}
      * or {@link SortField#nullsLast()} to specify whether the default should
@@ -655,14 +658,14 @@ extends
     /**
      * Create an indirected sort field.
      * <p>
-     * Create a sort field of the form (in pseudo code)<code><pre>
+     * Create a sort field of the form (in pseudo code)<pre><code>
      * CASE [this] WHEN [sortMap.key(0)] THEN sortMap.value(0)
      *             WHEN [sortMap.key(1)] THEN sortMap.value(1)
      *             ...
      *             WHEN [sortMap.key(n)] THEN sortMap.value(n)
      *                                   ELSE null
      * END DESC
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note: You can use this in combination with {@link SortField#nullsFirst()}
      * or {@link SortField#nullsLast()} to specify whether the default should
@@ -1452,13 +1455,13 @@ extends
      * <code>val(1133).contains(13)</code>
      * <p>
      * If you're using {@link SQLDialect#POSTGRES}, then you can use this method
-     * also to express the "ARRAY contains" operator. For example: <code><pre>
+     * also to express the "ARRAY contains" operator. For example: <pre><code>
      * // Use this expression
      * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
      *
      * // ... to render this SQL
      * ARRAY[1, 2, 3] @&gt; ARRAY[1, 2]
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note, this does not correspond to the Oracle Text <code>CONTAINS()</code>
      * function. Refer to {@link OracleDSL#contains(Field, String)} instead.
@@ -1481,13 +1484,13 @@ extends
      * <code>val(1133).contains(13)</code>
      * <p>
      * If you're using {@link SQLDialect#POSTGRES}, then you can use this method
-     * also to express the "ARRAY contains" operator. For example: <code><pre>
+     * also to express the "ARRAY contains" operator. For example: <pre><code>
      * // Use this expression
      * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
      *
      * // ... to render this SQL
      * ARRAY[1, 2, 3] @&gt; ARRAY[1, 2]
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Note, this does not correspond to the Oracle Text <code>CONTAINS()</code>
      * function. Refer to {@link OracleDSL#contains(Field, String)} instead.
@@ -1701,7 +1704,7 @@ extends
     /**
      * Negate this field to get its negative value.
      * <p>
-     * This renders the same on all dialects: <code><pre>-[this]</pre></code>
+     * This renders the same on all dialects: <pre><code>-[this]</code></pre>
      */
     @NotNull
     @Support
@@ -1994,13 +1997,13 @@ extends
      * Create a condition to regex-pattern-check this field against a pattern.
      * <p>
      * The SQL:2008 standard specifies a <code>&lt;regex like predicate&gt;</code>
-     * of the following form: <code><pre>
+     * of the following form: <pre><code>
      * &lt;regex like predicate&gt; ::=
      *   &lt;row value predicand&gt; &lt;regex like predicate part 2&gt;
      *
      * &lt;regex like predicate part 2&gt; ::=
      *  [ NOT ] LIKE_REGEX &lt;XQuery pattern&gt; [ FLAG &lt;XQuery option flag&gt; ]
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This particular <code>LIKE_REGEX</code> operator comes in several
      * flavours for various databases. jOOQ supports regular expressions as
@@ -4172,13 +4175,13 @@ extends
      * <p>
      * This method can be used in its method reference form conveniently on a
      * generated table, for instance, when mapping records in a stream:
-     * <code><pre>
+     * <pre><code>
      * DSL.using(configuration)
      *    .fetch("select * from t")
      *    .stream()
      *    .map(MY_TABLE.ID::get)
      *    .forEach(System.out::println);
-     * </pre></code>
+     * </code></pre>
      */
     @Nullable
     T get(Record record);
@@ -4188,13 +4191,13 @@ extends
      * <p>
      * This method can be used in its method reference form conveniently on a
      * generated table, for instance, when mapping records in a stream:
-     * <code><pre>
+     * <pre><code>
      * DSL.using(configuration)
      *    .fetch("select * from t")
      *    .stream()
      *    .map(MY_TABLE.ID::getValue)
      *    .forEach(System.out::println);
-     * </pre></code>
+     * </code></pre>
      */
     @Nullable
     T getValue(Record record);
@@ -4204,13 +4207,13 @@ extends
      * <p>
      * This method can be used in its method reference form conveniently on a
      * generated table, for instance, when mapping records in a stream:
-     * <code><pre>
+     * <pre><code>
      * DSL.using(configuration)
      *    .fetch("select * from t")
      *    .stream()
      *    .map(MY_TABLE.ID::original)
      *    .forEach(System.out::println);
-     * </pre></code>
+     * </code></pre>
      */
     @Nullable
     T original(Record record);
@@ -4220,13 +4223,13 @@ extends
      * <p>
      * This method can be used in its method reference form conveniently on a
      * generated table, for instance, when mapping records in a stream:
-     * <code><pre>
+     * <pre><code>
      * DSL.using(configuration)
      *    .fetch("select * from t")
      *    .stream()
      *    .map(MY_TABLE.ID::changed)
      *    .forEach(System.out::println);
-     * </pre></code>
+     * </code></pre>
      */
     boolean changed(Record record);
 
@@ -4235,12 +4238,12 @@ extends
      * <p>
      * This method can be used in its method reference form conveniently on a
      * generated table, for instance, when mapping records in a stream:
-     * <code><pre>
+     * <pre><code>
      * DSL.using(configuration)
      *    .fetch("select * from t")
      *    .stream()
      *    .forEach(MY_TABLE.ID::reset);
-     * </pre></code>
+     * </code></pre>
      */
     void reset(Record record);
 
@@ -4249,13 +4252,13 @@ extends
      * <p>
      * This method can be used in its method reference form conveniently on a
      * generated table, for instance, when mapping records in a stream:
-     * <code><pre>
+     * <pre><code>
      * DSL.using(configuration)
      *    .fetch("select * from t")
      *    .stream()
      *    .map(MY_TABLE.ID::from)
      *    .forEach(System.out::println);
-     * </pre></code>
+     * </code></pre>
      */
     @Nullable
     Record1<T> from(Record record);

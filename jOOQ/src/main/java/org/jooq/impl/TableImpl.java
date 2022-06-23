@@ -426,7 +426,7 @@ implements
 
     /**
      * Subclasses must override this method if they use the generic type
-     * parameter <R> for other types than {@link Record}
+     * parameter <code>R</code> for other types than {@link Record}
      * <p>
      * {@inheritDoc}
      */

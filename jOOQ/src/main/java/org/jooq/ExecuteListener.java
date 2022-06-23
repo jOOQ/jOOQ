@@ -92,7 +92,7 @@ import org.reactivestreams.Subscriber;
  * <th>Use case [6]</th>
  * </tr>
  * <tr>
- * <td>{@link #start(ExecuteContext)}</code></td>
+ * <td>{@link #start(ExecuteContext)}</td>
  * <td>Yes, 1x</td>
  * <td>Yes, 1x</td>
  * <td>Yes, 1x</td>

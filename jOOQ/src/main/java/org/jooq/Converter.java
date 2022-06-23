@@ -239,14 +239,14 @@ public interface Converter<T, U> extends Serializable {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Converter&lt;String, Integer&gt; converter =
      *   Converter.ofNullable(String.class, Integer.class, Integer::parseInt, Object::toString);
      *
      * // No exceptions thrown
      * assertNull(converter.from(null));
      * assertNull(converter.to(null));
-     * </pre></code>
+     * </code></pre>
      *
      * @param <T> the database type
      * @param <U> the user type
@@ -277,13 +277,13 @@ public interface Converter<T, U> extends Serializable {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Converter&lt;String, Integer&gt; converter =
      *   Converter.fromNullable(String.class, Integer.class, Integer::parseInt);
      *
      * // No exceptions thrown
      * assertNull(converter.from(null));
-     * </pre></code>
+     * </code></pre>
      *
      * @param <T> the database type.
      * @param <U> the user type.
@@ -312,13 +312,13 @@ public interface Converter<T, U> extends Serializable {
      * <p>
      * Example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Converter&lt;String, Integer&gt; converter =
      *   Converter.toNullable(String.class, Integer.class, Object::toString);
      *
      * // No exceptions thrown
      * assertNull(converter.to(null));
-     * </pre></code>
+     * </code></pre>
      *
      * @param <T> the database type
      * @param <U> the user type

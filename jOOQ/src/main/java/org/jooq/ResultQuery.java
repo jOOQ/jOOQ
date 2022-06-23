@@ -81,13 +81,13 @@ import org.jetbrains.annotations.Nullable;
  * The most common way to create a result is by calling {@link #fetch()}, or by
  * using the query's {@link #iterator()} method in a foreach loop:
  * <p>
- * <code><pre>
+ * <pre><code>
  * Result&lt;TRecord> result = ctx.select(T.A, T.B).from(T).fetch();
  *
  * for (TRecord record : ctx.select(T.A, T.B).from(T)) {
  *   // ...
  * }
- * </pre></code>
+ * </code></pre>
  * <p>
  * Most approaches to fetching results in {@link ResultQuery} (including the
  * above), fetch the entire JDBC {@link ResultSet} eagerly into memory, which
@@ -110,7 +110,7 @@ import org.jetbrains.annotations.Nullable;
  * In both cases, it is recommended to explicitly close the underlying resources
  * (i.e. JDBC {@link ResultSet}) using <code>try-with-resources</code>:
  * <p>
- * <code><pre>
+ * <pre><code>
  * try (Cursor&lt;TRecord> cursor = ctx.select(T.A, T.B).from(T).fetchLazy()) {
  *   for (;;) {
  *     TRecord record = cursor.fetchNext();
@@ -126,7 +126,7 @@ import org.jetbrains.annotations.Nullable;
  *     // ...
  *   });
  * }
- * </pre></code>
+ * </code></pre>
  * <p>
  * While most instances of {@link ResultQuery} implement {@link Select}, there
  * also exist other types of {@link ResultQuery} constructed e.g. from plain SQL
@@ -213,11 +213,11 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Clients should ensure the {@link Stream} is properly closed, e.g. in a
      * try-with-resources statement:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * try (Stream&lt;R&gt; stream = query.stream()) {
      *     // Do things with stream
      * }
-     * </pre></code>
+     * </code></pre>
      * <p>
      * If users prefer more fluent style streaming of queries, {@link ResultSet}
      * can be registered and closed via {@link ExecuteListener}, or via "smart"
@@ -246,11 +246,11 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Clients should ensure the {@link Stream} is properly closed, e.g. in a
      * try-with-resources statement:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * try (Stream&lt;R&gt; stream = query.stream()) {
      *     // Do things with stream
      * }
-     * </pre></code>
+     * </code></pre>
      * <p>
      * If users prefer more fluent style streaming of queries, {@link ResultSet}
      * can be registered and closed via {@link ExecuteListener}, or via "smart"
@@ -289,11 +289,11 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Clients should ensure the {@link Stream} is properly closed, e.g. in a
      * try-with-resources statement:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * try (Stream&lt;R&gt; stream = query.stream()) {
      *     // Do things with stream
      * }
-     * </pre></code>
+     * </code></pre>
      * <p>
      * If users prefer more fluent style streaming of queries, {@link ResultSet}
      * can be registered and closed via {@link ExecuteListener}, or via "smart"
@@ -323,11 +323,11 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * should ensure the {@link Stream} is properly closed, e.g. in a
      * try-with-resources statement:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * try (Stream&lt;R&gt; stream = query.stream()) {
      *     // Do things with stream
      * }
-     * </pre></code>
+     * </code></pre>
      * <p>
      * If users prefer more fluent style streaming of queries, {@link ResultSet}
      * can be registered and closed via {@link ExecuteListener}, or via "smart"
@@ -402,8 +402,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * <p>
      * Example (Sybase ASE):
      * <p>
-     * <code><pre>
-     * String sql = "sp_help 'my_table'";</pre></code>
+     * <pre><code>
+     * String sql = "sp_help 'my_table'";</code></pre>
      * <p>
      * The result and its contained records are attached to the original
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -943,7 +943,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Execute the query and return at most one resulting record as an array
      * <p>
      * You can access data like this
-     * <code><pre>query.fetchOneArray()[fieldIndex]</pre></code>
+     * <pre><code>query.fetchOneArray()[fieldIndex]</code></pre>
      *
      * @return The resulting record or <code>null</code> if the query returns no
      *         records.
@@ -956,13 +956,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     /**
      * Map resulting records onto a custom type.
      * <p>
-     * This is the same as calling <code><pre>
+     * This is the same as calling <pre><code>
      * E result = null;
      * Record r = q.fetchOne();
      *
      * if (r != null)
      *     result = r.into(type);
-     * </pre></code>. See {@link Record#into(Class)} for more details
+     * </code></pre>. See {@link Record#into(Class)} for more details
      *
      * @param <E> The generic entity type.
      * @param type The entity type.
@@ -982,13 +982,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     /**
      * Map resulting records onto a custom record.
      * <p>
-     * This is the same as calling <code><pre>
+     * This is the same as calling <pre><code>
      * Z result = null;
      * Record r = q.fetchOne();
      *
      * if (r != null)
      *     result = r.into(table);
-     * </pre></code>. See {@link Record#into(Table)} for more details
+     * </code></pre>. See {@link Record#into(Table)} for more details
      * <p>
      * The resulting record is attached to the original {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -1295,7 +1295,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Execute the query and return exactly one resulting record as an array
      * <p>
      * You can access data like this
-     * <code><pre>query.fetchSingleArray()[fieldIndex]</pre></code>
+     * <pre><code>query.fetchSingleArray()[fieldIndex]</code></pre>
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -1308,13 +1308,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     /**
      * Map resulting records onto a custom type.
      * <p>
-     * This is the same as calling <code><pre>
+     * This is the same as calling <pre><code>
      * E result = null;
      * Record r = q.fetchSingle();
      *
      * if (r != null)
      *     result = r.into(type);
-     * </pre></code>. See {@link Record#into(Class)} for more details
+     * </code></pre>. See {@link Record#into(Class)} for more details
      *
      * @param <E> The generic entity type.
      * @param type The entity type.
@@ -1334,13 +1334,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     /**
      * Map resulting records onto a custom record.
      * <p>
-     * This is the same as calling <code><pre>
+     * This is the same as calling <pre><code>
      * Z result = null;
      * Record r = q.fetchSingle();
      *
      * if (r != null)
      *     result = r.into(table);
-     * </pre></code>. See {@link Record#into(Table)} for more details
+     * </code></pre>. See {@link Record#into(Table)} for more details
      * <p>
      * The resulting record is attached to the original {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -1617,9 +1617,9 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     /**
      * Map resulting records onto a custom type.
      * <p>
-     * This is the same as calling <code><pre>
+     * This is the same as calling <pre><code>
      * Optional&lt;E&gt; result = q.fetchOptional().map(r -&gt; r.into(type));
-     * </pre></code>. See {@link Record#into(Class)} for more details
+     * </code></pre>. See {@link Record#into(Class)} for more details
      *
      * @param <E> The generic entity type.
      * @param type The entity type.
@@ -1638,9 +1638,9 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     /**
      * Map resulting records onto a custom record.
      * <p>
-     * This is the same as calling <code><pre>
+     * This is the same as calling <pre><code>
      * Optional&lt;Z&gt; result = q.fetchOptional().map(r -&gt; r.into(table));
-     * </pre></code>. See {@link Record#into(Table)} for more details
+     * </code></pre>. See {@link Record#into(Table)} for more details
      * <p>
      * The resulting record is attached to the original {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -1910,7 +1910,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Execute the query and return at most one resulting record as an array
      * <p>
      * You can access data like this
-     * <code><pre>query.fetchAnyArray()[fieldIndex]</pre></code>
+     * <pre><code>query.fetchAnyArray()[fieldIndex]</code></pre>
      *
      * @return The resulting record or <code>null</code> if the query returns no
      *         records.
@@ -1922,13 +1922,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     /**
      * Map resulting records onto a custom type.
      * <p>
-     * This is the same as calling <code><pre>
+     * This is the same as calling <pre><code>
      * E result = null;
      * Record r = q.fetchAny();
      *
      * if (r != null)
      *     result = r.into(type);
-     * </pre></code>. See {@link Record#into(Class)} for more details
+     * </code></pre>. See {@link Record#into(Class)} for more details
      *
      * @param <E> The generic entity type.
      * @param type The entity type.
@@ -1947,13 +1947,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     /**
      * Map resulting records onto a custom record.
      * <p>
-     * This is the same as calling <code><pre>
+     * This is the same as calling <pre><code>
      * Z result = null;
      * Record r = q.fetchOne();
      *
      * if (r != null)
      *     result = r.into(table);
-     * </pre></code>. See {@link Record#into(Table)} for more details
+     * </code></pre>. See {@link Record#into(Table)} for more details
      * <p>
      * The resulting record is attached to the original {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -4369,7 +4369,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Execute the query and return the generated result as an Object matrix.
      * <p>
      * You can access data like this
-     * <code><pre>query.fetchArray()[recordIndex][fieldIndex]</pre></code>
+     * <pre><code>query.fetchArray()[recordIndex][fieldIndex]</code></pre>
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4393,7 +4393,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * generated result.
      * <p>
      * You can access data like this
-     * <code><pre>query.fetchArray(fieldIndex)[recordIndex]</pre></code>
+     * <pre><code>query.fetchArray(fieldIndex)[recordIndex]</code></pre>
      *
      * @return The resulting values. This may be an array type more concrete
      *         than <code>Object[]</code>, depending on whether jOOQ has any
@@ -4410,7 +4410,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * generated result.
      * <p>
      * You can access data like this
-     * <code><pre>query.fetchArray(fieldIndex)[recordIndex]</pre></code>
+     * <pre><code>query.fetchArray(fieldIndex)[recordIndex]</code></pre>
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -4427,7 +4427,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * generated result.
      * <p>
      * You can access data like this
-     * <code><pre>query.fetchArray(fieldIndex)[recordIndex]</pre></code>
+     * <pre><code>query.fetchArray(fieldIndex)[recordIndex]</code></pre>
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4440,7 +4440,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * generated result.
      * <p>
      * You can access data like this
-     * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
+     * <pre><code>query.fetchArray(fieldName)[recordIndex]</code></pre>
      *
      * @return The resulting values. This may be an array type more concrete
      *         than <code>Object[]</code>, depending on whether jOOQ has any
@@ -4457,7 +4457,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * generated result.
      * <p>
      * You can access data like this
-     * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
+     * <pre><code>query.fetchArray(fieldName)[recordIndex]</code></pre>
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -4474,7 +4474,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * generated result.
      * <p>
      * You can access data like this
-     * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
+     * <pre><code>query.fetchArray(fieldName)[recordIndex]</code></pre>
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4487,7 +4487,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * generated result.
      * <p>
      * You can access data like this
-     * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
+     * <pre><code>query.fetchArray(fieldName)[recordIndex]</code></pre>
      *
      * @return The resulting values. This may be an array type more concrete
      *         than <code>Object[]</code>, depending on whether jOOQ has any
@@ -4504,7 +4504,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * generated result.
      * <p>
      * You can access data like this
-     * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
+     * <pre><code>query.fetchArray(fieldName)[recordIndex]</code></pre>
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -4521,7 +4521,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * generated result.
      * <p>
      * You can access data like this
-     * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
+     * <pre><code>query.fetchArray(fieldName)[recordIndex]</code></pre>
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4534,7 +4534,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * result.
      * <p>
      * You can access data like this
-     * <code><pre>query.fetchArray(field)[recordIndex]</pre></code>
+     * <pre><code>query.fetchArray(field)[recordIndex]</code></pre>
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4547,7 +4547,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * result.
      * <p>
      * You can access data like this
-     * <code><pre>query.fetchArray(field)[recordIndex]</pre></code>
+     * <pre><code>query.fetchArray(field)[recordIndex]</code></pre>
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -4564,7 +4564,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * result.
      * <p>
      * You can access data like this
-     * <code><pre>query.fetchArray(field)[recordIndex]</pre></code>
+     * <pre><code>query.fetchArray(field)[recordIndex]</code></pre>
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query

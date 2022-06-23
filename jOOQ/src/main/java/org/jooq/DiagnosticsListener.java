@@ -103,33 +103,33 @@ public interface DiagnosticsListener {
      * <p>
      * <h3>Whitespace differences</h3>
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM  actor;
      * SELECT  * FROM actor;
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <h3>Inline bind values</h3>
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM actor WHERE id = 1;
      * SELECT * FROM actor WHERE id = 2;
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <h3>Aliasing and qualification</h3>
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT a1.* FROM actor a1 WHERE id = ?;
      * SELECT * FROM actor a2 WHERE a2.id = ?;
-     * </pre></code>
+     * </code></pre>
      * <p>
      * Examples of identical statements (which are not considered duplicate, but
      * {@link #repeatedStatements(DiagnosticsContext)}, if on the same
      * {@link Connection}) are:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM actor WHERE id = ?;
      * SELECT * FROM actor WHERE id = ?;
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is a system-wide diagnostic that is not specific to individual
      * {@link Connection} instances.
@@ -158,17 +158,17 @@ public interface DiagnosticsListener {
      * <p>
      * Repeated statements may or may not be "identical". In the following
      * example, there are two repeated <em>and</em> identical statements:
-     * <code><pre>
+     * <pre><code>
      * SELECT * FROM actor WHERE id = ?;
      * SELECT * FROM actor WHERE id = ?;
-     * </pre></code>
+     * </code></pre>
      * <p>
      * In this example, we have three repeated statements, only some of which
-     * are also identical: <code><pre>
+     * are also identical: <pre><code>
      * SELECT * FROM actor WHERE id = ?;
      * SELECT * FROM actor WHERE id = ?;
      * SELECT * FROM actor WHERE id =  ?;
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is a {@link Connection}-specific diagnostic that is reset every time
      * {@link Connection#close()} is called.

@@ -50,18 +50,18 @@ import org.jetbrains.annotations.NotNull;
  * A wrapper for a JDBC batch operation. It has two modes:
  * <p>
  * <ol>
- * <li><b>Execute several queries without bind values</b><code><pre>
+ * <li><b>Execute several queries without bind values</b><pre><code>
  * create.batch(query1,
  *              query2,
  *              query3)
  *       .execute();
- * </pre></code></li>
- * <li><b>Execute one query several times with bind values</b><code><pre>
+ * </code></pre></li>
+ * <li><b>Execute one query several times with bind values</b><pre><code>
  * create.batch(query)
  *       .bind(valueA1, valueA2)
  *       .bind(valueB1, valueB2)
  *       .execute();
- * </pre></code></li>
+ * </code></pre></li>
  * </ol>
  *
  * @author Lukas Eder

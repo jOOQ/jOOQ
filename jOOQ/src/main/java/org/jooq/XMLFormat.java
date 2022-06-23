@@ -249,8 +249,8 @@ public final class XMLFormat {
     /**
      * The new header value, defaulting to <code>true</code>.
      * <p>
-     * This flag governs whether the <code>/result/fields element should be
-     * generated on export.
+     * This flag governs whether the <code>/result/fields</code> element should
+     * be generated on export.
      * <p>
      * This flag is ignored on {@link Record#formatXML(XMLFormat)} and similar
      * methods.

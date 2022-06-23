@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.17.1-SNAPSHOT</version>
+        <version>3.18.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>jooq</artifactId>
@@ -75,6 +75,17 @@
                             <Automatic-Module-Name>org.jooq</Automatic-Module-Name>
                         </manifestEntries>
                     </archive>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+
+                    <!-- [#13703] Validate at least HTML correctness -->
+                    <additionalparam>-Xdoclint:html</additionalparam>
+                    <additionalOptions>-Xdoclint:html</additionalOptions>
                 </configuration>
             </plugin>
         </plugins>

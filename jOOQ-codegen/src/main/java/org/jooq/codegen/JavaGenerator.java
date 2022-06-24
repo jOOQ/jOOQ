@@ -686,9 +686,11 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("");
     }
 
+    private static final /* record */ class Included { private final String name; private final Definition definition; public Included(String name, Definition definition) { this.name = name; this.definition = definition; } public String name() { return name; } public Definition definition() { return definition; } @Override public boolean equals(Object o) { if (!(o instanceof Included)) return false; Included other = (Included) o; if (!java.util.Objects.equals(this.name, other.name)) return false; if (!java.util.Objects.equals(this.definition, other.definition)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.name, this.definition); } @Override public String toString() { return new StringBuilder("Included[").append("name=").append(this.name).append(", definition=").append(this.definition).append("]").toString(); } }
+
     private class AvoidAmbiguousClassesFilter implements Database.Filter {
 
-        private Map<String, String> included = new HashMap<>();
+        private Map<String, Included> included = new HashMap<>();
 
         @Override
         public boolean exclude(Definition definition) {
@@ -702,12 +704,20 @@ public class JavaGenerator extends AbstractGenerator {
             // Check if we've previously encountered a Java type of the same case-insensitive, fully-qualified name.
             String name = getStrategy().getFullJavaClassName(definition);
             String nameLC = name.toLowerCase(getStrategy().getTargetLocale());
-            String existing = included.put(nameLC, name);
+            Included existing = included.put(nameLC, new Included(name, definition));
 
             if (existing == null)
                 return false;
 
-            log.warn("Ambiguous type name", "The object " + definition.getQualifiedOutputName() + " generates a type " + name + " which conflicts with the existing type " + existing + " on some operating systems. Use a custom generator strategy to disambiguate the types.");
+            log.warn("Ambiguous type name",
+                "The database object " + definition.getQualifiedOutputName()
+              + " generates a class " + name + " (" + definition.getClass() + ")"
+              + " which conflicts with the previously generated class " + existing.name() + " (" + existing.definition().getClass() + ")."
+              + " Use a custom generator strategy to disambiguate the types. More information here:\n"
+              + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy/\n"
+              + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy/"
+            );
+
             return true;
         }
     }

@@ -4958,6 +4958,111 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return (Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>) fetchSingle(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2) {
+        return fetchSingle(table, new Condition[] { c1, c2 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4, c5 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4, c5, c6 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4, c5, c6, c7 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4, c5, c6, c7, c8 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4, c5, c6, c7, c8, c9 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13, Condition c14) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13, Condition c14, Condition c15) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13, Condition c14, Condition c15, Condition c16) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13, Condition c14, Condition c15, Condition c16, Condition c17) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13, Condition c14, Condition c15, Condition c16, Condition c17, Condition c18) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13, Condition c14, Condition c15, Condition c16, Condition c17, Condition c18, Condition c19) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13, Condition c14, Condition c15, Condition c16, Condition c17, Condition c18, Condition c19, Condition c20) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13, Condition c14, Condition c15, Condition c16, Condition c17, Condition c18, Condition c19, Condition c20, Condition c21) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21 });
+    }
+
+    @Override
+    public <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13, Condition c14, Condition c15, Condition c16, Condition c17, Condition c18, Condition c19, Condition c20, Condition c21, Condition c22) {
+        return fetchSingle(table, new Condition[] { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22 });
+    }
+
 
 
     @Override

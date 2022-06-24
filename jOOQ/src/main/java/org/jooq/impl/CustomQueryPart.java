@@ -98,7 +98,7 @@ public non-sealed abstract class CustomQueryPart extends AbstractQueryPart imple
 
     /**
      * Subclasses must implement this method.
-     * <hr/>
+     * <hr>
      * {@inheritDoc}
      */
     @Override

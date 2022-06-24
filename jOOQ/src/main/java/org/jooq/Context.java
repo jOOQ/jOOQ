@@ -761,11 +761,11 @@ public interface Context<C extends Context<C>> extends Scope {
      * Specify, how bind values should be rendered.
      * <p>
      * <ul>
-     * <li>As {@link ParamType#INDEXED} parameters: <br/>
+     * <li>As {@link ParamType#INDEXED} parameters: <br>
      * <code>&#160; ?, ?, ?</code></li>
-     * <li>As {@link ParamType#NAMED} parameters: <br/>
+     * <li>As {@link ParamType#NAMED} parameters: <br>
      * <code>&#160; :1, :2, :custom_name</code></li>
-     * <li>As {@link ParamType#INLINED} parameters: <br/>
+     * <li>As {@link ParamType#INLINED} parameters: <br>
      * <code>&#160; 1, 'A', null</code></li>
      * </ul>
      */

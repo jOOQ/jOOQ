@@ -204,10 +204,10 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * <td><pre><code>INSERT INTO .. ON CONFLICT DO NOTHING</code></pre></td>
      * </tr>
      * <tr>
-     * <td>{@link SQLDialect#DB2}<br/>
-     * {@link SQLDialect#HSQLDB}<br/>
-     * {@link SQLDialect#ORACLE}<br/>
-     * {@link SQLDialect#SQLSERVER}<br/>
+     * <td>{@link SQLDialect#DB2}<br>
+     * {@link SQLDialect#HSQLDB}<br>
+     * {@link SQLDialect#ORACLE}<br>
+     * {@link SQLDialect#SQLSERVER}<br>
      * {@link SQLDialect#SYBASE}</td>
      * <td><pre><code>MERGE INTO [dst]
      * USING ([values])

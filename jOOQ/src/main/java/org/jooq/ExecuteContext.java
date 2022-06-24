@@ -165,8 +165,8 @@ public interface ExecuteContext extends Scope {
      * The {@link PreparedStatement} that is being executed or <code>null</code>
      * if the statement is unknown or if there was no statement.
      * <p>
-     * This can be any of the following: <br/>
-     * <br/>
+     * This can be any of the following: <br>
+     * <br>
      * <ul>
      * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
      * a jOOQ <code>Query</code> is being executed as

@@ -108,8 +108,8 @@ import io.r2dbc.spi.ConnectionFactory;
  * <li>{@link #connectionProvider()}: The {@link ConnectionProvider} that
  * defines the semantics of {@link ConnectionProvider#acquire()} and
  * {@link ConnectionProvider#release(Connection)} for all queries executed in
- * the context of this <code>Configuration</code>. <br/>
- * <br/>
+ * the context of this <code>Configuration</code>. <br>
+ * <br>
  * jOOQ-provided default implementations include:
  * <ul>
  * <li>{@link DefaultConnectionProvider}: a non-thread-safe implementation that
@@ -121,8 +121,8 @@ import io.r2dbc.spi.ConnectionFactory;
  * </li>
  * <li>{@link #executeListenerProviders()}: A set of
  * {@link ExecuteListenerProvider} that implement {@link Query} execution
- * lifecycle management.<br/>
- * <br/>
+ * lifecycle management.<br>
+ * <br>
  * jOOQ-provided example implementations include:
  * <ul>
  * <li>{@link LoggerListener}: generating default query execution log output
@@ -144,14 +144,14 @@ import io.r2dbc.spi.ConnectionFactory;
  * <li>{@link #recordListenerProviders()}: A set of
  * {@link RecordListenerProvider} that implement {@link Record} fetching and
  * storing lifecycle management, specifically for use with
- * {@link UpdatableRecord}.<br/>
- * <br/>
+ * {@link UpdatableRecord}.<br>
+ * <br>
  * jOOQ does not provide any implementations.</li>
  * <li>{@link #recordMapperProvider()}: The {@link RecordMapperProvider} that
  * defines and implements the behaviour of {@link Record#into(Class)},
  * {@link ResultQuery#fetchInto(Class)}, {@link Cursor#fetchInto(Class)}, and
- * various related methods. <br/>
- * <br/>
+ * various related methods. <br>
+ * <br>
  * jOOQ-provided default implementations include:
  * <ul>
  * <li>{@link DefaultRecordMapperProvider}: an implementation delegating to the
@@ -165,8 +165,8 @@ import io.r2dbc.spi.ConnectionFactory;
  * <li>{@link #transactionProvider()}: The {@link TransactionProvider} that
  * defines and implements the behaviour of the
  * {@link DSLContext#transaction(TransactionalRunnable)} and
- * {@link DSLContext#transactionResult(TransactionalCallable)} methods.<br/>
- * <br/>
+ * {@link DSLContext#transactionResult(TransactionalCallable)} methods.<br>
+ * <br>
  * jOOQ-provided default implementations include:
  * <ul>
  * <li>{@link DefaultTransactionProvider}: an implementation backed by JDBC
@@ -179,8 +179,8 @@ import io.r2dbc.spi.ConnectionFactory;
  * <li>{@link #visitListenerProviders()}: A set of {@link VisitListenerProvider}
  * that implement {@link Query} rendering and variable binding lifecycle
  * management, and that are allowed to implement query transformation - e.g. to
- * implement row-level security, or multi-tenancy.<br/>
- * <br/>
+ * implement row-level security, or multi-tenancy.<br>
+ * <br>
  * jOOQ does not provide any implementations.</li>
  * </ul>
  * <p>

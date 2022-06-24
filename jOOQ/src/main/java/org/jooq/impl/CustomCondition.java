@@ -90,7 +90,7 @@ implements
 
     /**
      * Subclasses must implement this method.
-     * <hr/>
+     * <hr>
      * {@inheritDoc}
      */
     @Override

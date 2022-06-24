@@ -203,7 +203,7 @@ import org.reactivestreams.Subscriber;
  * <td>No</td>
  * </tr>
  * <tr>
- * <td>{@link #recordStart(ExecuteContext)}<br/>
+ * <td>{@link #recordStart(ExecuteContext)}<br>
  * </td>
  * <td>Yes, Nx</td>
  * <td>Yes, Nx</td>
@@ -267,7 +267,7 @@ import org.reactivestreams.Subscriber;
  * <td>Maybe, 1x</td>
  * </tr>
  * </table>
- * <br/>
+ * <br>
  * <p>
  * <h5>Legend:</h5>
  * <p>
@@ -433,8 +433,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
-     * the following: <br/>
-     * <br/>
+     * the following: <br>
+     * <br>
      * <ul>
      * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
      * a jOOQ <code>Query</code> is being executed as
@@ -480,8 +480,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
-     * the following: <br/>
-     * <br/>
+     * the following: <br>
+     * <br>
      * <ul>
      * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
      * a jOOQ <code>Query</code> is being executed as
@@ -527,8 +527,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
-     * the following: <br/>
-     * <br/>
+     * the following: <br>
+     * <br>
      * <ul>
      * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
      * a jOOQ <code>Query</code> is being executed as
@@ -574,8 +574,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
-     * the following: <br/>
-     * <br/>
+     * the following: <br>
+     * <br>
      * <ul>
      * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
      * a jOOQ <code>Query</code> is being executed as
@@ -627,8 +627,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
-     * the following: <br/>
-     * <br/>
+     * the following: <br>
+     * <br>
      * <ul>
      * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
      * a jOOQ <code>Query</code> is being executed as
@@ -682,8 +682,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
-     * the following: <br/>
-     * <br/>
+     * the following: <br>
+     * <br>
      * <ul>
      * <li>A <code>java.sql.CallableStatement</code> when you are executing a
      * jOOQ <code>Routine</code></li>
@@ -719,8 +719,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
-     * the following: <br/>
-     * <br/>
+     * the following: <br>
+     * <br>
      * <ul>
      * <li>A <code>java.sql.CallableStatement</code> when you are executing a
      * jOOQ <code>Routine</code></li>
@@ -757,8 +757,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
-     * the following: <br/>
-     * <br/>
+     * the following: <br>
+     * <br>
      * <ul>
      * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
      * a jOOQ <code>Query</code> is being executed as
@@ -815,8 +815,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
-     * the following: <br/>
-     * <br/>
+     * the following: <br>
+     * <br>
      * <ul>
      * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
      * a jOOQ <code>Query</code> is being executed as
@@ -885,8 +885,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
-     * the following: <br/>
-     * <br/>
+     * the following: <br>
+     * <br>
      * <ul>
      * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
      * a jOOQ <code>Query</code> is being executed as
@@ -937,8 +937,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
-     * the following: <br/>
-     * <br/>
+     * the following: <br>
+     * <br>
      * <ul>
      * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
      * a jOOQ <code>Query</code> is being executed as
@@ -989,8 +989,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
-     * the following: <br/>
-     * <br/>
+     * the following: <br>
+     * <br>
      * <ul>
      * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
      * a jOOQ <code>Query</code> is being executed as
@@ -1061,8 +1061,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
-     * the following: <br/>
-     * <br/>
+     * the following: <br>
+     * <br>
      * <ul>
      * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
      * a jOOQ <code>Query</code> is being executed as
@@ -1120,8 +1120,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
-     * the following: <br/>
-     * <br/>
+     * the following: <br>
+     * <br>
      * <ul>
      * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
      * a jOOQ <code>Query</code> is being executed as
@@ -1174,8 +1174,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
-     * the following: <br/>
-     * <br/>
+     * the following: <br>
+     * <br>
      * <ul>
      * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
      * a jOOQ <code>Query</code> is being executed as
@@ -1229,8 +1229,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
-     * the following: <br/>
-     * <br/>
+     * the following: <br>
+     * <br>
      * <ul>
      * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
      * a jOOQ <code>Query</code> is being executed as

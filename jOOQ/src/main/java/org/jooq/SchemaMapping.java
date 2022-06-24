@@ -322,6 +322,11 @@ public class SchemaMapping implements Serializable {
             result = getCatalogs().get(catalogName);
         }
 
+        // [#4642] [#13723] There can still be a default name (e.g. from <outputCatalogToDefault/>
+        //                  code generation, even when there's no runtime schema mapping
+        else if ("".equals(result.getName()))
+            result = null;
+
         return result;
     }
 
@@ -341,6 +346,9 @@ public class SchemaMapping implements Serializable {
         else if (schema instanceof RenamedSchema) return schema;
 
         Schema result = schema;
+        if (result == null)
+            result = schema(name(""));
+
         RenderMapping m = mapping();
 
         // [#4642] Don't initialise schema mapping if not necessary
@@ -348,9 +356,6 @@ public class SchemaMapping implements Serializable {
             !m.getCatalogs().isEmpty() ||
             !isEmpty(m.getDefaultSchema()) ||
             !isEmpty(m.getDefaultCatalog())) {
-
-            if (result == null)
-                result = schema(name(""));
 
             Catalog catalog = result.getCatalog();
             if (catalog == null)
@@ -432,6 +437,11 @@ public class SchemaMapping implements Serializable {
 
             result = getSchemata().get(key);
         }
+
+        // [#4642] [#13723] There can still be a default name (e.g. from <outputSchemaToDefault/>
+        //                  code generation, even when there's no runtime schema mapping
+        else if ("".equals(result.getName()))
+            result = null;
 
         return result;
     }

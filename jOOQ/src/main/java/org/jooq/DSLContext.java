@@ -13782,6 +13782,405 @@ public interface DSLContext extends Scope {
     @Blocking
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> fetchSingle(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22) throws DataAccessException;
 
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13, SelectField14)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13, Condition c14) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13, SelectField14, SelectField15)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13, Condition c14, Condition c15) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13, SelectField14, SelectField15, SelectField16)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13, Condition c14, Condition c15, Condition c16) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13, SelectField14, SelectField15, SelectField16, SelectField17)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13, Condition c14, Condition c15, Condition c16, Condition c17) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13, SelectField14, SelectField15, SelectField16, SelectField17, SelectField18)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13, Condition c14, Condition c15, Condition c16, Condition c17, Condition c18) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13, SelectField14, SelectField15, SelectField16, SelectField17, SelectField18, SelectField19)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13, Condition c14, Condition c15, Condition c16, Condition c17, Condition c18, Condition c19) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13, SelectField14, SelectField15, SelectField16, SelectField17, SelectField18, SelectField19, SelectField20)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13, Condition c14, Condition c15, Condition c16, Condition c17, Condition c18, Condition c19, Condition c20) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13, SelectField14, SelectField15, SelectField16, SelectField17, SelectField18, SelectField19, SelectField20, SelectField21)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13, Condition c14, Condition c15, Condition c16, Condition c17, Condition c18, Condition c19, Condition c20, Condition c21) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
+    /**
+     * Disambiguation overload of {@link #fetchSingle(Table, Condition...)}.
+     * <p>
+     * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
+     * {@link Condition} extends {@link Field}. As such, there is an overload
+     * conflict between {@link #fetchSingle(Table, Condition...)} and
+     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13, SelectField14, SelectField15, SelectField16, SelectField17, SelectField18, SelectField19, SelectField20, SelectField21, SelectField22)}, which can be
+     * resolved backwards compatibly with this method.
+     *
+     * @return The record. This is never <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws NoDataFoundException if the query returned now rows
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @NotNull
+    @Support
+    @Blocking
+    <R extends Record> R fetchSingle(Table<R> table, Condition c1, Condition c2, Condition c3, Condition c4, Condition c5, Condition c6, Condition c7, Condition c8, Condition c9, Condition c10, Condition c11, Condition c12, Condition c13, Condition c14, Condition c15, Condition c16, Condition c17, Condition c18, Condition c19, Condition c20, Condition c21, Condition c22) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+
 
 
     /**

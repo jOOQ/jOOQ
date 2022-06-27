@@ -4395,7 +4395,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateSpringDao(CatalogDefinition catalog, JavaWriter out) {
         printPackage(out, catalog);
 
-        printClassJavadoc(out, "Spring specific {@" + out.ref(DAOImpl.class) + "} override.");
+        printClassJavadoc(out, "Spring specific {@link " + out.ref(DAOImpl.class) + "} override.");
         printClassAnnotations(out, catalog, Mode.DEFAULT);
 
         String transactional = generateSpringAnnotations()

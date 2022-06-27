@@ -6959,7 +6959,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (generateRecordsImplementingRecordN() && degree > 0 && degree <= Constants.MAX_ROW_DEGREE) {
-            out.javadoc("Convenience mapping calling {@link #convertFrom(%s)}.", Function.class);
+            out.javadoc("Convenience mapping calling {@link %s#convertFrom(%s)}.", SelectField.class, Function.class);
 
             if (scala) {
                 out.println("%sdef mapping[U](from: (" + rowType + ") => U): %s[U] = convertFrom(r => from.apply(" + rangeClosed(1, degree).mapToObj(i -> "r.value" + i + "()").collect(joining(", ")) + "))",
@@ -6976,7 +6976,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("}");
             }
 
-            out.javadoc("Convenience mapping calling {@link #convertFrom(%s, %s)}.", Class.class, Function.class);
+            out.javadoc("Convenience mapping calling {@link %s#convertFrom(%s, %s)}.", SelectField.class, Class.class, Function.class);
 
             if (scala) {
                 out.println("%sdef mapping[U](toType: %s[U], from: (" + rowType + ") => U): %s[U] = convertFrom(toType,r => from.apply(" + rangeClosed(1, degree).mapToObj(i -> "r.value" + i + "()").collect(joining(", ")) + "))",

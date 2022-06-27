@@ -68,7 +68,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * This type is used for the {@link Insert}'s DSL API.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * DSLContext create = DSL.using(configuration);
  *
  * create.insertInto(table, field1, field2)
@@ -78,7 +78,7 @@ import org.jetbrains.annotations.NotNull;
  *       .set(field1, value1)
  *       .set(field2, value2)
  *       .execute();
- * </pre></code>
+ * </code></pre>
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -197,32 +197,32 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * </tr>
      * <tr>
      * <td>{@link SQLDialect#MYSQL} and {@link SQLDialect#MARIADB}</td>
-     * <td><code><pre>INSERT IGNORE INTO ..</pre></code></td>
+     * <td><pre><code>INSERT IGNORE INTO ..</code></pre></td>
      * </tr>
      * <tr>
      * <td>{@link SQLDialect#POSTGRES_9_5} and {@link SQLDialect#SQLITE}</td>
-     * <td><code><pre>INSERT INTO .. ON CONFLICT DO NOTHING</pre></code></td>
+     * <td><pre><code>INSERT INTO .. ON CONFLICT DO NOTHING</code></pre></td>
      * </tr>
      * <tr>
-     * <td>{@link SQLDialect#DB2}<br/>
-     * {@link SQLDialect#HSQLDB}<br/>
-     * {@link SQLDialect#ORACLE}<br/>
-     * {@link SQLDialect#SQLSERVER}<br/>
+     * <td>{@link SQLDialect#DB2}<br>
+     * {@link SQLDialect#HSQLDB}<br>
+     * {@link SQLDialect#ORACLE}<br>
+     * {@link SQLDialect#SQLSERVER}<br>
      * {@link SQLDialect#SYBASE}</td>
-     * <td><code><pre>MERGE INTO [dst]
+     * <td><pre><code>MERGE INTO [dst]
      * USING ([values])
      * ON [dst.key] = [values.key]
-     * WHEN NOT MATCHED THEN INSERT ..</pre></code></td>
+     * WHEN NOT MATCHED THEN INSERT ..</code></pre></td>
      * </tr>
      * <tr>
      * <td>All the others</td>
-     * <td><code><pre>INSERT INTO [dst] ( ... )
+     * <td><pre><code>INSERT INTO [dst] ( ... )
      * SELECT [values]
      * WHERE NOT EXISTS (
      *   SELECT 1
      *   FROM [dst]
      *   WHERE [dst.key] = [values.key]
-     * )</pre></code></td>
+     * )</code></pre></td>
      * </tr>
      * </table>
      */

@@ -191,32 +191,32 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
      * </tr>
      * <tr>
      * <td>{@link SQLDialect#MYSQL} and {@link SQLDialect#MARIADB}</td>
-     * <td><code><pre>INSERT IGNORE INTO ..</pre></code></td>
+     * <td><pre><code>INSERT IGNORE INTO ..</code></pre></td>
      * </tr>
      * <tr>
      * <td>{@link SQLDialect#POSTGRES_9_5} and {@link SQLDialect#SQLITE}</td>
-     * <td><code><pre>INSERT INTO .. ON CONFLICT DO NOTHING</pre></code></td>
+     * <td><pre><code>INSERT INTO .. ON CONFLICT DO NOTHING</code></pre></td>
      * </tr>
      * <tr>
-     * <td>{@link SQLDialect#DB2}<br/>
-     * {@link SQLDialect#HSQLDB}<br/>
-     * {@link SQLDialect#ORACLE}<br/>
-     * {@link SQLDialect#SQLSERVER}<br/>
+     * <td>{@link SQLDialect#DB2}<br>
+     * {@link SQLDialect#HSQLDB}<br>
+     * {@link SQLDialect#ORACLE}<br>
+     * {@link SQLDialect#SQLSERVER}<br>
      * {@link SQLDialect#SYBASE}</td>
-     * <td><code><pre>MERGE INTO [dst]
+     * <td><pre><code>MERGE INTO [dst]
      * USING ([values])
      * ON [dst.key] = [values.key]
-     * WHEN NOT MATCHED THEN INSERT ..</pre></code></td>
+     * WHEN NOT MATCHED THEN INSERT ..</code></pre></td>
      * </tr>
      * <tr>
      * <td>All the others</td>
-     * <td><code><pre>INSERT INTO [dst] ( ... )
+     * <td><pre><code>INSERT INTO [dst] ( ... )
      * SELECT [values]
      * WHERE NOT EXISTS (
      *   SELECT 1
      *   FROM [dst]
      *   WHERE [dst.key] = [values.key]
-     * )</pre></code></td>
+     * )</code></pre></td>
      * </tr>
      * </table>
      * <p>

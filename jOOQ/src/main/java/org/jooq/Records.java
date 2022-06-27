@@ -62,14 +62,14 @@ import org.jooq.impl.Internal;
  * {@link Record} types and constructors of known degree, such as in this
  * example:
  * <p>
- * <code><pre>
+ * <pre><code>
  * record Actor (int id, String firstName, String lastName) {}
  *
  * List&lt;Actor&gt; actors =
  * ctx.select(ACTOR.ID, ACTOR.FIRST_NAME, ACTOR.LAST_NAME)
  *    .from(ACTOR)
  *    .fetch(mapping(Actor::new));
- * </pre></code>
+ * </code></pre>
  *
  * @author Lukas Eder
  */
@@ -81,22 +81,22 @@ public final class Records {
      * <p>
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String[] titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
      *    .collect(intoArray(new String[0]));
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is the same as the following, but allows for omitting repeating the
      * <code>BOOK.TITLE</code> column:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String[] titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
      *    .fetchArray(BOOK.TITLE);
-     * </pre></code>
+     * </code></pre>
      */
     public static final <E, R extends Record1<E>> Collector<R, ?, E[]> intoArray(E[] a) {
         return intoArray(a, Record1::value1);
@@ -108,21 +108,21 @@ public final class Records {
      * <p>
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String[] titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
      *    .collect(intoArray(new String[0], r -&gt; r.get(BOOK.TITLE)));
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is the same as the following:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String[] titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
      *    .fetchArray(BOOK.TITLE);
-     * </pre></code>
+     * </code></pre>
      */
     public static final <E, R extends Record1<E>> Collector<R, ?, E[]> intoArray(Class<? extends E> componentType) {
         return intoArray(componentType, Record1::value1);
@@ -134,21 +134,21 @@ public final class Records {
      * <p>
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String[] titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
      *    .collect(intoArray(new String[0], r -&gt; r.get(BOOK.TITLE)));
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is the same as the following:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String[] titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
      *    .fetchArray(BOOK.TITLE);
-     * </pre></code>
+     * </code></pre>
      */
     public static final <E, R extends Record> Collector<R, ?, E[]> intoArray(E[] a, Function<? super R, ? extends E> function) {
         return collectingAndThen(Collectors.mapping(function, toCollection(ArrayList::new)), l -> l.toArray(a));
@@ -160,21 +160,21 @@ public final class Records {
      * <p>
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String[] titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
      *    .collect(intoArray(new String[0], r -&gt; r.get(BOOK.TITLE)));
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is the same as the following:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * String[] titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
      *    .fetchArray(BOOK.TITLE);
-     * </pre></code>
+     * </code></pre>
      */
     @SuppressWarnings("unchecked")
     public static final <E, R extends Record> Collector<R, ?, E[]> intoArray(Class<? extends E> componentType, Function<? super R, ? extends E> function) {
@@ -188,22 +188,22 @@ public final class Records {
      * <p>
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * List&lt;String&gt; titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
      *    .collect(intoList());
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is the same as the following, but allows for omitting repeating the
      * <code>BOOK.TITLE</code> column:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * List&lt;String&gt; titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
      *    .fetch(BOOK.TITLE);
-     * </pre></code>
+     * </code></pre>
      */
     public static final <E, R extends Record1<E>> Collector<R, ?, List<E>> intoList() {
         return Collectors.mapping(Record1::value1, Collectors.toCollection(ArrayList::new));
@@ -215,21 +215,21 @@ public final class Records {
      * <p>
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * List&lt;String&gt; titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
      *    .collect(intoList(r -&gt; r.get(BOOK.TITLE)));
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is the same as the following:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * List&lt;String&gt; titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
      *    .fetch(BOOK.TITLE);
-     * </pre></code>
+     * </code></pre>
      */
     public static final <E, R extends Record> Collector<R, ?, List<E>> intoList(Function<? super R, ? extends E> function) {
         return Collectors.mapping(function, Collectors.toCollection(ArrayList::new));
@@ -242,22 +242,22 @@ public final class Records {
      * <p>
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Set&lt;String&gt; titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
      *    .collect(intoSet());
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is the same as the following, but allows for omitting repeating the
      * <code>BOOK.TITLE</code> column:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * List&lt;String&gt; titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
      *    .fetchSet(BOOK.TITLE);
-     * </pre></code>
+     * </code></pre>
      */
     public static final <E, R extends Record1<E>> Collector<R, ?, Set<E>> intoSet() {
         return intoSet(Record1::value1);
@@ -269,21 +269,21 @@ public final class Records {
      * <p>
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Set&lt;String&gt; titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
      *    .collect(intoSet(r -&gt; r.get(BOOK.TITLE)));
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is the same as the following:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * List&lt;String&gt; titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
      *    .fetchSet(BOOK.TITLE);
-     * </pre></code>
+     * </code></pre>
      */
     public static final <E, R extends Record> Collector<R, ?, Set<E>> intoSet(Function<? super R, ? extends E> function) {
         return Collectors.mapping(function, Collectors.toCollection(LinkedHashSet::new));
@@ -299,22 +299,22 @@ public final class Records {
      * <p>
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Map&lt;Integer, String&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
      *    .collect(intoMap());
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is the same as the following, but allows for omitting repeating the
      * <code>BOOK.ID</code> and <code>BOOK.TITLE</code> columns:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Map&lt;Integer, String&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
      *    .fetchMap(BOOK.ID, BOOK.TITLE);
-     * </pre></code>
+     * </code></pre>
      */
     public static final <K, V, R extends Record2<K, V>> Collector<R, ?, Map<K, V>> intoMap() {
         return intoMap(Record2::value1, Record2::value2);
@@ -330,21 +330,21 @@ public final class Records {
      * <p>
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Map&lt;Integer, Record2&lt;Integer, String&gt;&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
      *    .collect(intoMap(r -&gt; r.get(BOOK.ID)));
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is the same as the following:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Map&lt;Integer, Record2&lt;Integer, String&gt;&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
      *    .fetchMap(BOOK.ID);
-     * </pre></code>
+     * </code></pre>
      */
     public static final <K, R extends Record> Collector<R, ?, Map<K, R>> intoMap(Function<? super R, ? extends K> keyMapper) {
         return intoMap(keyMapper, r -> r);
@@ -361,21 +361,21 @@ public final class Records {
      * <p>
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Map&lt;Integer, String&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
      *    .collect(intoMap(r -&gt; r.get(BOOK.ID), r -&gt; r.get(BOOK.TITLE)));
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is the same as the following:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Map&lt;Integer, String&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
      *    .fetchMap(BOOK.ID, BOOK.TITLE);
-     * </pre></code>
+     * </code></pre>
      */
     public static final <K, V, R extends Record> Collector<R, ?, Map<K, V>> intoMap(
         Function<? super R, ? extends K> keyMapper,
@@ -407,22 +407,22 @@ public final class Records {
      * <p>
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Map&lt;Integer, List&lt;String&gt;&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
      *    .collect(intoGroups());
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is the same as the following, but allows for omitting repeating the
      * <code>BOOK.ID</code> and <code>BOOK.TITLE</code> columns:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Map&lt;Integer, List&lt;String&gt;&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
      *    .fetchGroups(BOOK.ID, BOOK.TITLE);
-     * </pre></code>
+     * </code></pre>
      */
     public static final <K, V, R extends Record2<K, V>> Collector<R, ?, Map<K, List<V>>> intoGroups() {
         return intoGroups(Record2::value1, Record2::value2);
@@ -436,21 +436,21 @@ public final class Records {
      * <p>
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Map&lt;Integer, List&lt;Record2&lt;Integer, String&gt;&gt;&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
      *    .collect(intoGroups(r -&gt; r.get(BOOK.ID)));
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is the same as the following:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Map&lt;Integer, List&lt;Record2&lt;Integer, String&gt;&gt;&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
      *    .fetchGroups(BOOK.ID);
-     * </pre></code>
+     * </code></pre>
      */
     public static final <K, R extends Record> Collector<R, ?, Map<K, List<R>>> intoGroups(Function<? super R, ? extends K> keyMapper) {
         return intoGroups(keyMapper, r -> r);
@@ -464,21 +464,21 @@ public final class Records {
      * <p>
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Map&lt;Integer, List&lt;String&gt;&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
      *    .collect(intoGroups(r -&gt; r.get(BOOK.ID), r -&gt; r.get(BOOK.TITLE)));
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is the same as the following:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Map&lt;Integer, List&lt;String&gt;&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
      *    .fetchGroups(BOOK.ID, BOOK.TITLE);
-     * </pre></code>
+     * </code></pre>
      */
     public static final <K, V, R extends Record> Collector<R, ?, Map<K, List<V>>> intoGroups(
         Function<? super R, ? extends K> keyMapper,
@@ -502,21 +502,21 @@ public final class Records {
      * <p>
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Map&lt;Integer, Result&lt;Record2&lt;Integer, String&gt;&gt;&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
      *    .collect(intoResultGroups(r -&gt; r.get(BOOK.ID)));
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is the same as the following:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Map&lt;Integer, Result&lt;Record2&lt;Integer, String&gt;&gt;&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
      *    .fetchGroups(BOOK.ID);
-     * </pre></code>
+     * </code></pre>
      */
     public static final <K, R extends Record> Collector<R, ?, Map<K, Result<R>>> intoResultGroups(Function<? super R, ? extends K> keyMapper) {
         return intoResultGroups(keyMapper, r -> r);
@@ -530,21 +530,21 @@ public final class Records {
      * <p>
      * For example:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Map&lt;Integer, Result&lt;Record1&lt;String&gt;&gt;&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
      *    .collect(intoResultGroups(r -&gt; r.get(BOOK.ID), r -&gt; r.get(BOOK.TITLE)));
-     * </pre></code>
+     * </code></pre>
      * <p>
      * This is the same as the following:
      * <p>
-     * <code><pre>
+     * <pre><code>
      * Map&lt;Integer, Result&lt;Record1&lt;String&gt;&gt;&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
      *    .fetchGroups(BOOK.ID, BOOK.TITLE);
-     * </pre></code>
+     * </code></pre>
      */
     @SuppressWarnings("unchecked")
     public static final <K, V extends Record, R extends Record> Collector<R, ?, Map<K, Result<V>>> intoResultGroups(

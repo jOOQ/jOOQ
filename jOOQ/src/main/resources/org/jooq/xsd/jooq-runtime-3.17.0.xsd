@@ -219,12 +219,12 @@ For details, see <a href="https://github.com/jOOQ/jOOQ/issues/3676">https://gith
 <p>
 A few hierarchical mapping features work with paths encoded in names (specifically field aliases), such as the reflective mapping of nested values when aliasing fields as:
 <p>
-<code><pre>
+<pre><code>
 SELECT 
   a.first_name AS "book.author.firstName"
   a.last_name AS "book.author.lastName"
 FROM ...
-</pre></code>
+</code></pre>
 <p>
 Not all dialects support "." in identifiers. This setting allows for specifying an alternative String to use as separator, e.g. "__".]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -311,7 +311,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       </element>
       
       <element name="transformPatternsNotComparison" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>NOT (a != b)</code> to <code>a = b/code>, and similar comparisons.
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>NOT (a != b)</code> to <code>a = b</code>, and similar comparisons.
 <p>
 This transformation removes a redundant logical negation from the <code>DISTINCT</code> predicate.
 <p>
@@ -833,7 +833,7 @@ RETURNING clause is fully supported, also for non-IDENTITY columns.]]></jxb:java
       <element name="returnRecordToPojo" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether calls to store(), insert(), update(), and delete() that are called on an UpdatableRecord
 that is created from a POJO (e.g. in a DAO) should return all Record values to the POJO, including
-IDENTITY values, and if <returnAllOnUpdatableRecord/> is active, also other values.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+IDENTITY values, and if {@link #returnAllOnUpdatableRecord} is active, also other values.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="mapJPAAnnotations" type="boolean" minOccurs="0" maxOccurs="1" default="true">

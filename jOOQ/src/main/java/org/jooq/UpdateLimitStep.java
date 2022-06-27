@@ -43,7 +43,7 @@ import org.jetbrains.annotations.*;
 /**
  * This type is used for the {@link Update}'s DSL API.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * DSLContext create = DSL.using(configuration);
  *
  * create.update(table)
@@ -51,7 +51,7 @@ import org.jetbrains.annotations.*;
  *       .set(field2, value2)
  *       .where(field1.greaterThan(100))
  *       .execute();
- * </pre></code>
+ * </code></pre>
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>

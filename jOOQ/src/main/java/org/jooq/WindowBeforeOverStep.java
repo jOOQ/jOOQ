@@ -43,7 +43,7 @@ package org.jooq;
 /**
  * This type is used for the window function DSL API.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * field.firstValue()
  *      .ignoreNulls()
  *      .over()
@@ -51,7 +51,7 @@ package org.jooq;
  *      .orderBy(PUBLISHED_IN.asc())
  *      .rowsBetweenUnboundedPreceding()
  *      .andUnboundedFollowing()
- * </pre></code>
+ * </code></pre>
  * <p>
  * Unlike in {@link WindowOverStep}, <code>OVER()</code> is an optional clause
  * clause.

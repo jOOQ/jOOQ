@@ -40,7 +40,7 @@ package org.jooq;
 /**
  * This type is used for the {@link Update}'s DSL API.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * DSLContext create = DSL.using(configuration);
  *
  * TableRecord&lt;?&gt; record =
@@ -49,7 +49,7 @@ package org.jooq;
  *       .set(field2, value2)
  *       .returning(field1)
  *       .fetchOne();
- * </pre></code>
+ * </code></pre>
  * <p>
  * This implemented differently for every dialect:
  * <ul>

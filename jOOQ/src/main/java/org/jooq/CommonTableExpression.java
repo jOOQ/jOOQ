@@ -52,7 +52,7 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  * <p>
  * <strong>Example:</strong>
  * <p>
- * <code><pre>
+ * <pre><code>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
  * Table&lt;?&gt; t = name("t").fields("v").as(select(one()));
@@ -61,7 +61,7 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  *    .select()
  *    .from(t)
  *    .fetch();
- * </pre></code>
+ * </code></pre>
  * <p>
  * Instances can be created using {@link Name#as(Select)}.
  *

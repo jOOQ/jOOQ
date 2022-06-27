@@ -733,7 +733,7 @@ final class Tools {
          * This needs to be done e.g. to emulate inline table valued parameters
          * in SQL Server:
          * <p>
-         * <code><pre>
+         * <pre><code>
          * -- With TVP bind variable:
          * SELECT * FROM func (?)
          *
@@ -741,7 +741,7 @@ final class Tools {
          * DECLARE @t TABLE_TYPE;
          * INSERT INTO @t VALUES (?),(?),...,(?);
          * SELECT * FROM func (@t)
-         * </pre></code>
+         * </code></pre>
          */
         DATA_PREPEND_SQL,
 
@@ -753,12 +753,12 @@ final class Tools {
          * MySQL @@group_concat_max_len setting is set to an appropriate value,
          * and reset to the previous value again.
          * <p>
-         * <code><pre>
+         * <pre><code>
          * SET @t = @@group_concat_max_len;
          * SET @@group_concat_max_len = 4294967295;
          * SELECT group_concat(...);
          * SET @@group_concat_max_len = @t;
-         * </pre></code>
+         * </code></pre>
          */
         DATA_APPEND_SQL,
 

@@ -491,27 +491,27 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     /**
      * Add an Oracle-style hint to the select clause.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.select(field1, field2)
      *       .hint("/*+ALL_ROWS&#42;/")
      *       .from(table1)
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * You can also use this clause for any other database, that accepts hints
      * or options at the same syntactic location, e.g. for MySQL's
-     * <code>SQL_CALC_FOUND_ROWS</code> option: <code><pre>
+     * <code>SQL_CALC_FOUND_ROWS</code> option: <pre><code>
      * create.select(field1, field2)
      *       .hint("SQL_CALC_FOUND_ROWS")
      *       .from(table1)
      *       .fetch();
-     * </pre></code>
+     * </code></pre>
      * <p>
-     * The outcome of such a query is this: <code><pre>
+     * The outcome of such a query is this: <pre><code>
      * SELECT [hint] field1, field2 FROM table1
-     * </pre></code>
+     * </code></pre>
      * <p>
      * For SQL Server style table hints, see {@link Table#with(String)}
      *
@@ -523,26 +523,26 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     /**
      * Add a SQL Server-style query hint to the select clause.
      * <p>
-     * Example: <code><pre>
+     * Example: <pre><code>
      * DSLContext create = DSL.using(configuration);
      *
      * create.select(field1, field2)
      *       .from(table1)
      *       .option("OPTION (OPTIMIZE FOR UNKNOWN)")
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      * <p>
      * You can also use this clause for any other database, that accepts hints
-     * or options at the same syntactic location, e.g. for DB2's isolation clause: <code><pre>
+     * or options at the same syntactic location, e.g. for DB2's isolation clause: <pre><code>
      * create.select(field1, field2)
      *       .from(table1)
      *       .option("WITH RR USE AND KEEP EXCLUSIVE LOCKS")
      *       .execute();
-     * </pre></code>
+     * </code></pre>
      * <p>
-     * The outcome of such a query is this: <code><pre>
+     * The outcome of such a query is this: <pre><code>
      * SELECT field1, field2 FROM table1 [option]
-     * </pre></code>
+     * </code></pre>
      * <p>
      * For SQL Server style table hints, see {@link Table#with(String)}
      *

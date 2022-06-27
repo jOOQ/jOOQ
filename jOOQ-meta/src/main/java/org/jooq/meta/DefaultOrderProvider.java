@@ -48,7 +48,7 @@ import java.util.Comparator;
  * reasonable, predictable way, according to these rules:
  * <p>
  * <ul>
- * <li><strong>Alphabetic when irrelevant</strong>:<br/>
+ * <li><strong>Alphabetic when irrelevant</strong>:<br>
  * When the order of objects within a parent is irrelevant, they are ordered
  * alphabetically. Such objects include:
  * <ul>
@@ -65,7 +65,7 @@ import java.util.Comparator;
  * <li>{@link SequenceDefinition} within {@link SchemaDefinition}</li>
  * </ul>
  * </li>
- * <li><strong>In given order when relevant</strong>:<br/>
+ * <li><strong>In given order when relevant</strong>:<br>
  * When the order of objects within a parent is relevant, and provided by the
  * database vendor, then that order is used. Such objects include:
  * <ul>

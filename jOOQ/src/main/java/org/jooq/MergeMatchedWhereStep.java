@@ -59,7 +59,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * This type is used for the {@link Merge}'s DSL API.
  * <p>
- * Example: <code><pre>
+ * Example: <pre><code>
  * DSLContext create = DSL.using(configuration);
  *
  * create.mergeInto(table)
@@ -71,7 +71,7 @@ import org.jetbrains.annotations.NotNull;
  *       .whenNotMatchedThenInsert(field1, field2)
  *       .values(value1, value2)
  *       .execute();
- * </pre></code>
+ * </code></pre>
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -101,15 +101,15 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeMatchedDel
      * <p>
      * <h3>In Oracle, this will produce:</h3>
      * <p>
-     * <code><pre>
+     * <pre><code>
      * WHEN MATCHED THEN UPDATE SET .. WHERE [ condition ]
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <h3>In SQL Server, this will produce:</h3>
      * <p>
-     * <code><pre>
+     * <pre><code>
      * WHEN MATCHED AND [ condition ] THEN UPDATE SET ..
-     * </pre><code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
@@ -121,15 +121,15 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeMatchedDel
      * <p>
      * <h3>In Oracle, this will produce:</h3>
      * <p>
-     * <code><pre>
+     * <pre><code>
      * WHEN MATCHED THEN UPDATE SET .. WHERE [ condition ]
-     * </pre></code>
+     * </code></pre>
      * <p>
      * <h3>In SQL Server, this will produce:</h3>
      * <p>
-     * <code><pre>
+     * <pre><code>
      * WHEN MATCHED AND [ condition ] THEN UPDATE SET ..
-     * </pre><code>
+     * </code></pre>
      */
     @NotNull @CheckReturnValue
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })

@@ -145,7 +145,7 @@ public interface InsertValuesStep1<R extends Record, T1> extends InsertOnDuplica
      * Use a <code>SELECT</code> statement as the source of values for the
      * <code>INSERT</code> statement
      * <p>
-     * This variant of the <code>INSERT .. SELECT</code> statement expects a
+     * This variant of the <code>INSERT … SELECT</code> statement expects a
      * select returning exactly as many fields as specified previously in the
      * <code>INTO</code> clause:
      * {@link DSLContext#insertInto(Table, Field)}

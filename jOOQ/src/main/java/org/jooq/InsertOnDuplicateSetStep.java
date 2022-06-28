@@ -107,7 +107,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
     /**
      * Set values for <code>UPDATE</code> in the <code>INSERT</code> statement's
      * <code>ON DUPLICATE KEY UPDATE</code> or
-     * <code>ON CONFLICT ... DO UPDATE</code> clause.
+     * <code>ON CONFLICT … DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -116,7 +116,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
     /**
      * Set values for <code>UPDATE</code> in the <code>INSERT</code> statement's
      * <code>ON DUPLICATE KEY UPDATE</code> or
-     * <code>ON CONFLICT ... DO UPDATE</code> clause.
+     * <code>ON CONFLICT … DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -125,7 +125,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
     /**
      * Set values for <code>UPDATE</code> in the <code>INSERT</code> statement's
      * <code>ON DUPLICATE KEY UPDATE</code> or
-     * <code>ON CONFLICT ... DO UPDATE</code> clause.
+     * <code>ON CONFLICT … DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -134,7 +134,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
     /**
      * Set a <code>null</code> value for <code>UPDATE</code> in the
      * <code>INSERT</code> statement's <code>ON DUPLICATE KEY UPDATE</code> or
-     * <code>ON CONFLICT ... DO UPDATE</code> clause.
+     * <code>ON CONFLICT … DO UPDATE</code> clause.
      * <p>
      * This method is convenience for calling {@link #set(Field, Object)},
      * without the necessity of casting the Java <code>null</code> literal to
@@ -147,7 +147,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
     /**
      * Set multiple values for <code>UPDATE</code> in the <code>INSERT</code>
      * statement's <code>ON DUPLICATE KEY UPDATE</code> or
-     * <code>ON CONFLICT ... DO UPDATE</code> clause.
+     * <code>ON CONFLICT … DO UPDATE</code> clause.
      * <p>
      * Keys can either be of type {@link String}, {@link Name}, or
      * {@link Field}.
@@ -163,7 +163,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
     /**
      * Set multiple values for <code>UPDATE</code> in the <code>INSERT</code>
      * statement's <code>ON DUPLICATE KEY UPDATE</code> or
-     * <code>ON CONFLICT ... DO UPDATE</code> clause.
+     * <code>ON CONFLICT … DO UPDATE</code> clause.
      * <p>
      * This is the same as calling {@link #set(Map)} with the argument record
      * treated as a <code>Map&lt;Field&lt;?&gt;, Object&gt;</code>.

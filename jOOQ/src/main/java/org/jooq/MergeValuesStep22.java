@@ -94,7 +94,7 @@ public interface MergeValuesStep22<R extends Record, T1, T2, T3, T4, T5, T6, T7,
      * Use a <code>SELECT</code> statement as the source of values for the
      * <code>MERGE</code> statement
      * <p>
-     * This variant of the <code>MERGE .. SELECT</code> statement expects a
+     * This variant of the <code>MERGE … SELECT</code> statement expects a
      * select returning exactly as many fields as specified previously in the
      * <code>INTO</code> clause:
      * {@link DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}.

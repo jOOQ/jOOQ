@@ -519,7 +519,7 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>VALUES()</code> function for use with
-     * <code>INSERT .. ON DUPLICATE KEY UPDATE</code> statements.
+     * <code>INSERT … ON DUPLICATE KEY UPDATE</code> statements.
      *
      * @see <a href=
      *      "http://dev.mysql.com/doc/refman/5.7/en/miscellaneous-functions.html#function_values">

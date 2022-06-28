@@ -146,7 +146,7 @@ public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
      * <tr>
      * <td>PostgreSQL</td>
      * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <code>INSERT … ON CONFLICT DO UPDATE</code></td>
      * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
      * </tr>
      * <tr>

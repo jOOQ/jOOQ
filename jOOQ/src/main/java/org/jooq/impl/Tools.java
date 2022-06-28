@@ -575,7 +575,7 @@ final class Tools {
         DATA_COLLECT_SEMI_ANTI_JOIN,
 
         /**
-         * [#11486] An <code>INSERT .. SELECT</code> statement.
+         * [#11486] An <code>INSERT … SELECT</code> statement.
          */
         DATA_INSERT_SELECT,
 
@@ -682,8 +682,8 @@ final class Tools {
         /**
          * [#2744] Currently rendering the data change delta table syntax.
          * <p>
-         * In some dialects, a <code>FINAL TABLE (INSERT ...)</code> clause exists, which
-         * corresponds to the PostgreSQL <code>INSERT .. RETURNING</code> clause.
+         * In some dialects, a <code>FINAL TABLE (INSERT …)</code> clause exists, which
+         * corresponds to the PostgreSQL <code>INSERT … RETURNING</code> clause.
          */
         DATA_RENDERING_DATA_CHANGE_DELTA_TABLE,
 
@@ -971,7 +971,7 @@ final class Tools {
     // ------------------------------------------------------------------------
 
     /**
-     * The default escape character for <code>[a] LIKE [b] ESCAPE [...]</code>
+     * The default escape character for <code>[a] LIKE [b] ESCAPE […]</code>
      * clauses.
      */
     static final char                    ESCAPE                             = '!';
@@ -4892,8 +4892,8 @@ final class Tools {
     }
 
     /**
-     * Wrap a <code>DROP .. IF EXISTS</code> statement with
-     * <code>BEGIN EXECUTE IMMEDIATE '...' EXCEPTION WHEN ... END;</code>, if
+     * Wrap a <code>DROP … IF EXISTS</code> statement with
+     * <code>BEGIN EXECUTE IMMEDIATE '…' EXCEPTION WHEN … END;</code>, if
      * <code>IF EXISTS</code> is not supported.
      */
     static final void tryCatch(Context<?> ctx, DDLStatementType type, Consumer<? super Context<?>> runnable) {

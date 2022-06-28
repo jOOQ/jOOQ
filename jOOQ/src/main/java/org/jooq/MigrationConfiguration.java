@@ -189,7 +189,7 @@ public final class MigrationConfiguration {
     }
 
     /**
-     * Whether <code>ALTER TABLE .. DROP</code> statements should have a
+     * Whether <code>ALTER TABLE … DROP</code> statements should have a
      * <code>CASCADE [ CONSTRAINTS ]</code> clause where supported.
      */
     public final boolean alterTableDropCascade() {
@@ -197,7 +197,7 @@ public final class MigrationConfiguration {
     }
 
     /**
-     * Whether <code>ALTER TABLE .. DROP</code> statements should have a
+     * Whether <code>ALTER TABLE … DROP</code> statements should have a
      * <code>CASCADE [ CONSTRAINTS ]</code> clause where supported.
      */
     public final MigrationConfiguration alterTableDropCascade(boolean newAlterTableDropCascade) {

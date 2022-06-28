@@ -183,10 +183,10 @@ import org.jooq.tools.reflect.ReflectException;
  * If {@link Field#getName()} is <code>MY_field</code> (case-sensitive!), then
  * this field's value will be set on all of these (regardless of visibility):
  * <ul>
- * <li>Single-argument instance method <code>MY_field(...)</code></li>
- * <li>Single-argument instance method <code>myField(...)</code></li>
- * <li>Single-argument instance method <code>setMY_field(...)</code></li>
- * <li>Single-argument instance method <code>setMyField(...)</code></li>
+ * <li>Single-argument instance method <code>MY_field(…)</code></li>
+ * <li>Single-argument instance method <code>myField(…)</code></li>
+ * <li>Single-argument instance method <code>setMY_field(…)</code></li>
+ * <li>Single-argument instance method <code>setMyField(…)</code></li>
  * <li>Non-final instance member field <code>MY_field</code></li>
  * <li>Non-final instance member field <code>myField</code></li>
  * </ul>
@@ -196,10 +196,10 @@ import org.jooq.tools.reflect.ReflectException;
  * <code>MY_nested_field</code>, which is set on a nested POJO that is passed to
  * all of these (regardless of visibility):
  * <ul>
- * <li>Single-argument instance method <code>MY_field(...)</code></li>
- * <li>Single-argument instance method <code>myField(...)</code></li>
- * <li>Single-argument instance method <code>setMY_field(...)</code></li>
- * <li>Single-argument instance method <code>setMyField(...)</code></li>
+ * <li>Single-argument instance method <code>MY_field(…)</code></li>
+ * <li>Single-argument instance method <code>myField(…)</code></li>
+ * <li>Single-argument instance method <code>setMY_field(…)</code></li>
+ * <li>Single-argument instance method <code>setMyField(…)</code></li>
  * <li>Non-final instance member field <code>MY_field</code></li>
  * <li>Non-final instance member field <code>myField</code></li>
  * </ul>

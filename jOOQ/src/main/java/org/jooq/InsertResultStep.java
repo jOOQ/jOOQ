@@ -53,7 +53,7 @@ package org.jooq;
  * This implemented differently for every dialect:
  * <ul>
  * <li>DB2 allows to execute
- * <code>SELECT .. FROM FINAL TABLE (INSERT ...)</code></li>
+ * <code>SELECT … FROM FINAL TABLE (INSERT …)</code></li>
  * <li>HSQLDB, and Oracle JDBC drivers allow for retrieving any table column as
  * "generated key" in one statement</li>
  * <li>Derby, H2, Ingres, MySQL, SQL Server only allow for retrieving IDENTITY

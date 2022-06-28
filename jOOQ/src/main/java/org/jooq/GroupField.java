@@ -43,7 +43,7 @@ import org.jooq.impl.QOM;
 /**
  * An expression to be used exclusively in <code>GROUP BY</code> clauses.
  * <p>
- * The <code>SELECT .. GROUP BY</code> clause accepts a variety of expressions,
+ * The <code>SELECT … GROUP BY</code> clause accepts a variety of expressions,
  * mostly ordinary {@link Field} expressions, but also some special expressions
  * usable only in the <code>GROUP BY</code> clause, such as
  * {@link DSL#groupingSets(Field[][])}.

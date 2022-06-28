@@ -87,6 +87,7 @@ import org.jooq.ExecuteListener;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.Field;
 import org.jooq.Log;
+import org.jooq.Log.Level;
 import org.jooq.Meta;
 import org.jooq.MetaProvider;
 import org.jooq.Name;
@@ -3277,6 +3278,22 @@ public abstract class AbstractDatabase implements Database {
                     log.log(level, message, e);
                     break;
                 case FAIL:
+                    log.log(ERROR, "Code generation error",
+                        ("" +
+                        "An error was encountered during code generation. This can have various reasons:\n" +
+                        "\n" +
+                        "- There's a bug in jOOQ. Please report it here: https://github.com/jOOQ/jOOQ/issues/new/choose\n" +
+                        "- Your database user doesn't have the necessary privileges to access a metadata table\n" +
+                        "- The database connection suffered a failure\n" +
+                        "\n" +
+                        "There are other reasons. If the error can be ignored, you can either:\n" +
+                        "\n" +
+                        "- Turn off the relevant feature in the code generator to avoid running into the error\n" +
+                        "- Avoid fetching the relevant meta data by excluding the object from code generation\n" +
+                        "- Use the <onError/> code generation configuration to specify the severity of such errors (for all errors!)\n" +
+                        "\n" +
+                        "See https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-onerror/\n" +
+                        ""));
                     throw new RuntimeException(e);
             }
         }

@@ -100,7 +100,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
 
     /**
      * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
-     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT … DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -108,7 +108,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
 
     /**
      * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
-     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause,
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT … DO UPDATE</code> clause,
      * connecting them with each other using {@link Operator#AND}.
      */
     @NotNull @CheckReturnValue
@@ -117,7 +117,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
 
     /**
      * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
-     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause,
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT … DO UPDATE</code> clause,
      * connecting them with each other using {@link Operator#AND}.
      */
     @NotNull @CheckReturnValue
@@ -126,7 +126,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
 
     /**
      * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
-     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT … DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -134,7 +134,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
 
     /**
      * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
-     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT … DO UPDATE</code> clause.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -151,7 +151,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
 
     /**
      * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
-     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT … DO UPDATE</code> clause.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -168,7 +168,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
 
     /**
      * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
-     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT … DO UPDATE</code> clause.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -186,7 +186,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
 
     /**
      * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
-     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT … DO UPDATE</code> clause.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -204,7 +204,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
 
     /**
      * Add a <code>WHERE EXISTS</code> clause to the <code>INSERT</code> statement's
-     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT … DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -212,7 +212,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
 
     /**
      * Add a <code>WHERE NOT EXISTS</code> clause to the <code>INSERT</code> statement's
-     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
+     * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT … DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })

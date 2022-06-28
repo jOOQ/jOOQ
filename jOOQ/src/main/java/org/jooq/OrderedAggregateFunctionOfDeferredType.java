@@ -49,7 +49,7 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
  * An ordered-set aggregate function.
  * <p>
  * An ordered-set aggregate function is an aggregate function with a mandatory
- * Oracle-specific <code>WITHIN GROUP (ORDER BY ..)</code> clause. An example is
+ * Oracle-specific <code>WITHIN GROUP (ORDER BY …)</code> clause. An example is
  * <code>LISTAGG</code>: <pre><code>
  * SELECT   LISTAGG(TITLE, ', ')
  *          WITHIN GROUP (ORDER BY TITLE)
@@ -59,7 +59,7 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
  * into a concatenated string.
  * <p>
  * Ordered-set aggregate functions can be further converted into window functions
- * using the <code>OVER(PARTITION BY ..)</code> clause. For example: <pre><code>
+ * using the <code>OVER(PARTITION BY …)</code> clause. For example: <pre><code>
  * SELECT LISTAGG(TITLE, ', ')
  *        WITHIN GROUP (ORDER BY TITLE)
  *        OVER (PARTITION BY AUTHOR_ID)
@@ -71,7 +71,7 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 public interface OrderedAggregateFunctionOfDeferredType {
 
     /**
-     * Add an <code>WITHIN GROUP (ORDER BY ..)</code> clause to the ordered
+     * Add an <code>WITHIN GROUP (ORDER BY …)</code> clause to the ordered
      * aggregate function
      */
     @NotNull

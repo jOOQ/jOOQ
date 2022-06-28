@@ -77,7 +77,7 @@ public interface AlterTableDropStep extends AlterTableFinalStep {
 
     /**
      * Add a <code>CASCADE</code> clause to the
-     * <code>ALTER TABLE .. DROP</code> statement.
+     * <code>ALTER TABLE … DROP</code> statement.
      */
     @NotNull @CheckReturnValue
     @Support({ DERBY, HSQLDB, POSTGRES, YUGABYTEDB })
@@ -85,7 +85,7 @@ public interface AlterTableDropStep extends AlterTableFinalStep {
 
     /**
      * Add a <code>RESTRICT</code> clause to the
-     * <code>ALTER TABLE .. DROP</code> statement.
+     * <code>ALTER TABLE … DROP</code> statement.
      */
     @NotNull @CheckReturnValue
     @Support({ DERBY, HSQLDB, POSTGRES, YUGABYTEDB })

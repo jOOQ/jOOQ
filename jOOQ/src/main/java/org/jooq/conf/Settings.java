@@ -1728,7 +1728,7 @@ public class Settings
     }
 
     /**
-     * Transform predicates comparing scalar subqueries with a count <code>(SELECT COUNT(*) ..) > 0</code> to equivalent <code>EXISTS (SELECT 1 ..)</code>.
+     * Transform predicates comparing scalar subqueries with a count <code>(SELECT COUNT(*) …) > 0</code> to equivalent <code>EXISTS (SELECT 1 …)</code>.
      * <p>
      * Scalar subqueries that count rows and whose count is compared to 0 can be transformed into equivalent, but likely cheaper to execute EXISTS queries.
      * <p>
@@ -1756,7 +1756,7 @@ public class Settings
     }
 
     /**
-     * Transform predicates comparing scalar subqueries with a count <code>(SELECT COUNT(expr) ..) > 0</code> to equivalent <code>EXISTS (SELECT 1 .. WHERE expr IS NOT NULL)</code>.
+     * Transform predicates comparing scalar subqueries with a count <code>(SELECT COUNT(expr) …) > 0</code> to equivalent <code>EXISTS (SELECT 1 … WHERE expr IS NOT NULL)</code>.
      * <p>
      * Scalar subqueries that count non-null expressions and whose count is compared to 0 can be transformed into equivalent, but likely cheaper to execute EXISTS queries.
      * <p>

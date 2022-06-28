@@ -163,7 +163,7 @@ public interface TableOnStep<R extends Record> {
     TableOnConditionStep<R> on(String sql, QueryPart... parts);
 
     /**
-     * Join a table with the <code>USING(column [, column...])</code> syntax.
+     * Join a table with the <code>USING(column [, column…])</code> syntax.
      * <p>
      * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
@@ -173,7 +173,7 @@ public interface TableOnStep<R extends Record> {
     Table<Record> using(Field<?>... fields);
 
     /**
-     * Join a table with the <code>USING(column [, column...])</code> syntax.
+     * Join a table with the <code>USING(column [, column…])</code> syntax.
      * <p>
      * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.

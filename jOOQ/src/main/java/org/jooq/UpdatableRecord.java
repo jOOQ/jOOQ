@@ -93,7 +93,7 @@ import org.jetbrains.annotations.Nullable;
  * <li>{@link #store()} : Storing the record to the database. This executes
  * either an <code>INSERT</code> or an <code>UPDATE</code> statement</li>
  * <li>{@link #merge()} : Merging a record to the database. This executes an
- * <code>INSERT .. ON DUPLICATE KEY UPDATE</code> statement.</li>
+ * <code>INSERT … ON DUPLICATE KEY UPDATE</code> statement.</li>
  * </ul>
  * <p>
  * <code>UpdatableRecords</code> are {@link Attachable}, which means that they
@@ -200,7 +200,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * In order to compare this record with the latest state, the database
      * record will be locked pessimistically using a
-     * <code>SELECT .. FOR UPDATE</code> statement. Not all databases support
+     * <code>SELECT … FOR UPDATE</code> statement. Not all databases support
      * the <code>FOR UPDATE</code> clause natively. Namely, the following
      * databases will show slightly different behaviour:
      * <ul>
@@ -392,7 +392,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * Unlike {@link #store()}, the statement produced by this operation does
      * not depend on whether the record has been previously fetched from the
      * database or created afresh. It implements the semantics of an
-     * <code>INSERT .. ON DUPLICATE KEY UPDATE</code> statement, which will
+     * <code>INSERT … ON DUPLICATE KEY UPDATE</code> statement, which will
      * update the row regardless of which (unique) key value is already present.
      * See {@link InsertOnDuplicateStep#onDuplicateKeyUpdate()}.
      * <p>
@@ -464,7 +464,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * In order to compare this record with the latest state, the database
      * record will be locked pessimistically using a
-     * <code>SELECT .. FOR UPDATE</code> statement. Not all databases support
+     * <code>SELECT … FOR UPDATE</code> statement. Not all databases support
      * the <code>FOR UPDATE</code> clause natively. Namely, the following
      * databases will show slightly different behaviour:
      * <ul>

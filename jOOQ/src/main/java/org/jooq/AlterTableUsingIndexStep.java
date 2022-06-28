@@ -43,7 +43,7 @@ import org.jetbrains.annotations.*;
 // ...
 
 /**
- * The step in the <code>ALTER TABLE .. ADD CONSTRAINT</code> statement where an
+ * The step in the <code>ALTER TABLE … ADD CONSTRAINT</code> statement where an
  * optional index can be specified to enforce the constraint.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>

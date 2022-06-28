@@ -123,7 +123,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
     WindowExcludeStep<T> rowsFollowing(int number);
 
     /**
-     * Add a <code>ROWS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
+     * Add a <code>ROWS BETWEEN UNBOUNDED PRECEDING …</code> frame clause to
      * the window function.
      */
     @NotNull
@@ -131,7 +131,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
     WindowRowsAndStep<T> rowsBetweenUnboundedPreceding();
 
     /**
-     * Add a <code>ROWS BETWEEN [number] PRECEDING ...</code> frame clause to
+     * Add a <code>ROWS BETWEEN [number] PRECEDING …</code> frame clause to
      * the window function.
      */
     @NotNull
@@ -139,7 +139,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
     WindowRowsAndStep<T> rowsBetweenPreceding(int number);
 
     /**
-     * Add a <code>ROWS BETWEEN CURRENT ROW ...</code> frame clause to
+     * Add a <code>ROWS BETWEEN CURRENT ROW …</code> frame clause to
      * the window function.
      */
     @NotNull
@@ -147,7 +147,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
     WindowRowsAndStep<T> rowsBetweenCurrentRow();
 
     /**
-     * Add a <code>ROWS BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
+     * Add a <code>ROWS BETWEEN UNBOUNDED FOLLOWING …</code> frame clause to
      * the window function.
      */
     @NotNull
@@ -155,7 +155,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
     WindowRowsAndStep<T> rowsBetweenUnboundedFollowing();
 
     /**
-     * Add a <code>ROWS BETWEEN [number] FOLLOWING ...</code> frame clause to
+     * Add a <code>ROWS BETWEEN [number] FOLLOWING …</code> frame clause to
      * the window function.
      */
     @NotNull
@@ -202,7 +202,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
     WindowExcludeStep<T> rangeFollowing(int number);
 
     /**
-     * Add a <code>RANGE BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
+     * Add a <code>RANGE BETWEEN UNBOUNDED PRECEDING …</code> frame clause to
      * the window function.
      */
     @NotNull
@@ -210,7 +210,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
     WindowRowsAndStep<T> rangeBetweenUnboundedPreceding();
 
     /**
-     * Add a <code>RANGE BETWEEN [number] PRECEDING ...</code> frame clause to
+     * Add a <code>RANGE BETWEEN [number] PRECEDING …</code> frame clause to
      * the window function.
      */
     @NotNull
@@ -218,7 +218,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
     WindowRowsAndStep<T> rangeBetweenPreceding(int number);
 
     /**
-     * Add a <code>RANGE BETWEEN CURRENT ROW ...</code> frame clause to
+     * Add a <code>RANGE BETWEEN CURRENT ROW …</code> frame clause to
      * the window function.
      */
     @NotNull
@@ -226,7 +226,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
     WindowRowsAndStep<T> rangeBetweenCurrentRow();
 
     /**
-     * Add a <code>RANGE BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
+     * Add a <code>RANGE BETWEEN UNBOUNDED FOLLOWING …</code> frame clause to
      * the window function.
      */
     @NotNull
@@ -234,7 +234,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
     WindowRowsAndStep<T> rangeBetweenUnboundedFollowing();
 
     /**
-     * Add a <code>RANGE BETWEEN [number] FOLLOWING ...</code> frame clause to
+     * Add a <code>RANGE BETWEEN [number] FOLLOWING …</code> frame clause to
      * the window function.
      */
     @NotNull
@@ -281,7 +281,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
     WindowExcludeStep<T> groupsFollowing(int number);
 
     /**
-     * Add a <code>GROUPS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
+     * Add a <code>GROUPS BETWEEN UNBOUNDED PRECEDING …</code> frame clause to
      * the window function.
      */
     @NotNull
@@ -289,7 +289,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
     WindowRowsAndStep<T> groupsBetweenUnboundedPreceding();
 
     /**
-     * Add a <code>GROUPS BETWEEN [number] PRECEDING ...</code> frame clause to
+     * Add a <code>GROUPS BETWEEN [number] PRECEDING …</code> frame clause to
      * the window function.
      */
     @NotNull
@@ -297,7 +297,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
     WindowRowsAndStep<T> groupsBetweenPreceding(int number);
 
     /**
-     * Add a <code>GROUPS BETWEEN CURRENT ROW ...</code> frame clause to
+     * Add a <code>GROUPS BETWEEN CURRENT ROW …</code> frame clause to
      * the window function.
      */
     @NotNull
@@ -305,7 +305,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
     WindowRowsAndStep<T> groupsBetweenCurrentRow();
 
     /**
-     * Add a <code>GROUPS BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
+     * Add a <code>GROUPS BETWEEN UNBOUNDED FOLLOWING …</code> frame clause to
      * the window function.
      */
     @NotNull
@@ -313,7 +313,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
     WindowRowsAndStep<T> groupsBetweenUnboundedFollowing();
 
     /**
-     * Add a <code>GROUPS BETWEEN [number] FOLLOWING ...</code> frame clause to
+     * Add a <code>GROUPS BETWEEN [number] FOLLOWING …</code> frame clause to
      * the window function.
      */
     @NotNull

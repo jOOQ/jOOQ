@@ -46,7 +46,7 @@ public enum ExecuteType {
     /**
      * A <code>SELECT</code> query is being executed.
      * <p>
-     * This may also apply to plain SQL <code>WITH .. SELECT</code> queries
+     * This may also apply to plain SQL <code>WITH … SELECT</code> queries
      * (selections with common table expressions), <code>FETCH</code> queries
      * and other types of vendor-specific queries.
      */

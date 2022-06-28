@@ -795,7 +795,7 @@ public interface AlterTableStep {
      * Some dialects (e.g. {@link SQLDialect#COCKROACHDB}) may not be able to
      * drop constraints by name. If users specify the constraint type
      * <em>and</em> the name, however, then the syntax can be emulated, e.g.
-     * using <code>DROP INDEX .. CASCADE</code>.
+     * using <code>DROP INDEX … CASCADE</code>.
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
@@ -808,7 +808,7 @@ public interface AlterTableStep {
      * Some dialects (e.g. {@link SQLDialect#COCKROACHDB}) may not be able to
      * drop constraints by name. If users specify the constraint type
      * <em>and</em> the name, however, then the syntax can be emulated, e.g.
-     * using <code>DROP INDEX .. CASCADE</code>.
+     * using <code>DROP INDEX … CASCADE</code>.
      *
      * @see DSL#constraint(Name)
      */
@@ -823,7 +823,7 @@ public interface AlterTableStep {
      * Some dialects (e.g. {@link SQLDialect#COCKROACHDB}) may not be able to
      * drop constraints by name. If users specify the constraint type
      * <em>and</em> the name, however, then the syntax can be emulated, e.g.
-     * using <code>DROP INDEX .. CASCADE</code>.
+     * using <code>DROP INDEX … CASCADE</code>.
      *
      * @see DSL#constraint(String)
      */

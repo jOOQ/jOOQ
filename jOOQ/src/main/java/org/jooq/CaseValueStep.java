@@ -140,20 +140,20 @@ public interface CaseValueStep<V> {
     <T> CaseWhenStep<V, T> when(Field<V> compareValue, Select<? extends Record1<T>> result);
 
     /**
-     * Create <code>WHEN .. THEN</code> expressions from a {@link Map}.
+     * Create <code>WHEN … THEN</code> expressions from a {@link Map}.
      * <p>
      * This will iterate over the map's entries to create individual
-     * <code>WHEN .. THEN</code> expressions for each map entry.
+     * <code>WHEN … THEN</code> expressions for each map entry.
      */
     @NotNull
     @Support
     <T> CaseWhenStep<V, T> mapValues(Map<V, T> values);
 
     /**
-     * Create <code>WHEN .. THEN</code> expressions from a {@link Map}.
+     * Create <code>WHEN … THEN</code> expressions from a {@link Map}.
      * <p>
      * This will iterate over the map's entries to create individual
-     * <code>WHEN .. THEN</code> expressions for each map entry.
+     * <code>WHEN … THEN</code> expressions for each map entry.
      */
     @NotNull
     @Support

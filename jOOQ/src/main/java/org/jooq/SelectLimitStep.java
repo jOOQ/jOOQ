@@ -233,7 +233,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * <p>
      * Offsets are 0-based as they describe the number of rows to <em>skip</em>.
      * <p>
-     * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
+     * If there is no <code>LIMIT … OFFSET</code> or <code>TOP</code> clause in
      * your RDBMS, or if your RDBMS does not natively support offsets, this is
      * emulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
@@ -247,7 +247,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * <p>
      * Offsets are 0-based as they describe the number of rows to <em>skip</em>.
      * <p>
-     * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
+     * If there is no <code>LIMIT … OFFSET</code> or <code>TOP</code> clause in
      * your RDBMS, or if your RDBMS does not natively support offsets, this is
      * emulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.

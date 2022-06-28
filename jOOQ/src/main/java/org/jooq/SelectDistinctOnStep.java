@@ -128,8 +128,8 @@ import org.jetbrains.annotations.NotNull;
 public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R> {
 
     /**
-     * Add the PostgreSQL-specific <code>ON(...)</code> clause to a
-     * <code>SELECT DISTINCT ON (...)</code> statement.
+     * Add the PostgreSQL-specific <code>ON(…)</code> clause to a
+     * <code>SELECT DISTINCT ON (…)</code> statement.
      * <p>
      * This implicitly enforces the <code>DISTINCT</code> clause, no matter if
      * it is added explicitly via the jOOQ API.
@@ -139,8 +139,8 @@ public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R
     SelectIntoStep<R> on(SelectFieldOrAsterisk... fields);
 
     /**
-     * Add the PostgreSQL-specific <code>ON(...)</code> clause to a
-     * <code>SELECT DISTINCT ON (...)</code> statement.
+     * Add the PostgreSQL-specific <code>ON(…)</code> clause to a
+     * <code>SELECT DISTINCT ON (…)</code> statement.
      * <p>
      * This implicitly enforces the <code>DISTINCT</code> clause, no matter if
      * it is added explicitly via the jOOQ API.
@@ -150,16 +150,16 @@ public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R
     SelectIntoStep<R> on(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
-     * Add the PostgreSQL-specific <code>ON(...)</code> clause to a
-     * <code>SELECT DISTINCT ON (...)</code> statement.
+     * Add the PostgreSQL-specific <code>ON(…)</code> clause to a
+     * <code>SELECT DISTINCT ON (…)</code> statement.
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     SelectIntoStep<R> distinctOn(SelectFieldOrAsterisk... fields);
 
     /**
-     * Add the PostgreSQL-specific <code>ON(...)</code> clause to a
-     * <code>SELECT DISTINCT ON (...)</code> statement.
+     * Add the PostgreSQL-specific <code>ON(…)</code> clause to a
+     * <code>SELECT DISTINCT ON (…)</code> statement.
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })

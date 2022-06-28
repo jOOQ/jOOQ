@@ -191,11 +191,11 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
      * </tr>
      * <tr>
      * <td>{@link SQLDialect#MYSQL} and {@link SQLDialect#MARIADB}</td>
-     * <td><pre><code>INSERT IGNORE INTO ..</code></pre></td>
+     * <td><pre><code>INSERT IGNORE INTO …</code></pre></td>
      * </tr>
      * <tr>
      * <td>{@link SQLDialect#POSTGRES_9_5} and {@link SQLDialect#SQLITE}</td>
-     * <td><pre><code>INSERT INTO .. ON CONFLICT DO NOTHING</code></pre></td>
+     * <td><pre><code>INSERT INTO … ON CONFLICT DO NOTHING</code></pre></td>
      * </tr>
      * <tr>
      * <td>{@link SQLDialect#DB2}<br>

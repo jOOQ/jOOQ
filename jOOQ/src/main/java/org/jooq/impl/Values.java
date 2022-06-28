@@ -89,7 +89,7 @@ import org.jooq.impl.QOM.UnmodifiableList;
 
 
 /**
- * An implementation for the <code>VALUES(...)</code> table constructor
+ * An implementation for the <code>VALUES(…)</code> table constructor
  *
  * @author Lukas Eder
  */

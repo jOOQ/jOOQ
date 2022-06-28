@@ -371,7 +371,7 @@ public interface InsertSetStep<R extends Record> {
      * Use a <code>SELECT</code> statement as the source of values for the
      * <code>INSERT</code> statement.
      * <p>
-     * This variant of the <code>INSERT .. SELECT</code> statement does not
+     * This variant of the <code>INSERT … SELECT</code> statement does not
      * allow for specifying a subset of the fields inserted into. It will insert
      * into all fields of the table specified in the <code>INTO</code> clause.
      * Use {@link DSLContext#insertInto(Table, Field...)} or

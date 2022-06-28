@@ -83,7 +83,7 @@ public abstract class CustomCondition extends AbstractCondition implements UEmpt
 
     /**
      * Subclasses must implement this method.
-     * <hr/>
+     * <hr>
      * {@inheritDoc}
      */
     @Override

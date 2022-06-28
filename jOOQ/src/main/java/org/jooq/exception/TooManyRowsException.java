@@ -49,7 +49,7 @@ import org.jooq.ResultQuery;
  * clients that the result was not what they expected, but this does not have
  * any effect on the outcome of the statement producing that result. For
  * instance, if calling {@link ResultQuery#fetchOne()} on a
- * <code>SELECT .. FOR UPDATE</code> query, or
+ * <code>SELECT … FOR UPDATE</code> query, or
  * {@link InsertResultStep#fetchOne()} on an <code>INSERT</code> statement, the
  * database change will still be executed: the rows will still be locked or
  * inserted.

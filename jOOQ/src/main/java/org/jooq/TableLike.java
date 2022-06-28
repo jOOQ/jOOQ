@@ -56,7 +56,7 @@ public interface TableLike<R extends Record> extends Fields, QueryPart {
      * The underlying table representation of this object.
      * <p>
      * This method is useful for things like
-     * <code>SELECT * FROM (SELECT * FROM x WHERE x.a = '1') WHERE ... </code>
+     * <code>SELECT * FROM (SELECT * FROM x WHERE x.a = '1') WHERE … </code>
      */
     @NotNull
     @Support

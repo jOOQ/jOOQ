@@ -195,7 +195,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      * This implemented differently for every dialect:
      * <ul>
      * <li>Firebird and Postgres have native support for
-     * <code>DELETE .. RETURNING</code> clauses</li>
+     * <code>DELETE … RETURNING</code> clauses</li>
      * </ul>
      *
      * @return The returned value as specified by any of the
@@ -218,7 +218,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      * This implemented differently for every dialect:
      * <ul>
      * <li>Firebird and Postgres have native support for
-     * <code>DELETE .. RETURNING</code> clauses</li>
+     * <code>DELETE … RETURNING</code> clauses</li>
      * </ul>
      *
      * @return The returned values as specified by any of the

@@ -106,7 +106,7 @@ public abstract class CustomTable<R extends TableRecord<R>> extends TableImpl<R>
 
     /**
      * Subclasses must implement this method
-     * <hr/>
+     * <hr>
      * {@inheritDoc}
      */
     @Override

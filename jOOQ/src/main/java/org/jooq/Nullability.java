@@ -70,7 +70,7 @@ public enum Nullability {
      * <li><code>CREATE TABLE</code>: The data type is implicitly nullable (or
      * explicitly, if the underlying database does not support implicit
      * nullability or defaults to implicit non-nullability).</li>
-     * <li><code>ALTER TABLE .. ALTER COLUMN .. SET TYPE</code>: The data type's
+     * <li><code>ALTER TABLE … ALTER COLUMN … SET TYPE</code>: The data type's
      * nullability will not be modified by jOOQ (but it may well be modified by
      * the database, e.g. {@link SQLDialect#MYSQL} or
      * {@link SQLDialect#SQLSERVER}).</li>

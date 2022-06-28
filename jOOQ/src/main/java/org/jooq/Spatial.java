@@ -47,7 +47,7 @@ import org.jetbrains.annotations.NotNull;
  * The wrapper represents spatial {@link #data()} in serialised string form
  * either as a well known text (WKT) or well known binary in hex format (WKB),
  * depending on your dialect's default behaviour. A
- * <code>CAST(NULL AS ...)</code> value is represented by a
+ * <code>CAST(NULL AS …)</code> value is represented by a
  * <code>null</code> reference of type {@link Spatial}, not as
  * <code>data() == null</code>. This is consistent with jOOQ's general way of
  * returning <code>NULL</code> from {@link Result} and {@link Record} methods.

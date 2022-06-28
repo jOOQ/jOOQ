@@ -97,7 +97,7 @@ public abstract class CustomQueryPart extends AbstractQueryPart implements UEmpt
 
     /**
      * Subclasses must implement this method.
-     * <hr/>
+     * <hr>
      * {@inheritDoc}
      */
     @Override

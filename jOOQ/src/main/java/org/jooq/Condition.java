@@ -50,9 +50,9 @@ import org.jetbrains.annotations.NotNull;
  * {@link Select} statement's <code>WHERE</code> clause, but can also appear in
  * (non-exhaustive list):
  * <ul>
- * <li><code>SELECT .. WHERE</code>, e.g. via
+ * <li><code>SELECT … WHERE</code>, e.g. via
  * {@link SelectWhereStep#where(Condition)}</li>
- * <li><code>SELECT .. HAVING</code>, e.g. via
+ * <li><code>SELECT … HAVING</code>, e.g. via
  * {@link SelectHavingStep#having(Condition)}</li>
  * <li>In a <code>CASE</code> expression, e.g. via {@link DSL#case_()} and
  * {@link Case#when(Condition, Field)}</li>

@@ -388,7 +388,7 @@ public enum Clause {
      * <ul>
      * <li>the <code>SELECT</code> keyword</li>
      * <li>Oracle style hints</li>
-     * <li>the T-SQL style <code>TOP .. START AT</code> clause</li>
+     * <li>the T-SQL style <code>TOP … START AT</code> clause</li>
      * <li>the select field list</li>
      * </ul>
      */

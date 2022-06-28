@@ -6193,7 +6193,7 @@ public interface DSLContext extends Scope {
      * Note that passing an empty collection conveniently produces
      * <code>SELECT *</code> semantics, i.e. it:
      * <ul>
-     * <li>Renders <code>SELECT tab1.col1, tab1.col2, ..., tabN.colN</code> if
+     * <li>Renders <code>SELECT tab1.col1, tab1.col2, …, tabN.colN</code> if
      * all columns are known</li>
      * <li>Renders <code>SELECT *</code> if not all columns are known, e.g. when
      * using plain SQL</li>
@@ -6228,7 +6228,7 @@ public interface DSLContext extends Scope {
      * Note that passing an empty collection conveniently produces
      * <code>SELECT *</code> semantics, i.e. it:
      * <ul>
-     * <li>Renders <code>SELECT tab1.col1, tab1.col2, ..., tabN.colN</code> if
+     * <li>Renders <code>SELECT tab1.col1, tab1.col2, …, tabN.colN</code> if
      * all columns are known</li>
      * <li>Renders <code>SELECT *</code> if not all columns are known, e.g. when
      * using plain SQL</li>
@@ -6926,7 +6926,7 @@ public interface DSLContext extends Scope {
      * Note that passing an empty collection conveniently produces
      * <code>SELECT DISTINCT *</code> semantics, i.e. it:
      * <ul>
-     * <li>Renders <code>SELECT DISTINCT tab1.col1, tab1.col2, ..., tabN.colN</code> if
+     * <li>Renders <code>SELECT DISTINCT tab1.col1, tab1.col2, …, tabN.colN</code> if
      * all columns are known</li>
      * <li>Renders <code>SELECT DISTINCT *</code> if not all columns are known, e.g. when
      * using plain SQL</li>
@@ -6960,7 +6960,7 @@ public interface DSLContext extends Scope {
      * Note that passing an empty collection conveniently produces
      * <code>SELECT DISTINCT *</code> semantics, i.e. it:
      * <ul>
-     * <li>Renders <code>SELECT DISTINCT tab1.col1, tab1.col2, ..., tabN.colN</code> if
+     * <li>Renders <code>SELECT DISTINCT tab1.col1, tab1.col2, …, tabN.colN</code> if
      * all columns are known</li>
      * <li>Renders <code>SELECT DISTINCT *</code> if not all columns are known, e.g. when
      * using plain SQL</li>
@@ -8600,7 +8600,7 @@ public interface DSLContext extends Scope {
      * <tr>
      * <td>PostgreSQL</td>
      * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <code>INSERT … ON CONFLICT DO UPDATE</code></td>
      * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
      * </tr>
      * <tr>
@@ -8750,7 +8750,7 @@ public interface DSLContext extends Scope {
      * (without bind values).
      * <p>
      * This is a convenience method for calling
-     * <pre><code>batch(query(queries[0]), query(queries[1]), ...)</code></pre>.
+     * <pre><code>batch(query(queries[0]), query(queries[1]), …)</code></pre>.
      *
      * @see #query(String)
      * @see #batch(Query...)
@@ -12858,7 +12858,7 @@ public interface DSLContext extends Scope {
      * </code></pre>
      *
      * @param query The wrapped query
-     * @return The <code>EXISTS(...)</code> result
+     * @return The <code>EXISTS(…)</code> result
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
@@ -13149,7 +13149,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13167,7 +13167,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13187,7 +13187,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13205,7 +13205,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13223,7 +13223,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13241,7 +13241,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13259,7 +13259,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13277,7 +13277,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13295,7 +13295,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13313,7 +13313,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13331,7 +13331,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13349,7 +13349,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13367,7 +13367,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13385,7 +13385,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13403,7 +13403,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13421,7 +13421,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13439,7 +13439,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13457,7 +13457,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13475,7 +13475,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13493,7 +13493,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13511,7 +13511,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13529,7 +13529,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13547,7 +13547,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -13565,7 +13565,7 @@ public interface DSLContext extends Scope {
 
     /**
      * Execute and return exactly one record for
-     * <pre><code>SELECT F1, F2, ..., FN</code></pre>.
+     * <pre><code>SELECT F1, F2, …, FN</code></pre>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -14055,7 +14055,7 @@ public interface DSLContext extends Scope {
      * Insert one record.
      * <p>
      * This executes something like the following statement:
-     * <pre><code>INSERT INTO [table] ... VALUES [record] </code></pre>
+     * <pre><code>INSERT INTO [table] … VALUES [record] </code></pre>
      * <p>
      * Unlike {@link UpdatableRecord#store()}, this does not change any of the
      * argument <code>record</code>'s internal "changed" flags, such that a

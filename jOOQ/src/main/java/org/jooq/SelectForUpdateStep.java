@@ -128,7 +128,7 @@ public interface SelectForUpdateStep<R extends Record> extends SelectForStep<R> 
      * Add a <code>FOR UPDATE</code> clause to the end of the query.
      * <p>
      * Note: not all SQL dialects allow for combining a <code>FOR UPDATE</code>
-     * clause with <code>LIMIT .. OFFSET</code>, or with <code>GROUP BY</code>.
+     * clause with <code>LIMIT … OFFSET</code>, or with <code>GROUP BY</code>.
      * This essentially includes {@link SQLDialect#INGRES} and
      * {@link SQLDialect#ORACLE}. These incompatibilities are not reflected by
      * the jOOQ API.

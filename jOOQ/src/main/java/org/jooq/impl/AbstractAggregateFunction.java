@@ -160,7 +160,7 @@ implements
     }
 
     /**
-     * Render <code>KEEP (DENSE_RANK [FIRST | LAST] ORDER BY {...})</code> clause
+     * Render <code>KEEP (DENSE_RANK [FIRST | LAST] ORDER BY {…})</code> clause
      */
     private final void acceptKeepDenseRankOrderByClause(Context<?> ctx) {
         if (!Tools.isEmpty(keepDenseRankOrderBy)) {
@@ -185,7 +185,7 @@ implements
     }
 
     /**
-     * Render <code>WITHIN GROUP (ORDER BY ..)</code> clause
+     * Render <code>WITHIN GROUP (ORDER BY …)</code> clause
      */
     final void acceptWithinGroupClause(Context<?> ctx) {
         if (withinGroupOrderBy != null) {

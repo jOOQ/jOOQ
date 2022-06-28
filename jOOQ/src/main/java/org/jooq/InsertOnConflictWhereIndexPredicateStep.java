@@ -89,7 +89,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
 
     /**
      * Add a <code>WHERE</code> clause to supply an index predicate to the
-     * <code>INSERT</code> statement's <code>ON CONFLICT ...</code> clause.
+     * <code>INSERT</code> statement's <code>ON CONFLICT …</code> clause.
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -97,7 +97,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
 
     /**
      * Add a <code>WHERE</code> clause to supply an index predicate to the
-     * <code>INSERT</code> statement's <code>ON CONFLICT ...</code> clause,
+     * <code>INSERT</code> statement's <code>ON CONFLICT …</code> clause,
      * connecting them with each other using {@link Operator#AND}.
      */
     @NotNull @CheckReturnValue
@@ -106,7 +106,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
 
     /**
      * Add a <code>WHERE</code> clause to supply an index predicate to the
-     * <code>INSERT</code> statement's <code>ON CONFLICT ...</code> clause,
+     * <code>INSERT</code> statement's <code>ON CONFLICT …</code> clause,
      * connecting them with each other using {@link Operator#AND}.
      */
     @NotNull @CheckReturnValue
@@ -115,7 +115,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
 
     /**
      * Add a <code>WHERE</code> clause to supply an index predicate to the
-     * <code>INSERT</code> statement's <code>ON CONFLICT ...</code> clause.
+     * <code>INSERT</code> statement's <code>ON CONFLICT …</code> clause.
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
@@ -123,7 +123,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
 
     /**
      * Add a <code>WHERE</code> clause to supply an index predicate to the
-     * <code>INSERT</code> statement's <code>ON CONFLICT ...</code> clause.
+     * <code>INSERT</code> statement's <code>ON CONFLICT …</code> clause.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -140,7 +140,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
 
     /**
      * Add a <code>WHERE</code> clause to supply an index predicate to the
-     * <code>INSERT</code> statement's <code>ON CONFLICT ...</code> clause.
+     * <code>INSERT</code> statement's <code>ON CONFLICT …</code> clause.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -157,7 +157,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
 
     /**
      * Add a <code>WHERE</code> clause to supply an index predicate to the
-     * <code>INSERT</code> statement's <code>ON CONFLICT ...</code> clause.
+     * <code>INSERT</code> statement's <code>ON CONFLICT …</code> clause.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -175,7 +175,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
 
     /**
      * Add a <code>WHERE</code> clause to supply an index predicate to the
-     * <code>INSERT</code> statement's <code>ON CONFLICT ...</code> clause.
+     * <code>INSERT</code> statement's <code>ON CONFLICT …</code> clause.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of

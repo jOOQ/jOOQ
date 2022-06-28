@@ -4943,7 +4943,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Specify the maximum number of rows returned by the underlying
      * {@link Statement}.
      * <p>
-     * This is not the same as setting a <code>LIMIT .. OFFSET</code> clause
+     * This is not the same as setting a <code>LIMIT … OFFSET</code> clause
      * onto the statement, where the result set is restricted within the
      * database.
      *

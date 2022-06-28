@@ -2372,7 +2372,7 @@ extends
     /**
      * Create a condition to check this field against several values.
      * <p>
-     * SQL: <code>this in (values...)</code>
+     * SQL: <code>this in (values…)</code>
      * <p>
      * Note that generating dynamic SQL with arbitrary-length <code>IN</code>
      * predicates can cause cursor cache contention in some databases that use
@@ -2395,7 +2395,7 @@ extends
      * Create a condition to check this field against several values from a
      * previous query.
      * <p>
-     * SQL: <code>this in (values...)</code>
+     * SQL: <code>this in (values…)</code>
      * <p>
      * Note that generating dynamic SQL with arbitrary-length <code>IN</code>
      * predicates can cause cursor cache contention in some databases that use
@@ -2417,7 +2417,7 @@ extends
     /**
      * Create a condition to check this field against several values.
      * <p>
-     * SQL: <code>this in (values...)</code>
+     * SQL: <code>this in (values…)</code>
      * <p>
      * Note that generating dynamic SQL with arbitrary-length <code>IN</code>
      * predicates can cause cursor cache contention in some databases that use
@@ -2439,7 +2439,7 @@ extends
     /**
      * Create a condition to check this field against several values.
      * <p>
-     * SQL: <code>this in (values...)</code>
+     * SQL: <code>this in (values…)</code>
      */
     @NotNull
     @Support
@@ -2452,7 +2452,7 @@ extends
      * condition will be <code>NULL</code> (or <code>false</code>, depending on
      * the dialect) as well. This is standard SQL behaviour.
      * <p>
-     * SQL: <code>this not in (values...)</code>
+     * SQL: <code>this not in (values…)</code>
      * <p>
      * Note that generating dynamic SQL with arbitrary-length
      * <code>NOT IN</code> predicates can cause cursor cache contention in some
@@ -2479,7 +2479,7 @@ extends
      * condition will be <code>NULL</code> (or <code>false</code>, depending on
      * the dialect) as well. This is standard SQL behaviour.
      * <p>
-     * SQL: <code>this in (values...)</code>
+     * SQL: <code>this in (values…)</code>
      * <p>
      * Note that generating dynamic SQL with arbitrary-length
      * <code>NOT IN</code> predicates can cause cursor cache contention in some
@@ -2505,7 +2505,7 @@ extends
      * condition will be <code>NULL</code> (or <code>false</code>, depending on
      * the dialect) as well. This is standard SQL behaviour.
      * <p>
-     * SQL: <code>this not in (values...)</code>
+     * SQL: <code>this not in (values…)</code>
      * <p>
      * Note that generating dynamic SQL with arbitrary-length
      * <code>NOT IN</code> predicates can cause cursor cache contention in some
@@ -2531,7 +2531,7 @@ extends
      * condition will be <code>NULL</code> (or <code>false</code>, depending on
      * the dialect) as well. This is standard SQL behaviour.
      * <p>
-     * SQL: <code>this not in (values...)</code>
+     * SQL: <code>this not in (values…)</code>
      */
     @NotNull
     @Support
@@ -2771,7 +2771,7 @@ extends
     // ------------------------------------------------------------------------
 
     /**
-     * <code>this = [quantifier] (Select&lt;?&gt; ...)</code>.
+     * <code>this = [quantifier] (Select&lt;?&gt; …)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -2785,7 +2785,7 @@ extends
     Condition equal(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this = [quantifier] (Select&lt;?&gt; ...)</code>.
+     * <code>this = [quantifier] (Select&lt;?&gt; …)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -2799,7 +2799,7 @@ extends
     Condition eq(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this != [quantifier] (Select&lt;?&gt; ...)</code>.
+     * <code>this != [quantifier] (Select&lt;?&gt; …)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -2813,7 +2813,7 @@ extends
     Condition notEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this != [quantifier] (Select&lt;?&gt; ...)</code>.
+     * <code>this != [quantifier] (Select&lt;?&gt; …)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -2827,7 +2827,7 @@ extends
     Condition ne(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this &lt; [quantifier] (Select&lt;?&gt; ...)</code>.
+     * <code>this &lt; [quantifier] (Select&lt;?&gt; …)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -2841,7 +2841,7 @@ extends
     Condition lessThan(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this &lt; [quantifier] (Select&lt;?&gt; ...)</code>.
+     * <code>this &lt; [quantifier] (Select&lt;?&gt; …)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -2855,7 +2855,7 @@ extends
     Condition lt(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this &lt;= [quantifier] (Select&lt;?&gt; ...)</code>.
+     * <code>this &lt;= [quantifier] (Select&lt;?&gt; …)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -2869,7 +2869,7 @@ extends
     Condition lessOrEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this &lt;= [quantifier] (Select&lt;?&gt; ...)</code>.
+     * <code>this &lt;= [quantifier] (Select&lt;?&gt; …)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -2883,7 +2883,7 @@ extends
     Condition le(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this &gt; [quantifier] (Select&lt;?&gt; ...)</code>.
+     * <code>this &gt; [quantifier] (Select&lt;?&gt; …)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -2897,7 +2897,7 @@ extends
     Condition greaterThan(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this &gt; [quantifier] (Select&lt;?&gt; ...)</code>.
+     * <code>this &gt; [quantifier] (Select&lt;?&gt; …)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -2911,7 +2911,7 @@ extends
     Condition gt(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this &gt;= [quantifier] (Select&lt;?&gt; ...)</code>.
+     * <code>this &gt;= [quantifier] (Select&lt;?&gt; …)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -2925,7 +2925,7 @@ extends
     Condition greaterOrEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this &gt;= [quantifier] (Select&lt;?&gt; ...)</code>.
+     * <code>this &gt;= [quantifier] (Select&lt;?&gt; …)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)

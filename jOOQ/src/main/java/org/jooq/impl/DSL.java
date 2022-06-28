@@ -3204,7 +3204,7 @@ public class DSL {
      * Note that passing an empty collection conveniently produces
      * <code>SELECT *</code> semantics, i.e. it:
      * <ul>
-     * <li>Renders <code>SELECT tab1.col1, tab1.col2, ..., tabN.colN</code> if
+     * <li>Renders <code>SELECT tab1.col1, tab1.col2, …, tabN.colN</code> if
      * all columns are known</li>
      * <li>Renders <code>SELECT *</code> if not all columns are known, e.g. when
      * using plain SQL</li>
@@ -3245,7 +3245,7 @@ public class DSL {
      * Note that passing an empty collection conveniently produces
      * <code>SELECT *</code> semantics, i.e. it:
      * <ul>
-     * <li>Renders <code>SELECT tab1.col1, tab1.col2, ..., tabN.colN</code> if
+     * <li>Renders <code>SELECT tab1.col1, tab1.col2, …, tabN.colN</code> if
      * all columns are known</li>
      * <li>Renders <code>SELECT *</code> if not all columns are known, e.g. when
      * using plain SQL</li>
@@ -4126,7 +4126,7 @@ public class DSL {
      * Note that passing an empty collection conveniently produces
      * <code>SELECT DISTINCT *</code> semantics, i.e. it:
      * <ul>
-     * <li>Renders <code>SELECT DISTINCT tab1.col1, tab1.col2, ..., tabN.colN</code> if
+     * <li>Renders <code>SELECT DISTINCT tab1.col1, tab1.col2, …, tabN.colN</code> if
      * all columns are known</li>
      * <li>Renders <code>SELECT DISTINCT *</code> if not all columns are known, e.g. when
      * using plain SQL</li>
@@ -4167,7 +4167,7 @@ public class DSL {
      * Note that passing an empty collection conveniently produces
      * <code>SELECT DISTINCT *</code> semantics, i.e. it:
      * <ul>
-     * <li>Renders <code>SELECT DISTINCT tab1.col1, tab1.col2, ..., tabN.colN</code> if
+     * <li>Renders <code>SELECT DISTINCT tab1.col1, tab1.col2, …, tabN.colN</code> if
      * all columns are known</li>
      * <li>Renders <code>SELECT DISTINCT *</code> if not all columns are known, e.g. when
      * using plain SQL</li>
@@ -11493,7 +11493,7 @@ public class DSL {
     }
 
     /**
-     * Create a <code>ROWS FROM (tables...)</code> expression.
+     * Create a <code>ROWS FROM (tables…)</code> expression.
      * <p>
      * Example: <pre><code>
      * SELECT *
@@ -14547,7 +14547,7 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
-     * Get the MySQL <code>FIELD(expr, expr1, expr2, ...)</code> function.
+     * Get the MySQL <code>FIELD(expr, expr1, expr2, …)</code> function.
      */
     @NotNull
     @Support
@@ -14557,7 +14557,7 @@ public class DSL {
     }
 
     /**
-     * Get the MySQL <code>FIELD(expr, expr1, expr2, ...)</code> function.
+     * Get the MySQL <code>FIELD(expr, expr1, expr2, …)</code> function.
      */
     @NotNull
     @Support
@@ -15114,7 +15114,7 @@ public class DSL {
 
     /**
      * Gets the Oracle-style
-     * <code>DECODE(expression, search, result[, search , result]... [, default])</code>
+     * <code>DECODE(expression, search, result[, search , result]… [, default])</code>
      * function.
      *
      * @see #decode(Field, Field, Field, Field[])
@@ -15127,7 +15127,7 @@ public class DSL {
 
     /**
      * Gets the Oracle-style
-     * <code>DECODE(expression, search, result[, search , result]... [, default])</code>
+     * <code>DECODE(expression, search, result[, search , result]… [, default])</code>
      * function.
      *
      * @see #decode(Field, Field, Field, Field[])
@@ -15140,7 +15140,7 @@ public class DSL {
 
     /**
      * Gets the Oracle-style
-     * <code>DECODE(expression, search, result[, search , result]... [, default])</code>
+     * <code>DECODE(expression, search, result[, search , result]… [, default])</code>
      * function.
      *
      * @see #decode(Field, Field, Field, Field[])
@@ -15153,7 +15153,7 @@ public class DSL {
 
     /**
      * Gets the Oracle-style
-     * <code>DECODE(expression, search, result[, search , result]... [, default])</code>
+     * <code>DECODE(expression, search, result[, search , result]… [, default])</code>
      * function.
      * <p>
      * Returns the dialect's equivalent to DECODE:
@@ -15493,7 +15493,7 @@ public class DSL {
     }
 
     /**
-     * The <code>COALESCE(value1, value2, ... , value n)</code> function.
+     * The <code>COALESCE(value1, value2, … , value n)</code> function.
      *
      * @see #coalesce(Field, Field...)
      */
@@ -15515,7 +15515,7 @@ public class DSL {
     }
 
     /**
-     * The <code>COALESCE(field1, field2, ... , field n)</code> function.
+     * The <code>COALESCE(field1, field2, … , field n)</code> function.
      */
     @NotNull
     @Support
@@ -22070,8 +22070,8 @@ public class DSL {
     /**
      * Get the concat(field[, field, ...]) function.
      * <p>
-     * This creates <code>fields[0] || fields[1] || ...</code> as an
-     * expression, or <code>concat(fields[0], fields[1], ...)</code>,
+     * This creates <code>fields[0] || fields[1] || …</code> as an
+     * expression, or <code>concat(fields[0], fields[1], …)</code>,
      * depending on the dialect.
      * <p>
      * If any of the given fields is not a {@link String} field, they are cast
@@ -30530,7 +30530,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -30585,7 +30585,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -30620,7 +30620,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -30655,7 +30655,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -30690,7 +30690,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -30725,7 +30725,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -30760,7 +30760,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -30795,7 +30795,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -30830,7 +30830,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -30865,7 +30865,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -30900,7 +30900,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -30935,7 +30935,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -30970,7 +30970,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -31005,7 +31005,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -31040,7 +31040,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -31075,7 +31075,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -31110,7 +31110,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -31145,7 +31145,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -31180,7 +31180,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -31215,7 +31215,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -31250,7 +31250,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -31285,7 +31285,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -31320,7 +31320,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT … UNION ALL …</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -31465,7 +31465,7 @@ public class DSL {
      * A <code>0</code> literal.
      * <p>
      * This is useful for mathematical functions or for
-     * <code>EXISTS (SELECT 0 ...)</code> or <code>PARTITION BY 0</code> clauses
+     * <code>EXISTS (SELECT 0 …)</code> or <code>PARTITION BY 0</code> clauses
      * and similar constructs. The <code>0</code> literal will not generate a
      * bind variable.
      *
@@ -31481,7 +31481,7 @@ public class DSL {
      * A <code>1</code> literal.
      * <p>
      * This is useful for mathematical functions or for
-     * <code>EXISTS (SELECT 1 ...)</code> or <code>PARTITION BY 1</code> clauses
+     * <code>EXISTS (SELECT 1 …)</code> or <code>PARTITION BY 1</code> clauses
      * and similar constructs. The <code>1</code> literal will not generate a
      * bind variable.
      *

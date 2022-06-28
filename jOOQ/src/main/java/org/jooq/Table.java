@@ -191,7 +191,7 @@ extends
      * locking is performed in a single <code>UPDATE</code> or
      * <code>DELETE</code> statement if tables provide a "version" or
      * "timestamp" field, or in two steps using an additional
-     * <code>SELECT .. FOR UPDATE</code> statement otherwise.
+     * <code>SELECT … FOR UPDATE</code> statement otherwise.
      * <p>
      * This method is overridden in generated subclasses if their corresponding
      * tables have been configured accordingly. A table may have both a
@@ -217,7 +217,7 @@ extends
      * locking is performed in a single <code>UPDATE</code> or
      * <code>DELETE</code> statement if tables provide a "version" or
      * "timestamp" field, or in two steps using an additional
-     * <code>SELECT .. FOR UPDATE</code> statement otherwise.
+     * <code>SELECT … FOR UPDATE</code> statement otherwise.
      * <p>
      * This method is overridden in generated subclasses if their corresponding
      * tables have been configured accordingly. A table may have both a
@@ -2909,8 +2909,8 @@ extends
      * Or in plain text: Find those TEXT values in C whose ID's correspond to
      * all ID's in B. Note that from the above SQL statement, it is immediately
      * clear that proper indexing is of the essence. Be sure to have indexes on
-     * all columns referenced from the <code>on(...)</code> and
-     * <code>returning(...)</code> clauses.
+     * all columns referenced from the <code>on(…)</code> and
+     * <code>returning(…)</code> clauses.
      * <p>
      * For more information about relational division and some nice, real-life
      * examples, see

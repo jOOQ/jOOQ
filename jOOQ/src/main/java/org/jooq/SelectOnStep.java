@@ -237,7 +237,7 @@ public interface SelectOnStep<R extends Record> {
     SelectOnConditionStep<R> onKey(ForeignKey<?, ?> key);
 
     /**
-     * Join the previous table with the <code>USING(column [, column...])</code>
+     * Join the previous table with the <code>USING(column [, column…])</code>
      * syntax.
      * <p>
      * If this is not supported by your RDBMS, then jOOQ will try to emulate
@@ -248,7 +248,7 @@ public interface SelectOnStep<R extends Record> {
     SelectJoinStep<R> using(Field<?>... fields);
 
     /**
-     * Join the previous table with the <code>USING(column [, column...])</code>
+     * Join the previous table with the <code>USING(column [, column…])</code>
      * syntax.
      * <p>
      * If this is not supported by your RDBMS, then jOOQ will try to emulate

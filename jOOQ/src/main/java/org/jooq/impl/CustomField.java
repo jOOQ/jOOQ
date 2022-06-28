@@ -99,7 +99,7 @@ public abstract class CustomField<T> extends AbstractField<T> implements UEmptyF
 
     /**
      * Subclasses must implement this method.
-     * <hr/>
+     * <hr>
      * {@inheritDoc}
      */
     @Override

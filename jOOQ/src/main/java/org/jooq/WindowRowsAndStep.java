@@ -81,7 +81,7 @@ import org.jetbrains.annotations.NotNull;
 public interface WindowRowsAndStep<T> {
 
     /**
-     * Add a <code>... AND UNBOUNDED PRECEDING</code> frame clause to the window
+     * Add a <code>… AND UNBOUNDED PRECEDING</code> frame clause to the window
      * function.
      */
     @NotNull
@@ -89,7 +89,7 @@ public interface WindowRowsAndStep<T> {
     WindowExcludeStep<T> andUnboundedPreceding();
 
     /**
-     * Add a <code>... AND [number] PRECEDING</code> frame clause to the window
+     * Add a <code>… AND [number] PRECEDING</code> frame clause to the window
      * function.
      */
     @NotNull
@@ -97,7 +97,7 @@ public interface WindowRowsAndStep<T> {
     WindowExcludeStep<T> andPreceding(int number);
 
     /**
-     * Add a <code>... AND CURRENT ROW</code> frame clause to the window
+     * Add a <code>… AND CURRENT ROW</code> frame clause to the window
      * function.
      */
     @NotNull
@@ -105,7 +105,7 @@ public interface WindowRowsAndStep<T> {
     WindowExcludeStep<T> andCurrentRow();
 
     /**
-     * Add a <code>... AND UNBOUNDED FOLLOWING</code> frame clause to the window
+     * Add a <code>… AND UNBOUNDED FOLLOWING</code> frame clause to the window
      * function.
      */
     @NotNull
@@ -113,7 +113,7 @@ public interface WindowRowsAndStep<T> {
     WindowExcludeStep<T> andUnboundedFollowing();
 
     /**
-     * Add a <code>... AND [number] FOLLOWING</code> frame clause to the window
+     * Add a <code>… AND [number] FOLLOWING</code> frame clause to the window
      * function.
      */
     @NotNull

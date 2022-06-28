@@ -178,7 +178,7 @@ import org.jetbrains.annotations.Nullable;
  * {@link UEmpty} or {@link UNotYetImplemented} subtype, and may not provide
  * access to contents via accessor methods.</li>
  * <li>Some child elements of a {@link QueryPart} may not yet be represented in
- * the model API, such as for example the <code>SELECT .. FOR UPDATE</code>
+ * the model API, such as for example the <code>SELECT … FOR UPDATE</code>
  * clause, as substantial changes to the internal model are still required
  * before being able to offer public access to it.</li>
  * </ul>

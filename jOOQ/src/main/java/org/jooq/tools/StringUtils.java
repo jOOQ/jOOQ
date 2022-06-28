@@ -615,7 +615,7 @@ public final class StringUtils {
      * <ul>
      *   <li>If <code>str</code> is less than <code>maxWidth</code> characters
      *       long, return it.</li>
-     *   <li>Else abbreviate it to <code>(substring(str, 0, max-3) + "...")</code>.</li>
+     *   <li>Else abbreviate it to <code>(substring(str, 0, max-3) + "…")</code>.</li>
      *   <li>If <code>maxWidth</code> is less than <code>4</code>, throw an
      *       <code>IllegalArgumentException</code>.</li>
      *   <li>In no case will it return a String of length greater than

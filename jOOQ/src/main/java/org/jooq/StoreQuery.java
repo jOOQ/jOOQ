@@ -143,7 +143,7 @@ public interface StoreQuery<R extends Record> extends RowCountQuery {
      * This implemented differently for every dialect:
      * <ul>
      * <li>Firebird and Postgres have native support for
-     * <code>INSERT .. RETURNING</code> and <code>UPDATE .. RETURNING</code>
+     * <code>INSERT … RETURNING</code> and <code>UPDATE … RETURNING</code>
      * clauses</li>
      * <li>HSQLDB, Oracle, and DB2 JDBC drivers allow for retrieving any table
      * column as "generated key" in one statement</li>
@@ -175,7 +175,7 @@ public interface StoreQuery<R extends Record> extends RowCountQuery {
      * This implemented differently for every dialect:
      * <ul>
      * <li>Firebird and Postgres have native support for
-     * <code>INSERT .. RETURNING</code> and <code>UPDATE .. RETURNING</code>
+     * <code>INSERT … RETURNING</code> and <code>UPDATE … RETURNING</code>
      * clauses</li>
      * <li>HSQLDB, Oracle, and DB2 JDBC drivers allow for retrieving any table
      * column as "generated key" in one statement</li>
@@ -216,7 +216,7 @@ public interface StoreQuery<R extends Record> extends RowCountQuery {
      * This implemented differently for every dialect:
      * <ul>
      * <li>Firebird and Postgres have native support for
-     * <code>INSERT .. RETURNING</code> and <code>UPDATE .. RETURNING</code>
+     * <code>INSERT … RETURNING</code> and <code>UPDATE … RETURNING</code>
      * clauses</li>
      * <li>HSQLDB, Oracle, and DB2 JDBC drivers allow for retrieving any table
      * column as "generated key" in one statement</li>

@@ -234,12 +234,17 @@ final class R2DBC {
         @Override
         public final void onError(Throwable t) {
             resultSubscriber.downstream.subscriber.onError(translate(resultSubscriber.downstream.sql(), t));
+            complete(true);
         }
 
         @Override
         public final void onComplete() {
+            complete(false);
+        }
+
+        private final void complete(boolean cancelled) {
             resultSubscriber.downstream.forwarders.remove(forwarderIndex);
-            resultSubscriber.complete();
+            resultSubscriber.complete(cancelled);
         }
     }
 
@@ -266,12 +271,12 @@ final class R2DBC {
         @Override
         public final void onComplete() {
             completed.set(true);
-            complete();
+            complete(false);
         }
 
-        final void complete() {
+        final void complete(boolean cancelled) {
             if (completed.get() && downstream.forwarders.isEmpty())
-                downstream.complete(false);
+                downstream.complete(cancelled);
         }
     }
 

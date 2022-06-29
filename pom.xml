@@ -143,12 +143,12 @@
             <dependency>
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-core</artifactId>
-                <version>3.4.7</version>
+                <version>3.4.19</version>
             </dependency>
             <dependency>
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-test</artifactId>
-                <version>3.4.7</version>
+                <version>3.4.19</version>
             </dependency>
 
             <!-- At the point of release 3.16, it seems not all drivers have been upgraded to 0.9.0.RELEASE yet -->

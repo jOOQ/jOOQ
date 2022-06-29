@@ -155,12 +155,12 @@
             <dependency>
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-core</artifactId>
-                <version>3.4.7</version>
+                <version>3.4.19</version>
             </dependency>
             <dependency>
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-test</artifactId>
-                <version>3.4.7</version>
+                <version>3.4.19</version>
             </dependency>
 
             <!-- Data binding -->
@@ -199,7 +199,7 @@
             <dependency>
                 <groupId>org.mariadb</groupId>
                 <artifactId>r2dbc-mariadb</artifactId>
-                <version>1.1.1-rc</version>
+                <version>1.1.2</version>
             </dependency>
             <dependency>
                 <groupId>io.r2dbc</groupId>

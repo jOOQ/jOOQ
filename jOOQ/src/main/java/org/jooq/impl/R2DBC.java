@@ -75,6 +75,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.jooq.BindingGetResultSetContext;
 import org.jooq.Configuration;
@@ -111,6 +112,7 @@ import io.r2dbc.spi.Connection;
 import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactoryOptions;
 import io.r2dbc.spi.ConnectionFactoryOptions.Builder;
+import io.r2dbc.spi.Result.RowSegment;
 import io.r2dbc.spi.Option;
 import io.r2dbc.spi.Result;
 import io.r2dbc.spi.Row;
@@ -244,7 +246,10 @@ final class R2DBC {
 
         private final void complete(boolean cancelled) {
             resultSubscriber.downstream.forwarders.remove(forwarderIndex);
-            resultSubscriber.complete(cancelled);
+
+            // [#13343] [#13669] Prevent premature completion
+            if (cancelled || resultSubscriber.downstream.forwarders.isEmpty() && resultSubscriber.completionRequested.get())
+                resultSubscriber.complete(cancelled);
         }
     }
 
@@ -252,10 +257,12 @@ final class R2DBC {
 
         final AbstractNonBlockingSubscription<? super T> downstream;
         final AtomicBoolean                              completed;
+        final AtomicBoolean                              completionRequested;
 
         AbstractResultSubscriber(AbstractNonBlockingSubscription<? super T> downstream) {
             this.downstream = downstream;
             this.completed = new AtomicBoolean();
+            this.completionRequested = new AtomicBoolean();
         }
 
         @Override
@@ -266,22 +273,26 @@ final class R2DBC {
         @Override
         public final void onError(Throwable t) {
             downstream.subscriber.onError(translate(downstream.sql(), t));
+            complete(true);
         }
 
         @Override
         public final void onComplete() {
-            completed.set(true);
             complete(false);
         }
 
         final void complete(boolean cancelled) {
-            if (completed.get() && downstream.forwarders.isEmpty())
+            completionRequested.set(true);
+
+            // [#13343] [#13669] Delay completion of the downstream in case this
+            //                   completion happens before each forwarder's
+            //                   completion.
+            if (downstream.forwarders.isEmpty() && !completed.getAndSet(true))
                 downstream.complete(cancelled);
         }
     }
 
     static final class RowCountSubscriber extends AbstractResultSubscriber<Integer> {
-
         RowCountSubscriber(AbstractNonBlockingSubscription<? super Integer> downstream) {
             super(downstream);
         }
@@ -337,8 +348,6 @@ final class R2DBC {
                         return record;
                     });
                 }
-
-                // TODO: More specific error handling
                 catch (Throwable t) {
                     onError(t);
                     return null;
@@ -430,8 +439,9 @@ final class R2DBC {
                 stmt.execute().subscribe(resultSubscriber.apply(query, downstream));
             }
 
-            // TODO: More specific error handling
+            // [#13343] Cancel the downstream in case of a rendering bug in jOOQ
             catch (Throwable t) {
+                downstream.cancel();
                 onError(t);
             }
         }
@@ -461,8 +471,9 @@ final class R2DBC {
                 b.execute().subscribe(new RowCountSubscriber(downstream));
             }
 
-            // TODO: More specific error handling
+            // [#13343] Cancel the downstream in case of a rendering bug in jOOQ
             catch (Throwable t) {
+                downstream.cancel();
                 onError(t);
             }
         }
@@ -505,7 +516,10 @@ final class R2DBC {
 
                 stmt.execute().subscribe(new RowCountSubscriber(downstream));
             }
+
+            // [#13343] Cancel the downstream in case of a rendering bug in jOOQ
             catch (Throwable t) {
+                downstream.cancel();
                 onError(t);
             }
         }
@@ -626,7 +640,7 @@ final class R2DBC {
         @Override
         final String sql() {
             String result = queryExecutionSubscriber.sql;
-            return result != null ? result : "" + queryExecutionSubscriber.query;
+            return result != null ? result : sql0(() -> "" + queryExecutionSubscriber.query);
         }
     }
 
@@ -653,7 +667,7 @@ final class R2DBC {
 
         @Override
         final String sql() {
-            return batch.toString();
+            return sql0(() -> batch.toString());
         }
     }
 
@@ -1398,5 +1412,17 @@ final class R2DBC {
 
     static final boolean isR2dbc(java.sql.Statement statement) {
         return statement instanceof R2DBCPreparedStatement;
+    }
+
+    /**
+     * [#13343] Prevent debug rendering errors from influencing control flow.
+     */
+    static final String sql0(Supplier<String> supplier) {
+        try {
+            return supplier.get();
+        }
+        catch (Throwable t) {
+            return "Error while rendering SQL: " + t.getMessage();
+        }
     }
 }

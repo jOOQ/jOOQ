@@ -15,4 +15,4 @@ Before asking your question, please check out the FAQ too: https://www.jooq.org/
 - Java:
 - Database (include vendor):
 - OS:
-- JDBC Driver (include name if inofficial driver):
+- JDBC Driver (include name if unofficial driver):

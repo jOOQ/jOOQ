@@ -127,6 +127,44 @@ public interface AttachableQueryPart extends Attachable, QueryPart {
     String getSQL(ParamType paramType);
 
     /**
+     * Retrieve the SQL code rendered by this Query for the given SQL dialect.
+     * Does not override the dialect of the default configuration.
+     * <p>
+     * [#1520] Note that the query actually being executed might not contain any
+     * bind variables, in case the number of bind variables exceeds your SQL
+     * dialect's maximum number of supported bind variables. This is not
+     * reflected by this method, which will only use the {@link Settings} to
+     * decide whether to render bind values.
+     * <p>
+     * See {@link #getSQL()} for more details.
+     *
+     * @param sqlDialect Which {@link SQLDialect} should be rendered.
+     * @return The generated SQL
+     */
+    @NotNull
+    String getSQL(SQLDialect sqlDialect);
+
+    /**
+     * Retrieve the SQL code rendered by this Query for the given SQL dialect.
+     * Does not override the dialect of the default configuration.
+     * <p>
+     * [#1520] Note that the query actually being executed might not contain any
+     * bind variables, in case the number of bind variables exceeds your SQL
+     * dialect's maximum number of supported bind variables. This is not
+     * reflected by this method, which will only use <code>paramType</code>
+     * argument to decide whether to render bind values.
+     * <p>
+     * See {@link #getSQL()} for more details.
+     *
+     * @param paramType How to render parameters. This overrides values in
+     *            {@link Settings#getStatementType()}
+     * @param sqlDialect Which {@link SQLDialect} should be rendered.
+     * @return The generated SQL
+     */
+    @NotNull
+    String getSQL(ParamType paramType, SQLDialect sqlDialect);
+
+    /**
      * Retrieve the bind values that will be bound by this Query.
      * <p>
      * Unlike {@link #getParams()}, which returns also inlined parameters, this

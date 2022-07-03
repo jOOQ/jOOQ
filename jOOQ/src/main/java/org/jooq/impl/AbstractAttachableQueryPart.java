@@ -46,6 +46,7 @@ import java.util.Map;
 import org.jooq.AttachableQueryPart;
 import org.jooq.Configuration;
 import org.jooq.Param;
+import org.jooq.SQLDialect;
 import org.jooq.conf.ParamType;
 
 import org.jetbrains.annotations.NotNull;
@@ -116,17 +117,37 @@ abstract class AbstractAttachableQueryPart extends AbstractQueryPart implements 
 
     @Override
     public final String getSQL(ParamType paramType) {
+        return getSQL(paramType, configuration());
+    }
+
+    @Override
+    public final String getSQL(SQLDialect sqlDialect) {
+        return getSQL(getParamType(Tools.settings(configuration())), sqlDialect);
+    }
+
+    @Override
+    public final String getSQL(ParamType paramType, SQLDialect sqlDialect) {
+        Configuration config = configuration();
+        if (config instanceof DefaultConfiguration) {
+            DefaultConfiguration defaultConfig = new DefaultConfiguration((DefaultConfiguration)config);
+            defaultConfig.setSQLDialect(sqlDialect);
+            config = defaultConfig;
+        }
+        return getSQL(paramType, config);
+    }
+
+    private String getSQL(ParamType paramType, Configuration configuration) {
         switch (paramType) {
             case INDEXED:
-                return create().render(this);
+                return create(configuration).render(this);
             case INLINED:
-                return create().renderInlined(this);
+                return create(configuration).renderInlined(this);
             case NAMED:
-                return create().renderNamedParams(this);
+                return create(configuration).renderNamedParams(this);
             case NAMED_OR_INLINED:
-                return create().renderNamedOrInlinedParams(this);
+                return create(configuration).renderNamedOrInlinedParams(this);
             case FORCE_INDEXED:
-                return create().renderContext().paramType(paramType).visit(this).render();
+                return create(configuration).renderContext().paramType(paramType).visit(this).render();
         }
 
         throw new IllegalArgumentException("ParamType not supported: " + paramType);

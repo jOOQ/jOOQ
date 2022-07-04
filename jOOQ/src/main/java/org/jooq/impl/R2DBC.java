@@ -248,7 +248,7 @@ final class R2DBC {
             resultSubscriber.downstream.forwarders.remove(forwarderIndex);
 
             // [#13343] [#13669] Prevent premature completion
-            if (cancelled || resultSubscriber.downstream.forwarders.isEmpty() && resultSubscriber.completionRequested.get())
+            if (resultSubscriber.downstream.forwarders.isEmpty() && resultSubscriber.completionRequested.get())
                 resultSubscriber.complete(cancelled);
         }
     }

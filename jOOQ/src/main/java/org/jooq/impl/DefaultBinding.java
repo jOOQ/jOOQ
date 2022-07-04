@@ -3694,8 +3694,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         void sqlBind0(BindingSQLContext<U> ctx, Record value) throws SQLException {
             Cast.renderCastIf(ctx.render(),
                 c -> super.sqlBind0(ctx, value),
-                c -> pgRenderRecordCast(ctx.render(), value),
-                () -> REQUIRE_RECORD_CAST.contains(ctx.dialect()) && value != null
+                c -> pgRenderRecordCast(ctx.render()),
+                () -> REQUIRE_RECORD_CAST.contains(ctx.dialect())
             );
         }
 
@@ -3708,7 +3708,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     else
                         ctx.render().sql("[UDT]");
                 },
-                c -> pgRenderRecordCast(ctx.render(), value),
+                c -> pgRenderRecordCast(ctx.render()),
                 () -> REQUIRE_RECORD_CAST.contains(ctx.dialect())
             );
         }
@@ -3828,11 +3828,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         // interfaces. Instead, a string representation of a UDT has to be parsed
         // -------------------------------------------------------------------------
 
-        static final void pgRenderRecordCast(Context<?> ctx, Record value) {
-            if (value instanceof UDTRecord<?> u)
-                ctx.visit(u.getUDT().getQualifiedName());
-            else if (value instanceof TableRecord<?> t)
-                ctx.visit(t.getTable().getQualifiedName());
+        final void pgRenderRecordCast(Context<?> ctx) {
+            ctx.visit(dataType.getQualifiedName());
         }
 
         @SuppressWarnings("unchecked")

@@ -850,11 +850,11 @@ final class Tools {
      */
     enum ExtendedDataKey implements DataKey {
 
-
-
-
-
-
+        /**
+         * [#4498] [#7552] The original INSERT ON DUPLICATE KEY UPDATE query
+         * that produced a MERGE statement for its emulation.
+         */
+        DATA_INSERT_ON_DUPLICATE_KEY_UPDATE,
 
 
 

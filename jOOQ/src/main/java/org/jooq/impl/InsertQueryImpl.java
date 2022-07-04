@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -344,66 +345,79 @@ implements
                 case POSTGRES:
                 case SQLITE:
                 case YUGABYTEDB: {
-                    ctx.data(DATA_MANDATORY_WHERE_CLAUSE, ctx.family() == SQLITE, c -> toSQLInsert(c, false));
 
-                    ctx.formatSeparator()
-                       .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
-                       .visit(K_ON_CONFLICT)
-                       .sql(' ');
-
-                    if (onConstraint != null ) {
-                        ctx.data(DATA_CONSTRAINT_REFERENCE, true);
-                        ctx.visit(K_ON_CONSTRAINT)
-                           .sql(' ')
-                           .visit(onConstraint);
-
-                        ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
+                    // [#7552] Dialects supporting both MERGE and ON CONFLICT should
+                    //         generate MERGE to emulate MySQL's ON DUPLICATE KEY UPDATE
+                    //         if there are multiple known unique constraints.
+                    if (ctx.dialect().supports(POSTGRES_15)
+                            && onConstraint == null
+                            && onConflict == null
+                            && returning.isEmpty()
+                            && table().getKeys().size() > 1) {
+                        acceptMerge(ctx);
                     }
                     else {
-                        if (onConflict != null && onConflict.size() > 0)
-                            ctx.sql('(').visit(onConflict).sql(')');
+                        ctx.data(DATA_MANDATORY_WHERE_CLAUSE, ctx.family() == SQLITE, c -> toSQLInsert(c, false));
 
-
-
-
-
-
-
-
-
-
-
-                        // [#13273] SQLite 3.38 has started supporting optional on conflict targets
-                        else if (SUPPORTS_OPTIONAL_DO_UPDATE_CONFLICT_TARGETS.contains(ctx.dialect()) && !onConflictWhere.hasWhere())
-                            ;
-                        // [#6462] There is no way to emulate MySQL's ON DUPLICATE KEY UPDATE
-                        //         where all UNIQUE keys are considered for conflicts. PostgreSQL
-                        //         doesn't allow ON CONFLICT DO UPDATE without either a conflict
-                        //         column list or a constraint reference.
-                        else if (table().getPrimaryKey() == null)
-                            ctx.sql("[unknown primary key]");
-                        else
-                            ctx.sql('(').qualify(false, c -> c.visit(new FieldsImpl<>(table().getPrimaryKey().getFields()))).sql(')');
-                    }
-
-                    acceptOnConflictWhere(ctx);
-
-                    ctx.formatSeparator()
-                       .visit(K_DO_UPDATE)
-                       .formatSeparator()
-                       .visit(K_SET)
-                       .formatIndentStart()
-                       .formatSeparator()
-                       .visit(updateMapComputedOnClientStored(ctx))
-                       .formatIndentEnd();
-
-                    if (condition.hasWhere())
                         ctx.formatSeparator()
-                           .visit(K_WHERE)
-                           .sql(' ')
-                           .visit(condition);
+                           .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
+                           .visit(K_ON_CONFLICT)
+                           .sql(' ');
 
-                    ctx.end(INSERT_ON_DUPLICATE_KEY_UPDATE);
+                        if (onConstraint != null ) {
+                            ctx.data(DATA_CONSTRAINT_REFERENCE, true);
+                            ctx.visit(K_ON_CONSTRAINT)
+                               .sql(' ')
+                               .visit(onConstraint);
+
+                            ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
+                        }
+                        else {
+                            if (onConflict != null && onConflict.size() > 0)
+                                ctx.sql('(').visit(onConflict).sql(')');
+
+
+
+
+
+
+
+
+
+
+
+                            // [#13273] SQLite 3.38 has started supporting optional on conflict targets
+                            else if (SUPPORTS_OPTIONAL_DO_UPDATE_CONFLICT_TARGETS.contains(ctx.dialect()) && !onConflictWhere.hasWhere())
+                                ;
+                            // [#6462] There is no way to emulate MySQL's ON DUPLICATE KEY UPDATE
+                            //         where all UNIQUE keys are considered for conflicts. PostgreSQL
+                            //         doesn't allow ON CONFLICT DO UPDATE without either a conflict
+                            //         column list or a constraint reference.
+                            else if (table().getPrimaryKey() == null)
+                                ctx.sql("[unknown primary key]");
+                            else
+                                ctx.sql('(').qualify(false, c -> c.visit(new FieldsImpl<>(table().getPrimaryKey().getFields()))).sql(')');
+                        }
+
+                        acceptOnConflictWhere(ctx);
+
+                        ctx.formatSeparator()
+                           .visit(K_DO_UPDATE)
+                           .formatSeparator()
+                           .visit(K_SET)
+                           .formatIndentStart()
+                           .formatSeparator()
+                           .visit(updateMapComputedOnClientStored(ctx))
+                           .formatIndentEnd();
+
+                        if (condition.hasWhere())
+                            ctx.formatSeparator()
+                               .visit(K_WHERE)
+                               .sql(' ')
+                               .visit(condition);
+
+                        ctx.end(INSERT_ON_DUPLICATE_KEY_UPDATE);
+                    }
 
                     break;
                 }
@@ -418,17 +432,11 @@ implements
 
 
 
-
-
-
-
-
-
                 case DERBY:
                 case FIREBIRD:
                 case H2:
                 case HSQLDB: {
-                    ctx.visit(toMerge(ctx));
+                    acceptMerge(ctx);
                     break;
                 }
 
@@ -505,7 +513,7 @@ implements
 
                 case FIREBIRD:
                 case IGNITE: {
-                    ctx.visit(toInsertSelect(ctx));
+                    acceptInsertSelect(ctx);
                     break;
                 }
 
@@ -578,7 +586,7 @@ implements
 
                 case H2:
                 case HSQLDB: {
-                    ctx.visit(toMerge(ctx));
+                    acceptMerge(ctx);
                     break;
                 }
 
@@ -586,9 +594,9 @@ implements
 
                     // [#10989] Cannot use MERGE with SELECT: [42XAL]: The source table of a MERGE statement must be a base table or table function.
                     if (select != null)
-                        ctx.visit(toInsertSelect(ctx));
+                        acceptInsertSelect(ctx);
                     else
-                        ctx.visit(toMerge(ctx));
+                        acceptMerge(ctx);
 
                     break;
                 }
@@ -794,7 +802,7 @@ implements
     }
 
     @SuppressWarnings("unchecked")
-    private final QueryPart toInsertSelect(Context<?> ctx) {
+    private final void acceptInsertSelect(Context<?> ctx) {
         List<List<? extends Field<?>>> keys = conflictingKeys(ctx);
 
         if (!keys.isEmpty()) {
@@ -838,16 +846,21 @@ implements
                 }
             }
 
-            return ctx.dsl()
+            ctx.visit(ctx.dsl()
                 .insertInto(table())
                 .columns(fields)
-                .select(selectFrom(rows.asTable("t")));
+                .select(selectFrom(rows.asTable("t")))
+            );
         }
         else
-            return DSL.sql("[ The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into tables without any known keys : " + table() + " ]");
+            ctx.sql("[ The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into tables without any known keys : " + table() + " ]");
     }
 
-    private final QueryPart toMerge(Context<?> ctx) {
+    private final void acceptMerge(Context<?> ctx) {
+        ctx.data(ExtendedDataKey.DATA_INSERT_ON_DUPLICATE_KEY_UPDATE, this, c -> acceptMerge0(c));
+    }
+
+    private final void acceptMerge0(Context<?> ctx) {
         if ((onConflict != null && onConflict.size() > 0)
             || onConstraint != null
             || !table().getKeys().isEmpty()) {
@@ -929,12 +942,13 @@ implements
                     : on.whenMatchedThenUpdate().set(um);
             }
 
-            return t != null
+            ctx.visit(t != null
                 ? notMatched.whenNotMatchedThenInsert(f).values(t.fields())
-                : notMatched.whenNotMatchedThenInsert(k).values(insertMaps.lastMap().entrySet().stream().filter(e -> k.contains(e.getKey())).map(Entry::getValue).collect(toList()));
+                : notMatched.whenNotMatchedThenInsert(k).values(insertMaps.lastMap().entrySet().stream().filter(e -> k.contains(e.getKey())).map(Entry::getValue).collect(toList()))
+            );
         }
         else
-            return DSL.sql("[ The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into non-updatable tables : " + table() + " ]");
+            ctx.sql("[ The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into non-updatable tables : " + table() + " ]");
     }
 
     private final FieldMapForUpdate updateMapComputedOnClientStored(Context<?> ctx) {

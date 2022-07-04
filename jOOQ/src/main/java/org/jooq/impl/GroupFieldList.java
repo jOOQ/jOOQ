@@ -133,6 +133,6 @@ final class GroupFieldList extends QueryPartList<GroupField> {
         if (pk == null || NO_SUPPORT_GROUP_FUNCTIONAL_DEP.contains(ctx.dialect()))
             return t.fields();
         else
-            return pk.getFieldsArray();
+            return t.fields(pk.getFieldsArray());
     }
 }

@@ -222,6 +222,11 @@
                 <artifactId>jooq-kotlin</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-kotlin-coroutines</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>

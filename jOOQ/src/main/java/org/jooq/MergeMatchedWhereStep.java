@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
@@ -112,7 +113,7 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeMatchedDel
      * </code></pre>
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeMatchedDeleteStep<R> where(Condition condition);
 
     /**
@@ -132,6 +133,6 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeMatchedDel
      * </code></pre>
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeMatchedDeleteStep<R> where(Field<Boolean> condition);
 }

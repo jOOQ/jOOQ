@@ -69,7 +69,7 @@ public interface MergeNotMatchedValuesStep6<R extends Record, T1, T2, T3, T4, T5
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeNotMatchedWhereStep<R> values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6);
 
     /**
@@ -77,7 +77,7 @@ public interface MergeNotMatchedValuesStep6<R extends Record, T1, T2, T3, T4, T5
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeNotMatchedWhereStep<R> values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6);
 
     /**
@@ -85,6 +85,6 @@ public interface MergeNotMatchedValuesStep6<R extends Record, T1, T2, T3, T4, T5
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeNotMatchedWhereStep<R> values(Collection<?> values);
 }

@@ -421,6 +421,18 @@ public enum SQLDialect {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The SQLite dialect family.
      * <p>

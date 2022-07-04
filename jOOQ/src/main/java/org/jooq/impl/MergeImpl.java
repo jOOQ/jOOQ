@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
@@ -261,7 +262,7 @@ implements
 
     private static final Set<SQLDialect> NO_SUPPORT_MULTI                        = SQLDialect.supportedBy(HSQLDB);
     private static final Set<SQLDialect> REQUIRE_NEGATION                        = SQLDialect.supportedBy(H2, HSQLDB);
-    private static final Set<SQLDialect> NO_SUPPORT_CONDITION_AFTER_NO_CONDITION = SQLDialect.supportedBy(FIREBIRD);
+    private static final Set<SQLDialect> NO_SUPPORT_CONDITION_AFTER_NO_CONDITION = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
 
     private final WithImpl               with;
     private final Table<R>               table;
@@ -1373,7 +1374,7 @@ implements
 
     private final void toPostgresInsertOnConflict(Context<?> ctx) {
         if (upsertSelect != null) {
-            ctx.sql("[ merge with select is not supported in PostgreSQL ]");
+            ctx.visit(getStandardMerge(true));
         }
         else {
             FieldsImpl<?> fields = new FieldsImpl<>(getUpsertFields());
@@ -1516,43 +1517,42 @@ implements
                 c2.visit(using);
         }));
 
+        switch (ctx.family()) {
+            case POSTGRES:
 
 
 
+{
+                if (using instanceof Select) {
+                    int hash = Internal.hash(using);
 
+                    ctx.sql(' ').visit(K_AS).sql(' ')
+                       .sql("dummy_")
+                       .sql(hash)
+                       .sql('(');
 
+                    String separator = "";
+                    for (Field<?> field : using.asTable("t").fields()) {
 
+                        // Some fields are unnamed
+                        // [#579] Correct this
+                        String name = StringUtils.isBlank(field.getName())
+                            ? "dummy_" + hash + "_" + Internal.hash(field)
+                            : field.getName();
 
+                        ctx.sql(separator).literal(name);
+                        separator = ", ";
+                    }
 
+                    ctx.sql(')');
+                }
 
+                else if (usingDual)
+                    ctx.sql(" t");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                break;
+            }
+        }
 
         boolean onParentheses = false;
         ctx.end(MERGE_USING)

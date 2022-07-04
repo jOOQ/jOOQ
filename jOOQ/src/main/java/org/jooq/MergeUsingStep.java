@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import java.util.Collection;
@@ -111,7 +112,7 @@ public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
      * ordinary table references, not with derived tables.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeOnStep<R> using(TableLike<?> table);
 
     /**
@@ -123,7 +124,7 @@ public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
      * Server, where derived tables need to be aliased.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeOnStep<R> usingDual();
 
     /**

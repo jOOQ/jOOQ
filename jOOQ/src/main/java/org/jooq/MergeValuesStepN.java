@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import java.util.Collection;
@@ -112,6 +113,6 @@ public interface MergeValuesStepN<R extends Record> {
      * {@link DSLContext#mergeInto(Table, Collection)}
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Merge<R> select(Select<?> select);
 }

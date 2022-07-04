@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
@@ -97,7 +98,7 @@ public interface MergeMatchedThenStep<R extends Record> {
      * <code>MERGE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeMatchedSetStep<R> thenUpdate();
 
     /**
@@ -105,6 +106,6 @@ public interface MergeMatchedThenStep<R extends Record> {
      * <code>MERGE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeMatchedStep<R> thenDelete();
 }

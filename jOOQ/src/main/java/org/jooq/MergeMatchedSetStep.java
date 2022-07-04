@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
@@ -101,7 +102,7 @@ public interface MergeMatchedSetStep<R extends Record> {
      * <code>WHEN MATCHED</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     <T> MergeMatchedSetMoreStep<R> set(Field<T> field, T value);
 
     /**
@@ -109,7 +110,7 @@ public interface MergeMatchedSetStep<R extends Record> {
      * <code>WHEN MATCHED</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     <T> MergeMatchedSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
@@ -117,7 +118,7 @@ public interface MergeMatchedSetStep<R extends Record> {
      * <code>WHEN MATCHED</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     <T> MergeMatchedSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
 
     /**
@@ -129,7 +130,7 @@ public interface MergeMatchedSetStep<R extends Record> {
      * <code>(T)</code>.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     <T> MergeMatchedSetMoreStep<R> setNull(Field<T> field);
 
     /**
@@ -144,7 +145,7 @@ public interface MergeMatchedSetStep<R extends Record> {
      * corresponding field's type.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeMatchedSetMoreStep<R> set(Map<?, ?> map);
 
     /**
@@ -159,6 +160,6 @@ public interface MergeMatchedSetStep<R extends Record> {
      * @see #set(Map)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeMatchedSetMoreStep<R> set(Record record);
 }

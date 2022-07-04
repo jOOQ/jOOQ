@@ -103,6 +103,6 @@ public interface MergeValuesStep1<R extends Record, T1> {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Merge<R> select(Select<? extends Record1<T1>> select);
 }

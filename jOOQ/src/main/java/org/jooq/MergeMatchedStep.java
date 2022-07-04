@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
@@ -101,7 +102,7 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
      * <code>MERGE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeMatchedSetStep<R> whenMatchedThenUpdate();
 
     /**
@@ -109,7 +110,7 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
      * <code>MERGE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeMatchedStep<R> whenMatchedThenDelete();
 
     /**
@@ -117,7 +118,7 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
      * <code>MERGE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeMatchedThenStep<R> whenMatchedAnd(Condition condition);
 
     /**
@@ -125,7 +126,7 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
      * <code>MERGE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeMatchedThenStep<R> whenMatchedAnd(Field<Boolean> condition);
 
     /**
@@ -142,7 +143,7 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
      */
     @PlainSQL
     @NotNull @CheckReturnValue
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeMatchedThenStep<R> whenMatchedAnd(SQL sql);
 
     /**
@@ -159,7 +160,7 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
      */
     @PlainSQL
     @NotNull @CheckReturnValue
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeMatchedThenStep<R> whenMatchedAnd(String sql);
 
     /**
@@ -177,7 +178,7 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
      */
     @PlainSQL
     @NotNull @CheckReturnValue
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeMatchedThenStep<R> whenMatchedAnd(String sql, Object... bindings);
 
     /**
@@ -195,7 +196,7 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
      */
     @PlainSQL
     @NotNull @CheckReturnValue
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeMatchedThenStep<R> whenMatchedAnd(String sql, QueryPart... parts);
 
 }

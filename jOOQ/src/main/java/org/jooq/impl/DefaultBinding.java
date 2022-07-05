@@ -156,6 +156,7 @@ import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.enums;
 // ...
 import static org.jooq.impl.Tools.getMappedUDTName;
+import static org.jooq.impl.Tools.getRecordQualifier;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.needsBackslashEscaping;
@@ -241,6 +242,7 @@ import org.jooq.Param;
 // ...
 import org.jooq.QualifiedRecord;
 import org.jooq.Record;
+import org.jooq.RecordQualifier;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Row;
@@ -575,8 +577,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (QualifiedRecord.class.isAssignableFrom(type)) {
                 Class<QualifiedRecord<?>> t = (Class<QualifiedRecord<?>>) type;
                 result.put(getMappedUDTName(scope, t), t);
-                QualifiedRecord<?> r = t.getDeclaredConstructor().newInstance();
-                for (Field<?> field : r.getQualifier().fields())
+                for (Field<?> field : getRecordQualifier(t).fields())
                     typeMap(field.getType(), scope, result);
             }
 
@@ -3829,7 +3830,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         // -------------------------------------------------------------------------
 
         final void pgRenderRecordCast(Context<?> ctx) {
-            ctx.visit(dataType.getQualifiedName());
+            if (dataType instanceof UDTDataType<?> u)
+                ctx.visit(u.udt);
+            else if (dataType instanceof TableDataType<?> t)
+                ctx.visit(t.table);
+            else if (dataType.isUDT())
+                ctx.visit(getRecordQualifier(dataType));
+            else
+                ctx.visit(dataType.getQualifiedName());
         }
 
         @SuppressWarnings("unchecked")

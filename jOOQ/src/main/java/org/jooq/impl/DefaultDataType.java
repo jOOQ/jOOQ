@@ -84,6 +84,7 @@ import static org.jooq.impl.SQLDataType.TINYINT;
 import static org.jooq.impl.SQLDataType.VARBINARY;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
+import static org.jooq.impl.Tools.getRecordQualifier;
 import static org.jooq.tools.reflect.Reflect.wrapper;
 
 import java.math.BigDecimal;
@@ -802,7 +803,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
                     // [#7174] PostgreSQL table records can be function argument types
                     if (QualifiedRecord.class.isAssignableFrom(type))
-                        return (DataType<T>) ((QualifiedRecord<?>) type.getDeclaredConstructor().newInstance()).getQualifier().getDataType();
+                        return (DataType<T>) getRecordQualifier(type).getDataType();
 
 
 

@@ -159,10 +159,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        Schema mappedSchema = getMappedSchema(ctx, getSchema());
-
-        if (mappedSchema != null && !"".equals(mappedSchema.getName()))
-            ctx.visit(mappedSchema).sql('.');
+        QualifiedImpl.acceptMappedSchemaPrefix(ctx, getSchema());
 
 
 

@@ -410,12 +410,7 @@ implements
 
 
         )) {
-            Schema mappedSchema = Tools.getMappedSchema(ctx, getSchema());
-
-            if (mappedSchema != null && !"".equals(mappedSchema.getName())) {
-                ctx.visit(mappedSchema);
-                ctx.sql('.');
-            }
+            QualifiedImpl.acceptMappedSchemaPrefix(ctx, getSchema());
         }
 
         ctx.visit(getMappedTable(ctx, this).getUnqualifiedName());

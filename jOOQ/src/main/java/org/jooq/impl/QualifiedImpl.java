@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.impl.Tools.getMappedSchema;
 
 import org.jooq.Catalog;
@@ -63,13 +64,16 @@ final class QualifiedImpl extends AbstractNamed implements Qualified, UTransient
     // XXX: QueryPart
     // -------------------------------------------------------------------------
 
-    @Override
-    public final void accept(Context<?> ctx) {
-        Schema mappedSchema = getMappedSchema(ctx, getSchema());
+    static final void acceptMappedSchemaPrefix(Context<?> ctx, Schema schema) {
+        Schema mappedSchema = getMappedSchema(ctx, schema);
 
         if (mappedSchema != null && !"".equals(mappedSchema.getName()))
             ctx.visit(mappedSchema).sql('.');
+    }
 
+    @Override
+    public final void accept(Context<?> ctx) {
+        acceptMappedSchemaPrefix(ctx, getSchema());
         ctx.visit(getUnqualifiedName());
     }
 

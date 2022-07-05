@@ -343,11 +343,7 @@ implements
 
 
 
-        Schema mappedSchema = getMappedSchema(ctx, schema);
-
-        if (mappedSchema != null && !"".equals(mappedSchema.getName()) && ctx.family() != CUBRID)
-            ctx.visit(mappedSchema)
-               .sql('.');
+        QualifiedImpl.acceptMappedSchemaPrefix(ctx, getSchema());
 
         if (nameIsPlainSQL)
             ctx.sql(getName());

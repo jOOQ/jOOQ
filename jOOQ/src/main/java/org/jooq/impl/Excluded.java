@@ -116,7 +116,6 @@ implements
             }
 
             default:
-
                 // [#7552] When emulating INSERT .. ON DUPLICATE KEY UPDATE using
                 //         MERGE, the EXCLUDED pseudo table is called "t", instead
                 ctx.visit(ctx.data(ExtendedDataKey.DATA_INSERT_ON_DUPLICATE_KEY_UPDATE) != null
@@ -124,7 +123,6 @@ implements
                         : N_EXCLUDED)
                    .sql('.')
                    .qualify(false, c -> c.visit(field));
-
                 break;
         }
     }

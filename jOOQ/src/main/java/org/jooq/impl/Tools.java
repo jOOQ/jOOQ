@@ -3569,6 +3569,19 @@ final class Tools {
 
 
 
+    static final RecordQualifier<?> getRecordQualifier(DataType<?> t) {
+        return getRecordQualifier(t.getType());
+    }
+
+    static final RecordQualifier<?> getRecordQualifier(Class<?> t) {
+        try {
+            return ((QualifiedRecord<?>) t.getDeclaredConstructor().newInstance()).getQualifier();
+        }
+        catch (Exception e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
     static final Configuration CONFIG          = new DefaultConfiguration();
     static final Configuration CONFIG_UNQUOTED = new DefaultConfiguration();
 

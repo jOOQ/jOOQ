@@ -46,6 +46,8 @@ import org.jooq.Table;
  */
 final class TableDataType<R extends Record> extends DefaultDataType<R> {
 
+    final Table<R> table;
+
     @SuppressWarnings("unchecked")
     TableDataType(Table<R> table) {
         super(
@@ -53,5 +55,7 @@ final class TableDataType<R extends Record> extends DefaultDataType<R> {
             (Class<R>) table.getRecordType(),
             new LazyName(() -> lazyName(table::getSchema, table::getUnqualifiedName))
         );
+
+        this.table = table;
     }
 }

@@ -156,6 +156,7 @@ import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.enums;
 // ...
 import static org.jooq.impl.Tools.getMappedUDTName;
+import static org.jooq.impl.Tools.getRecordQualifier;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.needsBackslashEscaping;
@@ -241,6 +242,7 @@ import org.jooq.Param;
 // ...
 import org.jooq.QualifiedRecord;
 import org.jooq.Record;
+import org.jooq.RecordQualifier;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Row;
@@ -575,8 +577,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (QualifiedRecord.class.isAssignableFrom(type)) {
                 Class<QualifiedRecord<?>> t = (Class<QualifiedRecord<?>>) type;
                 result.put(getMappedUDTName(scope, t), t);
-                QualifiedRecord<?> r = t.getDeclaredConstructor().newInstance();
-                for (Field<?> field : r.getQualifier().fields())
+                for (Field<?> field : getRecordQualifier(t).fields())
                     typeMap(field.getType(), scope, result);
             }
 
@@ -3694,7 +3695,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         void sqlBind0(BindingSQLContext<U> ctx, Record value) throws SQLException {
             Cast.renderCastIf(ctx.render(),
                 c -> super.sqlBind0(ctx, value),
-                c -> pgRenderRecordCast(ctx.render(), value),
+                c -> pgRenderRecordCast(ctx.render()),
                 () -> REQUIRE_RECORD_CAST.contains(ctx.dialect()) && value != null
             );
         }
@@ -3708,7 +3709,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     else
                         ctx.render().sql("[UDT]");
                 },
-                c -> pgRenderRecordCast(ctx.render(), value),
+                c -> pgRenderRecordCast(ctx.render()),
                 () -> REQUIRE_RECORD_CAST.contains(ctx.dialect())
             );
         }
@@ -3828,11 +3829,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         // interfaces. Instead, a string representation of a UDT has to be parsed
         // -------------------------------------------------------------------------
 
-        static final void pgRenderRecordCast(Context<?> ctx, Record value) {
-            if (value instanceof UDTRecord<?> u)
-                ctx.visit(u.getUDT().getQualifiedName());
-            else if (value instanceof TableRecord<?> t)
-                ctx.visit(t.getTable().getQualifiedName());
+        final void pgRenderRecordCast(Context<?> ctx) {
+            if (dataType instanceof UDTDataType<?> u)
+                ctx.visit(u.udt);
+            else if (dataType instanceof TableDataType<?> t)
+                ctx.visit(t.table);
+            else if (dataType.isUDT())
+                ctx.visit(getRecordQualifier(dataType));
+            else
+                ctx.visit(dataType.getQualifiedName());
         }
 
         @SuppressWarnings("unchecked")

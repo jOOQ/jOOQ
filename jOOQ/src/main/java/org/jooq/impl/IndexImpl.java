@@ -99,9 +99,9 @@ class IndexImpl extends AbstractNamed implements Index, UNotYetImplemented {
         if (NO_SUPPORT_INDEX_QUALIFICATION.contains(ctx.dialect()))
             ctx.visit(getUnqualifiedName());
         else if (getTable() == null)
-            ctx.visit(getQualifiedName());
+            ctx.visit(new QualifiedImpl(getQualifiedName()));
         else
-            ctx.visit(name(getTable().getQualifiedName().qualifier(), getUnqualifiedName()));
+            ctx.visit(new QualifiedImpl(name(getTable().getQualifiedName().qualifier(), getUnqualifiedName())));
     }
 
     @Override

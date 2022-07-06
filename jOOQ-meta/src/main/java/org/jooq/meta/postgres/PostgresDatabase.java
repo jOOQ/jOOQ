@@ -992,9 +992,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             // [#3375] Exclude table-valued functions as they're already generated as tables
             .join(PG_NAMESPACE).on(PG_NAMESPACE.NSPNAME.eq(r1.SPECIFIC_SCHEMA))
             .join(PG_PROC).on(PG_PROC.PRONAMESPACE.eq(oid(PG_NAMESPACE)))
-                          .and(is12()
-                              ? condition("nameconcatoid({0}, {1}) = {2}", PG_PROC.PRONAME, oid(PG_PROC), r1.SPECIFIC_NAME)
-                              : PG_PROC.PRONAME.concat("_").concat(oid(PG_PROC)).eq(r1.SPECIFIC_NAME))
+                          .and(nameconcatoid(r1))
             .where(r1.ROUTINE_SCHEMA.in(getInputSchemata()))
             .and(tableValuedFunctions()
                     ? condition(not(PG_PROC.PRORETSET))
@@ -1007,6 +1005,12 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 r1.ROUTINE_NAME.asc(),
                 field(name("overload")).asc())
             .collect(mapping(r -> new PostgresRoutineDefinition(this, r), Collectors.<RoutineDefinition>toList()));
+    }
+
+    protected Condition nameconcatoid(Routines r1) {
+        return is12()
+              ? condition("nameconcatoid({0}, {1}) = {2}", PG_PROC.PRONAME, oid(PG_PROC), r1.SPECIFIC_NAME)
+              : PG_PROC.PRONAME.concat("_").concat(oid(PG_PROC)).eq(r1.SPECIFIC_NAME);
     }
 
     @Override

@@ -61,6 +61,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.name;
@@ -131,6 +132,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+import org.jooq.conf.ParamType;
 import org.jooq.conf.WriteIfReadonly;
 import org.jooq.impl.FieldMapForUpdate.SetClause;
 import org.jooq.impl.QOM.UNotYetImplemented;
@@ -628,11 +630,17 @@ implements
         if (onConflictWhere.hasWhere())
 
             // [#11732] [#13660] Avoid qualification, which wasn't supported in older PG versions
-            ctx.qualify(false, c -> c
-                    .formatSeparator()
-                    .visit(K_WHERE)
-                    .sql(' ')
-                    .visit(onConflictWhere.getWhere()));
+            // [#12531]          In this very particular case, bind values aren't desirable to avoid
+            //                   mismatches with index specifications
+            ctx.paramType(INLINED,
+                c1 -> c1.qualify(false,
+                    c2 -> c2
+                        .formatSeparator()
+                        .visit(K_WHERE)
+                        .sql(' ')
+                        .visit(onConflictWhere.getWhere())
+                )
+            );
     }
 
     @Override

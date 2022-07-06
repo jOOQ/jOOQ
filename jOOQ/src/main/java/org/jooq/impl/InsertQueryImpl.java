@@ -349,7 +349,7 @@ implements
                     // [#7552] Dialects supporting both MERGE and ON CONFLICT should
                     //         generate MERGE to emulate MySQL's ON DUPLICATE KEY UPDATE
                     //         if there are multiple known unique constraints.
-                    if (ctx.dialect().supports(POSTGRES_15)
+                    if (ctx.dialect().supports(POSTGRES)
                             && onConstraint == null
                             && onConflict == null
                             && returning.isEmpty()

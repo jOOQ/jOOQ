@@ -154,6 +154,8 @@ public final class ParserCLI {
             settings.setTransformRownum(a.transformQualify);
         if (a.transformRownum != null)
             settings.setTransformRownum(a.transformRownum);
+        if (a.transformGroupByColumnIndex != null)
+            settings.setTransformGroupByColumnIndex(a.transformGroupByColumnIndex);
     }
 
     private static final <E extends Enum<E>> void parseInteractive(
@@ -315,6 +317,8 @@ public final class ParserCLI {
                                 parseInteractive(Transformation.class, arg, e -> { a.transformQualify = e; }, () -> displayTransformQualify(a));
                             else if ("transform-rownum".equals(flag))
                                 parseInteractive(Transformation.class, arg, e -> { a.transformRownum = e; }, () -> displayTransformRownum(a));
+                            else if ("transform-group-by-column-index".equals(flag))
+                                parseInteractive(Transformation.class, arg, e -> { a.transformGroupByColumnIndex = e; }, () -> displayTransformGroupByColumnIndex(a));
                             else if ("transform-table-lists-to-ansi-join".equals(flag)) {
                                 if (arg != null)
                                     a.transformTableListsToAnsiJoin = Boolean.parseBoolean(arg.toLowerCase());
@@ -484,6 +488,10 @@ public final class ParserCLI {
         System.out.println("Transform ROWNUM                   : " + a.transformRownum);
     }
 
+    private static void displayTransformGroupByColumnIndex(Args a) {
+        System.out.println("Transform GROUP BY <column index>  : " + a.transformGroupByColumnIndex);
+    }
+
     private static void displayTransformTableListsToAnsiJoin(Args a) {
         System.out.println("Transform table lists to ANSI join : " + a.transformTableListsToAnsiJoin);
     }
@@ -604,6 +612,8 @@ public final class ParserCLI {
                     result.transformQualify = parse((Class<Transformation>) (enumArgument = Transformation.class), args[++i]);
                 else if ("--transform-rownum".equals(args[i]))
                     result.transformRownum = parse((Class<Transformation>) (enumArgument = Transformation.class), args[++i]);
+                else if ("--transform-group-by-column-index".equals(args[i]))
+                    result.transformGroupByColumnIndex = parse((Class<Transformation>) (enumArgument = Transformation.class), args[++i]);
                 else if ("--transform-table-lists-to-ansi-join".equals(args[i]))
                     result.transformTableListsToAnsiJoin = true;
                 else if ("--transform-unneeded-arithmetic".equals(args[i]))
@@ -673,6 +683,7 @@ public final class ParserCLI {
         System.out.println("  --transform-ansi-join-to-table-lists");
         System.out.println("  --transform-qualify                             <Transformation>");
         System.out.println("  --transform-rownum                              <Transformation>");
+        System.out.println("  --transform-group-by-column-index               <Transformation>");
         System.out.println("  --transform-table-lists-to-ansi-join");
         System.out.println("  --transform-unneeded-arithmetic                 <TransformUnneededArithmeticExpressions>");
         System.out.println("");
@@ -713,6 +724,7 @@ public final class ParserCLI {
         System.out.println("  /transform-ansi-join-to-table-lists            <boolean>");
         System.out.println("  /transform-qualify                             <Transformation>");
         System.out.println("  /transform-rownum                              <Transformation>");
+        System.out.println("  /transform-group-by-column-index               <Transformation>");
         System.out.println("  /transform-table-lists-to-ansi-join            <boolean>");
         System.out.println("  /transform-unneeded-arithmetic                 <TransformUnneededArithmeticExpressions>");
         System.out.println("");
@@ -755,6 +767,7 @@ public final class ParserCLI {
         Boolean                                transformAnsiJoinToTableLists;
         Transformation                         transformQualify;
         Transformation                         transformRownum;
+        Transformation                         transformGroupByColumnIndex;
         Boolean                                transformTableListsToAnsiJoin;
         TransformUnneededArithmeticExpressions transformUnneededArithmetic            = TransformUnneededArithmeticExpressions.NEVER;
     }

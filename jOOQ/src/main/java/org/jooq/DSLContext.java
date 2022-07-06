@@ -45,6 +45,7 @@ package org.jooq;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -115,11 +116,11 @@ import org.jooq.tools.jdbc.MockDataProvider;
 import org.jooq.tools.jdbc.MockRunnable;
 import org.jooq.util.xml.jaxb.InformationSchema;
 
+import org.jetbrains.annotations.ApiStatus.Experimental;
+import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.ApiStatus.Experimental;
-import org.jetbrains.annotations.ApiStatus.Internal;
 
 import io.r2dbc.spi.ConnectionFactory;
 

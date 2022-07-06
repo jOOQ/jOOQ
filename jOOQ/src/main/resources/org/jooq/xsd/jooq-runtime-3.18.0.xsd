@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema
   xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-3.17.0.xsd"
+  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-3.18.0.xsd"
   xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
   xmlns:annox="http://annox.dev.java.net"
-  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-3.17.0.xsd"
+  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-3.18.0.xsd"
   elementFormDefault="qualified"
   jxb:extensionBindingPrefixes="annox"
   jxb:version="2.1">
@@ -663,6 +663,16 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 <p>
 Arithmetic expressions may be implemented by the user, or arise from emulations from within jOOQ.
 Expressions on literals and bind variables could be evaluated in the client prior to generating SQL.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformGroupByColumnIndex" type="jooq-runtime:Transformation" minOccurs="0" maxOccurs="1" default="WHEN_NEEDED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>GROUP BY [column index]</code> clauses by substituting the column index.
+<p>
+Not all dialects support grouping by column index, which is a convenient but also a bit confusing feature of
+some dialects. jOOQ can transform the syntax into an equivalent syntax where the referenced <code>SELECT</code>
+expression is duplicated into the <code>GROUP BY</code> clause.
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

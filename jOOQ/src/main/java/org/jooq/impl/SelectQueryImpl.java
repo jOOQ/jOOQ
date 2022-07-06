@@ -223,6 +223,7 @@ import static org.jooq.impl.Tools.SimpleDataKey.DATA_SELECT_ALIASES;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_SELECT_INTO_TABLE;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_WINDOW_DEFINITIONS;
+import static org.jooq.impl.Transformations.transformGroupByColumnIndex;
 import static org.jooq.impl.Transformations.transformQualify;
 import static org.jooq.impl.Transformations.transformRownum;
 
@@ -2426,8 +2427,26 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             if (groupByDistinct)
                 context.sql(' ').visit(K_DISTINCT);
 
-            context.separatorRequired(true);
-            context.visit(groupBy);
+            GroupFieldList g = groupBy;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            context.separatorRequired(true).visit(g);
         }
 
         context.end(SELECT_GROUP_BY);

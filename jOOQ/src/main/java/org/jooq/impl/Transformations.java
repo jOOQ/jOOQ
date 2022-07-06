@@ -91,7 +91,7 @@ final class Transformations {
     private static final Set<SQLDialect> SUPPORT_MISSING_TABLE_REFERENCES = SQLDialect.supportedBy();
     private static final Set<SQLDialect> EMULATE_QUALIFY                  = SQLDialect.supportedBy(CUBRID, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
     private static final Set<SQLDialect> EMULATE_ROWNUM                   = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
-    private static final Set<SQLDialect> EMULATE_GROUP_BY_COLUMN_INDEX    = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, SQLITE);
+    private static final Set<SQLDialect> EMULATE_GROUP_BY_COLUMN_INDEX    = SQLDialect.supportedBy(CUBRID, DERBY, H2, HSQLDB, IGNITE);
 
     static final SelectQueryImpl<?> subqueryWithLimit(QueryPart source) {
         SelectQueryImpl<?> s;

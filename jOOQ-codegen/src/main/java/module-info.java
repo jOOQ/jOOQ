@@ -10,6 +10,7 @@ module org.jooq.codegen {
     // - Settings (org.jooq.conf)
     // - InformationSchema (org.jooq.util.xml.jaxb)
     requires static jakarta.xml.bind;
+    requires org.jooq;
 
     exports org.jooq.codegen;
     exports org.jooq.codegen.example;

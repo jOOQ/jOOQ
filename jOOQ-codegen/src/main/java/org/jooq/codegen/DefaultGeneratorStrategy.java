@@ -58,6 +58,16 @@ import java.util.List;
 import java.util.Locale;
 
 // ...
+import org.jooq.impl.AbstractRoutine;
+import org.jooq.impl.CatalogImpl;
+import org.jooq.impl.DAOImpl;
+import org.jooq.impl.EmbeddableRecordImpl;
+import org.jooq.impl.SchemaImpl;
+import org.jooq.impl.TableImpl;
+import org.jooq.impl.TableRecordImpl;
+import org.jooq.impl.UDTImpl;
+import org.jooq.impl.UDTRecordImpl;
+import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.ColumnDefinition;
@@ -291,6 +301,34 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaClassExtends(Definition definition, Mode mode) {
+        if (definition instanceof CatalogDefinition) {
+            return CatalogImpl.class.getName();
+        }
+        else if (definition instanceof SchemaDefinition) {
+            return SchemaImpl.class.getName();
+        }
+        else if (definition instanceof RoutineDefinition) {
+            return AbstractRoutine.class.getName();
+        }
+        else if (definition instanceof TableDefinition t) {
+            switch (mode) {
+                case DAO: return DAOImpl.class.getName();
+                case RECORD: return (t.getPrimaryKey() != null ? UpdatableRecordImpl.class : TableRecordImpl.class).getName();
+                case DEFAULT: return TableImpl.class.getName();
+            }
+        }
+        else if (definition instanceof UDTDefinition) {
+            switch (mode) {
+                case RECORD: return UDTRecordImpl.class.getName();
+                case DEFAULT: return UDTImpl.class.getName();
+            }
+        }
+        else if (definition instanceof EmbeddableDefinition) {
+            switch (mode) {
+                case RECORD: return EmbeddableRecordImpl.class.getName();
+            }
+        }
+
         return null;
     }
 

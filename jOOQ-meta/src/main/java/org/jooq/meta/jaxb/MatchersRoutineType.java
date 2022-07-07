@@ -33,6 +33,8 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
     protected MatcherRule routineClass;
     protected MatcherRule routineMethod;
     @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String routineExtends;
+    @XmlJavaTypeAdapter(StringAdapter.class)
     protected String routineImplements;
 
     /**
@@ -84,6 +86,28 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
     }
 
     /**
+     * This string provides a super class that a generated {@link org.jooq.Routine} should extend.
+     * <p>        
+     * jOOQ internals make a few assumptions about what a {@link org.jooq.Routine} does, so to minimise
+     * unexpected behaviour, custom routine super classes should extend {@link org.jooq.impl.AbstractRoutine}.
+     * 
+     */
+    public String getRoutineExtends() {
+        return routineExtends;
+    }
+
+    /**
+     * This string provides a super class that a generated {@link org.jooq.Routine} should extend.
+     * <p>        
+     * jOOQ internals make a few assumptions about what a {@link org.jooq.Routine} does, so to minimise
+     * unexpected behaviour, custom routine super classes should extend {@link org.jooq.impl.AbstractRoutine}.
+     * 
+     */
+    public void setRoutineExtends(String value) {
+        this.routineExtends = value;
+    }
+
+    /**
      * This string provides additional interfaces that a generated {@link org.jooq.Routine} should implement.
      * 
      */
@@ -127,6 +151,18 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
     }
 
     /**
+     * This string provides a super class that a generated {@link org.jooq.Routine} should extend.
+     * <p>        
+     * jOOQ internals make a few assumptions about what a {@link org.jooq.Routine} does, so to minimise
+     * unexpected behaviour, custom routine super classes should extend {@link org.jooq.impl.AbstractRoutine}.
+     * 
+     */
+    public MatchersRoutineType withRoutineExtends(String value) {
+        setRoutineExtends(value);
+        return this;
+    }
+
+    /**
      * This string provides additional interfaces that a generated {@link org.jooq.Routine} should implement.
      * 
      */
@@ -140,6 +176,7 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
         builder.append("expression", expression);
         builder.append("routineClass", routineClass);
         builder.append("routineMethod", routineMethod);
+        builder.append("routineExtends", routineExtends);
         builder.append("routineImplements", routineImplements);
     }
 
@@ -189,6 +226,15 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (routineExtends == null) {
+            if (other.routineExtends!= null) {
+                return false;
+            }
+        } else {
+            if (!routineExtends.equals(other.routineExtends)) {
+                return false;
+            }
+        }
         if (routineImplements == null) {
             if (other.routineImplements!= null) {
                 return false;
@@ -208,6 +254,7 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
         result = ((prime*result)+((expression == null)? 0 :expression.hashCode()));
         result = ((prime*result)+((routineClass == null)? 0 :routineClass.hashCode()));
         result = ((prime*result)+((routineMethod == null)? 0 :routineMethod.hashCode()));
+        result = ((prime*result)+((routineExtends == null)? 0 :routineExtends.hashCode()));
         result = ((prime*result)+((routineImplements == null)? 0 :routineImplements.hashCode()));
         return result;
     }

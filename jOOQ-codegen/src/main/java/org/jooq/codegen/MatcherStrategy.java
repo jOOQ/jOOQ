@@ -305,11 +305,28 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaClassExtends(Definition definition, Mode mode) {
+        for (MatchersCatalogType catalogs : catalogs(definition)) {
+            String result = match(definition, catalogs.getExpression(), catalogs.getCatalogExtends());
+
+            if (result != null)
+                return result;
+        }
+
+        for (MatchersSchemaType schemas : schemas(definition)) {
+            String result = match(definition, schemas.getExpression(), schemas.getSchemaExtends());
+
+            if (result != null)
+                return result;
+        }
+
         for (MatchersTableType tables : tables(definition)) {
             String result = null;
 
             switch (mode) {
                 case POJO: result = match(definition, tables.getExpression(), tables.getPojoExtends()); break;
+                case RECORD: result = match(definition, tables.getExpression(), tables.getRecordExtends()); break;
+                case DAO: result = match(definition, tables.getExpression(), tables.getDaoExtends()); break;
+                case DEFAULT: result = match(definition, tables.getExpression(), tables.getTableExtends()); break;
             }
 
             if (result != null)
@@ -321,7 +338,15 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
             switch (mode) {
                 case POJO: result = match(definition, embeddables.getExpression(), embeddables.getPojoExtends()); break;
+                case RECORD: result = match(definition, embeddables.getExpression(), embeddables.getRecordExtends()); break;
             }
+
+            if (result != null)
+                return result;
+        }
+
+        for (MatchersRoutineType routines : routines(definition)) {
+            String result = match(definition, routines.getExpression(), routines.getRoutineExtends());
 
             if (result != null)
                 return result;

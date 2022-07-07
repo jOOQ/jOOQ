@@ -222,6 +222,14 @@
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.Catalog} identifier.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="catalogExtends" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides a super class that a generated {@link org.jooq.Catalog} should extend.
+<p>        
+jOOQ internals make a few assumptions about what a {@link org.jooq.Catalog} does, so to minimise
+unexpected behaviour, custom catalog super classes should extend {@link org.jooq.impl.CatalogImpl}
+and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="catalogImplements" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated {@link org.jooq.Catalog} should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -247,6 +255,14 @@
 
       <element name="schemaIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.Schema} identifier.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="schemaExtends" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides a super class that a generated {@link org.jooq.Schema} should extend.
+<p>        
+jOOQ internals make a few assumptions about what a {@link org.jooq.Schema} does, so to minimise
+unexpected behaviour, custom schema super classes should extend {@link org.jooq.impl.SchemaImpl}
+and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="schemaImplements" type="string" minOccurs="0" maxOccurs="1">
@@ -276,12 +292,28 @@
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.Table} identifier.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="tableExtends" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides a super class that a generated {@link org.jooq.Table} should extend.
+<p>        
+jOOQ internals make a few assumptions about what a {@link org.jooq.Table} does, so to minimise
+unexpected behaviour, custom table super classes should extend {@link org.jooq.impl.TableImpl}
+and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="tableImplements" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated {@link org.jooq.Table} should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="recordClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.TableRecord} object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="recordExtends" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides a super class that a generated {@link org.jooq.TableRecord} should extend.
+<p>        
+jOOQ internals make a few assumptions about what a {@link org.jooq.TableRecord} does, so to minimise
+unexpected behaviour, custom table record super classes should extend {@link org.jooq.impl.TableRecordImpl}
+and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="recordImplements" type="string" minOccurs="0" maxOccurs="1">
@@ -298,6 +330,14 @@
 
       <element name="daoClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.DAO} object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="daoExtends" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides a super class that a generated {@link org.jooq.DAO} should extend.
+<p>        
+jOOQ internals make a few assumptions about what a {@link org.jooq.DAO} does, so to minimise
+unexpected behaviour, custom DAO super classes should extend {@link org.jooq.impl.DAOImpl}
+and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="daoImplements" type="string" minOccurs="0" maxOccurs="1">
@@ -370,6 +410,14 @@
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of generated convenience methods used to call the {@link org.jooq.Routine}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="routineExtends" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides a super class that a generated {@link org.jooq.Routine} should extend.
+<p>        
+jOOQ internals make a few assumptions about what a {@link org.jooq.Routine} does, so to minimise
+unexpected behaviour, custom routine super classes should extend {@link org.jooq.impl.AbstractRoutine}
+and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="routineImplements" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated {@link org.jooq.Routine} should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -437,6 +485,14 @@
 
       <element name="recordClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.EmbeddableRecord} object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="recordExtends" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides a super class that a generated {@link org.jooq.EmbeddableRecord} should extend.
+<p>        
+jOOQ internals make a few assumptions about what a {@link org.jooq.EmbeddableRecord} does, so to minimise
+unexpected behaviour, custom embeddable record super classes should extend {@link org.jooq.impl.EmbeddableRecordImpl}
+and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="recordImplements" type="string" minOccurs="0" maxOccurs="1">

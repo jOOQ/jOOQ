@@ -32,6 +32,8 @@ public class MatchersEmbeddableType implements Serializable, XMLAppendable
     protected String expression;
     protected MatcherRule recordClass;
     @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String recordExtends;
+    @XmlJavaTypeAdapter(StringAdapter.class)
     protected String recordImplements;
     protected MatcherRule interfaceClass;
     @XmlJavaTypeAdapter(StringAdapter.class)
@@ -72,6 +74,28 @@ public class MatchersEmbeddableType implements Serializable, XMLAppendable
      */
     public void setRecordClass(MatcherRule value) {
         this.recordClass = value;
+    }
+
+    /**
+     * This string provides a super class that a generated {@link org.jooq.EmbeddableRecord} should extend.
+     * <p>        
+     * jOOQ internals make a few assumptions about what a {@link org.jooq.EmbeddableRecord} does, so to minimise
+     * unexpected behaviour, custom embeddable record super classes should extend {@link org.jooq.impl.EmbeddableRecordImpl}.
+     * 
+     */
+    public String getRecordExtends() {
+        return recordExtends;
+    }
+
+    /**
+     * This string provides a super class that a generated {@link org.jooq.EmbeddableRecord} should extend.
+     * <p>        
+     * jOOQ internals make a few assumptions about what a {@link org.jooq.EmbeddableRecord} does, so to minimise
+     * unexpected behaviour, custom embeddable record super classes should extend {@link org.jooq.impl.EmbeddableRecordImpl}.
+     * 
+     */
+    public void setRecordExtends(String value) {
+        this.recordExtends = value;
     }
 
     /**
@@ -189,6 +213,18 @@ public class MatchersEmbeddableType implements Serializable, XMLAppendable
     }
 
     /**
+     * This string provides a super class that a generated {@link org.jooq.EmbeddableRecord} should extend.
+     * <p>        
+     * jOOQ internals make a few assumptions about what a {@link org.jooq.EmbeddableRecord} does, so to minimise
+     * unexpected behaviour, custom embeddable record super classes should extend {@link org.jooq.impl.EmbeddableRecordImpl}.
+     * 
+     */
+    public MatchersEmbeddableType withRecordExtends(String value) {
+        setRecordExtends(value);
+        return this;
+    }
+
+    /**
      * This string provides additional interfaces that a generated {@link org.jooq.EmbeddableRecord} should implement.
      * 
      */
@@ -246,6 +282,7 @@ public class MatchersEmbeddableType implements Serializable, XMLAppendable
     public final void appendTo(XMLBuilder builder) {
         builder.append("expression", expression);
         builder.append("recordClass", recordClass);
+        builder.append("recordExtends", recordExtends);
         builder.append("recordImplements", recordImplements);
         builder.append("interfaceClass", interfaceClass);
         builder.append("interfaceImplements", interfaceImplements);
@@ -288,6 +325,15 @@ public class MatchersEmbeddableType implements Serializable, XMLAppendable
             }
         } else {
             if (!recordClass.equals(other.recordClass)) {
+                return false;
+            }
+        }
+        if (recordExtends == null) {
+            if (other.recordExtends!= null) {
+                return false;
+            }
+        } else {
+            if (!recordExtends.equals(other.recordExtends)) {
                 return false;
             }
         }
@@ -354,6 +400,7 @@ public class MatchersEmbeddableType implements Serializable, XMLAppendable
         int result = 1;
         result = ((prime*result)+((expression == null)? 0 :expression.hashCode()));
         result = ((prime*result)+((recordClass == null)? 0 :recordClass.hashCode()));
+        result = ((prime*result)+((recordExtends == null)? 0 :recordExtends.hashCode()));
         result = ((prime*result)+((recordImplements == null)? 0 :recordImplements.hashCode()));
         result = ((prime*result)+((interfaceClass == null)? 0 :interfaceClass.hashCode()));
         result = ((prime*result)+((interfaceImplements == null)? 0 :interfaceImplements.hashCode()));

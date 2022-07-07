@@ -96,7 +96,6 @@ import java.util.stream.Stream;
 import org.jooq.AggregateFunction;
 import org.jooq.Catalog;
 import org.jooq.Check;
-import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.DSLContext;
@@ -118,7 +117,6 @@ import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Result;
-import org.jooq.ResultQuery;
 import org.jooq.Row;
 import org.jooq.RowId;
 import org.jooq.SQLDialect;
@@ -129,7 +127,6 @@ import org.jooq.Sequence;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
-import org.jooq.TableLike;
 import org.jooq.TableOptions;
 import org.jooq.UDT;
 import org.jooq.UDTField;
@@ -140,14 +137,11 @@ import org.jooq.codegen.GeneratorWriter.CloseResult;
 import org.jooq.conf.ParseSearchSchema;
 import org.jooq.conf.ParseWithMetaLookups;
 import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.impl.AbstractRoutine;
 // ...
 // ...
-import org.jooq.impl.CatalogImpl;
 import org.jooq.impl.DAOImpl;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultDataType;
-import org.jooq.impl.EmbeddableRecordImpl;
 import org.jooq.impl.Internal;
 import org.jooq.impl.LazySchema;
 import org.jooq.impl.LazySupplier;
@@ -158,7 +152,6 @@ import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.impl.UDTImpl;
-import org.jooq.impl.UDTRecordImpl;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.meta.AbstractTypedElementDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -1514,15 +1507,12 @@ public class JavaGenerator extends AbstractGenerator {
         if (tableUdtOrEmbeddable instanceof TableDefinition)
             printTableJPAAnnotation(out, (TableDefinition) tableUdtOrEmbeddable);
 
-        Class<?> baseClass;
-        if (tableUdtOrEmbeddable instanceof UDTDefinition)
-            baseClass = UDTRecordImpl.class;
-        else if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-            baseClass = EmbeddableRecordImpl.class;
-        else if (generateRelations() && key != null)
-            baseClass = UpdatableRecordImpl.class;
-        else
-            baseClass = TableRecordImpl.class;
+        String baseClass = out.ref(getStrategy().getJavaClassExtends(tableUdtOrEmbeddable, Mode.RECORD));
+
+        // [#9844] The GeneratorStrategy doesn't have access to the generateRelations flag,
+        //         so restore the behaviour here in case users don't override the defaults.
+        if (UpdatableRecordImpl.class.getName().equals(baseClass) && !generateRelations())
+            baseClass = TableRecordImpl.class.getName();
 
         // [#10481] Use the types from replaced embeddables if applicable
         List<Definition> embeddablesAndColumns = embeddablesAndColumns(tableUdtOrEmbeddable);
@@ -3072,6 +3062,7 @@ public class JavaGenerator extends AbstractGenerator {
         final boolean synthetic = udt.isSynthetic();
         final String className = getStrategy().getJavaClassName(udt);
         final String recordType = out.ref(getStrategy().getFullJavaClassName(udt, Mode.RECORD));
+        final String classExtends = out.ref(getStrategy().getJavaClassExtends(udt, Mode.DEFAULT));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(udt, Mode.DEFAULT));
         final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
         final String packageId = pkg == null ? null : out.ref(getStrategy().getFullJavaIdentifier(pkg), 2);
@@ -3104,10 +3095,10 @@ public class JavaGenerator extends AbstractGenerator {
 
 
         if (scala) {
-            out.println("%sclass %s extends %s[%s](\"%s\", null, %s, %s)[[before= with ][separator= with ][%s]] {", visibility(), className, UDTImpl.class, recordType, escapeString(udt.getOutputName()), packageId, synthetic, interfaces);
+            out.println("%sclass %s extends %s[%s](\"%s\", null, %s, %s)[[before= with ][separator= with ][%s]] {", visibility(), className, classExtends, recordType, escapeString(udt.getOutputName()), packageId, synthetic, interfaces);
         }
         else if (kotlin) {
-            out.println("%sopen class %s : %s<%s>(\"%s\", null, %s, %s)[[before=, ][%s]] {", visibility(), className, UDTImpl.class, recordType, escapeString(udt.getOutputName()), packageId, synthetic, interfaces);
+            out.println("%sopen class %s : %s<%s>(\"%s\", null, %s, %s)[[before=, ][%s]] {", visibility(), className, classExtends, recordType, escapeString(udt.getOutputName()), packageId, synthetic, interfaces);
 
             out.println();
             out.println("public companion object {");
@@ -3116,7 +3107,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
         else {
-            out.println("%sclass %s extends %s<%s>[[before= implements ][%s]] {", visibility(), className, UDTImpl.class, recordType, interfaces);
+            out.println("%sclass %s extends %s<%s>[[before= implements ][%s]] {", visibility(), className, classExtends, recordType, interfaces);
             out.printSerial();
             printSingletonInstance(out, udt);
         }
@@ -5891,6 +5882,7 @@ public class JavaGenerator extends AbstractGenerator {
             ? out.ref(getStrategy().getFullJavaIdentifier(table), 2)
             : getStrategy().getJavaIdentifier(table);
         final String recordType = out.ref(getStrategy().getFullJavaClassName(table, Mode.RECORD));
+        final String classExtends = out.ref(getStrategy().getJavaClassExtends(table, Mode.DEFAULT));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(table, Mode.DEFAULT));
         final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
         final String tableType = table.isTemporary()
@@ -5924,7 +5916,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("aliased: %s[%s],", Table.class, recordType);
             out.println("parameters: %s[ %s[_] ]", out.ref("scala.Array"), Field.class);
             out.println(")");
-            out.println("extends %s[%s](", TableImpl.class, recordType);
+            out.println("extends %s[%s](", classExtends, recordType);
             out.println("alias,");
             out.println("%s,", schemaId);
             out.println("child,");
@@ -5949,7 +5941,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("path: %s<out %s, %s>?,", ForeignKey.class, Record.class, recordType);
             out.println("aliased: %s<%s>?,", Table.class, recordType);
             out.println("parameters: Array<%s<*>?>?", Field.class);
-            out.println("): %s<%s>(", TableImpl.class, recordType);
+            out.println("): %s<%s>(", classExtends, recordType);
             out.println("alias,");
             out.println("%s,", schemaId);
             out.println("child,");
@@ -5972,7 +5964,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
         else {
-            out.println("%sclass %s extends %s<%s>[[before= implements ][%s]] {", visibility(), className, TableImpl.class, recordType, interfaces);
+            out.println("%sclass %s extends %s<%s>[[before= implements ][%s]] {", visibility(), className, classExtends, recordType, interfaces);
             out.printSerial();
             printSingletonInstance(out, table);
         }
@@ -7383,6 +7375,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String catalogId = getStrategy().getJavaIdentifier(catalog);
         final String catalogName = !catalog.getQualifiedOutputName().isEmpty() ? catalog.getQualifiedOutputName() : catalogId;
         final String className = getStrategy().getJavaClassName(catalog);
+        final String classExtends = out.ref(getStrategy().getJavaClassExtends(catalog));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(catalog, Mode.DEFAULT));
 
         printPackage(out, catalog);
@@ -7400,11 +7393,11 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala) {
             out.println("%sclass %s extends %s(\"%s\")[[before= with ][separator= with ][%s]] {",
-                visibility(), className, CatalogImpl.class, catalog.getOutputName(), interfaces);
+                visibility(), className, classExtends, catalog.getOutputName(), interfaces);
         }
         else if (kotlin) {
             out.println("%sopen class %s : %s(\"%s\")[[before=, ][%s]] {",
-                visibility(), className, CatalogImpl.class, catalog.getOutputName(), interfaces);
+                visibility(), className, classExtends, catalog.getOutputName(), interfaces);
 
             out.println("%scompanion object {", visibility());
             out.javadoc("The reference instance of <code>%s</code>", catalogName);
@@ -7412,7 +7405,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
         else {
-            out.println("%sclass %s extends %s[[before= implements ][%s]] {", visibility(), className, CatalogImpl.class, interfaces);
+            out.println("%sclass %s extends %s[[before= implements ][%s]] {", visibility(), className, classExtends, interfaces);
             out.printSerial();
             out.javadoc("The reference instance of <code>%s</code>", catalogName);
             out.println("%sstatic final %s %s = new %s();", visibility(), className, catalogId, className);
@@ -7509,6 +7502,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String schemaId = getStrategy().getJavaIdentifier(schema);
         final String schemaName = !schema.getQualifiedOutputName().isEmpty() ? schema.getQualifiedOutputName() : schemaId;
         final String className = getStrategy().getJavaClassName(schema);
+        final String classExtends = out.ref(getStrategy().getJavaClassExtends(schema));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(schema, Mode.DEFAULT));
 
         printPackage(out, schema);
@@ -7526,11 +7520,11 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala) {
             out.println("%sclass %s extends %s(\"%s\", %s)[[before= with ][separator= with ][%s]] {",
-                visibility(), className, SchemaImpl.class, escapeString(schema.getOutputName()), catalogId, interfaces);
+                visibility(), className, classExtends, escapeString(schema.getOutputName()), catalogId, interfaces);
         }
         else if (kotlin) {
             out.println("%sopen class %s : %s(\"%s\", %s)[[before=, ][%s]] {",
-                visibility(), className, SchemaImpl.class, escapeString(schema.getOutputName()), catalogId, interfaces);
+                visibility(), className, classExtends, escapeString(schema.getOutputName()), catalogId, interfaces);
 
             out.println("public companion object {");
             out.javadoc("The reference instance of <code>%s</code>", schemaName);
@@ -7538,7 +7532,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
         else {
-            out.println("%sclass %s extends %s[[before= implements ][%s]] {", visibility(), className, SchemaImpl.class, interfaces);
+            out.println("%sclass %s extends %s[[before= implements ][%s]] {", visibility(), className, classExtends, interfaces);
             out.printSerial();
             out.javadoc("The reference instance of <code>%s</code>", schemaName);
             out.println("%sstatic final %s %s = new %s();", visibility(), className, schemaId, className);
@@ -8167,6 +8161,7 @@ public class JavaGenerator extends AbstractGenerator {
             ? routine.getReturnType(resolver(out)).getBinding()
             : null));
 
+        final String classExtends = out.ref(getStrategy().getJavaClassExtends(routine));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(routine, Mode.DEFAULT));
         final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
         final List<String> packageId = out.ref(getStrategy().getFullJavaIdentifiers(routine.getPackage()), 2);
@@ -8204,16 +8199,16 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala) {
             out.println("%sclass %s extends %s[%s](\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ")[[before= with ][separator= with ][%s]] {",
-                visibility(), className, AbstractRoutine.class, returnType, escapeString(routine.getName()), schemaId, packageId, returnTypeRef, returnConverter, returnBinding, interfaces);
+                visibility(), className, classExtends, returnType, escapeString(routine.getName()), schemaId, packageId, returnTypeRef, returnConverter, returnBinding, interfaces);
         }
         else {
             if (kotlin) {
                 out.println("%sopen class %s : %s<%s>(\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ")[[before=, ][%s]] {",
-                    visibility(), className, AbstractRoutine.class, returnType, escapeString(routine.getName()), schemaId, packageId, returnTypeRef, returnConverter, returnBinding, interfaces);
+                    visibility(), className, classExtends, returnType, escapeString(routine.getName()), schemaId, packageId, returnTypeRef, returnConverter, returnBinding, interfaces);
             }
             else {
                 out.println("%sclass %s extends %s<%s>[[before= implements ][%s]] {",
-                    visibility(), className, AbstractRoutine.class, returnType, interfaces);
+                    visibility(), className, classExtends, returnType, interfaces);
                 out.printSerial();
             }
 

@@ -104,6 +104,7 @@ public enum SQLDialectCategory {
     /**
      * Get all {@link SQLDialect} values belonging to this category.
      */
+    @NotNull
     public final Set<SQLDialect> dialects() {
         if (dialects == null)
             dialects = filter(SQLDialect.values());
@@ -114,6 +115,7 @@ public enum SQLDialectCategory {
     /**
      * Get all {@link SQLDialect} families belonging to this category.
      */
+    @NotNull
     public final Set<SQLDialect> families() {
         if (families == null)
             families = filter(SQLDialect.families());

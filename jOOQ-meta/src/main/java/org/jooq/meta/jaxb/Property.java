@@ -29,7 +29,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Property implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31700L;
+    private final static long serialVersionUID = 31800L;
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String key;

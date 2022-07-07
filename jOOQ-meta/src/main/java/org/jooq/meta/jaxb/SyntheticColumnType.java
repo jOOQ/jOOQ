@@ -44,7 +44,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class SyntheticColumnType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31700L;
+    private final static long serialVersionUID = 31800L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String tables;
     @XmlElement(required = true)

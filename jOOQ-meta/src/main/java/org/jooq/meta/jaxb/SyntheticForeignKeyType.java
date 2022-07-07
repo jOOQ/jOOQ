@@ -28,9 +28,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *       &lt;all&gt;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="tables" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="fields" type="{http://www.jooq.org/xsd/jooq-codegen-3.17.0.xsd}SyntheticKeyFieldsType"/&gt;
+ *         &lt;element name="fields" type="{http://www.jooq.org/xsd/jooq-codegen-3.18.0.xsd}SyntheticKeyFieldsType"/&gt;
  *         &lt;element name="referencedTable" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="referencedFields" type="{http://www.jooq.org/xsd/jooq-codegen-3.17.0.xsd}SyntheticKeyFieldsType" minOccurs="0"/&gt;
+ *         &lt;element name="referencedFields" type="{http://www.jooq.org/xsd/jooq-codegen-3.18.0.xsd}SyntheticKeyFieldsType" minOccurs="0"/&gt;
  *         &lt;element name="referencedKey" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
@@ -50,7 +50,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class SyntheticForeignKeyType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31700L;
+    private final static long serialVersionUID = 31800L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
     @XmlJavaTypeAdapter(StringAdapter.class)

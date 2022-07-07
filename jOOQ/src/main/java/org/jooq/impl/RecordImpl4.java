@@ -66,12 +66,12 @@ final class RecordImpl4<T1, T2, T3, T4> extends AbstractRecord implements Intern
 
     @Override
     public RowImpl4<T1, T2, T3, T4> fieldsRow() {
-        return new RowImpl4<>(field1(), field2(), field3(), field4());
+        return new RowImpl4<T1, T2, T3, T4>(field1(), field2(), field3(), field4());
     }
 
     @Override
     public final RowImpl4<T1, T2, T3, T4> valuesRow() {
-        return new RowImpl4<>(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()), Tools.field(value4(), field4()));
+        return new RowImpl4<T1, T2, T3, T4>(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()), Tools.field(value4(), field4()));
     }
 
     @Override

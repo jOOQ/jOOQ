@@ -66,12 +66,12 @@ final class RecordImpl5<T1, T2, T3, T4, T5> extends AbstractRecord implements In
 
     @Override
     public RowImpl5<T1, T2, T3, T4, T5> fieldsRow() {
-        return new RowImpl5<>(field1(), field2(), field3(), field4(), field5());
+        return new RowImpl5<T1, T2, T3, T4, T5>(field1(), field2(), field3(), field4(), field5());
     }
 
     @Override
     public final RowImpl5<T1, T2, T3, T4, T5> valuesRow() {
-        return new RowImpl5<>(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()), Tools.field(value4(), field4()), Tools.field(value5(), field5()));
+        return new RowImpl5<T1, T2, T3, T4, T5>(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()), Tools.field(value4(), field4()), Tools.field(value5(), field5()));
     }
 
     @Override

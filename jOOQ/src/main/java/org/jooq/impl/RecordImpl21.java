@@ -66,12 +66,12 @@ final class RecordImpl21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
 
     @Override
     public RowImpl21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> fieldsRow() {
-        return new RowImpl21<>(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11(), field12(), field13(), field14(), field15(), field16(), field17(), field18(), field19(), field20(), field21());
+        return new RowImpl21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11(), field12(), field13(), field14(), field15(), field16(), field17(), field18(), field19(), field20(), field21());
     }
 
     @Override
     public final RowImpl21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> valuesRow() {
-        return new RowImpl21<>(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()), Tools.field(value4(), field4()), Tools.field(value5(), field5()), Tools.field(value6(), field6()), Tools.field(value7(), field7()), Tools.field(value8(), field8()), Tools.field(value9(), field9()), Tools.field(value10(), field10()), Tools.field(value11(), field11()), Tools.field(value12(), field12()), Tools.field(value13(), field13()), Tools.field(value14(), field14()), Tools.field(value15(), field15()), Tools.field(value16(), field16()), Tools.field(value17(), field17()), Tools.field(value18(), field18()), Tools.field(value19(), field19()), Tools.field(value20(), field20()), Tools.field(value21(), field21()));
+        return new RowImpl21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()), Tools.field(value4(), field4()), Tools.field(value5(), field5()), Tools.field(value6(), field6()), Tools.field(value7(), field7()), Tools.field(value8(), field8()), Tools.field(value9(), field9()), Tools.field(value10(), field10()), Tools.field(value11(), field11()), Tools.field(value12(), field12()), Tools.field(value13(), field13()), Tools.field(value14(), field14()), Tools.field(value15(), field15()), Tools.field(value16(), field16()), Tools.field(value17(), field17()), Tools.field(value18(), field18()), Tools.field(value19(), field19()), Tools.field(value20(), field20()), Tools.field(value21(), field21()));
     }
 
     @Override

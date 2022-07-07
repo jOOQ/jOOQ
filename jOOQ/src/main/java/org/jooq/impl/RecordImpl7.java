@@ -66,12 +66,12 @@ final class RecordImpl7<T1, T2, T3, T4, T5, T6, T7> extends AbstractRecord imple
 
     @Override
     public RowImpl7<T1, T2, T3, T4, T5, T6, T7> fieldsRow() {
-        return new RowImpl7<>(field1(), field2(), field3(), field4(), field5(), field6(), field7());
+        return new RowImpl7<T1, T2, T3, T4, T5, T6, T7>(field1(), field2(), field3(), field4(), field5(), field6(), field7());
     }
 
     @Override
     public final RowImpl7<T1, T2, T3, T4, T5, T6, T7> valuesRow() {
-        return new RowImpl7<>(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()), Tools.field(value4(), field4()), Tools.field(value5(), field5()), Tools.field(value6(), field6()), Tools.field(value7(), field7()));
+        return new RowImpl7<T1, T2, T3, T4, T5, T6, T7>(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()), Tools.field(value4(), field4()), Tools.field(value5(), field5()), Tools.field(value6(), field6()), Tools.field(value7(), field7()));
     }
 
     @Override

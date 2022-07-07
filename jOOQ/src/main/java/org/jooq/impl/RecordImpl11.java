@@ -66,12 +66,12 @@ final class RecordImpl11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends A
 
     @Override
     public RowImpl11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> fieldsRow() {
-        return new RowImpl11<>(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11());
+        return new RowImpl11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11());
     }
 
     @Override
     public final RowImpl11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> valuesRow() {
-        return new RowImpl11<>(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()), Tools.field(value4(), field4()), Tools.field(value5(), field5()), Tools.field(value6(), field6()), Tools.field(value7(), field7()), Tools.field(value8(), field8()), Tools.field(value9(), field9()), Tools.field(value10(), field10()), Tools.field(value11(), field11()));
+        return new RowImpl11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()), Tools.field(value4(), field4()), Tools.field(value5(), field5()), Tools.field(value6(), field6()), Tools.field(value7(), field7()), Tools.field(value8(), field8()), Tools.field(value9(), field9()), Tools.field(value10(), field10()), Tools.field(value11(), field11()));
     }
 
     @Override

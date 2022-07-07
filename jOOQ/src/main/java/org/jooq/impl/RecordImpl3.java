@@ -66,12 +66,12 @@ final class RecordImpl3<T1, T2, T3> extends AbstractRecord implements InternalRe
 
     @Override
     public RowImpl3<T1, T2, T3> fieldsRow() {
-        return new RowImpl3<>(field1(), field2(), field3());
+        return new RowImpl3<T1, T2, T3>(field1(), field2(), field3());
     }
 
     @Override
     public final RowImpl3<T1, T2, T3> valuesRow() {
-        return new RowImpl3<>(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()));
+        return new RowImpl3<T1, T2, T3>(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()));
     }
 
     @Override

@@ -66,12 +66,12 @@ final class RecordImpl1<T1> extends AbstractRecord implements InternalRecord, Re
 
     @Override
     public RowImpl1<T1> fieldsRow() {
-        return new RowImpl1<>(field1());
+        return new RowImpl1<T1>(field1());
     }
 
     @Override
     public final RowImpl1<T1> valuesRow() {
-        return new RowImpl1<>(Tools.field(value1(), field1()));
+        return new RowImpl1<T1>(Tools.field(value1(), field1()));
     }
 
     @Override

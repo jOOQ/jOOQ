@@ -66,12 +66,12 @@ final class RecordImpl8<T1, T2, T3, T4, T5, T6, T7, T8> extends AbstractRecord i
 
     @Override
     public RowImpl8<T1, T2, T3, T4, T5, T6, T7, T8> fieldsRow() {
-        return new RowImpl8<>(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8());
+        return new RowImpl8<T1, T2, T3, T4, T5, T6, T7, T8>(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8());
     }
 
     @Override
     public final RowImpl8<T1, T2, T3, T4, T5, T6, T7, T8> valuesRow() {
-        return new RowImpl8<>(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()), Tools.field(value4(), field4()), Tools.field(value5(), field5()), Tools.field(value6(), field6()), Tools.field(value7(), field7()), Tools.field(value8(), field8()));
+        return new RowImpl8<T1, T2, T3, T4, T5, T6, T7, T8>(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()), Tools.field(value4(), field4()), Tools.field(value5(), field5()), Tools.field(value6(), field6()), Tools.field(value7(), field7()), Tools.field(value8(), field8()));
     }
 
     @Override

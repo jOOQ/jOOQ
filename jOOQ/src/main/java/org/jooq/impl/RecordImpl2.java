@@ -66,12 +66,12 @@ final class RecordImpl2<T1, T2> extends AbstractRecord implements InternalRecord
 
     @Override
     public RowImpl2<T1, T2> fieldsRow() {
-        return new RowImpl2<>(field1(), field2());
+        return new RowImpl2<T1, T2>(field1(), field2());
     }
 
     @Override
     public final RowImpl2<T1, T2> valuesRow() {
-        return new RowImpl2<>(Tools.field(value1(), field1()), Tools.field(value2(), field2()));
+        return new RowImpl2<T1, T2>(Tools.field(value1(), field1()), Tools.field(value2(), field2()));
     }
 
     @Override

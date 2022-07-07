@@ -2783,6 +2783,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 break;
 
+            case 'M':
+                if (parseKeywordIf("MEMORY TABLE"))
+                    return parseCreateTable(false);
+
+                break;
+
             case 'O':
                 if (parseKeywordIf("OR")) {
                     parseKeyword("REPLACE", "ALTER");

@@ -2742,6 +2742,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         parseKeyword("CREATE");
 
         switch (characterUpper()) {
+            case 'C':
+                if (parseKeywordIf("CACHED TABLE"))
+                    return parseCreateTable(false);
+
+                break;
+
             case 'D':
                 if (parseKeywordIf("DATABASE"))
                     return parseCreateDatabase();

@@ -100,7 +100,7 @@ public enum SQLDialect {
      *             future.
      */
     @Deprecated(forRemoval = true, since = "3.13")
-    CUBRID("CUBRID", false, true),
+    CUBRID("CUBRID", false, true, SQLDialectCategory.MYSQL),
 
     /**
      * The Apache Derby dialect family.
@@ -193,7 +193,7 @@ public enum SQLDialect {
      * <p>
      * This family behaves like the versioned dialect {@link #MARIADB_10_5}.
      */
-    MARIADB("MariaDB", false, true),
+    MARIADB("MariaDB", false, true, SQLDialectCategory.MYSQL),
 
 
 
@@ -268,7 +268,7 @@ public enum SQLDialect {
      * <p>
      * This family behaves like the versioned dialect {@link #MYSQL_8_0_20}.
      */
-    MYSQL("MySQL", false, true),
+    MYSQL("MySQL", false, true, SQLDialectCategory.MYSQL),
 
 
 
@@ -321,7 +321,7 @@ public enum SQLDialect {
      * extent on Amazon RedShift as well, we strongly suggest you use the
      * official {@link #REDSHIFT} support, instead.
      */
-    POSTGRES("Postgres", false, true),
+    POSTGRES("Postgres", false, true, SQLDialectCategory.POSTGRES),
 
 
 
@@ -478,7 +478,7 @@ public enum SQLDialect {
     /**
      * The YugabyteDB dialect family.
      */
-    YUGABYTEDB("YugabyteDB", false, true),
+    YUGABYTEDB("YugabyteDB", false, true, SQLDialectCategory.POSTGRES),
 
 
 
@@ -934,6 +934,7 @@ public enum SQLDialect {
     private final boolean                 commercial;
     private final boolean                 supported;
     private final SQLDialect              family;
+    private final SQLDialectCategory      category;
     private SQLDialect                    predecessor;
     private transient EnumSet<SQLDialect> predecessors;
     private final ThirdParty              thirdParty;
@@ -1033,7 +1034,11 @@ public enum SQLDialect {
     }
 
     private SQLDialect(String name, boolean commercial, boolean supported) {
-        this(name, commercial, supported, null, null);
+        this(name, commercial, supported, SQLDialectCategory.OTHER, null, null);
+    }
+
+    private SQLDialect(String name, boolean commercial, boolean supported, SQLDialectCategory category) {
+        this(name, commercial, supported, category, null, null);
     }
 
     private SQLDialect(String name, boolean commercial, boolean supported, SQLDialect family) {
@@ -1041,10 +1046,15 @@ public enum SQLDialect {
     }
 
     private SQLDialect(String name, boolean commercial, boolean supported, SQLDialect family, SQLDialect predecessor) {
+        this(name, commercial, supported, family.category(), family, predecessor);
+    }
+
+    private SQLDialect(String name, boolean commercial, boolean supported, SQLDialectCategory category, SQLDialect family, SQLDialect predecessor) {
         this.name = name;
         this.commercial = commercial;
         this.supported = supported;
         this.family = family == null ? this : family;
+        this.category = category == null ? this.family.category() : category;
         this.predecessor = predecessor == null ? this : predecessor;
 
         if (family != null)
@@ -1087,6 +1097,14 @@ public enum SQLDialect {
     @NotNull
     public final SQLDialect family() {
         return family;
+    }
+
+    /**
+     * The dialect category.
+     */
+    @NotNull
+    public final SQLDialectCategory category() {
+        return category;
     }
 
     /**

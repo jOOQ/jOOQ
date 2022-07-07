@@ -10288,7 +10288,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseFieldDatePartIf() {
-        if (parseFunctionNameIf("DATEPART")) {
+        if (parseFunctionNameIf("DATEPART", "DATE_PART")) {
             parse('(');
             DatePart part = parseDatePart();
             parse(',');

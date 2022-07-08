@@ -77,18 +77,22 @@
                     </archive>
                 </configuration>
             </plugin>
-            
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-
-                    <!-- [#13703] Validate at least HTML correctness -->
-                    <additionalparam>-Xdoclint:html</additionalparam>
-                    <additionalOptions>-Xdoclint:html</additionalOptions>
-                </configuration>
-            </plugin>
         </plugins>
+        
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <configuration>
+    
+                        <!-- [#13703] Validate at least HTML correctness -->
+                        <additionalparam>-Xdoclint:html</additionalparam>
+                        <additionalOptions>-Xdoclint:html</additionalOptions>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <dependencies>

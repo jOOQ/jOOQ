@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.impl.DSL.NULL;
+import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
@@ -81,6 +82,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.conf.NestedCollectionEmulation;
+
 
 
 /**
@@ -243,6 +245,11 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
         return field;
     }
 
+    @SuppressWarnings("unchecked")
+    private static Field<String> booleanCase(Field<?> field) {
+        return case_((Field<Boolean>) field).when(inline(true), inline("true")).when(inline(false), inline("false"));
+    }
+
     static final <T> Field<T> unescapeNestedJSON(Scope ctx, Field<T> value) {
 
         // [#12086] Avoid escaping nested JSON
@@ -294,7 +301,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
     }
 
     static final Field<?> booleanValAsVarchar(Field<?> field) {
-        return field instanceof Val ? ((Val<?>) field).convertTo0(VARCHAR) : field;
+        return field instanceof Val ? ((Val<?>) field).convertTo0(VARCHAR) : booleanCase(field);
     }
 
     static final Field<?> jsonMerge(Scope scope, String empty, Field<?>... fields) {

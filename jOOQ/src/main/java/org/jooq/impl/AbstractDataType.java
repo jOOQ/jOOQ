@@ -183,7 +183,7 @@ implements
     @Override
     public final boolean computedOnClientStored() {
         return computedOnClient()
-            && generationOption() == GenerationOption.STORED
+            && generationOption() != GenerationOption.VIRTUAL
             && (generatedAlwaysAsGenerator().supports(GeneratorStatementType.INSERT) ||
                 generatedAlwaysAsGenerator().supports(GeneratorStatementType.UPDATE));
     }
@@ -191,7 +191,7 @@ implements
     @Override
     public final boolean computedOnClientStoredOn(GeneratorStatementType statementType) {
         return computedOnClient()
-            && generationOption() == GenerationOption.STORED
+            && generationOption() != GenerationOption.VIRTUAL
             && generatedAlwaysAsGenerator().supports(statementType);
     }
 

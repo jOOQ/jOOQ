@@ -44,7 +44,6 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.AbstractRowAsField.forceMultisetContent;
 import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.case_;
-import static org.jooq.impl.DSL.castNull;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
@@ -53,8 +52,6 @@ import static org.jooq.impl.DSL.inlined;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.toChar;
 import static org.jooq.impl.DSL.when;
-import static org.jooq.impl.DSL.xmlelement;
-import static org.jooq.impl.DSL.xmlquery;
 import static org.jooq.impl.Keywords.K_FORMAT;
 import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_KEY;
@@ -66,8 +63,7 @@ import static org.jooq.impl.Names.N_JSON_MERGE;
 import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
 import static org.jooq.impl.Names.N_JSON_QUERY;
 import static org.jooq.impl.Names.N_RAWTOHEX;
-import static org.jooq.impl.RowAsField.NO_NATIVE_SUPPORT;
-import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.SQLDataType.BIT;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.combine;
@@ -92,6 +88,7 @@ import org.jooq.Scope;
 import org.jooq.Select;
 // ...
 import org.jooq.conf.NestedCollectionEmulation;
+
 
 
 /**
@@ -219,7 +216,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
             case SQLITE:
                 if (isType(type, Boolean.class))
-                    return function(N_JSON, SQLDataType.JSON, case_((Field<Boolean>) field).when(inline(true), inline("true")).when(inline(false), inline("false")));
+                    return function(N_JSON, SQLDataType.JSON, booleanCase(field));
                 else if (type.isBinary())
                     return when(field.isNotNull(), function(N_HEX, VARCHAR, field));
 
@@ -280,6 +277,11 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
         return field;
     }
 
+    @SuppressWarnings("unchecked")
+    private static Field<String> booleanCase(Field<?> field) {
+        return case_((Field<Boolean>) field).when(inline(true), inline("true")).when(inline(false), inline("false"));
+    }
+
     static final <T> Field<T> unescapeNestedJSON(Context<?> ctx, Field<T> value) {
 
         // [#12086] Avoid escaping nested JSON
@@ -333,7 +335,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
     }
 
     static final Field<?> booleanValAsVarchar(Field<?> field) {
-        return field instanceof Val<?> v ? v.convertTo0(VARCHAR) : field;
+        return field instanceof Val<?> v ? v.convertTo0(VARCHAR) : booleanCase(field);
     }
 
     static final Field<?> jsonMerge(Scope scope, String empty, Field<?>... fields) {

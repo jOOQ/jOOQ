@@ -206,7 +206,7 @@ implements
     @Override
     public final boolean computedOnClientStored(Configuration configuration) {
         return computedOnClient(configuration)
-            && generationOption(configuration) == GenerationOption.STORED
+            && generationOption(configuration) != GenerationOption.VIRTUAL
             && (generatedAlwaysAsGenerator().supports(GeneratorStatementType.INSERT) ||
                 generatedAlwaysAsGenerator().supports(GeneratorStatementType.UPDATE));
     }
@@ -219,7 +219,7 @@ implements
     @Override
     public final boolean computedOnClientStoredOn(GeneratorStatementType statementType, Configuration configuration) {
         return computedOnClient(configuration)
-            && generationOption(configuration) == GenerationOption.STORED
+            && generationOption(configuration) != GenerationOption.VIRTUAL
             && generatedAlwaysAsGenerator().supports(statementType);
     }
 

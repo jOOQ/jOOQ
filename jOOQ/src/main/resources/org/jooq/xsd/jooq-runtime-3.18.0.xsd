@@ -913,7 +913,14 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
       <element name="emulateMultiset" type="jooq-runtime:NestedCollectionEmulation" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#3884] How <code>MULTISET</code> support should be emulated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
+      <element name="emulateComputedColumns" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#13418] Whether computed columns should be emulated in the client.
+<p>
+This can be useful if a schema was generated using a dialect that supports computed columns, but it is
+deployed on an RDBMS that does not.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="executeUpdateWithoutWhere" type="jooq-runtime:ExecuteWithoutWhere" minOccurs="0" maxOccurs="1" default="LOG_DEBUG">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#6771] Specifies whether UPDATE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

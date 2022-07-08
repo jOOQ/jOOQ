@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -54,6 +56,7 @@ import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.CONFIG_UNQUOTED;
 import static org.jooq.impl.Tools.NO_SUPPORT_BINARY_TYPE_LENGTH;
 import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Tools.settings;
 import static org.jooq.impl.Tools.visitMappedSchema;
 
 import java.lang.reflect.Array;
@@ -159,7 +162,12 @@ implements
 
     @Override
     public final boolean readonlyInternal() {
-        return readonly() && !computedOnClientStored();
+        return readonlyInternal(CONFIG);
+    }
+
+    @Override
+    public final boolean readonlyInternal(Configuration configuration) {
+        return readonly() && !computedOnClientStored(configuration);
     }
 
     @Override
@@ -172,33 +180,58 @@ implements
 
     @Override
     public final boolean computedOnServer() {
-        return computed() && generationLocation() == GenerationLocation.SERVER;
+        return computedOnServer(CONFIG);
+    }
+
+    @Override
+    public final boolean computedOnServer(Configuration configuration) {
+        return computed() && generationLocation(configuration) == GenerationLocation.SERVER;
     }
 
     @Override
     public final boolean computedOnClient() {
-        return computed() && generationLocation() == GenerationLocation.CLIENT;
+        return computedOnClient(CONFIG);
+    }
+
+    @Override
+    public final boolean computedOnClient(Configuration configuration) {
+        return computed() && generationLocation(configuration) == GenerationLocation.CLIENT;
     }
 
     @Override
     public final boolean computedOnClientStored() {
-        return computedOnClient()
-            && generationOption() == GenerationOption.STORED
+        return computedOnClientStored(CONFIG);
+    }
+
+    @Override
+    public final boolean computedOnClientStored(Configuration configuration) {
+        return computedOnClient(configuration)
+            && generationOption(configuration) == GenerationOption.STORED
             && (generatedAlwaysAsGenerator().supports(GeneratorStatementType.INSERT) ||
                 generatedAlwaysAsGenerator().supports(GeneratorStatementType.UPDATE));
     }
 
     @Override
     public final boolean computedOnClientStoredOn(GeneratorStatementType statementType) {
-        return computedOnClient()
-            && generationOption() == GenerationOption.STORED
+        return computedOnClientStoredOn(statementType, CONFIG);
+    }
+
+    @Override
+    public final boolean computedOnClientStoredOn(GeneratorStatementType statementType, Configuration configuration) {
+        return computedOnClient(configuration)
+            && generationOption(configuration) == GenerationOption.STORED
             && generatedAlwaysAsGenerator().supports(statementType);
     }
 
     @Override
     public final boolean computedOnClientVirtual() {
-        return computedOnClient()
-            && generationOption() == GenerationOption.VIRTUAL
+        return computedOnClientVirtual(CONFIG);
+    }
+
+    @Override
+    public final boolean computedOnClientVirtual(Configuration configuration) {
+        return computedOnClient(configuration)
+            && generationOption(configuration) == GenerationOption.VIRTUAL
             && generatedAlwaysAsGenerator().supports(GeneratorStatementType.SELECT);
     }
 
@@ -240,11 +273,23 @@ implements
     @Override
     public abstract GenerationOption generationOption();
 
+    final GenerationOption generationOption(Configuration configuration) {
+        return TRUE.equals(settings(configuration).isEmulateComputedColumns())
+             ? GenerationOption.STORED
+             : generationOption();
+    }
+
     @Override
     public abstract DataType<T> generationLocation(GenerationLocation generationLocation);
 
     @Override
     public abstract GenerationLocation generationLocation();
+
+    final GenerationLocation generationLocation(Configuration configuration) {
+        return TRUE.equals(settings(configuration).isEmulateComputedColumns())
+             ? GenerationLocation.CLIENT
+             : generationLocation();
+    }
 
     @Override
     public abstract DataType<T> collation(Collation c);

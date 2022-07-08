@@ -89,7 +89,8 @@ public class MatchersCatalogType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.Catalog} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.Catalog} does, so to minimise
-     * unexpected behaviour, custom catalog super classes should extend {@link org.jooq.impl.CatalogImpl}.
+     * unexpected behaviour, custom catalog super classes should extend {@link org.jooq.impl.CatalogImpl}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public String getCatalogExtends() {
@@ -100,7 +101,8 @@ public class MatchersCatalogType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.Catalog} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.Catalog} does, so to minimise
-     * unexpected behaviour, custom catalog super classes should extend {@link org.jooq.impl.CatalogImpl}.
+     * unexpected behaviour, custom catalog super classes should extend {@link org.jooq.impl.CatalogImpl}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public void setCatalogExtends(String value) {
@@ -154,7 +156,8 @@ public class MatchersCatalogType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.Catalog} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.Catalog} does, so to minimise
-     * unexpected behaviour, custom catalog super classes should extend {@link org.jooq.impl.CatalogImpl}.
+     * unexpected behaviour, custom catalog super classes should extend {@link org.jooq.impl.CatalogImpl}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public MatchersCatalogType withCatalogExtends(String value) {

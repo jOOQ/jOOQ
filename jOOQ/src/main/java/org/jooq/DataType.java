@@ -77,6 +77,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import org.jooq.Converters.UnknownType;
+import org.jooq.conf.Settings;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.QOM.GenerationLocation;
@@ -490,9 +491,41 @@ public interface DataType<T> extends Named {
      * <li>Columns used for optimistic locking</li>
      * </ul>
      * <p>
+     * This method returns the static information for this data type. The
+     * information may be overridden by a {@link Settings} value, e.g.
+     * {@link Settings#isEmulateComputedColumns()}, in case of which
+     * {@link #readonlyInternal(Configuration)} should be called.
+     * <p>
      * This feature is implemented in commercial distributions only.
      */
     boolean readonlyInternal();
+
+    /**
+     * Get the readonly attribute of this data type, combined with other flags
+     * that influence readonly behaviour.
+     * <p>
+     * A column may be marked as {@link #readonly()} for various reasons,
+     * including:
+     * <ul>
+     * <li>When it is marked as readonly explicitly by the code generator.</li>
+     * <li>When it is marked as readonly implicitly because it's a computed
+     * column with {@link GenerationLocation#SERVER} or with
+     * {@link GenerationLocation#CLIENT} and
+     * {@link GenerationOption#VIRTUAL}.</li>
+     * </ul>
+     * <p>
+     * Some columns are readonly for users, meaning users of the jOOQ API cannot
+     * write to them, but jOOQ, internally, may still write to those columns.
+     * Such columns may include:
+     * <ul>
+     * <li>Columns that are computed with {@link GenerationLocation#CLIENT} and
+     * {@link GenerationOption#STORED}</li>
+     * <li>Columns used for optimistic locking</li>
+     * </ul>
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    boolean readonlyInternal(Configuration configuration);
 
     /**
      * Whether this column is computed.
@@ -511,9 +544,29 @@ public interface DataType<T> extends Named {
      * {@link GenerationLocation#SERVER}</li>
      * </ul>
      * <p>
+     * This method returns the static information for this data type. The
+     * information may be overridden by a {@link Settings} value, e.g.
+     * {@link Settings#isEmulateComputedColumns()}, in case of which
+     * {@link #computedOnServer(Configuration)} should be called.
+     * <p>
      * This feature is implemented in commercial distributions only.
      */
     boolean computedOnServer();
+
+    /**
+     * Whether this column is computed on the server.
+     * <p>
+     * This is true only if all of these hold true:
+     * <ul>
+     * <li>{@link #computed()}</li>
+     * <li>{@link #generationLocation()} ==
+     * {@link GenerationLocation#SERVER}</li>
+     * <li>{@link Settings#isEmulateComputedColumns() == false}</li>
+     * </ul>
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    boolean computedOnServer(Configuration configuration);
 
     /**
      * Whether this column is computed on the client.
@@ -525,9 +578,60 @@ public interface DataType<T> extends Named {
      * {@link GenerationLocation#CLIENT}</li>
      * </ul>
      * <p>
+     * This method returns the static information for this data type. The
+     * information may be overridden by a {@link Settings} value, e.g.
+     * {@link Settings#isEmulateComputedColumns()}, in case of which
+     * {@link #computedOnClient(Configuration)} should be called.
+     * <p>
      * This feature is implemented in commercial distributions only.
      */
     boolean computedOnClient();
+
+    /**
+     * Whether this column is computed on the client.
+     * <p>
+     * This is true only if all of these hold true:
+     * <ul>
+     * <li>{@link #computed()}</li>
+     * <li>{@link #generationLocation()} ==
+     * {@link GenerationLocation#CLIENT}</li>
+     * </ul>
+     * <p>
+     * Alternatively, this makes the result true as well:
+     * <ul>
+     * <li>{@link #computed()}</li>
+     * <li>{@link #generationLocation()} ==
+     * {@link GenerationLocation#SERVER}</li>
+     * <li>{@link Settings#isEmulateComputedColumns() == true}</li>
+     * </ul>
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    boolean computedOnClient(Configuration configuration);
+
+    /**
+     * Whether this column is computed on the client.
+     * <p>
+     * This is true only if all of these hold true:
+     * <ul>
+     * <li>{@link #computed()}</li>
+     * <li>{@link #generationLocation()} ==
+     * {@link GenerationLocation#CLIENT}</li>
+     * <li>{@link #generationOption()} == {@link GenerationOption#STORED}</li>
+     * <li>{@link #generatedAlwaysAsGenerator()} produces a generator that
+     * {@link Generator#supports(GeneratorStatementType)} any of
+     * {@link GeneratorStatementType#INSERT} or
+     * {@link GeneratorStatementType#UPDATE}</li>
+     * </ul>
+     * <p>
+     * This method returns the static information for this data type. The
+     * information may be overridden by a {@link Settings} value, e.g.
+     * {@link Settings#isEmulateComputedColumns()}, in case of which
+     * {@link #computedOnClientStored(Configuration)} should be called.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    boolean computedOnClientStored();
 
     /**
      * Whether this column is computed on the client.
@@ -546,7 +650,30 @@ public interface DataType<T> extends Named {
      * <p>
      * This feature is implemented in commercial distributions only.
      */
-    boolean computedOnClientStored();
+    boolean computedOnClientStored(Configuration configuration);
+
+    /**
+     * Whether this column is computed on the client.
+     * <p>
+     * This is true only if all of these hold true:
+     * <ul>
+     * <li>{@link #computed()}</li>
+     * <li>{@link #generationLocation()} ==
+     * {@link GenerationLocation#CLIENT}</li>
+     * <li>{@link #generationOption()} == {@link GenerationOption#STORED}</li>
+     * <li>{@link #generatedAlwaysAsGenerator()} produces a generator that
+     * {@link Generator#supports(GeneratorStatementType)} the argument
+     * <code>statementType</code></li>
+     * </ul>
+     * <p>
+     * This method returns the static information for this data type. The
+     * information may be overridden by a {@link Settings} value, e.g.
+     * {@link Settings#isEmulateComputedColumns()}, in case of which
+     * {@link #computedOnClientStoredOn(GeneratorStatementType, Configuration)} should be called.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    boolean computedOnClientStoredOn(GeneratorStatementType statementType);
 
     /**
      * Whether this column is computed on the client.
@@ -564,7 +691,30 @@ public interface DataType<T> extends Named {
      * <p>
      * This feature is implemented in commercial distributions only.
      */
-    boolean computedOnClientStoredOn(GeneratorStatementType statementType);
+    boolean computedOnClientStoredOn(GeneratorStatementType statementType, Configuration configuration);
+
+    /**
+     * Whether this column is computed on the client.
+     * <p>
+     * This is true only if all of these hold true:
+     * <ul>
+     * <li>{@link #computed()}</li>
+     * <li>{@link #generationLocation()} ==
+     * {@link GenerationLocation#CLIENT}</li>
+     * <li>{@link #generationOption()} == {@link GenerationOption#VIRTUAL}</li>
+     * <li>{@link #generatedAlwaysAsGenerator()} produces a generator that
+     * {@link Generator#supports(GeneratorStatementType)} the type
+     * {@link GeneratorStatementType#SELECT}</li>
+     * </ul>
+     * <p>
+     * This method returns the static information for this data type. The
+     * information may be overridden by a {@link Settings} value, e.g.
+     * {@link Settings#isEmulateComputedColumns()}, in case of which
+     * {@link #computedOnClientVirtual(Configuration)} should be called.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    boolean computedOnClientVirtual();
 
     /**
      * Whether this column is computed on the client.
@@ -582,7 +732,7 @@ public interface DataType<T> extends Named {
      * <p>
      * This feature is implemented in commercial distributions only.
      */
-    boolean computedOnClientVirtual();
+    boolean computedOnClientVirtual(Configuration configuration);
 
     /**
      * Set the computed column expression of this data type to a constant value.

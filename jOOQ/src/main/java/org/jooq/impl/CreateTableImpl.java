@@ -487,13 +487,21 @@ implements
             Field<?> identity = null;
             boolean qualify = ctx.qualify();
             ctx.qualify(false);
+            boolean first = true;
 
+            columnLoop:
             for (int i = 0; i < columns.size(); i++) {
                 Field<?> field = columns.get(i);
                 DataType<?> type = columnType(ctx, field);
 
+                if (type.computedOnClientVirtual(ctx.configuration()))
+                    continue columnLoop;
+
                 if (identity == null && type.identity())
                     identity = field;
+
+                if (!first)
+                    ctx.sql(',').formatSeparator();
 
                 ctx.visit(field);
 
@@ -502,8 +510,7 @@ implements
                     Tools.toSQLDDLTypeDeclarationForAddition(ctx, type);
                 }
 
-                if (i < columns.size() - 1)
-                    ctx.sql(',').formatSeparator();
+                first = false;
             }
 
             // [#10551] Ignite requires at least one non-PK column.

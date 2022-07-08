@@ -107,7 +107,8 @@ public class MatchersTableType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.Table} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.Table} does, so to minimise
-     * unexpected behaviour, custom table super classes should extend {@link org.jooq.impl.TableImpl}.
+     * unexpected behaviour, custom table super classes should extend {@link org.jooq.impl.TableImpl}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public String getTableExtends() {
@@ -118,7 +119,8 @@ public class MatchersTableType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.Table} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.Table} does, so to minimise
-     * unexpected behaviour, custom table super classes should extend {@link org.jooq.impl.TableImpl}.
+     * unexpected behaviour, custom table super classes should extend {@link org.jooq.impl.TableImpl}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public void setTableExtends(String value) {
@@ -161,7 +163,8 @@ public class MatchersTableType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.TableRecord} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.TableRecord} does, so to minimise
-     * unexpected behaviour, custom table record super classes should extend {@link org.jooq.impl.TableRecordImpl}.
+     * unexpected behaviour, custom table record super classes should extend {@link org.jooq.impl.TableRecordImpl}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public String getRecordExtends() {
@@ -172,7 +175,8 @@ public class MatchersTableType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.TableRecord} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.TableRecord} does, so to minimise
-     * unexpected behaviour, custom table record super classes should extend {@link org.jooq.impl.TableRecordImpl}.
+     * unexpected behaviour, custom table record super classes should extend {@link org.jooq.impl.TableRecordImpl}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public void setRecordExtends(String value) {
@@ -247,7 +251,8 @@ public class MatchersTableType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.DAO} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.DAO} does, so to minimise
-     * unexpected behaviour, custom DAO super classes should extend {@link org.jooq.impl.DAOImpl}.
+     * unexpected behaviour, custom DAO super classes should extend {@link org.jooq.impl.DAOImpl}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public String getDaoExtends() {
@@ -258,7 +263,8 @@ public class MatchersTableType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.DAO} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.DAO} does, so to minimise
-     * unexpected behaviour, custom DAO super classes should extend {@link org.jooq.impl.DAOImpl}.
+     * unexpected behaviour, custom DAO super classes should extend {@link org.jooq.impl.DAOImpl}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public void setDaoExtends(String value) {
@@ -360,7 +366,8 @@ public class MatchersTableType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.Table} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.Table} does, so to minimise
-     * unexpected behaviour, custom table super classes should extend {@link org.jooq.impl.TableImpl}.
+     * unexpected behaviour, custom table super classes should extend {@link org.jooq.impl.TableImpl}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public MatchersTableType withTableExtends(String value) {
@@ -390,7 +397,8 @@ public class MatchersTableType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.TableRecord} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.TableRecord} does, so to minimise
-     * unexpected behaviour, custom table record super classes should extend {@link org.jooq.impl.TableRecordImpl}.
+     * unexpected behaviour, custom table record super classes should extend {@link org.jooq.impl.TableRecordImpl}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public MatchersTableType withRecordExtends(String value) {
@@ -438,7 +446,8 @@ public class MatchersTableType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.DAO} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.DAO} does, so to minimise
-     * unexpected behaviour, custom DAO super classes should extend {@link org.jooq.impl.DAOImpl}.
+     * unexpected behaviour, custom DAO super classes should extend {@link org.jooq.impl.DAOImpl}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public MatchersTableType withDaoExtends(String value) {

@@ -89,7 +89,8 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.Routine} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.Routine} does, so to minimise
-     * unexpected behaviour, custom routine super classes should extend {@link org.jooq.impl.AbstractRoutine}.
+     * unexpected behaviour, custom routine super classes should extend {@link org.jooq.impl.AbstractRoutine}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public String getRoutineExtends() {
@@ -100,7 +101,8 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.Routine} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.Routine} does, so to minimise
-     * unexpected behaviour, custom routine super classes should extend {@link org.jooq.impl.AbstractRoutine}.
+     * unexpected behaviour, custom routine super classes should extend {@link org.jooq.impl.AbstractRoutine}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public void setRoutineExtends(String value) {
@@ -154,7 +156,8 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.Routine} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.Routine} does, so to minimise
-     * unexpected behaviour, custom routine super classes should extend {@link org.jooq.impl.AbstractRoutine}.
+     * unexpected behaviour, custom routine super classes should extend {@link org.jooq.impl.AbstractRoutine}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public MatchersRoutineType withRoutineExtends(String value) {

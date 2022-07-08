@@ -7033,7 +7033,7 @@ final class Tools {
         }
     }
 
-    static final <T> DataType<T> removeGenerator(DataType<T> dataType) {
+    static final <T> DataType<T> removeGenerator(Configuration configuration, DataType<T> dataType) {
 
 
 

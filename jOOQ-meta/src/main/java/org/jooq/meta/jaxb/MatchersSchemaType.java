@@ -89,7 +89,8 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.Schema} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.Schema} does, so to minimise
-     * unexpected behaviour, custom schema super classes should extend {@link org.jooq.impl.SchemaImpl}.
+     * unexpected behaviour, custom schema super classes should extend {@link org.jooq.impl.SchemaImpl}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public String getSchemaExtends() {
@@ -100,7 +101,8 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.Schema} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.Schema} does, so to minimise
-     * unexpected behaviour, custom schema super classes should extend {@link org.jooq.impl.SchemaImpl}.
+     * unexpected behaviour, custom schema super classes should extend {@link org.jooq.impl.SchemaImpl}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public void setSchemaExtends(String value) {
@@ -154,7 +156,8 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.Schema} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.Schema} does, so to minimise
-     * unexpected behaviour, custom schema super classes should extend {@link org.jooq.impl.SchemaImpl}.
+     * unexpected behaviour, custom schema super classes should extend {@link org.jooq.impl.SchemaImpl}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public MatchersSchemaType withSchemaExtends(String value) {

@@ -319,6 +319,8 @@ public class Settings
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
     protected NestedCollectionEmulation emulateMultiset = NestedCollectionEmulation.DEFAULT;
+    @XmlElement(defaultValue = "false")
+    protected Boolean emulateComputedColumns = false;
     @XmlElement(defaultValue = "LOG_DEBUG")
     @XmlSchemaType(name = "string")
     protected ExecuteWithoutWhere executeUpdateWithoutWhere = ExecuteWithoutWhere.LOG_DEBUG;
@@ -3449,6 +3451,33 @@ public class Settings
     }
 
     /**
+     * [#13418] Whether computed columns should be emulated in the client.
+     * <p>
+     * This can be useful if a schema was generated using a dialect that supports computed columns, but it is
+     * deployed on an RDBMS that does not.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isEmulateComputedColumns() {
+        return emulateComputedColumns;
+    }
+
+    /**
+     * Sets the value of the emulateComputedColumns property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setEmulateComputedColumns(Boolean value) {
+        this.emulateComputedColumns = value;
+    }
+
+    /**
      * [#6771] Specifies whether UPDATE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
      * 
      */
@@ -5116,6 +5145,11 @@ public class Settings
         return this;
     }
 
+    public Settings withEmulateComputedColumns(Boolean value) {
+        setEmulateComputedColumns(value);
+        return this;
+    }
+
     /**
      * [#6771] Specifies whether UPDATE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
      * 
@@ -5587,6 +5621,7 @@ public class Settings
         builder.append("delimiter", delimiter);
         builder.append("emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly", emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly);
         builder.append("emulateMultiset", emulateMultiset);
+        builder.append("emulateComputedColumns", emulateComputedColumns);
         builder.append("executeUpdateWithoutWhere", executeUpdateWithoutWhere);
         builder.append("executeDeleteWithoutWhere", executeDeleteWithoutWhere);
         builder.append("interpreterDialect", interpreterDialect);
@@ -6754,6 +6789,15 @@ public class Settings
                 return false;
             }
         }
+        if (emulateComputedColumns == null) {
+            if (other.emulateComputedColumns!= null) {
+                return false;
+            }
+        } else {
+            if (!emulateComputedColumns.equals(other.emulateComputedColumns)) {
+                return false;
+            }
+        }
         if (executeUpdateWithoutWhere == null) {
             if (other.executeUpdateWithoutWhere!= null) {
                 return false;
@@ -7235,6 +7279,7 @@ public class Settings
         result = ((prime*result)+((delimiter == null)? 0 :delimiter.hashCode()));
         result = ((prime*result)+((emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly == null)? 0 :emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly.hashCode()));
         result = ((prime*result)+((emulateMultiset == null)? 0 :emulateMultiset.hashCode()));
+        result = ((prime*result)+((emulateComputedColumns == null)? 0 :emulateComputedColumns.hashCode()));
         result = ((prime*result)+((executeUpdateWithoutWhere == null)? 0 :executeUpdateWithoutWhere.hashCode()));
         result = ((prime*result)+((executeDeleteWithoutWhere == null)? 0 :executeDeleteWithoutWhere.hashCode()));
         result = ((prime*result)+((interpreterDialect == null)? 0 :interpreterDialect.hashCode()));

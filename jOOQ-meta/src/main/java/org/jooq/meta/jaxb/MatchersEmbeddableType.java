@@ -80,7 +80,8 @@ public class MatchersEmbeddableType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.EmbeddableRecord} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.EmbeddableRecord} does, so to minimise
-     * unexpected behaviour, custom embeddable record super classes should extend {@link org.jooq.impl.EmbeddableRecordImpl}.
+     * unexpected behaviour, custom embeddable record super classes should extend {@link org.jooq.impl.EmbeddableRecordImpl}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public String getRecordExtends() {
@@ -91,7 +92,8 @@ public class MatchersEmbeddableType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.EmbeddableRecord} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.EmbeddableRecord} does, so to minimise
-     * unexpected behaviour, custom embeddable record super classes should extend {@link org.jooq.impl.EmbeddableRecordImpl}.
+     * unexpected behaviour, custom embeddable record super classes should extend {@link org.jooq.impl.EmbeddableRecordImpl}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public void setRecordExtends(String value) {
@@ -216,7 +218,8 @@ public class MatchersEmbeddableType implements Serializable, XMLAppendable
      * This string provides a super class that a generated {@link org.jooq.EmbeddableRecord} should extend.
      * <p>        
      * jOOQ internals make a few assumptions about what a {@link org.jooq.EmbeddableRecord} does, so to minimise
-     * unexpected behaviour, custom embeddable record super classes should extend {@link org.jooq.impl.EmbeddableRecordImpl}.
+     * unexpected behaviour, custom embeddable record super classes should extend {@link org.jooq.impl.EmbeddableRecordImpl}
+     * and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.
      * 
      */
     public MatchersEmbeddableType withRecordExtends(String value) {

@@ -38,6 +38,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.removeGenerator;
 
 import java.util.List;
@@ -87,10 +88,12 @@ final class TableAlias<R extends Record> extends AbstractTable<R> implements QOM
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private final FieldsImpl<R> initFieldAliases() {
+
+        // [#13418]
         List<Field<?>> result = Tools.map(this.alias.wrapped().fieldsRow().fields(), (f, i) -> new TableFieldImpl(
               alias.fieldAliases != null && alias.fieldAliases.length > i
             ? alias.fieldAliases[i]
-            : f.getUnqualifiedName(), removeGenerator(f.getDataType()), this, f.getCommentPart(), f.getBinding()
+            : f.getUnqualifiedName(), removeGenerator(CONFIG, f.getDataType()), this, f.getCommentPart(), f.getBinding()
         ));
 
         return new FieldsImpl<>(result);

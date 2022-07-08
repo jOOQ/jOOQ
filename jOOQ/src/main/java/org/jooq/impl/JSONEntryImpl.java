@@ -45,10 +45,8 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.coalesce;
-import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.iif;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.inlined;
 import static org.jooq.impl.DSL.nvl;
@@ -88,6 +86,7 @@ import org.jooq.Scope;
 import org.jooq.Select;
 // ...
 import org.jooq.conf.NestedCollectionEmulation;
+
 
 
 /**
@@ -211,7 +210,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
             case SQLITE:
                 if (isType(type, Boolean.class))
-                    return function(N_JSON, SQLDataType.JSON, case_((Field<Boolean>) field).when(inline(true), inline("true")).when(inline(false), inline("false")));
+                    return function(N_JSON, SQLDataType.JSON, booleanCase(field));
 
                 break;
 
@@ -258,6 +257,11 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
         }
 
         return field;
+    }
+
+    @SuppressWarnings("unchecked")
+    private static Field<String> booleanCase(Field<?> field) {
+        return case_((Field<Boolean>) field).when(inline(true), inline("true")).when(inline(false), inline("false"));
     }
 
     static final <T> Field<T> unescapeNestedJSON(Scope ctx, Field<T> value) {
@@ -312,7 +316,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
     }
 
     static final Field<?> booleanValAsVarchar(Field<?> field) {
-        return field instanceof Val ? ((Val<?>) field).convertTo0(VARCHAR) : field;
+        return field instanceof Val ? ((Val<?>) field).convertTo0(VARCHAR) : booleanCase(field);
     }
 
     static final Field<?> jsonMerge(Scope scope, String empty, Field<?>... fields) {

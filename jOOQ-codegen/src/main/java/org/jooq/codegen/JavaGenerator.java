@@ -38,6 +38,7 @@
 package org.jooq.codegen;
 
 
+import static java.lang.Boolean.parseBoolean;
 import static java.util.Arrays.asList;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.counting;
@@ -84,6 +85,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -5989,12 +5991,19 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
+        Properties databaseProperties = database.getProperties();
+
+        boolean isFieldsInLowerCase =
+                databaseProperties.get("fieldsInLowerCase") != null &&
+                parseBoolean(databaseProperties.get("fieldsInLowerCase").toString());
+
+
         for (ColumnDefinition column : table.getColumns()) {
             final String columnTypeFull = getJavaType(column.getType(resolver(out)), out);
             final String columnType = out.ref(columnTypeFull);
             final String columnTypeRef = getJavaTypeReference(column.getDatabase(), column.getType(resolver(out)), out);
             final String columnId = out.ref(getStrategy().getJavaIdentifier(column), colRefSegments(column));
-            final String columnName = column.getName();
+            final String columnName = isFieldsInLowerCase ? column.getName().toLowerCase() : column.getName();
             final List<String> converter = out.ref(list(column.getType(resolver(out)).getConverter()));
             final List<String> binding = out.ref(list(column.getType(resolver(out)).getBinding()));
             final List<String> generator = new ArrayList<>();

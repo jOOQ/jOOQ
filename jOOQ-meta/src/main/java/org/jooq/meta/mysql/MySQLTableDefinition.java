@@ -113,13 +113,15 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
             boolean displayWidths = getDatabase().integerDisplayWidths();
 
             // [#6492] MariaDB supports a standard IS_GENERATED, but MySQL doesn't (yet)
-            boolean generated = record.get(COLUMNS.EXTRA) != null && record.get(COLUMNS.EXTRA).toUpperCase().contains("GENERATED");
             GenerationOption generationOption =
                   "VIRTUAL GENERATED".equalsIgnoreCase(record.get(COLUMNS.EXTRA))
                 ? GenerationOption.VIRTUAL
                 : "STORED GENERATED".equalsIgnoreCase(record.get(COLUMNS.EXTRA))
                 ? GenerationOption.STORED
                 : null;
+
+            // [#13818] Some DEFAULT expressions (e.g. CURRENT_TIMESTAMP) produce a DEFAULT_GENERATED value in EXTRA
+            boolean generated = generationOption != null;
 
             columnTypeFix:
             if (unsigned || displayWidths) {

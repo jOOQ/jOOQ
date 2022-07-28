@@ -648,6 +648,14 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T> T connectionResult(ConnectionCallable<T> callable) {
+
+        // [#13827] [#13830] The OracleDSL.DBMS_AQ API requires a fix for
+        //                   #13830. However, #13830 risks introducing new
+        //                   regressions, which is why the fix has been applied
+        //                   only to work around #13827, so far.
+        if (data("org.jooq.workaround.issue13827") != null)
+            return connectionResult0(callable);
+
         final Connection connection = configuration().connectionProvider().acquire();
 
         if (connection == null)
@@ -665,6 +673,29 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         finally {
             configuration().connectionProvider().release(connection);
         }
+    }
+
+    private final <T> T connectionResult0(ConnectionCallable<T> callable) {
+        DefaultExecuteContext ctx = new DefaultExecuteContext(configuration());
+        Connection connection = ctx.connection();
+
+        if (connection == null)
+            throw new DetachedException("No JDBC Connection provided by ConnectionProvider");
+
+        return DefaultExecuteContext.localExecuteContext(ctx, () -> {
+            try {
+                return callable.run(connection);
+            }
+            catch (Error | RuntimeException e) {
+                throw e;
+            }
+            catch (Throwable t) {
+                throw new DataAccessException("Error while running ConnectionCallable", t);
+            }
+            finally {
+                Tools.safeClose(new DefaultExecuteListener(), ctx);
+            }
+        });
     }
 
     @Override

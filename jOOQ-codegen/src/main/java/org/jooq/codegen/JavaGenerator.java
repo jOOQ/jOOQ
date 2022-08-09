@@ -530,7 +530,7 @@ public class JavaGenerator extends AbstractGenerator {
                 "No modified files",
                 "This code generation run has not produced any file modifications.\n"
               + "This means, the schema has not changed, and no other parameters (jOOQ version, driver version, database version,\n"
-              + "and any configuration elements) have not changed either.\n\n"
+              + "and any configuration elements) have changed either.\n\n"
               + "In automated builds, it is recommended to prevent unnecessary code generation runs. This run took: " + StopWatch.format(time) + "\n"
               + "Possible means to prevent this:\n"
               + "- Use manual code generation and check in generated sources: https://www.jooq.org/doc/latest/manual/code-generation/codegen-version-control/\n"

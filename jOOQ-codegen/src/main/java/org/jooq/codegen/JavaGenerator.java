@@ -4667,7 +4667,7 @@ public class JavaGenerator extends AbstractGenerator {
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(table, Mode.DAO));
         final String tableRecord = out.ref(getStrategy().getFullJavaClassName(table, Mode.RECORD));
         final String daoImpl = generateSpringDao()
-            ? out.ref(getStrategy().getJavaPackageName(table.getSchema(), Mode.DAO) + ".AbstractSpringDAOImpl")
+            ? out.ref(getStrategy().getJavaPackageName(table.getCatalog(), Mode.DAO) + ".AbstractSpringDAOImpl")
             : out.ref(DAOImpl.class);
         final String tableIdentifier = out.ref(getStrategy().getFullJavaIdentifier(table), 2);
 

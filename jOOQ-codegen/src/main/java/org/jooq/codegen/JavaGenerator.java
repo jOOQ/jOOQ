@@ -8265,7 +8265,7 @@ public class JavaGenerator extends AbstractGenerator {
                     if (scala)
                         out.println("setSyntheticReturnParameter(%s.%s)", className, paramId);
                     else if (kotlin)
-                        out.println("syntheticReturnParameter = %s", paramId);
+                        out.println("setSyntheticReturnParameter(%s)", paramId);
                     else
                         out.println("setSyntheticReturnParameter(%s);", paramId);
                 }

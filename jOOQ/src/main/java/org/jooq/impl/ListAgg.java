@@ -125,6 +125,11 @@ final class ListAgg extends AbstractAggregateFunction<String> implements UNotYet
                     query("{set} @@group_concat_max_len = 4294967295")
                 );
                 acceptGroupConcat(ctx);
+
+
+
+
+
                 appendSQL(ctx, query("{set} @@group_concat_max_len = @t"));
             }
             else
@@ -204,12 +209,12 @@ final class ListAgg extends AbstractAggregateFunction<String> implements UNotYet
         // The explicit cast is needed in Postgres
         QueryPartListView<Field<?>> args =  wrap(castIfNeeded((Field<?>) arguments.get(0), String.class));
         acceptArguments1(ctx, args);
-        
+
         if (arguments.size() > 1)
             ctx.sql(", ").visit(arguments.get(1));
         else
             ctx.sql(", ").visit(inline(""));
-            
+
 
 
 

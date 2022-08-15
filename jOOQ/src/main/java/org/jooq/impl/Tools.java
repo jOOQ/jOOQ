@@ -1142,6 +1142,8 @@ final class Tools {
 
 
 
+
+
     // ------------------------------------------------------------------------
     // XXX: Record constructors and related methods
     // ------------------------------------------------------------------------
@@ -5545,6 +5547,11 @@ final class Tools {
 
 
 
+
+
+
+
+
     private static final void toSQLDDLTypeDeclarationDefault(Context<?> ctx, DataType<?> type) {
         if (type.defaulted())
             ctx.sql(' ').visit(K_DEFAULT).sql(' ').visit(type.defaultValue());
@@ -5558,6 +5565,11 @@ final class Tools {
 
 
 
+        toSQLDDLTypeDeclaration0(ctx, type);
+    }
+
+
+    private static final void toSQLDDLTypeDeclaration0(Context<?> ctx, DataType<?> type) {
         DataType<?> elementType = type instanceof ArrayDataType<?> t
             ? t.elementType
             : type;

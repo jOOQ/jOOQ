@@ -5356,6 +5356,7 @@ final class Tools {
 
 
 
+
     private static final void toSQLDDLTypeDeclarationDefault(Context<?> ctx, DataType<?> type) {
         if (type.defaulted())
             ctx.sql(' ').visit(K_DEFAULT).sql(' ').visit(type.defaultValue());

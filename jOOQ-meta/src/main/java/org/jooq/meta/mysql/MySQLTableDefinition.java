@@ -50,12 +50,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
+import org.jooq.meta.Database;
 import org.jooq.meta.DefaultColumnDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.SchemaDefinition;
@@ -78,6 +80,12 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
     @Override
     public List<ColumnDefinition> getElements0() throws SQLException {
         List<ColumnDefinition> result = new ArrayList<>();
+        MySQLDatabase database = (MySQLDatabase) getDatabase();
+        Field<String> generationExpression = COLUMNS.GENERATION_EXPRESSION;
+
+
+
+
 
         for (Record record : create().select(
                     COLUMNS.ORDINAL_POSITION,
@@ -88,7 +96,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                     COLUMNS.IS_NULLABLE,
                     COLUMNS.COLUMN_DEFAULT,
                     COLUMNS.EXTRA,
-                    COLUMNS.GENERATION_EXPRESSION,
+                    generationExpression,
                     COLUMNS.CHARACTER_MAXIMUM_LENGTH,
 
                     // [#10856] Some older versions of MySQL 5.7 don't have the DATETIME_PRECISION column yet

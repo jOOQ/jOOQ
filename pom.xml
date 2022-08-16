@@ -6,7 +6,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-parent</artifactId>
-    <version>3.17.3-SNAPSHOT</version>
+    <version>3.17.3</version>
     <packaging>pom</packaging>
 
     <name>jOOQ Parent</name>

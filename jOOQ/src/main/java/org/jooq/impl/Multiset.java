@@ -84,6 +84,7 @@ import java.util.function.Function;
 
 import org.jooq.AggregateFilterStep;
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Fields;
 import org.jooq.JSON;
@@ -433,9 +434,11 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                 map(fields.fields(), (f, i) -> {
                     Field<?> v = agg ? f : DSL.field(fieldName(i), f.getDataType());
                     String n = fieldNameString(i);
+                    DataType<?> t = v.getDataType();
 
                     // [#13181] We must make the '' vs NULL distinction explicit in XML
-                    if (v.getDataType().isString())
+                    // [#13872] Same with ARRAY[] vs NULL
+                    if (t.isString() || t.isArray())
                         return xmlelement(n, xmlattributes(when(v.isNull(), inline("true")).as(xsiNil(ctx))), v);
                     else
                         return xmlelement(n, v);

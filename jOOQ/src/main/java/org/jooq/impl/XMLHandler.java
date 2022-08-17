@@ -91,9 +91,11 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
         boolean                  inFields;
         int                      inRecord;
         boolean                  inColumn;
+        boolean                  inElement;
         Result<R>                result;
         final List<Field<?>>     fields;
         final List<Object>       values;
+        List<Object>             elements;
         int                      column;
 
         @SuppressWarnings("unchecked")
@@ -224,6 +226,9 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
                     throw new UnsupportedOperationException("Nested records not supported yet");
             }
         }
+        else if (s.inColumn && "element".equalsIgnoreCase(qName) && s.elements != null) {
+            s.inElement = true;
+        }
         else {
             if (s.result == null) {
                 String fieldName;
@@ -244,16 +249,21 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
             DataType<?> t = s.fields.get(s.column).getDataType();
 
             // [#13181] String NULL and '' values cannot be distinguished without xsi:nil
-            if (t.isString()
-                && !("true".equals(attributes.getValue("xsi:nil")))
-
-
-
-            )
+            if (t.isString() && !isNil(attributes))
                 s.values.add("");
+            else if (t.isArray() && !isNil(attributes))
+                s.elements = new ArrayList<>();
             else if (!t.isMultiset() && !t.isRecord())
                 s.values.add(null);
         }
+    }
+
+    private final boolean isNil(Attributes attributes) {
+        return "true".equals(attributes.getValue("xsi:nil"))
+
+
+
+        ;
     }
 
     @Override
@@ -282,6 +292,11 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
             s.values.clear();
             s.column = 0;
         }
+        else if (s.inColumn && "element".equalsIgnoreCase(qName) && s.elements != null) {
+            s.inElement = false;
+            s.elements.add(s.values.get(s.column));
+            s.values.remove(s.column);
+        }
 
         else x: {
             if (!states.isEmpty()) {
@@ -299,6 +314,10 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
                     s = states.pop();
                     break x;
                 }
+            }
+            else if (s.elements != null) {
+                s.values.add(s.elements);
+                s.elements = null;
             }
 
             s.inColumn = false;
@@ -330,12 +349,19 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
 
     @Override
     public final void characters(char[] ch, int start, int length) throws SAXException {
+        DataType<?> t;
+
         if (s.inColumn
-                && !(s.fields.get(s.column).getDataType().isRecord())
-                && !(s.fields.get(s.column).getDataType().isMultiset())) {
+            && !(t = s.fields.get(s.column).getDataType()).isRecord()
+            && !t.isMultiset()
+            && (!t.isArray() || s.inElement)
+        ) {
             String value = new String(ch, start, length);
             Object old;
 
+            // [#13872] If we're reading an array (s.inElement), the element
+            //          content is still appended to s.values for now, until
+            //          "element" is finished
             if (s.values.size() == s.column)
                 s.values.add(value);
             else if ((old = s.values.get(s.column)) == null)

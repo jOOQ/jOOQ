@@ -83,8 +83,8 @@ import static org.jooq.impl.Tools.flattenEntrySet;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.row0;
 import static org.jooq.impl.Tools.unqualified;
-import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_LIMIT_WITH_ORDER_BY;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_STORE_ASSIGNMENT;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_ON_DUPLICATE_KEY_WHERE;
 
 import java.util.ArrayList;
@@ -103,6 +103,7 @@ import org.jooq.FieldOrRow;
 import org.jooq.FieldOrRowOrSelect;
 import org.jooq.GeneratorStatementType;
 // ...
+import org.jooq.QueryPart;
 import org.jooq.RenderContext.CastMode;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
@@ -268,9 +269,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
 
                 // [#10523] Simplify special case
                 if (size == 1) {
-                    ctx.qualify(false, c -> c.visit(row.field(0)))
-                       .sql(" = ");
-
+                    acceptStoreAssignment(ctx, false, row.field(0));
                     visitSubquery(ctx, select);
                 }
                 else {
@@ -287,9 +286,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
             }
             else {
                 Row row = removeReadonly(ctx, multiRow);
-
-                ctx.qualify(false, c -> c.visit(row))
-                   .sql(" = ");
+                acceptStoreAssignment(ctx, false, row);
 
                 if (multiValue != null) {
 
@@ -325,8 +322,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
 
         // A regular (non-multi-row) update was specified
         else {
-            ctx.qualify(supportsQualify, c -> c.visit(key))
-               .sql(" = ");
+            acceptStoreAssignment(ctx, supportsQualify, key);
 
             // [#8479] Emulate WHERE clause using CASE
             Condition condition = (Condition) ctx.data(DATA_ON_DUPLICATE_KEY_WHERE);
@@ -344,6 +340,11 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
             ctx.end(assignmentClause);
 
         return ",";
+    }
+
+    private static final void acceptStoreAssignment(Context<?> ctx, boolean qualify, QueryPart target) {
+        ctx.qualify(qualify, c1 -> c1.data(DATA_STORE_ASSIGNMENT, true, c2 -> c2.visit(target)))
+           .sql(" = ");
     }
 
     private static final void visitSubquery(Context<?> ctx, Select<?> select) {

@@ -636,6 +636,12 @@ final class Tools {
          */
         DATA_PARSE_ON_CONFLICT,
 
+        /**
+         * [#13808] We're in a store assignment context (e.g.
+         * <code>UPDATE</code> or assignment statement).
+         */
+        DATA_STORE_ASSIGNMENT,
+
         ;
 
         private final boolean resetInSubqueryScope;

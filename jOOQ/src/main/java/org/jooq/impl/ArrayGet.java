@@ -114,7 +114,11 @@ implements
 
 
             case HSQLDB:
-                ctx.visit(when(cardinality(array).ge(index), new Standard()));
+                if (Boolean.TRUE.equals(ctx.data(DATA_STORE_ASSIGNMENT)))
+                    ctx.visit(new Standard());
+                else
+                    ctx.visit(when(cardinality(array).ge(index), new Standard()));
+
                 break;
 
             default:
@@ -131,7 +135,15 @@ implements
 
         @Override
         public void accept(Context<?> ctx) {
-            ctx.sql('(').visit(array).sql(')').sql('[').visit(index).sql(']');
+
+            // [#13808] When using an array element reference as a store assignment
+            //          target, the parentheses must not be rendered
+            if (array instanceof TableField || Boolean.TRUE.equals(ctx.data(DATA_STORE_ASSIGNMENT)))
+                ctx.visit(array).sql('[').visit(index).sql(']');
+
+            // [#12480] For expressions the parens might be required
+            else
+                ctx.sql('(').visit(array).sql(')').sql('[').visit(index).sql(']');
         }
     }
 

@@ -584,8 +584,13 @@ final class Tools {
          * [#11543] Whether the @@innodb_lock_wait_timeout value has already
          * been set.
          */
-        DATA_LOCK_WAIT_TIMEOUT_SET
+        DATA_LOCK_WAIT_TIMEOUT_SET,
 
+        /**
+         * [#13808] We're in a store assignment context (e.g.
+         * <code>UPDATE</code> or assignment statement).
+         */
+        DATA_STORE_ASSIGNMENT,
     }
 
     /**

@@ -54,6 +54,7 @@ import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.flattenEntrySet;
 import static org.jooq.impl.Tools.row0;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_STORE_ASSIGNMENT;
 import static org.jooq.impl.Tools.DataKey.DATA_ON_DUPLICATE_KEY_WHERE;
 
 import java.util.Map;
@@ -64,6 +65,7 @@ import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
 // ...
+import org.jooq.QueryPart;
 import org.jooq.RenderContext.CastMode;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
@@ -112,7 +114,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> i
                        .formatSeparator();
 
                 ctx.start(assignmentClause)
-                   .qualify(supportsQualify, c -> c.visit(entry.getKey()))
+                   .qualify(supportsQualify, c1 -> c1.data(DATA_STORE_ASSIGNMENT, true, c2 -> c2.visit(entry.getKey())))
                    .sql(" = ");
 
                 // [#8479] Emulate WHERE clause using CASE
@@ -132,6 +134,11 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> i
         }
         else
             ctx.sql("[ no fields are updated ]");
+    }
+
+    private static final void acceptStoreAssignment(Context<?> ctx, boolean qualify, QueryPart target) {
+        ctx.qualify(qualify, c1 -> c1.data(DATA_STORE_ASSIGNMENT, true, c2 -> c2.visit(target)))
+           .sql(" = ");
     }
 
     static final Iterable<Entry<Field<?>, Field<?>>> removeReadonly(Context<?> ctx, Iterable<Entry<Field<?>, Field<?>>> it) {

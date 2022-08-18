@@ -4645,6 +4645,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         boolean computed = false;
         boolean onUpdate = false;
         boolean unique = false;
+        Constraint uniqueConstraint = null;
         boolean comment = false;
         boolean compress = false;
         Comment fieldComment = null;
@@ -4758,28 +4759,31 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             ConstraintTypeStep inlineConstraint = parseConstraintNameSpecification();
 
-            if (!unique) {
-                if (!primary && parsePrimaryKeyClusteredNonClusteredKeywordIf()) {
-                    if (!parseKeywordIf("CLUSTERED"))
-                        parseKeywordIf("NONCLUSTERED");
+            if (!primary && parsePrimaryKeyClusteredNonClusteredKeywordIf()) {
+                constraints.add(parseConstraintEnforcementIf(inlineConstraint == null
+                    ? primaryKey(fieldName)
+                    : inlineConstraint.primaryKey(fieldName)));
 
-                    constraints.add(parseConstraintEnforcementIf(inlineConstraint == null
-                        ? primaryKey(fieldName)
-                        : inlineConstraint.primaryKey(fieldName)));
-                    primary = true;
-                    unique = true;
-                    continue;
-                }
-                else if (parseKeywordIf("UNIQUE")) {
-                    if (!parseKeywordIf("KEY"))
-                        parseKeywordIf("INDEX");
+                // [#13880] Remove all lexically preceding inline UNIQUE KEYs as
+                //          soon as a PRIMARY KEY is encountered
+                if (uniqueConstraint != null)
+                    constraints.remove(uniqueConstraint);
 
-                    constraints.add(parseConstraintEnforcementIf(inlineConstraint == null
+                primary = true;
+                unique = true;
+                continue;
+            }
+            else if (parseKeywordIf("UNIQUE")) {
+                if (!parseKeywordIf("KEY"))
+                    parseKeywordIf("INDEX");
+
+                if (!primary && !unique)
+                    constraints.add(uniqueConstraint = parseConstraintEnforcementIf(inlineConstraint == null
                         ? unique(fieldName)
                         : inlineConstraint.unique(fieldName)));
-                    unique = true;
-                    continue;
-                }
+
+                unique = true;
+                continue;
             }
 
             if (parseKeywordIf("CHECK")) {
@@ -4856,7 +4860,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 }
             }
-
 
             break;
         }

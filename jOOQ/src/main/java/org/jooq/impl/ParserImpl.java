@@ -12267,7 +12267,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         Name name;
         if (parseUnknownTypes && (name = parseNameIf()) != null)
-            return new DefaultDataType(dsl.dialect(), Object.class, name);
+            return parseDataTypeLength(new DefaultDataType(dsl.dialect(), Object.class, name));
         else
             return null;
     }

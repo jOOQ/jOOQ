@@ -4713,7 +4713,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (!parseKeywordIf("KEY"))
                     parseKeywordIf("INDEX");
 
-                if (!primary && !unique)
+                if (!unique)
                     constraints.add(uniqueConstraint = parseConstraintEnforcementIf(inlineConstraint == null
                         ? unique(fieldName)
                         : inlineConstraint.unique(fieldName)));

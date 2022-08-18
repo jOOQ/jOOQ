@@ -4944,6 +4944,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (!parseKeywordIf("CLUSTERED"))
             parseKeywordIf("NONCLUSTERED");
 
+        if (!parseKeywordIf("ASC"))
+            parseKeywordIf("DESC");
+
         return true;
     }
 
@@ -4969,11 +4972,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return Internal.createIndex(name == null ? NO_NAME : name, table, parseParenthesisedSortSpecification(), false);
     }
 
+    private final boolean parseConstraintConflictClauseIf() {
+        return parseKeywordIf("ON CONFLICT") && parseKeyword("ROLLBACK", "ABORT", "FAIL", "IGNORE", "REPLACE");
+    }
+
     private final Constraint parseConstraintEnforcementIf(ConstraintEnforcementStep e) {
-        boolean deferrable = parseConstraintDeferrableIf();
-        parseConstraintInitiallyIf();
-        if (!deferrable)
-            parseConstraintDeferrableIf();
+        boolean onConflict = false;
+        boolean deferrable = false;
+        boolean initially = false;
+
+        while ((!onConflict && (onConflict = parseConstraintConflictClauseIf()))
+            || (!deferrable && (deferrable = parseConstraintDeferrableIf()))
+            || (!initially && (initially = parseConstraintInitiallyIf())))
+            ;
 
         if ((parseKeywordIf("ENABLE") || parseKeywordIf("ENFORCED")))
             return e.enforced();
@@ -5476,7 +5487,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final boolean parseNotNullOptionalEnable() {
-        return parseKeywordIf("NOT NULL") && (parseKeywordIf("ENABLE") || true);
+        return parseKeywordIf("NOT NULL")
+            && (parseKeywordIf("ENABLE") || true)
+            && (parseConstraintConflictClauseIf() || true);
     }
 
     private final DDLQuery parseAlterTableAlterConstraint(AlterTableStep s1) {

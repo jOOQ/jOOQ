@@ -43,7 +43,6 @@ import static org.jooq.RenderContext.CastMode.NEVER;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
-// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -74,10 +73,7 @@ import org.jooq.Field;
 import org.jooq.Param;
 // ...
 import org.jooq.RenderContext.CastMode;
-import org.jooq.SQLDialect;
-import org.jooq.Select;
 import org.jooq.conf.ParamType;
-import org.jooq.exception.DataAccessException;
 import org.jooq.impl.QOM.UTransient;
 import org.jooq.impl.Tools.BooleanDataKey;
 
@@ -166,13 +162,14 @@ final class Limit extends AbstractQueryPart implements UTransient {
 
             case H2: {
 
-                // [#8415] For backwards compatibility reasons, we generate standard
-                //         OFFSET .. FETCH syntax on H2 only when strictly needed
-                if (ctx.family() == H2 && !withTies() && !percent())
-                    acceptDefault(ctx, castMode);
-                else
-                    acceptStandard(ctx, castMode);
 
+
+
+
+
+
+
+                acceptStandard(ctx, castMode);
                 break;
             }
 

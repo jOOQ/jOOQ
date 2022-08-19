@@ -1210,6 +1210,46 @@ public enum SQLDialect {
     }
 
     /**
+     * Whether this dialect strictly precedes an other dialect from the same
+     * family.
+     * <p>
+     * This returns:
+     * <ul>
+     * <li><code>false</code> if this dialect is the same as the other
+     * dialect</li>
+     * <li><code>true</code> if this dialect precedes the other dialect via any
+     * number of calls to {@link #predecessor()}</li>
+     * </ul>
+     * The above also implies that:
+     * <ul>
+     * <li><code>false</code> if the two dialects do not belong to the same
+     * family</li>
+     * </ul>
+     * <p>
+     * This is useful to see if some feature is supported by <em>"at least"</em>
+     * a given dialect version. Example:
+     *
+     * <pre>
+     * <code>
+     * // Do this block only if the chosen dialect was before PostgreSQL 9.3-
+     * if (dialect.precedesStrictly(POSTGRES_9_3)) {
+     * }
+     *
+     * // Do this block only if the chosen dialect was before PostgreSQL 9.4-
+     * else if (dialect.precedesStrictly(POSTGRES_9_4)) {
+     * }
+     *
+     * // Fall back to post-PostgreSQL 9.4+ behaviour
+     * else {
+     * }
+     * </code>
+     * </pre>
+     */
+    public final boolean precedesStrictly(SQLDialect other) {
+        return precedes(other) && this != other;
+    }
+
+    /**
      * Check whether this dialect supports another one.
      * <p>
      * This is:

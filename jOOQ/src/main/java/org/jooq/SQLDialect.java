@@ -171,6 +171,14 @@ public enum SQLDialect {
 
 
 
+
+
+
+
+
+
+
+
     /**
      * The Hypersonic dialect family.
      */

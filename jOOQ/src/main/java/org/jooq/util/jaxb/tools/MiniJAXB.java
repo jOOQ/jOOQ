@@ -285,15 +285,21 @@ public final class MiniJAXB {
         if (result == null)
             return;
 
+        // [#13897] Distinguish between lists of xs:complexType and xs:simpleType
+        boolean isComplexType = type.getAnnotation(XmlType.class) != null;
         NodeList list = element.getChildNodes();
         for (int i = 0; i < list.getLength(); i++) {
             Node item = list.item(i);
 
             if (item.getNodeType() == Node.ELEMENT_NODE) {
                 if (name.equals(((Element) item).getTagName()) || name.equals(((Element) item).getLocalName())) {
-                    Object o = Reflect.on(type).create().get();
-                    unmarshal0(o, (Element) item, fieldsByClass);
-                    result.add(o);
+                    if (isComplexType) {
+                        Object o = Reflect.on(type).create().get();
+                        unmarshal0(o, (Element) item, fieldsByClass);
+                        result.add(o);
+                    }
+                    else
+                        result.add(Convert.convert(item.getTextContent().trim(), type));
                 }
             }
         }

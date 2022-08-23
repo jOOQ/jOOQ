@@ -244,14 +244,14 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 INDEXES.TABLE_NAME,
                 INDEXES.INDEX_NAME,
                 field(INDEXES.getQualifiedName().append("INDEX_TYPE_NAME")).ne(inline("UNIQUE INDEX")).as(INDEXES.NON_UNIQUE),
-                field("i.column_name", INDEXES.COLUMN_NAME).as(INDEXES.COLUMN_NAME),
-                field("i.ordinal_position", INDEXES.ORDINAL_POSITION).as(INDEXES.ORDINAL_POSITION),
-                field("i.ordering_specification", INDEXES.ASC_OR_DESC).as(INDEXES.ASC_OR_DESC))
+                field("I.COLUMN_NAME", INDEXES.COLUMN_NAME).as(INDEXES.COLUMN_NAME),
+                field("I.ORDINAL_POSITION", INDEXES.ORDINAL_POSITION).as(INDEXES.ORDINAL_POSITION),
+                field("I.ORDERING_SPECIFICATION", INDEXES.ASC_OR_DESC).as(INDEXES.ASC_OR_DESC))
             .from(INDEXES)
-                .join("information_schema.index_columns i")
-                .on("{0} = i.table_schema", INDEXES.TABLE_SCHEMA)
-                .and("{0} = i.table_name", INDEXES.TABLE_NAME)
-                .and("{0} = i.index_name", INDEXES.INDEX_NAME)
+                .join("INFORMATION_SCHEMA.INDEX_COLUMNS I")
+                .on("{0} = I.TABLE_SCHEMA", INDEXES.TABLE_SCHEMA)
+                .and("{0} = I.TABLE_NAME", INDEXES.TABLE_NAME)
+                .and("{0} = I.INDEX_NAME", INDEXES.INDEX_NAME)
             .where(INDEXES.TABLE_SCHEMA.in(getInputSchemata()))
             .and(getIncludeSystemIndexes()
                 ? noCondition()
@@ -260,7 +260,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 INDEXES.TABLE_SCHEMA,
                 INDEXES.TABLE_NAME,
                 INDEXES.INDEX_NAME,
-                field("i.ordinal_position"));
+                field("I.ORDINAL_POSITION"));
     }
 
     private ResultQuery<?> indexes1_4() {

@@ -77,7 +77,7 @@ public final class JooqLogger implements Log {
      * Get a logger wrapper for a class.
      */
     public static JooqLogger getLogger(Class<?> clazz) {
-        return getLogger(clazz, clazz.getName(), -1);
+        return getLogger(clazz, null, -1);
     }
 
     /**
@@ -92,7 +92,7 @@ public final class JooqLogger implements Log {
      * messages.
      */
     public static JooqLogger getLogger(Class<?> clazz, int limitMessages) {
-        return getLogger(clazz, clazz.getName(), limitMessages);
+        return getLogger(clazz, null, limitMessages);
     }
 
     /**

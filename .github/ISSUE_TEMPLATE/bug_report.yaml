@@ -14,8 +14,6 @@ body:
         Describe what you were expecting jOOQ to do
       placeholder: |
         Here you can also attach log files, screenshots or a video
-    validations:
-      required: true
   - type: textarea
     id: actual
     attributes:
@@ -24,8 +22,6 @@ body:
         Describe what you observed jOOQ did instead
       placeholder: |
         Here you can also attach log files, screenshots or a video
-    validations:
-      required: true
   - type: textarea
     id: steps
     attributes:

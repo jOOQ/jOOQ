@@ -1,0 +1,78 @@
+name: Feature Request
+description: Suggest an idea
+labels: ["T: Enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please describe the use-case you have. This will better help us understand the context in which you're looking for a new feature.
+      placeholder: |
+        Here you can also attach log files, screenshots or a video
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use case
+      description: |
+        Please describe the use-case you have. This will better help us understand the context in which you're looking for a new feature.
+      placeholder: Describe the use-case here
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Use case
+      description: |
+        Please describe a possible solution you'd like to see in jOOQ, ideally with example code.
+        Please note, it's not always easy to describe a good solution. Describing the use-case above is much more important to us.
+      placeholder: Describe the possible solution here.
+    validations:
+      required: false
+  - type: textarea
+    id: workarounds
+    attributes:
+      label: Possible workarounds
+      description: |
+        Please describe the possible workarounds you've implemented to work around the lacking functionality.
+      placeholder: Describe the possible workarounds here.
+    validations:
+      required: false
+  - type: input
+    id: jooq-version
+    attributes:
+      label: jOOQ Version
+      description: What jOOQ version and edition did you use?
+      placeholder: ex. jOOQ Professional Edition 3.17.2
+    validations:
+      required: true
+  - type: input
+    id: java-version
+    attributes:
+      label: Java Version
+      description: What JDK version and distribution did you use (use `java -version`)
+      placeholder: ex. openjdk version "17" 2021-09-14
+    validations:
+      required: false
+  - type: input
+    id: os-version
+    attributes:
+      label: Java Version
+      description: What operating system version and distribution did you use (use e.g. `ver` on Windows)
+      placeholder: ex. Microsoft Windows [Version 10.0.22000.856]
+    validations:
+      required: false
+  - type: input
+    id: database-version
+    attributes:
+      label: Database product and version
+      description: What database version and distribution did you use (use e.g. `select version()`. See this article on how to get the database version https://blog.jooq.org/how-to-get-an-rdbms-server-version-with-sql/)
+      placeholder: ex. PostgreSQL 15beta2 (Debian 15~beta2-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+    validations:
+      required: false
+  - type: input
+    id: jdbc-version
+    attributes:
+      label: JDBC driver name and version (include name if unofficial driver)
+      description: What JDBC driver name and version did you use (use e.g. `select version()`. See this article on how to get the database version https://blog.jooq.org/how-to-get-an-rdbms-server-version-with-sql/)
+      placeholder: ex. org.postgresql:postgresql:42.4.2
+    validations:
+      required: false

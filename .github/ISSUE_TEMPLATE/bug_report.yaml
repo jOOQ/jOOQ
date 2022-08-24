@@ -54,7 +54,7 @@ body:
   - type: input
     id: os-version
     attributes:
-      label: Java Version
+      label: OS Version
       description: What operating system version and distribution did you use (use e.g. `ver` on Windows)
       placeholder: ex. Microsoft Windows [Version 10.0.22000.856]
     validations:

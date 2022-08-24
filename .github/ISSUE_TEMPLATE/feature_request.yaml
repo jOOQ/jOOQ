@@ -62,7 +62,9 @@ body:
     id: database-version
     attributes:
       label: Database product and version
-      description: What database version and distribution did you use (use e.g. `select version()`. See this article on how to get the database version https://blog.jooq.org/how-to-get-an-rdbms-server-version-with-sql/)
+      description: |
+        What database version and distribution did you use (use e.g. `select version()`).
+        See this article on how to get the database version https://blog.jooq.org/how-to-get-an-rdbms-server-version-with-sql/)
       placeholder: ex. PostgreSQL 15beta2 (Debian 15~beta2-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
     validations:
       required: false
@@ -70,7 +72,7 @@ body:
     id: jdbc-version
     attributes:
       label: JDBC driver name and version (include name if unofficial driver)
-      description: What JDBC driver name and version did you use (use e.g. `select version()`. See this article on how to get the database version https://blog.jooq.org/how-to-get-an-rdbms-server-version-with-sql/)
+      description: What JDBC driver name and version did you use.
       placeholder: ex. org.postgresql:postgresql:42.4.2
     validations:
       required: false

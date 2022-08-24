@@ -99,6 +99,7 @@ final class Tips {
         "jOOQ offers out of the box functionality for common scenarios related to audit columns: https://www.jooq.org/doc/dev/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-forced-types/codegen-database-forced-types-audit/",
         "Client side computed columns are very useful if you have redundant behaviour in your queries and data: https://www.jooq.org/doc/dev/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-forced-types/codegen-database-forced-types-computed/",
         "A list of common anti patterns in jOOQ or SQL is available here: https://www.jooq.org/doc/latest/manual/reference/dont-do-this/",
+        "In addition to <includes> and <excludes>, you can also use <includesSql> and <excludesSql> to generate regular expressions for the code generator! https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-includes-excludes/",
         ""
     };
 

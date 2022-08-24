@@ -6,8 +6,6 @@ body:
     attributes:
       value: |
         Please describe the use-case you have. This will better help us understand the context in which you're looking for a new feature.
-      placeholder: |
-        Here you can also attach log files, screenshots or a video
   - type: textarea
     id: use-case
     attributes:

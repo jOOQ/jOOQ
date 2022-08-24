@@ -1,0 +1,82 @@
+name: Bug report
+descriptin: Create a report and help us improve
+title: ""
+labels: ["T: Defect"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please fill in all required fields with as many details as possible.
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: |
+        Describe what you were expecting jOOQ to do
+      placeholder: |
+        Here you can also attach log files, screenshots or a video
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: |
+        Describe what you observed jOOQ did instead
+      placeholder: |
+        Here you can also attach log files, screenshots or a video
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce the problem
+      description: |
+        - If the problem relates to code generation, please post your code generation configuration
+        - If the problem relates to upgrades, please check if your RDBMS version is still supported by jOOQ: https://www.jooq.org/download/support-matrix
+        - A complete set of DDL statements can help re-create the setup you're having
+        - An MCVE can be helpful to provide a complete reproduction case: https://github.com/jOOQ/jOOQ-mcve
+      placeholder: |
+        Here you can also attach log files, screenshots or a video
+    validations:
+      required: true
+  - type: input
+    id: jooq-version
+    attributes:
+      label: jOOQ Version
+      description: What jOOQ version and edition did you use?
+      placeholder: ex. jOOQ Professional Edition 3.17.2
+    validations:
+      required: true
+  - type: input
+    id: java-version
+    attributes:
+      label: Java Version
+      description: What JDK version and distribution did you use (use `java -version`)
+      placeholder: ex. openjdk version "17" 2021-09-14
+    validations:
+      required: false
+  - type: input
+    id: os-version
+    attributes:
+      label: Java Version
+      description: What operating system version and distribution did you use (use e.g. `ver` on Windows)
+      placeholder: ex. Microsoft Windows [Version 10.0.22000.856]
+    validations:
+      required: false
+  - type: input
+    id: database-version
+    attributes:
+      label: Database product and version
+      description: What database version and distribution did you use (use e.g. `select version()`. See this article on how to get the database version https://blog.jooq.org/how-to-get-an-rdbms-server-version-with-sql/)
+      placeholder: ex. PostgreSQL 15beta2 (Debian 15~beta2-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+    validations:
+      required: false
+  - type: input
+    id: jdbc-version
+    attributes:
+      label: JDBC driver name and version (include name if unofficial driver)
+      description: What JDBC driver name and version did you use (use e.g. `select version()`. See this article on how to get the database version https://blog.jooq.org/how-to-get-an-rdbms-server-version-with-sql/)
+      placeholder: ex. org.postgresql:postgresql:42.4.2
+    validations:
+      required: false

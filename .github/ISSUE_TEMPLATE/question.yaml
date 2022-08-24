@@ -9,7 +9,7 @@ body:
   - type: textarea
     id: question
     attributes:
-      label: Expected behavior
+      label: Your question
       description: |
         Before asking your question, please check out the FAQ too: https://www.jooq.org/faq.
         Have you considered asking your question on Stack Overflow instead? https://stackoverflow.com/questions/tagged/jooq.

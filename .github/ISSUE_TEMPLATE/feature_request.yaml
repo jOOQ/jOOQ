@@ -43,22 +43,6 @@ body:
     validations:
       required: true
   - type: input
-    id: java-version
-    attributes:
-      label: Java Version
-      description: What JDK version and distribution did you use (use `java -version`)
-      placeholder: ex. openjdk version "17" 2021-09-14
-    validations:
-      required: false
-  - type: input
-    id: os-version
-    attributes:
-      label: OS Version
-      description: What operating system version and distribution did you use (use e.g. `ver` on Windows)
-      placeholder: ex. Microsoft Windows [Version 10.0.22000.856]
-    validations:
-      required: false
-  - type: input
     id: database-version
     attributes:
       label: Database product and version
@@ -67,12 +51,22 @@ body:
         See this article on how to get the database version https://blog.jooq.org/how-to-get-an-rdbms-server-version-with-sql/)
       placeholder: ex. PostgreSQL 15beta2 (Debian 15~beta2-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
     validations:
-      required: false
+      required: true
+  - type: input
+    id: java-version
+    attributes:
+      label: Java Version
+      description: What JDK version and distribution did you use (use `java -version`)
+      placeholder: ex. openjdk version "17" 2021-09-14
+  - type: input
+    id: os-version
+    attributes:
+      label: OS Version
+      description: What operating system version and distribution did you use (use e.g. `ver` on Windows)
+      placeholder: ex. Microsoft Windows [Version 10.0.22000.856]
   - type: input
     id: jdbc-version
     attributes:
       label: JDBC driver name and version (include name if unofficial driver)
       description: What JDBC driver name and version did you use.
       placeholder: ex. org.postgresql:postgresql:42.4.2
-    validations:
-      required: false

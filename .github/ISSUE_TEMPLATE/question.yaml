@@ -1,7 +1,6 @@
 name: Question
 description: Anything you're not sure about? Just ask us
 labels: ["T: Support request"]
-milestones: Support Requests
 body:
   - type: markdown
     attributes:

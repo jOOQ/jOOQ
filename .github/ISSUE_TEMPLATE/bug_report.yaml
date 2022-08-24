@@ -1,6 +1,5 @@
 name: Bug report
-descriptoin: Create a report and help us improve
-title: ""
+description: Create a report and help us improve
 labels: ["T: Defect"]
 body:
   - type: markdown

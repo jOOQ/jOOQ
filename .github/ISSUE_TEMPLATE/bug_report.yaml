@@ -1,9 +1,8 @@
 name: Bug report
 description: Create a report and help us improve
 labels: ["T: Defect"]
-markdown: kramdown
 body:
-  - type: markdown
+  - type: kramdown
     attributes:
       value: |
         Please fill in all required fields with as many details as possible.

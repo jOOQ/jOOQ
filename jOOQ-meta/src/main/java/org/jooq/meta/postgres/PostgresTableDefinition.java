@@ -59,6 +59,7 @@ import java.util.List;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.AbstractTableDefinition;
@@ -67,6 +68,8 @@ import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultColumnDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.SchemaDefinition;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -92,7 +95,43 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
             .when(COLUMNS.DATA_TYPE.eq(inline("USER-DEFINED")).and(COLUMNS.UDT_NAME.eq(inline("geometry"))), inline("geometry"))
             .else_(COLUMNS.DATA_TYPE);
         Field<String> udtSchema = COLUMNS.UDT_SCHEMA;
-        Field<Integer> precision = nvl(COLUMNS.DATETIME_PRECISION, COLUMNS.NUMERIC_PRECISION);
+
+        // [#8067] [#11658] [#13919]
+        // A more robust / sophisticated decoding might be available via
+        // - information_schema._pg_char_max_length
+        // - information_schema._pg_numeric_precision
+        // - information_schema._pg_numeric_scale
+        // - information_schema._pg_datetime_precision
+        // However, we cannot rely on all PG versions and PG clones making these available
+        // The source of these functions can be looked up here:
+        // https://github.com/postgres/postgres/blob/master/src/backend/catalog/information_schema.sql
+        Field<Integer> length = nvl(
+            COLUMNS.CHARACTER_MAXIMUM_LENGTH,
+            when(
+                COLUMNS.UDT_NAME.in(inline("_varchar"), inline("_bpchar"), inline("_char")),
+                PG_ATTRIBUTE.ATTTYPMOD.sub(inline(4))
+            )
+        );
+        Field<Integer> precision = coalesce(
+            COLUMNS.DATETIME_PRECISION,
+            COLUMNS.NUMERIC_PRECISION,
+            when(
+                COLUMNS.UDT_NAME.in(inline("_time"), inline("_timetz"), inline("_timestamp"), inline("_timestamptz")).and(PG_ATTRIBUTE.ATTTYPMOD.ge(inline(0))),
+                PG_ATTRIBUTE.ATTTYPMOD
+            )
+            .when(
+                COLUMNS.UDT_NAME.eq(inline("_numeric")),
+                PG_ATTRIBUTE.ATTTYPMOD.sub(inline(4)).shr(inline(16)).bitAnd(inline(65535))
+            )
+        );
+        Field<Integer> scale = nvl(
+            COLUMNS.NUMERIC_SCALE,
+            when(
+                COLUMNS.UDT_NAME.eq(inline("_numeric")),
+                PG_ATTRIBUTE.ATTTYPMOD.sub(inline(4)).bitAnd(inline(65535))
+            )
+        );
+
         Field<String> serialColumnDefault = inline("nextval('%_seq'::regclass)");
         Field<String> generationExpression = COLUMNS.GENERATION_EXPRESSION;
         Field<String> attgenerated = database.is12() ? PG_ATTRIBUTE.ATTGENERATED : inline("s");
@@ -120,13 +159,9 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 COLUMNS.COLUMN_NAME,
                 COLUMNS.ORDINAL_POSITION,
                 dataType.as(COLUMNS.DATA_TYPE),
-
-                // [#8067] [#11658] A more robust / sophisticated decoding might be available
-                nvl(
-                    COLUMNS.CHARACTER_MAXIMUM_LENGTH,
-                    when(COLUMNS.UDT_NAME.in(inline("_varchar"), inline("_bpchar"), inline("_char")), PG_ATTRIBUTE.ATTTYPMOD.sub(inline(4)))).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
+                length.as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 precision.as(COLUMNS.NUMERIC_PRECISION),
-                COLUMNS.NUMERIC_SCALE,
+                scale.as(COLUMNS.NUMERIC_SCALE),
                 (when(isIdentity, inline("YES"))).as(COLUMNS.IS_IDENTITY),
                 COLUMNS.IS_NULLABLE,
                 generationExpression.as(COLUMNS.GENERATION_EXPRESSION),

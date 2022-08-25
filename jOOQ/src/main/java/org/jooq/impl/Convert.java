@@ -944,8 +944,11 @@ final class Convert {
                 else if (java.util.Date.class.isAssignableFrom(fromClass)) {
 
                     // [#12225] Avoid losing precision if possible
-                    if (Timestamp.class == fromClass && LocalDateTime.class == toClass)
-                        return (U) ((Timestamp) from).toLocalDateTime();
+                    if (Timestamp.class == fromClass)
+                        if (LocalDateTime.class == toClass)
+                            return (U) ((Timestamp) from).toLocalDateTime();
+                        else
+                            return toDate(((Timestamp) from).getTime(), ((Timestamp) from).getNanos(), toClass);
                     else if (Date.class == fromClass && LocalDate.class == toClass)
                         return (U) ((Date) from).toLocalDate();
                     else if (Time.class == fromClass && LocalTime.class == toClass)
@@ -958,10 +961,14 @@ final class Convert {
                     // [#12225] Avoid losing precision if possible
                     if (LocalDateTime.class == fromClass && Timestamp.class == toClass)
                         return (U) Timestamp.valueOf((LocalDateTime) from);
+                    else if (LocalDateTime.class == fromClass && Temporal.class.isAssignableFrom(toClass))
+                        return toDate(((LocalDateTime) from).toInstant(OffsetTime.now().getOffset()).toEpochMilli(), ((LocalDateTime) from).getNano(), toClass);
                     else if (LocalDate.class == fromClass && Date.class == toClass)
                         return (U) Date.valueOf((LocalDate) from);
                     else if (LocalTime.class == fromClass && Time.class == toClass)
                         return (U) Time.valueOf((LocalTime) from);
+                    else if (OffsetDateTime.class == fromClass && (Timestamp.class == toClass || Temporal.class.isAssignableFrom(toClass)))
+                        return toDate(((OffsetDateTime) from).toInstant().toEpochMilli(), ((OffsetDateTime) from).getNano(), toClass);
                     else
                         return toDate(convert(from, Long.class), toClass);
                 }
@@ -1405,16 +1412,24 @@ final class Convert {
         }
 
         /**
-         * Convert a long timestamp to any date type
+         * Convert a long timestamp (millis) to any date type.
+         */
+        private static <X> X toDate(long time, Class<X> toClass) {
+            return toDate(time, 0, toClass);
+        }
+
+        /**
+         * Convert a long timestamp (millis) with nanos adjustment to any date
+         * type.
          */
         @SuppressWarnings("unchecked")
-        private static <X> X toDate(long time, Class<X> toClass) {
+        private static <X> X toDate(long time, int nanos, Class<X> toClass) {
             if (toClass == Date.class)
                 return (X) new Date(time);
             else if (toClass == Time.class)
                 return (X) new Time(time);
             else if (toClass == Timestamp.class)
-                return (X) new Timestamp(time);
+                return (X) toTimestamp(time, nanos);
             else if (toClass == java.util.Date.class)
                 return (X) new java.util.Date(time);
             else if (toClass == Calendar.class) {
@@ -1429,13 +1444,25 @@ final class Convert {
             else if (toClass == OffsetTime.class)
                 return (X) new Time(time).toLocalTime().atOffset(OffsetTime.now().getOffset());
             else if (toClass == LocalDateTime.class)
-                return (X) new Timestamp(time).toLocalDateTime();
+                return (X) toTimestamp(time, nanos).toLocalDateTime();
             else if (toClass == OffsetDateTime.class)
-                return (X) new Timestamp(time).toLocalDateTime().atOffset(OffsetDateTime.now().getOffset());
+                return (X) toTimestamp(time, nanos).toLocalDateTime().atOffset(OffsetDateTime.now().getOffset());
             else if (toClass == Instant.class)
-                return (X) Instant.ofEpochMilli(time);
+                if (nanos == 0L)
+                    return (X) Instant.ofEpochMilli(time);
+                else
+                    return (X) Instant.ofEpochSecond(time / 1000L, nanos);
 
             throw fail(time, toClass);
+        }
+
+        private static Timestamp toTimestamp(long time, int nanos) {
+            if (nanos == 0L)
+                return new Timestamp(time);
+
+            Timestamp ts = new Timestamp(time / 1000L * 1000L);
+            ts.setNanos(nanos);
+            return ts;
         }
 
         private static final long millis(Temporal temporal) {

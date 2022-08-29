@@ -63,6 +63,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
+import static org.jooq.SQLDialect.MARIADB;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -76,10 +77,14 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.SettingsTools.getExecuteUpdateWithoutWhere;
+import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.mergeInto;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.DSL.noField;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_LIMIT;
@@ -87,6 +92,7 @@ import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.Tools.findAny;
 
 import java.util.Arrays;
@@ -176,7 +182,7 @@ implements
     UNotYetImplemented
 {
 
-    private static final Clause[]        CLAUSES                   = { UPDATE };
+    private static final Clause[]        CLAUSES                       = { UPDATE };
 
 
 
@@ -184,14 +190,15 @@ implements
 
 
 
-    private static final Set<SQLDialect> EMULATE_FROM_WITH_MERGE   = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB);
+    private static final Set<SQLDialect> EMULATE_FROM_WITH_MERGE       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB);
+    private static final Set<SQLDialect> EMULATE_RETURNING_WITH_UPSERT = SQLDialect.supportedBy(MARIADB);
 
     // LIMIT is not supported at all
-    private static final Set<SQLDialect> NO_SUPPORT_LIMIT          = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_LIMIT              = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB);
 
     // LIMIT is supported but not ORDER BY
-    private static final Set<SQLDialect> NO_SUPPORT_ORDER_BY_LIMIT = SQLDialect.supportedBy(IGNITE);
-    static final Set<SQLDialect>         NO_SUPPORT_UPDATE_JOIN    = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, POSTGRES, SQLITE, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_ORDER_BY_LIMIT     = SQLDialect.supportedBy(IGNITE);
+    static final Set<SQLDialect>         NO_SUPPORT_UPDATE_JOIN        = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, POSTGRES, SQLITE, YUGABYTEDB);
 
     private final FieldMapForUpdate      updateMap;
     private final TableList              from;
@@ -547,6 +554,10 @@ implements
             acceptFromAsMerge(ctx);
             return;
         }
+        else if (!returning.isEmpty() && EMULATE_RETURNING_WITH_UPSERT.contains(ctx.dialect())) {
+            acceptReturningAsUpsert(ctx);
+            return;
+        }
 
 
 
@@ -560,6 +571,20 @@ implements
 
 
         accept1(ctx);
+    }
+
+    private final void acceptReturningAsUpsert(Context<?> ctx) {
+        ctx.visit(
+            insertInto(table)
+            .select(
+                selectFrom(table)
+                .where(hasWhere() ? getWhere() : noCondition())
+                .orderBy(orderBy)
+                .limit(limit != null ? limit : noField(INTEGER)))
+            .onDuplicateKeyUpdate()
+            .set(updateMap)
+            .returning(returning)
+        );
     }
 
     private final void acceptFromAsMerge(Context<?> ctx) {

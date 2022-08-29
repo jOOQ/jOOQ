@@ -39,7 +39,9 @@ body:
     id: jooq-version
     attributes:
       label: jOOQ Version
-      description: What jOOQ version and edition did you use?
+      description: |
+        What jOOQ version and edition did you use?
+        Note: While you can obviously continue using older versions of jOOQ, it may well be that your bug is already fixed. If you're using an older version, please also try to reproduce the bug in the latest version of jOOQ before reporting it.
       placeholder: ex. jOOQ Professional Edition 3.17.2
     validations:
       required: true

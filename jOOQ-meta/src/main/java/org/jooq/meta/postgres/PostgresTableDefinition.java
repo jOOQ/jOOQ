@@ -69,7 +69,6 @@ import org.jooq.meta.DefaultColumnDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.SchemaDefinition;
 
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder

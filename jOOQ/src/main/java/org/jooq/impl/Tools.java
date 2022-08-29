@@ -191,6 +191,7 @@ import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
 import static org.jooq.impl.Tools.DataKey.DATA_EXECUTE_CONTEXT;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -3805,8 +3806,20 @@ final class Tools {
         return Cache.run(configuration, () -> {
             switch (Tools.jpaNamespace()) {
                 case JAVAX:
-                    if (anyMatch(type.getAnnotations(), a -> a.annotationType().getName().startsWith("javax.persistence.")))
+                    if (anyMatch(type.getAnnotations(), isJavaxPersistenceAnnotation()))
                         JooqLogger.getLogger(Tools.class, "hasColumnAnnotations", 1).warn("Type " + type + " is annotated with javax.persistence annotation for usage in DefaultRecordMapper, but starting from jOOQ 3.16, only JakartaEE annotations are supported.");
+
+                    if (anyMatch(map(type.getMethods(), m -> anyMatch(m.getAnnotations(), isJavaxPersistenceAnnotation())), b -> b))
+                        JooqLogger.getLogger(Tools.class, "hasColumnAnnotations", 1).warn("Type " + type + " has methods annotated with javax.persistence annotation for usage in DefaultRecordMapper, but starting from jOOQ 3.16, only JakartaEE annotations are supported.");
+
+                    if (anyMatch(map(type.getDeclaredMethods(), m -> anyMatch(m.getAnnotations(), isJavaxPersistenceAnnotation())), b -> b))
+                        JooqLogger.getLogger(Tools.class, "hasColumnAnnotations", 1).warn("Type " + type + " has methods annotated with javax.persistence annotation for usage in DefaultRecordMapper, but starting from jOOQ 3.16, only JakartaEE annotations are supported.");
+
+                    if (anyMatch(map(type.getFields(), f -> anyMatch(f.getAnnotations(), isJavaxPersistenceAnnotation())), b -> b))
+                        JooqLogger.getLogger(Tools.class, "hasColumnAnnotations", 1).warn("Type " + type + " has fields annotated with javax.persistence annotation for usage in DefaultRecordMapper, but starting from jOOQ 3.16, only JakartaEE annotations are supported.");
+
+                    if (anyMatch(map(type.getDeclaredFields(), f -> anyMatch(f.getAnnotations(), isJavaxPersistenceAnnotation())), b -> b))
+                        JooqLogger.getLogger(Tools.class, "hasColumnAnnotations", 1).warn("Type " + type + " has fields annotated with javax.persistence annotation for usage in DefaultRecordMapper, but starting from jOOQ 3.16, only JakartaEE annotations are supported.");
 
                     return false;
 
@@ -3832,6 +3845,10 @@ final class Tools {
             }
 
         }, REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS, () -> type);
+    }
+
+    private static final ThrowingPredicate<? super Annotation, RuntimeException> isJavaxPersistenceAnnotation() {
+        return a -> a.annotationType().getName().startsWith("javax.persistence.");
     }
 
     static final <T extends AccessibleObject> T accessible(T object, boolean makeAccessible) {

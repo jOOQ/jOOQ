@@ -255,7 +255,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
         if (isExecutable()) {
 
             // Get the attached configuration of this query
-            Configuration c = configuration();
+            Configuration c = configurationOrDefault();
 
             // [#1191] The following triggers a start event on all listeners.
             //         This may be used to provide jOOQ with a JDBC connection,

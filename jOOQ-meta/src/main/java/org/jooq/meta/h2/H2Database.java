@@ -857,7 +857,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                         // are explicitly forced to another type
                         if (getConfiguredForcedType(columnDefinition, columnDefinition.getType()) == null) {
                             String name = r.value2() + "_" + r.value3();
-                            DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, "");
+                            DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, "", true);
 
                             for (String string : r.value4())
                                 definition.addLiteral(string);
@@ -907,7 +907,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                     // are explicitly forced to another type
                     if (getConfiguredForcedType(columnDefinition, columnDefinition.getType()) == null) {
                         String name = r.table + "_" + r.column;
-                        DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, "");
+                        DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, "", true);
 
                         CSVReader reader = new CSVReader(
                             new StringReader(r.type.replaceAll("(^enum\\()|(\\)[^)]*$)", ""))

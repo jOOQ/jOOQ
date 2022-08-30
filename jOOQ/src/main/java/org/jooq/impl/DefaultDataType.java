@@ -320,7 +320,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     }
 
     DefaultDataType(SQLDialect dialect, Class<T> type, Name qualifiedTypeName) {
-        this(dialect, null, type, qualifiedTypeName, qualifiedTypeName.last(), null, null, null, null, Nullability.DEFAULT, null);
+        this(dialect, null, type, qualifiedTypeName, null, null, null, null, null, Nullability.DEFAULT, null);
     }
 
     DefaultDataType(SQLDialect dialect, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
@@ -337,6 +337,10 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
     DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, boolean readonly, Generator<?, ?, T> generatedAlwaysAs, GenerationOption generationOption, GenerationLocation generationLocation, Collation collation, CharacterSet characterSet, boolean identity, Field<T> defaultValue) {
         super(qualifiedTypeName, NO_COMMENT);
+
+        // [#13934] Patch parameters
+        if (typeName == null)
+            typeName = qualifiedTypeName.toString();
 
         // Initialise final instance members
         // ---------------------------------

@@ -118,7 +118,7 @@ class DomainImpl<T> extends AbstractNamed implements Domain<T>, UNotYetImplement
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(getUnqualifiedName());
+        ctx.visit(getQualifiedName());
     }
 
     // -------------------------------------------------------------------------

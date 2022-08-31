@@ -74,15 +74,26 @@ final class SelectFieldList<F extends SelectFieldOrAsterisk> extends QueryPartLi
         return true;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void acceptElement(Context<?> ctx, F part) {
 
         // [#4727] Various SelectFieldList references containing Table<?> cannot
         //         resolve the instance in time for the rendering, e.g. RETURNING
         if (part instanceof AbstractTable<?> t)
-            ctx.visit(t.tf());
+            acceptElement0(ctx, (F) t.tf());
         else if (part instanceof AbstractRow<?> r)
-            ctx.visit(r.rf());
+            acceptElement0(ctx, (F) r.rf());
+        else
+            acceptElement0(ctx, part);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void acceptElement0(Context<?> ctx, F part) {
+        F alternative;
+
+        if (ctx.declareFields() && part instanceof AutoAlias && (alternative = ((AutoAlias<F>) part).autoAlias(ctx)) != null)
+            super.acceptElement(ctx, alternative);
         else
             super.acceptElement(ctx, part);
     }

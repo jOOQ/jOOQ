@@ -82,7 +82,7 @@ final class DataChangeDeltaTable<R extends Record>
 extends
     AbstractTable<R>
 implements
-    AutoAliasTable<R>,
+    AutoAlias<Table<R>>,
     QOM.DataChangeDeltaTable<R>
 {
 

@@ -49,7 +49,13 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-final class Coerce<T> extends AbstractField<T> implements QOM.Coerce<T> {
+final class Coerce<T>
+extends
+    AbstractField<T>
+implements
+    AutoAlias<Field<T>>,
+    QOM.Coerce<T>
+{
 
     final AbstractField<?> field;
 
@@ -116,6 +122,15 @@ final class Coerce<T> extends AbstractField<T> implements QOM.Coerce<T> {
     @Override
     public final boolean generatesCast() {
         return field.generatesCast();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Field<T> autoAlias(Context<?> ctx) {
+        if (field instanceof AutoAlias)
+            return ((AutoAlias<Field<T>>) field).autoAlias(ctx).coerce(getDataType());
+        else
+            return this;
     }
 
     // -------------------------------------------------------------------------

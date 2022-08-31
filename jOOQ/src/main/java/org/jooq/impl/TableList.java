@@ -82,11 +82,12 @@ final class TableList extends QueryPartList<Table<?>> {
         return true;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void acceptElement(Context<?> ctx, Table<?> part) {
         Table<?> alternative;
 
-        if (ctx.declareTables() && part instanceof AutoAliasTable && (alternative = ((AutoAliasTable<?>) part).autoAlias(ctx)) != null)
+        if (ctx.declareTables() && part instanceof AutoAlias && (alternative = ((AutoAlias<Table<?>>) part).autoAlias(ctx)) != null)
             super.acceptElement(ctx, alternative);
         else
             super.acceptElement(ctx, part);

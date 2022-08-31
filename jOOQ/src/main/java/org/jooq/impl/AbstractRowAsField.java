@@ -65,11 +65,17 @@ import org.jooq.Fields;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row;
+import org.jooq.SelectField;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractRowAsField<R extends Record> extends AbstractField<R> {
+abstract class AbstractRowAsField<R extends Record>
+extends
+    AbstractField<R>
+implements
+    AutoAlias<SelectField<R>>
+{
 
     AbstractRowAsField(Name name, DataType<R> type) {
         super(name, type);
@@ -220,6 +226,22 @@ abstract class AbstractRowAsField<R extends Record> extends AbstractField<R> {
         finally {
             ctx.data(DATA_MULTISET_CONTENT, previous);
         }
+    }
+
+    @Override
+    public final SelectField<R> autoAlias(Context<?> ctx) {
+
+        // [#13843] Re-aliasing only applies if at least ROW() projection is supported natively
+        if (RowAsField.NO_NATIVE_SUPPORT.contains(ctx.dialect()))
+            return this;
+
+        // [#13843] Within MULTISET(), re-aliasing isn't required, while it leads to new edge cases
+        else if (forceMultisetContent(ctx, () -> getDataType().getRow().size() > 1))
+            return this;
+
+        // [#13843] With native support, re-alias the table as field projection
+        else
+            return new FieldAlias<>(this, getUnqualifiedName());
     }
 
     private static final Field<?> alias(Context<?> ctx, Name alias, Field<?> field) {

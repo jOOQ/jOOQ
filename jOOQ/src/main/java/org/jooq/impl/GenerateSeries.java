@@ -100,7 +100,7 @@ final class GenerateSeries
 extends
     AbstractTable<Record1<Integer>>
 implements
-    AutoAliasTable<Record1<Integer>>,
+    AutoAlias<Table<Record1<Integer>>>,
     QOM.GenerateSeries<Integer>
 {
 

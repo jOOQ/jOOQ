@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import org.jooq.Context;
+import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.Table;
@@ -48,11 +49,11 @@ import org.jooq.Table;
  *
  * @author Lukas Eder
  */
-interface AutoAliasTable<R extends Record> extends Table<R>, QueryPartInternal {
+interface AutoAlias<Q extends QueryPart> extends QueryPartInternal {
 
     /**
      * Create the aliased table expression or <code>null</code> if no auto-alias
      * is required.
      */
-    Table<R> autoAlias(Context<?> ctx);
+    Q autoAlias(Context<?> ctx);
 }

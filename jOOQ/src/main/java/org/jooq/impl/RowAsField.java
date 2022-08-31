@@ -140,6 +140,16 @@ final class RowAsField<ROW extends Row, REC extends Record> extends AbstractRowA
     // -------------------------------------------------------------------------
 
     @Override
+    public final Field<?> $aliased() {
+        return new RowAsField<>(row);
+    }
+
+    @Override
+    public final Name $alias() {
+        return getQualifiedName();
+    }
+
+    @Override
     public final Row $row() {
         return row;
     }

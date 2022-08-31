@@ -46,6 +46,9 @@ import org.jooq.QueryPart;
 // ...
 // ...
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * @author Lukas Eder
  */
@@ -136,6 +139,16 @@ implements
     // -------------------------------------------------------------------------
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<?> $aliased() {
+        return field.$aliased().coerce(getDataType());
+    }
+
+    @Override
+    public final Name $alias() {
+        return field.$alias();
+    }
 
     @Override
     public final Field<?> $field() {

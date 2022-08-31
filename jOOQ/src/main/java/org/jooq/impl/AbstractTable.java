@@ -121,6 +121,7 @@ import org.jooq.TablePartitionByStep;
 import org.jooq.UniqueKey;
 // ...
 // ...
+import org.jooq.impl.QOM.Aliasable;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.tools.JooqLogger;
 
@@ -130,7 +131,14 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractTable<R extends Record> extends AbstractNamed implements Table<R>, FieldsTrait {
+abstract class AbstractTable<R extends Record>
+extends
+    AbstractNamed
+implements
+    Table<R>,
+    FieldsTrait,
+    Aliasable<Table<R>>
+{
 
     private static final JooqLogger  log              = JooqLogger.getLogger(AbstractTable.class);
     private static final Clause[]    CLAUSES          = { TABLE };
@@ -154,6 +162,20 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
 
         this.options = options;
         this.tableschema = schema;
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: QOM API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public /* non-final */ Name $alias() {
+        return null;
+    }
+
+    @Override
+    public /* non-final */ Table<R> $aliased() {
+        return this;
     }
 
     // ------------------------------------------------------------------------

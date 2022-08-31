@@ -41,25 +41,16 @@ import static org.jooq.Clause.FIELD;
 import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.GREATER;
 import static org.jooq.Comparator.GREATER_OR_EQUAL;
-import static org.jooq.Comparator.IN;
 import static org.jooq.Comparator.LESS;
 import static org.jooq.Comparator.LESS_OR_EQUAL;
 import static org.jooq.Comparator.LIKE;
-import static org.jooq.Comparator.LIKE_IGNORE_CASE;
 import static org.jooq.Comparator.NOT_EQUALS;
-import static org.jooq.Comparator.NOT_IN;
 import static org.jooq.Comparator.NOT_LIKE;
-import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
-import static org.jooq.Comparator.NOT_SIMILAR_TO;
-import static org.jooq.Comparator.SIMILAR_TO;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.ExpressionOperator.ADD;
-import static org.jooq.impl.ExpressionOperator.DIVIDE;
-import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.castIfNeeded;
-import static org.jooq.impl.Tools.fieldsArray;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.nullSafe;
 import static org.jooq.impl.Tools.nullSafeList;
@@ -97,11 +88,19 @@ import org.jooq.SortField;
 import org.jooq.SortOrder;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowPartitionByStep;
+import org.jooq.impl.QOM.Aliasable;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T>, ScopeMappable {
+abstract class AbstractField<T>
+extends
+    AbstractTypedNamed<T>
+implements
+    Field<T>,
+    Aliasable<Field<?>>,
+    ScopeMappable
+{
 
     private static final Clause[] CLAUSES = { FIELD };
 
@@ -187,6 +186,20 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     public final Record1<T> from(Record record) {
         return record.into(this);
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: QOM API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public /* non-final */ Name $alias() {
+        return null;
+    }
+
+    @Override
+    public /* non-final */ Field<?> $aliased() {
+        return this;
     }
 
     // ------------------------------------------------------------------------

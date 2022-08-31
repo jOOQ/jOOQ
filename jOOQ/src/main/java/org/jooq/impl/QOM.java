@@ -249,6 +249,14 @@ public final class QOM {
         boolean $recursive();
     }
 
+    public interface Aliasable<Q extends org.jooq.QueryPart>
+        extends
+            org.jooq.QueryPart
+    {
+        @NotNull Q $aliased();
+        @Nullable Name $alias();
+    }
+
     // -------------------------------------------------------------------------
     // XXX: Queries
     // -------------------------------------------------------------------------
@@ -362,8 +370,17 @@ public final class QOM {
     // XXX: Tables
     // -------------------------------------------------------------------------
 
-    public interface TableAlias<R extends Record> extends Table<R> {
+    public interface TableAlias<R extends Record>
+        extends
+            Table<R>,
+            Aliasable<Table<R>>
+    {
         @NotNull Table<R> $table();
+        @Override
+        @NotNull default Table<R> $aliased() {
+            return $table();
+        }
+        @Override
         @NotNull Name $alias();
         // TODO [#12425] Reuse MDerivedColumnList
     }
@@ -778,11 +795,17 @@ public final class QOM {
 
     public /*sealed*/ interface FieldAlias<T>
         extends
-            Field<T>
+            Field<T>,
+            Aliasable<Field<?>>
         /*permits
             FieldAlias*/
     {
         @NotNull Field<T> $field();
+        @Override
+        @NotNull default Field<?> $aliased() {
+            return $field();
+        }
+        @Override
         @NotNull Name $alias();
     }
 

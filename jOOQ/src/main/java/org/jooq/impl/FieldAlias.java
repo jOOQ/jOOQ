@@ -44,7 +44,10 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 // ...
+import org.jooq.Table;
 // ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -104,7 +107,12 @@ final class FieldAlias<T> extends AbstractField<T> implements QOM.FieldAlias<T> 
     }
 
     @Override
-    public final Name $alias() {
+    public final Field<?> $aliased() {
+        return alias.wrapped();
+    }
+
+    @Override
+    public final @NotNull Name $alias() {
         return getQualifiedName();
     }
 

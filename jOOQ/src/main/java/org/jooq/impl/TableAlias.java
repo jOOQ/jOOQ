@@ -57,6 +57,8 @@ import org.jooq.TableField;
 // ...
 import org.jooq.UniqueKey;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Lukas Eder
  */
@@ -187,7 +189,12 @@ final class TableAlias<R extends Record> extends AbstractTable<R> implements QOM
     }
 
     @Override
-    public final Name $alias() {
+    public final Table<R> $aliased() {
+        return $table();
+    }
+
+    @Override
+    public final @NotNull Name $alias() {
         return getUnqualifiedName();
     }
 

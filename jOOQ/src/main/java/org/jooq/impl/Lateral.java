@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.lateral;
 import static org.jooq.impl.Keywords.K_LATERAL;
 
 import org.jooq.Context;
@@ -45,6 +46,7 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableOptions;
+import org.jooq.impl.QOM.Aliasable;
 
 /**
  * @author Lukas Eder
@@ -92,6 +94,18 @@ final class Lateral<R extends Record> extends AbstractTable<R> implements QOM.La
     // -------------------------------------------------------------------------
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Table<R> $aliased() {
+        return lateral(((Aliasable<Table<R>>) table).$aliased());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Name $alias() {
+        return ((Aliasable<Table<R>>) table).$alias();
+    }
 
     @Override
     public final Function1<? super Table<R>, ? extends Table<R>> $constructor() {

@@ -266,4 +266,18 @@ final class ArrayTable extends AbstractTable<Record> implements UNotYetImplement
     final FieldsImpl<Record> fields0() {
         return field;
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Table<Record> $aliased() {
+        return new ArrayTable(array);
+    }
+
+    @Override
+    public final Name $alias() {
+        return alias;
+    }
 }

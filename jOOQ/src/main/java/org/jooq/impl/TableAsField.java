@@ -157,6 +157,16 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
+    public final Field<?> $aliased() {
+        return new TableAsField<>(table);
+    }
+
+    @Override
+    public final Name $alias() {
+        return getQualifiedName();
+    }
+
+    @Override
     public final Table<R> $table() {
         return table;
     }

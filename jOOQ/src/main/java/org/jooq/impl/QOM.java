@@ -89,6 +89,8 @@ import org.jooq.Function9;
 import org.jooq.Geometry;
 import org.jooq.GroupField;
 import org.jooq.Index;
+import org.jooq.JSON;
+import org.jooq.JSONB;
 import org.jooq.JSONEntry;
 import org.jooq.Keyword;
 // ...
@@ -4533,6 +4535,143 @@ public final class QOM {
         @NotNull  JSONObject<T> $entries(Collection<? extends JSONEntry<?>> entries);
         @NotNull  JSONObject<T> $onNull(JSONOnNull onNull);
         @NotNull  JSONObject<T> $returning(DataType<?> returning);
+    }
+
+    /**
+     * The <code>JSON GET ELEMENT</code> function.
+     * <p>
+     * Access an array element from a JSON array expression.
+     */
+    public /*sealed*/ interface JSONGetElement
+        extends
+            org.jooq.Field<JSON>
+        //permits
+        //    JSONGetElement
+    {
+        @NotNull  Field<JSON> $field();
+        @NotNull  Field<Integer> $index();
+        @NotNull  JSONGetElement $field(Field<JSON> field);
+        @NotNull  JSONGetElement $index(Field<Integer> index);
+    }
+
+    /**
+     * The <code>JSONB GET ELEMENT</code> function.
+     * <p>
+     * Access an array element from a JSONB array expression.
+     */
+    public /*sealed*/ interface JSONBGetElement
+        extends
+            org.jooq.Field<JSONB>
+        //permits
+        //    JSONBGetElement
+    {
+        @NotNull  Field<JSONB> $field();
+        @NotNull  Field<Integer> $index();
+        @NotNull  JSONBGetElement $field(Field<JSONB> field);
+        @NotNull  JSONBGetElement $index(Field<Integer> index);
+    }
+
+    /**
+     * The <code>JSON GET ELEMENT AS TEXT</code> function.
+     * <p>
+     * Access an array element from a JSON array expression and return it as a string.
+     */
+    public /*sealed*/ interface JSONGetElementAsText
+        extends
+            org.jooq.Field<String>
+        //permits
+        //    JSONGetElementAsText
+    {
+        @NotNull  Field<JSON> $field();
+        @NotNull  Field<Integer> $index();
+        @NotNull  JSONGetElementAsText $field(Field<JSON> field);
+        @NotNull  JSONGetElementAsText $index(Field<Integer> index);
+    }
+
+    /**
+     * The <code>JSONB GET ELEMENT AS TEXT</code> function.
+     * <p>
+     * Access an array element from a JSONB array expression and return it as a string.
+     */
+    public /*sealed*/ interface JSONBGetElementAsText
+        extends
+            org.jooq.Field<String>
+        //permits
+        //    JSONBGetElementAsText
+    {
+        @NotNull  Field<JSONB> $field();
+        @NotNull  Field<Integer> $index();
+        @NotNull  JSONBGetElementAsText $field(Field<JSONB> field);
+        @NotNull  JSONBGetElementAsText $index(Field<Integer> index);
+    }
+
+    /**
+     * The <code>JSON GET ATTRIBUTE</code> function.
+     * <p>
+     * Access an object attribute value from a JSON object expression.
+     */
+    public /*sealed*/ interface JSONGetAttribute
+        extends
+            org.jooq.Field<JSON>
+        //permits
+        //    JSONGetAttribute
+    {
+        @NotNull  Field<JSON> $field();
+        @NotNull  Field<String> $attribute();
+        @NotNull  JSONGetAttribute $field(Field<JSON> field);
+        @NotNull  JSONGetAttribute $attribute(Field<String> attribute);
+    }
+
+    /**
+     * The <code>JSONB GET ATTRIBUTE</code> function.
+     * <p>
+     * Access an object attribute value from a JSONB object expression.
+     */
+    public /*sealed*/ interface JSONBGetAttribute
+        extends
+            org.jooq.Field<JSONB>
+        //permits
+        //    JSONBGetAttribute
+    {
+        @NotNull  Field<JSONB> $field();
+        @NotNull  Field<String> $attribute();
+        @NotNull  JSONBGetAttribute $field(Field<JSONB> field);
+        @NotNull  JSONBGetAttribute $attribute(Field<String> attribute);
+    }
+
+    /**
+     * The <code>JSON GET ATTRIBUTE AS TEXT</code> function.
+     * <p>
+     * Access an object attribute value from a JSON object expression and return it as string.
+     */
+    public /*sealed*/ interface JSONGetAttributeAsText
+        extends
+            org.jooq.Field<String>
+        //permits
+        //    JSONGetAttributeAsText
+    {
+        @NotNull  Field<JSON> $field();
+        @NotNull  Field<String> $attribute();
+        @NotNull  JSONGetAttributeAsText $field(Field<JSON> field);
+        @NotNull  JSONGetAttributeAsText $attribute(Field<String> attribute);
+    }
+
+    /**
+     * The <code>JSONB GET ATTRIBUTE AS TEXT</code> function.
+     * <p>
+     * Access an object attribute value from a JSONB object expression and return it as
+     * string.
+     */
+    public /*sealed*/ interface JSONBGetAttributeAsText
+        extends
+            org.jooq.Field<String>
+        //permits
+        //    JSONBGetAttributeAsText
+    {
+        @NotNull  Field<JSONB> $field();
+        @NotNull  Field<String> $attribute();
+        @NotNull  JSONBGetAttributeAsText $field(Field<JSONB> field);
+        @NotNull  JSONBGetAttributeAsText $attribute(Field<String> attribute);
     }
 
 

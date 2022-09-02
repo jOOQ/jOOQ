@@ -197,12 +197,20 @@ import static org.jooq.impl.DSL.isoDayOfWeek;
 import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonArrayAgg;
 import static org.jooq.impl.DSL.jsonExists;
+import static org.jooq.impl.DSL.jsonGetAttribute;
+import static org.jooq.impl.DSL.jsonGetAttributeAsText;
+import static org.jooq.impl.DSL.jsonGetElement;
+import static org.jooq.impl.DSL.jsonGetElementAsText;
 import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.jsonObjectAgg;
 import static org.jooq.impl.DSL.jsonTable;
 import static org.jooq.impl.DSL.jsonValue;
 import static org.jooq.impl.DSL.jsonbArray;
 import static org.jooq.impl.DSL.jsonbArrayAgg;
+import static org.jooq.impl.DSL.jsonbGetAttribute;
+import static org.jooq.impl.DSL.jsonbGetAttributeAsText;
+import static org.jooq.impl.DSL.jsonbGetElement;
+import static org.jooq.impl.DSL.jsonbGetElementAsText;
 import static org.jooq.impl.DSL.jsonbObject;
 import static org.jooq.impl.DSL.jsonbObjectAgg;
 import static org.jooq.impl.DSL.key;
@@ -593,6 +601,7 @@ import org.jooq.InsertOnDuplicateStep;
 import org.jooq.InsertReturningStep;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStepN;
+import org.jooq.JSON;
 import org.jooq.JSONArrayAggNullStep;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONArrayAggReturningStep;
@@ -702,7 +711,6 @@ import org.jooq.impl.QOM.JSONOnNull;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.XMLPassingMechanism;
 import org.jooq.impl.ScopeStack.Value;
-import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
@@ -7734,18 +7742,54 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     // Any numeric operator of low precedence
     // See https://www.postgresql.org/docs/current/sql-syntax-lexical.html#SQL-PRECEDENCE
     private final FieldOrRow parseNumericOp() {
-        FieldOrRow r = parseSum();
+        FieldOrRow l = parseSum();
 
-        if (r instanceof Field)
+        if (l instanceof Field)
             for (;;)
                 if (parseIf("<<"))
-                    r = ((Field) r).shl((Field) parseSum());
+                    l = ((Field) l).shl((Field) parseSum());
                 else if (parseIf(">>"))
-                    r = ((Field) r).shr((Field) parseSum());
+                    l = ((Field) l).shr((Field) parseSum());
+                else if (parseIf("->>")) {
+                    Field r = (Field) parseSum();
+
+                    // [#10018] We cannot really know reliably whether this is a
+                    //          index or attribute access. Let's default to the
+                    //          more popular attribute access for now. Also,
+                    //          JSONB is likely more popular than JSON.
+                    if (r.getDataType().isNumeric())
+                        if (((Field) l).getType() == JSON.class)
+                            l = jsonGetElementAsText((Field) l, r);
+                        else
+                            l = jsonbGetElementAsText((Field) l, r);
+                    else
+                        if (((Field) l).getType() == JSON.class)
+                            l = jsonGetAttributeAsText((Field) l, r);
+                        else
+                            l = jsonbGetAttributeAsText((Field) l, r);
+                }
+                else if (parseIf("->")) {
+                    Field r = (Field) parseSum();
+
+                    // [#10018] We cannot really know reliably whether this is a
+                    //          index or attribute access. Let's default to the
+                    //          more popular attribute access for now. Also,
+                    //          JSONB is likely more popular than JSON.
+                    if (r.getDataType().isNumeric())
+                        if (((Field) l).getType() == JSON.class)
+                            l = jsonGetElement((Field) l, r);
+                        else
+                            l = jsonbGetElement((Field) l, r);
+                    else
+                        if (((Field) l).getType() == JSON.class)
+                            l = jsonGetAttribute((Field) l, r);
+                        else
+                            l = jsonbGetAttribute((Field) l, r);
+                }
                 else
                     break;
 
-        return r;
+        return l;
     }
 
     private final FieldOrRow parseSum() {
@@ -7755,7 +7799,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             for (;;)
                 if (parseIf('+'))
                     r = parseSumRightOperand(r, true);
-                else if (parseIf('-'))
+                else if (!peek("->") && parseIf('-'))
                     r = parseSumRightOperand(r, false);
                 else
                     break;

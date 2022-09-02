@@ -42,6 +42,7 @@ import org.jooq.Keyword;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
+import org.jooq.impl.QOM.Aliasable;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
@@ -104,5 +105,19 @@ final class HintedTable<R extends Record> extends AbstractTable<R> implements UN
     @Override
     final FieldsImpl<R> fields0() {
         return delegate.fields0();
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Table<R> $aliased() {
+        return new HintedTable<R>((AbstractTable<R>) ((Aliasable<Table<R>>) delegate).$aliased(), keywords, arguments);
+    }
+
+    @Override
+    public final Name $alias() {
+        return ((Aliasable<Table<R>>) delegate).$alias();
     }
 }

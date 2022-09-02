@@ -20182,6 +20182,418 @@ public class DSL {
         return new JSONObject(SQLDataType.JSONB, new QueryPartList<>(entries));
     }
 
+    /**
+     * The <code>JSON_GET_ELEMENT</code> function.
+     * <p>
+     * Access an array element from a JSON array expression.
+     *
+     * @param field is wrapped as {@link #val(Object)}.
+     * @param index is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSON> jsonGetElement(JSON field, int index) {
+        return new JSONGetElement(Tools.field(field), Tools.field(index));
+    }
+
+    /**
+     * The <code>JSON_GET_ELEMENT</code> function.
+     * <p>
+     * Access an array element from a JSON array expression.
+     *
+     * @param field is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSON> jsonGetElement(JSON field, Field<Integer> index) {
+        return new JSONGetElement(Tools.field(field), index);
+    }
+
+    /**
+     * The <code>JSON_GET_ELEMENT</code> function.
+     * <p>
+     * Access an array element from a JSON array expression.
+     *
+     * @param index is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSON> jsonGetElement(Field<JSON> field, int index) {
+        return new JSONGetElement(field, Tools.field(index));
+    }
+
+    /**
+     * The <code>JSON_GET_ELEMENT</code> function.
+     * <p>
+     * Access an array element from a JSON array expression.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSON> jsonGetElement(Field<JSON> field, Field<Integer> index) {
+        return new JSONGetElement(field, index);
+    }
+
+    /**
+     * The <code>JSONB_GET_ELEMENT</code> function.
+     * <p>
+     * Access an array element from a JSONB array expression.
+     *
+     * @param field is wrapped as {@link #val(Object)}.
+     * @param index is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSONB> jsonbGetElement(JSONB field, int index) {
+        return new JSONBGetElement(Tools.field(field), Tools.field(index));
+    }
+
+    /**
+     * The <code>JSONB_GET_ELEMENT</code> function.
+     * <p>
+     * Access an array element from a JSONB array expression.
+     *
+     * @param field is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSONB> jsonbGetElement(JSONB field, Field<Integer> index) {
+        return new JSONBGetElement(Tools.field(field), index);
+    }
+
+    /**
+     * The <code>JSONB_GET_ELEMENT</code> function.
+     * <p>
+     * Access an array element from a JSONB array expression.
+     *
+     * @param index is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSONB> jsonbGetElement(Field<JSONB> field, int index) {
+        return new JSONBGetElement(field, Tools.field(index));
+    }
+
+    /**
+     * The <code>JSONB_GET_ELEMENT</code> function.
+     * <p>
+     * Access an array element from a JSONB array expression.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSONB> jsonbGetElement(Field<JSONB> field, Field<Integer> index) {
+        return new JSONBGetElement(field, index);
+    }
+
+    /**
+     * The <code>JSON_GET_ELEMENT_AS_TEXT</code> function.
+     * <p>
+     * Access an array element from a JSON array expression and return it as a string.
+     *
+     * @param field is wrapped as {@link #val(Object)}.
+     * @param index is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<String> jsonGetElementAsText(JSON field, int index) {
+        return new JSONGetElementAsText(Tools.field(field), Tools.field(index));
+    }
+
+    /**
+     * The <code>JSON_GET_ELEMENT_AS_TEXT</code> function.
+     * <p>
+     * Access an array element from a JSON array expression and return it as a string.
+     *
+     * @param field is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<String> jsonGetElementAsText(JSON field, Field<Integer> index) {
+        return new JSONGetElementAsText(Tools.field(field), index);
+    }
+
+    /**
+     * The <code>JSON_GET_ELEMENT_AS_TEXT</code> function.
+     * <p>
+     * Access an array element from a JSON array expression and return it as a string.
+     *
+     * @param index is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<String> jsonGetElementAsText(Field<JSON> field, int index) {
+        return new JSONGetElementAsText(field, Tools.field(index));
+    }
+
+    /**
+     * The <code>JSON_GET_ELEMENT_AS_TEXT</code> function.
+     * <p>
+     * Access an array element from a JSON array expression and return it as a string.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<String> jsonGetElementAsText(Field<JSON> field, Field<Integer> index) {
+        return new JSONGetElementAsText(field, index);
+    }
+
+    /**
+     * The <code>JSONB_GET_ELEMENT_AS_TEXT</code> function.
+     * <p>
+     * Access an array element from a JSONB array expression and return it as a string.
+     *
+     * @param field is wrapped as {@link #val(Object)}.
+     * @param index is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<String> jsonbGetElementAsText(JSONB field, int index) {
+        return new JSONBGetElementAsText(Tools.field(field), Tools.field(index));
+    }
+
+    /**
+     * The <code>JSONB_GET_ELEMENT_AS_TEXT</code> function.
+     * <p>
+     * Access an array element from a JSONB array expression and return it as a string.
+     *
+     * @param field is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<String> jsonbGetElementAsText(JSONB field, Field<Integer> index) {
+        return new JSONBGetElementAsText(Tools.field(field), index);
+    }
+
+    /**
+     * The <code>JSONB_GET_ELEMENT_AS_TEXT</code> function.
+     * <p>
+     * Access an array element from a JSONB array expression and return it as a string.
+     *
+     * @param index is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<String> jsonbGetElementAsText(Field<JSONB> field, int index) {
+        return new JSONBGetElementAsText(field, Tools.field(index));
+    }
+
+    /**
+     * The <code>JSONB_GET_ELEMENT_AS_TEXT</code> function.
+     * <p>
+     * Access an array element from a JSONB array expression and return it as a string.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<String> jsonbGetElementAsText(Field<JSONB> field, Field<Integer> index) {
+        return new JSONBGetElementAsText(field, index);
+    }
+
+    /**
+     * The <code>JSON_GET_ATTRIBUTE</code> function.
+     * <p>
+     * Access an object attribute value from a JSON object expression.
+     *
+     * @param field is wrapped as {@link #val(Object)}.
+     * @param attribute is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSON> jsonGetAttribute(JSON field, @Stringly.Param String attribute) {
+        return new JSONGetAttribute(Tools.field(field), Tools.field(attribute));
+    }
+
+    /**
+     * The <code>JSON_GET_ATTRIBUTE</code> function.
+     * <p>
+     * Access an object attribute value from a JSON object expression.
+     *
+     * @param field is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSON> jsonGetAttribute(JSON field, Field<String> attribute) {
+        return new JSONGetAttribute(Tools.field(field), attribute);
+    }
+
+    /**
+     * The <code>JSON_GET_ATTRIBUTE</code> function.
+     * <p>
+     * Access an object attribute value from a JSON object expression.
+     *
+     * @param attribute is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSON> jsonGetAttribute(Field<JSON> field, @Stringly.Param String attribute) {
+        return new JSONGetAttribute(field, Tools.field(attribute));
+    }
+
+    /**
+     * The <code>JSON_GET_ATTRIBUTE</code> function.
+     * <p>
+     * Access an object attribute value from a JSON object expression.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSON> jsonGetAttribute(Field<JSON> field, Field<String> attribute) {
+        return new JSONGetAttribute(field, attribute);
+    }
+
+    /**
+     * The <code>JSONB_GET_ATTRIBUTE</code> function.
+     * <p>
+     * Access an object attribute value from a JSONB object expression.
+     *
+     * @param field is wrapped as {@link #val(Object)}.
+     * @param attribute is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSONB> jsonbGetAttribute(JSONB field, @Stringly.Param String attribute) {
+        return new JSONBGetAttribute(Tools.field(field), Tools.field(attribute));
+    }
+
+    /**
+     * The <code>JSONB_GET_ATTRIBUTE</code> function.
+     * <p>
+     * Access an object attribute value from a JSONB object expression.
+     *
+     * @param field is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSONB> jsonbGetAttribute(JSONB field, Field<String> attribute) {
+        return new JSONBGetAttribute(Tools.field(field), attribute);
+    }
+
+    /**
+     * The <code>JSONB_GET_ATTRIBUTE</code> function.
+     * <p>
+     * Access an object attribute value from a JSONB object expression.
+     *
+     * @param attribute is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSONB> jsonbGetAttribute(Field<JSONB> field, @Stringly.Param String attribute) {
+        return new JSONBGetAttribute(field, Tools.field(attribute));
+    }
+
+    /**
+     * The <code>JSONB_GET_ATTRIBUTE</code> function.
+     * <p>
+     * Access an object attribute value from a JSONB object expression.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSONB> jsonbGetAttribute(Field<JSONB> field, Field<String> attribute) {
+        return new JSONBGetAttribute(field, attribute);
+    }
+
+    /**
+     * The <code>JSON_GET_ATTRIBUTE_AS_TEXT</code> function.
+     * <p>
+     * Access an object attribute value from a JSON object expression and return it as string.
+     *
+     * @param field is wrapped as {@link #val(Object)}.
+     * @param attribute is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<String> jsonGetAttributeAsText(JSON field, @Stringly.Param String attribute) {
+        return new JSONGetAttributeAsText(Tools.field(field), Tools.field(attribute));
+    }
+
+    /**
+     * The <code>JSON_GET_ATTRIBUTE_AS_TEXT</code> function.
+     * <p>
+     * Access an object attribute value from a JSON object expression and return it as string.
+     *
+     * @param field is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<String> jsonGetAttributeAsText(JSON field, Field<String> attribute) {
+        return new JSONGetAttributeAsText(Tools.field(field), attribute);
+    }
+
+    /**
+     * The <code>JSON_GET_ATTRIBUTE_AS_TEXT</code> function.
+     * <p>
+     * Access an object attribute value from a JSON object expression and return it as string.
+     *
+     * @param attribute is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<String> jsonGetAttributeAsText(Field<JSON> field, @Stringly.Param String attribute) {
+        return new JSONGetAttributeAsText(field, Tools.field(attribute));
+    }
+
+    /**
+     * The <code>JSON_GET_ATTRIBUTE_AS_TEXT</code> function.
+     * <p>
+     * Access an object attribute value from a JSON object expression and return it as string.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<String> jsonGetAttributeAsText(Field<JSON> field, Field<String> attribute) {
+        return new JSONGetAttributeAsText(field, attribute);
+    }
+
+    /**
+     * The <code>JSONB_GET_ATTRIBUTE_AS_TEXT</code> function.
+     * <p>
+     * Access an object attribute value from a JSONB object expression and return it as
+     * string.
+     *
+     * @param field is wrapped as {@link #val(Object)}.
+     * @param attribute is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<String> jsonbGetAttributeAsText(JSONB field, @Stringly.Param String attribute) {
+        return new JSONBGetAttributeAsText(Tools.field(field), Tools.field(attribute));
+    }
+
+    /**
+     * The <code>JSONB_GET_ATTRIBUTE_AS_TEXT</code> function.
+     * <p>
+     * Access an object attribute value from a JSONB object expression and return it as
+     * string.
+     *
+     * @param field is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<String> jsonbGetAttributeAsText(JSONB field, Field<String> attribute) {
+        return new JSONBGetAttributeAsText(Tools.field(field), attribute);
+    }
+
+    /**
+     * The <code>JSONB_GET_ATTRIBUTE_AS_TEXT</code> function.
+     * <p>
+     * Access an object attribute value from a JSONB object expression and return it as
+     * string.
+     *
+     * @param attribute is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<String> jsonbGetAttributeAsText(Field<JSONB> field, @Stringly.Param String attribute) {
+        return new JSONBGetAttributeAsText(field, Tools.field(attribute));
+    }
+
+    /**
+     * The <code>JSONB_GET_ATTRIBUTE_AS_TEXT</code> function.
+     * <p>
+     * Access an object attribute value from a JSONB object expression and return it as
+     * string.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<String> jsonbGetAttributeAsText(Field<JSONB> field, Field<String> attribute) {
+        return new JSONBGetAttributeAsText(field, attribute);
+    }
+
 
 
 

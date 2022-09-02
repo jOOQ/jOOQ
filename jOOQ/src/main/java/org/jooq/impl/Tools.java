@@ -318,6 +318,7 @@ import org.jooq.WindowSpecification;
 import org.jooq.XML;
 import org.jooq.conf.BackslashEscaping;
 import org.jooq.conf.NestedCollectionEmulation;
+import org.jooq.conf.ParamType;
 import org.jooq.conf.ParseNameCase;
 import org.jooq.conf.RenderDefaultNullability;
 import org.jooq.conf.RenderMapping;
@@ -5790,6 +5791,13 @@ final class Tools {
             length = Math.max(length, e.getLiteral().length());
 
         return VARCHAR(length).nullability(type.nullability()).defaultValue((Field) type.defaultValue());
+    }
+
+    static final <C extends Context<? extends C>> C prependInline(C ctx, String prepend, Field<?> inline, String append) {
+        if (inline instanceof Param<?> p)
+            return ctx.visit(DSL.inline(prepend + p.getValue() + append));
+        else
+            return ctx.visit(DSL.inline(prepend).concat(inline).concat(DSL.inline(append)), ParamType.INLINED);
     }
 
     static final <C extends Context<? extends C>> C prependSQL(C ctx, Query... queries) {

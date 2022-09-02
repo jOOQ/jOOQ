@@ -392,8 +392,16 @@ final class Names {
     static final Name N_GOTO                   = systemName("goto");
     static final Name N_INSERTING              = systemName("inserting");
     static final Name N_JSONB_ARRAY            = systemName("jsonb_array");
+    static final Name N_JSONB_GET_ATTRIBUTE    = systemName("jsonb_get_attribute");
+    static final Name N_JSONB_GET_ATTRIBUTE_AS_TEXT= systemName("jsonb_get_attribute_as_text");
+    static final Name N_JSONB_GET_ELEMENT      = systemName("jsonb_get_element");
+    static final Name N_JSONB_GET_ELEMENT_AS_TEXT= systemName("jsonb_get_element_as_text");
     static final Name N_JSONB_OBJECT           = systemName("jsonb_object");
     static final Name N_JSON_ARRAY             = systemName("json_array");
+    static final Name N_JSON_GET_ATTRIBUTE     = systemName("json_get_attribute");
+    static final Name N_JSON_GET_ATTRIBUTE_AS_TEXT= systemName("json_get_attribute_as_text");
+    static final Name N_JSON_GET_ELEMENT       = systemName("json_get_element");
+    static final Name N_JSON_GET_ELEMENT_AS_TEXT= systemName("json_get_element_as_text");
     static final Name N_JSON_OBJECT            = systemName("json_object");
     static final Name N_LEFT                   = systemName("left");
     static final Name N_LEVEL                  = systemName("level");

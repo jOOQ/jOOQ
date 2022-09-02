@@ -77,6 +77,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -117,6 +118,7 @@ import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.TIME;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.configuration;
@@ -20592,6 +20594,360 @@ public class DSL {
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonbGetAttributeAsText(Field<JSONB> field, Field<String> attribute) {
         return new JSONBGetAttributeAsText(field, attribute);
+    }
+
+    /**
+     * The <code>JSON_SET</code> function.
+     * <p>
+     * Add or replace a JSON value to a JSON field at a given path.
+     *
+     * @param path is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSON> jsonSet(Field<JSON> field, @Stringly.Param String path, Object value) {
+        return new JSONSet(field, Tools.field(path), Tools.field(value));
+    }
+
+    /**
+     * The <code>JSON_SET</code> function.
+     * <p>
+     * Add or replace a JSON value to a JSON field at a given path.
+     *
+     * @param path is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSON> jsonSet(Field<JSON> field, @Stringly.Param String path, Field<?> value) {
+        return new JSONSet(field, Tools.field(path), value);
+    }
+
+    /**
+     * The <code>JSON_SET</code> function.
+     * <p>
+     * Add or replace a JSON value to a JSON field at a given path.
+     *
+     * @param value is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSON> jsonSet(Field<JSON> field, Field<String> path, Object value) {
+        return new JSONSet(field, path, Tools.field(value));
+    }
+
+    /**
+     * The <code>JSON_SET</code> function.
+     * <p>
+     * Add or replace a JSON value to a JSON field at a given path.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSON> jsonSet(Field<JSON> field, Field<String> path, Field<?> value) {
+        return new JSONSet(field, path, value);
+    }
+
+    /**
+     * The <code>JSONB_SET</code> function.
+     * <p>
+     * Add or replace a JSONB value to a JSONB field at a given path.
+     *
+     * @param path is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSONB> jsonbSet(Field<JSONB> field, @Stringly.Param String path, Object value) {
+        return new JSONBSet(field, Tools.field(path), Tools.field(value));
+    }
+
+    /**
+     * The <code>JSONB_SET</code> function.
+     * <p>
+     * Add or replace a JSONB value to a JSONB field at a given path.
+     *
+     * @param path is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSONB> jsonbSet(Field<JSONB> field, @Stringly.Param String path, Field<?> value) {
+        return new JSONBSet(field, Tools.field(path), value);
+    }
+
+    /**
+     * The <code>JSONB_SET</code> function.
+     * <p>
+     * Add or replace a JSONB value to a JSONB field at a given path.
+     *
+     * @param value is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSONB> jsonbSet(Field<JSONB> field, Field<String> path, Object value) {
+        return new JSONBSet(field, path, Tools.field(value));
+    }
+
+    /**
+     * The <code>JSONB_SET</code> function.
+     * <p>
+     * Add or replace a JSONB value to a JSONB field at a given path.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSONB> jsonbSet(Field<JSONB> field, Field<String> path, Field<?> value) {
+        return new JSONBSet(field, path, value);
+    }
+
+    /**
+     * The <code>JSON_INSERT</code> function.
+     * <p>
+     * Add (but not replace) a JSON value to a JSON field at a given path.
+     *
+     * @param path is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSON> jsonInsert(Field<JSON> field, @Stringly.Param String path, Object value) {
+        return new JSONInsert(field, Tools.field(path), Tools.field(value));
+    }
+
+    /**
+     * The <code>JSON_INSERT</code> function.
+     * <p>
+     * Add (but not replace) a JSON value to a JSON field at a given path.
+     *
+     * @param path is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSON> jsonInsert(Field<JSON> field, @Stringly.Param String path, Field<?> value) {
+        return new JSONInsert(field, Tools.field(path), value);
+    }
+
+    /**
+     * The <code>JSON_INSERT</code> function.
+     * <p>
+     * Add (but not replace) a JSON value to a JSON field at a given path.
+     *
+     * @param value is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSON> jsonInsert(Field<JSON> field, Field<String> path, Object value) {
+        return new JSONInsert(field, path, Tools.field(value));
+    }
+
+    /**
+     * The <code>JSON_INSERT</code> function.
+     * <p>
+     * Add (but not replace) a JSON value to a JSON field at a given path.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSON> jsonInsert(Field<JSON> field, Field<String> path, Field<?> value) {
+        return new JSONInsert(field, path, value);
+    }
+
+    /**
+     * The <code>JSONB_INSERT</code> function.
+     * <p>
+     * Add (but not replace) a JSON value to a JSON field at a given path.
+     *
+     * @param path is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSONB> jsonbInsert(Field<JSONB> field, @Stringly.Param String path, Object value) {
+        return new JSONBInsert(field, Tools.field(path), Tools.field(value));
+    }
+
+    /**
+     * The <code>JSONB_INSERT</code> function.
+     * <p>
+     * Add (but not replace) a JSON value to a JSON field at a given path.
+     *
+     * @param path is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSONB> jsonbInsert(Field<JSONB> field, @Stringly.Param String path, Field<?> value) {
+        return new JSONBInsert(field, Tools.field(path), value);
+    }
+
+    /**
+     * The <code>JSONB_INSERT</code> function.
+     * <p>
+     * Add (but not replace) a JSON value to a JSON field at a given path.
+     *
+     * @param value is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSONB> jsonbInsert(Field<JSONB> field, Field<String> path, Object value) {
+        return new JSONBInsert(field, path, Tools.field(value));
+    }
+
+    /**
+     * The <code>JSONB_INSERT</code> function.
+     * <p>
+     * Add (but not replace) a JSON value to a JSON field at a given path.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSONB> jsonbInsert(Field<JSONB> field, Field<String> path, Field<?> value) {
+        return new JSONBInsert(field, path, value);
+    }
+
+    /**
+     * The <code>JSON_REPLACE</code> function.
+     * <p>
+     * Replace (but not add) a JSON value to a JSON field at a given path.
+     *
+     * @param path is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSON> jsonReplace(Field<JSON> field, @Stringly.Param String path, Object value) {
+        return new JSONReplace(field, Tools.field(path), Tools.field(value));
+    }
+
+    /**
+     * The <code>JSON_REPLACE</code> function.
+     * <p>
+     * Replace (but not add) a JSON value to a JSON field at a given path.
+     *
+     * @param path is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSON> jsonReplace(Field<JSON> field, @Stringly.Param String path, Field<?> value) {
+        return new JSONReplace(field, Tools.field(path), value);
+    }
+
+    /**
+     * The <code>JSON_REPLACE</code> function.
+     * <p>
+     * Replace (but not add) a JSON value to a JSON field at a given path.
+     *
+     * @param value is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSON> jsonReplace(Field<JSON> field, Field<String> path, Object value) {
+        return new JSONReplace(field, path, Tools.field(value));
+    }
+
+    /**
+     * The <code>JSON_REPLACE</code> function.
+     * <p>
+     * Replace (but not add) a JSON value to a JSON field at a given path.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSON> jsonReplace(Field<JSON> field, Field<String> path, Field<?> value) {
+        return new JSONReplace(field, path, value);
+    }
+
+    /**
+     * The <code>JSONB_REPLACE</code> function.
+     * <p>
+     * Replace (but not add) a JSONB value to a JSONB field at a given path.
+     *
+     * @param path is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSONB> jsonbReplace(Field<JSONB> field, @Stringly.Param String path, Object value) {
+        return new JSONBReplace(field, Tools.field(path), Tools.field(value));
+    }
+
+    /**
+     * The <code>JSONB_REPLACE</code> function.
+     * <p>
+     * Replace (but not add) a JSONB value to a JSONB field at a given path.
+     *
+     * @param path is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSONB> jsonbReplace(Field<JSONB> field, @Stringly.Param String path, Field<?> value) {
+        return new JSONBReplace(field, Tools.field(path), value);
+    }
+
+    /**
+     * The <code>JSONB_REPLACE</code> function.
+     * <p>
+     * Replace (but not add) a JSONB value to a JSONB field at a given path.
+     *
+     * @param value is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSONB> jsonbReplace(Field<JSONB> field, Field<String> path, Object value) {
+        return new JSONBReplace(field, path, Tools.field(value));
+    }
+
+    /**
+     * The <code>JSONB_REPLACE</code> function.
+     * <p>
+     * Replace (but not add) a JSONB value to a JSONB field at a given path.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSONB> jsonbReplace(Field<JSONB> field, Field<String> path, Field<?> value) {
+        return new JSONBReplace(field, path, value);
+    }
+
+    /**
+     * The <code>JSON_REMOVE</code> function.
+     * <p>
+     * Remove a JSON value from a JSON field at a given path.
+     *
+     * @param path is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSON> jsonRemove(Field<JSON> field, @Stringly.Param String path) {
+        return new JSONRemove(field, Tools.field(path));
+    }
+
+    /**
+     * The <code>JSON_REMOVE</code> function.
+     * <p>
+     * Remove a JSON value from a JSON field at a given path.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSON> jsonRemove(Field<JSON> field, Field<String> path) {
+        return new JSONRemove(field, path);
+    }
+
+    /**
+     * The <code>JSONB_REMOVE</code> function.
+     * <p>
+     * Remove a JSONB value from a JSONB field at a given path.
+     *
+     * @param path is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSONB> jsonbRemove(Field<JSONB> field, @Stringly.Param String path) {
+        return new JSONBRemove(field, Tools.field(path));
+    }
+
+    /**
+     * The <code>JSONB_REMOVE</code> function.
+     * <p>
+     * Remove a JSONB value from a JSONB field at a given path.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, SQLITE })
+    public static Field<JSONB> jsonbRemove(Field<JSONB> field, Field<String> path) {
+        return new JSONBRemove(field, path);
     }
 
 

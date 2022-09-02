@@ -172,6 +172,7 @@ final class Keywords {
     static final Keyword K_EXECUTE_IMMEDIATE        = keyword("execute immediate");
     static final Keyword K_EXECUTE_STATEMENT        = keyword("execute statement");
     static final Keyword K_EXIST                    = keyword("exist");
+    static final Keyword K_EXISTING                 = keyword("existing");
     static final Keyword K_EXISTS                   = keyword("exists");
     static final Keyword K_EXIT                     = keyword("exit");
     static final Keyword K_EXPLICIT                 = keyword("explicit");
@@ -336,6 +337,7 @@ final class Keywords {
     static final Keyword K_REFERENCES               = keyword("references");
     static final Keyword K_REFERENCING              = keyword("referencing");
     static final Keyword K_REGEXP                   = keyword("regexp");
+    static final Keyword K_REMOVE                   = keyword("remove");
     static final Keyword K_RENAME                   = keyword("rename");
     static final Keyword K_RENAME_COLUMN            = keyword("rename column");
     static final Keyword K_RENAME_CONSTRAINT        = keyword("rename constraint");

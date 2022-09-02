@@ -6825,6 +6825,18 @@ final class Tools {
              : convertVal(field, type);
     }
 
+    /**
+     * In very rare cases, we want {@link #nullSafe(Field, DataType)} behaviour
+     * but only for <code>null</code> values.
+     */
+    static final Field<?> nullSafeNoConvertVal(Object field, DataType<?> type) {
+        return field == null
+             ? DSL.val(null, type)
+             : field instanceof Condition c
+             ? DSL.field(c)
+             : field(field);
+    }
+
     @SuppressWarnings("unchecked")
     static final <T> Field<T> convertVal(Field<T> field, DataType<?> type) {
         return isVal(field)
@@ -6875,6 +6887,10 @@ final class Tools {
 
     static final <T> Field<T> nullSafeNotNull(Field<T> field, DataType<?> type) {
         return nullableIf(false, nullSafe(field, type));
+    }
+
+    static final Field<?> nullSafeNoConvertValNotNull(Field<?> field, DataType<?> type) {
+        return nullableIf(false, nullSafeNoConvertVal(field, type));
     }
 
     static final <T> Field<T> nullableIf(boolean nullable, Field<T> field) {

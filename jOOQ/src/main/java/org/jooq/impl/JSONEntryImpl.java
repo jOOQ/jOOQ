@@ -177,8 +177,11 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
         return field -> jsonCast(ctx, field);
     }
 
-    @SuppressWarnings("unchecked")
     static final Field<?> jsonCast(Context<?> ctx, Field<?> field) {
+        return jsonCast(ctx, field, false);
+    }
+
+    static final Field<?> jsonCast(Context<?> ctx, Field<?> field, boolean castJSONTypes) {
         DataType<?> type = field.getDataType();
 
         switch (ctx.family()) {
@@ -211,6 +214,8 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
                     return field.cast(BOOLEAN);
                 else if (isType(type, Boolean.class))
                     return inlined(field);
+                else if (castJSONTypes && type.isJSON())
+                    return field.cast(field.getDataType());
 
                 break;
 
@@ -219,6 +224,8 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
                     return function(N_JSON, SQLDataType.JSON, booleanCase(field));
                 else if (type.isBinary())
                     return when(field.isNotNull(), function(N_HEX, VARCHAR, field));
+                else if (castJSONTypes && type.isJSON())
+                    return function(N_JSON, SQLDataType.JSON, field);
 
                 break;
 

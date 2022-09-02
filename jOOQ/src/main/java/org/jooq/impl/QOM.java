@@ -4674,6 +4674,154 @@ public final class QOM {
         @NotNull  JSONBGetAttributeAsText $attribute(Field<String> attribute);
     }
 
+    /**
+     * The <code>JSON SET</code> function.
+     * <p>
+     * Add or replace a JSON value to a JSON field at a given path.
+     */
+    public /*sealed*/ interface JSONSet
+        extends
+            org.jooq.Field<JSON>
+        //permits
+        //    JSONSet
+    {
+        @NotNull  Field<JSON> $field();
+        @NotNull  Field<String> $path();
+        @NotNull  Field<?> $value();
+        @NotNull  JSONSet $field(Field<JSON> field);
+        @NotNull  JSONSet $path(Field<String> path);
+        @NotNull  JSONSet $value(Field<?> value);
+    }
+
+    /**
+     * The <code>JSONB SET</code> function.
+     * <p>
+     * Add or replace a JSONB value to a JSONB field at a given path.
+     */
+    public /*sealed*/ interface JSONBSet
+        extends
+            org.jooq.Field<JSONB>
+        //permits
+        //    JSONBSet
+    {
+        @NotNull  Field<JSONB> $field();
+        @NotNull  Field<String> $path();
+        @NotNull  Field<?> $value();
+        @NotNull  JSONBSet $field(Field<JSONB> field);
+        @NotNull  JSONBSet $path(Field<String> path);
+        @NotNull  JSONBSet $value(Field<?> value);
+    }
+
+    /**
+     * The <code>JSON INSERT</code> function.
+     * <p>
+     * Add (but not replace) a JSON value to a JSON field at a given path.
+     */
+    public /*sealed*/ interface JSONInsert
+        extends
+            org.jooq.Field<JSON>
+        //permits
+        //    JSONInsert
+    {
+        @NotNull  Field<JSON> $field();
+        @NotNull  Field<String> $path();
+        @NotNull  Field<?> $value();
+        @NotNull  JSONInsert $field(Field<JSON> field);
+        @NotNull  JSONInsert $path(Field<String> path);
+        @NotNull  JSONInsert $value(Field<?> value);
+    }
+
+    /**
+     * The <code>JSONB INSERT</code> function.
+     * <p>
+     * Add (but not replace) a JSON value to a JSON field at a given path.
+     */
+    public /*sealed*/ interface JSONBInsert
+        extends
+            org.jooq.Field<JSONB>
+        //permits
+        //    JSONBInsert
+    {
+        @NotNull  Field<JSONB> $field();
+        @NotNull  Field<String> $path();
+        @NotNull  Field<?> $value();
+        @NotNull  JSONBInsert $field(Field<JSONB> field);
+        @NotNull  JSONBInsert $path(Field<String> path);
+        @NotNull  JSONBInsert $value(Field<?> value);
+    }
+
+    /**
+     * The <code>JSON REPLACE</code> function.
+     * <p>
+     * Replace (but not add) a JSON value to a JSON field at a given path.
+     */
+    public /*sealed*/ interface JSONReplace
+        extends
+            org.jooq.Field<JSON>
+        //permits
+        //    JSONReplace
+    {
+        @NotNull  Field<JSON> $field();
+        @NotNull  Field<String> $path();
+        @NotNull  Field<?> $value();
+        @NotNull  JSONReplace $field(Field<JSON> field);
+        @NotNull  JSONReplace $path(Field<String> path);
+        @NotNull  JSONReplace $value(Field<?> value);
+    }
+
+    /**
+     * The <code>JSONB REPLACE</code> function.
+     * <p>
+     * Replace (but not add) a JSONB value to a JSONB field at a given path.
+     */
+    public /*sealed*/ interface JSONBReplace
+        extends
+            org.jooq.Field<JSONB>
+        //permits
+        //    JSONBReplace
+    {
+        @NotNull  Field<JSONB> $field();
+        @NotNull  Field<String> $path();
+        @NotNull  Field<?> $value();
+        @NotNull  JSONBReplace $field(Field<JSONB> field);
+        @NotNull  JSONBReplace $path(Field<String> path);
+        @NotNull  JSONBReplace $value(Field<?> value);
+    }
+
+    /**
+     * The <code>JSON REMOVE</code> function.
+     * <p>
+     * Remove a JSON value from a JSON field at a given path.
+     */
+    public /*sealed*/ interface JSONRemove
+        extends
+            org.jooq.Field<JSON>
+        //permits
+        //    JSONRemove
+    {
+        @NotNull  Field<JSON> $field();
+        @NotNull  Field<String> $path();
+        @NotNull  JSONRemove $field(Field<JSON> field);
+        @NotNull  JSONRemove $path(Field<String> path);
+    }
+
+    /**
+     * The <code>JSONB REMOVE</code> function.
+     * <p>
+     * Remove a JSONB value from a JSONB field at a given path.
+     */
+    public /*sealed*/ interface JSONBRemove
+        extends
+            org.jooq.Field<JSONB>
+        //permits
+        //    JSONBRemove
+    {
+        @NotNull  Field<JSONB> $field();
+        @NotNull  Field<String> $path();
+        @NotNull  JSONBRemove $field(Field<JSONB> field);
+        @NotNull  JSONBRemove $path(Field<String> path);
+    }
+
 
 
 

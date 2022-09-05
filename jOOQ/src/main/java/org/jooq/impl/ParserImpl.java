@@ -8427,6 +8427,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs3(DSL::jsonReplace);
                 else if (parseFunctionNameIf("JSON_SET"))
                     return parseFunctionArgs3(DSL::jsonSet);
+                else if (parseFunctionNameIf("JSONB_INSERT"))
+                    return parseFunctionArgs3(DSL::jsonbInsert);
+                else if (parseFunctionNameIf("JSONB_REMOVE"))
+                    return parseFunctionArgs2(DSL::jsonbRemove);
+                else if (parseFunctionNameIf("JSONB_REPLACE"))
+                    return parseFunctionArgs3(DSL::jsonbReplace);
+                else if (parseFunctionNameIf("JSONB_SET"))
+                    return parseFunctionArgs3(DSL::jsonbSet);
 
                 break;
 

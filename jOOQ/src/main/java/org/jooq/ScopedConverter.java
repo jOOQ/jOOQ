@@ -50,14 +50,15 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * A special type of {@link Converter} with alternative
- * {@link #from(Object, ConverterContext)} and {@link #to(Object, ConverterContext)}
- * methods.
+ * {@link #from(Object, ConverterContext)} and
+ * {@link #to(Object, ConverterContext)} methods.
  * <p>
  * This special converter type can be used wherever an ordinary
  * {@link Converter} is used. jOOQ internal call sites will call the alternative
- * {@link #from(Object, ConverterContext)} and {@link #to(Object, ConverterContext)}
- * methods, instead of {@link #from(Object)} and {@link #to(Object)}, allowing
- * for accessing global {@link Configuration#data()} content.
+ * {@link #from(Object, ConverterContext)} and
+ * {@link #to(Object, ConverterContext)} methods, instead of
+ * {@link #from(Object)} and {@link #to(Object)}, allowing for accessing global
+ * {@link Configuration#data()} content.
  */
 public interface ScopedConverter<T, U> extends Converter<T, U> {
 
@@ -65,19 +66,19 @@ public interface ScopedConverter<T, U> extends Converter<T, U> {
      * Read and convert a database object to a user object.
      *
      * @param databaseObject The database object.
-     * @param scope The scope of this conversion.
+     * @param ctx The context of this conversion.
      * @return The user object.
      */
-    U from(T databaseObject, ConverterContext scope);
+    U from(T databaseObject, ConverterContext ctx);
 
     /**
      * Convert and write a user object to a database object.
      *
      * @param userObject The user object.
-     * @param scope The scope of this conversion.
+     * @param ctx The context of this conversion.
      * @return The database object.
      */
-    T to(U userObject, ConverterContext scope);
+    T to(U userObject, ConverterContext ctx);
 
     @Override
     default T to(U userObject) {

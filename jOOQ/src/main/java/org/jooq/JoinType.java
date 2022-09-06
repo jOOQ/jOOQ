@@ -71,6 +71,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import org.jooq.impl.DSL;
@@ -109,14 +110,14 @@ public enum JoinType {
      * <code>RIGHT OUTER JOIN</code> two tables.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support
     RIGHT_OUTER_JOIN("right outer join", "right outer join", "right join", true),
 
     /**
      * <code>FULL OUTER JOIN</code> two tables.
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
     FULL_OUTER_JOIN("full outer join", "full outer join", "full join", true),
 
     /**
@@ -137,14 +138,14 @@ public enum JoinType {
      * <code>NATURAL RIGHT OUTER JOIN</code> two tables.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     NATURAL_RIGHT_OUTER_JOIN("natural right outer join", "natural right outer join", "natural right join", false),
 
     /**
      * <code>NATURAL FULL OUTER JOIN</code> two tables.
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
     NATURAL_FULL_OUTER_JOIN("natural full outer join", "natural full outer join", "natural full join", false),
 
     /**

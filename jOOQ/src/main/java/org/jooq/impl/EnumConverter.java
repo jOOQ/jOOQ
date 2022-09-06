@@ -38,14 +38,14 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Convert.convert;
-import static org.jooq.impl.Internal.converterScope;
+import static org.jooq.impl.Internal.converterContext;
 import static org.jooq.tools.reflect.Reflect.wrapper;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.jooq.ConverterScope;
+import org.jooq.ConverterContext;
 
 /**
  * A base class for enum conversion.

@@ -42,7 +42,7 @@ import java.time.LocalTime;
 import java.util.function.Function;
 
 import org.jooq.Converter;
-import org.jooq.ConverterScope;
+import org.jooq.ConverterContext;
 
 /**
  * @author Lukas Eder
@@ -59,12 +59,12 @@ public final class TimeToLocalTimeConverter extends AbstractScopedConverter<Time
     }
 
     @Override
-    public final LocalTime from(Time t, ConverterScope scope) {
+    public final LocalTime from(Time t, ConverterContext scope) {
         return t == null ? null : t.toLocalTime();
     }
 
     @Override
-    public final Time to(LocalTime u, ConverterScope scope) {
+    public final Time to(LocalTime u, ConverterContext scope) {
         return u == null ? null : Time.valueOf(u);
     }
 }

@@ -103,7 +103,7 @@ class DefaultBindingGetResultSetContext<U> extends AbstractExecuteScope implemen
         return new DefaultBindingGetResultSetContext<T>(ctx, resultSet, index) {
             @Override
             public void value(T v) {
-                outer.value(scoped(converter).from(v, converterScope()));
+                outer.value(scoped(converter).from(v, converterContext()));
             }
         };
     }

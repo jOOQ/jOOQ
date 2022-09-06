@@ -37,7 +37,7 @@
  */
 package org.jooq.impl;
 
-import org.jooq.ConverterScope;
+import org.jooq.ConverterContext;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteScope;
 
@@ -57,8 +57,8 @@ abstract class AbstractExecuteScope extends AbstractScope implements ExecuteScop
     }
 
     @Override
-    public final ConverterScope converterScope() {
-        return ctx.converterScope();
+    public final ConverterContext converterContext() {
+        return ctx.converterContext();
     }
 
     @Override

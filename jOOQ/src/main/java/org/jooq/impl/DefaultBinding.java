@@ -231,7 +231,7 @@ import org.jooq.BindingSetStatementContext;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Converter;
-import org.jooq.ConverterScope;
+import org.jooq.ConverterContext;
 import org.jooq.Converters;
 import org.jooq.DataType;
 import org.jooq.EnumType;
@@ -376,8 +376,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<LocalDate>) dataType,
                 ScopedConverter.ofNullable(Date.class, LocalDate.class,
-                    (BiFunction<Date, ConverterScope, LocalDate> & Serializable) (t, x) -> t.toLocalDate(),
-                    (BiFunction<LocalDate, ConverterScope, Date> & Serializable) (t, x) -> Date.valueOf(t)
+                    (BiFunction<Date, ConverterContext, LocalDate> & Serializable) (t, x) -> t.toLocalDate(),
+                    (BiFunction<LocalDate, ConverterContext, Date> & Serializable) (t, x) -> Date.valueOf(t)
                 ),
                 (ScopedConverter<LocalDate, U>) converter,
                 c -> new DefaultDateBinding<>(DATE, c)
@@ -386,8 +386,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<LocalDateTime>) dataType,
                 ScopedConverter.ofNullable(Timestamp.class, LocalDateTime.class,
-                    (BiFunction<Timestamp, ConverterScope, LocalDateTime> & Serializable) (t, x) -> t.toLocalDateTime(),
-                    (BiFunction<LocalDateTime, ConverterScope, Timestamp> & Serializable) (t, x) -> Timestamp.valueOf(t)
+                    (BiFunction<Timestamp, ConverterContext, LocalDateTime> & Serializable) (t, x) -> t.toLocalDateTime(),
+                    (BiFunction<LocalDateTime, ConverterContext, Timestamp> & Serializable) (t, x) -> Timestamp.valueOf(t)
                 ),
                 (ScopedConverter<LocalDateTime, U>) converter,
                 c -> new DefaultTimestampBinding<>(TIMESTAMP, c)
@@ -396,8 +396,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<LocalTime>) dataType,
                 ScopedConverter.ofNullable(Time.class, LocalTime.class,
-                    (BiFunction<Time, ConverterScope, LocalTime> & Serializable) (t, x) -> t.toLocalTime(),
-                    (BiFunction<LocalTime, ConverterScope, Time> & Serializable) (t, x) -> Time.valueOf(t)
+                    (BiFunction<Time, ConverterContext, LocalTime> & Serializable) (t, x) -> t.toLocalTime(),
+                    (BiFunction<LocalTime, ConverterContext, Time> & Serializable) (t, x) -> Time.valueOf(t)
                 ),
                 (ScopedConverter<LocalTime, U>) converter,
                 c -> new DefaultTimeBinding<>(TIME, c)
@@ -430,8 +430,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<UByte>) dataType,
                 ScopedConverter.ofNullable(Short.class, UByte.class,
-                    (BiFunction<Short, ConverterScope, UByte> & Serializable) (t, x) -> UByte.valueOf(t),
-                    (BiFunction<UByte, ConverterScope, Short> & Serializable) (t, x) -> t.shortValue()
+                    (BiFunction<Short, ConverterContext, UByte> & Serializable) (t, x) -> UByte.valueOf(t),
+                    (BiFunction<UByte, ConverterContext, Short> & Serializable) (t, x) -> t.shortValue()
                 ),
                 (ScopedConverter<UByte, U>) converter,
                 c -> new DefaultShortBinding<>(SMALLINT, c)
@@ -440,8 +440,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<UInteger>) dataType,
                 ScopedConverter.ofNullable(Long.class, UInteger.class,
-                    (BiFunction<Long, ConverterScope, UInteger> & Serializable) (t, x) -> UInteger.valueOf(t),
-                    (BiFunction<UInteger, ConverterScope, Long> & Serializable) (t, x) -> t.longValue()
+                    (BiFunction<Long, ConverterContext, UInteger> & Serializable) (t, x) -> UInteger.valueOf(t),
+                    (BiFunction<UInteger, ConverterContext, Long> & Serializable) (t, x) -> t.longValue()
                 ),
                 (ScopedConverter<UInteger, U>) converter,
                 c -> new DefaultLongBinding<>(BIGINT, c)
@@ -450,8 +450,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<ULong>) dataType,
                 ScopedConverter.ofNullable(BigInteger.class, ULong.class,
-                    (BiFunction<BigInteger, ConverterScope, ULong> & Serializable) (t, x) -> ULong.valueOf(t),
-                    (BiFunction<ULong, ConverterScope, BigInteger> & Serializable) (t, x) -> t.toBigInteger()
+                    (BiFunction<BigInteger, ConverterContext, ULong> & Serializable) (t, x) -> ULong.valueOf(t),
+                    (BiFunction<ULong, ConverterContext, BigInteger> & Serializable) (t, x) -> t.toBigInteger()
                 ),
                 (ScopedConverter<ULong, U>) converter,
                 c -> new DefaultBigIntegerBinding<>(DECIMAL_INTEGER, c)
@@ -460,8 +460,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<UShort>) dataType,
                 ScopedConverter.ofNullable(Integer.class, UShort.class,
-                    (BiFunction<Integer, ConverterScope, UShort> & Serializable) (t, x) -> UShort.valueOf(t),
-                    (BiFunction<UShort, ConverterScope, Integer> & Serializable) (t, x) -> t.intValue()
+                    (BiFunction<Integer, ConverterContext, UShort> & Serializable) (t, x) -> UShort.valueOf(t),
+                    (BiFunction<UShort, ConverterContext, Integer> & Serializable) (t, x) -> t.intValue()
                 ),
                 (ScopedConverter<UShort, U>) converter,
                 c -> new DefaultIntegerBinding<>(INTEGER, c)
@@ -940,7 +940,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         public final void sql(BindingSQLContext<U> ctx) throws SQLException {
-            T converted = converter().to(ctx.value(), ctx.converterScope());
+            T converted = converter().to(ctx.value(), ctx.converterContext());
 
             // Casting can be enforced or prevented
             switch (ctx.render().castMode()) {
@@ -1000,7 +1000,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         public final void set(BindingSetStatementContext<U> ctx) throws SQLException {
-            T value = converter().to(ctx.value(), ctx.converterScope());
+            T value = converter().to(ctx.value(), ctx.converterContext());
 
             if (!FALSE.equals(ctx.settings().isExecuteLogging()))
                 if (log.isTraceEnabled())
@@ -1017,7 +1017,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         public final void set(BindingSetSQLOutputContext<U> ctx) throws SQLException {
-            T value = converter().to(ctx.value(), ctx.converterScope());
+            T value = converter().to(ctx.value(), ctx.converterContext());
 
             if (value == null)
                 ctx.output().writeObject(null);
@@ -1027,7 +1027,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         public final void get(BindingGetResultSetContext<U> ctx) throws SQLException {
-            U value = converter().from(get0(ctx), ctx.converterScope());
+            U value = converter().from(get0(ctx), ctx.converterContext());
 
             if (attachable)
                 value = attach(value, ctx.configuration());
@@ -1037,7 +1037,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         public final void get(BindingGetStatementContext<U> ctx) throws SQLException {
-            U value = converter().from(get0(ctx), ctx.converterScope());
+            U value = converter().from(get0(ctx), ctx.converterContext());
 
             if (attachable)
                 value = attach(value, ctx.configuration());
@@ -1047,7 +1047,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         public final void get(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            U value = converter().from(get0(ctx), ctx.converterScope());
+            U value = converter().from(get0(ctx), ctx.converterContext());
 
             if (attachable)
                 value = attach(value, ctx.configuration());
@@ -1129,17 +1129,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, X value) throws SQLException {
-            delegatingBinding.sqlInline0(ctx, delegatingConverter.to(value, ctx.converterScope()));
+            delegatingBinding.sqlInline0(ctx, delegatingConverter.to(value, ctx.converterContext()));
         }
 
         @Override
         final void sqlBind0(BindingSQLContext<U> ctx, X value) throws SQLException {
-            delegatingBinding.sqlBind0(ctx, delegatingConverter.to(value, ctx.converterScope()));
+            delegatingBinding.sqlBind0(ctx, delegatingConverter.to(value, ctx.converterContext()));
         }
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, X value) throws SQLException {
-            delegatingBinding.set0(ctx, delegatingConverter.to(value, ctx.converterScope()));
+            delegatingBinding.set0(ctx, delegatingConverter.to(value, ctx.converterContext()));
         }
 
         @Override
@@ -1149,22 +1149,22 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, X value) throws SQLException {
-            delegatingBinding.set0(ctx, delegatingConverter.to(value, ctx.converterScope()));
+            delegatingBinding.set0(ctx, delegatingConverter.to(value, ctx.converterContext()));
         }
 
         @Override
         final X get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return delegatingConverter.from(delegatingBinding.get0(ctx), ctx.converterScope());
+            return delegatingConverter.from(delegatingBinding.get0(ctx), ctx.converterContext());
         }
 
         @Override
         final X get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return delegatingConverter.from(delegatingBinding.get0(ctx), ctx.converterScope());
+            return delegatingConverter.from(delegatingBinding.get0(ctx), ctx.converterContext());
         }
 
         @Override
         final X get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            return delegatingConverter.from(delegatingBinding.get0(ctx), ctx.converterScope());
+            return delegatingConverter.from(delegatingBinding.get0(ctx), ctx.converterContext());
         }
 
         @Override
@@ -3463,8 +3463,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final ScopedConverter<OffsetDateTime, Instant> CONVERTER = ScopedConverter.ofNullable(
             OffsetDateTime.class,
             Instant.class,
-            (BiFunction<OffsetDateTime, ConverterScope, Instant> & Serializable) (t, x) -> t.toInstant(),
-            (BiFunction<Instant, ConverterScope, OffsetDateTime> & Serializable) (i, x) -> OffsetDateTime.ofInstant(i, ZoneOffset.UTC)
+            (BiFunction<OffsetDateTime, ConverterContext, Instant> & Serializable) (t, x) -> t.toInstant(),
+            (BiFunction<Instant, ConverterContext, OffsetDateTime> & Serializable) (i, x) -> OffsetDateTime.ofInstant(i, ZoneOffset.UTC)
         );
 
         private final DefaultOffsetDateTimeBinding<U>           delegate;
@@ -3482,32 +3482,32 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Instant value) throws SQLException {
-            delegate.sqlInline0(ctx, CONVERTER.to(value, ctx.converterScope()));
+            delegate.sqlInline0(ctx, CONVERTER.to(value, ctx.converterContext()));
         }
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Instant value) throws SQLException {
-            delegate.set0(ctx, CONVERTER.to(value, ctx.converterScope()));
+            delegate.set0(ctx, CONVERTER.to(value, ctx.converterContext()));
         }
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, Instant value) throws SQLException {
-            delegate.set0(ctx, CONVERTER.to(value, ctx.converterScope()));
+            delegate.set0(ctx, CONVERTER.to(value, ctx.converterContext()));
         }
 
         @Override
         final Instant get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return CONVERTER.from(delegate.get0(ctx), ctx.converterScope());
+            return CONVERTER.from(delegate.get0(ctx), ctx.converterContext());
         }
 
         @Override
         final Instant get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return CONVERTER.from(delegate.get0(ctx), ctx.converterScope());
+            return CONVERTER.from(delegate.get0(ctx), ctx.converterContext());
         }
 
         @Override
         final Instant get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            return CONVERTER.from(delegate.get0(ctx), ctx.converterScope());
+            return CONVERTER.from(delegate.get0(ctx), ctx.converterContext());
         }
 
         @Override
@@ -3856,88 +3856,88 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             else if (type == Blob.class)
                 ; // Not supported
             else if (type == Boolean.class)
-                return converter.from((T) Convert.convert(string, Boolean.class), ctx.converterScope());
+                return converter.from((T) Convert.convert(string, Boolean.class), ctx.converterContext());
             else if (type == BigInteger.class)
-                return converter.from((T) new BigInteger(string), ctx.converterScope());
+                return converter.from((T) new BigInteger(string), ctx.converterContext());
             else if (type == BigDecimal.class)
-                return converter.from((T) new BigDecimal(string), ctx.converterScope());
+                return converter.from((T) new BigDecimal(string), ctx.converterContext());
             else if (type == Byte.class)
-                return converter.from((T) Byte.valueOf(string), ctx.converterScope());
+                return converter.from((T) Byte.valueOf(string), ctx.converterContext());
             else if (type == byte[].class)
-                return converter.from((T) PostgresUtils.toBytes(string), ctx.converterScope());
+                return converter.from((T) PostgresUtils.toBytes(string), ctx.converterContext());
             else if (type == Clob.class)
                 ; // Not supported
             else if (type == Date.class)
-                return converter.from((T) Date.valueOf(string), ctx.converterScope());
+                return converter.from((T) Date.valueOf(string), ctx.converterContext());
             else if (type == Double.class)
-                return converter.from((T) Double.valueOf(string), ctx.converterScope());
+                return converter.from((T) Double.valueOf(string), ctx.converterContext());
             else if (type == Float.class)
-                return converter.from((T) Float.valueOf(string), ctx.converterScope());
+                return converter.from((T) Float.valueOf(string), ctx.converterContext());
             else if (type == Integer.class)
-                return converter.from((T) Integer.valueOf(string), ctx.converterScope());
+                return converter.from((T) Integer.valueOf(string), ctx.converterContext());
             else if (type == Long.class)
-                return converter.from((T) Long.valueOf(string), ctx.converterScope());
+                return converter.from((T) Long.valueOf(string), ctx.converterContext());
             else if (type == Short.class)
-                return converter.from((T) Short.valueOf(string), ctx.converterScope());
+                return converter.from((T) Short.valueOf(string), ctx.converterContext());
             else if (type == String.class)
-                return converter.from((T) string, ctx.converterScope());
+                return converter.from((T) string, ctx.converterContext());
             else if (type == Time.class)
-                return converter.from((T) Time.valueOf(string), ctx.converterScope());
+                return converter.from((T) Time.valueOf(string), ctx.converterContext());
             else if (type == Timestamp.class)
-                return converter.from((T) Timestamp.valueOf(patchIso8601Timestamp(string, false)), ctx.converterScope());
+                return converter.from((T) Timestamp.valueOf(patchIso8601Timestamp(string, false)), ctx.converterContext());
             else if (type == LocalTime.class)
-                return converter.from((T) LocalTime.parse(string), ctx.converterScope());
+                return converter.from((T) LocalTime.parse(string), ctx.converterContext());
             else if (type == LocalDate.class)
-                return converter.from((T) LocalDate.parse(string), ctx.converterScope());
+                return converter.from((T) LocalDate.parse(string), ctx.converterContext());
             else if (type == LocalDateTime.class)
-                return converter.from((T) LocalDateTime.parse(patchIso8601Timestamp(string, true)), ctx.converterScope());
+                return converter.from((T) LocalDateTime.parse(patchIso8601Timestamp(string, true)), ctx.converterContext());
             else if (type == OffsetTime.class)
-                return converter.from((T) OffsetDateTimeParser.offsetTime(string), ctx.converterScope());
+                return converter.from((T) OffsetDateTimeParser.offsetTime(string), ctx.converterContext());
             else if (type == OffsetDateTime.class)
-                return converter.from((T) OffsetDateTimeParser.offsetDateTime(string), ctx.converterScope());
+                return converter.from((T) OffsetDateTimeParser.offsetDateTime(string), ctx.converterContext());
             else if (type == Instant.class)
-                return converter.from((T) OffsetDateTimeParser.offsetDateTime(string).toInstant(), ctx.converterScope());
+                return converter.from((T) OffsetDateTimeParser.offsetDateTime(string).toInstant(), ctx.converterContext());
             else if (type == JSON.class)
-                return converter.from((T) JSON.json(string), ctx.converterScope());
+                return converter.from((T) JSON.json(string), ctx.converterContext());
             else if (type == JSONB.class)
-                return converter.from((T) JSONB.jsonb(string), ctx.converterScope());
+                return converter.from((T) JSONB.jsonb(string), ctx.converterContext());
             else if (type == UByte.class)
-                return converter.from((T) UByte.valueOf(string), ctx.converterScope());
+                return converter.from((T) UByte.valueOf(string), ctx.converterContext());
             else if (type == UShort.class)
-                return converter.from((T) UShort.valueOf(string), ctx.converterScope());
+                return converter.from((T) UShort.valueOf(string), ctx.converterContext());
             else if (type == UInteger.class)
-                return converter.from((T) UInteger.valueOf(string), ctx.converterScope());
+                return converter.from((T) UInteger.valueOf(string), ctx.converterContext());
             else if (type == ULong.class)
-                return converter.from((T) ULong.valueOf(string), ctx.converterScope());
+                return converter.from((T) ULong.valueOf(string), ctx.converterContext());
             else if (type == UUID.class)
-                return converter.from((T) UUID.fromString(string), ctx.converterScope());
+                return converter.from((T) UUID.fromString(string), ctx.converterContext());
             else if (type == XML.class)
-                return converter.from((T) XML.xml(string), ctx.converterScope());
+                return converter.from((T) XML.xml(string), ctx.converterContext());
             else if (type.isArray())
-                return converter.from((T) pgNewArray(ctx, field, type, string), ctx.converterScope());
+                return converter.from((T) pgNewArray(ctx, field, type, string), ctx.converterContext());
 
 
 
 
             else if (EnumType.class.isAssignableFrom(type))
-                return converter.from((T) DefaultEnumTypeBinding.getEnumType((Class<EnumType>) type, string), ctx.converterScope());
+                return converter.from((T) DefaultEnumTypeBinding.getEnumType((Class<EnumType>) type, string), ctx.converterContext());
             else if (Result.class.isAssignableFrom(type))
                 if (string.startsWith("<"))
-                    return converter.from((T) readMultisetXML(ctx, (AbstractRow<Record>) field.getDataType().getRow(), (Class<Record>) field.getDataType().getRecordType(), string), ctx.converterScope());
+                    return converter.from((T) readMultisetXML(ctx, (AbstractRow<Record>) field.getDataType().getRow(), (Class<Record>) field.getDataType().getRecordType(), string), ctx.converterContext());
                 else
-                    return converter.from((T) readMultisetJSON(ctx, (AbstractRow<Record>) field.getDataType().getRow(), (Class<Record>) field.getDataType().getRecordType(), string), ctx.converterScope());
+                    return converter.from((T) readMultisetJSON(ctx, (AbstractRow<Record>) field.getDataType().getRow(), (Class<Record>) field.getDataType().getRecordType(), string), ctx.converterContext());
             else if (Record.class.isAssignableFrom(type)
 
             // [#11812] UDTRecords/TableRecords or InternalRecords that don't have an explicit converter
                     && (!InternalRecord.class.isAssignableFrom(type) || type == converter.fromType()))
-                return converter.from((T) pgNewRecord(ctx, type, (AbstractRow<?>) field.getDataType().getRow(), string), ctx.converterScope());
+                return converter.from((T) pgNewRecord(ctx, type, (AbstractRow<?>) field.getDataType().getRow(), string), ctx.converterContext());
             else if (type == Object.class)
-                return converter.from((T) string, ctx.converterScope());
+                return converter.from((T) string, ctx.converterContext());
 
             // [#4964] [#6058] Recurse only if we have a meaningful converter, not the identity converter,
             //                 which would cause a StackOverflowError, here!
             else if (type != wrapper(converter.toType())) {
-                return converter.from((T) pgFromString(ctx, field("converted_field", ((ConvertedDataType<?, ?>) field.getDataType()).delegate()), string), ctx.converterScope());
+                return converter.from((T) pgFromString(ctx, field("converted_field", ((ConvertedDataType<?, ?>) field.getDataType()).delegate()), string), ctx.converterContext());
             }
 
             throw new UnsupportedOperationException("Class " + type + " is not supported");
@@ -5416,7 +5416,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         void sqlInline0(BindingSQLContext<U> ctx, JSONB value) throws SQLException {
             if (EMULATE_AS_BLOB.contains(ctx.dialect())) {
-                bytes(ctx.configuration()).sqlInline0(ctx, bytesConverter(ctx.configuration()).to(value, ctx.converterScope()));
+                bytes(ctx.configuration()).sqlInline0(ctx, bytesConverter(ctx.configuration()).to(value, ctx.converterContext()));
             }
             else {
                 super.sqlInline0(ctx, value);
@@ -5437,7 +5437,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void set0(BindingSetStatementContext<U> ctx, JSONB value) throws SQLException {
             if (EMULATE_AS_BLOB.contains(ctx.dialect()))
-                bytes(ctx.configuration()).set0(ctx, bytesConverter(ctx.configuration()).to(value, ctx.converterScope()));
+                bytes(ctx.configuration()).set0(ctx, bytesConverter(ctx.configuration()).to(value, ctx.converterContext()));
             else
                 ctx.statement().setString(ctx.index(), value.data());
         }
@@ -5445,7 +5445,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, JSONB value) throws SQLException {
             if (EMULATE_AS_BLOB.contains(ctx.dialect()))
-                bytes(ctx.configuration()).set0(ctx, bytesConverter(ctx.configuration()).to(value, ctx.converterScope()));
+                bytes(ctx.configuration()).set0(ctx, bytesConverter(ctx.configuration()).to(value, ctx.converterContext()));
             else
                 ctx.output().writeString(value.data());
         }
@@ -5453,7 +5453,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final JSONB get0(BindingGetResultSetContext<U> ctx) throws SQLException {
             if (EMULATE_AS_BLOB.contains(ctx.dialect()))
-                return bytesConverter(ctx.configuration()).from(bytes(ctx.configuration()).get0(ctx), ctx.converterScope());
+                return bytesConverter(ctx.configuration()).from(bytes(ctx.configuration()).get0(ctx), ctx.converterContext());
 
             String string = ctx.resultSet().getString(ctx.index());
             return string == null ? null : JSONB.valueOf(string);
@@ -5462,7 +5462,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final JSONB get0(BindingGetStatementContext<U> ctx) throws SQLException {
             if (EMULATE_AS_BLOB.contains(ctx.dialect()))
-                return bytesConverter(ctx.configuration()).from(bytes(ctx.configuration()).get0(ctx), ctx.converterScope());
+                return bytesConverter(ctx.configuration()).from(bytes(ctx.configuration()).get0(ctx), ctx.converterContext());
 
             String string = ctx.statement().getString(ctx.index());
             return string == null ? null : JSONB.valueOf(string);
@@ -5471,7 +5471,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final JSONB get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
             if (EMULATE_AS_BLOB.contains(ctx.dialect()))
-                return bytesConverter(ctx.configuration()).from(bytes(ctx.configuration()).get0(ctx), ctx.converterScope());
+                return bytesConverter(ctx.configuration()).from(bytes(ctx.configuration()).get0(ctx), ctx.converterContext());
 
             String string = ctx.input().readString();
             return string == null ? null : JSONB.valueOf(string);

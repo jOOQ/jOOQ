@@ -72,10 +72,10 @@ import org.jetbrains.annotations.Nullable;
 public interface ExecuteContext extends Scope {
 
     /**
-     * Get a {@link ConverterScope} for the scope of this
+     * Get a {@link ConverterContext} for the scope of this
      * {@link ExecuteContext}.
      */
-    ConverterScope converterScope();
+    ConverterContext converterContext();
 
     /**
      * The connection to be used in this execute context.

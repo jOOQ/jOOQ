@@ -195,7 +195,7 @@ public final class Converters<T, U> extends AbstractScopedConverter<T, U> {
     }
 
     @Override
-    public final U from(T t, ConverterScope scope) {
+    public final U from(T t, ConverterContext scope) {
         Object result = t;
 
         for (int i = 0; i < chain.length; i++)
@@ -205,7 +205,7 @@ public final class Converters<T, U> extends AbstractScopedConverter<T, U> {
     }
 
     @Override
-    public final T to(U u, ConverterScope scope) {
+    public final T to(U u, ConverterContext scope) {
         Object result = u;
 
         for (int i = chain.length - 1; i >= 0; i--)
@@ -237,9 +237,9 @@ public final class Converters<T, U> extends AbstractScopedConverter<T, U> {
             : f.apply(t) : t -> t == null ? null : f.apply(t);
     }
 
-    static final <T, U> BiFunction<T, ConverterScope, U> nullable(BiFunction<? super T, ? super ConverterScope, ? extends U> f) {
+    static final <T, U> BiFunction<T, ConverterContext, U> nullable(BiFunction<? super T, ? super ConverterContext, ? extends U> f) {
         return f instanceof Serializable
-            ? (BiFunction<T, ConverterScope, U> & Serializable) (t, x) -> t == null ? null
+            ? (BiFunction<T, ConverterContext, U> & Serializable) (t, x) -> t == null ? null
             : f.apply(t, x) : (t, x) -> t == null ? null : f.apply(t, x);
     }
 
@@ -247,7 +247,7 @@ public final class Converters<T, U> extends AbstractScopedConverter<T, U> {
         return t -> { throw new DataTypeException("Conversion function not implemented"); };
     }
 
-    static final <T, U> BiFunction<T, ConverterScope, U> notImplementedBiFunction() {
+    static final <T, U> BiFunction<T, ConverterContext, U> notImplementedBiFunction() {
         return (t, x) -> { throw new DataTypeException("Conversion function not implemented"); };
     }
 

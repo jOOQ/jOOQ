@@ -263,7 +263,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.ConverterProvider;
-import org.jooq.ConverterScope;
+import org.jooq.ConverterContext;
 import org.jooq.Converters;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
@@ -7104,11 +7104,11 @@ final class Tools {
         return dataType;
     }
 
-    static final ConverterScope converterScope(Attachable attachable) {
-        return new DefaultConverterScope(configuration(attachable));
+    static final ConverterContext converterContext(Attachable attachable) {
+        return new DefaultConverterContext(configuration(attachable));
     }
 
-    static final ConverterScope converterScope(Configuration configuration) {
-        return new DefaultConverterScope(configuration(configuration));
+    static final ConverterContext converterContext(Configuration configuration) {
+        return new DefaultConverterContext(configuration(configuration));
     }
 }

@@ -79,7 +79,7 @@ class DefaultBindingSetStatementContext<U> extends AbstractExecuteScope implemen
 
     @Override
     public final <T> BindingSetStatementContext<T> convert(Converter<? extends T, ? super U> converter) {
-        return new DefaultBindingSetStatementContext<>(ctx, statement, index, scoped(converter).to(value, converterScope()));
+        return new DefaultBindingSetStatementContext<>(ctx, statement, index, scoped(converter).to(value, converterContext()));
     }
 
     @Override

@@ -38,7 +38,7 @@
 package org.jooq.impl;
 
 import org.jooq.Converter;
-import org.jooq.ConverterScope;
+import org.jooq.ConverterContext;
 import org.jooq.ScopedConverter;
 
 /**
@@ -54,12 +54,12 @@ public final class IdentityConverter<T> implements ScopedConverter<T, T> {
     }
 
     @Override
-    public final T from(T t, ConverterScope scope) {
+    public final T from(T t, ConverterContext scope) {
         return t;
     }
 
     @Override
-    public final T to(T t, ConverterScope scope) {
+    public final T to(T t, ConverterContext scope) {
         return t;
     }
 

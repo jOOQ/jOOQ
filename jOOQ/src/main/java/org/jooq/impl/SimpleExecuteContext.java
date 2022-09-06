@@ -46,7 +46,7 @@ import java.util.Map;
 
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
-import org.jooq.ConverterScope;
+import org.jooq.ConverterContext;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteType;
 import org.jooq.Query;
@@ -68,8 +68,8 @@ final class SimpleExecuteContext extends AbstractScope implements ExecuteContext
     }
 
     @Override
-    public final ConverterScope converterScope() {
-        return Tools.converterScope(configuration);
+    public final ConverterContext converterContext() {
+        return Tools.converterContext(configuration);
     }
 
     @Override

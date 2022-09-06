@@ -40,7 +40,7 @@ package org.jooq.impl;
 import java.io.StringReader;
 import java.io.StringWriter;
 
-import org.jooq.ConverterScope;
+import org.jooq.ConverterContext;
 import org.jooq.XML;
 
 import jakarta.xml.bind.JAXB;

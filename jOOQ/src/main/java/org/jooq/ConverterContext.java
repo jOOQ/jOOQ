@@ -43,6 +43,6 @@ package org.jooq;
  * <p>
  * Implementations
  */
-public interface ConverterScope extends Scope {
+public interface ConverterContext extends Scope {
 
 }

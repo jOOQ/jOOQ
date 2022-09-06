@@ -42,7 +42,7 @@ import java.time.LocalDateTime;
 import java.util.function.Function;
 
 import org.jooq.Converter;
-import org.jooq.ConverterScope;
+import org.jooq.ConverterContext;
 
 /**
  * @author Lukas Eder
@@ -59,12 +59,12 @@ public final class TimestampToLocalDateTimeConverter extends AbstractScopedConve
     }
 
     @Override
-    public final LocalDateTime from(Timestamp t, ConverterScope scope) {
+    public final LocalDateTime from(Timestamp t, ConverterContext scope) {
         return t == null ? null : t.toLocalDateTime();
     }
 
     @Override
-    public final Timestamp to(LocalDateTime u, ConverterScope scope) {
+    public final Timestamp to(LocalDateTime u, ConverterContext scope) {
         return u == null ? null : Timestamp.valueOf(u);
     }
 }

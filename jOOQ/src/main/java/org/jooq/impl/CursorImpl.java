@@ -1571,7 +1571,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
 
                         // [#7100] TODO: Is there a more elegant way to do this?
                         if (f != field)
-                            value = ((ScopedConverter<Object, T>) field.getConverter()).from(value, ctx.converterScope());
+                            value = ((ScopedConverter<Object, T>) field.getConverter()).from(value, ctx.converterContext());
 
                         offset += operation.offset - nestedOffset + nested.size() - 1;
                     }

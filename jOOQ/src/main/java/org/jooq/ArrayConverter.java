@@ -61,12 +61,12 @@ final class ArrayConverter<T, U> extends AbstractScopedConverter<T[], U[]> {
     }
 
     @Override
-    public final U[] from(T[] t, ConverterScope scope) {
+    public final U[] from(T[] t, ConverterContext scope) {
         return Convert.convertArray(t, converter);
     }
 
     @Override
-    public final T[] to(U[] t, ConverterScope scope) {
+    public final T[] to(U[] t, ConverterContext scope) {
         return Convert.convertArray(t, inverse);
     }
 }

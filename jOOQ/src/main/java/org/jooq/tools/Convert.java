@@ -42,7 +42,7 @@ import static java.time.temporal.ChronoField.MILLI_OF_DAY;
 import static java.time.temporal.ChronoField.MILLI_OF_SECOND;
 import static org.jooq.ScopedConverter.scoped;
 import static org.jooq.impl.Internal.arrayType;
-import static org.jooq.impl.Internal.converterScope;
+import static org.jooq.impl.Internal.converterContext;
 import static org.jooq.tools.reflect.Reflect.accessible;
 import static org.jooq.tools.reflect.Reflect.wrapper;
 import static org.jooq.types.Unsigned.ubyte;
@@ -93,7 +93,7 @@ import jakarta.xml.bind.JAXB;
 // ...
 import org.jooq.Converter;
 import org.jooq.ConverterProvider;
-import org.jooq.ConverterScope;
+import org.jooq.ConverterContext;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
@@ -377,7 +377,7 @@ public final class Convert {
     }
 
     public static final <U> U[] convertCollection(Collection from, Class<? extends U[]> to){
-        return new ConvertAll<U[]>(to).from(from, converterScope());
+        return new ConvertAll<U[]>(to).from(from, converterContext());
     }
 
     /**
@@ -407,10 +407,10 @@ public final class Convert {
         Class<T> fromType = converter.fromType();
 
         if (fromType == Object.class)
-            return scoped(converter).from((T) from, converterScope());
+            return scoped(converter).from((T) from, converterContext());
 
         ConvertAll<T> convertAll = new ConvertAll<>(fromType);
-        return scoped(converter).from(convertAll.from(from, converterScope()), converterScope());
+        return scoped(converter).from(convertAll.from(from, converterContext()), converterContext());
     }
 
     /**
@@ -521,7 +521,7 @@ public final class Convert {
         List<U> result = new ArrayList<>(collection.size());
 
         for (Object o : collection)
-            result.add(convert(all.from(o, converterScope()), converter));
+            result.add(convert(all.from(o, converterContext()), converter));
 
         return result;
     }
@@ -547,7 +547,7 @@ public final class Convert {
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
         @Override
-        public U from(Object from, ConverterScope scope) {
+        public U from(Object from, ConverterContext scope) {
             if (from == null) {
 
                 // [#936] If types are converted to primitives, the result must not
@@ -1249,7 +1249,7 @@ public final class Convert {
         }
 
         @Override
-        public Object to(U to, ConverterScope scope) {
+        public Object to(U to, ConverterContext scope) {
             return to;
         }
 

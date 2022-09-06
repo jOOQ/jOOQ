@@ -56,7 +56,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
 import org.jooq.Converter;
-import org.jooq.ConverterScope;
+import org.jooq.ConverterContext;
 import org.jooq.XML;
 
 /**
@@ -103,7 +103,7 @@ public class AbstractXMLasObjectBinding<T> extends AbstractXMLBinding<T> {
         }
 
         @Override
-        public T from(XML t, ConverterScope scope) {
+        public T from(XML t, ConverterContext scope) {
             if (t == null)
                 return null;
 
@@ -111,7 +111,7 @@ public class AbstractXMLasObjectBinding<T> extends AbstractXMLBinding<T> {
         }
 
         @Override
-        public XML to(T u, ConverterScope scope) {
+        public XML to(T u, ConverterContext scope) {
             if (u == null)
                 return null;
 

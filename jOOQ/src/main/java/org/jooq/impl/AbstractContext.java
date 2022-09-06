@@ -78,7 +78,7 @@ import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
-import org.jooq.ConverterScope;
+import org.jooq.ConverterContext;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.Field;
@@ -237,8 +237,8 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     // ------------------------------------------------------------------------
 
     @Override
-    public final ConverterScope converterScope() {
-        return ctx != null ? ctx.converterScope() : Tools.converterScope(configuration());
+    public final ConverterContext converterContext() {
+        return ctx != null ? ctx.converterContext() : Tools.converterContext(configuration());
     }
 
     @Override

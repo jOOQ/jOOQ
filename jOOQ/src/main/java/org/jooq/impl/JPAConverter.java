@@ -41,7 +41,7 @@ import java.lang.reflect.Method;
 
 import jakarta.persistence.AttributeConverter;
 
-import org.jooq.ConverterScope;
+import org.jooq.ConverterContext;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.reflect.Reflect;
@@ -117,12 +117,12 @@ public final class JPAConverter<T, U> extends AbstractScopedConverter<T, U> {
     }
 
     @Override
-    public final U from(T t, ConverterScope scope) {
+    public final U from(T t, ConverterContext scope) {
         return delegate.convertToEntityAttribute(t);
     }
 
     @Override
-    public final T to(U u, ConverterScope scope) {
+    public final T to(U u, ConverterContext scope) {
         return delegate.convertToDatabaseColumn(u);
     }
 }

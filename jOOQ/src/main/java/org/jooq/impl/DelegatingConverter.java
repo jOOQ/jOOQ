@@ -37,7 +37,7 @@
  */
 package org.jooq.impl;
 
-import org.jooq.ConverterScope;
+import org.jooq.ConverterContext;
 import org.jooq.ScopedConverter;
 
 /**
@@ -54,7 +54,7 @@ public class DelegatingConverter<T, U> extends AbstractScopedConverter<T, U> {
     }
 
     @Override
-    public final U from(T t, ConverterScope scope) {
+    public final U from(T t, ConverterContext scope) {
         return delegate.from(t, scope);
     }
 
@@ -64,7 +64,7 @@ public class DelegatingConverter<T, U> extends AbstractScopedConverter<T, U> {
     }
 
     @Override
-    public final T to(U u, ConverterScope scope) {
+    public final T to(U u, ConverterContext scope) {
         return delegate.to(u, scope);
     }
 

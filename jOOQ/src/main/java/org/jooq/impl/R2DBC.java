@@ -44,7 +44,7 @@ import static org.jooq.impl.Internal.subscriber;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
 import static org.jooq.impl.Tools.abstractDMLQuery;
 import static org.jooq.impl.Tools.abstractResultQuery;
-import static org.jooq.impl.Tools.converterScope;
+import static org.jooq.impl.Tools.converterContext;
 import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.recordFactory;
 import static org.jooq.impl.Tools.translate;
@@ -1240,7 +1240,7 @@ final class R2DBC {
                 if (converter == null)
                     throw new DataTypeException("Cannot convert from " + o.getClass() + " to " + uType + ". Please report an issue here: https://github.com/jOOQ/jOOQ/issues/new. As a workaround, you can implement a ConverterProvider.");
                 else
-                    return scoped(converter).from(o, converterScope(c));
+                    return scoped(converter).from(o, converterContext(c));
             }
 
             // ---------------------------------------------------------------------

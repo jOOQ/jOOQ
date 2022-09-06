@@ -80,7 +80,7 @@ class DefaultBindingGetSQLInputContext<U> extends AbstractExecuteScope implement
         return new DefaultBindingGetSQLInputContext<T>(ctx, input) {
             @Override
             public void value(T v) {
-                outer.value(scoped(converter).from(v, converterScope()));
+                outer.value(scoped(converter).from(v, converterContext()));
             }
         };
     }

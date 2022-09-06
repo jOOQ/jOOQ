@@ -44,7 +44,7 @@ import java.util.Map;
 import org.jooq.BindingSQLContext;
 import org.jooq.Configuration;
 import org.jooq.Converter;
-import org.jooq.ConverterScope;
+import org.jooq.ConverterContext;
 import org.jooq.RenderContext;
 
 /**
@@ -69,8 +69,8 @@ class DefaultBindingSQLContext<U> extends AbstractScope implements BindingSQLCon
     }
 
     @Override
-    public final ConverterScope converterScope() {
-        return render.converterScope();
+    public final ConverterContext converterContext() {
+        return render.converterContext();
     }
 
     @Override
@@ -90,7 +90,7 @@ class DefaultBindingSQLContext<U> extends AbstractScope implements BindingSQLCon
 
     @Override
     public <T> BindingSQLContext<T> convert(Converter<? extends T, ? super U> converter) {
-        return new DefaultBindingSQLContext<>(configuration, data, render, scoped(converter).to(value, converterScope()), variable);
+        return new DefaultBindingSQLContext<>(configuration, data, render, scoped(converter).to(value, converterContext()), variable);
     }
 
     @Override

@@ -45,10 +45,10 @@ import org.jetbrains.annotations.Nullable;
 public interface ExecuteScope extends Scope {
 
     /**
-     * Get the {@link ConverterScope} from the context of this
+     * Get the {@link ConverterContext} from the context of this
      * {@link ExecuteScope}.
      */
-    ConverterScope converterScope();
+    ConverterContext converterContext();
 
     /**
      * The {@link ExecuteContext} that created this scope.

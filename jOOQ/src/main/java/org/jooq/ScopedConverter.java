@@ -39,7 +39,7 @@ package org.jooq;
 
 import static org.jooq.Converters.notImplementedBiFunction;
 import static org.jooq.Converters.nullable;
-import static org.jooq.impl.Internal.converterScope;
+import static org.jooq.impl.Internal.converterContext;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -50,12 +50,12 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * A special type of {@link Converter} with alternative
- * {@link #from(Object, ConverterScope)} and {@link #to(Object, ConverterScope)}
+ * {@link #from(Object, ConverterContext)} and {@link #to(Object, ConverterContext)}
  * methods.
  * <p>
  * This special converter type can be used wherever an ordinary
  * {@link Converter} is used. jOOQ internal call sites will call the alternative
- * {@link #from(Object, ConverterScope)} and {@link #to(Object, ConverterScope)}
+ * {@link #from(Object, ConverterContext)} and {@link #to(Object, ConverterContext)}
  * methods, instead of {@link #from(Object)} and {@link #to(Object)}, allowing
  * for accessing global {@link Configuration#data()} content.
  */
@@ -68,7 +68,7 @@ public interface ScopedConverter<T, U> extends Converter<T, U> {
      * @param scope The scope of this conversion.
      * @return The user object.
      */
-    U from(T databaseObject, ConverterScope scope);
+    U from(T databaseObject, ConverterContext scope);
 
     /**
      * Convert and write a user object to a database object.
@@ -77,16 +77,16 @@ public interface ScopedConverter<T, U> extends Converter<T, U> {
      * @param scope The scope of this conversion.
      * @return The database object.
      */
-    T to(U userObject, ConverterScope scope);
+    T to(U userObject, ConverterContext scope);
 
     @Override
     default T to(U userObject) {
-        return to(userObject, converterScope());
+        return to(userObject, converterContext());
     }
 
     @Override
     default U from(T databaseObject) {
-        return from(databaseObject, converterScope());
+        return from(databaseObject, converterContext());
     }
 
     /**
@@ -126,12 +126,12 @@ public interface ScopedConverter<T, U> extends Converter<T, U> {
         else
             return new AbstractScopedConverter<T, U>(converter.fromType(), converter.toType()) {
                 @Override
-                public U from(T t, ConverterScope scope) {
+                public U from(T t, ConverterContext scope) {
                     return converter.from(t);
                 }
 
                 @Override
-                public T to(U u, ConverterScope scope) {
+                public T to(U u, ConverterContext scope) {
                     return converter.to(u);
                 }
             };
@@ -154,7 +154,7 @@ public interface ScopedConverter<T, U> extends Converter<T, U> {
     static <T, U> ScopedConverter<T, U> from(
         Class<T> fromType,
         Class<U> toType,
-        BiFunction<? super T, ? super ConverterScope, ? extends U> from
+        BiFunction<? super T, ? super ConverterContext, ? extends U> from
     ) {
         return of(fromType, toType, from, notImplementedBiFunction());
     }
@@ -176,7 +176,7 @@ public interface ScopedConverter<T, U> extends Converter<T, U> {
     static <T, U> ScopedConverter<T, U> to(
         Class<T> fromType,
         Class<U> toType,
-        BiFunction<? super U, ? super ConverterScope, ? extends T> to
+        BiFunction<? super U, ? super ConverterContext, ? extends T> to
     ) {
         return of(fromType, toType, notImplementedBiFunction(), to);
     }
@@ -198,18 +198,18 @@ public interface ScopedConverter<T, U> extends Converter<T, U> {
     static <T, U> ScopedConverter<T, U> of(
         Class<T> fromType,
         Class<U> toType,
-        BiFunction<? super T, ? super ConverterScope, ? extends U> from,
-        BiFunction<? super U, ? super ConverterScope, ? extends T> to
+        BiFunction<? super T, ? super ConverterContext, ? extends U> from,
+        BiFunction<? super U, ? super ConverterContext, ? extends T> to
     ) {
         return new AbstractScopedConverter<T, U>(fromType, toType) {
 
             @Override
-            public final U from(T t, ConverterScope scope) {
+            public final U from(T t, ConverterContext scope) {
                 return from.apply(t, scope);
             }
 
             @Override
-            public final T to(U u, ConverterScope scope) {
+            public final T to(U u, ConverterContext scope) {
                 return to.apply(u, scope);
             }
         };
@@ -248,8 +248,8 @@ public interface ScopedConverter<T, U> extends Converter<T, U> {
     static <T, U> ScopedConverter<T, U> ofNullable(
         Class<T> fromType,
         Class<U> toType,
-        BiFunction<? super T, ? super ConverterScope, ? extends U> from,
-        BiFunction<? super U, ? super ConverterScope, ? extends T> to
+        BiFunction<? super T, ? super ConverterContext, ? extends U> from,
+        BiFunction<? super U, ? super ConverterContext, ? extends T> to
     ) {
         return of(fromType, toType, nullable(from), nullable(to));
     }
@@ -284,7 +284,7 @@ public interface ScopedConverter<T, U> extends Converter<T, U> {
     static <T, U> Converter<T, U> fromNullable(
         Class<T> fromType,
         Class<U> toType,
-        BiFunction<? super T, ? super ConverterScope, ? extends U> from
+        BiFunction<? super T, ? super ConverterContext, ? extends U> from
     ) {
         return of(fromType, toType, nullable(from), notImplementedBiFunction());
     }
@@ -318,7 +318,7 @@ public interface ScopedConverter<T, U> extends Converter<T, U> {
     static <T, U> Converter<T, U> toNullable(
         Class<T> fromType,
         Class<U> toType,
-        BiFunction<? super U, ? super ConverterScope, ? extends T> to
+        BiFunction<? super U, ? super ConverterContext, ? extends T> to
     ) {
         return of(fromType, toType, notImplementedBiFunction(), nullable(to));
     }

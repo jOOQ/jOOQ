@@ -40,18 +40,18 @@ package org.jooq.impl;
 import java.util.Map;
 
 import org.jooq.Configuration;
-import org.jooq.ConverterScope;
+import org.jooq.ConverterContext;
 
 /**
  * @author Lukas Eder
  */
-final class DefaultConverterScope extends AbstractScope implements ConverterScope {
+final class DefaultConverterContext extends AbstractScope implements ConverterContext {
 
-    DefaultConverterScope(Configuration configuration) {
+    DefaultConverterContext(Configuration configuration) {
         super(configuration, new DataMap());
     }
 
-    DefaultConverterScope(Configuration configuration, Map<Object, Object> data) {
+    DefaultConverterContext(Configuration configuration, Map<Object, Object> data) {
         super(configuration, data);
     }
 }

@@ -42,7 +42,7 @@ import java.time.LocalDate;
 import java.util.function.Function;
 
 import org.jooq.Converter;
-import org.jooq.ConverterScope;
+import org.jooq.ConverterContext;
 
 /**
  * @author Lukas Eder
@@ -59,12 +59,12 @@ public final class DateToLocalDateConverter extends AbstractScopedConverter<Date
     }
 
     @Override
-    public final LocalDate from(Date t, ConverterScope scope) {
+    public final LocalDate from(Date t, ConverterContext scope) {
         return t == null ? null : t.toLocalDate();
     }
 
     @Override
-    public final Date to(LocalDate u, ConverterScope scope) {
+    public final Date to(LocalDate u, ConverterContext scope) {
         return u == null ? null : Date.valueOf(u);
     }
 }

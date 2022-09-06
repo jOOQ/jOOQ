@@ -175,12 +175,12 @@ public interface Converter<T, U> extends Serializable {
         return new AbstractScopedConverter<T, U>(fromType, toType) {
 
             @Override
-            public final U from(T t, ConverterScope scope) {
+            public final U from(T t, ConverterContext scope) {
                 return from.apply(t);
             }
 
             @Override
-            public final T to(U u, ConverterScope scope) {
+            public final T to(U u, ConverterContext scope) {
                 return to.apply(u);
             }
         };

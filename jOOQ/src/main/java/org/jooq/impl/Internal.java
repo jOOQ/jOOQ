@@ -53,7 +53,7 @@ import org.jooq.Binding;
 import org.jooq.Check;
 import org.jooq.Comment;
 import org.jooq.Converter;
-import org.jooq.ConverterScope;
+import org.jooq.ConverterContext;
 import org.jooq.DDLExportConfiguration;
 import org.jooq.DataType;
 import org.jooq.Domain;
@@ -630,9 +630,9 @@ public final class Internal {
             return 0x7FFFFFF & object.hashCode();
     }
 
-    private static final ConverterScope CONVERTER_SCOPE = new DefaultConverterScope(CONFIG);
+    private static final ConverterContext CONVERTER_SCOPE = new DefaultConverterContext(CONFIG);
 
-    public static final ConverterScope converterScope() {
+    public static final ConverterContext converterContext() {
         return CONVERTER_SCOPE;
     }
 }

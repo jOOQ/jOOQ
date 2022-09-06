@@ -88,7 +88,7 @@ class DefaultBindingGetStatementContext<U> extends AbstractExecuteScope implemen
         return new DefaultBindingGetStatementContext<T>(ctx, statement, index) {
             @Override
             public void value(T v) {
-                outer.value(scoped(converter).from(v, converterScope()));
+                outer.value(scoped(converter).from(v, converterContext()));
             }
         };
     }

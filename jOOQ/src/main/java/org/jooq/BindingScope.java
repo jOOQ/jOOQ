@@ -99,8 +99,8 @@ import java.sql.SQLOutput;
 public interface BindingScope extends Scope {
 
     /**
-     * Get the {@link ConverterScope} from the context of this
+     * Get the {@link ConverterContext} from the context of this
      * {@link BindingScope}.
      */
-    ConverterScope converterScope();
+    ConverterContext converterContext();
 }

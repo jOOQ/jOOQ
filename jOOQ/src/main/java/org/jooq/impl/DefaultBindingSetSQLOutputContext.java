@@ -72,7 +72,7 @@ class DefaultBindingSetSQLOutputContext<U> extends AbstractExecuteScope implemen
 
     @Override
     public final <T> BindingSetSQLOutputContext<T> convert(Converter<? extends T, ? super U> converter) {
-        return new DefaultBindingSetSQLOutputContext<>(ctx, output, scoped(converter).to(value, converterScope()));
+        return new DefaultBindingSetSQLOutputContext<>(ctx, output, scoped(converter).to(value, converterContext()));
     }
 
     @Override

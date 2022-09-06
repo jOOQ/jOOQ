@@ -37,7 +37,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Internal.converterScope;
+import static org.jooq.impl.Internal.converterContext;
 
 import java.util.List;
 import java.util.Map;
@@ -309,7 +309,7 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
 
         // [#3200] Try to convert arbitrary objects to T
         else
-            return ((ScopedConverter<T, U>) getConverter()).from(delegate.convert(object), converterScope());
+            return ((ScopedConverter<T, U>) getConverter()).from(delegate.convert(object), converterContext());
     }
 
     @Override

@@ -56,7 +56,7 @@ final class ArrayComponentConverter<T, U> extends AbstractScopedConverter<T, U> 
     }
 
     @Override
-    public final U from(T t, ConverterScope scope) {
+    public final U from(T t, ConverterContext scope) {
         if (t == null)
             return null;
 
@@ -66,7 +66,7 @@ final class ArrayComponentConverter<T, U> extends AbstractScopedConverter<T, U> 
     }
 
     @Override
-    public final T to(U u, ConverterScope scope) {
+    public final T to(U u, ConverterContext scope) {
         if (u == null)
             return null;
 

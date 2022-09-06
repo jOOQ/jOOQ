@@ -38,7 +38,7 @@
 package org.jooq.impl;
 
 // ...
-import static org.jooq.ScopedConverter.scoped;
+import static org.jooq.ContextConverter.scoped;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.impl.Internal.subscriber;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
@@ -93,7 +93,7 @@ import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
-import org.jooq.ScopedConverter;
+import org.jooq.ContextConverter;
 import org.jooq.TransactionalPublishable;
 import org.jooq.XML;
 import org.jooq.conf.Settings;

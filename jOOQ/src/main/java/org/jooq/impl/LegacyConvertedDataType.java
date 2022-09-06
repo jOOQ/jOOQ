@@ -44,7 +44,7 @@ import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.ScopedConverter;
+import org.jooq.ContextConverter;
 
 /**
  * @author Lukas Eder
@@ -99,7 +99,7 @@ final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
 
         // [#3200] Try to convert arbitrary objects to T
         else
-            return ((ScopedConverter<T, U>) getConverter()).from(delegate.convert(object), converterContext());
+            return ((ContextConverter<T, U>) getConverter()).from(delegate.convert(object), converterContext());
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

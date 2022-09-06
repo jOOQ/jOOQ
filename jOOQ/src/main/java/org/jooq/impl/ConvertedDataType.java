@@ -56,7 +56,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
-import org.jooq.ScopedConverter;
+import org.jooq.ContextConverter;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DefaultBinding.InternalBinding;
 import org.jooq.impl.QOM.GenerationLocation;
@@ -309,7 +309,7 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
 
         // [#3200] Try to convert arbitrary objects to T
         else
-            return ((ScopedConverter<T, U>) getConverter()).from(delegate.convert(object), converterContext());
+            return ((ContextConverter<T, U>) getConverter()).from(delegate.convert(object), converterContext());
     }
 
     @Override

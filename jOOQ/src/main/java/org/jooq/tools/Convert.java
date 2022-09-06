@@ -40,7 +40,7 @@ package org.jooq.tools;
 import static java.time.temporal.ChronoField.INSTANT_SECONDS;
 import static java.time.temporal.ChronoField.MILLI_OF_DAY;
 import static java.time.temporal.ChronoField.MILLI_OF_SECOND;
-import static org.jooq.ScopedConverter.scoped;
+import static org.jooq.ContextConverter.scoped;
 import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.impl.Internal.converterContext;
 import static org.jooq.tools.reflect.Reflect.accessible;
@@ -103,11 +103,11 @@ import org.jooq.QualifiedRecord;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.ScopedConverter;
+import org.jooq.ContextConverter;
 import org.jooq.XML;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.AbstractConverter;
-import org.jooq.impl.AbstractScopedConverter;
+import org.jooq.impl.AbstractContextConverter;
 import org.jooq.impl.IdentityConverter;
 import org.jooq.impl.Internal;
 import org.jooq.tools.jdbc.MockArray;
@@ -534,7 +534,7 @@ public final class Convert {
     /**
      * The converter to convert them all.
      */
-    private static final class ConvertAll<U> extends AbstractScopedConverter<Object, U> {
+    private static final class ConvertAll<U> extends AbstractContextConverter<Object, U> {
 
         private final Class<? extends U> toClass;
 

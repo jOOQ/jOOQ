@@ -37,14 +37,14 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.ScopedConverter.scoped;
+import static org.jooq.ContextConverter.scoped;
 
 import java.sql.CallableStatement;
 
 import org.jooq.BindingGetStatementContext;
 import org.jooq.Converter;
 import org.jooq.ExecuteContext;
-import org.jooq.ScopedConverter;
+import org.jooq.ContextConverter;
 
 /**
  * @author Lukas Eder

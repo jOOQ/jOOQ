@@ -37,19 +37,19 @@
  */
 package org.jooq.impl;
 
-import org.jooq.ScopedConverter;
+import org.jooq.ContextConverter;
 
 /**
  * @author Lukas Eder
  */
-public abstract class AbstractScopedConverter<T, U> extends AbstractConverter<T, U> implements ScopedConverter<T, U> {
+public abstract class AbstractContextConverter<T, U> extends AbstractConverter<T, U> implements ContextConverter<T, U> {
 
-    public AbstractScopedConverter(Class<T> fromType, Class<U> toType) {
+    public AbstractContextConverter(Class<T> fromType, Class<U> toType) {
         super(fromType, toType);
     }
 
     @Override
     public String toString() {
-        return "ScopedConverter [ " + fromType().getName() + " -> " + toType().getName() + " ]";
+        return "ContextConverter [ " + fromType().getName() + " -> " + toType().getName() + " ]";
     }
 }

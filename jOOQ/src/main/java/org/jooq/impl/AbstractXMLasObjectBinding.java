@@ -81,7 +81,7 @@ public class AbstractXMLasObjectBinding<T> extends AbstractXMLBinding<T> {
         return converter;
     }
 
-    private static final class XMLasObjectConverter<T> extends AbstractScopedConverter<XML, T> {
+    private static final class XMLasObjectConverter<T> extends AbstractContextConverter<XML, T> {
 
         XmlRootElement        root;
         transient JAXBContext ctx;

@@ -39,17 +39,17 @@ package org.jooq;
 
 import java.lang.reflect.Array;
 
-import org.jooq.impl.AbstractScopedConverter;
+import org.jooq.impl.AbstractContextConverter;
 
 /**
  * @author Lukas Eder
  */
 @SuppressWarnings("unchecked")
-final class ArrayComponentConverter<T, U> extends AbstractScopedConverter<T, U> {
+final class ArrayComponentConverter<T, U> extends AbstractContextConverter<T, U> {
 
-    final ScopedConverter<T[], U[]> converter;
+    final ContextConverter<T[], U[]> converter;
 
-    public ArrayComponentConverter(ScopedConverter<T[], U[]> converter) {
+    public ArrayComponentConverter(ContextConverter<T[], U[]> converter) {
         super((Class<T>) converter.fromType().getComponentType(), (Class<U>) converter.toType().getComponentType());
 
         this.converter = converter;

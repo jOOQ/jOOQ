@@ -40,7 +40,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
-import static org.jooq.ScopedConverter.scoped;
+import static org.jooq.ContextConverter.scoped;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.converterOrFail;

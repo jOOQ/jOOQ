@@ -82,7 +82,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
-import static org.jooq.ScopedConverter.scoped;
+import static org.jooq.ContextConverter.scoped;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Convert.convert;
 import static org.jooq.impl.Convert.patchIso8601Timestamp;
@@ -254,7 +254,7 @@ import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Scope;
-import org.jooq.ScopedConverter;
+import org.jooq.ContextConverter;
 import org.jooq.Source;
 import org.jooq.Spatial;
 import org.jooq.TableRecord;
@@ -375,31 +375,31 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == LocalDate.class)
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<LocalDate>) dataType,
-                ScopedConverter.ofNullable(Date.class, LocalDate.class,
+                ContextConverter.ofNullable(Date.class, LocalDate.class,
                     (BiFunction<Date, ConverterContext, LocalDate> & Serializable) (t, x) -> t.toLocalDate(),
                     (BiFunction<LocalDate, ConverterContext, Date> & Serializable) (t, x) -> Date.valueOf(t)
                 ),
-                (ScopedConverter<LocalDate, U>) converter,
+                (ContextConverter<LocalDate, U>) converter,
                 c -> new DefaultDateBinding<>(DATE, c)
             );
         else if (type == LocalDateTime.class)
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<LocalDateTime>) dataType,
-                ScopedConverter.ofNullable(Timestamp.class, LocalDateTime.class,
+                ContextConverter.ofNullable(Timestamp.class, LocalDateTime.class,
                     (BiFunction<Timestamp, ConverterContext, LocalDateTime> & Serializable) (t, x) -> t.toLocalDateTime(),
                     (BiFunction<LocalDateTime, ConverterContext, Timestamp> & Serializable) (t, x) -> Timestamp.valueOf(t)
                 ),
-                (ScopedConverter<LocalDateTime, U>) converter,
+                (ContextConverter<LocalDateTime, U>) converter,
                 c -> new DefaultTimestampBinding<>(TIMESTAMP, c)
             );
         else if (type == LocalTime.class)
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<LocalTime>) dataType,
-                ScopedConverter.ofNullable(Time.class, LocalTime.class,
+                ContextConverter.ofNullable(Time.class, LocalTime.class,
                     (BiFunction<Time, ConverterContext, LocalTime> & Serializable) (t, x) -> t.toLocalTime(),
                     (BiFunction<LocalTime, ConverterContext, Time> & Serializable) (t, x) -> Time.valueOf(t)
                 ),
-                (ScopedConverter<LocalTime, U>) converter,
+                (ContextConverter<LocalTime, U>) converter,
                 c -> new DefaultTimeBinding<>(TIME, c)
             );
         else if (type == Long.class || type == long.class)
@@ -429,41 +429,41 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == UByte.class)
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<UByte>) dataType,
-                ScopedConverter.ofNullable(Short.class, UByte.class,
+                ContextConverter.ofNullable(Short.class, UByte.class,
                     (BiFunction<Short, ConverterContext, UByte> & Serializable) (t, x) -> UByte.valueOf(t),
                     (BiFunction<UByte, ConverterContext, Short> & Serializable) (t, x) -> t.shortValue()
                 ),
-                (ScopedConverter<UByte, U>) converter,
+                (ContextConverter<UByte, U>) converter,
                 c -> new DefaultShortBinding<>(SMALLINT, c)
             );
         else if (type == UInteger.class)
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<UInteger>) dataType,
-                ScopedConverter.ofNullable(Long.class, UInteger.class,
+                ContextConverter.ofNullable(Long.class, UInteger.class,
                     (BiFunction<Long, ConverterContext, UInteger> & Serializable) (t, x) -> UInteger.valueOf(t),
                     (BiFunction<UInteger, ConverterContext, Long> & Serializable) (t, x) -> t.longValue()
                 ),
-                (ScopedConverter<UInteger, U>) converter,
+                (ContextConverter<UInteger, U>) converter,
                 c -> new DefaultLongBinding<>(BIGINT, c)
             );
         else if (type == ULong.class)
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<ULong>) dataType,
-                ScopedConverter.ofNullable(BigInteger.class, ULong.class,
+                ContextConverter.ofNullable(BigInteger.class, ULong.class,
                     (BiFunction<BigInteger, ConverterContext, ULong> & Serializable) (t, x) -> ULong.valueOf(t),
                     (BiFunction<ULong, ConverterContext, BigInteger> & Serializable) (t, x) -> t.toBigInteger()
                 ),
-                (ScopedConverter<ULong, U>) converter,
+                (ContextConverter<ULong, U>) converter,
                 c -> new DefaultBigIntegerBinding<>(DECIMAL_INTEGER, c)
             );
         else if (type == UShort.class)
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<UShort>) dataType,
-                ScopedConverter.ofNullable(Integer.class, UShort.class,
+                ContextConverter.ofNullable(Integer.class, UShort.class,
                     (BiFunction<Integer, ConverterContext, UShort> & Serializable) (t, x) -> UShort.valueOf(t),
                     (BiFunction<UShort, ConverterContext, Integer> & Serializable) (t, x) -> t.intValue()
                 ),
-                (ScopedConverter<UShort, U>) converter,
+                (ContextConverter<UShort, U>) converter,
                 c -> new DefaultIntegerBinding<>(INTEGER, c)
             );
         else if (type == UUID.class)
@@ -520,12 +520,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             theBinding = (Binding) binding;
         }
         else if (binding == null) {
-            theBinding = binding(dataType, (ScopedConverter<T, U>) scoped(converter));
+            theBinding = binding(dataType, (ContextConverter<T, U>) scoped(converter));
         }
         else {
             theBinding = new Binding<T, U>() {
 
-                final ScopedConverter<T, U> theConverter = Converters.of(binding.converter(), converter);
+                final ContextConverter<T, U> theConverter = Converters.of(binding.converter(), converter);
 
                 @Override
                 public Converter<T, U> converter() {
@@ -701,12 +701,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
         final DataType<T>            dataType;
-        final ScopedConverter<T, U>  converter;
+        final ContextConverter<T, U>  converter;
         final boolean                attachable;
 
         InternalBinding(DataType<T> dataType, Converter<T, U> converter) {
             this.dataType = dataType;
-            this.converter = ScopedConverter.scoped(converter);
+            this.converter = ContextConverter.scoped(converter);
 
             // [#11099] Caching this per binding seems to have a considerable performance effect.
             //          We must be careful to short circuit instanceof Attachable checks only if we *know*
@@ -716,7 +716,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        public final ScopedConverter<T, U> converter() {
+        public final ContextConverter<T, U> converter() {
             return converter;
         }
 
@@ -1112,14 +1112,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DelegatingBinding<X, T, U> extends InternalBinding<X, U> {
 
-        private final ScopedConverter<T, X> delegatingConverter;
+        private final ContextConverter<T, X> delegatingConverter;
         private final InternalBinding<T, U> delegatingBinding;
 
         DelegatingBinding(
             DataType<X> originalDataType,
-            ScopedConverter<T, X> delegatingConverter,
-            ScopedConverter<X, U> originalConverter,
-            Function<? super ScopedConverter<T, U>, ? extends InternalBinding<T, U>> f
+            ContextConverter<T, X> delegatingConverter,
+            ContextConverter<X, U> originalConverter,
+            Function<? super ContextConverter<T, U>, ? extends InternalBinding<T, U>> f
         ) {
             super(originalDataType, originalConverter);
 
@@ -3460,7 +3460,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     static final class DefaultInstantBinding<U> extends InternalBinding<Instant, U> {
 
         @SuppressWarnings("unchecked")
-        private static final ScopedConverter<OffsetDateTime, Instant> CONVERTER = ScopedConverter.ofNullable(
+        private static final ContextConverter<OffsetDateTime, Instant> CONVERTER = ContextConverter.ofNullable(
             OffsetDateTime.class,
             Instant.class,
             (BiFunction<OffsetDateTime, ConverterContext, Instant> & Serializable) (t, x) -> t.toInstant(),
@@ -3848,7 +3848,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @SuppressWarnings("unchecked")
         private static final <T, U> U pgFromString(BindingScope ctx, Field<U> field, String string) {
-            ScopedConverter<T, U> converter = (ScopedConverter<T, U>) field.getConverter();
+            ContextConverter<T, U> converter = (ContextConverter<T, U>) field.getConverter();
             Class<?> type = wrapper(converter.fromType());
 
             if (string == null)
@@ -5485,8 +5485,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return Types.VARCHAR;
         }
 
-        private final ScopedConverter<byte[], JSONB> bytesConverter(final Configuration configuration) {
-            return ScopedConverter.ofNullable(byte[].class, JSONB.class,
+        private final ContextConverter<byte[], JSONB> bytesConverter(final Configuration configuration) {
+            return ContextConverter.ofNullable(byte[].class, JSONB.class,
                 (t, x) -> JSONB.valueOf(new String(t, configuration.charsetProvider().provide())),
                 (u, x) -> u.toString().getBytes(configuration.charsetProvider().provide())
             );

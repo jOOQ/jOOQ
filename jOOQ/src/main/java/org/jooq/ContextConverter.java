@@ -44,7 +44,7 @@ import static org.jooq.impl.Internal.converterContext;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import org.jooq.impl.AbstractScopedConverter;
+import org.jooq.impl.AbstractContextConverter;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -60,7 +60,7 @@ import org.jetbrains.annotations.NotNull;
  * {@link #from(Object)} and {@link #to(Object)}, allowing for accessing global
  * {@link Configuration#data()} content.
  */
-public interface ScopedConverter<T, U> extends Converter<T, U> {
+public interface ContextConverter<T, U> extends Converter<T, U> {
 
     /**
      * Read and convert a database object to a user object.
@@ -95,7 +95,7 @@ public interface ScopedConverter<T, U> extends Converter<T, U> {
      */
     @Override
     @NotNull
-    default ScopedConverter<U, T> inverse() {
+    default ContextConverter<U, T> inverse() {
         return Converters.inverse(this);
     }
 
@@ -104,7 +104,7 @@ public interface ScopedConverter<T, U> extends Converter<T, U> {
      */
     @Override
     @NotNull
-    default <X> ScopedConverter<T, X> andThen(Converter<? super U, X> converter) {
+    default <X> ContextConverter<T, X> andThen(Converter<? super U, X> converter) {
         return Converters.of(this, converter);
     }
 
@@ -113,19 +113,19 @@ public interface ScopedConverter<T, U> extends Converter<T, U> {
      */
     @Override
     @NotNull
-    default ScopedConverter<T[], U[]> forArrays() {
+    default ContextConverter<T[], U[]> forArrays() {
         return Converters.forArrays(this);
     }
 
     /**
-     * Turn a {@link Converter} into a {@link ScopedConverter}.
+     * Turn a {@link Converter} into a {@link ContextConverter}.
      */
     @NotNull
-    static <T, U> ScopedConverter<T, U> scoped(Converter<T, U> converter) {
-        if (converter instanceof ScopedConverter<T, U> s)
+    static <T, U> ContextConverter<T, U> scoped(Converter<T, U> converter) {
+        if (converter instanceof ContextConverter<T, U> s)
             return s;
         else
-            return new AbstractScopedConverter<T, U>(converter.fromType(), converter.toType()) {
+            return new AbstractContextConverter<T, U>(converter.fromType(), converter.toType()) {
                 @Override
                 public U from(T t, ConverterContext scope) {
                     return converter.from(t);
@@ -152,7 +152,7 @@ public interface ScopedConverter<T, U> extends Converter<T, U> {
      * @see Converter
      */
     @NotNull
-    static <T, U> ScopedConverter<T, U> from(
+    static <T, U> ContextConverter<T, U> from(
         Class<T> fromType,
         Class<U> toType,
         BiFunction<? super T, ? super ConverterContext, ? extends U> from
@@ -174,7 +174,7 @@ public interface ScopedConverter<T, U> extends Converter<T, U> {
      * @see Converter
      */
     @NotNull
-    static <T, U> ScopedConverter<T, U> to(
+    static <T, U> ContextConverter<T, U> to(
         Class<T> fromType,
         Class<U> toType,
         BiFunction<? super U, ? super ConverterContext, ? extends T> to
@@ -196,13 +196,13 @@ public interface ScopedConverter<T, U> extends Converter<T, U> {
      * @see Converter
      */
     @NotNull
-    static <T, U> ScopedConverter<T, U> of(
+    static <T, U> ContextConverter<T, U> of(
         Class<T> fromType,
         Class<U> toType,
         BiFunction<? super T, ? super ConverterContext, ? extends U> from,
         BiFunction<? super U, ? super ConverterContext, ? extends T> to
     ) {
-        return new AbstractScopedConverter<T, U>(fromType, toType) {
+        return new AbstractContextConverter<T, U>(fromType, toType) {
 
             @Override
             public final U from(T t, ConverterContext scope) {
@@ -246,7 +246,7 @@ public interface ScopedConverter<T, U> extends Converter<T, U> {
      * @see Converter
      */
     @NotNull
-    static <T, U> ScopedConverter<T, U> ofNullable(
+    static <T, U> ContextConverter<T, U> ofNullable(
         Class<T> fromType,
         Class<U> toType,
         BiFunction<? super T, ? super ConverterContext, ? extends U> from,

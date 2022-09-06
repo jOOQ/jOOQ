@@ -52,7 +52,7 @@ import org.jooq.ConverterContext;
  *             <code>Converter.ofNullable(Timestamp.class, LocalDateTime.class, Timestamp::toLocalDateTime, Timestamp::valueOf)</code>.
  */
 @Deprecated
-public final class TimestampToLocalDateTimeConverter extends AbstractScopedConverter<Timestamp, LocalDateTime> {
+public final class TimestampToLocalDateTimeConverter extends AbstractContextConverter<Timestamp, LocalDateTime> {
 
     public TimestampToLocalDateTimeConverter() {
         super(Timestamp.class, LocalDateTime.class);

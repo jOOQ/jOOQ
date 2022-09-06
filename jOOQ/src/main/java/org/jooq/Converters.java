@@ -43,7 +43,7 @@ import java.util.function.Function;
 
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.AbstractConverter;
-import org.jooq.impl.AbstractScopedConverter;
+import org.jooq.impl.AbstractContextConverter;
 import org.jooq.impl.IdentityConverter;
 import org.jooq.impl.SQLDataType;
 
@@ -59,15 +59,15 @@ import org.jetbrains.annotations.NotNull;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public final class Converters<T, U> extends AbstractScopedConverter<T, U> {
+public final class Converters<T, U> extends AbstractContextConverter<T, U> {
 
-    final ScopedConverter[] chain;
+    final ContextConverter[] chain;
 
     /**
      * Create an identity converter.
      */
     @NotNull
-    public static <T> ScopedConverter<T, T> identity(final Class<T> type) {
+    public static <T> ContextConverter<T, T> identity(final Class<T> type) {
         return new IdentityConverter<T>(type);
     }
 
@@ -79,7 +79,7 @@ public final class Converters<T, U> extends AbstractScopedConverter<T, U> {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    public static <T, U> ScopedConverter<T, U> of() {
+    public static <T, U> ContextConverter<T, U> of() {
         return new Converters();
     }
 
@@ -91,18 +91,18 @@ public final class Converters<T, U> extends AbstractScopedConverter<T, U> {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    public static <T, U> ScopedConverter<T, U> of(Converter<T, U> converter) {
-        return new Converters(ScopedConverter.scoped(converter));
+    public static <T, U> ContextConverter<T, U> of(Converter<T, U> converter) {
+        return new Converters(ContextConverter.scoped(converter));
     }
 
     /**
      * Chain two converters.
      */
     @NotNull
-    public static <T, X1, U> ScopedConverter<T, U> of(Converter<T, ? extends X1> c1, Converter<? super X1, U> c2) {
+    public static <T, X1, U> ContextConverter<T, U> of(Converter<T, ? extends X1> c1, Converter<? super X1, U> c2) {
         return new Converters(
-            ScopedConverter.scoped(c1),
-            ScopedConverter.scoped(c2)
+            ContextConverter.scoped(c1),
+            ContextConverter.scoped(c2)
         );
     }
 
@@ -110,11 +110,11 @@ public final class Converters<T, U> extends AbstractScopedConverter<T, U> {
      * Chain three converters.
      */
     @NotNull
-    public static <T, X1, X2, U> ScopedConverter<T, U> of(Converter<T, ? extends X1> c1, Converter<? super X1, ? extends X2> c2, Converter<? super X2, U> c3) {
+    public static <T, X1, X2, U> ContextConverter<T, U> of(Converter<T, ? extends X1> c1, Converter<? super X1, ? extends X2> c2, Converter<? super X2, U> c3) {
         return new Converters(
-            ScopedConverter.scoped(c1),
-            ScopedConverter.scoped(c2),
-            ScopedConverter.scoped(c3)
+            ContextConverter.scoped(c1),
+            ContextConverter.scoped(c2),
+            ContextConverter.scoped(c3)
         );
     }
 
@@ -122,12 +122,12 @@ public final class Converters<T, U> extends AbstractScopedConverter<T, U> {
      * Chain four converters.
      */
     @NotNull
-    public static <T, X1, X2, X3, U> ScopedConverter<T, U> of(Converter<T, ? extends X1> c1, Converter<? super X1, ? extends X2> c2, Converter<? super X2, ? extends X3> c3, Converter<? super X3, U> c4) {
+    public static <T, X1, X2, X3, U> ContextConverter<T, U> of(Converter<T, ? extends X1> c1, Converter<? super X1, ? extends X2> c2, Converter<? super X2, ? extends X3> c3, Converter<? super X3, U> c4) {
         return new Converters(
-            ScopedConverter.scoped(c1),
-            ScopedConverter.scoped(c2),
-            ScopedConverter.scoped(c3),
-            ScopedConverter.scoped(c4)
+            ContextConverter.scoped(c1),
+            ContextConverter.scoped(c2),
+            ContextConverter.scoped(c3),
+            ContextConverter.scoped(c4)
         );
     }
 
@@ -135,19 +135,19 @@ public final class Converters<T, U> extends AbstractScopedConverter<T, U> {
      * Inverse a converter.
      */
     public static <T, U> Converter<U, T> inverse(final Converter<T, U> converter) {
-        return inverse(ScopedConverter.scoped(converter));
+        return inverse(ContextConverter.scoped(converter));
     }
 
     /**
      * Inverse a converter.
      */
-    public static <T, U> ScopedConverter<U, T> inverse(final ScopedConverter<T, U> converter) {
+    public static <T, U> ContextConverter<U, T> inverse(final ContextConverter<T, U> converter) {
 
         // [#11099] Allow instanceof checks on IdentityConverter for performance reasons
         if (converter instanceof IdentityConverter)
-            return (ScopedConverter<U, T>) converter;
+            return (ContextConverter<U, T>) converter;
         else
-            return ScopedConverter.of(converter.toType(), converter.fromType(), converter::to, converter::from);
+            return ContextConverter.of(converter.toType(), converter.fromType(), converter::to, converter::from);
     }
 
     /**
@@ -155,14 +155,14 @@ public final class Converters<T, U> extends AbstractScopedConverter<T, U> {
      * the argument converter's types.
      */
     public static <T, U> Converter<T[], U[]> forArrays(Converter<T, U> converter) {
-        return forArrays(ScopedConverter.scoped(converter));
+        return forArrays(ContextConverter.scoped(converter));
     }
 
     /**
      * Create a converter that can convert arrays with the component types being
      * the argument converter's types.
      */
-    public static <T, U> ScopedConverter<T[], U[]> forArrays(ScopedConverter<T, U> converter) {
+    public static <T, U> ContextConverter<T[], U[]> forArrays(ContextConverter<T, U> converter) {
         if (converter instanceof ArrayComponentConverter<T, U> a)
             return a.converter;
         else
@@ -174,21 +174,21 @@ public final class Converters<T, U> extends AbstractScopedConverter<T, U> {
      * converter, which converts array types.
      */
     public static <T, U> Converter<T, U> forArrayComponents(Converter<T[], U[]> converter) {
-        return forArrayComponents(ScopedConverter.scoped(converter));
+        return forArrayComponents(ContextConverter.scoped(converter));
     }
 
     /**
      * Create a converter that can convert component types based on the argument
      * converter, which converts array types.
      */
-    public static <T, U> Converter<T, U> forArrayComponents(ScopedConverter<T[], U[]> converter) {
+    public static <T, U> Converter<T, U> forArrayComponents(ContextConverter<T[], U[]> converter) {
         if (converter instanceof ArrayConverter<T, U> a)
             return a.converter;
         else
             return new ArrayComponentConverter<>(converter);
     }
 
-    Converters(ScopedConverter... chain) {
+    Converters(ContextConverter... chain) {
         super(chain[0].fromType(), chain[chain.length - 1].toType());
 
         this.chain = chain;

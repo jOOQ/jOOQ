@@ -37,7 +37,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.ScopedConverter.scoped;
+import static org.jooq.ContextConverter.scoped;
 
 import java.sql.SQLInput;
 

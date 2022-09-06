@@ -106,7 +106,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
-import org.jooq.ScopedConverter;
+import org.jooq.ContextConverter;
 import org.jooq.Table;
 import org.jooq.XML;
 import org.jooq.impl.QOM.GenerationLocation;
@@ -566,8 +566,8 @@ implements
     }
 
     @Override
-    public final ScopedConverter<?, T> getConverter() {
-        return (@NotNull ScopedConverter<?, T>) ScopedConverter.scoped(getBinding().converter());
+    public final ContextConverter<?, T> getConverter() {
+        return (@NotNull ContextConverter<?, T>) ContextConverter.scoped(getBinding().converter());
     }
 
     @Override

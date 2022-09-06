@@ -84,7 +84,7 @@ import org.jooq.Field;
 // ...
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.ScopedConverter;
+import org.jooq.ContextConverter;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBC41ResultSet;
@@ -1571,7 +1571,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
 
                         // [#7100] TODO: Is there a more elegant way to do this?
                         if (f != field)
-                            value = ((ScopedConverter<Object, T>) field.getConverter()).from(value, ctx.converterContext());
+                            value = ((ContextConverter<Object, T>) field.getConverter()).from(value, ctx.converterContext());
 
                         offset += operation.offset - nestedOffset + nested.size() - 1;
                     }

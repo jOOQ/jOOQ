@@ -59,7 +59,7 @@ import org.jooq.tools.reflect.Reflect;
  *
  * @author Lukas Eder
  */
-public final class JPAConverter<T, U> extends AbstractScopedConverter<T, U> {
+public final class JPAConverter<T, U> extends AbstractContextConverter<T, U> {
 
     private static final JooqLogger        log = JooqLogger.getLogger(JPAConverter.class);
 

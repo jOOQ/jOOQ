@@ -38,16 +38,16 @@
 package org.jooq.impl;
 
 import org.jooq.ConverterContext;
-import org.jooq.ScopedConverter;
+import org.jooq.ContextConverter;
 
 /**
  * @author Lukas Eder
  */
-public class DelegatingConverter<T, U> extends AbstractScopedConverter<T, U> {
+public class DelegatingConverter<T, U> extends AbstractContextConverter<T, U> {
 
-    private final ScopedConverter<T, U> delegate;
+    private final ContextConverter<T, U> delegate;
 
-    public DelegatingConverter(ScopedConverter<T, U> delegate) {
+    public DelegatingConverter(ContextConverter<T, U> delegate) {
         super(delegate.fromType(), delegate.toType());
 
         this.delegate = delegate;

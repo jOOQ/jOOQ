@@ -53,7 +53,7 @@ import java.util.List;
 import org.jooq.Converter;
 import org.jooq.EnumType;
 import org.jooq.Record;
-import org.jooq.ScopedConverter;
+import org.jooq.ContextConverter;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.StringUtils;
 import org.jooq.types.DayToSecond;
@@ -531,7 +531,7 @@ public class PostgresUtils {
         String separator = "";
         for (int i = 0; i < r.size(); i++) {
             @SuppressWarnings({ "unchecked", "rawtypes" })
-            Object a = ((ScopedConverter) r.field(i).getConverter()).to(r.get(i), converterContext());
+            Object a = ((ContextConverter) r.field(i).getConverter()).to(r.get(i), converterContext());
             sb.append(separator);
 
             // [#753] null must not be set as a literal

@@ -45,7 +45,7 @@ import java.util.function.Function;
 
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.AbstractConverter;
-import org.jooq.impl.AbstractScopedConverter;
+import org.jooq.impl.AbstractContextConverter;
 import org.jooq.impl.SQLDataType;
 
 import org.jetbrains.annotations.NotNull;
@@ -172,7 +172,7 @@ public interface Converter<T, U> extends Serializable {
         Function<? super T, ? extends U> from,
         Function<? super U, ? extends T> to
     ) {
-        return new AbstractScopedConverter<T, U>(fromType, toType) {
+        return new AbstractContextConverter<T, U>(fromType, toType) {
 
             @Override
             public final U from(T t, ConverterContext scope) {

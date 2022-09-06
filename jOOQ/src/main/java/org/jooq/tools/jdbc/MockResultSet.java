@@ -38,7 +38,7 @@
 package org.jooq.tools.jdbc;
 
 import static org.jooq.SQLDialect.DEFAULT;
-import static org.jooq.ScopedConverter.scoped;
+import static org.jooq.ContextConverter.scoped;
 import static org.jooq.impl.Internal.converterContext;
 
 import java.io.ByteArrayInputStream;
@@ -73,7 +73,7 @@ import org.jooq.Converters;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.ScopedConverter;
+import org.jooq.ContextConverter;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.Internal;

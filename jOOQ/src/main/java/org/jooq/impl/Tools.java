@@ -75,7 +75,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
-import static org.jooq.ScopedConverter.scoped;
+import static org.jooq.ContextConverter.scoped;
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
 import static org.jooq.conf.ParamType.INLINED;
@@ -303,7 +303,7 @@ import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Scope;
-import org.jooq.ScopedConverter;
+import org.jooq.ContextConverter;
 import org.jooq.Select;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SortField;
@@ -1464,7 +1464,7 @@ final class Tools {
      * Get a converter from a {@link ConverterProvider} or <code>null</code> if
      * no converter could be provided.
      */
-    static final <T, U> ScopedConverter<T, U> converter(Configuration configuration, T instance, Class<T> tType, Class<U> uType) {
+    static final <T, U> ContextConverter<T, U> converter(Configuration configuration, T instance, Class<T> tType, Class<U> uType) {
         Converter<T, U> result = configuration(configuration).converterProvider().provide(tType, uType);
 
         if (result == null)
@@ -1484,8 +1484,8 @@ final class Tools {
      * Get a converter from a {@link ConverterProvider} or <code>null</code> if
      * no converter could be provided.
      */
-    static final <T, U> ScopedConverter<T, U> converterOrFail(Configuration configuration, T instance, Class<T> tType, Class<U> uType) {
-        ScopedConverter<T, U> result = converter(configuration, instance, tType, uType);
+    static final <T, U> ContextConverter<T, U> converterOrFail(Configuration configuration, T instance, Class<T> tType, Class<U> uType) {
+        ContextConverter<T, U> result = converter(configuration, instance, tType, uType);
 
         if (result == null)
             throw new DataTypeException("No Converter found for types " + tType.getName() + " and " + uType.getName());
@@ -1496,7 +1496,7 @@ final class Tools {
     /**
      * Get a converter from a {@link ConverterProvider}.
      */
-    static final <T, U> ScopedConverter<T, U> converterOrFail(Attachable attachable, T instance, Class<T> tType, Class<U> uType) {
+    static final <T, U> ContextConverter<T, U> converterOrFail(Attachable attachable, T instance, Class<T> tType, Class<U> uType) {
         return converterOrFail(configuration(attachable), instance, tType, uType);
     }
 

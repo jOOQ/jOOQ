@@ -39,14 +39,14 @@ package org.jooq.impl;
 
 import org.jooq.Converter;
 import org.jooq.ConverterContext;
-import org.jooq.ScopedConverter;
+import org.jooq.ContextConverter;
 
 /**
  * A converter that doesn't convert anything.
  *
  * @author Lukas Eder
  */
-public final class IdentityConverter<T> implements ScopedConverter<T, T> {
+public final class IdentityConverter<T> implements ContextConverter<T, T> {
     private final Class<T> type;
 
     public IdentityConverter(Class<T> type) {

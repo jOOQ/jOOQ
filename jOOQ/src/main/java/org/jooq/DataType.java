@@ -139,7 +139,7 @@ public interface DataType<T> extends Named {
      * Get the converter associated with this data type.
      */
     @NotNull
-    ScopedConverter<?, T> getConverter();
+    ContextConverter<?, T> getConverter();
 
     /**
      * Retrieve the Java type associated with this data type.

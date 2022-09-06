@@ -52,7 +52,7 @@ import org.jooq.ConverterContext;
  *             <code>Converter.ofNullable(Time.class, LocalTime.class, Time::toLocalTime, Time::valueOf)</code>.
  */
 @Deprecated
-public final class TimeToLocalTimeConverter extends AbstractScopedConverter<Time, LocalTime> {
+public final class TimeToLocalTimeConverter extends AbstractContextConverter<Time, LocalTime> {
 
     public TimeToLocalTimeConverter() {
         super(Time.class, LocalTime.class);

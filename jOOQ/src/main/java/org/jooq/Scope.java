@@ -55,15 +55,25 @@ import org.jetbrains.annotations.Nullable;
  * dependent and will be specified by the concrete subtype of
  * <code>Scope</code>. Examples of such scope types are:
  * <ul>
+ * <li>{@link BindingScope}: A scope used for a single {@link Binding}
+ * operation.</li>
  * <li>{@link Context}: Used for a single traversal of a {@link QueryPart}
  * expression tree to produce a SQL string and / or a list of bind
  * variables.</li>
+ * <li>{@link ConverterContext}: A scope that covers a single
+ * {@link ContextConverter#from(Object, ConverterContext)} or
+ * {@link ContextConverter#to(Object, ConverterContext)} call.</li>
  * <li>{@link DSLContext}: The {@link DSL} API that creates {@link Query}
  * instances in the context of a {@link Configuration}. It shares the wrapped
  * {@link Configuration}'s lifecycle.</li>
  * <li>{@link ExecuteContext}: Used for a single execution of a {@link Query},
  * containing JDBC resources and other execution relevant objects. Can be
  * accessed by the {@link ExecuteListener} SPI.</li>
+ * <li>{@link ExecuteScope}: A scope that is used for operations that are
+ * {@link ExecuteContext} aware, but may have a more narrow scope, such as e.g.
+ * {@link BindingScope}.</li>
+ * <li>{@link GeneratorContext}: A scope that is used for client side computed
+ * column expression generation.</li>
  * <li>{@link ParseContext}: Used for a single parse call. Can be accessed by
  * the {@link ParseListener} SPI.</li>
  * <li>{@link RecordContext}: Used a single record operation, such as
@@ -84,7 +94,9 @@ import org.jetbrains.annotations.Nullable;
  * implementation that measures time for fetching data, it is perfectly possible
  * to store timestamps in that map:
  * <p>
- * <pre><code>
+ *
+ * <pre>
+ * <code>
  * class FetchTimeMeasuringListener extends DefaultExecuteListener {
  *     &#64;Override
  *     public void fetchStart(ExecuteContext ctx) {
@@ -101,7 +113,8 @@ import org.jetbrains.annotations.Nullable;
  *         System.out.println("Time taken: " + (System.nanoTime() - startTime) / 1000 / 1000.0 + " ms");
  *     }
  * }
- * </code></pre>
+ * </code>
+ * </pre>
  *
  * @author Lukas Eder
  */

@@ -247,6 +247,10 @@ public final class Converters<T, U> extends AbstractScopedConverter<T, U> {
         return t -> { throw new DataTypeException("Conversion function not implemented"); };
     }
 
+    static final <T, U> BiFunction<T, ConverterScope, U> notImplementedBiFunction() {
+        return (t, x) -> { throw new DataTypeException("Conversion function not implemented"); };
+    }
+
     /**
      * An unknown type that is used when users do not provide any explicit user
      * type {@link Class} reference e.g. in

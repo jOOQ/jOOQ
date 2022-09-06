@@ -46,6 +46,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Generator;
 import org.jooq.Name;
+import org.jooq.ScopedConverter;
 import org.jooq.Typed;
 
 /**
@@ -71,7 +72,7 @@ abstract class AbstractTypedNamed<T> extends AbstractNamed implements Typed<T> {
     // -------------------------------------------------------------------------
 
     @Override
-    public final Converter<?, T> getConverter() {
+    public final ScopedConverter<?, T> getConverter() {
         return getDataType().getConverter();
     }
 

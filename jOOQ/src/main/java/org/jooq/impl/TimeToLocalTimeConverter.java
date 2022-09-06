@@ -42,6 +42,7 @@ import java.time.LocalTime;
 import java.util.function.Function;
 
 import org.jooq.Converter;
+import org.jooq.ConverterScope;
 
 /**
  * @author Lukas Eder
@@ -51,19 +52,19 @@ import org.jooq.Converter;
  *             <code>Converter.ofNullable(Time.class, LocalTime.class, Time::toLocalTime, Time::valueOf)</code>.
  */
 @Deprecated
-public final class TimeToLocalTimeConverter extends AbstractConverter<Time, LocalTime> {
+public final class TimeToLocalTimeConverter extends AbstractScopedConverter<Time, LocalTime> {
 
     public TimeToLocalTimeConverter() {
         super(Time.class, LocalTime.class);
     }
 
     @Override
-    public final LocalTime from(Time t) {
+    public final LocalTime from(Time t, ConverterScope scope) {
         return t == null ? null : t.toLocalTime();
     }
 
     @Override
-    public final Time to(LocalTime u) {
+    public final Time to(LocalTime u, ConverterScope scope) {
         return u == null ? null : Time.valueOf(u);
     }
 }

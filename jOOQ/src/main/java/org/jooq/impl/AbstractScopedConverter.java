@@ -35,43 +35,21 @@
  *
  *
  */
-package org.jooq;
+package org.jooq.impl;
 
-import java.lang.reflect.Array;
-
-import org.jooq.impl.AbstractScopedConverter;
+import org.jooq.ScopedConverter;
 
 /**
  * @author Lukas Eder
  */
-@SuppressWarnings("unchecked")
-final class ArrayComponentConverter<T, U> extends AbstractScopedConverter<T, U> {
+public abstract class AbstractScopedConverter<T, U> extends AbstractConverter<T, U> implements ScopedConverter<T, U> {
 
-    final ScopedConverter<T[], U[]> converter;
-
-    public ArrayComponentConverter(ScopedConverter<T[], U[]> converter) {
-        super((Class<T>) converter.fromType().getComponentType(), (Class<U>) converter.toType().getComponentType());
-
-        this.converter = converter;
+    public AbstractScopedConverter(Class<T> fromType, Class<U> toType) {
+        super(fromType, toType);
     }
 
     @Override
-    public final U from(T t, ConverterScope scope) {
-        if (t == null)
-            return null;
-
-        T[] a = (T[]) Array.newInstance(fromType(), 1);
-        a[0] = t;
-        return converter.from(a, scope)[0];
-    }
-
-    @Override
-    public final T to(U u, ConverterScope scope) {
-        if (u == null)
-            return null;
-
-        U[] a = (U[]) Array.newInstance(fromType(), 1);
-        a[0] = u;
-        return converter.to(a, scope)[0];
+    public String toString() {
+        return "ScopedConverter [ " + fromType().getName() + " -> " + toType().getName() + " ]";
     }
 }

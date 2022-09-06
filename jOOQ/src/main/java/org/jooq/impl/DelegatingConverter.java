@@ -37,24 +37,35 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Converter;
+import org.jooq.ConverterScope;
+import org.jooq.ScopedConverter;
 
 /**
  * @author Lukas Eder
  */
-public class DelegatingConverter<T, U> extends AbstractConverter<T, U> {
+public class DelegatingConverter<T, U> extends AbstractScopedConverter<T, U> {
 
-    private final Converter<T, U> delegate;
+    private final ScopedConverter<T, U> delegate;
 
-    public DelegatingConverter(Converter<T, U> delegate) {
+    public DelegatingConverter(ScopedConverter<T, U> delegate) {
         super(delegate.fromType(), delegate.toType());
 
         this.delegate = delegate;
     }
 
     @Override
+    public final U from(T t, ConverterScope scope) {
+        return delegate.from(t, scope);
+    }
+
+    @Override
     public final U from(T t) {
         return delegate.from(t);
+    }
+
+    @Override
+    public final T to(U u, ConverterScope scope) {
+        return delegate.to(u, scope);
     }
 
     @Override

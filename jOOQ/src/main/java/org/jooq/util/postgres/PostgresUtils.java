@@ -38,6 +38,7 @@
 package org.jooq.util.postgres;
 
 import static java.lang.Integer.toOctalString;
+import static org.jooq.impl.Internal.converterScope;
 import static org.jooq.tools.StringUtils.leftPad;
 
 import java.io.ByteArrayOutputStream;
@@ -52,6 +53,7 @@ import java.util.List;
 import org.jooq.Converter;
 import org.jooq.EnumType;
 import org.jooq.Record;
+import org.jooq.ScopedConverter;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.StringUtils;
 import org.jooq.types.DayToSecond;
@@ -529,7 +531,7 @@ public class PostgresUtils {
         String separator = "";
         for (int i = 0; i < r.size(); i++) {
             @SuppressWarnings({ "unchecked", "rawtypes" })
-            Object a = ((Converter) r.field(i).getConverter()).to(r.get(i));
+            Object a = ((ScopedConverter) r.field(i).getConverter()).to(r.get(i), converterScope());
             sb.append(separator);
 
             // [#753] null must not be set as a literal

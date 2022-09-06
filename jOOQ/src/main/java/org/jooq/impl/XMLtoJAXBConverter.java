@@ -40,6 +40,7 @@ package org.jooq.impl;
 import java.io.StringReader;
 import java.io.StringWriter;
 
+import org.jooq.ConverterScope;
 import org.jooq.XML;
 
 import jakarta.xml.bind.JAXB;
@@ -56,21 +57,21 @@ public class XMLtoJAXBConverter<U> extends AbstractConverter<XML, U> {
     }
 
     @Override
-    public U from(XML databaseObject) {
-        if (databaseObject == null)
+    public U from(XML t) {
+        if (t == null)
             return null;
         else
-            return JAXB.unmarshal(new StringReader(databaseObject.data()), toType());
+            return JAXB.unmarshal(new StringReader(t.data()), toType());
     }
 
     @Override
-    public XML to(U userObject) {
-        if (userObject == null) {
+    public XML to(U u) {
+        if (u == null) {
             return null;
         }
         else {
             StringWriter w = new StringWriter();
-            JAXB.marshal(userObject, w);
+            JAXB.marshal(u, w);
             return XML.xml(w.toString());
         }
     }

@@ -37,11 +37,14 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.ScopedConverter.scoped;
+
 import java.sql.CallableStatement;
 
 import org.jooq.BindingGetStatementContext;
 import org.jooq.Converter;
 import org.jooq.ExecuteContext;
+import org.jooq.ScopedConverter;
 
 /**
  * @author Lukas Eder
@@ -85,7 +88,7 @@ class DefaultBindingGetStatementContext<U> extends AbstractExecuteScope implemen
         return new DefaultBindingGetStatementContext<T>(ctx, statement, index) {
             @Override
             public void value(T v) {
-                outer.value(converter.from(v));
+                outer.value(scoped(converter).from(v, converterScope()));
             }
         };
     }

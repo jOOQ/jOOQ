@@ -62,7 +62,7 @@ public interface Typed<T> extends QueryPart {
      * the generated object.
      */
     @NotNull
-    Converter<?, T> getConverter();
+    ScopedConverter<?, T> getConverter();
 
     /**
      * The object's underlying {@link Binding}.

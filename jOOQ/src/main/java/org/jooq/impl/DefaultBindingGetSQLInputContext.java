@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.ScopedConverter.scoped;
+
 import java.sql.SQLInput;
 
 import org.jooq.BindingGetSQLInputContext;
@@ -78,7 +80,7 @@ class DefaultBindingGetSQLInputContext<U> extends AbstractExecuteScope implement
         return new DefaultBindingGetSQLInputContext<T>(ctx, input) {
             @Override
             public void value(T v) {
-                outer.value(converter.from(v));
+                outer.value(scoped(converter).from(v, converterScope()));
             }
         };
     }

@@ -61,6 +61,7 @@ import java.util.Map;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.Constants;
+import org.jooq.ConverterScope;
 import org.jooq.DDLQuery;
 import org.jooq.DSLContext;
 import org.jooq.Delete;
@@ -94,6 +95,7 @@ class DefaultExecuteContext implements ExecuteContext {
     private static final JooqLogger                       log       = JooqLogger.getLogger(DefaultExecuteContext.class);
 
     // Persistent attributes (repeatable)
+    private final ConverterScope                          converterScope;
     private final Instant                                 creationTime;
     private final Configuration                           originalConfiguration;
     private final Configuration                           derivedConfiguration;
@@ -335,6 +337,7 @@ class DefaultExecuteContext implements ExecuteContext {
         this.data = new DataMap();
         this.query = query;
         this.routine = routine;
+        this.converterScope = new DefaultConverterScope(derivedConfiguration, data);
 
         if (routine != null) {
             this.batch = false;
@@ -364,6 +367,11 @@ class DefaultExecuteContext implements ExecuteContext {
         }
 
         clean();
+    }
+
+    @Override
+    public final ConverterScope converterScope() {
+        return converterScope;
     }
 
     @Override

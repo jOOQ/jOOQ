@@ -42,6 +42,7 @@ import java.time.LocalDate;
 import java.util.function.Function;
 
 import org.jooq.Converter;
+import org.jooq.ConverterScope;
 
 /**
  * @author Lukas Eder
@@ -51,19 +52,19 @@ import org.jooq.Converter;
  *             <code>Converter.ofNullable(Date.class, LocalDate.class, Date::toLocalDate, Date::valueOf)</code>.
  */
 @Deprecated
-public final class DateToLocalDateConverter extends AbstractConverter<Date, LocalDate> {
+public final class DateToLocalDateConverter extends AbstractScopedConverter<Date, LocalDate> {
 
     public DateToLocalDateConverter() {
         super(Date.class, LocalDate.class);
     }
 
     @Override
-    public final LocalDate from(Date t) {
+    public final LocalDate from(Date t, ConverterScope scope) {
         return t == null ? null : t.toLocalDate();
     }
 
     @Override
-    public final Date to(LocalDate u) {
+    public final Date to(LocalDate u, ConverterScope scope) {
         return u == null ? null : Date.valueOf(u);
     }
 }

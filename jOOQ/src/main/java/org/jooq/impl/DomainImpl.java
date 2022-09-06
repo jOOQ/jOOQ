@@ -55,6 +55,7 @@ import org.jooq.Function1;
 import org.jooq.Function2;
 import org.jooq.Name;
 import org.jooq.Schema;
+import org.jooq.ScopedConverter;
 import org.jooq.QueryPart;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
@@ -92,7 +93,7 @@ class DomainImpl<T> extends AbstractNamed implements Domain<T>, UNotYetImplement
     }
 
     @Override
-    public final Converter<?, T> getConverter() {
+    public final ScopedConverter<?, T> getConverter() {
         return type.getConverter();
     }
 

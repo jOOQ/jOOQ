@@ -38,6 +38,8 @@
 package org.jooq.tools.jdbc;
 
 import static org.jooq.SQLDialect.DEFAULT;
+import static org.jooq.ScopedConverter.scoped;
+import static org.jooq.impl.Internal.converterScope;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -71,8 +73,10 @@ import org.jooq.Converters;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.ScopedConverter;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
+import org.jooq.impl.Internal;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -457,7 +461,7 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
             .converterProvider()
             .provide(value == null ? Object.class : (Class<Object>) value.getClass(), type);
 
-        T converted = converter == null ? null : converter.from(value);
+        T converted = converter == null ? null : scoped(converter).from(value, converterScope());
         wasNull = (converted == null);
         return converted;
     }

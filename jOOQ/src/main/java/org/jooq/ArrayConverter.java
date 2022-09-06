@@ -39,7 +39,7 @@ package org.jooq;
 
 import static org.jooq.impl.Internal.arrayType;
 
-import org.jooq.impl.AbstractConverter;
+import org.jooq.impl.AbstractScopedConverter;
 import org.jooq.tools.Convert;
 
 /**
@@ -48,12 +48,12 @@ import org.jooq.tools.Convert;
  *
  * @author Lukas Eder
  */
-final class ArrayConverter<T, U> extends AbstractConverter<T[], U[]> {
+final class ArrayConverter<T, U> extends AbstractScopedConverter<T[], U[]> {
 
-    final Converter<T, U> converter;
-    final Converter<U, T> inverse;
+    final ScopedConverter<T, U> converter;
+    final ScopedConverter<U, T> inverse;
 
-    public ArrayConverter(Converter<T, U> converter) {
+    public ArrayConverter(ScopedConverter<T, U> converter) {
         super(arrayType(converter.fromType()), arrayType(converter.toType()));
 
         this.converter = converter;
@@ -61,12 +61,12 @@ final class ArrayConverter<T, U> extends AbstractConverter<T[], U[]> {
     }
 
     @Override
-    public final U[] from(T[] t) {
+    public final U[] from(T[] t, ConverterScope scope) {
         return Convert.convertArray(t, converter);
     }
 
     @Override
-    public final T[] to(U[] t) {
+    public final T[] to(U[] t, ConverterScope scope) {
         return Convert.convertArray(t, inverse);
     }
 }

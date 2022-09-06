@@ -53,6 +53,7 @@ import org.jooq.Binding;
 import org.jooq.Check;
 import org.jooq.Comment;
 import org.jooq.Converter;
+import org.jooq.ConverterScope;
 import org.jooq.DDLExportConfiguration;
 import org.jooq.DataType;
 import org.jooq.Domain;
@@ -627,5 +628,11 @@ public final class Internal {
         // [#6175] TODO: Speed this up with a faster way to calculate a hash code
         else
             return 0x7FFFFFF & object.hashCode();
+    }
+
+    private static final ConverterScope CONVERTER_SCOPE = new DefaultConverterScope(CONFIG);
+
+    public static final ConverterScope converterScope() {
+        return CONVERTER_SCOPE;
     }
 }

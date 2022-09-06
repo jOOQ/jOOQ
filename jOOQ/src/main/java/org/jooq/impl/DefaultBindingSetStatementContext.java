@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.ScopedConverter.scoped;
+
 import java.sql.PreparedStatement;
 
 import org.jooq.BindingSetStatementContext;
@@ -77,7 +79,7 @@ class DefaultBindingSetStatementContext<U> extends AbstractExecuteScope implemen
 
     @Override
     public final <T> BindingSetStatementContext<T> convert(Converter<? extends T, ? super U> converter) {
-        return new DefaultBindingSetStatementContext<>(ctx, statement, index, converter.to(value));
+        return new DefaultBindingSetStatementContext<>(ctx, statement, index, scoped(converter).to(value, converterScope()));
     }
 
     @Override

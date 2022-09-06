@@ -35,43 +35,23 @@
  *
  *
  */
-package org.jooq;
+package org.jooq.impl;
 
-import java.lang.reflect.Array;
+import java.util.Map;
 
-import org.jooq.impl.AbstractScopedConverter;
+import org.jooq.Configuration;
+import org.jooq.ConverterScope;
 
 /**
  * @author Lukas Eder
  */
-@SuppressWarnings("unchecked")
-final class ArrayComponentConverter<T, U> extends AbstractScopedConverter<T, U> {
+final class DefaultConverterScope extends AbstractScope implements ConverterScope {
 
-    final ScopedConverter<T[], U[]> converter;
-
-    public ArrayComponentConverter(ScopedConverter<T[], U[]> converter) {
-        super((Class<T>) converter.fromType().getComponentType(), (Class<U>) converter.toType().getComponentType());
-
-        this.converter = converter;
+    DefaultConverterScope(Configuration configuration) {
+        super(configuration, new DataMap());
     }
 
-    @Override
-    public final U from(T t, ConverterScope scope) {
-        if (t == null)
-            return null;
-
-        T[] a = (T[]) Array.newInstance(fromType(), 1);
-        a[0] = t;
-        return converter.from(a, scope)[0];
-    }
-
-    @Override
-    public final T to(U u, ConverterScope scope) {
-        if (u == null)
-            return null;
-
-        U[] a = (U[]) Array.newInstance(fromType(), 1);
-        a[0] = u;
-        return converter.to(a, scope)[0];
+    DefaultConverterScope(Configuration configuration, Map<Object, Object> data) {
+        super(configuration, data);
     }
 }

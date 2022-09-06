@@ -75,6 +75,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.ScopedConverter.scoped;
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
 import static org.jooq.conf.ParamType.INLINED;
@@ -219,7 +220,6 @@ import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -263,6 +263,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.ConverterProvider;
+import org.jooq.ConverterScope;
 import org.jooq.Converters;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
@@ -294,7 +295,6 @@ import org.jooq.Record1;
 import org.jooq.RecordQualifier;
 import org.jooq.RenderContext;
 import org.jooq.RenderContext.CastMode;
-// ...
 import org.jooq.Result;
 import org.jooq.ResultOrRows;
 import org.jooq.ResultQuery;
@@ -302,8 +302,8 @@ import org.jooq.Results;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
-import org.jooq.SchemaMapping;
 import org.jooq.Scope;
+import org.jooq.ScopedConverter;
 import org.jooq.Select;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SortField;
@@ -311,7 +311,6 @@ import org.jooq.Source;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
-// ...
 import org.jooq.UDT;
 import org.jooq.UpdatableRecord;
 import org.jooq.WindowSpecification;
@@ -334,7 +333,6 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TemplatingException;
 import org.jooq.exception.TooManyRowsException;
-import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Ints;
@@ -1466,7 +1464,7 @@ final class Tools {
      * Get a converter from a {@link ConverterProvider} or <code>null</code> if
      * no converter could be provided.
      */
-    static final <T, U> Converter<T, U> converter(Configuration configuration, T instance, Class<T> tType, Class<U> uType) {
+    static final <T, U> ScopedConverter<T, U> converter(Configuration configuration, T instance, Class<T> tType, Class<U> uType) {
         Converter<T, U> result = configuration(configuration).converterProvider().provide(tType, uType);
 
         if (result == null)
@@ -1479,15 +1477,15 @@ final class Tools {
         if (result == null && tType == Converters.UnknownType.class)
             result = converter(configuration, instance, (Class<T>) (instance == null ? Object.class : instance.getClass()), uType);
 
-        return result;
+        return result == null ? null : scoped(result);
     }
 
     /**
      * Get a converter from a {@link ConverterProvider} or <code>null</code> if
      * no converter could be provided.
      */
-    static final <T, U> Converter<T, U> converterOrFail(Configuration configuration, T instance, Class<T> tType, Class<U> uType) {
-        Converter<T, U> result = converter(configuration, instance, tType, uType);
+    static final <T, U> ScopedConverter<T, U> converterOrFail(Configuration configuration, T instance, Class<T> tType, Class<U> uType) {
+        ScopedConverter<T, U> result = converter(configuration, instance, tType, uType);
 
         if (result == null)
             throw new DataTypeException("No Converter found for types " + tType.getName() + " and " + uType.getName());
@@ -1498,7 +1496,7 @@ final class Tools {
     /**
      * Get a converter from a {@link ConverterProvider}.
      */
-    static final <T, U> Converter<T, U> converterOrFail(Attachable attachable, T instance, Class<T> tType, Class<U> uType) {
+    static final <T, U> ScopedConverter<T, U> converterOrFail(Attachable attachable, T instance, Class<T> tType, Class<U> uType) {
         return converterOrFail(configuration(attachable), instance, tType, uType);
     }
 
@@ -7104,5 +7102,13 @@ final class Tools {
 
 
         return dataType;
+    }
+
+    static final ConverterScope converterScope(Attachable attachable) {
+        return new DefaultConverterScope(configuration(attachable));
+    }
+
+    static final ConverterScope converterScope(Configuration configuration) {
+        return new DefaultConverterScope(configuration(configuration));
     }
 }

@@ -64,6 +64,7 @@ import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.Row2;
+import org.jooq.ScopedConverter;
 import org.jooq.SelectField;
 // ...
 import org.jooq.impl.QOM.UnmodifiableList;
@@ -151,7 +152,7 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
     }
 
     @Override
-    public final Converter<?, R> getConverter() {
+    public final ScopedConverter<?, R> getConverter() {
         return rf().getConverter();
     }
 

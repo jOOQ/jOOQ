@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.ScopedConverter.scoped;
+
 import java.sql.SQLOutput;
 
 import org.jooq.BindingSetSQLOutputContext;
@@ -70,7 +72,7 @@ class DefaultBindingSetSQLOutputContext<U> extends AbstractExecuteScope implemen
 
     @Override
     public final <T> BindingSetSQLOutputContext<T> convert(Converter<? extends T, ? super U> converter) {
-        return new DefaultBindingSetSQLOutputContext<>(ctx, output, converter.to(value));
+        return new DefaultBindingSetSQLOutputContext<>(ctx, output, scoped(converter).to(value, converterScope()));
     }
 
     @Override

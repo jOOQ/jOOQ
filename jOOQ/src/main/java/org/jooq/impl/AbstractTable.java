@@ -107,6 +107,7 @@ import org.jooq.Row;
 import org.jooq.RowId;
 import org.jooq.SQL;
 import org.jooq.Schema;
+import org.jooq.ScopedConverter;
 import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.Table;
@@ -203,7 +204,7 @@ implements
     }
 
     @Override
-    public final Converter<?, R> getConverter() {
+    public final ScopedConverter<?, R> getConverter() {
         return getDataType().getConverter();
     }
 

@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Internal.converterScope;
+
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +56,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
+import org.jooq.ScopedConverter;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DefaultBinding.InternalBinding;
 import org.jooq.impl.QOM.GenerationLocation;
@@ -306,7 +309,7 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
 
         // [#3200] Try to convert arbitrary objects to T
         else
-            return ((Converter<T, U>) getConverter()).from(delegate.convert(object));
+            return ((ScopedConverter<T, U>) getConverter()).from(delegate.convert(object), converterScope());
     }
 
     @Override

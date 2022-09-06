@@ -45,6 +45,12 @@ import org.jetbrains.annotations.Nullable;
 public interface ExecuteScope extends Scope {
 
     /**
+     * Get the {@link ConverterScope} from the context of this
+     * {@link ExecuteScope}.
+     */
+    ConverterScope converterScope();
+
+    /**
      * The {@link ExecuteContext} that created this scope.
      *
      * @return The execute context. Can be <code>null</code> e.g. when running

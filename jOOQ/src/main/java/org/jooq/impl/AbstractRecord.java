@@ -40,9 +40,11 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
+import static org.jooq.ScopedConverter.scoped;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.converterOrFail;
+import static org.jooq.impl.Tools.converterScope;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.indexFail;
 import static org.jooq.impl.Tools.indexOrFail;
@@ -102,7 +104,6 @@ import org.jooq.XMLFormat;
 import org.jooq.exception.IOException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
-import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -335,12 +336,12 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     @Override
     public final <U> U get(Field<?> field, Class<? extends U> type) {
         Object t = get(field);
-        return (U) converterOrFail(this, t, (Class) field.getType(), type).from(t);
+        return (U) converterOrFail(this, t, (Class) field.getType(), type).from(t, converterScope(this));
     }
 
     @Override
     public final <T, U> U get(Field<T> field, Converter<? super T, ? extends U> converter) {
-        return converter.from(get(field));
+        return scoped(converter).from(get(field), converterScope(this));
     }
 
     @Override
@@ -351,7 +352,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     @Override
     public final <U> U get(int index, Class<? extends U> type) {
         Object t = get(index);
-        return (U) converterOrFail(this, t, (Class) field(safeIndex(index)).getType(), type).from(t);
+        return (U) converterOrFail(this, t, (Class) field(safeIndex(index)).getType(), type).from(t, converterScope(this));
     }
 
     @Override
@@ -474,7 +475,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T, U> void set(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
-        set(field, converter.to(value));
+        set(field, scoped(converter).to(value, converterScope(this)));
     }
 
     @Override

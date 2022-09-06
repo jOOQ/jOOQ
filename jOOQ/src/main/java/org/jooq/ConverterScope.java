@@ -37,41 +37,12 @@
  */
 package org.jooq;
 
-import java.lang.reflect.Array;
-
-import org.jooq.impl.AbstractScopedConverter;
-
 /**
- * @author Lukas Eder
+ * A {@link Scope} that models the life cycle of a data type conversion call to
+ * {@link Converter#from(Object)} or {@link Converter#to(Object)}.
+ * <p>
+ * Implementations
  */
-@SuppressWarnings("unchecked")
-final class ArrayComponentConverter<T, U> extends AbstractScopedConverter<T, U> {
+public interface ConverterScope extends Scope {
 
-    final ScopedConverter<T[], U[]> converter;
-
-    public ArrayComponentConverter(ScopedConverter<T[], U[]> converter) {
-        super((Class<T>) converter.fromType().getComponentType(), (Class<U>) converter.toType().getComponentType());
-
-        this.converter = converter;
-    }
-
-    @Override
-    public final U from(T t, ConverterScope scope) {
-        if (t == null)
-            return null;
-
-        T[] a = (T[]) Array.newInstance(fromType(), 1);
-        a[0] = t;
-        return converter.from(a, scope)[0];
-    }
-
-    @Override
-    public final T to(U u, ConverterScope scope) {
-        if (u == null)
-            return null;
-
-        U[] a = (U[]) Array.newInstance(fromType(), 1);
-        a[0] = u;
-        return converter.to(a, scope)[0];
-    }
 }

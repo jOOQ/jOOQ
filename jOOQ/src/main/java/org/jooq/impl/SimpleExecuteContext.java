@@ -42,11 +42,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
-import java.time.Instant;
 import java.util.Map;
 
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
+import org.jooq.ConverterScope;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteType;
 import org.jooq.Query;
@@ -65,6 +65,11 @@ final class SimpleExecuteContext extends AbstractScope implements ExecuteContext
 
     SimpleExecuteContext(Configuration configuration, Map<Object, Object> data) {
         super(configuration, data);
+    }
+
+    @Override
+    public final ConverterScope converterScope() {
+        return Tools.converterScope(configuration);
     }
 
     @Override

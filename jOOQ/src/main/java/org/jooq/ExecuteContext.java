@@ -72,6 +72,12 @@ import org.jetbrains.annotations.Nullable;
 public interface ExecuteContext extends Scope {
 
     /**
+     * Get a {@link ConverterScope} for the scope of this
+     * {@link ExecuteContext}.
+     */
+    ConverterScope converterScope();
+
+    /**
      * The connection to be used in this execute context.
      * <p>
      * This returns a proxy to the {@link Configuration#connectionProvider()}

@@ -38,10 +38,12 @@
 package org.jooq;
 
 import java.io.Serializable;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.AbstractConverter;
+import org.jooq.impl.AbstractScopedConverter;
 import org.jooq.impl.IdentityConverter;
 import org.jooq.impl.SQLDataType;
 
@@ -57,15 +59,15 @@ import org.jetbrains.annotations.NotNull;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class Converters<T, U> extends AbstractConverter<T, U> {
+public final class Converters<T, U> extends AbstractScopedConverter<T, U> {
 
-    final Converter[] chain;
+    final ScopedConverter[] chain;
 
     /**
      * Create an identity converter.
      */
     @NotNull
-    public static <T> Converter<T, T> identity(final Class<T> type) {
+    public static <T> ScopedConverter<T, T> identity(final Class<T> type) {
         return new IdentityConverter<T>(type);
     }
 
@@ -77,7 +79,7 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    public static <T, U> Converter<T, U> of() {
+    public static <T, U> ScopedConverter<T, U> of() {
         return new Converters();
     }
 
@@ -89,44 +91,63 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    public static <T, U> Converter<T, U> of(Converter<T, U> converter) {
-        return new Converters(converter);
+    public static <T, U> ScopedConverter<T, U> of(Converter<T, U> converter) {
+        return new Converters(ScopedConverter.scoped(converter));
     }
 
     /**
      * Chain two converters.
      */
     @NotNull
-    public static <T, X1, U> Converter<T, U> of(Converter<T, ? extends X1> c1, Converter<? super X1, U> c2) {
-        return new Converters(c1, c2);
+    public static <T, X1, U> ScopedConverter<T, U> of(Converter<T, ? extends X1> c1, Converter<? super X1, U> c2) {
+        return new Converters(
+            ScopedConverter.scoped(c1),
+            ScopedConverter.scoped(c2)
+        );
     }
 
     /**
      * Chain three converters.
      */
     @NotNull
-    public static <T, X1, X2, U> Converter<T, U> of(Converter<T, ? extends X1> c1, Converter<? super X1, ? extends X2> c2, Converter<? super X2, U> c3) {
-        return new Converters(c1, c2, c3);
+    public static <T, X1, X2, U> ScopedConverter<T, U> of(Converter<T, ? extends X1> c1, Converter<? super X1, ? extends X2> c2, Converter<? super X2, U> c3) {
+        return new Converters(
+            ScopedConverter.scoped(c1),
+            ScopedConverter.scoped(c2),
+            ScopedConverter.scoped(c3)
+        );
     }
 
     /**
      * Chain four converters.
      */
     @NotNull
-    public static <T, X1, X2, X3, U> Converter<T, U> of(Converter<T, ? extends X1> c1, Converter<? super X1, ? extends X2> c2, Converter<? super X2, ? extends X3> c3, Converter<? super X3, U> c4) {
-        return new Converters(c1, c2, c3, c4);
+    public static <T, X1, X2, X3, U> ScopedConverter<T, U> of(Converter<T, ? extends X1> c1, Converter<? super X1, ? extends X2> c2, Converter<? super X2, ? extends X3> c3, Converter<? super X3, U> c4) {
+        return new Converters(
+            ScopedConverter.scoped(c1),
+            ScopedConverter.scoped(c2),
+            ScopedConverter.scoped(c3),
+            ScopedConverter.scoped(c4)
+        );
     }
 
     /**
      * Inverse a converter.
      */
     public static <T, U> Converter<U, T> inverse(final Converter<T, U> converter) {
+        return inverse(ScopedConverter.scoped(converter));
+    }
 
-    	// [#11099] Allow instanceof checks on IdentityConverter for performance reasons
-    	if (converter instanceof IdentityConverter)
-            return (Converter<U, T>) converter;
+    /**
+     * Inverse a converter.
+     */
+    public static <T, U> ScopedConverter<U, T> inverse(final ScopedConverter<T, U> converter) {
+
+        // [#11099] Allow instanceof checks on IdentityConverter for performance reasons
+        if (converter instanceof IdentityConverter)
+            return (ScopedConverter<U, T>) converter;
         else
-            return Converter.of(converter.toType(), converter.fromType(), converter::to, converter::from);
+            return ScopedConverter.of(converter.toType(), converter.fromType(), converter::to, converter::from);
     }
 
     /**
@@ -134,6 +155,14 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
      * the argument converter's types.
      */
     public static <T, U> Converter<T[], U[]> forArrays(Converter<T, U> converter) {
+        return forArrays(ScopedConverter.scoped(converter));
+    }
+
+    /**
+     * Create a converter that can convert arrays with the component types being
+     * the argument converter's types.
+     */
+    public static <T, U> ScopedConverter<T[], U[]> forArrays(ScopedConverter<T, U> converter) {
         if (converter instanceof ArrayComponentConverter<T, U> a)
             return a.converter;
         else
@@ -145,35 +174,42 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
      * converter, which converts array types.
      */
     public static <T, U> Converter<T, U> forArrayComponents(Converter<T[], U[]> converter) {
+        return forArrayComponents(ScopedConverter.scoped(converter));
+    }
+
+    /**
+     * Create a converter that can convert component types based on the argument
+     * converter, which converts array types.
+     */
+    public static <T, U> Converter<T, U> forArrayComponents(ScopedConverter<T[], U[]> converter) {
         if (converter instanceof ArrayConverter<T, U> a)
             return a.converter;
         else
             return new ArrayComponentConverter<>(converter);
     }
 
-
-    Converters(Converter... chain) {
+    Converters(ScopedConverter... chain) {
         super(chain[0].fromType(), chain[chain.length - 1].toType());
 
         this.chain = chain;
     }
 
     @Override
-    public final U from(T t) {
+    public final U from(T t, ConverterScope scope) {
         Object result = t;
 
         for (int i = 0; i < chain.length; i++)
-            result = chain[i].from(result);
+            result = chain[i].from(result, scope);
 
         return (U) result;
     }
 
     @Override
-    public final T to(U u) {
+    public final T to(U u, ConverterScope scope) {
         Object result = u;
 
         for (int i = chain.length - 1; i >= 0; i--)
-            result = chain[i].to(result);
+            result = chain[i].to(result, scope);
 
         return (T) result;
     }
@@ -199,6 +235,12 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
         return f instanceof Serializable
             ? (Function<T, U> & Serializable) t -> t == null ? null
             : f.apply(t) : t -> t == null ? null : f.apply(t);
+    }
+
+    static final <T, U> BiFunction<T, ConverterScope, U> nullable(BiFunction<? super T, ? super ConverterScope, ? extends U> f) {
+        return f instanceof Serializable
+            ? (BiFunction<T, ConverterScope, U> & Serializable) (t, x) -> t == null ? null
+            : f.apply(t, x) : (t, x) -> t == null ? null : f.apply(t, x);
     }
 
     static final <T, U> Function<T, U> notImplemented() {

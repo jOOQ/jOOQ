@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.ScopedConverter.scoped;
+
 import java.sql.ResultSet;
 
 import org.jooq.BindingGetResultSetContext;
@@ -101,7 +103,7 @@ class DefaultBindingGetResultSetContext<U> extends AbstractExecuteScope implemen
         return new DefaultBindingGetResultSetContext<T>(ctx, resultSet, index) {
             @Override
             public void value(T v) {
-                outer.value(converter.from(v));
+                outer.value(scoped(converter).from(v, converterScope()));
             }
         };
     }

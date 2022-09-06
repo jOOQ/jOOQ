@@ -38,18 +38,21 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Convert.convert;
+import static org.jooq.impl.Internal.converterScope;
 import static org.jooq.tools.reflect.Reflect.wrapper;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.jooq.ConverterScope;
+
 /**
  * A base class for enum conversion.
  *
  * @author Lukas Eder
  */
-public class EnumConverter<T, U extends Enum<U>> extends AbstractConverter<T, U> {
+public /* non-final */ class EnumConverter<T, U extends Enum<U>> extends AbstractConverter<T, U> {
 
     private final Map<T, U>                        lookup;
     private final Function<? super U, ? extends T> to;
@@ -77,8 +80,8 @@ public class EnumConverter<T, U extends Enum<U>> extends AbstractConverter<T, U>
     }
 
     @Override
-    public final U from(T databaseObject) {
-        return lookup.get(databaseObject);
+    public final U from(T t) {
+        return lookup.get(t);
     }
 
     /**
@@ -88,11 +91,11 @@ public class EnumConverter<T, U extends Enum<U>> extends AbstractConverter<T, U>
      * {@inheritDoc}
      */
     @Override
-    public T to(U userObject) {
-        if (userObject == null)
+    public T to(U u) {
+        if (u == null)
             return null;
         else
-            return to.apply(userObject);
+            return to.apply(u);
     }
 
     @Override

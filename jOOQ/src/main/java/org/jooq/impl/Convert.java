@@ -40,7 +40,9 @@ package org.jooq.impl;
 import static java.time.temporal.ChronoField.INSTANT_SECONDS;
 import static java.time.temporal.ChronoField.MILLI_OF_DAY;
 import static java.time.temporal.ChronoField.MILLI_OF_SECOND;
+import static org.jooq.ScopedConverter.scoped;
 import static org.jooq.impl.Internal.arrayType;
+import static org.jooq.impl.Internal.converterScope;
 import static org.jooq.impl.Tools.configuration;
 import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.tools.reflect.Reflect.accessible;
@@ -90,11 +92,10 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-import jakarta.xml.bind.JAXB;
-
 // ...
 import org.jooq.Converter;
 import org.jooq.ConverterProvider;
+import org.jooq.ConverterScope;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.JSON;
@@ -123,6 +124,8 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.xml.jaxb.InformationSchema;
+
+import jakarta.xml.bind.JAXB;
 
 /**
  * Utility methods for type conversions
@@ -400,7 +403,7 @@ final class Convert {
     }
 
     static final <U> U[] convertCollection(Collection from, Class<? extends U[]> to){
-        return new ConvertAll<U[]>(to).from(from);
+        return new ConvertAll<U[]>(to).from(from, converterScope());
     }
 
     /**
@@ -430,10 +433,10 @@ final class Convert {
         Class<T> fromType = converter.fromType();
 
         if (fromType == Object.class)
-            return converter.from((T) from);
+            return scoped(converter).from((T) from, converterScope());
 
         ConvertAll<T> convertAll = new ConvertAll<>(fromType);
-        return converter.from(convertAll.from(from));
+        return scoped(converter).from(convertAll.from(from, converterScope()), converterScope());
     }
 
     /**
@@ -544,7 +547,7 @@ final class Convert {
         List<U> result = new ArrayList<>(collection.size());
 
         for (Object o : collection)
-            result.add(convert(all.from(o), converter));
+            result.add(convert(all.from(o, converterScope()), converter));
 
         return result;
     }
@@ -557,17 +560,20 @@ final class Convert {
     /**
      * The converter to convert them all.
      */
-    private static class ConvertAll<U> implements Converter<Object, U> {
+    private static final class ConvertAll<U> extends AbstractScopedConverter<Object, U> {
 
         private final Class<? extends U> toClass;
 
+        @SuppressWarnings("unchecked")
         ConvertAll(Class<? extends U> toClass) {
+            super(Object.class, (Class<U>) toClass);
+
             this.toClass = toClass;
         }
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
         @Override
-        public U from(Object from) {
+        public U from(Object from, ConverterScope scope) {
             if (from == null) {
 
                 // [#936] If types are converted to primitives, the result must not
@@ -608,7 +614,7 @@ final class Convert {
 
                 // [#12557] Anything can be unwrapped from Optional
                 else if (fromClass == Optional.class)
-                    return from(((Optional) from).orElse(null));
+                    return from(((Optional) from).orElse(null), scope);
 
                 // Regular checks
                 else if (fromClass == byte[].class) {
@@ -1396,19 +1402,8 @@ final class Convert {
         }
 
         @Override
-        public Object to(U to) {
+        public Object to(U to, ConverterScope scope) {
             return to;
-        }
-
-        @Override
-        public Class<Object> fromType() {
-            return Object.class;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        public Class<U> toType() {
-            return (Class<U>) toClass;
         }
 
         /**

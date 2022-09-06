@@ -56,6 +56,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
 import org.jooq.Converter;
+import org.jooq.ConverterScope;
 import org.jooq.XML;
 
 /**
@@ -80,21 +81,21 @@ public class AbstractXMLasObjectBinding<T> extends AbstractXMLBinding<T> {
         return converter;
     }
 
-    private static final class XMLasObjectConverter<T> implements Converter<XML, T> {
+    private static final class XMLasObjectConverter<T> extends AbstractScopedConverter<XML, T> {
 
-        Class<T>                  type;
-        XmlRootElement            root;
-        transient JAXBContext     ctx;
+        XmlRootElement        root;
+        transient JAXBContext ctx;
 
         private XMLasObjectConverter(Class<T> type) {
-            this.type = type;
+            super(XML.class, type);
+
             this.root = type.getAnnotation(XmlRootElement.class);
             this.ctx = initCtx();
         }
 
         private final JAXBContext initCtx() {
             try {
-                return JAXBContext.newInstance(type);
+                return JAXBContext.newInstance(toType());
             }
             catch (JAXBException e) {
                 throw new DataBindingException(e);
@@ -102,15 +103,15 @@ public class AbstractXMLasObjectBinding<T> extends AbstractXMLBinding<T> {
         }
 
         @Override
-        public T from(XML t) {
+        public T from(XML t, ConverterScope scope) {
             if (t == null)
                 return null;
 
-            return JAXB.unmarshal(new StringReader("" + t), type);
+            return JAXB.unmarshal(new StringReader("" + t), toType());
         }
 
         @Override
-        public XML to(T u) {
+        public XML to(T u, ConverterScope scope) {
             if (u == null)
                 return null;
 
@@ -118,9 +119,8 @@ public class AbstractXMLasObjectBinding<T> extends AbstractXMLBinding<T> {
                 StringWriter s = new StringWriter();
 
                 Object o = u;
-                if (root == null) {
-                    o = new JAXBElement<>(new QName(decapitalize(type.getSimpleName())), type, u);
-                }
+                if (root == null)
+                    o = new JAXBElement<>(new QName(decapitalize(toType().getSimpleName())), toType(), u);
 
                 Marshaller m = ctx.createMarshaller();
                 m.setProperty(Marshaller.JAXB_FRAGMENT, true);
@@ -130,16 +130,6 @@ public class AbstractXMLasObjectBinding<T> extends AbstractXMLBinding<T> {
             catch (JAXBException e) {
                 throw new DataBindingException(e);
             }
-        }
-
-        @Override
-        public Class<XML> fromType() {
-            return XML.class;
-        }
-
-        @Override
-        public Class<T> toType() {
-            return type;
         }
 
         private void writeObject(ObjectOutputStream oos) throws IOException {

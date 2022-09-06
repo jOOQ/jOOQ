@@ -39,23 +39,26 @@ package org.jooq.impl;
 
 import java.sql.Timestamp;
 
+import org.jooq.ConverterScope;
+
 /**
  * @author Lukas Eder
  */
-final class TimestampToJavaUtilDateConverter extends AbstractConverter<Timestamp, java.util.Date> {
-    static final TimestampToJavaUtilDateConverter INSTANCE         = new TimestampToJavaUtilDateConverter();
+final class TimestampToJavaUtilDateConverter extends AbstractScopedConverter<Timestamp, java.util.Date> {
+
+    static final TimestampToJavaUtilDateConverter INSTANCE = new TimestampToJavaUtilDateConverter();
 
     private TimestampToJavaUtilDateConverter () {
         super(Timestamp.class, java.util.Date.class);
     }
 
     @Override
-    public final java.util.Date from(Timestamp t) {
+    public final java.util.Date from(Timestamp t, ConverterScope scope) {
         return t == null ? null : new java.util.Date(t.getTime());
     }
 
     @Override
-    public final Timestamp to(java.util.Date u) {
+    public final Timestamp to(java.util.Date u, ConverterScope scope) {
         return u == null ? null : new Timestamp(u.getTime());
     }
 }

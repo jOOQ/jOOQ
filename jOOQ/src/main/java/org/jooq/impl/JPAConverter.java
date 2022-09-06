@@ -41,6 +41,7 @@ import java.lang.reflect.Method;
 
 import jakarta.persistence.AttributeConverter;
 
+import org.jooq.ConverterScope;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.reflect.Reflect;
@@ -58,8 +59,9 @@ import org.jooq.tools.reflect.Reflect;
  *
  * @author Lukas Eder
  */
-public final class JPAConverter<T, U> extends AbstractConverter<T, U> {
-    private static final JooqLogger        log              = JooqLogger.getLogger(JPAConverter.class);
+public final class JPAConverter<T, U> extends AbstractScopedConverter<T, U> {
+
+    private static final JooqLogger        log = JooqLogger.getLogger(JPAConverter.class);
 
     private final AttributeConverter<U, T> delegate;
 
@@ -115,12 +117,12 @@ public final class JPAConverter<T, U> extends AbstractConverter<T, U> {
     }
 
     @Override
-    public final U from(T t) {
+    public final U from(T t, ConverterScope scope) {
         return delegate.convertToEntityAttribute(t);
     }
 
     @Override
-    public final T to(U u) {
+    public final T to(U u, ConverterScope scope) {
         return delegate.convertToDatabaseColumn(u);
     }
 }

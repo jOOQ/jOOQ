@@ -106,6 +106,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.ScopedConverter;
 import org.jooq.Table;
 import org.jooq.XML;
 import org.jooq.impl.QOM.GenerationLocation;
@@ -113,6 +114,8 @@ import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.types.Interval;
 import org.jooq.types.UNumber;
+
+import org.jetbrains.annotations.NotNull;
 
 // ...
 
@@ -563,8 +566,8 @@ implements
     }
 
     @Override
-    public final Converter<?, T> getConverter() {
-        return getBinding().converter();
+    public final ScopedConverter<?, T> getConverter() {
+        return (@NotNull ScopedConverter<?, T>) ScopedConverter.scoped(getBinding().converter());
     }
 
     @Override

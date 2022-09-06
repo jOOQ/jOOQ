@@ -38,13 +38,15 @@
 package org.jooq.impl;
 
 import org.jooq.Converter;
+import org.jooq.ConverterScope;
+import org.jooq.ScopedConverter;
 
 /**
  * A converter that doesn't convert anything.
  *
  * @author Lukas Eder
  */
-public final class IdentityConverter<T> implements Converter<T, T> {
+public final class IdentityConverter<T> implements ScopedConverter<T, T> {
     private final Class<T> type;
 
     public IdentityConverter(Class<T> type) {
@@ -52,12 +54,12 @@ public final class IdentityConverter<T> implements Converter<T, T> {
     }
 
     @Override
-    public final T from(T t) {
+    public final T from(T t, ConverterScope scope) {
         return t;
     }
 
     @Override
-    public final T to(T t) {
+    public final T to(T t, ConverterScope scope) {
         return t;
     }
 

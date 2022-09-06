@@ -40,7 +40,9 @@ package org.jooq.tools;
 import static java.time.temporal.ChronoField.INSTANT_SECONDS;
 import static java.time.temporal.ChronoField.MILLI_OF_DAY;
 import static java.time.temporal.ChronoField.MILLI_OF_SECOND;
+import static org.jooq.ScopedConverter.scoped;
 import static org.jooq.impl.Internal.arrayType;
+import static org.jooq.impl.Internal.converterScope;
 import static org.jooq.tools.reflect.Reflect.accessible;
 import static org.jooq.tools.reflect.Reflect.wrapper;
 import static org.jooq.types.Unsigned.ubyte;
@@ -91,6 +93,7 @@ import jakarta.xml.bind.JAXB;
 // ...
 import org.jooq.Converter;
 import org.jooq.ConverterProvider;
+import org.jooq.ConverterScope;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
@@ -100,9 +103,13 @@ import org.jooq.QualifiedRecord;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.ScopedConverter;
 import org.jooq.XML;
 import org.jooq.exception.DataTypeException;
+import org.jooq.impl.AbstractConverter;
+import org.jooq.impl.AbstractScopedConverter;
 import org.jooq.impl.IdentityConverter;
+import org.jooq.impl.Internal;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
 import org.jooq.tools.reflect.Reflect;
@@ -370,7 +377,7 @@ public final class Convert {
     }
 
     public static final <U> U[] convertCollection(Collection from, Class<? extends U[]> to){
-        return new ConvertAll<U[]>(to).from(from);
+        return new ConvertAll<U[]>(to).from(from, converterScope());
     }
 
     /**
@@ -400,10 +407,10 @@ public final class Convert {
         Class<T> fromType = converter.fromType();
 
         if (fromType == Object.class)
-            return converter.from((T) from);
+            return scoped(converter).from((T) from, converterScope());
 
         ConvertAll<T> convertAll = new ConvertAll<>(fromType);
-        return converter.from(convertAll.from(from));
+        return scoped(converter).from(convertAll.from(from, converterScope()), converterScope());
     }
 
     /**
@@ -514,7 +521,7 @@ public final class Convert {
         List<U> result = new ArrayList<>(collection.size());
 
         for (Object o : collection)
-            result.add(convert(all.from(o), converter));
+            result.add(convert(all.from(o, converterScope()), converter));
 
         return result;
     }
@@ -527,17 +534,20 @@ public final class Convert {
     /**
      * The converter to convert them all.
      */
-    private static class ConvertAll<U> implements Converter<Object, U> {
+    private static final class ConvertAll<U> extends AbstractScopedConverter<Object, U> {
 
         private final Class<? extends U> toClass;
 
+        @SuppressWarnings("unchecked")
         ConvertAll(Class<? extends U> toClass) {
+            super(Object.class, (Class<U>) toClass);
+
             this.toClass = toClass;
         }
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
         @Override
-        public U from(Object from) {
+        public U from(Object from, ConverterScope scope) {
             if (from == null) {
 
                 // [#936] If types are converted to primitives, the result must not
@@ -1239,21 +1249,9 @@ public final class Convert {
         }
 
         @Override
-        public Object to(U to) {
+        public Object to(U to, ConverterScope scope) {
             return to;
         }
-
-        @Override
-        public Class<Object> fromType() {
-            return Object.class;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        public Class<U> toType() {
-            return (Class<U>) toClass;
-        }
-
 
         /**
          * Convert a long timestamp (millis) to any date type.

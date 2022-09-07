@@ -1309,9 +1309,20 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 case YUGABYTEDB:
                     return pgGetArray(ctx, ctx.resultSet(), dataType, ctx.index());
 
+                case HSQLDB: {
+
+                    // [#13965] Some HSQLDB versions have trouble reading NULL values as arrays
+                    //          See also: https://sourceforge.net/p/hsqldb/bugs/1662/
+                    if (ctx.resultSet().getObject(ctx.index()) == null)
+                        return null;
+
+                    // However, due to a historic HSQLDB bug, we better not rely on rs.getObject() here:
+                    // See https://sourceforge.net/p/hsqldb/bugs/1102/
+                    else
+                        return convertArray(ctx.resultSet().getArray(ctx.index()), dataType.getType());
+                }
+
                 default:
-                    // Note: due to a HSQLDB bug, it is not recommended to call rs.getObject() here:
-                    // See https://sourceforge.net/tracker/?func=detail&aid=3181365&group_id=23316&atid=378131
                     return convertArray(ctx.resultSet().getArray(ctx.index()), dataType.getType());
             }
         }

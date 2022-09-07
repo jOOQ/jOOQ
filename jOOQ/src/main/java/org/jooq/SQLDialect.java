@@ -1240,11 +1240,11 @@ public enum SQLDialect {
      * <pre>
      * <code>
      * // Do this block only if the chosen dialect was before PostgreSQL 9.3-
-     * if (dialect.precedesStrictly(POSTGRES_9_3)) {
+     * if (dialect.precedesStrictly(POSTGRES)) {
      * }
      *
      * // Do this block only if the chosen dialect was before PostgreSQL 9.4-
-     * else if (dialect.precedesStrictly(POSTGRES_9_4)) {
+     * else if (dialect.precedesStrictly(POSTGRES)) {
      * }
      *
      * // Fall back to post-PostgreSQL 9.4+ behaviour

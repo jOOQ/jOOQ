@@ -39,7 +39,9 @@ package org.jooq.impl;
 
 // ...
 import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.SQLDialect.MYSQL;
+// ...
 // ...
 import static org.jooq.impl.AbstractRowAsField.forceMultisetContent;
 import static org.jooq.impl.DSL.NULL;
@@ -215,7 +217,10 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
                 else if (isType(type, Boolean.class))
                     return inlined(field);
                 else if (castJSONTypes && type.isJSON())
-                    return field.cast(field.getDataType());
+                    if (ctx.family() == MYSQL)
+                        return field.cast(field.getDataType());
+                    else
+                        return function(N_JSON_EXTRACT, field.getDataType(), field, inline("$"));
 
                 break;
 

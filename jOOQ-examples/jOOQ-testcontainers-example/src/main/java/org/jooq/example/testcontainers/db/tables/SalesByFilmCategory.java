@@ -62,7 +62,18 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
     }
 
     private SalesByFilmCategory(Name alias, Table<SalesByFilmCategoryRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("create view \"sales_by_film_category\" as  SELECT c.name AS category,\n    sum(p.amount) AS total_sales\n   FROM (((((payment p\n     JOIN rental r ON ((p.rental_id = r.rental_id)))\n     JOIN inventory i ON ((r.inventory_id = i.inventory_id)))\n     JOIN film f ON ((i.film_id = f.film_id)))\n     JOIN film_category fc ON ((f.film_id = fc.film_id)))\n     JOIN category c ON ((fc.category_id = c.category_id)))\n  GROUP BY c.name\n  ORDER BY (sum(p.amount)) DESC;"));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("""
+        create view "sales_by_film_category" as  SELECT c.name AS category,
+          sum(p.amount) AS total_sales
+         FROM (((((payment p
+           JOIN rental r ON ((p.rental_id = r.rental_id)))
+           JOIN inventory i ON ((r.inventory_id = i.inventory_id)))
+           JOIN film f ON ((i.film_id = f.film_id)))
+           JOIN film_category fc ON ((f.film_id = fc.film_id)))
+           JOIN category c ON ((fc.category_id = c.category_id)))
+        GROUP BY c.name
+        ORDER BY (sum(p.amount)) DESC;
+        """));
     }
 
     /**
@@ -108,7 +119,7 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
     }
 
     @Override
-    public SalesByFilmCategory as(Table alias) {
+    public SalesByFilmCategory as(Table<?> alias) {
         return new SalesByFilmCategory(alias.getQualifiedName(), this);
     }
 
@@ -132,7 +143,7 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
      * Rename this table
      */
     @Override
-    public SalesByFilmCategory rename(Table name) {
+    public SalesByFilmCategory rename(Table<?> name) {
         return new SalesByFilmCategory(name.getQualifiedName(), null);
     }
 
@@ -146,14 +157,15 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function2<? super String, ? super BigDecimal, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function2<? super String, ? super BigDecimal, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

@@ -188,7 +188,7 @@ public class Payment extends TableImpl<PaymentRecord> {
     }
 
     @Override
-    public Payment as(Table alias) {
+    public Payment as(Table<?> alias) {
         return new Payment(alias.getQualifiedName(), this);
     }
 
@@ -212,7 +212,7 @@ public class Payment extends TableImpl<PaymentRecord> {
      * Rename this table
      */
     @Override
-    public Payment rename(Table name) {
+    public Payment rename(Table<?> name) {
         return new Payment(name.getQualifiedName(), null);
     }
 
@@ -226,14 +226,15 @@ public class Payment extends TableImpl<PaymentRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function6<? super Long, ? super Long, ? super Long, ? super Long, ? super BigDecimal, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function6<? super Long, ? super Long, ? super Long, ? super Long, ? super BigDecimal, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

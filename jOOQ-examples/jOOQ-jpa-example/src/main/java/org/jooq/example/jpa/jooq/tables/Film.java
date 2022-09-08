@@ -165,7 +165,7 @@ public class Film extends TableImpl<FilmRecord> {
     }
 
     @Override
-    public Film as(Table alias) {
+    public Film as(Table<?> alias) {
         return new Film(alias.getQualifiedName(), this);
     }
 
@@ -189,7 +189,7 @@ public class Film extends TableImpl<FilmRecord> {
      * Rename this table
      */
     @Override
-    public Film rename(Table name) {
+    public Film rename(Table<?> name) {
         return new Film(name.getQualifiedName(), null);
     }
 
@@ -203,14 +203,15 @@ public class Film extends TableImpl<FilmRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function6<? super Integer, ? super Integer, ? super Year, ? super String, ? super Integer, ? super Integer, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function6<? super Integer, ? super Integer, ? super Year, ? super String, ? super Integer, ? super Integer, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

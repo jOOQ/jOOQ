@@ -124,7 +124,7 @@ public class Language extends TableImpl<LanguageRecord> {
     }
 
     @Override
-    public Language as(Table alias) {
+    public Language as(Table<?> alias) {
         return new Language(alias.getQualifiedName(), this);
     }
 
@@ -148,7 +148,7 @@ public class Language extends TableImpl<LanguageRecord> {
      * Rename this table
      */
     @Override
-    public Language rename(Table name) {
+    public Language rename(Table<?> name) {
         return new Language(name.getQualifiedName(), null);
     }
 
@@ -162,14 +162,15 @@ public class Language extends TableImpl<LanguageRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function3<? super Long, ? super String, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function3<? super Long, ? super String, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

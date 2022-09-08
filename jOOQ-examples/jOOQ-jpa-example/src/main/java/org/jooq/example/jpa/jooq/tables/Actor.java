@@ -117,7 +117,7 @@ public class Actor extends TableImpl<ActorRecord> {
     }
 
     @Override
-    public Actor as(Table alias) {
+    public Actor as(Table<?> alias) {
         return new Actor(alias.getQualifiedName(), this);
     }
 
@@ -141,7 +141,7 @@ public class Actor extends TableImpl<ActorRecord> {
      * Rename this table
      */
     @Override
-    public Actor rename(Table name) {
+    public Actor rename(Table<?> name) {
         return new Actor(name.getQualifiedName(), null);
     }
 
@@ -155,14 +155,15 @@ public class Actor extends TableImpl<ActorRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function3<? super Integer, ? super String, ? super String, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function3<? super Integer, ? super String, ? super String, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

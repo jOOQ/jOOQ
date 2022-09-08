@@ -124,7 +124,7 @@ public class Country extends TableImpl<CountryRecord> {
     }
 
     @Override
-    public Country as(Table alias) {
+    public Country as(Table<?> alias) {
         return new Country(alias.getQualifiedName(), this);
     }
 
@@ -148,7 +148,7 @@ public class Country extends TableImpl<CountryRecord> {
      * Rename this table
      */
     @Override
-    public Country rename(Table name) {
+    public Country rename(Table<?> name) {
         return new Country(name.getQualifiedName(), null);
     }
 
@@ -162,14 +162,15 @@ public class Country extends TableImpl<CountryRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function3<? super Long, ? super String, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function3<? super Long, ? super String, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

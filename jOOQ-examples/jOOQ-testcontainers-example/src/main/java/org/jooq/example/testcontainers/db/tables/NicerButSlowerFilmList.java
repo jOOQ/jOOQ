@@ -93,7 +93,22 @@ public class NicerButSlowerFilmList extends TableImpl<NicerButSlowerFilmListReco
     }
 
     private NicerButSlowerFilmList(Name alias, Table<NicerButSlowerFilmListRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("create view \"nicer_but_slower_film_list\" as  SELECT film.film_id AS fid,\n    film.title,\n    film.description,\n    category.name AS category,\n    film.rental_rate AS price,\n    film.length,\n    film.rating,\n    group_concat((((upper(\"substring\"((actor.first_name)::text, 1, 1)) || lower(\"substring\"((actor.first_name)::text, 2))) || upper(\"substring\"((actor.last_name)::text, 1, 1))) || lower(\"substring\"((actor.last_name)::text, 2)))) AS actors\n   FROM ((((category\n     LEFT JOIN film_category ON ((category.category_id = film_category.category_id)))\n     LEFT JOIN film ON ((film_category.film_id = film.film_id)))\n     JOIN film_actor ON ((film.film_id = film_actor.film_id)))\n     JOIN actor ON ((film_actor.actor_id = actor.actor_id)))\n  GROUP BY film.film_id, film.title, film.description, category.name, film.rental_rate, film.length, film.rating;"));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("""
+        create view "nicer_but_slower_film_list" as  SELECT film.film_id AS fid,
+          film.title,
+          film.description,
+          category.name AS category,
+          film.rental_rate AS price,
+          film.length,
+          film.rating,
+          group_concat((((upper("substring"((actor.first_name)::text, 1, 1)) || lower("substring"((actor.first_name)::text, 2))) || upper("substring"((actor.last_name)::text, 1, 1))) || lower("substring"((actor.last_name)::text, 2)))) AS actors
+         FROM ((((category
+           LEFT JOIN film_category ON ((category.category_id = film_category.category_id)))
+           LEFT JOIN film ON ((film_category.film_id = film.film_id)))
+           JOIN film_actor ON ((film.film_id = film_actor.film_id)))
+           JOIN actor ON ((film_actor.actor_id = actor.actor_id)))
+        GROUP BY film.film_id, film.title, film.description, category.name, film.rental_rate, film.length, film.rating;
+        """));
     }
 
     /**
@@ -139,7 +154,7 @@ public class NicerButSlowerFilmList extends TableImpl<NicerButSlowerFilmListReco
     }
 
     @Override
-    public NicerButSlowerFilmList as(Table alias) {
+    public NicerButSlowerFilmList as(Table<?> alias) {
         return new NicerButSlowerFilmList(alias.getQualifiedName(), this);
     }
 
@@ -163,7 +178,7 @@ public class NicerButSlowerFilmList extends TableImpl<NicerButSlowerFilmListReco
      * Rename this table
      */
     @Override
-    public NicerButSlowerFilmList rename(Table name) {
+    public NicerButSlowerFilmList rename(Table<?> name) {
         return new NicerButSlowerFilmList(name.getQualifiedName(), null);
     }
 
@@ -177,14 +192,15 @@ public class NicerButSlowerFilmList extends TableImpl<NicerButSlowerFilmListReco
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function8<? super Long, ? super String, ? super String, ? super String, ? super BigDecimal, ? super Short, ? super MpaaRating, ? super String, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function8<? super Long, ? super String, ? super String, ? super String, ? super BigDecimal, ? super Short, ? super MpaaRating, ? super String, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

@@ -133,7 +133,7 @@ public class Author extends TableImpl<AuthorRecord> {
     }
 
     @Override
-    public Author as(Table alias) {
+    public Author as(Table<?> alias) {
         return new Author(alias.getQualifiedName(), this);
     }
 
@@ -157,7 +157,7 @@ public class Author extends TableImpl<AuthorRecord> {
      * Rename this table
      */
     @Override
-    public Author rename(Table name) {
+    public Author rename(Table<?> name) {
         return new Author(name.getQualifiedName(), null);
     }
 
@@ -171,14 +171,15 @@ public class Author extends TableImpl<AuthorRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function6<? super Integer, ? super String, ? super String, ? super LocalDate, ? super Integer, ? super String, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function6<? super Integer, ? super String, ? super String, ? super LocalDate, ? super Integer, ? super String, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

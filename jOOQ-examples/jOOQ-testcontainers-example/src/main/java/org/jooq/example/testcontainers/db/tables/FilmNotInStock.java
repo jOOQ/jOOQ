@@ -97,7 +97,7 @@ public class FilmNotInStock extends TableImpl<FilmNotInStockRecord> {
     }
 
     @Override
-    public FilmNotInStock as(Table alias) {
+    public FilmNotInStock as(Table<?> alias) {
         return new FilmNotInStock(alias.getQualifiedName(), this, parameters);
     }
 
@@ -121,7 +121,7 @@ public class FilmNotInStock extends TableImpl<FilmNotInStockRecord> {
      * Rename this table
      */
     @Override
-    public FilmNotInStock rename(Table name) {
+    public FilmNotInStock rename(Table<?> name) {
         return new FilmNotInStock(name.getQualifiedName(), null, parameters);
     }
 
@@ -165,14 +165,15 @@ public class FilmNotInStock extends TableImpl<FilmNotInStockRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function1<? super Integer, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function1<? super Integer, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

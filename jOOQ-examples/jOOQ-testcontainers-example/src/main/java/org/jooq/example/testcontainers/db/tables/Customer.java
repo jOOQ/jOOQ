@@ -197,7 +197,7 @@ public class Customer extends TableImpl<CustomerRecord> {
     }
 
     @Override
-    public Customer as(Table alias) {
+    public Customer as(Table<?> alias) {
         return new Customer(alias.getQualifiedName(), this);
     }
 
@@ -221,7 +221,7 @@ public class Customer extends TableImpl<CustomerRecord> {
      * Rename this table
      */
     @Override
-    public Customer rename(Table name) {
+    public Customer rename(Table<?> name) {
         return new Customer(name.getQualifiedName(), null);
     }
 
@@ -235,14 +235,15 @@ public class Customer extends TableImpl<CustomerRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function10<? super Long, ? super Long, ? super String, ? super String, ? super String, ? super Long, ? super Boolean, ? super LocalDate, ? super LocalDateTime, ? super Integer, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function10<? super Long, ? super Long, ? super String, ? super String, ? super String, ? super Long, ? super Boolean, ? super LocalDate, ? super LocalDateTime, ? super Integer, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

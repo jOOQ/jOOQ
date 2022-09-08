@@ -136,7 +136,7 @@ public class Book extends TableImpl<BookRecord> {
     }
 
     @Override
-    public Book as(Table alias) {
+    public Book as(Table<?> alias) {
         return new Book(alias.getQualifiedName(), this);
     }
 
@@ -160,7 +160,7 @@ public class Book extends TableImpl<BookRecord> {
      * Rename this table
      */
     @Override
-    public Book rename(Table name) {
+    public Book rename(Table<?> name) {
         return new Book(name.getQualifiedName(), null);
     }
 
@@ -174,14 +174,15 @@ public class Book extends TableImpl<BookRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function3<? super Integer, ? super Integer, ? super String, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function3<? super Integer, ? super Integer, ? super String, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

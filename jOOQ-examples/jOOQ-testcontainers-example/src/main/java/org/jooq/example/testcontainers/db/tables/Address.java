@@ -175,7 +175,7 @@ public class Address extends TableImpl<AddressRecord> {
     }
 
     @Override
-    public Address as(Table alias) {
+    public Address as(Table<?> alias) {
         return new Address(alias.getQualifiedName(), this);
     }
 
@@ -199,7 +199,7 @@ public class Address extends TableImpl<AddressRecord> {
      * Rename this table
      */
     @Override
-    public Address rename(Table name) {
+    public Address rename(Table<?> name) {
         return new Address(name.getQualifiedName(), null);
     }
 
@@ -213,14 +213,15 @@ public class Address extends TableImpl<AddressRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function8<? super Long, ? super String, ? super String, ? super String, ? super Long, ? super String, ? super String, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function8<? super Long, ? super String, ? super String, ? super String, ? super Long, ? super String, ? super String, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

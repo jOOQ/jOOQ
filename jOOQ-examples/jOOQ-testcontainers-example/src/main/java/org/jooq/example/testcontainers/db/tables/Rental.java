@@ -192,7 +192,7 @@ public class Rental extends TableImpl<RentalRecord> {
     }
 
     @Override
-    public Rental as(Table alias) {
+    public Rental as(Table<?> alias) {
         return new Rental(alias.getQualifiedName(), this);
     }
 
@@ -216,7 +216,7 @@ public class Rental extends TableImpl<RentalRecord> {
      * Rename this table
      */
     @Override
-    public Rental rename(Table name) {
+    public Rental rename(Table<?> name) {
         return new Rental(name.getQualifiedName(), null);
     }
 
@@ -230,14 +230,15 @@ public class Rental extends TableImpl<RentalRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function7<? super Long, ? super LocalDateTime, ? super Long, ? super Long, ? super LocalDateTime, ? super Long, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function7<? super Long, ? super LocalDateTime, ? super Long, ? super Long, ? super LocalDateTime, ? super Long, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

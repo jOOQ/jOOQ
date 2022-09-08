@@ -166,7 +166,7 @@ public class Inventory extends TableImpl<InventoryRecord> {
     }
 
     @Override
-    public Inventory as(Table alias) {
+    public Inventory as(Table<?> alias) {
         return new Inventory(alias.getQualifiedName(), this);
     }
 
@@ -190,7 +190,7 @@ public class Inventory extends TableImpl<InventoryRecord> {
      * Rename this table
      */
     @Override
-    public Inventory rename(Table name) {
+    public Inventory rename(Table<?> name) {
         return new Inventory(name.getQualifiedName(), null);
     }
 
@@ -204,14 +204,15 @@ public class Inventory extends TableImpl<InventoryRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function4<? super Long, ? super Long, ? super Long, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function4<? super Long, ? super Long, ? super Long, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

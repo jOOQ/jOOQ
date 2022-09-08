@@ -194,7 +194,7 @@ public class Staff extends TableImpl<StaffRecord> {
     }
 
     @Override
-    public Staff as(Table alias) {
+    public Staff as(Table<?> alias) {
         return new Staff(alias.getQualifiedName(), this);
     }
 
@@ -218,7 +218,7 @@ public class Staff extends TableImpl<StaffRecord> {
      * Rename this table
      */
     @Override
-    public Staff rename(Table name) {
+    public Staff rename(Table<?> name) {
         return new Staff(name.getQualifiedName(), null);
     }
 
@@ -232,14 +232,15 @@ public class Staff extends TableImpl<StaffRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function11<? super Long, ? super String, ? super String, ? super Long, ? super String, ? super Long, ? super Boolean, ? super String, ? super String, ? super LocalDateTime, ? super byte[], ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function11<? super Long, ? super String, ? super String, ? super Long, ? super String, ? super Long, ? super Boolean, ? super String, ? super String, ? super LocalDateTime, ? super byte[], ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

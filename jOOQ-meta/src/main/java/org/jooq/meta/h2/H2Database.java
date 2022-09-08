@@ -56,6 +56,7 @@ import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.nullif;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.upper;
 import static org.jooq.impl.DSL.when;
@@ -87,9 +88,11 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -135,6 +138,7 @@ import org.jooq.meta.hsqldb.information_schema.Tables;
 import org.jooq.meta.hsqldb.information_schema.tables.CheckConstraints;
 import org.jooq.meta.hsqldb.information_schema.tables.DomainConstraints;
 import org.jooq.meta.hsqldb.information_schema.tables.Domains;
+import org.jooq.meta.hsqldb.information_schema.tables.ElementTypes;
 import org.jooq.meta.hsqldb.information_schema.tables.KeyColumnUsage;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -150,6 +154,51 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
 
     private static final long DEFAULT_SEQUENCE_CACHE    = 32;
     private static final long DEFAULT_SEQUENCE_MAXVALUE = Long.MAX_VALUE;
+
+    static final record ElementTypeLookupKey (String schema, String name, String identifier) {}
+    static final record ElementType (String dataType, Long length, Long precision, Long scale, String identifier, int dimension) {}
+    private Map<ElementTypeLookupKey, ElementType> ELEMENT_TYPE_LOOKUP;
+
+    ElementType elementTypeLookup(ElementTypeLookupKey key) {
+        if (ELEMENT_TYPE_LOOKUP == null) {
+            ElementTypes e = ELEMENT_TYPES;
+
+            ELEMENT_TYPE_LOOKUP = create().fetchMap(
+                select(
+                    row(
+                        e.OBJECT_SCHEMA,
+                        e.OBJECT_NAME,
+                        e.COLLECTION_TYPE_IDENTIFIER
+                    ).mapping(ElementTypeLookupKey::new),
+                    row(
+                        e.DATA_TYPE,
+                        e.CHARACTER_MAXIMUM_LENGTH,
+                        coalesce(e.DATETIME_PRECISION, e.NUMERIC_PRECISION),
+                        e.NUMERIC_SCALE,
+                        e.DTD_IDENTIFIER,
+                        inline(1)
+                    ).mapping(ElementType::new)
+                )
+                .from(e)
+                .where(e.OBJECT_SCHEMA.in(getInputSchemata()))
+            );
+
+            AtomicBoolean repeat = new AtomicBoolean(true);
+            while (repeat.getAndSet(false)) {
+                ELEMENT_TYPE_LOOKUP.replaceAll((k, v) -> {
+                    ElementType et = ELEMENT_TYPE_LOOKUP.get(new ElementTypeLookupKey(k.schema(), k.name(), v.identifier()));
+
+                    if (et != null) {
+                        repeat.set(true);
+                        return new ElementType(et.dataType(), et.length(), et.precision(), et.scale(), et.identifier(), v.dimension() + 1);                  }
+                    else
+                        return v;
+                });
+            }
+        }
+
+        return ELEMENT_TYPE_LOOKUP.get(key);
+    }
 
     @Override
     protected DSLContext create0() {

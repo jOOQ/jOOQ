@@ -54,6 +54,10 @@ import java.util.regex.Pattern;
 import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.meta.DataTypeDefinition;
+import org.jooq.meta.Database;
+import org.jooq.meta.DefaultDataTypeDefinition;
+import org.jooq.meta.SchemaDefinition;
 import org.jooq.util.h2.H2DataType;
 
 /**
@@ -482,6 +486,29 @@ class GenerationUtil {
             return null;
 
         return qualifiedJavaType.replaceAll(".*\\.", "");
+    }
+
+    static DataTypeDefinition getArrayBaseType(SQLDialect dialect, DataTypeDefinition type) {
+        Name name = getArrayBaseType(dialect, type.getType(), type.getQualifiedUserType());
+
+        return new DefaultDataTypeDefinition(
+            type.getDatabase(),
+            type.getSchema(),
+            name.last(),
+            type.getLength(),
+            type.getPrecision(),
+            type.getScale(),
+            type.isNullable(),
+            type.isReadonly(),
+            type.getGeneratedAlwaysAs(),
+            type.getDefaultValue(),
+            type.isIdentity(),
+            name,
+            type.getGenerator(),
+            type.getConverter(),
+            type.getBinding(),
+            type.getJavaType()
+        );
     }
 
     /**

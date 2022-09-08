@@ -9179,24 +9179,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         // [#4388] TODO: Improve array handling
         if (database.isArrayType(type.getType())) {
-            Name baseType = GenerationUtil.getArrayBaseType(db.getDialect(), type.getType(), type.getQualifiedUserType());
-            return getTypeReference(
-                db,
-                type.getSchema(),
-                out,
-                baseType.last(),
-                type.getPrecision(),
-                type.getScale(),
-                type.getLength(),
-                true,
-                false,
-                false,
-                null,
-                null,
-                null,
-                null,
-                baseType
-            ) + ".getArrayDataType()";
+            return getJavaTypeReference(db, GenerationUtil.getArrayBaseType(db.getDialect(), type), out) + ".getArrayDataType()";
         }
         else {
             return getTypeReference(

@@ -116,12 +116,17 @@
             <artifactId>jakarta.persistence-api</artifactId>
         </dependency>
 
-        <!-- From JDK 9 onwards, the JAXB dependency needs to be made explicit -->
-        <!-- The dependency can cause trouble in older JDKs, so it needs to be
-             excluded from pre-java-9 builds: https://github.com/jOOQ/jOOQ/issues/7649 -->
+        <!-- From JDK 9 onwards, the JAXB dependency needs to be made explicit
+        
+             [#7649] The dependency can cause trouble in older JDKs, so it needs to be
+             excluded from pre-java-9 builds: https://github.com/jOOQ/jOOQ/issues/7649
+             [#13047] The dependency is now optional. Users can opt in to using this
+             dependency if they need, by making it explicit on their end. 
+          -->
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
+            <optional>true</optional>
         </dependency>
         
 

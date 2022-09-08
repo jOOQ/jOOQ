@@ -454,27 +454,50 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         return false;
     }
 
+    private List<String> matchNames;
+
     @Override
     public List<String> getMatchNames() {
-        Set<String> result = new LinkedHashSet<>();
-        result.add(getType());
+        if (matchNames == null) {
+            Set<String> result = new LinkedHashSet<>();
+            result.add(getType());
 
-        if (getLength() != 0)
-            result.add(getType() + "(" + getLength() + ")");
-        if (getScale() == 0)
-            result.add(getType() + "(" + getPrecision() + ")");
+            if (getLength() != 0)
+                result.add(getType() + "(" + getLength() + ")");
+            if (getScale() == 0)
+                result.add(getType() + "(" + getPrecision() + ")");
 
-        result.add(getType() + "(" + getPrecision() + "," + getScale() + ")");
-        result.add(getType() + "(" + getPrecision() + ", " + getScale() + ")");
+            result.add(getType() + "(" + getPrecision() + "," + getScale() + ")");
+            result.add(getType() + "(" + getPrecision() + ", " + getScale() + ")");
 
-        // [#5872] We should match user-defined types as well, in case of which the type might be reported
-        //         as USER-DEFINED (in PostgreSQL)
-        if (!StringUtils.isBlank(getUserType())) {
-            result.add(getUserType());
-            result.add(getQualifiedUserType().unquotedName().toString());
+            if (getDatabase().isArrayType(getType())) {
+
+                // [#13970] Backwards compatibility for forced types matching _int, etc.
+                switch (getDialect().family()) {
+
+
+                    case POSTGRES:
+                    case YUGABYTEDB:
+                        if (getType().startsWith("_"))
+                            result.add(getType().substring(1) + " array");
+                        else if (getType().toUpperCase().endsWith(" ARRAY"))
+                            result.add("_" + getType().replaceFirst("(?i: ARRAY)", ""));
+
+                        break;
+                }
+            }
+
+            // [#5872] We should match user-defined types as well, in case of which the type might be reported
+            //         as USER-DEFINED (in PostgreSQL)
+            else if (!StringUtils.isBlank(getUserType())) {
+                result.add(getUserType());
+                result.add(getQualifiedUserType().unquotedName().toString());
+            }
+
+            matchNames = new ArrayList<>(result);
         }
 
-        return new ArrayList<>(result);
+        return matchNames;
     }
 
     @Override

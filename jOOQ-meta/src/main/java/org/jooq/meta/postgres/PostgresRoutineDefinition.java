@@ -43,6 +43,7 @@ import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.partitionBy;
+import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.information_schema.Tables.PARAMETERS;
@@ -133,13 +134,15 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
         for (Record record : create().select(
                 p.PARAMETER_NAME,
                 when(p.DATA_TYPE.eq(inline("USER-DEFINED")).and(p.UDT_NAME.eq(inline("geometry"))), inline("geometry"))
+                    .when(p.DATA_TYPE.eq(inline("ARRAY")), substring(p.UDT_NAME, inline(2)).concat(inline(" ARRAY")))
                     .else_(p.DATA_TYPE)
                     .as(p.DATA_TYPE),
                 p.CHARACTER_MAXIMUM_LENGTH,
                 pNumericPrecision(p).as(p.NUMERIC_PRECISION),
                 p.NUMERIC_SCALE,
                 p.UDT_SCHEMA,
-                p.UDT_NAME,
+                when(p.DATA_TYPE.eq(inline("ARRAY")), substring(p.UDT_NAME, inline(2)))
+                    .else_(p.UDT_NAME).as(p.UDT_NAME),
                 p.ORDINAL_POSITION,
                 p.PARAMETER_MODE,
                 ((PostgresDatabase) getDatabase()).is94()

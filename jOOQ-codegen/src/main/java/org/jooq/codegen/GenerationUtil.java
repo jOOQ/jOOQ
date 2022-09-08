@@ -489,12 +489,15 @@ class GenerationUtil {
     }
 
     static DataTypeDefinition getArrayBaseType(SQLDialect dialect, DataTypeDefinition type) {
-        Name name = getArrayBaseType(dialect, type.getType(), type.getQualifiedUserType());
+        BaseType bt = getArrayBaseType(dialect, type.getType(), type.getQualifiedUserType());
+
+        if (bt.t().equals(type.getType()))
+            return type;
 
         return new DefaultDataTypeDefinition(
             type.getDatabase(),
             type.getSchema(),
-            name.last(),
+            bt.t(),
             type.getLength(),
             type.getPrecision(),
             type.getScale(),
@@ -503,7 +506,7 @@ class GenerationUtil {
             type.getGeneratedAlwaysAs(),
             type.getDefaultValue(),
             type.isIdentity(),
-            name,
+            bt.u(),
             type.getGenerator(),
             type.getConverter(),
             type.getBinding(),
@@ -511,10 +514,12 @@ class GenerationUtil {
         );
     }
 
+    static final record BaseType(String t, Name u) {}
+
     /**
      * Gets the base type for an array type, depending on the RDBMS dialect
      */
-    static Name getArrayBaseType(SQLDialect dialect, String t, Name u) {
+    static BaseType getArrayBaseType(SQLDialect dialect, String t, Name u) {
 
         // [#4388] TODO: Improve array handling
         switch (dialect.family()) {
@@ -541,20 +546,16 @@ class GenerationUtil {
 
                 // The convention is to prepend a "_" to a type to get an array type
                 if (u != null) {
-                    if (u.last().startsWith("_")) {
-                        String[] name = u.getName();
-                        name[name.length - 1] = name[name.length - 1].substring(1);
-                        return name(name);
-                    }
-                    else if (u.last().toUpperCase().endsWith(" ARRAY")) {
-                        String[] name = u.getName();
-                        name[name.length - 1] = name[name.length - 1].replaceFirst("(?i: ARRAY)", "");
-                        return name(name);
-                    }
+                    if (u.last().startsWith("_"))
+                        return new BaseType(u.last().substring(1), u);
+                    else if (u.last().toUpperCase().endsWith(" ARRAY"))
+                        return new BaseType(u.last().replaceFirst("(?i: ARRAY)", ""), u);
+                    else if (t.toUpperCase().endsWith(" ARRAY"))
+                        return new BaseType(t.replaceFirst("(?i: ARRAY)", ""), u);
                 }
 
                 // But there are also arrays with a "vector" suffix
-                return u;
+                return new BaseType(t, u);
             }
 
             case H2:
@@ -565,11 +566,11 @@ class GenerationUtil {
                 // In HSQLDB 2.2.5, there has been an incompatible INFORMATION_SCHEMA change around the
                 // ELEMENT_TYPES view. Arrays are now described much more explicitly
                 if ("ARRAY".equalsIgnoreCase(t))
-                    return name("OTHER");
+                    return new BaseType("OTHER", u);
 
                 // This is for backwards compatibility
                 else
-                    return name(t.replaceFirst("(?i: ARRAY)", ""));
+                    return new BaseType(t.replaceFirst("(?i: ARRAY)", ""), u);
             }
         }
     }

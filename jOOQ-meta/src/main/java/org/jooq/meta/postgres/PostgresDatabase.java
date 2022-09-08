@@ -51,11 +51,13 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.impl.DSL.array;
 import static org.jooq.impl.DSL.cast;
+import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.greatest;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.name;
@@ -65,12 +67,14 @@ import static org.jooq.impl.DSL.nullif;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.power;
+// ...
 import static org.jooq.impl.DSL.replace;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.sql;
+import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.DSL.when;
@@ -173,6 +177,8 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgInherits;
 import org.jooq.meta.postgres.pg_catalog.tables.PgNamespace;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 import org.jooq.tools.JooqLogger;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Postgres uses the ANSI default INFORMATION_SCHEMA, but unfortunately ships
@@ -939,6 +945,8 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             return result;
 
         Routines r1 = ROUTINES.as("r1");
+        PgType retT = PG_TYPE.as("rett");
+        PgNamespace retN = PG_NAMESPACE.as("retn");
 
         // [#7785] The pg_proc.proisagg column has been replaced incompatibly in PostgreSQL 11
         Field<Boolean> isAgg = (is11()
@@ -956,11 +964,12 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 when(r1.DATA_TYPE.eq(inline("USER-DEFINED")).and(r1.TYPE_UDT_NAME.eq(inline("geometry"))), inline("geometry"))
 
                 // Ignore the data type when there is at least one out parameter
-                .else_(canCombineArrays()
-                    ? when(condition("{0} && ARRAY['o','b']::\"char\"[]", PG_PROC.PROARGMODES), inline("void"))
-                     .else_(r1.DATA_TYPE)
-                    : r1.DATA_TYPE
-                ).as("data_type"),
+                .when(canCombineArrays()
+                    ? condition("{0} && ARRAY['o','b']::\"char\"[]", PG_PROC.PROARGMODES)
+                    : falseCondition(), inline("void"))
+
+                .when(r1.DATA_TYPE.eq(inline("ARRAY")), substring(r1.TYPE_UDT_NAME, inline(2)).concat(inline(" ARRAY")))
+                .else_(r1.DATA_TYPE).as("data_type"),
 
                 r1.CHARACTER_MAXIMUM_LENGTH,
 
@@ -977,7 +986,8 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 .else_(r1.NUMERIC_PRECISION).as(r1.NUMERIC_PRECISION),
                 r1.NUMERIC_SCALE,
                 r1.TYPE_UDT_SCHEMA,
-                r1.TYPE_UDT_NAME,
+                when(r1.DATA_TYPE.eq(inline("ARRAY")), substring(r1.TYPE_UDT_NAME, inline(2)))
+                    .else_(r1.TYPE_UDT_NAME).as(r1.TYPE_UDT_NAME),
 
                 // Calculate overload index if applicable
                 when(
@@ -997,6 +1007,8 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             .join(PG_NAMESPACE).on(PG_NAMESPACE.NSPNAME.eq(r1.SPECIFIC_SCHEMA))
             .join(PG_PROC).on(PG_PROC.PRONAMESPACE.eq(PG_NAMESPACE.OID))
                           .and(nameconcatoid(r1))
+            .leftJoin(retT).on(PG_PROC.PRORETTYPE.eq(retT.OID))
+            .leftJoin(retN).on(retT.TYPNAMESPACE.eq(retN.OID))
             .where(r1.ROUTINE_SCHEMA.in(getInputSchemata()))
             .and(tableValuedFunctions()
                     ? condition(not(PG_PROC.PRORETSET))
@@ -1227,5 +1239,33 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 .and(PG_ENUM.pgType().TYPNAME.eq(typname))
                 .orderBy(orderBy)
                 .collect(intoList());
+    }
+
+    /**
+     * Translate the DATA_TYPE = 'ARRAY' to the UDT_NAME in standard SQL form,
+     * for multi dimensional arrays.
+     */
+    Field<String> arrayDataType(Field<String> dataType, Field<String> udtName, Field<Integer> dims) {
+        return when(dataType.eq(inline("ARRAY")),
+                    substring(udtName, inline(2))
+                    .concat(repeat(inline(" ARRAY"), greatest(coalesce(dims, inline(0)), inline(1)))))
+                .else_(dataType);
+    }
+
+    /**
+     * Translate the DATA_TYPE = 'ARRAY' to the UDT_NAME in standard SQL form,
+     * for single dimensional arrays.
+     */
+    Field<String> arrayDataType(Field<String> dataType, Field<String> udtName) {
+        return when(dataType.eq(inline("ARRAY")), substring(udtName, inline(2)).concat(inline(" ARRAY")))
+                .else_(dataType);
+    }
+
+    /**
+     * Translate the UDT_NAME to the base type.
+     */
+    Field<String> arrayUdtName(Field<String> dataType, Field<String> udtName) {
+        return when(dataType.eq(inline("ARRAY")), substring(udtName, inline(2)))
+                .else_(udtName);
     }
 }

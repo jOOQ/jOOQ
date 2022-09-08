@@ -44,6 +44,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.nvl;
+import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRDEF;
@@ -60,6 +61,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Condition;
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.TableOptions.TableType;
 import org.jooq.meta.AbstractTableDefinition;
@@ -75,6 +78,8 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgClass;
 import org.jooq.meta.postgres.pg_catalog.tables.PgCollation;
 import org.jooq.meta.postgres.pg_catalog.tables.PgNamespace;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -105,16 +110,21 @@ public class PostgresMaterializedViewDefinition extends AbstractTableDefinition 
         PgNamespace nbt = PG_NAMESPACE.as("nbt");
         PgNamespace nco = PG_NAMESPACE.as("nco");
 
+        Field<String> udtName = field("({0})::information_schema.sql_identifier", col.UDT_NAME.getDataType(), nvl(bt.TYPNAME, t.TYPNAME));
+        Condition c1 = t.TYPTYPE.eq(inline("d"));
+        Condition c1array = bt.TYPELEM.ne(inline(0L)).and(bt.TYPLEN.eq(inline((short) -1)));
+        Condition c0array = t.TYPELEM.ne(inline(0L)).and(t.TYPLEN.eq(inline((short) -1)));
+
         for (Record record : create().select(
                 field("({0})::information_schema.sql_identifier", col.COLUMN_NAME.getDataType(), a.ATTNAME).as(col.COLUMN_NAME),
                 field("({0})::information_schema.cardinal_number", col.ORDINAL_POSITION.getDataType(), a.ATTNUM).as(col.ORDINAL_POSITION),
                 field("({0})::information_schema.character_data", col.DATA_TYPE.getDataType(),
-                    when(t.TYPTYPE.eq(inline("d")),
-                        when(bt.TYPELEM.ne(inline(0L)).and(bt.TYPLEN.eq(inline((short) -1))), inline("ARRAY"))
+                    when(c1,
+                        when(c1array, substring(udtName, inline(2)).concat(inline(" ARRAY")))
                        .when(nbt.NSPNAME.eq(inline("pg_catalog")), field("format_type({0}, NULL::integer)", String.class, t.TYPBASETYPE))
                        .otherwise(inline("USER-DEFINED")))
                    .otherwise(
-                        when(t.TYPELEM.ne(inline(0L)).and(t.TYPLEN.eq(inline((short) -1))), inline("ARRAY"))
+                        when(c0array, substring(udtName, inline(2)).concat(inline(" ARRAY")))
                        .when(nt.NSPNAME.eq(inline("pg_catalog")), field("format_type({0}, NULL::integer)", String.class, a.ATTTYPID))
                        .otherwise(inline("USER-DEFINED")))).as(col.DATA_TYPE),
                 field("(information_schema._pg_char_max_length(information_schema._pg_truetypid(a.*, t.*), information_schema._pg_truetypmod(a.*, t.*)))::information_schema.cardinal_number", col.CHARACTER_MAXIMUM_LENGTH.getDataType()).as(col.CHARACTER_MAXIMUM_LENGTH),
@@ -126,8 +136,9 @@ public class PostgresMaterializedViewDefinition extends AbstractTableDefinition 
                 field("(pg_get_expr({0}, {1}))::information_schema.character_data", col.COLUMN_DEFAULT.getDataType(), ad.ADBIN, ad.ADRELID).as(col.COLUMN_DEFAULT),
                 field("({0})::information_schema.sql_identifier", col.UDT_SCHEMA.getDataType(),
                     nvl(nbt.NSPNAME, nt.NSPNAME)).as(col.UDT_SCHEMA),
-                field("({0})::information_schema.sql_identifier", col.UDT_NAME.getDataType(),
-                    nvl(bt.TYPNAME, t.TYPNAME)).as(col.UDT_NAME),
+                when(c1.and(c1array).or(not(c1).and(c0array)), substring(udtName, inline(2)))
+                    .else_(udtName)
+                    .as(col.UDT_NAME),
                 PG_DESCRIPTION.DESCRIPTION)
             .from(a
                 .leftJoin(ad)

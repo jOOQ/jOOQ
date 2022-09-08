@@ -40,17 +40,21 @@ package org.jooq.meta.postgres;
 
 import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.coalesce;
+import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.greatest;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nvl;
+// ...
+import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRIBUTE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CLASS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_DESCRIPTION;
-import static org.jooq.meta.postgres.pg_catalog.Tables.PG_NAMESPACE;
+import static org.jooq.meta.postgres.pg_catalog.Tables.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -93,6 +97,14 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
             when(COLUMNS.INTERVAL_TYPE.like(any(inline("%YEAR%"), inline("%MONTH%"))), inline("INTERVAL YEAR TO MONTH"))
             .when(COLUMNS.INTERVAL_TYPE.like(any(inline("%DAY%"), inline("%HOUR%"), inline("%MINUTE%"), inline("%SECOND%"))), inline("INTERVAL DAY TO SECOND"))
             .when(COLUMNS.DATA_TYPE.eq(inline("USER-DEFINED")).and(COLUMNS.UDT_NAME.eq(inline("geometry"))), inline("geometry"))
+            .when(COLUMNS.DATA_TYPE.eq(inline("ARRAY")),
+                concat(
+                    substring(PG_TYPE.TYPNAME, inline(2)),
+                    repeat(inline(" ARRAY"),
+                        // [#252] Among others, it seems that UDT arrays report dimension 0 (?)
+                        greatest(inline(1), PG_ATTRIBUTE.ATTNDIMS)
+                    )
+                ))
             .else_(COLUMNS.DATA_TYPE);
         Field<String> udtSchema = COLUMNS.UDT_SCHEMA;
 
@@ -168,7 +180,11 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 attgenerated.as(PG_ATTRIBUTE.ATTGENERATED),
                 (when(isIdentity, inline(null, String.class)).else_(COLUMNS.COLUMN_DEFAULT)).as(COLUMNS.COLUMN_DEFAULT),
                 coalesce(COLUMNS.DOMAIN_SCHEMA, udtSchema).as(COLUMNS.UDT_SCHEMA),
-                coalesce(COLUMNS.DOMAIN_NAME, COLUMNS.UDT_NAME).as(COLUMNS.UDT_NAME),
+                coalesce(
+                    COLUMNS.DOMAIN_NAME,
+                    when(COLUMNS.DATA_TYPE.eq(inline("ARRAY")), substring(PG_TYPE.TYPNAME, inline(2)))
+                        .else_(COLUMNS.UDT_NAME)
+                ).as(COLUMNS.UDT_NAME),
                 PG_DESCRIPTION.DESCRIPTION)
             .from(COLUMNS)
             .join(PG_NAMESPACE)
@@ -179,6 +195,8 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
             .join(PG_ATTRIBUTE)
                 .on(PG_ATTRIBUTE.ATTRELID.eq(PG_CLASS.OID))
                 .and(PG_ATTRIBUTE.ATTNAME.eq(COLUMNS.COLUMN_NAME))
+            .join(PG_TYPE)
+                .on(PG_ATTRIBUTE.ATTTYPID.eq(PG_TYPE.OID))
             .leftJoin(PG_DESCRIPTION)
                 .on(PG_DESCRIPTION.OBJOID.eq(PG_CLASS.OID))
                 .and(PG_DESCRIPTION.OBJSUBID.eq(COLUMNS.ORDINAL_POSITION))

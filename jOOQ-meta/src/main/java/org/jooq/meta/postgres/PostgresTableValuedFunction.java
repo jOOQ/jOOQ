@@ -41,17 +41,22 @@ package org.jooq.meta.postgres;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.lateral;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.substring;
+import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.DSL.values;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.postgres.PostgresRoutineDefinition.pNumericPrecision;
 import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.meta.postgres.information_schema.Tables.ROUTINES;
-import static org.jooq.meta.postgres.pg_catalog.Tables.PG_NAMESPACE;
+import static org.jooq.meta.postgres.pg_catalog.Tables.*;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_PROC;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_TYPE;
 import static org.jooq.tools.StringUtils.defaultString;
@@ -75,6 +80,8 @@ import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.postgres.information_schema.tables.Columns;
 import org.jooq.meta.postgres.information_schema.tables.Parameters;
 import org.jooq.meta.postgres.information_schema.tables.Routines;
+import org.jooq.meta.postgres.pg_catalog.tables.PgAttribute;
+import org.jooq.meta.postgres.pg_catalog.tables.PgClass;
 import org.jooq.meta.postgres.pg_catalog.tables.PgNamespace;
 import org.jooq.meta.postgres.pg_catalog.tables.PgProc;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
@@ -101,13 +108,17 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
     @Override
     public List<ColumnDefinition> getElements0() throws SQLException {
         List<ColumnDefinition> result = new ArrayList<>();
+        PostgresDatabase db = (PostgresDatabase) getDatabase();
 
-        Routines r = ROUTINES;
-        Parameters p = PARAMETERS;
-        PgNamespace pg_n = PG_NAMESPACE;
-        PgProc pg_p = PG_PROC;
-        Columns c = COLUMNS;
-        PgType pg_t = PG_TYPE;
+        Routines r = ROUTINES.as("r");
+        Parameters p = PARAMETERS.as("p");
+        Columns c = COLUMNS.as("c");
+        Columns x = COLUMNS.as("x");
+        PgNamespace pg_n = PG_NAMESPACE.as("pgn");
+        PgClass pg_c = PG_CLASS.as("pgc");
+        PgAttribute pg_a = PG_ATTRIBUTE.as("pga");
+        PgProc pg_p = PG_PROC.as("pgp");
+        PgType pg_t = PG_TYPE.as("pgt");
 
         Field<Integer> pPrecision = pNumericPrecision(p);
         Field<Integer> cPrecision = nvl(c.DATETIME_PRECISION, c.NUMERIC_PRECISION);
@@ -126,16 +137,20 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
             .select(
                 p.PARAMETER_NAME,
                 rowNumber().over(partitionBy(p.SPECIFIC_NAME).orderBy(p.ORDINAL_POSITION)).as(p.ORDINAL_POSITION),
-                p.DATA_TYPE,
+                when(p.DATA_TYPE.eq(inline("ARRAY")), substring(p.UDT_NAME, inline(2)).concat(" ARRAY"))
+                    .else_(p.DATA_TYPE)
+                    .as(p.DATA_TYPE),
                 p.CHARACTER_MAXIMUM_LENGTH,
                 pPrecision.as(p.NUMERIC_PRECISION),
                 p.NUMERIC_SCALE,
                 inline("true").as(c.IS_NULLABLE),
-               (((PostgresDatabase) getDatabase()).is94()
-                    ? PARAMETERS.PARAMETER_DEFAULT
+               (db.is94()
+                    ? p.PARAMETER_DEFAULT
                     : inline((String) null)).as(c.COLUMN_DEFAULT),
                 p.UDT_SCHEMA,
-                p.UDT_NAME
+                when(p.DATA_TYPE.eq(inline("ARRAY")), substring(p.UDT_NAME, inline(2)))
+                    .else_(p.UDT_NAME)
+                    .as(p.UDT_NAME)
             )
             .from(r)
             .join(p).on(row(r.SPECIFIC_CATALOG, r.SPECIFIC_SCHEMA, r.SPECIFIC_NAME)
@@ -154,30 +169,43 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
             // table reference is reported via a TYPE_UDT that matches a table
             // from INFORMATION_SCHEMA.TABLES
              select(
-                coalesce(c.COLUMN_NAME               , getName()                   ).as(c.COLUMN_NAME),
-                coalesce(c.ORDINAL_POSITION          , inline(1)                   ).as(c.ORDINAL_POSITION),
-                coalesce(c.DATA_TYPE                 , r.DATA_TYPE                 ).as(c.DATA_TYPE),
-                coalesce(c.CHARACTER_MAXIMUM_LENGTH  , r.CHARACTER_MAXIMUM_LENGTH  ).as(c.CHARACTER_MAXIMUM_LENGTH),
-                coalesce(cPrecision                  , rPrecision                  ).as(c.NUMERIC_PRECISION),
-                coalesce(c.NUMERIC_SCALE             , r.NUMERIC_SCALE             ).as(c.NUMERIC_SCALE),
-                coalesce(c.IS_NULLABLE               , "true"                      ).as(c.IS_NULLABLE),
-                coalesce(c.COLUMN_DEFAULT            , inline((String) null)       ).as(c.COLUMN_DEFAULT),
-                coalesce(c.UDT_SCHEMA                , inline((String) null)       ).as(c.UDT_SCHEMA),
-                coalesce(c.UDT_NAME                  , r.UDT_NAME                  ,
-                         field(select(pg_t.TYPNAME).from(pg_t).where(pg_t.OID.eq(pg_p.PRORETTYPE)))
-                                                                                   ).as(c.UDT_NAME)
+                coalesce(c.COLUMN_NAME, getName()).as(c.COLUMN_NAME),
+                coalesce(c.ORDINAL_POSITION, inline(1)).as(c.ORDINAL_POSITION),
+                db.arrayDataType(x.DATA_TYPE, x.UDT_NAME, pg_a.ATTNDIMS).as(c.DATA_TYPE),
+                coalesce(c.CHARACTER_MAXIMUM_LENGTH, r.CHARACTER_MAXIMUM_LENGTH  ).as(c.CHARACTER_MAXIMUM_LENGTH),
+                coalesce(cPrecision, rPrecision).as(c.NUMERIC_PRECISION),
+                coalesce(c.NUMERIC_SCALE, r.NUMERIC_SCALE).as(c.NUMERIC_SCALE),
+                coalesce(c.IS_NULLABLE, inline("true")).as(c.IS_NULLABLE),
+                coalesce(c.COLUMN_DEFAULT, inline((String) null)).as(c.COLUMN_DEFAULT),
+                coalesce(c.UDT_SCHEMA, inline((String) null)).as(c.UDT_SCHEMA),
+                db.arrayUdtName(x.DATA_TYPE, x.UDT_NAME).as(c.UDT_NAME)
             )
             .from(r)
 
             // [#4269] SETOF [ scalar type ] routines don't have any corresponding
             // entries in INFORMATION_SCHEMA.COLUMNS. Their single result table
             // column type is contained in ROUTINES
-            .leftOuterJoin(c)
-                .on(row(r.TYPE_UDT_CATALOG, r.TYPE_UDT_SCHEMA, r.TYPE_UDT_NAME)
-                    .eq(c.TABLE_CATALOG,    c.TABLE_SCHEMA,    c.TABLE_NAME))
             .join(pg_n).on(r.SPECIFIC_SCHEMA.eq(pg_n.NSPNAME))
             .join(pg_p).on(pg_p.PRONAMESPACE.eq(pg_n.OID))
                        .and(pg_p.PRONAME.concat("_").concat(pg_p.OID).eq(r.SPECIFIC_NAME))
+            .leftJoin(c)
+                .on(row(r.TYPE_UDT_CATALOG, r.TYPE_UDT_SCHEMA, r.TYPE_UDT_NAME)
+                    .eq(c.TABLE_CATALOG,    c.TABLE_SCHEMA,    c.TABLE_NAME))
+            .leftJoin(pg_c)
+                .on(pg_n.OID.eq(pg_c.RELNAMESPACE))
+                .and(c.TABLE_NAME.eq(pg_c.RELNAME))
+            .leftJoin(pg_a)
+                .on(pg_c.OID.eq(pg_a.ATTRELID))
+                .and(c.COLUMN_NAME.eq(pg_a.ATTNAME))
+            .crossApply(
+                select(
+                    coalesce(c.DATA_TYPE, r.DATA_TYPE).as(x.DATA_TYPE),
+                    coalesce(
+                        c.UDT_NAME, r.UDT_NAME,
+                        field(select(pg_t.TYPNAME).from(pg_t).where(pg_t.OID.eq(pg_p.PRORETTYPE)))
+                    ).as(x.UDT_NAME)
+                ).asTable(x)
+            )
             .where(r.SPECIFIC_NAME.eq(specificName))
 
             // [#4269] Exclude TABLE [ some type ] routines from the first UNION ALL subselect

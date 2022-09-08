@@ -132,6 +132,7 @@ import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
+import org.jooq.codegen.GenerationUtil.BaseType;
 import org.jooq.codegen.GeneratorStrategy.Mode;
 import org.jooq.codegen.GeneratorWriter.CloseResult;
 import org.jooq.conf.ParseSearchSchema;
@@ -9179,27 +9180,37 @@ public class JavaGenerator extends AbstractGenerator {
 
         // [#4388] TODO: Improve array handling
         if (database.isArrayType(type.getType())) {
-            return getJavaTypeReference(db, GenerationUtil.getArrayBaseType(db.getDialect(), type), out) + ".getArrayDataType()";
+            DataTypeDefinition base = GenerationUtil.getArrayBaseType(db.getDialect(), type);
+
+            // [#252] This check prevents StackOverflowError in case of e.g. PostgreSQL ANYARRAY types
+            if (base != type)
+                return getJavaTypeReference(db, base, out) + ".getArrayDataType()";
+            else
+                return getJavaTypeReference0(db, type, out) + ".getArrayDataType()";
         }
-        else {
-            return getTypeReference(
-                db,
-                type.getSchema(),
-                out,
-                type.getType(),
-                type.getPrecision(),
-                type.getScale(),
-                type.getLength(),
-                type.isNullable(),
-                type.isIdentity(),
-                type.isReadonly(),
-                type.getGeneratedAlwaysAs(),
-                type.getGenerationOption(),
-                type.getGenerator(),
-                type.getDefaultValue(),
-                type.getQualifiedUserType()
-            );
-        }
+
+        else
+            return getJavaTypeReference0(db, type, out);
+    }
+
+    private String getJavaTypeReference0(Database db, DataTypeDefinition type, JavaWriter out) {
+        return getTypeReference(
+            db,
+            type.getSchema(),
+            out,
+            type.getType(),
+            type.getPrecision(),
+            type.getScale(),
+            type.getLength(),
+            type.isNullable(),
+            type.isIdentity(),
+            type.isReadonly(),
+            type.getGeneratedAlwaysAs(),
+            type.getGenerationOption(),
+            type.getGenerator(),
+            type.getDefaultValue(),
+            type.getQualifiedUserType()
+        );
     }
 
     private class Resolver implements JavaTypeResolver {
@@ -9349,14 +9360,14 @@ public class JavaGenerator extends AbstractGenerator {
         else if (db.isArrayType(t)) {
 
             // [#4388] TODO: Improve array handling
-            Name baseTypeName = GenerationUtil.getArrayBaseType(db.getDialect(), t, u);
+            BaseType bt = GenerationUtil.getArrayBaseType(db.getDialect(), t, u);
 
             // [#9067] Prevent StackOverflowErrors
-            String last = t.equals(baseTypeName.last()) ? "OTHER" : baseTypeName.last();
+            String newT = t.equals(bt.t()) ? "OTHER" : bt.t();
 
             // [#10309] TODO: The schema should be taken from baseType, if available. Might be different than the argument schema.
             //          When can this happen?
-            String baseType = getType(db, schema, out, last, p, s, baseTypeName, javaType, defaultType, udtMode);
+            String baseType = getType(db, schema, out, newT, p, s, bt.u(), javaType, defaultType, udtMode);
 
             if (scala)
                 type = "scala.Array[" + baseType + "]";

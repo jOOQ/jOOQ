@@ -50,10 +50,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.jooq.Converter;
+import org.jooq.ContextConverter;
 import org.jooq.EnumType;
 import org.jooq.Record;
-import org.jooq.ContextConverter;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.StringUtils;
 import org.jooq.types.DayToSecond;
@@ -481,7 +480,10 @@ public class PostgresUtils {
      * Create a Postgres string representation of an array
      */
     public static String toPGArrayString(Object[] value) {
-        StringBuilder sb = new StringBuilder();
+        return toPGArrayString0(value, new StringBuilder()).toString();
+    }
+
+    private static StringBuilder toPGArrayString0(Object[] value, StringBuilder sb) {
         sb.append("{");
 
         String separator = "";
@@ -492,7 +494,11 @@ public class PostgresUtils {
             if (o == null)
                 sb.append(o);
             else if (o instanceof byte[])
-                sb.append(toPGString((byte[]) o));
+                toPGString0((byte[]) o, sb);
+
+            // [#252] Multi dimensional array support
+            else if (o instanceof Object[] a)
+                toPGArrayString0(a, sb);
             else
                 sb.append("\"")
                   .append(StringUtils.replace(StringUtils.replace(toPGString(o), "\\", "\\\\"), "\"", "\\\""))
@@ -502,7 +508,7 @@ public class PostgresUtils {
         }
 
         sb.append("}");
-        return sb.toString();
+        return sb;
     }
 
     /**
@@ -525,7 +531,10 @@ public class PostgresUtils {
      * Create a PostgreSQL string representation of a record.
      */
     public static String toPGString(Record r) {
-        StringBuilder sb = new StringBuilder();
+        return toPGString0(r, new StringBuilder()).toString();
+    }
+
+    private static StringBuilder toPGString0(Record r, StringBuilder sb) {
         sb.append("(");
 
         String separator = "";
@@ -537,7 +546,7 @@ public class PostgresUtils {
             // [#753] null must not be set as a literal
             if (a != null) {
                 if (a instanceof byte[])
-                    sb.append(toPGString((byte[]) a));
+                    toPGString0((byte[]) a, sb);
                 else
                     sb.append("\"")
                       .append(StringUtils.replace(StringUtils.replace(toPGString(a), "\\", "\\\\"), "\"", "\\\""))
@@ -548,15 +557,17 @@ public class PostgresUtils {
         }
 
         sb.append(")");
-        return sb.toString();
+        return sb;
     }
 
     /**
      * Create a PostgreSQL string representation of a binary.
      */
     public static String toPGString(byte[] binary) {
-        StringBuilder sb = new StringBuilder();
+        return toPGString0(binary, new StringBuilder()).toString();
+    }
 
+    private static StringBuilder toPGString0(byte[] binary, StringBuilder sb) {
         for (byte b : binary) {
 
             // [#3924] Beware of signed vs unsigned bytes!
@@ -564,6 +575,6 @@ public class PostgresUtils {
             sb.append(leftPad(toOctalString(b & 0x000000ff), 3, '0'));
         }
 
-        return sb.toString();
+        return sb;
     }
 }

@@ -670,6 +670,16 @@ implements
     }
 
     @Override
+    public /* non-final */ Class<?> getArrayBaseType() {
+        return getType();
+    }
+
+    @Override
+    public /* non-final */ DataType<?> getArrayBaseDataType() {
+        return this;
+    }
+
+    @Override
     public /* non-final */ Row getRow() {
         return null;
     }

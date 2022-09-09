@@ -5592,9 +5592,7 @@ final class Tools {
 
 
     private static final void toSQLDDLTypeDeclaration0(Context<?> ctx, DataType<?> type) {
-        DataType<?> elementType = type instanceof ArrayDataType<?> t
-            ? t.elementType
-            : type;
+        DataType<?> elementType = type.getArrayBaseDataType();
 
         // In some databases, identity is a type, not a flag.
         if (type.identity()) {

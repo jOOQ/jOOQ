@@ -12054,17 +12054,22 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         DataType<?> result = parseDataTypePrefixIf(parseUnknownTypes);
 
         if (result != null) {
-            boolean array = parseKeywordIf("ARRAY");
+            boolean array;
 
-            if (parseIf('[')) {
-                parseUnsignedIntegerLiteralIf();
-                parse(']');
+            do {
+                array = parseKeywordIf("ARRAY");
 
-                array = true;
+                if (parseIf('[')) {
+                    parseUnsignedIntegerLiteralIf();
+                    parse(']');
+
+                    array = true;
+                }
+
+                if (array)
+                    result = result.getArrayDataType();
             }
-
-            if (array)
-                result = result.getArrayDataType();
+            while (array);
         }
 
         return result;

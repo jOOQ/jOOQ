@@ -159,7 +159,6 @@ import org.jooq.exception.MappingException;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.QOM.UTransient;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
-import org.jooq.impl.Tools.DBMS_SQL;
 import org.jooq.tools.reflect.Reflect;
 
 /**

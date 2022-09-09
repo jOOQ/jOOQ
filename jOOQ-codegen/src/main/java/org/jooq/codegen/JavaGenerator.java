@@ -9192,9 +9192,9 @@ public class JavaGenerator extends AbstractGenerator {
 
             // [#252] This check prevents StackOverflowError in case of e.g. PostgreSQL ANYARRAY types
             if (base != type)
-                return getJavaTypeReference(db, base, out) + ".getArrayDataType()";
+                return getJavaTypeReference(db, base, out) + ".array()";
             else
-                return getJavaTypeReference0(db, type, out) + ".getArrayDataType()";
+                return getJavaTypeReference0(db, type, out) + ".array()";
         }
 
         else

@@ -203,6 +203,13 @@ public interface DataType<T> extends Named {
     DataType<T[]> getArrayDataType() throws DataTypeException;
 
     /**
+     * A convenient short for form {@link #getArrayDataType()} for DSL usage
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    DataType<T[]> array() throws DataTypeException;
+
+    /**
      * Retrieve the Java component type if this is an ARRAY type, or
      * <code>null</code>, otherwise.
      * <p>

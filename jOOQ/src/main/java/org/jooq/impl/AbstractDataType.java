@@ -109,6 +109,7 @@ import org.jooq.Schema;
 import org.jooq.ContextConverter;
 import org.jooq.Table;
 import org.jooq.XML;
+import org.jooq.exception.DataTypeException;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.QOM.UEmpty;
@@ -657,6 +658,11 @@ implements
     @Override
     public /* non-final */ DataType<T[]> getArrayDataType() {
         return new ArrayDataType<>(this);
+    }
+
+    @Override
+    public final DataType<T[]> array() {
+        return getArrayDataType();
     }
 
     @Override

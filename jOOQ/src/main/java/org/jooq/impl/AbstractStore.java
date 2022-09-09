@@ -163,7 +163,7 @@ abstract class AbstractStore extends AbstractFormattable {
                         // Other primitive types are not expected
                         else if (!thisValue.getClass().getComponentType().isPrimitive() &&
                                  !thatValue.getClass().getComponentType().isPrimitive()) {
-                            if (!Arrays.equals((Object[]) thisValue, (Object[]) thatValue))
+                            if (!Arrays.deepEquals((Object[]) thisValue, (Object[]) thatValue))
                                 return false;
                         }
 

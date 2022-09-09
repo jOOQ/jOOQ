@@ -323,7 +323,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         return result;
     }
 
-    private static final Pattern KOTLIN_ARRAY_PATTERN = Pattern.compile("kotlin.Array<([^?>]*)\\?>");
+    private static final Pattern KOTLIN_ARRAY_PATTERN = Pattern.compile("kotlin.Array<(.*)\\?>");
 
     private String patchKotlinClasses(String c) {
         // [#10768] TODO: Is this the right place to patch these classes?

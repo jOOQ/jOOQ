@@ -47,14 +47,14 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nvl;
-// ...
 import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRIBUTE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CLASS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_DESCRIPTION;
-import static org.jooq.meta.postgres.pg_catalog.Tables.*;
+import static org.jooq.meta.postgres.pg_catalog.Tables.PG_NAMESPACE;
+import static org.jooq.meta.postgres.pg_catalog.Tables.PG_TYPE;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -63,8 +63,8 @@ import java.util.List;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
+import org.jooq.impl.DSL;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
@@ -72,8 +72,6 @@ import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultColumnDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.SchemaDefinition;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -100,7 +98,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
             .when(COLUMNS.DATA_TYPE.eq(inline("ARRAY")),
                 concat(
                     substring(PG_TYPE.TYPNAME, inline(2)),
-                    repeat(inline(" ARRAY"),
+                    DSL.repeat(inline(" ARRAY"),
                         // [#252] Among others, it seems that UDT arrays report dimension 0 (?)
                         greatest(inline(1), PG_ATTRIBUTE.ATTNDIMS)
                     )

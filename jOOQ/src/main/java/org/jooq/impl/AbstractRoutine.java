@@ -65,6 +65,7 @@ import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_BOOLEAN;
 import static org.jooq.impl.Keywords.K_CASE;
 import static org.jooq.impl.Keywords.K_COLUMNS;
+import static org.jooq.impl.Keywords.K_COUNT;
 import static org.jooq.impl.Keywords.K_DECLARE;
 import static org.jooq.impl.Keywords.K_ELSE;
 import static org.jooq.impl.Keywords.K_END;
@@ -74,8 +75,11 @@ import static org.jooq.impl.Keywords.K_FIRST;
 import static org.jooq.impl.Keywords.K_FOR;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_FUNCTION;
+import static org.jooq.impl.Keywords.K_IF;
+import static org.jooq.impl.Keywords.K_IN;
 import static org.jooq.impl.Keywords.K_IS;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
+import static org.jooq.impl.Keywords.K_LAST;
 import static org.jooq.impl.Keywords.K_LOOP;
 import static org.jooq.impl.Keywords.K_NEXT;
 import static org.jooq.impl.Keywords.K_NOT;
@@ -107,6 +111,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -154,6 +159,7 @@ import org.jooq.exception.MappingException;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.QOM.UTransient;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
+import org.jooq.impl.Tools.DBMS_SQL;
 import org.jooq.tools.reflect.Reflect;
 
 /**
@@ -680,6 +686,7 @@ implements
         }
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     private final void bind1(BindContext context, Parameter<?> parameter, boolean bindAsIn, boolean bindAsOut) {
         int index = context.peekIndex();
 
@@ -695,6 +702,16 @@ implements
         }
 
         if (bindAsIn) {
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -960,6 +977,19 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 
@@ -1010,6 +1040,29 @@ implements
 
     private final void toSQLBegin(RenderContext context) {
         if (!isSQLUsable() && context.family() == POSTGRES) {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1393,6 +1446,8 @@ implements
     }
 
     private final void toSQLInParam(RenderContext ctx, Parameter<?> parameter, int index, Field<?> value) {
+
+
 
 
 

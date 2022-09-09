@@ -251,6 +251,7 @@ import java.util.stream.Stream;
 
 // ...
 // ...
+// ...
 import org.jooq.Asterisk;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
@@ -1160,6 +1161,39 @@ final class Tools {
     static final List<Row> rows(Result<?> result) {
         return map(result, r -> r.valuesRow());
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

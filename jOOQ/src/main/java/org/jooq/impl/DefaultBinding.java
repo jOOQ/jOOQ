@@ -218,6 +218,8 @@ import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
 // ...
+// ...
+// ...
 import org.jooq.Attachable;
 import org.jooq.Binding;
 import org.jooq.BindingGetResultSetContext;
@@ -477,6 +479,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         // The type byte[] is handled earlier. byte[][] can be handled here
         else if (type.isArray())
             return new DefaultArrayBinding(dataType, converter);
+
+
 
 
 
@@ -1425,6 +1429,63 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return null;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

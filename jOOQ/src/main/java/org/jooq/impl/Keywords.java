@@ -103,6 +103,7 @@ final class Keywords {
     static final Keyword K_CONTAINS                 = keyword("contains");
     static final Keyword K_CONTENT                  = keyword("content");
     static final Keyword K_CONTINUE                 = keyword("continue");
+    static final Keyword K_COUNT                    = keyword("count");
     static final Keyword K_CREATE                   = keyword("create");
     static final Keyword K_CROSS_JOIN_LATERAL       = keyword("cross join lateral");
     static final Keyword K_CURRENT                  = keyword("current");

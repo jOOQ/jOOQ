@@ -5747,7 +5747,7 @@ public class JavaGenerator extends AbstractGenerator {
                 if (columnType.equals("scala.Array[scala.Byte]"))
                     out.println("sb%s.append(\"[binary...]\")", separator);
                 else if (array)
-                    out.println("sb%s.append(\"[\").append(if (this.%s == null) \"\" else %s.mkString(\", \")).append(\"]\")", separator, columnMember, columnMember);
+                    out.println("sb%s.append(if (this.%s == null) \"\" else %s.deepToString(%s.asInstanceOf[ Array[Object] ]))", separator, columnMember, Arrays.class, columnMember);
                 else
                     out.println("sb%s.append(%s)", separator, columnMember);
 

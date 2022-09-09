@@ -67,7 +67,6 @@ import static org.jooq.impl.DSL.nullif;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.power;
-// ...
 import static org.jooq.impl.DSL.replace;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
@@ -166,7 +165,6 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
 import org.jooq.meta.hsqldb.HSQLDBDatabase;
-import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.postgres.information_schema.tables.CheckConstraints;
 import org.jooq.meta.postgres.information_schema.tables.KeyColumnUsage;
 import org.jooq.meta.postgres.information_schema.tables.Routines;
@@ -177,8 +175,6 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgInherits;
 import org.jooq.meta.postgres.pg_catalog.tables.PgNamespace;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 import org.jooq.tools.JooqLogger;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Postgres uses the ANSI default INFORMATION_SCHEMA, but unfortunately ships
@@ -1248,7 +1244,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
     Field<String> arrayDataType(Field<String> dataType, Field<String> udtName, Field<Integer> dims) {
         return when(dataType.eq(inline("ARRAY")),
                     substring(udtName, inline(2))
-                    .concat(repeat(inline(" ARRAY"), greatest(coalesce(dims, inline(0)), inline(1)))))
+                    .concat(DSL.repeat(inline(" ARRAY"), greatest(coalesce(dims, inline(0)), inline(1)))))
                 .else_(dataType);
     }
 

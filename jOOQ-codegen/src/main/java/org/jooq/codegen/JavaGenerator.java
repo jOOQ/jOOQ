@@ -5766,7 +5766,7 @@ public class JavaGenerator extends AbstractGenerator {
                 if (array && columnType.equals("kotlin.ByteArray"))
                     out.println("sb%s.append(\"[binary...]\")", separator);
                 else if (array)
-                    out.println("sb%s.append(%s.toString(%s))", separator, Arrays.class, columnMember);
+                    out.println("sb%s.append(%s.deepToString(%s))", separator, Arrays.class, columnMember);
                 else
                     out.println("sb%s.append(%s)", separator, columnMember);
 
@@ -5793,7 +5793,7 @@ public class JavaGenerator extends AbstractGenerator {
                 if (array && columnType.equals("byte[]"))
                     out.println("sb%s.append(\"[binary...]\");", separator);
                 else if (array)
-                    out.println("sb%s.append(%s.toString(%s));", separator, Arrays.class, columnMember);
+                    out.println("sb%s.append(%s.deepToString(%s));", separator, Arrays.class, columnMember);
                 else
                     out.println("sb%s.append(%s);", separator, columnMember);
 

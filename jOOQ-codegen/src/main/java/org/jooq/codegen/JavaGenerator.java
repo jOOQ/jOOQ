@@ -197,7 +197,6 @@ import org.jooq.meta.jaxb.VisibilityModifier;
 // ...
 // ...
 // ...
-import org.jooq.meta.postgres.PostgresDatabase;
 import org.jooq.meta.postgres.PostgresRoutineDefinition;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
@@ -2197,7 +2196,7 @@ public class JavaGenerator extends AbstractGenerator {
                     final boolean isArrayOfUDTs = isArrayOfUDTs(t, r);
 
                     final String udtType = (isUDT || isArray)
-                        ? out.ref(getJavaType(((TypedElementDefinition<?>) column).getType(r), out, Mode.RECORD))
+                        ? out.ref(getJavaType(t.getType(r), out, Mode.RECORD))
                         : "";
                     final String udtArrayElementType = isUDTArray
                         ? out.ref(database.getArray(t.getType(r).getSchema(), t.getType(r).getQualifiedUserType()).getElementType(r).getJavaType(r))
@@ -2266,8 +2265,8 @@ public class JavaGenerator extends AbstractGenerator {
                                 getStrategy().getJavaMemberName(column, Mode.POJO));
                     }
                     else {
-                        if (pojoArgument)
-                            if (isUDTArray)
+                        if (pojoArgument) {
+                            if (isUDTArray) {
                                 out.println("%s(value.%s() == null ? null : new %s(value.%s().stream().map(%s::new).collect(%s.toList())));",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
@@ -2277,17 +2276,47 @@ public class JavaGenerator extends AbstractGenerator {
                                         : getStrategy().getJavaGetterName(column, Mode.POJO),
                                     udtArrayElementType,
                                     Collectors.class);
-                            else if (isArrayOfUDTs)
-                                out.println("%s(value.%s() == null ? null : %s.of(value.%s()).map(%s::new).toArray(%s[]::new));",
+                            }
+                            else if (isArrayOfUDTs) {
+                                final String columnTypeFull = getJavaType(t.getType(resolver(out, Mode.POJO)), out, Mode.POJO);
+                                final String columnType = out.ref(columnTypeFull);
+                                final String brackets = columnType.substring(columnType.indexOf("[]"));
+
+                                String mapping = udtArrayElementType + "::new";
+                                String arrayType = udtArrayElementType + "[]";
+                                int dimensions = brackets.length() / 2 - 1;
+
+
+                                for (; dimensions > 0; dimensions--) {
+                                    String a = "a" + dimensions;
+                                    mapping = a + " -> Stream.of(" + a + ").map(" + mapping + ").toArray(" + arrayType + "::new)";
+                                    arrayType += "[]";
+                                }
+
+                                /*
+                                 *
+            setA3(value.getA3() == null ? null :
+                Stream.of(value.getA3())
+                      .map(a1 -> Stream.of(a1)
+                          .map(a2 -> Stream.of(a2)
+                              .map(UMultidimARecord::new)
+                              .toArray(UMultidimARecord[]::new))
+                          .toArray(UMultidimARecord[][]::new))
+                      .toArray(UMultidimARecord[][][]::new));
+                                 */
+
+                                out.println("%s(value.%s() == null ? null : %s.of(value.%s()).map(%s).toArray(%s%s::new));",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
                                     Stream.class,
                                     generatePojosAsJavaRecordClasses()
                                         ? getStrategy().getJavaMemberName(column, Mode.POJO)
                                         : getStrategy().getJavaGetterName(column, Mode.POJO),
+                                    mapping,
                                     udtArrayElementType,
-                                    udtArrayElementType);
-                            else if (isUDT || isArray)
+                                    brackets);
+                            }
+                            else if (isUDT || isArray) {
                                 out.println("%s(value.%s() == null ? null : new %s(value.%s()));",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
@@ -2295,12 +2324,15 @@ public class JavaGenerator extends AbstractGenerator {
                                     generatePojosAsJavaRecordClasses()
                                         ? getStrategy().getJavaMemberName(column, Mode.POJO)
                                         : getStrategy().getJavaGetterName(column, Mode.POJO));
-                            else
+                            }
+                            else {
                                 out.println("%s(value.%s());",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),
                                     generatePojosAsJavaRecordClasses()
                                         ? getStrategy().getJavaMemberName(column, Mode.POJO)
                                         : getStrategy().getJavaGetterName(column, Mode.POJO));
+                            }
+                        }
                         else
                             out.println("%s(%s);",
                                 getStrategy().getJavaSetterName(column, Mode.RECORD),

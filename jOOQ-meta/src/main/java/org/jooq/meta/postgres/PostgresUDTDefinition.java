@@ -45,6 +45,9 @@ import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.postgres.information_schema.Tables.ATTRIBUTES;
 import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.information_schema.Tables.DOMAINS;
+import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRIBUTE;
+import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CLASS;
+import static org.jooq.meta.postgres.pg_catalog.Tables.PG_NAMESPACE;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -55,10 +58,15 @@ import org.jooq.Record;
 import org.jooq.meta.AbstractUDTDefinition;
 import org.jooq.meta.AttributeDefinition;
 import org.jooq.meta.DataTypeDefinition;
+import org.jooq.meta.Database;
 import org.jooq.meta.DefaultAttributeDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
+import org.jooq.meta.postgres.pg_catalog.Tables;
+import org.jooq.meta.postgres.pg_catalog.tables.PgAttribute;
+import org.jooq.meta.postgres.pg_catalog.tables.PgClass;
+import org.jooq.meta.postgres.pg_catalog.tables.PgNamespace;
 
 public class PostgresUDTDefinition extends AbstractUDTDefinition {
 
@@ -70,14 +78,19 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
     protected List<AttributeDefinition> getElements0() throws SQLException {
         List<AttributeDefinition> result = new ArrayList<>();
 
+        PostgresDatabase db = (PostgresDatabase) getDatabase();
+
+        PgNamespace n = PG_NAMESPACE.as("n");
+        PgClass c = PG_CLASS.as("c");
+        PgAttribute a = PG_ATTRIBUTE.as("a");
+
         for (Record record : create().select(
                     ATTRIBUTES.ATTRIBUTE_NAME,
                     ATTRIBUTES.ORDINAL_POSITION,
                     coalesce(
                         DOMAINS.DATA_TYPE,
                         when(ATTRIBUTES.DATA_TYPE.eq(inline("USER-DEFINED")).and(ATTRIBUTES.ATTRIBUTE_UDT_NAME.eq(inline("geometry"))), inline("geometry"))
-                        .when(ATTRIBUTES.DATA_TYPE.eq(inline("ARRAY")), substring(ATTRIBUTES.ATTRIBUTE_UDT_NAME, inline(2)).concat(inline(" ARRAY")))
-                        .else_(ATTRIBUTES.DATA_TYPE)
+                        .else_(db.arrayDataType(ATTRIBUTES.DATA_TYPE, ATTRIBUTES.ATTRIBUTE_UDT_NAME, a.ATTNDIMS))
                     ).as(ATTRIBUTES.DATA_TYPE),
                     coalesce(DOMAINS.CHARACTER_MAXIMUM_LENGTH, ATTRIBUTES.CHARACTER_MAXIMUM_LENGTH).as(ATTRIBUTES.CHARACTER_MAXIMUM_LENGTH),
                     coalesce(DOMAINS.NUMERIC_PRECISION, ATTRIBUTES.NUMERIC_PRECISION).as(ATTRIBUTES.NUMERIC_PRECISION),
@@ -85,17 +98,23 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
                     ATTRIBUTES.IS_NULLABLE,
                     ATTRIBUTES.ATTRIBUTE_DEFAULT,
                     ATTRIBUTES.ATTRIBUTE_UDT_SCHEMA,
-                    when(ATTRIBUTES.DATA_TYPE.eq(inline("ARRAY")), substring(ATTRIBUTES.ATTRIBUTE_UDT_NAME, inline(2)))
-                        .else_(ATTRIBUTES.ATTRIBUTE_UDT_NAME).as(ATTRIBUTES.ATTRIBUTE_UDT_NAME))
+                    db.arrayUdtName(ATTRIBUTES.DATA_TYPE, ATTRIBUTES.ATTRIBUTE_UDT_NAME).as(ATTRIBUTES.ATTRIBUTE_UDT_NAME))
                 .from(ATTRIBUTES)
+                .join(n)
+                    .on(ATTRIBUTES.UDT_SCHEMA.eq(n.NSPNAME))
+                .join(c)
+                    .on(ATTRIBUTES.UDT_NAME.eq(c.RELNAME))
+                    .and(n.OID.eq(c.RELNAMESPACE))
+                .join(a)
+                    .on(ATTRIBUTES.ATTRIBUTE_NAME.eq(a.ATTNAME))
+                    .and(c.OID.eq(a.ATTRELID))
                 .leftJoin(DOMAINS)
                     .on(ATTRIBUTES.ATTRIBUTE_UDT_CATALOG.eq(DOMAINS.DOMAIN_CATALOG))
                     .and(ATTRIBUTES.ATTRIBUTE_UDT_SCHEMA.eq(DOMAINS.DOMAIN_SCHEMA))
                     .and(ATTRIBUTES.ATTRIBUTE_UDT_NAME.eq(DOMAINS.DOMAIN_NAME))
                 .where(ATTRIBUTES.UDT_SCHEMA.equal(getSchema().getName()))
                 .and(ATTRIBUTES.UDT_NAME.equal(getName()))
-                .orderBy(ATTRIBUTES.ORDINAL_POSITION)
-                .fetch()) {
+                .orderBy(ATTRIBUTES.ORDINAL_POSITION)) {
 
             SchemaDefinition typeSchema = null;
 

@@ -63,6 +63,8 @@ import org.jooq.meta.DefaultAttributeDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
+import org.jooq.meta.postgres.information_schema.tables.Attributes;
+import org.jooq.meta.postgres.information_schema.tables.Domains;
 import org.jooq.meta.postgres.pg_catalog.Tables;
 import org.jooq.meta.postgres.pg_catalog.tables.PgAttribute;
 import org.jooq.meta.postgres.pg_catalog.tables.PgClass;
@@ -77,70 +79,65 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
     @Override
     protected List<AttributeDefinition> getElements0() throws SQLException {
         List<AttributeDefinition> result = new ArrayList<>();
-
         PostgresDatabase db = (PostgresDatabase) getDatabase();
 
-        PgNamespace n = PG_NAMESPACE.as("n");
-        PgClass c = PG_CLASS.as("c");
-        PgAttribute a = PG_ATTRIBUTE.as("a");
+        Attributes a = ATTRIBUTES.as("a");
+        Domains d = DOMAINS.as("d");
+        PgAttribute pg_a = PG_ATTRIBUTE.as("pg_a");
 
         for (Record record : create().select(
-                    ATTRIBUTES.ATTRIBUTE_NAME,
-                    ATTRIBUTES.ORDINAL_POSITION,
+                    a.ATTRIBUTE_NAME,
+                    a.ORDINAL_POSITION,
                     coalesce(
-                        DOMAINS.DATA_TYPE,
-                        when(ATTRIBUTES.DATA_TYPE.eq(inline("USER-DEFINED")).and(ATTRIBUTES.ATTRIBUTE_UDT_NAME.eq(inline("geometry"))), inline("geometry"))
-                        .else_(db.arrayDataType(ATTRIBUTES.DATA_TYPE, ATTRIBUTES.ATTRIBUTE_UDT_NAME, a.ATTNDIMS))
-                    ).as(ATTRIBUTES.DATA_TYPE),
-                    coalesce(DOMAINS.CHARACTER_MAXIMUM_LENGTH, ATTRIBUTES.CHARACTER_MAXIMUM_LENGTH).as(ATTRIBUTES.CHARACTER_MAXIMUM_LENGTH),
-                    coalesce(DOMAINS.NUMERIC_PRECISION, ATTRIBUTES.NUMERIC_PRECISION).as(ATTRIBUTES.NUMERIC_PRECISION),
-                    coalesce(DOMAINS.NUMERIC_SCALE, ATTRIBUTES.NUMERIC_SCALE).as(ATTRIBUTES.NUMERIC_SCALE),
-                    ATTRIBUTES.IS_NULLABLE,
-                    ATTRIBUTES.ATTRIBUTE_DEFAULT,
-                    ATTRIBUTES.ATTRIBUTE_UDT_SCHEMA,
-                    db.arrayUdtName(ATTRIBUTES.DATA_TYPE, ATTRIBUTES.ATTRIBUTE_UDT_NAME).as(ATTRIBUTES.ATTRIBUTE_UDT_NAME))
-                .from(ATTRIBUTES)
-                .join(n)
-                    .on(ATTRIBUTES.UDT_SCHEMA.eq(n.NSPNAME))
-                .join(c)
-                    .on(ATTRIBUTES.UDT_NAME.eq(c.RELNAME))
-                    .and(n.OID.eq(c.RELNAMESPACE))
-                .join(a)
-                    .on(ATTRIBUTES.ATTRIBUTE_NAME.eq(a.ATTNAME))
-                    .and(c.OID.eq(a.ATTRELID))
-                .leftJoin(DOMAINS)
-                    .on(ATTRIBUTES.ATTRIBUTE_UDT_CATALOG.eq(DOMAINS.DOMAIN_CATALOG))
-                    .and(ATTRIBUTES.ATTRIBUTE_UDT_SCHEMA.eq(DOMAINS.DOMAIN_SCHEMA))
-                    .and(ATTRIBUTES.ATTRIBUTE_UDT_NAME.eq(DOMAINS.DOMAIN_NAME))
-                .where(ATTRIBUTES.UDT_SCHEMA.equal(getSchema().getName()))
-                .and(ATTRIBUTES.UDT_NAME.equal(getName()))
-                .orderBy(ATTRIBUTES.ORDINAL_POSITION)) {
+                        d.DATA_TYPE,
+                        when(a.DATA_TYPE.eq(inline("USER-DEFINED")).and(a.ATTRIBUTE_UDT_NAME.eq(inline("geometry"))), inline("geometry"))
+                        .else_(db.arrayDataType(a.DATA_TYPE, a.ATTRIBUTE_UDT_NAME, pg_a.ATTNDIMS))
+                    ).as(a.DATA_TYPE),
+                    coalesce(d.CHARACTER_MAXIMUM_LENGTH, a.CHARACTER_MAXIMUM_LENGTH).as(a.CHARACTER_MAXIMUM_LENGTH),
+                    coalesce(d.NUMERIC_PRECISION, a.NUMERIC_PRECISION).as(a.NUMERIC_PRECISION),
+                    coalesce(d.NUMERIC_SCALE, a.NUMERIC_SCALE).as(a.NUMERIC_SCALE),
+                    a.IS_NULLABLE,
+                    a.ATTRIBUTE_DEFAULT,
+                    a.ATTRIBUTE_UDT_SCHEMA,
+                    db.arrayUdtName(a.DATA_TYPE, a.ATTRIBUTE_UDT_NAME).as(a.ATTRIBUTE_UDT_NAME))
+                .from(a)
+                .join(pg_a)
+                    .on(a.ATTRIBUTE_NAME.eq(pg_a.ATTNAME))
+                    .and(a.UDT_NAME.eq(pg_a.pgClass().RELNAME))
+                    .and(a.UDT_SCHEMA.eq(pg_a.pgClass().pgNamespace().NSPNAME))
+                .leftJoin(d)
+                    .on(a.ATTRIBUTE_UDT_CATALOG.eq(d.DOMAIN_CATALOG))
+                    .and(a.ATTRIBUTE_UDT_SCHEMA.eq(d.DOMAIN_SCHEMA))
+                    .and(a.ATTRIBUTE_UDT_NAME.eq(d.DOMAIN_NAME))
+                .where(a.UDT_SCHEMA.equal(getSchema().getName()))
+                .and(a.UDT_NAME.equal(getName()))
+                .orderBy(a.ORDINAL_POSITION)) {
 
             SchemaDefinition typeSchema = null;
 
-            String schemaName = record.get(ATTRIBUTES.ATTRIBUTE_UDT_SCHEMA);
+            String schemaName = record.get(a.ATTRIBUTE_UDT_SCHEMA);
             if (schemaName != null)
                 typeSchema = getDatabase().getSchema(schemaName);
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 typeSchema == null ? getSchema() : typeSchema,
-                record.get(ATTRIBUTES.DATA_TYPE),
-                record.get(ATTRIBUTES.CHARACTER_MAXIMUM_LENGTH),
-                record.get(ATTRIBUTES.NUMERIC_PRECISION),
-                record.get(ATTRIBUTES.NUMERIC_SCALE),
-                record.get(ATTRIBUTES.IS_NULLABLE, boolean.class),
-                record.get(ATTRIBUTES.ATTRIBUTE_DEFAULT),
+                record.get(a.DATA_TYPE),
+                record.get(a.CHARACTER_MAXIMUM_LENGTH),
+                record.get(a.NUMERIC_PRECISION),
+                record.get(a.NUMERIC_SCALE),
+                record.get(a.IS_NULLABLE, boolean.class),
+                record.get(a.ATTRIBUTE_DEFAULT),
                 name(
-                    record.get(ATTRIBUTES.ATTRIBUTE_UDT_SCHEMA),
-                    record.get(ATTRIBUTES.ATTRIBUTE_UDT_NAME)
+                    record.get(a.ATTRIBUTE_UDT_SCHEMA),
+                    record.get(a.ATTRIBUTE_UDT_NAME)
                 )
             );
 
             AttributeDefinition column = new DefaultAttributeDefinition(
                 this,
-                record.get(ATTRIBUTES.ATTRIBUTE_NAME),
-                record.get(ATTRIBUTES.ORDINAL_POSITION),
+                record.get(a.ATTRIBUTE_NAME),
+                record.get(a.ORDINAL_POSITION),
                 type);
 
             result.add(column);

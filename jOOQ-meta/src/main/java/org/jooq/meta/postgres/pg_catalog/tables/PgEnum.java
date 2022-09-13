@@ -139,6 +139,11 @@ public class PgEnum extends TableImpl<Record> {
         return new PgEnum(alias, this);
     }
 
+    @Override
+    public PgEnum as(Table<?> alias) {
+        return new PgEnum(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -153,5 +158,13 @@ public class PgEnum extends TableImpl<Record> {
     @Override
     public PgEnum rename(Name name) {
         return new PgEnum(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public PgEnum rename(Table<?> name) {
+        return new PgEnum(name.getQualifiedName(), null);
     }
 }

@@ -65,7 +65,8 @@ public class Tables extends TableImpl<Record> {
     public final TableField<Record, String> TABLE_TYPE = createField(DSL.name("table_type"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.tables.self_referencing_column_name</code>.
+     * The column
+     * <code>information_schema.tables.self_referencing_column_name</code>.
      */
     public final TableField<Record, String> SELF_REFERENCING_COLUMN_NAME = createField(DSL.name("self_referencing_column_name"), SQLDataType.VARCHAR, this, "");
 
@@ -75,12 +76,14 @@ public class Tables extends TableImpl<Record> {
     public final TableField<Record, String> REFERENCE_GENERATION = createField(DSL.name("reference_generation"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.tables.user_defined_type_catalog</code>.
+     * The column
+     * <code>information_schema.tables.user_defined_type_catalog</code>.
      */
     public final TableField<Record, String> USER_DEFINED_TYPE_CATALOG = createField(DSL.name("user_defined_type_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.tables.user_defined_type_schema</code>.
+     * The column
+     * <code>information_schema.tables.user_defined_type_schema</code>.
      */
     public final TableField<Record, String> USER_DEFINED_TYPE_SCHEMA = createField(DSL.name("user_defined_type_schema"), SQLDataType.VARCHAR, this, "");
 
@@ -139,7 +142,7 @@ public class Tables extends TableImpl<Record> {
 
     @Override
     public Schema getSchema() {
-        return InformationSchema.INFORMATION_SCHEMA;
+        return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
     }
 
     @Override
@@ -148,8 +151,21 @@ public class Tables extends TableImpl<Record> {
     }
 
     @Override
-    public List<UniqueKey<Record>> getKeys() {
-        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_TABLES);
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.asList(Keys.TABLES__SYNTHETIC_FK_TABLES__SYNTHETIC_PK_SCHEMATA);
+    }
+
+    private transient Schemata _schemata;
+
+    /**
+     * Get the implicit join path to the
+     * <code>information_schema.schemata</code> table.
+     */
+    public Schemata schemata() {
+        if (_schemata == null)
+            _schemata = new Schemata(this, Keys.TABLES__SYNTHETIC_FK_TABLES__SYNTHETIC_PK_SCHEMATA);
+
+        return _schemata;
     }
 
     @Override
@@ -160,6 +176,11 @@ public class Tables extends TableImpl<Record> {
     @Override
     public Tables as(Name alias) {
         return new Tables(alias, this);
+    }
+
+    @Override
+    public Tables as(Table<?> alias) {
+        return new Tables(alias.getQualifiedName(), this);
     }
 
     /**
@@ -176,5 +197,13 @@ public class Tables extends TableImpl<Record> {
     @Override
     public Tables rename(Name name) {
         return new Tables(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Tables rename(Table<?> name) {
+        return new Tables(name.getQualifiedName(), null);
     }
 }

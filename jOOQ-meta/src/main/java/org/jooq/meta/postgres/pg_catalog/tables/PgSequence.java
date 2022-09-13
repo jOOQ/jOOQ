@@ -165,6 +165,11 @@ public class PgSequence extends TableImpl<Record> {
         return new PgSequence(alias, this);
     }
 
+    @Override
+    public PgSequence as(Table<?> alias) {
+        return new PgSequence(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -179,5 +184,13 @@ public class PgSequence extends TableImpl<Record> {
     @Override
     public PgSequence rename(Name name) {
         return new PgSequence(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public PgSequence rename(Table<?> name) {
+        return new PgSequence(name.getQualifiedName(), null);
     }
 }

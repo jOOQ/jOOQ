@@ -122,6 +122,11 @@ public class PgDepend extends TableImpl<Record> {
         return new PgDepend(alias, this);
     }
 
+    @Override
+    public PgDepend as(Table<?> alias) {
+        return new PgDepend(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -136,5 +141,13 @@ public class PgDepend extends TableImpl<Record> {
     @Override
     public PgDepend rename(Name name) {
         return new PgDepend(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public PgDepend rename(Table<?> name) {
+        return new PgDepend(name.getQualifiedName(), null);
     }
 }

@@ -4,9 +4,6 @@
 package org.jooq.meta.postgres.information_schema.tables;
 
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -65,12 +62,14 @@ public class Domains extends TableImpl<Record> {
     public final TableField<Record, String> DATA_TYPE = createField(DSL.name("data_type"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.domains.character_maximum_length</code>.
+     * The column
+     * <code>information_schema.domains.character_maximum_length</code>.
      */
     public final TableField<Record, Integer> CHARACTER_MAXIMUM_LENGTH = createField(DSL.name("character_maximum_length"), SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>information_schema.domains.character_octet_length</code>.
+     * The column
+     * <code>information_schema.domains.character_octet_length</code>.
      */
     public final TableField<Record, Integer> CHARACTER_OCTET_LENGTH = createField(DSL.name("character_octet_length"), SQLDataType.INTEGER, this, "");
 
@@ -110,7 +109,8 @@ public class Domains extends TableImpl<Record> {
     public final TableField<Record, Integer> NUMERIC_PRECISION = createField(DSL.name("numeric_precision"), SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>information_schema.domains.numeric_precision_radix</code>.
+     * The column
+     * <code>information_schema.domains.numeric_precision_radix</code>.
      */
     public final TableField<Record, Integer> NUMERIC_PRECISION_RADIX = createField(DSL.name("numeric_precision_radix"), SQLDataType.INTEGER, this, "");
 
@@ -214,17 +214,12 @@ public class Domains extends TableImpl<Record> {
 
     @Override
     public Schema getSchema() {
-        return InformationSchema.INFORMATION_SCHEMA;
+        return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
     }
 
     @Override
     public UniqueKey<Record> getPrimaryKey() {
         return Keys.SYNTHETIC_PK_DOMAINS;
-    }
-
-    @Override
-    public List<UniqueKey<Record>> getKeys() {
-        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_DOMAINS);
     }
 
     @Override
@@ -235,6 +230,11 @@ public class Domains extends TableImpl<Record> {
     @Override
     public Domains as(Name alias) {
         return new Domains(alias, this);
+    }
+
+    @Override
+    public Domains as(Table<?> alias) {
+        return new Domains(alias.getQualifiedName(), this);
     }
 
     /**
@@ -251,5 +251,13 @@ public class Domains extends TableImpl<Record> {
     @Override
     public Domains rename(Name name) {
         return new Domains(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Domains rename(Table<?> name) {
+        return new Domains(name.getQualifiedName(), null);
     }
 }

@@ -197,12 +197,12 @@ public class PgClass extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_class.relacl</code>.
      */
-    public final TableField<Record, String[]> RELACL = createField(DSL.name("relacl"), SQLDataType.VARCHAR.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> RELACL = createField(DSL.name("relacl"), SQLDataType.VARCHAR.array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_class.reloptions</code>.
      */
-    public final TableField<Record, String[]> RELOPTIONS = createField(DSL.name("reloptions"), SQLDataType.CLOB.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> RELOPTIONS = createField(DSL.name("reloptions"), SQLDataType.CLOB.array(), this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -291,6 +291,11 @@ public class PgClass extends TableImpl<Record> {
         return new PgClass(alias, this);
     }
 
+    @Override
+    public PgClass as(Table<?> alias) {
+        return new PgClass(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -305,5 +310,13 @@ public class PgClass extends TableImpl<Record> {
     @Override
     public PgClass rename(Name name) {
         return new PgClass(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public PgClass rename(Table<?> name) {
+        return new PgClass(name.getQualifiedName(), null);
     }
 }

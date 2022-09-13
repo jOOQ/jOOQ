@@ -208,7 +208,7 @@ public class PgType extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_type.typacl</code>.
      */
-    public final TableField<Record, String[]> TYPACL = createField(DSL.name("typacl"), SQLDataType.VARCHAR.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> TYPACL = createField(DSL.name("typacl"), SQLDataType.VARCHAR.array(), this, "");
 
     private PgType(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -286,6 +286,11 @@ public class PgType extends TableImpl<Record> {
         return new PgType(alias, this);
     }
 
+    @Override
+    public PgType as(Table<?> alias) {
+        return new PgType(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -300,5 +305,13 @@ public class PgType extends TableImpl<Record> {
     @Override
     public PgType rename(Name name) {
         return new PgType(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public PgType rename(Table<?> name) {
+        return new PgType(name.getQualifiedName(), null);
     }
 }

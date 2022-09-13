@@ -118,7 +118,7 @@ public class InformationSchema extends SchemaImpl {
 
     @Override
     public final List<Table<?>> getTables() {
-        return Arrays.<Table<?>>asList(
+        return Arrays.asList(
             Attributes.ATTRIBUTES,
             CheckConstraints.CHECK_CONSTRAINTS,
             Columns.COLUMNS,
@@ -131,6 +131,7 @@ public class InformationSchema extends SchemaImpl {
             Schemata.SCHEMATA,
             Sequences.SEQUENCES,
             Tables.TABLES,
-            Views.VIEWS);
+            Views.VIEWS
+        );
     }
 }

@@ -128,6 +128,11 @@ public class PgAttrdef extends TableImpl<Record> {
         return new PgAttrdef(alias, this);
     }
 
+    @Override
+    public PgAttrdef as(Table<?> alias) {
+        return new PgAttrdef(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -142,5 +147,13 @@ public class PgAttrdef extends TableImpl<Record> {
     @Override
     public PgAttrdef rename(Name name) {
         return new PgAttrdef(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public PgAttrdef rename(Table<?> name) {
+        return new PgAttrdef(name.getQualifiedName(), null);
     }
 }

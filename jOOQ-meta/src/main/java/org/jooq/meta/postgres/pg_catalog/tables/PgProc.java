@@ -142,22 +142,22 @@ public class PgProc extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_proc.proargtypes</code>.
      */
-    public final TableField<Record, Long[]> PROARGTYPES = createField(DSL.name("proargtypes"), SQLDataType.BIGINT.getArrayDataType(), this, "");
+    public final TableField<Record, Object[]> PROARGTYPES = createField(DSL.name("proargtypes"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"idvector\"").nullable(false).array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.proallargtypes</code>.
      */
-    public final TableField<Record, Long[]> PROALLARGTYPES = createField(DSL.name("proallargtypes"), SQLDataType.BIGINT.getArrayDataType(), this, "");
+    public final TableField<Record, Long[]> PROALLARGTYPES = createField(DSL.name("proallargtypes"), SQLDataType.BIGINT.array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.proargmodes</code>.
      */
-    public final TableField<Record, String[]> PROARGMODES = createField(DSL.name("proargmodes"), SQLDataType.CHAR.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> PROARGMODES = createField(DSL.name("proargmodes"), SQLDataType.CHAR.array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.proargnames</code>.
      */
-    public final TableField<Record, String[]> PROARGNAMES = createField(DSL.name("proargnames"), SQLDataType.CLOB.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> PROARGNAMES = createField(DSL.name("proargnames"), SQLDataType.CLOB.array(), this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -173,7 +173,7 @@ public class PgProc extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_proc.protrftypes</code>.
      */
-    public final TableField<Record, Long[]> PROTRFTYPES = createField(DSL.name("protrftypes"), SQLDataType.BIGINT.getArrayDataType(), this, "");
+    public final TableField<Record, Long[]> PROTRFTYPES = createField(DSL.name("protrftypes"), SQLDataType.BIGINT.array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.prosrc</code>.
@@ -199,12 +199,12 @@ public class PgProc extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_proc.proconfig</code>.
      */
-    public final TableField<Record, String[]> PROCONFIG = createField(DSL.name("proconfig"), SQLDataType.CLOB.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> PROCONFIG = createField(DSL.name("proconfig"), SQLDataType.CLOB.array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.proacl</code>.
      */
-    public final TableField<Record, String[]> PROACL = createField(DSL.name("proacl"), SQLDataType.VARCHAR.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> PROACL = createField(DSL.name("proacl"), SQLDataType.VARCHAR.array(), this, "");
 
     private PgProc(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -264,6 +264,11 @@ public class PgProc extends TableImpl<Record> {
         return new PgProc(alias, this);
     }
 
+    @Override
+    public PgProc as(Table<?> alias) {
+        return new PgProc(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -278,5 +283,13 @@ public class PgProc extends TableImpl<Record> {
     @Override
     public PgProc rename(Name name) {
         return new PgProc(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public PgProc rename(Table<?> name) {
+        return new PgProc(name.getQualifiedName(), null);
     }
 }

@@ -157,28 +157,22 @@ public class PgAttribute extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_attribute.attacl</code>.
      */
-    public final TableField<Record, String[]> ATTACL = createField(DSL.name("attacl"), SQLDataType.VARCHAR.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> ATTACL = createField(DSL.name("attacl"), SQLDataType.VARCHAR.array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attoptions</code>.
      */
-    public final TableField<Record, String[]> ATTOPTIONS = createField(DSL.name("attoptions"), SQLDataType.CLOB.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> ATTOPTIONS = createField(DSL.name("attoptions"), SQLDataType.CLOB.array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attfdwoptions</code>.
      */
-    public final TableField<Record, String[]> ATTFDWOPTIONS = createField(DSL.name("attfdwoptions"), SQLDataType.CLOB.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> ATTFDWOPTIONS = createField(DSL.name("attfdwoptions"), SQLDataType.CLOB.array(), this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>pg_catalog.pg_attribute.attmissingval</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> ATTMISSINGVAL = createField(DSL.name("attmissingval"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"anyarray\""), this, "");
+    public final TableField<Record, Object[]> ATTMISSINGVAL = createField(DSL.name("attmissingval"), SQLDataType.OTHER.array(), this, "");
 
     private PgAttribute(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -229,6 +223,23 @@ public class PgAttribute extends TableImpl<Record> {
     }
 
     @Override
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.asList(Keys.PG_ATTRIBUTE__SYNTHETIC_FK_PG_ATTRIBUTE__SYNTHETIC_PK_PG_CLASS);
+    }
+
+    private transient PgClass _pgClass;
+
+    /**
+     * Get the implicit join path to the <code>pg_catalog.pg_class</code> table.
+     */
+    public PgClass pgClass() {
+        if (_pgClass == null)
+            _pgClass = new PgClass(this, Keys.PG_ATTRIBUTE__SYNTHETIC_FK_PG_ATTRIBUTE__SYNTHETIC_PK_PG_CLASS);
+
+        return _pgClass;
+    }
+
+    @Override
     public PgAttribute as(String alias) {
         return new PgAttribute(DSL.name(alias), this);
     }
@@ -236,6 +247,11 @@ public class PgAttribute extends TableImpl<Record> {
     @Override
     public PgAttribute as(Name alias) {
         return new PgAttribute(alias, this);
+    }
+
+    @Override
+    public PgAttribute as(Table<?> alias) {
+        return new PgAttribute(alias.getQualifiedName(), this);
     }
 
     /**
@@ -252,5 +268,13 @@ public class PgAttribute extends TableImpl<Record> {
     @Override
     public PgAttribute rename(Name name) {
         return new PgAttribute(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public PgAttribute rename(Table<?> name) {
+        return new PgAttribute(name.getQualifiedName(), null);
     }
 }

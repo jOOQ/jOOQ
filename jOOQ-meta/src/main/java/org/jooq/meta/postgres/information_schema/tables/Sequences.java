@@ -70,7 +70,8 @@ public class Sequences extends TableImpl<Record> {
     public final TableField<Record, Integer> NUMERIC_PRECISION = createField(DSL.name("numeric_precision"), SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>information_schema.sequences.numeric_precision_radix</code>.
+     * The column
+     * <code>information_schema.sequences.numeric_precision_radix</code>.
      */
     public final TableField<Record, Integer> NUMERIC_PRECISION_RADIX = createField(DSL.name("numeric_precision_radix"), SQLDataType.INTEGER, this, "");
 
@@ -113,14 +114,16 @@ public class Sequences extends TableImpl<Record> {
     }
 
     /**
-     * Create an aliased <code>information_schema.sequences</code> table reference
+     * Create an aliased <code>information_schema.sequences</code> table
+     * reference
      */
     public Sequences(String alias) {
         this(DSL.name(alias), SEQUENCES);
     }
 
     /**
-     * Create an aliased <code>information_schema.sequences</code> table reference
+     * Create an aliased <code>information_schema.sequences</code> table
+     * reference
      */
     public Sequences(Name alias) {
         this(alias, SEQUENCES);
@@ -139,7 +142,7 @@ public class Sequences extends TableImpl<Record> {
 
     @Override
     public Schema getSchema() {
-        return InformationSchema.INFORMATION_SCHEMA;
+        return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
     }
 
     @Override
@@ -148,17 +151,21 @@ public class Sequences extends TableImpl<Record> {
     }
 
     @Override
-    public List<UniqueKey<Record>> getKeys() {
-        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_SEQUENCES);
-    }
-
-    @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SEQUENCES__SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA);
+        return Arrays.asList(Keys.SEQUENCES__SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA);
     }
 
+    private transient Schemata _schemata;
+
+    /**
+     * Get the implicit join path to the
+     * <code>information_schema.schemata</code> table.
+     */
     public Schemata schemata() {
-        return new Schemata(this, Keys.SEQUENCES__SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA);
+        if (_schemata == null)
+            _schemata = new Schemata(this, Keys.SEQUENCES__SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA);
+
+        return _schemata;
     }
 
     @Override
@@ -169,6 +176,11 @@ public class Sequences extends TableImpl<Record> {
     @Override
     public Sequences as(Name alias) {
         return new Sequences(alias, this);
+    }
+
+    @Override
+    public Sequences as(Table<?> alias) {
+        return new Sequences(alias.getQualifiedName(), this);
     }
 
     /**
@@ -185,5 +197,13 @@ public class Sequences extends TableImpl<Record> {
     @Override
     public Sequences rename(Name name) {
         return new Sequences(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Sequences rename(Table<?> name) {
+        return new Sequences(name.getQualifiedName(), null);
     }
 }

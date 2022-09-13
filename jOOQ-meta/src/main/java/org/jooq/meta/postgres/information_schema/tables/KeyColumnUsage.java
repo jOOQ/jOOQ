@@ -4,6 +4,9 @@
 package org.jooq.meta.postgres.information_schema.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -16,6 +19,7 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.information_schema.InformationSchema;
+import org.jooq.meta.postgres.information_schema.Keys;
 
 
 /**
@@ -27,7 +31,8 @@ public class KeyColumnUsage extends TableImpl<Record> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>information_schema.key_column_usage</code>
+     * The reference instance of
+     * <code>information_schema.key_column_usage</code>
      */
     public static final KeyColumnUsage KEY_COLUMN_USAGE = new KeyColumnUsage();
 
@@ -40,22 +45,26 @@ public class KeyColumnUsage extends TableImpl<Record> {
     }
 
     /**
-     * The column <code>information_schema.key_column_usage.constraint_catalog</code>.
+     * The column
+     * <code>information_schema.key_column_usage.constraint_catalog</code>.
      */
     public final TableField<Record, String> CONSTRAINT_CATALOG = createField(DSL.name("constraint_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.key_column_usage.constraint_schema</code>.
+     * The column
+     * <code>information_schema.key_column_usage.constraint_schema</code>.
      */
     public final TableField<Record, String> CONSTRAINT_SCHEMA = createField(DSL.name("constraint_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.key_column_usage.constraint_name</code>.
+     * The column
+     * <code>information_schema.key_column_usage.constraint_name</code>.
      */
     public final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("constraint_name"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.key_column_usage.table_catalog</code>.
+     * The column
+     * <code>information_schema.key_column_usage.table_catalog</code>.
      */
     public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("table_catalog"), SQLDataType.VARCHAR, this, "");
 
@@ -75,12 +84,14 @@ public class KeyColumnUsage extends TableImpl<Record> {
     public final TableField<Record, String> COLUMN_NAME = createField(DSL.name("column_name"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.key_column_usage.ordinal_position</code>.
+     * The column
+     * <code>information_schema.key_column_usage.ordinal_position</code>.
      */
     public final TableField<Record, Integer> ORDINAL_POSITION = createField(DSL.name("ordinal_position"), SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>information_schema.key_column_usage.position_in_unique_constraint</code>.
+     * The column
+     * <code>information_schema.key_column_usage.position_in_unique_constraint</code>.
      */
     public final TableField<Record, Integer> POSITION_IN_UNIQUE_CONSTRAINT = createField(DSL.name("position_in_unique_constraint"), SQLDataType.INTEGER, this, "");
 
@@ -93,14 +104,16 @@ public class KeyColumnUsage extends TableImpl<Record> {
     }
 
     /**
-     * Create an aliased <code>information_schema.key_column_usage</code> table reference
+     * Create an aliased <code>information_schema.key_column_usage</code> table
+     * reference
      */
     public KeyColumnUsage(String alias) {
         this(DSL.name(alias), KEY_COLUMN_USAGE);
     }
 
     /**
-     * Create an aliased <code>information_schema.key_column_usage</code> table reference
+     * Create an aliased <code>information_schema.key_column_usage</code> table
+     * reference
      */
     public KeyColumnUsage(Name alias) {
         this(alias, KEY_COLUMN_USAGE);
@@ -119,7 +132,25 @@ public class KeyColumnUsage extends TableImpl<Record> {
 
     @Override
     public Schema getSchema() {
-        return InformationSchema.INFORMATION_SCHEMA;
+        return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
+    }
+
+    @Override
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.asList(Keys.KEY_COLUMN_USAGE__SYNTHETIC_FK_KEY_COLUMN_USAGE__SYNTHETIC_PK_SCHEMATA);
+    }
+
+    private transient Schemata _schemata;
+
+    /**
+     * Get the implicit join path to the
+     * <code>information_schema.schemata</code> table.
+     */
+    public Schemata schemata() {
+        if (_schemata == null)
+            _schemata = new Schemata(this, Keys.KEY_COLUMN_USAGE__SYNTHETIC_FK_KEY_COLUMN_USAGE__SYNTHETIC_PK_SCHEMATA);
+
+        return _schemata;
     }
 
     @Override
@@ -130,6 +161,11 @@ public class KeyColumnUsage extends TableImpl<Record> {
     @Override
     public KeyColumnUsage as(Name alias) {
         return new KeyColumnUsage(alias, this);
+    }
+
+    @Override
+    public KeyColumnUsage as(Table<?> alias) {
+        return new KeyColumnUsage(alias.getQualifiedName(), this);
     }
 
     /**
@@ -146,5 +182,13 @@ public class KeyColumnUsage extends TableImpl<Record> {
     @Override
     public KeyColumnUsage rename(Name name) {
         return new KeyColumnUsage(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public KeyColumnUsage rename(Table<?> name) {
+        return new KeyColumnUsage(name.getQualifiedName(), null);
     }
 }

@@ -137,32 +137,37 @@ public class PgConstraint extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_constraint.conkey</code>.
      */
-    public final TableField<Record, Short[]> CONKEY = createField(DSL.name("conkey"), SQLDataType.SMALLINT.getArrayDataType(), this, "");
+    public final TableField<Record, Short[]> CONKEY = createField(DSL.name("conkey"), SQLDataType.SMALLINT.array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_constraint.confkey</code>.
      */
-    public final TableField<Record, Short[]> CONFKEY = createField(DSL.name("confkey"), SQLDataType.SMALLINT.getArrayDataType(), this, "");
+    public final TableField<Record, Short[]> CONFKEY = createField(DSL.name("confkey"), SQLDataType.SMALLINT.array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_constraint.conpfeqop</code>.
      */
-    public final TableField<Record, Long[]> CONPFEQOP = createField(DSL.name("conpfeqop"), SQLDataType.BIGINT.getArrayDataType(), this, "");
+    public final TableField<Record, Long[]> CONPFEQOP = createField(DSL.name("conpfeqop"), SQLDataType.BIGINT.array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_constraint.conppeqop</code>.
      */
-    public final TableField<Record, Long[]> CONPPEQOP = createField(DSL.name("conppeqop"), SQLDataType.BIGINT.getArrayDataType(), this, "");
+    public final TableField<Record, Long[]> CONPPEQOP = createField(DSL.name("conppeqop"), SQLDataType.BIGINT.array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_constraint.conffeqop</code>.
      */
-    public final TableField<Record, Long[]> CONFFEQOP = createField(DSL.name("conffeqop"), SQLDataType.BIGINT.getArrayDataType(), this, "");
+    public final TableField<Record, Long[]> CONFFEQOP = createField(DSL.name("conffeqop"), SQLDataType.BIGINT.array(), this, "");
+
+    /**
+     * The column <code>pg_catalog.pg_constraint.confdelsetcols</code>.
+     */
+    public final TableField<Record, Short[]> CONFDELSETCOLS = createField(DSL.name("confdelsetcols"), SQLDataType.SMALLINT.array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_constraint.conexclop</code>.
      */
-    public final TableField<Record, Long[]> CONEXCLOP = createField(DSL.name("conexclop"), SQLDataType.BIGINT.getArrayDataType(), this, "");
+    public final TableField<Record, Long[]> CONEXCLOP = createField(DSL.name("conexclop"), SQLDataType.BIGINT.array(), this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -262,6 +267,11 @@ public class PgConstraint extends TableImpl<Record> {
         return new PgConstraint(alias, this);
     }
 
+    @Override
+    public PgConstraint as(Table<?> alias) {
+        return new PgConstraint(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -276,5 +286,13 @@ public class PgConstraint extends TableImpl<Record> {
     @Override
     public PgConstraint rename(Name name) {
         return new PgConstraint(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public PgConstraint rename(Table<?> name) {
+        return new PgConstraint(name.getQualifiedName(), null);
     }
 }

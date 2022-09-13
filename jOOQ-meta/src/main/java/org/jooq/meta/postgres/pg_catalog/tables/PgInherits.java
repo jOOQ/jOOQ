@@ -114,6 +114,11 @@ public class PgInherits extends TableImpl<Record> {
         return new PgInherits(alias, this);
     }
 
+    @Override
+    public PgInherits as(Table<?> alias) {
+        return new PgInherits(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -128,5 +133,13 @@ public class PgInherits extends TableImpl<Record> {
     @Override
     public PgInherits rename(Name name) {
         return new PgInherits(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public PgInherits rename(Table<?> name) {
+        return new PgInherits(name.getQualifiedName(), null);
     }
 }

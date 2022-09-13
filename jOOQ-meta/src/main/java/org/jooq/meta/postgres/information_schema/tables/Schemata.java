@@ -4,9 +4,6 @@
 package org.jooq.meta.postgres.information_schema.tables;
 
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -60,17 +57,20 @@ public class Schemata extends TableImpl<Record> {
     public final TableField<Record, String> SCHEMA_OWNER = createField(DSL.name("schema_owner"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.schemata.default_character_set_catalog</code>.
+     * The column
+     * <code>information_schema.schemata.default_character_set_catalog</code>.
      */
     public final TableField<Record, String> DEFAULT_CHARACTER_SET_CATALOG = createField(DSL.name("default_character_set_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.schemata.default_character_set_schema</code>.
+     * The column
+     * <code>information_schema.schemata.default_character_set_schema</code>.
      */
     public final TableField<Record, String> DEFAULT_CHARACTER_SET_SCHEMA = createField(DSL.name("default_character_set_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.schemata.default_character_set_name</code>.
+     * The column
+     * <code>information_schema.schemata.default_character_set_name</code>.
      */
     public final TableField<Record, String> DEFAULT_CHARACTER_SET_NAME = createField(DSL.name("default_character_set_name"), SQLDataType.VARCHAR, this, "");
 
@@ -88,14 +88,16 @@ public class Schemata extends TableImpl<Record> {
     }
 
     /**
-     * Create an aliased <code>information_schema.schemata</code> table reference
+     * Create an aliased <code>information_schema.schemata</code> table
+     * reference
      */
     public Schemata(String alias) {
         this(DSL.name(alias), SCHEMATA);
     }
 
     /**
-     * Create an aliased <code>information_schema.schemata</code> table reference
+     * Create an aliased <code>information_schema.schemata</code> table
+     * reference
      */
     public Schemata(Name alias) {
         this(alias, SCHEMATA);
@@ -114,17 +116,12 @@ public class Schemata extends TableImpl<Record> {
 
     @Override
     public Schema getSchema() {
-        return InformationSchema.INFORMATION_SCHEMA;
+        return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
     }
 
     @Override
     public UniqueKey<Record> getPrimaryKey() {
         return Keys.SYNTHETIC_PK_SCHEMATA;
-    }
-
-    @Override
-    public List<UniqueKey<Record>> getKeys() {
-        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_SCHEMATA);
     }
 
     @Override
@@ -135,6 +132,11 @@ public class Schemata extends TableImpl<Record> {
     @Override
     public Schemata as(Name alias) {
         return new Schemata(alias, this);
+    }
+
+    @Override
+    public Schemata as(Table<?> alias) {
+        return new Schemata(alias.getQualifiedName(), this);
     }
 
     /**
@@ -151,5 +153,13 @@ public class Schemata extends TableImpl<Record> {
     @Override
     public Schemata rename(Name name) {
         return new Schemata(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Schemata rename(Table<?> name) {
+        return new Schemata(name.getQualifiedName(), null);
     }
 }

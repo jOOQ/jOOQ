@@ -82,12 +82,17 @@ public class PgCollation extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_collation.collcollate</code>.
      */
-    public final TableField<Record, String> COLLCOLLATE = createField(DSL.name("collcollate"), SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> COLLCOLLATE = createField(DSL.name("collcollate"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>pg_catalog.pg_collation.collctype</code>.
      */
-    public final TableField<Record, String> COLLCTYPE = createField(DSL.name("collctype"), SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> COLLCTYPE = createField(DSL.name("collctype"), SQLDataType.CLOB, this, "");
+
+    /**
+     * The column <code>pg_catalog.pg_collation.colliculocale</code>.
+     */
+    public final TableField<Record, String> COLLICULOCALE = createField(DSL.name("colliculocale"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>pg_catalog.pg_collation.collversion</code>.
@@ -152,6 +157,11 @@ public class PgCollation extends TableImpl<Record> {
         return new PgCollation(alias, this);
     }
 
+    @Override
+    public PgCollation as(Table<?> alias) {
+        return new PgCollation(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -166,5 +176,13 @@ public class PgCollation extends TableImpl<Record> {
     @Override
     public PgCollation rename(Name name) {
         return new PgCollation(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public PgCollation rename(Table<?> name) {
+        return new PgCollation(name.getQualifiedName(), null);
     }
 }

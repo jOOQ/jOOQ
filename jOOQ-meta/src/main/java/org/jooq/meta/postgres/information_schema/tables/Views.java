@@ -89,7 +89,8 @@ public class Views extends TableImpl<Record> {
     public final TableField<Record, String> IS_TRIGGER_DELETABLE = createField(DSL.name("is_trigger_deletable"), SQLDataType.VARCHAR(3), this, "");
 
     /**
-     * The column <code>information_schema.views.is_trigger_insertable_into</code>.
+     * The column
+     * <code>information_schema.views.is_trigger_insertable_into</code>.
      */
     public final TableField<Record, String> IS_TRIGGER_INSERTABLE_INTO = createField(DSL.name("is_trigger_insertable_into"), SQLDataType.VARCHAR(3), this, "");
 
@@ -128,16 +129,37 @@ public class Views extends TableImpl<Record> {
 
     @Override
     public Schema getSchema() {
-        return InformationSchema.INFORMATION_SCHEMA;
+        return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
     }
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.VIEWS__SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES);
+        return Arrays.asList(Keys.VIEWS__SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_SCHEMATA, Keys.VIEWS__SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES);
     }
 
+    private transient Schemata _schemata;
+    private transient Tables _tables;
+
+    /**
+     * Get the implicit join path to the
+     * <code>information_schema.schemata</code> table.
+     */
+    public Schemata schemata() {
+        if (_schemata == null)
+            _schemata = new Schemata(this, Keys.VIEWS__SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_SCHEMATA);
+
+        return _schemata;
+    }
+
+    /**
+     * Get the implicit join path to the <code>information_schema.tables</code>
+     * table.
+     */
     public Tables tables() {
-        return new Tables(this, Keys.VIEWS__SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES);
+        if (_tables == null)
+            _tables = new Tables(this, Keys.VIEWS__SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES);
+
+        return _tables;
     }
 
     @Override
@@ -148,6 +170,11 @@ public class Views extends TableImpl<Record> {
     @Override
     public Views as(Name alias) {
         return new Views(alias, this);
+    }
+
+    @Override
+    public Views as(Table<?> alias) {
+        return new Views(alias.getQualifiedName(), this);
     }
 
     /**
@@ -164,5 +191,13 @@ public class Views extends TableImpl<Record> {
     @Override
     public Views rename(Name name) {
         return new Views(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Views rename(Table<?> name) {
+        return new Views(name.getQualifiedName(), null);
     }
 }

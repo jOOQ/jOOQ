@@ -172,7 +172,6 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgClass;
 import org.jooq.meta.postgres.pg_catalog.tables.PgConstraint;
 import org.jooq.meta.postgres.pg_catalog.tables.PgIndex;
 import org.jooq.meta.postgres.pg_catalog.tables.PgInherits;
-import org.jooq.meta.postgres.pg_catalog.tables.PgNamespace;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 import org.jooq.tools.JooqLogger;
 
@@ -202,14 +201,13 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         List<IndexDefinition> result = new ArrayList<>();
 
         PgIndex i = PG_INDEX.as("i");
-        PgClass trel = PG_CLASS.as("trel");
         PgConstraint c = PG_CONSTRAINT.as("c");
 
         indexLoop:
         for (Record6<String, String, String, Boolean, String[], Integer[]> record : create()
                 .select(
-                    trel.pgNamespace().NSPNAME,
-                    trel.RELNAME,
+                    i.tableClass().pgNamespace().NSPNAME,
+                    i.tableClass().RELNAME,
                     i.indexClass().RELNAME,
                     i.INDISUNIQUE,
                     array(
@@ -220,21 +218,20 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     field("{0}::int[]", Integer[].class, i.INDOPTION).as("asc_or_desc")
                 )
                 .from(i)
-                .join(trel).on(trel.OID.eq(i.INDRELID))
-                .where(trel.pgNamespace().NSPNAME.in(getInputSchemata()))
+                .where(i.tableClass().pgNamespace().NSPNAME.in(getInputSchemata()))
                 .and(getIncludeSystemIndexes()
                     ? noCondition()
-                    : row(trel.pgNamespace().NSPNAME, i.indexClass().RELNAME).notIn(
+                    : row(i.tableClass().pgNamespace().NSPNAME, i.indexClass().RELNAME).notIn(
                         select(c.pgNamespace().NSPNAME, c.CONNAME).from(c)
                       ))
                 .orderBy(1, 2, 3)) {
 
-            final SchemaDefinition tableSchema = getSchema(record.get(trel.pgNamespace().NSPNAME));
+            final SchemaDefinition tableSchema = getSchema(record.get(i.tableClass().pgNamespace().NSPNAME));
             if (tableSchema == null)
                 continue indexLoop;
 
             final String indexName = record.get(i.indexClass().RELNAME);
-            final String tableName = record.get(trel.RELNAME);
+            final String tableName = record.get(i.tableClass().RELNAME);
             final String[] columns = record.value5();
             final Integer[] options = record.value6();
             final TableDefinition table = getTable(tableSchema, tableName);
@@ -485,11 +482,9 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                             .else_(inline(TableType.TABLE.name())).as("table_type"),
                         VIEWS.VIEW_DEFINITION)
                     .from(TABLES)
-                    .join(PG_NAMESPACE)
-                        .on(TABLES.TABLE_SCHEMA.eq(PG_NAMESPACE.NSPNAME))
                     .join(PG_CLASS)
                         .on(PG_CLASS.RELNAME.eq(TABLES.TABLE_NAME))
-                        .and(PG_CLASS.RELNAMESPACE.eq(PG_NAMESPACE.OID))
+                        .and(PG_CLASS.pgNamespace().NSPNAME.eq(TABLES.TABLE_SCHEMA))
                     .leftJoin(PG_DESCRIPTION)
                         .on(PG_DESCRIPTION.OBJOID.eq(PG_CLASS.OID))
                         .and(PG_DESCRIPTION.OBJSUBID.eq(0))
@@ -503,11 +498,9 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     .and(canUseTupleInPredicates()
                         ? row(TABLES.TABLE_SCHEMA, TABLES.TABLE_NAME).notIn(
                             select(
-                                PG_NAMESPACE.NSPNAME,
+                                PG_CLASS.pgNamespace().NSPNAME,
                                 PG_CLASS.RELNAME)
                             .from(PG_CLASS)
-                            .join(PG_NAMESPACE)
-                                .on(PG_CLASS.RELNAMESPACE.eq(PG_NAMESPACE.OID))
                             .where(PG_CLASS.RELKIND.eq(inline("m"))))
                         : noCondition()
                     )
@@ -518,19 +511,17 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 //         from information_schema with "name" types from pg_catalog
                 .unionAll(
                     select(
-                        field("{0}::varchar", PG_NAMESPACE.NSPNAME.getDataType(), PG_NAMESPACE.NSPNAME),
+                        field("{0}::varchar", PG_CLASS.pgNamespace().NSPNAME.getDataType(), PG_CLASS.pgNamespace().NSPNAME),
                         field("{0}::varchar", PG_CLASS.RELNAME.getDataType(), PG_CLASS.RELNAME),
                         field("{0}::varchar", PG_CLASS.RELNAME.getDataType(), PG_CLASS.RELNAME),
                         PG_DESCRIPTION.DESCRIPTION,
                         inline(TableType.MATERIALIZED_VIEW.name()).as("table_type"),
                         inline(""))
                     .from(PG_CLASS)
-                    .join(PG_NAMESPACE)
-                        .on(PG_CLASS.RELNAMESPACE.eq(PG_NAMESPACE.OID))
                     .leftOuterJoin(PG_DESCRIPTION)
                         .on(PG_DESCRIPTION.OBJOID.eq(PG_CLASS.OID))
                         .and(PG_DESCRIPTION.OBJSUBID.eq(0))
-                    .where(PG_NAMESPACE.NSPNAME.in(getInputSchemata()))
+                    .where(PG_CLASS.pgNamespace().NSPNAME.in(getInputSchemata()))
                     .and(PG_CLASS.RELKIND.eq(inline("m"))))
 
                 // [#3375] [#3376] Include table-valued functions in the set of tables
@@ -545,8 +536,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                             inline(TableType.FUNCTION.name()).as("table_type"),
                             inline(""))
                         .from(ROUTINES)
-                        .join(PG_NAMESPACE).on(ROUTINES.SPECIFIC_SCHEMA.eq(PG_NAMESPACE.NSPNAME))
-                        .join(PG_PROC).on(PG_PROC.PRONAMESPACE.eq(PG_NAMESPACE.OID))
+                        .join(PG_PROC).on(PG_PROC.pgNamespace().NSPNAME.eq(ROUTINES.SPECIFIC_SCHEMA))
                                       .and(PG_PROC.PRONAME.concat("_").concat(PG_PROC.OID).eq(ROUTINES.SPECIFIC_NAME))
                         .where(ROUTINES.ROUTINE_SCHEMA.in(getInputSchemata()))
                         .and(PG_PROC.PRORETSET)
@@ -581,30 +571,26 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         }
 
         PgClass ct = PG_CLASS.as("ct");
-        PgNamespace cn = PG_NAMESPACE.as("cn");
         PgInherits i = PG_INHERITS.as("i");
         PgClass pt = PG_CLASS.as("pt");
-        PgNamespace pn = PG_NAMESPACE.as("pn");
 
         // [#2916] If window functions are not supported (prior to PostgreSQL 8.4), then
         // don't execute the following query:
         if (is84()) {
             for (Record5<String, String, String, String, Integer> inheritance : create()
-                    .select(
-                        cn.NSPNAME,
-                        ct.RELNAME,
-                        pn.NSPNAME,
-                        pt.RELNAME,
-                        max(i.INHSEQNO).over().partitionBy(i.INHRELID).as("m")
-                    )
-                    .from(ct)
-                    .join(cn).on(ct.RELNAMESPACE.eq(cn.OID))
-                    .join(i).on(i.INHRELID.eq(ct.OID))
-                    .join(pt).on(i.INHPARENT.eq(pt.OID))
-                    .join(pn).on(pt.RELNAMESPACE.eq(pn.OID))
-                    .where(cn.NSPNAME.in(getInputSchemata()))
-                    .and(pn.NSPNAME.in(getInputSchemata()))
-                    .fetch()) {
+                .select(
+                    ct.pgNamespace().NSPNAME,
+                    ct.RELNAME,
+                    pt.pgNamespace().NSPNAME,
+                    pt.RELNAME,
+                    max(i.INHSEQNO).over().partitionBy(i.INHRELID).as("m")
+                )
+                .from(ct)
+                .join(i).on(i.INHRELID.eq(ct.OID))
+                .join(pt).on(i.INHPARENT.eq(pt.OID))
+                .where(ct.pgNamespace().NSPNAME.in(getInputSchemata()))
+                .and(pt.pgNamespace().NSPNAME.in(getInputSchemata()))
+            ) {
 
                 Name child = name(inheritance.value1(), inheritance.value2());
                 Name parent = name(inheritance.value3(), inheritance.value4());
@@ -795,7 +781,6 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         List<DomainDefinition> result = new ArrayList<>();
 
         if (existAll(PG_CONSTRAINT, PG_TYPE)) {
-            PgNamespace n = PG_NAMESPACE.as("n");
             PgConstraint c = PG_CONSTRAINT.as("c");
             PgType d = PG_TYPE.as("d");
             PgType b = PG_TYPE.as("b");
@@ -818,12 +803,10 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                              when(c.OID.isNotNull(), array(constraintDef))
                          )
                         .from(d)
-                        .join(n)
-                            .on(n.OID.eq(d.TYPNAMESPACE))
                         .leftJoin(c)
                             .on(d.OID.eq(c.CONTYPID))
                         .where(d.TYPTYPE.eq("d"))
-                        .and(n.NSPNAME.in(getInputSchemata()))
+                        .and(d.pgNamespace().NSPNAME.in(getInputSchemata()))
                     .unionAll(
                          select(
                              field(name("domains", "domain_id"), Long.class),
@@ -840,7 +823,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                             .on(d.OID.eq(c.CONTYPID))
                     ))
                     .select(
-                        n.NSPNAME,
+                        d.pgNamespace().NSPNAME,
                         d.TYPNAME,
                         d.TYPNOTNULL,
                         d.TYPDEFAULT,
@@ -857,13 +840,11 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                         .and(field(name("domains", "domain_id")).eq(d.OID))
                     .join(b)
                         .on(field(name("domains", "base_id")).eq(b.OID))
-                    .join(n)
-                        .on(n.OID.eq(d.TYPNAMESPACE))
                     .where(d.TYPTYPE.eq("d"))
-                    .and(n.NSPNAME.in(getInputSchemata()))
-                    .orderBy(n.NSPNAME, d.TYPNAME)) {
-
-                SchemaDefinition schema = getSchema(record.get(n.NSPNAME));
+                    .and(d.pgNamespace().NSPNAME.in(getInputSchemata()))
+                    .orderBy(d.pgNamespace().NSPNAME, d.TYPNAME)
+            ) {
+                SchemaDefinition schema = getSchema(record.get(d.pgNamespace().NSPNAME));
 
                 DataTypeDefinition baseType = new DefaultDataTypeDefinition(
                     this,
@@ -875,7 +856,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                    !record.get(d.TYPNOTNULL, boolean.class),
                     record.get(d.TYPDEFAULT),
                     name(
-                        record.get(n.NSPNAME),
+                        record.get(d.pgNamespace().NSPNAME),
                         record.get(b.TYPNAME)
                     )
                 );
@@ -942,7 +923,6 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
         Routines r1 = ROUTINES.as("r1");
         PgType retT = PG_TYPE.as("rett");
-        PgNamespace retN = PG_NAMESPACE.as("retn");
 
         // [#7785] The pg_proc.proisagg column has been replaced incompatibly in PostgreSQL 11
         Field<Boolean> isAgg = (is11()
@@ -1000,11 +980,10 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             .from(r1)
 
             // [#3375] Exclude table-valued functions as they're already generated as tables
-            .join(PG_NAMESPACE).on(PG_NAMESPACE.NSPNAME.eq(r1.SPECIFIC_SCHEMA))
-            .join(PG_PROC).on(PG_PROC.PRONAMESPACE.eq(PG_NAMESPACE.OID))
-                          .and(nameconcatoid(r1))
+            .join(PG_PROC)
+                .on(PG_PROC.pgNamespace().NSPNAME.eq(r1.SPECIFIC_SCHEMA))
+                .and(nameconcatoid(r1))
             .leftJoin(retT).on(PG_PROC.PRORETTYPE.eq(retT.OID))
-            .leftJoin(retN).on(retT.TYPNAMESPACE.eq(retN.OID))
             .where(r1.ROUTINE_SCHEMA.in(getInputSchemata()))
             .and(tableValuedFunctions()
                     ? condition(not(PG_PROC.PRORETSET))

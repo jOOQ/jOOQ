@@ -62,7 +62,7 @@ public class PgNamespace extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_namespace.nspacl</code>.
      */
-    public final TableField<Record, String[]> NSPACL = createField(DSL.name("nspacl"), SQLDataType.VARCHAR.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> NSPACL = createField(DSL.name("nspacl"), SQLDataType.VARCHAR.array(), this, "");
 
     private PgNamespace(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -122,6 +122,11 @@ public class PgNamespace extends TableImpl<Record> {
         return new PgNamespace(alias, this);
     }
 
+    @Override
+    public PgNamespace as(Table<?> alias) {
+        return new PgNamespace(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -136,5 +141,13 @@ public class PgNamespace extends TableImpl<Record> {
     @Override
     public PgNamespace rename(Name name) {
         return new PgNamespace(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public PgNamespace rename(Table<?> name) {
+        return new PgNamespace(name.getQualifiedName(), null);
     }
 }

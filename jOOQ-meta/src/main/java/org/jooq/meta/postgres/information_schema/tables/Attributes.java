@@ -80,22 +80,26 @@ public class Attributes extends TableImpl<Record> {
     public final TableField<Record, String> DATA_TYPE = createField(DSL.name("data_type"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.attributes.character_maximum_length</code>.
+     * The column
+     * <code>information_schema.attributes.character_maximum_length</code>.
      */
     public final TableField<Record, Integer> CHARACTER_MAXIMUM_LENGTH = createField(DSL.name("character_maximum_length"), SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>information_schema.attributes.character_octet_length</code>.
+     * The column
+     * <code>information_schema.attributes.character_octet_length</code>.
      */
     public final TableField<Record, Integer> CHARACTER_OCTET_LENGTH = createField(DSL.name("character_octet_length"), SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>information_schema.attributes.character_set_catalog</code>.
+     * The column
+     * <code>information_schema.attributes.character_set_catalog</code>.
      */
     public final TableField<Record, String> CHARACTER_SET_CATALOG = createField(DSL.name("character_set_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.attributes.character_set_schema</code>.
+     * The column
+     * <code>information_schema.attributes.character_set_schema</code>.
      */
     public final TableField<Record, String> CHARACTER_SET_SCHEMA = createField(DSL.name("character_set_schema"), SQLDataType.VARCHAR, this, "");
 
@@ -125,7 +129,8 @@ public class Attributes extends TableImpl<Record> {
     public final TableField<Record, Integer> NUMERIC_PRECISION = createField(DSL.name("numeric_precision"), SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>information_schema.attributes.numeric_precision_radix</code>.
+     * The column
+     * <code>information_schema.attributes.numeric_precision_radix</code>.
      */
     public final TableField<Record, Integer> NUMERIC_PRECISION_RADIX = createField(DSL.name("numeric_precision_radix"), SQLDataType.INTEGER, this, "");
 
@@ -150,12 +155,14 @@ public class Attributes extends TableImpl<Record> {
     public final TableField<Record, Integer> INTERVAL_PRECISION = createField(DSL.name("interval_precision"), SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>information_schema.attributes.attribute_udt_catalog</code>.
+     * The column
+     * <code>information_schema.attributes.attribute_udt_catalog</code>.
      */
     public final TableField<Record, String> ATTRIBUTE_UDT_CATALOG = createField(DSL.name("attribute_udt_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.attributes.attribute_udt_schema</code>.
+     * The column
+     * <code>information_schema.attributes.attribute_udt_schema</code>.
      */
     public final TableField<Record, String> ATTRIBUTE_UDT_SCHEMA = createField(DSL.name("attribute_udt_schema"), SQLDataType.VARCHAR, this, "");
 
@@ -180,7 +187,8 @@ public class Attributes extends TableImpl<Record> {
     public final TableField<Record, String> SCOPE_NAME = createField(DSL.name("scope_name"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.attributes.maximum_cardinality</code>.
+     * The column
+     * <code>information_schema.attributes.maximum_cardinality</code>.
      */
     public final TableField<Record, Integer> MAXIMUM_CARDINALITY = createField(DSL.name("maximum_cardinality"), SQLDataType.INTEGER, this, "");
 
@@ -190,7 +198,8 @@ public class Attributes extends TableImpl<Record> {
     public final TableField<Record, String> DTD_IDENTIFIER = createField(DSL.name("dtd_identifier"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.attributes.is_derived_reference_attribute</code>.
+     * The column
+     * <code>information_schema.attributes.is_derived_reference_attribute</code>.
      */
     public final TableField<Record, String> IS_DERIVED_REFERENCE_ATTRIBUTE = createField(DSL.name("is_derived_reference_attribute"), SQLDataType.VARCHAR(3), this, "");
 
@@ -203,14 +212,16 @@ public class Attributes extends TableImpl<Record> {
     }
 
     /**
-     * Create an aliased <code>information_schema.attributes</code> table reference
+     * Create an aliased <code>information_schema.attributes</code> table
+     * reference
      */
     public Attributes(String alias) {
         this(DSL.name(alias), ATTRIBUTES);
     }
 
     /**
-     * Create an aliased <code>information_schema.attributes</code> table reference
+     * Create an aliased <code>information_schema.attributes</code> table
+     * reference
      */
     public Attributes(Name alias) {
         this(alias, ATTRIBUTES);
@@ -229,7 +240,7 @@ public class Attributes extends TableImpl<Record> {
 
     @Override
     public Schema getSchema() {
-        return InformationSchema.INFORMATION_SCHEMA;
+        return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
     }
 
     @Override
@@ -240,6 +251,11 @@ public class Attributes extends TableImpl<Record> {
     @Override
     public Attributes as(Name alias) {
         return new Attributes(alias, this);
+    }
+
+    @Override
+    public Attributes as(Table<?> alias) {
+        return new Attributes(alias.getQualifiedName(), this);
     }
 
     /**
@@ -256,5 +272,13 @@ public class Attributes extends TableImpl<Record> {
     @Override
     public Attributes rename(Name name) {
         return new Attributes(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Attributes rename(Table<?> name) {
+        return new Attributes(name.getQualifiedName(), null);
     }
 }

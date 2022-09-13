@@ -172,7 +172,8 @@ public class PostgresMaterializedViewDefinition extends AbstractTableDefinition 
                 .and(c.RELKIND.eq(inline("m")))
                 .and(nc.NSPNAME.in(getSchema().getName()))
                 .and(c.RELNAME.eq(getName())))
-            .orderBy(a.ATTNUM)) {
+            .orderBy(a.ATTNUM)
+        ) {
 
             SchemaDefinition typeSchema = null;
 

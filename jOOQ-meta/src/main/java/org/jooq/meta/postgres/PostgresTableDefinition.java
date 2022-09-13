@@ -51,9 +51,7 @@ import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRIBUTE;
-import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CLASS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_DESCRIPTION;
-import static org.jooq.meta.postgres.pg_catalog.Tables.PG_NAMESPACE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_TYPE;
 
 import java.sql.SQLException;
@@ -185,18 +183,14 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 ).as(COLUMNS.UDT_NAME),
                 PG_DESCRIPTION.DESCRIPTION)
             .from(COLUMNS)
-            .join(PG_NAMESPACE)
-                .on(COLUMNS.TABLE_SCHEMA.eq(PG_NAMESPACE.NSPNAME))
-            .join(PG_CLASS)
-                .on(PG_CLASS.RELNAME.eq(COLUMNS.TABLE_NAME))
-                .and(PG_CLASS.RELNAMESPACE.eq(PG_NAMESPACE.OID))
             .join(PG_ATTRIBUTE)
-                .on(PG_ATTRIBUTE.ATTRELID.eq(PG_CLASS.OID))
-                .and(PG_ATTRIBUTE.ATTNAME.eq(COLUMNS.COLUMN_NAME))
+                .on(PG_ATTRIBUTE.ATTNAME.eq(COLUMNS.COLUMN_NAME))
+                .and(PG_ATTRIBUTE.pgClass().RELNAME.eq(COLUMNS.TABLE_NAME))
+                .and(PG_ATTRIBUTE.pgClass().pgNamespace().NSPNAME.eq(COLUMNS.TABLE_SCHEMA))
             .join(PG_TYPE)
                 .on(PG_ATTRIBUTE.ATTTYPID.eq(PG_TYPE.OID))
             .leftJoin(PG_DESCRIPTION)
-                .on(PG_DESCRIPTION.OBJOID.eq(PG_CLASS.OID))
+                .on(PG_DESCRIPTION.OBJOID.eq(PG_ATTRIBUTE.ATTRELID))
                 .and(PG_DESCRIPTION.OBJSUBID.eq(COLUMNS.ORDINAL_POSITION))
             .where(COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()))
             .and(COLUMNS.TABLE_NAME.equal(getName()))

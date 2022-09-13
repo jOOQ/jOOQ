@@ -114,6 +114,11 @@ public class PgDescription extends TableImpl<Record> {
         return new PgDescription(alias, this);
     }
 
+    @Override
+    public PgDescription as(Table<?> alias) {
+        return new PgDescription(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -128,5 +133,13 @@ public class PgDescription extends TableImpl<Record> {
     @Override
     public PgDescription rename(Name name) {
         return new PgDescription(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public PgDescription rename(Table<?> name) {
+        return new PgDescription(name.getQualifiedName(), null);
     }
 }

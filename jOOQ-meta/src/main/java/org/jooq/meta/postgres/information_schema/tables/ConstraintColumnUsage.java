@@ -27,7 +27,8 @@ public class ConstraintColumnUsage extends TableImpl<Record> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>information_schema.constraint_column_usage</code>
+     * The reference instance of
+     * <code>information_schema.constraint_column_usage</code>
      */
     public static final ConstraintColumnUsage CONSTRAINT_COLUMN_USAGE = new ConstraintColumnUsage();
 
@@ -40,37 +41,44 @@ public class ConstraintColumnUsage extends TableImpl<Record> {
     }
 
     /**
-     * The column <code>information_schema.constraint_column_usage.table_catalog</code>.
+     * The column
+     * <code>information_schema.constraint_column_usage.table_catalog</code>.
      */
     public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("table_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.constraint_column_usage.table_schema</code>.
+     * The column
+     * <code>information_schema.constraint_column_usage.table_schema</code>.
      */
     public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("table_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.constraint_column_usage.table_name</code>.
+     * The column
+     * <code>information_schema.constraint_column_usage.table_name</code>.
      */
     public final TableField<Record, String> TABLE_NAME = createField(DSL.name("table_name"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.constraint_column_usage.column_name</code>.
+     * The column
+     * <code>information_schema.constraint_column_usage.column_name</code>.
      */
     public final TableField<Record, String> COLUMN_NAME = createField(DSL.name("column_name"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.constraint_column_usage.constraint_catalog</code>.
+     * The column
+     * <code>information_schema.constraint_column_usage.constraint_catalog</code>.
      */
     public final TableField<Record, String> CONSTRAINT_CATALOG = createField(DSL.name("constraint_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.constraint_column_usage.constraint_schema</code>.
+     * The column
+     * <code>information_schema.constraint_column_usage.constraint_schema</code>.
      */
     public final TableField<Record, String> CONSTRAINT_SCHEMA = createField(DSL.name("constraint_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>information_schema.constraint_column_usage.constraint_name</code>.
+     * The column
+     * <code>information_schema.constraint_column_usage.constraint_name</code>.
      */
     public final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("constraint_name"), SQLDataType.VARCHAR, this, "");
 
@@ -83,21 +91,24 @@ public class ConstraintColumnUsage extends TableImpl<Record> {
     }
 
     /**
-     * Create an aliased <code>information_schema.constraint_column_usage</code> table reference
+     * Create an aliased <code>information_schema.constraint_column_usage</code>
+     * table reference
      */
     public ConstraintColumnUsage(String alias) {
         this(DSL.name(alias), CONSTRAINT_COLUMN_USAGE);
     }
 
     /**
-     * Create an aliased <code>information_schema.constraint_column_usage</code> table reference
+     * Create an aliased <code>information_schema.constraint_column_usage</code>
+     * table reference
      */
     public ConstraintColumnUsage(Name alias) {
         this(alias, CONSTRAINT_COLUMN_USAGE);
     }
 
     /**
-     * Create a <code>information_schema.constraint_column_usage</code> table reference
+     * Create a <code>information_schema.constraint_column_usage</code> table
+     * reference
      */
     public ConstraintColumnUsage() {
         this(DSL.name("constraint_column_usage"), null);
@@ -109,7 +120,7 @@ public class ConstraintColumnUsage extends TableImpl<Record> {
 
     @Override
     public Schema getSchema() {
-        return InformationSchema.INFORMATION_SCHEMA;
+        return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
     }
 
     @Override
@@ -120,6 +131,11 @@ public class ConstraintColumnUsage extends TableImpl<Record> {
     @Override
     public ConstraintColumnUsage as(Name alias) {
         return new ConstraintColumnUsage(alias, this);
+    }
+
+    @Override
+    public ConstraintColumnUsage as(Table<?> alias) {
+        return new ConstraintColumnUsage(alias.getQualifiedName(), this);
     }
 
     /**
@@ -136,5 +152,13 @@ public class ConstraintColumnUsage extends TableImpl<Record> {
     @Override
     public ConstraintColumnUsage rename(Name name) {
         return new ConstraintColumnUsage(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public ConstraintColumnUsage rename(Table<?> name) {
+        return new ConstraintColumnUsage(name.getQualifiedName(), null);
     }
 }

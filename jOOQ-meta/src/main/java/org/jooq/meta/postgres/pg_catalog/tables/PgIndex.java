@@ -70,6 +70,11 @@ public class PgIndex extends TableImpl<Record> {
     public final TableField<Record, Boolean> INDISUNIQUE = createField(DSL.name("indisunique"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
+     * The column <code>pg_catalog.pg_index.indnullsnotdistinct</code>.
+     */
+    public final TableField<Record, Boolean> INDNULLSNOTDISTINCT = createField(DSL.name("indnullsnotdistinct"), SQLDataType.BOOLEAN.nullable(false), this, "");
+
+    /**
      * The column <code>pg_catalog.pg_index.indisprimary</code>.
      */
     public final TableField<Record, Boolean> INDISPRIMARY = createField(DSL.name("indisprimary"), SQLDataType.BOOLEAN.nullable(false), this, "");
@@ -117,22 +122,22 @@ public class PgIndex extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_index.indkey</code>.
      */
-    public final TableField<Record, Object[]> INDKEY = createField(DSL.name("indkey"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"int2vector\"").getArrayDataType(), this, "");
+    public final TableField<Record, Object[]> INDKEY = createField(DSL.name("indkey"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"nt2vector\"").nullable(false).array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indcollation</code>.
      */
-    public final TableField<Record, Long[]> INDCOLLATION = createField(DSL.name("indcollation"), SQLDataType.BIGINT.getArrayDataType(), this, "");
+    public final TableField<Record, Object[]> INDCOLLATION = createField(DSL.name("indcollation"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"idvector\"").nullable(false).array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indclass</code>.
      */
-    public final TableField<Record, Long[]> INDCLASS = createField(DSL.name("indclass"), SQLDataType.BIGINT.getArrayDataType(), this, "");
+    public final TableField<Record, Object[]> INDCLASS = createField(DSL.name("indclass"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"idvector\"").nullable(false).array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indoption</code>.
      */
-    public final TableField<Record, Object[]> INDOPTION = createField(DSL.name("indoption"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"int2vector\"").getArrayDataType(), this, "");
+    public final TableField<Record, Object[]> INDOPTION = createField(DSL.name("indoption"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"nt2vector\"").nullable(false).array(), this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -239,6 +244,11 @@ public class PgIndex extends TableImpl<Record> {
         return new PgIndex(alias, this);
     }
 
+    @Override
+    public PgIndex as(Table<?> alias) {
+        return new PgIndex(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -253,5 +263,13 @@ public class PgIndex extends TableImpl<Record> {
     @Override
     public PgIndex rename(Name name) {
         return new PgIndex(name, null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public PgIndex rename(Table<?> name) {
+        return new PgIndex(name.getQualifiedName(), null);
     }
 }

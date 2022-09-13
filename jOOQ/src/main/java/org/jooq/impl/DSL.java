@@ -26425,13 +26425,28 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      * <p>
      * An important limitation is that correlating <code>MULTISET</code>
-     * subqueries currently only works on dialects that support correlating
-     * derived tables. This excludes:
+     * subqueries currently only fully works on dialects that support
+     * correlating derived tables. This excludes:
      * <ul>
      * <li>{@link SQLDialect#DB2}</li>
      * <li>{@link SQLDialect#H2}</li>
      * <li>{@link SQLDialect#MARIADB}</li>
      * <li>{@link SQLDialect#MYSQL_5_7}</li>
+     * </ul>
+     * <p>
+     * On the above dialects, a simplified emulation is implemented, which does
+     * not support the following inside of <code>MULTISET</code>:
+     * <ul>
+     * <li><code>SELECT DISTINCT</code></li>
+     * <li>Aggregate functions</li>
+     * <li>Window functions</li>
+     * <li><code>GROUP BY</code></li>
+     * <li><code>HAVING</code></li>
+     * <li><code>WINDOW</code></li>
+     * <li><code>QUALIFY</code></li>
+     * <li><code>OFFSET</code></li>
+     * <li><code>LIMIT</code></li>
+     * <li><code>UNION</code> and other set operations</li>
      * </ul>
      * <p>
      * See also <a href=

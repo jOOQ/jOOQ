@@ -525,11 +525,14 @@ public class PostgresUtils {
                 toPGString0((byte[]) o, sb);
 
             // [#252] Multi dimensional array support
-            else if (o instanceof Object[] a)
+            else if (o instanceof Object[] a) {
+
+                // [#252] In PostgreSQL "maths" ∅ = {∅}...
                 if (isDeepEmpty(a))
                     ;
                 else
                     toPGArrayString0(a, sb);
+            }
             else
                 sb.append("\"")
                   .append(StringUtils.replace(StringUtils.replace(toPGString(o), "\\", "\\\\"), "\"", "\\\""))

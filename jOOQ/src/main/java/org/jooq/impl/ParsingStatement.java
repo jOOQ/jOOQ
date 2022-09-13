@@ -344,9 +344,11 @@ final class ParsingStatement implements CallableStatement {
     // XXX: Prepared statement execution
     // -------------------------------------------------------------------------
 
-    private final PreparedStatement last() throws SQLException {
+    private final Statement last() throws SQLException {
         if (last != null)
             return last;
+        else if (statement != null)
+            return statement;
         else
             throw new SQLException("No PreparedStatement is available yet");
     }

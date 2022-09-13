@@ -2279,31 +2279,16 @@ public class JavaGenerator extends AbstractGenerator {
                             }
                             else if (isArrayOfUDTs) {
                                 final String columnTypeFull = getJavaType(t.getType(resolver(out, Mode.POJO)), out, Mode.POJO);
-                                final String columnType = out.ref(columnTypeFull);
-                                final String brackets = columnType.substring(columnType.indexOf("[]"));
+                                final String brackets = columnTypeFull.substring(columnTypeFull.indexOf("[]"));
 
                                 String mapping = udtArrayElementType + "::new";
                                 String arrayType = udtArrayElementType + "[]";
-                                int dimensions = brackets.length() / 2 - 1;
 
-
-                                for (; dimensions > 0; dimensions--) {
+                                for (int dimensions = brackets.length() / 2 - 1; dimensions > 0; dimensions--) {
                                     String a = "a" + dimensions;
                                     mapping = a + " -> Stream.of(" + a + ").map(" + mapping + ").toArray(" + arrayType + "::new)";
                                     arrayType += "[]";
                                 }
-
-                                /*
-                                 *
-            setA3(value.getA3() == null ? null :
-                Stream.of(value.getA3())
-                      .map(a1 -> Stream.of(a1)
-                          .map(a2 -> Stream.of(a2)
-                              .map(UMultidimARecord::new)
-                              .toArray(UMultidimARecord[]::new))
-                          .toArray(UMultidimARecord[][]::new))
-                      .toArray(UMultidimARecord[][][]::new));
-                                 */
 
                                 out.println("%s(value.%s() == null ? null : %s.of(value.%s()).map(%s).toArray(%s%s::new));",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),

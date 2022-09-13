@@ -255,6 +255,24 @@ public class PgProc extends TableImpl<Record> {
     }
 
     @Override
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.asList(Keys.PG_PROC__SYNTHETIC_FK_PG_PROC__SYNTHETIC_PK_PG_NAMESPACE);
+    }
+
+    private transient PgNamespace _pgNamespace;
+
+    /**
+     * Get the implicit join path to the <code>pg_catalog.pg_namespace</code>
+     * table.
+     */
+    public PgNamespace pgNamespace() {
+        if (_pgNamespace == null)
+            _pgNamespace = new PgNamespace(this, Keys.PG_PROC__SYNTHETIC_FK_PG_PROC__SYNTHETIC_PK_PG_NAMESPACE);
+
+        return _pgNamespace;
+    }
+
+    @Override
     public PgProc as(String alias) {
         return new PgProc(DSL.name(alias), this);
     }

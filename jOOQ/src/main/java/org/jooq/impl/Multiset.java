@@ -188,13 +188,14 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                     default: {
                         if (NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect()) && isSimple(select)) {
                             JSONArrayAggReturningStep<JSON> returning =
-                                jsonArrayaggEmulation(ctx, row(map(select.getSelect(), f -> Tools.unalias(f))), true).orderBy(select.$orderBy());
+                                jsonArrayaggEmulation(ctx, row(map(select.getSelect(), f -> Tools.unalias(f))), true, select.$distinct()).orderBy(select.$orderBy());
 
                             Select<?> s = select
                                 .$select(Arrays.asList(DSL.coalesce(
                                     returningClob(ctx, returning),
                                     returningClob(ctx, jsonArray())
                                 )))
+                                .$distinct(false)
                                 .$orderBy(Arrays.asList());
 
                             visitSubquery(ctx, s);
@@ -203,7 +204,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                             JSONArrayAggOrderByStep<JSON> order;
                             JSONArrayAggReturningStep<JSON> returning;
 
-                            returning = order = jsonArrayaggEmulation(ctx, t, true);
+                            returning = order = jsonArrayaggEmulation(ctx, t, true, false);
 
                             // TODO: Re-apply derived table's ORDER BY clause as aggregate ORDER BY
                             if (multisetCondition)
@@ -254,13 +255,14 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                     default: {
                         if (NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect()) && isSimple(select)) {
                             JSONArrayAggReturningStep<JSONB> returning =
-                                jsonbArrayaggEmulation(ctx, row(map(select.getSelect(), f -> Tools.unalias(f))), true).orderBy(select.$orderBy());
+                                jsonbArrayaggEmulation(ctx, row(map(select.getSelect(), f -> Tools.unalias(f))), true, select.$distinct()).orderBy(select.$orderBy());
 
                             Select<?> s = select
                                 .$select(Arrays.asList(DSL.coalesce(
                                     returningClob(ctx, returning),
                                     returningClob(ctx, jsonArray())
                                 )))
+                                .$distinct(false)
                                 .$orderBy(Arrays.asList());
 
                             visitSubquery(ctx, s);
@@ -269,7 +271,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                             JSONArrayAggOrderByStep<JSONB> order;
                             JSONArrayAggReturningStep<JSONB> returning;
 
-                            returning = order = jsonbArrayaggEmulation(ctx, t, false);
+                            returning = order = jsonbArrayaggEmulation(ctx, t, false, false);
 
                             // TODO: Re-apply derived table's ORDER BY clause as aggregate ORDER BY
                             if (multisetCondition)
@@ -320,7 +322,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
 
                     default: {
-                        if (NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect()) && isSimple(select)) {
+                        if (NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect()) && isSimple(select) && !select.$distinct()) {
                             AggregateFilterStep<XML> filter =
                                 xmlaggEmulation(ctx, row(map(select.getSelect(), f -> Tools.unalias(f))), true).orderBy(select.$orderBy());
 
@@ -367,9 +369,6 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
             && s.$having() == null
             && s.$window().isEmpty()
             && s.$qualify() == null
-
-            // [#10730] [#12045] TODO: This could be supported
-            && !s.$distinct()
             && !selectQueryImpl(s).hasUnions()
             && s.$offset() == null
             && s.$limit() == null
@@ -448,12 +447,12 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
     // - It is column name agnostic (supporting ambiguous column names)
     // - The JSON never leaks outside of the emulation into user code
 
-    static final JSONArrayAggOrderByStep<JSON> jsonArrayaggEmulation(Context<?> ctx, Fields fields, boolean agg) {
-        return jsonxArrayaggEmulation(ctx, fields, agg, DSL::jsonArrayAgg, DSL::jsonObject, DSL::jsonArray);
+    static final JSONArrayAggOrderByStep<JSON> jsonArrayaggEmulation(Context<?> ctx, Fields fields, boolean agg, boolean distinct) {
+        return jsonxArrayaggEmulation(ctx, fields, agg, distinct ? DSL::jsonArrayAggDistinct : DSL::jsonArrayAgg, DSL::jsonObject, DSL::jsonArray);
     }
 
-    static final JSONArrayAggOrderByStep<JSONB> jsonbArrayaggEmulation(Context<?> ctx, Fields fields, boolean agg) {
-        return jsonxArrayaggEmulation(ctx, fields, agg, DSL::jsonbArrayAgg, DSL::jsonbObject, DSL::jsonbArray);
+    static final JSONArrayAggOrderByStep<JSONB> jsonbArrayaggEmulation(Context<?> ctx, Fields fields, boolean agg, boolean distinct) {
+        return jsonxArrayaggEmulation(ctx, fields, agg, distinct ? DSL::jsonbArrayAggDistinct : DSL::jsonbArrayAgg, DSL::jsonbObject, DSL::jsonbArray);
     }
 
     static final <J> JSONArrayAggOrderByStep<J> jsonxArrayaggEmulation(

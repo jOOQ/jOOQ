@@ -218,10 +218,12 @@ final class R2DBC {
         final int                           forwarderIndex;
         final AbstractResultSubscriber<T>   resultSubscriber;
         final AtomicReference<Subscription> subscription;
+        final Settings                      settings;
 
-        Forwarding(int forwarderIndex, AbstractResultSubscriber<T> resultSubscriber) {
+        Forwarding(int forwarderIndex, AbstractResultSubscriber<T> resultSubscriber, Settings settings) {
             this.forwarderIndex = forwarderIndex;
             this.resultSubscriber = resultSubscriber;
+            this.settings = settings;
             this.subscription = new AtomicReference<>();
         }
 
@@ -241,7 +243,7 @@ final class R2DBC {
 
         @Override
         public final void onError(Throwable t) {
-            resultSubscriber.downstream.subscriber.onError(translate(resultSubscriber.downstream.sql(), t));
+            resultSubscriber.downstream.subscriber.onError(translate(resultSubscriber.downstream.sql(), t, settings.isIncludeSqlStringInException()));
             complete(true);
         }
 
@@ -278,7 +280,7 @@ final class R2DBC {
 
         @Override
         public final void onError(Throwable t) {
-            downstream.subscriber.onError(translate(downstream.sql(), t));
+            downstream.subscriber.onError(translate(downstream.sql(), t, downstream.configuration.settings().isIncludeSqlStringInException()));
             complete(true);
         }
 
@@ -386,7 +388,7 @@ final class R2DBC {
 
         @Override
         public final void onError(Throwable t) {
-            downstream.subscriber.onError(translate(downstream.sql(), t));
+            downstream.subscriber.onError(translate(downstream.sql(), t, downstream.configuration.settings().isIncludeSqlStringInException()));
         }
 
         @Override
@@ -631,7 +633,7 @@ final class R2DBC {
 
         final Forwarding<T> forwardingSubscriber(AbstractResultSubscriber<T> resultSubscriber) {
             int i = nextForwarderIndex.getAndIncrement();
-            Forwarding<T> f = new Forwarding<>(i, resultSubscriber);
+            Forwarding<T> f = new Forwarding<>(i, resultSubscriber, configuration.settings());
             forwarders.put(i, f);
             return f;
         }

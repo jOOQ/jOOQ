@@ -560,7 +560,7 @@ public class DSL {
                 return new DefaultCloseableDSLContext(new DefaultCloseableConnectionProvider(connection), JDBCUtils.dialect(connection));
             }
             catch (SQLException e) {
-                throw Tools.translate("Error when initialising Connection", e);
+                throw Tools.translate("Error when initialising Connection", e, true);
             }
         }
     }
@@ -602,7 +602,7 @@ public class DSL {
                 return new DefaultCloseableDSLContext(new DefaultCloseableConnectionProvider(connection), JDBCUtils.dialect(connection));
             }
             catch (SQLException e) {
-                throw Tools.translate("Error when initialising Connection", e);
+                throw Tools.translate("Error when initialising Connection", e, true);
             }
         }
     }
@@ -643,7 +643,7 @@ public class DSL {
                 return new DefaultCloseableDSLContext(new DefaultCloseableConnectionProvider(connection), JDBCUtils.dialect(connection));
             }
             catch (SQLException e) {
-                throw Tools.translate("Error when initialising Connection", e);
+                throw Tools.translate("Error when initialising Connection", e, true);
             }
         }
     }

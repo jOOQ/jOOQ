@@ -276,6 +276,8 @@ public class Settings
     @XmlSchemaType(name = "string")
     protected ThrowExceptions throwExceptions = ThrowExceptions.THROW_ALL;
     @XmlElement(defaultValue = "true")
+    protected Boolean includeSqlStringInException = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean fetchWarnings = true;
     @XmlElement(defaultValue = "0")
     protected Integer fetchServerOutputSize = 0;
@@ -3005,6 +3007,14 @@ public class Settings
         this.throwExceptions = value;
     }
 
+    public Boolean isIncludeSqlStringInException() {
+        return includeSqlStringInException;
+    }
+
+    public void setIncludeSqlStringInException(Boolean includeSqlStringInException) {
+        this.includeSqlStringInException = includeSqlStringInException;
+    }
+
     /**
      * Whether warnings should be fetched after each query execution.
      * 
@@ -5000,6 +5010,14 @@ public class Settings
         return this;
     }
 
+    /**
+     * Whether include full sql query in an exception or not
+     */
+    public Settings withIncludeSqlStringInException(Boolean value) {
+        setIncludeSqlStringInException(value);
+        return this;
+    }
+
     public Settings withFetchWarnings(Boolean value) {
         setFetchWarnings(value);
         return this;
@@ -5600,6 +5618,7 @@ public class Settings
         builder.append("cacheParsingConnectionLRUCacheSize", cacheParsingConnectionLRUCacheSize);
         builder.append("cachePreparedStatementInLoader", cachePreparedStatementInLoader);
         builder.append("throwExceptions", throwExceptions);
+        builder.append("includeSqlStringInException", includeSqlStringInException);
         builder.append("fetchWarnings", fetchWarnings);
         builder.append("fetchServerOutputSize", fetchServerOutputSize);
         builder.append("returnIdentityOnUpdatableRecord", returnIdentityOnUpdatableRecord);
@@ -6600,6 +6619,15 @@ public class Settings
                 return false;
             }
         }
+        if (includeSqlStringInException == null) {
+            if (other.includeSqlStringInException!= null) {
+                return false;
+            }
+        } else {
+            if (!includeSqlStringInException.equals(other.includeSqlStringInException)) {
+                return false;
+            }
+        }
         if (fetchWarnings == null) {
             if (other.fetchWarnings!= null) {
                 return false;
@@ -7258,6 +7286,7 @@ public class Settings
         result = ((prime*result)+((cacheParsingConnectionLRUCacheSize == null)? 0 :cacheParsingConnectionLRUCacheSize.hashCode()));
         result = ((prime*result)+((cachePreparedStatementInLoader == null)? 0 :cachePreparedStatementInLoader.hashCode()));
         result = ((prime*result)+((throwExceptions == null)? 0 :throwExceptions.hashCode()));
+        result = ((prime*result)+((includeSqlStringInException == null)? 0 :includeSqlStringInException.hashCode()));
         result = ((prime*result)+((fetchWarnings == null)? 0 :fetchWarnings.hashCode()));
         result = ((prime*result)+((fetchServerOutputSize == null)? 0 :fetchServerOutputSize.hashCode()));
         result = ((prime*result)+((returnIdentityOnUpdatableRecord == null)? 0 :returnIdentityOnUpdatableRecord.hashCode()));

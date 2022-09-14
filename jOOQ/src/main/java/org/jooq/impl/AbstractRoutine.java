@@ -599,7 +599,7 @@ implements
         listener.executeEnd(ctx);
 
         if (e != null)
-            results.resultsOrRows().add(new ResultOrRowsImpl(Tools.translate(ctx.sql(), e)));
+            results.resultsOrRows().add(new ResultOrRowsImpl(Tools.translate(ctx.sql(), e, ctx.settings().isIncludeSqlStringInException())));
 
         return e;
     }

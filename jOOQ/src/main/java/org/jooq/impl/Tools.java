@@ -3309,47 +3309,47 @@ final class Tools {
     /**
      * Translate a {@link R2dbcException} to a {@link DataAccessException}
      */
-    static final RuntimeException translate(String sql, Throwable t) {
+    static final RuntimeException translate(String sql, Throwable t, boolean includeSql) {
         if (t instanceof R2dbcException e)
-            return translate(sql, e);
+            return translate(sql, e, includeSql);
         else if (t instanceof SQLException e)
-            return translate(sql, e);
+            return translate(sql, e, includeSql);
         else if (t instanceof RuntimeException e)
-            return translate(sql, e);
+            return translate(sql, e, includeSql);
         else if (t != null)
-            return new DataAccessException("SQL [" + sql + "]; Unspecified Throwable", t);
+            return new DataAccessException((includeSql ? "SQL [" + sql + "]; " : "") + "Unspecified Throwable", t);
         else
-            return new DataAccessException("SQL [" + sql + "]; Unspecified Throwable");
+            return new DataAccessException((includeSql ? "SQL [" + sql + "]; " : "") + "Unspecified Throwable");
     }
 
     /**
      * Translate a {@link R2dbcException} to a {@link DataAccessException}
      */
-    static final DataAccessException translate(String sql, R2dbcException e) {
+    static final DataAccessException translate(String sql, R2dbcException e, boolean includeSql) {
         if (e != null)
-            return new DataAccessException("SQL [" + sql + "]; " + e.getMessage(), e);
+            return new DataAccessException((includeSql ? "SQL [" + sql + "]; " : "") + e.getMessage(), e);
         else
-            return new DataAccessException("SQL [" + sql + "]; Unspecified R2dbcException");
+            return new DataAccessException((includeSql ? "SQL [" + sql + "]; " : "") + "Unspecified R2dbcException");
     }
 
     /**
      * Translate a {@link SQLException} to a {@link DataAccessException}
      */
-    static final DataAccessException translate(String sql, SQLException e) {
+    static final DataAccessException translate(String sql, SQLException e, boolean includeSql) {
         if (e != null)
-            return new DataAccessException("SQL [" + sql + "]; " + e.getMessage(), e);
+            return new DataAccessException((includeSql ? "SQL [" + sql + "]; " : "") + e.getMessage(), e);
         else
-            return new DataAccessException("SQL [" + sql + "]; Unspecified SQLException");
+            return new DataAccessException((includeSql ? "SQL [" + sql + "]; " : "") + "Unspecified SQLException");
     }
 
     /**
      * Translate a {@link RuntimeException} to a {@link DataAccessException}
      */
-    static final RuntimeException translate(String sql, RuntimeException e) {
+    static final RuntimeException translate(String sql, RuntimeException e, boolean includeSql) {
         if (e != null)
             return e;
         else
-            return new DataAccessException("SQL [" + sql + "]; Unspecified RuntimeException");
+            return new DataAccessException((includeSql ? "SQL [" + sql + "]; " : "") + "Unspecified RuntimeException");
     }
 
     /**
@@ -4672,7 +4672,7 @@ final class Tools {
 
                 if (ctx.settings().getThrowExceptions() == THROW_NONE) {
                     ctx.sqlException(e);
-                    results.resultsOrRows().add(new ResultOrRowsImpl(Tools.translate(ctx.sql(), e)));
+                    results.resultsOrRows().add(new ResultOrRowsImpl(Tools.translate(ctx.sql(), e, ctx.settings().isIncludeSqlStringInException())));
                 }
                 else {
                     consumeExceptions(ctx.configuration(), ctx.statement(), e);

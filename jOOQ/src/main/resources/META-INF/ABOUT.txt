@@ -36,6 +36,7 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Miguel Gonzalez Sanchez
 - Mustafa Yücel
 - Nathaniel Fischer
+- Nikolay Mikheev
 - Octavia Togami
 - Oliver Flege
 - Per Lundberg

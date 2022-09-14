@@ -233,7 +233,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
                 statement = null;
             }
             catch (SQLException e) {
-                throw Tools.translate(rendered.sql, e);
+                throw Tools.translate(rendered.sql, e, configuration().settings().isIncludeSqlStringInException());
             }
         }
     }
@@ -245,7 +245,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
                 statement.cancel();
             }
             catch (SQLException e) {
-                throw Tools.translate(rendered.sql, e);
+                throw Tools.translate(rendered.sql, e, configuration().settings().isIncludeSqlStringInException());
             }
         }
     }

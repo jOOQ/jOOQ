@@ -237,7 +237,7 @@ abstract class AbstractQueryPart implements QueryPartInternal {
      * Internal convenience method
      */
     protected final DataAccessException translate(String sql, SQLException e) {
-        return Tools.translate(sql, e);
+        return Tools.translate(sql, e, configuration().settings().isIncludeSqlStringInException());
     }
 
     private static final JooqLogger log = JooqLogger.getLogger(AbstractQueryPart.class, "serialization", 100);

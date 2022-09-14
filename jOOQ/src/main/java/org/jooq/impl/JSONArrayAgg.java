@@ -44,10 +44,11 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.groupConcat;
+import static org.jooq.impl.DSL.groupConcatDistinct;
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
 import static org.jooq.impl.JSONEntryImpl.jsonMerge;
+import static org.jooq.impl.Keywords.K_DISTINCT;
 import static org.jooq.impl.Names.N_GROUP_CONCAT;
 import static org.jooq.impl.Names.N_JSONB_AGG;
 import static org.jooq.impl.Names.N_JSON_AGG;
@@ -101,8 +102,8 @@ implements
     private JSONOnNull           onNull;
     private DataType<?>          returning;
 
-    JSONArrayAgg(DataType<J> type, Field<?> arg) {
-        super(false, N_JSON_ARRAYAGG, type, arg);
+    JSONArrayAgg(DataType<J> type, Field<?> arg, boolean distinct) {
+        super(distinct, N_JSON_ARRAYAGG, type, arg);
     }
 
     @Override
@@ -134,6 +135,7 @@ implements
             case POSTGRES:
             case YUGABYTEDB:
                 ctx.visit(getDataType() == JSON ? N_JSON_AGG : N_JSONB_AGG).sql('(');
+                acceptDistinct(ctx);
                 ctx.visit(arguments.get(0));
                 acceptOrderBy(ctx);
                 ctx.sql(')');
@@ -148,6 +150,7 @@ implements
 
             case SQLITE:
                 ctx.visit(N_JSON_GROUP_ARRAY).sql('(');
+                acceptDistinct(ctx);
                 ctx.visit(arguments.get(0));
                 acceptOrderBy(ctx);
                 ctx.sql(')');
@@ -190,6 +193,7 @@ implements
             inline('['),
             CustomField.of(N_GROUP_CONCAT, VARCHAR, c1 -> {
                 c1.visit(groupConcatEmulationWithoutArrayWrappers(
+                    distinct,
                     CustomField.of(Names.N_FIELD, VARCHAR, c2 -> acceptArguments2(c2, QueryPartListView.wrap(arg2))),
                     withinGroupOrderBy
                 ));
@@ -200,10 +204,11 @@ implements
         );
     }
 
-    static final Field<?> groupConcatEmulationWithoutArrayWrappers(Field<?> field, SortFieldList orderBy) {
-        return Tools.isEmpty(orderBy)
-             ? groupConcat(field)
-             : groupConcat(field).orderBy(orderBy);
+    static final Field<?> groupConcatEmulationWithoutArrayWrappers(boolean distinct, Field<?> field, SortFieldList orderBy) {
+        return Tools.apply(
+            distinct ? groupConcatDistinct(field) : groupConcat(field),
+            agg -> Tools.isEmpty(orderBy) ? agg : agg.orderBy(orderBy)
+        );
     }
 
 
@@ -226,6 +231,7 @@ implements
 
     private final void acceptStandard(Context<?> ctx) {
         ctx.visit(N_JSON_ARRAYAGG).sql('(');
+        acceptDistinct(ctx);
 
 
 
@@ -247,6 +253,11 @@ implements
 
         acceptFilterClause(ctx);
         acceptOverClause(ctx);
+    }
+
+    private void acceptDistinct(Context<?> ctx) {
+        if (distinct)
+            ctx.visit(K_DISTINCT).sql(' ');
     }
 
     @Override
@@ -310,7 +321,7 @@ implements
     @Override
     public final Function1<? super Field<?>, ? extends AggregateFunction<J>> $constructor() {
         return f -> {
-            JSONArrayAgg<J> r = new JSONArrayAgg<J>(getDataType(), f);
+            JSONArrayAgg<J> r = new JSONArrayAgg<J>(getDataType(), f, distinct);
             r.onNull = onNull;
             r.returning = returning;
             return r;

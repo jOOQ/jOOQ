@@ -26126,7 +26126,7 @@ public class DSL {
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static JSONArrayAggOrderByStep<JSON> jsonArrayAgg(Field<?> value) {
-        return new JSONArrayAgg<>(JSON, value);
+        return new JSONArrayAgg<>(JSON, value, false);
     }
 
     /**
@@ -26135,7 +26135,25 @@ public class DSL {
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static JSONArrayAggOrderByStep<JSONB> jsonbArrayAgg(Field<?> value) {
-        return new JSONArrayAgg<>(JSONB, value);
+        return new JSONArrayAgg<>(JSONB, value, false);
+    }
+
+    /**
+     * The JSON array aggregate function.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, SQLITE })
+    public static JSONArrayAggOrderByStep<JSON> jsonArrayAggDistinct(Field<?> value) {
+        return new JSONArrayAgg<>(JSON, value, true);
+    }
+
+    /**
+     * The JSON array aggregate function.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static JSONArrayAggOrderByStep<JSONB> jsonbArrayAggDistinct(Field<?> value) {
+        return new JSONArrayAgg<>(JSONB, value, true);
     }
 
     /**

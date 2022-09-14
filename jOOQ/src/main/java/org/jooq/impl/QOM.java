@@ -653,6 +653,7 @@ public final class QOM {
             JSONArrayAgg*/
     {
         @NotNull default Field<?> $field() { return $arg1(); }
+        boolean $distinct();
         @Nullable JSONOnNull $onNull();
         @Nullable DataType<?> $returning();
     }

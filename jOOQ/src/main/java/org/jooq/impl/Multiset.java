@@ -254,7 +254,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                     default: {
                         if (NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect()) && isSimple(select)) {
                             JSONArrayAggReturningStep<JSONB> returning =
-                                jsonbArrayaggEmulation(ctx, row(map(select.getSelect(), t -> Tools.unalias(t))), true).orderBy(select.$orderBy());
+                                jsonbArrayaggEmulation(ctx, row(map(select.getSelect(), f -> Tools.unalias(f))), true).orderBy(select.$orderBy());
 
                             Select<?> s = select
                                 .$select(Arrays.asList(DSL.coalesce(
@@ -322,7 +322,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                     default: {
                         if (NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect()) && isSimple(select)) {
                             AggregateFilterStep<XML> filter =
-                                xmlaggEmulation(ctx, row(map(select.getSelect(), t -> Tools.unalias(t))), true).orderBy(select.$orderBy());
+                                xmlaggEmulation(ctx, row(map(select.getSelect(), f -> Tools.unalias(f))), true).orderBy(select.$orderBy());
 
                             Select<?> s = select
                                 .$select(Arrays.asList(xmlelement(nResult(ctx), filter)))

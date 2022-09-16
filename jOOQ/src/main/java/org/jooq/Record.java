@@ -134,7 +134,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     Row valuesRow();
 
     /**
-     * Get a value from this Record, providing a field.
+     * Get a value from this Record, providing a field, using
+     * {@link #field(Field)} for lookup.
      * <p>
      * If this record contains a field with the same {@link Field#getName()} as
      * the argument field, that value is retrieved.
@@ -148,7 +149,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     <T> T get(Field<T> field) throws IllegalArgumentException;
 
     /**
-     * Get a converted value from this Record, providing a field.
+     * Get a converted value from this Record, providing a field, using
+     * {@link #field(Field)} for lookup.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -169,7 +171,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     <U> U get(Field<?> field, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
-     * Get a converted value from this Record, providing a field.
+     * Get a converted value from this Record, providing a field, using
+     * {@link #field(Field)} for lookup.
      * <p>
      * If this record contains a field with the same {@link Field#getName()} as
      * the argument field, that value is retrieved.
@@ -184,10 +187,12 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <T, U> U get(Field<T> field, Converter<? super T, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
+    <T, U> U get(Field<T> field, Converter<? super T, ? extends U> converter)
+        throws IllegalArgumentException, DataTypeException;
 
     /**
-     * Get a value from this Record, providing a field name.
+     * Get a value from this Record, providing a field name, using
+     * {@link #field(String)} for lookup.
      *
      * @param fieldName The field's name
      * @return The value of a field's name contained in this record
@@ -198,7 +203,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     Object get(String fieldName) throws IllegalArgumentException;
 
     /**
-     * Get a converted value from this Record, providing a field name.
+     * Get a converted value from this Record, providing a field name, using
+     * {@link #field(String)} for lookup.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -216,7 +222,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     <U> U get(String fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
-     * Get a converted value from this Record, providing a field name.
+     * Get a converted value from this Record, providing a field name, using
+     * {@link #field(String)} for lookup.
      *
      * @param <U> The conversion type parameter
      * @param fieldName The field's name
@@ -230,7 +237,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     <U> U get(String fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
-     * Get a value from this Record, providing a field name.
+     * Get a value from this Record, providing a field name, using
+     * {@link #field(Name)} for lookup.
      *
      * @param fieldName The field's name
      * @return The value of a field's name contained in this record
@@ -241,7 +249,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     Object get(Name fieldName) throws IllegalArgumentException;
 
     /**
-     * Get a converted value from this Record, providing a field name.
+     * Get a converted value from this Record, providing a field name, using
+     * {@link #field(Name)} for lookup.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -259,7 +268,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     <U> U get(Name fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
-     * Get a converted value from this Record, providing a field name.
+     * Get a converted value from this Record, providing a field name, using
+     * {@link #field(Name)} for lookup.
      *
      * @param <U> The conversion type parameter
      * @param fieldName The field's name
@@ -316,7 +326,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     <U> U get(int index, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
-     * Set a value into this record.
+     * Set a value into this record, using {@link #field(Field)} for lookup.
      * <p>
      * This will always set the {@link #changed(Field)} flag for the given
      * <code>field</code>, no matter if setting the value actually changes the
@@ -334,7 +344,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     <T> void set(Field<T> field, T value);
 
     /**
-     * Set a value into this record.
+     * Set a value into this record, using {@link #field(Field)} for lookup.
      * <p>
      * This will always set the {@link #changed(Field)} flag for the given
      * <code>field</code>, no matter if setting the value actually changes the
@@ -355,7 +365,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     <T, U> void set(Field<T> field, U value, Converter<? extends T, ? super U> converter);
 
     /**
-     * Set a value into this record.
+     * Set a value into this record, using {@link #field(Field)} for lookup.
      * <p>
      * Like {@link #set(Field, Object)} but returning <code>this</code> for
      * fluent setting of multiple values.
@@ -364,7 +374,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     <T> Record with(Field<T> field, T value);
 
     /**
-     * Set a value into this record.
+     * Set a value into this record, using {@link #field(Field)} for lookup.
      * <p>
      * Like {@link #set(Field, Object, Converter)} but returning
      * <code>this</code> for fluent setting of multiple values.
@@ -393,7 +403,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     Record original();
 
     /**
-     * Get an original value from this record as fetched from the database.
+     * Get an original value from this record as fetched from the database,
+     * using {@link #field(Field)} for lookup.
      * <p>
      * Record values can be freely modified after having fetched a record from
      * the database. Every record also references the originally fetched values.
@@ -417,7 +428,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     Object original(int fieldIndex);
 
     /**
-     * Get an original value from this record as fetched from the database.
+     * Get an original value from this record as fetched from the database,
+     * using {@link #field(String)} for lookup.
      * <p>
      * Record values can be freely modified after having fetched a record from
      * the database. Every record also references the originally fetched values.
@@ -429,7 +441,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     Object original(String fieldName);
 
     /**
-     * Get an original value from this record as fetched from the database.
+     * Get an original value from this record as fetched from the database,
+     * using {@link #field(Name)} for lookup.
      * <p>
      * Record values can be freely modified after having fetched a record from
      * the database. Every record also references the originally fetched values.
@@ -456,7 +469,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Check if a field's value has been changed from its original as fetched
-     * from the database.
+     * from the database, using {@link #field(Field)} for lookup.
      *
      * @see #changed()
      * @see #original(Field)
@@ -475,7 +488,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Check if a field's value has been changed from its original as fetched
-     * from the database.
+     * from the database, using {@link #field(String)} for lookup.
      *
      * @see #changed()
      * @see #original(String)
@@ -484,7 +497,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Check if a field's value has been changed from its original as fetched
-     * from the database.
+     * from the database, using {@link #field(Name)} for lookup.
      *
      * @see #changed()
      * @see #original(Name)
@@ -507,7 +520,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Set this record's internal changed flag to the supplied value for a given
-     * field.
+     * field, using {@link #field(Field)} for lookup.
      * <p>
      * If the <code>changed</code> argument is <code>false</code>, the
      * {@link #original(Field)} value will be reset to the corresponding
@@ -534,7 +547,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Set this record's internal changed flag to the supplied value for a given
-     * field.
+     * field, using {@link #field(String)} for lookup.
      * <p>
      * If the <code>changed</code> argument is <code>false</code>, the
      * {@link #original(String)} value will be reset to the corresponding
@@ -547,7 +560,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Set this record's internal changed flag to the supplied value for a given
-     * field.
+     * field, using {@link #field(Name)} for lookup.
      * <p>
      * If the <code>changed</code> argument is <code>false</code>, the
      * {@link #original(Name)} value will be reset to the corresponding
@@ -566,7 +579,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Reset a given value to its {@link #original(Field)} value and its
-     * {@link #changed(Field)} flag to <code>false</code>.
+     * {@link #changed(Field)} flag to <code>false</code>, using
+     * {@link #field(Field)} for lookup.
      */
     void reset(Field<?> field);
 
@@ -580,13 +594,15 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Reset a given value to its {@link #original(String)} value and its
-     * {@link #changed(String)} flag to <code>false</code>.
+     * {@link #changed(String)} flag to <code>false</code>, using
+     * {@link #field(String)} for lookup.
      */
     void reset(String fieldName);
 
     /**
      * Reset a given value to its {@link #original(Name)} value and its
-     * {@link #changed(Name)} flag to <code>false</code>.
+     * {@link #changed(Name)} flag to <code>false</code>, using
+     * {@link #field(Name)} for lookup.
      */
     void reset(Name fieldName);
 
@@ -596,10 +612,13 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * The resulting array has the same number of elements as this record has
      * fields. The resulting array contains data as such:
      * <p>
-     * <pre><code>
+     *
+     * <pre>
+     * <code>
      * // For arbitrary values of i
      * record.getValue(i) == record.intoArray()[i]
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
      * This is the same as calling <code>into(Object[].class)</code>
      *
@@ -615,10 +634,13 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * The resulting list has the same number of elements as this record has
      * fields. The resulting array contains data as such:
      * <p>
-     * <pre><code>
+     *
+     * <pre>
+     * <code>
      * // For arbitrary values of i
      * record.getValue(i) == record.intoList().get(i)
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
      * This is the same as calling <code>Arrays.asList(intoArray())</code>
      */
@@ -651,7 +673,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @param fields The fields of the new record
      * @return The new record
@@ -663,7 +685,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -673,7 +695,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -683,7 +705,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -693,7 +715,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -703,7 +725,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -713,7 +735,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -723,7 +745,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -733,7 +755,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -743,7 +765,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -753,7 +775,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -763,7 +785,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -773,7 +795,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -783,7 +805,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -793,7 +815,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -803,7 +825,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -813,7 +835,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -823,7 +845,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -833,7 +855,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -843,7 +865,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -853,7 +875,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -863,7 +885,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -873,7 +895,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Copy this record into a new record holding only a subset of the previous
-     * fields.
+     * fields, using {@link #field(Field)} for lookup.
      *
      * @return The new record
      * @see #into(Table)
@@ -898,7 +920,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * @see #from(Object)
      * @see DefaultRecordMapper
      */
-    // [#10774] This is @Nullable in rare cases, which can be annoying for Kotlin users in most cases
+    // [#10774] This is @Nullable in rare cases, which can be annoying for
+    // Kotlin users in most cases
     <E> E into(Class<? extends E> type) throws MappingException;
 
     /**
@@ -928,7 +951,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * <ul>
      * <li>For every field in the <code>table</code> argument with
      * {@link Field#getName()} <code>"MY_field"</code> (case-sensitive!), a
-     * corresponding field with the same name in this record will be searched.</li>
+     * corresponding field with the same name in this record will be
+     * searched.</li>
      * <li>If several fields in this record share the same
      * {@link Field#getName()}, then the first one returning true on
      * {@link Field#equals(Object)} will be returned. (e.g. qualified field
@@ -959,14 +983,14 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * returned <code>ResultSet</code> allows for the following behaviour
      * according to the JDBC specification:
      * <ul>
-     * <li> {@link ResultSet#CLOSE_CURSORS_AT_COMMIT}: The cursors (i.e.
+     * <li>{@link ResultSet#CLOSE_CURSORS_AT_COMMIT}: The cursors (i.e.
      * {@link Statement} object) are no longer available</li>
-     * <li> {@link ResultSet#CONCUR_READ_ONLY}: You cannot update the database
+     * <li>{@link ResultSet#CONCUR_READ_ONLY}: You cannot update the database
      * through this <code>ResultSet</code>, as the underlying {@link Result}
      * object does not hold any open database refences anymore</li>
-     * <li> {@link ResultSet#FETCH_FORWARD}: The fetch direction is forward only,
+     * <li>{@link ResultSet#FETCH_FORWARD}: The fetch direction is forward only,
      * and cannot be changed</li>
-     * <li> {@link ResultSet#TYPE_SCROLL_INSENSITIVE}: You can use any of the
+     * <li>{@link ResultSet#TYPE_SCROLL_INSENSITIVE}: You can use any of the
      * <code>ResultSet</code>'s scrolling methods, e.g. {@link ResultSet#next()}
      * or {@link ResultSet#previous()}, etc.</li>
      * </ul>
@@ -1078,7 +1102,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     void from(Object source) throws MappingException;
 
     /**
-     * Load data into this record from a source, providing some fields.
+     * Load data into this record from a source, providing some fields, using
+     * {@link #field(Field)} for lookup.
      * <p>
      * This is the same as {@link #from(Object)}, except that only fields
      * contained in the <code>fields</code> argument will be mapped.
@@ -1093,7 +1118,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     void from(Object source, Field<?>... fields) throws MappingException;
 
     /**
-     * Load data into this record from a source, providing some field names.
+     * Load data into this record from a source, providing some field names,
+     * using {@link #field(String)} for lookup.
      * <p>
      * This is the same as {@link #from(Object)}, except that only fields
      * contained in the <code>fieldNames</code> argument will be mapped.
@@ -1108,7 +1134,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     void from(Object source, String... fieldNames) throws MappingException;
 
     /**
-     * Load data into this record from a source, providing some field names.
+     * Load data into this record from a source, providing some field names,
+     * using {@link #field(Name)} for lookup.
      * <p>
      * This is the same as {@link #from(Object)}, except that only fields
      * contained in the <code>fieldNames</code> argument will be mapped.
@@ -1138,7 +1165,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     void from(Object source, int... fieldIndexes) throws MappingException;
 
     /**
-     * Load data from a map into this record.
+     * Load data from a map into this record, using {@link #field(String)} for
+     * lookup.
      * <p>
      * The argument map is expected to hold field-name / value pairs where
      * field-names correspond to actual field names as provided by
@@ -1154,7 +1182,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     void fromMap(Map<String, ?> map);
 
     /**
-     * Load data from a map into this record, providing some fields.
+     * Load data from a map into this record, providing some fields, using
+     * {@link #field(Field)} for lookup.
      * <p>
      * The argument map is expected to hold field-name / value pairs where
      * field-names correspond to actual field names as provided by
@@ -1170,7 +1199,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     void fromMap(Map<String, ?> map, Field<?>... fields);
 
     /**
-     * Load data from a map into this record, providing some field names.
+     * Load data from a map into this record, providing some field names, using
+     * {@link #field(String)} for lookup.
      * <p>
      * The argument map is expected to hold field-name / value pairs where
      * field-names correspond to actual field names as provided by
@@ -1186,7 +1216,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     void fromMap(Map<String, ?> map, String... fieldNames);
 
     /**
-     * Load data from a map into this record, providing some field names.
+     * Load data from a map into this record, providing some field names, using
+     * {@link #field(Name)} for lookup.
      * <p>
      * The argument map is expected to hold field-name / value pairs where
      * field-names correspond to actual field names as provided by
@@ -1233,7 +1264,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     void fromArray(Object... array);
 
     /**
-     * Load data from an array into this record, providing some fields.
+     * Load data from an array into this record, providing some fields, using
+     * {@link #field(Field)} for lookup.
      * <p>
      * The argument array is expected to hold values for this record's field
      * indexes. Missing values will be left untouched. Excess values will be
@@ -1248,7 +1280,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     void fromArray(Object[] array, Field<?>... fields);
 
     /**
-     * Load data from an array into this record, providing some fields names.
+     * Load data from an array into this record, providing some fields names,
+     * using {@link #field(String)} for lookup.
      * <p>
      * The argument array is expected to hold values for this record's field
      * indexes. Missing values will be left untouched. Excess values will be
@@ -1263,7 +1296,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     void fromArray(Object[] array, String... fieldNames);
 
     /**
-     * Load data from an array into this record, providing some fields names.
+     * Load data from an array into this record, providing some fields names,
+     * using {@link #field(Name)} for lookup.
      * <p>
      * The argument array is expected to hold values for this record's field
      * indexes. Missing values will be left untouched. Excess values will be
@@ -1324,18 +1358,23 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * </ul>
      * <p>
      * Note, that the above rules correspond to the SQL comparison predicate
-     * behaviour as illustrated in the following example: <pre><code>
+     * behaviour as illustrated in the following example:
+     *
+     * <pre>
+     * <code>
      * -- A row value expression comparison predicate
      * SELECT *
      * FROM my_table
      * WHERE (1, 'A') = (1, 'A')
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
      * Unlike SQL, jOOQ allows to compare also incompatible records, e.g.
      * records
      * <ul>
      * <li>... whose degrees are not equal (results in <code>false</code>)</li>
-     * <li>... whose column types are not equal (results in <code>false</code>)</li>
+     * <li>... whose column types are not equal (results in
+     * <code>false</code>)</li>
      * <li>... whose record types are not equal (irrelevant for the result)</li>
      * </ul>
      * <p>
@@ -1380,25 +1419,43 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * Then, for two comparable Records <code>r1</code> and <code>r2</code>,
      * <code>x = r1.compareTo(r2)</code> yields:
      * <ul>
-     * <li><strong><code>x = -1</code></strong>: if <pre><code>
+     * <li><strong><code>x = -1</code></strong>: if
+     *
+     * <pre>
+     * <code>
      *    (r1[0] &lt; r2[0])
      * OR (r1[0] = r2[0] AND r1[1] &lt; r2[1])
      * OR  ...
-     * OR (r1[0] = r2[0] AND ... AND r1[N-1] = r2[N-1] AND r1[N] &lt; r2[N])</code></pre>
+     * OR (r1[0] = r2[0] AND ... AND r1[N-1] = r2[N-1] AND r1[N] &lt; r2[N])</code>
+     * </pre>
+     *
      * </li>
-     * <li><strong><code>x = 0</code></strong>: if <pre><code>
-     * OR (r1[0] = r2[0] AND ... AND r1[N-1] = r2[N-1] AND r1[N] = r2[N])</code></pre>
+     * <li><strong><code>x = 0</code></strong>: if
+     *
+     * <pre>
+     * <code>
+     * OR (r1[0] = r2[0] AND ... AND r1[N-1] = r2[N-1] AND r1[N] = r2[N])</code>
+     * </pre>
+     *
      * </li>
-     * <li><strong><code>x = 1</code></strong>: if <pre><code>
+     * <li><strong><code>x = 1</code></strong>: if
+     *
+     * <pre>
+     * <code>
      *    (r1[0] &gt; r2[0])
      * OR (r1[0] = r2[0] AND r1[1] &gt; r2[1])
      * OR  ...
-     * OR (r1[0] = r2[0] AND ... AND r1[N-1] = r2[N-1] AND r1[N] &gt; r2[N])</code></pre>
+     * OR (r1[0] = r2[0] AND ... AND r1[N-1] = r2[N-1] AND r1[N] &gt; r2[N])</code>
+     * </pre>
+     *
      * </li>
      * </ul>
      * <p>
      * Note, that the above rules correspond to the SQL ordering behaviour as
-     * illustrated in the following examples: <pre><code>
+     * illustrated in the following examples:
+     *
+     * <pre>
+     * <code>
      * -- A SQL ORDER BY clause, ordering all records by columns in their order
      * SELECT a, b, c
      * FROM my_table
@@ -1408,7 +1465,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * SELECT *
      * FROM my_table
      * WHERE (a, b, c) &lt; (1, 2, 3)
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
      * See {@link Row1#lessThan(Row1)}, {@link Row2#lessThan(Row2)}, ...,
      * {@link Row22#lessThan(Row22)} for more details about row value expression
@@ -1429,7 +1487,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     // -------------------------------------------------------------------------
 
     /**
-     * Get a value from this Record, providing a field.
+     * Get a value from this Record, providing a field, using
+     * {@link #field(Field)} for lookup.
      * <p>
      * [#2211] Future versions of jOOQ might remove this method. It is
      * recommended to use {@link #get(Field)} instead.
@@ -1439,7 +1498,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     <T> T getValue(Field<T> field) throws IllegalArgumentException;
 
     /**
-     * Get a converted value from this Record, providing a field.
+     * Get a converted value from this Record, providing a field, using
+     * {@link #field(Field)} for lookup.
      * <p>
      * [#2211] Future versions of jOOQ might remove tthis method. It is
      * recommended to use {@link #get(Field, Class)} instead.
@@ -1449,17 +1509,20 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     <T> T getValue(Field<?> field, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
 
     /**
-     * Get a converted value from this Record, providing a field.
+     * Get a converted value from this Record, providing a field, using
+     * {@link #field(Field)} for lookup.
      * <p>
      * [#2211] Future versions of jOOQ might remove this method. It is
      * recommended to use {@link #get(Field, Converter)} instead.
      *
      * @see #get(Field, Converter)
      */
-    <T, U> U getValue(Field<T> field, Converter<? super T, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
+    <T, U> U getValue(Field<T> field, Converter<? super T, ? extends U> converter)
+        throws IllegalArgumentException, DataTypeException;
 
     /**
-     * Get a value from this Record, providing a field name.
+     * Get a value from this Record, providing a field name, using
+     * {@link #field(String)} for lookup.
      * <p>
      * [#2211] Future versions of jOOQ might remove this method. It is
      * recommended to use {@link #get(String)} instead.
@@ -1469,7 +1532,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     Object getValue(String fieldName) throws IllegalArgumentException;
 
     /**
-     * Get a converted value from this Record, providing a field name.
+     * Get a converted value from this Record, providing a field name, using
+     * {@link #field(String)} for lookup.
      * <p>
      * [#2211] Future versions of jOOQ might remove this method. It is
      * recommended to use {@link #get(String, Class)} instead.
@@ -1479,17 +1543,20 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     <T> T getValue(String fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
 
     /**
-     * Get a converted value from this Record, providing a field name.
+     * Get a converted value from this Record, providing a field name, using
+     * {@link #field(String)} for lookup.
      * <p>
      * [#2211] Future versions of jOOQ might remove this method. It is
      * recommended to use {@link #get(String, Converter)} instead.
      *
      * @see #get(String, Converter)
      */
-    <U> U getValue(String fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
+    <U> U getValue(String fieldName, Converter<?, ? extends U> converter)
+        throws IllegalArgumentException, DataTypeException;
 
     /**
-     * Get a value from this Record, providing a field name.
+     * Get a value from this Record, providing a field name, using
+     * {@link #field(Name)} for lookup.
      * <p>
      * [#2211] Future versions of jOOQ might remove this method. It is
      * recommended to use {@link #get(Name)} instead.
@@ -1499,7 +1566,8 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     Object getValue(Name fieldName) throws IllegalArgumentException;
 
     /**
-     * Get a converted value from this Record, providing a field name.
+     * Get a converted value from this Record, providing a field name, using
+     * {@link #field(Name)} for lookup.
      * <p>
      * [#2211] Future versions of jOOQ might remove this method. It is
      * recommended to use {@link #get(Name, Class)} instead.
@@ -1509,14 +1577,16 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     <T> T getValue(Name fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
 
     /**
-     * Get a converted value from this Record, providing a field name.
+     * Get a converted value from this Record, providing a field name, using
+     * {@link #field(Name)} for lookup.
      * <p>
      * [#2211] Future versions of jOOQ might remove this method. It is
      * recommended to use {@link #get(Name, Converter)} instead.
      *
      * @see #get(Name, Converter)
      */
-    <U> U getValue(Name fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
+    <U> U getValue(Name fieldName, Converter<?, ? extends U> converter)
+        throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field index.
@@ -1552,7 +1622,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     <U> U getValue(int index, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
-     * Set a value into this record.
+     * Set a value into this record, using {@link #field(Field)} for lookup.
      * <p>
      * [#2211] Future versions of jOOQ might remove this method. It is
      * recommended to use {@link #set(Field, Object)} instead.
@@ -1562,7 +1632,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     <T> void setValue(Field<T> field, T value);
 
     /**
-     * Set a value into this record.
+     * Set a value into this record, using {@link #field(Field)} for lookup.
      * <p>
      * [#2211] Future versions of jOOQ might remove this method. It is
      * recommended to use {@link #set(Field, Object, Converter)} instead.

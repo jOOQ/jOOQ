@@ -82,13 +82,16 @@ import org.jetbrains.annotations.Nullable;
  * The most common way to create a result is by calling {@link #fetch()}, or by
  * using the query's {@link #iterator()} method in a foreach loop:
  * <p>
- * <pre><code>
+ *
+ * <pre>
+ * <code>
  * Result&lt;TRecord> result = ctx.select(T.A, T.B).from(T).fetch();
  *
  * for (TRecord record : ctx.select(T.A, T.B).from(T)) {
  *   // ...
  * }
- * </code></pre>
+ * </code>
+ * </pre>
  * <p>
  * Most approaches to fetching results in {@link ResultQuery} (including the
  * above), fetch the entire JDBC {@link ResultSet} eagerly into memory, which
@@ -111,7 +114,9 @@ import org.jetbrains.annotations.Nullable;
  * In both cases, it is recommended to explicitly close the underlying resources
  * (i.e. JDBC {@link ResultSet}) using <code>try-with-resources</code>:
  * <p>
- * <pre><code>
+ *
+ * <pre>
+ * <code>
  * try (Cursor&lt;TRecord> cursor = ctx.select(T.A, T.B).from(T).fetchLazy()) {
  *   for (;;) {
  *     TRecord record = cursor.fetchNext();
@@ -127,7 +132,8 @@ import org.jetbrains.annotations.Nullable;
  *     // ...
  *   });
  * }
- * </code></pre>
+ * </code>
+ * </pre>
  * <p>
  * While most instances of {@link ResultQuery} implement {@link Select}, there
  * also exist other types of {@link ResultQuery} constructed e.g. from plain SQL
@@ -229,11 +235,14 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Clients should ensure the {@link Stream} is properly closed, e.g. in a
      * try-with-resources statement:
      * <p>
-     * <pre><code>
+     *
+     * <pre>
+     * <code>
      * try (Stream&lt;R&gt; stream = query.stream()) {
      *     // Do things with stream
      * }
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
      * If users prefer more fluent style streaming of queries, {@link ResultSet}
      * can be registered and closed via {@link ExecuteListener}, or via "smart"
@@ -263,11 +272,14 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Clients should ensure the {@link Stream} is properly closed, e.g. in a
      * try-with-resources statement:
      * <p>
-     * <pre><code>
+     *
+     * <pre>
+     * <code>
      * try (Stream&lt;R&gt; stream = query.stream()) {
      *     // Do things with stream
      * }
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
      * If users prefer more fluent style streaming of queries, {@link ResultSet}
      * can be registered and closed via {@link ExecuteListener}, or via "smart"
@@ -307,11 +319,14 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Clients should ensure the {@link Stream} is properly closed, e.g. in a
      * try-with-resources statement:
      * <p>
-     * <pre><code>
+     *
+     * <pre>
+     * <code>
      * try (Stream&lt;R&gt; stream = query.stream()) {
      *     // Do things with stream
      * }
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
      * If users prefer more fluent style streaming of queries, {@link ResultSet}
      * can be registered and closed via {@link ExecuteListener}, or via "smart"
@@ -342,11 +357,14 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * should ensure the {@link Stream} is properly closed, e.g. in a
      * try-with-resources statement:
      * <p>
-     * <pre><code>
+     *
+     * <pre>
+     * <code>
      * try (Stream&lt;R&gt; stream = query.stream()) {
      *     // Do things with stream
      * }
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
      * If users prefer more fluent style streaming of queries, {@link ResultSet}
      * can be registered and closed via {@link ExecuteListener}, or via "smart"
@@ -424,8 +442,11 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * <p>
      * Example (Sybase ASE):
      * <p>
-     * <pre><code>
-     * String sql = "sp_help 'my_table'";</code></pre>
+     *
+     * <pre>
+     * <code>
+     * String sql = "sp_help 'my_table'";</code>
+     * </pre>
      * <p>
      * The result and its contained records are attached to the original
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -440,7 +461,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field from the generated
-     * result.
+     * result, using {@link #field(Field)} for lookup.
      * <p>
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(Field)}. As such, the query projection
@@ -460,7 +481,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field from the generated
-     * result.
+     * result, using {@link #field(Field)} for lookup.
      * <p>
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(Field, Class)}. As such, the query projection
@@ -486,7 +507,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field from the generated
-     * result.
+     * result, using {@link #field(Field)} for lookup.
      * <p>
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(Field, Converter)}. As such, the query projection
@@ -577,7 +598,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field name from the
-     * generated result.
+     * generated result, using {@link #field(String)} for lookup.
      * <p>
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(String)}. As such, the query projection
@@ -598,7 +619,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field name from the
-     * generated result.
+     * generated result, using {@link #field(String)} for lookup.
      * <p>
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(String, Class)}. As such, the query projection
@@ -624,7 +645,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field name from the
-     * generated result.
+     * generated result, using {@link #field(String)} for lookup.
      * <p>
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(String, Converter)}. As such, the query
@@ -646,7 +667,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field name from the
-     * generated result.
+     * generated result, using {@link #field(Name)} for lookup.
      * <p>
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(Name)}. As such, the query projection
@@ -667,7 +688,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field name from the
-     * generated result.
+     * generated result, using {@link #field(Name)} for lookup.
      * <p>
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(Name, Class)}. As such, the query projection
@@ -693,7 +714,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field name from the
-     * generated result.
+     * generated result, using {@link #field(Name)} for lookup.
      * <p>
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(Name, Converter)}. As such, the query projection
@@ -714,8 +735,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     <U> List<U> fetch(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field from the generated result.
+     * Execute the query and return at most one resulting value for a field from
+     * the generated result, using {@link #field(Field)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(Field)}. As such, the query projection
@@ -732,8 +753,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     <T> T fetchOne(Field<T> field) throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field from the generated result.
+     * Execute the query and return at most one resulting value for a field from
+     * the generated result, using {@link #field(Field)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(Field, Class)}. As such, the query projection
@@ -754,8 +775,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     <U> U fetchOne(Field<?> field, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field from the generated result.
+     * Execute the query and return at most one resulting value for a field from
+     * the generated result, using {@link #field(Field)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(Field, Converter)}. As such, the query projection
@@ -769,11 +790,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @Nullable
     @Blocking
-    <T, U> U fetchOne(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException, TooManyRowsException;
+    <T, U> U fetchOne(Field<T> field, Converter<? super T, ? extends U> converter)
+        throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field index from the generated result.
+     * Execute the query and return at most one resulting value for a field
+     * index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(int)}. As such, the query projection
@@ -790,8 +812,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     Object fetchOne(int fieldIndex) throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field index from the generated result.
+     * Execute the query and return at most one resulting value for a field
+     * index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(int, Class)}. As such, the query projection
@@ -812,8 +834,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     <U> U fetchOne(int fieldIndex, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field index from the generated result.
+     * Execute the query and return at most one resulting value for a field
+     * index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(int, Converter)}. As such, the query projection
@@ -827,11 +849,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @Nullable
     @Blocking
-    <U> U fetchOne(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
+    <U> U fetchOne(int fieldIndex, Converter<?, ? extends U> converter)
+        throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return at most one resulting value for a field name
+     * from the generated result, using {@link #field(String)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(String)}. As such, the query projection
@@ -848,8 +871,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     Object fetchOne(String fieldName) throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return at most one resulting value for a field name
+     * from the generated result, using {@link #field(String)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(String, Class)}. As such, the query projection
@@ -870,8 +893,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     <U> U fetchOne(String fieldName, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return at most one resulting value for a field name
+     * from the generated result, using {@link #field(String)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(String, Converter)}. As such, the query projection
@@ -885,11 +908,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @Nullable
     @Blocking
-    <U> U fetchOne(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
+    <U> U fetchOne(String fieldName, Converter<?, ? extends U> converter)
+        throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return at most one resulting value for a field name
+     * from the generated result, using {@link #field(Name)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(Name)}. As such, the query projection
@@ -907,7 +931,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return at most one resulting value for a field name
-     * from the generated result.
+     * from the generated result, using {@link #field(Name)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(Name, Class)}. As such, the query projection
@@ -928,8 +952,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     <U> U fetchOne(Name fieldName, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return at most one resulting value for a field name
+     * from the generated result, using {@link #field(Name)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(Name, Converter)}. As such, the query projection
@@ -943,7 +967,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @Nullable
     @Blocking
-    <U> U fetchOne(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
+    <U> U fetchOne(Name fieldName, Converter<?, ? extends U> converter)
+        throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting record.
@@ -962,11 +987,11 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     R fetchOne() throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value into a
-     * custom mapper callback.
+     * Execute the query and return at most one resulting value into a custom
+     * mapper callback.
      *
-     * @return The custom mapped record or <code>null</code> if the query returned no
-     *         records.
+     * @return The custom mapped record or <code>null</code> if the query
+     *         returned no records.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
@@ -993,7 +1018,10 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Execute the query and return at most one resulting record as an array
      * <p>
      * You can access data like this
-     * <pre><code>query.fetchOneArray()[fieldIndex]</code></pre>
+     *
+     * <pre>
+     * <code>query.fetchOneArray()[fieldIndex]</code>
+     * </pre>
      *
      * @return The resulting record or <code>null</code> if the query returns no
      *         records.
@@ -1007,13 +1035,19 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     /**
      * Map resulting records onto a custom type.
      * <p>
-     * This is the same as calling <pre><code>
+     * This is the same as calling
+     *
+     * <pre>
+     * <code>
      * E result = null;
      * Record r = q.fetchOne();
      *
      * if (r != null)
      *     result = r.into(type);
-     * </code></pre>. See {@link Record#into(Class)} for more details
+     * </code>
+     * </pre>
+     *
+     * . See {@link Record#into(Class)} for more details
      *
      * @param <E> The generic entity type.
      * @param type The entity type.
@@ -1034,13 +1068,19 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     /**
      * Map resulting records onto a custom record.
      * <p>
-     * This is the same as calling <pre><code>
+     * This is the same as calling
+     *
+     * <pre>
+     * <code>
      * Z result = null;
      * Record r = q.fetchOne();
      *
      * if (r != null)
      *     result = r.into(table);
-     * </code></pre>. See {@link Record#into(Table)} for more details
+     * </code>
+     * </pre>
+     *
+     * . See {@link Record#into(Table)} for more details
      * <p>
      * The resulting record is attached to the original {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -1061,7 +1101,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return exactly one resulting value for a field from
-     * the generated result.
+     * the generated result, using {@link #field(Field)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(Field)}. As such, the query projection
@@ -1081,7 +1121,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return exactly one resulting value for a field from
-     * the generated result.
+     * the generated result, using {@link #field(Field)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(Field, Class)}. As such, the query projection
@@ -1101,11 +1141,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @Nullable
     @Blocking
-    <U> U fetchSingle(Field<?> field, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+    <U> U fetchSingle(Field<?> field, Class<? extends U> type)
+        throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Execute the query and return exactly one resulting value for a field from
-     * the generated result.
+     * the generated result, using {@link #field(Field)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(Field, Converter)}. As such, the query projection
@@ -1121,7 +1162,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @Nullable
     @Blocking
-    <T, U> U fetchSingle(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+    <T, U> U fetchSingle(Field<T> field, Converter<? super T, ? extends U> converter)
+        throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Execute the query and return exactly one resulting value for a field
@@ -1165,7 +1207,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @Nullable
     @Blocking
-    <U> U fetchSingle(int fieldIndex, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+    <U> U fetchSingle(int fieldIndex, Class<? extends U> type)
+        throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Execute the query and return exactly one resulting value for a field
@@ -1185,11 +1228,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @Nullable
     @Blocking
-    <U> U fetchSingle(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+    <U> U fetchSingle(int fieldIndex, Converter<?, ? extends U> converter)
+        throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Execute the query and return exactly one resulting value for a field name
-     * from the generated result.
+     * from the generated result, using {@link #field(String)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(String)}. As such, the query projection
@@ -1209,7 +1253,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return exactly one resulting value for a field name
-     * from the generated result.
+     * from the generated result, using {@link #field(String)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(String, Class)}. As such, the query projection
@@ -1229,11 +1273,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @Nullable
     @Blocking
-    <U> U fetchSingle(String fieldName, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+    <U> U fetchSingle(String fieldName, Class<? extends U> type)
+        throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Execute the query and return exactly one resulting value for a field name
-     * from the generated result.
+     * from the generated result, using {@link #field(String)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(String, Converter)}. As such, the query projection
@@ -1249,11 +1294,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @Nullable
     @Blocking
-    <U> U fetchSingle(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+    <U> U fetchSingle(String fieldName, Converter<?, ? extends U> converter)
+        throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Execute the query and return exactly one resulting value for a field name
-     * from the generated result.
+     * from the generated result, using {@link #field(Name)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(Name)}. As such, the query projection
@@ -1273,7 +1319,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return exactly one resulting value for a field name
-     * from the generated result.
+     * from the generated result, using {@link #field(Name)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(Name, Class)}. As such, the query projection
@@ -1293,11 +1339,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @Nullable
     @Blocking
-    <U> U fetchSingle(Name fieldName, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+    <U> U fetchSingle(Name fieldName, Class<? extends U> type)
+        throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Execute the query and return exactly one resulting value for a field name
-     * from the generated result.
+     * from the generated result, using {@link #field(Name)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(Name, Converter)}. As such, the query projection
@@ -1313,7 +1360,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @Nullable
     @Blocking
-    <U> U fetchSingle(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+    <U> U fetchSingle(Name fieldName, Converter<?, ? extends U> converter)
+        throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Execute the query and return exactly one resulting record.
@@ -1342,7 +1390,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E> E fetchSingle(RecordMapper<? super R, E> mapper) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+    <E> E fetchSingle(RecordMapper<? super R, E> mapper)
+        throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Execute the query and return exactly one resulting record as a name/value
@@ -1363,7 +1412,10 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Execute the query and return exactly one resulting record as an array
      * <p>
      * You can access data like this
-     * <pre><code>query.fetchSingleArray()[fieldIndex]</code></pre>
+     *
+     * <pre>
+     * <code>query.fetchSingleArray()[fieldIndex]</code>
+     * </pre>
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -1377,13 +1429,19 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     /**
      * Map resulting records onto a custom type.
      * <p>
-     * This is the same as calling <pre><code>
+     * This is the same as calling
+     *
+     * <pre>
+     * <code>
      * E result = null;
      * Record r = q.fetchSingle();
      *
      * if (r != null)
      *     result = r.into(type);
-     * </code></pre>. See {@link Record#into(Class)} for more details
+     * </code>
+     * </pre>
+     *
+     * . See {@link Record#into(Class)} for more details
      *
      * @param <E> The generic entity type.
      * @param type The entity type.
@@ -1398,19 +1456,27 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @see DefaultRecordMapper
      */
     @Blocking
-    // [#10774] This is @Nullable in rare cases, which can be annoying for Kotlin users in most cases
-    <E> E fetchSingleInto(Class<? extends E> type) throws DataAccessException, MappingException, NoDataFoundException, TooManyRowsException;
+    // [#10774] This is @Nullable in rare cases, which can be annoying for
+    // Kotlin users in most cases
+    <E> E fetchSingleInto(Class<? extends E> type)
+        throws DataAccessException, MappingException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Map resulting records onto a custom record.
      * <p>
-     * This is the same as calling <pre><code>
+     * This is the same as calling
+     *
+     * <pre>
+     * <code>
      * Z result = null;
      * Record r = q.fetchSingle();
      *
      * if (r != null)
      *     result = r.into(table);
-     * </code></pre>. See {@link Record#into(Table)} for more details
+     * </code>
+     * </pre>
+     *
+     * . See {@link Record#into(Table)} for more details
      * <p>
      * The resulting record is attached to the original {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -1427,11 +1493,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <Z extends Record> Z fetchSingleInto(Table<Z> table) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+    <Z extends Record> Z fetchSingleInto(Table<Z> table)
+        throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field from the generated result.
+     * Execute the query and return at most one resulting value for a field from
+     * the generated result, using {@link #field(Field)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
      * {@link Record#get(Field)}. As such, the query projection
@@ -1447,8 +1514,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     <T> Optional<T> fetchOptional(Field<T> field) throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field from the generated result.
+     * Execute the query and return at most one resulting value for a field from
+     * the generated result, using {@link #field(Field)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
      * {@link Record#get(Field, Class)}. As such, the query projection
@@ -1465,11 +1532,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <U> Optional<U> fetchOptional(Field<?> field, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
+    <U> Optional<U> fetchOptional(Field<?> field, Class<? extends U> type)
+        throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field from the generated result.
+     * Execute the query and return at most one resulting value for a field from
+     * the generated result, using {@link #field(Field)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
      * {@link Record#get(Field, Converter)}. As such, the query projection
@@ -1482,11 +1550,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <T, U> Optional<U> fetchOptional(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException, TooManyRowsException;
+    <T, U> Optional<U> fetchOptional(Field<T> field, Converter<? super T, ? extends U> converter)
+        throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field index from the generated result.
+     * Execute the query and return at most one resulting value for a field
+     * index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
      * {@link Record#get(int)}. As such, the query projection
@@ -1502,8 +1571,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     Optional<?> fetchOptional(int fieldIndex) throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field index from the generated result.
+     * Execute the query and return at most one resulting value for a field
+     * index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
      * {@link Record#get(int, Class)}. As such, the query projection
@@ -1520,11 +1589,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <U> Optional<U> fetchOptional(int fieldIndex, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
+    <U> Optional<U> fetchOptional(int fieldIndex, Class<? extends U> type)
+        throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field index from the generated result.
+     * Execute the query and return at most one resulting value for a field
+     * index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
      * {@link Record#get(int, Converter)}. As such, the query projection
@@ -1537,11 +1607,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <U> Optional<U> fetchOptional(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
+    <U> Optional<U> fetchOptional(int fieldIndex, Converter<?, ? extends U> converter)
+        throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return at most one resulting value for a field name
+     * from the generated result, using {@link #field(String)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
      * {@link Record#get(String)}. As such, the query projection
@@ -1557,8 +1628,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     Optional<?> fetchOptional(String fieldName) throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return at most one resulting value for a field name
+     * from the generated result, using {@link #field(String)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
      * {@link Record#get(String, Class)}. As such, the query projection
@@ -1575,11 +1646,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <U> Optional<U> fetchOptional(String fieldName, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
+    <U> Optional<U> fetchOptional(String fieldName, Class<? extends U> type)
+        throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return at most one resulting value for a field name
+     * from the generated result, using {@link #field(String)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
      * {@link Record#get(String, Converter)}. As such, the query projection
@@ -1592,11 +1664,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <U> Optional<U> fetchOptional(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
+    <U> Optional<U> fetchOptional(String fieldName, Converter<?, ? extends U> converter)
+        throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return at most one resulting value for a field name
+     * from the generated result, using {@link #field(Name)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
      * {@link Record#get(Name)}. As such, the query projection
@@ -1612,8 +1685,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     Optional<?> fetchOptional(Name fieldName) throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return at most one resulting value for a field name
+     * from the generated result, using {@link #field(Name)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
      * {@link Record#get(Name, Class)}. As such, the query projection
@@ -1630,11 +1703,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <U> Optional<U> fetchOptional(Name fieldName, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
+    <U> Optional<U> fetchOptional(Name fieldName, Class<? extends U> type)
+        throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return at most one resulting value for a field name
+     * from the generated result, using {@link #field(Name)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
      * {@link Record#get(Name, Converter)}. As such, the query projection
@@ -1647,7 +1721,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <U> Optional<U> fetchOptional(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
+    <U> Optional<U> fetchOptional(Name fieldName, Converter<?, ? extends U> converter)
+        throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting record.
@@ -1665,8 +1740,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     Optional<R> fetchOptional() throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value into a
-     * custom mapper callback.
+     * Execute the query and return at most one resulting value into a custom
+     * mapper callback.
      *
      * @return The custom mapped record
      * @throws DataAccessException if something went wrong executing the query
@@ -1704,9 +1779,15 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     /**
      * Map resulting records onto a custom type.
      * <p>
-     * This is the same as calling <pre><code>
+     * This is the same as calling
+     *
+     * <pre>
+     * <code>
      * Optional&lt;E&gt; result = q.fetchOptional().map(r -&gt; r.into(type));
-     * </code></pre>. See {@link Record#into(Class)} for more details
+     * </code>
+     * </pre>
+     *
+     * . See {@link Record#into(Class)} for more details
      *
      * @param <E> The generic entity type.
      * @param type The entity type.
@@ -1721,14 +1802,21 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E> Optional<E> fetchOptionalInto(Class<? extends E> type) throws DataAccessException, MappingException, TooManyRowsException;
+    <E> Optional<E> fetchOptionalInto(Class<? extends E> type)
+        throws DataAccessException, MappingException, TooManyRowsException;
 
     /**
      * Map resulting records onto a custom record.
      * <p>
-     * This is the same as calling <pre><code>
+     * This is the same as calling
+     *
+     * <pre>
+     * <code>
      * Optional&lt;Z&gt; result = q.fetchOptional().map(r -&gt; r.into(table));
-     * </code></pre>. See {@link Record#into(Table)} for more details
+     * </code>
+     * </pre>
+     *
+     * . See {@link Record#into(Table)} for more details
      * <p>
      * The resulting record is attached to the original {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -1747,8 +1835,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field from the generated result.
+     * Execute the query and return at most one resulting value for a field from
+     * the generated result, using {@link #field(Field)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchAny()} and then
      * {@link Record#get(Field)}. As such, the query projection
@@ -1765,7 +1853,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return at most one resulting value for a field from
-     * the generated result.
+     * the generated result, using {@link #field(Field)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchAny()} and then
      * {@link Record#get(Field, Class)}. As such, the query projection
@@ -1785,8 +1873,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     <U> U fetchAny(Field<?> field, Class<? extends U> type) throws DataAccessException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field from the generated result.
+     * Execute the query and return at most one resulting value for a field from
+     * the generated result, using {@link #field(Field)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchAny()} and then
      * {@link Record#get(Field, Converter)}. As such, the query projection
@@ -1802,8 +1890,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     <T, U> U fetchAny(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field index from the generated result.
+     * Execute the query and return at most one resulting value for a field
+     * index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchAny()} and then
      * {@link Record#get(int)}. As such, the query projection
@@ -1840,8 +1928,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     <U> U fetchAny(int fieldIndex, Class<? extends U> type) throws DataAccessException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field index from the generated result.
+     * Execute the query and return at most one resulting value for a field
+     * index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchAny()} and then
      * {@link Record#get(int, Converter)}. As such, the query projection
@@ -1857,8 +1945,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     <U> U fetchAny(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return at most one resulting value for a field name
+     * from the generated result, using {@link #field(String)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchAny()} and then
      * {@link Record#get(String)}. As such, the query projection
@@ -1874,8 +1962,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     Object fetchAny(String fieldName) throws DataAccessException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return at most one resulting value for a field name
+     * from the generated result, using {@link #field(String)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchAny()} and then
      * {@link Record#get(String, Class)}. As such, the query projection
@@ -1895,8 +1983,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     <U> U fetchAny(String fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return at most one resulting value for a field name
+     * from the generated result, using {@link #field(String)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchAny()} and then
      * {@link Record#get(String, Converter)}. As such, the query projection
@@ -1912,8 +2000,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     <U> U fetchAny(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return at most one resulting value for a field name
+     * from the generated result, using {@link #field(Name)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchAny()} and then
      * {@link Record#get(Name)}. As such, the query projection
@@ -1929,8 +2017,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     Object fetchAny(Name fieldName) throws DataAccessException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return at most one resulting value for a field name
+     * from the generated result, using {@link #field(Name)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchAny()} and then
      * {@link Record#get(Name, Class)}. As such, the query projection
@@ -1950,8 +2038,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     <U> U fetchAny(Name fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return at most one resulting value for a field name
+     * from the generated result, using {@link #field(Name)} for lookup.
      * <p>
      * This is the same as calling {@link #fetchAny()} and then
      * {@link Record#get(Name, Converter)}. As such, the query projection
@@ -2014,7 +2102,10 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Execute the query and return at most one resulting record as an array
      * <p>
      * You can access data like this
-     * <pre><code>query.fetchAnyArray()[fieldIndex]</code></pre>
+     *
+     * <pre>
+     * <code>query.fetchAnyArray()[fieldIndex]</code>
+     * </pre>
      *
      * @return The resulting record or <code>null</code> if the query returns no
      *         records.
@@ -2027,13 +2118,19 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     /**
      * Map resulting records onto a custom type.
      * <p>
-     * This is the same as calling <pre><code>
+     * This is the same as calling
+     *
+     * <pre>
+     * <code>
      * E result = null;
      * Record r = q.fetchAny();
      *
      * if (r != null)
      *     result = r.into(type);
-     * </code></pre>. See {@link Record#into(Class)} for more details
+     * </code>
+     * </pre>
+     *
+     * . See {@link Record#into(Class)} for more details
      *
      * @param <E> The generic entity type.
      * @param type The entity type.
@@ -2053,13 +2150,19 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     /**
      * Map resulting records onto a custom record.
      * <p>
-     * This is the same as calling <pre><code>
+     * This is the same as calling
+     *
+     * <pre>
+     * <code>
      * Z result = null;
      * Record r = q.fetchOne();
      *
      * if (r != null)
      *     result = r.into(table);
-     * </code></pre>. See {@link Record#into(Table)} for more details
+     * </code>
+     * </pre>
+     *
+     * . See {@link Record#into(Table)} for more details
      * <p>
      * The resulting record is attached to the original {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -2099,7 +2202,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
-     * columns as key and the corresponding records as value.
+     * columns as key and the corresponding records as value, using
+     * {@link #field(Field)} for lookup.
      * <p>
      * An exception is thrown, if the key turns out to be non-unique in the
      * result set. Use {@link #fetchGroups(Field)} instead, if your keys are
@@ -2164,7 +2268,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
-     * columns as key and the corresponding records as value.
+     * columns as key and the corresponding records as value, using
+     * {@link #field(String)} for lookup.
      * <p>
      * An exception is thrown, if the key turns out to be non-unique in the
      * result set. Use {@link #fetchGroups(String)} instead, if your keys are
@@ -2196,7 +2301,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
-     * columns as key and the corresponding records as value.
+     * columns as key and the corresponding records as value, using
+     * {@link #field(Name)} for lookup.
      * <p>
      * An exception is thrown, if the key turns out to be non-unique in the
      * result set. Use {@link #fetchGroups(Name)} instead, if your keys are
@@ -2228,7 +2334,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
-     * columns as key and another one of the result's columns as value
+     * columns as key and another one of the result's columns as value, using
+     * {@link #field(Field)} for lookup.
      * <p>
      * An exception is thrown, if the key turns out to be non-unique in the
      * result set. Use {@link #fetchGroups(Field, Field)} instead, if your keys
@@ -2263,7 +2370,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
-     * columns as key and another one of the result's columns as value
+     * columns as key and another one of the result's columns as value.
      * <p>
      * An exception is thrown, if the key turns out to be non-unique in the
      * result set. Use {@link #fetchGroups(int, int)} instead, if your keys are
@@ -2292,11 +2399,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
-     * columns as key and another one of the result's columns as value
+     * columns as key and another one of the result's columns as value, using
+     * {@link #field(String)} for lookup.
      * <p>
      * An exception is thrown, if the key turns out to be non-unique in the
-     * result set. Use {@link #fetchGroups(String, String)} instead, if your keys
-     * are non-unique.
+     * result set. Use {@link #fetchGroups(String, String)} instead, if your
+     * keys are non-unique.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
@@ -2326,7 +2434,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
-     * columns as key and another one of the result's columns as value
+     * columns as key and another one of the result's columns as value, using
+     * {@link #field(Name)} for lookup.
      * <p>
      * An exception is thrown, if the key turns out to be non-unique in the
      * result set. Use {@link #fetchGroups(Name, Name)} instead, if your keys
@@ -2355,7 +2464,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with keys as a map key and the
-     * corresponding record as value.
+     * corresponding record as value, using {@link #field(Field)} for lookup.
      * <p>
      * An exception is thrown, if the keys turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(Field[])} instead, if your keys are
@@ -2411,7 +2520,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with keys as a map key and the
-     * corresponding record as value.
+     * corresponding record as value, using {@link #field(String)} for lookup.
      * <p>
      * An exception is thrown, if the keys turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(String[])} instead, if your keys are
@@ -2439,7 +2548,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with keys as a map key and the
-     * corresponding record as value.
+     * corresponding record as value, using {@link #field(Name)} for lookup.
      * <p>
      * An exception is thrown, if the keys turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(Name[])} instead, if your keys are
@@ -2467,7 +2576,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with keys as a map key and the
-     * corresponding record as value.
+     * corresponding record as value, using {@link #field(Field)} for lookup.
      * <p>
      * An exception is thrown, if the keys turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(Field[], Field[])} instead, if your
@@ -2525,7 +2634,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with keys as a map key and the
-     * corresponding record as value.
+     * corresponding record as value, using {@link #field(String)} for lookup.
      * <p>
      * An exception is thrown, if the keys turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(String[], String[])} instead, if your
@@ -2554,7 +2663,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with keys as a map key and the
-     * corresponding record as value.
+     * corresponding record as value, using {@link #field(Name)} for lookup.
      * <p>
      * An exception is thrown, if the keys turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(Name[], Name[])} instead, if your
@@ -2583,7 +2692,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
-     * given keys and mapped into the given entity type.
+     * given keys and mapped into the given entity type, using
+     * {@link #field(Field)} for lookup.
      * <p>
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(Field[], Class)} instead, if
@@ -2645,11 +2755,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E> Map<List<?>, E> fetchMap(int[] keyFieldIndexes, Class<? extends E> type) throws DataAccessException, MappingException;
+    <E> Map<List<?>, E> fetchMap(int[] keyFieldIndexes, Class<? extends E> type)
+        throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
-     * given keys and mapped into the given entity type.
+     * given keys and mapped into the given entity type, using
+     * {@link #field(String)} for lookup.
      * <p>
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(String[], Class)} instead, if
@@ -2678,11 +2790,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E> Map<List<?>, E> fetchMap(String[] keyFieldNames, Class<? extends E> type) throws DataAccessException, MappingException;
+    <E> Map<List<?>, E> fetchMap(String[] keyFieldNames, Class<? extends E> type)
+        throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
-     * given keys and mapped into the given entity type.
+     * given keys and mapped into the given entity type, using
+     * {@link #field(Name)} for lookup.
      * <p>
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(Name[], Class)} instead, if
@@ -2711,11 +2825,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E> Map<List<?>, E> fetchMap(Name[] keyFieldNames, Class<? extends E> type) throws DataAccessException, MappingException;
+    <E> Map<List<?>, E> fetchMap(Name[] keyFieldNames, Class<? extends E> type)
+        throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
-     * given keys and mapped by the given mapper.
+     * given keys and mapped by the given mapper, using {@link #field(Field)}
+     * for lookup.
      * <p>
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(Field[], RecordMapper)}
@@ -2744,7 +2860,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E> Map<List<?>, E> fetchMap(Field<?>[] keys, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
+    <E> Map<List<?>, E> fetchMap(Field<?>[] keys, RecordMapper<? super R, E> mapper)
+        throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2777,11 +2894,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E> Map<List<?>, E> fetchMap(int[] keyFieldIndexes, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
+    <E> Map<List<?>, E> fetchMap(int[] keyFieldIndexes, RecordMapper<? super R, E> mapper)
+        throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
-     * given keys and mapped by the given mapper.
+     * given keys and mapped by the given mapper, using {@link #field(String)}
+     * for lookup.
      * <p>
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(String[], RecordMapper)}
@@ -2810,11 +2929,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E> Map<List<?>, E> fetchMap(String[] keyFieldNames, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
+    <E> Map<List<?>, E> fetchMap(String[] keyFieldNames, RecordMapper<? super R, E> mapper)
+        throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
-     * given keys and mapped by the given mapper.
+     * given keys and mapped by the given mapper, using {@link #field(Name)} for
+     * lookup.
      * <p>
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(Name[], RecordMapper)}
@@ -2843,7 +2964,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E> Map<List<?>, E> fetchMap(Name[] keyFieldNames, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
+    <E> Map<List<?>, E> fetchMap(Name[] keyFieldNames, RecordMapper<? super R, E> mapper)
+        throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2877,7 +2999,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <K> Map<K, R> fetchMap(Class<? extends K> keyType) throws DataAccessException, MappingException, InvalidResultException;
+    <K> Map<K, R> fetchMap(Class<? extends K> keyType)
+        throws DataAccessException, MappingException, InvalidResultException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2912,7 +3035,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <K, V> Map<K, V> fetchMap(Class<? extends K> keyType, Class<? extends V> valueType) throws DataAccessException, MappingException, InvalidResultException;
+    <K, V> Map<K, V> fetchMap(Class<? extends K> keyType, Class<? extends V> valueType)
+        throws DataAccessException, MappingException, InvalidResultException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2947,7 +3071,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <K, V> Map<K, V> fetchMap(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) throws DataAccessException, InvalidResultException, MappingException;
+    <K, V> Map<K, V> fetchMap(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper)
+        throws DataAccessException, InvalidResultException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2980,7 +3105,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <K> Map<K, R> fetchMap(RecordMapper<? super R, K> keyMapper) throws DataAccessException, InvalidResultException, MappingException;
+    <K> Map<K, R> fetchMap(RecordMapper<? super R, K> keyMapper)
+        throws DataAccessException, InvalidResultException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -3014,7 +3140,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <K, V> Map<K, V> fetchMap(RecordMapper<? super R, K> keyMapper, Class<V> valueType) throws DataAccessException, InvalidResultException, MappingException;
+    <K, V> Map<K, V> fetchMap(RecordMapper<? super R, K> keyMapper, Class<V> valueType)
+        throws DataAccessException, InvalidResultException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -3048,7 +3175,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <K, V> Map<K, V> fetchMap(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) throws DataAccessException, InvalidResultException, MappingException;
+    <K, V> Map<K, V> fetchMap(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper)
+        throws DataAccessException, InvalidResultException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with table as a map key and
@@ -3105,7 +3233,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <S extends Record, T extends Record> Map<S, T> fetchMap(Table<S> keyTable, Table<T> valueTable) throws DataAccessException;
+    <S extends Record, T extends Record> Map<S, T> fetchMap(Table<S> keyTable, Table<T> valueTable)
+        throws DataAccessException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -3137,7 +3266,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E, S extends Record> Map<S, E> fetchMap(Table<S> table, Class<? extends E> type) throws DataAccessException, MappingException;
+    <E, S extends Record> Map<S, E> fetchMap(Table<S> table, Class<? extends E> type)
+        throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -3169,11 +3299,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E, S extends Record> Map<S, E> fetchMap(Table<S> table, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
+    <E, S extends Record> Map<S, E> fetchMap(Table<S> table, RecordMapper<? super R, E> mapper)
+        throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
-     * given key and mapped into the given entity type.
+     * given key and mapped into the given entity type, using
+     * {@link #field(Field)} for lookup.
      * <p>
      * An exception is thrown, if the key turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(Field, Class)} instead, if your key
@@ -3205,8 +3337,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * given key and mapped into the given entity type.
      * <p>
      * An exception is thrown, if the key turn out to be non-unique in the
-     * result set. Use {@link #fetchGroups(int, Class)} instead, if your key
-     * is non-unique.
+     * result set. Use {@link #fetchGroups(int, Class)} instead, if your key is
+     * non-unique.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
@@ -3231,7 +3363,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
-     * given key and mapped into the given entity type.
+     * given key and mapped into the given entity type, using
+     * {@link #field(String)} for lookup.
      * <p>
      * An exception is thrown, if the key turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(String, Class)} instead, if your key
@@ -3260,11 +3393,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
-     * given key and mapped into the given entity type.
+     * given key and mapped into the given entity type, using
+     * {@link #field(Name)} for lookup.
      * <p>
      * An exception is thrown, if the key turn out to be non-unique in the
-     * result set. Use {@link #fetchGroups(Name, Class)} instead, if your key
-     * is non-unique.
+     * result set. Use {@link #fetchGroups(Name, Class)} instead, if your key is
+     * non-unique.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
@@ -3289,7 +3423,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
-     * given key and mapped by the given mapper.
+     * given key and mapped by the given mapper, using {@link #field(Field)} for
+     * lookup.
      * <p>
      * An exception is thrown, if the key turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(Field, Class)} instead, if your key
@@ -3347,7 +3482,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
-     * given key and mapped by the given mapper.
+     * given key and mapped by the given mapper, using {@link #field(String)}
+     * for lookup.
      * <p>
      * An exception is thrown, if the key turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(String, Class)} instead, if your key
@@ -3376,11 +3512,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
-     * given key and mapped by the given mapper.
+     * given key and mapped by the given mapper, using {@link #field(Name)} for
+     * lookup.
      * <p>
      * An exception is thrown, if the key turn out to be non-unique in the
-     * result set. Use {@link #fetchGroups(Name, Class)} instead, if your key
-     * is non-unique.
+     * result set. Use {@link #fetchGroups(Name, Class)} instead, if your key is
+     * non-unique.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
@@ -3405,7 +3542,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
-     * columns as key and a list of corresponding records as value.
+     * columns as key and a list of corresponding records as value, using
+     * {@link #field(Field)} for lookup.
      * <p>
      * Unlike {@link #fetchMap(Field)}, this method allows for non-unique keys
      * in the result set.
@@ -3462,7 +3600,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
-     * columns as key and a list of corresponding records as value.
+     * columns as key and a list of corresponding records as value, using
+     * {@link #field(String)} for lookup.
      * <p>
      * Unlike {@link #fetchMap(String)}, this method allows for non-unique keys
      * in the result set.
@@ -3490,10 +3629,11 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
-     * columns as key and a list of corresponding records as value.
+     * columns as key and a list of corresponding records as value, using
+     * {@link #field(Name)} for lookup.
      * <p>
-     * Unlike {@link #fetchMap(Name)}, this method allows for non-unique keys
-     * in the result set.
+     * Unlike {@link #fetchMap(Name)}, this method allows for non-unique keys in
+     * the result set.
      * <p>
      * The resulting records are attached to the original {@link Configuration}
      * by default. Use {@link Settings#isAttachRecords()} to override this
@@ -3518,7 +3658,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
-     * columns as key and another one of the result's columns as value
+     * columns as key and another one of the result's columns as value, using
+     * {@link #field(Field)} for lookup.
      * <p>
      * Unlike {@link #fetchMap(Field, Field)}, this method allows for non-unique
      * keys in the result set.
@@ -3550,7 +3691,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
-     * columns as key and another one of the result's columns as value
+     * columns as key and another one of the result's columns as value.
      * <p>
      * Unlike {@link #fetchMap(int, int)}, this method allows for non-unique
      * keys in the result set.
@@ -3575,7 +3716,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
-     * columns as key and another one of the result's columns as value
+     * columns as key and another one of the result's columns as value, using
+     * {@link #field(String)} for lookup.
      * <p>
      * Unlike {@link #fetchMap(String, String)}, this method allows for
      * non-unique keys in the result set.
@@ -3600,10 +3742,11 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
-     * columns as key and another one of the result's columns as value
+     * columns as key and another one of the result's columns as value, using
+     * {@link #field(Name)} for lookup.
      * <p>
-     * Unlike {@link #fetchMap(Name, Name)}, this method allows for
-     * non-unique keys in the result set.
+     * Unlike {@link #fetchMap(Name, Name)}, this method allows for non-unique
+     * keys in the result set.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
@@ -3625,7 +3768,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with the result grouped by the
-     * given keys.
+     * given keys, using {@link #field(Field)} for lookup.
      * <p>
      * Unlike {@link #fetchMap(Field[])}, this method allows for non-unique keys
      * in the result set.
@@ -3677,7 +3820,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with the result grouped by the
-     * given keys.
+     * given keys, using {@link #field(String)} for lookup.
      * <p>
      * Unlike {@link #fetchMap(String[])}, this method allows for non-unique
      * keys in the result set.
@@ -3703,10 +3846,10 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with the result grouped by the
-     * given keys.
+     * given keys, using {@link #field(Name)} for lookup.
      * <p>
-     * Unlike {@link #fetchMap(Name[])}, this method allows for non-unique
-     * keys in the result set.
+     * Unlike {@link #fetchMap(Name[])}, this method allows for non-unique keys
+     * in the result set.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
@@ -3729,7 +3872,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with the result grouped by the
-     * given keys.
+     * given keys, using {@link #field(Field)} for lookup.
      * <p>
      * Unlike {@link #fetchMap(Field[], Field[])}, this method allows for
      * non-unique keys in the result set.
@@ -3783,7 +3926,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with the result grouped by the
-     * given keys.
+     * given keys, using {@link #field(String)} for lookup.
      * <p>
      * Unlike {@link #fetchMap(String[], String[])}, this method allows for
      * non-unique keys in the result set.
@@ -3806,11 +3949,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    Map<Record, Result<Record>> fetchGroups(String[] keyFieldNames, String[] valueFieldNames) throws DataAccessException;
+    Map<Record, Result<Record>> fetchGroups(String[] keyFieldNames, String[] valueFieldNames)
+        throws DataAccessException;
 
     /**
      * Execute the query and return a {@link Map} with the result grouped by the
-     * given keys.
+     * given keys, using {@link #field(Name)} for lookup.
      * <p>
      * Unlike {@link #fetchMap(Name[], Name[])}, this method allows for
      * non-unique keys in the result set.
@@ -3837,7 +3981,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
-     * given keys and mapped into the given entity type.
+     * given keys and mapped into the given entity type, using
+     * {@link #field(Field)} for lookup.
      * <p>
      * Unlike {@link #fetchMap(Field[], Class)}, this method allows for
      * non-unique keys in the result set.
@@ -3868,8 +4013,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * Execute the query and return a {@link Map} with results grouped by the
      * given keys and mapped into the given entity type.
      * <p>
-     * Unlike {@link #fetchMap(int[], Class)}, this method allows for
-     * non-unique keys in the result set.
+     * Unlike {@link #fetchMap(int[], Class)}, this method allows for non-unique
+     * keys in the result set.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
@@ -3895,7 +4040,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
-     * given keys and mapped into the given entity type.
+     * given keys and mapped into the given entity type, using
+     * {@link #field(String)} for lookup.
      * <p>
      * Unlike {@link #fetchMap(String[], Class)}, this method allows for
      * non-unique keys in the result set.
@@ -3924,7 +4070,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
-     * given keys and mapped into the given entity type.
+     * given keys and mapped into the given entity type, using
+     * {@link #field(Name)} for lookup.
      * <p>
      * Unlike {@link #fetchMap(Name[], Class)}, this method allows for
      * non-unique keys in the result set.
@@ -3953,7 +4100,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
-     * given keys and mapped by the given mapper.
+     * given keys and mapped by the given mapper, using {@link #field(Field)}
+     * for lookup.
      * <p>
      * Unlike {@link #fetchMap(Field[], RecordMapper)}, this method allows for
      * non-unique keys in the result set.
@@ -4007,11 +4155,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E> Map<Record, List<E>> fetchGroups(int[] keyFieldIndexes, RecordMapper<? super R, E> mapper) throws MappingException;
+    <E> Map<Record, List<E>> fetchGroups(int[] keyFieldIndexes, RecordMapper<? super R, E> mapper)
+        throws MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
-     * given keys and mapped by the given mapper.
+     * given keys and mapped by the given mapper, using {@link #field(String)}
+     * for lookup.
      * <p>
      * Unlike {@link #fetchMap(String[], RecordMapper)}, this method allows for
      * non-unique keys in the result set.
@@ -4036,11 +4186,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E> Map<Record, List<E>> fetchGroups(String[] keyFieldNames, RecordMapper<? super R, E> mapper) throws MappingException;
+    <E> Map<Record, List<E>> fetchGroups(String[] keyFieldNames, RecordMapper<? super R, E> mapper)
+        throws MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
-     * given keys and mapped by the given mapper.
+     * given keys and mapped by the given mapper, using {@link #field(Name)} for
+     * lookup.
      * <p>
      * Unlike {@link #fetchMap(Name[], RecordMapper)}, this method allows for
      * non-unique keys in the result set.
@@ -4065,7 +4217,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E> Map<Record, List<E>> fetchGroups(Name[] keyFieldNames, RecordMapper<? super R, E> mapper) throws MappingException;
+    <E> Map<Record, List<E>> fetchGroups(Name[] keyFieldNames, RecordMapper<? super R, E> mapper)
+        throws MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -4126,7 +4279,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <K, V> Map<K, List<V>> fetchGroups(Class<? extends K> keyType, Class<? extends V> valueType) throws MappingException;
+    <K, V> Map<K, List<V>> fetchGroups(Class<? extends K> keyType, Class<? extends V> valueType)
+        throws MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -4157,7 +4311,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <K, V> Map<K, List<V>> fetchGroups(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) throws MappingException;
+    <K, V> Map<K, List<V>> fetchGroups(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper)
+        throws MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -4216,7 +4371,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <K, V> Map<K, List<V>> fetchGroups(RecordMapper<? super R, K> keyMapper, Class<V> valueType) throws MappingException;
+    <K, V> Map<K, List<V>> fetchGroups(RecordMapper<? super R, K> keyMapper, Class<V> valueType)
+        throws MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -4246,7 +4402,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <K, V> Map<K, List<V>> fetchGroups(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) throws MappingException;
+    <K, V> Map<K, List<V>> fetchGroups(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper)
+        throws MappingException;
 
     /**
      * Execute the query and return a {@link Map} with the result grouped by the
@@ -4295,7 +4452,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <S extends Record, T extends Record> Map<S, Result<T>> fetchGroups(Table<S> keyTable, Table<T> valueTable) throws DataAccessException;
+    <S extends Record, T extends Record> Map<S, Result<T>> fetchGroups(Table<S> keyTable, Table<T> valueTable)
+        throws DataAccessException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -4323,7 +4481,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E, S extends Record> Map<S, List<E>> fetchGroups(Table<S> table, Class<? extends E> type) throws DataAccessException, MappingException;
+    <E, S extends Record> Map<S, List<E>> fetchGroups(Table<S> table, Class<? extends E> type)
+        throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -4351,11 +4510,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E, S extends Record> Map<S, List<E>> fetchGroups(Table<S> table, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
+    <E, S extends Record> Map<S, List<E>> fetchGroups(Table<S> table, RecordMapper<? super R, E> mapper)
+        throws DataAccessException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
-     * into the given entity type.
+     * into the given entity type, using {@link #field(Field)} for lookup.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
@@ -4378,7 +4538,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <K, E> Map<K, List<E>> fetchGroups(Field<K> key, Class<? extends E> type) throws DataAccessException, MappingException;
+    <K, E> Map<K, List<E>> fetchGroups(Field<K> key, Class<? extends E> type)
+        throws DataAccessException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
@@ -4403,11 +4564,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E> Map<?, List<E>> fetchGroups(int keyFieldIndex, Class<? extends E> type) throws DataAccessException, MappingException;
+    <E> Map<?, List<E>> fetchGroups(int keyFieldIndex, Class<? extends E> type)
+        throws DataAccessException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
-     * into the given entity type.
+     * into the given entity type, using {@link #field(String)} for lookup.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
@@ -4428,11 +4590,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E> Map<?, List<E>> fetchGroups(String keyFieldName, Class<? extends E> type) throws DataAccessException, MappingException;
+    <E> Map<?, List<E>> fetchGroups(String keyFieldName, Class<? extends E> type)
+        throws DataAccessException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
-     * into the given entity type.
+     * into the given entity type, using {@link #field(Name)} for lookup.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
@@ -4453,11 +4616,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E> Map<?, List<E>> fetchGroups(Name keyFieldName, Class<? extends E> type) throws DataAccessException, MappingException;
+    <E> Map<?, List<E>> fetchGroups(Name keyFieldName, Class<? extends E> type)
+        throws DataAccessException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
-     * the given mapper.
+     * the given mapper, using {@link #field(Field)} for lookup.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
@@ -4480,7 +4644,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <K, E> Map<K, List<E>> fetchGroups(Field<K> key, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
+    <K, E> Map<K, List<E>> fetchGroups(Field<K> key, RecordMapper<? super R, E> mapper)
+        throws DataAccessException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
@@ -4505,11 +4670,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E> Map<?, List<E>> fetchGroups(int keyFieldIndex, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
+    <E> Map<?, List<E>> fetchGroups(int keyFieldIndex, RecordMapper<? super R, E> mapper)
+        throws DataAccessException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
-     * the given mapper.
+     * the given mapper, using {@link #field(String)} for lookup.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
@@ -4530,11 +4696,12 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E> Map<?, List<E>> fetchGroups(String keyFieldName, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
+    <E> Map<?, List<E>> fetchGroups(String keyFieldName, RecordMapper<? super R, E> mapper)
+        throws DataAccessException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
-     * the given mapper.
+     * the given mapper, using {@link #field(Name)} for lookup.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
@@ -4555,13 +4722,17 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      */
     @NotNull
     @Blocking
-    <E> Map<?, List<E>> fetchGroups(Name keyFieldName, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
+    <E> Map<?, List<E>> fetchGroups(Name keyFieldName, RecordMapper<? super R, E> mapper)
+        throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return the generated result as an Object matrix.
      * <p>
      * You can access data like this
-     * <pre><code>query.fetchArray()[recordIndex][fieldIndex]</code></pre>
+     *
+     * <pre>
+     * <code>query.fetchArray()[recordIndex][fieldIndex]</code>
+     * </pre>
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4587,7 +4758,10 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * generated result.
      * <p>
      * You can access data like this
-     * <pre><code>query.fetchArray(fieldIndex)[recordIndex]</code></pre>
+     *
+     * <pre>
+     * <code>query.fetchArray(fieldIndex)[recordIndex]</code>
+     * </pre>
      *
      * @return The resulting values. This may be an array type more concrete
      *         than <code>Object[]</code>, depending on whether jOOQ has any
@@ -4605,7 +4779,10 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * generated result.
      * <p>
      * You can access data like this
-     * <pre><code>query.fetchArray(fieldIndex)[recordIndex]</code></pre>
+     *
+     * <pre>
+     * <code>query.fetchArray(fieldIndex)[recordIndex]</code>
+     * </pre>
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -4623,7 +4800,10 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * generated result.
      * <p>
      * You can access data like this
-     * <pre><code>query.fetchArray(fieldIndex)[recordIndex]</code></pre>
+     *
+     * <pre>
+     * <code>query.fetchArray(fieldIndex)[recordIndex]</code>
+     * </pre>
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4634,10 +4814,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field name from the
-     * generated result.
+     * generated result, using {@link #field(String)} for lookup.
      * <p>
      * You can access data like this
-     * <pre><code>query.fetchArray(fieldName)[recordIndex]</code></pre>
+     *
+     * <pre>
+     * <code>query.fetchArray(fieldName)[recordIndex]</code>
+     * </pre>
      *
      * @return The resulting values. This may be an array type more concrete
      *         than <code>Object[]</code>, depending on whether jOOQ has any
@@ -4652,10 +4835,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field name from the
-     * generated result.
+     * generated result, using {@link #field(String)} for lookup.
      * <p>
      * You can access data like this
-     * <pre><code>query.fetchArray(fieldName)[recordIndex]</code></pre>
+     *
+     * <pre>
+     * <code>query.fetchArray(fieldName)[recordIndex]</code>
+     * </pre>
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -4670,10 +4856,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field name from the
-     * generated result.
+     * generated result, using {@link #field(String)} for lookup.
      * <p>
      * You can access data like this
-     * <pre><code>query.fetchArray(fieldName)[recordIndex]</code></pre>
+     *
+     * <pre>
+     * <code>query.fetchArray(fieldName)[recordIndex]</code>
+     * </pre>
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4684,10 +4873,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field name from the
-     * generated result.
+     * generated result, using {@link #field(Name)} for lookup.
      * <p>
      * You can access data like this
-     * <pre><code>query.fetchArray(fieldName)[recordIndex]</code></pre>
+     *
+     * <pre>
+     * <code>query.fetchArray(fieldName)[recordIndex]</code>
+     * </pre>
      *
      * @return The resulting values. This may be an array type more concrete
      *         than <code>Object[]</code>, depending on whether jOOQ has any
@@ -4702,10 +4894,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field name from the
-     * generated result.
+     * generated result, using {@link #field(Name)} for lookup.
      * <p>
      * You can access data like this
-     * <pre><code>query.fetchArray(fieldName)[recordIndex]</code></pre>
+     *
+     * <pre>
+     * <code>query.fetchArray(fieldName)[recordIndex]</code>
+     * </pre>
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -4720,10 +4915,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field name from the
-     * generated result.
+     * generated result, using {@link #field(Name)} for lookup.
      * <p>
      * You can access data like this
-     * <pre><code>query.fetchArray(fieldName)[recordIndex]</code></pre>
+     *
+     * <pre>
+     * <code>query.fetchArray(fieldName)[recordIndex]</code>
+     * </pre>
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4734,10 +4932,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field from the generated
-     * result.
+     * result, using {@link #field(Field)} for lookup.
      * <p>
      * You can access data like this
-     * <pre><code>query.fetchArray(field)[recordIndex]</code></pre>
+     *
+     * <pre>
+     * <code>query.fetchArray(field)[recordIndex]</code>
+     * </pre>
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4748,10 +4949,13 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field from the generated
-     * result.
+     * result, using {@link #field(Field)} for lookup.
      * <p>
      * You can access data like this
-     * <pre><code>query.fetchArray(field)[recordIndex]</code></pre>
+     *
+     * <pre>
+     * <code>query.fetchArray(field)[recordIndex]</code>
+     * </pre>
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -4766,17 +4970,21 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field from the generated
-     * result.
+     * result, using {@link #field(Field)} for lookup.
      * <p>
      * You can access data like this
-     * <pre><code>query.fetchArray(field)[recordIndex]</code></pre>
+     *
+     * <pre>
+     * <code>query.fetchArray(field)[recordIndex]</code>
+     * </pre>
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field, Converter)
      */
     @Blocking
-    <T, U> U @NotNull [] fetchArray(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException;
+    <T, U> U @NotNull [] fetchArray(Field<T> field, Converter<? super T, ? extends U> converter)
+        throws DataAccessException;
 
     /**
      * Fetch results into a custom mapper callback.
@@ -4851,7 +5059,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field name from the
-     * generated result.
+     * generated result, using {@link #field(String)} for lookup.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
@@ -4868,7 +5076,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field name from the
-     * generated result.
+     * generated result, using {@link #field(String)} for lookup.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -4889,7 +5097,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field name from the
-     * generated result.
+     * generated result, using {@link #field(String)} for lookup.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
@@ -4906,7 +5114,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field name from the
-     * generated result.
+     * generated result, using {@link #field(Name)} for lookup.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
@@ -4923,7 +5131,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field name from the
-     * generated result.
+     * generated result, using {@link #field(Name)} for lookup.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -4944,7 +5152,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field name from the
-     * generated result.
+     * generated result, using {@link #field(Name)} for lookup.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
@@ -4961,7 +5169,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field from the generated
-     * result.
+     * result, using {@link #field(Field)} for lookup.
      * <p>
      * If the argument {@link Field}s are the same as the ones you've provided
      * to {@link DSLContext#select(SelectField)}, then you could also just call
@@ -4982,7 +5190,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field from the generated
-     * result.
+     * result, using {@link #field(Field)} for lookup.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -5003,7 +5211,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
 
     /**
      * Execute the query and return all values for a field from the generated
-     * result.
+     * result, using {@link #field(Field)} for lookup.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
@@ -5221,8 +5429,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     ResultQuery<R> resultSetConcurrency(int resultSetConcurrency);
 
     /**
-     * Specify the <code>ResultSet</code> type of <code>ResultSet</code>
-     * objects created by jOOQ.
+     * Specify the <code>ResultSet</code> type of <code>ResultSet</code> objects
+     * created by jOOQ.
      * <p>
      * This will affect the way you may perceive <code>ResultSet</code> objects
      * obtained from any of these methods:
@@ -5265,7 +5473,6 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @return The same result query
      * @see Result#intern(Field...)
      * @see String#intern()
-     *
      * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
      *             and will be removed in 4.0
      */
@@ -5284,7 +5491,6 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @return The same result query
      * @see Result#intern(int...)
      * @see String#intern()
-     *
      * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
      *             and will be removed in 4.0
      */
@@ -5303,7 +5509,6 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @return The same result query
      * @see Result#intern(String...)
      * @see String#intern()
-     *
      * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
      *             and will be removed in 4.0
      */
@@ -5322,7 +5527,6 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @return The same result query
      * @see Result#intern(Name...)
      * @see String#intern()
-     *
      * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
      *             and will be removed in 4.0
      */

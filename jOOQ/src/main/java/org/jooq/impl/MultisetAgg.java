@@ -115,7 +115,7 @@ final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Resu
     private final void accept0(Context<?> ctx, boolean multisetCondition) {
         switch (emulateMultiset(ctx.configuration())) {
             case JSON: {
-                JSONArrayAggOrderByStep<JSON> order = jsonArrayaggEmulation(ctx, row, true, false);
+                JSONArrayAggOrderByStep<JSON> order = jsonArrayaggEmulation(ctx, row, true, distinct);
 
                 Field<?> f = multisetCondition
                     ? fo((AbstractAggregateFunction<?>) returningClob(ctx, order.orderBy(row.fields())))
@@ -130,7 +130,7 @@ final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Resu
             }
 
             case JSONB: {
-                JSONArrayAggOrderByStep<JSONB> order = jsonbArrayaggEmulation(ctx, row, true, false);
+                JSONArrayAggOrderByStep<JSONB> order = jsonbArrayaggEmulation(ctx, row, true, distinct);
 
                 Field<?> f = multisetCondition
                     ? fo((AbstractAggregateFunction<?>) returningClob(ctx, order.orderBy(row.fields())))

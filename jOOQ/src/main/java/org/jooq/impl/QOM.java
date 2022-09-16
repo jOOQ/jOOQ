@@ -2169,6 +2169,16 @@ public final class QOM {
     }
 
     /**
+     * The <code>XOR</code> operator.
+     */
+    public /*sealed*/ interface Xor
+        extends
+            CombinedCondition
+        //permits
+        //    Xor
+    {}
+
+    /**
      * The <code>IS DOCUMENT</code> operator.
      * <p>
      * Create a condition to check if this field contains XML data.

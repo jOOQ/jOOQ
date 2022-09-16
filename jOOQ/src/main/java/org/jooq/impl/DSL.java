@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.Operator.AND;
 import static org.jooq.Operator.OR;
+import static org.jooq.Operator.XOR;
 // ...
 // ...
 // ...
@@ -14753,6 +14754,36 @@ public class DSL {
 
     /**
      * Return a <code>Condition</code> that connects all argument
+     * <code>conditions</code> with {@link Operator#XOR}.
+     */
+    @NotNull
+    @Support
+    public static Condition xor(Condition left, Condition right) {
+        return condition(XOR, left, right);
+    }
+
+    /**
+     * Return a <code>Condition</code> that connects all argument
+     * <code>conditions</code> with {@link Operator#XOR}.
+     */
+    @NotNull
+    @Support
+    public static Condition xor(Condition... conditions) {
+        return condition(XOR, conditions);
+    }
+
+    /**
+     * Return a <code>Condition</code> that connects all argument
+     * <code>conditions</code> with {@link Operator#XOR}.
+     */
+    @NotNull
+    @Support
+    public static Condition xor(Collection<? extends Condition> conditions) {
+        return condition(XOR, conditions);
+    }
+
+    /**
+     * Return a <code>Condition</code> that connects all argument
      * <code>conditions</code> with <code>Operator</code>.
      */
     @NotNull
@@ -14764,6 +14795,8 @@ public class DSL {
             return left;
         else if (operator == AND)
             return new And(left, right);
+        else if (operator == XOR)
+            return new Xor(left, right);
         else
             return new Or(left, right);
     }

@@ -42,8 +42,6 @@ import static org.jooq.impl.DSL.noCondition;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
 
 import org.jooq.Condition;
 import org.jooq.ConditionProvider;
@@ -246,6 +244,56 @@ final class ConditionProviderImpl extends AbstractField<Boolean> implements Cond
     @Override
     public final Condition orNotExists(Select<?> select) {
         return getWhere().orNotExists(select);
+    }
+
+    @Override
+    public final Condition xor(Condition other) {
+        return getWhere().xor(other);
+    }
+
+    @Override
+    public final Condition xor(Field<Boolean> other) {
+        return getWhere().xor(other);
+    }
+
+    @Override
+    public final Condition xor(SQL sql) {
+        return getWhere().xor(sql);
+    }
+
+    @Override
+    public final Condition xor(String sql) {
+        return getWhere().xor(sql);
+    }
+
+    @Override
+    public final Condition xor(String sql, Object... bindings) {
+        return getWhere().xor(sql, bindings);
+    }
+
+    @Override
+    public final Condition xor(String sql, QueryPart... parts) {
+        return getWhere().xor(sql, parts);
+    }
+
+    @Override
+    public final Condition xorNot(Condition other) {
+        return getWhere().xorNot(other);
+    }
+
+    @Override
+    public final Condition xorNot(Field<Boolean> other) {
+        return getWhere().xorNot(other);
+    }
+
+    @Override
+    public final Condition xorExists(Select<?> select) {
+        return getWhere().xorExists(select);
+    }
+
+    @Override
+    public final Condition xorNotExists(Select<?> select) {
+        return getWhere().xorNotExists(select);
     }
 
     @Override

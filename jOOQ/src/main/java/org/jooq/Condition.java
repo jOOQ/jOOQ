@@ -357,6 +357,143 @@ public interface Condition extends Field<Boolean> {
     @Support
     Condition orNotExists(Select<?> select);
 
+    /**
+     * Combine this condition with another one using the {@link Operator#XOR}
+     * operator.
+     *
+     * @param other The other condition
+     * @return The combined condition
+     */
+    @NotNull
+    @Support
+    Condition xor(Field<Boolean> other);
+
+    /**
+     * Combine this condition with another one using the {@link Operator#XOR}
+     * operator.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The other condition
+     * @return The combined condition
+     * @see DSL#condition(SQL)
+     * @see SQL
+     */
+    @NotNull
+    @Support
+    @PlainSQL
+    Condition xor(SQL sql);
+
+    /**
+     * Combine this condition with another one using the {@link Operator#XOR}
+     * operator.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The other condition
+     * @return The combined condition
+     * @see DSL#condition(String)
+     * @see SQL
+     */
+    @NotNull
+    @Support
+    @PlainSQL
+    Condition xor(String sql);
+
+    /**
+     * Combine this condition with another one using the {@link Operator#XOR}
+     * operator.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The other condition
+     * @param bindings The bindings
+     * @return The combined condition
+     * @see DSL#condition(String, Object...)
+     * @see DSL#sql(String, Object...)
+     * @see SQL
+     */
+    @NotNull
+    @Support
+    @PlainSQL
+    Condition xor(String sql, Object... bindings);
+
+    /**
+     * Combine this condition with another one using the {@link Operator#XOR}
+     * operator.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return The combined condition
+     * @see DSL#condition(String, Object...)
+     * @see DSL#sql(String, QueryPart...)
+     * @see SQL
+     */
+    @NotNull
+    @Support
+    @PlainSQL
+    Condition xor(String sql, QueryPart... parts);
+
+    /**
+     * Combine this condition with a negated other one using the
+     * {@link Operator#XOR} operator.
+     *
+     * @param other The other condition
+     * @return The combined condition
+     */
+    @NotNull
+    @Support
+    Condition xorNot(Condition other);
+
+    /**
+     * Combine this condition with a negated other one using the
+     * {@link Operator#XOR} operator.
+     *
+     * @param other The other condition
+     * @return The combined condition
+     */
+    @NotNull
+    @Support
+    Condition xorNot(Field<Boolean> other);
+
+    /**
+     * Combine this condition with an EXISTS clause using the
+     * {@link Operator#XOR} operator.
+     *
+     * @param select The EXISTS's subquery
+     * @return The combined condition
+     */
+    @NotNull
+    @Support
+    Condition xorExists(Select<?> select);
+
+    /**
+     * Combine this condition with a NOT EXIST clause using the
+     * {@link Operator#XOR} operator.
+     *
+     * @param select The EXISTS's subquery
+     * @return The combined condition
+     */
+    @NotNull
+    @Support
+    Condition xorNotExists(Select<?> select);
+
 
 
     // -------------------------------------------------------------------------
@@ -383,6 +520,13 @@ public interface Condition extends Field<Boolean> {
     @NotNull
     @Support
     Condition or(Condition arg2);
+
+    /**
+     * The <code>XOR</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition xor(Condition arg2);
 
 
 }

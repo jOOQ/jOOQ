@@ -64,7 +64,14 @@ public enum Operator {
      */
     @NotNull
     @Support
-    OR("or");
+    OR("or"),
+
+    /**
+     * The xor operator
+     */
+    @NotNull
+    @Support
+    XOR("xor");
 
     private final String    sql;
     private final Keyword   keyword;

@@ -40,22 +40,18 @@ package org.jooq.impl;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Operator.AND;
 import static org.jooq.Operator.OR;
+import static org.jooq.Operator.XOR;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
-
-import java.util.function.BiFunction;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.Select;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -94,6 +90,11 @@ abstract class AbstractCondition extends AbstractField<Boolean> implements Condi
     @Override
     public final Condition or(Field<Boolean> other) {
         return or(condition(other));
+    }
+
+    @Override
+    public final Condition xor(Field<Boolean> other) {
+        return xor(condition(other));
     }
 
     @Override
@@ -137,6 +138,26 @@ abstract class AbstractCondition extends AbstractField<Boolean> implements Condi
     }
 
     @Override
+    public final Condition xor(SQL sql) {
+        return xor(condition(sql));
+    }
+
+    @Override
+    public final Condition xor(String sql) {
+        return xor(condition(sql));
+    }
+
+    @Override
+    public final Condition xor(String sql, Object... bindings) {
+        return xor(condition(sql, bindings));
+    }
+
+    @Override
+    public final Condition xor(String sql, QueryPart... parts) {
+        return xor(condition(sql, parts));
+    }
+
+    @Override
     public final Condition andNot(Condition other) {
         return and(other.not());
     }
@@ -154,6 +175,16 @@ abstract class AbstractCondition extends AbstractField<Boolean> implements Condi
     @Override
     public final Condition orNot(Field<Boolean> other) {
         return orNot(condition(other));
+    }
+
+    @Override
+    public final Condition xorNot(Condition other) {
+        return xor(other.not());
+    }
+
+    @Override
+    public final Condition xorNot(Field<Boolean> other) {
+        return xorNot(condition(other));
     }
 
     @Override
@@ -176,6 +207,16 @@ abstract class AbstractCondition extends AbstractField<Boolean> implements Condi
         return or(notExists(select));
     }
 
+    @Override
+    public final Condition xorExists(Select<?> select) {
+        return xor(exists(select));
+    }
+
+    @Override
+    public final Condition xorNotExists(Select<?> select) {
+        return xor(notExists(select));
+    }
+
 
 
     // -------------------------------------------------------------------------
@@ -195,6 +236,11 @@ abstract class AbstractCondition extends AbstractField<Boolean> implements Condi
     @Override
     public final Condition or(Condition arg2) {
         return DSL.condition(OR, this, arg2);
+    }
+
+    @Override
+    public final Condition xor(Condition arg2) {
+        return DSL.condition(XOR, this, arg2);
     }
 
 

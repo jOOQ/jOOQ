@@ -6278,10 +6278,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final QueryPart parseOr() {
-        QueryPart condition = parseAnd();
+        QueryPart condition = parseXor();
 
         while (parseKeywordIf("OR"))
-            condition = toCondition(condition).or(toCondition(parseAnd()));
+            condition = toCondition(condition).or(toCondition(parseXor()));
+
+        return condition;
+    }
+
+    private final QueryPart parseXor() {
+        QueryPart condition = parseAnd();
+
+        while (parseKeywordIf("XOR"))
+            condition = toCondition(condition).xor(toCondition(parseAnd()));
 
         return condition;
     }

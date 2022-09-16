@@ -271,6 +271,13 @@ public enum Clause {
     CONDITION_OR,
 
     /**
+     * A combined condition using <code>XOR</code>.
+     * <p>
+     * This clause surrounds several {@link #CONDITION} clauses.
+     */
+    CONDITION_XOR,
+
+    /**
      * A <code>NOT</code> condition.
      * <p>
      * This clause surrounds a {@link #CONDITION} clause.

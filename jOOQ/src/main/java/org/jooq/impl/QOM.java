@@ -388,7 +388,7 @@ public final class QOM {
     }
     public interface Dual extends Table<Record>, UEmpty {}
     public interface Lateral<R extends Record> extends Table<R>, UOperator1<Table<R>, Table<R>> {}
-    public interface DerivedTable<R extends Record> extends org.jooq.Table<R>, UOperator1<org.jooq.Select<R>, org.jooq.Table<R>> {}
+    public interface DerivedTable<R extends org.jooq.Record> extends org.jooq.Table<R>, UOperator1<org.jooq.Select<R>, org.jooq.Table<R>> {}
     public interface Values<R extends Record> extends Table<R>, UOperator1<UnmodifiableList<? extends Row>, Table<R>> {}
     public interface DataChangeDeltaTable<R extends Record> extends Table<R> {
         @NotNull ResultOption $resultOption();

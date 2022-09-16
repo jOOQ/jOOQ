@@ -65,7 +65,7 @@ final class NullCondition extends AbstractCondition implements Null, UEmpty {
 
     @Override
     final boolean isNullable() {
-        return false;
+        return true;
     }
 
     @Override

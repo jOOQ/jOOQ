@@ -1,8 +1,7 @@
 package org.jooq.kotlin
 
 import org.jooq.*
-import org.jooq.impl.DSL
-import org.jooq.impl.DSL.condition
+import org.jooq.impl.DSL.*
 import java.util.stream.Collector
 
 // ----------------------------------------------------------------------------

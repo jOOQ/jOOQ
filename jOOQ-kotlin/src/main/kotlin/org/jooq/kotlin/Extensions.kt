@@ -1,7 +1,6 @@
 package org.jooq.kotlin
 
 import org.jooq.*
-import org.jooq.impl.DSL.*
 import java.util.stream.Collector
 
 // ----------------------------------------------------------------------------
@@ -406,75 +405,75 @@ fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17,
 // ----------------------------------------------------------------------------
 
 @Support
-fun Field<Boolean>.and(other: Condition): Condition = condition(this).and(other)
+fun Field<out Boolean?>.and(other: Condition): Condition = condition(this as Boolean?).and(other)
 
 @Support
-fun Field<Boolean>.and(other: Field<Boolean>): Condition = condition(this).and(other)
-
-@Support
-@PlainSQL
-fun Field<Boolean>.and(sql: SQL): Condition = condition(this).and(sql)
+fun Field<out Boolean?>.and(other: Field<out Boolean?>): Condition = condition(this as Boolean?).and(other)
 
 @Support
 @PlainSQL
-fun Field<Boolean>.and(sql: String): Condition = condition(this).and(sql)
+fun Field<out Boolean?>.and(sql: SQL): Condition = condition(this as Boolean?).and(sql)
 
 @Support
 @PlainSQL
-fun Field<Boolean>.and(sql: String, vararg bindings: Any): Condition = condition(this).and(sql, bindings)
+fun Field<out Boolean?>.and(sql: String): Condition = condition(this as Boolean?).and(sql)
 
 @Support
 @PlainSQL
-fun Field<Boolean>.and(sql: String, vararg parts: QueryPart): Condition = condition(this).and(sql, parts)
-
-@Support
-fun Field<Boolean>.andNot(other: Condition): Condition = condition(this).andNot(other)
-
-@Support
-fun Field<Boolean>.andNot(other: Field<Boolean>): Condition = condition(this).andNot(other)
-
-@Support
-fun Field<Boolean>.andExists(select: Select<*>): Condition = condition(this).andExists(select)
-
-@Support
-fun Field<Boolean>.andNotExists(select: Select<*>): Condition = condition(this).andNotExists(select)
-
-@Support
-fun Field<Boolean>.or(other: Condition): Condition = condition(this).or(other)
-
-@Support
-fun Field<Boolean>.or(other: Field<Boolean>): Condition = condition(this).or(other)
+fun Field<out Boolean?>.and(sql: String, vararg bindings: Any): Condition = condition(this as Boolean?).and(sql, bindings)
 
 @Support
 @PlainSQL
-fun Field<Boolean>.or(sql: SQL): Condition = condition(this).or(sql)
+fun Field<out Boolean?>.and(sql: String, vararg parts: QueryPart): Condition = condition(this as Boolean?).and(sql, parts)
+
+@Support
+fun Field<out Boolean?>.andNot(other: Condition): Condition = condition(this as Boolean?).andNot(other)
+
+@Support
+fun Field<out Boolean?>.andNot(other: Field<out Boolean?>): Condition = condition(this as Boolean?).andNot(other)
+
+@Support
+fun Field<out Boolean?>.andExists(select: Select<*>): Condition = condition(this as Boolean?).andExists(select)
+
+@Support
+fun Field<out Boolean?>.andNotExists(select: Select<*>): Condition = condition(this as Boolean?).andNotExists(select)
+
+@Support
+fun Field<out Boolean?>.or(other: Condition): Condition = condition(this as Boolean?).or(other)
+
+@Support
+fun Field<out Boolean?>.or(other: Field<out Boolean?>): Condition = condition(this as Boolean?).or(other)
 
 @Support
 @PlainSQL
-fun Field<Boolean>.or(sql: String): Condition = condition(this).or(sql)
+fun Field<out Boolean?>.or(sql: SQL): Condition = condition(this as Boolean?).or(sql)
 
 @Support
 @PlainSQL
-fun Field<Boolean>.or(sql: String, vararg bindings: Any): Condition = condition(this).or(sql)
+fun Field<out Boolean?>.or(sql: String): Condition = condition(this as Boolean?).or(sql)
 
 @Support
 @PlainSQL
-fun Field<Boolean>.or(sql: String, vararg parts: QueryPart): Condition = condition(this).or(sql, parts)
+fun Field<out Boolean?>.or(sql: String, vararg bindings: Any): Condition = condition(this as Boolean?).or(sql)
 
 @Support
-fun Field<Boolean>.orNot(other: Condition): Condition = condition(this).orNot(other)
+@PlainSQL
+fun Field<out Boolean?>.or(sql: String, vararg parts: QueryPart): Condition = condition(this as Boolean?).or(sql, parts)
 
 @Support
-fun Field<Boolean>.orNot(other: Field<Boolean>): Condition = condition(this).orNot(other)
+fun Field<out Boolean?>.orNot(other: Condition): Condition = condition(this as Boolean?).orNot(other)
 
 @Support
-fun Field<Boolean>.orExists(select: Select<*>): Condition = condition(this).orExists(select)
+fun Field<out Boolean?>.orNot(other: Field<Boolean>): Condition = condition(this as Boolean?).orNot(other)
 
 @Support
-fun Field<Boolean>.orNotExists(select: Select<*>): Condition = condition(this).orNotExists(select)
+fun Field<out Boolean?>.orExists(select: Select<*>): Condition = condition(this as Boolean?).orExists(select)
 
 @Support
-fun Field<Boolean>.not(): Condition = condition(this).not()
+fun Field<out Boolean?>.orNotExists(select: Select<*>): Condition = condition(this as Boolean?).orNotExists(select)
+
+@Support
+fun Field<out Boolean?>.not(): Condition = condition(this as Boolean?).not()
 
 
 // ----------------------------------------------------------------------------
@@ -498,10 +497,10 @@ operator fun <T> TableLike<*>.get(field: Field<T>) = this.field(field)
 // ----------------------------------------------------------------------------
 
 @Support
-operator fun <T> Field<Array<T>>.get(index: Int) = arrayGet(this, index)
+operator fun <T> Field<out Array<T>?>.get(index: Int) = arrayGet(this as Field<Array<T>?>, index)
 
 @Support
-operator fun <T> Field<Array<T>>.get(index: Field<Int>) = arrayGet(this, index)
+operator fun <T> Field<out Array<T>?>.get(index: Field<out Int?>) = arrayGet(this as Field<Array<T>?>, index as Field<Int?>)
 
 // ----------------------------------------------------------------------------
 // Extensions to make Select<Record1<T>> a scalar subquery of type Field<T>

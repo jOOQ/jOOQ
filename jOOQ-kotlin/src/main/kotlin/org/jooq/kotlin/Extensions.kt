@@ -47,6 +47,94 @@ fun <E, R : Record> Field<Result<R>>.intoSet(mapper: (R) -> E): Field<Set<E>> = 
 
 // [jooq-tools] START [mapping]
 
+fun <T1, E> ignoreNulls(f: Function1<T1, E>): Function1<T1?, E> = Function1<T1?, E> { t1: T1? -> f.apply(t1!!) }
+
+fun <T1, T2, E> ignoreNulls(f: Function2<T1, T2, E>): Function2<T1?, T2?, E> = Function2<T1?, T2?, E> { t1: T1?, t2: T2? -> f.apply(t1!!, t2!!) }
+
+fun <T1, T2, T3, E> ignoreNulls(f: Function3<T1, T2, T3, E>): Function3<T1?, T2?, T3?, E> = Function3<T1?, T2?, T3?, E> { t1: T1?, t2: T2?, t3: T3? -> f.apply(t1!!, t2!!, t3!!) }
+
+fun <T1, T2, T3, T4, E> ignoreNulls(f: Function4<T1, T2, T3, T4, E>): Function4<T1?, T2?, T3?, T4?, E> = Function4<T1?, T2?, T3?, T4?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4? -> f.apply(t1!!, t2!!, t3!!, t4!!) }
+
+fun <T1, T2, T3, T4, T5, E> ignoreNulls(f: Function5<T1, T2, T3, T4, T5, E>): Function5<T1?, T2?, T3?, T4?, T5?, E> = Function5<T1?, T2?, T3?, T4?, T5?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4?, t5: T5? -> f.apply(t1!!, t2!!, t3!!, t4!!, t5!!) }
+
+fun <T1, T2, T3, T4, T5, T6, E> ignoreNulls(f: Function6<T1, T2, T3, T4, T5, T6, E>): Function6<T1?, T2?, T3?, T4?, T5?, T6?, E> = Function6<T1?, T2?, T3?, T4?, T5?, T6?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4?, t5: T5?, t6: T6? -> f.apply(t1!!, t2!!, t3!!, t4!!, t5!!, t6!!) }
+
+fun <T1, T2, T3, T4, T5, T6, T7, E> ignoreNulls(f: Function7<T1, T2, T3, T4, T5, T6, T7, E>): Function7<T1?, T2?, T3?, T4?, T5?, T6?, T7?, E> = Function7<T1?, T2?, T3?, T4?, T5?, T6?, T7?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4?, t5: T5?, t6: T6?, t7: T7? -> f.apply(t1!!, t2!!, t3!!, t4!!, t5!!, t6!!, t7!!) }
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, E> ignoreNulls(f: Function8<T1, T2, T3, T4, T5, T6, T7, T8, E>): Function8<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, E> = Function8<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4?, t5: T5?, t6: T6?, t7: T7?, t8: T8? -> f.apply(t1!!, t2!!, t3!!, t4!!, t5!!, t6!!, t7!!, t8!!) }
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, E> ignoreNulls(f: Function9<T1, T2, T3, T4, T5, T6, T7, T8, T9, E>): Function9<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, E> = Function9<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4?, t5: T5?, t6: T6?, t7: T7?, t8: T8?, t9: T9? -> f.apply(t1!!, t2!!, t3!!, t4!!, t5!!, t6!!, t7!!, t8!!, t9!!) }
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, E> ignoreNulls(f: Function10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, E>): Function10<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, E> = Function10<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4?, t5: T5?, t6: T6?, t7: T7?, t8: T8?, t9: T9?, t10: T10? -> f.apply(t1!!, t2!!, t3!!, t4!!, t5!!, t6!!, t7!!, t8!!, t9!!, t10!!) }
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, E> ignoreNulls(f: Function11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, E>): Function11<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, E> = Function11<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4?, t5: T5?, t6: T6?, t7: T7?, t8: T8?, t9: T9?, t10: T10?, t11: T11? -> f.apply(t1!!, t2!!, t3!!, t4!!, t5!!, t6!!, t7!!, t8!!, t9!!, t10!!, t11!!) }
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, E> ignoreNulls(f: Function12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, E>): Function12<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, E> = Function12<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4?, t5: T5?, t6: T6?, t7: T7?, t8: T8?, t9: T9?, t10: T10?, t11: T11?, t12: T12? -> f.apply(t1!!, t2!!, t3!!, t4!!, t5!!, t6!!, t7!!, t8!!, t9!!, t10!!, t11!!, t12!!) }
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, E> ignoreNulls(f: Function13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, E>): Function13<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, E> = Function13<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4?, t5: T5?, t6: T6?, t7: T7?, t8: T8?, t9: T9?, t10: T10?, t11: T11?, t12: T12?, t13: T13? -> f.apply(t1!!, t2!!, t3!!, t4!!, t5!!, t6!!, t7!!, t8!!, t9!!, t10!!, t11!!, t12!!, t13!!) }
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, E> ignoreNulls(f: Function14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, E>): Function14<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, E> = Function14<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4?, t5: T5?, t6: T6?, t7: T7?, t8: T8?, t9: T9?, t10: T10?, t11: T11?, t12: T12?, t13: T13?, t14: T14? -> f.apply(t1!!, t2!!, t3!!, t4!!, t5!!, t6!!, t7!!, t8!!, t9!!, t10!!, t11!!, t12!!, t13!!, t14!!) }
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, E> ignoreNulls(f: Function15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, E>): Function15<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, E> = Function15<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4?, t5: T5?, t6: T6?, t7: T7?, t8: T8?, t9: T9?, t10: T10?, t11: T11?, t12: T12?, t13: T13?, t14: T14?, t15: T15? -> f.apply(t1!!, t2!!, t3!!, t4!!, t5!!, t6!!, t7!!, t8!!, t9!!, t10!!, t11!!, t12!!, t13!!, t14!!, t15!!) }
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, E> ignoreNulls(f: Function16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, E>): Function16<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, E> = Function16<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4?, t5: T5?, t6: T6?, t7: T7?, t8: T8?, t9: T9?, t10: T10?, t11: T11?, t12: T12?, t13: T13?, t14: T14?, t15: T15?, t16: T16? -> f.apply(t1!!, t2!!, t3!!, t4!!, t5!!, t6!!, t7!!, t8!!, t9!!, t10!!, t11!!, t12!!, t13!!, t14!!, t15!!, t16!!) }
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, E> ignoreNulls(f: Function17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, E>): Function17<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, E> = Function17<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4?, t5: T5?, t6: T6?, t7: T7?, t8: T8?, t9: T9?, t10: T10?, t11: T11?, t12: T12?, t13: T13?, t14: T14?, t15: T15?, t16: T16?, t17: T17? -> f.apply(t1!!, t2!!, t3!!, t4!!, t5!!, t6!!, t7!!, t8!!, t9!!, t10!!, t11!!, t12!!, t13!!, t14!!, t15!!, t16!!, t17!!) }
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, E> ignoreNulls(f: Function18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, E>): Function18<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, E> = Function18<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4?, t5: T5?, t6: T6?, t7: T7?, t8: T8?, t9: T9?, t10: T10?, t11: T11?, t12: T12?, t13: T13?, t14: T14?, t15: T15?, t16: T16?, t17: T17?, t18: T18? -> f.apply(t1!!, t2!!, t3!!, t4!!, t5!!, t6!!, t7!!, t8!!, t9!!, t10!!, t11!!, t12!!, t13!!, t14!!, t15!!, t16!!, t17!!, t18!!) }
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, E> ignoreNulls(f: Function19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, E>): Function19<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, E> = Function19<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4?, t5: T5?, t6: T6?, t7: T7?, t8: T8?, t9: T9?, t10: T10?, t11: T11?, t12: T12?, t13: T13?, t14: T14?, t15: T15?, t16: T16?, t17: T17?, t18: T18?, t19: T19? -> f.apply(t1!!, t2!!, t3!!, t4!!, t5!!, t6!!, t7!!, t8!!, t9!!, t10!!, t11!!, t12!!, t13!!, t14!!, t15!!, t16!!, t17!!, t18!!, t19!!) }
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, E> ignoreNulls(f: Function20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, E>): Function20<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, T20?, E> = Function20<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, T20?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4?, t5: T5?, t6: T6?, t7: T7?, t8: T8?, t9: T9?, t10: T10?, t11: T11?, t12: T12?, t13: T13?, t14: T14?, t15: T15?, t16: T16?, t17: T17?, t18: T18?, t19: T19?, t20: T20? -> f.apply(t1!!, t2!!, t3!!, t4!!, t5!!, t6!!, t7!!, t8!!, t9!!, t10!!, t11!!, t12!!, t13!!, t14!!, t15!!, t16!!, t17!!, t18!!, t19!!, t20!!) }
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, E> ignoreNulls(f: Function21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, E>): Function21<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, T20?, T21?, E> = Function21<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, T20?, T21?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4?, t5: T5?, t6: T6?, t7: T7?, t8: T8?, t9: T9?, t10: T10?, t11: T11?, t12: T12?, t13: T13?, t14: T14?, t15: T15?, t16: T16?, t17: T17?, t18: T18?, t19: T19?, t20: T20?, t21: T21? -> f.apply(t1!!, t2!!, t3!!, t4!!, t5!!, t6!!, t7!!, t8!!, t9!!, t10!!, t11!!, t12!!, t13!!, t14!!, t15!!, t16!!, t17!!, t18!!, t19!!, t20!!, t21!!) }
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E> ignoreNulls(f: Function22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E>): Function22<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, T20?, T21?, T22?, E> = Function22<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, T20?, T21?, T22?, E> { t1: T1?, t2: T2?, t3: T3?, t4: T4?, t5: T5?, t6: T6?, t7: T7?, t8: T8?, t9: T9?, t10: T10?, t11: T11?, t12: T12?, t13: T13?, t14: T14?, t15: T15?, t16: T16?, t17: T17?, t18: T18?, t19: T19?, t20: T20?, t21: T21?, t22: T22? -> f.apply(t1!!, t2!!, t3!!, t4!!, t5!!, t6!!, t7!!, t8!!, t9!!, t10!!, t11!!, t12!!, t13!!, t14!!, t15!!, t16!!, t17!!, t18!!, t19!!, t20!!, t21!!, t22!!) }
+
+fun <T1, E> mappingIgnoreNulls(f: Function1<T1, E>): RecordMapper<Record1<T1?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, E> mappingIgnoreNulls(f: Function2<T1, T2, E>): RecordMapper<Record2<T1?, T2?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, E> mappingIgnoreNulls(f: Function3<T1, T2, T3, E>): RecordMapper<Record3<T1?, T2?, T3?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, E> mappingIgnoreNulls(f: Function4<T1, T2, T3, T4, E>): RecordMapper<Record4<T1?, T2?, T3?, T4?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, E> mappingIgnoreNulls(f: Function5<T1, T2, T3, T4, T5, E>): RecordMapper<Record5<T1?, T2?, T3?, T4?, T5?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, E> mappingIgnoreNulls(f: Function6<T1, T2, T3, T4, T5, T6, E>): RecordMapper<Record6<T1?, T2?, T3?, T4?, T5?, T6?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, E> mappingIgnoreNulls(f: Function7<T1, T2, T3, T4, T5, T6, T7, E>): RecordMapper<Record7<T1?, T2?, T3?, T4?, T5?, T6?, T7?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, E> mappingIgnoreNulls(f: Function8<T1, T2, T3, T4, T5, T6, T7, T8, E>): RecordMapper<Record8<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, E> mappingIgnoreNulls(f: Function9<T1, T2, T3, T4, T5, T6, T7, T8, T9, E>): RecordMapper<Record9<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, E> mappingIgnoreNulls(f: Function10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, E>): RecordMapper<Record10<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, E> mappingIgnoreNulls(f: Function11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, E>): RecordMapper<Record11<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, E> mappingIgnoreNulls(f: Function12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, E>): RecordMapper<Record12<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, E> mappingIgnoreNulls(f: Function13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, E>): RecordMapper<Record13<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, E> mappingIgnoreNulls(f: Function14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, E>): RecordMapper<Record14<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, E> mappingIgnoreNulls(f: Function15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, E>): RecordMapper<Record15<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, E> mappingIgnoreNulls(f: Function16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, E>): RecordMapper<Record16<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, E> mappingIgnoreNulls(f: Function17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, E>): RecordMapper<Record17<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, E> mappingIgnoreNulls(f: Function18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, E>): RecordMapper<Record18<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, E> mappingIgnoreNulls(f: Function19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, E>): RecordMapper<Record19<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, E> mappingIgnoreNulls(f: Function20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, E>): RecordMapper<Record20<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, T20?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, E> mappingIgnoreNulls(f: Function21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, E>): RecordMapper<Record21<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, T20?, T21?>, E> = Records.mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E> mappingIgnoreNulls(f: Function22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E>): RecordMapper<Record22<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, T20?, T21?, T22?>, E> = Records.mapping(ignoreNulls(f))
+
 @JvmName("mappingRecord")
 fun <T1, E> Field<Record1<T1>>.mapping(f: Function1<T1, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
 
@@ -113,6 +201,72 @@ fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17,
 @JvmName("mappingRecord")
 fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E> Field<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>.mapping(f: Function22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E>): Field<E> = convertFrom { Records.mapping(f).apply(it) }
 
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, E> Field<Record1<T1?>>.mappingIgnoreNulls(f: Function1<T1, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, E> Field<Record2<T1?, T2?>>.mappingIgnoreNulls(f: Function2<T1, T2, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, E> Field<Record3<T1?, T2?, T3?>>.mappingIgnoreNulls(f: Function3<T1, T2, T3, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, E> Field<Record4<T1?, T2?, T3?, T4?>>.mappingIgnoreNulls(f: Function4<T1, T2, T3, T4, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, T5, E> Field<Record5<T1?, T2?, T3?, T4?, T5?>>.mappingIgnoreNulls(f: Function5<T1, T2, T3, T4, T5, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, T5, T6, E> Field<Record6<T1?, T2?, T3?, T4?, T5?, T6?>>.mappingIgnoreNulls(f: Function6<T1, T2, T3, T4, T5, T6, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, T5, T6, T7, E> Field<Record7<T1?, T2?, T3?, T4?, T5?, T6?, T7?>>.mappingIgnoreNulls(f: Function7<T1, T2, T3, T4, T5, T6, T7, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, E> Field<Record8<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?>>.mappingIgnoreNulls(f: Function8<T1, T2, T3, T4, T5, T6, T7, T8, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, E> Field<Record9<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?>>.mappingIgnoreNulls(f: Function9<T1, T2, T3, T4, T5, T6, T7, T8, T9, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, E> Field<Record10<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?>>.mappingIgnoreNulls(f: Function10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, E> Field<Record11<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?>>.mappingIgnoreNulls(f: Function11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, E> Field<Record12<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?>>.mappingIgnoreNulls(f: Function12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, E> Field<Record13<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?>>.mappingIgnoreNulls(f: Function13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, E> Field<Record14<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?>>.mappingIgnoreNulls(f: Function14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, E> Field<Record15<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?>>.mappingIgnoreNulls(f: Function15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, E> Field<Record16<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?>>.mappingIgnoreNulls(f: Function16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, E> Field<Record17<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?>>.mappingIgnoreNulls(f: Function17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, E> Field<Record18<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?>>.mappingIgnoreNulls(f: Function18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, E> Field<Record19<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?>>.mappingIgnoreNulls(f: Function19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, E> Field<Record20<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, T20?>>.mappingIgnoreNulls(f: Function20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, E> Field<Record21<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, T20?, T21?>>.mappingIgnoreNulls(f: Function21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, E>): Field<E> = mapping(ignoreNulls(f))
+
+@JvmName("mappingRecordIgnoreNulls")
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E> Field<Record22<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, T20?, T21?, T22?>>.mappingIgnoreNulls(f: Function22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E>): Field<E> = mapping(ignoreNulls(f))
+
 fun <T1, E> Field<Result<Record1<T1>>>.mapping(f: Function1<T1, E>): Field<List<E>> = convertFrom { it.map(Records.mapping(f)) }
 
 fun <T1, T2, E> Field<Result<Record2<T1, T2>>>.mapping(f: Function2<T1, T2, E>): Field<List<E>> = convertFrom { it.map(Records.mapping(f)) }
@@ -156,6 +310,94 @@ fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17,
 fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, E> Field<Result<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>>.mapping(f: Function21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, E>): Field<List<E>> = convertFrom { it.map(Records.mapping(f)) }
 
 fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E> Field<Result<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>>.mapping(f: Function22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E>): Field<List<E>> = convertFrom { it.map(Records.mapping(f)) }
+
+fun <T1, E> Field<Result<Record1<T1?>>>.mappingIgnoreNulls(f: Function1<T1, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, E> Field<Result<Record2<T1?, T2?>>>.mappingIgnoreNulls(f: Function2<T1, T2, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, E> Field<Result<Record3<T1?, T2?, T3?>>>.mappingIgnoreNulls(f: Function3<T1, T2, T3, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, E> Field<Result<Record4<T1?, T2?, T3?, T4?>>>.mappingIgnoreNulls(f: Function4<T1, T2, T3, T4, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, E> Field<Result<Record5<T1?, T2?, T3?, T4?, T5?>>>.mappingIgnoreNulls(f: Function5<T1, T2, T3, T4, T5, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, E> Field<Result<Record6<T1?, T2?, T3?, T4?, T5?, T6?>>>.mappingIgnoreNulls(f: Function6<T1, T2, T3, T4, T5, T6, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, E> Field<Result<Record7<T1?, T2?, T3?, T4?, T5?, T6?, T7?>>>.mappingIgnoreNulls(f: Function7<T1, T2, T3, T4, T5, T6, T7, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, E> Field<Result<Record8<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?>>>.mappingIgnoreNulls(f: Function8<T1, T2, T3, T4, T5, T6, T7, T8, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, E> Field<Result<Record9<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?>>>.mappingIgnoreNulls(f: Function9<T1, T2, T3, T4, T5, T6, T7, T8, T9, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, E> Field<Result<Record10<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?>>>.mappingIgnoreNulls(f: Function10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, E> Field<Result<Record11<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?>>>.mappingIgnoreNulls(f: Function11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, E> Field<Result<Record12<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?>>>.mappingIgnoreNulls(f: Function12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, E> Field<Result<Record13<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?>>>.mappingIgnoreNulls(f: Function13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, E> Field<Result<Record14<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?>>>.mappingIgnoreNulls(f: Function14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, E> Field<Result<Record15<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?>>>.mappingIgnoreNulls(f: Function15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, E> Field<Result<Record16<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?>>>.mappingIgnoreNulls(f: Function16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, E> Field<Result<Record17<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?>>>.mappingIgnoreNulls(f: Function17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, E> Field<Result<Record18<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?>>>.mappingIgnoreNulls(f: Function18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, E> Field<Result<Record19<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?>>>.mappingIgnoreNulls(f: Function19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, E> Field<Result<Record20<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, T20?>>>.mappingIgnoreNulls(f: Function20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, E> Field<Result<Record21<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, T20?, T21?>>>.mappingIgnoreNulls(f: Function21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E> Field<Result<Record22<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, T20?, T21?, T22?>>>.mappingIgnoreNulls(f: Function22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E>): Field<List<E>> = mapping(ignoreNulls(f))
+
+fun <T1, E> Row1<T1?>.mappingIgnoreNulls(f: Function1<T1, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, E> Row2<T1?, T2?>.mappingIgnoreNulls(f: Function2<T1, T2, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, E> Row3<T1?, T2?, T3?>.mappingIgnoreNulls(f: Function3<T1, T2, T3, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, E> Row4<T1?, T2?, T3?, T4?>.mappingIgnoreNulls(f: Function4<T1, T2, T3, T4, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, E> Row5<T1?, T2?, T3?, T4?, T5?>.mappingIgnoreNulls(f: Function5<T1, T2, T3, T4, T5, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, E> Row6<T1?, T2?, T3?, T4?, T5?, T6?>.mappingIgnoreNulls(f: Function6<T1, T2, T3, T4, T5, T6, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, E> Row7<T1?, T2?, T3?, T4?, T5?, T6?, T7?>.mappingIgnoreNulls(f: Function7<T1, T2, T3, T4, T5, T6, T7, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, E> Row8<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?>.mappingIgnoreNulls(f: Function8<T1, T2, T3, T4, T5, T6, T7, T8, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, E> Row9<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?>.mappingIgnoreNulls(f: Function9<T1, T2, T3, T4, T5, T6, T7, T8, T9, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, E> Row10<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?>.mappingIgnoreNulls(f: Function10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, E> Row11<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?>.mappingIgnoreNulls(f: Function11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, E> Row12<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?>.mappingIgnoreNulls(f: Function12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, E> Row13<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?>.mappingIgnoreNulls(f: Function13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, E> Row14<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?>.mappingIgnoreNulls(f: Function14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, E> Row15<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?>.mappingIgnoreNulls(f: Function15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, E> Row16<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?>.mappingIgnoreNulls(f: Function16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, E> Row17<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?>.mappingIgnoreNulls(f: Function17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, E> Row18<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?>.mappingIgnoreNulls(f: Function18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, E> Row19<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?>.mappingIgnoreNulls(f: Function19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, E> Row20<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, T20?>.mappingIgnoreNulls(f: Function20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, E> Row21<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, T20?, T21?>.mappingIgnoreNulls(f: Function21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, E>): SelectField<E> = mapping(ignoreNulls(f))
+
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E> Row22<T1?, T2?, T3?, T4?, T5?, T6?, T7?, T8?, T9?, T10?, T11?, T12?, T13?, T14?, T15?, T16?, T17?, T18?, T19?, T20?, T21?, T22?>.mappingIgnoreNulls(f: Function22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, E>): SelectField<E> = mapping(ignoreNulls(f))
 
 // [jooq-tools] END [mapping]
 

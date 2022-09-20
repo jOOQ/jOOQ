@@ -4876,12 +4876,16 @@ public class JavaGenerator extends AbstractGenerator {
                         visibility(), colClass, colType, colType, List.class, pType, colIdentifier);
             }
             else if (kotlin) {
-                if (column instanceof EmbeddableDefinition)
-                    out.println("%sfun fetchRangeOf%s(lowerInclusive: %s?, upperInclusive: %s?): %s<%s> = fetchRange(%s, if (lowerInclusive != null) %s(lowerInclusive) else null, if (upperInclusive != null) %s(upperInclusive) else null)",
+                if (column instanceof EmbeddableDefinition) {
+                    out.println("%sfun fetchRangeOf%s(lowerInclusive: %s%s, upperInclusive: %s%s): %s<%s> = fetchRange(%s, if (lowerInclusive != null) %s(lowerInclusive) else null, if (upperInclusive != null) %s(upperInclusive) else null)",
                         visibility(), colMemberUC, colType, colType, out.ref(KLIST), pType, colIdentifier, colTypeRecord, colTypeRecord);
-                else
-                    out.println("%sfun fetchRangeOf%s(lowerInclusive: %s?, upperInclusive: %s?): %s<%s> = fetchRange(%s, lowerInclusive, upperInclusive)",
-                        visibility(), colClass, colType, colType, out.ref(KLIST), pType, colIdentifier);
+                }
+                else {
+                    final String nullability = kotlinNullability(out, (TypedElementDefinition<?>) column, Mode.POJO);
+
+                    out.println("%sfun fetchRangeOf%s(lowerInclusive: %s%s, upperInclusive: %s%s): %s<%s> = fetchRange(%s, lowerInclusive, upperInclusive)",
+                        visibility(), colClass, colType, nullability, colType, nullability, out.ref(KLIST), pType, colIdentifier);
+                }
             }
             else {
                 printNonnullAnnotation(out);
@@ -8175,13 +8179,13 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private String nullableOrNonnullAnnotation(JavaWriter out, Definition column) {
-        return (column instanceof TypedElementDefinition && effectivelyNotNull(out, (TypedElementDefinition<?>) column))
+        return (column instanceof TypedElementDefinition && !effectivelyNotNull(out, (TypedElementDefinition<?>) column))
              ? nullableAnnotation(out)
              : nonnullAnnotation(out);
     }
 
     private void printNullableOrNonnullAnnotation(JavaWriter out, Definition column) {
-        if (column instanceof TypedElementDefinition && effectivelyNotNull(out, (TypedElementDefinition<?>) column))
+        if (column instanceof TypedElementDefinition && !effectivelyNotNull(out, (TypedElementDefinition<?>) column))
             printNullableAnnotation(out);
         else
             printNonnullAnnotation(out);

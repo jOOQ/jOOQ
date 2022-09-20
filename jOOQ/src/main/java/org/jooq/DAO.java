@@ -313,7 +313,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      */
     @NotNull
     @Support
-    List<P> findAll() throws DataAccessException;
+    List<@NotNull P> findAll() throws DataAccessException;
 
     /**
      * Find a record of the underlying table by ID.
@@ -336,7 +336,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      */
     @NotNull
     @Support
-    Optional<P> findOptionalById(T id) throws DataAccessException;
+    Optional<@NotNull P> findOptionalById(T id) throws DataAccessException;
 
     /**
      * Find records by a given field and a set of values.
@@ -409,7 +409,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      */
     @NotNull
     @Support
-    <Z> Optional<P> fetchOptional(Field<Z> field, Z value) throws DataAccessException;
+    <Z> Optional<@NotNull P> fetchOptional(Field<Z> field, Z value) throws DataAccessException;
 
     /**
      * Get the underlying table.

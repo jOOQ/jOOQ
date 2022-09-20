@@ -113,6 +113,9 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateSpringAnnotations                        = false;
     boolean                            generateSpringDao                                = false;
     boolean                            generateKotlinSetterJvmNameAnnotationsOnIsPrefix = true;
+    boolean                            generateKotlinNotNullPojoAttributes              = false;
+    boolean                            generateKotlinNotNullRecordAttributes            = false;
+    boolean                            generateKotlinNotNullInterfaceAttributes         = false;
     GeneratedSerialVersionUID          generatedSerialVersionUID                        = GeneratedSerialVersionUID.CONSTANT;
     int                                maxMembersPerInitialiser                         = 500;
     boolean                            generateQueues                                   = true;
@@ -736,6 +739,36 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateKotlinSetterJvmNameAnnotationsOnIsPrefix(boolean generateKotlinSetterJvmNameAnnotationsOnIsPrefix) {
         this.generateKotlinSetterJvmNameAnnotationsOnIsPrefix = generateKotlinSetterJvmNameAnnotationsOnIsPrefix;
+    }
+
+    @Override
+    public boolean generateKotlinNotNullPojoAttributes() {
+        return generateKotlinNotNullPojoAttributes;
+    }
+
+    @Override
+    public void setGenerateKotlinNotNullPojoAttributes(boolean generateKotlinNotNullPojoAttributes) {
+        this.generateKotlinNotNullPojoAttributes = generateKotlinNotNullPojoAttributes;
+    }
+
+    @Override
+    public boolean generateKotlinNotNullRecordAttributes() {
+        return generateKotlinNotNullRecordAttributes;
+    }
+
+    @Override
+    public void setGenerateKotlinNotNullRecordAttributes(boolean generateKotlinNotNullRecordAttributes) {
+        this.generateKotlinNotNullRecordAttributes = generateKotlinNotNullRecordAttributes;
+    }
+
+    @Override
+    public boolean generateKotlinNotNullInterfaceAttributes() {
+        return generateKotlinNotNullInterfaceAttributes;
+    }
+
+    @Override
+    public void setGenerateKotlinNotNullInterfaceAttributes(boolean generateKotlinNotNullInterfaceAttributes) {
+        this.generateKotlinNotNullInterfaceAttributes = generateKotlinNotNullInterfaceAttributes;
     }
 
     @Override

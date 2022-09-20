@@ -601,6 +601,39 @@ public interface Generator {
     void setGenerateKotlinSetterJvmNameAnnotationsOnIsPrefix(boolean generateKotlinSetterJvmNameAnnotationsOnIsPrefix);
 
     /**
+     * Generate non-nullable types on POJO attributes, where column is not null.
+     */
+    boolean generateKotlinNotNullPojoAttributes();
+
+    /**
+     * Generate non-nullable types on POJO attributes, where column is not null.
+     */
+    void setGenerateKotlinNotNullPojoAttributes(boolean generateKotlinNotNullPojoAttributes);
+
+    /**
+     * Generate non-nullable types on Record attributes, where column is not
+     * null.
+     */
+    boolean generateKotlinNotNullRecordAttributes();
+
+    /**
+     * Generate non-nullable types on Record attributes, where column is not
+     * null.
+     */
+    void setGenerateKotlinNotNullRecordAttributes(boolean generateKotlinNotNullRecordAttributes);
+
+    /**
+     * Generate non-nullable types on interface attributes, where column is not
+     * null.
+     */
+    boolean generateKotlinNotNullInterfaceAttributes();
+
+    /**
+     * Generate non-nullable types on interface attributes, where column is not null.
+     */
+    void setGenerateKotlinNotNullInterfaceAttributes(boolean generateKotlinNotNullInterfaceAttributes);
+
+    /**
      * The type of <code>serialVersionUID</code> that should be generated.
      */
     GeneratedSerialVersionUID generatedSerialVersionUID();

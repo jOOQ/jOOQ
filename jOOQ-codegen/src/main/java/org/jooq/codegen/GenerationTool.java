@@ -808,6 +808,12 @@ public class GenerationTool {
                 generator.setGenerateSpringDao(g.getGenerate().isSpringDao());
             if (g.getGenerate().isKotlinSetterJvmNameAnnotationsOnIsPrefix() != null)
                 generator.setGenerateKotlinSetterJvmNameAnnotationsOnIsPrefix(g.getGenerate().isKotlinSetterJvmNameAnnotationsOnIsPrefix());
+            if (g.getGenerate().isKotlinNotNullPojoAttributes() != null)
+                generator.setGenerateKotlinNotNullPojoAttributes(g.getGenerate().isKotlinNotNullPojoAttributes());
+            if (g.getGenerate().isKotlinNotNullRecordAttributes() != null)
+                generator.setGenerateKotlinNotNullRecordAttributes(g.getGenerate().isKotlinNotNullRecordAttributes());
+            if (g.getGenerate().isKotlinNotNullInterfaceAttributes() != null)
+                generator.setGenerateKotlinNotNullInterfaceAttributes(g.getGenerate().isKotlinNotNullInterfaceAttributes());
             if (g.getGenerate().getGeneratedSerialVersionUID() != null)
                 generator.setGenerateGeneratedSerialVersionUID(g.getGenerate().getGeneratedSerialVersionUID());
             if (g.getGenerate().getMaxMembersPerInitialiser() != null)

@@ -132,6 +132,12 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean springDao = false;
     @XmlElement(defaultValue = "true")
     protected Boolean kotlinSetterJvmNameAnnotationsOnIsPrefix = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean kotlinNotNullPojoAttributes = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean kotlinNotNullRecordAttributes = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean kotlinNotNullInterfaceAttributes = false;
     @XmlElement(defaultValue = "true")
     protected Boolean globalObjectReferences = true;
     @XmlElement(defaultValue = "true")
@@ -1409,6 +1415,78 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setKotlinSetterJvmNameAnnotationsOnIsPrefix(Boolean value) {
         this.kotlinSetterJvmNameAnnotationsOnIsPrefix = value;
+    }
+
+    /**
+     * Generate non-nullable types on POJO attributes, where column is not null.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isKotlinNotNullPojoAttributes() {
+        return kotlinNotNullPojoAttributes;
+    }
+
+    /**
+     * Sets the value of the kotlinNotNullPojoAttributes property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setKotlinNotNullPojoAttributes(Boolean value) {
+        this.kotlinNotNullPojoAttributes = value;
+    }
+
+    /**
+     * Generate non-nullable types on Record attributes, where column is not null.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isKotlinNotNullRecordAttributes() {
+        return kotlinNotNullRecordAttributes;
+    }
+
+    /**
+     * Sets the value of the kotlinNotNullRecordAttributes property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setKotlinNotNullRecordAttributes(Boolean value) {
+        this.kotlinNotNullRecordAttributes = value;
+    }
+
+    /**
+     * Generate non-nullable types on interface attributes, where column is not null.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isKotlinNotNullInterfaceAttributes() {
+        return kotlinNotNullInterfaceAttributes;
+    }
+
+    /**
+     * Sets the value of the kotlinNotNullInterfaceAttributes property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setKotlinNotNullInterfaceAttributes(Boolean value) {
+        this.kotlinNotNullInterfaceAttributes = value;
     }
 
     /**
@@ -2784,6 +2862,21 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withKotlinNotNullPojoAttributes(Boolean value) {
+        setKotlinNotNullPojoAttributes(value);
+        return this;
+    }
+
+    public Generate withKotlinNotNullRecordAttributes(Boolean value) {
+        setKotlinNotNullRecordAttributes(value);
+        return this;
+    }
+
+    public Generate withKotlinNotNullInterfaceAttributes(Boolean value) {
+        setKotlinNotNullInterfaceAttributes(value);
+        return this;
+    }
+
     public Generate withGlobalObjectReferences(Boolean value) {
         setGlobalObjectReferences(value);
         return this;
@@ -3103,6 +3196,9 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("springAnnotations", springAnnotations);
         builder.append("springDao", springDao);
         builder.append("kotlinSetterJvmNameAnnotationsOnIsPrefix", kotlinSetterJvmNameAnnotationsOnIsPrefix);
+        builder.append("kotlinNotNullPojoAttributes", kotlinNotNullPojoAttributes);
+        builder.append("kotlinNotNullRecordAttributes", kotlinNotNullRecordAttributes);
+        builder.append("kotlinNotNullInterfaceAttributes", kotlinNotNullInterfaceAttributes);
         builder.append("globalObjectReferences", globalObjectReferences);
         builder.append("globalCatalogReferences", globalCatalogReferences);
         builder.append("globalSchemaReferences", globalSchemaReferences);
@@ -3621,6 +3717,33 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (kotlinNotNullPojoAttributes == null) {
+            if (other.kotlinNotNullPojoAttributes!= null) {
+                return false;
+            }
+        } else {
+            if (!kotlinNotNullPojoAttributes.equals(other.kotlinNotNullPojoAttributes)) {
+                return false;
+            }
+        }
+        if (kotlinNotNullRecordAttributes == null) {
+            if (other.kotlinNotNullRecordAttributes!= null) {
+                return false;
+            }
+        } else {
+            if (!kotlinNotNullRecordAttributes.equals(other.kotlinNotNullRecordAttributes)) {
+                return false;
+            }
+        }
+        if (kotlinNotNullInterfaceAttributes == null) {
+            if (other.kotlinNotNullInterfaceAttributes!= null) {
+                return false;
+            }
+        } else {
+            if (!kotlinNotNullInterfaceAttributes.equals(other.kotlinNotNullInterfaceAttributes)) {
+                return false;
+            }
+        }
         if (globalObjectReferences == null) {
             if (other.globalObjectReferences!= null) {
                 return false;
@@ -4101,6 +4224,9 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((springAnnotations == null)? 0 :springAnnotations.hashCode()));
         result = ((prime*result)+((springDao == null)? 0 :springDao.hashCode()));
         result = ((prime*result)+((kotlinSetterJvmNameAnnotationsOnIsPrefix == null)? 0 :kotlinSetterJvmNameAnnotationsOnIsPrefix.hashCode()));
+        result = ((prime*result)+((kotlinNotNullPojoAttributes == null)? 0 :kotlinNotNullPojoAttributes.hashCode()));
+        result = ((prime*result)+((kotlinNotNullRecordAttributes == null)? 0 :kotlinNotNullRecordAttributes.hashCode()));
+        result = ((prime*result)+((kotlinNotNullInterfaceAttributes == null)? 0 :kotlinNotNullInterfaceAttributes.hashCode()));
         result = ((prime*result)+((globalObjectReferences == null)? 0 :globalObjectReferences.hashCode()));
         result = ((prime*result)+((globalCatalogReferences == null)? 0 :globalCatalogReferences.hashCode()));
         result = ((prime*result)+((globalSchemaReferences == null)? 0 :globalSchemaReferences.hashCode()));

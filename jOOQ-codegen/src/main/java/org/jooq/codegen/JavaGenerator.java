@@ -1540,7 +1540,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateInterfaces())
             interfaces.add(out.ref(getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, Mode.INTERFACE)));
 
-        if (scala)
+        if (scala) {
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
                 out.println("%sclass %s extends %s[%s](%s.%s.getDataType.getRow)[[before= with ][separator= with ][%s]] {",
                     visibility(),
@@ -1560,11 +1560,14 @@ public class JavaGenerator extends AbstractGenerator {
                     tableIdentifier,
                     interfaces
                 );
-        else if (kotlin)
+        }
+        else if (kotlin) {
+            String constructorVisibility = generateKotlinNotNullRecordAttributes() ? " private constructor" : "";
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                out.println("%sopen class %s() : %s<%s>(%s.%s.dataType.row)[[before=, ][%s]] {",
+                out.println("%sopen class %s%s() : %s<%s>(%s.%s.dataType.row)[[before=, ][%s]] {",
                     visibility(),
                     className,
+                    constructorVisibility,
                     baseClass,
                     className,
                     out.ref(getStrategy().getFullJavaIdentifier(((EmbeddableDefinition) tableUdtOrEmbeddable).getTable()), 2),
@@ -1572,14 +1575,16 @@ public class JavaGenerator extends AbstractGenerator {
                     interfaces
                 );
             else
-                out.println("%sopen class %s() : %s<%s>(%s)[[before=, ][%s]] {",
+                out.println("%sopen class %s%s() : %s<%s>(%s)[[before=, ][%s]] {",
                     visibility(),
                     className,
+                    constructorVisibility,
                     baseClass,
                     className,
                     tableIdentifier,
                     interfaces
                 );
+        }
         else
             out.println("%sclass %s extends %s<%s>[[before= implements ][%s]] {", visibility(), className, baseClass, className, interfaces);
 
@@ -1788,7 +1793,7 @@ public class JavaGenerator extends AbstractGenerator {
                 }
                 else if (kotlin) {
                     printDeprecationIfUnknownType(out, colTypeFull);
-                    out.println("%soverride fun component%s(): %s? = %s", visibilityPublic(), i, colType, colMember);
+                    out.println("%soverride fun component%s(): %s%s = %s", visibilityPublic(), i, colType, kotlinNullability(out, (TypedElementDefinition<?>) column, Mode.RECORD), colMember);
                 }
                 else {
                     if (printDeprecationIfUnknownType(out, colTypeFull))
@@ -1818,7 +1823,7 @@ public class JavaGenerator extends AbstractGenerator {
                 }
                 else if (kotlin) {
                     printDeprecationIfUnknownType(out, colTypeFull);
-                    out.println("%soverride fun value%s(): %s? = %s", visibilityPublic(), i, colType, colMember);
+                    out.println("%soverride fun value%s(): %s%s = %s", visibilityPublic(), i, colType, kotlinNullability(out, (TypedElementDefinition<?>) column, Mode.RECORD), colMember);
                 }
                 else {
                     if (printDeprecationIfUnknownType(out, colTypeFull))
@@ -2091,7 +2096,12 @@ public class JavaGenerator extends AbstractGenerator {
                     arguments.add(columnMember + " : " + type);
                 }
                 else if (kotlin) {
-                    arguments.add(columnMember + ": " + type + "? = null");
+                    String nullability = column instanceof TypedElementDefinition<?> ted ? kotlinNullability(out, ted, Mode.RECORD) : "";
+
+                    if (nullability.isEmpty())
+                        arguments.add(columnMember + ": " + type);
+                    else
+                        arguments.add(columnMember + ": " + type + "? = null");
                 }
                 else {
                     final String nullableAnnotation = column instanceof EmbeddableDefinition
@@ -2425,7 +2435,7 @@ public class JavaGenerator extends AbstractGenerator {
                 printValidationAnnotation(out, column);
                 printKotlinSetterAnnotation(out, column, Mode.RECORD);
 
-                out.println("%sopen %svar %s: %s?", visibility(generateInterfaces()), (generateInterfaces() ? "override " : ""), member, type);
+                out.println("%sopen %svar %s: %s%s", visibility(generateInterfaces()), (generateInterfaces() ? "override " : ""), member, type, kotlinNullability(out, column, Mode.RECORD));
                 out.tab(1).println("set(value): %s = set(%s, value)", setterReturnType, index);
             }
             else {
@@ -2619,7 +2629,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%sdef %s: %s = get(%s).asInstanceOf[%s]", visibility(override), scalaWhitespaceSuffix(getter), type, index, type);
         }
         else if (kotlin) {
-            String nullable = column instanceof EmbeddableDefinition ? "" : "?";
+            String nullable = column instanceof EmbeddableDefinition ? "" : kotlinNullability(out, column, Mode.RECORD);
             out.tab(1).println("get(): %s%s = get(%s) as %s%s", type, nullable, index, type, nullable);
         }
         else {
@@ -2691,7 +2701,7 @@ public class JavaGenerator extends AbstractGenerator {
                 if (scala)
                     out.println("get(%s).asInstanceOf[%s]%s", position, columnType, separator);
                 else if (kotlin)
-                    out.tab(1).println("get(%s) as %s?%s", position, columnType, separator);
+                    out.tab(1).println("get(%s) as %s%s%s", position, columnType, kotlinNullability(out, column, Mode.RECORD), separator);
                 else {
 
                     // [#6705] Avoid generating code with a redundant (Object) cast
@@ -3024,7 +3034,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala)
             out.println("%sdef %s: %s", visibilityPublic(), scalaWhitespaceSuffix(getter), type);
         else if (kotlin)
-            out.println("%s%s %s: %s?", visibilityPublic(), (generateImmutableInterfaces() ? "val" : "var"), member, type);
+            out.println("%s%s %s: %s%s", visibilityPublic(), (generateImmutableInterfaces() ? "val" : "var"), member, type, kotlinNullability(out, column, Mode.INTERFACE));
         else
             out.println("%s%s %s();", visibilityPublic(), type, getter);
     }
@@ -5070,6 +5080,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             forEach(getTypedElements(tableUdtOrEmbeddable), (column, separator) -> {
                 final String member = getStrategy().getJavaMemberName(column, Mode.POJO);
+                final String nullability = kotlinNullability(out, column, Mode.POJO);
 
                 if (column instanceof ColumnDefinition)
                     printColumnJPAAnnotation(out, (ColumnDefinition) column);
@@ -5078,12 +5089,14 @@ public class JavaGenerator extends AbstractGenerator {
                 if (!generateImmutablePojos())
                     printKotlinSetterAnnotation(out, column, Mode.POJO);
 
-                out.println("%s%s%s %s: %s? = null%s",
+                out.println("%s%s%s %s: %s%s%s%s",
                     visibility(generateInterfaces()),
                     generateInterfaces() ? "override " : "",
                     generateImmutablePojos() ? "val" : "var",
                     member,
                     out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)),
+                    nullability,
+                    nullability.isEmpty() ? "" : " = null",
                     separator
                 );
             });
@@ -5631,18 +5644,25 @@ public class JavaGenerator extends AbstractGenerator {
 
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+                final boolean nn = kotlinEffectivelyNotNull(out, column, Mode.POJO);
+                final String else_ = nn ? "" : "else ";
 
-                out.println("if (this.%s === null) {", columnMember);
-                out.println("if (o.%s !== null)", columnMember);
-                out.println("return false");
-                out.println("}");
+                if (!nn) {
+                    out.println("if (this.%s === null) {", columnMember);
+                    out.println("if (o.%s !== null)", columnMember);
+                    out.println("return false");
+                    out.println("}");
+                }
 
                 if (isObjectArrayType(getJavaType(column.getType(resolver(out)), out)))
-                    out.println("else if (!%s.deepEquals(this.%s, o.%s))", Arrays.class, columnMember, columnMember);
+                    out.println("%sif (!%s.deepEquals(this.%s, o.%s))", else_, Arrays.class, columnMember, columnMember);
                 else if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
-                    out.println("else if (!%s.equals(this.%s, o.%s))", Arrays.class, columnMember, columnMember);
+                    out.println("%sif (!%s.equals(this.%s, o.%s))", else_, Arrays.class, columnMember, columnMember);
                 else
-                    out.println("else if (this.%s != o.%s)", columnMember, columnMember);
+                    out.println("%sif (this.%s != o.%s)", else_, columnMember, columnMember);
+
+                if (nn)
+                    out.tab(1);
 
                 out.println("return false");
             }
@@ -5710,13 +5730,24 @@ public class JavaGenerator extends AbstractGenerator {
 
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+                final boolean nn = kotlinEffectivelyNotNull(out, column, Mode.POJO);
 
-                if (isObjectArrayType(getJavaType(column.getType(resolver(out)), out)))
-                    out.println("result = prime * result + (if (this.%s === null) 0 else %s.deepHashCode(this.%s))", columnMember, Arrays.class, columnMember);
-                else if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
-                    out.println("result = prime * result + (if (this.%s === null) 0 else %s.hashCode(this.%s))", columnMember, Arrays.class, columnMember);
-                else
-                    out.println("result = prime * result + (if (this.%s === null) 0 else this.%s.hashCode())", columnMember, columnMember);
+                if (nn) {
+                    if (isObjectArrayType(getJavaType(column.getType(resolver(out)), out)))
+                        out.println("result = prime * result + %s.deepHashCode(this.%s)", columnMember, Arrays.class, columnMember);
+                    else if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
+                        out.println("result = prime * result + %s.hashCode(this.%s)", columnMember, Arrays.class, columnMember);
+                    else
+                        out.println("result = prime * result + this.%s.hashCode()", columnMember, columnMember);
+                }
+                else {
+                    if (isObjectArrayType(getJavaType(column.getType(resolver(out)), out)))
+                        out.println("result = prime * result + (if (this.%s === null) 0 else %s.deepHashCode(this.%s))", columnMember, Arrays.class, columnMember);
+                    else if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
+                        out.println("result = prime * result + (if (this.%s === null) 0 else %s.hashCode(this.%s))", columnMember, Arrays.class, columnMember);
+                    else
+                        out.println("result = prime * result + (if (this.%s === null) 0 else this.%s.hashCode())", columnMember, columnMember);
+                }
             }
 
             out.println("return result");
@@ -8004,7 +8035,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             String nullable = "";
-            if (!column.getType(resolver(out)).isNullable())
+            if (effectivelyNotNull(out, column))
                 nullable = ", nullable = false";
 
             String length = "";
@@ -8054,9 +8085,7 @@ public class JavaGenerator extends AbstractGenerator {
             DataTypeDefinition type = column.getType(resolver(out));
 
             // [#5128] defaulted columns are nullable in Java
-            if (!column.getType(resolver(out)).isNullable() &&
-                !column.getType(resolver(out)).isDefaulted() &&
-                !column.getType(resolver(out)).isIdentity())
+            if (effectivelyNotNull(out, column))
                 out.println("@%s%s", prefix, out.ref("jakarta.validation.constraints.NotNull"));
 
             String javaType = getJavaType(type, out);
@@ -8067,6 +8096,34 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("@%s%s(max = %s)", prefix, out.ref("jakarta.validation.constraints.Size"), length);
             }
         }
+    }
+
+    private String kotlinNullability(JavaWriter out, TypedElementDefinition<?> typed) {
+        return kotlinNullability(out, typed, Mode.DEFAULT);
+    }
+
+    private String kotlinNullability(JavaWriter out, TypedElementDefinition<?> typed, Mode mode) {
+        return kotlinEffectivelyNotNull(out, typed, mode) ? "" : "?";
+    }
+
+    private boolean kotlinEffectivelyNotNull(JavaWriter out, TypedElementDefinition<?> typed, Mode mode) {
+        if (mode == Mode.POJO && generateKotlinNotNullPojoAttributes() ||
+            mode == Mode.RECORD && generateKotlinNotNullRecordAttributes() ||
+            mode == Mode.INTERFACE && generateKotlinNotNullInterfaceAttributes() ||
+            mode == Mode.DEFAULT)
+            return effectivelyNotNull(out, typed) ? true : false;
+        else
+            return false;
+    }
+
+    private boolean effectivelyNotNull(JavaWriter out, TypedElementDefinition<?> column) {
+        return effectivelyNotNull(column.getType(resolver(out)));
+    }
+
+    private boolean effectivelyNotNull(DataTypeDefinition type) {
+        return !type.isNullable()
+            && !type.isDefaulted()
+            && !type.isIdentity();
     }
 
     private static final Pattern P_IS = Pattern.compile("^is[A-Z].*$");
@@ -8096,13 +8153,13 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private String nullableOrNonnullAnnotation(JavaWriter out, Definition column) {
-        return (column instanceof TypedElementDefinition && ((TypedElementDefinition<?>) column).getType().isNullable())
+        return (column instanceof TypedElementDefinition && effectivelyNotNull(out, (TypedElementDefinition<?>) column))
              ? nullableAnnotation(out)
              : nonnullAnnotation(out);
     }
 
     private void printNullableOrNonnullAnnotation(JavaWriter out, Definition column) {
-        if (column instanceof TypedElementDefinition && ((TypedElementDefinition<?>) column).getType().isNullable())
+        if (column instanceof TypedElementDefinition && effectivelyNotNull(out, (TypedElementDefinition<?>) column))
             printNullableAnnotation(out);
         else
             printNonnullAnnotation(out);
@@ -8606,7 +8663,7 @@ public class JavaGenerator extends AbstractGenerator {
                 if (parametersAsField)
                     out.println("%s%s: %s<%s?>", separator, memberName, Field.class, refExtendsNumberType(out, parameter.getType(resolver(out))));
                 else
-                    out.println("%s%s: %s%s", separator, memberName, refNumberType(out, parameter.getType(resolver(out))), kotlinNullability(parameter));
+                    out.println("%s%s: %s%s", separator, memberName, refNumberType(out, parameter.getType(resolver(out))), kotlinNullability(out, parameter));
             }
             else {
                 if (parametersAsField)
@@ -8688,7 +8745,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (scala)
                 out.println("%s%s: %s", separator, scalaWhitespaceSuffix(paramMember), paramType);
             else if (kotlin)
-                out.println("%s%s: %s%s", separator, paramMember, paramType, kotlinNullability(parameter));
+                out.println("%s%s: %s%s", separator, paramMember, paramType, kotlinNullability(out, parameter));
             else
                 out.println("%s%s %s", separator, paramType, paramMember);
 
@@ -9685,10 +9742,6 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         return sb.toString();
-    }
-
-    private String kotlinNullability(TypedElementDefinition<?> typed) {
-        return typed.getType().isNullable() ? "?" : "";
     }
 
     private DataType<?> mapTypes(DataType<?> dataType) {

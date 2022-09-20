@@ -1792,8 +1792,15 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("%soverride def component%s: %s = %s", visibilityPublic(), i, colType, colGetter);
                 }
                 else if (kotlin) {
+                    final String nullability;
+
+                    if (column instanceof TypedElementDefinition<?> ted)
+                        nullability = kotlinNullability(out, ted, Mode.RECORD);
+                    else
+                        nullability = "?";
+
                     printDeprecationIfUnknownType(out, colTypeFull);
-                    out.println("%soverride fun component%s(): %s%s = %s", visibilityPublic(), i, colType, kotlinNullability(out, (TypedElementDefinition<?>) column, Mode.RECORD), colMember);
+                    out.println("%soverride fun component%s(): %s%s = %s", visibilityPublic(), i, colType, nullability, colMember);
                 }
                 else {
                     if (printDeprecationIfUnknownType(out, colTypeFull))
@@ -1822,8 +1829,15 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("%soverride def value%s: %s = %s", visibilityPublic(), i, colType, colGetter);
                 }
                 else if (kotlin) {
+                    final String nullability;
+
+                    if (column instanceof TypedElementDefinition<?> ted)
+                        nullability = kotlinNullability(out, ted, Mode.RECORD);
+                    else
+                        nullability = "?";
+
                     printDeprecationIfUnknownType(out, colTypeFull);
-                    out.println("%soverride fun value%s(): %s%s = %s", visibilityPublic(), i, colType, kotlinNullability(out, (TypedElementDefinition<?>) column, Mode.RECORD), colMember);
+                    out.println("%soverride fun value%s(): %s%s = %s", visibilityPublic(), i, colType, nullability, colMember);
                 }
                 else {
                     if (printDeprecationIfUnknownType(out, colTypeFull))
@@ -2096,10 +2110,12 @@ public class JavaGenerator extends AbstractGenerator {
                     arguments.add(columnMember + " : " + type);
                 }
                 else if (kotlin) {
-                    String nullability = column instanceof TypedElementDefinition<?> ted ? kotlinNullability(out, ted, Mode.RECORD) : "";
-
-                    if (nullability.isEmpty())
-                        arguments.add(columnMember + ": " + type);
+                    if (column instanceof TypedElementDefinition<?> ted) {
+                        if (kotlinEffectivelyNotNull(out, ted, Mode.RECORD))
+                            arguments.add(columnMember + ": " + type);
+                        else
+                            arguments.add(columnMember + ": " + type + "? = null");
+                    }
                     else
                         arguments.add(columnMember + ": " + type + "? = null");
                 }
@@ -5645,24 +5661,28 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
                 final boolean nn = kotlinEffectivelyNotNull(out, column, Mode.POJO);
-                final String else_ = nn ? "" : "else ";
 
-                if (!nn) {
+                if (nn) {
+                    if (isObjectArrayType(getJavaType(column.getType(resolver(out)), out)))
+                        out.println("if (!%s.deepEquals(this.%s, o.%s))", Arrays.class, columnMember, columnMember);
+                    else if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
+                        out.println("if (!%s.equals(this.%s, o.%s))", Arrays.class, columnMember, columnMember);
+                    else
+                        out.println("if (this.%s != o.%s)", columnMember, columnMember);
+                }
+                else {
                     out.println("if (this.%s === null) {", columnMember);
                     out.println("if (o.%s !== null)", columnMember);
                     out.println("return false");
                     out.println("}");
+
+                    if (isObjectArrayType(getJavaType(column.getType(resolver(out)), out)))
+                        out.println("else if (!%s.deepEquals(this.%s, o.%s))", Arrays.class, columnMember, columnMember);
+                    else if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
+                        out.println("else if (!%s.equals(this.%s, o.%s))", Arrays.class, columnMember, columnMember);
+                    else
+                        out.println("else if (this.%s != o.%s)", columnMember, columnMember);
                 }
-
-                if (isObjectArrayType(getJavaType(column.getType(resolver(out)), out)))
-                    out.println("%sif (!%s.deepEquals(this.%s, o.%s))", else_, Arrays.class, columnMember, columnMember);
-                else if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
-                    out.println("%sif (!%s.equals(this.%s, o.%s))", else_, Arrays.class, columnMember, columnMember);
-                else
-                    out.println("%sif (this.%s != o.%s)", else_, columnMember, columnMember);
-
-                if (nn)
-                    out.tab(1);
 
                 out.println("return false");
             }

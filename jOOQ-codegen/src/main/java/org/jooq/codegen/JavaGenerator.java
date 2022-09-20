@@ -4717,12 +4717,14 @@ public class JavaGenerator extends AbstractGenerator {
         final String tableIdentifier = out.ref(getStrategy().getFullJavaIdentifier(table), 2);
 
         String tType = (scala || kotlin ? "Unit" : "Void");
+        String tNullability = "";
         String pType = out.ref(getStrategy().getFullJavaClassName(table, Mode.POJO));
 
         List<ColumnDefinition> keyColumns = key.getKeyColumns();
 
         if (keyColumns.size() == 1) {
             tType = getJavaType(keyColumns.get(0).getType(resolver(out)), out, Mode.POJO);
+            tNullability = kotlinNullability(out, keyColumns.get(0), Mode.POJO);
         }
         else if (keyColumns.size() <= Constants.MAX_ROW_DEGREE) {
             StringBuilder generics = new StringBuilder();
@@ -4800,7 +4802,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else if (kotlin) {
             out.println();
-            out.print("%soverride fun getId(o: %s): %s? = ", visibilityPublic(), pType, tType);
+            out.print("%soverride fun getId(o: %s): %s%s = ", visibilityPublic(), pType, tType, tNullability);
         }
         else {
             out.overrideInherit();

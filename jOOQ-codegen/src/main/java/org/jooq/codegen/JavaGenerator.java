@@ -2110,12 +2110,15 @@ public class JavaGenerator extends AbstractGenerator {
                     arguments.add(columnMember + " : " + type);
                 }
                 else if (kotlin) {
-                    if (column instanceof TypedElementDefinition<?> ted) {
-                        if (kotlinEffectivelyNotNull(out, ted, Mode.RECORD))
-                            arguments.add(columnMember + ": " + type);
-                        else
-                            arguments.add(columnMember + ": " + type + "? = null");
-                    }
+                    final boolean nn;
+
+                    if (column instanceof EmbeddableDefinition)
+                        nn = kotlinEffectivelyNotNull(out, (EmbeddableDefinition) column, Mode.RECORD);
+                    else
+                        nn = kotlinEffectivelyNotNull(out, (TypedElementDefinition<?>) column, Mode.RECORD);
+
+                    if (nn)
+                        arguments.add(columnMember + ": " + type);
                     else
                         arguments.add(columnMember + ": " + type + "? = null");
                 }
@@ -2170,23 +2173,33 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("if (value != null) {");
 
             for (Definition column : columns) {
-                if (column instanceof EmbeddableDefinition) {
+                if (column instanceof EmbeddableDefinition e) {
 
                     // TODO: Setters of X properties cannot accept X? in Kotlin: https://twitter.com/lukaseder/status/1296371561214234624
                     if (kotlin)
                         if (pojoArgument)
-                            out.println("this.%s = %s(%s) ?: %s([[%s]])",
+                            if (kotlinEffectivelyNotNull(out, e, Mode.RECORD))
+                                out.println("this.%s = %s(%s)",
+                                    getStrategy().getJavaMemberName(column, Mode.POJO),
+                                    out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
+                                    getStrategy().getJavaMemberName(column, Mode.POJO));
+                            else
+                                out.println("this.%s = %s(%s) ?: %s([[%s]])",
+                                    getStrategy().getJavaMemberName(column, Mode.POJO),
+                                    out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
+                                    getStrategy().getJavaMemberName(column, Mode.POJO),
+                                    out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
+                                    Collections.nCopies(e.getColumns().size(), "null"));
+                        else if (kotlinEffectivelyNotNull(out, e, Mode.RECORD))
+                            out.println("this.%s = %s",
                                 getStrategy().getJavaMemberName(column, Mode.POJO),
-                                out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
-                                getStrategy().getJavaMemberName(column, Mode.POJO),
-                                out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
-                                Collections.nCopies(((EmbeddableDefinition) column).getColumns().size(), "null"));
+                                getStrategy().getJavaMemberName(column, Mode.POJO));
                         else
                             out.println("this.%s = %s ?: %s([[%s]])",
                                 getStrategy().getJavaMemberName(column, Mode.POJO),
                                 getStrategy().getJavaMemberName(column, Mode.POJO),
                                 out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
-                                Collections.nCopies(((EmbeddableDefinition) column).getColumns().size(), "null"));
+                                Collections.nCopies(e.getColumns().size(), "null"));
 
                     // In Scala, the setter call can be ambiguous, e.g. when using KeepNamesGeneratorStrategy
                     else if (scala)
@@ -2357,6 +2370,14 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.println("}");
         }
+    }
+
+    private boolean kotlinEffectivelyNotNull(JavaWriter out, EmbeddableDefinition e, Mode mode) {
+        for (EmbeddableColumnDefinition c : e.getColumns())
+            if (kotlinEffectivelyNotNull(out, c, mode))
+                return true;
+
+        return false;
     }
 
     private boolean isArrayOfUDTs(final TypedElementDefinition<?> t, final JavaTypeResolver r) {
@@ -4877,7 +4898,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else if (kotlin) {
                 if (column instanceof EmbeddableDefinition) {
-                    out.println("%sfun fetchRangeOf%s(lowerInclusive: %s%s, upperInclusive: %s%s): %s<%s> = fetchRange(%s, if (lowerInclusive != null) %s(lowerInclusive) else null, if (upperInclusive != null) %s(upperInclusive) else null)",
+                    out.println("%sfun fetchRangeOf%s(lowerInclusive: %s?, upperInclusive: %s?): %s<%s> = fetchRange(%s, if (lowerInclusive != null) %s(lowerInclusive) else null, if (upperInclusive != null) %s(upperInclusive) else null)",
                         visibility(), colMemberUC, colType, colType, out.ref(KLIST), pType, colIdentifier, colTypeRecord, colTypeRecord);
                 }
                 else {
@@ -5382,6 +5403,8 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateEmbeddablePojoGetter(EmbeddableDefinition embeddable, @SuppressWarnings("unused") int index, JavaWriter out) {
         final String columnTypeFull = getStrategy().getFullJavaClassName(embeddable, Mode.POJO);
         final String columnType = out.ref(columnTypeFull);
+        final String columnTypeDeclaredFull = getStrategy().getFullJavaClassName(embeddable, generateInterfaces() ? Mode.INTERFACE : Mode.POJO);
+        final String columnTypeDeclared = out.ref(columnTypeDeclaredFull);
         final String columnGetter = getStrategy().getJavaGetterName(embeddable, Mode.POJO);
         final String name = embeddable.getQualifiedOutputName();
 
@@ -5394,7 +5417,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala)
             out.println("%sdef %s: %s = new %s(", visibility(generateInterfaces()), scalaWhitespaceSuffix(columnGetter), columnType, columnType);
         else if (kotlin)
-            out.tab(1).println("get(): %s = %s(", columnType, columnType);
+            out.tab(1).println("get(): %s = %s(", columnTypeDeclared, columnType);
         else {
             out.overrideIf(generateInterfaces());
             out.println("%s%s %s() {", visibility(generateInterfaces()), columnType, columnGetter);
@@ -5467,14 +5490,14 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own pojo setters.
      */
     protected void generateEmbeddablePojoSetter(EmbeddableDefinition embeddable, @SuppressWarnings("unused") int index, JavaWriter out) {
+        final boolean override = generateInterfaces() && !generateImmutableInterfaces();
         final String className = getStrategy().getJavaClassName(embeddable.getReferencingTable(), Mode.POJO);
-        final String columnTypeFull = getStrategy().getFullJavaClassName(embeddable, Mode.POJO);
+        final String columnTypeFull = getStrategy().getFullJavaClassName(embeddable, override ? Mode.INTERFACE : Mode.POJO);
         final String columnType = out.ref(columnTypeFull);
         final String columnSetterReturnType = generateFluentSetters() ? className : tokenVoid;
         final String columnSetter = getStrategy().getJavaSetterName(embeddable, Mode.POJO);
         final String columnMember = getStrategy().getJavaMemberName(embeddable, Mode.POJO);
         final String name = embeddable.getQualifiedOutputName();
-        final boolean override = generateInterfaces() && !generateImmutableInterfaces();
 
         if (!kotlin && !printDeprecationIfUnknownType(out, columnTypeFull))
             out.javadoc("Setter for <code>%s</code>.", name);
@@ -5483,7 +5506,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%sdef %s(value: %s): %s = {", visibility(override), columnSetter, columnType, columnSetterReturnType);
         }
         else if (kotlin) {
-            out.println("%svar %s: %s", visibility(override), columnMember, columnType);
+            out.println("%s%svar %s: %s", visibility(override), override ? "override " : "", columnMember, columnType);
             out.tab(1).println("set(value): %s {", columnSetterReturnType);
         }
         else {

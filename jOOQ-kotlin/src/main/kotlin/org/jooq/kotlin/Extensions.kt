@@ -1,5 +1,6 @@
 package org.jooq.kotlin
 
+import org.jetbrains.annotations.Blocking
 import org.jooq.*
 import org.jooq.impl.DSL.*
 import java.util.stream.Collector
@@ -37,6 +38,39 @@ fun <K, V : Record, R : Record> Field<Result<R>>.intoResultGroups(keyMapper: (R)
 fun <E, R : Record1<E>> Field<Result<R>>.intoSet(): Field<Set<E>> = collecting(Records.intoSet())
 
 fun <E, R : Record> Field<Result<R>>.intoSet(mapper: (R) -> E): Field<Set<E>> = collecting(Records.intoSet(mapper))
+
+// ----------------------------------------------------------------------------
+// Extensions to collect ResultQuery<Record[N]> into other types
+// ----------------------------------------------------------------------------
+
+@Blocking
+inline fun <reified E> ResultQuery<Record1<E>>.fetchArray(): Array<E> = collect(Records.intoArray(E::class.java))
+
+@Blocking
+fun <K, V, R : Record2<K, V>> ResultQuery<R>.fetchGroups(): Map<K, List<V>> = collect(Records.intoGroups())
+
+@Blocking
+fun <E, R : Record1<E>> ResultQuery<R>.fetchList(): List<E> = collect(Records.intoList())
+
+@Blocking
+fun <K, V> ResultQuery<Record2<K, V>>.fetchMap(): Map<K, V> = collect(Records.intoMap())
+
+@Blocking
+fun <E, R : Record1<E>> ResultQuery<R>.fetchSet(): Set<E> = collect(Records.intoSet())
+
+// ----------------------------------------------------------------------------
+// Extensions to collect Result<Record[N]> into other types
+// ----------------------------------------------------------------------------
+
+inline fun <reified E> Result<Record1<E>>.intoArray(): Array<E> = collect(Records.intoArray(E::class.java))
+
+fun <K, V, R : Record2<K, V>> Result<R>.intoGroups(): Map<K, List<V>> = collect(Records.intoGroups())
+
+fun <E, R : Record1<E>> Result<R>.intoList(): List<E> = collect(Records.intoList())
+
+fun <K, V> Result<Record2<K, V>>.intoMap(): Map<K, V> = collect(Records.intoMap())
+
+fun <E, R : Record1<E>> Result<R>.intoSet(): Set<E> = collect(Records.intoSet())
 
 
 

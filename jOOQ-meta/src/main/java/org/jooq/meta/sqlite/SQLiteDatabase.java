@@ -395,18 +395,22 @@ public class SQLiteDatabase extends AbstractDatabase {
                 .where(SQLiteMaster.TYPE.in("table", "view"))
                 .and(getIncludeSystemTables()
                     ? noCondition()
-                    : SQLiteMaster.NAME.notLike(all(
-                        inline("%!_content"),
-                        inline("%!_segments"),
-                        inline("%!_segdir"),
-                        inline("%!_docsize"),
-                        inline("%!_stat")
-                      )).escape('!')
-                        .or(SQLiteMaster.NAME.like(inline("%!_content" )).escape('!').and(replace(SQLiteMaster.NAME, inline("_content" )).notIn(selectFrom(virtualTables))))
-                        .or(SQLiteMaster.NAME.like(inline("%!_segments")).escape('!').and(replace(SQLiteMaster.NAME, inline("_segments")).notIn(selectFrom(virtualTables))))
-                        .or(SQLiteMaster.NAME.like(inline("%!_segdir"  )).escape('!').and(replace(SQLiteMaster.NAME, inline("_segdir"  )).notIn(selectFrom(virtualTables))))
-                        .or(SQLiteMaster.NAME.like(inline("%!_docsize" )).escape('!').and(replace(SQLiteMaster.NAME, inline("_docsize" )).notIn(selectFrom(virtualTables))))
-                        .or(SQLiteMaster.NAME.like(inline("%!_stat"    )).escape('!').and(replace(SQLiteMaster.NAME, inline("_stat"    )).notIn(selectFrom(virtualTables))))
+                    : SQLiteMaster.NAME.notIn(inline("sqlite_sequence"), inline("sqlite_master"))
+                    .and(SQLiteMaster.NAME.notLike(inline("sqlite!_stat%")).escape('!'))
+                    .and(
+                          SQLiteMaster.NAME.notLike(all(
+                            inline("%!_content"),
+                            inline("%!_segments"),
+                            inline("%!_segdir"),
+                            inline("%!_docsize"),
+                            inline("%!_stat")
+                          )).escape('!')
+                            .or(SQLiteMaster.NAME.like(inline("%!_content" )).escape('!').and(replace(SQLiteMaster.NAME, inline("_content" )).notIn(selectFrom(virtualTables))))
+                            .or(SQLiteMaster.NAME.like(inline("%!_segments")).escape('!').and(replace(SQLiteMaster.NAME, inline("_segments")).notIn(selectFrom(virtualTables))))
+                            .or(SQLiteMaster.NAME.like(inline("%!_segdir"  )).escape('!').and(replace(SQLiteMaster.NAME, inline("_segdir"  )).notIn(selectFrom(virtualTables))))
+                            .or(SQLiteMaster.NAME.like(inline("%!_docsize" )).escape('!').and(replace(SQLiteMaster.NAME, inline("_docsize" )).notIn(selectFrom(virtualTables))))
+                            .or(SQLiteMaster.NAME.like(inline("%!_stat"    )).escape('!').and(replace(SQLiteMaster.NAME, inline("_stat"    )).notIn(selectFrom(virtualTables))))
+                    )
                 )
                 .orderBy(SQLiteMaster.NAME)) {
 

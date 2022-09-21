@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 // ...
 import static org.jooq.impl.Names.N_XMLATTRIBUTES;
+import static org.jooq.impl.Tools.isSimple;
+import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
 import static org.jooq.impl.XMLElement.xmlCastMapper;
 
@@ -77,7 +79,10 @@ final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes
 
 
 
-        boolean format = attributes.size() > 1;
+        boolean format = ctx.format() && (
+              attributes.size() > 1
+           || attributes.size() == 1 && !isSimple(ctx, unalias(attributes.get(0)))
+        );
 
         ctx.data(DATA_AS_REQUIRED, true, c -> {
             c.visit(N_XMLATTRIBUTES).sql('(');

@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_FUNCTION;
 // ...
@@ -100,6 +101,7 @@ import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.configurationOrThrow;
+// ...
 import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
 import static org.jooq.impl.Tools.getRecordQualifier;
 import static org.jooq.impl.Tools.settings;
@@ -120,6 +122,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.jooq.AggregateFunction;
 // ...
@@ -153,6 +157,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.UDT;
 import org.jooq.UDTField;
+import org.jooq.UDTRecord;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.MappingException;
@@ -730,6 +735,18 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
             context.visit(getInValues().get(parameter));
 
             // [#391] This happens when null literals are used as IN/OUT
@@ -974,21 +991,6 @@ implements
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
 
@@ -1069,29 +1071,71 @@ implements
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         else
             context.sql("{ ");
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -42,6 +42,7 @@ import static java.util.Arrays.asList;
 // ...
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.meta.mysql.information_schema.Tables.COLUMNS;
 
 import java.sql.SQLException;
@@ -109,6 +110,9 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                 // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
                 .where(COLUMNS.TABLE_SCHEMA.in(getSchema().getName(), getSchema().getName()))
                 .and(COLUMNS.TABLE_NAME.equal(getName()))
+                .and(getDatabase().getIncludeInvisibleColumns()
+                    ? noCondition()
+                    : COLUMNS.EXTRA.notLike("%INVISIBLE%"))
                 .orderBy(COLUMNS.ORDINAL_POSITION)
         ) {
 

@@ -2261,6 +2261,10 @@ public class JavaGenerator extends AbstractGenerator {
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
                                     udtType);
+                            else if (kotlinEffectivelyNotNull(out, t, Mode.RECORD) && !kotlinEffectivelyNotNull(out, t, Mode.POJO))
+                                out.println("value.%s?.let { this.%s = it }",
+                                    getStrategy().getJavaMemberName(column, Mode.POJO),
+                                    getStrategy().getJavaMemberName(column, Mode.POJO));
                             else
                                 out.println("this.%s = value.%s",
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
@@ -2370,14 +2374,6 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.println("}");
         }
-    }
-
-    private boolean kotlinEffectivelyNotNull(JavaWriter out, EmbeddableDefinition e, Mode mode) {
-        for (EmbeddableColumnDefinition c : e.getColumns())
-            if (kotlinEffectivelyNotNull(out, c, mode))
-                return true;
-
-        return false;
     }
 
     private boolean isArrayOfUDTs(final TypedElementDefinition<?> t, final JavaTypeResolver r) {
@@ -8153,6 +8149,14 @@ public class JavaGenerator extends AbstractGenerator {
 
     private String kotlinNullability(JavaWriter out, TypedElementDefinition<?> typed, Mode mode) {
         return kotlinEffectivelyNotNull(out, typed, mode) ? "" : "?";
+    }
+
+    private boolean kotlinEffectivelyNotNull(JavaWriter out, EmbeddableDefinition e, Mode mode) {
+        for (EmbeddableColumnDefinition c : e.getColumns())
+            if (kotlinEffectivelyNotNull(out, c, mode))
+                return true;
+
+        return false;
     }
 
     private boolean kotlinEffectivelyNotNull(JavaWriter out, TypedElementDefinition<?> typed, Mode mode) {

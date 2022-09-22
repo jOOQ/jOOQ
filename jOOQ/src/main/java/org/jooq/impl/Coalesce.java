@@ -81,7 +81,7 @@ final class Coalesce<T> extends AbstractField<T> implements QOM.Coalesce<T> {
             case DERBY: {
                 // [#13601] Workaround for https://issues.apache.org/jira/browse/DERBY-7139
                 ctx.visit(DSL.function(N_COALESCE, getDataType(),
-                    Tools.map(fields, f -> f.getType() == Boolean.class ? new ParenthesisedField<>(f) : f, Field[]::new)
+                    Tools.map(fields, f -> f.getDataType().isBoolean() ? new ParenthesisedField<>(f) : f, Field[]::new)
                 ));
                 break;
             }

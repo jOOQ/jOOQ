@@ -1251,6 +1251,17 @@ public interface DataType<T> extends Named {
     boolean isInteger();
 
     /**
+     * Whether this data type is any boolean data type.
+     * <p>
+     * This applies to any of these types:
+     * <ul>
+     * <li> {@link SQLDataType#BIT}</li>
+     * <li> {@link SQLDataType#BOOLEAN}</li>
+     * </ul>
+     */
+    boolean isBoolean();
+
+    /**
      * Whether this data type is any character data type.
      * <p>
      * This applies to any of these types:

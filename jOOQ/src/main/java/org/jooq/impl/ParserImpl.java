@@ -7566,7 +7566,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             DataType dataType = f.getDataType();
             Class<?> type = dataType.getType();
 
-            if (type == Boolean.class)
+            if (dataType.isBoolean())
                 return condition(f);
 
             // [#11631] [#12394] Numeric expressions are booleans in MySQL

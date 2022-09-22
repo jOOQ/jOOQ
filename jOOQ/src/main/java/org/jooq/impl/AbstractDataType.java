@@ -803,6 +803,11 @@ implements
     }
 
     @Override
+    public final boolean isBoolean() {
+        return tType0() == Boolean.class;
+    }
+
+    @Override
     public final boolean isString() {
         return tType0() == String.class;
     }

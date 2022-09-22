@@ -737,16 +737,6 @@ implements
 
 
 
-
-
-
-
-
-
-
-
-
-
             context.visit(getInValues().get(parameter));
 
             // [#391] This happens when null literals are used as IN/OUT
@@ -769,6 +759,22 @@ implements
         else
             context.nextIndex();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     final void toSQL0(RenderContext context) {
         toSQLDeclare(context);
@@ -1074,6 +1080,19 @@ implements
         else
             context.sql("{ ");
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

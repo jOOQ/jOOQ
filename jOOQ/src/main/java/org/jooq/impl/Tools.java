@@ -94,6 +94,7 @@ import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_GETTER;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_MEMBERS;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_SETTERS;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS;
+import static org.jooq.impl.Convert.convert;
 import static org.jooq.impl.DDLStatementType.ALTER_SCHEMA;
 import static org.jooq.impl.DDLStatementType.ALTER_TABLE;
 import static org.jooq.impl.DDLStatementType.ALTER_VIEW;

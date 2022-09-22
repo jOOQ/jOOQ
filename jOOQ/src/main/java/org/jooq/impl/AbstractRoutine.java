@@ -46,7 +46,6 @@ import static org.jooq.Clause.FIELD_FUNCTION;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
-// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -54,7 +53,6 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
 import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.param;
@@ -66,9 +64,7 @@ import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_BOOLEAN;
 import static org.jooq.impl.Keywords.K_CASE;
 import static org.jooq.impl.Keywords.K_COLUMNS;
-import static org.jooq.impl.Keywords.K_COUNT;
 import static org.jooq.impl.Keywords.K_DECLARE;
-import static org.jooq.impl.Keywords.K_ELSE;
 import static org.jooq.impl.Keywords.K_END;
 import static org.jooq.impl.Keywords.K_END_LOOP;
 import static org.jooq.impl.Keywords.K_FALSE;
@@ -76,7 +72,6 @@ import static org.jooq.impl.Keywords.K_FIRST;
 import static org.jooq.impl.Keywords.K_FOR;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_FUNCTION;
-import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_IN;
 import static org.jooq.impl.Keywords.K_IS;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
@@ -84,7 +79,6 @@ import static org.jooq.impl.Keywords.K_LAST;
 import static org.jooq.impl.Keywords.K_LOOP;
 import static org.jooq.impl.Keywords.K_NEXT;
 import static org.jooq.impl.Keywords.K_NOT;
-import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_OPEN;
 import static org.jooq.impl.Keywords.K_PASSING;
 import static org.jooq.impl.Keywords.K_RECORD;
@@ -110,6 +104,7 @@ import static org.jooq.impl.Tools.SimpleDataKey.DATA_TOP_LEVEL_CTE;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -122,8 +117,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.function.Consumer;
 
 import org.jooq.AggregateFunction;
 // ...
@@ -889,6 +883,7 @@ implements
 
 
 
+
         else
             context.sql(" }");
     }
@@ -1045,6 +1040,19 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     private final void toSQLBegin(RenderContext context) {
         if (!isSQLUsable() && context.family() == POSTGRES) {}
 
@@ -1080,6 +1088,25 @@ implements
         else
             context.sql("{ ");
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

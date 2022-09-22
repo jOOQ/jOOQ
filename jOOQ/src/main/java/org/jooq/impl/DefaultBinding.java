@@ -48,6 +48,7 @@ import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 import static java.time.temporal.ChronoField.YEAR;
 import static java.util.Arrays.asList;
 import static java.util.function.Function.identity;
+import static org.jooq.ContextConverter.scoped;
 import static org.jooq.Geography.geography;
 import static org.jooq.Geometry.geometry;
 // ...
@@ -82,7 +83,6 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
-import static org.jooq.ContextConverter.scoped;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Convert.convert;
 import static org.jooq.impl.Convert.patchIso8601Timestamp;
@@ -232,6 +232,7 @@ import org.jooq.BindingSetSQLOutputContext;
 import org.jooq.BindingSetStatementContext;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.ContextConverter;
 import org.jooq.Converter;
 import org.jooq.ConverterContext;
 import org.jooq.Converters;
@@ -248,7 +249,6 @@ import org.jooq.Param;
 // ...
 import org.jooq.QualifiedRecord;
 import org.jooq.Record;
-import org.jooq.RecordQualifier;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Row;
@@ -256,10 +256,8 @@ import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Scope;
-import org.jooq.ContextConverter;
 import org.jooq.Source;
 import org.jooq.Spatial;
-import org.jooq.TableRecord;
 import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
@@ -1366,12 +1364,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 if (array == null)
                     return null;
 
+                DataType<?> cdt = dataType.getArrayComponentDataType();
+
                 // Try fetching a Java Object[]. That's gonna work for non-UDT types
                 try {
 
-                    // [#5633] Special treatment for this type.
                     // [#5586] [#5613] TODO: Improve PostgreSQL array deserialisation.
-                    if (byte[][].class == dataType.getType())
+                    // [#5633] Special treatment for byte[][] types.
+                    // [#14010] UDT arrays should skip the Convert utility
+                    if (cdt.isBinary() || cdt.isUDT())
                         throw new ControlFlowSignal("GOTO the next array deserialisation strategy");
                     else
                         return (T) convertArray(array, (Class<? extends Object[]>) dataType.getType());

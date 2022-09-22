@@ -167,6 +167,8 @@ public class Database implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean forceIntegerTypesOnZeroScaleDecimals = true;
     protected Boolean tableValuedFunctions;
+    @XmlElement(defaultValue = "false")
+    protected Boolean oracleUseDBAViews = false;
     @XmlElement(defaultValue = "5")
     protected Integer logSlowQueriesAfterSeconds = 5;
     @XmlElement(defaultValue = "5")
@@ -1872,6 +1874,30 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
+     * Specify whether to use the Oracle DBA_XYZ views instead of the ALL_XYZ views.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isOracleUseDBAViews() {
+        return oracleUseDBAViews;
+    }
+
+    /**
+     * Sets the value of the oracleUseDBAViews property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setOracleUseDBAViews(Boolean value) {
+        this.oracleUseDBAViews = value;
+    }
+
+    /**
      * The number of seconds that are considered "slow" before a query is logged to indicate a bug, 0 for not logging.
      * 
      */
@@ -2608,6 +2634,11 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    public Database withOracleUseDBAViews(Boolean value) {
+        setOracleUseDBAViews(value);
+        return this;
+    }
+
     /**
      * The number of seconds that are considered "slow" before a query is logged to indicate a bug, 0 for not logging.
      * 
@@ -2864,6 +2895,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("forcedTypesForXMLSchemaCollections", forcedTypesForXMLSchemaCollections);
         builder.append("forceIntegerTypesOnZeroScaleDecimals", forceIntegerTypesOnZeroScaleDecimals);
         builder.append("tableValuedFunctions", tableValuedFunctions);
+        builder.append("oracleUseDBAViews", oracleUseDBAViews);
         builder.append("logSlowQueriesAfterSeconds", logSlowQueriesAfterSeconds);
         builder.append("logSlowResultsAfterSeconds", logSlowResultsAfterSeconds);
         builder.append("properties", "property", properties);
@@ -3453,6 +3485,15 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (oracleUseDBAViews == null) {
+            if (other.oracleUseDBAViews!= null) {
+                return false;
+            }
+        } else {
+            if (!oracleUseDBAViews.equals(other.oracleUseDBAViews)) {
+                return false;
+            }
+        }
         if (logSlowQueriesAfterSeconds == null) {
             if (other.logSlowQueriesAfterSeconds!= null) {
                 return false;
@@ -3612,6 +3653,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((forcedTypesForXMLSchemaCollections == null)? 0 :forcedTypesForXMLSchemaCollections.hashCode()));
         result = ((prime*result)+((forceIntegerTypesOnZeroScaleDecimals == null)? 0 :forceIntegerTypesOnZeroScaleDecimals.hashCode()));
         result = ((prime*result)+((tableValuedFunctions == null)? 0 :tableValuedFunctions.hashCode()));
+        result = ((prime*result)+((oracleUseDBAViews == null)? 0 :oracleUseDBAViews.hashCode()));
         result = ((prime*result)+((logSlowQueriesAfterSeconds == null)? 0 :logSlowQueriesAfterSeconds.hashCode()));
         result = ((prime*result)+((logSlowResultsAfterSeconds == null)? 0 :logSlowResultsAfterSeconds.hashCode()));
         result = ((prime*result)+((properties == null)? 0 :properties.hashCode()));

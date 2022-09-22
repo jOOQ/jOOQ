@@ -436,6 +436,13 @@ public class GenerationTool {
                 ? databaseClass(connection)
                 : databaseClass(j);
             database = databaseClass.newInstance();
+
+
+
+
+
+
+
             database.setBasedir(configuration.getBasedir());
             database.setProperties(properties(d.getProperties()));
             database.setOnError(configuration.getOnError());

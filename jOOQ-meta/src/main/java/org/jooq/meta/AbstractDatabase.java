@@ -365,6 +365,10 @@ public abstract class AbstractDatabase implements Database {
         //         [A-Za-z_$#][A-Za-z0-9_$#]+ in generated jOOQ-meta code.
         configuration.settings().setRenderQuotedNames(getRenderQuotedNames());
 
+        // [#252] We're not quoting identifiers. Hence the default name path
+        //        separator is illegal
+        configuration.settings().setNamePathSeparator("__");
+
         if (muteExceptions) {
             return DSL.using(configuration);
         }

@@ -241,7 +241,6 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Scope;
 import org.jooq.Spatial;
-import org.jooq.TableRecord;
 import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
@@ -1355,12 +1354,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 if (array == null)
                     return null;
 
+                DataType<?> cdt = dataType.getArrayComponentDataType();
+
                 // Try fetching a Java Object[]. That's gonna work for non-UDT types
                 try {
 
-                    // [#5633] Special treatment for this type.
                     // [#5586] [#5613] TODO: Improve PostgreSQL array deserialisation.
-                    if (byte[][].class == dataType.getType())
+                    // [#5633] Special treatment for byte[][] types.
+                    // [#14010] UDT arrays should skip the Convert utility
+                    if (cdt.isBinary() || cdt.isUDT())
                         throw new ControlFlowSignal("GOTO the next array deserialisation strategy");
                     else
                         return (T) convertArray(array, (Class<? extends Object[]>) dataType.getType());

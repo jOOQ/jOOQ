@@ -4238,6 +4238,35 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void sqlInline0(BindingSQLContext<U> ctx, String value) throws SQLException {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            super.sqlInline0(ctx, value);
+        }
+
+        @Override
         final void set0(BindingSetStatementContext<U> ctx, String value) throws SQLException {
             ctx.statement().setString(ctx.index(), value);
         }

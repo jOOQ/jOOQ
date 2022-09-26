@@ -57,6 +57,7 @@ import org.jooq.BindingSetStatementContext;
 import org.jooq.Converter;
 import org.jooq.Converters;
 import org.jooq.ResourceManagingScope;
+import org.jooq.conf.ParamType;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 // ...
@@ -79,7 +80,10 @@ public class BlobBinding implements Binding<byte[], byte[]> {
 
     @Override
     public final void sql(BindingSQLContext<byte[]> ctx) throws SQLException {
-        ctx.render().visit(DSL.val(ctx.value(), SQLDataType.BLOB));
+        if (ctx.render().paramType() == ParamType.INLINED)
+            ctx.render().visit(DSL.inline(ctx.convert(converter()).value(), SQLDataType.BLOB));
+        else
+            ctx.render().sql(ctx.variable());
     }
 
     @Override
@@ -134,6 +138,9 @@ public class BlobBinding implements Binding<byte[], byte[]> {
     }
 
     static final Blob newBlob(ResourceManagingScope scope, byte[] bytes, Connection connection) throws SQLException {
+        if (bytes == null)
+            return null;
+
         Blob blob;
 
         switch (scope.dialect()) {

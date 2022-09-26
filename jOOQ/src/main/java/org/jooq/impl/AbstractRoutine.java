@@ -66,12 +66,14 @@ import static org.jooq.impl.Keywords.K_CASE;
 import static org.jooq.impl.Keywords.K_COLUMNS;
 import static org.jooq.impl.Keywords.K_DECLARE;
 import static org.jooq.impl.Keywords.K_END;
+import static org.jooq.impl.Keywords.K_END_IF;
 import static org.jooq.impl.Keywords.K_END_LOOP;
 import static org.jooq.impl.Keywords.K_FALSE;
 import static org.jooq.impl.Keywords.K_FIRST;
 import static org.jooq.impl.Keywords.K_FOR;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_FUNCTION;
+import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_IN;
 import static org.jooq.impl.Keywords.K_IS;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
@@ -1088,6 +1090,12 @@ implements
         else
             context.sql("{ ");
     }
+
+
+
+
+
+
 
 
 

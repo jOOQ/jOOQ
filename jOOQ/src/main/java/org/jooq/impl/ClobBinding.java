@@ -59,6 +59,7 @@ import org.jooq.Converters;
 import org.jooq.ResourceManagingScope;
 import org.jooq.Scope;
 import org.jooq.Source;
+import org.jooq.conf.ParamType;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 // ...
@@ -81,7 +82,10 @@ public class ClobBinding implements Binding<String, String> {
 
     @Override
     public final void sql(BindingSQLContext<String> ctx) throws SQLException {
-        ctx.render().visit(DSL.val(ctx.value(), SQLDataType.CLOB));
+        if (ctx.render().paramType() == ParamType.INLINED)
+            ctx.render().visit(DSL.inline(ctx.convert(converter()).value(), SQLDataType.CLOB));
+        else
+            ctx.render().sql(ctx.variable());
     }
 
     @Override
@@ -154,6 +158,9 @@ public class ClobBinding implements Binding<String, String> {
     }
 
     static final Clob newClob(ResourceManagingScope scope, String string) throws SQLException {
+        if (string == null)
+            return null;
+
         Clob clob;
 
         switch (scope.dialect()) {

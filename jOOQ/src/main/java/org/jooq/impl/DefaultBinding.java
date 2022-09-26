@@ -703,7 +703,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
         final DataType<T>            dataType;
-        final ContextConverter<T, U>  converter;
+        final ContextConverter<T, U> converter;
         final boolean                attachable;
 
         InternalBinding(DataType<T> dataType, Converter<T, U> converter) {
@@ -4309,7 +4309,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, String value) throws SQLException {
-
 
 
 

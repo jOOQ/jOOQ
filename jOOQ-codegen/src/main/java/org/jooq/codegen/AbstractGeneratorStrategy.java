@@ -77,14 +77,14 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     @Override
     public final File getFileRoot() {
         String dir = getTargetDirectory();
-        String pkg = getTargetPackage().replaceAll("\\.", "/");
+        String pkg = patchPackageName(getTargetPackage().replaceAll("\\.", "/"));
         return new File(dir + "/" + pkg);
     }
 
     @Override
     public final File getGlobalReferencesFile(Definition container, Class<? extends Definition> objectType) {
         String dir = getTargetDirectory();
-        String pkg = getGlobalReferencesJavaPackageName(container, objectType).replaceAll("\\.", "/");
+        String pkg = patchPackageName(getGlobalReferencesJavaPackageName(container, objectType).replaceAll("\\.", "/"));
         return new File(dir + "/" + pkg, getGlobalReferencesFileName(container, objectType));
     }
 
@@ -96,15 +96,29 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     @Override
     public final File getFile(Definition definition, Mode mode) {
         String dir = getTargetDirectory();
-        String pkg = getJavaPackageName(definition, mode).replaceAll("\\.", "/");
+        String pkg = patchPackageName(getJavaPackageName(definition, mode).replaceAll("\\.", "/"));
         return new File(dir + "/" + pkg, getFileName(definition, mode));
     }
 
     @Override
     public final File getFile(String fileName) {
         String dir = getTargetDirectory();
-        String pkg = getTargetPackage().replaceAll("\\.", "/");
+        String pkg = patchPackageName(getTargetPackage().replaceAll("\\.", "/"));
         return new File(dir + "/" + pkg, fileName);
+    }
+
+    private final String patchPackageName(String pkg) {
+        // [#13866] Backticks that were used to escape identifiers conflicting
+        //          with keywords shouldn't appear in file names.
+        switch (getTargetLanguage()) {
+            case KOTLIN:
+            case SCALA:
+                if (pkg.contains("`"))
+                    pkg = pkg.replaceAll("`([^`]+)`", "$1");
+
+                break;
+        }
+        return pkg;
     }
 
     @Override

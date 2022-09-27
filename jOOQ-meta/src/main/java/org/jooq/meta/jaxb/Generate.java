@@ -418,7 +418,7 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate deprecation annotations on references to unknown data types.
-     * This helps identifying columns, attributes, and parameters, which may not be usable through
+     * This helps to identify columns, attributes, and parameters, which may not be usable through
      * jOOQ API, without adding custom data type bindings to them.
      * 
      * @return

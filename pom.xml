@@ -40,7 +40,7 @@
         <javax.activation.version>1.2.0</javax.activation.version>
 
         <!-- Scala versions -->
-        <scala.version>2.13.6</scala.version>
+        <scala.version>2.13.9</scala.version>
 
         <!-- Kotlin versions -->
         <kotlin.version>1.5.21</kotlin.version>

@@ -46,6 +46,7 @@ public class CustomType implements Serializable, XMLAppendable
     protected Boolean auditUpdateUser;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String converter;
+    protected Boolean autoConverter;
     protected Boolean enumConverter;
     protected Boolean xmlConverter;
     protected Boolean jsonConverter;
@@ -256,6 +257,32 @@ public class CustomType implements Serializable, XMLAppendable
      *     
      */
     @Deprecated
+    public Boolean isAutoConverter() {
+        return autoConverter;
+    }
+
+    /**
+     * Sets the value of the autoConverter property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public void setAutoConverter(Boolean value) {
+        this.autoConverter = value;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
     public Boolean isEnumConverter() {
         return enumConverter;
     }
@@ -431,6 +458,11 @@ public class CustomType implements Serializable, XMLAppendable
         return this;
     }
 
+    public CustomType withAutoConverter(Boolean value) {
+        setAutoConverter(value);
+        return this;
+    }
+
     public CustomType withEnumConverter(Boolean value) {
         setEnumConverter(value);
         return this;
@@ -477,6 +509,7 @@ public class CustomType implements Serializable, XMLAppendable
         builder.append("auditUpdateTimestamp", auditUpdateTimestamp);
         builder.append("auditUpdateUser", auditUpdateUser);
         builder.append("converter", converter);
+        builder.append("autoConverter", autoConverter);
         builder.append("enumConverter", enumConverter);
         builder.append("xmlConverter", xmlConverter);
         builder.append("jsonConverter", jsonConverter);
@@ -584,6 +617,15 @@ public class CustomType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (autoConverter == null) {
+            if (other.autoConverter!= null) {
+                return false;
+            }
+        } else {
+            if (!autoConverter.equals(other.autoConverter)) {
+                return false;
+            }
+        }
         if (enumConverter == null) {
             if (other.enumConverter!= null) {
                 return false;
@@ -645,6 +687,7 @@ public class CustomType implements Serializable, XMLAppendable
         result = ((prime*result)+((auditUpdateTimestamp == null)? 0 :auditUpdateTimestamp.hashCode()));
         result = ((prime*result)+((auditUpdateUser == null)? 0 :auditUpdateUser.hashCode()));
         result = ((prime*result)+((converter == null)? 0 :converter.hashCode()));
+        result = ((prime*result)+((autoConverter == null)? 0 :autoConverter.hashCode()));
         result = ((prime*result)+((enumConverter == null)? 0 :enumConverter.hashCode()));
         result = ((prime*result)+((xmlConverter == null)? 0 :xmlConverter.hashCode()));
         result = ((prime*result)+((jsonConverter == null)? 0 :jsonConverter.hashCode()));

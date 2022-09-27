@@ -46,6 +46,7 @@ public class ForcedType implements Serializable, XMLAppendable
     protected Boolean auditUpdateUser;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String converter;
+    protected Boolean autoConverter;
     protected Boolean enumConverter;
     protected Boolean xmlConverter;
     protected Boolean jsonConverter;
@@ -303,6 +304,30 @@ public class ForcedType implements Serializable, XMLAppendable
      */
     public void setConverter(String value) {
         this.converter = value;
+    }
+
+    /**
+     * Whether the converter is an {@link org.jooq.impl.AutoConverter}.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isAutoConverter() {
+        return autoConverter;
+    }
+
+    /**
+     * Sets the value of the autoConverter property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setAutoConverter(Boolean value) {
+        this.autoConverter = value;
     }
 
     /**
@@ -668,6 +693,11 @@ public class ForcedType implements Serializable, XMLAppendable
         return this;
     }
 
+    public ForcedType withAutoConverter(Boolean value) {
+        setAutoConverter(value);
+        return this;
+    }
+
     public ForcedType withEnumConverter(Boolean value) {
         setEnumConverter(value);
         return this;
@@ -810,6 +840,7 @@ public class ForcedType implements Serializable, XMLAppendable
         builder.append("auditUpdateTimestamp", auditUpdateTimestamp);
         builder.append("auditUpdateUser", auditUpdateUser);
         builder.append("converter", converter);
+        builder.append("autoConverter", autoConverter);
         builder.append("enumConverter", enumConverter);
         builder.append("xmlConverter", xmlConverter);
         builder.append("jsonConverter", jsonConverter);
@@ -933,6 +964,15 @@ public class ForcedType implements Serializable, XMLAppendable
             }
         } else {
             if (!converter.equals(other.converter)) {
+                return false;
+            }
+        }
+        if (autoConverter == null) {
+            if (other.autoConverter!= null) {
+                return false;
+            }
+        } else {
+            if (!autoConverter.equals(other.autoConverter)) {
                 return false;
             }
         }
@@ -1088,6 +1128,7 @@ public class ForcedType implements Serializable, XMLAppendable
         result = ((prime*result)+((auditUpdateTimestamp == null)? 0 :auditUpdateTimestamp.hashCode()));
         result = ((prime*result)+((auditUpdateUser == null)? 0 :auditUpdateUser.hashCode()));
         result = ((prime*result)+((converter == null)? 0 :converter.hashCode()));
+        result = ((prime*result)+((autoConverter == null)? 0 :autoConverter.hashCode()));
         result = ((prime*result)+((enumConverter == null)? 0 :enumConverter.hashCode()));
         result = ((prime*result)+((xmlConverter == null)? 0 :xmlConverter.hashCode()));
         result = ((prime*result)+((jsonConverter == null)? 0 :jsonConverter.hashCode()));

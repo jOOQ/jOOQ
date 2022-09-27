@@ -1542,15 +1542,16 @@ public abstract class AbstractDatabase implements Database {
                     && !TRUE.equals(type.isAuditUpdateTimestamp())
                     && !TRUE.equals(type.isAuditUpdateUser())
                     && type.getVisibilityModifier() == null
+                    && !Boolean.TRUE.equals(type.isAutoConverter())
                     && !Boolean.TRUE.equals(type.isEnumConverter())
                     && !Boolean.TRUE.equals(type.isXmlConverter())
                     && !Boolean.TRUE.equals(type.isJsonConverter())
                     && type.getLambdaConverter() == null
                 ) {
-                    log.warn("Bad configuration for <forcedType/>. Either <binding/>, <converter/>, <enumConverter/>, <xmlConverter/>, <jsonConverter/>, <lambdaConverter/>, or <generator/> is required: " + type);
+                    type.setAutoConverter(true);
 
-                    it2.remove();
-                    continue;
+                    if (log.isDebugEnabled())
+                        log.debug("<autoConverter/> is implicit for <forcedType/>: " + type);
                 }
             }
             else {
@@ -1565,6 +1566,10 @@ public abstract class AbstractDatabase implements Database {
                 if (!StringUtils.isBlank(type.getConverter())) {
                     log.warn("Bad configuration for <forcedType/>. <converter/> is not allowed when <name/> is provided: " + type);
                     type.setConverter(null);
+                }
+                if (Boolean.TRUE.equals(type.isAutoConverter())) {
+                    log.warn("Bad configuration for <forcedType/>. <autoConverter/> is not allowed when <name/> is provided: " + type);
+                    type.setEnumConverter(null);
                 }
                 if (Boolean.TRUE.equals(type.isEnumConverter())) {
                     log.warn("Bad configuration for <forcedType/>. <enumConverter/> is not allowed when <name/> is provided: " + type);

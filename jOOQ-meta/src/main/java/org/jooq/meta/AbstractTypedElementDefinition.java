@@ -58,6 +58,7 @@ import org.jooq.Name;
 // ...
 import org.jooq.exception.SQLDialectNotSupportedException;
 // ...
+import org.jooq.impl.AutoConverter;
 import org.jooq.impl.DateAsTimestampBinding;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.EnumConverter;
@@ -243,14 +244,21 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
 
 
 
-                // [#5877] [#6567] EnumConverters profit from simplified configuration
-                if (TRUE.equals(customType.isEnumConverter()) ||
+                // [#13791] AutoConverters profit from simplified configuration
+                if (TRUE.equals(customType.isAutoConverter()) ||
+                    AutoConverter.class.getName().equals(customType.getConverter())) {
+                    String tType = tType(db, resolver, definedType);
+                    converter = resolver.constructorCall(AutoConverter.class.getName() + "<" + resolver.ref(tType) + ", " + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(tType) + ", " + resolver.classLiteral(uType) + ")";
+                }
+
+                // [#5877] [#6567] ... so do EnumConverters
+                else if (TRUE.equals(customType.isEnumConverter()) ||
                     EnumConverter.class.getName().equals(customType.getConverter())) {
                     String tType = tType(db, resolver, definedType);
                     converter = resolver.constructorCall(EnumConverter.class.getName() + "<" + resolver.ref(tType) + ", " + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(tType) + ", " + resolver.classLiteral(uType) + ")";
                 }
 
-                // [#13607] So do XML and JSON converters
+                // [#13607] ... so do XML and JSON converters
                 else if (TRUE.equals(customType.isXmlConverter()) ||
                     XMLtoJAXBConverter.class.getName().equals(customType.getConverter())) {
                     converter = resolver.constructorCall(XMLtoJAXBConverter.class.getName() + "<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
@@ -407,6 +415,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
         else {
             return new CustomType()
                 .withBinding(forcedType.getBinding())
+                .withAutoConverter(forcedType.isAutoConverter())
                 .withEnumConverter(forcedType.isEnumConverter())
                 .withXmlConverter(forcedType.isXmlConverter())
                 .withJsonConverter(forcedType.isJsonConverter())

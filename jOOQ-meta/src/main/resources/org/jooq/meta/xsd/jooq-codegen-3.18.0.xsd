@@ -1960,7 +1960,7 @@ This flag allows for turning off this default behaviour.]]></jxb:javadoc></jxb:p
 
       <element name="deprecationOnUnknownTypes" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate deprecation annotations on references to unknown data types.
-This helps identifying columns, attributes, and parameters, which may not be usable through
+This helps to identify columns, attributes, and parameters, which may not be usable through
 jOOQ API, without adding custom data type bindings to them.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 

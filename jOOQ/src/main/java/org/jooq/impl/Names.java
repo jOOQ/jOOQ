@@ -183,6 +183,7 @@ final class Names {
     static final Name N_JSON_EXTRACT           = systemName("json_extract");
     static final Name N_JSON_GROUP_ARRAY       = systemName("json_group_array");
     static final Name N_JSON_GROUP_OBJECT      = systemName("json_group_object");
+    static final Name N_JSON_KEYS              = systemName("json_keys");
     static final Name N_JSON_MERGE             = systemName("json_merge");
     static final Name N_JSON_MERGE_PRESERVE    = systemName("json_merge_preserve");
     static final Name N_JSON_MODIFY            = systemName("json_modify");

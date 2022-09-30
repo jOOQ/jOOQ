@@ -207,6 +207,31 @@ implements
                 break;
             }
 
+            case MYSQL: {
+
+                // [#13249] ABSENT ON NULL emulation using JSON_TABLE
+                if (onNull == JSONOnNull.ABSENT_ON_NULL) {
+                    Field<String> k = DSL.field(name("jt", "k"), VARCHAR);
+                    Field<JSON> o = DSL.field(name("j", "o"), JSON);
+
+                    ctx.visit(DSL.field(
+                        select(DSL.coalesce(
+                            DSL.jsonObjectAgg(k, DSL.function(N_JSON_EXTRACT, JSON, o, DSL.concat(inline("$.\""), k, inline("\"")))),
+                            DSL.jsonObject()))
+                        .from(
+                            select(CustomField.of("o", JSON, c -> acceptStandard(c)).as(o)).asTable("j"),
+                            jsonTable(function(N_JSON_KEYS, JSON, o), inline("$[*]"))
+                                .column("k", VARCHAR).path("$")
+                                .asTable("jt"))
+                        .where(DSL.function(N_JSON_EXTRACT, JSON, o, DSL.concat(inline("$.\""), k, inline("\""))).ne(DSL.inline("null").cast(JSON)))
+                    ));
+                }
+                else
+                    acceptStandard(ctx);
+
+                break;
+            }
+
             default:
                 acceptStandard(ctx);
                 break;

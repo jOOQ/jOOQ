@@ -29,7 +29,7 @@
         <!-- JDBC drivers for jOOQ-xyz-extensions modules and vendor-specific API access -->
         <postgres.version>42.4.1</postgres.version>
         <sqlserver.version>10.2.0.jre11</sqlserver.version>
-        <oracle.version>21.5.0.0</oracle.version>
+        <oracle.version>21.7.0.0</oracle.version>
 
         <!-- R2DBC SPI version and some matching driver versions -->
         <io.r2dbc.version>0.9.1.RELEASE</io.r2dbc.version>

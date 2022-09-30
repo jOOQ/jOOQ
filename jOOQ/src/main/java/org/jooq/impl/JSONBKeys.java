@@ -105,6 +105,14 @@ implements
                 ctx.visit(DSL.field(select(DSL.coalesce(jsonbArrayAgg(DSL.field(unquotedName("j"))), jsonbArray())).from("jsonb_object_keys({0}) as j(j)", field)));
                 break;
 
+
+
+
+
+
+
+
+
             case SQLITE:
                 ctx.visit(DSL.field(select(jsonbArrayAgg(DSL.field(name("key")))).from("json_each({0})", field)));
                 break;

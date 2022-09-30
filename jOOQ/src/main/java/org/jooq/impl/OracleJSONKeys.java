@@ -37,33 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.CommonTableExpressionList.markTopLevelCteAndAccept;
-import static org.jooq.impl.Tools.SimpleDataKey.DATA_TOP_LEVEL_CTE;
-
-import java.util.function.Predicate;
-import java.util.function.Supplier;
-
-import org.jooq.Context;
-// ...
-import org.jooq.QueryPart;
-import org.jooq.impl.ScopeMarker.ScopeContent;
-
-/**
- * [#3607] [#8522] CTEs that need to be added to the top level CTE section.
- */
-final class TopLevelCte extends QueryPartList<QueryPart> implements ScopeContent {
-
-    boolean recursive;
-
-    @Override
-    public void accept(Context<?> ctx) {
-        markTopLevelCteAndAccept(ctx, c -> super.accept(c));
-    }
-
-    @Override
-    public final boolean declaresCTE() {
-        return true;
-    }
 
 
 
@@ -86,4 +59,24 @@ final class TopLevelCte extends QueryPartList<QueryPart> implements ScopeContent
 
 
 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -98,6 +98,11 @@ implements
             case YUGABYTEDB:
                 return false;
 
+
+
+
+
+
             case SQLITE:
                 return false;
 
@@ -121,6 +126,14 @@ implements
             case YUGABYTEDB:
                 ctx.visit(DSL.field(select(DSL.coalesce(jsonArrayAgg(DSL.field(unquotedName("j"))), jsonArray())).from("json_object_keys({0}) as j(j)", field)));
                 break;
+
+
+
+
+
+
+
+
 
             case SQLITE:
                 ctx.visit(DSL.field(select(jsonArrayAgg(DSL.field(name("key")))).from("json_each({0})", field)));

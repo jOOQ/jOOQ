@@ -8428,6 +8428,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if ((field = parseFieldJSONLiteralIf()) != null)
                     return field;
+                else if (parseFunctionNameIf("JSON_KEYS"))
+                    return parseFunctionArgs1(DSL::jsonKeys);
                 else if (parseFunctionNameIf("JSON_INSERT"))
                     return parseFunctionArgs3(DSL::jsonInsert);
                 else if (parseFunctionNameIf("JSON_REMOVE"))
@@ -8436,6 +8438,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs3(DSL::jsonReplace);
                 else if (parseFunctionNameIf("JSON_SET"))
                     return parseFunctionArgs3(DSL::jsonSet);
+                else if (parseFunctionNameIf("JSONB_KEYS"))
+                    return parseFunctionArgs1(DSL::jsonbKeys);
                 else if (parseFunctionNameIf("JSONB_INSERT"))
                     return parseFunctionArgs3(DSL::jsonbInsert);
                 else if (parseFunctionNameIf("JSONB_REMOVE"))

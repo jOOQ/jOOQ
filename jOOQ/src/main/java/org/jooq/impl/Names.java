@@ -183,7 +183,6 @@ final class Names {
     static final Name N_JSON_EXTRACT           = systemName("json_extract");
     static final Name N_JSON_GROUP_ARRAY       = systemName("json_group_array");
     static final Name N_JSON_GROUP_OBJECT      = systemName("json_group_object");
-    static final Name N_JSON_KEYS              = systemName("json_keys");
     static final Name N_JSON_MERGE             = systemName("json_merge");
     static final Name N_JSON_MERGE_PRESERVE    = systemName("json_merge_preserve");
     static final Name N_JSON_MODIFY            = systemName("json_modify");
@@ -399,6 +398,7 @@ final class Names {
     static final Name N_JSONB_GET_ELEMENT      = systemName("jsonb_get_element");
     static final Name N_JSONB_GET_ELEMENT_AS_TEXT= systemName("jsonb_get_element_as_text");
     static final Name N_JSONB_INSERT           = systemName("jsonb_insert");
+    static final Name N_JSONB_KEYS             = systemName("jsonb_keys");
     static final Name N_JSONB_OBJECT           = systemName("jsonb_object");
     static final Name N_JSONB_REMOVE           = systemName("jsonb_remove");
     static final Name N_JSONB_REPLACE          = systemName("jsonb_replace");
@@ -409,6 +409,7 @@ final class Names {
     static final Name N_JSON_GET_ELEMENT       = systemName("json_get_element");
     static final Name N_JSON_GET_ELEMENT_AS_TEXT= systemName("json_get_element_as_text");
     static final Name N_JSON_INSERT            = systemName("json_insert");
+    static final Name N_JSON_KEYS              = systemName("json_keys");
     static final Name N_JSON_OBJECT            = systemName("json_object");
     static final Name N_JSON_REMOVE            = systemName("json_remove");
     static final Name N_JSON_REPLACE           = systemName("json_replace");

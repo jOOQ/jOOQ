@@ -4686,6 +4686,36 @@ public final class QOM {
     }
 
     /**
+     * The <code>JSON KEYS</code> function.
+     * <p>
+     * Retrieve all keys from a JSON object as an array of strings.
+     */
+    public /*sealed*/ interface JSONKeys
+        extends
+            org.jooq.Field<JSON>
+        //permits
+        //    JSONKeys
+    {
+        @NotNull  Field<JSON> $field();
+        @NotNull  JSONKeys $field(Field<JSON> field);
+    }
+
+    /**
+     * The <code>JSONB KEYS</code> function.
+     * <p>
+     * Retrieve all keys from a JSONB object as an array of strings.
+     */
+    public /*sealed*/ interface JSONBKeys
+        extends
+            org.jooq.Field<JSONB>
+        //permits
+        //    JSONBKeys
+    {
+        @NotNull  Field<JSONB> $field();
+        @NotNull  JSONBKeys $field(Field<JSONB> field);
+    }
+
+    /**
      * The <code>JSON SET</code> function.
      * <p>
      * Add or replace a JSON value to a JSON field at a given path.

@@ -20630,6 +20630,54 @@ public class DSL {
     }
 
     /**
+     * The <code>JSON_KEYS</code> function.
+     * <p>
+     * Retrieve all keys from a JSON object as an array of strings.
+     *
+     * @param field is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSON> jsonKeys(JSON field) {
+        return new JSONKeys(Tools.field(field));
+    }
+
+    /**
+     * The <code>JSON_KEYS</code> function.
+     * <p>
+     * Retrieve all keys from a JSON object as an array of strings.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSON> jsonKeys(Field<JSON> field) {
+        return new JSONKeys(field);
+    }
+
+    /**
+     * The <code>JSONB_KEYS</code> function.
+     * <p>
+     * Retrieve all keys from a JSONB object as an array of strings.
+     *
+     * @param field is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSONB> jsonbKeys(JSONB field) {
+        return new JSONBKeys(Tools.field(field));
+    }
+
+    /**
+     * The <code>JSONB_KEYS</code> function.
+     * <p>
+     * Retrieve all keys from a JSONB object as an array of strings.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<JSONB> jsonbKeys(Field<JSONB> field) {
+        return new JSONBKeys(field);
+    }
+
+    /**
      * The <code>JSON_SET</code> function.
      * <p>
      * Add or replace a JSON value to a JSON field at a given path.

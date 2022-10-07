@@ -4240,31 +4240,41 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, String value) throws SQLException {
 
+            // [#6516] The below heuristics work for UTF-32 and UTF-8
+            //         future UTF encodings which may use more bytes per
+            //         character are not handled here, yet.
+            if (ctx.family() == DERBY)
+                sqlInlineWorkaround6516(ctx, value, 8192, "");
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            super.sqlInline0(ctx, value);
+            else
+                super.sqlInline0(ctx, value);
         }
+
+        private final void sqlInlineWorkaround6516(BindingSQLContext<U> ctx, String value, int limit, String prefix) throws SQLException {
+            int l = value.length();
+
+            if (l > limit) {
+                ctx.render().sql('(');
+
+                for (int i = 0; i < l; i += limit) {
+                    if (i > 0)
+                        ctx.render().sql(" || ");
+
+                    ctx.render().sql(prefix).sql("(");
+                    super.sqlInline0(ctx, value.substring(i, Math.min(l, i + limit)));
+                    ctx.render().sql(')');
+                }
+
+                ctx.render().sql(')');
+            }
+            else
+                super.sqlInline0(ctx, value);
+        }
+
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, String value) throws SQLException {

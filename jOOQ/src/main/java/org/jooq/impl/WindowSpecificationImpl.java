@@ -94,6 +94,7 @@ import java.util.function.Predicate;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
+import org.jooq.GroupField;
 import org.jooq.OrderField;
 // ...
 import org.jooq.QueryPart;
@@ -410,12 +411,12 @@ implements
     }
 
     @Override
-    public final WindowSpecificationPartitionByStep partitionBy(Field<?>... fields) {
+    public final WindowSpecificationPartitionByStep partitionBy(GroupField... fields) {
         return partitionBy(Arrays.asList(fields));
     }
 
     @Override
-    public final WindowSpecificationPartitionByStep partitionBy(Collection<? extends Field<?>> fields) {
+    public final WindowSpecificationPartitionByStep partitionBy(Collection<? extends GroupField> fields) {
         partitionBy.addAll(fields);
         return this;
     }

@@ -12101,8 +12101,8 @@ public class DSL {
      * It can also be useful for other, similar clauses, e.g. when passing
      * optional expressions to window function clauses, such as:
      * <ul>
-     * <li>{@link DSL#partitionBy(Field...)}</li>
-     * <li>{@link DSL#orderBy(Field...)}</li>
+     * <li>{@link DSL#partitionBy(GroupField...)}</li>
+     * <li>{@link DSL#orderBy(OrderField...)}</li>
      * </ul>
      * In clauses that project fields to a given {@link Record} type, the
      * {@link #noField()} simply projects <code>NULL</code> and cannot be used
@@ -12131,8 +12131,8 @@ public class DSL {
      * It can also be useful for other, similar clauses, e.g. when passing
      * optional expressions to window function clauses, such as:
      * <ul>
-     * <li>{@link DSL#partitionBy(Field...)}</li>
-     * <li>{@link DSL#orderBy(Field...)}</li>
+     * <li>{@link DSL#partitionBy(GroupField...)}</li>
+     * <li>{@link DSL#orderBy(OrderField...)}</li>
      * </ul>
      * In clauses that project fields to a given {@link Record} type, the
      * {@link #noField()} simply projects <code>NULL</code> and cannot be used
@@ -12163,8 +12163,8 @@ public class DSL {
      * It can also be useful for other, similar clauses, e.g. when passing
      * optional expressions to window function clauses, such as:
      * <ul>
-     * <li>{@link DSL#partitionBy(Field...)}</li>
-     * <li>{@link DSL#orderBy(Field...)}</li>
+     * <li>{@link DSL#partitionBy(GroupField...)}</li>
+     * <li>{@link DSL#orderBy(OrderField...)}</li>
      * </ul>
      * In clauses that project fields to a given {@link Record} type, the
      * {@link #noField()} simply projects <code>NULL</code> and cannot be used
@@ -12195,8 +12195,8 @@ public class DSL {
      * It can also be useful for other, similar clauses, e.g. when passing
      * optional expressions to window function clauses, such as:
      * <ul>
-     * <li>{@link DSL#partitionBy(Field...)}</li>
-     * <li>{@link DSL#orderBy(Field...)}</li>
+     * <li>{@link DSL#partitionBy(GroupField...)}</li>
+     * <li>{@link DSL#orderBy(OrderField...)}</li>
      * </ul>
      * In clauses that project fields to a given {@link Record} type, the
      * {@link #noField()} simply projects <code>NULL</code> and cannot be used
@@ -28854,7 +28854,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static WindowSpecificationOrderByStep partitionBy(Field<?>... fields) {
+    public static WindowSpecificationOrderByStep partitionBy(GroupField... fields) {
         return new WindowSpecificationImpl().partitionBy(fields);
     }
 
@@ -28863,7 +28863,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static WindowSpecificationOrderByStep partitionBy(Collection<? extends Field<?>> fields) {
+    public static WindowSpecificationOrderByStep partitionBy(Collection<? extends GroupField> fields) {
         return new WindowSpecificationImpl().partitionBy(fields);
     }
 

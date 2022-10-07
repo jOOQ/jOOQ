@@ -63,7 +63,7 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  *    .andCurrentRow();
  * </code></pre>
  * <p>
- * Instances can be created using {@link DSL#partitionBy(Field...)},
+ * Instances can be created using {@link DSL#partitionBy(GroupField...)},
  * {@link DSL#orderBy(OrderField...)}, and overloads as well as rows / range /
  * groups related methods in {@link DSL}.
  *
@@ -87,7 +87,7 @@ public interface WindowSpecification extends QueryPart {
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
-    @NotNull UnmodifiableList<? extends Field<?>> $partitionBy();
+    @NotNull UnmodifiableList<? extends GroupField> $partitionBy();
 
     /**
      * Experimental query object model accessor method, see also {@link QOM}.

@@ -61,6 +61,7 @@ import java.util.Set;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.GroupField;
 import org.jooq.Name;
 import org.jooq.OrderField;
 // ...
@@ -345,13 +346,13 @@ implements
     }
 
     @Override
-    public final WindowOrderByStep<T> partitionBy(Field<?>... fields) {
+    public final WindowOrderByStep<T> partitionBy(GroupField... fields) {
         windowSpecification.partitionBy(fields);
         return this;
     }
 
     @Override
-    public final WindowOrderByStep<T> partitionBy(Collection<? extends Field<?>> fields) {
+    public final WindowOrderByStep<T> partitionBy(Collection<? extends GroupField> fields) {
         windowSpecification.partitionBy(fields);
         return this;
     }

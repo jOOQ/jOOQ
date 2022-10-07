@@ -50,6 +50,7 @@ import java.util.function.Predicate;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
+import org.jooq.GroupField;
 import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.QueryPart;
@@ -329,7 +330,7 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
     }
 
     @Override
-    public final UnmodifiableList<? extends Field<?>> $partitionBy() {
+    public final UnmodifiableList<? extends GroupField> $partitionBy() {
         return QOM.unmodifiable($windowSpecification() == null ? new QueryPartList<>() : $windowSpecification().$partitionBy());
     }
 

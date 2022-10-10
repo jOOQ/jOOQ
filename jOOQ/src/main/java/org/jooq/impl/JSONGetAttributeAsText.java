@@ -125,6 +125,9 @@ implements
 
             case MARIADB:
             case MYSQL:
+                ctx.visit(function(N_JSON_UNQUOTE, JSON, DSL.nullif(function(N_JSON_EXTRACT, JSON, field, inline("$.").concat(attribute)), inline("null").cast(JSON))));
+                break;
+
             case SQLITE:
                 ctx.visit(function(N_JSON_EXTRACT, JSON, field, inline("$.").concat(attribute)));
                 break;

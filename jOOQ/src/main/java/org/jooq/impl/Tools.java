@@ -123,6 +123,7 @@ import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultParseContext.SUPPORTS_HASH_COMMENT_SYNTAX;
+import static org.jooq.impl.DerivedTable.NO_SUPPORT_CORRELATED_DERIVED_TABLE;
 import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
@@ -279,6 +280,9 @@ import org.jooq.FieldOrRow;
 import org.jooq.FieldOrRowOrSelect;
 import org.jooq.Fields;
 import org.jooq.ForeignKey;
+import org.jooq.Function1;
+import org.jooq.Function2;
+import org.jooq.Function3;
 import org.jooq.Generator;
 import org.jooq.JSON;
 import org.jooq.JSONB;
@@ -308,6 +312,7 @@ import org.jooq.Scope;
 import org.jooq.ContextConverter;
 import org.jooq.Select;
 import org.jooq.SelectFieldOrAsterisk;
+import org.jooq.SelectJoinStep;
 import org.jooq.SortField;
 import org.jooq.Source;
 import org.jooq.Table;
@@ -7160,5 +7165,58 @@ final class Tools {
 
     static final ConverterContext converterContext(Configuration configuration) {
         return new DefaultConverterContext(configuration(configuration));
+    }
+
+    /**
+     * Wrap an expression in a derived table to allow for simplifying
+     * referencing it.
+     */
+    static final <T1, R> Field<R> derivedTable(
+        Context<?> ctx,
+        Field<T1> f1,
+        Function1<? super Field<T1>, ? extends Field<R>> f
+    ) {
+        if (derivedTableEnabled(ctx) && !isSimple(ctx, f1))
+            return DSL.field(select(f.apply(f1.as("f1"))).from(select(f1.as("f1")).asTable("t")));
+        else
+            return f.apply(f1);
+    }
+
+    /**
+     * Wrap expressions in a derived table to allow for simplifying referencing
+     * them.
+     */
+    static final <T1, T2, R> Field<R> derivedTable(
+        Context<?> ctx,
+        Field<T1> f1,
+        Field<T2> f2,
+        Function2<? super Field<T1>, ? super Field<T2>, ? extends Field<R>> f
+    ) {
+        if (derivedTableEnabled(ctx) && !isSimple(ctx, f1) && !isSimple(ctx, f2))
+            return DSL.field(select(f.apply(f1.as("f1"), f2.as("f2"))).from(select(f1.as("f1"), f2.as("f2")).asTable("t")));
+        else
+            return f.apply(f1, f2);
+    }
+
+    /**
+     * Wrap expressions in a derived table to allow for simplifying referencing
+     * them.
+     */
+    static final <T1, T2, T3, R> Field<R> derivedTable(
+        Context<?> ctx,
+        Field<T1> f1,
+        Field<T2> f2,
+        Field<T3> f3,
+        Function3<? super Field<T1>, ? super Field<T2>, ? super Field<T3>, ? extends Field<R>> f
+    ) {
+        if (derivedTableEnabled(ctx) && !isSimple(ctx, f1) && !isSimple(ctx, f2) && !isSimple(ctx, f3))
+            return DSL.field(select(f.apply(f1.as("f1"), f2.as("f2"), f3.as("f3"))).from(select(f1.as("f1"), f2.as("f2"), f3.as("f3")).asTable("t")));
+        else
+            return f.apply(f1, f2, f3);
+    }
+
+    private static boolean derivedTableEnabled(Context<?> ctx) {
+        return !FALSE.equals(ctx.settings().isRenderVariablesInDerivedTablesForEmulations())
+            && !NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect());
     }
 }

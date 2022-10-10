@@ -103,6 +103,8 @@ public class Settings
     protected Boolean renderGroupConcatMaxLenSessionVariable = true;
     @XmlElement(defaultValue = "false")
     protected Boolean renderParenthesisAroundSetOperationQueries = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean renderVariablesInDerivedTablesForEmulations = true;
     @XmlElement(defaultValue = ".")
     protected String namePathSeparator = ".";
     @XmlElement(defaultValue = "false")
@@ -1034,6 +1036,32 @@ public class Settings
      */
     public void setRenderParenthesisAroundSetOperationQueries(Boolean value) {
         this.renderParenthesisAroundSetOperationQueries = value;
+    }
+
+    /**
+     * Whether emulations that require repeating expressions should render variables for those expressions in derived tables.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/14065">https://github.com/jOOQ/jOOQ/issues/14065</a>.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRenderVariablesInDerivedTablesForEmulations() {
+        return renderVariablesInDerivedTablesForEmulations;
+    }
+
+    /**
+     * Sets the value of the renderVariablesInDerivedTablesForEmulations property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRenderVariablesInDerivedTablesForEmulations(Boolean value) {
+        this.renderVariablesInDerivedTablesForEmulations = value;
     }
 
     /**
@@ -4463,6 +4491,11 @@ public class Settings
         return this;
     }
 
+    public Settings withRenderVariablesInDerivedTablesForEmulations(Boolean value) {
+        setRenderVariablesInDerivedTablesForEmulations(value);
+        return this;
+    }
+
     /**
      * The character(s) to be used as a separator in paths encoded in a {@link Name}
      * <p>
@@ -5525,6 +5558,7 @@ public class Settings
         builder.append("renderOutputForSQLServerReturningClause", renderOutputForSQLServerReturningClause);
         builder.append("renderGroupConcatMaxLenSessionVariable", renderGroupConcatMaxLenSessionVariable);
         builder.append("renderParenthesisAroundSetOperationQueries", renderParenthesisAroundSetOperationQueries);
+        builder.append("renderVariablesInDerivedTablesForEmulations", renderVariablesInDerivedTablesForEmulations);
         builder.append("namePathSeparator", namePathSeparator);
         builder.append("bindOffsetDateTimeType", bindOffsetDateTimeType);
         builder.append("bindOffsetTimeType", bindOffsetTimeType);
@@ -5922,6 +5956,15 @@ public class Settings
             }
         } else {
             if (!renderParenthesisAroundSetOperationQueries.equals(other.renderParenthesisAroundSetOperationQueries)) {
+                return false;
+            }
+        }
+        if (renderVariablesInDerivedTablesForEmulations == null) {
+            if (other.renderVariablesInDerivedTablesForEmulations!= null) {
+                return false;
+            }
+        } else {
+            if (!renderVariablesInDerivedTablesForEmulations.equals(other.renderVariablesInDerivedTablesForEmulations)) {
                 return false;
             }
         }
@@ -7183,6 +7226,7 @@ public class Settings
         result = ((prime*result)+((renderOutputForSQLServerReturningClause == null)? 0 :renderOutputForSQLServerReturningClause.hashCode()));
         result = ((prime*result)+((renderGroupConcatMaxLenSessionVariable == null)? 0 :renderGroupConcatMaxLenSessionVariable.hashCode()));
         result = ((prime*result)+((renderParenthesisAroundSetOperationQueries == null)? 0 :renderParenthesisAroundSetOperationQueries.hashCode()));
+        result = ((prime*result)+((renderVariablesInDerivedTablesForEmulations == null)? 0 :renderVariablesInDerivedTablesForEmulations.hashCode()));
         result = ((prime*result)+((namePathSeparator == null)? 0 :namePathSeparator.hashCode()));
         result = ((prime*result)+((bindOffsetDateTimeType == null)? 0 :bindOffsetDateTimeType.hashCode()));
         result = ((prime*result)+((bindOffsetTimeType == null)? 0 :bindOffsetTimeType.hashCode()));

@@ -123,6 +123,7 @@ implements
 
 
 
+
             case MYSQL:
                 ctx.visit(function(N_JSON_UNQUOTE, JSON, DSL.nullif(function(N_JSON_EXTRACT, JSON, field, inline("$[").concat(index).concat(inline("]"))), inline("null").cast(JSON))));
                 break;

@@ -130,7 +130,6 @@ implements
 
             case MARIADB:
             case MYSQL:
-            case SQLITE:
                 ctx.visit(function(N_JSON_EXTRACT, JSON, field, inline("$.").concat(attribute)));
                 break;
 

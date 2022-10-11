@@ -5977,6 +5977,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+
     private final DDLQuery parseCreateDomain() {
         boolean ifNotExists = parseKeywordIf("IF NOT EXISTS");
         Domain<?> domainName = parseDomainName();

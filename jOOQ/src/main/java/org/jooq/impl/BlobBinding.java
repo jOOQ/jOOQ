@@ -37,11 +37,13 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Tools.asInt;
 
 import java.sql.Blob;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -97,10 +99,18 @@ public class BlobBinding implements Binding<byte[], byte[]> {
     public final void set(BindingSetStatementContext<byte[]> ctx) throws SQLException {
 
         // [#12964] We don't support the whole Blob API for R2DBC yet.
-        if (ctx.statement() instanceof R2DBCPreparedStatement)
+        if (ctx.statement() instanceof R2DBCPreparedStatement) {
             ctx.statement().setBytes(ctx.index(), ctx.value());
-        else
-            ctx.statement().setBlob(ctx.index(), newBlob(ctx, ctx.value(), ctx.statement().getConnection()));
+        }
+        else {
+            Blob blob = newBlob(ctx, ctx.value(), ctx.statement().getConnection());
+
+            // [#14067] Workaround for Firebird bug https://github.com/FirebirdSQL/jaybird/issues/712
+            if (blob == null && ctx.family() == FIREBIRD)
+                ctx.statement().setNull(ctx.index(), Types.BLOB);
+            else
+                ctx.statement().setBlob(ctx.index(), blob);
+        }
     }
 
     @Override

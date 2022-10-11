@@ -71,7 +71,7 @@ import org.jooq.impl.QOM.UEmpty;
 /**
  * @author Lukas Eder
  */
-final class TrueCondition extends AbstractCondition implements True, UEmpty {
+final class TrueCondition extends AbstractCondition implements True, UEmpty, SimpleQueryPart {
 
     private static final Clause[] CLAUSES            = { CONDITION, CONDITION_COMPARISON };
     static final TrueCondition    INSTANCE           = new TrueCondition();

@@ -112,7 +112,7 @@ import org.jooq.impl.QOM.UEmpty;
 /**
  * @author Lukas Eder
  */
-final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmpty {
+final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmpty, SimpleCheckQueryPart {
 
     private static final Clause[]        CLAUSES_TABLE_REFERENCE               = { TABLE, TABLE_REFERENCE };
     private static final Clause[]        CLAUSES_TABLE_ALIAS                   = { TABLE, TABLE_ALIAS };
@@ -146,6 +146,12 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
 
     final Q wrapped() {
         return wrapped;
+    }
+
+    @Override
+    public final boolean isSimple(Context<?> ctx) {
+        return wrapped instanceof Table && !ctx.declareTables()
+            || wrapped instanceof Field && !ctx.declareFields();
     }
 
     @Override

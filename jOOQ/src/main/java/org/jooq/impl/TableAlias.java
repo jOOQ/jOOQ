@@ -62,7 +62,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Lukas Eder
  */
-final class TableAlias<R extends Record> extends AbstractTable<R> implements QOM.TableAlias<R> {
+final class TableAlias<R extends Record> extends AbstractTable<R> implements QOM.TableAlias<R>, SimpleCheckQueryPart {
 
     final Alias<Table<R>>   alias;
     transient FieldsImpl<R> aliasedFields;
@@ -83,6 +83,11 @@ final class TableAlias<R extends Record> extends AbstractTable<R> implements QOM
         super(table.getOptions(), alias, table.getSchema());
 
         this.alias = new Alias<>(table, this, alias, fieldAliases, wrapInParentheses);
+    }
+
+    @Override
+    public final boolean isSimple(Context<?> ctx) {
+        return !ctx.declareTables();
     }
 
     /**

@@ -79,15 +79,17 @@ final class Decode<T, Z> extends AbstractField<Z> implements UNotYetImplemented 
     @Override
     public final void accept(Context<?> ctx) {
         if (EMULATE_DISTINCT.contains(ctx.dialect())) {
-            CaseConditionStep<Z> when = DSL.choose().when(field.isNotDistinctFrom(search), result);
+            ctx.visit(Tools.derivedTableIf(ctx, more.length > 1, field, f -> {
+                CaseConditionStep<Z> when = DSL.choose().when(f.isNotDistinctFrom(search), result);
 
-            for (int i = 0; i + 1 < more.length; i += 2)
-                when = when.when(field.isNotDistinctFrom((Field<T>) more[i]), (Field<Z>) more[i + 1]);
+                for (int i = 0; i + 1 < more.length; i += 2)
+                    when = when.when(f.isNotDistinctFrom((Field<T>) more[i]), (Field<Z>) more[i + 1]);
 
-            if (more.length % 2 == 0)
-                ctx.visit(when);
-            else
-                ctx.visit(when.otherwise((Field<Z>) more[more.length - 1]));
+                if (more.length % 2 == 0)
+                    return when;
+                else
+                    return when.otherwise((Field<Z>) more[more.length - 1]);
+            }));
         }
 
 

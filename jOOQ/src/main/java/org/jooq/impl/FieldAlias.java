@@ -52,7 +52,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Lukas Eder
  */
-final class FieldAlias<T> extends AbstractField<T> implements QOM.FieldAlias<T> {
+final class FieldAlias<T> extends AbstractField<T> implements QOM.FieldAlias<T>, SimpleCheckQueryPart {
 
     private final Alias<Field<T>> alias;
 
@@ -60,6 +60,11 @@ final class FieldAlias<T> extends AbstractField<T> implements QOM.FieldAlias<T> 
         super(alias, field.getDataType());
 
         this.alias = new Alias<>(field, this, alias);
+    }
+
+    @Override
+    public final boolean isSimple(Context<?> ctx) {
+        return !ctx.declareFields();
     }
 
     @Override

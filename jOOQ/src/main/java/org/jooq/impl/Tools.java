@@ -3721,7 +3721,8 @@ final class Tools {
     }
 
     static final boolean isSimple(Context<?> ctx, QueryPart part) {
-        return part instanceof SimpleQueryPart && ((SimpleQueryPart) part).isSimple(ctx);
+        return part instanceof SimpleQueryPart
+            || part instanceof SimpleCheckQueryPart && ((SimpleCheckQueryPart) part).isSimple(ctx);
     }
 
     static final boolean isSimple(Context<?> ctx, QueryPart... parts) {
@@ -7176,10 +7177,7 @@ final class Tools {
         Field<T1> f1,
         Function1<? super Field<T1>, ? extends Field<R>> f
     ) {
-        if (derivedTableEnabled(ctx) && !isSimple(ctx, f1))
-            return DSL.field(select(f.apply(f1.as("f1"))).from(select(f1.as("f1")).asTable("t")));
-        else
-            return f.apply(f1);
+        return derivedTableIf(ctx, true, f1, f);
     }
 
     /**
@@ -7192,10 +7190,7 @@ final class Tools {
         Field<T2> f2,
         Function2<? super Field<T1>, ? super Field<T2>, ? extends Field<R>> f
     ) {
-        if (derivedTableEnabled(ctx) && !isSimple(ctx, f1) && !isSimple(ctx, f2))
-            return DSL.field(select(f.apply(f1.as("f1"), f2.as("f2"))).from(select(f1.as("f1"), f2.as("f2")).asTable("t")));
-        else
-            return f.apply(f1, f2);
+        return derivedTableIf(ctx, true, f1, f2, f);
     }
 
     /**
@@ -7209,8 +7204,56 @@ final class Tools {
         Field<T3> f3,
         Function3<? super Field<T1>, ? super Field<T2>, ? super Field<T3>, ? extends Field<R>> f
     ) {
-        if (derivedTableEnabled(ctx) && !isSimple(ctx, f1) && !isSimple(ctx, f2) && !isSimple(ctx, f3))
-            return DSL.field(select(f.apply(f1.as("f1"), f2.as("f2"), f3.as("f3"))).from(select(f1.as("f1"), f2.as("f2"), f3.as("f3")).asTable("t")));
+        return derivedTableIf(ctx, true, f1, f2, f3, f);
+    }
+
+    /**
+     * Wrap an expression in a derived table to allow for simplifying
+     * referencing it.
+     */
+    static final <T1, R> Field<R> derivedTableIf(
+        Context<?> ctx,
+        boolean condition,
+        Field<T1> f1,
+        Function1<? super Field<T1>, ? extends Field<R>> f
+    ) {
+        if (condition && derivedTableEnabled(ctx) && !isSimple(ctx, f1))
+            return DSL.field(select(f.apply(DSL.field(name("f1"), f1.getDataType()))).from(select(f1.as("f1")).asTable("t")));
+        else
+            return f.apply(f1);
+    }
+
+    /**
+     * Wrap expressions in a derived table to allow for simplifying referencing
+     * them.
+     */
+    static final <T1, T2, R> Field<R> derivedTableIf(
+        Context<?> ctx,
+        boolean condition,
+        Field<T1> f1,
+        Field<T2> f2,
+        Function2<? super Field<T1>, ? super Field<T2>, ? extends Field<R>> f
+    ) {
+        if (condition && derivedTableEnabled(ctx) && !isSimple(ctx, f1) && !isSimple(ctx, f2))
+            return DSL.field(select(f.apply(DSL.field(name("f1"), f1.getDataType()), DSL.field(name("f2"), f2.getDataType()))).from(select(f1.as("f1"), f2.as("f2")).asTable("t")));
+        else
+            return f.apply(f1, f2);
+    }
+
+    /**
+     * Wrap expressions in a derived table to allow for simplifying referencing
+     * them.
+     */
+    static final <T1, T2, T3, R> Field<R> derivedTableIf(
+        Context<?> ctx,
+        boolean condition,
+        Field<T1> f1,
+        Field<T2> f2,
+        Field<T3> f3,
+        Function3<? super Field<T1>, ? super Field<T2>, ? super Field<T3>, ? extends Field<R>> f
+    ) {
+        if (condition && derivedTableEnabled(ctx) && !isSimple(ctx, f1) && !isSimple(ctx, f2) && !isSimple(ctx, f3))
+            return DSL.field(select(f.apply(DSL.field(name("f1"), f1.getDataType()), DSL.field(name("f2"), f2.getDataType()), DSL.field(name("f3"), f3.getDataType()))).from(select(f1.as("f1"), f2.as("f2"), f3.as("f3")).asTable("t")));
         else
             return f.apply(f1, f2, f3);
     }

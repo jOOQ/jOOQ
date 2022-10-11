@@ -37,16 +37,29 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Context;
+import org.jooq.OrderField;
+import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 
 /**
  * A marker interface for all query parts that are capable of generating
  * "simple" SQL. This information is used mainly for formatting decisions.
  * <p>
- * Unlike {@link SimpleCheckQueryPart}, this is always simple.
+ * Unlike {@link SimpleQueryPart}, which marks a {@link QueryPart} that is
+ * unconditionally simple, this allows for checking whether a {@link QueryPart}
+ * is {@link #isSimple(Context)}
  *
  * @author Lukas Eder
  */
-interface SimpleQueryPart extends QueryPartInternal {
+interface SimpleCheckQueryPart extends QueryPartInternal {
 
+    /**
+     * Whether the {@link QueryPart} really is simple.
+     * <p>
+     * e.g. an {@link OrderField} can be simple if its contents are also simple.
+     */
+    default boolean isSimple(Context<?> ctx) {
+        return true;
+    }
 }

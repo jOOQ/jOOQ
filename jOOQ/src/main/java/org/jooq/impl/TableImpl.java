@@ -133,7 +133,7 @@ extends
 implements
     ScopeMappable,
     ScopeNestable,
-    SimpleQueryPart,
+    SimpleCheckQueryPart,
     UNotYetImplemented
 {
 

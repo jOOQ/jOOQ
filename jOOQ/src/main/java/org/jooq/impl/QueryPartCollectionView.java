@@ -76,7 +76,7 @@ extends
     AbstractQueryPart
 implements
     UnmodifiableCollection<T>,
-    SimpleQueryPart,
+    SimpleCheckQueryPart,
     SeparatedQueryPart
 permits
 

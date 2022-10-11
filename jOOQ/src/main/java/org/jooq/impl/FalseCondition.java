@@ -51,7 +51,7 @@ import org.jooq.impl.QOM.UEmpty;
 /**
  * @author Lukas Eder
  */
-final class FalseCondition extends AbstractCondition implements False, UEmpty {
+final class FalseCondition extends AbstractCondition implements False, UEmpty, SimpleQueryPart {
 
     private static final Clause[] CLAUSES  = { CONDITION, CONDITION_COMPARISON };
     static final FalseCondition   INSTANCE = new FalseCondition();

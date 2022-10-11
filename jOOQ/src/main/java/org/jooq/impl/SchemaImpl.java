@@ -80,7 +80,7 @@ import org.jooq.tools.StringUtils;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-public class SchemaImpl extends AbstractNamed implements Schema {
+public class SchemaImpl extends AbstractNamed implements Schema, SimpleQueryPart {
 
     private static final Clause[] CLAUSES        = { SCHEMA, SCHEMA_REFERENCE };
     static final Schema           DEFAULT_SCHEMA = new SchemaImpl("");

@@ -57,7 +57,7 @@ import org.jooq.impl.QOM.UEmpty;
 /**
  * @author Lukas Eder
  */
-final class NullCondition extends AbstractCondition implements Null, UEmpty {
+final class NullCondition extends AbstractCondition implements Null, UEmpty, SimpleQueryPart {
 
     private static final Clause[] CLAUSES  = { CONDITION, CONDITION_COMPARISON };
     static final NullCondition    INSTANCE = new NullCondition();

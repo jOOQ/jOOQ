@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Tools.asInt;
@@ -95,7 +96,13 @@ public class ClobBinding implements Binding<String, String> {
 
     @Override
     public final void set(BindingSetStatementContext<String> ctx) throws SQLException {
-        ctx.statement().setClob(ctx.index(), newClob(ctx, ctx.value()));
+        Clob clob = newClob(ctx, ctx.value());
+
+        // [#14067] Workaround for Firebird bug https://github.com/FirebirdSQL/jaybird/issues/712
+        if (clob == null && ctx.family() == FIREBIRD)
+            ctx.statement().setNull(ctx.index(), Types.CLOB);
+        else
+            ctx.statement().setClob(ctx.index(), clob);
     }
 
     @Override

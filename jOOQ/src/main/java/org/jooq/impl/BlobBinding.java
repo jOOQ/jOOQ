@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.impl.ClobBinding.NO_SUPPORT_NULL_LOBS;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Tools.asInt;
@@ -98,7 +99,7 @@ public class BlobBinding implements Binding<byte[], byte[]> {
         Blob blob = newBlob(ctx, ctx.value(), ctx.statement().getConnection());
 
         // [#14067] Workaround for Firebird bug https://github.com/FirebirdSQL/jaybird/issues/712
-        if (blob == null && ctx.family() == FIREBIRD)
+        if (blob == null && NO_SUPPORT_NULL_LOBS.contains(ctx.dialect()))
             ctx.statement().setNull(ctx.index(), Types.BLOB);
         else
             ctx.statement().setBlob(ctx.index(), blob);

@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Tools.asInt;
@@ -46,6 +47,7 @@ import java.io.Reader;
 import java.sql.Clob;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Set;
 
 import org.jooq.Binding;
 import org.jooq.BindingGetResultSetContext;
@@ -58,6 +60,7 @@ import org.jooq.BindingSetStatementContext;
 import org.jooq.Converter;
 import org.jooq.Converters;
 import org.jooq.ResourceManagingScope;
+import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Source;
 import org.jooq.conf.ParamType;
@@ -75,6 +78,8 @@ import org.jooq.tools.jdbc.JDBCUtils;
  * @author Lukas Eder
  */
 public class ClobBinding implements Binding<String, String> {
+
+    static final Set<SQLDialect> NO_SUPPORT_NULL_LOBS = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
 
     @Override
     public final Converter<String, String> converter() {
@@ -99,7 +104,7 @@ public class ClobBinding implements Binding<String, String> {
         Clob clob = newClob(ctx, ctx.value());
 
         // [#14067] Workaround for Firebird bug https://github.com/FirebirdSQL/jaybird/issues/712
-        if (clob == null && ctx.family() == FIREBIRD)
+        if (clob == null && NO_SUPPORT_NULL_LOBS.contains(ctx.dialect()))
             ctx.statement().setNull(ctx.index(), Types.CLOB);
         else
             ctx.statement().setClob(ctx.index(), clob);

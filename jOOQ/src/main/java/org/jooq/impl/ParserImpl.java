@@ -1281,6 +1281,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         List<CommonTableExpression<?>> cte = new ArrayList<>();
         do {
+            if (parseKeywordIf("FUNCTION"))
+                throw notImplemented("WITH FUNCTION");
+
             Name name = parseIdentifier();
             DerivedColumnList dcl = null;
 

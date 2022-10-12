@@ -45,6 +45,7 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.nCopies;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.joining;
+import static org.jooq.ContextConverter.scoped;
 // ...
 // ...
 // ...
@@ -55,6 +56,7 @@ import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+// ...
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -75,7 +77,6 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
-import static org.jooq.ContextConverter.scoped;
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
 import static org.jooq.conf.ParamType.INLINED;
@@ -264,9 +265,10 @@ import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.ContextConverter;
 import org.jooq.Converter;
-import org.jooq.ConverterProvider;
 import org.jooq.ConverterContext;
+import org.jooq.ConverterProvider;
 import org.jooq.Converters;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
@@ -309,10 +311,8 @@ import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Scope;
-import org.jooq.ContextConverter;
 import org.jooq.Select;
 import org.jooq.SelectFieldOrAsterisk;
-import org.jooq.SelectJoinStep;
 import org.jooq.SortField;
 import org.jooq.Source;
 import org.jooq.Table;
@@ -1132,7 +1132,7 @@ final class Tools {
     };
 
     static final Set<SQLDialect>         REQUIRES_BACKSLASH_ESCAPING        = SQLDialect.supportedBy(MARIADB, MYSQL);
-    static final Set<SQLDialect>         NO_SUPPORT_NULL                    = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
+    static final Set<SQLDialect>         NO_SUPPORT_NULL                    = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB);
     static final Set<SQLDialect>         NO_SUPPORT_BINARY_TYPE_LENGTH      = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect>         NO_SUPPORT_CAST_TYPE_IN_DDL        = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>         SUPPORT_NON_BIND_VARIABLE_SUFFIXES = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
@@ -5403,7 +5403,7 @@ final class Tools {
 
             case NULL:
 
-                // [#3400] [#4321] [#7392] E.g. Derby, Firebird, HSQLDB do not support explicit nullability.
+                // [#3400] [#4321] [#7392] [#10819] E.g. Derby, Firebird, HSQLDB do not support explicit nullability.
                 if (!NO_SUPPORT_NULL.contains(ctx.dialect()))
                     ctx.sql(' ').visit(K_NULL);
 

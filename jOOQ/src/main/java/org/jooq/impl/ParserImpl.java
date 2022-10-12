@@ -6186,6 +6186,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse(')');
         }
 
+        parseKeywordIf("VISIBLE");
         Condition condition = parseKeywordIf("WHERE")
             ? parseCondition()
             : null;

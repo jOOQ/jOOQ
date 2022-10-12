@@ -7262,4 +7262,31 @@ final class Tools {
         return !FALSE.equals(ctx.settings().isRenderVariablesInDerivedTablesForEmulations())
             && !NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect());
     }
+
+    @SuppressWarnings("removal")
+    static final DataType<?> componentDataType(Object[] array) {
+        if (!isEmpty(array) && array[0] instanceof Field<?> f) {
+            return f.getDataType();
+        }
+        else
+            return DSL.getDataType(array.getClass().getComponentType());
+    }
+
+    static final Object[] mostSpecificArray(Object[] array) {
+        if (isEmpty(array))
+            return array;
+
+        Class<?> type = null;
+        for (Object o : array)
+            if (o != null)
+                if (type == null)
+                    type = o.getClass();
+                else if (type != o.getClass())
+                    return array;
+
+        if (type == null)
+            return array;
+        else
+            return Convert.convertArray(array, type);
+    }
 }

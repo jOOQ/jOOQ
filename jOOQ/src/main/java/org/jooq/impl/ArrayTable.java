@@ -116,15 +116,6 @@ final class ArrayTable extends AbstractTable<Record> implements UNotYetImplement
         this.field = init(arrayType, this.alias, this.fieldAliases[0]);
     }
 
-    @SuppressWarnings("removal")
-    static final DataType<?> componentDataType(Object[] array) {
-        if (!isEmpty(array) && array[0] instanceof Field<?> f) {
-            return f.getDataType();
-        }
-        else
-            return DSL.getDataType(array.getClass().getComponentType());
-    }
-
     static final FieldsImpl<Record> init(Class<?> arrayType, Name alias, Name fieldAlias) {
 
         // [#1114] [#7863] VARRAY/TABLE of OBJECT have more than one field

@@ -125,6 +125,7 @@ import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.configuration;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Tools.mostSpecificArray;
 import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.math.BigDecimal;
@@ -11261,8 +11262,12 @@ public class DSL {
     @NotNull
     @Support
     public static Table<?> unnest(Object[] array) {
-        if (!isEmpty(array) && array[0] instanceof Field)
+        boolean notEmpty = !isEmpty(array);
+
+        if (notEmpty && array[0] instanceof Field)
             return new ArrayOfValues(Tools.fieldsArray(array));
+        else if (notEmpty && array.getClass() == Object[].class)
+            return unnest0(val(mostSpecificArray(array)));
         else
             return unnest0(val(array));
     }

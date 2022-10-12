@@ -43,6 +43,7 @@ import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.Names.N_ARRAY_TABLE;
 import static org.jooq.impl.Names.N_COLUMN_VALUE;
+import static org.jooq.impl.Tools.componentDataType;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -83,7 +84,7 @@ final class ArrayTableEmulation extends AbstractTable<Record> implements UTransi
         this.array = array;
         this.alias = alias;
         this.fieldAlias = fieldAlias == null ? N_COLUMN_VALUE : fieldAlias;
-        this.field = new FieldsImpl<>(DSL.field(name(alias.last(), this.fieldAlias.last()), ArrayTable.componentDataType(array)));
+        this.field = new FieldsImpl<>(DSL.field(name(alias.last(), this.fieldAlias.last()), componentDataType(array)));
     }
 
     @Override

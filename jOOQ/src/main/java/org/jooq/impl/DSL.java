@@ -123,6 +123,7 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.configuration;
+import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.tools.StringUtils.isEmpty;
 
@@ -11188,7 +11189,7 @@ public class DSL {
     @NotNull
     @Support
     public static Table<?> table(Collection<?> list) {
-        return table(list.toArray());
+        return unnest(list);
     }
 
     /**
@@ -11199,7 +11200,7 @@ public class DSL {
     @NotNull
     @Support
     public static Table<?> table(Object[] array) {
-        return unnest0(val(array));
+        return unnest(array);
     }
 
 
@@ -11224,7 +11225,7 @@ public class DSL {
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Table<?> table(Field<?> cursor) {
-        return unnest0(cursor);
+        return unnest(cursor);
     }
 
     /**
@@ -11260,7 +11261,10 @@ public class DSL {
     @NotNull
     @Support
     public static Table<?> unnest(Object[] array) {
-        return unnest0(val(array));
+        if (!isEmpty(array) && array[0] instanceof Field)
+            return new ArrayOfValues(Tools.fieldsArray(array));
+        else
+            return unnest0(val(array));
     }
 
 

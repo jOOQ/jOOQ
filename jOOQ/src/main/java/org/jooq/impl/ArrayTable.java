@@ -42,11 +42,13 @@ import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_UNNEST;
 import static org.jooq.impl.Names.N_ARRAY_TABLE;
 import static org.jooq.impl.Names.N_COLUMN_VALUE;
+import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
 
 // ...
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Param;
@@ -114,7 +116,16 @@ final class ArrayTable extends AbstractTable<Record> implements UNotYetImplement
         this.field = init(arrayType, this.alias, this.fieldAliases[0]);
     }
 
-    private static final FieldsImpl<Record> init(Class<?> arrayType, Name alias, Name fieldAlias) {
+    @SuppressWarnings("removal")
+    static final DataType<?> componentDataType(Object[] array) {
+        if (!isEmpty(array) && array[0] instanceof Field<?> f) {
+            return f.getDataType();
+        }
+        else
+            return DSL.getDataType(array.getClass().getComponentType());
+    }
+
+    static final FieldsImpl<Record> init(Class<?> arrayType, Name alias, Name fieldAlias) {
 
         // [#1114] [#7863] VARRAY/TABLE of OBJECT have more than one field
         if (Record.class.isAssignableFrom(arrayType)) {

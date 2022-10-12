@@ -83,7 +83,7 @@ final class ArrayTableEmulation extends AbstractTable<Record> implements UTransi
         this.array = array;
         this.alias = alias;
         this.fieldAlias = fieldAlias == null ? N_COLUMN_VALUE : fieldAlias;
-        this.field = new FieldsImpl<>(DSL.field(name(alias.last(), this.fieldAlias.last()), DSL.getDataType(array.getClass().getComponentType())));
+        this.field = new FieldsImpl<>(DSL.field(name(alias.last(), this.fieldAlias.last()), ArrayTable.componentDataType(array)));
     }
 
     @Override

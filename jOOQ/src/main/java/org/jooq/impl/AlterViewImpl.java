@@ -71,23 +71,27 @@ extends
 implements
     QOM.AlterView,
     AlterViewStep,
+    AlterViewAsStep,
     AlterViewFinalStep
 {
 
-    final Table<?>  view;
-    final boolean   ifExists;
-          Select<?> as;
-          Comment   comment;
-          Table<?>  renameTo;
+    final Table<?>                              view;
+    final QueryPartListView<? extends Field<?>> fields;
+    final boolean                               ifExists;
+          Comment                               comment;
+          Table<?>                              renameTo;
+          Select<?>                             as;
 
     AlterViewImpl(
         Configuration configuration,
         Table<?> view,
+        Collection<? extends Field<?>> fields,
         boolean ifExists
     ) {
         this(
             configuration,
             view,
+            fields,
             ifExists,
             null,
             null,
@@ -98,29 +102,38 @@ implements
     AlterViewImpl(
         Configuration configuration,
         Table<?> view,
+        boolean ifExists
+    ) {
+        this(
+            configuration,
+            view,
+            null,
+            ifExists
+        );
+    }
+
+    AlterViewImpl(
+        Configuration configuration,
+        Table<?> view,
+        Collection<? extends Field<?>> fields,
         boolean ifExists,
-        Select<?> as,
         Comment comment,
-        Table<?> renameTo
+        Table<?> renameTo,
+        Select<?> as
     ) {
         super(configuration);
 
         this.view = view;
+        this.fields = new QueryPartList<>(fields);
         this.ifExists = ifExists;
-        this.as = as;
         this.comment = comment;
         this.renameTo = renameTo;
+        this.as = as;
     }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
-
-    @Override
-    public final AlterViewImpl as(Select<?> as) {
-        this.as = as;
-        return this;
-    }
 
     @Override
     public final AlterViewImpl comment(String comment) {
@@ -146,6 +159,12 @@ implements
     @Override
     public final AlterViewImpl renameTo(Table<?> renameTo) {
         this.renameTo = renameTo;
+        return this;
+    }
+
+    @Override
+    public final AlterViewImpl as(Select<?> as) {
+        this.as = as;
         return this;
     }
 
@@ -204,11 +223,16 @@ implements
                 case POSTGRES:
                 case SQLITE:
                 case YUGABYTEDB:
-                    ctx.visit(begin(dropView(view), createView(view).as(as)));
+                    ctx.visit(begin(dropView(view), createView(view, fields.toArray(Tools.EMPTY_FIELD)).as(as)));
                     break;
 
                 default:
-                    ctx.visit(K_ALTER).sql(' ').visit(K_VIEW).sql(' ').visit(view).sql(' ').visit(K_AS).sql(' ').visit(as);
+                    ctx.visit(K_ALTER).sql(' ').visit(K_VIEW).sql(' ').visit(view);
+
+                    if (!fields.isEmpty())
+                        ctx.sql(" (").visit(QueryPartCollectionView.wrap(fields).qualify(false)).sql(')');
+
+                    ctx.formatSeparator().visit(K_AS).formatSeparator().visit(as);
                     break;
             }
 
@@ -329,13 +353,13 @@ implements
     }
 
     @Override
-    public final boolean $ifExists() {
-        return ifExists;
+    public final UnmodifiableList<? extends Field<?>> $fields() {
+        return QOM.unmodifiable(fields);
     }
 
     @Override
-    public final Select<?> $as() {
-        return as;
+    public final boolean $ifExists() {
+        return ifExists;
     }
 
     @Override
@@ -349,33 +373,45 @@ implements
     }
 
     @Override
+    public final Select<?> $as() {
+        return as;
+    }
+
+    @Override
     public final QOM.AlterView $view(Table<?> newValue) {
-        return $constructor().apply(newValue, $ifExists(), $as(), $comment(), $renameTo());
+        return $constructor().apply(newValue, $fields(), $ifExists(), $comment(), $renameTo(), $as());
+    }
+
+    @Override
+    public final QOM.AlterView $fields(Collection<? extends Field<?>> newValue) {
+        return $constructor().apply($view(), newValue, $ifExists(), $comment(), $renameTo(), $as());
     }
 
     @Override
     public final QOM.AlterView $ifExists(boolean newValue) {
-        return $constructor().apply($view(), newValue, $as(), $comment(), $renameTo());
-    }
-
-    @Override
-    public final QOM.AlterView $as(Select<?> newValue) {
-        return $constructor().apply($view(), $ifExists(), newValue, $comment(), $renameTo());
+        return $constructor().apply($view(), $fields(), newValue, $comment(), $renameTo(), $as());
     }
 
     @Override
     public final QOM.AlterView $comment(Comment newValue) {
-        return $constructor().apply($view(), $ifExists(), $as(), newValue, $renameTo());
+        return $constructor().apply($view(), $fields(), $ifExists(), newValue, $renameTo(), $as());
     }
 
     @Override
     public final QOM.AlterView $renameTo(Table<?> newValue) {
-        return $constructor().apply($view(), $ifExists(), $as(), $comment(), newValue);
+        return $constructor().apply($view(), $fields(), $ifExists(), $comment(), newValue, $as());
     }
 
-    public final Function5<? super Table<?>, ? super Boolean, ? super Select<?>, ? super Comment, ? super Table<?>, ? extends QOM.AlterView> $constructor() {
-        return (a1, a2, a3, a4, a5) -> new AlterViewImpl(configuration(), a1, a2, a3, a4, a5);
+    @Override
+    public final QOM.AlterView $as(Select<?> newValue) {
+        return $constructor().apply($view(), $fields(), $ifExists(), $comment(), $renameTo(), newValue);
     }
+
+    public final Function6<? super Table<?>, ? super Collection<? extends Field<?>>, ? super Boolean, ? super Comment, ? super Table<?>, ? super Select<?>, ? extends QOM.AlterView> $constructor() {
+        return (a1, a2, a3, a4, a5, a6) -> new AlterViewImpl(configuration(), a1, (Collection<? extends Field<?>>) a2, a3, a4, a5, a6);
+    }
+
+
 
 
 

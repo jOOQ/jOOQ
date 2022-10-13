@@ -7701,6 +7701,36 @@ public class DSL {
     }
 
     /**
+     * The <code>ALTER VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#alterView(Table, Field...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.AlterViewAsStep alterView(Table<?> view, Field<?>... fields) {
+        return dsl().alterView(view, fields);
+    }
+
+    /**
+     * The <code>ALTER VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#alterView(Table, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.AlterViewAsStep alterView(Table<?> view, Collection<? extends Field<?>> fields) {
+        return dsl().alterView(view, fields);
+    }
+
+    /**
      * The <code>COMMENT ON TABLE</code> statement.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this

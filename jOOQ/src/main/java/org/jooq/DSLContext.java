@@ -9667,6 +9667,24 @@ public interface DSLContext extends Scope {
     AlterViewStep alterViewIfExists(Table<?> view);
 
     /**
+     * The <code>ALTER VIEW</code> statement.
+     *
+     * @see DSL#alterView(Table, Field...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    AlterViewAsStep alterView(Table<?> view, Field<?>... fields);
+
+    /**
+     * The <code>ALTER VIEW</code> statement.
+     *
+     * @see DSL#alterView(Table, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    AlterViewAsStep alterView(Table<?> view, Collection<? extends Field<?>> fields);
+
+    /**
      * The <code>COMMENT ON TABLE</code> statement.
      *
      * @see DSL#commentOnTable(String)

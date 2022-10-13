@@ -3046,32 +3046,42 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.AlterViewStep alterView(@Stringly.Name String view) {
-        return new AlterViewImpl(configuration(), DSL.table(DSL.name(view)), false);
+        return new AlterViewImpl(configuration(), DSL.table(DSL.name(view)), null, false);
     }
 
     @Override
     public org.jooq.AlterViewStep alterView(Name view) {
-        return new AlterViewImpl(configuration(), DSL.table(view), false);
+        return new AlterViewImpl(configuration(), DSL.table(view), null, false);
     }
 
     @Override
     public org.jooq.AlterViewStep alterView(Table<?> view) {
-        return new AlterViewImpl(configuration(), view, false);
+        return new AlterViewImpl(configuration(), view, null, false);
     }
 
     @Override
     public org.jooq.AlterViewStep alterViewIfExists(@Stringly.Name String view) {
-        return new AlterViewImpl(configuration(), DSL.table(DSL.name(view)), true);
+        return new AlterViewImpl(configuration(), DSL.table(DSL.name(view)), null, true);
     }
 
     @Override
     public org.jooq.AlterViewStep alterViewIfExists(Name view) {
-        return new AlterViewImpl(configuration(), DSL.table(view), true);
+        return new AlterViewImpl(configuration(), DSL.table(view), null, true);
     }
 
     @Override
     public org.jooq.AlterViewStep alterViewIfExists(Table<?> view) {
-        return new AlterViewImpl(configuration(), view, true);
+        return new AlterViewImpl(configuration(), view, null, true);
+    }
+
+    @Override
+    public org.jooq.AlterViewAsStep alterView(Table<?> view, Field<?>... fields) {
+        return new AlterViewImpl(configuration(), view, Arrays.asList(fields), false);
+    }
+
+    @Override
+    public org.jooq.AlterViewAsStep alterView(Table<?> view, Collection<? extends Field<?>> fields) {
+        return new AlterViewImpl(configuration(), view, new QueryPartList<>(fields), false);
     }
 
     @Override

@@ -1227,15 +1227,17 @@ public final class QOM {
         //    AlterViewImpl
     {
         @NotNull  Table<?> $view();
+        @NotNull  UnmodifiableList<? extends Field<?>> $fields();
                   boolean $ifExists();
-        @Nullable Select<?> $as();
         @Nullable Comment $comment();
         @Nullable Table<?> $renameTo();
+        @Nullable Select<?> $as();
         @NotNull  AlterView $view(Table<?> view);
+        @NotNull  AlterView $fields(Collection<? extends Field<?>> fields);
         @NotNull  AlterView $ifExists(boolean ifExists);
-        @NotNull  AlterView $as(Select<?> as);
         @NotNull  AlterView $comment(Comment comment);
         @NotNull  AlterView $renameTo(Table<?> renameTo);
+        @NotNull  AlterView $as(Select<?> as);
     }
 
     /**

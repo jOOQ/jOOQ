@@ -68,40 +68,12 @@ import org.jetbrains.annotations.*;
  * </ul>
  */
 @SuppressWarnings({ "unused" })
-public interface AlterViewStep extends AlterViewAsStep {
+public interface AlterViewAsStep {
 
     /**
-     * Add the <code>COMMENT</code> clause to the <code>ALTER VIEW</code> statement.
+     * Add the <code>AS</code> clause to the <code>ALTER VIEW</code> statement.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    AlterViewFinalStep comment(@Stringly.Comment String comment);
-
-    /**
-     * Add the <code>COMMENT</code> clause to the <code>ALTER VIEW</code> statement.
-     */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
-    @NotNull @CheckReturnValue
-    AlterViewFinalStep comment(Comment comment);
-
-    /**
-     * Add the <code>RENAME TO</code> clause to the <code>ALTER VIEW</code> statement.
-     */
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
-    @NotNull @CheckReturnValue
-    AlterViewFinalStep renameTo(@Stringly.Name String renameTo);
-
-    /**
-     * Add the <code>RENAME TO</code> clause to the <code>ALTER VIEW</code> statement.
-     */
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
-    @NotNull @CheckReturnValue
-    AlterViewFinalStep renameTo(Name renameTo);
-
-    /**
-     * Add the <code>RENAME TO</code> clause to the <code>ALTER VIEW</code> statement.
-     */
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
-    @NotNull @CheckReturnValue
-    AlterViewFinalStep renameTo(Table<?> renameTo);
+    AlterViewFinalStep as(Select<?> as);
 }

@@ -10247,7 +10247,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static CreateViewAsStep createView(String view, String... fields) {
+    public static CreateViewAsStep<Record> createView(String view, String... fields) {
         return dsl().createView(view, fields);
     }
 
@@ -10258,7 +10258,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static CreateViewAsStep createView(Name view, Name... fields) {
+    public static CreateViewAsStep<Record> createView(Name view, Name... fields) {
         return dsl().createView(view, fields);
     }
 
@@ -10269,7 +10269,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static CreateViewAsStep createView(Table<?> view, Field<?>... fields) {
+    public static CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields) {
         return dsl().createView(view, fields);
     }
 
@@ -10290,7 +10290,7 @@ public class DSL {
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static CreateViewAsStep createView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+    public static CreateViewAsStep<Record> createView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return dsl().createView(view, fieldNameFunction);
     }
 
@@ -10311,7 +10311,7 @@ public class DSL {
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static CreateViewAsStep createView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
+    public static CreateViewAsStep<Record> createView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return dsl().createView(view, fieldNameFunction);
     }
 
@@ -10332,7 +10332,7 @@ public class DSL {
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static CreateViewAsStep createView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
+    public static CreateViewAsStep<Record> createView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createView(view, fieldNameFunction);
     }
 
@@ -10343,7 +10343,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    public static CreateViewAsStep createOrReplaceView(String view, String... fields) {
+    public static CreateViewAsStep<Record> createOrReplaceView(String view, String... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
 
@@ -10354,7 +10354,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    public static CreateViewAsStep createOrReplaceView(Name view, Name... fields) {
+    public static CreateViewAsStep<Record> createOrReplaceView(Name view, Name... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
 
@@ -10365,7 +10365,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    public static CreateViewAsStep createOrReplaceView(Table<?> view, Field<?>... fields) {
+    public static CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
 
@@ -10386,7 +10386,7 @@ public class DSL {
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    public static CreateViewAsStep createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+    public static CreateViewAsStep<Record> createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }
 
@@ -10407,7 +10407,7 @@ public class DSL {
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    public static CreateViewAsStep createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
+    public static CreateViewAsStep<Record> createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }
 
@@ -10428,7 +10428,7 @@ public class DSL {
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    public static CreateViewAsStep createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
+    public static CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }
 
@@ -10439,7 +10439,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static CreateViewAsStep createViewIfNotExists(String view, String... fields) {
+    public static CreateViewAsStep<Record> createViewIfNotExists(String view, String... fields) {
         return dsl().createViewIfNotExists(view, fields);
     }
 
@@ -10450,7 +10450,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static CreateViewAsStep createViewIfNotExists(Name view, Name... fields) {
+    public static CreateViewAsStep<Record> createViewIfNotExists(Name view, Name... fields) {
         return dsl().createViewIfNotExists(view, fields);
     }
 
@@ -10461,7 +10461,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static CreateViewAsStep createViewIfNotExists(Table<?> view, Field<?>... fields) {
+    public static CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields) {
         return dsl().createViewIfNotExists(view, fields);
     }
 
@@ -10482,7 +10482,7 @@ public class DSL {
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static CreateViewAsStep createViewIfNotExists(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+    public static CreateViewAsStep<Record> createViewIfNotExists(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return dsl().createViewIfNotExists(view, fieldNameFunction);
     }
 
@@ -10503,7 +10503,7 @@ public class DSL {
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static CreateViewAsStep createViewIfNotExists(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
+    public static CreateViewAsStep<Record> createViewIfNotExists(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return dsl().createViewIfNotExists(view, fieldNameFunction);
     }
 
@@ -10524,7 +10524,7 @@ public class DSL {
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static CreateViewAsStep createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
+    public static CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createViewIfNotExists(view, fieldNameFunction);
     }
 

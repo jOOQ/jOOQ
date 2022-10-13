@@ -71,6 +71,13 @@ import org.jetbrains.annotations.*;
 public interface AlterViewStep {
 
     /**
+     * Add the <code>AS</code> clause to the <code>ALTER VIEW</code> statement.
+     */
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @NotNull @CheckReturnValue
+    AlterViewFinalStep as(Select<?> as);
+
+    /**
      * Add the <code>COMMENT</code> clause to the <code>ALTER VIEW</code> statement.
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })

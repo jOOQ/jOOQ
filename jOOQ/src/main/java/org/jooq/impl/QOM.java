@@ -1228,10 +1228,12 @@ public final class QOM {
     {
         @NotNull  Table<?> $view();
                   boolean $ifExists();
+        @Nullable Select<?> $as();
         @Nullable Comment $comment();
         @Nullable Table<?> $renameTo();
         @NotNull  AlterView $view(Table<?> view);
         @NotNull  AlterView $ifExists(boolean ifExists);
+        @NotNull  AlterView $as(Select<?> as);
         @NotNull  AlterView $comment(Comment comment);
         @NotNull  AlterView $renameTo(Table<?> renameTo);
     }

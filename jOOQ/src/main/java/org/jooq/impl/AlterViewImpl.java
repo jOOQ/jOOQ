@@ -74,10 +74,11 @@ implements
     AlterViewFinalStep
 {
 
-    final Table<?> view;
-    final boolean  ifExists;
-          Comment  comment;
-          Table<?> renameTo;
+    final Table<?>  view;
+    final boolean   ifExists;
+          Select<?> as;
+          Comment   comment;
+          Table<?>  renameTo;
 
     AlterViewImpl(
         Configuration configuration,
@@ -89,6 +90,7 @@ implements
             view,
             ifExists,
             null,
+            null,
             null
         );
     }
@@ -97,6 +99,7 @@ implements
         Configuration configuration,
         Table<?> view,
         boolean ifExists,
+        Select<?> as,
         Comment comment,
         Table<?> renameTo
     ) {
@@ -104,6 +107,7 @@ implements
 
         this.view = view;
         this.ifExists = ifExists;
+        this.as = as;
         this.comment = comment;
         this.renameTo = renameTo;
     }
@@ -111,6 +115,12 @@ implements
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
+
+    @Override
+    public final AlterViewImpl as(Select<?> as) {
+        this.as = as;
+        return this;
+    }
 
     @Override
     public final AlterViewImpl comment(String comment) {
@@ -162,6 +172,49 @@ implements
     }
 
     private final void accept0(Context<?> ctx) {
+        if (as != null) {
+            switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                case CUBRID:
+                case DERBY:
+                case FIREBIRD:
+                case H2:
+                case HSQLDB:
+                case IGNITE:
+                case MARIADB:
+                case MYSQL:
+                case POSTGRES:
+                case SQLITE:
+                case YUGABYTEDB:
+                    ctx.visit(begin(dropView(view), createView(view).as(as)));
+                    break;
+
+                default:
+                    ctx.visit(K_ALTER).sql(' ').visit(K_VIEW).sql(' ').visit(view).sql(' ').visit(K_AS).sql(' ').visit(as);
+                    break;
+            }
+
+            return;
+        }
+
         if (comment != null) {
             ctx.visit(commentOnView(view).is(comment));
             return;
@@ -281,6 +334,11 @@ implements
     }
 
     @Override
+    public final Select<?> $as() {
+        return as;
+    }
+
+    @Override
     public final Comment $comment() {
         return comment;
     }
@@ -292,27 +350,34 @@ implements
 
     @Override
     public final QOM.AlterView $view(Table<?> newValue) {
-        return $constructor().apply(newValue, $ifExists(), $comment(), $renameTo());
+        return $constructor().apply(newValue, $ifExists(), $as(), $comment(), $renameTo());
     }
 
     @Override
     public final QOM.AlterView $ifExists(boolean newValue) {
-        return $constructor().apply($view(), newValue, $comment(), $renameTo());
+        return $constructor().apply($view(), newValue, $as(), $comment(), $renameTo());
+    }
+
+    @Override
+    public final QOM.AlterView $as(Select<?> newValue) {
+        return $constructor().apply($view(), $ifExists(), newValue, $comment(), $renameTo());
     }
 
     @Override
     public final QOM.AlterView $comment(Comment newValue) {
-        return $constructor().apply($view(), $ifExists(), newValue, $renameTo());
+        return $constructor().apply($view(), $ifExists(), $as(), newValue, $renameTo());
     }
 
     @Override
     public final QOM.AlterView $renameTo(Table<?> newValue) {
-        return $constructor().apply($view(), $ifExists(), $comment(), newValue);
+        return $constructor().apply($view(), $ifExists(), $as(), $comment(), newValue);
     }
 
-    public final Function4<? super Table<?>, ? super Boolean, ? super Comment, ? super Table<?>, ? extends QOM.AlterView> $constructor() {
-        return (a1, a2, a3, a4) -> new AlterViewImpl(configuration(), a1, a2, a3, a4);
+    public final Function5<? super Table<?>, ? super Boolean, ? super Select<?>, ? super Comment, ? super Table<?>, ? extends QOM.AlterView> $constructor() {
+        return (a1, a2, a3, a4, a5) -> new AlterViewImpl(configuration(), a1, a2, a3, a4, a5);
     }
+
+
 
 
 

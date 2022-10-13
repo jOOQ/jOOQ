@@ -176,18 +176,30 @@ final class ArrayTable extends AbstractTable<Record> implements UNotYetImplement
             case H2:
                 return new H2ArrayTable().as(alias);
 
-            // [#756] These dialects need special care when aliasing unnested
-            // arrays
+            // Most dialects can simulate unnested arrays using UNION ALL
 
 
 
-            case HSQLDB:
-            case POSTGRES:
-            case YUGABYTEDB:
-                return new PostgresHSQLDBTable().as(alias, fieldAliases);
 
-            // Other dialects can simulate unnested arrays using UNION ALL
-            default:
+
+
+
+
+
+
+
+
+
+
+
+
+            case CUBRID:
+            case DERBY:
+            case FIREBIRD:
+            case IGNITE:
+            case MARIADB:
+            case MYSQL:
+            case SQLITE:
                 if (array.getDataType().getType().isArray() && array instanceof Param)
                     return emulate();
 
@@ -200,6 +212,10 @@ final class ArrayTable extends AbstractTable<Record> implements UNotYetImplement
 
                 else
                     return DSL.table("{0}", array).as(alias);
+
+            // [#756] The standard SQL behaviour
+            default:
+                return new PostgresHSQLDBTable().as(alias, fieldAliases);
         }
     }
 

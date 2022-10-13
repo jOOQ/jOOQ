@@ -112,27 +112,27 @@ final class ArrayOfValues extends AbstractTable<Record> implements UNotYetImplem
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case CUBRID:
-
             case DERBY:
-
             case FIREBIRD:
-
             case IGNITE:
-
-
             case MARIADB:
-
             case MYSQL:
-
-
-
-
             case SQLITE:
-
-
-
-
                 ctx.visit(new ArrayTableEmulation(array).as(alias, fieldAliases));
                 break;
 

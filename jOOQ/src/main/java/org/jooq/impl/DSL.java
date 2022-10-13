@@ -7620,7 +7620,7 @@ public class DSL {
      * @see DSLContext#alterView(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.AlterViewStep alterView(@Stringly.Name String view) {
         return dsl().alterView(view);
     }
@@ -7635,7 +7635,7 @@ public class DSL {
      * @see DSLContext#alterView(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.AlterViewStep alterView(Name view) {
         return dsl().alterView(view);
     }
@@ -7650,7 +7650,7 @@ public class DSL {
      * @see DSLContext#alterView(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.AlterViewStep alterView(Table<?> view) {
         return dsl().alterView(view);
     }

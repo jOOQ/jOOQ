@@ -9618,7 +9618,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterView(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterViewStep alterView(@Stringly.Name String view);
 
     /**
@@ -9627,7 +9627,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterView(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterViewStep alterView(Name view);
 
     /**
@@ -9636,7 +9636,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterView(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterViewStep alterView(Table<?> view);
 
     /**

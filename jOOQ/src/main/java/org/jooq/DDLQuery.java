@@ -37,9 +37,21 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
 
 /**
  * A marker interface for all DDL queries.
+ * <p>
+ * A lot of DDL queries come with syntax that requires emulation using anonymous
+ * blocks via {@link DSL#begin(Statement...)}. While basic anonymous blocks are
+ * supported in the jOOQ Open Source Edition as well, more sophisticated blocks
+ * and other procedural logic is a commercial only feature. Examples for this
+ * are:
+ * <ul>
+ * <li>Various <code>IF [ NOT ] EXISTS</code> clauses.</li>
+ * <li><code>ALTER VIEW … AS</code> (emulated via a block containing
+ * <code>DROP VIEW</code> and then <code>CREATE VIEW</code>).</li>
+ * </ul>
  *
  * @author Lukas Eder
  */

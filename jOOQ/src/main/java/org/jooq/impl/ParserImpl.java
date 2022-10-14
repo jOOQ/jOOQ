@@ -6091,10 +6091,24 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final DDLQuery parseCreateDatabase() {
         boolean ifNotExists = parseKeywordIf("IF NOT EXISTS");
         Catalog catalogName = parseCatalogName();
+        parseMySQLCreateDatabaseFlagsIf();
 
         return ifNotExists
             ? dsl.createDatabaseIfNotExists(catalogName)
             : dsl.createDatabase(catalogName);
+    }
+
+    private final void parseMySQLCreateDatabaseFlagsIf() {
+        for (;;) {
+            if ((parseKeywordIf("DEFAULT CHARACTER SET") || parseKeywordIf("CHARACTER SET")) && (parseIf("=") || true))
+                parseCharacterSet();
+            else if ((parseKeywordIf("DEFAULT COLLATE") || parseKeywordIf("COLLATE")) && (parseIf("=") || true))
+                parseCollation();
+            else if ((parseKeywordIf("DEFAULT ENCRYPTION") || parseKeywordIf("ENCRYPTION")) && (parseIf("=") || true))
+                parseCharacterLiteral();
+            else
+                break;
+        }
     }
 
     private final DDLQuery parseAlterDatabase() {
@@ -6150,6 +6164,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (!authorization && parseKeywordIf("AUTHORIZATION"))
             parseUser();
 
+        parseMySQLCreateDatabaseFlagsIf();
         return ifNotExists
             ? dsl.createSchemaIfNotExists(schemaName)
             : dsl.createSchema(schemaName);
@@ -11889,11 +11904,20 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Collation parseCollation() {
-        return collation(parseName());
+        return collation(parseNameOrStringLiteral());
     }
 
     private final CharacterSet parseCharacterSet() {
-        return characterSet(parseName());
+        return characterSet(parseNameOrStringLiteral());
+    }
+
+    public final Name parseNameOrStringLiteral() {
+        Name result = parseNameIf();
+
+        if (result == null)
+            return name(parseStringLiteral());
+        else
+            return result;
     }
 
     @Override

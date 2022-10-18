@@ -1482,7 +1482,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
             }
-            else if (!ignoreProEdition() && (jsonb = parseKeywordIf("JSONB") || parseKeywordIf("JSON")) && requireProEdition()) {
+            else if (!ignoreProEdition() && (jsonb = parseKeywordIf("JSONB", "JSON")) && requireProEdition()) {
 
 
 
@@ -1544,7 +1544,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (offset && parseKeywordIf("OFFSET")) {
             result.addOffset((Field) parseField());
 
-            if (parseKeywordIf("ROWS") || parseKeywordIf("ROW"))
+            if (parseKeywordIf("ROWS", "ROW"))
                 offsetStandard = true;
 
             // Ingres doesn't have a ROWS keyword after offset
@@ -1707,7 +1707,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         ignoreHints(false);
         parseKeyword("SELECT", "SEL");
         String hints = parseHints();
-        boolean distinct = parseKeywordIf("DISTINCT") || parseKeywordIf("UNIQUE");
+        boolean distinct = parseKeywordIf("DISTINCT", "UNIQUE");
         List<Field<?>> distinctOn = null;
 
         if (distinct) {
@@ -4281,7 +4281,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final boolean parseSequenceNoCacheIf() {
-        return parseKeywordIf("NO CACHE") || parseKeywordIf("NOCACHE");
+        return parseKeywordIf("NO CACHE", "NOCACHE");
     }
 
     private final Field<Long> parseSequenceCacheIf() {
@@ -4289,11 +4289,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final boolean parseSequenceNoCycleIf() {
-        return parseKeywordIf("NO CYCLE") || parseKeywordIf("NOCYCLE");
+        return parseKeywordIf("NO CYCLE", "NOCYCLE");
     }
 
     private final boolean parseSequenceNoMaxvalueIf() {
-        return parseKeywordIf("NO MAXVALUE") || parseKeywordIf("NOMAXVALUE");
+        return parseKeywordIf("NO MAXVALUE", "NOMAXVALUE");
     }
 
     private final Field<Long> parseSequenceMaxvalueIf() {
@@ -4301,7 +4301,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final boolean parseSequenceNoMinvalueIf() {
-        return parseKeywordIf("NO MINVALUE") || parseKeywordIf("NOMINVALUE");
+        return parseKeywordIf("NO MINVALUE", "NOMINVALUE");
     }
 
     private final Field<Long> parseSequenceMinvalueIf() {
@@ -5018,16 +5018,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             || (!initially && (initially = parseConstraintInitiallyIf())))
             ;
 
-        if ((parseKeywordIf("ENABLE") || parseKeywordIf("ENFORCED")))
+        if ((parseKeywordIf("ENABLE", "ENFORCED")))
             return e.enforced();
-        else if ((parseKeywordIf("DISABLE") || parseKeywordIf("NOT ENFORCED")))
+        else if ((parseKeywordIf("DISABLE", "NOT ENFORCED")))
             return e.notEnforced();
         else
             return e;
     }
 
     private final boolean parseConstraintDeferrableIf() {
-        return parseKeywordIf("DEFERRABLE") || parseKeywordIf("NOT DEFERRABLE");
+        return parseKeywordIf("DEFERRABLE", "NOT DEFERRABLE");
     }
 
     private final boolean parseConstraintInitiallyIf() {
@@ -5331,7 +5331,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             case 'R':
                 if (parseKeywordIf("RENAME")) {
-                    if (parseKeywordIf("AS") || parseKeywordIf("TO")) {
+                    if (parseKeywordIf("AS", "TO")) {
                         Table<?> newName = parseTableName();
 
                         return s1.renameTo(newName);
@@ -5438,7 +5438,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         if (parsePrimaryKeyClusteredNonClusteredKeywordIf())
             list.add(parsePrimaryKeySpecification(constraint));
-        else if (parseKeywordIf("UNIQUE") && (parseKeywordIf("KEY") || parseKeywordIf("INDEX") || true))
+        else if (parseKeywordIf("UNIQUE") && (parseKeywordIf("KEY", "INDEX") || true))
             list.add(parseUniqueSpecification(constraint));
         else if (parseKeywordIf("FOREIGN KEY"))
             list.add(parseForeignKeySpecification(constraint));
@@ -5492,7 +5492,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return s1.alter(field).setNotNull();
                 else
                     throw expected("NOT NULL", "NULL");
-            else if (parseKeywordIf("DROP NOT NULL") || parseKeywordIf("SET NULL") || parseKeywordIf("NULL"))
+            else if (parseKeywordIf("DROP NOT NULL", "SET NULL", "NULL"))
                 return s1.alter(field).dropNotNull();
             else if (parseKeywordIf("DROP DEFAULT"))
                 return s1.alter(field).dropDefault();
@@ -5500,9 +5500,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return s1.alter(field).setNotNull();
             else if (parseKeywordIf("SET DEFAULT"))
                 return s1.alter(field).default_((Field) toField(parseConcat()));
-            else if (parseKeywordIf("TO") || parseKeywordIf("RENAME TO") || parseKeywordIf("RENAME AS"))
+            else if (parseKeywordIf("TO", "RENAME TO", "RENAME AS"))
                 return s1.renameColumn(field).to(parseFieldName());
-            else if (parseKeywordIf("TYPE") || parseKeywordIf("SET DATA TYPE"))
+            else if (parseKeywordIf("TYPE", "SET DATA TYPE"))
                 ;
 
         DataType<?> type = parseDataType();
@@ -6059,7 +6059,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 : s2;
         }
         else if (parseKeywordIf("RENAME")) {
-            if (parseKeywordIf("TO") || parseKeywordIf("AS")) {
+            if (parseKeywordIf("TO", "AS")) {
                 return s1.renameTo(parseDomainName());
             }
             else if (parseKeywordIf("CONSTRAINT")) {
@@ -6103,11 +6103,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final void parseMySQLCreateDatabaseFlagsIf() {
         for (;;) {
-            if ((parseKeywordIf("DEFAULT CHARACTER SET") || parseKeywordIf("CHARACTER SET")) && (parseIf("=") || true))
+            if (parseKeywordIf("DEFAULT CHARACTER SET", "CHARACTER SET") && (parseIf("=") || true))
                 parseCharacterSet();
-            else if ((parseKeywordIf("DEFAULT COLLATE") || parseKeywordIf("COLLATE")) && (parseIf("=") || true))
+            else if (parseKeywordIf("DEFAULT COLLATE", "COLLATE") && (parseIf("=") || true))
                 parseCollation();
-            else if ((parseKeywordIf("DEFAULT ENCRYPTION") || parseKeywordIf("ENCRYPTION")) && (parseIf("=") || true))
+            else if (parseKeywordIf("DEFAULT ENCRYPTION", "ENCRYPTION") && (parseIf("=") || true))
                 parseCharacterLiteral();
             else
                 break;
@@ -6207,7 +6207,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         parseUsingIndexTypeIf();
 
         Name[] include = null;
-        if (parseKeywordIf("INCLUDE") || parseKeywordIf("COVERING") || parseKeywordIf("STORING")) {
+        if (parseKeywordIf("INCLUDE", "COVERING", "STORING")) {
             parse('(');
             include = parseIdentifiers().toArray(EMPTY_NAME);
             parse(')');
@@ -6508,7 +6508,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
         else if (!not && (comp = parseComparatorIf()) != null) {
             boolean all = parseKeywordIf("ALL");
-            boolean any = !all && (parseKeywordIf("ANY") || parseKeywordIf("SOME"));
+            boolean any = !all && parseKeywordIf("ANY", "SOME");
             if (all || any)
                 parse('(');
 
@@ -7889,17 +7889,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Field rhs = (Field) parseFactor();
         DatePart part;
 
-        if (!ignoreProEdition() && (parseKeywordIf("YEAR") || parseKeywordIf("YEARS")) && requireProEdition())
+        if (!ignoreProEdition() && parseKeywordIf("YEAR", "YEARS") && requireProEdition())
             part = DatePart.YEAR;
-        else if (!ignoreProEdition() && (parseKeywordIf("MONTH") || parseKeywordIf("MONTHS")) && requireProEdition())
+        else if (!ignoreProEdition() && parseKeywordIf("MONTH", "MONTHS") && requireProEdition())
             part = DatePart.MONTH;
-        else if (!ignoreProEdition() && (parseKeywordIf("DAY") || parseKeywordIf("DAYS")) && requireProEdition())
+        else if (!ignoreProEdition() && parseKeywordIf("DAY", "DAYS") && requireProEdition())
             part = DatePart.DAY;
-        else if (!ignoreProEdition() && (parseKeywordIf("HOUR") || parseKeywordIf("HOURS")) && requireProEdition())
+        else if (!ignoreProEdition() && parseKeywordIf("HOUR", "HOURS") && requireProEdition())
             part = DatePart.HOUR;
-        else if (!ignoreProEdition() && (parseKeywordIf("MINUTE") || parseKeywordIf("MINUTES")) && requireProEdition())
+        else if (!ignoreProEdition() && parseKeywordIf("MINUTE", "MINUTES") && requireProEdition())
             part = DatePart.MINUTE;
-        else if (!ignoreProEdition() && (parseKeywordIf("SECOND") || parseKeywordIf("SECONDS")) && requireProEdition())
+        else if (!ignoreProEdition() && parseKeywordIf("SECOND", "SECONDS") && requireProEdition())
             part = DatePart.SECOND;
         else
             part = null;
@@ -8307,9 +8307,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("CENTURY"))
                     return century(parseFieldParenthesised());
 
-                else if ((parseKeywordIf("CURRENT_DATE") || parseKeywordIf("CURRENT DATE")) && parseEmptyParensIf())
+                else if (parseKeywordIf("CURRENT_DATE", "CURRENT DATE") && parseEmptyParensIf())
                     return currentDate();
-                else if (parseKeywordIf("CURRENT_TIMESTAMP") || parseKeywordIf("CURRENT TIMESTAMP")) {
+                else if (parseKeywordIf("CURRENT_TIMESTAMP", "CURRENT TIMESTAMP")) {
                     Field<Integer> precision = null;
                     if (parseIf('('))
                         if (!parseIf(')')) {
@@ -8318,7 +8318,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         }
                     return precision != null ? currentTimestamp(precision) : currentTimestamp();
                 }
-                else if ((parseKeywordIf("CURRENT_TIME") || parseKeywordIf("CURRENT TIME")) && parseEmptyParensIf())
+                else if (parseKeywordIf("CURRENT_TIME", "CURRENT TIME") && parseEmptyParensIf())
                     return currentTime();
                 else if (parseFunctionNameIf("CURDATE") && parseEmptyParens())
                     return currentDate();
@@ -9264,7 +9264,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             return bitXNor((Field) x, (Field) y);
         }
-        else if (parseKeywordIf("BIT_NOT") || parseKeywordIf("BITNOT") || parseKeywordIf("BIN_NOT")) {
+        else if (parseKeywordIf("BIT_NOT", "BITNOT", "BIN_NOT")) {
             parse('(');
             Field<?> x = toField(parseNumericOp());
             parse(')');
@@ -10903,9 +10903,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse('(');
             int p = position();
 
-            boolean leading = parseKeywordIf("LEADING") || parseKeywordIf("L");
-            boolean trailing = !leading && (parseKeywordIf("TRAILING") || parseKeywordIf("T"));
-            boolean both = !leading && !trailing && (parseKeywordIf("BOTH") || parseKeywordIf("B"));
+            boolean leading = parseKeywordIf("LEADING", "L");
+            boolean trailing = !leading && parseKeywordIf("TRAILING", "T");
+            boolean both = !leading && !trailing && parseKeywordIf("BOTH", "B");
 
             if (leading || trailing || both) {
                 if (parseIf(',') || parseIf(')')) {
@@ -12537,7 +12537,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final CharacterSet parseCharacterSetSpecificationIf() {
-        if (parseKeywordIf("CHARACTER SET") || parseKeywordIf("CHARSET")) {
+        if (parseKeywordIf("CHARACTER SET", "CHARSET")) {
             parseIf('=');
             return parseCharacterSet();
         }
@@ -13283,7 +13283,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return CombineOperator.UNION;
             else
                 return CombineOperator.UNION;
-        else if (!intersectOnly && (parseKeywordIf("EXCEPT") || parseKeywordIf("MINUS")))
+        else if (!intersectOnly && parseKeywordIf("EXCEPT", "MINUS"))
             if (parseKeywordIf("ALL"))
                 return CombineOperator.EXCEPT_ALL;
             else if (parseKeywordIf("DISTINCT"))

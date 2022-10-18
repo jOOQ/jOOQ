@@ -94,9 +94,7 @@ implements
     ScopeMappableWrapper<TableAsField<R>, Table<R>>
 {
 
-    static final Set<SQLDialect> NO_NATIVE_SUPPORT = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
-
-    final Table<R>               table;
+    final Table<R> table;
 
     TableAsField(Table<R> table) {
         this(table, table.getQualifiedName());
@@ -125,26 +123,21 @@ implements
 
     @Override
     final void acceptDefault(Context<?> ctx) {
-        if (NO_NATIVE_SUPPORT.contains(ctx.dialect()))
+        if (RowAsField.NO_NATIVE_SUPPORT.contains(ctx.dialect()))
+            ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(new SelectFieldList<>(emulatedFields(ctx.configuration()).fields.fields)));
 
 
 
 
-
-
-
-
-                ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(new SelectFieldList<>(emulatedFields(ctx.configuration()).fields.fields)));
-
-
-
-
-
-
-        // [#13664] Because of risk of ambiguity between table and column names,
-        //          we can't just render the table name here.
+        // [#4727] [#13664] [#14100] In the first versions of jOOQ 3.17, there
+        // used to be native implementations for this feature here, but they
+        // produced a significant amount of problems, most importantly #14100,
+        // where we relied on code generation column order to match production
+        // metadata column order, something which we should never rely upon.
+        // Hence, even in the presence of native support (e.g. PostgreSQL), we
+        // are now emulating the feature.
         else
-            ctx.visit(K_CAST).sql(" (").visit(K_ROW).sql(" (").visit(table).sql(".*) ").visit(K_AS).sql(' ').visit(unalias(table)).sql(')');
+            ctx.visit(new RowAsField<>(table.fieldsRow(), getQualifiedName()));
     }
 
     @Override

@@ -468,6 +468,7 @@ import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.asInt;
 import static org.jooq.impl.Tools.deleteQueryImpl;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.normaliseNameCase;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.updateQueryImpl;
@@ -717,6 +718,8 @@ import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -7148,8 +7151,48 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             else
                 position(p);
         }
+        else {
+            for (;;) {
+                if (parseKeywordIf("USE KEY", "USE INDEX")) {
+                    if (parseKeywordIf("FOR JOIN"))
+                        result = t(result).useIndexForJoin(parseParenthesisedIdentifiers());
+                    else if (parseKeywordIf("FOR ORDER BY"))
+                        result = t(result).useIndexForOrderBy(parseParenthesisedIdentifiers());
+                    else if (parseKeywordIf("FOR GROUP BY"))
+                        result = t(result).useIndexForGroupBy(parseParenthesisedIdentifiers());
+                    else
+                        result = t(result).useIndex(parseParenthesisedIdentifiers());
+                }
+                else if (parseKeywordIf("FORCE KEY", "FORCE INDEX")) {
+                    if (parseKeywordIf("FOR JOIN"))
+                        result = t(result).forceIndexForJoin(parseParenthesisedIdentifiers());
+                    else if (parseKeywordIf("FOR ORDER BY"))
+                        result = t(result).forceIndexForOrderBy(parseParenthesisedIdentifiers());
+                    else if (parseKeywordIf("FOR GROUP BY"))
+                        result = t(result).forceIndexForGroupBy(parseParenthesisedIdentifiers());
+                    else
+                        result = t(result).forceIndex(parseParenthesisedIdentifiers());
+                }
+                else if (parseKeywordIf("IGNORE KEY", "IGNORE INDEX")) {
+                    if (parseKeywordIf("FOR JOIN"))
+                        result = t(result).ignoreIndexForJoin(parseParenthesisedIdentifiers());
+                    else if (parseKeywordIf("FOR ORDER BY"))
+                        result = t(result).ignoreIndexForOrderBy(parseParenthesisedIdentifiers());
+                    else if (parseKeywordIf("FOR GROUP BY"))
+                        result = t(result).ignoreIndexForGroupBy(parseParenthesisedIdentifiers());
+                    else
+                        result = t(result).ignoreIndex(parseParenthesisedIdentifiers());
+                }
+                else
+                    break;
+            }
+        }
 
         return t(result);
+    }
+
+    private final String[] parseParenthesisedIdentifiers() {
+        return parseParenthesised(c -> map(parseIdentifiers(), Name::last, String[]::new));
     }
 
     private final Field<?> parseFunctionArgumentIf(String parameterName) {
@@ -14044,8 +14087,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             "FOR SHARE",
             "FOR UPDATE",
             "FOR XML",
+            "FORCE KEY",
+            "FORCE INDEX",
             "GROUP BY",
             "HAVING",
+            "IGNORE KEY",
+            "IGNORE INDEX",
             "INTERSECT",
             "INTO",
             "LIMIT",
@@ -14057,6 +14104,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             "ROWS",
             "START WITH",
             "UNION",
+            "USE KEY",
+            "USE INDEX",
             "WHERE",
             "WINDOW"
         ));

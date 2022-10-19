@@ -123,6 +123,7 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.configuration;
+import static org.jooq.impl.Tools.getRecordQualifier;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.mostSpecificArray;
@@ -31610,8 +31611,10 @@ public class DSL {
     public static <T> Param<T> val(Object value, DataType<T> type) {
 
         // Advanced data types have dedicated constant types
-        if (value instanceof QualifiedRecord)
-            return new QualifiedRecordConstant((QualifiedRecord<?>) value);
+        if (value instanceof QualifiedRecord<?> r)
+            return new QualifiedRecordConstant(r, r.getQualifier());
+        else if (value == null && QualifiedRecord.class.isAssignableFrom(type.getType()))
+            return new QualifiedRecordConstant(null, getRecordQualifier(type));
 
 
 

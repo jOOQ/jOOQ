@@ -41,6 +41,7 @@ package org.jooq.impl;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultBinding.DefaultRecordBinding.REQUIRE_RECORD_CAST;
+import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Tools.getMappedUDTName;
 
@@ -48,6 +49,7 @@ import org.jooq.BindContext;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QualifiedRecord;
+import org.jooq.RecordQualifier;
 import org.jooq.RenderContext;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -58,8 +60,12 @@ import org.jooq.impl.QOM.UNotYetImplemented;
  */
 final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends AbstractParam<R> implements UNotYetImplemented {
 
-    QualifiedRecordConstant(R value) {
-        super(value, value.getQualifier().getDataType());
+    final RecordQualifier<R> qualifier;
+
+    QualifiedRecordConstant(R value, RecordQualifier<R> qualifier) {
+        super(value, qualifier.getDataType());
+
+        this.qualifier = qualifier;
     }
 
     @Override
@@ -132,34 +138,39 @@ final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends Abstra
     private final void toSQLInline(RenderContext ctx) {
         Cast.renderCastIf(ctx,
             c -> {
-                switch (c.family()) {
+                if (value == null) {
+                    c.visit(K_NULL);
+                }
+                else {
+                    switch (c.family()) {
 
 
-                    case POSTGRES:
-                    case YUGABYTEDB:
-                        c.visit(K_ROW);
-                        break;
+                        case POSTGRES:
+                        case YUGABYTEDB:
+                            c.visit(K_ROW);
+                            break;
 
-                    default: {
-                        c.visit(value.getQualifier());
-                        break;
+                        default: {
+                            c.visit(qualifier);
+                            break;
+                        }
                     }
+
+                    c.sql('(');
+
+                    String separator = "";
+                    for (Field<?> field : value.fields()) {
+                        c.sql(separator);
+                        c.visit(val(value.get(field), field));
+                        separator = ", ";
+                    }
+
+                    c.sql(')');
                 }
-
-                c.sql('(');
-
-                String separator = "";
-                for (Field<?> field : value.fields()) {
-                    c.sql(separator);
-                    c.visit(val(value.get(field), field));
-                    separator = ", ";
-                }
-
-                c.sql(')');
             },
 
             // [#13174] Need to cast inline UDT ROW expressions to the UDT type
-            c -> c.visit(value.getQualifier()),
+            c -> c.visit(qualifier),
             () -> REQUIRE_RECORD_CAST.contains(ctx.dialect())
         );
     }
@@ -198,8 +209,9 @@ final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends Abstra
             // inlined instead: ROW(.., .., ..)
             case POSTGRES:
             case YUGABYTEDB:  {
-                for (Field<?> field : value.fields())
-                    ctx.visit(val(value.get(field)));
+                if (value != null)
+                    for (Field<?> field : value.fields())
+                        ctx.visit(val(value.get(field), field.getDataType()));
 
                 break;
             }

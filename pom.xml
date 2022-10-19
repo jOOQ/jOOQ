@@ -56,7 +56,7 @@
         <!-- [#12884] TODO: Remove explicit upgrade of protobuf-java again when https://github.com/google/error-prone/pull/2819 is released  -->
         <errorprone.version>2.11.0</errorprone.version>
         <testcontainers.version>1.16.3</testcontainers.version>
-        <jackson.version>2.13.4</jackson.version>
+        <jackson.version>2.13.4.1</jackson.version>
     </properties>
 
     <licenses>

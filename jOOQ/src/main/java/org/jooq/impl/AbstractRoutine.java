@@ -151,6 +151,7 @@ import org.jooq.Results;
 import org.jooq.Routine;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.Table;
 import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
@@ -1090,6 +1091,14 @@ implements
         else
             context.sql("{ ");
     }
+
+
+
+
+
+
+
+
 
 
 

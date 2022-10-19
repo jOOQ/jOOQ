@@ -57,6 +57,7 @@
         <errorprone.version>2.11.0</errorprone.version>
         <testcontainers.version>1.16.3</testcontainers.version>
         <jackson.version>2.13.4</jackson.version>
+        <jackson.version.databind>2.13.4.2</jackson.version.databind>
     </properties>
 
     <licenses>
@@ -167,7 +168,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
+                <version>${jackson.version.databind}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>

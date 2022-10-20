@@ -44,8 +44,8 @@ import org.jooq.Converter;
  */
 public abstract class AbstractConverter<T, U> implements Converter<T, U> {
 
-    private final Class<T>    fromType;
-    private final Class<U>    toType;
+    private final Class<T> fromType;
+    private final Class<U> toType;
 
     public AbstractConverter(Class<T> fromType, Class<U> toType) {
         this.fromType = fromType;

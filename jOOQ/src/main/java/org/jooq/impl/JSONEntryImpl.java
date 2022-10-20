@@ -312,16 +312,11 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
     }
 
     static final boolean isType(DataType<?> t, Class<?> type) {
-        if (t instanceof ConvertedDataType<?, ?> c)
-            t = c.delegate();
-
-        return t.getType() == type;
+        return ConvertedDataType.delegate(t).getType() == type;
     }
 
     static final boolean isJSON(Context<?> ctx, DataType<?> type) {
-        DataType<?> t = type instanceof ConvertedDataType<?, ?> c
-            ? c.delegate()
-            : type;
+        DataType<?> t = ConvertedDataType.delegate(type);
 
         return t.isJSON()
             || t.isEmbeddable() && forceMultisetContent(ctx, () -> t.getRow().size() > 1) && emulateMultisetWithJSON(ctx)

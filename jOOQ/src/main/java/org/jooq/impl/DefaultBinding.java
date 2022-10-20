@@ -3942,9 +3942,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#4964] [#6058] Recurse only if we have a meaningful converter, not the identity converter,
             //                 which would cause a StackOverflowError, here!
-            else if (type != wrapper(converter.toType())) {
-                return converter.from((T) pgFromString(ctx, field("converted_field", ((ConvertedDataType<?, ?>) field.getDataType()).delegate()), string));
-            }
+            else if (type != wrapper(converter.toType()))
+                return converter.from((T) pgFromString(ctx, field("converted_field", ConvertedDataType.delegate(field.getDataType())), string));
 
             throw new UnsupportedOperationException("Class " + type + " is not supported");
         }
@@ -3998,9 +3997,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         /**
          * Create an array from a String
-         * <p>
-         * Unfortunately, this feature is very poorly documented and true UDT
-         * support by the PostGreSQL JDBC driver has been postponed for a long time.
          *
          * @param string A String representation of an array
          * @return The converted array
@@ -4009,10 +4005,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (string == null)
                 return null;
 
+            DataType<?> t = field.getDataType();
             try {
                 return Tools.map(
                     toPGArray(string),
-                    v -> pgFromString(ctx, field("array_element", type.getComponentType()), v),
+                    v -> pgFromString(ctx, field("array_element", ConvertedDataType.delegate(t).getArrayComponentDataType()), v),
                     size -> (Object[]) java.lang.reflect.Array.newInstance(type.getComponentType(), size)
                 );
             }

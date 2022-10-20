@@ -320,5 +320,9 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     final DataType<T> delegate() {
         return delegate instanceof ConvertedDataType c ? c.delegate() : delegate;
     }
+
+    static final DataType<?> delegate(DataType<?> type) {
+        return type instanceof ConvertedDataType<?, ?> c ? c.delegate() : type;
+    }
 }
 

@@ -57,7 +57,7 @@
         <errorprone.version>2.11.0</errorprone.version>
         <testcontainers.version>1.16.3</testcontainers.version>
         <jackson.version>2.13.4</jackson.version>
-        <jackson.version.databind>2.13.4.2</jackson.version.databind>
+        <jackson.version.databind>2.14.0-rc1.2</jackson.version.databind>
     </properties>
 
     <licenses>

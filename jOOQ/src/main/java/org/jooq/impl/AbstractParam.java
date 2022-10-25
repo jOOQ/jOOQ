@@ -118,10 +118,13 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
 
     private final static String name(Object value) {
 
-        // [#13392] The generated name of a byte[] value shouldn't depend on the
-        //          identity of the value, but on the value itself
+        // [#13392] [##14131] The generated name of an array value shouldn't
+        //          depend on the identity of the value, but on the value itself
         if (value instanceof byte[] b) {
             return "b_" + Internal.hash0(Arrays.hashCode(Arrays.copyOf(b, 16)));
+        }
+        else if (value instanceof Object[] o) {
+            return "a_" + Internal.hash0(Arrays.hashCode(Arrays.copyOf(o, 16)));
         }
         else
             return String.valueOf(value);

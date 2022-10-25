@@ -41,6 +41,13 @@ import static org.jooq.Clause.WITH;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+// ...
+// ...
+// ...
+// ...
 // ...
 // ...
 // ...
@@ -53,13 +60,14 @@ import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_TOP_LEVEL_CTE;
+import static org.jooq.impl.Transformations.NO_SUPPORT_CTE;
+import static org.jooq.impl.Transformations.transformInlineCTE;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 import org.jooq.Clause;
 import org.jooq.CommonTableExpression;
@@ -67,7 +75,6 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DerivedColumnList;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.InsertSetStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Name;
@@ -182,8 +189,8 @@ implements
 
 
 
-    private final CommonTableExpressionList                                 ctes;
-    private final boolean                                                   recursive;
+    final CommonTableExpressionList                                         ctes;
+    final boolean                                                           recursive;
     private Configuration                                                   configuration;
 
     // Intermediary properties for CTE construction
@@ -204,6 +211,9 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        if (transformInlineCTE(ctx.configuration()))
+            return;
+
         CommonTableExpressionList list;
 
 

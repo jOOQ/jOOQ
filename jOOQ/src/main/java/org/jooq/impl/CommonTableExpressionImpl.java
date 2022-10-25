@@ -42,6 +42,7 @@ package org.jooq.impl;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_MATERIALIZED;
 import static org.jooq.impl.Keywords.K_NOT;
@@ -49,15 +50,12 @@ import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
 
 import org.jooq.CommonTableExpression;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.DerivedColumnList;
 import org.jooq.Field;
-import org.jooq.Function1;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -65,6 +63,7 @@ import org.jooq.Record;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
+import org.jooq.Table;
 import org.jooq.TableOptions;
 // ...
 import org.jooq.impl.QOM.Materialized;
@@ -102,6 +101,11 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
 
     @Override
     public final boolean declaresCTE() {
+        return true;
+    }
+
+    @Override
+    public final boolean declaresTables() {
         return true;
     }
 
@@ -147,9 +151,41 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
 
 
         }
+
+        else if (ctx.declareTables()
+                && query instanceof Select
+                && Transformations.transformInlineCTE(ctx.configuration())) {
+
+
+
+
+
+
+
+
+
+        }
+
         else
             ctx.visit(name.name);
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     final FieldsImpl<R> fields0() {

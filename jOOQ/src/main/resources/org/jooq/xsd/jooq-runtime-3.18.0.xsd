@@ -682,6 +682,15 @@ expression is duplicated into the <code>GROUP BY</code> clause.
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="transformInlineCTE" type="jooq-runtime:Transformation" minOccurs="0" maxOccurs="1" default="WHEN_NEEDED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform Common Table Expressions (CTE) by inlining their <code>WITH</code> clause definition to wherever they're referenced.
+<p>
+Non-recursive CTE are just syntax sugar for inline views (derived tables). When they're not supported natively,
+jOOQ can simply inline their definition to wherever they're referenced.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="backslashEscaping" type="jooq-runtime:BackslashEscaping" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether string literals should be escaped with backslash.]]></jxb:javadoc></jxb:property></appinfo></annotation>

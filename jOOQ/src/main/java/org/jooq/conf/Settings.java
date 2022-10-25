@@ -201,6 +201,9 @@ public class Settings
     @XmlElement(defaultValue = "WHEN_NEEDED")
     @XmlSchemaType(name = "string")
     protected Transformation transformGroupByColumnIndex = Transformation.WHEN_NEEDED;
+    @XmlElement(defaultValue = "WHEN_NEEDED")
+    @XmlSchemaType(name = "string")
+    protected Transformation transformInlineCTE = Transformation.WHEN_NEEDED;
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
     protected BackslashEscaping backslashEscaping = BackslashEscaping.DEFAULT;
@@ -2413,6 +2416,32 @@ public class Settings
      */
     public void setTransformGroupByColumnIndex(Transformation value) {
         this.transformGroupByColumnIndex = value;
+    }
+
+    /**
+     * Transform Common Table Expressions (CTE) by inlining their <code>WITH</code> clause definition to wherever they're referenced.
+     * <p>
+     * Non-recursive CTE are just syntax sugar for inline views (derived tables). When they're not supported natively,
+     * jOOQ can simply inline their definition to wherever they're referenced.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Transformation getTransformInlineCTE() {
+        return transformInlineCTE;
+    }
+
+    /**
+     * Transform Common Table Expressions (CTE) by inlining their <code>WITH</code> clause definition to wherever they're referenced.
+     * <p>
+     * Non-recursive CTE are just syntax sugar for inline views (derived tables). When they're not supported natively,
+     * jOOQ can simply inline their definition to wherever they're referenced.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public void setTransformInlineCTE(Transformation value) {
+        this.transformInlineCTE = value;
     }
 
     /**
@@ -4794,6 +4823,20 @@ public class Settings
     }
 
     /**
+     * Transform Common Table Expressions (CTE) by inlining their <code>WITH</code> clause definition to wherever they're referenced.
+     * <p>
+     * Non-recursive CTE are just syntax sugar for inline views (derived tables). When they're not supported natively,
+     * jOOQ can simply inline their definition to wherever they're referenced.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Settings withTransformInlineCTE(Transformation value) {
+        setTransformInlineCTE(value);
+        return this;
+    }
+
+    /**
      * Whether string literals should be escaped with backslash.
      * 
      */
@@ -5604,6 +5647,7 @@ public class Settings
         builder.append("transformRownum", transformRownum);
         builder.append("transformUnneededArithmeticExpressions", transformUnneededArithmeticExpressions);
         builder.append("transformGroupByColumnIndex", transformGroupByColumnIndex);
+        builder.append("transformInlineCTE", transformInlineCTE);
         builder.append("backslashEscaping", backslashEscaping);
         builder.append("paramType", paramType);
         builder.append("paramCastMode", paramCastMode);
@@ -6370,6 +6414,15 @@ public class Settings
             }
         } else {
             if (!transformGroupByColumnIndex.equals(other.transformGroupByColumnIndex)) {
+                return false;
+            }
+        }
+        if (transformInlineCTE == null) {
+            if (other.transformInlineCTE!= null) {
+                return false;
+            }
+        } else {
+            if (!transformInlineCTE.equals(other.transformInlineCTE)) {
                 return false;
             }
         }
@@ -7272,6 +7325,7 @@ public class Settings
         result = ((prime*result)+((transformRownum == null)? 0 :transformRownum.hashCode()));
         result = ((prime*result)+((transformUnneededArithmeticExpressions == null)? 0 :transformUnneededArithmeticExpressions.hashCode()));
         result = ((prime*result)+((transformGroupByColumnIndex == null)? 0 :transformGroupByColumnIndex.hashCode()));
+        result = ((prime*result)+((transformInlineCTE == null)? 0 :transformInlineCTE.hashCode()));
         result = ((prime*result)+((backslashEscaping == null)? 0 :backslashEscaping.hashCode()));
         result = ((prime*result)+((paramType == null)? 0 :paramType.hashCode()));
         result = ((prime*result)+((paramCastMode == null)? 0 :paramCastMode.hashCode()));

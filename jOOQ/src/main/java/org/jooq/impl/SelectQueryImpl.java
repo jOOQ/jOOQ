@@ -224,6 +224,7 @@ import static org.jooq.impl.Tools.SimpleDataKey.DATA_SELECT_INTO_TABLE;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_WINDOW_DEFINITIONS;
 import static org.jooq.impl.Transformations.transformGroupByColumnIndex;
+import static org.jooq.impl.Transformations.transformInlineCTE;
 import static org.jooq.impl.Transformations.transformQualify;
 import static org.jooq.impl.Transformations.transformRownum;
 
@@ -245,12 +246,12 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.jooq.Clause;
+import org.jooq.CommonTableExpression;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
-import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.GeneratorStatementType;
@@ -2181,6 +2182,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             if (t instanceof TableImpl)
                 context.scopeRegister(t, true);
         });
+
+        if (with != null && transformInlineCTE(context.configuration())) {
+
+
+
+
+        }
 
         for (Entry<QueryPart, QueryPart> entry : localQueryPartMapping.entrySet())
             context.scopeRegister(entry.getKey(), true, entry.getValue());

@@ -521,6 +521,11 @@ public class PostgresUtils {
             // [#753] null must be set as a literal
             if (o == null)
                 sb.append(o);
+
+            // [#6359] Avoid quotes for numbers
+            else if (o instanceof Number)
+                sb.append(toPGString(o));
+
             else if (o instanceof byte[])
                 toPGString0((byte[]) o, sb);
 

@@ -3647,6 +3647,32 @@ final class Tools {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     static final Configuration CONFIG          = new DefaultConfiguration();
     static final Configuration CONFIG_UNQUOTED = new DefaultConfiguration();
 

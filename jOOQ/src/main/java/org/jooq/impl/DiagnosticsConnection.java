@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
+import static java.util.Collections.synchronizedMap;
 // ...
 import static org.jooq.conf.ParamType.FORCE_INDEXED;
 
@@ -46,20 +47,22 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.function.Predicate;
 import java.util.Set;
+import java.util.function.Predicate;
 
+import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Parser;
+// ...
 import org.jooq.Queries;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
+// ...
 import org.jooq.conf.Settings;
 import org.jooq.impl.QOM.Eq;
 import org.jooq.tools.jdbc.DefaultConnection;
@@ -73,7 +76,6 @@ final class DiagnosticsConnection extends DefaultConnection {
     static final int                      LRU_SIZE_GLOBAL = 50000;
     static final int                      LRU_SIZE_LOCAL  = 500;
     static final int                      DUP_SIZE        = 500;
-    static final Map<String, Set<String>> DUPLICATE_SQL   = Collections.synchronizedMap(new LRU<>(LRU_SIZE_GLOBAL));
 
     final Map<String, List<String>>       repeatedSQL     = new LRU<>(LRU_SIZE_LOCAL);
     final Configuration                   configuration;
@@ -168,13 +170,27 @@ final class DiagnosticsConnection extends DefaultConnection {
         return !FALSE.equals(test.test(configuration.settings()));
     }
 
+    @SuppressWarnings("unchecked")
+    final Map<String, Set<String>> duplicateSql() {
+        return (Map<String, Set<String>>) configuration.data().computeIfAbsent(
+            "org.jooq.diagnostics.duplicate-sql",
+            k -> synchronizedMap(new LRU<>(LRU_SIZE_GLOBAL))
+        );
+    }
+
     final String parse(String sql) {
         Queries queries = null;
+        Queries transformed = null;
         String normalised;
 
         try {
-            queries = parser.parse(sql);
-            normalised = normalisingRenderer.render(queries);
+
+            // [#14137] TODO: Avoid unnecessary work, depending on the Settings
+            transformed = queries = parser.parse(sql);
+
+
+
+            normalised = normalisingRenderer.render(transformed);
         }
         catch (ParserException exception) {
             normalised = sql;
@@ -186,10 +202,7 @@ final class DiagnosticsConnection extends DefaultConnection {
 
         try {
             if (check(Settings::isDiagnosticsDuplicateStatements)) {
-                Set<String> duplicates = null;
-                synchronized (DUPLICATE_SQL) {
-                    duplicates = duplicates(DUPLICATE_SQL, sql, normalised);
-                }
+                Set<String> duplicates = duplicates(duplicateSql(), sql, normalised);
 
                 if (duplicates != null)
                     listeners.duplicateStatements(new DefaultDiagnosticsContext(
@@ -229,6 +242,11 @@ final class DiagnosticsConnection extends DefaultConnection {
 
 
 
+
+
+
+
+
         }
         catch (Error e) {
             throw e;
@@ -244,16 +262,25 @@ final class DiagnosticsConnection extends DefaultConnection {
         return sql;
     }
 
-    private Set<String> duplicates(Map<String, Set<String>> map, String sql, String normalised) {
-        Set<String> v = map.computeIfAbsent(normalised, k -> new HashSet<>());
 
-        if (v.size() >= DUP_SIZE || (v.add(sql) && v.size() > 1))
-            return v;
-        else
-            return null;
+
+
+
+
+
+
+    private final Set<String> duplicates(Map<String, Set<String>> map, String sql, String normalised) {
+        synchronized (map) {
+            Set<String> v = map.computeIfAbsent(normalised, k -> new HashSet<>());
+
+            if (v.size() >= DUP_SIZE || (v.add(sql) && v.size() > 1))
+                return v;
+            else
+                return null;
+        }
     }
 
-    private List<String> repetitions(Map<String, List<String>> map, String sql, String normalised) {
+    private final List<String> repetitions(Map<String, List<String>> map, String sql, String normalised) {
         List<String> v = map.computeIfAbsent(normalised, k -> new ArrayList<>());
 
         if (v.size() >= DUP_SIZE || (v.add(sql) && v.size() > 1))
@@ -263,7 +290,7 @@ final class DiagnosticsConnection extends DefaultConnection {
     }
 
     // See https://stackoverflow.com/a/1953516/521799
-    static class LRU<V> extends LinkedHashMap<String, V> {
+    static final class LRU<V> extends LinkedHashMap<String, V> {
         private final int size;
 
         LRU(int size) {

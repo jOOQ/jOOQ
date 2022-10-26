@@ -130,6 +130,8 @@ public class Settings
     protected Boolean diagnosticsUnnecessaryWasNullCall = true;
     @XmlElement(defaultValue = "true")
     protected Boolean diagnosticsTrivialCondition = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean diagnosticsNullCondition = true;
     @XmlElement(defaultValue = "false")
     protected Boolean transformPatterns = false;
     @XmlElement(defaultValue = "true")
@@ -1433,6 +1435,35 @@ public class Settings
      */
     public void setDiagnosticsTrivialCondition(Boolean value) {
         this.diagnosticsTrivialCondition = value;
+    }
+
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#nullConditoin(org.jooq.DiagnosticsContext) diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isDiagnosticsNullCondition() {
+        return diagnosticsNullCondition;
+    }
+
+    /**
+     * Sets the value of the diagnosticsNullCondition property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDiagnosticsNullCondition(Boolean value) {
+        this.diagnosticsNullCondition = value;
     }
 
     /**
@@ -4818,6 +4849,11 @@ public class Settings
         return this;
     }
 
+    public Settings withDiagnosticsNullCondition(Boolean value) {
+        setDiagnosticsNullCondition(value);
+        return this;
+    }
+
     public Settings withTransformPatterns(Boolean value) {
         setTransformPatterns(value);
         return this;
@@ -5854,6 +5890,7 @@ public class Settings
         builder.append("diagnosticsTooManyRowsFetched", diagnosticsTooManyRowsFetched);
         builder.append("diagnosticsUnnecessaryWasNullCall", diagnosticsUnnecessaryWasNullCall);
         builder.append("diagnosticsTrivialCondition", diagnosticsTrivialCondition);
+        builder.append("diagnosticsNullCondition", diagnosticsNullCondition);
         builder.append("transformPatterns", transformPatterns);
         builder.append("transformPatternsLogging", transformPatternsLogging);
         builder.append("transformPatternsTrim", transformPatternsTrim);
@@ -6364,6 +6401,15 @@ public class Settings
             }
         } else {
             if (!diagnosticsTrivialCondition.equals(other.diagnosticsTrivialCondition)) {
+                return false;
+            }
+        }
+        if (diagnosticsNullCondition == null) {
+            if (other.diagnosticsNullCondition!= null) {
+                return false;
+            }
+        } else {
+            if (!diagnosticsNullCondition.equals(other.diagnosticsNullCondition)) {
                 return false;
             }
         }
@@ -7602,6 +7648,7 @@ public class Settings
         result = ((prime*result)+((diagnosticsTooManyRowsFetched == null)? 0 :diagnosticsTooManyRowsFetched.hashCode()));
         result = ((prime*result)+((diagnosticsUnnecessaryWasNullCall == null)? 0 :diagnosticsUnnecessaryWasNullCall.hashCode()));
         result = ((prime*result)+((diagnosticsTrivialCondition == null)? 0 :diagnosticsTrivialCondition.hashCode()));
+        result = ((prime*result)+((diagnosticsNullCondition == null)? 0 :diagnosticsNullCondition.hashCode()));
         result = ((prime*result)+((transformPatterns == null)? 0 :transformPatterns.hashCode()));
         result = ((prime*result)+((transformPatternsLogging == null)? 0 :transformPatternsLogging.hashCode()));
         result = ((prime*result)+((transformPatternsTrim == null)? 0 :transformPatternsTrim.hashCode()));

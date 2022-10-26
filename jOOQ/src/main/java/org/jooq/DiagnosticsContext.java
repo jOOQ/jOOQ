@@ -50,7 +50,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-public interface DiagnosticsContext {
+public interface DiagnosticsContext extends Scope {
 
     /**
      * The object that was diagnosed if available, or <code>null</code>, if there was no specific {@link QueryPart} to attach the diagnostic to.

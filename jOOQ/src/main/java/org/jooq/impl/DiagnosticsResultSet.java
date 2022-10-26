@@ -59,7 +59,9 @@ import java.sql.Timestamp;
 import java.util.BitSet;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.function.Predicate;
 
+import org.jooq.conf.Settings;
 import org.jooq.tools.jdbc.DefaultResultSet;
 
 /**
@@ -579,7 +581,7 @@ final class DiagnosticsResultSet extends DefaultResultSet {
 
     @Override
     public final boolean wasNull() throws SQLException {
-        if (!wasPrimitive) {
+        if (!wasPrimitive && check(Settings::isDiagnosticsUnnecessaryWasNullCall)) {
             DefaultDiagnosticsContext ctx = ctx("ResultSet::wasNull was called unnecessarily.");
             ctx.resultSetUnnecessaryWasNullCall = true;
             ctx.resultSetColumnIndex = wasColumnIndex;
@@ -609,7 +611,7 @@ final class DiagnosticsResultSet extends DefaultResultSet {
     }
 
     private final void checkPrimitive() throws SQLException {
-        if (wasPrimitive && wasNullable) {
+        if (wasPrimitive && wasNullable && check(Settings::isDiagnosticsMissingWasNullCall)) {
             DefaultDiagnosticsContext ctx = ctx("ResultSet::wasNull was not called.");
             ctx.resultSetMissingWasNullCall = true;
             ctx.resultSetColumnIndex = wasColumnIndex;
@@ -628,8 +630,12 @@ final class DiagnosticsResultSet extends DefaultResultSet {
         read(super.findColumn(columnLabel));
     }
 
+    private final boolean check(Predicate<? super Settings> test) {
+        return connection.check(test);
+    }
+
     private final DefaultDiagnosticsContext ctx(String message) throws SQLException {
-        DefaultDiagnosticsContext ctx = new DefaultDiagnosticsContext(message, sql);
+        DefaultDiagnosticsContext ctx = new DefaultDiagnosticsContext(connection.configuration, message, sql);
 
         ctx.resultSet = super.getDelegate();
         ctx.resultSetWrapper = this;
@@ -742,20 +748,24 @@ final class DiagnosticsResultSet extends DefaultResultSet {
         checkPrimitive();
 
         try {
-            if (current < rows)
-                super.absolute(current = rows);
+            if (check(Settings::isDiagnosticsTooManyRowsFetched)) {
+                if (current < rows)
+                    super.absolute(current = rows);
 
-            DefaultDiagnosticsContext c1 = ctx("Too many rows fetched");
-            c1.resultSetClosing = true;
+                DefaultDiagnosticsContext c1 = ctx("Too many rows fetched");
+                c1.resultSetClosing = true;
 
-            if (super.next())
-                connection.listeners.tooManyRowsFetched(c1);
+                if (super.next())
+                    connection.listeners.tooManyRowsFetched(c1);
+            }
 
-            DefaultDiagnosticsContext c2 = ctx("Too many columns fetched");
-            c2.resultSetClosing = true;
+            if (check(Settings::isDiagnosticsTooManyColumnsFetched)) {
+                DefaultDiagnosticsContext c2 = ctx("Too many columns fetched");
+                c2.resultSetClosing = true;
 
-            if (read.cardinality() != columns)
-                connection.listeners.tooManyColumnsFetched(c2);
+                if (read.cardinality() != columns)
+                    connection.listeners.tooManyColumnsFetched(c2);
+            }
         }
         catch (SQLException ignore) {}
 

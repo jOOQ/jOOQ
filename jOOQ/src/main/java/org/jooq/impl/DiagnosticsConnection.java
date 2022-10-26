@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 // ...
 import static org.jooq.conf.ParamType.FORCE_INDEXED;
 
@@ -51,6 +52,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Predicate;
 import java.util.Set;
 
 import org.jooq.Configuration;
@@ -58,6 +60,7 @@ import org.jooq.Parser;
 import org.jooq.Queries;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
+import org.jooq.conf.Settings;
 import org.jooq.impl.QOM.Eq;
 import org.jooq.tools.jdbc.DefaultConnection;
 
@@ -161,6 +164,10 @@ final class DiagnosticsConnection extends DefaultConnection {
         configuration.connectionProvider().release(getDelegate());
     }
 
+    final boolean check(Predicate<? super Settings> test) {
+        return !FALSE.equals(test.test(configuration.settings()));
+    }
+
     final String parse(String sql) {
         Queries queries = null;
         String normalised;
@@ -172,28 +179,37 @@ final class DiagnosticsConnection extends DefaultConnection {
         catch (ParserException exception) {
             normalised = sql;
             listeners.exception(new DefaultDiagnosticsContext(
+                configuration,
                 "Query could not be parsed.", sql, exception
             ));
         }
 
         try {
-            Set<String> duplicates = null;
-            synchronized (DUPLICATE_SQL) {
-                duplicates = duplicates(DUPLICATE_SQL, sql, normalised);
+            if (check(Settings::isDiagnosticsDuplicateStatements)) {
+                Set<String> duplicates = null;
+                synchronized (DUPLICATE_SQL) {
+                    duplicates = duplicates(DUPLICATE_SQL, sql, normalised);
+                }
+
+                if (duplicates != null)
+                    listeners.duplicateStatements(new DefaultDiagnosticsContext(
+                        configuration,
+                        "Duplicate statements encountered.",
+                        sql, normalised, duplicates, null, queries, null
+                    ));
             }
 
-            if (duplicates != null)
-                listeners.duplicateStatements(new DefaultDiagnosticsContext(
-                    "Duplicate statements encountered.",
-                    sql, normalised, duplicates, null, queries, null
-                ));
+            if (check(Settings::isDiagnosticsRepeatedStatements)) {
+                List<String> repetitions = repetitions(repeatedSQL, sql, normalised);
+                if (repetitions != null)
+                    listeners.repeatedStatements(new DefaultDiagnosticsContext(
+                        configuration,
+                        "Repeated statements encountered.",
+                        sql, normalised, null, repetitions, queries, null
+                    ));
+            }
 
-            List<String> repetitions = repetitions(repeatedSQL, sql, normalised);
-            if (repetitions != null)
-                listeners.repeatedStatements(new DefaultDiagnosticsContext(
-                    "Repeated statements encountered.",
-                    sql, normalised, null, repetitions, queries, null
-                ));
+
 
 
 
@@ -219,6 +235,7 @@ final class DiagnosticsConnection extends DefaultConnection {
         }
         catch (Throwable exception) {
             listeners.exception(new DefaultDiagnosticsContext(
+                configuration,
                 "An unexpected exception has occurred. See exception for details.",
                 sql, normalised, null, null, queries, exception
             ));

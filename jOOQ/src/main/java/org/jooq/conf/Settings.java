@@ -116,6 +116,20 @@ public class Settings
     @XmlElement(defaultValue = "WHEN_RESULT_REQUESTED")
     @XmlSchemaType(name = "string")
     protected FetchIntermediateResult fetchIntermediateResult = FetchIntermediateResult.WHEN_RESULT_REQUESTED;
+    @XmlElement(defaultValue = "true")
+    protected Boolean diagnosticsDuplicateStatements = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean diagnosticsMissingWasNullCall = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean diagnosticsRepeatedStatements = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean diagnosticsTooManyColumnsFetched = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean diagnosticsTooManyRowsFetched = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean diagnosticsUnnecessaryWasNullCall = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean diagnosticsTrivialCondition = true;
     @XmlElement(defaultValue = "false")
     protected Boolean transformPatterns = false;
     @XmlElement(defaultValue = "true")
@@ -1228,6 +1242,197 @@ public class Settings
      */
     public void setFetchIntermediateResult(FetchIntermediateResult value) {
         this.fetchIntermediateResult = value;
+    }
+
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#duplicateStatements(org.jooq.DiagnosticsContext) diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isDiagnosticsDuplicateStatements() {
+        return diagnosticsDuplicateStatements;
+    }
+
+    /**
+     * Sets the value of the diagnosticsDuplicateStatements property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDiagnosticsDuplicateStatements(Boolean value) {
+        this.diagnosticsDuplicateStatements = value;
+    }
+
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#missingWasNullCall(org.jooq.DiagnosticsContext) diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isDiagnosticsMissingWasNullCall() {
+        return diagnosticsMissingWasNullCall;
+    }
+
+    /**
+     * Sets the value of the diagnosticsMissingWasNullCall property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDiagnosticsMissingWasNullCall(Boolean value) {
+        this.diagnosticsMissingWasNullCall = value;
+    }
+
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#repeatedStatements(org.jooq.DiagnosticsContext) diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isDiagnosticsRepeatedStatements() {
+        return diagnosticsRepeatedStatements;
+    }
+
+    /**
+     * Sets the value of the diagnosticsRepeatedStatements property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDiagnosticsRepeatedStatements(Boolean value) {
+        this.diagnosticsRepeatedStatements = value;
+    }
+
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#tooManyColumnsFetched(org.jooq.DiagnosticsContext) diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isDiagnosticsTooManyColumnsFetched() {
+        return diagnosticsTooManyColumnsFetched;
+    }
+
+    /**
+     * Sets the value of the diagnosticsTooManyColumnsFetched property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDiagnosticsTooManyColumnsFetched(Boolean value) {
+        this.diagnosticsTooManyColumnsFetched = value;
+    }
+
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#tooManyRowsFetched(org.jooq.DiagnosticsContext) diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isDiagnosticsTooManyRowsFetched() {
+        return diagnosticsTooManyRowsFetched;
+    }
+
+    /**
+     * Sets the value of the diagnosticsTooManyRowsFetched property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDiagnosticsTooManyRowsFetched(Boolean value) {
+        this.diagnosticsTooManyRowsFetched = value;
+    }
+
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#unnecessaryWasNullCall(org.jooq.DiagnosticsContext) diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isDiagnosticsUnnecessaryWasNullCall() {
+        return diagnosticsUnnecessaryWasNullCall;
+    }
+
+    /**
+     * Sets the value of the diagnosticsUnnecessaryWasNullCall property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDiagnosticsUnnecessaryWasNullCall(Boolean value) {
+        this.diagnosticsUnnecessaryWasNullCall = value;
+    }
+
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#trivialCondition(org.jooq.DiagnosticsContext) diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isDiagnosticsTrivialCondition() {
+        return diagnosticsTrivialCondition;
+    }
+
+    /**
+     * Sets the value of the diagnosticsTrivialCondition property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDiagnosticsTrivialCondition(Boolean value) {
+        this.diagnosticsTrivialCondition = value;
     }
 
     /**
@@ -4578,6 +4783,41 @@ public class Settings
         return this;
     }
 
+    public Settings withDiagnosticsDuplicateStatements(Boolean value) {
+        setDiagnosticsDuplicateStatements(value);
+        return this;
+    }
+
+    public Settings withDiagnosticsMissingWasNullCall(Boolean value) {
+        setDiagnosticsMissingWasNullCall(value);
+        return this;
+    }
+
+    public Settings withDiagnosticsRepeatedStatements(Boolean value) {
+        setDiagnosticsRepeatedStatements(value);
+        return this;
+    }
+
+    public Settings withDiagnosticsTooManyColumnsFetched(Boolean value) {
+        setDiagnosticsTooManyColumnsFetched(value);
+        return this;
+    }
+
+    public Settings withDiagnosticsTooManyRowsFetched(Boolean value) {
+        setDiagnosticsTooManyRowsFetched(value);
+        return this;
+    }
+
+    public Settings withDiagnosticsUnnecessaryWasNullCall(Boolean value) {
+        setDiagnosticsUnnecessaryWasNullCall(value);
+        return this;
+    }
+
+    public Settings withDiagnosticsTrivialCondition(Boolean value) {
+        setDiagnosticsTrivialCondition(value);
+        return this;
+    }
+
     public Settings withTransformPatterns(Boolean value) {
         setTransformPatterns(value);
         return this;
@@ -5607,6 +5847,13 @@ public class Settings
         builder.append("bindOffsetTimeType", bindOffsetTimeType);
         builder.append("fetchTriggerValuesAfterSQLServerOutput", fetchTriggerValuesAfterSQLServerOutput);
         builder.append("fetchIntermediateResult", fetchIntermediateResult);
+        builder.append("diagnosticsDuplicateStatements", diagnosticsDuplicateStatements);
+        builder.append("diagnosticsMissingWasNullCall", diagnosticsMissingWasNullCall);
+        builder.append("diagnosticsRepeatedStatements", diagnosticsRepeatedStatements);
+        builder.append("diagnosticsTooManyColumnsFetched", diagnosticsTooManyColumnsFetched);
+        builder.append("diagnosticsTooManyRowsFetched", diagnosticsTooManyRowsFetched);
+        builder.append("diagnosticsUnnecessaryWasNullCall", diagnosticsUnnecessaryWasNullCall);
+        builder.append("diagnosticsTrivialCondition", diagnosticsTrivialCondition);
         builder.append("transformPatterns", transformPatterns);
         builder.append("transformPatternsLogging", transformPatternsLogging);
         builder.append("transformPatternsTrim", transformPatternsTrim);
@@ -6054,6 +6301,69 @@ public class Settings
             }
         } else {
             if (!fetchIntermediateResult.equals(other.fetchIntermediateResult)) {
+                return false;
+            }
+        }
+        if (diagnosticsDuplicateStatements == null) {
+            if (other.diagnosticsDuplicateStatements!= null) {
+                return false;
+            }
+        } else {
+            if (!diagnosticsDuplicateStatements.equals(other.diagnosticsDuplicateStatements)) {
+                return false;
+            }
+        }
+        if (diagnosticsMissingWasNullCall == null) {
+            if (other.diagnosticsMissingWasNullCall!= null) {
+                return false;
+            }
+        } else {
+            if (!diagnosticsMissingWasNullCall.equals(other.diagnosticsMissingWasNullCall)) {
+                return false;
+            }
+        }
+        if (diagnosticsRepeatedStatements == null) {
+            if (other.diagnosticsRepeatedStatements!= null) {
+                return false;
+            }
+        } else {
+            if (!diagnosticsRepeatedStatements.equals(other.diagnosticsRepeatedStatements)) {
+                return false;
+            }
+        }
+        if (diagnosticsTooManyColumnsFetched == null) {
+            if (other.diagnosticsTooManyColumnsFetched!= null) {
+                return false;
+            }
+        } else {
+            if (!diagnosticsTooManyColumnsFetched.equals(other.diagnosticsTooManyColumnsFetched)) {
+                return false;
+            }
+        }
+        if (diagnosticsTooManyRowsFetched == null) {
+            if (other.diagnosticsTooManyRowsFetched!= null) {
+                return false;
+            }
+        } else {
+            if (!diagnosticsTooManyRowsFetched.equals(other.diagnosticsTooManyRowsFetched)) {
+                return false;
+            }
+        }
+        if (diagnosticsUnnecessaryWasNullCall == null) {
+            if (other.diagnosticsUnnecessaryWasNullCall!= null) {
+                return false;
+            }
+        } else {
+            if (!diagnosticsUnnecessaryWasNullCall.equals(other.diagnosticsUnnecessaryWasNullCall)) {
+                return false;
+            }
+        }
+        if (diagnosticsTrivialCondition == null) {
+            if (other.diagnosticsTrivialCondition!= null) {
+                return false;
+            }
+        } else {
+            if (!diagnosticsTrivialCondition.equals(other.diagnosticsTrivialCondition)) {
                 return false;
             }
         }
@@ -7285,6 +7595,13 @@ public class Settings
         result = ((prime*result)+((bindOffsetTimeType == null)? 0 :bindOffsetTimeType.hashCode()));
         result = ((prime*result)+((fetchTriggerValuesAfterSQLServerOutput == null)? 0 :fetchTriggerValuesAfterSQLServerOutput.hashCode()));
         result = ((prime*result)+((fetchIntermediateResult == null)? 0 :fetchIntermediateResult.hashCode()));
+        result = ((prime*result)+((diagnosticsDuplicateStatements == null)? 0 :diagnosticsDuplicateStatements.hashCode()));
+        result = ((prime*result)+((diagnosticsMissingWasNullCall == null)? 0 :diagnosticsMissingWasNullCall.hashCode()));
+        result = ((prime*result)+((diagnosticsRepeatedStatements == null)? 0 :diagnosticsRepeatedStatements.hashCode()));
+        result = ((prime*result)+((diagnosticsTooManyColumnsFetched == null)? 0 :diagnosticsTooManyColumnsFetched.hashCode()));
+        result = ((prime*result)+((diagnosticsTooManyRowsFetched == null)? 0 :diagnosticsTooManyRowsFetched.hashCode()));
+        result = ((prime*result)+((diagnosticsUnnecessaryWasNullCall == null)? 0 :diagnosticsUnnecessaryWasNullCall.hashCode()));
+        result = ((prime*result)+((diagnosticsTrivialCondition == null)? 0 :diagnosticsTrivialCondition.hashCode()));
         result = ((prime*result)+((transformPatterns == null)? 0 :transformPatterns.hashCode()));
         result = ((prime*result)+((transformPatternsLogging == null)? 0 :transformPatternsLogging.hashCode()));
         result = ((prime*result)+((transformPatternsTrim == null)? 0 :transformPatternsTrim.hashCode()));

@@ -49,7 +49,7 @@ import org.jooq.tools.jdbc.DefaultCallableStatement;
  */
 final class DiagnosticsStatement extends DefaultCallableStatement {
 
-    private final DiagnosticsConnection connection;
+    final DiagnosticsConnection connection;
 
     DiagnosticsStatement(DiagnosticsConnection connection, Statement statement) {
         super(statement);

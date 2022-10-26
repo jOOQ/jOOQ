@@ -50,6 +50,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import org.jooq.Configuration;
 import org.jooq.DiagnosticsContext;
 import org.jooq.QueryPart;
 import org.jooq.tools.JooqLogger;
@@ -57,7 +58,7 @@ import org.jooq.tools.JooqLogger;
 /**
  * @author Lukas Eder
  */
-final class DefaultDiagnosticsContext implements DiagnosticsContext {
+final class DefaultDiagnosticsContext extends AbstractScope implements DiagnosticsContext {
 
     private static final JooqLogger log = JooqLogger.getLogger(DefaultDiagnosticsContext.class);
 
@@ -79,12 +80,13 @@ final class DefaultDiagnosticsContext implements DiagnosticsContext {
     int                             resultSetColumnIndex;
     final Throwable                 exception;
 
-    DefaultDiagnosticsContext(String message, String actualStatement) {
-        this(message, actualStatement, null);
+    DefaultDiagnosticsContext(Configuration configuration, String message, String actualStatement) {
+        this(configuration, message, actualStatement, null);
     }
 
-    DefaultDiagnosticsContext(String message, String actualStatement, Throwable exception) {
+    DefaultDiagnosticsContext(Configuration configuration, String message, String actualStatement, Throwable exception) {
         this(
+            configuration,
             message,
             actualStatement,
             actualStatement,
@@ -96,6 +98,7 @@ final class DefaultDiagnosticsContext implements DiagnosticsContext {
     }
 
     DefaultDiagnosticsContext(
+        Configuration configuration,
         String message,
         String actualStatement,
         String normalisedStatement,
@@ -104,6 +107,8 @@ final class DefaultDiagnosticsContext implements DiagnosticsContext {
         QueryPart part,
         Throwable exception
     ) {
+        super(configuration);
+
         this.message = message;
         this.actualStatement = actualStatement;
         this.normalisedStatement = normalisedStatement;

@@ -37,12 +37,16 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 import static org.jooq.impl.Tools.map;
+
+import java.util.function.Predicate;
 
 import org.jooq.Configuration;
 import org.jooq.DiagnosticsContext;
 import org.jooq.DiagnosticsListener;
 import org.jooq.DiagnosticsListenerProvider;
+import org.jooq.conf.Settings;
 
 /**
  * @author Lukas Eder
@@ -59,41 +63,52 @@ final class DiagnosticsListeners implements DiagnosticsListener {
         return new DiagnosticsListeners(configuration.diagnosticsListenerProviders());
     }
 
+    private final boolean check(DiagnosticsContext ctx, Predicate<? super Settings> test) {
+        return !FALSE.equals(test.test(ctx.settings()));
+    }
+
     @Override
     public final void tooManyRowsFetched(DiagnosticsContext ctx) {
-        for (DiagnosticsListener listener : listeners)
-            listener.tooManyRowsFetched(ctx);
+        if (check(ctx, Settings::isDiagnosticsTooManyRowsFetched))
+            for (DiagnosticsListener listener : listeners)
+                listener.tooManyRowsFetched(ctx);
     }
 
     @Override
     public final void tooManyColumnsFetched(DiagnosticsContext ctx) {
-        for (DiagnosticsListener listener : listeners)
-            listener.tooManyColumnsFetched(ctx);
+        if (check(ctx, Settings::isDiagnosticsTooManyColumnsFetched))
+            for (DiagnosticsListener listener : listeners)
+                listener.tooManyColumnsFetched(ctx);
     }
 
     @Override
     public final void unnecessaryWasNullCall(DiagnosticsContext ctx) {
-        for (DiagnosticsListener listener : listeners)
-            listener.unnecessaryWasNullCall(ctx);
+        if (check(ctx, Settings::isDiagnosticsUnnecessaryWasNullCall))
+            for (DiagnosticsListener listener : listeners)
+                listener.unnecessaryWasNullCall(ctx);
     }
 
     @Override
     public final void missingWasNullCall(DiagnosticsContext ctx) {
-        for (DiagnosticsListener listener : listeners)
-            listener.missingWasNullCall(ctx);
+        if (check(ctx, Settings::isDiagnosticsMissingWasNullCall))
+            for (DiagnosticsListener listener : listeners)
+                listener.missingWasNullCall(ctx);
     }
 
     @Override
     public final void duplicateStatements(DiagnosticsContext ctx) {
-        for (DiagnosticsListener listener : listeners)
-            listener.duplicateStatements(ctx);
+        if (check(ctx, Settings::isDiagnosticsDuplicateStatements))
+            for (DiagnosticsListener listener : listeners)
+                listener.duplicateStatements(ctx);
     }
 
     @Override
     public final void repeatedStatements(DiagnosticsContext ctx) {
-        for (DiagnosticsListener listener : listeners)
-            listener.repeatedStatements(ctx);
+        if (check(ctx, Settings::isDiagnosticsRepeatedStatements))
+            for (DiagnosticsListener listener : listeners)
+                listener.repeatedStatements(ctx);
     }
+
 
 
 

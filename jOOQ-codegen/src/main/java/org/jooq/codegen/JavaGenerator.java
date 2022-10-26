@@ -8087,14 +8087,16 @@ public class JavaGenerator extends AbstractGenerator {
             String precision = "";
             String scale = "";
 
-            if (column.getType(resolver(out)).getLength() > 0) {
-                length = ", length = " + column.getType(resolver(out)).getLength();
+            DataTypeDefinition type = column.getType(resolver(out));
+            DataType<?> t = getRuntimeDataType(type);
+            if (t.hasLength() && type.getLength() > 0) {
+                length = ", length = " + type.getLength();
             }
-            else if (column.getType(resolver(out)).getPrecision() > 0) {
-                precision = ", precision = " + column.getType(resolver(out)).getPrecision();
+            else if (t.hasPrecision() && type.getPrecision() > 0) {
+                precision = ", precision = " + type.getPrecision();
 
-                if (column.getType(resolver(out)).getScale() > 0) {
-                    scale = ", scale = " + column.getType(resolver(out)).getScale();
+                if (t.hasScale() && type.getScale() > 0) {
+                    scale = ", scale = " + type.getScale();
                 }
             }
 
@@ -9466,6 +9468,15 @@ public class JavaGenerator extends AbstractGenerator {
             udtMode,
             type.getXMLTypeDefinition()
         );
+    }
+
+    private DataType<?> getRuntimeDataType(DataTypeDefinition type) {
+        try {
+            return mapTypes(getDataType(type.getDatabase(), type.getType(), type.getPrecision(), type.getScale()));
+        }
+        catch (SQLDialectNotSupportedException ignore) {
+            return SQLDataType.OTHER;
+        }
     }
 
     /**

@@ -286,6 +286,19 @@ Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListen
 Once configured, this diagnostic is turned on by default.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="diagnosticsDuplicateStatementsUsingTransformPatterns" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#duplicateStatements(org.jooq.DiagnosticsContext) diagnostic with the {@link #transformPatterns} feature activated.
+<p>
+When transforming patterns, many more complex, duplicate SQL statements can be recognised than if simply
+parsing and re-rendering the statement. This flag turns on all transformation patterns, independently of their
+individual settings.
+<p>
+Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+Once configured, this diagnostic is turned on by default.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="diagnosticsMissingWasNullCall" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#missingWasNullCall(org.jooq.DiagnosticsContext) diagnostic.
 <p>

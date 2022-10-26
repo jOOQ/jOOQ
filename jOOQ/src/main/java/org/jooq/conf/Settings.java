@@ -119,6 +119,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean diagnosticsDuplicateStatements = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean diagnosticsDuplicateStatementsUsingTransformPatterns = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean diagnosticsMissingWasNullCall = true;
     @XmlElement(defaultValue = "true")
     protected Boolean diagnosticsRepeatedStatements = true;
@@ -1271,6 +1273,39 @@ public class Settings
      */
     public void setDiagnosticsDuplicateStatements(Boolean value) {
         this.diagnosticsDuplicateStatements = value;
+    }
+
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#duplicateStatements(org.jooq.DiagnosticsContext) diagnostic with the {@link #transformPatterns} feature activated.
+     * <p>
+     * When transforming patterns, many more complex, duplicate SQL statements can be recognised than if simply
+     * parsing and re-rendering the statement. This flag turns on all transformation patterns, independently of their
+     * individual settings.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isDiagnosticsDuplicateStatementsUsingTransformPatterns() {
+        return diagnosticsDuplicateStatementsUsingTransformPatterns;
+    }
+
+    /**
+     * Sets the value of the diagnosticsDuplicateStatementsUsingTransformPatterns property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDiagnosticsDuplicateStatementsUsingTransformPatterns(Boolean value) {
+        this.diagnosticsDuplicateStatementsUsingTransformPatterns = value;
     }
 
     /**
@@ -4819,6 +4854,11 @@ public class Settings
         return this;
     }
 
+    public Settings withDiagnosticsDuplicateStatementsUsingTransformPatterns(Boolean value) {
+        setDiagnosticsDuplicateStatementsUsingTransformPatterns(value);
+        return this;
+    }
+
     public Settings withDiagnosticsMissingWasNullCall(Boolean value) {
         setDiagnosticsMissingWasNullCall(value);
         return this;
@@ -5884,6 +5924,7 @@ public class Settings
         builder.append("fetchTriggerValuesAfterSQLServerOutput", fetchTriggerValuesAfterSQLServerOutput);
         builder.append("fetchIntermediateResult", fetchIntermediateResult);
         builder.append("diagnosticsDuplicateStatements", diagnosticsDuplicateStatements);
+        builder.append("diagnosticsDuplicateStatementsUsingTransformPatterns", diagnosticsDuplicateStatementsUsingTransformPatterns);
         builder.append("diagnosticsMissingWasNullCall", diagnosticsMissingWasNullCall);
         builder.append("diagnosticsRepeatedStatements", diagnosticsRepeatedStatements);
         builder.append("diagnosticsTooManyColumnsFetched", diagnosticsTooManyColumnsFetched);
@@ -6347,6 +6388,15 @@ public class Settings
             }
         } else {
             if (!diagnosticsDuplicateStatements.equals(other.diagnosticsDuplicateStatements)) {
+                return false;
+            }
+        }
+        if (diagnosticsDuplicateStatementsUsingTransformPatterns == null) {
+            if (other.diagnosticsDuplicateStatementsUsingTransformPatterns!= null) {
+                return false;
+            }
+        } else {
+            if (!diagnosticsDuplicateStatementsUsingTransformPatterns.equals(other.diagnosticsDuplicateStatementsUsingTransformPatterns)) {
                 return false;
             }
         }
@@ -7642,6 +7692,7 @@ public class Settings
         result = ((prime*result)+((fetchTriggerValuesAfterSQLServerOutput == null)? 0 :fetchTriggerValuesAfterSQLServerOutput.hashCode()));
         result = ((prime*result)+((fetchIntermediateResult == null)? 0 :fetchIntermediateResult.hashCode()));
         result = ((prime*result)+((diagnosticsDuplicateStatements == null)? 0 :diagnosticsDuplicateStatements.hashCode()));
+        result = ((prime*result)+((diagnosticsDuplicateStatementsUsingTransformPatterns == null)? 0 :diagnosticsDuplicateStatementsUsingTransformPatterns.hashCode()));
         result = ((prime*result)+((diagnosticsMissingWasNullCall == null)? 0 :diagnosticsMissingWasNullCall.hashCode()));
         result = ((prime*result)+((diagnosticsRepeatedStatements == null)? 0 :diagnosticsRepeatedStatements.hashCode()));
         result = ((prime*result)+((diagnosticsTooManyColumnsFetched == null)? 0 :diagnosticsTooManyColumnsFetched.hashCode()));

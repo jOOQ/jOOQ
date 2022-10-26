@@ -190,6 +190,7 @@ final class DiagnosticsConnection extends DefaultConnection {
 
 
 
+
             normalised = normalisingRenderer.render(transformed);
         }
         catch (ParserException exception) {

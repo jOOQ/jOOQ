@@ -175,6 +175,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsMergeBetweenSymmetricPredicates = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsCaseElseNull = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrivialCaseAbbreviation = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrivialPredicates = true;
@@ -2107,6 +2109,34 @@ public class Settings
      */
     public void setTransformPatternsMergeBetweenSymmetricPredicates(Boolean value) {
         this.transformPatternsMergeBetweenSymmetricPredicates = value;
+    }
+
+    /**
+     * Transform <code>CASE … ELSE NULL</code> removing the <code>ELSE</code> clause.
+     * <p>
+     * <code>CASE WHEN x THEN y ELSE NULL END</code> is equivalent to <code>CASE WHEN x THEN y END</code>.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsCaseElseNull() {
+        return transformPatternsCaseElseNull;
+    }
+
+    /**
+     * Sets the value of the transformPatternsCaseElseNull property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsCaseElseNull(Boolean value) {
+        this.transformPatternsCaseElseNull = value;
     }
 
     /**
@@ -5126,6 +5156,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsCaseElseNull(Boolean value) {
+        setTransformPatternsCaseElseNull(value);
+        return this;
+    }
+
     public Settings withTransformPatternsTrivialCaseAbbreviation(Boolean value) {
         setTransformPatternsTrivialCaseAbbreviation(value);
         return this;
@@ -6104,6 +6139,7 @@ public class Settings
         builder.append("transformPatternsMergeInLists", transformPatternsMergeInLists);
         builder.append("transformPatternsMergeRangePredicates", transformPatternsMergeRangePredicates);
         builder.append("transformPatternsMergeBetweenSymmetricPredicates", transformPatternsMergeBetweenSymmetricPredicates);
+        builder.append("transformPatternsCaseElseNull", transformPatternsCaseElseNull);
         builder.append("transformPatternsTrivialCaseAbbreviation", transformPatternsTrivialCaseAbbreviation);
         builder.append("transformPatternsTrivialPredicates", transformPatternsTrivialPredicates);
         builder.append("transformPatternsScalarSubqueryCountAsteriskGtZero", transformPatternsScalarSubqueryCountAsteriskGtZero);
@@ -6796,6 +6832,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsMergeBetweenSymmetricPredicates.equals(other.transformPatternsMergeBetweenSymmetricPredicates)) {
+                return false;
+            }
+        }
+        if (transformPatternsCaseElseNull == null) {
+            if (other.transformPatternsCaseElseNull!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsCaseElseNull.equals(other.transformPatternsCaseElseNull)) {
                 return false;
             }
         }
@@ -7912,6 +7957,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsMergeInLists == null)? 0 :transformPatternsMergeInLists.hashCode()));
         result = ((prime*result)+((transformPatternsMergeRangePredicates == null)? 0 :transformPatternsMergeRangePredicates.hashCode()));
         result = ((prime*result)+((transformPatternsMergeBetweenSymmetricPredicates == null)? 0 :transformPatternsMergeBetweenSymmetricPredicates.hashCode()));
+        result = ((prime*result)+((transformPatternsCaseElseNull == null)? 0 :transformPatternsCaseElseNull.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialCaseAbbreviation == null)? 0 :transformPatternsTrivialCaseAbbreviation.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialPredicates == null)? 0 :transformPatternsTrivialPredicates.hashCode()));
         result = ((prime*result)+((transformPatternsScalarSubqueryCountAsteriskGtZero == null)? 0 :transformPatternsScalarSubqueryCountAsteriskGtZero.hashCode()));

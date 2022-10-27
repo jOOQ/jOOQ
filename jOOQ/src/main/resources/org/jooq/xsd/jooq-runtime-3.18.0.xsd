@@ -552,6 +552,14 @@ To enable this feature, {@link #transformPatterns} must be enabled as well.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsCaseElseNull" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>CASE .. ELSE NULL</code> removing the <code>ELSE</code> clause.
+<p>
+<code>CASE WHEN x THEN y ELSE NULL END</code> is equivalent to <code>CASE WHEN x THEN y END</code>.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsTrivialCaseAbbreviation" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform trivial case abbreviations like <code>NVL(NULL, a)</code> to <code>a</code>.
 <p>

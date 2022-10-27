@@ -45,11 +45,14 @@ import org.jooq.CaseWhenStep;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Select;
+import org.jooq.impl.QOM.UTransient;
 
 /**
+ * A transient step in the construction of <code>CASE</code> statements.
+ *
  * @author Lukas Eder
  */
-final class CaseValueStepImpl<V> implements CaseValueStep<V> {
+final class CaseValueStepImpl<V> implements CaseValueStep<V>, UTransient {
 
     private final Field<V> value;
 

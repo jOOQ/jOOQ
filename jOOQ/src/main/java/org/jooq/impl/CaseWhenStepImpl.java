@@ -47,30 +47,37 @@ import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Names.NQ_CASE;
+import static org.jooq.impl.QOM.tuple;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.jooq.CaseConditionStep;
 import org.jooq.CaseWhenStep;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function3;
 // ...
-import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.CaseSimple;
+import org.jooq.impl.QOM.UTuple2;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
  */
-final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V, T>, UNotYetImplemented {
+final class CaseWhenStepImpl<V, T>
+extends
+    AbstractField<T>
+implements
+    CaseWhenStep<V, T>,
+    QOM.CaseSimple<V, T>
+{
 
-    private final Field<V>       value;
-    private final List<Field<V>> compareValues;
-    private final List<Field<T>> results;
-    private Field<T>             else_;
+    private final Field<V>                          value;
+    private final List<UTuple2<Field<V>, Field<T>>> when;
+    private Field<T>                                else_;
 
     CaseWhenStepImpl(Field<V> value, Field<V> compareValue, Field<T> result) {
         this(value, result.getDataType());
@@ -84,12 +91,11 @@ final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenS
         mapFields(map);
     }
 
-    private CaseWhenStepImpl(Field<V> value, DataType<T> type) {
+    CaseWhenStepImpl(Field<V> value, DataType<T> type) {
         super(NQ_CASE, type);
 
         this.value = value;
-        this.compareValues = new ArrayList<>();
-        this.results = new ArrayList<>();
+        this.when = new QueryPartList<>();
     }
 
     @SuppressWarnings("unchecked")
@@ -99,6 +105,10 @@ final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenS
         else
             return map.entrySet().iterator().next().getValue().getDataType();
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
 
     @Override
     public final Field<T> otherwise(T result) {
@@ -139,8 +149,7 @@ final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenS
 
     @Override
     public final CaseWhenStep<V, T> when(Field<V> compareValue, Field<T> result) {
-        compareValues.add(compareValue);
-        results.add(result);
+        when.add(tuple(compareValue, result));
 
         return this;
     }
@@ -224,37 +233,36 @@ final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenS
 
 
 
+
     private final void acceptSearched(Context<?> ctx) {
-        int size = compareValues.size();
 
-        CaseConditionStep<T> when = null;
-        for (int i = 0; i < size; i++)
-            if (when == null)
-                when = DSL.when(value.eq(compareValues.get(i)), results.get(i));
+        CaseConditionStep<T> w = null;
+        for (UTuple2<Field<V>, Field<T>> e : when)
+            if (w == null)
+                w = DSL.when(value.eq(e.$1()), e.$2());
             else
-                when = when.when(value.eq(compareValues.get(i)), results.get(i));
+                w = w.when(value.eq(e.$1()), e.$2());
 
-        if (when != null)
+        if (w != null)
             if (else_ != null)
-                ctx.visit(when.else_(else_));
+                ctx.visit(w.else_(else_));
             else
-                ctx.visit(when);
+                ctx.visit(w);
     }
 
     private final void acceptNative(Context<?> ctx) {
         ctx.visit(K_CASE);
 
-        int size = compareValues.size();
         ctx.sql(' ')
            .visit(value)
            .formatIndentStart();
 
-        for (int i = 0; i < size; i++)
+        for (UTuple2<Field<V>, Field<T>> e : when)
             ctx.formatSeparator()
                .visit(K_WHEN).sql(' ')
-               .visit(compareValues.get(i)).sql(' ')
+               .visit(e.$1()).sql(' ')
                .visit(K_THEN).sql(' ')
-               .visit(results.get(i));
+               .visit(e.$2());
 
         if (else_ != null)
             ctx.formatSeparator()
@@ -267,5 +275,49 @@ final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenS
         ctx.formatIndentEnd()
            .formatSeparator()
            .visit(K_END);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Function3<? super Field<V>, ? super UnmodifiableList<? extends UTuple2<Field<V>, Field<T>>>, ? super Field<T>, ? extends CaseSimple<V, T>> $constructor() {
+        return (v, w, e) -> {
+            CaseWhenStepImpl<V, T> r = new CaseWhenStepImpl<>(v, getDataType());
+            w.forEach(t -> r.when(t.$1(), t.$2()));
+            r.else_(e);
+            return r;
+        };
+    }
+
+    @Override
+    public final Field<V> $arg1() {
+        return value;
+    }
+
+    @Override
+    public final CaseSimple<V, T> $arg1(Field<V> newArg1) {
+        return $constructor().apply(newArg1, $when(), $else());
+    }
+
+    @Override
+    public final UnmodifiableList<? extends UTuple2<Field<V>, Field<T>>> $arg2() {
+        return QOM.unmodifiable(when);
+    }
+
+    @Override
+    public final CaseSimple<V, T> $arg2(UnmodifiableList<? extends UTuple2<Field<V>, Field<T>>> w) {
+        return $constructor().apply($value(), w, $else());
+    }
+
+    @Override
+    public final Field<T> $arg3() {
+        return else_;
+    }
+
+    @Override
+    public final CaseSimple<V, T> $arg3(Field<T> e) {
+        return $constructor().apply($value(), $when(), e);
     }
 }

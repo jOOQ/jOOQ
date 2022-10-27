@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.QOM.tuple;
+
 import org.jooq.Context;
 import org.jooq.QueryPart;
 // ...
@@ -80,37 +82,37 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Q1 $part1() {
+    public final Q1 $1() {
         return part1;
     }
 
     @Override
-    public final Q2 $part2() {
+    public final Q2 $2() {
         return part2;
     }
 
     @Override
-    public final UTuple2<Q1, Q2> $part1(Q1 newPart1) {
-        return new UTupleImpl2<>(newPart1, part2);
+    public final UTuple2<Q1, Q2> $1(Q1 newPart1) {
+        return tuple(newPart1, part2);
     }
 
     @Override
-    public final UTuple2<Q1, Q2> $part2(Q2 newPart2) {
-        return new UTupleImpl2<>(part1, newPart2);
+    public final UTuple2<Q1, Q2> $2(Q2 newPart2) {
+        return tuple(part1, newPart2);
     }
 
     @Override
     public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, $part1(), $part2());
+        return QOM.traverse(traverser, this, $1(), $2());
     }
 
     @Override
     public final QueryPart $replace(Replacer replacer) {
         return QOM.replace(
             this,
-            $part1(),
-            $part2(),
-            (p1, p2) -> new UTupleImpl2<>(p1, p2),
+            $1(),
+            $2(),
+            (p1, p2) -> tuple(p1, p2),
             replacer
         );
     }

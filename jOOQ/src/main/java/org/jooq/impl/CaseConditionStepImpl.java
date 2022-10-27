@@ -61,11 +61,9 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function2;
 // ...
-import org.jooq.QueryPart;
 import org.jooq.Record1;
 // ...
 import org.jooq.Select;
-// ...
 import org.jooq.impl.QOM.CaseSearched;
 import org.jooq.impl.QOM.UTuple2;
 import org.jooq.impl.QOM.UnmodifiableList;
@@ -226,7 +224,7 @@ implements
            .formatIndentStart();
 
         for (UTuple2<Condition, Field<T>> e : when) {
-            Condition c = e.$part1();
+            Condition c = e.$1();
 
 
 
@@ -245,7 +243,7 @@ implements
 
             ctx.formatSeparator()
                .visit(K_WHEN).sql(' ').visit(c).sql(' ')
-               .visit(K_THEN).sql(' ').visit(e.$part2());
+               .visit(K_THEN).sql(' ').visit(e.$2());
         }
 
         if (else_ != null)
@@ -268,7 +266,7 @@ implements
     public final Function2<? super UnmodifiableList<? extends UTuple2<Condition, Field<T>>>, ? super Field<T>, ? extends CaseSearched<T>> $constructor() {
         return (w, e) -> {
             CaseConditionStepImpl<T> r = new CaseConditionStepImpl<>(getDataType());
-            w.forEach(t -> r.when(t.$part1(), t.$part2()));
+            w.forEach(t -> r.when(t.$1(), t.$2()));
             r.else_(e);
             return r;
         };
@@ -292,21 +290,5 @@ implements
     @Override
     public final CaseSearched<T> $arg2(Field<T> e) {
         return $constructor().apply($when(), e);
-    }
-
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, $when(), $else());
-    }
-
-    @Override
-    public final QueryPart $replace(Replacer replacer) {
-        return QOM.replace(
-            this,
-            $when(),
-            $else(),
-            (w, e) -> $constructor().apply(w, e),
-            replacer
-        );
     }
 }

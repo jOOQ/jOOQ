@@ -44,14 +44,16 @@ import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Select;
+import org.jooq.impl.QOM.UTransient;
 
 /**
+ * A transient step in the construction of <code>CASE</code> statements.
+ *
  * @author Lukas Eder
  */
-final class CaseImpl implements Case {
+final class CaseImpl implements Case, UTransient {
 
-    CaseImpl() {
-    }
+    CaseImpl() {}
 
     @Override
     public final <V> CaseValueStep<V> value(V value) {

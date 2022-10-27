@@ -224,10 +224,10 @@ public final class QOM {
         permits
             UTupleImpl2
     {
-        @NotNull Q1 $part1();
-        @NotNull UTuple2<Q1, Q2> $part1(Q1 newPart1);
-        @NotNull Q2 $part2();
-        @NotNull UTuple2<Q1, Q2> $part2(Q2 newPart2);
+        @NotNull Q1 $1();
+        @NotNull UTuple2<Q1, Q2> $1(Q1 newPart1);
+        @NotNull Q2 $2();
+        @NotNull UTuple2<Q1, Q2> $2(Q2 newPart2);
     }
 
     /**

@@ -360,7 +360,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private String                                       hint;
     private String                                       option;
     private boolean                                      distinct;
-    private QueryPartList<SelectFieldOrAsterisk>         distinctOn;
+    private final QueryPartList<SelectFieldOrAsterisk>   distinctOn;
     private ForLock                                      forLock;
 
 
@@ -424,6 +424,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         this.with = with;
         this.distinct = distinct;
+        this.distinctOn = new SelectFieldList<>();
         this.select = new SelectFieldList<>();
         this.from = new TableList();
         this.condition = new ConditionProviderImpl();
@@ -556,7 +557,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             result.hint = hint;
             result.distinct = distinct;
-            result.distinctOn = distinctOn;
+            result.distinctOn.addAll(distinctOn);
             result.orderBy.addAll(orderBy);
 
 
@@ -1262,7 +1263,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     private final Select<?> distinctOnEmulation() {
 
         // [#3564] TODO: Extract and merge this with getSelectResolveSomeAsterisks0()
@@ -1275,7 +1275,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         Field<Integer> rn = rowNumber().over(partitionBy(partitionBy).orderBy(orderBy)).as("rn");
 
         SelectQueryImpl<R> copy = copy(x -> {});
-        copy.distinctOn = null;
+        copy.distinctOn.clear();
         copy.select.add(rn);
         copy.orderBy.clear();
         copy.limit.clear();
@@ -3336,9 +3336,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void addDistinctOn(Collection<? extends SelectFieldOrAsterisk> fields) {
-        if (distinctOn == null)
-            distinctOn = new QueryPartList<>();
-
         distinctOn.addAll(fields);
     }
 
@@ -4577,6 +4574,19 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             return this;
         else
             return copy(s -> s.distinct = newDistinct);
+    }
+
+    @Override
+    public final UnmodifiableList<SelectFieldOrAsterisk> $distinctOn() {
+        return QOM.unmodifiable(distinctOn);
+    }
+
+    @Override
+    public final Select<R> $distinctOn(Collection<? extends SelectFieldOrAsterisk> newDistinctOn) {
+        return copy(s -> {
+            s.distinctOn.clear();
+            s.distinctOn.addAll(newDistinctOn);
+        });
     }
 
     @Override

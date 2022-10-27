@@ -143,6 +143,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsLogging = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsUnnecessaryDistinct = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCountConstant = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrim = true;
@@ -1622,6 +1624,37 @@ public class Settings
      */
     public void setTransformPatternsLogging(Boolean value) {
         this.transformPatternsLogging = value;
+    }
+
+    /**
+     * Transform <code>SELECT DISTINCT a, b FROM t GROUP BY a, b</code> to <code>SELECT a, b FROM t GROUP BY a, b</code>.
+     * <p>
+     * The <code>GROUP BY</code> clause already removes duplicates, so if the <code>DISTINCT</code> clause
+     * contains at least all the columns from <code>GROUP BY</code> then it can be removed.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsUnnecessaryDistinct() {
+        return transformPatternsUnnecessaryDistinct;
+    }
+
+    /**
+     * Sets the value of the transformPatternsUnnecessaryDistinct property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsUnnecessaryDistinct(Boolean value) {
+        this.transformPatternsUnnecessaryDistinct = value;
     }
 
     /**
@@ -5013,6 +5046,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsUnnecessaryDistinct(Boolean value) {
+        setTransformPatternsUnnecessaryDistinct(value);
+        return this;
+    }
+
     public Settings withTransformPatternsCountConstant(Boolean value) {
         setTransformPatternsCountConstant(value);
         return this;
@@ -6050,6 +6088,7 @@ public class Settings
         builder.append("diagnosticsNullCondition", diagnosticsNullCondition);
         builder.append("transformPatterns", transformPatterns);
         builder.append("transformPatternsLogging", transformPatternsLogging);
+        builder.append("transformPatternsUnnecessaryDistinct", transformPatternsUnnecessaryDistinct);
         builder.append("transformPatternsCountConstant", transformPatternsCountConstant);
         builder.append("transformPatternsTrim", transformPatternsTrim);
         builder.append("transformPatternsNotNot", transformPatternsNotNot);
@@ -6613,6 +6652,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsLogging.equals(other.transformPatternsLogging)) {
+                return false;
+            }
+        }
+        if (transformPatternsUnnecessaryDistinct == null) {
+            if (other.transformPatternsUnnecessaryDistinct!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsUnnecessaryDistinct.equals(other.transformPatternsUnnecessaryDistinct)) {
                 return false;
             }
         }
@@ -7848,6 +7896,7 @@ public class Settings
         result = ((prime*result)+((diagnosticsNullCondition == null)? 0 :diagnosticsNullCondition.hashCode()));
         result = ((prime*result)+((transformPatterns == null)? 0 :transformPatterns.hashCode()));
         result = ((prime*result)+((transformPatternsLogging == null)? 0 :transformPatternsLogging.hashCode()));
+        result = ((prime*result)+((transformPatternsUnnecessaryDistinct == null)? 0 :transformPatternsUnnecessaryDistinct.hashCode()));
         result = ((prime*result)+((transformPatternsCountConstant == null)? 0 :transformPatternsCountConstant.hashCode()));
         result = ((prime*result)+((transformPatternsTrim == null)? 0 :transformPatternsTrim.hashCode()));
         result = ((prime*result)+((transformPatternsNotNot == null)? 0 :transformPatternsNotNot.hashCode()));

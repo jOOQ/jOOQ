@@ -233,6 +233,20 @@ extends
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
+    UnmodifiableList<? extends SelectFieldOrAsterisk> $distinctOn();
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
+    @NotNull Select<R> $distinctOn(Collection<? extends SelectFieldOrAsterisk> newDistinctOn);
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @NotNull UnmodifiableList<? extends Table<?>> $from();
 
     /**

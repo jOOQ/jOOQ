@@ -3424,6 +3424,16 @@ implements
     }
 
     @Override
+    public final UnmodifiableList<? extends SelectFieldOrAsterisk> $distinctOn() {
+        return getDelegate().$distinctOn();
+    }
+
+    @Override
+    public final Select<R> $distinctOn(Collection<? extends SelectFieldOrAsterisk> newDistinctOn) {
+        return getDelegate().$distinctOn(newDistinctOn);
+    }
+
+    @Override
     public final UnmodifiableList<? extends Table<?>> $from() {
         return getDelegate().$from();
     }

@@ -389,6 +389,17 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Activate debug logging of the {@link #transformPatterns} feature.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsUnnecessaryDistinct" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>SELECT DISTINCT a, b FROM t GROUP BY a, b</code> to <code>SELECT a, b FROM t GROUP BY a, b</code>.
+<p>
+The <code>GROUP BY</code> clause already removes duplicates, so if the <code>DISTINCT</code> clause
+contains at least all the columns from <code>GROUP BY</code> then it can be removed.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsCountConstant" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>COUNT(1)</code> or any other <code>COUNT(const)</code> to <code>COUNT(*)</code>.
 <p>

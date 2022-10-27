@@ -560,6 +560,14 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsCaseElseCase" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>CASE .. ELSE CASE ..</code> by flattening the nested <code>CASE</code>.
+<p>
+<code>CASE WHEN a THEN b ELSE CASE WHEN c THEN d END END</code> is equivalent to <code>CASE WHEN a THEN b WHEN c THEN d END</code>.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsTrivialCaseAbbreviation" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform trivial case abbreviations like <code>NVL(NULL, a)</code> to <code>a</code>.
 <p>

@@ -251,7 +251,13 @@ public final class QOM {
             java.util.List<Q>
         permits
             QueryPartListView
-    {}
+    {
+        @NotNull default UnmodifiableList<Q> $concat(UnmodifiableList<Q> other) {
+            QueryPartList<Q> r = new QueryPartList<>(this);
+            r.addAll(other);
+            return r;
+        }
+    }
 
     public /*sealed*/ interface With
         extends

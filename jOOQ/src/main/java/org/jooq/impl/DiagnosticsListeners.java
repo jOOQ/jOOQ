@@ -63,8 +63,20 @@ final class DiagnosticsListeners implements DiagnosticsListener {
         return new DiagnosticsListeners(configuration.diagnosticsListenerProviders());
     }
 
-    private final boolean check(DiagnosticsContext ctx, Predicate<? super Settings> test) {
-        return !FALSE.equals(test.test(ctx.settings()));
+    private static final boolean check(DiagnosticsContext ctx, Predicate<? super Settings> test) {
+        return check(ctx.settings(), test);
+    }
+
+    static final boolean check(Settings settings, Predicate<? super Settings> test) {
+        return !FALSE.equals(test.test(settings));
+    }
+
+    private static final boolean checkPattern(DiagnosticsContext ctx, Predicate<? super Settings> test) {
+        return checkPattern(ctx.settings(), test);
+    }
+
+    static final boolean checkPattern(Settings settings, Predicate<? super Settings> test) {
+        return !FALSE.equals(settings.isDiagnosticsPatterns()) && check(settings, test);
     }
 
     @Override
@@ -108,6 +120,13 @@ final class DiagnosticsListeners implements DiagnosticsListener {
             for (DiagnosticsListener listener : listeners)
                 listener.repeatedStatements(ctx);
     }
+
+
+
+
+
+
+
 
 
 

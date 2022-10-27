@@ -343,6 +343,19 @@ Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListen
 Once configured, this diagnostic is turned on by default.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="diagnosticsPatterns" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the various pattern transformation diagnostics.
+<p>
+{@link #transformPatterns} allows for applying numerous pattern transformations, which can be turned on separately when running
+diagnostics. This flag overrides the {@link #transformPatterns} flag in the diagnostics context. Individual pattern flags
+still allow to enable / disable the pattern for diagnostics. 
+<p>
+Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+Once configured, this diagnostic is turned on by default.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="diagnosticsTrivialCondition" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#trivialCondition(org.jooq.DiagnosticsContext) diagnostic.
 <p>

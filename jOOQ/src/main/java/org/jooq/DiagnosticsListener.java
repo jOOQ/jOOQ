@@ -41,6 +41,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 import org.jooq.impl.ParserException;
 
@@ -189,6 +190,16 @@ public interface DiagnosticsListener {
      * @param ctx The context containing information about the diagnostic.
      */
     default void repeatedStatements(DiagnosticsContext ctx) {}
+
+
+
+
+
+
+
+
+
+
 
 
 

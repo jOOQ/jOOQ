@@ -133,6 +133,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean diagnosticsUnnecessaryWasNullCall = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean diagnosticsPatterns = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean diagnosticsTrivialCondition = true;
     @XmlElement(defaultValue = "true")
     protected Boolean diagnosticsNullCondition = true;
@@ -1474,6 +1476,39 @@ public class Settings
      */
     public void setDiagnosticsUnnecessaryWasNullCall(Boolean value) {
         this.diagnosticsUnnecessaryWasNullCall = value;
+    }
+
+    /**
+     * Whether to run the various pattern transformation diagnostics.
+     * <p>
+     * {@link #transformPatterns} allows for applying numerous pattern transformations, which can be turned on separately when running
+     * diagnostics. This flag overrides the {@link #transformPatterns} flag in the diagnostics context. Individual pattern flags
+     * still allow to enable / disable the pattern for diagnostics. 
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isDiagnosticsPatterns() {
+        return diagnosticsPatterns;
+    }
+
+    /**
+     * Sets the value of the diagnosticsPatterns property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDiagnosticsPatterns(Boolean value) {
+        this.diagnosticsPatterns = value;
     }
 
     /**
@@ -4953,6 +4988,11 @@ public class Settings
         return this;
     }
 
+    public Settings withDiagnosticsPatterns(Boolean value) {
+        setDiagnosticsPatterns(value);
+        return this;
+    }
+
     public Settings withDiagnosticsTrivialCondition(Boolean value) {
         setDiagnosticsTrivialCondition(value);
         return this;
@@ -6005,6 +6045,7 @@ public class Settings
         builder.append("diagnosticsTooManyColumnsFetched", diagnosticsTooManyColumnsFetched);
         builder.append("diagnosticsTooManyRowsFetched", diagnosticsTooManyRowsFetched);
         builder.append("diagnosticsUnnecessaryWasNullCall", diagnosticsUnnecessaryWasNullCall);
+        builder.append("diagnosticsPatterns", diagnosticsPatterns);
         builder.append("diagnosticsTrivialCondition", diagnosticsTrivialCondition);
         builder.append("diagnosticsNullCondition", diagnosticsNullCondition);
         builder.append("transformPatterns", transformPatterns);
@@ -6527,6 +6568,15 @@ public class Settings
             }
         } else {
             if (!diagnosticsUnnecessaryWasNullCall.equals(other.diagnosticsUnnecessaryWasNullCall)) {
+                return false;
+            }
+        }
+        if (diagnosticsPatterns == null) {
+            if (other.diagnosticsPatterns!= null) {
+                return false;
+            }
+        } else {
+            if (!diagnosticsPatterns.equals(other.diagnosticsPatterns)) {
                 return false;
             }
         }
@@ -7793,6 +7843,7 @@ public class Settings
         result = ((prime*result)+((diagnosticsTooManyColumnsFetched == null)? 0 :diagnosticsTooManyColumnsFetched.hashCode()));
         result = ((prime*result)+((diagnosticsTooManyRowsFetched == null)? 0 :diagnosticsTooManyRowsFetched.hashCode()));
         result = ((prime*result)+((diagnosticsUnnecessaryWasNullCall == null)? 0 :diagnosticsUnnecessaryWasNullCall.hashCode()));
+        result = ((prime*result)+((diagnosticsPatterns == null)? 0 :diagnosticsPatterns.hashCode()));
         result = ((prime*result)+((diagnosticsTrivialCondition == null)? 0 :diagnosticsTrivialCondition.hashCode()));
         result = ((prime*result)+((diagnosticsNullCondition == null)? 0 :diagnosticsNullCondition.hashCode()));
         result = ((prime*result)+((transformPatterns == null)? 0 :transformPatterns.hashCode()));

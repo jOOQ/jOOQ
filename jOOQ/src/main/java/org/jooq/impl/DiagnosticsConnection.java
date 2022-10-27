@@ -37,9 +37,9 @@
  */
 package org.jooq.impl;
 
-import static java.lang.Boolean.FALSE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.synchronizedMap;
+// ...
 // ...
 // ...
 import static org.jooq.conf.ParamType.FORCE_INDEXED;
@@ -51,7 +51,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -69,6 +68,7 @@ import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
+// ...
 // ...
 import org.jooq.Select;
 import org.jooq.conf.Settings;
@@ -95,7 +95,8 @@ final class DiagnosticsConnection extends DefaultConnection {
     DiagnosticsConnection(Configuration configuration) {
         super(configuration.connectionProvider().acquire());
 
-        this.configuration = configuration;
+        // [#7527] The Settings.diagnosticsPattern flag overrides the Settings.transformPatterns flag.
+        this.configuration = configuration.deriveSettings(s -> s.withTransformPatterns(true));
         this.normalisingRenderer = configuration.deriveSettings(s -> s
 
             // Forcing all inline parameters to be indexed helps find opportunities to use bind variables
@@ -175,8 +176,12 @@ final class DiagnosticsConnection extends DefaultConnection {
         configuration.connectionProvider().release(getDelegate());
     }
 
+    final boolean checkPattern(Predicate<? super Settings> test) {
+        return DiagnosticsListeners.checkPattern(configuration.settings(), test);
+    }
+
     final boolean check(Predicate<? super Settings> test) {
-        return !FALSE.equals(test.test(configuration.settings()));
+        return DiagnosticsListeners.check(configuration.settings(), test);
     }
 
     @SuppressWarnings("unchecked")
@@ -218,7 +223,7 @@ final class DiagnosticsConnection extends DefaultConnection {
                     listeners.duplicateStatements(new DefaultDiagnosticsContext(
                         configuration,
                         "Duplicate statements encountered.",
-                        sql, normalised, duplicates, null, queries, null
+                        sql, normalised, duplicates, null, queries, transformed, null
                     ));
             }
 
@@ -228,11 +233,24 @@ final class DiagnosticsConnection extends DefaultConnection {
                     listeners.repeatedStatements(new DefaultDiagnosticsContext(
                         configuration,
                         "Repeated statements encountered.",
-                        sql, normalised, null, repetitions, queries, null
+                        sql, normalised, null, repetitions, queries, transformed, null
                     ));
             }
 
             if (queries != null) {
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -282,7 +300,7 @@ final class DiagnosticsConnection extends DefaultConnection {
             listeners.exception(new DefaultDiagnosticsContext(
                 configuration,
                 "An unexpected exception has occurred. See exception for details.",
-                sql, normalised, null, null, queries, exception
+                sql, normalised, null, null, queries, transformed, exception
             ));
         }
 

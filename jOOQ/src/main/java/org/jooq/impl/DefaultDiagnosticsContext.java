@@ -63,6 +63,7 @@ final class DefaultDiagnosticsContext extends AbstractScope implements Diagnosti
     private static final JooqLogger log = JooqLogger.getLogger(DefaultDiagnosticsContext.class);
 
     final QueryPart                 part;
+    final QueryPart                 transformedPart;
     final String                    message;
     ResultSet                       resultSet;
     DiagnosticsResultSet            resultSetWrapper;
@@ -93,6 +94,7 @@ final class DefaultDiagnosticsContext extends AbstractScope implements Diagnosti
             singleton(actualStatement),
             singletonList(actualStatement),
             null,
+            null,
             exception
         );
     }
@@ -105,6 +107,7 @@ final class DefaultDiagnosticsContext extends AbstractScope implements Diagnosti
         Set<String> duplicateStatements,
         List<String> repeatedStatements,
         QueryPart part,
+        QueryPart transformedPart,
         Throwable exception
     ) {
         super(configuration);
@@ -115,12 +118,18 @@ final class DefaultDiagnosticsContext extends AbstractScope implements Diagnosti
         this.duplicateStatements = duplicateStatements == null ? emptySet() : duplicateStatements;
         this.repeatedStatements = repeatedStatements == null ? emptyList() : repeatedStatements;
         this.part = part;
+        this.transformedPart = transformedPart;
         this.exception = exception;
     }
 
     @Override
     public final QueryPart part() {
         return part;
+    }
+
+    @Override
+    public final QueryPart transformedPart() {
+        return transformedPart;
     }
 
     @Override

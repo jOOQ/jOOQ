@@ -60,6 +60,17 @@ public interface DiagnosticsContext extends Scope {
     QueryPart part();
 
     /**
+     * The transformed object from {@link #part()} if available, or
+     * <code>null</code>, if there was no specific transformation to attach the
+     * diagnostic to.
+     * <p>
+     * This helps diagnosing pattern transformations as indicated by
+     * {@link DiagnosticsListener#transformPattern(DiagnosticsContext)}.
+     */
+    @Nullable
+    QueryPart transformedPart();
+
+    /**
      * A message describing the diagnostics and the object in question.
      */
     @NotNull

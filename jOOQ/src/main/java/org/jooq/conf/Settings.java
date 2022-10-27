@@ -179,6 +179,12 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCaseElseCase = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsCaseMergeWhenWhen = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsCaseMergeWhenElse = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsCaseThenBoolean = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrivialCaseAbbreviation = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrivialPredicates = true;
@@ -2167,6 +2173,92 @@ public class Settings
      */
     public void setTransformPatternsCaseElseCase(Boolean value) {
         this.transformPatternsCaseElseCase = value;
+    }
+
+    /**
+     * Transform <code>CASE WHEN a THEN x WHEN b THEN x END</code> to <code>CASE WHEN a OR b THEN x END</code>.
+     * <p>
+     * Two consecutive <code>WHEN</code> clauses can be merged, if their respective <code>THEN</code> clause is identical.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsCaseMergeWhenWhen() {
+        return transformPatternsCaseMergeWhenWhen;
+    }
+
+    /**
+     * Sets the value of the transformPatternsCaseMergeWhenWhen property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsCaseMergeWhenWhen(Boolean value) {
+        this.transformPatternsCaseMergeWhenWhen = value;
+    }
+
+    /**
+     * Transform <code>CASE WHEN a THEN x WHEN b THEN y ELSE y END</code> to <code>CASE WHEN a THEN x ELSE y END</code>.
+     * <p>
+     * The ultimate <code>WHEN</code> clause can be merged with the <code>ELSE</code>, if their respective result is identical.
+     * If the <code>WHEN</code> clause is the only <code>WHEN</code> clause, then the entire <code>CASE</code> expression can
+     * be replaced by the <code>ELSE</code> clause content.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsCaseMergeWhenElse() {
+        return transformPatternsCaseMergeWhenElse;
+    }
+
+    /**
+     * Sets the value of the transformPatternsCaseMergeWhenElse property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsCaseMergeWhenElse(Boolean value) {
+        this.transformPatternsCaseMergeWhenElse = value;
+    }
+
+    /**
+     * Transform <code>CASE … THEN TRUE ELSE FALSE</code> to something simpler.
+     * <p>
+     * A <code>CASE</code> expression that transforms things to booleans can usually be simplified easily.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsCaseThenBoolean() {
+        return transformPatternsCaseThenBoolean;
+    }
+
+    /**
+     * Sets the value of the transformPatternsCaseThenBoolean property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsCaseThenBoolean(Boolean value) {
+        this.transformPatternsCaseThenBoolean = value;
     }
 
     /**
@@ -5196,6 +5288,21 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsCaseMergeWhenWhen(Boolean value) {
+        setTransformPatternsCaseMergeWhenWhen(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsCaseMergeWhenElse(Boolean value) {
+        setTransformPatternsCaseMergeWhenElse(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsCaseThenBoolean(Boolean value) {
+        setTransformPatternsCaseThenBoolean(value);
+        return this;
+    }
+
     public Settings withTransformPatternsTrivialCaseAbbreviation(Boolean value) {
         setTransformPatternsTrivialCaseAbbreviation(value);
         return this;
@@ -6176,6 +6283,9 @@ public class Settings
         builder.append("transformPatternsMergeBetweenSymmetricPredicates", transformPatternsMergeBetweenSymmetricPredicates);
         builder.append("transformPatternsCaseElseNull", transformPatternsCaseElseNull);
         builder.append("transformPatternsCaseElseCase", transformPatternsCaseElseCase);
+        builder.append("transformPatternsCaseMergeWhenWhen", transformPatternsCaseMergeWhenWhen);
+        builder.append("transformPatternsCaseMergeWhenElse", transformPatternsCaseMergeWhenElse);
+        builder.append("transformPatternsCaseThenBoolean", transformPatternsCaseThenBoolean);
         builder.append("transformPatternsTrivialCaseAbbreviation", transformPatternsTrivialCaseAbbreviation);
         builder.append("transformPatternsTrivialPredicates", transformPatternsTrivialPredicates);
         builder.append("transformPatternsScalarSubqueryCountAsteriskGtZero", transformPatternsScalarSubqueryCountAsteriskGtZero);
@@ -6886,6 +6996,33 @@ public class Settings
             }
         } else {
             if (!transformPatternsCaseElseCase.equals(other.transformPatternsCaseElseCase)) {
+                return false;
+            }
+        }
+        if (transformPatternsCaseMergeWhenWhen == null) {
+            if (other.transformPatternsCaseMergeWhenWhen!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsCaseMergeWhenWhen.equals(other.transformPatternsCaseMergeWhenWhen)) {
+                return false;
+            }
+        }
+        if (transformPatternsCaseMergeWhenElse == null) {
+            if (other.transformPatternsCaseMergeWhenElse!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsCaseMergeWhenElse.equals(other.transformPatternsCaseMergeWhenElse)) {
+                return false;
+            }
+        }
+        if (transformPatternsCaseThenBoolean == null) {
+            if (other.transformPatternsCaseThenBoolean!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsCaseThenBoolean.equals(other.transformPatternsCaseThenBoolean)) {
                 return false;
             }
         }
@@ -8004,6 +8141,9 @@ public class Settings
         result = ((prime*result)+((transformPatternsMergeBetweenSymmetricPredicates == null)? 0 :transformPatternsMergeBetweenSymmetricPredicates.hashCode()));
         result = ((prime*result)+((transformPatternsCaseElseNull == null)? 0 :transformPatternsCaseElseNull.hashCode()));
         result = ((prime*result)+((transformPatternsCaseElseCase == null)? 0 :transformPatternsCaseElseCase.hashCode()));
+        result = ((prime*result)+((transformPatternsCaseMergeWhenWhen == null)? 0 :transformPatternsCaseMergeWhenWhen.hashCode()));
+        result = ((prime*result)+((transformPatternsCaseMergeWhenElse == null)? 0 :transformPatternsCaseMergeWhenElse.hashCode()));
+        result = ((prime*result)+((transformPatternsCaseThenBoolean == null)? 0 :transformPatternsCaseThenBoolean.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialCaseAbbreviation == null)? 0 :transformPatternsTrivialCaseAbbreviation.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialPredicates == null)? 0 :transformPatternsTrivialPredicates.hashCode()));
         result = ((prime*result)+((transformPatternsScalarSubqueryCountAsteriskGtZero == null)? 0 :transformPatternsScalarSubqueryCountAsteriskGtZero.hashCode()));

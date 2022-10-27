@@ -568,6 +568,32 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsCaseMergeWhenWhen" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>CASE WHEN a THEN x WHEN b THEN x END</code> to <code>CASE WHEN a OR b THEN x END</code>.
+<p>
+Two consecutive <code>WHEN</code> clauses can be merged, if their respective <code>THEN</code> clause is identical.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformPatternsCaseMergeWhenElse" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>CASE WHEN a THEN x WHEN b THEN y ELSE y END</code> to <code>CASE WHEN a THEN x ELSE y END</code>.
+<p>
+The ultimate <code>WHEN</code> clause can be merged with the <code>ELSE</code>, if their respective result is identical.
+If the <code>WHEN</code> clause is the only <code>WHEN</code> clause, then the entire <code>CASE</code> expression can
+be replaced by the <code>ELSE</code> clause content.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="transformPatternsCaseThenBoolean" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>CASE .. THEN TRUE ELSE FALSE</code> to something simpler.
+<p>
+A <code>CASE</code> expression that transforms things to booleans can usually be simplified easily.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsTrivialCaseAbbreviation" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform trivial case abbreviations like <code>NVL(NULL, a)</code> to <code>a</code>.
 <p>

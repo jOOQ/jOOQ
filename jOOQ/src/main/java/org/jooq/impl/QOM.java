@@ -252,10 +252,61 @@ public final class QOM {
         permits
             QueryPartListView
     {
+
+        // TODO: These methods could return unmodifiable views instead, to avoid
+        //       copying things around...
         @NotNull default UnmodifiableList<Q> $concat(UnmodifiableList<Q> other) {
             QueryPartList<Q> r = new QueryPartList<>(this);
             r.addAll(other);
-            return r;
+            return unmodifiable(r);
+        }
+
+        @NotNull default UnmodifiableList<Q> $removeFirst() {
+            QueryPartList<Q> r = new QueryPartList<>();
+
+            for (int i = 1; i < size(); i++)
+                r.add(get(i));
+
+            return unmodifiable(r);
+        }
+
+        @NotNull default UnmodifiableList<Q> $set(int position, Q newValue) {
+            QueryPartList<Q> r = new QueryPartList<>();
+
+            for (int i = 0; i < size(); i++)
+                if (i == position)
+                    r.add(newValue);
+                else
+                    r.add(get(i));
+
+            return unmodifiable(r);
+        }
+
+        @NotNull default UnmodifiableList<Q> $remove(int position) {
+            QueryPartList<Q> r = new QueryPartList<>();
+
+            for (int i = 0; i < size(); i++)
+                if (i != position)
+                    r.add(get(i));
+
+            return unmodifiable(r);
+        }
+
+        @NotNull default UnmodifiableList<Q> $removeLast() {
+            QueryPartList<Q> r = new QueryPartList<>();
+
+            for (int i = 0; i < size() - 1; i++)
+                r.add(get(i));
+
+            return unmodifiable(r);
+        }
+
+        @Nullable default Q $first() {
+            return isEmpty() ? null : get(0);
+        }
+
+        @Nullable default Q $last() {
+            return isEmpty() ? null : get(size() - 1);
         }
     }
 

@@ -185,6 +185,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCaseThenBoolean = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsCaseToCaseAbbreviation = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrivialCaseAbbreviation = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrivialPredicates = true;
@@ -2259,6 +2261,34 @@ public class Settings
      */
     public void setTransformPatternsCaseThenBoolean(Boolean value) {
         this.transformPatternsCaseThenBoolean = value;
+    }
+
+    /**
+     * Transform <code>CASE</code> expressions to their respective abbreviations.
+     * <p>
+     * Some <code>CASE</code> expressions have a shorter abbreviated form, such as <code>COALESCE()</code> or <code>NULLIF()</code>.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsCaseToCaseAbbreviation() {
+        return transformPatternsCaseToCaseAbbreviation;
+    }
+
+    /**
+     * Sets the value of the transformPatternsCaseToCaseAbbreviation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsCaseToCaseAbbreviation(Boolean value) {
+        this.transformPatternsCaseToCaseAbbreviation = value;
     }
 
     /**
@@ -5303,6 +5333,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsCaseToCaseAbbreviation(Boolean value) {
+        setTransformPatternsCaseToCaseAbbreviation(value);
+        return this;
+    }
+
     public Settings withTransformPatternsTrivialCaseAbbreviation(Boolean value) {
         setTransformPatternsTrivialCaseAbbreviation(value);
         return this;
@@ -6286,6 +6321,7 @@ public class Settings
         builder.append("transformPatternsCaseMergeWhenWhen", transformPatternsCaseMergeWhenWhen);
         builder.append("transformPatternsCaseMergeWhenElse", transformPatternsCaseMergeWhenElse);
         builder.append("transformPatternsCaseThenBoolean", transformPatternsCaseThenBoolean);
+        builder.append("transformPatternsCaseToCaseAbbreviation", transformPatternsCaseToCaseAbbreviation);
         builder.append("transformPatternsTrivialCaseAbbreviation", transformPatternsTrivialCaseAbbreviation);
         builder.append("transformPatternsTrivialPredicates", transformPatternsTrivialPredicates);
         builder.append("transformPatternsScalarSubqueryCountAsteriskGtZero", transformPatternsScalarSubqueryCountAsteriskGtZero);
@@ -7023,6 +7059,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsCaseThenBoolean.equals(other.transformPatternsCaseThenBoolean)) {
+                return false;
+            }
+        }
+        if (transformPatternsCaseToCaseAbbreviation == null) {
+            if (other.transformPatternsCaseToCaseAbbreviation!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsCaseToCaseAbbreviation.equals(other.transformPatternsCaseToCaseAbbreviation)) {
                 return false;
             }
         }
@@ -8144,6 +8189,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsCaseMergeWhenWhen == null)? 0 :transformPatternsCaseMergeWhenWhen.hashCode()));
         result = ((prime*result)+((transformPatternsCaseMergeWhenElse == null)? 0 :transformPatternsCaseMergeWhenElse.hashCode()));
         result = ((prime*result)+((transformPatternsCaseThenBoolean == null)? 0 :transformPatternsCaseThenBoolean.hashCode()));
+        result = ((prime*result)+((transformPatternsCaseToCaseAbbreviation == null)? 0 :transformPatternsCaseToCaseAbbreviation.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialCaseAbbreviation == null)? 0 :transformPatternsTrivialCaseAbbreviation.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialPredicates == null)? 0 :transformPatternsTrivialPredicates.hashCode()));
         result = ((prime*result)+((transformPatternsScalarSubqueryCountAsteriskGtZero == null)? 0 :transformPatternsScalarSubqueryCountAsteriskGtZero.hashCode()));

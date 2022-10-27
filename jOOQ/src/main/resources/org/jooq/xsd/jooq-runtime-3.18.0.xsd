@@ -593,6 +593,14 @@ A <code>CASE</code> expression that transforms things to booleans can usually be
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="transformPatternsCaseToCaseAbbreviation" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>CASE</code> expressions to their respective abbreviations.
+<p>
+Some <code>CASE</code> expressions have a shorter abbreviated form, such as <code>COALESCE()</code> or <code>NULLIF()</code>.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
       
       <element name="transformPatternsTrivialCaseAbbreviation" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform trivial case abbreviations like <code>NVL(NULL, a)</code> to <code>a</code>.

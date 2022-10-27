@@ -38,15 +38,20 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
+import static java.util.Arrays.asList;
 import static java.util.Collections.synchronizedMap;
 // ...
+// ...
 import static org.jooq.conf.ParamType.FORCE_INDEXED;
+import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.noCondition;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -55,14 +60,17 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import org.jooq.AggregateFunction;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Parser;
 // ...
 import org.jooq.Queries;
+import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 // ...
+import org.jooq.Select;
 import org.jooq.conf.Settings;
 import org.jooq.impl.QOM.Eq;
 import org.jooq.tools.jdbc.DefaultConnection;
@@ -73,15 +81,16 @@ import org.jooq.tools.jdbc.DefaultConnection;
 final class DiagnosticsConnection extends DefaultConnection {
 
     // TODO: Make these configurable
-    static final int                      LRU_SIZE_GLOBAL = 50000;
-    static final int                      LRU_SIZE_LOCAL  = 500;
-    static final int                      DUP_SIZE        = 500;
+    static final int                LRU_SIZE_GLOBAL = 50000;
+    static final int                LRU_SIZE_LOCAL  = 500;
+    static final int                DUP_SIZE        = 500;
 
-    final Map<String, List<String>>       repeatedSQL     = new LRU<>(LRU_SIZE_LOCAL);
-    final Configuration                   configuration;
-    final RenderContext                   normalisingRenderer;
-    final Parser                          parser;
-    final DiagnosticsListeners            listeners;
+    final Map<String, List<String>> repeatedSQL     = new LRU<>(LRU_SIZE_LOCAL);
+    final Map<String, List<String>> consecutiveAgg  = new LRU<>(LRU_SIZE_LOCAL);
+    final Configuration             configuration;
+    final RenderContext             normalisingRenderer;
+    final Parser                    parser;
+    final DiagnosticsListeners      listeners;
 
     DiagnosticsConnection(Configuration configuration) {
         super(configuration.connectionProvider().acquire());
@@ -223,6 +232,7 @@ final class DiagnosticsConnection extends DefaultConnection {
                     ));
             }
 
+            if (queries != null) {
 
 
 
@@ -248,6 +258,22 @@ final class DiagnosticsConnection extends DefaultConnection {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
         }
         catch (Error e) {
             throw e;

@@ -53,7 +53,8 @@ import org.jetbrains.annotations.Nullable;
 public interface DiagnosticsContext extends Scope {
 
     /**
-     * The object that was diagnosed if available, or <code>null</code>, if there was no specific {@link QueryPart} to attach the diagnostic to.
+     * The object that was diagnosed if available, or <code>null</code>, if
+     * there was no specific {@link QueryPart} to attach the diagnostic to.
      */
     @Nullable
     QueryPart part();
@@ -94,8 +95,8 @@ public interface DiagnosticsContext extends Scope {
     int resultSetFetchedRows();
 
     /**
-     * The number of columns that were consumed from the {@link #resultSet()}, or
-     * <code>-1</code> if there was no result set.
+     * The number of columns that were consumed from the {@link #resultSet()},
+     * or <code>-1</code> if there was no result set.
      * <p>
      * If the result set is still being consumed (i.e. prior to the
      * {@link ResultSet#close()} call), then this will return the number of
@@ -111,8 +112,8 @@ public interface DiagnosticsContext extends Scope {
     int resultSetFetchedColumnCount();
 
     /**
-     * The number of columns that were consumed from the {@link #resultSet()}, or
-     * <code>-1</code> if there was no result set.
+     * The number of columns that were consumed from the {@link #resultSet()},
+     * or <code>-1</code> if there was no result set.
      * <p>
      * If the result set is still being consumed (i.e. prior to the
      * {@link ResultSet#close()} call), then this will return the number of
@@ -174,6 +175,11 @@ public interface DiagnosticsContext extends Scope {
     /**
      * The duplicate statements that all correspond to a single normalised
      * statement.
+     * <p>
+     * This set is used by at least:
+     * <ul>
+     * <li>{@link DiagnosticsListener#duplicateStatements(DiagnosticsContext)}</li>
+     * </ul>
      */
     @NotNull
     Set<String> duplicateStatements();
@@ -181,6 +187,12 @@ public interface DiagnosticsContext extends Scope {
     /**
      * The repeated statements that all correspond to a single normalised
      * statement.
+     * <p>
+     * This set is used by at least:
+     * <ul>
+     * <li>{@link DiagnosticsListener#repeatedStatements(DiagnosticsContext)}</li>
+     * <li>{@link DiagnosticsListener#consecutiveAggregation(DiagnosticsContext)}</li>
+     * </ul>
      */
     @NotNull
     List<String> repeatedStatements();

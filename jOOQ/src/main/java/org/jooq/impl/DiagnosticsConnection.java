@@ -88,6 +88,7 @@ final class DiagnosticsConnection extends DefaultConnection {
     final Map<String, List<String>> repeatedSQL     = new LRU<>(LRU_SIZE_LOCAL);
     final Map<String, List<String>> consecutiveAgg  = new LRU<>(LRU_SIZE_LOCAL);
     final Configuration             configuration;
+    final Configuration             configurationTranformPatterns;
     final RenderContext             normalisingRenderer;
     final Parser                    parser;
     final DiagnosticsListeners      listeners;
@@ -96,7 +97,8 @@ final class DiagnosticsConnection extends DefaultConnection {
         super(configuration.connectionProvider().acquire());
 
         // [#7527] The Settings.diagnosticsPattern flag overrides the Settings.transformPatterns flag.
-        this.configuration = configuration.deriveSettings(s -> s.withTransformPatterns(true));
+        this.configuration = configuration;
+        this.configurationTranformPatterns = configuration.deriveSettings(s -> s.withTransformPatterns(true));
         this.normalisingRenderer = configuration.deriveSettings(s -> s
 
             // Forcing all inline parameters to be indexed helps find opportunities to use bind variables
@@ -238,7 +240,6 @@ final class DiagnosticsConnection extends DefaultConnection {
             }
 
             if (queries != null) {
-
 
 
 

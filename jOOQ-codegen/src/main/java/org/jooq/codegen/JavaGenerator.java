@@ -7272,11 +7272,18 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         // [#9817] Generate text blocks only if there are newlines or quotes
-        else if (generateTextBlocks0() && (string.contains("\n") || string.contains("\r") || string.contains("\""))) {
+        else if (generateTextBlocks0() && (
+                   string.contains("\\")
+                || string.contains("\n")
+                || string.contains("\r")
+                || string.contains("\"")
+        )) {
             // TODO [#3450] Escape sequences?
             // TODO [#10007] [#10318] Long textblocks?
             // TODO [#10869] String interpolation in kotlin?
-            String result = string.replace("\"\"\"", "\\\"\\\"\\\"");
+            String result = string
+                .replace("\\", "\\\\")
+                .replace("\"\"\"", "\\\"\\\"\\\"");
 
 
             // Only Java has incidental whitespace support (?)

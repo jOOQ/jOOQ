@@ -141,6 +141,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsLogging = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsCountConstant = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrim = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNotNot = true;
@@ -1585,6 +1587,37 @@ public class Settings
      */
     public void setTransformPatternsLogging(Boolean value) {
         this.transformPatternsLogging = value;
+    }
+
+    /**
+     * Transform <code>COUNT(1)</code> or any other <code>COUNT(const)</code> to <code>COUNT(*)</code>.
+     * <p>
+     * There is no benefit to counting a constant expression. In fact, in some RDBMS, it might even be slightly
+     * slower, at least in benchmarks.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsCountConstant() {
+        return transformPatternsCountConstant;
+    }
+
+    /**
+     * Sets the value of the transformPatternsCountConstant property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsCountConstant(Boolean value) {
+        this.transformPatternsCountConstant = value;
     }
 
     /**
@@ -4940,6 +4973,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsCountConstant(Boolean value) {
+        setTransformPatternsCountConstant(value);
+        return this;
+    }
+
     public Settings withTransformPatternsTrim(Boolean value) {
         setTransformPatternsTrim(value);
         return this;
@@ -5971,6 +6009,7 @@ public class Settings
         builder.append("diagnosticsNullCondition", diagnosticsNullCondition);
         builder.append("transformPatterns", transformPatterns);
         builder.append("transformPatternsLogging", transformPatternsLogging);
+        builder.append("transformPatternsCountConstant", transformPatternsCountConstant);
         builder.append("transformPatternsTrim", transformPatternsTrim);
         builder.append("transformPatternsNotNot", transformPatternsNotNot);
         builder.append("transformPatternsNotComparison", transformPatternsNotComparison);
@@ -6524,6 +6563,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsLogging.equals(other.transformPatternsLogging)) {
+                return false;
+            }
+        }
+        if (transformPatternsCountConstant == null) {
+            if (other.transformPatternsCountConstant!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsCountConstant.equals(other.transformPatternsCountConstant)) {
                 return false;
             }
         }
@@ -7749,6 +7797,7 @@ public class Settings
         result = ((prime*result)+((diagnosticsNullCondition == null)? 0 :diagnosticsNullCondition.hashCode()));
         result = ((prime*result)+((transformPatterns == null)? 0 :transformPatterns.hashCode()));
         result = ((prime*result)+((transformPatternsLogging == null)? 0 :transformPatternsLogging.hashCode()));
+        result = ((prime*result)+((transformPatternsCountConstant == null)? 0 :transformPatternsCountConstant.hashCode()));
         result = ((prime*result)+((transformPatternsTrim == null)? 0 :transformPatternsTrim.hashCode()));
         result = ((prime*result)+((transformPatternsNotNot == null)? 0 :transformPatternsNotNot.hashCode()));
         result = ((prime*result)+((transformPatternsNotComparison == null)? 0 :transformPatternsNotComparison.hashCode()));

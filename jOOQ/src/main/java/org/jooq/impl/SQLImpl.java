@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.Objects.requireNonNull;
 import static org.jooq.Clause.TEMPLATE;
 import static org.jooq.impl.DSL.list;
 import static org.jooq.impl.Tools.renderAndBind;
@@ -57,7 +58,7 @@ final class SQLImpl extends AbstractQueryPart implements SQL, UEmpty {
     private final List<QueryPart> substitutes;
 
     SQLImpl(String sql, Object... input) {
-        this.sql = sql;
+        this.sql = requireNonNull(sql);
         this.substitutes = Tools.queryParts(input);
     }
 

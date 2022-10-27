@@ -218,6 +218,18 @@ public final class QOM {
     // minimal example. Without the qualification, the types cannot be found
     // despite being imported
 
+    public sealed interface UTuple2<Q1 extends org.jooq.QueryPart, Q2 extends org.jooq.QueryPart>
+        extends
+            org.jooq.QueryPart
+        permits
+            UTupleImpl2
+    {
+        @NotNull Q1 $part1();
+        @NotNull UTuple2<Q1, Q2> $part1(Q1 newPart1);
+        @NotNull Q2 $part2();
+        @NotNull UTuple2<Q1, Q2> $part2(Q2 newPart2);
+    }
+
     /**
      * An unmodifiable {@link Collection} of {@link QueryPart} elements.
      */
@@ -964,6 +976,30 @@ public final class QOM {
         /*permits
             Coalesce*/
     {}
+
+    public /*sealed*/ interface CaseSimple<V, T>
+        extends
+            Field<T>,
+            UOperator3<Field<V>, UnmodifiableList<? extends UTuple2<Field<V>, Field<T>>>, Field<T>, CaseSimple<V, T>>
+    {
+        @NotNull  default Field<V> $value() { return $arg1(); }
+        @NotNull  default CaseSimple<V, T> $value(Field<V> value) { return $arg1(value); }
+        @NotNull  default UnmodifiableList<? extends UTuple2<Field<V>, Field<T>>> $when() { return $arg2(); }
+        @NotNull  default CaseSimple<V, T> $when(UnmodifiableList<? extends UTuple2<Field<V>, Field<T>>> when) { return $arg2(when); }
+        @Nullable default Field<T> $else() { return $arg3(); }
+        @NotNull  default CaseSimple<V, T> $else(Field<T> else_) { return $arg3(else_); }
+    }
+
+    public /*sealed*/ interface CaseSearched<T>
+        extends
+            Field<T>,
+            UOperator2<UnmodifiableList<? extends UTuple2<Condition, Field<T>>>, Field<T>, CaseSearched<T>>
+    {
+        @NotNull  default UnmodifiableList<? extends UTuple2<Condition, Field<T>>> $when() { return $arg1(); }
+        @NotNull  default CaseSearched<T> $when(UnmodifiableList<? extends UTuple2<Condition, Field<T>>> when) { return $arg1(when); }
+        @Nullable default Field<T> $else() { return $arg2(); }
+        @NotNull  default CaseSearched<T> $else(Field<T> else_) { return $arg2(else_); }
+    }
 
     public /*sealed*/ interface Concat
         extends
@@ -7726,5 +7762,10 @@ public final class QOM {
             return unmodifiable((List<Q>) collection);
         else
             return new QueryPartList<>(unmodifiableCollection(collection));
+    }
+
+    @Internal
+    public static final <Q1 extends QueryPart, Q2 extends QueryPart> UTuple2<Q1, Q2> tuple(Q1 q1, Q2 q2) {
+        return new UTupleImpl2<>(q1, q2);
     }
 }

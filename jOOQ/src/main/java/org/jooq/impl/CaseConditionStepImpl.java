@@ -52,36 +52,53 @@ import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Names.NQ_CASE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.CaseConditionStep;
 import org.jooq.Condition;
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function2;
 // ...
+import org.jooq.QueryPart;
 import org.jooq.Record1;
 // ...
 import org.jooq.Select;
-import org.jooq.impl.QOM.UNotYetImplemented;
+// ...
+import org.jooq.impl.QOM.CaseSearched;
+import org.jooq.impl.QOM.UTuple2;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
  */
-final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseConditionStep<T>, UNotYetImplemented {
+final class CaseConditionStepImpl<T>
+extends
+    AbstractField<T>
+implements
+    CaseConditionStep<T>,
+    QOM.CaseSearched<T>
+{
 
-    private final List<Condition> conditions;
-    private final List<Field<T>>  results;
-    private Field<T>              else_;
+    private final List<UTuple2<Condition, Field<T>>> when;
+    private Field<T>                                 else_;
+
+    CaseConditionStepImpl(DataType<T> type) {
+        super(NQ_CASE, type);
+
+        this.when = new QueryPartList<>();
+    }
 
     CaseConditionStepImpl(Condition condition, Field<T> result) {
-        super(NQ_CASE, result.getDataType());
-
-        this.conditions = new ArrayList<>();
-        this.results = new ArrayList<>();
+        this(result.getDataType());
 
         when(condition, result);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
 
     @Override
     public final CaseConditionStep<T> when(Condition condition, T result) {
@@ -90,9 +107,7 @@ final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCon
 
     @Override
     public final CaseConditionStep<T> when(Condition condition, Field<T> result) {
-        conditions.add(condition);
-        results.add(result);
-
+        when.add(QOM.tuple(condition, result));
         return this;
     }
 
@@ -206,18 +221,12 @@ final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCon
 
 
 
-
-
-
-
-
     private final void acceptNative(Context<?> ctx) {
         ctx.visit(K_CASE)
            .formatIndentStart();
 
-        int size = conditions.size();
-        for (int i = 0; i < size; i++) {
-            Condition c = conditions.get(i);
+        for (UTuple2<Condition, Field<T>> e : when) {
+            Condition c = e.$part1();
 
 
 
@@ -236,7 +245,7 @@ final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCon
 
             ctx.formatSeparator()
                .visit(K_WHEN).sql(' ').visit(c).sql(' ')
-               .visit(K_THEN).sql(' ').visit(results.get(i));
+               .visit(K_THEN).sql(' ').visit(e.$part2());
         }
 
         if (else_ != null)
@@ -249,5 +258,55 @@ final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCon
         ctx.formatIndentEnd()
            .formatSeparator()
            .visit(K_END);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Function2<? super UnmodifiableList<? extends UTuple2<Condition, Field<T>>>, ? super Field<T>, ? extends CaseSearched<T>> $constructor() {
+        return (w, e) -> {
+            CaseConditionStepImpl<T> r = new CaseConditionStepImpl<>(getDataType());
+            w.forEach(t -> r.when(t.$part1(), t.$part2()));
+            r.else_(e);
+            return r;
+        };
+    }
+
+    @Override
+    public final UnmodifiableList<? extends UTuple2<Condition, Field<T>>> $arg1() {
+        return QOM.unmodifiable(when);
+    }
+
+    @Override
+    public final CaseSearched<T> $arg1(UnmodifiableList<? extends UTuple2<Condition, Field<T>>> w) {
+        return $constructor().apply(w, $else());
+    }
+
+    @Override
+    public final Field<T> $arg2() {
+        return else_;
+    }
+
+    @Override
+    public final CaseSearched<T> $arg2(Field<T> e) {
+        return $constructor().apply($when(), e);
+    }
+
+    @Override
+    public final <R> R $traverse(Traverser<?, R> traverser) {
+        return QOM.traverse(traverser, this, $when(), $else());
+    }
+
+    @Override
+    public final QueryPart $replace(Replacer replacer) {
+        return QOM.replace(
+            this,
+            $when(),
+            $else(),
+            (w, e) -> $constructor().apply(w, e),
+            replacer
+        );
     }
 }

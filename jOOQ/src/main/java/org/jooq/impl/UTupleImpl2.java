@@ -101,19 +101,23 @@ implements
         return tuple(part1, newPart2);
     }
 
-    @Override
-    public final <R> R $traverse(Traverser<?, R> traverser) {
-        return QOM.traverse(traverser, this, $1(), $2());
-    }
 
-    @Override
-    public final QueryPart $replace(Replacer replacer) {
-        return QOM.replace(
-            this,
-            $1(),
-            $2(),
-            (p1, p2) -> tuple(p1, p2),
-            replacer
-        );
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

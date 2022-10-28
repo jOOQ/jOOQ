@@ -83,6 +83,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -113,6 +114,7 @@ import org.jooq.impl.Tools.ExtendedDataKey;
  * @author Lukas Eder
  */
 final class BlockImpl extends AbstractRowCountQuery implements Block {
+
     private static final Set<SQLDialect>  REQUIRES_EXECUTE_IMMEDIATE_ON_DDL = SQLDialect.supportedBy(FIREBIRD);
     private static final Set<SQLDialect>  SUPPORTS_NULL_STATEMENT           = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
@@ -587,6 +589,30 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+
+        if (obj instanceof BlockImpl b) {
+            return alwaysWrapInBeginEnd == b.alwaysWrapInBeginEnd && Objects.equals(statements, b.statements);
+        }
+        else
+            return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = prime;
+        result = prime * result + Objects.hash(alwaysWrapInBeginEnd, statements);
+        return result;
+    }
 
     // -------------------------------------------------------------------------
     // XXX: Query Object Model

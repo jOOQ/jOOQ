@@ -50,7 +50,6 @@ import static org.jooq.Clause.DELETE_WHERE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
-// ...
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -75,6 +74,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.SettingsTools.getExecuteDeleteWithoutWhere;
+import static org.jooq.impl.ConditionProviderImpl.extractCondition;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.trueCondition;
@@ -90,6 +90,7 @@ import static org.jooq.impl.Tools.traverseJoins;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -99,20 +100,31 @@ import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.OrderField;
-import org.jooq.Param;
 // ...
+import org.jooq.QueryPart;
 import org.jooq.Record;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
+import org.jooq.SelectFieldOrAsterisk;
+import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableLike;
+// ...
 import org.jooq.conf.ParamType;
-import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.Delete;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
  */
-final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implements DeleteQuery<R>, UNotYetImplemented {
+final class DeleteQueryImpl<R extends Record>
+extends
+    AbstractDMLQuery<R>
+implements
+    DeleteQuery<R>,
+    QOM.Delete<R>
+{
 
     private static final Clause[]        CLAUSES                         = { DELETE };
     private static final Set<SQLDialect> SPECIAL_DELETE_AS_SYNTAX        = SQLDialect.supportedBy(MARIADB, MYSQL);
@@ -355,6 +367,136 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
         return super.isExecutable();
     }
+
+
+
+
+
+
+
+
+
+
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    final DeleteQueryImpl<R> copy(Consumer<? super DeleteQueryImpl<R>> finisher) {
+        return copy(finisher, table);
+    }
+
+    final <O extends Record> DeleteQueryImpl<O> copy(Consumer<? super DeleteQueryImpl<O>> finisher, Table<O> t) {
+        DeleteQueryImpl<O> r = new DeleteQueryImpl<>(configuration(), with, t);
+        r.using.addAll(using);
+        r.condition.addConditions(extractCondition(condition));
+        r.orderBy.addAll(orderBy);
+        r.limit = limit;
+        r.setReturning(returning);
+        finisher.accept(r);
+        return r;
+    }
+
+    @Override
+    public final WithImpl $with() {
+        return with;
+    }
+
+    @Override
+    public final Table<R> $from() {
+        return table;
+    }
+
+    @Override
+    public final Delete<?> $from(Table<?> newFrom) {
+        if ($from() == newFrom)
+            return this;
+        else
+            return copy(d -> {}, newFrom);
+    }
+
+    @Override
+    public final UnmodifiableList<? extends Table<?>> $using() {
+        return QOM.unmodifiable(using);
+    }
+
+    @Override
+    public final Delete<R> $using(Collection<? extends Table<?>> using) {
+        return copy(d -> {
+            d.using.clear();
+            d.using.addAll(using);
+        });
+    }
+
+    @Override
+    public final Condition $where() {
+        return condition.getWhereOrNull();
+    }
+
+    @Override
+    public final Delete<R> $where(Condition newWhere) {
+        if ($where() == newWhere)
+            return this;
+        else
+            return copy(d -> d.condition.setWhere(newWhere));
+    }
+
+    @Override
+    public final UnmodifiableList<? extends SortField<?>> $orderBy() {
+        return QOM.unmodifiable(orderBy);
+    }
+
+    @Override
+    public final Delete<R> $orderBy(Collection<? extends SortField<?>> newOrderBy) {
+        return copy(d -> {
+            d.orderBy.clear();
+            d.orderBy.addAll(newOrderBy);
+        });
+    }
+
+    @Override
+    public final Field<? extends Number> $limit() {
+        return limit;
+    }
+
+    @Override
+    public final Delete<R> $limit(Field<? extends Number> newLimit) {
+        if ($limit() == newLimit)
+            return this;
+        else
+            return copy(d -> d.limit = newLimit);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

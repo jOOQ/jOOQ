@@ -94,6 +94,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -115,7 +116,10 @@ import org.jooq.impl.QOM.UNotYetImplemented;
 /**
  * @author Lukas Eder
  */
-final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRowOrSelect> implements UNotYetImplemented {
+final class FieldMapForUpdate
+extends
+    AbstractQueryPartMap<FieldOrRow, FieldOrRowOrSelect>
+{
 
     static final Set<SQLDialect> CASTS_NEEDED                      = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect> NO_SUPPORT_QUALIFY                = SQLDialect.supportedBy(POSTGRES, SQLITE, YUGABYTEDB);
@@ -509,5 +513,18 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<FieldOrRow, FieldOrRo
         UPDATE,
         INSERT,
         MERGE
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    final Function<? super Map<FieldOrRow, FieldOrRowOrSelect>, ? extends AbstractQueryPartMap<FieldOrRow, FieldOrRowOrSelect>> $construct() {
+        return m -> {
+            FieldMapForUpdate r = new FieldMapForUpdate(table, setClause, assignmentClause);
+            r.putAll(m);
+            return r;
+        };
     }
 }

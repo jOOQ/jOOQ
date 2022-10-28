@@ -77,22 +77,18 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-final class DMLQueryAsResultQuery<R extends Record, Q extends AbstractDMLQuery<R>>
+abstract class AbstractDMLQueryAsResultQuery<R extends Record, Q extends AbstractDMLQuery<R>>
 extends
     AbstractQueryPart
 implements
-    ResultQueryTrait<R>,
-    DeleteResultStep<R>,
-    UpdateResultStep<R>,
-    InsertResultStep<R>,
-    UNotYetImplemented
+    ResultQueryTrait<R>
 {
-    private final Q                        delegate;
-    private final boolean                  returningResult;
-    private Table<?>                       coerceTable;
-    private Collection<? extends Field<?>> coerceFields;
+    final Q                        delegate;
+    final boolean                  returningResult;
+    Table<?>                       coerceTable;
+    Collection<? extends Field<?>> coerceFields;
 
-    DMLQueryAsResultQuery(Q delegate, boolean returningResult) {
+    AbstractDMLQueryAsResultQuery(Q delegate, boolean returningResult) {
         this.delegate = delegate;
         this.returningResult = returningResult;
     }

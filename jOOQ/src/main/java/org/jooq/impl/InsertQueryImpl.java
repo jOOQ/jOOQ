@@ -62,6 +62,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.ConditionProviderImpl.extractCondition;
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.name;
@@ -108,6 +109,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Consumer;
 import java.util.Set;
 
 import org.jooq.Clause;
@@ -116,6 +118,8 @@ import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.FieldOrRow;
+import org.jooq.FieldOrRowOrSelect;
 import org.jooq.GeneratorStatementType;
 import org.jooq.Identity;
 import org.jooq.InsertQuery;
@@ -126,19 +130,29 @@ import org.jooq.Operator;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
+// ...
+import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
+// ...
 import org.jooq.UniqueKey;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.WriteIfReadonly;
 import org.jooq.impl.FieldMapForUpdate.SetClause;
+import org.jooq.impl.QOM.Insert;
 import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.UnmodifiableList;
+import org.jooq.impl.QOM.UnmodifiableMap;
+import org.jooq.impl.QOM.With;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.ExtendedDataKey;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -148,7 +162,7 @@ extends
     AbstractStoreQuery<R, Field<?>, Field<?>>
 implements
     InsertQuery<R>,
-    UNotYetImplemented
+    QOM.Insert<R>
 {
 
     static final Clause[]        CLAUSES                                       = { INSERT };
@@ -158,7 +172,6 @@ implements
     static final Set<SQLDialect> NO_SUPPORT_SUBQUERY_IN_MERGE_USING            = SQLDialect.supportedBy(DERBY);
     static final Set<SQLDialect> REQUIRE_NEW_MYSQL_EXCLUDED_EMULATION          = SQLDialect.supportedBy(MYSQL);
 
-    final FieldMapForUpdate      updateMap;
     final FieldMapsForInsert     insertMaps;
     Select<?>                    select;
     boolean                      defaultValues;
@@ -168,15 +181,16 @@ implements
     UniqueKey<R>                 onConstraintUniqueKey;
     QueryPartList<Field<?>>      onConflict;
     final ConditionProviderImpl  onConflictWhere;
-    final ConditionProviderImpl  condition;
+    final FieldMapForUpdate      updateMap;
+    final ConditionProviderImpl  updateWhere;
 
     InsertQueryImpl(Configuration configuration, WithImpl with, Table<R> into) {
         super(configuration, with, into);
 
-        this.updateMap = new FieldMapForUpdate(into, SetClause.INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
         this.insertMaps = new FieldMapsForInsert(into);
         this.onConflictWhere = new ConditionProviderImpl();
-        this.condition = new ConditionProviderImpl();
+        this.updateMap = new FieldMapForUpdate(into, SetClause.INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
+        this.updateWhere = new ConditionProviderImpl();
     }
 
     @Override
@@ -246,14 +260,31 @@ implements
 
     @Override
     public final void onDuplicateKeyUpdate(boolean flag) {
-        this.onDuplicateKeyIgnore = false;
-        this.onDuplicateKeyUpdate = flag;
+        onDuplicateKeyUpdate = flag;
+
+        if (flag) {
+            onDuplicateKeyIgnore = false;
+            clearOnConflict();
+        }
     }
 
     @Override
     public final void onDuplicateKeyIgnore(boolean flag) {
-        this.onDuplicateKeyUpdate = false;
-        this.onDuplicateKeyIgnore = flag;
+        onDuplicateKeyIgnore = flag;
+
+        if (flag) {
+            onDuplicateKeyUpdate = false;
+            updateMap.clear();
+            updateWhere.setWhere(null);
+            clearOnConflict();
+        }
+    }
+
+    private final void clearOnConflict() {
+        onConflict = null;
+        onConflictWhere.setWhere(null);
+        onConstraint = null;
+        onConstraintUniqueKey = null;
     }
 
     @Override
@@ -273,37 +304,38 @@ implements
 
     @Override
     public final void addConditions(Condition conditions) {
-        condition.addConditions(conditions);
+        updateWhere.addConditions(conditions);
     }
 
     @Override
     public final void addConditions(Condition... conditions) {
-        condition.addConditions(conditions);
+        updateWhere.addConditions(conditions);
     }
 
     @Override
     public final void addConditions(Collection<? extends Condition> conditions) {
-        condition.addConditions(conditions);
+        updateWhere.addConditions(conditions);
     }
 
     @Override
     public final void addConditions(Operator operator, Condition conditions) {
-        condition.addConditions(operator, conditions);
+        updateWhere.addConditions(operator, conditions);
     }
 
     @Override
     public final void addConditions(Operator operator, Condition... conditions) {
-        condition.addConditions(operator, conditions);
+        updateWhere.addConditions(operator, conditions);
     }
 
     @Override
     public final void addConditions(Operator operator, Collection<? extends Condition> conditions) {
-        condition.addConditions(operator, conditions);
+        updateWhere.addConditions(operator, conditions);
     }
 
     @Override
     public final void setDefaultValues() {
         defaultValues = true;
+        select = null;
     }
 
     private final boolean defaultValues(Configuration c) {
@@ -322,6 +354,8 @@ implements
 
     @Override
     public final void setSelect(Collection<? extends Field<?>> f, Select<?> s) {
+        defaultValues = false;
+        insertMaps.clear();
         insertMaps.addFields(f);
         select = s;
     }
@@ -412,11 +446,11 @@ implements
                            .visit(updateMapComputedOnClientStored(ctx))
                            .formatIndentEnd();
 
-                        if (condition.hasWhere())
+                        if (updateWhere.hasWhere())
                             ctx.formatSeparator()
                                .visit(K_WHERE)
                                .sql(' ')
-                               .visit(condition);
+                               .visit(updateWhere);
 
                         ctx.end(INSERT_ON_DUPLICATE_KEY_UPDATE);
                     }
@@ -469,8 +503,8 @@ implements
                        .qualify(newQualify);
 
                     // [#8479] Emulate WHERE clause using CASE
-                    if (condition.hasWhere())
-                        ctx.data(DATA_ON_DUPLICATE_KEY_WHERE, condition.getWhere());
+                    if (updateWhere.hasWhere())
+                        ctx.data(DATA_ON_DUPLICATE_KEY_WHERE, updateWhere.getWhere());
 
                     if (requireNewMySQLExcludedEmulation) {
                         um.replaceAll((k, v) -> {
@@ -484,7 +518,7 @@ implements
 
                     ctx.visit(um);
 
-                    if (condition.hasWhere())
+                    if (updateWhere.hasWhere())
                         ctx.data().remove(DATA_ON_DUPLICATE_KEY_WHERE);
 
                     ctx.qualify(oldQualify)
@@ -945,8 +979,8 @@ implements
                 //         computed column emulation
                 um = updateMapComputedOnClientStored(ctx, um);
 
-                notMatched = condition.hasWhere()
-                    ? on.whenMatchedAnd(condition.getWhere()).thenUpdate().set(um)
+                notMatched = updateWhere.hasWhere()
+                    ? on.whenMatchedAnd(updateWhere.getWhere()).thenUpdate().set(um)
                     : on.whenMatchedThenUpdate().set(um);
             }
 
@@ -1059,6 +1093,222 @@ implements
     public final boolean isExecutable() {
         return insertMaps.isExecutable() || defaultValues(configuration()) || select != null;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    final InsertQueryImpl<R> copy(Consumer<? super InsertQueryImpl<R>> finisher) {
+        return copy(finisher, table);
+    }
+
+    final <O extends Record> InsertQueryImpl<O> copy(Consumer<? super InsertQueryImpl<O>> finisher, Table<O> t) {
+        InsertQueryImpl<O> i = new InsertQueryImpl<>(configuration(), with, t);
+
+        if (!returning.isEmpty())
+            i.setReturning(returning);
+
+        i.insertMaps.empty.putAll(insertMaps.empty);
+        i.insertMaps.values.putAll(insertMaps.values);
+        i.insertMaps.rows = insertMaps.rows;
+        i.insertMaps.nextRow = insertMaps.nextRow;
+        i.defaultValues = defaultValues;
+        i.select = select;
+
+        if (onConflict != null)
+            i.onConflict(onConflict);
+
+        if (onConflictWhere.hasWhere())
+            i.onConflictWhere.setWhere(extractCondition(onConflictWhere));
+
+        i.onConstraint = onConstraint;
+        i.onConstraintUniqueKey = (UniqueKey) onConstraintUniqueKey;
+        i.onDuplicateKeyIgnore = onDuplicateKeyIgnore;
+        i.onDuplicateKeyUpdate = onDuplicateKeyUpdate;
+        i.updateWhere.setWhere(updateWhere.getWhere());
+        i.updateMap.putAll(updateMap);
+        finisher.accept(i);
+        return i;
+    }
+
+    @Override
+    public final WithImpl $with() {
+        return with;
+    }
+
+    @Override
+    public final Table<R> $into() {
+        return table;
+    }
+
+    @Override
+    public final Insert<?> $into(Table<?> newInto) {
+        if ($into() == newInto)
+            return this;
+        else
+            return copy(i -> {}, newInto);
+    }
+
+    @Override
+    public final UnmodifiableList<? extends Field<?>> $columns() {
+        return QOM.unmodifiable(new ArrayList<>(insertMaps.values.keySet()));
+    }
+
+    @Override
+    public final Insert<?> $columns(Collection<? extends Field<?>> columns) {
+        throw new QOM.NotYetImplementedException();
+    }
+
+    @Override
+    public final Select<?> $select() {
+        return select;
+    }
+
+    @Override
+    public final Insert<?> $select(Select<?> newSelect) {
+        if ($select() == newSelect)
+            return this;
+        else
+            return copy(i -> {
+                i.setSelect($columns(), newSelect);
+            });
+    }
+
+    @Override
+    public final boolean $defaultValues() {
+        return defaultValues;
+    }
+
+    @Override
+    public final Insert<?> $defaultValues(boolean newDefaultValues) {
+        if ($defaultValues() == newDefaultValues)
+            return this;
+        else
+            return copy(i -> {
+                if (newDefaultValues)
+                    i.setDefaultValues();
+                else
+                    i.defaultValues = false;
+            });
+    }
+
+    @Override
+    public final UnmodifiableList<? extends Row> $values() {
+        return QOM.unmodifiable(new ArrayList<>());
+    }
+
+    @Override
+    public final Insert<?> $values(Collection<? extends Row> values) {
+        throw new QOM.NotYetImplementedException();
+    }
+
+    @Override
+    public final boolean $onDuplicateKeyIgnore() {
+        return onDuplicateKeyIgnore;
+    }
+
+    @Override
+    public final Insert<?> $onDuplicateKeyIgnore(boolean newOnDuplicateKeyIgnore) {
+        if ($onDuplicateKeyIgnore() == newOnDuplicateKeyIgnore)
+            return this;
+        else
+            return copy(i -> i.onDuplicateKeyIgnore(newOnDuplicateKeyIgnore));
+    }
+
+    @Override
+    public final boolean $onDuplicateKeyUpdate() {
+        return onDuplicateKeyUpdate;
+    }
+
+    @Override
+    public final Insert<?> $onDuplicateKeyUpdate(boolean newOnDuplicateKeyUpdate) {
+        if ($onDuplicateKeyUpdate() == newOnDuplicateKeyUpdate)
+            return this;
+        else
+            return copy(i -> i.onDuplicateKeyUpdate(newOnDuplicateKeyUpdate));
+    }
+
+    @Override
+    public final UnmodifiableList<? extends Field<?>> $onConflict() {
+        return QOM.unmodifiable(onConflict == null ? new ArrayList<>() : onConflict);
+    }
+
+    @Override
+    public final Insert<?> $onConflict(Collection<? extends Field<?>> newOnConflict) {
+        if ($onConflict() == newOnConflict)
+            return this;
+        else
+            return copy(i -> i.onConflict(newOnConflict));
+    }
+
+    @Override
+    public final Condition $onConflictWhere() {
+        return onConflictWhere.getWhereOrNull();
+    }
+
+    @Override
+    public final Insert<?> $onConflictWhere(Condition newWhere) {
+        if ($onConflictWhere() == newWhere)
+            return this;
+        else
+            return copy(i -> i.onConflictWhere.setWhere(newWhere));
+    }
+
+    @Override
+    public final UnmodifiableMap<? extends FieldOrRow, ? extends FieldOrRowOrSelect> $updateSet() {
+        return QOM.unmodifiable(updateMap);
+    }
+
+    @Override
+    public final Insert<?> $updateSet(Map<? extends FieldOrRow, ? extends FieldOrRowOrSelect> newUpdateSet) {
+        if ($updateSet() == newUpdateSet)
+            return this;
+        else
+            return copy(i -> i.addValuesForUpdate(newUpdateSet));
+    }
+
+    @Override
+    public final Condition $updateWhere() {
+        return updateWhere.getWhereOrNull();
+    }
+
+    @Override
+    public final Insert<?> $updateWhere(Condition newWhere) {
+        if ($updateWhere() == newWhere)
+            return this;
+        else
+            return copy(i -> i.updateWhere.setWhere(newWhere));
+    }
+
+
+
+
+
+
+
+
+
 
 
 

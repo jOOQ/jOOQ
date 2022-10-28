@@ -124,6 +124,7 @@ import static org.jooq.impl.CombineOperator.INTERSECT_ALL;
 import static org.jooq.impl.CombineOperator.UNION;
 import static org.jooq.impl.CombineOperator.UNION_ALL;
 import static org.jooq.impl.CommonTableExpressionList.markTopLevelCteAndAccept;
+import static org.jooq.impl.ConditionProviderImpl.extractCondition;
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.createTable;
 import static org.jooq.impl.DSL.emptyGroupingSet;
@@ -4617,7 +4618,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final UnmodifiableList<GroupField> $groupBy() {
-        return QOM.unmodifiable(groupBy == null ? new GroupFieldList() : groupBy);
+        return QOM.unmodifiable(groupBy);
     }
 
     @Override
@@ -4746,15 +4747,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         else
             return copy(s -> s.getLimit().setOffset(newOffset));
     }
-
-
-
-
-
-
-
-
-
 
 
 

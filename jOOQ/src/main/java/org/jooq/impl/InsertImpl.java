@@ -54,22 +54,15 @@ import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.Field;
 import org.jooq.FieldLike;
+import org.jooq.FieldOrRow;
+import org.jooq.FieldOrRowOrSelect;
 import org.jooq.InsertOnConflictConditionStep;
 import org.jooq.InsertOnConflictWhereIndexPredicateStep;
 import org.jooq.InsertOnDuplicateSetMoreStep;
 import org.jooq.InsertResultStep;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
-import org.jooq.InsertValuesStepN;
 import org.jooq.InsertValuesStep1;
-import org.jooq.InsertValuesStep2;
-import org.jooq.InsertValuesStep3;
-import org.jooq.InsertValuesStep4;
-import org.jooq.InsertValuesStep5;
-import org.jooq.InsertValuesStep6;
-import org.jooq.InsertValuesStep7;
-import org.jooq.InsertValuesStep8;
-import org.jooq.InsertValuesStep9;
 import org.jooq.InsertValuesStep10;
 import org.jooq.InsertValuesStep11;
 import org.jooq.InsertValuesStep12;
@@ -80,22 +73,23 @@ import org.jooq.InsertValuesStep16;
 import org.jooq.InsertValuesStep17;
 import org.jooq.InsertValuesStep18;
 import org.jooq.InsertValuesStep19;
+import org.jooq.InsertValuesStep2;
 import org.jooq.InsertValuesStep20;
 import org.jooq.InsertValuesStep21;
 import org.jooq.InsertValuesStep22;
+import org.jooq.InsertValuesStep3;
+import org.jooq.InsertValuesStep4;
+import org.jooq.InsertValuesStep5;
+import org.jooq.InsertValuesStep6;
+import org.jooq.InsertValuesStep7;
+import org.jooq.InsertValuesStep8;
+import org.jooq.InsertValuesStep9;
+import org.jooq.InsertValuesStepN;
 import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
-import org.jooq.Record2;
-import org.jooq.Record3;
-import org.jooq.Record4;
-import org.jooq.Record5;
-import org.jooq.Record6;
-import org.jooq.Record7;
-import org.jooq.Record8;
-import org.jooq.Record9;
 import org.jooq.Record10;
 import org.jooq.Record11;
 import org.jooq.Record12;
@@ -106,20 +100,20 @@ import org.jooq.Record16;
 import org.jooq.Record17;
 import org.jooq.Record18;
 import org.jooq.Record19;
+import org.jooq.Record2;
 import org.jooq.Record20;
 import org.jooq.Record21;
 import org.jooq.Record22;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.Record5;
+import org.jooq.Record6;
+import org.jooq.Record7;
+import org.jooq.Record8;
+import org.jooq.Record9;
+// ...
 import org.jooq.Row;
-import org.jooq.RowN;
 import org.jooq.Row1;
-import org.jooq.Row2;
-import org.jooq.Row3;
-import org.jooq.Row4;
-import org.jooq.Row5;
-import org.jooq.Row6;
-import org.jooq.Row7;
-import org.jooq.Row8;
-import org.jooq.Row9;
 import org.jooq.Row10;
 import org.jooq.Row11;
 import org.jooq.Row12;
@@ -130,15 +124,28 @@ import org.jooq.Row16;
 import org.jooq.Row17;
 import org.jooq.Row18;
 import org.jooq.Row19;
+import org.jooq.Row2;
 import org.jooq.Row20;
 import org.jooq.Row21;
 import org.jooq.Row22;
+import org.jooq.Row3;
+import org.jooq.Row4;
+import org.jooq.Row5;
+import org.jooq.Row6;
+import org.jooq.Row7;
+import org.jooq.Row8;
+import org.jooq.Row9;
+import org.jooq.RowN;
 import org.jooq.SQL;
 import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Table;
+// ...
 import org.jooq.UniqueKey;
+import org.jooq.impl.QOM.Insert;
+import org.jooq.impl.QOM.UnmodifiableList;
+import org.jooq.impl.QOM.UnmodifiableMap;
 
 /**
  * @author Lukas Eder
@@ -176,7 +183,9 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     InsertSetMoreStep<R>,
     InsertOnDuplicateSetMoreStep<R>,
     InsertOnConflictWhereIndexPredicateStep<R>,
-    InsertOnConflictConditionStep<R> {
+    InsertOnConflictConditionStep<R>,
+    QOM.Insert<R>
+{
 
     private final Table<R>    into;
     private Field<?>[]        fields;
@@ -1417,33 +1426,33 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     @Override
     public final InsertResultStep<R> returning() {
         getDelegate().setReturning();
-        return new DMLQueryAsResultQuery<>(getDelegate(), returningResult);
+        return new InsertAsResultQuery<>(getDelegate(), returningResult);
     }
 
     @Override
     public final InsertResultStep<R> returning(SelectFieldOrAsterisk... f) {
         getDelegate().setReturning(f);
-        return new DMLQueryAsResultQuery<>(getDelegate(), returningResult);
+        return new InsertAsResultQuery<>(getDelegate(), returningResult);
     }
 
     @Override
     public final InsertResultStep<R> returning(Collection<? extends SelectFieldOrAsterisk> f) {
         getDelegate().setReturning(f);
-        return new DMLQueryAsResultQuery<>(getDelegate(), returningResult);
+        return new InsertAsResultQuery<>(getDelegate(), returningResult);
     }
 
     @Override
     public final InsertResultStep<Record> returningResult(SelectFieldOrAsterisk... f) {
         returningResult = true;
         getDelegate().setReturning(f);
-        return new DMLQueryAsResultQuery(getDelegate(), returningResult);
+        return new InsertAsResultQuery(getDelegate(), returningResult);
     }
 
     @Override
     public final InsertResultStep<Record> returningResult(Collection<? extends SelectFieldOrAsterisk> f) {
         returningResult = true;
         getDelegate().setReturning(f);
-        return new DMLQueryAsResultQuery(getDelegate(), returningResult);
+        return new InsertAsResultQuery(getDelegate(), returningResult);
     }
 
     @Override
@@ -1577,4 +1586,138 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> InsertResultStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22) {
         return (InsertResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
+
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final WithImpl $with() {
+        return getDelegate().$with();
+    }
+
+    @Override
+    public final Table<R> $into() {
+        return getDelegate().$into();
+    }
+
+    @Override
+    public final Insert<?> $into(Table<?> newInto) {
+        return getDelegate().$into(newInto);
+    }
+
+    @Override
+    public final UnmodifiableList<? extends Field<?>> $columns() {
+        return getDelegate().$columns();
+    }
+
+    @Override
+    public final Insert<?> $columns(Collection<? extends Field<?>> columns) {
+        return getDelegate().$columns(columns);
+    }
+
+    @Override
+    public final Select<?> $select() {
+        return getDelegate().$select();
+    }
+
+    @Override
+    public final Insert<?> $select(Select<?> select) {
+        return getDelegate().$select(select);
+    }
+
+    @Override
+    public final boolean $defaultValues() {
+        return getDelegate().$defaultValues();
+    }
+
+    @Override
+    public final Insert<?> $defaultValues(boolean defaultValues) {
+        return getDelegate().$defaultValues(defaultValues);
+    }
+
+    @Override
+    public final UnmodifiableList<? extends Row> $values() {
+        return getDelegate().$values();
+    }
+
+    @Override
+    public final Insert<?> $values(Collection<? extends Row> values) {
+        return getDelegate().$values(values);
+    }
+
+    @Override
+    public final boolean $onDuplicateKeyIgnore() {
+        return getDelegate().$onDuplicateKeyIgnore();
+    }
+
+    @Override
+    public final Insert<?> $onDuplicateKeyIgnore(boolean onDuplicateKeyIgnore) {
+        return getDelegate().$onDuplicateKeyIgnore(onDuplicateKeyIgnore);
+    }
+
+    @Override
+    public boolean $onDuplicateKeyUpdate() {
+        return getDelegate().$onDuplicateKeyUpdate();
+    }
+
+    @Override
+    public final Insert<?> $onDuplicateKeyUpdate(boolean onDuplicateKeyUpdate) {
+        return getDelegate().$onDuplicateKeyUpdate(onDuplicateKeyUpdate);
+    }
+
+    @Override
+    public final UnmodifiableList<? extends Field<?>> $onConflict() {
+        return getDelegate().$onConflict();
+    }
+
+    @Override
+    public final Insert<?> $onConflict(Collection<? extends Field<?>> onConflictFields) {
+        return getDelegate().$onConflict(onConflictFields);
+    }
+
+    @Override
+    public final Condition $onConflictWhere() {
+        return getDelegate().$onConflictWhere();
+    }
+
+    @Override
+    public final Insert<?> $onConflictWhere(Condition where) {
+        return getDelegate().$onConflictWhere(where);
+    }
+
+    @Override
+    public final UnmodifiableMap<? extends FieldOrRow, ? extends FieldOrRowOrSelect> $updateSet() {
+        return getDelegate().$updateSet();
+    }
+
+    @Override
+    public final Insert<?> $updateSet(Map<? extends FieldOrRow, ? extends FieldOrRowOrSelect> updateSet) {
+        return getDelegate().$updateSet(updateSet);
+    }
+
+    @Override
+    public final Condition $updateWhere() {
+        return getDelegate().$updateWhere();
+    }
+
+    @Override
+    public final Insert<?> $updateWhere(Condition where) {
+        return getDelegate().$updateWhere(where);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

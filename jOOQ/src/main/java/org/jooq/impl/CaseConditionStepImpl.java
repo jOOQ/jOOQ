@@ -65,7 +65,7 @@ import org.jooq.Record1;
 // ...
 import org.jooq.Select;
 import org.jooq.impl.QOM.CaseSearched;
-import org.jooq.impl.QOM.UTuple2;
+import org.jooq.impl.QOM.Tuple2;
 import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
@@ -79,7 +79,7 @@ implements
     QOM.CaseSearched<T>
 {
 
-    private final List<UTuple2<Condition, Field<T>>> when;
+    private final List<Tuple2<Condition, Field<T>>> when;
     private Field<T>                                 else_;
 
     CaseConditionStepImpl(DataType<T> type) {
@@ -223,7 +223,7 @@ implements
         ctx.visit(K_CASE)
            .formatIndentStart();
 
-        for (UTuple2<Condition, Field<T>> e : when) {
+        for (Tuple2<Condition, Field<T>> e : when) {
             Condition c = e.$1();
 
 
@@ -263,7 +263,7 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Function2<? super UnmodifiableList<? extends UTuple2<Condition, Field<T>>>, ? super Field<T>, ? extends CaseSearched<T>> $constructor() {
+    public final Function2<? super UnmodifiableList<? extends Tuple2<Condition, Field<T>>>, ? super Field<T>, ? extends CaseSearched<T>> $constructor() {
         return (w, e) -> {
             CaseConditionStepImpl<T> r = new CaseConditionStepImpl<>(getDataType());
             w.forEach(t -> r.when(t.$1(), t.$2()));
@@ -273,12 +273,12 @@ implements
     }
 
     @Override
-    public final UnmodifiableList<? extends UTuple2<Condition, Field<T>>> $arg1() {
+    public final UnmodifiableList<? extends Tuple2<Condition, Field<T>>> $arg1() {
         return QOM.unmodifiable(when);
     }
 
     @Override
-    public final CaseSearched<T> $arg1(UnmodifiableList<? extends UTuple2<Condition, Field<T>>> w) {
+    public final CaseSearched<T> $arg1(UnmodifiableList<? extends Tuple2<Condition, Field<T>>> w) {
         return $constructor().apply(w, $else());
     }
 

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.util.Collections.unmodifiableCollection;
 import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.unmodifiableMap;
 import static org.jooq.impl.DSL.keyword;
 
 import java.math.BigDecimal;
@@ -46,7 +47,9 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.function.Predicate;
 
@@ -64,6 +67,7 @@ import org.jooq.DatePart;
 import org.jooq.Domain;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
+import org.jooq.FieldOrRowOrSelect;
 import org.jooq.Function1;
 import org.jooq.Function10;
 import org.jooq.Function11;
@@ -115,13 +119,16 @@ import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
+import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Sequence;
+import org.jooq.SortField;
 import org.jooq.Spatial;
 import org.jooq.Statement;
 import org.jooq.Table;
 import org.jooq.TableElement;
 import org.jooq.TableLike;
 // ...
+import org.jooq.UniqueKey;
 // ...
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
@@ -221,16 +228,29 @@ public final class QOM {
     /**
      * A generic tuple of degree 2 for use in {@link QOM} types.
      */
-    public sealed interface UTuple2<Q1 extends org.jooq.QueryPart, Q2 extends org.jooq.QueryPart>
+    public sealed interface Tuple2<Q1 extends org.jooq.QueryPart, Q2 extends org.jooq.QueryPart>
         extends
             org.jooq.QueryPart
         permits
-            UTupleImpl2
+            TupleImpl2
     {
         @NotNull Q1 $1();
-        @NotNull UTuple2<Q1, Q2> $1(Q1 newPart1);
+        @NotNull Tuple2<Q1, Q2> $1(Q1 newPart1);
         @NotNull Q2 $2();
-        @NotNull UTuple2<Q1, Q2> $2(Q2 newPart2);
+        @NotNull Tuple2<Q1, Q2> $2(Q2 newPart2);
+    }
+
+    /**
+     * An unmodifiable {@link Map} of {@link QueryPart} keys and values.
+     */
+    public sealed interface UnmodifiableMap<K extends org.jooq.QueryPart, V extends org.jooq.QueryPart>
+        extends
+            org.jooq.QueryPart,
+            java.util.Map<K, V>
+        permits
+            AbstractQueryPartMap
+    {
+        @NotNull UnmodifiableList<Tuple2<K, V>> $tuples();
     }
 
     /**
@@ -334,6 +354,117 @@ public final class QOM {
     // -------------------------------------------------------------------------
     // XXX: Queries
     // -------------------------------------------------------------------------
+
+    public sealed interface Insert<R extends Record>
+        extends
+            DMLQuery<R>
+        permits
+            InsertImpl,
+            InsertQueryImpl
+    {
+        @Nullable With $with();
+        @NotNull  Table<R> $into();
+        @NotNull  Insert<?> $into(Table<?> into);
+        @NotNull  UnmodifiableList<? extends Field<?>> $columns();
+        @NotNull  Insert<?> $columns(Collection<? extends Field<?>> columns);
+        @Nullable Select<?> $select();
+        @NotNull  Insert<?> $select(Select<?> select);
+                  boolean $defaultValues();
+        @NotNull  Insert<?> $defaultValues(boolean defaultValues);
+        @NotNull  UnmodifiableList<? extends Row> $values();
+        @NotNull  Insert<?> $values(Collection<? extends Row> values);
+                  boolean $onDuplicateKeyIgnore();
+        @NotNull  Insert<?> $onDuplicateKeyIgnore(boolean onDuplicateKeyIgnore);
+                  boolean $onDuplicateKeyUpdate();
+        @NotNull  Insert<?> $onDuplicateKeyUpdate(boolean onDuplicateKeyUpdate);
+        @NotNull  UnmodifiableList<? extends Field<?>> $onConflict();
+        @NotNull  Insert<?> $onConflict(Collection<? extends Field<?>> onConflictFields);
+        // [#13640] TODO: What to do about the CONSTRAINT? Re-design this model?
+        @Nullable Condition $onConflictWhere();
+        @NotNull  Insert<?> $onConflictWhere(Condition where);
+        @NotNull  UnmodifiableMap<? extends FieldOrRow, ? extends FieldOrRowOrSelect> $updateSet();
+        @NotNull  Insert<?> $updateSet(Map<? extends FieldOrRow, ? extends FieldOrRowOrSelect> updateSet);
+        @Nullable Condition $updateWhere();
+        @NotNull  Insert<?> $updateWhere(Condition where);
+    }
+
+    public sealed interface InsertReturning<R extends Record>
+        extends
+            ResultQuery<R>
+        permits
+            InsertAsResultQuery
+    {
+        @NotNull Insert<?> $insert();
+        @NotNull InsertReturning<R> $insert(Insert<?> insert);
+        @NotNull UnmodifiableList<? extends SelectFieldOrAsterisk> $returning();
+        @NotNull InsertReturning<?> $returning(Collection<? extends SelectFieldOrAsterisk> returning);
+    }
+
+    public sealed interface Update<R extends Record>
+        extends
+            DMLQuery<R>
+        permits
+            UpdateImpl,
+            UpdateQueryImpl
+    {
+        @Nullable With $with();
+        @NotNull  Table<R> $table();
+        @NotNull  Update<?> $table(Table<?> table);
+        @NotNull  UnmodifiableList<? extends Table<?>> $from();
+        @NotNull  Update<R> $from(Collection<? extends Table<?>> from);
+        @NotNull  UnmodifiableMap<? extends FieldOrRow, ? extends FieldOrRowOrSelect> $set();
+        @NotNull  Update<R> $set(Map<? extends FieldOrRow, ? extends FieldOrRowOrSelect> set);
+        @Nullable Condition $where();
+        @NotNull  Update<R> $where(Condition condition);
+        @NotNull  UnmodifiableList<? extends SortField<?>> $orderBy();
+        @NotNull  Update<R> $orderBy(Collection<? extends SortField<?>> orderBy);
+        @Nullable Field<? extends Number> $limit();
+        @NotNull  Update<R> $limit(Field<? extends Number> limit);
+    }
+
+    public sealed interface UpdateReturning<R extends Record>
+        extends
+            ResultQuery<R>
+        permits
+            UpdateAsResultQuery
+    {
+        @NotNull Update<?> $update();
+        @NotNull UpdateReturning<R> $update(Update<?> update);
+        @NotNull UnmodifiableList<? extends SelectFieldOrAsterisk> $returning();
+        @NotNull UpdateReturning<?> $returning(Collection<? extends SelectFieldOrAsterisk> returning);
+    }
+
+    public sealed interface Delete<R extends Record>
+        extends
+            DMLQuery<R>
+        permits
+            DeleteImpl,
+            DeleteQueryImpl
+    {
+        @Nullable With $with();
+        @NotNull  Table<R> $from();
+        @NotNull  Delete<?> $from(Table<?> table);
+        @NotNull  UnmodifiableList<? extends Table<?>> $using();
+        @NotNull  Delete<R> $using(Collection<? extends Table<?>> using);
+        @Nullable Condition $where();
+        @NotNull  Delete<R> $where(Condition condition);
+        @NotNull  UnmodifiableList<? extends SortField<?>> $orderBy();
+        @NotNull  Delete<R> $orderBy(Collection<? extends SortField<?>> orderBy);
+        @Nullable Field<? extends Number> $limit();
+        @NotNull  Delete<R> $limit(Field<? extends Number> limit);
+    }
+
+    public sealed interface DeleteReturning<R extends Record>
+        extends
+            ResultQuery<R>
+        permits
+            DeleteAsResultQuery
+    {
+        @NotNull Delete<?> $delete();
+        @NotNull DeleteReturning<R> $delete(Delete<?> delete);
+        @NotNull UnmodifiableList<? extends SelectFieldOrAsterisk> $returning();
+        @NotNull DeleteReturning<?> $returning(Collection<? extends SelectFieldOrAsterisk> returning);
+    }
 
     public /*sealed*/ interface CreateType
         extends
@@ -1040,12 +1171,12 @@ public final class QOM {
     public /*sealed*/ interface CaseSimple<V, T>
         extends
             Field<T>,
-            UOperator3<Field<V>, UnmodifiableList<? extends UTuple2<Field<V>, Field<T>>>, Field<T>, CaseSimple<V, T>>
+            UOperator3<Field<V>, UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>>, Field<T>, CaseSimple<V, T>>
     {
         @NotNull  default Field<V> $value() { return $arg1(); }
         @NotNull  default CaseSimple<V, T> $value(Field<V> value) { return $arg1(value); }
-        @NotNull  default UnmodifiableList<? extends UTuple2<Field<V>, Field<T>>> $when() { return $arg2(); }
-        @NotNull  default CaseSimple<V, T> $when(UnmodifiableList<? extends UTuple2<Field<V>, Field<T>>> when) { return $arg2(when); }
+        @NotNull  default UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>> $when() { return $arg2(); }
+        @NotNull  default CaseSimple<V, T> $when(UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>> when) { return $arg2(when); }
         @Nullable default Field<T> $else() { return $arg3(); }
         @NotNull  default CaseSimple<V, T> $else(Field<T> else_) { return $arg3(else_); }
     }
@@ -1053,10 +1184,10 @@ public final class QOM {
     public /*sealed*/ interface CaseSearched<T>
         extends
             Field<T>,
-            UOperator2<UnmodifiableList<? extends UTuple2<Condition, Field<T>>>, Field<T>, CaseSearched<T>>
+            UOperator2<UnmodifiableList<? extends Tuple2<Condition, Field<T>>>, Field<T>, CaseSearched<T>>
     {
-        @NotNull  default UnmodifiableList<? extends UTuple2<Condition, Field<T>>> $when() { return $arg1(); }
-        @NotNull  default CaseSearched<T> $when(UnmodifiableList<? extends UTuple2<Condition, Field<T>>> when) { return $arg1(when); }
+        @NotNull  default UnmodifiableList<? extends Tuple2<Condition, Field<T>>> $when() { return $arg1(); }
+        @NotNull  default CaseSearched<T> $when(UnmodifiableList<? extends Tuple2<Condition, Field<T>>> when) { return $arg1(when); }
         @Nullable default Field<T> $else() { return $arg2(); }
         @NotNull  default CaseSearched<T> $else(Field<T> else_) { return $arg2(else_); }
     }
@@ -7824,8 +7955,16 @@ public final class QOM {
             return new QueryPartList<>(unmodifiableCollection(collection));
     }
 
+    /**
+     * Turn a {@link Map} into an unmodifiable {@link UnmodifiableMap}.
+     */
     @Internal
-    public static final <Q1 extends QueryPart, Q2 extends QueryPart> UTuple2<Q1, Q2> tuple(Q1 q1, Q2 q2) {
-        return new UTupleImpl2<>(q1, q2);
+    public static final <K extends QueryPart, V extends QueryPart> UnmodifiableMap<K, V> unmodifiable(Map<K, V> map) {
+        return new QueryPartMapView<>(unmodifiableMap(map));
+    }
+
+    @Internal
+    public static final <Q1 extends QueryPart, Q2 extends QueryPart> Tuple2<Q1, Q2> tuple(Q1 q1, Q2 q2) {
+        return new TupleImpl2<>(q1, q2);
     }
 }

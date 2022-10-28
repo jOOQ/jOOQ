@@ -73,6 +73,15 @@ final class ConditionProviderImpl extends AbstractField<Boolean> implements Cond
         this.condition = condition;
     }
 
+    static final Condition extractCondition(Condition c) {
+
+        // join(..).on(..).and(..) uses some identity tricks to keep the right
+        // reference to the mutable ConditionProviderImpl instance, which we
+        // must take into account here.
+        return c instanceof ConditionProviderImpl cp ? cp.getWhere() : c;
+    }
+
+
     @Nullable
     final Condition getWhereOrNull() {
         return hasWhere() ? condition : null;

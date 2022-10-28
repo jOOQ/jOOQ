@@ -3873,7 +3873,7 @@ final class Tools {
             return q;
         else if (query instanceof AbstractDelegatingDMLQuery<?, ?> q)
             return abstractDMLQuery(q.getDelegate());
-        else if (query instanceof DMLQueryAsResultQuery<?, ?> q)
+        else if (query instanceof AbstractDMLQueryAsResultQuery<?, ?> q)
             return q.getDelegate();
         else
             return null;

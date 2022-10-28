@@ -54,7 +54,6 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.OrderField;
-import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -79,24 +78,33 @@ import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Record8;
 import org.jooq.Record9;
+// ...
 import org.jooq.SQL;
 import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;
+import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableLike;
+// ...
+import org.jooq.impl.QOM.Delete;
+import org.jooq.impl.QOM.UnmodifiableList;
+import org.jooq.impl.QOM.With;
 
 /**
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class DeleteImpl<R extends Record>
-    extends AbstractDelegatingDMLQuery<R, DeleteQueryImpl<R>>
-    implements
+extends
+    AbstractDelegatingDMLQuery<R, DeleteQueryImpl<R>>
+implements
 
     // Cascading interface implementations for Delete behaviour
     DeleteUsingStep<R>,
-    DeleteConditionStep<R> {
+    DeleteConditionStep<R>,
+    QOM.Delete<R>
+{
     private boolean           returningResult;
 
     DeleteImpl(Configuration configuration, WithImpl with, Table<R> table) {
@@ -333,33 +341,33 @@ final class DeleteImpl<R extends Record>
     @Override
     public final DeleteResultStep<R> returning() {
         getDelegate().setReturning();
-        return new DMLQueryAsResultQuery<>(getDelegate(), returningResult);
+        return new DeleteAsResultQuery<>(getDelegate(), returningResult);
     }
 
     @Override
     public final DeleteResultStep<R> returning(SelectFieldOrAsterisk... f) {
         getDelegate().setReturning(f);
-        return new DMLQueryAsResultQuery<>(getDelegate(), returningResult);
+        return new DeleteAsResultQuery<>(getDelegate(), returningResult);
     }
 
     @Override
     public final DeleteResultStep<R> returning(Collection<? extends SelectFieldOrAsterisk> f) {
         getDelegate().setReturning(f);
-        return new DMLQueryAsResultQuery<>(getDelegate(), returningResult);
+        return new DeleteAsResultQuery<>(getDelegate(), returningResult);
     }
 
     @Override
     public final DeleteResultStep<Record> returningResult(SelectFieldOrAsterisk... f) {
         returningResult = true;
         getDelegate().setReturning(f);
-        return new DMLQueryAsResultQuery(getDelegate(), returningResult);
+        return new DeleteAsResultQuery(getDelegate(), returningResult);
     }
 
     @Override
     public final DeleteResultStep<Record> returningResult(Collection<? extends SelectFieldOrAsterisk> f) {
         returningResult = true;
         getDelegate().setReturning(f);
-        return new DMLQueryAsResultQuery(getDelegate(), returningResult);
+        return new DeleteAsResultQuery(getDelegate(), returningResult);
     }
 
 
@@ -473,6 +481,79 @@ final class DeleteImpl<R extends Record>
     public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> DeleteResultStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22) {
         return (DeleteResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
+
+
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final With $with() {
+        return getDelegate().$with();
+    }
+
+    @Override
+    public final Table<R> $from() {
+        return getDelegate().$from();
+    }
+
+    @Override
+    public final Delete<?> $from(Table<?> from) {
+        return getDelegate().$from(from);
+    }
+
+    @Override
+    public final UnmodifiableList<? extends Table<?>> $using() {
+        return getDelegate().$using();
+    }
+
+    @Override
+    public final Delete<R> $using(Collection<? extends Table<?>> using) {
+        return getDelegate().$using(using);
+    }
+
+    @Override
+    public final Condition $where() {
+        return getDelegate().$where();
+    }
+
+    @Override
+    public final Delete<R> $where(Condition condition) {
+        return getDelegate().$where(condition);
+    }
+
+    @Override
+    public final UnmodifiableList<? extends SortField<?>> $orderBy() {
+        return getDelegate().$orderBy();
+    }
+
+    @Override
+    public final Delete<R> $orderBy(Collection<? extends SortField<?>> orderBy) {
+        return getDelegate().$orderBy(orderBy);
+    }
+
+    @Override
+    public final Field<? extends Number> $limit() {
+        return getDelegate().$limit();
+    }
+
+    @Override
+    public final Delete<R> $limit(Field<? extends Number> limit) {
+        return getDelegate().$limit(limit);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

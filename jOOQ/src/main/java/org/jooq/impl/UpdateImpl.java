@@ -49,6 +49,8 @@ import java.util.Map;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.FieldOrRow;
+import org.jooq.FieldOrRowOrSelect;
 import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.OrderField;
@@ -76,6 +78,7 @@ import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Record8;
 import org.jooq.Record9;
+// ...
 import org.jooq.Row1;
 import org.jooq.Row10;
 import org.jooq.Row11;
@@ -103,8 +106,10 @@ import org.jooq.SQL;
 import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;
+import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableLike;
+// ...
 import org.jooq.UpdateConditionStep;
 import org.jooq.UpdateFromStep;
 import org.jooq.UpdateQuery;
@@ -112,6 +117,10 @@ import org.jooq.UpdateResultStep;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;
 import org.jooq.UpdateWhereStep;
+import org.jooq.impl.QOM.UnmodifiableList;
+import org.jooq.impl.QOM.UnmodifiableMap;
+import org.jooq.impl.QOM.Update;
+import org.jooq.impl.QOM.With;
 
 /**
  * A wrapper for an {@link UpdateQuery}
@@ -120,13 +129,16 @@ import org.jooq.UpdateWhereStep;
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class UpdateImpl<R extends Record>
-    extends AbstractDelegatingDMLQuery<R, UpdateQueryImpl<R>>
-    implements
+extends
+    AbstractDelegatingDMLQuery<R, UpdateQueryImpl<R>>
+implements
 
     // Cascading interface implementations for Update behaviour
     UpdateSetFirstStep<R>,
     UpdateSetMoreStep<R>,
-    UpdateConditionStep<R> {
+    UpdateConditionStep<R>,
+    QOM.Update<R>
+{
     private boolean           returningResult;
 
     UpdateImpl(Configuration configuration, WithImpl with, Table<R> table) {
@@ -679,33 +691,33 @@ final class UpdateImpl<R extends Record>
     @Override
     public final UpdateResultStep<R> returning() {
         getDelegate().setReturning();
-        return new DMLQueryAsResultQuery<>(getDelegate(), returningResult);
+        return new UpdateAsResultQuery<>(getDelegate(), returningResult);
     }
 
     @Override
     public final UpdateResultStep<R> returning(SelectFieldOrAsterisk... f) {
         getDelegate().setReturning(f);
-        return new DMLQueryAsResultQuery<>(getDelegate(), returningResult);
+        return new UpdateAsResultQuery<>(getDelegate(), returningResult);
     }
 
     @Override
     public final UpdateResultStep<R> returning(Collection<? extends SelectFieldOrAsterisk> f) {
         getDelegate().setReturning(f);
-        return new DMLQueryAsResultQuery<>(getDelegate(), returningResult);
+        return new UpdateAsResultQuery<>(getDelegate(), returningResult);
     }
 
     @Override
     public final UpdateResultStep<Record> returningResult(SelectFieldOrAsterisk... f) {
         returningResult = true;
         getDelegate().setReturning(f);
-        return new DMLQueryAsResultQuery(getDelegate(), returningResult);
+        return new UpdateAsResultQuery(getDelegate(), returningResult);
     }
 
     @Override
     public final UpdateResultStep<Record> returningResult(Collection<? extends SelectFieldOrAsterisk> f) {
         returningResult = true;
         getDelegate().setReturning(f);
-        return new DMLQueryAsResultQuery(getDelegate(), returningResult);
+        return new UpdateAsResultQuery(getDelegate(), returningResult);
     }
 
 
@@ -819,6 +831,90 @@ final class UpdateImpl<R extends Record>
     public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> UpdateResultStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22) {
         return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
+
+
+
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final With $with() {
+        return getDelegate().$with();
+    }
+
+    @Override
+    public final Table<R> $table() {
+        return getDelegate().$table();
+    }
+
+    @Override
+    public final Update<?> $table(Table<?> table) {
+        return getDelegate().$table(table);
+    }
+
+    @Override
+    public final UnmodifiableList<? extends Table<?>> $from() {
+        return getDelegate().$from();
+    }
+
+    @Override
+    public final Update<R> $from(Collection<? extends Table<?>> using) {
+        return getDelegate().$from(using);
+    }
+
+    @Override
+    public final UnmodifiableMap<? extends FieldOrRow, ? extends FieldOrRowOrSelect> $set() {
+        return getDelegate().$set();
+    }
+
+    @Override
+    public final Update<R> $set(Map<? extends FieldOrRow, ? extends FieldOrRowOrSelect> set) {
+        return getDelegate().$set(set);
+    }
+
+    @Override
+    public final Condition $where() {
+        return getDelegate().$where();
+    }
+
+    @Override
+    public final Update<R> $where(Condition condition) {
+        return getDelegate().$where(condition);
+    }
+
+    @Override
+    public final UnmodifiableList<? extends SortField<?>> $orderBy() {
+        return getDelegate().$orderBy();
+    }
+
+    @Override
+    public final Update<R> $orderBy(Collection<? extends SortField<?>> orderBy) {
+        return getDelegate().$orderBy(orderBy);
+    }
+
+    @Override
+    public final Field<? extends Number> $limit() {
+        return getDelegate().$limit();
+    }
+
+    @Override
+    public final Update<R> $limit(Field<? extends Number> limit) {
+        return getDelegate().$limit(limit);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

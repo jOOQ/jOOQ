@@ -77,6 +77,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.SettingsTools.getExecuteUpdateWithoutWhere;
+import static org.jooq.impl.ConditionProviderImpl.extractCondition;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.mergeInto;
 import static org.jooq.impl.DSL.name;
@@ -137,6 +138,7 @@ import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Record8;
 import org.jooq.Record9;
+// ...
 import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.Row10;
@@ -164,12 +166,16 @@ import org.jooq.RowN;
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
+import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
+// ...
 import org.jooq.UpdateQuery;
 import org.jooq.impl.FieldMapForUpdate.SetClause;
-import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.UnmodifiableList;
+import org.jooq.impl.QOM.UnmodifiableMap;
+import org.jooq.impl.QOM.Update;
 
 /**
  * @author Lukas Eder
@@ -179,7 +185,7 @@ extends
     AbstractStoreQuery<R, FieldOrRow, FieldOrRowOrSelect>
 implements
     UpdateQuery<R>,
-    UNotYetImplemented
+    QOM.Update<R>
 {
 
     private static final Clause[]        CLAUSES                       = { UPDATE };
@@ -636,8 +642,12 @@ implements
         ctx.visit(mergeInto(table).using(s).on(c).whenMatchedThenUpdate().set(um));
     }
 
-    private final UpdateQueryImpl<R> copy(Consumer<? super UpdateQueryImpl<R>> consumer) {
-        UpdateQueryImpl<R> u = new UpdateQueryImpl<>(configuration(), with, table);
+    final UpdateQueryImpl<R> copy(Consumer<? super UpdateQueryImpl<R>> finisher) {
+        return copy(finisher, table);
+    }
+
+    final <O extends Record> UpdateQueryImpl<O> copy(Consumer<? super UpdateQueryImpl<O>> finisher, Table<O> t) {
+        UpdateQueryImpl<O> u = new UpdateQueryImpl<>(configuration(), with, t);
 
         if (!returning.isEmpty())
             u.setReturning(returning);
@@ -647,7 +657,7 @@ implements
         u.condition.setWhere(condition.getWhere());
         u.orderBy.addAll(orderBy);
         u.limit = limit;
-        consumer.accept(u);
+        finisher.accept(u);
         return u;
     }
 
@@ -784,6 +794,138 @@ implements
 
         return updateMap.size() > 0;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final WithImpl $with() {
+        return with;
+    }
+
+    @Override
+    public final Table<R> $table() {
+        return table;
+    }
+
+    @Override
+    public final Update<?> $table(Table<?> newTable) {
+        if ($from() == newTable)
+            return this;
+        else
+            return copy(d -> {}, newTable);
+    }
+
+    @Override
+    public final UnmodifiableList<? extends Table<?>> $from() {
+        return QOM.unmodifiable(from);
+    }
+
+    @Override
+    public final Update<R> $from(Collection<? extends Table<?>> newFrom) {
+        return copy(d -> {
+            d.from.clear();
+            d.from.addAll(newFrom);
+        });
+    }
+
+    @Override
+    public final UnmodifiableMap<? extends FieldOrRow, ? extends FieldOrRowOrSelect> $set() {
+        return QOM.unmodifiable(updateMap);
+    }
+
+    @Override
+    public final Update<R> $set(Map<? extends FieldOrRow, ? extends FieldOrRowOrSelect> newSet) {
+        return copy(u -> {
+            u.updateMap.clear();
+            u.updateMap.putAll(newSet);
+        });
+    }
+
+    @Override
+    public final Condition $where() {
+        return condition.getWhereOrNull();
+    }
+
+    @Override
+    public final Update<R> $where(Condition newWhere) {
+        if ($where() == newWhere)
+            return this;
+        else
+            return copy(u -> u.condition.setWhere(newWhere));
+    }
+
+    @Override
+    public final UnmodifiableList<? extends SortField<?>> $orderBy() {
+        return QOM.unmodifiable(orderBy);
+    }
+
+    @Override
+    public final Update<R> $orderBy(Collection<? extends SortField<?>> newOrderBy) {
+        return copy(u -> {
+            u.orderBy.clear();
+            u.orderBy.addAll(newOrderBy);
+        });
+    }
+
+    @Override
+    public final Field<? extends Number> $limit() {
+        return limit;
+    }
+
+    @Override
+    public final Update<R> $limit(Field<? extends Number> newLimit) {
+        if ($limit() == newLimit)
+            return this;
+        else
+            return copy(s -> s.limit = newLimit);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -61,7 +61,7 @@ import org.jooq.Field;
 import org.jooq.Function3;
 // ...
 import org.jooq.impl.QOM.CaseSimple;
-import org.jooq.impl.QOM.UTuple2;
+import org.jooq.impl.QOM.Tuple2;
 import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
@@ -76,7 +76,7 @@ implements
 {
 
     private final Field<V>                          value;
-    private final List<UTuple2<Field<V>, Field<T>>> when;
+    private final List<Tuple2<Field<V>, Field<T>>> when;
     private Field<T>                                else_;
 
     CaseWhenStepImpl(Field<V> value, Field<V> compareValue, Field<T> result) {
@@ -237,7 +237,7 @@ implements
     private final void acceptSearched(Context<?> ctx) {
 
         CaseConditionStep<T> w = null;
-        for (UTuple2<Field<V>, Field<T>> e : when)
+        for (Tuple2<Field<V>, Field<T>> e : when)
             if (w == null)
                 w = DSL.when(value.eq(e.$1()), e.$2());
             else
@@ -257,7 +257,7 @@ implements
            .visit(value)
            .formatIndentStart();
 
-        for (UTuple2<Field<V>, Field<T>> e : when)
+        for (Tuple2<Field<V>, Field<T>> e : when)
             ctx.formatSeparator()
                .visit(K_WHEN).sql(' ')
                .visit(e.$1()).sql(' ')
@@ -282,7 +282,7 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Function3<? super Field<V>, ? super UnmodifiableList<? extends UTuple2<Field<V>, Field<T>>>, ? super Field<T>, ? extends CaseSimple<V, T>> $constructor() {
+    public final Function3<? super Field<V>, ? super UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>>, ? super Field<T>, ? extends CaseSimple<V, T>> $constructor() {
         return (v, w, e) -> {
             CaseWhenStepImpl<V, T> r = new CaseWhenStepImpl<>(v, getDataType());
             w.forEach(t -> r.when(t.$1(), t.$2()));
@@ -302,12 +302,12 @@ implements
     }
 
     @Override
-    public final UnmodifiableList<? extends UTuple2<Field<V>, Field<T>>> $arg2() {
+    public final UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>> $arg2() {
         return QOM.unmodifiable(when);
     }
 
     @Override
-    public final CaseSimple<V, T> $arg2(UnmodifiableList<? extends UTuple2<Field<V>, Field<T>>> w) {
+    public final CaseSimple<V, T> $arg2(UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>> w) {
         return $constructor().apply($value(), w, $else());
     }
 

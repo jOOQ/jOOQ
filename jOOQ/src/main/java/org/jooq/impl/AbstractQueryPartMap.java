@@ -37,28 +37,44 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.QOM.tuple;
+import static org.jooq.impl.QOM.unmodifiable;
+import static org.jooq.impl.Tools.map;
+
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.jooq.Context;
 import org.jooq.QueryPart;
+// ...
+// ...
+import org.jooq.impl.QOM.Tuple2;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractQueryPartMap<K extends QueryPart, V extends QueryPart>
+abstract sealed class AbstractQueryPartMap<K extends QueryPart, V extends QueryPart>
 extends
     AbstractQueryPart
 implements
-    Map<K, V>
+    QOM.UnmodifiableMap<K, V>
+permits
+    FieldMapForUpdate,
+    QueryPartMapView
 {
 
     private final Map<K, V> map;
 
     AbstractQueryPartMap() {
-        map = new LinkedHashMap<>();
+        this(new LinkedHashMap<>());
+    }
+
+    AbstractQueryPartMap(Map<K, V> map) {
+        this.map = map;
     }
 
     // -------------------------------------------------------------------------
@@ -131,4 +147,42 @@ implements
     public final Set<Entry<K, V>> entrySet() {
         return map.entrySet();
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final UnmodifiableList<Tuple2<K, V>> $tuples() {
+        return unmodifiable(map(entrySet(), e -> tuple(e.getKey(), e.getValue())));
+    }
+
+    abstract Function<? super Map<K, V>, ? extends AbstractQueryPartMap<K, V>> $construct();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

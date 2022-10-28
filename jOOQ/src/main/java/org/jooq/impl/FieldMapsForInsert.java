@@ -117,6 +117,13 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         this.empty = new LinkedHashMap<>();
     }
 
+    void clear() {
+        empty.clear();
+        values.clear();
+        rows = 0;
+        nextRow = -1;
+    }
+
     // -------------------------------------------------------------------------
     // The QueryPart API
     // -------------------------------------------------------------------------

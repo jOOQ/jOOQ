@@ -37,44 +37,35 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.QOM.tuple;
+import static org.jooq.impl.QueryPartCollectionView.wrap;
+
+import java.util.Map;
+import java.util.function.Function;
 
 import org.jooq.Context;
 import org.jooq.QueryPart;
-// ...
-// ...
-import org.jooq.impl.QOM.UTuple2;
 
 /**
- * A generic tuple of degree 2, which acts as a {@link QueryPart} for traversal,
- * replacement, etc.
- *
  * @author Lukas Eder
  */
-final class UTupleImpl2<Q1 extends QueryPart, Q2 extends QueryPart>
+final class QueryPartMapView<K extends QueryPart, V extends QueryPart>
 extends
-    AbstractQueryPart
-implements
-    UTuple2<Q1, Q2>
+    AbstractQueryPartMap<K, V>
 {
 
-    private final Q1 part1;
-    private final Q2 part2;
-
-    UTupleImpl2(Q1 part1, Q2 part2) {
-        this.part1 = part1;
-        this.part2 = part2;
+    QueryPartMapView(Map<K, V> map) {
+        super(map);
     }
 
     // -------------------------------------------------------------------------
-    // XXX: QueryPart API
+    // The QueryPart API
     // -------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {
 
-        // This is unlikely to be called directly:
-        ctx.sql('(').visit(part1).sql(", ").visit(part2).sql(')');
+        // This is a placeholder implementation without any real SQL usage
+        ctx.visit(wrap($tuples()));
     }
 
     // -------------------------------------------------------------------------
@@ -82,42 +73,7 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Q1 $1() {
-        return part1;
+    final Function<? super Map<K, V>, ? extends AbstractQueryPartMap<K, V>> $construct() {
+        return QueryPartMapView::new;
     }
-
-    @Override
-    public final Q2 $2() {
-        return part2;
-    }
-
-    @Override
-    public final UTuple2<Q1, Q2> $1(Q1 newPart1) {
-        return tuple(newPart1, part2);
-    }
-
-    @Override
-    public final UTuple2<Q1, Q2> $2(Q2 newPart2) {
-        return tuple(part1, newPart2);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

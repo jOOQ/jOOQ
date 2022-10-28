@@ -218,6 +218,9 @@ public final class QOM {
     // minimal example. Without the qualification, the types cannot be found
     // despite being imported
 
+    /**
+     * A generic tuple of degree 2 for use in {@link QOM} types.
+     */
     public sealed interface UTuple2<Q1 extends org.jooq.QueryPart, Q2 extends org.jooq.QueryPart>
         extends
             org.jooq.QueryPart

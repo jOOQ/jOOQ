@@ -46,7 +46,7 @@ import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_NULL;
 
 import org.jooq.Context;
-import org.jooq.impl.QOM.UEmpty;
+import org.jooq.impl.QOM.UTransient;
 
 /**
  * @author Lukas Eder
@@ -56,7 +56,7 @@ extends
     AbstractStatement
 implements
     QOM.NullStatement,
-    UEmpty
+    UTransient
 {
 
     static final NullStatement INSTANCE = new NullStatement();

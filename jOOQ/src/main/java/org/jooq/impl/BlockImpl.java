@@ -73,7 +73,9 @@ import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_TRUE;
+import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.decrement;
+import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.toplevel;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_STATIC_STATEMENT;
@@ -138,7 +140,8 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
     BlockImpl(Configuration configuration, Collection<? extends Statement> statements, boolean alwaysWrapInBeginEnd) {
         super(configuration);
 
-        this.statements = statements;
+        // [#14153] Remove NullStatement as it is UTransient
+        this.statements = collect(filter(statements, s -> !(s instanceof NullStatement)));
         this.alwaysWrapInBeginEnd = alwaysWrapInBeginEnd;
     }
 

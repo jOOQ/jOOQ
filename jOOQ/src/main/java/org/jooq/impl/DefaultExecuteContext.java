@@ -470,7 +470,7 @@ class DefaultExecuteContext implements ExecuteContext {
 
     @Override
     public final Query query() {
-        return transformedQuery();
+        return query;
     }
 
 

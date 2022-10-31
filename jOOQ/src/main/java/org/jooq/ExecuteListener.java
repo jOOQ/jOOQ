@@ -96,6 +96,24 @@ import org.reactivestreams.Subscriber;
  * <td>Yes, 1x</td>
  * </tr>
  * <tr>
+ * <td>{@link #transformStart(ExecuteContext)}</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>No</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, Nx (for every query)</td>
+ * <td>Yes, 1x</td>
+ * </tr>
+ * <tr>
+ * <td>{@link #transformEnd(ExecuteContext)}</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>No</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, Nx (for every query)</td>
+ * <td>Yes, 1x</td>
+ * </tr>
+ * <tr>
  * <td>{@link #renderStart(ExecuteContext)}</td>
  * <td>Yes, 1x</td>
  * <td>Yes, 1x</td>
@@ -364,6 +382,74 @@ public interface ExecuteListener extends EventListener, Serializable {
      * @param ctx The context containing information about the execution.
      */
     default void renderEnd(ExecuteContext ctx) {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Called before preparing / creating the SQL statement.
@@ -1286,6 +1372,26 @@ public interface ExecuteListener extends EventListener, Serializable {
     static CallbackExecuteListener onEnd(ExecuteEventHandler handler) {
         return new CallbackExecuteListener().onEnd(handler);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Create an {@link ExecuteListener} with a

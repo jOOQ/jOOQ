@@ -69,6 +69,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteType;
 import org.jooq.Insert;
 import org.jooq.Merge;
+// ...
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -82,6 +83,7 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 // ...
 
@@ -100,7 +102,11 @@ class DefaultExecuteContext implements ExecuteContext {
     private final Configuration                           originalConfiguration;
     private final Configuration                           derivedConfiguration;
     private final Map<Object, Object>                     data;
-    private final Query                                   query;
+
+
+
+
+    private Query                                         query;
     private final Routine<?>                              routine;
     private String                                        sql;
 
@@ -336,6 +342,9 @@ class DefaultExecuteContext implements ExecuteContext {
         this.derivedConfiguration = configuration.derive(new ExecuteContextConnectionProvider());
         this.data = new DataMap();
         this.query = query;
+
+
+
         this.routine = routine;
         this.converterContext = new DefaultConverterContext(derivedConfiguration, data);
 
@@ -461,14 +470,35 @@ class DefaultExecuteContext implements ExecuteContext {
 
     @Override
     public final Query query() {
-        return query;
+        return transformedQuery();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final Query[] batchQueries() {
-        return batch         ? batchQueries
-             : query != null ? new Query[] { query }
-             :                 EMPTY_QUERY;
+        return batch
+             ? batchQueries
+             : query() != null
+             ? new Query[] { query() }
+             : EMPTY_QUERY;
     }
 
     @Override
@@ -492,9 +522,11 @@ class DefaultExecuteContext implements ExecuteContext {
 
     @Override
     public final String[] batchSQL() {
-        return batch                            ? batchSQL
-             : routine != null || query != null ? new String[] { sql }
-             :                                    EMPTY_STRING;
+        return batch
+             ? batchSQL
+             : routine != null || query() != null
+             ? new String[] { sql }
+             : EMPTY_STRING;
     }
 
     @Override
@@ -629,9 +661,11 @@ class DefaultExecuteContext implements ExecuteContext {
 
     @Override
     public final int[] batchRows() {
-        return batch                            ? batchRows
-             : routine != null || query != null ? new int[] { rows }
-             :                                    EMPTY_INT;
+        return batch
+             ? batchRows
+             : routine != null || query() != null
+             ? new int[] { rows }
+             : EMPTY_INT;
     }
 
     @Override

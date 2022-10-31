@@ -101,15 +101,55 @@ public interface ExecuteContext extends Scope {
     ExecuteType type();
 
     /**
-     * The jOOQ {@link Query} that is being executed or <code>null</code> if the
-     * query is unknown, if it is a batch query, or if there was no jOOQ
+     * The jOOQ {@link Query} that is being executed, or <code>null</code> if
+     * the query is unknown, if it is a batch query, or if there was no jOOQ
      * <code>Query</code>.
+     * <p>
+     * This corresponds to {@link #transformedQuery()}.
      *
      * @see #routine()
      * @see #batchQueries()
      */
     @Nullable
     Query query();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * The jOOQ {@link Query} objects that are being executed in batch mode, or

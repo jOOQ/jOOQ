@@ -56,6 +56,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
 
     private final ExecuteEventHandler onStart;
     private final ExecuteEventHandler onEnd;
+    private final ExecuteEventHandler onTransformStart;
+    private final ExecuteEventHandler onTransformEnd;
     private final ExecuteEventHandler onRenderStart;
     private final ExecuteEventHandler onRenderEnd;
     private final ExecuteEventHandler onPrepareStart;
@@ -76,12 +78,14 @@ public final class CallbackExecuteListener implements ExecuteListener {
     private final ExecuteEventHandler onWarning;
 
     public CallbackExecuteListener() {
-        this(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        this(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     }
 
     private CallbackExecuteListener(
         ExecuteEventHandler onStart,
         ExecuteEventHandler onEnd,
+        ExecuteEventHandler onTransformStart,
+        ExecuteEventHandler onTransformEnd,
         ExecuteEventHandler onRenderStart,
         ExecuteEventHandler onRenderEnd,
         ExecuteEventHandler onPrepareStart,
@@ -105,6 +109,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         this.onEnd = onEnd;
         this.onRenderStart = onRenderStart;
         this.onRenderEnd = onRenderEnd;
+        this.onTransformStart = onTransformStart;
+        this.onTransformEnd = onTransformEnd;
         this.onPrepareStart = onPrepareStart;
         this.onPrepareEnd = onPrepareEnd;
         this.onBindStart = onBindStart;
@@ -128,6 +134,22 @@ public final class CallbackExecuteListener implements ExecuteListener {
         if (onStart != null)
             onStart.fire(ctx);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final void renderStart(ExecuteContext ctx) {
@@ -247,6 +269,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             newOnStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             onRenderEnd,
             onPrepareStart,
@@ -268,10 +292,70 @@ public final class CallbackExecuteListener implements ExecuteListener {
         );
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public final CallbackExecuteListener onRenderStart(ExecuteEventHandler newOnRenderStart) {
         return new CallbackExecuteListener(
             onStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             newOnRenderStart,
             onRenderEnd,
             onPrepareStart,
@@ -297,6 +381,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             onStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             newOnRenderEnd,
             onPrepareStart,
@@ -322,6 +408,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             onStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             onRenderEnd,
             newOnPrepareStart,
@@ -347,6 +435,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             onStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             onRenderEnd,
             onPrepareStart,
@@ -372,6 +462,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             onStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             onRenderEnd,
             onPrepareStart,
@@ -397,6 +489,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             onStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             onRenderEnd,
             onPrepareStart,
@@ -422,6 +516,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             onStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             onRenderEnd,
             onPrepareStart,
@@ -447,6 +543,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             onStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             onRenderEnd,
             onPrepareStart,
@@ -472,6 +570,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             onStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             onRenderEnd,
             onPrepareStart,
@@ -497,6 +597,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             onStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             onRenderEnd,
             onPrepareStart,
@@ -522,6 +624,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             onStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             onRenderEnd,
             onPrepareStart,
@@ -547,6 +651,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             onStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             onRenderEnd,
             onPrepareStart,
@@ -572,6 +678,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             onStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             onRenderEnd,
             onPrepareStart,
@@ -597,6 +705,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             onStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             onRenderEnd,
             onPrepareStart,
@@ -622,6 +732,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             onStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             onRenderEnd,
             onPrepareStart,
@@ -647,6 +759,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             onStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             onRenderEnd,
             onPrepareStart,
@@ -672,6 +786,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             onStart,
             newOnEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             onRenderEnd,
             onPrepareStart,
@@ -697,6 +813,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             onStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             onRenderEnd,
             onPrepareStart,
@@ -722,6 +840,8 @@ public final class CallbackExecuteListener implements ExecuteListener {
         return new CallbackExecuteListener(
             onStart,
             onEnd,
+            onTransformStart,
+            onTransformEnd,
             onRenderStart,
             onRenderEnd,
             onPrepareStart,

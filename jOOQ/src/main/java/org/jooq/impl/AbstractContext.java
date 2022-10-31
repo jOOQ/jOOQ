@@ -266,7 +266,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             if (topLevel == null) {
                 topLevel = topLevelForLanguageContext = part;
 
-                if (TRUE.equals(settings().isTransformPatterns()) && configuration().requireCommercial(() -> "SQL transformations are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.")) {
+                // [#14155] Apply transformation only if it hasn't been applied
+                //          already, from some ExecuteContext.
+                if (executeContext() == null
+                        && TRUE.equals(settings().isTransformPatterns())
+                        && configuration().requireCommercial(() -> "SQL transformations are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.")) {
 
 
 

@@ -594,30 +594,6 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
     // -------------------------------------------------------------------------
-    // XXX: Object API
-    // -------------------------------------------------------------------------
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-
-        if (obj instanceof BlockImpl b) {
-            return alwaysWrapInBeginEnd == b.alwaysWrapInBeginEnd && Objects.equals(statements, b.statements);
-        }
-        else
-            return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = prime;
-        result = prime * result + Objects.hash(alwaysWrapInBeginEnd, statements);
-        return result;
-    }
-
-    // -------------------------------------------------------------------------
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 

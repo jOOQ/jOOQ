@@ -264,7 +264,6 @@ implements
 
         if (flag) {
             onDuplicateKeyIgnore = false;
-            clearOnConflict();
         }
     }
 
@@ -276,15 +275,7 @@ implements
             onDuplicateKeyUpdate = false;
             updateMap.clear();
             updateWhere.setWhere(null);
-            clearOnConflict();
         }
-    }
-
-    private final void clearOnConflict() {
-        onConflict = null;
-        onConflictWhere.setWhere(null);
-        onConstraint = null;
-        onConstraintUniqueKey = null;
     }
 
     @Override

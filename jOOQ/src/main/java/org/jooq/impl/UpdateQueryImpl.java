@@ -822,7 +822,7 @@ implements
 
     @Override
     public final Update<?> $table(Table<?> newTable) {
-        if ($from() == newTable)
+        if ($table() == newTable)
             return this;
         else
             return copy(d -> {}, newTable);

@@ -89,8 +89,8 @@ final class BatchMultiple extends AbstractBatch {
         return execute(configuration, queries);
     }
 
-    static int[] execute(final Configuration configuration, final Query[] queries) {
-        ExecuteContext ctx = new DefaultExecuteContext(configuration, BatchMode.MULTIPLE, queries);
+    static int[] execute(Configuration configuration, Query[] queries) {
+        DefaultExecuteContext ctx = new DefaultExecuteContext(configuration, BatchMode.MULTIPLE, queries);
         ExecuteListener listener = ExecuteListeners.get(ctx);
         Connection connection = ctx.connection();
 
@@ -98,20 +98,21 @@ final class BatchMultiple extends AbstractBatch {
 
             // [#8968] Keep start() event inside of lifecycle management
             listener.start(ctx);
+            ctx.transformQueries(listener);
 
             if (ctx.statement() == null)
                 ctx.statement(new SettingsEnabledPreparedStatement(connection));
 
             String[] batchSQL = ctx.batchSQL();
-            for (int i = 0; i < queries.length; i++) {
+            for (int i = 0; i < ctx.batchQueries().length; i++) {
                 ctx.sql(null);
                 listener.renderStart(ctx);
-                batchSQL[i] = DSL.using(configuration).renderInlined(queries[i]);
+                batchSQL[i] = DSL.using(configuration).renderInlined(ctx.batchQueries()[i]);
                 ctx.sql(batchSQL[i]);
                 listener.renderEnd(ctx);
             }
 
-            for (int i = 0; i < queries.length; i++) {
+            for (int i = 0; i < ctx.batchQueries().length; i++) {
                 ctx.sql(batchSQL[i]);
                 listener.prepareStart(ctx);
                 ctx.statement().addBatch(batchSQL[i]);

@@ -107,14 +107,16 @@ class DefaultExecuteContext implements ExecuteContext {
 
 
 
+
+
     private Query                                         query;
     private final Routine<?>                              routine;
     private String                                        sql;
 
     private final BatchMode                               batchMode;
-    private final Query[]                                 batchQueries;
-    private final String[]                                batchSQL;
-    private final int[]                                   batchRows;
+    private Query[]                                       batchQueries;
+    private String[]                                      batchSQL;
+    private int[]                                         batchRows;
 
     ConnectionProvider                                    connectionProvider;
     private Connection                                    connection;
@@ -347,32 +349,11 @@ class DefaultExecuteContext implements ExecuteContext {
 
 
 
+
         this.routine = routine;
         this.converterContext = new DefaultConverterContext(derivedConfiguration, data);
 
-        if (routine != null) {
-            this.batchQueries = null;
-            this.batchRows = null;
-            this.batchSQL = null;
-        }
-        else if (batchQueries != null) {
-            this.batchQueries = batchQueries;
-            this.batchRows = new int[batchQueries.length];
-            this.batchSQL = new String[batchQueries.length];
-
-            Arrays.fill(this.batchRows, -1);
-        }
-        else if (query == null) {
-            this.batchQueries = null;
-            this.batchRows = null;
-            this.batchSQL = null;
-        }
-        else {
-            this.batchQueries = null;
-            this.batchRows = null;
-            this.batchSQL = null;
-        }
-
+        batchQueries(batchQueries);
         clean();
     }
 
@@ -503,6 +484,36 @@ class DefaultExecuteContext implements ExecuteContext {
              ? new Query[] { query() }
              : EMPTY_QUERY;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final Routine<?> routine() {
@@ -763,7 +774,7 @@ class DefaultExecuteContext implements ExecuteContext {
     }
 
 
-    final void transformQuery(ExecuteListener listener) {
+    final void transformQueries(ExecuteListener listener) {
 
 
 

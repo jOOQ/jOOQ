@@ -167,6 +167,8 @@ public interface ExecuteContext extends Scope {
      * <code>Query</code>
      * <p>
      * Refer to {@link #batchMode()} to decide how to interpret this content.
+     * <p>
+     * This corresponds to {@link #transformedBatchQueries()}.
      *
      * @see #query()
      * @see #routine()
@@ -175,6 +177,44 @@ public interface ExecuteContext extends Scope {
      */
     @NotNull
     Query @NotNull [] batchQueries();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * The jOOQ {@link Routine} that is being executed or <code>null</code> if

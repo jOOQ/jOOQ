@@ -116,6 +116,25 @@ final class SimpleExecuteContext extends AbstractScope implements ExecuteContext
         throw new UnsupportedOperationException("Not implemented");
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public final Routine<?> routine() {
         throw new UnsupportedOperationException("Not implemented");

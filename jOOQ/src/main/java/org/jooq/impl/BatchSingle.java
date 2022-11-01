@@ -196,7 +196,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
         try {
             // [#8968] Keep start() event inside of lifecycle management
             listener.start(ctx);
-            ctx.transformQuery(listener);
+            ctx.transformQueries(listener);
 
             listener.renderStart(ctx);
             // [#1520] TODO: Should the number of bind values be checked, here?

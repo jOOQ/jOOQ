@@ -57,6 +57,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Param;
 import org.jooq.Query;
+import org.jooq.ExecuteContext.BatchMode;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.impl.R2DBC.BatchSingleSubscriber;
@@ -186,7 +187,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
     }
 
     private final int[] executePrepared() {
-        DefaultExecuteContext ctx = new DefaultExecuteContext(configuration, new Query[] { query });
+        DefaultExecuteContext ctx = new DefaultExecuteContext(configuration, BatchMode.SINGLE, new Query[] { query });
         ExecuteListener listener = ExecuteListeners.get(ctx);
         Connection connection = ctx.connection();
 

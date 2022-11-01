@@ -151,6 +151,13 @@ public interface ExecuteContext extends Scope {
 
 
 
+
+    /**
+     * The batch execution mode.
+     */
+    @NotNull
+    BatchMode batchMode();
+
     /**
      * The jOOQ {@link Query} objects that are being executed in batch mode, or
      * empty if the query is unknown or if there was no jOOQ <code>Query</code>.
@@ -158,6 +165,8 @@ public interface ExecuteContext extends Scope {
      * If a single <code>Query</code> is executed in non-batch mode, this will
      * return an array of length <code>1</code>, containing that
      * <code>Query</code>
+     * <p>
+     * Refer to {@link #batchMode()} to decide how to interpret this content.
      *
      * @see #query()
      * @see #routine()
@@ -423,4 +432,29 @@ public interface ExecuteContext extends Scope {
      * <code>{@link Settings#getFetchServerOutputSize()} &gt; 0</code>.
      */
     void serverOutput(String[] output);
+
+    /**
+     * The batch mode, which helps interpret the contents of
+     * {@link ExecuteContext#batchQueries()}.
+     */
+    enum BatchMode {
+
+        /**
+         * No {@link Batch} is being executed, but a single
+         * {@link ExecuteContext#query()} or a {@link ExecuteContext#routine()}.
+         */
+        NONE,
+
+        /**
+         * A {@link Batch} with a single {@link PreparedStatement} and multiple
+         * bind variable sets is being executed.
+         */
+        SINGLE,
+
+        /**
+         * A {@link Batch} with multiple static {@link Statement} and no bind
+         * variables is being executed.
+         */
+        MULTIPLE
+    }
 }

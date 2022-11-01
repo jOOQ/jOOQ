@@ -107,6 +107,11 @@ final class SimpleExecuteContext extends AbstractScope implements ExecuteContext
 
 
     @Override
+    public final BatchMode batchMode() {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @Override
     public final Query[] batchQueries() {
         throw new UnsupportedOperationException("Not implemented");
     }

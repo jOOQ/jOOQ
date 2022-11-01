@@ -85,7 +85,6 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 // ...
 
@@ -112,7 +111,7 @@ class DefaultExecuteContext implements ExecuteContext {
     private final Routine<?>                              routine;
     private String                                        sql;
 
-    private final boolean                                 batch;
+    private final BatchMode                               batchMode;
     private final Query[]                                 batchQueries;
     private final String[]                                batchSQL;
     private final int[]                                   batchRows;
@@ -318,22 +317,22 @@ class DefaultExecuteContext implements ExecuteContext {
     // ------------------------------------------------------------------------
 
     DefaultExecuteContext(Configuration configuration) {
-        this(configuration, null, null, null);
+        this(configuration, BatchMode.NONE, null, null, null);
     }
 
-    DefaultExecuteContext(Configuration configuration, Query[] batchQueries) {
-        this(configuration, null, batchQueries, null);
+    DefaultExecuteContext(Configuration configuration, BatchMode batchMode, Query[] batchQueries) {
+        this(configuration, batchMode, null, batchQueries, null);
     }
 
     DefaultExecuteContext(Configuration configuration, Query query) {
-        this(configuration, query, null, null);
+        this(configuration, BatchMode.NONE, query, null, null);
     }
 
     DefaultExecuteContext(Configuration configuration, Routine<?> routine) {
-        this(configuration, null, null, routine);
+        this(configuration, BatchMode.NONE, null, null, routine);
     }
 
-    private DefaultExecuteContext(Configuration configuration, Query query, Query[] batchQueries, Routine<?> routine) {
+    private DefaultExecuteContext(Configuration configuration, BatchMode batchMode, Query query, Query[] batchQueries, Routine<?> routine) {
 
         // [#4277] The ExecuteContext's Configuration will always return the same Connection,
         //         e.g. when running statements from sub-ExecuteContexts
@@ -343,6 +342,7 @@ class DefaultExecuteContext implements ExecuteContext {
         this.originalConfiguration = configuration;
         this.derivedConfiguration = configuration.derive(new ExecuteContextConnectionProvider());
         this.data = new DataMap();
+        this.batchMode = batchMode;
         this.query = query;
 
 
@@ -351,13 +351,11 @@ class DefaultExecuteContext implements ExecuteContext {
         this.converterContext = new DefaultConverterContext(derivedConfiguration, data);
 
         if (routine != null) {
-            this.batch = false;
             this.batchQueries = null;
             this.batchRows = null;
             this.batchSQL = null;
         }
         else if (batchQueries != null) {
-            this.batch = true;
             this.batchQueries = batchQueries;
             this.batchRows = new int[batchQueries.length];
             this.batchSQL = new String[batchQueries.length];
@@ -365,13 +363,11 @@ class DefaultExecuteContext implements ExecuteContext {
             Arrays.fill(this.batchRows, -1);
         }
         else if (query == null) {
-            this.batch = false;
             this.batchQueries = null;
             this.batchRows = null;
             this.batchSQL = null;
         }
         else {
-            this.batch = false;
             this.batchQueries = null;
             this.batchRows = null;
             this.batchSQL = null;
@@ -414,7 +410,7 @@ class DefaultExecuteContext implements ExecuteContext {
         }
 
         // This can only be a BatchSingle or BatchMultiple execution
-        else if (batch) {
+        else if (batchMode != BatchMode.NONE) {
             return ExecuteType.BATCH;
         }
 
@@ -495,8 +491,13 @@ class DefaultExecuteContext implements ExecuteContext {
 
 
     @Override
+    public final BatchMode batchMode() {
+        return batchMode;
+    }
+
+    @Override
     public final Query[] batchQueries() {
-        return batch
+        return batchMode != BatchMode.NONE
              ? batchQueries
              : query() != null
              ? new Query[] { query() }
@@ -524,7 +525,7 @@ class DefaultExecuteContext implements ExecuteContext {
 
     @Override
     public final String[] batchSQL() {
-        return batch
+        return batchMode != BatchMode.NONE
              ? batchSQL
              : routine != null || query() != null
              ? new String[] { sql }
@@ -663,7 +664,7 @@ class DefaultExecuteContext implements ExecuteContext {
 
     @Override
     public final int[] batchRows() {
-        return batch
+        return batchMode != BatchMode.NONE
              ? batchRows
              : routine != null || query() != null
              ? new int[] { rows }

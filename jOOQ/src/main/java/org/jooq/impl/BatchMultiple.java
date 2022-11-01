@@ -42,6 +42,7 @@ import java.sql.SQLException;
 
 import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
+import org.jooq.ExecuteContext.BatchMode;
 import org.jooq.ExecuteListener;
 import org.jooq.Query;
 import org.jooq.conf.SettingsTools;
@@ -89,7 +90,7 @@ final class BatchMultiple extends AbstractBatch {
     }
 
     static int[] execute(final Configuration configuration, final Query[] queries) {
-        ExecuteContext ctx = new DefaultExecuteContext(configuration, queries);
+        ExecuteContext ctx = new DefaultExecuteContext(configuration, BatchMode.MULTIPLE, queries);
         ExecuteListener listener = ExecuteListeners.get(ctx);
         Connection connection = ctx.connection();
 

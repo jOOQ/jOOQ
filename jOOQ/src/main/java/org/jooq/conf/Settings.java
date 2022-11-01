@@ -155,6 +155,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNotNotDistinct = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsDistinctFromNull = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNormaliseAssociativeOps = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNormaliseInListSingleElementToComparison = true;
@@ -1820,6 +1822,36 @@ public class Settings
      */
     public void setTransformPatternsNotNotDistinct(Boolean value) {
         this.transformPatternsNotNotDistinct = value;
+    }
+
+    /**
+     * Transform <code>a IS [ NOT ] DISTINCT FROM NULL</code> to <code>a IS [ NOT ] NULL</code>.
+     * <p>
+     * This simplifies the much more verbose <code>DISTINCT</code> predicate.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsDistinctFromNull() {
+        return transformPatternsDistinctFromNull;
+    }
+
+    /**
+     * Sets the value of the transformPatternsDistinctFromNull property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsDistinctFromNull(Boolean value) {
+        this.transformPatternsDistinctFromNull = value;
     }
 
     /**
@@ -5258,6 +5290,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsDistinctFromNull(Boolean value) {
+        setTransformPatternsDistinctFromNull(value);
+        return this;
+    }
+
     public Settings withTransformPatternsNormaliseAssociativeOps(Boolean value) {
         setTransformPatternsNormaliseAssociativeOps(value);
         return this;
@@ -6306,6 +6343,7 @@ public class Settings
         builder.append("transformPatternsNotNot", transformPatternsNotNot);
         builder.append("transformPatternsNotComparison", transformPatternsNotComparison);
         builder.append("transformPatternsNotNotDistinct", transformPatternsNotNotDistinct);
+        builder.append("transformPatternsDistinctFromNull", transformPatternsDistinctFromNull);
         builder.append("transformPatternsNormaliseAssociativeOps", transformPatternsNormaliseAssociativeOps);
         builder.append("transformPatternsNormaliseInListSingleElementToComparison", transformPatternsNormaliseInListSingleElementToComparison);
         builder.append("transformPatternsNormaliseFieldCompareValue", transformPatternsNormaliseFieldCompareValue);
@@ -6924,6 +6962,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsNotNotDistinct.equals(other.transformPatternsNotNotDistinct)) {
+                return false;
+            }
+        }
+        if (transformPatternsDistinctFromNull == null) {
+            if (other.transformPatternsDistinctFromNull!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsDistinctFromNull.equals(other.transformPatternsDistinctFromNull)) {
                 return false;
             }
         }
@@ -8174,6 +8221,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsNotNot == null)? 0 :transformPatternsNotNot.hashCode()));
         result = ((prime*result)+((transformPatternsNotComparison == null)? 0 :transformPatternsNotComparison.hashCode()));
         result = ((prime*result)+((transformPatternsNotNotDistinct == null)? 0 :transformPatternsNotNotDistinct.hashCode()));
+        result = ((prime*result)+((transformPatternsDistinctFromNull == null)? 0 :transformPatternsDistinctFromNull.hashCode()));
         result = ((prime*result)+((transformPatternsNormaliseAssociativeOps == null)? 0 :transformPatternsNormaliseAssociativeOps.hashCode()));
         result = ((prime*result)+((transformPatternsNormaliseInListSingleElementToComparison == null)? 0 :transformPatternsNormaliseInListSingleElementToComparison.hashCode()));
         result = ((prime*result)+((transformPatternsNormaliseFieldCompareValue == null)? 0 :transformPatternsNormaliseFieldCompareValue.hashCode()));

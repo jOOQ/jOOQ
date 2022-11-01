@@ -4692,6 +4692,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Constraint uniqueConstraint = null;
         boolean comment = false;
         boolean compress = false;
+        boolean sparse = false;
         Comment fieldComment = null;
 
         identity |= type.identity();
@@ -4899,6 +4900,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+
+
+
+                }
+            }
+
+            if (!sparse) {
+                if (!ignoreProEdition() && parseKeywordIf("SPARSE") && requireProEdition()) {
 
 
 

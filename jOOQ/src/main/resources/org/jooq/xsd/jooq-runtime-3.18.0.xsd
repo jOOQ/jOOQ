@@ -453,6 +453,16 @@ To enable this feature, {@link #transformPatterns} must be enabled as well.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsDistinctFromNull" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>a IS [ NOT ] DISTINCT FROM NULL</code> to <code>a IS [ NOT ] NULL</code>.
+<p>
+This simplifies the much more verbose <code>DISTINCT</code> predicate.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsNormaliseAssociativeOps" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>(a + b) + (c + d)</code> to <code>((a + b) + c) + d</code>.
 <p>

@@ -611,6 +611,18 @@ Some <code>CASE</code> expressions have a shorter abbreviated form, such as <cod
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="transformPatternsSimplifyCaseAbbreviation" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform complex predicates into simpler <code>CASE</code> abbreviations.
+<p>
+Some predicates can be simplified into case abbreviations, such as, for example
+<ul>
+<li><code>a IS NULL OR COALESCE(a = b, FALSE)</code> to <code>NULLIF(a, b) IS NULL</code></li>
+<li><code>a IS NOT NULL AND COALESCE(a != b, TRUE)</code> to <code>NULLIF(a, b) IS NOT NULL</code></li>
+</ul>
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
       
       <element name="transformPatternsTrivialCaseAbbreviation" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform trivial case abbreviations like <code>NVL(NULL, a)</code> to <code>a</code>.

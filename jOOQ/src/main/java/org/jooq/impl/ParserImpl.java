@@ -1924,7 +1924,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 result.addGroupBy(groupingSets(fieldSets.toArray((Collection[]) EMPTY_COLLECTION)));
             }
             else {
-                groupBy = parseList(',', c -> c.parseField());
+                groupBy = parseOrdinaryGroupingSets();
 
                 if (parseKeywordIf("WITH ROLLUP"))
                     result.addGroupBy(rollup(groupBy.toArray(EMPTY_FIELD)));
@@ -1936,6 +1936,30 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
         else
             return false;
+    }
+
+    private final List<GroupField> parseOrdinaryGroupingSets() {
+        List<GroupField> result = new ArrayList<>();
+
+        do {
+
+            // [#14159] Explicit ROW expressions are actual RowAsFields.
+            //          Other parenthesised expressions are grouping column reference lists
+            if (peekKeyword("ROW")) {
+                result.add(parseField());
+            }
+            else {
+                FieldOrRow fr = parseFieldOrRow();
+
+                if (fr instanceof Field<?> f)
+                    result.add(f);
+                else
+                    result.addAll(asList(((Row) fr).fields()));
+            }
+        }
+        while (parseIf(','));
+
+        return result;
     }
 
     private final boolean parseQueryPrimaryConnectBy(SelectQueryImpl<Record> result) {

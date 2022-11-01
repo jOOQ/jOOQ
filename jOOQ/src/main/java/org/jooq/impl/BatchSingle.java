@@ -186,7 +186,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
     }
 
     private final int[] executePrepared() {
-        ExecuteContext ctx = new DefaultExecuteContext(configuration, new Query[] { query });
+        DefaultExecuteContext ctx = new DefaultExecuteContext(configuration, new Query[] { query });
         ExecuteListener listener = ExecuteListeners.get(ctx);
         Connection connection = ctx.connection();
 
@@ -195,6 +195,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
         try {
             // [#8968] Keep start() event inside of lifecycle management
             listener.start(ctx);
+            ctx.transformQuery(listener);
 
             listener.renderStart(ctx);
             // [#1520] TODO: Should the number of bind values be checked, here?

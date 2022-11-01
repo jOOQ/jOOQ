@@ -284,14 +284,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
 
                 // [#385] First time statement preparing
                 else {
-
-
-
-
-
-
-
-
+                    ctx.transformQuery(listener);
 
                     listener.renderStart(ctx);
                     rendered = getSQL0(ctx);

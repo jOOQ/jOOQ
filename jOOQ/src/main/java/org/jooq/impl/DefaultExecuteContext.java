@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.Tools.EMPTY_INT;
 import static org.jooq.impl.Tools.EMPTY_QUERY;
@@ -66,6 +67,7 @@ import org.jooq.DDLQuery;
 import org.jooq.DSLContext;
 import org.jooq.Delete;
 import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
 import org.jooq.ExecuteType;
 import org.jooq.Insert;
 import org.jooq.Merge;
@@ -757,5 +759,24 @@ class DefaultExecuteContext implements ExecuteContext {
 
         @Override
         public final void release(Connection c) {}
+    }
+
+
+    final void transformQuery(ExecuteListener listener) {
+
+
+
+
+        if (TRUE.equals(settings().isTransformPatterns()) && configuration().requireCommercial(() -> "SQL transformations are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.")) {
+
+
+
+
+        }
+
+
+
+
+
     }
 }

@@ -278,13 +278,54 @@ public final class QOM {
 
         // TODO: These methods could return unmodifiable views instead, to avoid
         //       copying things around...
-        @NotNull default UnmodifiableList<Q> $concat(UnmodifiableList<Q> other) {
+
+        /**
+         * Concatenate a collection to this UnmodifiableList, returning a new
+         * UnmodifiableList from the combined data.
+         */
+        @NotNull
+        default UnmodifiableList<Q> $concat(Collection<? extends Q> other) {
             QueryPartList<Q> r = new QueryPartList<>(this);
             r.addAll(other);
             return unmodifiable(r);
         }
 
-        @NotNull default UnmodifiableList<Q> $removeFirst() {
+        /**
+         * Return a new UnmodifiableList without the element at the argument
+         * position.
+         */
+        @NotNull
+        default UnmodifiableList<Q> $remove(int position) {
+            QueryPartList<Q> r = new QueryPartList<>();
+
+            for (int i = 0; i < size(); i++)
+                if (i != position)
+                    r.add(get(i));
+
+            return unmodifiable(r);
+        }
+
+        /**
+         * Access the first element if available.
+         */
+        @Nullable
+        default Q $first() {
+            return isEmpty() ? null : get(0);
+        }
+
+        /**
+         * Access the last element if available.
+         */
+        @Nullable
+        default Q $last() {
+            return isEmpty() ? null : get(size() - 1);
+        }
+
+        /**
+         * Return a new UnmodifiableList without the {@link #$first()} element.
+         */
+        @NotNull
+        default UnmodifiableList<Q> $removeFirst() {
             QueryPartList<Q> r = new QueryPartList<>();
 
             for (int i = 1; i < size(); i++)
@@ -293,7 +334,26 @@ public final class QOM {
             return unmodifiable(r);
         }
 
-        @NotNull default UnmodifiableList<Q> $set(int position, Q newValue) {
+        /**
+         * Return a new {@link UnmodifiableList} without the {@link #$last()}
+         * element.
+         */
+        @NotNull
+        default UnmodifiableList<Q> $removeLast() {
+            QueryPartList<Q> r = new QueryPartList<>();
+
+            for (int i = 0; i < size() - 1; i++)
+                r.add(get(i));
+
+            return unmodifiable(r);
+        }
+
+        /**
+         * Return a new {@link UnmodifiableList} with a new, replaced value at
+         * the argument position.
+         */
+        @NotNull
+        default UnmodifiableList<Q> $set(int position, Q newValue) {
             QueryPartList<Q> r = new QueryPartList<>();
 
             for (int i = 0; i < size(); i++)
@@ -305,31 +365,21 @@ public final class QOM {
             return unmodifiable(r);
         }
 
-        @NotNull default UnmodifiableList<Q> $remove(int position) {
+        /**
+         * Return a new {@link UnmodifiableList} with a new, replaced set of
+         * values at the argument position.
+         */
+        @NotNull
+        default UnmodifiableList<Q> $setAll(int position, Collection<? extends Q> newValues) {
             QueryPartList<Q> r = new QueryPartList<>();
 
             for (int i = 0; i < size(); i++)
-                if (i != position)
+                if (i == position)
+                    r.addAll(newValues);
+                else
                     r.add(get(i));
 
             return unmodifiable(r);
-        }
-
-        @NotNull default UnmodifiableList<Q> $removeLast() {
-            QueryPartList<Q> r = new QueryPartList<>();
-
-            for (int i = 0; i < size() - 1; i++)
-                r.add(get(i));
-
-            return unmodifiable(r);
-        }
-
-        @Nullable default Q $first() {
-            return isEmpty() ? null : get(0);
-        }
-
-        @Nullable default Q $last() {
-            return isEmpty() ? null : get(size() - 1);
         }
     }
 

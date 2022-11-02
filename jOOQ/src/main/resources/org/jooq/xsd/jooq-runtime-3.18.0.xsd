@@ -624,6 +624,18 @@ Some predicates can be simplified into case abbreviations, such as, for example
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsFlattenCaseAbbreviation" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Flatten nested <code>CASE</code> abbreviations such as <code>NVL</code> or <code>CASE</code>.
+<p>
+Nested <code>CASE</code> abbreviations can be flattened, as such:
+<ul>
+<li><code>NVL(NVL(a, b), c)</code> to <code>COALESCE(a, b, c)</code></li>
+<li><code>COALESCE(a, ..., COALESCE(b, ..., c), ..., d)</code> to <code>COALESCE(a, ..., b, ..., c, ..., d)</code></li>
+</ul>
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsTrivialCaseAbbreviation" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform trivial case abbreviations like <code>NVL(NULL, a)</code> to <code>a</code>.
 <p>

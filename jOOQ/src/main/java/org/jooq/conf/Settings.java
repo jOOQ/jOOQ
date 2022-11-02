@@ -191,6 +191,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsSimplifyCaseAbbreviation = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsFlattenCaseAbbreviation = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrivialCaseAbbreviation = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrivialPredicates = true;
@@ -2355,6 +2357,38 @@ public class Settings
      */
     public void setTransformPatternsSimplifyCaseAbbreviation(Boolean value) {
         this.transformPatternsSimplifyCaseAbbreviation = value;
+    }
+
+    /**
+     * Flatten nested <code>CASE</code> abbreviations such as <code>NVL</code> or <code>CASE</code>.
+     * <p>
+     * Nested <code>CASE</code> abbreviations can be flattened, as such:
+     * <ul>
+     * <li><code>NVL(NVL(a, b), c)</code> to <code>COALESCE(a, b, c)</code></li>
+     * <li><code>COALESCE(a, ..., COALESCE(b, ..., c), ..., d)</code> to <code>COALESCE(a, …, b, …, c, ..., d)</code></li>
+     * </ul>
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsFlattenCaseAbbreviation() {
+        return transformPatternsFlattenCaseAbbreviation;
+    }
+
+    /**
+     * Sets the value of the transformPatternsFlattenCaseAbbreviation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsFlattenCaseAbbreviation(Boolean value) {
+        this.transformPatternsFlattenCaseAbbreviation = value;
     }
 
     /**
@@ -5414,6 +5448,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsFlattenCaseAbbreviation(Boolean value) {
+        setTransformPatternsFlattenCaseAbbreviation(value);
+        return this;
+    }
+
     public Settings withTransformPatternsTrivialCaseAbbreviation(Boolean value) {
         setTransformPatternsTrivialCaseAbbreviation(value);
         return this;
@@ -6400,6 +6439,7 @@ public class Settings
         builder.append("transformPatternsCaseMergeWhenElse", transformPatternsCaseMergeWhenElse);
         builder.append("transformPatternsCaseToCaseAbbreviation", transformPatternsCaseToCaseAbbreviation);
         builder.append("transformPatternsSimplifyCaseAbbreviation", transformPatternsSimplifyCaseAbbreviation);
+        builder.append("transformPatternsFlattenCaseAbbreviation", transformPatternsFlattenCaseAbbreviation);
         builder.append("transformPatternsTrivialCaseAbbreviation", transformPatternsTrivialCaseAbbreviation);
         builder.append("transformPatternsTrivialPredicates", transformPatternsTrivialPredicates);
         builder.append("transformPatternsScalarSubqueryCountAsteriskGtZero", transformPatternsScalarSubqueryCountAsteriskGtZero);
@@ -7164,6 +7204,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsSimplifyCaseAbbreviation.equals(other.transformPatternsSimplifyCaseAbbreviation)) {
+                return false;
+            }
+        }
+        if (transformPatternsFlattenCaseAbbreviation == null) {
+            if (other.transformPatternsFlattenCaseAbbreviation!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsFlattenCaseAbbreviation.equals(other.transformPatternsFlattenCaseAbbreviation)) {
                 return false;
             }
         }
@@ -8288,6 +8337,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsCaseMergeWhenElse == null)? 0 :transformPatternsCaseMergeWhenElse.hashCode()));
         result = ((prime*result)+((transformPatternsCaseToCaseAbbreviation == null)? 0 :transformPatternsCaseToCaseAbbreviation.hashCode()));
         result = ((prime*result)+((transformPatternsSimplifyCaseAbbreviation == null)? 0 :transformPatternsSimplifyCaseAbbreviation.hashCode()));
+        result = ((prime*result)+((transformPatternsFlattenCaseAbbreviation == null)? 0 :transformPatternsFlattenCaseAbbreviation.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialCaseAbbreviation == null)? 0 :transformPatternsTrivialCaseAbbreviation.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialPredicates == null)? 0 :transformPatternsTrivialPredicates.hashCode()));
         result = ((prime*result)+((transformPatternsScalarSubqueryCountAsteriskGtZero == null)? 0 :transformPatternsScalarSubqueryCountAsteriskGtZero.hashCode()));

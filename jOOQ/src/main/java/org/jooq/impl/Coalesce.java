@@ -42,6 +42,8 @@ import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.anyNotNull;
 
+import java.util.Collection;
+
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -54,6 +56,10 @@ import org.jooq.impl.QOM.UnmodifiableList;
 final class Coalesce<T> extends AbstractField<T> implements QOM.Coalesce<T> {
 
     private final Field<T>[] fields;
+
+    Coalesce(Collection<? extends Field<?>> fields) {
+        this(fields.toArray(EMPTY_FIELD));
+    }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     Coalesce(Field<?>[] fields) {

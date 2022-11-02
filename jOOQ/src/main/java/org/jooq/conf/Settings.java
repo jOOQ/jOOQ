@@ -163,6 +163,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNormaliseFieldCompareValue = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsNormaliseCoalesceToNvl = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsOrEqToIn = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsAndNeToNotIn = true;
@@ -1943,6 +1945,34 @@ public class Settings
      */
     public void setTransformPatternsNormaliseFieldCompareValue(Boolean value) {
         this.transformPatternsNormaliseFieldCompareValue = value;
+    }
+
+    /**
+     * Transform 2 argument <code>COALESCE(a, b)</code> to <code>NVL(a, b)</code>.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsNormaliseCoalesceToNvl() {
+        return transformPatternsNormaliseCoalesceToNvl;
+    }
+
+    /**
+     * Sets the value of the transformPatternsNormaliseCoalesceToNvl property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsNormaliseCoalesceToNvl(Boolean value) {
+        this.transformPatternsNormaliseCoalesceToNvl = value;
     }
 
     /**
@@ -5344,6 +5374,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsNormaliseCoalesceToNvl(Boolean value) {
+        setTransformPatternsNormaliseCoalesceToNvl(value);
+        return this;
+    }
+
     public Settings withTransformPatternsOrEqToIn(Boolean value) {
         setTransformPatternsOrEqToIn(value);
         return this;
@@ -6386,6 +6421,7 @@ public class Settings
         builder.append("transformPatternsNormaliseAssociativeOps", transformPatternsNormaliseAssociativeOps);
         builder.append("transformPatternsNormaliseInListSingleElementToComparison", transformPatternsNormaliseInListSingleElementToComparison);
         builder.append("transformPatternsNormaliseFieldCompareValue", transformPatternsNormaliseFieldCompareValue);
+        builder.append("transformPatternsNormaliseCoalesceToNvl", transformPatternsNormaliseCoalesceToNvl);
         builder.append("transformPatternsOrEqToIn", transformPatternsOrEqToIn);
         builder.append("transformPatternsAndNeToNotIn", transformPatternsAndNeToNotIn);
         builder.append("transformPatternsMergeOrComparison", transformPatternsMergeOrComparison);
@@ -7038,6 +7074,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsNormaliseFieldCompareValue.equals(other.transformPatternsNormaliseFieldCompareValue)) {
+                return false;
+            }
+        }
+        if (transformPatternsNormaliseCoalesceToNvl == null) {
+            if (other.transformPatternsNormaliseCoalesceToNvl!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsNormaliseCoalesceToNvl.equals(other.transformPatternsNormaliseCoalesceToNvl)) {
                 return false;
             }
         }
@@ -8274,6 +8319,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsNormaliseAssociativeOps == null)? 0 :transformPatternsNormaliseAssociativeOps.hashCode()));
         result = ((prime*result)+((transformPatternsNormaliseInListSingleElementToComparison == null)? 0 :transformPatternsNormaliseInListSingleElementToComparison.hashCode()));
         result = ((prime*result)+((transformPatternsNormaliseFieldCompareValue == null)? 0 :transformPatternsNormaliseFieldCompareValue.hashCode()));
+        result = ((prime*result)+((transformPatternsNormaliseCoalesceToNvl == null)? 0 :transformPatternsNormaliseCoalesceToNvl.hashCode()));
         result = ((prime*result)+((transformPatternsOrEqToIn == null)? 0 :transformPatternsOrEqToIn.hashCode()));
         result = ((prime*result)+((transformPatternsAndNeToNotIn == null)? 0 :transformPatternsAndNeToNotIn.hashCode()));
         result = ((prime*result)+((transformPatternsMergeOrComparison == null)? 0 :transformPatternsMergeOrComparison.hashCode()));

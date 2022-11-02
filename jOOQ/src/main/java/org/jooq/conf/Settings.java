@@ -183,6 +183,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCaseElseCase = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsCaseUnreachableClauses = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCaseMergeWhenWhen = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCaseMergeWhenElse = true;
@@ -2239,6 +2241,38 @@ public class Settings
      */
     public void setTransformPatternsCaseElseCase(Boolean value) {
         this.transformPatternsCaseElseCase = value;
+    }
+
+    /**
+     * Transform <code>CASE</code> by removing unreachable clauses.
+     * <p>
+     * Case clauses can be proven to be unreachable, and thus removed:
+     * <ul>
+     * <li><code>CASE WHEN p THEN 1 WHEN TRUE THEN 2 WHEN q … ELSE … END</code> is equivalent to <code>CASE WHEN p THEN 1 ELSE 2 END</code></li>
+     * <li><code>CASE WHEN p THEN 1 WHEN FALSE THEN 2 WHEN q .. ELSE .. END</code> is equivalent to <code>CASE WHEN p THEN 1 WHEN q … ELSE … END</code></li>
+     * </ul>
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsCaseUnreachableClauses() {
+        return transformPatternsCaseUnreachableClauses;
+    }
+
+    /**
+     * Sets the value of the transformPatternsCaseUnreachableClauses property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsCaseUnreachableClauses(Boolean value) {
+        this.transformPatternsCaseUnreachableClauses = value;
     }
 
     /**
@@ -5428,6 +5462,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsCaseUnreachableClauses(Boolean value) {
+        setTransformPatternsCaseUnreachableClauses(value);
+        return this;
+    }
+
     public Settings withTransformPatternsCaseMergeWhenWhen(Boolean value) {
         setTransformPatternsCaseMergeWhenWhen(value);
         return this;
@@ -6435,6 +6474,7 @@ public class Settings
         builder.append("transformPatternsMergeBetweenSymmetricPredicates", transformPatternsMergeBetweenSymmetricPredicates);
         builder.append("transformPatternsCaseElseNull", transformPatternsCaseElseNull);
         builder.append("transformPatternsCaseElseCase", transformPatternsCaseElseCase);
+        builder.append("transformPatternsCaseUnreachableClauses", transformPatternsCaseUnreachableClauses);
         builder.append("transformPatternsCaseMergeWhenWhen", transformPatternsCaseMergeWhenWhen);
         builder.append("transformPatternsCaseMergeWhenElse", transformPatternsCaseMergeWhenElse);
         builder.append("transformPatternsCaseToCaseAbbreviation", transformPatternsCaseToCaseAbbreviation);
@@ -7168,6 +7208,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsCaseElseCase.equals(other.transformPatternsCaseElseCase)) {
+                return false;
+            }
+        }
+        if (transformPatternsCaseUnreachableClauses == null) {
+            if (other.transformPatternsCaseUnreachableClauses!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsCaseUnreachableClauses.equals(other.transformPatternsCaseUnreachableClauses)) {
                 return false;
             }
         }
@@ -8333,6 +8382,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsMergeBetweenSymmetricPredicates == null)? 0 :transformPatternsMergeBetweenSymmetricPredicates.hashCode()));
         result = ((prime*result)+((transformPatternsCaseElseNull == null)? 0 :transformPatternsCaseElseNull.hashCode()));
         result = ((prime*result)+((transformPatternsCaseElseCase == null)? 0 :transformPatternsCaseElseCase.hashCode()));
+        result = ((prime*result)+((transformPatternsCaseUnreachableClauses == null)? 0 :transformPatternsCaseUnreachableClauses.hashCode()));
         result = ((prime*result)+((transformPatternsCaseMergeWhenWhen == null)? 0 :transformPatternsCaseMergeWhenWhen.hashCode()));
         result = ((prime*result)+((transformPatternsCaseMergeWhenElse == null)? 0 :transformPatternsCaseMergeWhenElse.hashCode()));
         result = ((prime*result)+((transformPatternsCaseToCaseAbbreviation == null)? 0 :transformPatternsCaseToCaseAbbreviation.hashCode()));

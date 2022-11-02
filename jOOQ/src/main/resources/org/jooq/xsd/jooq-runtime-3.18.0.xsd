@@ -586,6 +586,18 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsCaseUnreachableClauses" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>CASE</code> by removing unreachable clauses.
+<p>
+Case clauses can be proven to be unreachable, and thus removed:
+<ul>
+<li><code>CASE WHEN p THEN 1 WHEN TRUE THEN 2 WHEN q .. ELSE .. END</code> is equivalent to <code>CASE WHEN p THEN 1 ELSE 2 END</code></li>
+<li><code>CASE WHEN p THEN 1 WHEN FALSE THEN 2 WHEN q .. ELSE .. END</code> is equivalent to <code>CASE WHEN p THEN 1 WHEN q .. ELSE .. END</code></li>
+</ul>
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsCaseMergeWhenWhen" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>CASE WHEN a THEN x WHEN b THEN x END</code> to <code>CASE WHEN a OR b THEN x END</code>.
 <p>

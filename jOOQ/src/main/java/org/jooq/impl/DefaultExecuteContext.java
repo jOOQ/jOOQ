@@ -353,7 +353,7 @@ class DefaultExecuteContext implements ExecuteContext {
         this.routine = routine;
         this.converterContext = new DefaultConverterContext(derivedConfiguration, data);
 
-        batchQueries(batchQueries);
+        batchQueries0(batchQueries);
         clean();
     }
 
@@ -504,16 +504,20 @@ class DefaultExecuteContext implements ExecuteContext {
 
 
 
+    private final void batchQueries0(Query... newQueries) {
+        if (newQueries != null) {
+            this.batchQueries = newQueries.clone();
+            this.batchSQL = new String[newQueries.length];
+            this.batchRows = new int[newQueries.length];
 
-
-
-
-
-
-
-
-
-
+            Arrays.fill(this.batchRows, -1);
+        }
+        else {
+            this.batchQueries = null;
+            this.batchSQL = null;
+            this.batchRows = null;
+        }
+    }
 
     @Override
     public final Routine<?> routine() {

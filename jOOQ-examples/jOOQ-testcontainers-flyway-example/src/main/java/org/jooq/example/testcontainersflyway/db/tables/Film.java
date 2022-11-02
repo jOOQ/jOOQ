@@ -119,7 +119,7 @@ public class Film extends TableImpl<FilmRecord> {
     /**
      * The column <code>public.film.special_features</code>.
      */
-    public final TableField<FilmRecord, String[]> SPECIAL_FEATURES = createField(DSL.name("special_features"), SQLDataType.CLOB.getArrayDataType(), this, "");
+    public final TableField<FilmRecord, String[]> SPECIAL_FEATURES = createField(DSL.name("special_features"), SQLDataType.CLOB.array(), this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,

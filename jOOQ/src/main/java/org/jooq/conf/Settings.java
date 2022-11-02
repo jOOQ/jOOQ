@@ -187,8 +187,6 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCaseMergeWhenElse = true;
     @XmlElement(defaultValue = "true")
-    protected Boolean transformPatternsCaseThenBoolean = true;
-    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCaseToCaseAbbreviation = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsSimplifyCaseAbbreviation = true;
@@ -2297,34 +2295,6 @@ public class Settings
      */
     public void setTransformPatternsCaseMergeWhenElse(Boolean value) {
         this.transformPatternsCaseMergeWhenElse = value;
-    }
-
-    /**
-     * Transform <code>CASE … THEN TRUE ELSE FALSE</code> to something simpler.
-     * <p>
-     * A <code>CASE</code> expression that transforms things to booleans can usually be simplified easily.
-     * <p>
-     * This feature is available in the commercial distribution only.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public Boolean isTransformPatternsCaseThenBoolean() {
-        return transformPatternsCaseThenBoolean;
-    }
-
-    /**
-     * Sets the value of the transformPatternsCaseThenBoolean property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setTransformPatternsCaseThenBoolean(Boolean value) {
-        this.transformPatternsCaseThenBoolean = value;
     }
 
     /**
@@ -5434,11 +5404,6 @@ public class Settings
         return this;
     }
 
-    public Settings withTransformPatternsCaseThenBoolean(Boolean value) {
-        setTransformPatternsCaseThenBoolean(value);
-        return this;
-    }
-
     public Settings withTransformPatternsCaseToCaseAbbreviation(Boolean value) {
         setTransformPatternsCaseToCaseAbbreviation(value);
         return this;
@@ -6433,7 +6398,6 @@ public class Settings
         builder.append("transformPatternsCaseElseCase", transformPatternsCaseElseCase);
         builder.append("transformPatternsCaseMergeWhenWhen", transformPatternsCaseMergeWhenWhen);
         builder.append("transformPatternsCaseMergeWhenElse", transformPatternsCaseMergeWhenElse);
-        builder.append("transformPatternsCaseThenBoolean", transformPatternsCaseThenBoolean);
         builder.append("transformPatternsCaseToCaseAbbreviation", transformPatternsCaseToCaseAbbreviation);
         builder.append("transformPatternsSimplifyCaseAbbreviation", transformPatternsSimplifyCaseAbbreviation);
         builder.append("transformPatternsTrivialCaseAbbreviation", transformPatternsTrivialCaseAbbreviation);
@@ -7182,15 +7146,6 @@ public class Settings
             }
         } else {
             if (!transformPatternsCaseMergeWhenElse.equals(other.transformPatternsCaseMergeWhenElse)) {
-                return false;
-            }
-        }
-        if (transformPatternsCaseThenBoolean == null) {
-            if (other.transformPatternsCaseThenBoolean!= null) {
-                return false;
-            }
-        } else {
-            if (!transformPatternsCaseThenBoolean.equals(other.transformPatternsCaseThenBoolean)) {
                 return false;
             }
         }
@@ -8331,7 +8286,6 @@ public class Settings
         result = ((prime*result)+((transformPatternsCaseElseCase == null)? 0 :transformPatternsCaseElseCase.hashCode()));
         result = ((prime*result)+((transformPatternsCaseMergeWhenWhen == null)? 0 :transformPatternsCaseMergeWhenWhen.hashCode()));
         result = ((prime*result)+((transformPatternsCaseMergeWhenElse == null)? 0 :transformPatternsCaseMergeWhenElse.hashCode()));
-        result = ((prime*result)+((transformPatternsCaseThenBoolean == null)? 0 :transformPatternsCaseThenBoolean.hashCode()));
         result = ((prime*result)+((transformPatternsCaseToCaseAbbreviation == null)? 0 :transformPatternsCaseToCaseAbbreviation.hashCode()));
         result = ((prime*result)+((transformPatternsSimplifyCaseAbbreviation == null)? 0 :transformPatternsSimplifyCaseAbbreviation.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialCaseAbbreviation == null)? 0 :transformPatternsTrivialCaseAbbreviation.hashCode()));

@@ -604,14 +604,6 @@ be replaced by the <code>ELSE</code> clause content.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="transformPatternsCaseThenBoolean" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>CASE .. THEN TRUE ELSE FALSE</code> to something simpler.
-<p>
-A <code>CASE</code> expression that transforms things to booleans can usually be simplified easily.
-<p>
-This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
-      </element>
-
       <element name="transformPatternsCaseToCaseAbbreviation" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>CASE</code> expressions to their respective abbreviations.
 <p>

@@ -682,6 +682,14 @@ This transformation removes any trivial predicates.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsTrivialBitwiseOperations" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform trivial bitwise comparisons like <code>BIT_OR(a, 0)</code> to <code>a</code>.
+<p>
+This transformation removes any trivial predicates.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsScalarSubqueryCountAsteriskGtZero" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform predicates comparing scalar subqueries with a count <code>(SELECT COUNT(*) ..) > 0</code> to equivalent <code>EXISTS (SELECT 1 ..)</code>.
 <p>

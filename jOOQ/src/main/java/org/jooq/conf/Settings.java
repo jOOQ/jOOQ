@@ -201,6 +201,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrivialPredicates = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsTrivialBitwiseOperations = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsScalarSubqueryCountAsteriskGtZero = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsScalarSubqueryCountExpressionGtZero = true;
@@ -2519,6 +2521,34 @@ public class Settings
      */
     public void setTransformPatternsTrivialPredicates(Boolean value) {
         this.transformPatternsTrivialPredicates = value;
+    }
+
+    /**
+     * Transform trivial bitwise comparisons like <code>BIT_OR(a, 0)</code> to <code>a</code>.
+     * <p>
+     * This transformation removes any trivial predicates.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsTrivialBitwiseOperations() {
+        return transformPatternsTrivialBitwiseOperations;
+    }
+
+    /**
+     * Sets the value of the transformPatternsTrivialBitwiseOperations property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsTrivialBitwiseOperations(Boolean value) {
+        this.transformPatternsTrivialBitwiseOperations = value;
     }
 
     /**
@@ -5546,6 +5576,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsTrivialBitwiseOperations(Boolean value) {
+        setTransformPatternsTrivialBitwiseOperations(value);
+        return this;
+    }
+
     public Settings withTransformPatternsScalarSubqueryCountAsteriskGtZero(Boolean value) {
         setTransformPatternsScalarSubqueryCountAsteriskGtZero(value);
         return this;
@@ -6527,6 +6562,7 @@ public class Settings
         builder.append("transformPatternsFlattenCaseAbbreviation", transformPatternsFlattenCaseAbbreviation);
         builder.append("transformPatternsTrivialCaseAbbreviation", transformPatternsTrivialCaseAbbreviation);
         builder.append("transformPatternsTrivialPredicates", transformPatternsTrivialPredicates);
+        builder.append("transformPatternsTrivialBitwiseOperations", transformPatternsTrivialBitwiseOperations);
         builder.append("transformPatternsScalarSubqueryCountAsteriskGtZero", transformPatternsScalarSubqueryCountAsteriskGtZero);
         builder.append("transformPatternsScalarSubqueryCountExpressionGtZero", transformPatternsScalarSubqueryCountExpressionGtZero);
         builder.append("transformPatternsEmptyScalarSubquery", transformPatternsEmptyScalarSubquery);
@@ -7334,6 +7370,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsTrivialPredicates.equals(other.transformPatternsTrivialPredicates)) {
+                return false;
+            }
+        }
+        if (transformPatternsTrivialBitwiseOperations == null) {
+            if (other.transformPatternsTrivialBitwiseOperations!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsTrivialBitwiseOperations.equals(other.transformPatternsTrivialBitwiseOperations)) {
                 return false;
             }
         }
@@ -8445,6 +8490,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsFlattenCaseAbbreviation == null)? 0 :transformPatternsFlattenCaseAbbreviation.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialCaseAbbreviation == null)? 0 :transformPatternsTrivialCaseAbbreviation.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialPredicates == null)? 0 :transformPatternsTrivialPredicates.hashCode()));
+        result = ((prime*result)+((transformPatternsTrivialBitwiseOperations == null)? 0 :transformPatternsTrivialBitwiseOperations.hashCode()));
         result = ((prime*result)+((transformPatternsScalarSubqueryCountAsteriskGtZero == null)? 0 :transformPatternsScalarSubqueryCountAsteriskGtZero.hashCode()));
         result = ((prime*result)+((transformPatternsScalarSubqueryCountExpressionGtZero == null)? 0 :transformPatternsScalarSubqueryCountExpressionGtZero.hashCode()));
         result = ((prime*result)+((transformPatternsEmptyScalarSubquery == null)? 0 :transformPatternsEmptyScalarSubquery.hashCode()));

@@ -400,6 +400,23 @@ To enable this feature, {@link #transformPatterns} must be enabled as well.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsUnnecessaryExistsSubqueryClauses" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>[ NOT ] EXISTS (SELECT DISTINCT a, b FROM t ORDER BY c LIMIT d)</code> to <code>[ NOT ] EXISTS (SELECT 1 FROM t)</code>.
+<p>
+In <code>EXISTS</code> subqueries, quite a few <code>SELECT</code> clauses are meaningless, and can
+thus be removed. These include:
+<ul>
+<li><code>SELECT</code> (any projection can be ignored)</li>
+<li><code>DISTINCT</code></li>
+<li><code>ORDER BY</code></li>
+<li><code>LIMIT</code> (except <code>LIMIT 0</code>, in case of which {@link #transformPatternsTrivialPredicates} applies).</li>
+</ul>
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsCountConstant" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>COUNT(1)</code> or any other <code>COUNT(const)</code> to <code>COUNT(*)</code>.
 <p>

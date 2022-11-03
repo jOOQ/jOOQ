@@ -145,6 +145,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsUnnecessaryDistinct = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsUnnecessaryExistsSubqueryClauses = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCountConstant = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrim = true;
@@ -1675,6 +1677,43 @@ public class Settings
      */
     public void setTransformPatternsUnnecessaryDistinct(Boolean value) {
         this.transformPatternsUnnecessaryDistinct = value;
+    }
+
+    /**
+     * Transform <code>[ NOT ] EXISTS (SELECT DISTINCT a, b FROM t ORDER BY c LIMIT d)</code> to <code>[ NOT ] EXISTS (SELECT 1 FROM t)</code>.
+     * <p>
+     * In <code>EXISTS</code> subqueries, quite a few <code>SELECT</code> clauses are meaningless, and can
+     * thus be removed. These include:
+     * <ul>
+     * <li><code>SELECT</code> (any projection can be ignored)</li>
+     * <li><code>DISTINCT</code></li>
+     * <li><code>ORDER BY</code></li>
+     * <li><code>LIMIT</code> (except <code>LIMIT 0</code>, in case of which {@link #transformPatternsTrivialPredicates} applies).</li>
+     * </ul>
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsUnnecessaryExistsSubqueryClauses() {
+        return transformPatternsUnnecessaryExistsSubqueryClauses;
+    }
+
+    /**
+     * Sets the value of the transformPatternsUnnecessaryExistsSubqueryClauses property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsUnnecessaryExistsSubqueryClauses(Boolean value) {
+        this.transformPatternsUnnecessaryExistsSubqueryClauses = value;
     }
 
     /**
@@ -5367,6 +5406,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsUnnecessaryExistsSubqueryClauses(Boolean value) {
+        setTransformPatternsUnnecessaryExistsSubqueryClauses(value);
+        return this;
+    }
+
     public Settings withTransformPatternsCountConstant(Boolean value) {
         setTransformPatternsCountConstant(value);
         return this;
@@ -6455,6 +6499,7 @@ public class Settings
         builder.append("transformPatterns", transformPatterns);
         builder.append("transformPatternsLogging", transformPatternsLogging);
         builder.append("transformPatternsUnnecessaryDistinct", transformPatternsUnnecessaryDistinct);
+        builder.append("transformPatternsUnnecessaryExistsSubqueryClauses", transformPatternsUnnecessaryExistsSubqueryClauses);
         builder.append("transformPatternsCountConstant", transformPatternsCountConstant);
         builder.append("transformPatternsTrim", transformPatternsTrim);
         builder.append("transformPatternsNotNot", transformPatternsNotNot);
@@ -7037,6 +7082,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsUnnecessaryDistinct.equals(other.transformPatternsUnnecessaryDistinct)) {
+                return false;
+            }
+        }
+        if (transformPatternsUnnecessaryExistsSubqueryClauses == null) {
+            if (other.transformPatternsUnnecessaryExistsSubqueryClauses!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsUnnecessaryExistsSubqueryClauses.equals(other.transformPatternsUnnecessaryExistsSubqueryClauses)) {
                 return false;
             }
         }
@@ -8363,6 +8417,7 @@ public class Settings
         result = ((prime*result)+((transformPatterns == null)? 0 :transformPatterns.hashCode()));
         result = ((prime*result)+((transformPatternsLogging == null)? 0 :transformPatternsLogging.hashCode()));
         result = ((prime*result)+((transformPatternsUnnecessaryDistinct == null)? 0 :transformPatternsUnnecessaryDistinct.hashCode()));
+        result = ((prime*result)+((transformPatternsUnnecessaryExistsSubqueryClauses == null)? 0 :transformPatternsUnnecessaryExistsSubqueryClauses.hashCode()));
         result = ((prime*result)+((transformPatternsCountConstant == null)? 0 :transformPatternsCountConstant.hashCode()));
         result = ((prime*result)+((transformPatternsTrim == null)? 0 :transformPatternsTrim.hashCode()));
         result = ((prime*result)+((transformPatternsNotNot == null)? 0 :transformPatternsNotNot.hashCode()));

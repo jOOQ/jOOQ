@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.Names.N_COALESCE;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
@@ -70,7 +71,14 @@ final class Coalesce<T> extends AbstractField<T> implements QOM.Coalesce<T> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
+        if (fields.length == 0) {
+            ctx.visit(NULL(getDataType()));
+        }
+        else if (fields.length == 1) {
+            ctx.visit(fields[0]);
+        }
+        else {
+            switch (ctx.family()) {
 
 
 
@@ -84,17 +92,18 @@ final class Coalesce<T> extends AbstractField<T> implements QOM.Coalesce<T> {
 
 
 
-            case DERBY: {
-                // [#13601] Workaround for https://issues.apache.org/jira/browse/DERBY-7139
-                ctx.visit(DSL.function(N_COALESCE, getDataType(),
-                    Tools.map(fields, f -> f.getDataType().isBoolean() ? new ParenthesisedField<>(f) : f, Field[]::new)
-                ));
-                break;
-            }
+                case DERBY: {
+                    // [#13601] Workaround for https://issues.apache.org/jira/browse/DERBY-7139
+                    ctx.visit(DSL.function(N_COALESCE, getDataType(),
+                        Tools.map(fields, f -> f.getDataType().isBoolean() ? new ParenthesisedField<>(f) : f, Field[]::new)
+                    ));
+                    break;
+                }
 
-            default: {
-                ctx.visit(DSL.function(N_COALESCE, getDataType(), fields));
-                break;
+                default: {
+                    ctx.visit(DSL.function(N_COALESCE, getDataType(), fields));
+                    break;
+                }
             }
         }
     }

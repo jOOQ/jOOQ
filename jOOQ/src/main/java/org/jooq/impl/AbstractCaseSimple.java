@@ -37,12 +37,13 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Names.NQ_CASE;
+import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.QOM.tuple;
 
 import java.util.List;
 import java.util.Map;
 
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function3;
@@ -140,6 +141,19 @@ extends
 
         return this;
     }
+
+    @Override
+    public final void accept(Context<?> ctx) {
+        if (when.isEmpty())
+            if (else_ != null)
+                ctx.visit(else_);
+            else
+                ctx.visit(NULL(getDataType()));
+        else
+            accept0(ctx);
+    }
+
+    abstract void accept0(Context<?> ctx);
 
     // -------------------------------------------------------------------------
     // XXX: Query Object Model

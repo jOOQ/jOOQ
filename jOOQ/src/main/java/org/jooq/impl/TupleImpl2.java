@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.QOM.tuple;
 
+import java.util.Objects;
+
 import org.jooq.Context;
 import org.jooq.QueryPart;
 // ...
@@ -120,4 +122,28 @@ implements
 
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + Objects.hash(part1, part2);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        TupleImpl2<?, ?> other = (TupleImpl2<?, ?>) obj;
+        return Objects.equals(part1, other.part1) && Objects.equals(part2, other.part2);
+    }
 }

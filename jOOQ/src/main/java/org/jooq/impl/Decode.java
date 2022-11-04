@@ -116,7 +116,7 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final void accept(Context<?> ctx) {
+    final void accept0(Context<?> ctx) {
         if (EMULATE_DISTINCT.contains(ctx.dialect())) {
             ctx.visit(Tools.derivedTableIf(ctx, when.size() > 1, value, f -> {
                 CaseSearched<T> c = new CaseSearched<>(getDataType());

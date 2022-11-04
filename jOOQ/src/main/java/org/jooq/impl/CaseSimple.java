@@ -38,7 +38,6 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.Keywords.K_CASE;
 import static org.jooq.impl.Keywords.K_ELSE;
 import static org.jooq.impl.Keywords.K_END;
@@ -101,15 +100,8 @@ implements
     }
 
     @Override
-    public final void accept(Context<?> ctx) {
-        if (when.isEmpty()) {
-            if (else_ != null)
-                ctx.visit(else_);
-            else
-                ctx.visit(NULL(getDataType()));
-        }
-        else {
-            switch (ctx.family()) {
+    final void accept0(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
@@ -120,15 +112,14 @@ implements
 
 
 
-                // The DERBY dialect doesn't support the simple CASE clause
-                case DERBY:
-                    acceptSearched(ctx);
-                    break;
+            // The DERBY dialect doesn't support the simple CASE clause
+            case DERBY:
+                acceptSearched(ctx);
+                break;
 
-                default:
-                    acceptNative(ctx);
-                    break;
-            }
+            default:
+                acceptNative(ctx);
+                break;
         }
     }
 

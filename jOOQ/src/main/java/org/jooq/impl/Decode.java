@@ -118,13 +118,9 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (EMULATE_DISTINCT.contains(ctx.dialect())) {
-            ctx.visit(Tools.derivedTableIf(ctx, !when.isEmpty(), value, f -> {
+            ctx.visit(Tools.derivedTableIf(ctx, when.size() > 1, value, f -> {
                 CaseSearched<T> c = new CaseSearched<>(getDataType());
-
-                // .when(f.isNotDistinctFrom(search), result)
-                when.forEach(t -> {
-                    c.when(f.isNotDistinctFrom(t.$1()), t.$2());
-                });
+                when.forEach(t -> c.when(f.isNotDistinctFrom(t.$1()), t.$2()));
 
                 if (else_ == null)
                     return c;

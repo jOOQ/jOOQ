@@ -48,10 +48,8 @@ import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Names.NQ_CASE;
-import static org.jooq.impl.QOM.tuple;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
 
-import java.util.List;
 import java.util.Map;
 
 import org.jooq.CaseConditionStep;
@@ -59,51 +57,33 @@ import org.jooq.CaseWhenStep;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Function3;
+// ...
+import org.jooq.QueryPart;
+// ...
 // ...
 import org.jooq.impl.QOM.Tuple2;
-import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
  */
 final class CaseSimple<V, T>
 extends
-    AbstractField<T>
+    AbstractCaseSimple<V, T, CaseSimple<V, T>>
 implements
     CaseWhenStep<V, T>,
     QOM.CaseSimple<V, T>
 {
 
-    private final Field<V>                         value;
-    private final List<Tuple2<Field<V>, Field<T>>> when;
-    private Field<T>                               else_;
-
     CaseSimple(Field<V> value, Field<V> compareValue, Field<T> result) {
-        this(value, result.getDataType());
-
-        when(compareValue, result);
+        super(NQ_CASE, value, compareValue, result);
     }
 
     CaseSimple(Field<V> value, Map<? extends Field<V>, ? extends Field<T>> map) {
-        this(value, dataType(map));
-
-        mapFields(map);
+        super(NQ_CASE, value, map);
     }
 
     CaseSimple(Field<V> value, DataType<T> type) {
-        super(NQ_CASE, type);
-
-        this.value = value;
-        this.when = new QueryPartList<>();
-    }
-
-    @SuppressWarnings("unchecked")
-    private static final <T> DataType<T> dataType(Map<? extends Field<?>, ? extends Field<T>> map) {
-        if (map.isEmpty())
-            return (DataType<T>) SQLDataType.OTHER;
-        else
-            return map.entrySet().iterator().next().getValue().getDataType();
+        super(NQ_CASE, value, type);
     }
 
     // -------------------------------------------------------------------------
@@ -118,52 +98,6 @@ implements
     @Override
     public final Field<T> otherwise(Field<T> result) {
         return else_(result);
-    }
-
-    @Override
-    public final Field<T> else_(T result) {
-        return else_(Tools.field(result));
-    }
-
-    @Override
-    public final Field<T> else_(Field<T> result) {
-        this.else_ = result;
-
-        return this;
-    }
-
-    @Override
-    public final CaseWhenStep<V, T> when(V compareValue, T result) {
-        return when(Tools.field(compareValue, value), Tools.field(result));
-    }
-
-    @Override
-    public final CaseWhenStep<V, T> when(V compareValue, Field<T> result) {
-        return when(Tools.field(compareValue, value), result);
-    }
-
-    @Override
-    public final CaseWhenStep<V, T> when(Field<V> compareValue, T result) {
-        return when(compareValue, Tools.field(result));
-    }
-
-    @Override
-    public final CaseWhenStep<V, T> when(Field<V> compareValue, Field<T> result) {
-        when.add(tuple(compareValue, result));
-
-        return this;
-    }
-
-    @Override
-    public final CaseWhenStep<V, T> mapValues(Map<V, T> values) {
-        values.forEach((k, v) -> when(k, v));
-        return this;
-    }
-
-    @Override
-    public final CaseWhenStep<V, T> mapFields(Map<? extends Field<V>, ? extends Field<T>> fields) {
-        fields.forEach((k, v) -> when(k, v));
-        return this;
     }
 
     @Override
@@ -290,42 +224,21 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Function3<? super Field<V>, ? super UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>>, ? super Field<T>, ? extends CaseSimple<V, T>> $constructor() {
-        return (v, w, e) -> {
-            CaseSimple<V, T> r = new CaseSimple<>(v, getDataType());
-            w.forEach(t -> r.when(t.$1(), t.$2()));
-            r.else_(e);
-            return r;
-        };
+    final CaseSimple<V, T> construct(Field<V> v, DataType<T> t) {
+        return new CaseSimple<>(v, t);
     }
 
-    @Override
-    public final Field<V> $arg1() {
-        return value;
-    }
 
-    @Override
-    public final CaseSimple<V, T> $arg1(Field<V> newArg1) {
-        return $constructor().apply(newArg1, $when(), $else());
-    }
 
-    @Override
-    public final UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>> $arg2() {
-        return QOM.unmodifiable(when);
-    }
 
-    @Override
-    public final CaseSimple<V, T> $arg2(UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>> w) {
-        return $constructor().apply($value(), w, $else());
-    }
 
-    @Override
-    public final Field<T> $arg3() {
-        return else_;
-    }
 
-    @Override
-    public final CaseSimple<V, T> $arg3(Field<T> e) {
-        return $constructor().apply($value(), $when(), e);
-    }
+
+
+
+
+
+
+
+
 }

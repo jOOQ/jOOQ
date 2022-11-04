@@ -1242,6 +1242,19 @@ public final class QOM {
         @NotNull  default CaseSearched<T> $else(Field<T> else_) { return $arg2(else_); }
     }
 
+    public /*sealed*/ interface Decode<V, T>
+        extends
+            Field<T>,
+            UOperator3<Field<V>, UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>>, Field<T>, Decode<V, T>>
+    {
+        @NotNull  default Field<V> $value() { return $arg1(); }
+        @NotNull  default Decode<V, T> $value(Field<V> value) { return $arg1(value); }
+        @NotNull  default UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>> $when() { return $arg2(); }
+        @NotNull  default Decode<V, T> $when(UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>> when) { return $arg2(when); }
+        @Nullable default Field<T> $else() { return $arg3(); }
+        @NotNull  default Decode<V, T> $else(Field<T> else_) { return $arg3(else_); }
+    }
+
     public /*sealed*/ interface Concat
         extends
             Field<String>,

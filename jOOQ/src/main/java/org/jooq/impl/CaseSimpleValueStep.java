@@ -52,11 +52,11 @@ import org.jooq.impl.QOM.UTransient;
  *
  * @author Lukas Eder
  */
-final class CaseValueStepImpl<V> implements CaseValueStep<V>, UTransient {
+final class CaseSimpleValueStep<V> implements CaseValueStep<V>, UTransient {
 
     private final Field<V> value;
 
-    CaseValueStepImpl(Field<V> value) {
+    CaseSimpleValueStep(Field<V> value) {
         this.value = value;
     }
 
@@ -82,7 +82,7 @@ final class CaseValueStepImpl<V> implements CaseValueStep<V>, UTransient {
 
     @Override
     public final <T> CaseWhenStep<V, T> when(Field<V> compareValue, Field<T> result) {
-        return new CaseWhenStepImpl<>(value, compareValue, result);
+        return new CaseSimple<>(value, compareValue, result);
     }
 
     @Override
@@ -99,6 +99,6 @@ final class CaseValueStepImpl<V> implements CaseValueStep<V>, UTransient {
 
     @Override
     public final <T> CaseWhenStep<V, T> mapFields(Map<? extends Field<V>, ? extends Field<T>> fields) {
-        return new CaseWhenStepImpl<>(value, fields);
+        return new CaseSimple<>(value, fields);
     }
 }

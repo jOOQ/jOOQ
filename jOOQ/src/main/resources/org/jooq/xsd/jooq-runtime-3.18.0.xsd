@@ -615,6 +615,21 @@ Case clauses can be proven to be unreachable, and thus removed:
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsCaseDistinctToDecode" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>CASE WHEN a IS NOT DISTINCT FROM b ..</code> to an equivalent <code>DECODE</code> function.
+<p>
+When all <code>WHEN</code> clauses of a <code>CASE</code> expression use the <code>DISTINCT</code> predicate, then the
+<code>CASE</code> expression can be transformed into a <code>DECODE</code> function call:
+<ul>
+<li><code>CASE WHEN a IS NOT DISTINCT FROM b THEN 1 END</code> is equivalent to <code>DECODE(a, b, 1)</code></li>
+<li><code>CASE WHEN a IS NOT DISTINCT FROM b THEN 1 ELSE 2 END</code> is equivalent to <code>DECODE(a, b, 1, 2)</code></li>
+<li><code>CASE WHEN a IS NOT DISTINCT FROM b THEN 1 WHEN a IS NOT DISTINCT FROM c THEN 2 END</code> is equivalent to <code>DECODE(a, b, 1, c, 2)</code></li>
+<li><code>CASE WHEN a IS NOT DISTINCT FROM b THEN 1 WHEN a IS NOT DISTINCT FROM c THEN 2 ELSE 3 END</code> is equivalent to <code>DECODE(a, b, 1, c, 2, 3)</code></li>
+</ul>
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsCaseMergeWhenWhen" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>CASE WHEN a THEN x WHEN b THEN x END</code> to <code>CASE WHEN a OR b THEN x END</code>.
 <p>

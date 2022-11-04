@@ -62,7 +62,7 @@ final class CaseImpl implements Case, UTransient {
 
     @Override
     public final <V> CaseValueStep<V> value(Field<V> value) {
-        return new CaseValueStepImpl<>(value);
+        return new CaseSimpleValueStep<>(value);
     }
 
     @Override
@@ -72,7 +72,7 @@ final class CaseImpl implements Case, UTransient {
 
     @Override
     public final <T> CaseConditionStep<T> when(Condition condition, Field<T> result) {
-        return new CaseConditionStepImpl<>(condition, result);
+        return new CaseSearched<>(condition, result);
     }
 
     @Override

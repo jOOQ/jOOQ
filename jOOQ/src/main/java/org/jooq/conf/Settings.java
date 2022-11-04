@@ -187,6 +187,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCaseUnreachableClauses = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsCaseDistinctToDecode = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCaseMergeWhenWhen = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCaseMergeWhenElse = true;
@@ -2314,6 +2316,41 @@ public class Settings
      */
     public void setTransformPatternsCaseUnreachableClauses(Boolean value) {
         this.transformPatternsCaseUnreachableClauses = value;
+    }
+
+    /**
+     * Transform <code>CASE WHEN a IS NOT DISTINCT FROM b …</code> to an equivalent <code>DECODE</code> function.
+     * <p>
+     * When all <code>WHEN</code> clauses of a <code>CASE</code> expression use the <code>DISTINCT</code> predicate, then the
+     * <code>CASE</code> expression can be transformed into a <code>DECODE</code> function call:
+     * <ul>
+     * <li><code>CASE WHEN a IS NOT DISTINCT FROM b THEN 1 END</code> is equivalent to <code>DECODE(a, b, 1)</code></li>
+     * <li><code>CASE WHEN a IS NOT DISTINCT FROM b THEN 1 ELSE 2 END</code> is equivalent to <code>DECODE(a, b, 1, 2)</code></li>
+     * <li><code>CASE WHEN a IS NOT DISTINCT FROM b THEN 1 WHEN a IS NOT DISTINCT FROM c THEN 2 END</code> is equivalent to <code>DECODE(a, b, 1, c, 2)</code></li>
+     * <li><code>CASE WHEN a IS NOT DISTINCT FROM b THEN 1 WHEN a IS NOT DISTINCT FROM c THEN 2 ELSE 3 END</code> is equivalent to <code>DECODE(a, b, 1, c, 2, 3)</code></li>
+     * </ul>
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsCaseDistinctToDecode() {
+        return transformPatternsCaseDistinctToDecode;
+    }
+
+    /**
+     * Sets the value of the transformPatternsCaseDistinctToDecode property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsCaseDistinctToDecode(Boolean value) {
+        this.transformPatternsCaseDistinctToDecode = value;
     }
 
     /**
@@ -5541,6 +5578,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsCaseDistinctToDecode(Boolean value) {
+        setTransformPatternsCaseDistinctToDecode(value);
+        return this;
+    }
+
     public Settings withTransformPatternsCaseMergeWhenWhen(Boolean value) {
         setTransformPatternsCaseMergeWhenWhen(value);
         return this;
@@ -6555,6 +6597,7 @@ public class Settings
         builder.append("transformPatternsCaseElseNull", transformPatternsCaseElseNull);
         builder.append("transformPatternsCaseElseCase", transformPatternsCaseElseCase);
         builder.append("transformPatternsCaseUnreachableClauses", transformPatternsCaseUnreachableClauses);
+        builder.append("transformPatternsCaseDistinctToDecode", transformPatternsCaseDistinctToDecode);
         builder.append("transformPatternsCaseMergeWhenWhen", transformPatternsCaseMergeWhenWhen);
         builder.append("transformPatternsCaseMergeWhenElse", transformPatternsCaseMergeWhenElse);
         builder.append("transformPatternsCaseToCaseAbbreviation", transformPatternsCaseToCaseAbbreviation);
@@ -7307,6 +7350,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsCaseUnreachableClauses.equals(other.transformPatternsCaseUnreachableClauses)) {
+                return false;
+            }
+        }
+        if (transformPatternsCaseDistinctToDecode == null) {
+            if (other.transformPatternsCaseDistinctToDecode!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsCaseDistinctToDecode.equals(other.transformPatternsCaseDistinctToDecode)) {
                 return false;
             }
         }
@@ -8483,6 +8535,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsCaseElseNull == null)? 0 :transformPatternsCaseElseNull.hashCode()));
         result = ((prime*result)+((transformPatternsCaseElseCase == null)? 0 :transformPatternsCaseElseCase.hashCode()));
         result = ((prime*result)+((transformPatternsCaseUnreachableClauses == null)? 0 :transformPatternsCaseUnreachableClauses.hashCode()));
+        result = ((prime*result)+((transformPatternsCaseDistinctToDecode == null)? 0 :transformPatternsCaseDistinctToDecode.hashCode()));
         result = ((prime*result)+((transformPatternsCaseMergeWhenWhen == null)? 0 :transformPatternsCaseMergeWhenWhen.hashCode()));
         result = ((prime*result)+((transformPatternsCaseMergeWhenElse == null)? 0 :transformPatternsCaseMergeWhenElse.hashCode()));
         result = ((prime*result)+((transformPatternsCaseToCaseAbbreviation == null)? 0 :transformPatternsCaseToCaseAbbreviation.hashCode()));

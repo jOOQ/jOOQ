@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 // ...
+import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_CASE;
@@ -64,14 +65,13 @@ import org.jooq.Function2;
 import org.jooq.Record1;
 // ...
 import org.jooq.Select;
-import org.jooq.impl.QOM.CaseSearched;
 import org.jooq.impl.QOM.Tuple2;
 import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
  */
-final class CaseConditionStepImpl<T>
+final class CaseSearched<T>
 extends
     AbstractField<T>
 implements
@@ -80,15 +80,15 @@ implements
 {
 
     private final List<Tuple2<Condition, Field<T>>> when;
-    private Field<T>                                 else_;
+    private Field<T>                                else_;
 
-    CaseConditionStepImpl(DataType<T> type) {
+    CaseSearched(DataType<T> type) {
         super(NQ_CASE, type);
 
         this.when = new QueryPartList<>();
     }
 
-    CaseConditionStepImpl(Condition condition, Field<T> result) {
+    CaseSearched(Condition condition, Field<T> result) {
         this(result.getDataType());
 
         when(condition, result);
@@ -163,7 +163,14 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
+        if (when.isEmpty()) {
+            if (else_ != null)
+                ctx.visit(else_);
+            else
+                ctx.visit(NULL(getDataType()));
+        }
+        else {
+            switch (ctx.family()) {
 
 
 
@@ -174,9 +181,10 @@ implements
 
 
 
-            default:
-                acceptNative(ctx);
-                break;
+                default:
+                    acceptNative(ctx);
+                    break;
+            }
         }
     }
 
@@ -265,7 +273,7 @@ implements
     @Override
     public final Function2<? super UnmodifiableList<? extends Tuple2<Condition, Field<T>>>, ? super Field<T>, ? extends CaseSearched<T>> $constructor() {
         return (w, e) -> {
-            CaseConditionStepImpl<T> r = new CaseConditionStepImpl<>(getDataType());
+            CaseSearched<T> r = new CaseSearched<>(getDataType());
             w.forEach(t -> r.when(t.$1(), t.$2()));
             r.else_(e);
             return r;

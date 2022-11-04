@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.Keywords.K_CASE;
 import static org.jooq.impl.Keywords.K_ELSE;
 import static org.jooq.impl.Keywords.K_END;
@@ -60,14 +61,13 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function3;
 // ...
-import org.jooq.impl.QOM.CaseSimple;
 import org.jooq.impl.QOM.Tuple2;
 import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * @author Lukas Eder
  */
-final class CaseWhenStepImpl<V, T>
+final class CaseSimple<V, T>
 extends
     AbstractField<T>
 implements
@@ -75,23 +75,23 @@ implements
     QOM.CaseSimple<V, T>
 {
 
-    private final Field<V>                          value;
+    private final Field<V>                         value;
     private final List<Tuple2<Field<V>, Field<T>>> when;
-    private Field<T>                                else_;
+    private Field<T>                               else_;
 
-    CaseWhenStepImpl(Field<V> value, Field<V> compareValue, Field<T> result) {
+    CaseSimple(Field<V> value, Field<V> compareValue, Field<T> result) {
         this(value, result.getDataType());
 
         when(compareValue, result);
     }
 
-    CaseWhenStepImpl(Field<V> value, Map<? extends Field<V>, ? extends Field<T>> map) {
+    CaseSimple(Field<V> value, Map<? extends Field<V>, ? extends Field<T>> map) {
         this(value, dataType(map));
 
         mapFields(map);
     }
 
-    CaseWhenStepImpl(Field<V> value, DataType<T> type) {
+    CaseSimple(Field<V> value, DataType<T> type) {
         super(NQ_CASE, type);
 
         this.value = value;
@@ -168,7 +168,14 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
+        if (when.isEmpty()) {
+            if (else_ != null)
+                ctx.visit(else_);
+            else
+                ctx.visit(NULL(getDataType()));
+        }
+        else {
+            switch (ctx.family()) {
 
 
 
@@ -179,14 +186,15 @@ implements
 
 
 
-            // The DERBY dialect doesn't support the simple CASE clause
-            case DERBY:
-                acceptSearched(ctx);
-                break;
+                // The DERBY dialect doesn't support the simple CASE clause
+                case DERBY:
+                    acceptSearched(ctx);
+                    break;
 
-            default:
-                acceptNative(ctx);
-                break;
+                default:
+                    acceptNative(ctx);
+                    break;
+            }
         }
     }
 
@@ -284,7 +292,7 @@ implements
     @Override
     public final Function3<? super Field<V>, ? super UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>>, ? super Field<T>, ? extends CaseSimple<V, T>> $constructor() {
         return (v, w, e) -> {
-            CaseWhenStepImpl<V, T> r = new CaseWhenStepImpl<>(v, getDataType());
+            CaseSimple<V, T> r = new CaseSimple<>(v, getDataType());
             w.forEach(t -> r.when(t.$1(), t.$2()));
             r.else_(e);
             return r;

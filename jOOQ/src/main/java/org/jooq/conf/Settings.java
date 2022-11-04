@@ -183,8 +183,6 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCaseElseNull = true;
     @XmlElement(defaultValue = "true")
-    protected Boolean transformPatternsCaseElseCase = true;
-    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCaseUnreachableClauses = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCaseDistinctToDecode = true;
@@ -198,6 +196,8 @@ public class Settings
     protected Boolean transformPatternsSimplifyCaseAbbreviation = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsFlattenCaseAbbreviation = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsFlattenCase = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrivialCaseAbbreviation = true;
     @XmlElement(defaultValue = "true")
@@ -2259,34 +2259,6 @@ public class Settings
     }
 
     /**
-     * Transform <code>CASE … ELSE CASE …</code> by flattening the nested <code>CASE</code>.
-     * <p>
-     * <code>CASE WHEN a THEN b ELSE CASE WHEN c THEN d END END</code> is equivalent to <code>CASE WHEN a THEN b WHEN c THEN d END</code>.
-     * <p>
-     * This feature is available in the commercial distribution only.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public Boolean isTransformPatternsCaseElseCase() {
-        return transformPatternsCaseElseCase;
-    }
-
-    /**
-     * Sets the value of the transformPatternsCaseElseCase property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setTransformPatternsCaseElseCase(Boolean value) {
-        this.transformPatternsCaseElseCase = value;
-    }
-
-    /**
      * Transform <code>CASE</code> by removing unreachable clauses.
      * <p>
      * Case clauses can be proven to be unreachable, and thus removed:
@@ -2501,6 +2473,34 @@ public class Settings
      */
     public void setTransformPatternsFlattenCaseAbbreviation(Boolean value) {
         this.transformPatternsFlattenCaseAbbreviation = value;
+    }
+
+    /**
+     * Transform <code>CASE … ELSE CASE …</code> by flattening the nested <code>CASE</code>.
+     * <p>
+     * <code>CASE WHEN a THEN b ELSE CASE WHEN c THEN d END END</code> is equivalent to <code>CASE WHEN a THEN b WHEN c THEN d END</code>.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsFlattenCase() {
+        return transformPatternsFlattenCase;
+    }
+
+    /**
+     * Sets the value of the transformPatternsFlattenCase property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsFlattenCase(Boolean value) {
+        this.transformPatternsFlattenCase = value;
     }
 
     /**
@@ -5568,11 +5568,6 @@ public class Settings
         return this;
     }
 
-    public Settings withTransformPatternsCaseElseCase(Boolean value) {
-        setTransformPatternsCaseElseCase(value);
-        return this;
-    }
-
     public Settings withTransformPatternsCaseUnreachableClauses(Boolean value) {
         setTransformPatternsCaseUnreachableClauses(value);
         return this;
@@ -5605,6 +5600,11 @@ public class Settings
 
     public Settings withTransformPatternsFlattenCaseAbbreviation(Boolean value) {
         setTransformPatternsFlattenCaseAbbreviation(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsFlattenCase(Boolean value) {
+        setTransformPatternsFlattenCase(value);
         return this;
     }
 
@@ -6595,7 +6595,6 @@ public class Settings
         builder.append("transformPatternsMergeRangePredicates", transformPatternsMergeRangePredicates);
         builder.append("transformPatternsMergeBetweenSymmetricPredicates", transformPatternsMergeBetweenSymmetricPredicates);
         builder.append("transformPatternsCaseElseNull", transformPatternsCaseElseNull);
-        builder.append("transformPatternsCaseElseCase", transformPatternsCaseElseCase);
         builder.append("transformPatternsCaseUnreachableClauses", transformPatternsCaseUnreachableClauses);
         builder.append("transformPatternsCaseDistinctToDecode", transformPatternsCaseDistinctToDecode);
         builder.append("transformPatternsCaseMergeWhenWhen", transformPatternsCaseMergeWhenWhen);
@@ -6603,6 +6602,7 @@ public class Settings
         builder.append("transformPatternsCaseToCaseAbbreviation", transformPatternsCaseToCaseAbbreviation);
         builder.append("transformPatternsSimplifyCaseAbbreviation", transformPatternsSimplifyCaseAbbreviation);
         builder.append("transformPatternsFlattenCaseAbbreviation", transformPatternsFlattenCaseAbbreviation);
+        builder.append("transformPatternsFlattenCase", transformPatternsFlattenCase);
         builder.append("transformPatternsTrivialCaseAbbreviation", transformPatternsTrivialCaseAbbreviation);
         builder.append("transformPatternsTrivialPredicates", transformPatternsTrivialPredicates);
         builder.append("transformPatternsTrivialBitwiseOperations", transformPatternsTrivialBitwiseOperations);
@@ -7335,15 +7335,6 @@ public class Settings
                 return false;
             }
         }
-        if (transformPatternsCaseElseCase == null) {
-            if (other.transformPatternsCaseElseCase!= null) {
-                return false;
-            }
-        } else {
-            if (!transformPatternsCaseElseCase.equals(other.transformPatternsCaseElseCase)) {
-                return false;
-            }
-        }
         if (transformPatternsCaseUnreachableClauses == null) {
             if (other.transformPatternsCaseUnreachableClauses!= null) {
                 return false;
@@ -7404,6 +7395,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsFlattenCaseAbbreviation.equals(other.transformPatternsFlattenCaseAbbreviation)) {
+                return false;
+            }
+        }
+        if (transformPatternsFlattenCase == null) {
+            if (other.transformPatternsFlattenCase!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsFlattenCase.equals(other.transformPatternsFlattenCase)) {
                 return false;
             }
         }
@@ -8533,7 +8533,6 @@ public class Settings
         result = ((prime*result)+((transformPatternsMergeRangePredicates == null)? 0 :transformPatternsMergeRangePredicates.hashCode()));
         result = ((prime*result)+((transformPatternsMergeBetweenSymmetricPredicates == null)? 0 :transformPatternsMergeBetweenSymmetricPredicates.hashCode()));
         result = ((prime*result)+((transformPatternsCaseElseNull == null)? 0 :transformPatternsCaseElseNull.hashCode()));
-        result = ((prime*result)+((transformPatternsCaseElseCase == null)? 0 :transformPatternsCaseElseCase.hashCode()));
         result = ((prime*result)+((transformPatternsCaseUnreachableClauses == null)? 0 :transformPatternsCaseUnreachableClauses.hashCode()));
         result = ((prime*result)+((transformPatternsCaseDistinctToDecode == null)? 0 :transformPatternsCaseDistinctToDecode.hashCode()));
         result = ((prime*result)+((transformPatternsCaseMergeWhenWhen == null)? 0 :transformPatternsCaseMergeWhenWhen.hashCode()));
@@ -8541,6 +8540,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsCaseToCaseAbbreviation == null)? 0 :transformPatternsCaseToCaseAbbreviation.hashCode()));
         result = ((prime*result)+((transformPatternsSimplifyCaseAbbreviation == null)? 0 :transformPatternsSimplifyCaseAbbreviation.hashCode()));
         result = ((prime*result)+((transformPatternsFlattenCaseAbbreviation == null)? 0 :transformPatternsFlattenCaseAbbreviation.hashCode()));
+        result = ((prime*result)+((transformPatternsFlattenCase == null)? 0 :transformPatternsFlattenCase.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialCaseAbbreviation == null)? 0 :transformPatternsTrivialCaseAbbreviation.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialPredicates == null)? 0 :transformPatternsTrivialPredicates.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialBitwiseOperations == null)? 0 :transformPatternsTrivialBitwiseOperations.hashCode()));

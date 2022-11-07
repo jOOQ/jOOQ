@@ -683,6 +683,17 @@ Nested <code>CASE</code> abbreviations can be flattened, as such:
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="transformPatternsFlattenDecode" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Flatten nested <code>DECODE</code> functions.
+<p>
+Nested <code>DECODE</code> functions can be flattened, as such:
+<ul>
+<li><code>DECODE(a, b, c, DECODE(a, d, e))</code> to <code>DECODE(a, b, c, d, e)</code></li>
+</ul>
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="transformPatternsFlattenCase" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>CASE .. ELSE CASE ..</code> by flattening the nested <code>CASE</code>.

@@ -690,8 +690,8 @@ public final class ParserCLI {
         RenderQuotedNames                      quoted                                 = RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED;
         SQLDialect                             toDialect                              = SQLDialect.DEFAULT;
         SQLDialect                             fromDialect                            = SQLDialect.DEFAULT;
-        Boolean                                formatted;
-        Boolean                                renderCoalesceToEmptyStringInConcat;
+        Boolean                                formatted                              = d.isRenderFormatted();
+        Boolean                                renderCoalesceToEmptyStringInConcat    = d.isRenderCoalesceToEmptyStringInConcat();
         RenderOptionalKeyword                  renderOptionalInnerKeyword             = RenderOptionalKeyword.DEFAULT;
         RenderOptionalKeyword                  renderOptionalOuterKeyword             = RenderOptionalKeyword.DEFAULT;
         RenderOptionalKeyword                  renderOptionalAsKeywordForFieldAliases = RenderOptionalKeyword.DEFAULT;
@@ -708,10 +708,10 @@ public final class ParserCLI {
         String                                 parseTimestampFormat                   = d.getParseTimestampFormat();
         ParseUnknownFunctions                  parseUnknownFunctions                  = d.getParseUnknownFunctions();
         ParseUnsupportedSyntax                 parseUnsupportedSyntax                 = d.getParseUnsupportedSyntax();
-        Boolean                                transformAnsiJoinToTableLists;
-        Transformation                         transformQualify;
-        Transformation                         transformRownum;
-        Boolean                                transformTableListsToAnsiJoin;
+        Boolean                                transformAnsiJoinToTableLists          = d.isTransformAnsiJoinToTableLists();
+        Transformation                         transformQualify                       = d.getTransformQualify();
+        Transformation                         transformRownum                        = d.getTransformRownum();
+        Boolean                                transformTableListsToAnsiJoin          = d.isTransformTableListsToAnsiJoin();
         TransformUnneededArithmeticExpressions transformUnneededArithmetic            = TransformUnneededArithmeticExpressions.NEVER;
     }
 }

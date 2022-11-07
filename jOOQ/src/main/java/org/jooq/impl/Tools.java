@@ -6966,8 +6966,8 @@ final class Tools {
     }
 
     @SuppressWarnings("unchecked")
-    static final <T> DataType<T> nullSafeDataType(Field<T>[] values) {
-        return isEmpty(values) ? (DataType<T>) SQLDataType.OTHER : values[0].getDataType();
+    static final <T> DataType<T> nullSafeDataType(Field<?>[] values) {
+        return (DataType<T>) (isEmpty(values) ? SQLDataType.OTHER : values[0].getDataType());
     }
 
     static final <T> Field<T> nullSafeNotNull(Field<T> field, DataType<?> type) {

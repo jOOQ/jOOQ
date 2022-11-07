@@ -37,11 +37,13 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.Names.N_GREATEST;
 import static org.jooq.impl.Names.N_MAX;
 import static org.jooq.impl.Names.N_MAXVALUE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.nullSafeDataType;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -58,16 +60,18 @@ final class Greatest<T> extends AbstractField<T> implements QOM.Greatest<T> {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     Greatest(Field<?>... args) {
-        super(N_GREATEST, (DataType<T>) Tools.nullSafeDataType(args[0]));
+        super(N_GREATEST, (DataType<T>) nullSafeDataType(args));
 
         this.args = (QueryPartListView) QueryPartListView.wrap(args);
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-
-        // In any dialect, a single argument is always the greatest
-        if (args.size() == 1) {
+        if (args.isEmpty()) {
+            ctx.visit(NULL(getDataType()));
+            return;
+        }
+        else if (args.size() == 1) {
             ctx.visit(args.get(0));
             return;
         }

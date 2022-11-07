@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.systemName;
@@ -66,6 +67,14 @@ final class Concat extends AbstractField<String> implements QOM.Concat {
 
     @Override
     public final void accept(Context<?> ctx) {
+        if (arguments.length == 0) {
+            ctx.visit(NULL(getDataType()));
+            return;
+        }
+        else if (arguments.length == 1) {
+            ctx.visit(arguments[0]);
+            return;
+        }
 
         // [#461] Type cast the concat expression, if this isn't a VARCHAR field
         Field<String>[] cast = castAllIfNeeded(arguments, String.class);
@@ -76,12 +85,6 @@ final class Concat extends AbstractField<String> implements QOM.Concat {
 
 
 
-        }
-
-        // If there is only one argument, return it immediately
-        if (cast.length == 1) {
-            ctx.visit(cast[0]);
-            return;
         }
 
         ExpressionOperator op = CONCAT;

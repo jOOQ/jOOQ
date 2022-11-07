@@ -595,13 +595,25 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
-      <element name="transformPatternsCaseUnreachableClauses" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+      <element name="transformPatternsUnreachableCaseClauses" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>CASE</code> by removing unreachable clauses.
 <p>
 Case clauses can be proven to be unreachable, and thus removed:
 <ul>
 <li><code>CASE WHEN p THEN 1 WHEN TRUE THEN 2 WHEN q .. ELSE .. END</code> is equivalent to <code>CASE WHEN p THEN 1 ELSE 2 END</code></li>
 <li><code>CASE WHEN p THEN 1 WHEN FALSE THEN 2 WHEN q .. ELSE .. END</code> is equivalent to <code>CASE WHEN p THEN 1 WHEN q .. ELSE .. END</code></li>
+</ul>
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformPatternsUnreachableDecodeClauses" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>DECODE</code> by removing unreachable clauses.
+<p>
+DECODE clauses can be proven to be unreachable, and thus removed:
+<ul>
+<li><code>DECODE(a, b, 1, c, 2, b, 3)</code> is equivalent to <code>DECODE(a, b, 1, c, 2)</code></li>
+<li><code>DECODE(a, b, 1, c, 2, b, 3, 4)</code> is equivalent to <code>DECODE(a, b, 1, c, 2, 4)</code></li>
 </ul>
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>

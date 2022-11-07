@@ -37,11 +37,13 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.Names.N_LEAST;
 import static org.jooq.impl.Names.N_MIN;
 import static org.jooq.impl.Names.N_MINVALUE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.nullSafeDataType;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -58,16 +60,18 @@ final class Least<T> extends AbstractField<T> implements QOM.Least<T> {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     Least(Field<?>... args) {
-        super(N_LEAST, (DataType<T>) Tools.nullSafeDataType(args[0]));
+        super(N_LEAST, (DataType<T>) nullSafeDataType(args));
 
         this.args = (QueryPartListView) QueryPartListView.wrap(args);
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-
-        // In any dialect, a single argument is always the least
-        if (args.size() == 1) {
+        if (args.isEmpty()) {
+            ctx.visit(NULL(getDataType()));
+            return;
+        }
+        else if (args.size() == 1) {
             ctx.visit(args.get(0));
             return;
         }

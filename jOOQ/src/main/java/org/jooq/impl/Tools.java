@@ -6965,6 +6965,11 @@ final class Tools {
         return (DataType<T>) (field == null ? SQLDataType.OTHER : field.getDataType());
     }
 
+    @SuppressWarnings("unchecked")
+    static final <T> DataType<T> nullSafeDataType(Field<T>[] values) {
+        return isEmpty(values) ? (DataType<T>) SQLDataType.OTHER : values[0].getDataType();
+    }
+
     static final <T> Field<T> nullSafeNotNull(Field<T> field, DataType<?> type) {
         return nullableIf(false, nullSafe(field, type));
     }

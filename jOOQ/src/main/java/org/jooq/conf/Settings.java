@@ -183,7 +183,9 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCaseElseNull = true;
     @XmlElement(defaultValue = "true")
-    protected Boolean transformPatternsCaseUnreachableClauses = true;
+    protected Boolean transformPatternsUnreachableCaseClauses = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsUnreachableDecodeClauses = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCaseDistinctToDecode = true;
     @XmlElement(defaultValue = "true")
@@ -2274,20 +2276,52 @@ public class Settings
      *     {@link Boolean }
      *     
      */
-    public Boolean isTransformPatternsCaseUnreachableClauses() {
-        return transformPatternsCaseUnreachableClauses;
+    public Boolean isTransformPatternsUnreachableCaseClauses() {
+        return transformPatternsUnreachableCaseClauses;
     }
 
     /**
-     * Sets the value of the transformPatternsCaseUnreachableClauses property.
+     * Sets the value of the transformPatternsUnreachableCaseClauses property.
      * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
      *     
      */
-    public void setTransformPatternsCaseUnreachableClauses(Boolean value) {
-        this.transformPatternsCaseUnreachableClauses = value;
+    public void setTransformPatternsUnreachableCaseClauses(Boolean value) {
+        this.transformPatternsUnreachableCaseClauses = value;
+    }
+
+    /**
+     * Transform <code>DECODE</code> by removing unreachable clauses.
+     * <p>
+     * DECODE clauses can be proven to be unreachable, and thus removed:
+     * <ul>
+     * <li><code>DECODE(a, b, 1, c, 2, b, 3)</code> is equivalent to <code>DECODE(a, b, 1, c, 2)</code></li>
+     * <li><code>DECODE(a, b, 1, c, 2, b, 3, 4)</code> is equivalent to <code>DECODE(a, b, 1, c, 2, 4)</code></li>
+     * </ul>
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsUnreachableDecodeClauses() {
+        return transformPatternsUnreachableDecodeClauses;
+    }
+
+    /**
+     * Sets the value of the transformPatternsUnreachableDecodeClauses property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsUnreachableDecodeClauses(Boolean value) {
+        this.transformPatternsUnreachableDecodeClauses = value;
     }
 
     /**
@@ -5568,8 +5602,13 @@ public class Settings
         return this;
     }
 
-    public Settings withTransformPatternsCaseUnreachableClauses(Boolean value) {
-        setTransformPatternsCaseUnreachableClauses(value);
+    public Settings withTransformPatternsUnreachableCaseClauses(Boolean value) {
+        setTransformPatternsUnreachableCaseClauses(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsUnreachableDecodeClauses(Boolean value) {
+        setTransformPatternsUnreachableDecodeClauses(value);
         return this;
     }
 
@@ -6595,7 +6634,8 @@ public class Settings
         builder.append("transformPatternsMergeRangePredicates", transformPatternsMergeRangePredicates);
         builder.append("transformPatternsMergeBetweenSymmetricPredicates", transformPatternsMergeBetweenSymmetricPredicates);
         builder.append("transformPatternsCaseElseNull", transformPatternsCaseElseNull);
-        builder.append("transformPatternsCaseUnreachableClauses", transformPatternsCaseUnreachableClauses);
+        builder.append("transformPatternsUnreachableCaseClauses", transformPatternsUnreachableCaseClauses);
+        builder.append("transformPatternsUnreachableDecodeClauses", transformPatternsUnreachableDecodeClauses);
         builder.append("transformPatternsCaseDistinctToDecode", transformPatternsCaseDistinctToDecode);
         builder.append("transformPatternsCaseMergeWhenWhen", transformPatternsCaseMergeWhenWhen);
         builder.append("transformPatternsCaseMergeWhenElse", transformPatternsCaseMergeWhenElse);
@@ -7335,12 +7375,21 @@ public class Settings
                 return false;
             }
         }
-        if (transformPatternsCaseUnreachableClauses == null) {
-            if (other.transformPatternsCaseUnreachableClauses!= null) {
+        if (transformPatternsUnreachableCaseClauses == null) {
+            if (other.transformPatternsUnreachableCaseClauses!= null) {
                 return false;
             }
         } else {
-            if (!transformPatternsCaseUnreachableClauses.equals(other.transformPatternsCaseUnreachableClauses)) {
+            if (!transformPatternsUnreachableCaseClauses.equals(other.transformPatternsUnreachableCaseClauses)) {
+                return false;
+            }
+        }
+        if (transformPatternsUnreachableDecodeClauses == null) {
+            if (other.transformPatternsUnreachableDecodeClauses!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsUnreachableDecodeClauses.equals(other.transformPatternsUnreachableDecodeClauses)) {
                 return false;
             }
         }
@@ -8533,7 +8582,8 @@ public class Settings
         result = ((prime*result)+((transformPatternsMergeRangePredicates == null)? 0 :transformPatternsMergeRangePredicates.hashCode()));
         result = ((prime*result)+((transformPatternsMergeBetweenSymmetricPredicates == null)? 0 :transformPatternsMergeBetweenSymmetricPredicates.hashCode()));
         result = ((prime*result)+((transformPatternsCaseElseNull == null)? 0 :transformPatternsCaseElseNull.hashCode()));
-        result = ((prime*result)+((transformPatternsCaseUnreachableClauses == null)? 0 :transformPatternsCaseUnreachableClauses.hashCode()));
+        result = ((prime*result)+((transformPatternsUnreachableCaseClauses == null)? 0 :transformPatternsUnreachableCaseClauses.hashCode()));
+        result = ((prime*result)+((transformPatternsUnreachableDecodeClauses == null)? 0 :transformPatternsUnreachableDecodeClauses.hashCode()));
         result = ((prime*result)+((transformPatternsCaseDistinctToDecode == null)? 0 :transformPatternsCaseDistinctToDecode.hashCode()));
         result = ((prime*result)+((transformPatternsCaseMergeWhenWhen == null)? 0 :transformPatternsCaseMergeWhenWhen.hashCode()));
         result = ((prime*result)+((transformPatternsCaseMergeWhenElse == null)? 0 :transformPatternsCaseMergeWhenElse.hashCode()));

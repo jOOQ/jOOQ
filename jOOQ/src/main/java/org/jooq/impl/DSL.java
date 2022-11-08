@@ -29242,7 +29242,7 @@ public class DSL {
     }
 
     /**
-     * The <code>precent_rank() over ([analytic clause])</code> function.
+     * The <code>percent_rank() over ([analytic clause])</code> function.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })

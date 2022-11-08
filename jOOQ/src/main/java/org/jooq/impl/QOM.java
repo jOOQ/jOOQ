@@ -2105,6 +2105,7 @@ public final class QOM {
      */
     public /*sealed*/ interface TableEq<R extends Record>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Condition,
             UCommutativeOperator<Table<R>, Condition>
         //permits
@@ -2116,6 +2117,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Eq<T>
         extends
+            UReturnsNullOnNullInput,
             UCommutativeOperator<Field<T>, Condition>,
             CompareCondition<T>
         //permits
@@ -2140,6 +2142,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Ge<T>
         extends
+            UReturnsNullOnNullInput,
             UConvertibleOperator<Field<T>, Condition>,
             CompareCondition<T>
         //permits
@@ -2156,6 +2159,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Gt<T>
         extends
+            UReturnsNullOnNullInput,
             UConvertibleOperator<Field<T>, Condition>,
             CompareCondition<T>
         //permits
@@ -2241,6 +2245,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Le<T>
         extends
+            UReturnsNullOnNullInput,
             UConvertibleOperator<Field<T>, Condition>,
             CompareCondition<T>
         //permits
@@ -2257,6 +2262,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Like
         extends
+            UReturnsNullOnNullInput,
             Condition,
             UOperator3<Field<?>, Field<String>, Character, Condition>
         //permits
@@ -2279,6 +2285,7 @@ public final class QOM {
      */
     public /*sealed*/ interface LikeIgnoreCase
         extends
+            UReturnsNullOnNullInput,
             Condition,
             UOperator3<Field<?>, Field<String>, Character, Condition>
         //permits
@@ -2294,6 +2301,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Lt<T>
         extends
+            UReturnsNullOnNullInput,
             UConvertibleOperator<Field<T>, Condition>,
             CompareCondition<T>
         //permits
@@ -2310,6 +2318,7 @@ public final class QOM {
      */
     public /*sealed*/ interface TableNe<R extends Record>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Condition,
             UCommutativeOperator<Table<R>, Condition>
         //permits
@@ -2321,6 +2330,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Ne<T>
         extends
+            UReturnsNullOnNullInput,
             UCommutativeOperator<Field<T>, Condition>,
             CompareCondition<T>
         //permits
@@ -2332,6 +2342,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Not
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Condition,
             UOperator1<Condition, Condition>
         //permits
@@ -2345,6 +2356,7 @@ public final class QOM {
      */
     public /*sealed*/ interface NotField
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<Boolean>,
             UOperator1<Field<Boolean>, Field<Boolean>>
         //permits
@@ -2377,6 +2389,7 @@ public final class QOM {
      */
     public /*sealed*/ interface NotLike
         extends
+            UReturnsNullOnNullInput,
             Condition,
             UOperator3<Field<?>, Field<String>, Character, Condition>
         //permits
@@ -2399,6 +2412,7 @@ public final class QOM {
      */
     public /*sealed*/ interface NotLikeIgnoreCase
         extends
+            UReturnsNullOnNullInput,
             Condition,
             UOperator3<Field<?>, Field<String>, Character, Condition>
         //permits
@@ -2414,6 +2428,7 @@ public final class QOM {
      */
     public /*sealed*/ interface NotSimilarTo
         extends
+            UReturnsNullOnNullInput,
             Condition,
             UOperator3<Field<?>, Field<String>, Character, Condition>
         //permits
@@ -2439,6 +2454,7 @@ public final class QOM {
      */
     public /*sealed*/ interface SimilarTo
         extends
+            UReturnsNullOnNullInput,
             Condition,
             UOperator3<Field<?>, Field<String>, Character, Condition>
         //permits
@@ -2467,6 +2483,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Xor
         extends
+            UReturnsNullOnNullInput,
             CombinedCondition
         //permits
         //    Xor
@@ -2479,6 +2496,7 @@ public final class QOM {
      */
     public /*sealed*/ interface IsDocument
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Condition,
             UOperator1<Field<?>, Condition>
         //permits
@@ -2494,6 +2512,7 @@ public final class QOM {
      */
     public /*sealed*/ interface IsNotDocument
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Condition,
             UOperator1<Field<?>, Condition>
         //permits
@@ -2509,6 +2528,7 @@ public final class QOM {
      */
     public /*sealed*/ interface IsJson
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Condition,
             UOperator1<Field<?>, Condition>
         //permits
@@ -2524,6 +2544,7 @@ public final class QOM {
      */
     public /*sealed*/ interface IsNotJson
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Condition,
             UOperator1<Field<?>, Condition>
         //permits
@@ -2596,6 +2617,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Abs<T extends Number>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>
         //permits
         //    Abs
@@ -2609,6 +2631,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Acos
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Acos
@@ -2622,6 +2645,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Acosh
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Acosh
@@ -2635,6 +2659,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Acoth
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Acoth
@@ -2648,6 +2673,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Add<T>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>,
             UCommutativeOperator<Field<T>, Field<T>>
         //permits
@@ -2659,6 +2685,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Asin
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Asin
@@ -2672,6 +2699,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Asinh
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Asinh
@@ -2685,6 +2713,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Atan
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Atan
@@ -2698,6 +2727,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Atan2
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Atan2
@@ -2713,6 +2743,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Atanh
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Atanh
@@ -2726,6 +2757,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitAnd<T extends Number>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>,
             UCommutativeOperator<Field<T>, Field<T>>
         //permits
@@ -2739,6 +2771,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitCount
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<Integer>
         //permits
         //    BitCount
@@ -2752,6 +2785,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitNand<T extends Number>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>,
             UCommutativeOperator<Field<T>, Field<T>>
         //permits
@@ -2763,6 +2797,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitNor<T extends Number>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>,
             UCommutativeOperator<Field<T>, Field<T>>
         //permits
@@ -2774,6 +2809,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitNot<T extends Number>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>,
             UOperator1<Field<T>, Field<T>>
         //permits
@@ -2785,6 +2821,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitOr<T extends Number>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>,
             UCommutativeOperator<Field<T>, Field<T>>
         //permits
@@ -2796,6 +2833,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitXNor<T extends Number>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>,
             UCommutativeOperator<Field<T>, Field<T>>
         //permits
@@ -2807,6 +2845,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitXor<T extends Number>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>,
             UCommutativeOperator<Field<T>, Field<T>>
         //permits
@@ -2820,6 +2859,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Ceil<T extends Number>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>
         //permits
         //    Ceil
@@ -2833,6 +2873,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Cos
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Cos
@@ -2846,6 +2887,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Cosh
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Cosh
@@ -2859,6 +2901,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Cot
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Cot
@@ -2872,6 +2915,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Coth
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Coth
@@ -2887,6 +2931,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Degrees
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Degrees
@@ -2908,6 +2953,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Div<T>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>,
             UOperator2<Field<T>, Field<T>, Field<T>>
         //permits
@@ -2932,6 +2978,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Exp
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Exp
@@ -2947,6 +2994,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Floor<T extends Number>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>
         //permits
         //    Floor
@@ -2962,6 +3010,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Ln
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Ln
@@ -2977,6 +3026,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Log
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Log
@@ -2994,6 +3044,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Log10
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Log10
@@ -3007,6 +3058,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Mod<T extends Number>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>,
             UOperator2<Field<T>, Field<? extends Number>, Field<T>>
         //permits
@@ -3021,6 +3073,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Mul<T>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>,
             UCommutativeOperator<Field<T>, Field<T>>
         //permits
@@ -3045,6 +3098,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Power
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>,
             UOperator2<Field<? extends Number>, Field<? extends Number>, Field<BigDecimal>>
         //permits
@@ -3061,6 +3115,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Radians
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Radians
@@ -3097,6 +3152,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Round<T extends Number>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>
         //permits
         //    Round
@@ -3130,6 +3186,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Shl<T extends Number>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>,
             UOperator2<Field<T>, Field<? extends Number>, Field<T>>
         //permits
@@ -3154,6 +3211,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Shr<T extends Number>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>,
             UOperator2<Field<T>, Field<? extends Number>, Field<T>>
         //permits
@@ -3178,6 +3236,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Sign
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<Integer>
         //permits
         //    Sign
@@ -3191,6 +3250,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Sin
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Sin
@@ -3204,6 +3264,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Sinh
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Sinh
@@ -3217,6 +3278,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Sqrt
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Sqrt
@@ -3230,6 +3292,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Square<T extends Number>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>
         //permits
         //    Square
@@ -3243,6 +3306,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Sub<T>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>,
             UOperator2<Field<T>, Field<T>, Field<T>>
         //permits
@@ -3254,6 +3318,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Tan
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Tan
@@ -3267,6 +3332,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Tanh
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<BigDecimal>
         //permits
         //    Tanh
@@ -3295,6 +3361,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Trunc<T extends Number>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>
         //permits
         //    Trunc
@@ -3328,6 +3395,7 @@ public final class QOM {
      */
     public /*sealed*/ interface WidthBucket<T extends Number>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>
         //permits
         //    WidthBucket
@@ -3381,6 +3449,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Ascii
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<Integer>
         //permits
         //    Ascii
@@ -3396,6 +3465,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitLength
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<Integer>
         //permits
         //    BitLength
@@ -3411,6 +3481,7 @@ public final class QOM {
      */
     public /*sealed*/ interface CharLength
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<Integer>
         //permits
         //    CharLength
@@ -3424,6 +3495,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Chr
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Chr
@@ -3457,6 +3529,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Contains<T>
         extends
+            UReturnsNullOnNullInput,
             CompareCondition<T>
         //permits
         //    Contains
@@ -3479,6 +3552,7 @@ public final class QOM {
      */
     public /*sealed*/ interface ContainsIgnoreCase<T>
         extends
+            UReturnsNullOnNullInput,
             CompareCondition<T>
         //permits
         //    ContainsIgnoreCase
@@ -3492,6 +3566,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Digits
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Digits
@@ -3513,6 +3588,7 @@ public final class QOM {
      */
     public /*sealed*/ interface EndsWith<T>
         extends
+            UReturnsNullOnNullInput,
             CompareCondition<T>
         //permits
         //    EndsWith
@@ -3534,6 +3610,7 @@ public final class QOM {
      */
     public /*sealed*/ interface EndsWithIgnoreCase<T>
         extends
+            UReturnsNullOnNullInput,
             CompareCondition<T>
         //permits
         //    EndsWithIgnoreCase
@@ -3549,6 +3626,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Left
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Left
@@ -3582,6 +3660,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Lower
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Lower
@@ -3597,6 +3676,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Lpad
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Lpad
@@ -3640,6 +3720,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Ltrim
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Ltrim
@@ -3673,6 +3754,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Md5
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Md5
@@ -3688,6 +3770,7 @@ public final class QOM {
      */
     public /*sealed*/ interface OctetLength
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<Integer>
         //permits
         //    OctetLength
@@ -3703,6 +3786,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Overlay
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Overlay
@@ -3756,6 +3840,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Position
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<Integer>
         //permits
         //    Position
@@ -3799,6 +3884,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Repeat
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Repeat
@@ -3832,6 +3918,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Replace
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Replace
@@ -3875,6 +3962,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Reverse
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Reverse
@@ -3890,6 +3978,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Right
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Right
@@ -3923,6 +4012,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Rpad
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Rpad
@@ -3966,6 +4056,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Rtrim
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Rtrim
@@ -3999,6 +4090,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Space
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Space
@@ -4022,6 +4114,7 @@ public final class QOM {
      */
     public /*sealed*/ interface SplitPart
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    SplitPart
@@ -4071,6 +4164,7 @@ public final class QOM {
      */
     public /*sealed*/ interface StartsWith<T>
         extends
+            UReturnsNullOnNullInput,
             CompareCondition<T>
         //permits
         //    StartsWith
@@ -4092,6 +4186,7 @@ public final class QOM {
      */
     public /*sealed*/ interface StartsWithIgnoreCase<T>
         extends
+            UReturnsNullOnNullInput,
             CompareCondition<T>
         //permits
         //    StartsWithIgnoreCase
@@ -4107,6 +4202,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Substring
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Substring
@@ -4150,6 +4246,7 @@ public final class QOM {
      */
     public /*sealed*/ interface SubstringIndex
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    SubstringIndex
@@ -4193,6 +4290,7 @@ public final class QOM {
      */
     public /*sealed*/ interface ToChar
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    ToChar
@@ -4226,6 +4324,7 @@ public final class QOM {
      */
     public /*sealed*/ interface ToDate
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<Date>
         //permits
         //    ToDate
@@ -4259,6 +4358,7 @@ public final class QOM {
      */
     public /*sealed*/ interface ToHex
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    ToHex
@@ -4274,6 +4374,7 @@ public final class QOM {
      */
     public /*sealed*/ interface ToTimestamp
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<Timestamp>
         //permits
         //    ToTimestamp
@@ -4307,6 +4408,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Translate
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Translate
@@ -4350,6 +4452,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Trim
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Trim
@@ -4383,6 +4486,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Upper
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    Upper
@@ -4411,6 +4515,7 @@ public final class QOM {
      */
     public /*sealed*/ interface DateAdd<T>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>
         //permits
         //    DateAdd
@@ -4454,6 +4559,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Cardinality
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<Integer>
         //permits
         //    Cardinality
@@ -4469,6 +4575,7 @@ public final class QOM {
      */
     public /*sealed*/ interface ArrayGet<T>
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<T>
         //permits
         //    ArrayGet
@@ -4849,6 +4956,7 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONGetElement
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<JSON>
         //permits
         //    JSONGetElement
@@ -4866,6 +4974,7 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONBGetElement
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<JSONB>
         //permits
         //    JSONBGetElement
@@ -4883,6 +4992,7 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONGetElementAsText
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    JSONGetElementAsText
@@ -4900,6 +5010,7 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONBGetElementAsText
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    JSONBGetElementAsText
@@ -4917,6 +5028,7 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONGetAttribute
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<JSON>
         //permits
         //    JSONGetAttribute
@@ -4934,6 +5046,7 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONBGetAttribute
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<JSONB>
         //permits
         //    JSONBGetAttribute
@@ -4951,6 +5064,7 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONGetAttributeAsText
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    JSONGetAttributeAsText
@@ -4969,6 +5083,7 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONBGetAttributeAsText
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<String>
         //permits
         //    JSONBGetAttributeAsText
@@ -4986,6 +5101,7 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONKeys
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<JSON>
         //permits
         //    JSONKeys
@@ -5001,6 +5117,7 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONBKeys
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<JSONB>
         //permits
         //    JSONBKeys
@@ -5130,6 +5247,7 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONRemove
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<JSON>
         //permits
         //    JSONRemove
@@ -5147,6 +5265,7 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONBRemove
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<JSONB>
         //permits
         //    JSONBRemove
@@ -5202,6 +5321,7 @@ public final class QOM {
      */
     public /*sealed*/ interface ConditionAsField
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Field<Boolean>
         //permits
         //    ConditionAsField
@@ -5225,6 +5345,7 @@ public final class QOM {
      */
     public /*sealed*/ interface FieldCondition
         extends
+            UReturnsNullOnNullInput,
             org.jooq.Condition
         //permits
         //    FieldCondition
@@ -6476,6 +6597,41 @@ public final class QOM {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The <code>Cascade</code> type.
      * <p>
@@ -6969,6 +7125,13 @@ public final class QOM {
             return $swap();
         }
     }
+
+    /**
+     * A marker interface for {@link QueryPart} implementations that represent
+     * functions or operators who evaluate to <code>NULL</code> as soon as at
+     * least one argument is <code>NULL</code>.
+     */
+    interface UReturnsNullOnNullInput extends org.jooq.QueryPart {}
 
     /**
      * A marker interface for {@link QueryPart} implementations that are used

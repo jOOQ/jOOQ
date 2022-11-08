@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableCollection;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Collections.unmodifiableMap;
@@ -46,6 +47,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -4556,6 +4558,7 @@ public final class QOM {
         //permits
         //    XMLConcat
     {
+        @Override
         @NotNull  default UnmodifiableList<? extends Field<?>> $args() { return $arg1(); }
     }
 
@@ -6308,6 +6311,54 @@ public final class QOM {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The <code>Cascade</code> type.
      * <p>
@@ -6675,10 +6726,19 @@ public final class QOM {
     // XXX: Utility API
     // -------------------------------------------------------------------------
 
-    interface UOperator0<R extends org.jooq.QueryPart> extends org.jooq.QueryPart {
+    interface UOperator<R extends org.jooq.QueryPart> extends org.jooq.QueryPart {
+        List<?> $args();
+    }
+    interface UOperator0<R extends org.jooq.QueryPart> extends UOperator<R> {
 
         @NotNull
         Function0<? extends R> $constructor();
+
+        @NotNull
+        @Override
+        default List<?> $args() {
+            return Collections.emptyList();
+        }
 
 
 
@@ -6700,7 +6760,7 @@ public final class QOM {
 
     }
 
-    interface UOperator1<Q1, R extends org.jooq.QueryPart> extends org.jooq.QueryPart {
+    interface UOperator1<Q1, R extends org.jooq.QueryPart> extends UOperator<R> {
         Q1 $arg1();
 
         @NotNull default R $arg1(Q1 newArg1) { return $constructor().apply(newArg1); }
@@ -6708,6 +6768,12 @@ public final class QOM {
         @NotNull
         Function1<? super Q1, ? extends R> $constructor();
 
+        @NotNull
+        @Override
+        default List<?> $args() {
+            return unmodifiableList(asList($arg1()));
+        }
+
 
 
 
@@ -6729,7 +6795,7 @@ public final class QOM {
 
     }
 
-    interface UOperator2<Q1, Q2, R extends org.jooq.QueryPart> extends org.jooq.QueryPart {
+    interface UOperator2<Q1, Q2, R extends org.jooq.QueryPart> extends UOperator<R> {
         Q1 $arg1();
         Q2 $arg2();
 
@@ -6739,6 +6805,12 @@ public final class QOM {
         @NotNull
         Function2<? super Q1, ? super Q2, ? extends R> $constructor();
 
+        @NotNull
+        @Override
+        default List<?> $args() {
+            return unmodifiableList(asList($arg1(), $arg2()));
+        }
+
 
 
 
@@ -6761,7 +6833,7 @@ public final class QOM {
 
     }
 
-    interface UOperator3<Q1, Q2, Q3, R extends org.jooq.QueryPart> extends org.jooq.QueryPart {
+    interface UOperator3<Q1, Q2, Q3, R extends org.jooq.QueryPart> extends UOperator<R> {
         Q1 $arg1();
         Q2 $arg2();
         Q3 $arg3();
@@ -6772,6 +6844,12 @@ public final class QOM {
         @NotNull
         Function3<? super Q1, ? super Q2, ? super Q3, ? extends R> $constructor();
 
+        @NotNull
+        @Override
+        default List<?> $args() {
+            return unmodifiableList(asList($arg1(), $arg2(), $arg3()));
+        }
+
 
 
 
@@ -6795,7 +6873,7 @@ public final class QOM {
 
     }
 
-    interface UOperator4<Q1, Q2, Q3, Q4, R extends org.jooq.QueryPart> extends org.jooq.QueryPart {
+    interface UOperator4<Q1, Q2, Q3, Q4, R extends org.jooq.QueryPart> extends UOperator<R> {
         Q1 $arg1();
         Q2 $arg2();
         Q3 $arg3();
@@ -6807,6 +6885,12 @@ public final class QOM {
 
         @NotNull
         Function4<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? extends R> $constructor();
+
+        @NotNull
+        @Override
+        default List<?> $args() {
+            return unmodifiableList(asList($arg1(), $arg2(), $arg3(), $arg4()));
+        }
 
 
 

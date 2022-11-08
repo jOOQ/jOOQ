@@ -4558,6 +4558,7 @@ public final class QOM {
         //permits
         //    XMLConcat
     {
+        @Override
         @NotNull  default UnmodifiableList<? extends Field<?>> $args() { return $arg1(); }
     }
 
@@ -6618,6 +6619,7 @@ public final class QOM {
     // -------------------------------------------------------------------------
 
     interface UOperator<R extends org.jooq.QueryPart> extends org.jooq.QueryPart {
+        @NotNull
         List<?> $args();
     }
     interface UOperator0<R extends org.jooq.QueryPart> extends UOperator<R> {

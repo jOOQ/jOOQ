@@ -3875,7 +3875,10 @@ final class Tools {
                     }
                     catch (Throwable e) {
                         try {
-                            Class.forName("javax.persistence.Column");
+
+                            // [#14180] Break the maven-bundle-plugin class analyser, to prevent
+                            //          adding a package import to MANIFEST.MF for this lookup
+                            Class.forName(new String("javax.persistence.") + new String("Column"));
                             jpaNamespace = JPANamespace.JAVAX;
                             JooqLogger.getLogger(Tools.class, "isJPAAvailable", 1).info("javax.persistence.Column was found on the classpath instead of jakarta.persistence.Column. jOOQ 3.16 requires you to upgrade to Jakarta EE if you wish to use JPA annotations in your DefaultRecordMapper");
                         }

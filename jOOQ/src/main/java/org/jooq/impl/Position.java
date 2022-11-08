@@ -214,63 +214,39 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<String> $in() {
+    public final Field<String> $arg1() {
         return in;
     }
 
     @Override
-    public final Field<String> $search() {
+    public final Field<String> $arg2() {
         return search;
     }
 
     @Override
-    public final Field<? extends Number> $startIndex() {
+    public final Field<? extends Number> $arg3() {
         return startIndex;
     }
 
     @Override
-    public final QOM.Position $in(Field<String> newValue) {
-        return $constructor().apply(newValue, $search(), $startIndex());
+    public final QOM.Position $arg1(Field<String> newValue) {
+        return $constructor().apply(newValue, $arg2(), $arg3());
     }
 
     @Override
-    public final QOM.Position $search(Field<String> newValue) {
-        return $constructor().apply($in(), newValue, $startIndex());
+    public final QOM.Position $arg2(Field<String> newValue) {
+        return $constructor().apply($arg1(), newValue, $arg3());
     }
 
     @Override
-    public final QOM.Position $startIndex(Field<? extends Number> newValue) {
-        return $constructor().apply($in(), $search(), newValue);
+    public final QOM.Position $arg3(Field<? extends Number> newValue) {
+        return $constructor().apply($arg1(), $arg2(), newValue);
     }
 
+    @Override
     public final Function3<? super Field<String>, ? super Field<String>, ? super Field<? extends Number>, ? extends QOM.Position> $constructor() {
         return (a1, a2, a3) -> new Position(a1, a2, a3);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

@@ -143,51 +143,29 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Name $target() {
+    public final Name $arg1() {
         return target;
     }
 
     @Override
-    public final Field<?> $content() {
+    public final Field<?> $arg2() {
         return content;
     }
 
     @Override
-    public final QOM.XMLPi $target(Name newValue) {
-        return $constructor().apply(newValue, $content());
+    public final QOM.XMLPi $arg1(Name newValue) {
+        return $constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final QOM.XMLPi $content(Field<?> newValue) {
-        return $constructor().apply($target(), newValue);
+    public final QOM.XMLPi $arg2(Field<?> newValue) {
+        return $constructor().apply($arg1(), newValue);
     }
 
+    @Override
     public final Function2<? super Name, ? super Field<?>, ? extends QOM.XMLPi> $constructor() {
         return (a1, a2) -> new XMLPi(a1, a2);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

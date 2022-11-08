@@ -201,51 +201,29 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<T> $value() {
+    public final Field<T> $arg1() {
         return value;
     }
 
     @Override
-    public final Field<Integer> $decimals() {
+    public final Field<Integer> $arg2() {
         return decimals;
     }
 
     @Override
-    public final QOM.Round<T> $value(Field<T> newValue) {
-        return $constructor().apply(newValue, $decimals());
+    public final QOM.Round<T> $arg1(Field<T> newValue) {
+        return $constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final QOM.Round<T> $decimals(Field<Integer> newValue) {
-        return $constructor().apply($value(), newValue);
+    public final QOM.Round<T> $arg2(Field<Integer> newValue) {
+        return $constructor().apply($arg1(), newValue);
     }
 
+    @Override
     public final Function2<? super Field<T>, ? super Field<Integer>, ? extends QOM.Round<T>> $constructor() {
         return (a1, a2) -> new Round<>(a1, a2);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

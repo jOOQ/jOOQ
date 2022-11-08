@@ -145,51 +145,29 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<T> $value() {
+    public final Field<T> $arg1() {
         return value;
     }
 
     @Override
-    public final Field<T> $other() {
+    public final Field<T> $arg2() {
         return other;
     }
 
     @Override
-    public final QOM.Nullif<T> $value(Field<T> newValue) {
-        return $constructor().apply(newValue, $other());
+    public final QOM.Nullif<T> $arg1(Field<T> newValue) {
+        return $constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final QOM.Nullif<T> $other(Field<T> newValue) {
-        return $constructor().apply($value(), newValue);
+    public final QOM.Nullif<T> $arg2(Field<T> newValue) {
+        return $constructor().apply($arg1(), newValue);
     }
 
+    @Override
     public final Function2<? super Field<T>, ? super Field<T>, ? extends QOM.Nullif<T>> $constructor() {
         return (a1, a2) -> new Nullif<>(a1, a2);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

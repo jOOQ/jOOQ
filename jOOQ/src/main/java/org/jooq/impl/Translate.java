@@ -155,63 +155,39 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<String> $string() {
+    public final Field<String> $arg1() {
         return string;
     }
 
     @Override
-    public final Field<String> $from() {
+    public final Field<String> $arg2() {
         return from;
     }
 
     @Override
-    public final Field<String> $to() {
+    public final Field<String> $arg3() {
         return to;
     }
 
     @Override
-    public final QOM.Translate $string(Field<String> newValue) {
-        return $constructor().apply(newValue, $from(), $to());
+    public final QOM.Translate $arg1(Field<String> newValue) {
+        return $constructor().apply(newValue, $arg2(), $arg3());
     }
 
     @Override
-    public final QOM.Translate $from(Field<String> newValue) {
-        return $constructor().apply($string(), newValue, $to());
+    public final QOM.Translate $arg2(Field<String> newValue) {
+        return $constructor().apply($arg1(), newValue, $arg3());
     }
 
     @Override
-    public final QOM.Translate $to(Field<String> newValue) {
-        return $constructor().apply($string(), $from(), newValue);
+    public final QOM.Translate $arg3(Field<String> newValue) {
+        return $constructor().apply($arg1(), $arg2(), newValue);
     }
 
+    @Override
     public final Function3<? super Field<String>, ? super Field<String>, ? super Field<String>, ? extends QOM.Translate> $constructor() {
         return (a1, a2, a3) -> new Translate(a1, a2, a3);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

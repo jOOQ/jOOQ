@@ -186,75 +186,49 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<String> $in() {
+    public final Field<String> $arg1() {
         return in;
     }
 
     @Override
-    public final Field<String> $placing() {
+    public final Field<String> $arg2() {
         return placing;
     }
 
     @Override
-    public final Field<? extends Number> $startIndex() {
+    public final Field<? extends Number> $arg3() {
         return startIndex;
     }
 
     @Override
-    public final Field<? extends Number> $length() {
+    public final Field<? extends Number> $arg4() {
         return length;
     }
 
     @Override
-    public final QOM.Overlay $in(Field<String> newValue) {
-        return $constructor().apply(newValue, $placing(), $startIndex(), $length());
+    public final QOM.Overlay $arg1(Field<String> newValue) {
+        return $constructor().apply(newValue, $arg2(), $arg3(), $arg4());
     }
 
     @Override
-    public final QOM.Overlay $placing(Field<String> newValue) {
-        return $constructor().apply($in(), newValue, $startIndex(), $length());
+    public final QOM.Overlay $arg2(Field<String> newValue) {
+        return $constructor().apply($arg1(), newValue, $arg3(), $arg4());
     }
 
     @Override
-    public final QOM.Overlay $startIndex(Field<? extends Number> newValue) {
-        return $constructor().apply($in(), $placing(), newValue, $length());
+    public final QOM.Overlay $arg3(Field<? extends Number> newValue) {
+        return $constructor().apply($arg1(), $arg2(), newValue, $arg4());
     }
 
     @Override
-    public final QOM.Overlay $length(Field<? extends Number> newValue) {
-        return $constructor().apply($in(), $placing(), $startIndex(), newValue);
+    public final QOM.Overlay $arg4(Field<? extends Number> newValue) {
+        return $constructor().apply($arg1(), $arg2(), $arg3(), newValue);
     }
 
+    @Override
     public final Function4<? super Field<String>, ? super Field<String>, ? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Overlay> $constructor() {
         return (a1, a2, a3, a4) -> new Overlay(a1, a2, a3, a4);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

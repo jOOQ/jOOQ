@@ -155,39 +155,19 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<T> $value() {
+    public final Field<T> $arg1() {
         return value;
     }
 
     @Override
-    public final QOM.Floor<T> $value(Field<T> newValue) {
+    public final QOM.Floor<T> $arg1(Field<T> newValue) {
         return $constructor().apply(newValue);
     }
 
+    @Override
     public final Function1<? super Field<T>, ? extends QOM.Floor<T>> $constructor() {
         return (a1) -> new Floor<>(a1);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

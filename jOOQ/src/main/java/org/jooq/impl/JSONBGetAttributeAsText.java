@@ -162,51 +162,29 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<JSONB> $field() {
+    public final Field<JSONB> $arg1() {
         return field;
     }
 
     @Override
-    public final Field<String> $attribute() {
+    public final Field<String> $arg2() {
         return attribute;
     }
 
     @Override
-    public final QOM.JSONBGetAttributeAsText $field(Field<JSONB> newValue) {
-        return $constructor().apply(newValue, $attribute());
+    public final QOM.JSONBGetAttributeAsText $arg1(Field<JSONB> newValue) {
+        return $constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final QOM.JSONBGetAttributeAsText $attribute(Field<String> newValue) {
-        return $constructor().apply($field(), newValue);
+    public final QOM.JSONBGetAttributeAsText $arg2(Field<String> newValue) {
+        return $constructor().apply($arg1(), newValue);
     }
 
+    @Override
     public final Function2<? super Field<JSONB>, ? super Field<String>, ? extends QOM.JSONBGetAttributeAsText> $constructor() {
         return (a1, a2) -> new JSONBGetAttributeAsText(a1, a2);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

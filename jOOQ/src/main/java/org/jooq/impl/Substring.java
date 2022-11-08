@@ -198,63 +198,39 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<String> $string() {
+    public final Field<String> $arg1() {
         return string;
     }
 
     @Override
-    public final Field<? extends Number> $startingPosition() {
+    public final Field<? extends Number> $arg2() {
         return startingPosition;
     }
 
     @Override
-    public final Field<? extends Number> $length() {
+    public final Field<? extends Number> $arg3() {
         return length;
     }
 
     @Override
-    public final QOM.Substring $string(Field<String> newValue) {
-        return $constructor().apply(newValue, $startingPosition(), $length());
+    public final QOM.Substring $arg1(Field<String> newValue) {
+        return $constructor().apply(newValue, $arg2(), $arg3());
     }
 
     @Override
-    public final QOM.Substring $startingPosition(Field<? extends Number> newValue) {
-        return $constructor().apply($string(), newValue, $length());
+    public final QOM.Substring $arg2(Field<? extends Number> newValue) {
+        return $constructor().apply($arg1(), newValue, $arg3());
     }
 
     @Override
-    public final QOM.Substring $length(Field<? extends Number> newValue) {
-        return $constructor().apply($string(), $startingPosition(), newValue);
+    public final QOM.Substring $arg3(Field<? extends Number> newValue) {
+        return $constructor().apply($arg1(), $arg2(), newValue);
     }
 
+    @Override
     public final Function3<? super Field<String>, ? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Substring> $constructor() {
         return (a1, a2, a3) -> new Substring(a1, a2, a3);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

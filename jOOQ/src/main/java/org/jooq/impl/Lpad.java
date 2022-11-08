@@ -171,63 +171,39 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<String> $string() {
+    public final Field<String> $arg1() {
         return string;
     }
 
     @Override
-    public final Field<? extends Number> $length() {
+    public final Field<? extends Number> $arg2() {
         return length;
     }
 
     @Override
-    public final Field<String> $character() {
+    public final Field<String> $arg3() {
         return character;
     }
 
     @Override
-    public final QOM.Lpad $string(Field<String> newValue) {
-        return $constructor().apply(newValue, $length(), $character());
+    public final QOM.Lpad $arg1(Field<String> newValue) {
+        return $constructor().apply(newValue, $arg2(), $arg3());
     }
 
     @Override
-    public final QOM.Lpad $length(Field<? extends Number> newValue) {
-        return $constructor().apply($string(), newValue, $character());
+    public final QOM.Lpad $arg2(Field<? extends Number> newValue) {
+        return $constructor().apply($arg1(), newValue, $arg3());
     }
 
     @Override
-    public final QOM.Lpad $character(Field<String> newValue) {
-        return $constructor().apply($string(), $length(), newValue);
+    public final QOM.Lpad $arg3(Field<String> newValue) {
+        return $constructor().apply($arg1(), $arg2(), newValue);
     }
 
+    @Override
     public final Function3<? super Field<String>, ? super Field<? extends Number>, ? super Field<String>, ? extends QOM.Lpad> $constructor() {
         return (a1, a2, a3) -> new Lpad(a1, a2, a3);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

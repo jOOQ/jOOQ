@@ -139,39 +139,19 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Select<?> $query() {
+    public final Select<?> $arg1() {
         return query;
     }
 
     @Override
-    public final QOM.Unique $query(Select<?> newValue) {
+    public final QOM.Unique $arg1(Select<?> newValue) {
         return $constructor().apply(newValue);
     }
 
+    @Override
     public final Function1<? super Select<?>, ? extends QOM.Unique> $constructor() {
         return (a1) -> new Unique(a1);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

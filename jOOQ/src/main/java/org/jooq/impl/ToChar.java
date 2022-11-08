@@ -156,51 +156,29 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<?> $value() {
+    public final Field<?> $arg1() {
         return value;
     }
 
     @Override
-    public final Field<String> $formatMask() {
+    public final Field<String> $arg2() {
         return formatMask;
     }
 
     @Override
-    public final QOM.ToChar $value(Field<?> newValue) {
-        return $constructor().apply(newValue, $formatMask());
+    public final QOM.ToChar $arg1(Field<?> newValue) {
+        return $constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final QOM.ToChar $formatMask(Field<String> newValue) {
-        return $constructor().apply($value(), newValue);
+    public final QOM.ToChar $arg2(Field<String> newValue) {
+        return $constructor().apply($arg1(), newValue);
     }
 
+    @Override
     public final Function2<? super Field<?>, ? super Field<String>, ? extends QOM.ToChar> $constructor() {
         return (a1, a2) -> new ToChar(a1, a2);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

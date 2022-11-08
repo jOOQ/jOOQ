@@ -139,51 +139,29 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<? extends Number> $x() {
+    public final Field<? extends Number> $arg1() {
         return x;
     }
 
     @Override
-    public final Field<? extends Number> $y() {
+    public final Field<? extends Number> $arg2() {
         return y;
     }
 
     @Override
-    public final QOM.Atan2 $x(Field<? extends Number> newValue) {
-        return $constructor().apply(newValue, $y());
+    public final QOM.Atan2 $arg1(Field<? extends Number> newValue) {
+        return $constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final QOM.Atan2 $y(Field<? extends Number> newValue) {
-        return $constructor().apply($x(), newValue);
+    public final QOM.Atan2 $arg2(Field<? extends Number> newValue) {
+        return $constructor().apply($arg1(), newValue);
     }
 
+    @Override
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Atan2> $constructor() {
         return (a1, a2) -> new Atan2(a1, a2);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

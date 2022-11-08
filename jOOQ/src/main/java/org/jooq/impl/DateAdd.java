@@ -422,62 +422,39 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<T> $date() {
+    public final Field<T> $arg1() {
         return date;
     }
 
     @Override
-    public final Field<? extends Number> $interval() {
+    public final Field<? extends Number> $arg2() {
         return interval;
     }
 
     @Override
-    public final DatePart $datePart() {
+    public final DatePart $arg3() {
         return datePart;
     }
 
     @Override
-    public final QOM.DateAdd<T> $date(Field<T> newValue) {
-        return $constructor().apply(newValue, $interval(), $datePart());
+    public final QOM.DateAdd<T> $arg1(Field<T> newValue) {
+        return $constructor().apply(newValue, $arg2(), $arg3());
     }
 
     @Override
-    public final QOM.DateAdd<T> $interval(Field<? extends Number> newValue) {
-        return $constructor().apply($date(), newValue, $datePart());
+    public final QOM.DateAdd<T> $arg2(Field<? extends Number> newValue) {
+        return $constructor().apply($arg1(), newValue, $arg3());
     }
 
     @Override
-    public final QOM.DateAdd<T> $datePart(DatePart newValue) {
-        return $constructor().apply($date(), $interval(), newValue);
+    public final QOM.DateAdd<T> $arg3(DatePart newValue) {
+        return $constructor().apply($arg1(), $arg2(), newValue);
     }
 
+    @Override
     public final Function3<? super Field<T>, ? super Field<? extends Number>, ? super DatePart, ? extends QOM.DateAdd<T>> $constructor() {
         return (a1, a2, a3) -> new DateAdd<>(a1, a2, a3);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

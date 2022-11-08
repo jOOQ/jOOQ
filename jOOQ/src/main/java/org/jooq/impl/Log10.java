@@ -175,39 +175,19 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<? extends Number> $value() {
+    public final Field<? extends Number> $arg1() {
         return value;
     }
 
     @Override
-    public final QOM.Log10 $value(Field<? extends Number> newValue) {
+    public final QOM.Log10 $arg1(Field<? extends Number> newValue) {
         return $constructor().apply(newValue);
     }
 
+    @Override
     public final Function1<? super Field<? extends Number>, ? extends QOM.Log10> $constructor() {
         return (a1) -> new Log10(a1);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

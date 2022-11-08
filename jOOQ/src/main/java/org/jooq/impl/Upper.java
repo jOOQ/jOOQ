@@ -131,39 +131,19 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<String> $string() {
+    public final Field<String> $arg1() {
         return string;
     }
 
     @Override
-    public final QOM.Upper $string(Field<String> newValue) {
+    public final QOM.Upper $arg1(Field<String> newValue) {
         return $constructor().apply(newValue);
     }
 
+    @Override
     public final Function1<? super Field<String>, ? extends QOM.Upper> $constructor() {
         return (a1) -> new Upper(a1);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

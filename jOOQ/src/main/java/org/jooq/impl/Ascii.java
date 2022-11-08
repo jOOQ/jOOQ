@@ -135,39 +135,19 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<String> $string() {
+    public final Field<String> $arg1() {
         return string;
     }
 
     @Override
-    public final QOM.Ascii $string(Field<String> newValue) {
+    public final QOM.Ascii $arg1(Field<String> newValue) {
         return $constructor().apply(newValue);
     }
 
+    @Override
     public final Function1<? super Field<String>, ? extends QOM.Ascii> $constructor() {
         return (a1) -> new Ascii(a1);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

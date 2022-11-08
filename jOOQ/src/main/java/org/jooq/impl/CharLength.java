@@ -145,39 +145,19 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<String> $string() {
+    public final Field<String> $arg1() {
         return string;
     }
 
     @Override
-    public final QOM.CharLength $string(Field<String> newValue) {
+    public final QOM.CharLength $arg1(Field<String> newValue) {
         return $constructor().apply(newValue);
     }
 
+    @Override
     public final Function1<? super Field<String>, ? extends QOM.CharLength> $constructor() {
         return (a1) -> new CharLength(a1);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

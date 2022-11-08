@@ -162,51 +162,29 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<String> $string() {
+    public final Field<String> $arg1() {
         return string;
     }
 
     @Override
-    public final Field<String> $characters() {
+    public final Field<String> $arg2() {
         return characters;
     }
 
     @Override
-    public final QOM.Rtrim $string(Field<String> newValue) {
-        return $constructor().apply(newValue, $characters());
+    public final QOM.Rtrim $arg1(Field<String> newValue) {
+        return $constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final QOM.Rtrim $characters(Field<String> newValue) {
-        return $constructor().apply($string(), newValue);
+    public final QOM.Rtrim $arg2(Field<String> newValue) {
+        return $constructor().apply($arg1(), newValue);
     }
 
+    @Override
     public final Function2<? super Field<String>, ? super Field<String>, ? extends QOM.Rtrim> $constructor() {
         return (a1, a2) -> new Rtrim(a1, a2);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

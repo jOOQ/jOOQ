@@ -161,39 +161,19 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<JSON> $field() {
+    public final Field<JSON> $arg1() {
         return field;
     }
 
     @Override
-    public final QOM.JSONKeys $field(Field<JSON> newValue) {
+    public final QOM.JSONKeys $arg1(Field<JSON> newValue) {
         return $constructor().apply(newValue);
     }
 
+    @Override
     public final Function1<? super Field<JSON>, ? extends QOM.JSONKeys> $constructor() {
         return (a1) -> new JSONKeys(a1);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

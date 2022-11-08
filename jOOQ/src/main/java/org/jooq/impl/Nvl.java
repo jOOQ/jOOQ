@@ -222,51 +222,29 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<T> $value() {
+    public final Field<T> $arg1() {
         return value;
     }
 
     @Override
-    public final Field<T> $defaultValue() {
+    public final Field<T> $arg2() {
         return defaultValue;
     }
 
     @Override
-    public final QOM.Nvl<T> $value(Field<T> newValue) {
-        return $constructor().apply(newValue, $defaultValue());
+    public final QOM.Nvl<T> $arg1(Field<T> newValue) {
+        return $constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final QOM.Nvl<T> $defaultValue(Field<T> newValue) {
-        return $constructor().apply($value(), newValue);
+    public final QOM.Nvl<T> $arg2(Field<T> newValue) {
+        return $constructor().apply($arg1(), newValue);
     }
 
+    @Override
     public final Function2<? super Field<T>, ? super Field<T>, ? extends QOM.Nvl<T>> $constructor() {
         return (a1, a2) -> new Nvl<>(a1, a2);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

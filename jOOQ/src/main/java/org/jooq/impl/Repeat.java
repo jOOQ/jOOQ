@@ -179,51 +179,29 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<String> $string() {
+    public final Field<String> $arg1() {
         return string;
     }
 
     @Override
-    public final Field<? extends Number> $count() {
+    public final Field<? extends Number> $arg2() {
         return count;
     }
 
     @Override
-    public final QOM.Repeat $string(Field<String> newValue) {
-        return $constructor().apply(newValue, $count());
+    public final QOM.Repeat $arg1(Field<String> newValue) {
+        return $constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final QOM.Repeat $count(Field<? extends Number> newValue) {
-        return $constructor().apply($string(), newValue);
+    public final QOM.Repeat $arg2(Field<? extends Number> newValue) {
+        return $constructor().apply($arg1(), newValue);
     }
 
+    @Override
     public final Function2<? super Field<String>, ? super Field<? extends Number>, ? extends QOM.Repeat> $constructor() {
         return (a1, a2) -> new Repeat(a1, a2);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

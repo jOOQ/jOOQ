@@ -150,39 +150,19 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<String> $string() {
+    public final Field<String> $arg1() {
         return string;
     }
 
     @Override
-    public final QOM.Md5 $string(Field<String> newValue) {
+    public final QOM.Md5 $arg1(Field<String> newValue) {
         return $constructor().apply(newValue);
     }
 
+    @Override
     public final Function1<? super Field<String>, ? extends QOM.Md5> $constructor() {
         return (a1) -> new Md5(a1);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

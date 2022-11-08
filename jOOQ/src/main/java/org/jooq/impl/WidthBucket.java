@@ -151,75 +151,49 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<T> $field() {
+    public final Field<T> $arg1() {
         return field;
     }
 
     @Override
-    public final Field<T> $low() {
+    public final Field<T> $arg2() {
         return low;
     }
 
     @Override
-    public final Field<T> $high() {
+    public final Field<T> $arg3() {
         return high;
     }
 
     @Override
-    public final Field<Integer> $buckets() {
+    public final Field<Integer> $arg4() {
         return buckets;
     }
 
     @Override
-    public final QOM.WidthBucket<T> $field(Field<T> newValue) {
-        return $constructor().apply(newValue, $low(), $high(), $buckets());
+    public final QOM.WidthBucket<T> $arg1(Field<T> newValue) {
+        return $constructor().apply(newValue, $arg2(), $arg3(), $arg4());
     }
 
     @Override
-    public final QOM.WidthBucket<T> $low(Field<T> newValue) {
-        return $constructor().apply($field(), newValue, $high(), $buckets());
+    public final QOM.WidthBucket<T> $arg2(Field<T> newValue) {
+        return $constructor().apply($arg1(), newValue, $arg3(), $arg4());
     }
 
     @Override
-    public final QOM.WidthBucket<T> $high(Field<T> newValue) {
-        return $constructor().apply($field(), $low(), newValue, $buckets());
+    public final QOM.WidthBucket<T> $arg3(Field<T> newValue) {
+        return $constructor().apply($arg1(), $arg2(), newValue, $arg4());
     }
 
     @Override
-    public final QOM.WidthBucket<T> $buckets(Field<Integer> newValue) {
-        return $constructor().apply($field(), $low(), $high(), newValue);
+    public final QOM.WidthBucket<T> $arg4(Field<Integer> newValue) {
+        return $constructor().apply($arg1(), $arg2(), $arg3(), newValue);
     }
 
+    @Override
     public final Function4<? super Field<T>, ? super Field<T>, ? super Field<T>, ? super Field<Integer>, ? extends QOM.WidthBucket<T>> $constructor() {
         return (a1, a2, a3, a4) -> new WidthBucket<>(a1, a2, a3, a4);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

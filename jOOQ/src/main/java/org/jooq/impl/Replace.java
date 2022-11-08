@@ -193,63 +193,39 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<String> $string() {
+    public final Field<String> $arg1() {
         return string;
     }
 
     @Override
-    public final Field<String> $search() {
+    public final Field<String> $arg2() {
         return search;
     }
 
     @Override
-    public final Field<String> $replace() {
+    public final Field<String> $arg3() {
         return replace;
     }
 
     @Override
-    public final QOM.Replace $string(Field<String> newValue) {
-        return $constructor().apply(newValue, $search(), $replace());
+    public final QOM.Replace $arg1(Field<String> newValue) {
+        return $constructor().apply(newValue, $arg2(), $arg3());
     }
 
     @Override
-    public final QOM.Replace $search(Field<String> newValue) {
-        return $constructor().apply($string(), newValue, $replace());
+    public final QOM.Replace $arg2(Field<String> newValue) {
+        return $constructor().apply($arg1(), newValue, $arg3());
     }
 
     @Override
-    public final QOM.Replace $replace(Field<String> newValue) {
-        return $constructor().apply($string(), $search(), newValue);
+    public final QOM.Replace $arg3(Field<String> newValue) {
+        return $constructor().apply($arg1(), $arg2(), newValue);
     }
 
+    @Override
     public final Function3<? super Field<String>, ? super Field<String>, ? super Field<String>, ? extends QOM.Replace> $constructor() {
         return (a1, a2, a3) -> new Replace(a1, a2, a3);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

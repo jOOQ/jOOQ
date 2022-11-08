@@ -143,62 +143,39 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final boolean $content() {
+    public final Boolean $arg1() {
         return content;
     }
 
     @Override
-    public final Field<XML> $value() {
+    public final Field<XML> $arg2() {
         return value;
     }
 
     @Override
-    public final DataType<T> $type() {
+    public final DataType<T> $arg3() {
         return type;
     }
 
     @Override
-    public final QOM.XMLSerialize<T> $content(boolean newValue) {
-        return $constructor().apply(newValue, $value(), $type());
+    public final QOM.XMLSerialize<T> $arg1(Boolean newValue) {
+        return $constructor().apply(newValue, $arg2(), $arg3());
     }
 
     @Override
-    public final QOM.XMLSerialize<T> $value(Field<XML> newValue) {
-        return $constructor().apply($content(), newValue, $type());
+    public final QOM.XMLSerialize<T> $arg2(Field<XML> newValue) {
+        return $constructor().apply($arg1(), newValue, $arg3());
     }
 
     @Override
-    public final QOM.XMLSerialize<T> $type(DataType<T> newValue) {
-        return $constructor().apply($content(), $value(), newValue);
+    public final QOM.XMLSerialize<T> $arg3(DataType<T> newValue) {
+        return $constructor().apply($arg1(), $arg2(), newValue);
     }
 
+    @Override
     public final Function3<? super Boolean, ? super Field<XML>, ? super DataType<T>, ? extends QOM.XMLSerialize<T>> $constructor() {
         return (a1, a2, a3) -> new XMLSerialize<>(a1, a2, a3);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

@@ -141,63 +141,39 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<JSON> $field() {
+    public final Field<JSON> $arg1() {
         return field;
     }
 
     @Override
-    public final Field<String> $path() {
+    public final Field<String> $arg2() {
         return path;
     }
 
     @Override
-    public final Field<?> $value() {
+    public final Field<?> $arg3() {
         return value;
     }
 
     @Override
-    public final QOM.JSONReplace $field(Field<JSON> newValue) {
-        return $constructor().apply(newValue, $path(), $value());
+    public final QOM.JSONReplace $arg1(Field<JSON> newValue) {
+        return $constructor().apply(newValue, $arg2(), $arg3());
     }
 
     @Override
-    public final QOM.JSONReplace $path(Field<String> newValue) {
-        return $constructor().apply($field(), newValue, $value());
+    public final QOM.JSONReplace $arg2(Field<String> newValue) {
+        return $constructor().apply($arg1(), newValue, $arg3());
     }
 
     @Override
-    public final QOM.JSONReplace $value(Field<?> newValue) {
-        return $constructor().apply($field(), $path(), newValue);
+    public final QOM.JSONReplace $arg3(Field<?> newValue) {
+        return $constructor().apply($arg1(), $arg2(), newValue);
     }
 
+    @Override
     public final Function3<? super Field<JSON>, ? super Field<String>, ? super Field<?>, ? extends QOM.JSONReplace> $constructor() {
         return (a1, a2, a3) -> new JSONReplace(a1, a2, a3);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

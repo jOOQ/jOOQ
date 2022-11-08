@@ -256,74 +256,49 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final DataType<T> $type() {
+    public final DataType<T> $arg1() {
         return type;
     }
 
     @Override
-    public final UnmodifiableList<? extends Field<?>> $fields() {
+    public final UnmodifiableList<? extends Field<?>> $arg2() {
         return QOM.unmodifiable(fields);
     }
 
     @Override
-    public final JSONOnNull $onNull() {
+    public final JSONOnNull $arg3() {
         return onNull;
     }
 
     @Override
-    public final DataType<?> $returning() {
+    public final DataType<?> $arg4() {
         return returning;
     }
 
     @Override
-    public final QOM.JSONArray<T> $type(DataType<T> newValue) {
-        return $constructor().apply(newValue, $fields(), $onNull(), $returning());
+    public final QOM.JSONArray<T> $arg1(DataType<T> newValue) {
+        return $constructor().apply(newValue, $arg2(), $arg3(), $arg4());
     }
 
     @Override
-    public final QOM.JSONArray<T> $fields(Collection<? extends Field<?>> newValue) {
-        return $constructor().apply($type(), newValue, $onNull(), $returning());
+    public final QOM.JSONArray<T> $arg2(UnmodifiableList<? extends Field<?>> newValue) {
+        return $constructor().apply($arg1(), newValue, $arg3(), $arg4());
     }
 
     @Override
-    public final QOM.JSONArray<T> $onNull(JSONOnNull newValue) {
-        return $constructor().apply($type(), $fields(), newValue, $returning());
+    public final QOM.JSONArray<T> $arg3(JSONOnNull newValue) {
+        return $constructor().apply($arg1(), $arg2(), newValue, $arg4());
     }
 
     @Override
-    public final QOM.JSONArray<T> $returning(DataType<?> newValue) {
-        return $constructor().apply($type(), $fields(), $onNull(), newValue);
+    public final QOM.JSONArray<T> $arg4(DataType<?> newValue) {
+        return $constructor().apply($arg1(), $arg2(), $arg3(), newValue);
     }
 
+    @Override
     public final Function4<? super DataType<T>, ? super Collection<? extends Field<?>>, ? super JSONOnNull, ? super DataType<?>, ? extends QOM.JSONArray<T>> $constructor() {
         return (a1, a2, a3, a4) -> new JSONArray(a1, (Collection<? extends Field<?>>) a2, a3, a4);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

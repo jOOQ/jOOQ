@@ -166,39 +166,19 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<T> $value() {
+    public final Field<T> $arg1() {
         return value;
     }
 
     @Override
-    public final QOM.Ceil<T> $value(Field<T> newValue) {
+    public final QOM.Ceil<T> $arg1(Field<T> newValue) {
         return $constructor().apply(newValue);
     }
 
+    @Override
     public final Function1<? super Field<T>, ? extends QOM.Ceil<T>> $constructor() {
         return (a1) -> new Ceil<>(a1);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

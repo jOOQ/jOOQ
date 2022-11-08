@@ -143,39 +143,19 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<T> $field() {
+    public final Field<T> $arg1() {
         return field;
     }
 
     @Override
-    public final QOM.Excluded<T> $field(Field<T> newValue) {
+    public final QOM.Excluded<T> $arg1(Field<T> newValue) {
         return $constructor().apply(newValue);
     }
 
+    @Override
     public final Function1<? super Field<T>, ? extends QOM.Excluded<T>> $constructor() {
         return (a1) -> new Excluded<>(a1);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

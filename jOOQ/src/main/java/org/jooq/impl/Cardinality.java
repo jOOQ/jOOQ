@@ -125,39 +125,19 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<? extends Object[]> $array() {
+    public final Field<? extends Object[]> $arg1() {
         return array;
     }
 
     @Override
-    public final QOM.Cardinality $array(Field<? extends Object[]> newValue) {
+    public final QOM.Cardinality $arg1(Field<? extends Object[]> newValue) {
         return $constructor().apply(newValue);
     }
 
+    @Override
     public final Function1<? super Field<? extends Object[]>, ? extends QOM.Cardinality> $constructor() {
         return (a1) -> new Cardinality(a1);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

@@ -802,6 +802,21 @@ To enable this feature, {@link #transformPatterns} must be enabled as well.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsNullOnNullInput" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Any {org.jooq.impl.QOM.UReturnsNullOnNullInput} function or expression with <code>NULL</code> arguments can be replaced by <code>NULL</code>.
+<p>
+There are many built-in SQL functions and operators with a <code>RETURNS NULL ON NULL INPUT</code> property, e.g.
+<ul>
+<li><code>ABS(NULL)</code></li>
+<li><code>MOD(NULL, 1)</code></li>
+<li><code>NULL + 1</code></li>
+</ul>
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsIdempotentFunctionRepetition" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform all repetitions of idempotent functions, such as <code>UPPER(UPPER(s))</code> to <code>UPPER(s)</code>.
 <p>

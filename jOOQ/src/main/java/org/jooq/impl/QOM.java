@@ -68,6 +68,7 @@ import org.jooq.Domain;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
 import org.jooq.FieldOrRowOrSelect;
+import org.jooq.Function0;
 import org.jooq.Function1;
 import org.jooq.Function10;
 import org.jooq.Function11;
@@ -2095,6 +2096,7 @@ public final class QOM {
      */
     public /*sealed*/ interface And
         extends
+            UCommutativeOperator<Condition, Condition>,
             CombinedCondition
         //permits
         //    And
@@ -2106,8 +2108,8 @@ public final class QOM {
     public /*sealed*/ interface TableEq<R extends Record>
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Condition,
-            UCommutativeOperator<Table<R>, Condition>
+            UCommutativeOperator<Table<R>, Condition>,
+            org.jooq.Condition
         //permits
         //    TableEq
     {}
@@ -2129,12 +2131,12 @@ public final class QOM {
      */
     public /*sealed*/ interface Exists
         extends
+            UOperator1<Select<?>, Condition>,
             org.jooq.Condition
         //permits
         //    Exists
     {
-        @NotNull  Select<?> $query();
-        @NotNull  Exists $query(Select<?> query);
+        @NotNull  default Select<?> $query() { return $arg1(); }
     }
 
     /**
@@ -2180,8 +2182,8 @@ public final class QOM {
      */
     public /*sealed*/ interface In<T>
         extends
-            org.jooq.Condition,
-            UOperator2<Field<T>, Select<? extends Record1<T>>, Condition>
+            UOperator2<Field<T>, Select<? extends Record1<T>>, Condition>,
+            org.jooq.Condition
         //permits
         //    In
     {}
@@ -2205,8 +2207,8 @@ public final class QOM {
      */
     public /*sealed*/ interface IsNull
         extends
-            org.jooq.Condition,
-            UOperator1<Field<?>, Condition>
+            UOperator1<Field<?>, Condition>,
+            org.jooq.Condition
         //permits
         //    IsNull
     {
@@ -2232,8 +2234,8 @@ public final class QOM {
      */
     public /*sealed*/ interface IsNotNull
         extends
-            org.jooq.Condition,
-            UOperator1<Field<?>, Condition>
+            UOperator1<Field<?>, Condition>,
+            org.jooq.Condition
         //permits
         //    IsNotNull
     {
@@ -2263,8 +2265,8 @@ public final class QOM {
     public /*sealed*/ interface Like
         extends
             UReturnsNullOnNullInput,
-            Condition,
-            UOperator3<Field<?>, Field<String>, Character, Condition>
+            UOperator3<Field<?>, Field<String>, Character, Condition>,
+            Condition
         //permits
         //    Like
     {
@@ -2286,8 +2288,8 @@ public final class QOM {
     public /*sealed*/ interface LikeIgnoreCase
         extends
             UReturnsNullOnNullInput,
-            Condition,
-            UOperator3<Field<?>, Field<String>, Character, Condition>
+            UOperator3<Field<?>, Field<String>, Character, Condition>,
+            Condition
         //permits
         //    LikeIgnoreCase
     {
@@ -2319,8 +2321,8 @@ public final class QOM {
     public /*sealed*/ interface TableNe<R extends Record>
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Condition,
-            UCommutativeOperator<Table<R>, Condition>
+            UCommutativeOperator<Table<R>, Condition>,
+            org.jooq.Condition
         //permits
         //    TableNe
     {}
@@ -2343,8 +2345,8 @@ public final class QOM {
     public /*sealed*/ interface Not
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Condition,
-            UOperator1<Condition, Condition>
+            UOperator1<Condition, Condition>,
+            org.jooq.Condition
         //permits
         //    Not
     {
@@ -2357,8 +2359,8 @@ public final class QOM {
     public /*sealed*/ interface NotField
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Field<Boolean>,
-            UOperator1<Field<Boolean>, Field<Boolean>>
+            UOperator1<Field<Boolean>, Field<Boolean>>,
+            org.jooq.Field<Boolean>
         //permits
         //    NotField
     {
@@ -2378,8 +2380,8 @@ public final class QOM {
      */
     public /*sealed*/ interface NotIn<T>
         extends
-            org.jooq.Condition,
-            UOperator2<Field<T>, Select<? extends Record1<T>>, Condition>
+            UOperator2<Field<T>, Select<? extends Record1<T>>, Condition>,
+            org.jooq.Condition
         //permits
         //    NotIn
     {}
@@ -2390,8 +2392,8 @@ public final class QOM {
     public /*sealed*/ interface NotLike
         extends
             UReturnsNullOnNullInput,
-            Condition,
-            UOperator3<Field<?>, Field<String>, Character, Condition>
+            UOperator3<Field<?>, Field<String>, Character, Condition>,
+            Condition
         //permits
         //    NotLike
     {
@@ -2413,8 +2415,8 @@ public final class QOM {
     public /*sealed*/ interface NotLikeIgnoreCase
         extends
             UReturnsNullOnNullInput,
-            Condition,
-            UOperator3<Field<?>, Field<String>, Character, Condition>
+            UOperator3<Field<?>, Field<String>, Character, Condition>,
+            Condition
         //permits
         //    NotLikeIgnoreCase
     {
@@ -2429,8 +2431,8 @@ public final class QOM {
     public /*sealed*/ interface NotSimilarTo
         extends
             UReturnsNullOnNullInput,
-            Condition,
-            UOperator3<Field<?>, Field<String>, Character, Condition>
+            UOperator3<Field<?>, Field<String>, Character, Condition>,
+            Condition
         //permits
         //    NotSimilarTo
     {
@@ -2444,6 +2446,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Or
         extends
+            UCommutativeOperator<Condition, Condition>,
             CombinedCondition
         //permits
         //    Or
@@ -2455,8 +2458,8 @@ public final class QOM {
     public /*sealed*/ interface SimilarTo
         extends
             UReturnsNullOnNullInput,
-            Condition,
-            UOperator3<Field<?>, Field<String>, Character, Condition>
+            UOperator3<Field<?>, Field<String>, Character, Condition>,
+            Condition
         //permits
         //    SimilarTo
     {
@@ -2470,12 +2473,12 @@ public final class QOM {
      */
     public /*sealed*/ interface Unique
         extends
+            UOperator1<Select<?>, Condition>,
             org.jooq.Condition
         //permits
         //    Unique
     {
-        @NotNull  Select<?> $query();
-        @NotNull  Unique $query(Select<?> query);
+        @NotNull  default Select<?> $query() { return $arg1(); }
     }
 
     /**
@@ -2484,6 +2487,7 @@ public final class QOM {
     public /*sealed*/ interface Xor
         extends
             UReturnsNullOnNullInput,
+            UCommutativeOperator<Condition, Condition>,
             CombinedCondition
         //permits
         //    Xor
@@ -2497,8 +2501,8 @@ public final class QOM {
     public /*sealed*/ interface IsDocument
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Condition,
-            UOperator1<Field<?>, Condition>
+            UOperator1<Field<?>, Condition>,
+            org.jooq.Condition
         //permits
         //    IsDocument
     {
@@ -2513,8 +2517,8 @@ public final class QOM {
     public /*sealed*/ interface IsNotDocument
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Condition,
-            UOperator1<Field<?>, Condition>
+            UOperator1<Field<?>, Condition>,
+            org.jooq.Condition
         //permits
         //    IsNotDocument
     {
@@ -2529,8 +2533,8 @@ public final class QOM {
     public /*sealed*/ interface IsJson
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Condition,
-            UOperator1<Field<?>, Condition>
+            UOperator1<Field<?>, Condition>,
+            org.jooq.Condition
         //permits
         //    IsJson
     {
@@ -2545,8 +2549,8 @@ public final class QOM {
     public /*sealed*/ interface IsNotJson
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Condition,
-            UOperator1<Field<?>, Condition>
+            UOperator1<Field<?>, Condition>,
+            org.jooq.Condition
         //permits
         //    IsNotJson
     {
@@ -2561,6 +2565,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Excluded<T>
         extends
+            UOperator1<Field<T>, Field<T>>,
             org.jooq.Field<T>
         //permits
         //    Excluded
@@ -2569,12 +2574,7 @@ public final class QOM {
         /**
          * The excluded field.
          */
-        @NotNull  Field<T> $field();
-
-        /**
-         * The excluded field.
-         */
-        @NotNull  Excluded<T> $field(Field<T> field);
+        @NotNull  default Field<T> $field() { return $arg1(); }
     }
 
     /**
@@ -2604,8 +2604,8 @@ public final class QOM {
      */
     public /*sealed*/ interface QualifiedRowid
         extends
-            org.jooq.Field<RowId>,
-            UOperator1<Table<?>, Field<RowId>>
+            UOperator1<Table<?>, Field<RowId>>,
+            org.jooq.Field<RowId>
         //permits
         //    QualifiedRowid
     {
@@ -2618,12 +2618,12 @@ public final class QOM {
     public /*sealed*/ interface Abs<T extends Number>
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<T>, Field<T>>,
             org.jooq.Field<T>
         //permits
         //    Abs
     {
-        @NotNull  Field<T> $value();
-        @NotNull  Abs<T> $value(Field<T> value);
+        @NotNull  default Field<T> $value() { return $arg1(); }
     }
 
     /**
@@ -2632,12 +2632,12 @@ public final class QOM {
     public /*sealed*/ interface Acos
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Acos
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Acos $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -2646,12 +2646,12 @@ public final class QOM {
     public /*sealed*/ interface Acosh
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Acosh
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Acosh $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -2660,12 +2660,12 @@ public final class QOM {
     public /*sealed*/ interface Acoth
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Acoth
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Acoth $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -2674,8 +2674,8 @@ public final class QOM {
     public /*sealed*/ interface Add<T>
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Field<T>,
-            UCommutativeOperator<Field<T>, Field<T>>
+            UCommutativeOperator<Field<T>, Field<T>>,
+            org.jooq.Field<T>
         //permits
         //    Add
     {}
@@ -2686,12 +2686,12 @@ public final class QOM {
     public /*sealed*/ interface Asin
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Asin
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Asin $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -2700,12 +2700,12 @@ public final class QOM {
     public /*sealed*/ interface Asinh
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Asinh
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Asinh $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -2714,12 +2714,12 @@ public final class QOM {
     public /*sealed*/ interface Atan
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Atan
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Atan $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -2728,14 +2728,13 @@ public final class QOM {
     public /*sealed*/ interface Atan2
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<? extends Number>, Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Atan2
     {
-        @NotNull  Field<? extends Number> $x();
-        @NotNull  Field<? extends Number> $y();
-        @NotNull  Atan2 $x(Field<? extends Number> x);
-        @NotNull  Atan2 $y(Field<? extends Number> y);
+        @NotNull  default Field<? extends Number> $x() { return $arg1(); }
+        @NotNull  default Field<? extends Number> $y() { return $arg2(); }
     }
 
     /**
@@ -2744,12 +2743,12 @@ public final class QOM {
     public /*sealed*/ interface Atanh
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Atanh
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Atanh $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -2758,8 +2757,8 @@ public final class QOM {
     public /*sealed*/ interface BitAnd<T extends Number>
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Field<T>,
-            UCommutativeOperator<Field<T>, Field<T>>
+            UCommutativeOperator<Field<T>, Field<T>>,
+            org.jooq.Field<T>
         //permits
         //    BitAnd
     {}
@@ -2772,12 +2771,12 @@ public final class QOM {
     public /*sealed*/ interface BitCount
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<Integer>>,
             org.jooq.Field<Integer>
         //permits
         //    BitCount
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  BitCount $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -2786,8 +2785,8 @@ public final class QOM {
     public /*sealed*/ interface BitNand<T extends Number>
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Field<T>,
-            UCommutativeOperator<Field<T>, Field<T>>
+            UCommutativeOperator<Field<T>, Field<T>>,
+            org.jooq.Field<T>
         //permits
         //    BitNand
     {}
@@ -2798,8 +2797,8 @@ public final class QOM {
     public /*sealed*/ interface BitNor<T extends Number>
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Field<T>,
-            UCommutativeOperator<Field<T>, Field<T>>
+            UCommutativeOperator<Field<T>, Field<T>>,
+            org.jooq.Field<T>
         //permits
         //    BitNor
     {}
@@ -2810,8 +2809,8 @@ public final class QOM {
     public /*sealed*/ interface BitNot<T extends Number>
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Field<T>,
-            UOperator1<Field<T>, Field<T>>
+            UOperator1<Field<T>, Field<T>>,
+            org.jooq.Field<T>
         //permits
         //    BitNot
     {}
@@ -2822,8 +2821,8 @@ public final class QOM {
     public /*sealed*/ interface BitOr<T extends Number>
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Field<T>,
-            UCommutativeOperator<Field<T>, Field<T>>
+            UCommutativeOperator<Field<T>, Field<T>>,
+            org.jooq.Field<T>
         //permits
         //    BitOr
     {}
@@ -2834,8 +2833,8 @@ public final class QOM {
     public /*sealed*/ interface BitXNor<T extends Number>
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Field<T>,
-            UCommutativeOperator<Field<T>, Field<T>>
+            UCommutativeOperator<Field<T>, Field<T>>,
+            org.jooq.Field<T>
         //permits
         //    BitXNor
     {}
@@ -2846,8 +2845,8 @@ public final class QOM {
     public /*sealed*/ interface BitXor<T extends Number>
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Field<T>,
-            UCommutativeOperator<Field<T>, Field<T>>
+            UCommutativeOperator<Field<T>, Field<T>>,
+            org.jooq.Field<T>
         //permits
         //    BitXor
     {}
@@ -2860,12 +2859,12 @@ public final class QOM {
     public /*sealed*/ interface Ceil<T extends Number>
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<T>, Field<T>>,
             org.jooq.Field<T>
         //permits
         //    Ceil
     {
-        @NotNull  Field<T> $value();
-        @NotNull  Ceil<T> $value(Field<T> value);
+        @NotNull  default Field<T> $value() { return $arg1(); }
     }
 
     /**
@@ -2874,12 +2873,12 @@ public final class QOM {
     public /*sealed*/ interface Cos
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Cos
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Cos $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -2888,12 +2887,12 @@ public final class QOM {
     public /*sealed*/ interface Cosh
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Cosh
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Cosh $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -2902,12 +2901,12 @@ public final class QOM {
     public /*sealed*/ interface Cot
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Cot
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Cot $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -2916,12 +2915,12 @@ public final class QOM {
     public /*sealed*/ interface Coth
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Coth
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Coth $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -2932,6 +2931,7 @@ public final class QOM {
     public /*sealed*/ interface Degrees
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Degrees
@@ -2940,12 +2940,7 @@ public final class QOM {
         /**
          * The value in radians.
          */
-        @NotNull  Field<? extends Number> $radians();
-
-        /**
-         * The value in radians.
-         */
-        @NotNull  Degrees $radians(Field<? extends Number> radians);
+        @NotNull  default Field<? extends Number> $radians() { return $arg1(); }
     }
 
     /**
@@ -2954,8 +2949,8 @@ public final class QOM {
     public /*sealed*/ interface Div<T>
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Field<T>,
-            UOperator2<Field<T>, Field<T>, Field<T>>
+            UOperator2<Field<T>, Field<T>, Field<T>>,
+            org.jooq.Field<T>
         //permits
         //    Div
     {}
@@ -2967,8 +2962,8 @@ public final class QOM {
      */
     public /*sealed*/ interface Euler
         extends
-            org.jooq.Field<BigDecimal>,
-            UEmpty
+            UOperator0<Field<BigDecimal>>,
+            org.jooq.Field<BigDecimal>
         //permits
         //    Euler
     {}
@@ -2979,12 +2974,12 @@ public final class QOM {
     public /*sealed*/ interface Exp
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Exp
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Exp $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -2995,12 +2990,12 @@ public final class QOM {
     public /*sealed*/ interface Floor<T extends Number>
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<T>, Field<T>>,
             org.jooq.Field<T>
         //permits
         //    Floor
     {
-        @NotNull  Field<T> $value();
-        @NotNull  Floor<T> $value(Field<T> value);
+        @NotNull  default Field<T> $value() { return $arg1(); }
     }
 
     /**
@@ -3011,12 +3006,12 @@ public final class QOM {
     public /*sealed*/ interface Ln
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Ln
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Ln $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -3027,14 +3022,13 @@ public final class QOM {
     public /*sealed*/ interface Log
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<? extends Number>, Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Log
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Field<? extends Number> $base();
-        @NotNull  Log $value(Field<? extends Number> value);
-        @NotNull  Log $base(Field<? extends Number> base);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
+        @NotNull  default Field<? extends Number> $base() { return $arg2(); }
     }
 
     /**
@@ -3045,12 +3039,12 @@ public final class QOM {
     public /*sealed*/ interface Log10
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Log10
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Log10 $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -3059,8 +3053,8 @@ public final class QOM {
     public /*sealed*/ interface Mod<T extends Number>
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Field<T>,
-            UOperator2<Field<T>, Field<? extends Number>, Field<T>>
+            UOperator2<Field<T>, Field<? extends Number>, Field<T>>,
+            org.jooq.Field<T>
         //permits
         //    Mod
     {
@@ -3074,8 +3068,8 @@ public final class QOM {
     public /*sealed*/ interface Mul<T>
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Field<T>,
-            UCommutativeOperator<Field<T>, Field<T>>
+            UCommutativeOperator<Field<T>, Field<T>>,
+            org.jooq.Field<T>
         //permits
         //    Mul
     {}
@@ -3087,8 +3081,8 @@ public final class QOM {
      */
     public /*sealed*/ interface Pi
         extends
-            org.jooq.Field<BigDecimal>,
-            UEmpty
+            UOperator0<Field<BigDecimal>>,
+            org.jooq.Field<BigDecimal>
         //permits
         //    Pi
     {}
@@ -3099,8 +3093,8 @@ public final class QOM {
     public /*sealed*/ interface Power
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Field<BigDecimal>,
-            UOperator2<Field<? extends Number>, Field<? extends Number>, Field<BigDecimal>>
+            UOperator2<Field<? extends Number>, Field<? extends Number>, Field<BigDecimal>>,
+            org.jooq.Field<BigDecimal>
         //permits
         //    Power
     {
@@ -3116,6 +3110,7 @@ public final class QOM {
     public /*sealed*/ interface Radians
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Radians
@@ -3124,12 +3119,7 @@ public final class QOM {
         /**
          * The value in degrees.
          */
-        @NotNull  Field<? extends Number> $degrees();
-
-        /**
-         * The value in degrees.
-         */
-        @NotNull  Radians $degrees(Field<? extends Number> degrees);
+        @NotNull  default Field<? extends Number> $degrees() { return $arg1(); }
     }
 
     /**
@@ -3139,8 +3129,8 @@ public final class QOM {
      */
     public /*sealed*/ interface Rand
         extends
-            org.jooq.Field<BigDecimal>,
-            UEmpty
+            UOperator0<Field<BigDecimal>>,
+            org.jooq.Field<BigDecimal>
         //permits
         //    Rand
     {}
@@ -3153,6 +3143,7 @@ public final class QOM {
     public /*sealed*/ interface Round<T extends Number>
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<T>, Field<Integer>, Field<T>>,
             org.jooq.Field<T>
         //permits
         //    Round
@@ -3161,22 +3152,12 @@ public final class QOM {
         /**
          * The number to be rounded.
          */
-        @NotNull  Field<T> $value();
+        @NotNull  default Field<T> $value() { return $arg1(); }
 
         /**
          * The decimals to round to.
          */
-        @Nullable Field<Integer> $decimals();
-
-        /**
-         * The number to be rounded.
-         */
-        @NotNull  Round<T> $value(Field<T> value);
-
-        /**
-         * The decimals to round to.
-         */
-        @NotNull  Round<T> $decimals(Field<Integer> decimals);
+        @Nullable default Field<Integer> $decimals() { return $arg2(); }
     }
 
     /**
@@ -3187,8 +3168,8 @@ public final class QOM {
     public /*sealed*/ interface Shl<T extends Number>
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Field<T>,
-            UOperator2<Field<T>, Field<? extends Number>, Field<T>>
+            UOperator2<Field<T>, Field<? extends Number>, Field<T>>,
+            org.jooq.Field<T>
         //permits
         //    Shl
     {
@@ -3212,8 +3193,8 @@ public final class QOM {
     public /*sealed*/ interface Shr<T extends Number>
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Field<T>,
-            UOperator2<Field<T>, Field<? extends Number>, Field<T>>
+            UOperator2<Field<T>, Field<? extends Number>, Field<T>>,
+            org.jooq.Field<T>
         //permits
         //    Shr
     {
@@ -3237,12 +3218,12 @@ public final class QOM {
     public /*sealed*/ interface Sign
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<Integer>>,
             org.jooq.Field<Integer>
         //permits
         //    Sign
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Sign $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -3251,12 +3232,12 @@ public final class QOM {
     public /*sealed*/ interface Sin
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Sin
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Sin $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -3265,12 +3246,12 @@ public final class QOM {
     public /*sealed*/ interface Sinh
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Sinh
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Sinh $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -3279,12 +3260,12 @@ public final class QOM {
     public /*sealed*/ interface Sqrt
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Sqrt
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Sqrt $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -3293,12 +3274,12 @@ public final class QOM {
     public /*sealed*/ interface Square<T extends Number>
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<T>, Field<T>>,
             org.jooq.Field<T>
         //permits
         //    Square
     {
-        @NotNull  Field<T> $value();
-        @NotNull  Square<T> $value(Field<T> value);
+        @NotNull  default Field<T> $value() { return $arg1(); }
     }
 
     /**
@@ -3307,8 +3288,8 @@ public final class QOM {
     public /*sealed*/ interface Sub<T>
         extends
             UReturnsNullOnNullInput,
-            org.jooq.Field<T>,
-            UOperator2<Field<T>, Field<T>, Field<T>>
+            UOperator2<Field<T>, Field<T>, Field<T>>,
+            org.jooq.Field<T>
         //permits
         //    Sub
     {}
@@ -3319,12 +3300,12 @@ public final class QOM {
     public /*sealed*/ interface Tan
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Tan
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Tan $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -3333,12 +3314,12 @@ public final class QOM {
     public /*sealed*/ interface Tanh
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<BigDecimal>>,
             org.jooq.Field<BigDecimal>
         //permits
         //    Tanh
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Tanh $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -3348,8 +3329,8 @@ public final class QOM {
      */
     public /*sealed*/ interface Tau
         extends
-            org.jooq.Field<BigDecimal>,
-            UEmpty
+            UOperator0<Field<BigDecimal>>,
+            org.jooq.Field<BigDecimal>
         //permits
         //    Tau
     {}
@@ -3362,6 +3343,7 @@ public final class QOM {
     public /*sealed*/ interface Trunc<T extends Number>
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<T>, Field<Integer>, Field<T>>,
             org.jooq.Field<T>
         //permits
         //    Trunc
@@ -3370,22 +3352,12 @@ public final class QOM {
         /**
          * The number to be truncated
          */
-        @NotNull  Field<T> $value();
+        @NotNull  default Field<T> $value() { return $arg1(); }
 
         /**
          * The decimals to truncate to.
          */
-        @NotNull  Field<Integer> $decimals();
-
-        /**
-         * The number to be truncated
-         */
-        @NotNull  Trunc<T> $value(Field<T> value);
-
-        /**
-         * The decimals to truncate to.
-         */
-        @NotNull  Trunc<T> $decimals(Field<Integer> decimals);
+        @NotNull  default Field<Integer> $decimals() { return $arg2(); }
     }
 
     /**
@@ -3396,6 +3368,7 @@ public final class QOM {
     public /*sealed*/ interface WidthBucket<T extends Number>
         extends
             UReturnsNullOnNullInput,
+            UOperator4<Field<T>, Field<T>, Field<T>, Field<Integer>, Field<T>>,
             org.jooq.Field<T>
         //permits
         //    WidthBucket
@@ -3404,42 +3377,22 @@ public final class QOM {
         /**
          * The value to divide into the range.
          */
-        @NotNull  Field<T> $field();
+        @NotNull  default Field<T> $field() { return $arg1(); }
 
         /**
          * The lower bound of the range.
          */
-        @NotNull  Field<T> $low();
+        @NotNull  default Field<T> $low() { return $arg2(); }
 
         /**
          * The upper bound of the range.
          */
-        @NotNull  Field<T> $high();
+        @NotNull  default Field<T> $high() { return $arg3(); }
 
         /**
          * The number of buckets to produce.
          */
-        @NotNull  Field<Integer> $buckets();
-
-        /**
-         * The value to divide into the range.
-         */
-        @NotNull  WidthBucket<T> $field(Field<T> field);
-
-        /**
-         * The lower bound of the range.
-         */
-        @NotNull  WidthBucket<T> $low(Field<T> low);
-
-        /**
-         * The upper bound of the range.
-         */
-        @NotNull  WidthBucket<T> $high(Field<T> high);
-
-        /**
-         * The number of buckets to produce.
-         */
-        @NotNull  WidthBucket<T> $buckets(Field<Integer> buckets);
+        @NotNull  default Field<Integer> $buckets() { return $arg4(); }
     }
 
     /**
@@ -3450,12 +3403,12 @@ public final class QOM {
     public /*sealed*/ interface Ascii
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<String>, Field<Integer>>,
             org.jooq.Field<Integer>
         //permits
         //    Ascii
     {
-        @NotNull  Field<String> $string();
-        @NotNull  Ascii $string(Field<String> string);
+        @NotNull  default Field<String> $string() { return $arg1(); }
     }
 
     /**
@@ -3466,12 +3419,12 @@ public final class QOM {
     public /*sealed*/ interface BitLength
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<String>, Field<Integer>>,
             org.jooq.Field<Integer>
         //permits
         //    BitLength
     {
-        @NotNull  Field<String> $string();
-        @NotNull  BitLength $string(Field<String> string);
+        @NotNull  default Field<String> $string() { return $arg1(); }
     }
 
     /**
@@ -3482,12 +3435,12 @@ public final class QOM {
     public /*sealed*/ interface CharLength
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<String>, Field<Integer>>,
             org.jooq.Field<Integer>
         //permits
         //    CharLength
     {
-        @NotNull  Field<String> $string();
-        @NotNull  CharLength $string(Field<String> string);
+        @NotNull  default Field<String> $string() { return $arg1(); }
     }
 
     /**
@@ -3496,12 +3449,12 @@ public final class QOM {
     public /*sealed*/ interface Chr
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Chr
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Chr $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -3530,6 +3483,7 @@ public final class QOM {
     public /*sealed*/ interface Contains<T>
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<T>, Field<T>, Condition>,
             CompareCondition<T>
         //permits
         //    Contains
@@ -3553,6 +3507,7 @@ public final class QOM {
     public /*sealed*/ interface ContainsIgnoreCase<T>
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<T>, Field<T>, Condition>,
             CompareCondition<T>
         //permits
         //    ContainsIgnoreCase
@@ -3567,12 +3522,12 @@ public final class QOM {
     public /*sealed*/ interface Digits
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Digits
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  Digits $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -3589,6 +3544,7 @@ public final class QOM {
     public /*sealed*/ interface EndsWith<T>
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<T>, Field<T>, Condition>,
             CompareCondition<T>
         //permits
         //    EndsWith
@@ -3611,6 +3567,7 @@ public final class QOM {
     public /*sealed*/ interface EndsWithIgnoreCase<T>
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<T>, Field<T>, Condition>,
             CompareCondition<T>
         //permits
         //    EndsWithIgnoreCase
@@ -3627,6 +3584,7 @@ public final class QOM {
     public /*sealed*/ interface Left
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<String>, Field<? extends Number>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Left
@@ -3635,22 +3593,12 @@ public final class QOM {
         /**
          * The string whose characters are extracted.
          */
-        @NotNull  Field<String> $string();
+        @NotNull  default Field<String> $string() { return $arg1(); }
 
         /**
          * The number of characters to extract from the string.
          */
-        @NotNull  Field<? extends Number> $length();
-
-        /**
-         * The string whose characters are extracted.
-         */
-        @NotNull  Left $string(Field<String> string);
-
-        /**
-         * The number of characters to extract from the string.
-         */
-        @NotNull  Left $length(Field<? extends Number> length);
+        @NotNull  default Field<? extends Number> $length() { return $arg2(); }
     }
 
     /**
@@ -3661,12 +3609,12 @@ public final class QOM {
     public /*sealed*/ interface Lower
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<String>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Lower
     {
-        @NotNull  Field<String> $string();
-        @NotNull  Lower $string(Field<String> string);
+        @NotNull  default Field<String> $string() { return $arg1(); }
     }
 
     /**
@@ -3677,6 +3625,7 @@ public final class QOM {
     public /*sealed*/ interface Lpad
         extends
             UReturnsNullOnNullInput,
+            UOperator3<Field<String>, Field<? extends Number>, Field<String>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Lpad
@@ -3685,32 +3634,17 @@ public final class QOM {
         /**
          * The string to be padded.
          */
-        @NotNull  Field<String> $string();
+        @NotNull  default Field<String> $string() { return $arg1(); }
 
         /**
          * The maximum length to pad the string to.
          */
-        @NotNull  Field<? extends Number> $length();
+        @NotNull  default Field<? extends Number> $length() { return $arg2(); }
 
         /**
          * The padding character, if different from whitespace
          */
-        @Nullable Field<String> $character();
-
-        /**
-         * The string to be padded.
-         */
-        @NotNull  Lpad $string(Field<String> string);
-
-        /**
-         * The maximum length to pad the string to.
-         */
-        @NotNull  Lpad $length(Field<? extends Number> length);
-
-        /**
-         * The padding character, if different from whitespace
-         */
-        @NotNull  Lpad $character(Field<String> character);
+        @Nullable default Field<String> $character() { return $arg3(); }
     }
 
     /**
@@ -3721,6 +3655,7 @@ public final class QOM {
     public /*sealed*/ interface Ltrim
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<String>, Field<String>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Ltrim
@@ -3729,22 +3664,12 @@ public final class QOM {
         /**
          * The string to be trimmed.
          */
-        @NotNull  Field<String> $string();
+        @NotNull  default Field<String> $string() { return $arg1(); }
 
         /**
          * The characters to be trimmed.
          */
-        @Nullable Field<String> $characters();
-
-        /**
-         * The string to be trimmed.
-         */
-        @NotNull  Ltrim $string(Field<String> string);
-
-        /**
-         * The characters to be trimmed.
-         */
-        @NotNull  Ltrim $characters(Field<String> characters);
+        @Nullable default Field<String> $characters() { return $arg2(); }
     }
 
     /**
@@ -3755,12 +3680,12 @@ public final class QOM {
     public /*sealed*/ interface Md5
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<String>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Md5
     {
-        @NotNull  Field<String> $string();
-        @NotNull  Md5 $string(Field<String> string);
+        @NotNull  default Field<String> $string() { return $arg1(); }
     }
 
     /**
@@ -3771,12 +3696,12 @@ public final class QOM {
     public /*sealed*/ interface OctetLength
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<String>, Field<Integer>>,
             org.jooq.Field<Integer>
         //permits
         //    OctetLength
     {
-        @NotNull  Field<String> $string();
-        @NotNull  OctetLength $string(Field<String> string);
+        @NotNull  default Field<String> $string() { return $arg1(); }
     }
 
     /**
@@ -3787,6 +3712,7 @@ public final class QOM {
     public /*sealed*/ interface Overlay
         extends
             UReturnsNullOnNullInput,
+            UOperator4<Field<String>, Field<String>, Field<? extends Number>, Field<? extends Number>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Overlay
@@ -3795,42 +3721,22 @@ public final class QOM {
         /**
          * The original string on top of which the overlay is placed.
          */
-        @NotNull  Field<String> $in();
+        @NotNull  default Field<String> $in() { return $arg1(); }
 
         /**
          * The string that is being placed on top of the other string.
          */
-        @NotNull  Field<String> $placing();
+        @NotNull  default Field<String> $placing() { return $arg2(); }
 
         /**
          * The start index (1-based) starting from where the overlay is placed.
          */
-        @NotNull  Field<? extends Number> $startIndex();
+        @NotNull  default Field<? extends Number> $startIndex() { return $arg3(); }
 
         /**
          * The length in the original string that will be replaced, if different from the overlay length.
          */
-        @Nullable Field<? extends Number> $length();
-
-        /**
-         * The original string on top of which the overlay is placed.
-         */
-        @NotNull  Overlay $in(Field<String> in);
-
-        /**
-         * The string that is being placed on top of the other string.
-         */
-        @NotNull  Overlay $placing(Field<String> placing);
-
-        /**
-         * The start index (1-based) starting from where the overlay is placed.
-         */
-        @NotNull  Overlay $startIndex(Field<? extends Number> startIndex);
-
-        /**
-         * The length in the original string that will be replaced, if different from the overlay length.
-         */
-        @NotNull  Overlay $length(Field<? extends Number> length);
+        @Nullable default Field<? extends Number> $length() { return $arg4(); }
     }
 
     /**
@@ -3841,6 +3747,7 @@ public final class QOM {
     public /*sealed*/ interface Position
         extends
             UReturnsNullOnNullInput,
+            UOperator3<Field<String>, Field<String>, Field<? extends Number>, Field<Integer>>,
             org.jooq.Field<Integer>
         //permits
         //    Position
@@ -3849,32 +3756,17 @@ public final class QOM {
         /**
          * The string in which to search the substring.
          */
-        @NotNull  Field<String> $in();
+        @NotNull  default Field<String> $in() { return $arg1(); }
 
         /**
          * The substring to search for.
          */
-        @NotNull  Field<String> $search();
+        @NotNull  default Field<String> $search() { return $arg2(); }
 
         /**
          * The start index (1-based) from which to start looking for the substring.
          */
-        @Nullable Field<? extends Number> $startIndex();
-
-        /**
-         * The string in which to search the substring.
-         */
-        @NotNull  Position $in(Field<String> in);
-
-        /**
-         * The substring to search for.
-         */
-        @NotNull  Position $search(Field<String> search);
-
-        /**
-         * The start index (1-based) from which to start looking for the substring.
-         */
-        @NotNull  Position $startIndex(Field<? extends Number> startIndex);
+        @Nullable default Field<? extends Number> $startIndex() { return $arg3(); }
     }
 
     /**
@@ -3885,6 +3777,7 @@ public final class QOM {
     public /*sealed*/ interface Repeat
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<String>, Field<? extends Number>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Repeat
@@ -3893,22 +3786,12 @@ public final class QOM {
         /**
          * The string to be repeated.
          */
-        @NotNull  Field<String> $string();
+        @NotNull  default Field<String> $string() { return $arg1(); }
 
         /**
          * The number of times to repeat the string.
          */
-        @NotNull  Field<? extends Number> $count();
-
-        /**
-         * The string to be repeated.
-         */
-        @NotNull  Repeat $string(Field<String> string);
-
-        /**
-         * The number of times to repeat the string.
-         */
-        @NotNull  Repeat $count(Field<? extends Number> count);
+        @NotNull  default Field<? extends Number> $count() { return $arg2(); }
     }
 
     /**
@@ -3919,6 +3802,7 @@ public final class QOM {
     public /*sealed*/ interface Replace
         extends
             UReturnsNullOnNullInput,
+            UOperator3<Field<String>, Field<String>, Field<String>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Replace
@@ -3927,32 +3811,17 @@ public final class QOM {
         /**
          * The string in which to replace contents.
          */
-        @NotNull  Field<String> $string();
+        @NotNull  default Field<String> $string() { return $arg1(); }
 
         /**
          * The substring to search for.
          */
-        @NotNull  Field<String> $search();
+        @NotNull  default Field<String> $search() { return $arg2(); }
 
         /**
          * The replacement for each substring, if not empty.
          */
-        @Nullable Field<String> $replace();
-
-        /**
-         * The string in which to replace contents.
-         */
-        @NotNull  Replace $string(Field<String> string);
-
-        /**
-         * The substring to search for.
-         */
-        @NotNull  Replace $search(Field<String> search);
-
-        /**
-         * The replacement for each substring, if not empty.
-         */
-        @NotNull  Replace $replace(Field<String> replace);
+        @Nullable default Field<String> $replace() { return $arg3(); }
     }
 
     /**
@@ -3963,12 +3832,12 @@ public final class QOM {
     public /*sealed*/ interface Reverse
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<String>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Reverse
     {
-        @NotNull  Field<String> $string();
-        @NotNull  Reverse $string(Field<String> string);
+        @NotNull  default Field<String> $string() { return $arg1(); }
     }
 
     /**
@@ -3979,6 +3848,7 @@ public final class QOM {
     public /*sealed*/ interface Right
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<String>, Field<? extends Number>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Right
@@ -3987,22 +3857,12 @@ public final class QOM {
         /**
          * The string whose characters are extracted.
          */
-        @NotNull  Field<String> $string();
+        @NotNull  default Field<String> $string() { return $arg1(); }
 
         /**
          * The number of characters to extract from the string.
          */
-        @NotNull  Field<? extends Number> $length();
-
-        /**
-         * The string whose characters are extracted.
-         */
-        @NotNull  Right $string(Field<String> string);
-
-        /**
-         * The number of characters to extract from the string.
-         */
-        @NotNull  Right $length(Field<? extends Number> length);
+        @NotNull  default Field<? extends Number> $length() { return $arg2(); }
     }
 
     /**
@@ -4013,6 +3873,7 @@ public final class QOM {
     public /*sealed*/ interface Rpad
         extends
             UReturnsNullOnNullInput,
+            UOperator3<Field<String>, Field<? extends Number>, Field<String>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Rpad
@@ -4021,32 +3882,17 @@ public final class QOM {
         /**
          * The string to be padded.
          */
-        @NotNull  Field<String> $string();
+        @NotNull  default Field<String> $string() { return $arg1(); }
 
         /**
          * The maximum length to pad the string to.
          */
-        @NotNull  Field<? extends Number> $length();
+        @NotNull  default Field<? extends Number> $length() { return $arg2(); }
 
         /**
          * The padding character, if different from whitespace
          */
-        @Nullable Field<String> $character();
-
-        /**
-         * The string to be padded.
-         */
-        @NotNull  Rpad $string(Field<String> string);
-
-        /**
-         * The maximum length to pad the string to.
-         */
-        @NotNull  Rpad $length(Field<? extends Number> length);
-
-        /**
-         * The padding character, if different from whitespace
-         */
-        @NotNull  Rpad $character(Field<String> character);
+        @Nullable default Field<String> $character() { return $arg3(); }
     }
 
     /**
@@ -4057,6 +3903,7 @@ public final class QOM {
     public /*sealed*/ interface Rtrim
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<String>, Field<String>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Rtrim
@@ -4065,22 +3912,12 @@ public final class QOM {
         /**
          * The string to be trimmed.
          */
-        @NotNull  Field<String> $string();
+        @NotNull  default Field<String> $string() { return $arg1(); }
 
         /**
          * The characters to be trimmed.
          */
-        @Nullable Field<String> $characters();
-
-        /**
-         * The string to be trimmed.
-         */
-        @NotNull  Rtrim $string(Field<String> string);
-
-        /**
-         * The characters to be trimmed.
-         */
-        @NotNull  Rtrim $characters(Field<String> characters);
+        @Nullable default Field<String> $characters() { return $arg2(); }
     }
 
     /**
@@ -4091,6 +3928,7 @@ public final class QOM {
     public /*sealed*/ interface Space
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Space
@@ -4099,12 +3937,7 @@ public final class QOM {
         /**
          * The number of spaces to produce.
          */
-        @NotNull  Field<? extends Number> $count();
-
-        /**
-         * The number of spaces to produce.
-         */
-        @NotNull  Space $count(Field<? extends Number> count);
+        @NotNull  default Field<? extends Number> $count() { return $arg1(); }
     }
 
     /**
@@ -4115,6 +3948,7 @@ public final class QOM {
     public /*sealed*/ interface SplitPart
         extends
             UReturnsNullOnNullInput,
+            UOperator3<Field<String>, Field<String>, Field<? extends Number>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    SplitPart
@@ -4123,32 +3957,17 @@ public final class QOM {
         /**
          * The string to be split into parts.
          */
-        @NotNull  Field<String> $string();
+        @NotNull  default Field<String> $string() { return $arg1(); }
 
         /**
          * The delimiter used for splitting.
          */
-        @NotNull  Field<String> $delimiter();
+        @NotNull  default Field<String> $delimiter() { return $arg2(); }
 
         /**
          * The token number (1-based).
          */
-        @NotNull  Field<? extends Number> $n();
-
-        /**
-         * The string to be split into parts.
-         */
-        @NotNull  SplitPart $string(Field<String> string);
-
-        /**
-         * The delimiter used for splitting.
-         */
-        @NotNull  SplitPart $delimiter(Field<String> delimiter);
-
-        /**
-         * The token number (1-based).
-         */
-        @NotNull  SplitPart $n(Field<? extends Number> n);
+        @NotNull  default Field<? extends Number> $n() { return $arg3(); }
     }
 
     /**
@@ -4165,6 +3984,7 @@ public final class QOM {
     public /*sealed*/ interface StartsWith<T>
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<T>, Field<T>, Condition>,
             CompareCondition<T>
         //permits
         //    StartsWith
@@ -4187,6 +4007,7 @@ public final class QOM {
     public /*sealed*/ interface StartsWithIgnoreCase<T>
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<T>, Field<T>, Condition>,
             CompareCondition<T>
         //permits
         //    StartsWithIgnoreCase
@@ -4203,6 +4024,7 @@ public final class QOM {
     public /*sealed*/ interface Substring
         extends
             UReturnsNullOnNullInput,
+            UOperator3<Field<String>, Field<? extends Number>, Field<? extends Number>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Substring
@@ -4211,32 +4033,17 @@ public final class QOM {
         /**
          * The string from which to get the substring.
          */
-        @NotNull  Field<String> $string();
+        @NotNull  default Field<String> $string() { return $arg1(); }
 
         /**
          * The position (1-based) from which to get the substring.
          */
-        @NotNull  Field<? extends Number> $startingPosition();
+        @NotNull  default Field<? extends Number> $startingPosition() { return $arg2(); }
 
         /**
          * The maximum length of the substring.
          */
-        @Nullable Field<? extends Number> $length();
-
-        /**
-         * The string from which to get the substring.
-         */
-        @NotNull  Substring $string(Field<String> string);
-
-        /**
-         * The position (1-based) from which to get the substring.
-         */
-        @NotNull  Substring $startingPosition(Field<? extends Number> startingPosition);
-
-        /**
-         * The maximum length of the substring.
-         */
-        @NotNull  Substring $length(Field<? extends Number> length);
+        @Nullable default Field<? extends Number> $length() { return $arg3(); }
     }
 
     /**
@@ -4247,6 +4054,7 @@ public final class QOM {
     public /*sealed*/ interface SubstringIndex
         extends
             UReturnsNullOnNullInput,
+            UOperator3<Field<String>, Field<String>, Field<? extends Number>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    SubstringIndex
@@ -4255,32 +4063,17 @@ public final class QOM {
         /**
          * The string from which to get the substring.
          */
-        @NotNull  Field<String> $string();
+        @NotNull  default Field<String> $string() { return $arg1(); }
 
         /**
          * The delimiter.
          */
-        @NotNull  Field<String> $delimiter();
+        @NotNull  default Field<String> $delimiter() { return $arg2(); }
 
         /**
          * The number of occurrences of the delimiter.
          */
-        @NotNull  Field<? extends Number> $n();
-
-        /**
-         * The string from which to get the substring.
-         */
-        @NotNull  SubstringIndex $string(Field<String> string);
-
-        /**
-         * The delimiter.
-         */
-        @NotNull  SubstringIndex $delimiter(Field<String> delimiter);
-
-        /**
-         * The number of occurrences of the delimiter.
-         */
-        @NotNull  SubstringIndex $n(Field<? extends Number> n);
+        @NotNull  default Field<? extends Number> $n() { return $arg3(); }
     }
 
     /**
@@ -4291,6 +4084,7 @@ public final class QOM {
     public /*sealed*/ interface ToChar
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<?>, Field<String>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    ToChar
@@ -4299,22 +4093,12 @@ public final class QOM {
         /**
          * The value to be formatted.
          */
-        @NotNull  Field<?> $value();
+        @NotNull  default Field<?> $value() { return $arg1(); }
 
         /**
          * The vendor-specific formatting string.
          */
-        @Nullable Field<String> $formatMask();
-
-        /**
-         * The value to be formatted.
-         */
-        @NotNull  ToChar $value(Field<?> value);
-
-        /**
-         * The vendor-specific formatting string.
-         */
-        @NotNull  ToChar $formatMask(Field<String> formatMask);
+        @Nullable default Field<String> $formatMask() { return $arg2(); }
     }
 
     /**
@@ -4325,6 +4109,7 @@ public final class QOM {
     public /*sealed*/ interface ToDate
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<String>, Field<String>, Field<Date>>,
             org.jooq.Field<Date>
         //permits
         //    ToDate
@@ -4333,22 +4118,12 @@ public final class QOM {
         /**
          * The formatted DATE value.
          */
-        @NotNull  Field<String> $value();
+        @NotNull  default Field<String> $value() { return $arg1(); }
 
         /**
          * The vendor-specific formatting string.
          */
-        @NotNull  Field<String> $formatMask();
-
-        /**
-         * The formatted DATE value.
-         */
-        @NotNull  ToDate $value(Field<String> value);
-
-        /**
-         * The vendor-specific formatting string.
-         */
-        @NotNull  ToDate $formatMask(Field<String> formatMask);
+        @NotNull  default Field<String> $formatMask() { return $arg2(); }
     }
 
     /**
@@ -4359,12 +4134,12 @@ public final class QOM {
     public /*sealed*/ interface ToHex
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    ToHex
     {
-        @NotNull  Field<? extends Number> $value();
-        @NotNull  ToHex $value(Field<? extends Number> value);
+        @NotNull  default Field<? extends Number> $value() { return $arg1(); }
     }
 
     /**
@@ -4375,6 +4150,7 @@ public final class QOM {
     public /*sealed*/ interface ToTimestamp
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<String>, Field<String>, Field<Timestamp>>,
             org.jooq.Field<Timestamp>
         //permits
         //    ToTimestamp
@@ -4383,22 +4159,12 @@ public final class QOM {
         /**
          * The formatted TIMESTAMP value.
          */
-        @NotNull  Field<String> $value();
+        @NotNull  default Field<String> $value() { return $arg1(); }
 
         /**
          * The vendor-specific formatting string.
          */
-        @NotNull  Field<String> $formatMask();
-
-        /**
-         * The formatted TIMESTAMP value.
-         */
-        @NotNull  ToTimestamp $value(Field<String> value);
-
-        /**
-         * The vendor-specific formatting string.
-         */
-        @NotNull  ToTimestamp $formatMask(Field<String> formatMask);
+        @NotNull  default Field<String> $formatMask() { return $arg2(); }
     }
 
     /**
@@ -4409,6 +4175,7 @@ public final class QOM {
     public /*sealed*/ interface Translate
         extends
             UReturnsNullOnNullInput,
+            UOperator3<Field<String>, Field<String>, Field<String>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Translate
@@ -4417,32 +4184,17 @@ public final class QOM {
         /**
          * The string to translate.
          */
-        @NotNull  Field<String> $string();
+        @NotNull  default Field<String> $string() { return $arg1(); }
 
         /**
          * The set of source characters.
          */
-        @NotNull  Field<String> $from();
+        @NotNull  default Field<String> $from() { return $arg2(); }
 
         /**
          * The set of target characters, matched with source characters by position.
          */
-        @NotNull  Field<String> $to();
-
-        /**
-         * The string to translate.
-         */
-        @NotNull  Translate $string(Field<String> string);
-
-        /**
-         * The set of source characters.
-         */
-        @NotNull  Translate $from(Field<String> from);
-
-        /**
-         * The set of target characters, matched with source characters by position.
-         */
-        @NotNull  Translate $to(Field<String> to);
+        @NotNull  default Field<String> $to() { return $arg3(); }
     }
 
     /**
@@ -4453,6 +4205,7 @@ public final class QOM {
     public /*sealed*/ interface Trim
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<String>, Field<String>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Trim
@@ -4461,22 +4214,12 @@ public final class QOM {
         /**
          * The string to be trimmed.
          */
-        @NotNull  Field<String> $string();
+        @NotNull  default Field<String> $string() { return $arg1(); }
 
         /**
          * The characters to be trimmed.
          */
-        @Nullable Field<String> $characters();
-
-        /**
-         * The string to be trimmed.
-         */
-        @NotNull  Trim $string(Field<String> string);
-
-        /**
-         * The characters to be trimmed.
-         */
-        @NotNull  Trim $characters(Field<String> characters);
+        @Nullable default Field<String> $characters() { return $arg2(); }
     }
 
     /**
@@ -4487,12 +4230,12 @@ public final class QOM {
     public /*sealed*/ interface Upper
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<String>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    Upper
     {
-        @NotNull  Field<String> $string();
-        @NotNull  Upper $string(Field<String> string);
+        @NotNull  default Field<String> $string() { return $arg1(); }
     }
 
     /**
@@ -4502,8 +4245,8 @@ public final class QOM {
      */
     public /*sealed*/ interface Uuid
         extends
-            org.jooq.Field<UUID>,
-            UEmpty
+            UOperator0<Field<UUID>>,
+            org.jooq.Field<UUID>
         //permits
         //    Uuid
     {}
@@ -4516,6 +4259,7 @@ public final class QOM {
     public /*sealed*/ interface DateAdd<T>
         extends
             UReturnsNullOnNullInput,
+            UOperator3<Field<T>, Field<? extends Number>, DatePart, Field<T>>,
             org.jooq.Field<T>
         //permits
         //    DateAdd
@@ -4524,32 +4268,17 @@ public final class QOM {
         /**
          * The date to add an interval to
          */
-        @NotNull  Field<T> $date();
+        @NotNull  default Field<T> $date() { return $arg1(); }
 
         /**
          * The interval to add to the date
          */
-        @NotNull  Field<? extends Number> $interval();
+        @NotNull  default Field<? extends Number> $interval() { return $arg2(); }
 
         /**
          * The date part describing the interval
          */
-        @Nullable DatePart $datePart();
-
-        /**
-         * The date to add an interval to
-         */
-        @NotNull  DateAdd<T> $date(Field<T> date);
-
-        /**
-         * The interval to add to the date
-         */
-        @NotNull  DateAdd<T> $interval(Field<? extends Number> interval);
-
-        /**
-         * The date part describing the interval
-         */
-        @NotNull  DateAdd<T> $datePart(DatePart datePart);
+        @Nullable default DatePart $datePart() { return $arg3(); }
     }
 
     /**
@@ -4560,12 +4289,12 @@ public final class QOM {
     public /*sealed*/ interface Cardinality
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Object[]>, Field<Integer>>,
             org.jooq.Field<Integer>
         //permits
         //    Cardinality
     {
-        @NotNull  Field<? extends Object[]> $array();
-        @NotNull  Cardinality $array(Field<? extends Object[]> array);
+        @NotNull  default Field<? extends Object[]> $array() { return $arg1(); }
     }
 
     /**
@@ -4576,14 +4305,13 @@ public final class QOM {
     public /*sealed*/ interface ArrayGet<T>
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<T[]>, Field<Integer>, Field<T>>,
             org.jooq.Field<T>
         //permits
         //    ArrayGet
     {
-        @NotNull  Field<T[]> $array();
-        @NotNull  Field<Integer> $index();
-        @NotNull  ArrayGet<T> $array(Field<T[]> array);
-        @NotNull  ArrayGet<T> $index(Field<Integer> index);
+        @NotNull  default Field<T[]> $array() { return $arg1(); }
+        @NotNull  default Field<Integer> $index() { return $arg2(); }
     }
 
     /**
@@ -4593,6 +4321,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Nvl<T>
         extends
+            UOperator2<Field<T>, Field<T>, Field<T>>,
             org.jooq.Field<T>
         //permits
         //    Nvl
@@ -4601,22 +4330,12 @@ public final class QOM {
         /**
          * The nullable value.
          */
-        @NotNull  Field<T> $value();
+        @NotNull  default Field<T> $value() { return $arg1(); }
 
         /**
          * The default value if the other value is null.
          */
-        @NotNull  Field<T> $defaultValue();
-
-        /**
-         * The nullable value.
-         */
-        @NotNull  Nvl<T> $value(Field<T> value);
-
-        /**
-         * The default value if the other value is null.
-         */
-        @NotNull  Nvl<T> $defaultValue(Field<T> defaultValue);
+        @NotNull  default Field<T> $defaultValue() { return $arg2(); }
     }
 
     /**
@@ -4624,6 +4343,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Nullif<T>
         extends
+            UOperator2<Field<T>, Field<T>, Field<T>>,
             org.jooq.Field<T>
         //permits
         //    Nullif
@@ -4632,22 +4352,12 @@ public final class QOM {
         /**
          * The result value if the other value is not equal.
          */
-        @NotNull  Field<T> $value();
+        @NotNull  default Field<T> $value() { return $arg1(); }
 
         /**
          * The value to compare the result value with.
          */
-        @NotNull  Field<T> $other();
-
-        /**
-         * The result value if the other value is not equal.
-         */
-        @NotNull  Nullif<T> $value(Field<T> value);
-
-        /**
-         * The value to compare the result value with.
-         */
-        @NotNull  Nullif<T> $other(Field<T> other);
+        @NotNull  default Field<T> $other() { return $arg2(); }
     }
 
     /**
@@ -4655,8 +4365,8 @@ public final class QOM {
      */
     public /*sealed*/ interface CurrentCatalog
         extends
-            org.jooq.Field<String>,
-            UEmpty
+            UOperator0<Field<String>>,
+            org.jooq.Field<String>
         //permits
         //    CurrentCatalog
     {}
@@ -4666,8 +4376,8 @@ public final class QOM {
      */
     public /*sealed*/ interface CurrentSchema
         extends
-            org.jooq.Field<String>,
-            UEmpty
+            UOperator0<Field<String>>,
+            org.jooq.Field<String>
         //permits
         //    CurrentSchema
     {}
@@ -4677,12 +4387,11 @@ public final class QOM {
      */
     public /*sealed*/ interface CurrentUser
         extends
-            org.jooq.Field<String>,
-            UEmpty
+            UOperator0<Field<String>>,
+            org.jooq.Field<String>
         //permits
         //    CurrentUser
     {}
-
 
 
 
@@ -4829,12 +4538,12 @@ public final class QOM {
      */
     public /*sealed*/ interface XMLComment
         extends
+            UOperator1<Field<String>, Field<XML>>,
             org.jooq.Field<XML>
         //permits
         //    XMLComment
     {
-        @NotNull  Field<String> $comment();
-        @NotNull  XMLComment $comment(Field<String> comment);
+        @NotNull  default Field<String> $comment() { return $arg1(); }
     }
 
     /**
@@ -4842,12 +4551,12 @@ public final class QOM {
      */
     public /*sealed*/ interface XMLConcat
         extends
+            UOperator1<UnmodifiableList<? extends Field<?>>, Field<XML>>,
             org.jooq.Field<XML>
         //permits
         //    XMLConcat
     {
-        @NotNull  UnmodifiableList<? extends Field<?>> $args();
-        @NotNull  XMLConcat $args(Collection<? extends Field<?>> args);
+        @NotNull  default UnmodifiableList<? extends Field<?>> $args() { return $arg1(); }
     }
 
 
@@ -4871,12 +4580,12 @@ public final class QOM {
      */
     public /*sealed*/ interface XMLForest
         extends
+            UOperator1<UnmodifiableList<? extends Field<?>>, Field<XML>>,
             org.jooq.Field<XML>
         //permits
         //    XMLForest
     {
-        @NotNull  UnmodifiableList<? extends Field<?>> $fields();
-        @NotNull  XMLForest $fields(Collection<? extends Field<?>> fields);
+        @NotNull  default UnmodifiableList<? extends Field<?>> $fields() { return $arg1(); }
     }
 
     /**
@@ -4884,14 +4593,13 @@ public final class QOM {
      */
     public /*sealed*/ interface XMLPi
         extends
+            UOperator2<Name, Field<?>, Field<XML>>,
             org.jooq.Field<XML>
         //permits
         //    XMLPi
     {
-        @NotNull  Name $target();
-        @Nullable Field<?> $content();
-        @NotNull  XMLPi $target(Name target);
-        @NotNull  XMLPi $content(Field<?> content);
+        @NotNull  default Name $target() { return $arg1(); }
+        @Nullable default Field<?> $content() { return $arg2(); }
     }
 
     /**
@@ -4899,16 +4607,14 @@ public final class QOM {
      */
     public /*sealed*/ interface XMLSerialize<T>
         extends
+            UOperator3<Boolean, Field<XML>, DataType<T>, Field<T>>,
             org.jooq.Field<T>
         //permits
         //    XMLSerialize
     {
-                  boolean $content();
-        @NotNull  Field<XML> $value();
-        @NotNull  DataType<T> $type();
-        @NotNull  XMLSerialize<T> $content(boolean content);
-        @NotNull  XMLSerialize<T> $value(Field<XML> value);
-        @NotNull  XMLSerialize<T> $type(DataType<T> type);
+        @NotNull  default Boolean $content() { return $arg1(); }
+        @NotNull  default Field<XML> $value() { return $arg2(); }
+        @NotNull  default DataType<T> $type() { return $arg3(); }
     }
 
     /**
@@ -4916,18 +4622,15 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONArray<T>
         extends
+            UOperator4<DataType<T>, UnmodifiableList<? extends Field<?>>, JSONOnNull, DataType<?>, Field<T>>,
             Field<T>
         //permits
         //    JSONArray
     {
-        @NotNull  DataType<T> $type();
-        @NotNull  UnmodifiableList<? extends Field<?>> $fields();
-        @Nullable JSONOnNull $onNull();
-        @Nullable DataType<?> $returning();
-        @NotNull  JSONArray<T> $type(DataType<T> type);
-        @NotNull  JSONArray<T> $fields(Collection<? extends Field<?>> fields);
-        @NotNull  JSONArray<T> $onNull(JSONOnNull onNull);
-        @NotNull  JSONArray<T> $returning(DataType<?> returning);
+        @NotNull  default DataType<T> $type() { return $arg1(); }
+        @NotNull  default UnmodifiableList<? extends Field<?>> $fields() { return $arg2(); }
+        @Nullable default JSONOnNull $onNull() { return $arg3(); }
+        @Nullable default DataType<?> $returning() { return $arg4(); }
     }
 
     /**
@@ -4935,18 +4638,15 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONObject<T>
         extends
+            UOperator4<DataType<T>, UnmodifiableList<? extends JSONEntry<?>>, JSONOnNull, DataType<?>, Field<T>>,
             Field<T>
         //permits
         //    JSONObject
     {
-        @NotNull  DataType<T> $type();
-        @NotNull  UnmodifiableList<? extends JSONEntry<?>> $entries();
-        @Nullable JSONOnNull $onNull();
-        @Nullable DataType<?> $returning();
-        @NotNull  JSONObject<T> $type(DataType<T> type);
-        @NotNull  JSONObject<T> $entries(Collection<? extends JSONEntry<?>> entries);
-        @NotNull  JSONObject<T> $onNull(JSONOnNull onNull);
-        @NotNull  JSONObject<T> $returning(DataType<?> returning);
+        @NotNull  default DataType<T> $type() { return $arg1(); }
+        @NotNull  default UnmodifiableList<? extends JSONEntry<?>> $entries() { return $arg2(); }
+        @Nullable default JSONOnNull $onNull() { return $arg3(); }
+        @Nullable default DataType<?> $returning() { return $arg4(); }
     }
 
     /**
@@ -4957,14 +4657,13 @@ public final class QOM {
     public /*sealed*/ interface JSONGetElement
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<JSON>, Field<Integer>, Field<JSON>>,
             org.jooq.Field<JSON>
         //permits
         //    JSONGetElement
     {
-        @NotNull  Field<JSON> $field();
-        @NotNull  Field<Integer> $index();
-        @NotNull  JSONGetElement $field(Field<JSON> field);
-        @NotNull  JSONGetElement $index(Field<Integer> index);
+        @NotNull  default Field<JSON> $field() { return $arg1(); }
+        @NotNull  default Field<Integer> $index() { return $arg2(); }
     }
 
     /**
@@ -4975,14 +4674,13 @@ public final class QOM {
     public /*sealed*/ interface JSONBGetElement
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<JSONB>, Field<Integer>, Field<JSONB>>,
             org.jooq.Field<JSONB>
         //permits
         //    JSONBGetElement
     {
-        @NotNull  Field<JSONB> $field();
-        @NotNull  Field<Integer> $index();
-        @NotNull  JSONBGetElement $field(Field<JSONB> field);
-        @NotNull  JSONBGetElement $index(Field<Integer> index);
+        @NotNull  default Field<JSONB> $field() { return $arg1(); }
+        @NotNull  default Field<Integer> $index() { return $arg2(); }
     }
 
     /**
@@ -4993,14 +4691,13 @@ public final class QOM {
     public /*sealed*/ interface JSONGetElementAsText
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<JSON>, Field<Integer>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    JSONGetElementAsText
     {
-        @NotNull  Field<JSON> $field();
-        @NotNull  Field<Integer> $index();
-        @NotNull  JSONGetElementAsText $field(Field<JSON> field);
-        @NotNull  JSONGetElementAsText $index(Field<Integer> index);
+        @NotNull  default Field<JSON> $field() { return $arg1(); }
+        @NotNull  default Field<Integer> $index() { return $arg2(); }
     }
 
     /**
@@ -5011,14 +4708,13 @@ public final class QOM {
     public /*sealed*/ interface JSONBGetElementAsText
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<JSONB>, Field<Integer>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    JSONBGetElementAsText
     {
-        @NotNull  Field<JSONB> $field();
-        @NotNull  Field<Integer> $index();
-        @NotNull  JSONBGetElementAsText $field(Field<JSONB> field);
-        @NotNull  JSONBGetElementAsText $index(Field<Integer> index);
+        @NotNull  default Field<JSONB> $field() { return $arg1(); }
+        @NotNull  default Field<Integer> $index() { return $arg2(); }
     }
 
     /**
@@ -5029,14 +4725,13 @@ public final class QOM {
     public /*sealed*/ interface JSONGetAttribute
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<JSON>, Field<String>, Field<JSON>>,
             org.jooq.Field<JSON>
         //permits
         //    JSONGetAttribute
     {
-        @NotNull  Field<JSON> $field();
-        @NotNull  Field<String> $attribute();
-        @NotNull  JSONGetAttribute $field(Field<JSON> field);
-        @NotNull  JSONGetAttribute $attribute(Field<String> attribute);
+        @NotNull  default Field<JSON> $field() { return $arg1(); }
+        @NotNull  default Field<String> $attribute() { return $arg2(); }
     }
 
     /**
@@ -5047,14 +4742,13 @@ public final class QOM {
     public /*sealed*/ interface JSONBGetAttribute
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<JSONB>, Field<String>, Field<JSONB>>,
             org.jooq.Field<JSONB>
         //permits
         //    JSONBGetAttribute
     {
-        @NotNull  Field<JSONB> $field();
-        @NotNull  Field<String> $attribute();
-        @NotNull  JSONBGetAttribute $field(Field<JSONB> field);
-        @NotNull  JSONBGetAttribute $attribute(Field<String> attribute);
+        @NotNull  default Field<JSONB> $field() { return $arg1(); }
+        @NotNull  default Field<String> $attribute() { return $arg2(); }
     }
 
     /**
@@ -5065,14 +4759,13 @@ public final class QOM {
     public /*sealed*/ interface JSONGetAttributeAsText
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<JSON>, Field<String>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    JSONGetAttributeAsText
     {
-        @NotNull  Field<JSON> $field();
-        @NotNull  Field<String> $attribute();
-        @NotNull  JSONGetAttributeAsText $field(Field<JSON> field);
-        @NotNull  JSONGetAttributeAsText $attribute(Field<String> attribute);
+        @NotNull  default Field<JSON> $field() { return $arg1(); }
+        @NotNull  default Field<String> $attribute() { return $arg2(); }
     }
 
     /**
@@ -5084,14 +4777,13 @@ public final class QOM {
     public /*sealed*/ interface JSONBGetAttributeAsText
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<JSONB>, Field<String>, Field<String>>,
             org.jooq.Field<String>
         //permits
         //    JSONBGetAttributeAsText
     {
-        @NotNull  Field<JSONB> $field();
-        @NotNull  Field<String> $attribute();
-        @NotNull  JSONBGetAttributeAsText $field(Field<JSONB> field);
-        @NotNull  JSONBGetAttributeAsText $attribute(Field<String> attribute);
+        @NotNull  default Field<JSONB> $field() { return $arg1(); }
+        @NotNull  default Field<String> $attribute() { return $arg2(); }
     }
 
     /**
@@ -5102,12 +4794,12 @@ public final class QOM {
     public /*sealed*/ interface JSONKeys
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<JSON>, Field<JSON>>,
             org.jooq.Field<JSON>
         //permits
         //    JSONKeys
     {
-        @NotNull  Field<JSON> $field();
-        @NotNull  JSONKeys $field(Field<JSON> field);
+        @NotNull  default Field<JSON> $field() { return $arg1(); }
     }
 
     /**
@@ -5118,12 +4810,12 @@ public final class QOM {
     public /*sealed*/ interface JSONBKeys
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<JSONB>, Field<JSONB>>,
             org.jooq.Field<JSONB>
         //permits
         //    JSONBKeys
     {
-        @NotNull  Field<JSONB> $field();
-        @NotNull  JSONBKeys $field(Field<JSONB> field);
+        @NotNull  default Field<JSONB> $field() { return $arg1(); }
     }
 
     /**
@@ -5133,16 +4825,14 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONSet
         extends
+            UOperator3<Field<JSON>, Field<String>, Field<?>, Field<JSON>>,
             org.jooq.Field<JSON>
         //permits
         //    JSONSet
     {
-        @NotNull  Field<JSON> $field();
-        @NotNull  Field<String> $path();
-        @NotNull  Field<?> $value();
-        @NotNull  JSONSet $field(Field<JSON> field);
-        @NotNull  JSONSet $path(Field<String> path);
-        @NotNull  JSONSet $value(Field<?> value);
+        @NotNull  default Field<JSON> $field() { return $arg1(); }
+        @NotNull  default Field<String> $path() { return $arg2(); }
+        @NotNull  default Field<?> $value() { return $arg3(); }
     }
 
     /**
@@ -5152,16 +4842,14 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONBSet
         extends
+            UOperator3<Field<JSONB>, Field<String>, Field<?>, Field<JSONB>>,
             org.jooq.Field<JSONB>
         //permits
         //    JSONBSet
     {
-        @NotNull  Field<JSONB> $field();
-        @NotNull  Field<String> $path();
-        @NotNull  Field<?> $value();
-        @NotNull  JSONBSet $field(Field<JSONB> field);
-        @NotNull  JSONBSet $path(Field<String> path);
-        @NotNull  JSONBSet $value(Field<?> value);
+        @NotNull  default Field<JSONB> $field() { return $arg1(); }
+        @NotNull  default Field<String> $path() { return $arg2(); }
+        @NotNull  default Field<?> $value() { return $arg3(); }
     }
 
     /**
@@ -5171,16 +4859,14 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONInsert
         extends
+            UOperator3<Field<JSON>, Field<String>, Field<?>, Field<JSON>>,
             org.jooq.Field<JSON>
         //permits
         //    JSONInsert
     {
-        @NotNull  Field<JSON> $field();
-        @NotNull  Field<String> $path();
-        @NotNull  Field<?> $value();
-        @NotNull  JSONInsert $field(Field<JSON> field);
-        @NotNull  JSONInsert $path(Field<String> path);
-        @NotNull  JSONInsert $value(Field<?> value);
+        @NotNull  default Field<JSON> $field() { return $arg1(); }
+        @NotNull  default Field<String> $path() { return $arg2(); }
+        @NotNull  default Field<?> $value() { return $arg3(); }
     }
 
     /**
@@ -5190,16 +4876,14 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONBInsert
         extends
+            UOperator3<Field<JSONB>, Field<String>, Field<?>, Field<JSONB>>,
             org.jooq.Field<JSONB>
         //permits
         //    JSONBInsert
     {
-        @NotNull  Field<JSONB> $field();
-        @NotNull  Field<String> $path();
-        @NotNull  Field<?> $value();
-        @NotNull  JSONBInsert $field(Field<JSONB> field);
-        @NotNull  JSONBInsert $path(Field<String> path);
-        @NotNull  JSONBInsert $value(Field<?> value);
+        @NotNull  default Field<JSONB> $field() { return $arg1(); }
+        @NotNull  default Field<String> $path() { return $arg2(); }
+        @NotNull  default Field<?> $value() { return $arg3(); }
     }
 
     /**
@@ -5209,16 +4893,14 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONReplace
         extends
+            UOperator3<Field<JSON>, Field<String>, Field<?>, Field<JSON>>,
             org.jooq.Field<JSON>
         //permits
         //    JSONReplace
     {
-        @NotNull  Field<JSON> $field();
-        @NotNull  Field<String> $path();
-        @NotNull  Field<?> $value();
-        @NotNull  JSONReplace $field(Field<JSON> field);
-        @NotNull  JSONReplace $path(Field<String> path);
-        @NotNull  JSONReplace $value(Field<?> value);
+        @NotNull  default Field<JSON> $field() { return $arg1(); }
+        @NotNull  default Field<String> $path() { return $arg2(); }
+        @NotNull  default Field<?> $value() { return $arg3(); }
     }
 
     /**
@@ -5228,16 +4910,14 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONBReplace
         extends
+            UOperator3<Field<JSONB>, Field<String>, Field<?>, Field<JSONB>>,
             org.jooq.Field<JSONB>
         //permits
         //    JSONBReplace
     {
-        @NotNull  Field<JSONB> $field();
-        @NotNull  Field<String> $path();
-        @NotNull  Field<?> $value();
-        @NotNull  JSONBReplace $field(Field<JSONB> field);
-        @NotNull  JSONBReplace $path(Field<String> path);
-        @NotNull  JSONBReplace $value(Field<?> value);
+        @NotNull  default Field<JSONB> $field() { return $arg1(); }
+        @NotNull  default Field<String> $path() { return $arg2(); }
+        @NotNull  default Field<?> $value() { return $arg3(); }
     }
 
     /**
@@ -5248,14 +4928,13 @@ public final class QOM {
     public /*sealed*/ interface JSONRemove
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<JSON>, Field<String>, Field<JSON>>,
             org.jooq.Field<JSON>
         //permits
         //    JSONRemove
     {
-        @NotNull  Field<JSON> $field();
-        @NotNull  Field<String> $path();
-        @NotNull  JSONRemove $field(Field<JSON> field);
-        @NotNull  JSONRemove $path(Field<String> path);
+        @NotNull  default Field<JSON> $field() { return $arg1(); }
+        @NotNull  default Field<String> $path() { return $arg2(); }
     }
 
     /**
@@ -5266,14 +4945,13 @@ public final class QOM {
     public /*sealed*/ interface JSONBRemove
         extends
             UReturnsNullOnNullInput,
+            UOperator2<Field<JSONB>, Field<String>, Field<JSONB>>,
             org.jooq.Field<JSONB>
         //permits
         //    JSONBRemove
     {
-        @NotNull  Field<JSONB> $field();
-        @NotNull  Field<String> $path();
-        @NotNull  JSONBRemove $field(Field<JSONB> field);
-        @NotNull  JSONBRemove $path(Field<String> path);
+        @NotNull  default Field<JSONB> $field() { return $arg1(); }
+        @NotNull  default Field<String> $path() { return $arg2(); }
     }
 
 
@@ -5322,12 +5000,12 @@ public final class QOM {
     public /*sealed*/ interface ConditionAsField
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Condition, Field<Boolean>>,
             org.jooq.Field<Boolean>
         //permits
         //    ConditionAsField
     {
-        @NotNull  Condition $condition();
-        @NotNull  ConditionAsField $condition(Condition condition);
+        @NotNull  default Condition $condition() { return $arg1(); }
     }
 
     /**
@@ -5346,12 +5024,12 @@ public final class QOM {
     public /*sealed*/ interface FieldCondition
         extends
             UReturnsNullOnNullInput,
+            UOperator1<Field<Boolean>, Condition>,
             org.jooq.Condition
         //permits
         //    FieldCondition
     {
-        @NotNull  Field<Boolean> $field();
-        @NotNull  FieldCondition $field(Field<Boolean> field);
+        @NotNull  default Field<Boolean> $field() { return $arg1(); }
     }
 
     /**
@@ -6630,8 +6308,6 @@ public final class QOM {
 
 
 
-
-
     /**
      * The <code>Cascade</code> type.
      * <p>
@@ -6999,6 +6675,31 @@ public final class QOM {
     // XXX: Utility API
     // -------------------------------------------------------------------------
 
+    interface UOperator0<R extends org.jooq.QueryPart> extends org.jooq.QueryPart {
+
+        @NotNull
+        Function0<? extends R> $constructor();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
     interface UOperator1<Q1, R extends org.jooq.QueryPart> extends org.jooq.QueryPart {
         Q1 $arg1();
 
@@ -7070,6 +6771,43 @@ public final class QOM {
 
         @NotNull
         Function3<? super Q1, ? super Q2, ? super Q3, ? extends R> $constructor();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    interface UOperator4<Q1, Q2, Q3, Q4, R extends org.jooq.QueryPart> extends org.jooq.QueryPart {
+        Q1 $arg1();
+        Q2 $arg2();
+        Q3 $arg3();
+        Q4 $arg4();
+        @NotNull default R $arg1(Q1 newArg1) { return $constructor().apply(newArg1, $arg2(), $arg3(), $arg4()); }
+        @NotNull default R $arg2(Q2 newArg2) { return $constructor().apply($arg1(), newArg2, $arg3(), $arg4()); }
+        @NotNull default R $arg3(Q3 newArg3) { return $constructor().apply($arg1(), $arg2(), newArg3, $arg4()); }
+        @NotNull default R $arg4(Q4 newArg4) { return $constructor().apply($arg1(), $arg2(), $arg3(), newArg4); }
+
+        @NotNull
+        Function4<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? extends R> $constructor();
+
 
 
 
@@ -7226,6 +6964,15 @@ public final class QOM {
     interface UEmptyTable<R extends Record> extends Table<R>, UEmpty {}
     interface UEmptyStatement extends Statement, UEmpty {}
     interface UEmptyQuery extends Query, UEmpty {}
+
+
+
+
+
+
+
+
+
 
 
 

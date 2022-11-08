@@ -123,39 +123,19 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final UnmodifiableList<? extends Field<?>> $fields() {
+    public final UnmodifiableList<? extends Field<?>> $arg1() {
         return QOM.unmodifiable(fields);
     }
 
     @Override
-    public final QOM.XMLForest $fields(Collection<? extends Field<?>> newValue) {
+    public final QOM.XMLForest $arg1(UnmodifiableList<? extends Field<?>> newValue) {
         return $constructor().apply(newValue);
     }
 
+    @Override
     public final Function1<? super Collection<? extends Field<?>>, ? extends QOM.XMLForest> $constructor() {
         return (a1) -> new XMLForest((Collection<? extends Field<?>>) a1);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

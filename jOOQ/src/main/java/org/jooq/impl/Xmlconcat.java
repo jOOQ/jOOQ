@@ -131,39 +131,19 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final UnmodifiableList<? extends Field<?>> $args() {
+    public final UnmodifiableList<? extends Field<?>> $arg1() {
         return QOM.unmodifiable(args);
     }
 
     @Override
-    public final QOM.XMLConcat $args(Collection<? extends Field<?>> newValue) {
+    public final QOM.XMLConcat $arg1(UnmodifiableList<? extends Field<?>> newValue) {
         return $constructor().apply(newValue);
     }
 
+    @Override
     public final Function1<? super Collection<? extends Field<?>>, ? extends QOM.XMLConcat> $constructor() {
         return (a1) -> new XMLConcat((Collection<? extends Field<?>>) a1);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

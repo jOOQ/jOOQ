@@ -167,51 +167,29 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<T[]> $array() {
+    public final Field<T[]> $arg1() {
         return array;
     }
 
     @Override
-    public final Field<Integer> $index() {
+    public final Field<Integer> $arg2() {
         return index;
     }
 
     @Override
-    public final QOM.ArrayGet<T> $array(Field<T[]> newValue) {
-        return $constructor().apply(newValue, $index());
+    public final QOM.ArrayGet<T> $arg1(Field<T[]> newValue) {
+        return $constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final QOM.ArrayGet<T> $index(Field<Integer> newValue) {
-        return $constructor().apply($array(), newValue);
+    public final QOM.ArrayGet<T> $arg2(Field<Integer> newValue) {
+        return $constructor().apply($arg1(), newValue);
     }
 
+    @Override
     public final Function2<? super Field<T[]>, ? super Field<Integer>, ? extends QOM.ArrayGet<T>> $constructor() {
         return (a1, a2) -> new ArrayGet<>(a1, a2);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

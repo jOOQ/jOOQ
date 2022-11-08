@@ -136,51 +136,29 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<JSON> $field() {
+    public final Field<JSON> $arg1() {
         return field;
     }
 
     @Override
-    public final Field<String> $path() {
+    public final Field<String> $arg2() {
         return path;
     }
 
     @Override
-    public final QOM.JSONRemove $field(Field<JSON> newValue) {
-        return $constructor().apply(newValue, $path());
+    public final QOM.JSONRemove $arg1(Field<JSON> newValue) {
+        return $constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final QOM.JSONRemove $path(Field<String> newValue) {
-        return $constructor().apply($field(), newValue);
+    public final QOM.JSONRemove $arg2(Field<String> newValue) {
+        return $constructor().apply($arg1(), newValue);
     }
 
+    @Override
     public final Function2<? super Field<JSON>, ? super Field<String>, ? extends QOM.JSONRemove> $constructor() {
         return (a1, a2) -> new JSONRemove(a1, a2);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

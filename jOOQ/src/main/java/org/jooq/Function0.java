@@ -35,130 +35,25 @@
  *
  *
  */
-package org.jooq.impl;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+package org.jooq;
+
+import java.util.function.Supplier;
+
+/**
+ * A function of degree 0.
+ *
+ * @author Lukas Eder
+ */
+@FunctionalInterface
+public interface Function0<R> extends Supplier<R> {
+
+    @Override
+    default R get() {
+        return apply();
+    }
+
+    /**
+     * Applies this function to the given arguments.
+     */
+    R apply();
+}

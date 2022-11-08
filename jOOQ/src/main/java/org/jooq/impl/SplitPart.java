@@ -232,63 +232,39 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<String> $string() {
+    public final Field<String> $arg1() {
         return string;
     }
 
     @Override
-    public final Field<String> $delimiter() {
+    public final Field<String> $arg2() {
         return delimiter;
     }
 
     @Override
-    public final Field<? extends Number> $n() {
+    public final Field<? extends Number> $arg3() {
         return n;
     }
 
     @Override
-    public final QOM.SplitPart $string(Field<String> newValue) {
-        return $constructor().apply(newValue, $delimiter(), $n());
+    public final QOM.SplitPart $arg1(Field<String> newValue) {
+        return $constructor().apply(newValue, $arg2(), $arg3());
     }
 
     @Override
-    public final QOM.SplitPart $delimiter(Field<String> newValue) {
-        return $constructor().apply($string(), newValue, $n());
+    public final QOM.SplitPart $arg2(Field<String> newValue) {
+        return $constructor().apply($arg1(), newValue, $arg3());
     }
 
     @Override
-    public final QOM.SplitPart $n(Field<? extends Number> newValue) {
-        return $constructor().apply($string(), $delimiter(), newValue);
+    public final QOM.SplitPart $arg3(Field<? extends Number> newValue) {
+        return $constructor().apply($arg1(), $arg2(), newValue);
     }
 
+    @Override
     public final Function3<? super Field<String>, ? super Field<String>, ? super Field<? extends Number>, ? extends QOM.SplitPart> $constructor() {
         return (a1, a2, a3) -> new SplitPart(a1, a2, a3);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

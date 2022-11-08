@@ -225,6 +225,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsBitNotBitXNor = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsNullOnNullInput = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsIdempotentFunctionRepetition = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsArithmeticExpressions = true;
@@ -2887,6 +2889,41 @@ public class Settings
      */
     public void setTransformPatternsBitNotBitXNor(Boolean value) {
         this.transformPatternsBitNotBitXNor = value;
+    }
+
+    /**
+     * Any {org.jooq.impl.QOM.UReturnsNullOnNullInput} function or expression with <code>NULL</code> arguments can be replaced by <code>NULL</code>.
+     * <p>
+     * There are many built-in SQL functions and operators with a <code>RETURNS NULL ON NULL INPUT</code> property, e.g.
+     * <ul>
+     * <li><code>ABS(NULL)</code></li>
+     * <li><code>MOD(NULL, 1)</code></li>
+     * <li><code>NULL + 1</code></li>
+     * </ul>
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsNullOnNullInput() {
+        return transformPatternsNullOnNullInput;
+    }
+
+    /**
+     * Sets the value of the transformPatternsNullOnNullInput property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsNullOnNullInput(Boolean value) {
+        this.transformPatternsNullOnNullInput = value;
     }
 
     /**
@@ -5740,6 +5777,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsNullOnNullInput(Boolean value) {
+        setTransformPatternsNullOnNullInput(value);
+        return this;
+    }
+
     public Settings withTransformPatternsIdempotentFunctionRepetition(Boolean value) {
         setTransformPatternsIdempotentFunctionRepetition(value);
         return this;
@@ -6693,6 +6735,7 @@ public class Settings
         builder.append("transformPatternsBitNotBitNand", transformPatternsBitNotBitNand);
         builder.append("transformPatternsBitNotBitNor", transformPatternsBitNotBitNor);
         builder.append("transformPatternsBitNotBitXNor", transformPatternsBitNotBitXNor);
+        builder.append("transformPatternsNullOnNullInput", transformPatternsNullOnNullInput);
         builder.append("transformPatternsIdempotentFunctionRepetition", transformPatternsIdempotentFunctionRepetition);
         builder.append("transformPatternsArithmeticExpressions", transformPatternsArithmeticExpressions);
         builder.append("transformPatternsTrigonometricFunctions", transformPatternsTrigonometricFunctions);
@@ -7600,6 +7643,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsBitNotBitXNor.equals(other.transformPatternsBitNotBitXNor)) {
+                return false;
+            }
+        }
+        if (transformPatternsNullOnNullInput == null) {
+            if (other.transformPatternsNullOnNullInput!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsNullOnNullInput.equals(other.transformPatternsNullOnNullInput)) {
                 return false;
             }
         }
@@ -8651,6 +8703,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsBitNotBitNand == null)? 0 :transformPatternsBitNotBitNand.hashCode()));
         result = ((prime*result)+((transformPatternsBitNotBitNor == null)? 0 :transformPatternsBitNotBitNor.hashCode()));
         result = ((prime*result)+((transformPatternsBitNotBitXNor == null)? 0 :transformPatternsBitNotBitXNor.hashCode()));
+        result = ((prime*result)+((transformPatternsNullOnNullInput == null)? 0 :transformPatternsNullOnNullInput.hashCode()));
         result = ((prime*result)+((transformPatternsIdempotentFunctionRepetition == null)? 0 :transformPatternsIdempotentFunctionRepetition.hashCode()));
         result = ((prime*result)+((transformPatternsArithmeticExpressions == null)? 0 :transformPatternsArithmeticExpressions.hashCode()));
         result = ((prime*result)+((transformPatternsTrigonometricFunctions == null)? 0 :transformPatternsTrigonometricFunctions.hashCode()));

@@ -467,39 +467,19 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<? extends Number> $value() {
+    public final Field<? extends Number> $arg1() {
         return value;
     }
 
     @Override
-    public final QOM.BitCount $value(Field<? extends Number> newValue) {
+    public final QOM.BitCount $arg1(Field<? extends Number> newValue) {
         return $constructor().apply(newValue);
     }
 
+    @Override
     public final Function1<? super Field<? extends Number>, ? extends QOM.BitCount> $constructor() {
         return (a1) -> new BitCount(a1);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

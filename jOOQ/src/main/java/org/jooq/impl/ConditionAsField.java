@@ -146,39 +146,19 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Condition $condition() {
+    public final Condition $arg1() {
         return condition;
     }
 
     @Override
-    public final QOM.ConditionAsField $condition(Condition newValue) {
+    public final QOM.ConditionAsField $arg1(Condition newValue) {
         return new ConditionAsField(newValue);
     }
 
+    @Override
     public final Function1<? super Condition, ? extends Field<Boolean>> $constructor() {
         return (a1) -> DSL.field(a1);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

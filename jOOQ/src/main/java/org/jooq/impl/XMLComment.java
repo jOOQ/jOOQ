@@ -128,39 +128,19 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<String> $comment() {
+    public final Field<String> $arg1() {
         return comment;
     }
 
     @Override
-    public final QOM.XMLComment $comment(Field<String> newValue) {
+    public final QOM.XMLComment $arg1(Field<String> newValue) {
         return $constructor().apply(newValue);
     }
 
+    @Override
     public final Function1<? super Field<String>, ? extends QOM.XMLComment> $constructor() {
         return (a1) -> new XMLComment(a1);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

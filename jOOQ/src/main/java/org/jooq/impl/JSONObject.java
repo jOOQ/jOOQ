@@ -292,74 +292,49 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final DataType<T> $type() {
+    public final DataType<T> $arg1() {
         return type;
     }
 
     @Override
-    public final UnmodifiableList<? extends JSONEntry<?>> $entries() {
+    public final UnmodifiableList<? extends JSONEntry<?>> $arg2() {
         return QOM.unmodifiable(entries);
     }
 
     @Override
-    public final JSONOnNull $onNull() {
+    public final JSONOnNull $arg3() {
         return onNull;
     }
 
     @Override
-    public final DataType<?> $returning() {
+    public final DataType<?> $arg4() {
         return returning;
     }
 
     @Override
-    public final QOM.JSONObject<T> $type(DataType<T> newValue) {
-        return $constructor().apply(newValue, $entries(), $onNull(), $returning());
+    public final QOM.JSONObject<T> $arg1(DataType<T> newValue) {
+        return $constructor().apply(newValue, $arg2(), $arg3(), $arg4());
     }
 
     @Override
-    public final QOM.JSONObject<T> $entries(Collection<? extends JSONEntry<?>> newValue) {
-        return $constructor().apply($type(), newValue, $onNull(), $returning());
+    public final QOM.JSONObject<T> $arg2(UnmodifiableList<? extends JSONEntry<?>> newValue) {
+        return $constructor().apply($arg1(), newValue, $arg3(), $arg4());
     }
 
     @Override
-    public final QOM.JSONObject<T> $onNull(JSONOnNull newValue) {
-        return $constructor().apply($type(), $entries(), newValue, $returning());
+    public final QOM.JSONObject<T> $arg3(JSONOnNull newValue) {
+        return $constructor().apply($arg1(), $arg2(), newValue, $arg4());
     }
 
     @Override
-    public final QOM.JSONObject<T> $returning(DataType<?> newValue) {
-        return $constructor().apply($type(), $entries(), $onNull(), newValue);
+    public final QOM.JSONObject<T> $arg4(DataType<?> newValue) {
+        return $constructor().apply($arg1(), $arg2(), $arg3(), newValue);
     }
 
+    @Override
     public final Function4<? super DataType<T>, ? super Collection<? extends JSONEntry<?>>, ? super JSONOnNull, ? super DataType<?>, ? extends QOM.JSONObject<T>> $constructor() {
         return (a1, a2, a3, a4) -> new JSONObject(a1, (Collection<? extends JSONEntry<?>>) a2, a3, a4);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

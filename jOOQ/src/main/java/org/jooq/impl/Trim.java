@@ -168,51 +168,29 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<String> $string() {
+    public final Field<String> $arg1() {
         return string;
     }
 
     @Override
-    public final Field<String> $characters() {
+    public final Field<String> $arg2() {
         return characters;
     }
 
     @Override
-    public final QOM.Trim $string(Field<String> newValue) {
-        return $constructor().apply(newValue, $characters());
+    public final QOM.Trim $arg1(Field<String> newValue) {
+        return $constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final QOM.Trim $characters(Field<String> newValue) {
-        return $constructor().apply($string(), newValue);
+    public final QOM.Trim $arg2(Field<String> newValue) {
+        return $constructor().apply($arg1(), newValue);
     }
 
+    @Override
     public final Function2<? super Field<String>, ? super Field<String>, ? extends QOM.Trim> $constructor() {
         return (a1, a2) -> new Trim(a1, a2);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX: The Object API

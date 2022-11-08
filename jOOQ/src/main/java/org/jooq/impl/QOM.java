@@ -4558,7 +4558,6 @@ public final class QOM {
         //permits
         //    XMLConcat
     {
-        @Override
         @NotNull  default UnmodifiableList<? extends Field<?>> $args() { return $arg1(); }
     }
 
@@ -5592,54 +5591,6 @@ public final class QOM {
         @NotNull  Field<? extends Number> $field();
         @NotNull  VarSamp $field(Field<? extends Number> field);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

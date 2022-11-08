@@ -4557,10 +4557,7 @@ public final class QOM {
             org.jooq.Field<XML>
         //permits
         //    XMLConcat
-    {
-        @Override
-        @NotNull  default UnmodifiableList<? extends Field<?>> $args() { return $arg1(); }
-    }
+    {}
 
 
 

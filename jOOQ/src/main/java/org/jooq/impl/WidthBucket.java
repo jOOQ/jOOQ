@@ -108,12 +108,25 @@ implements
 
 
 
-            case POSTGRES:
-            case YUGABYTEDB:
-                ctx.visit(N_WIDTH_BUCKET).sql('(').visit(field).sql(", ").visit(low).sql(", ").visit(high).sql(", ").visit(buckets).sql(')');
-                break;
 
-            default:
+
+
+
+
+
+
+
+
+
+            case CUBRID:
+            case DERBY:
+            case FIREBIRD:
+            case H2:
+            case HSQLDB:
+            case IGNITE:
+            case MARIADB:
+            case MYSQL:
+            case SQLITE:
                 ctx.visit(
                     DSL.when(field.lt(low), zero())
                        .when(field.ge(high), iadd(buckets, one()))
@@ -125,6 +138,10 @@ implements
                            one()
                        ))
                 );
+                break;
+
+            default:
+                ctx.visit(N_WIDTH_BUCKET).sql('(').visit(field).sql(", ").visit(low).sql(", ").visit(high).sql(", ").visit(buckets).sql(')');
                 break;
         }
     }

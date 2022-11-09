@@ -71,6 +71,7 @@ final class DefaultDiagnosticsContext extends AbstractScope implements Diagnosti
     int                             resultSetFetchedColumnCount;
     int                             resultSetConsumedColumnCount;
     int                             resultSetFetchedRows;
+    boolean                         resultSetFetchedRowsComputed;
     int                             resultSetConsumedRows;
     final String                    actualStatement;
     final String                    normalisedStatement;
@@ -152,15 +153,21 @@ final class DefaultDiagnosticsContext extends AbstractScope implements Diagnosti
         if (resultSet == null)
             return -1;
 
-        try {
-            if (resultSetClosing || resultSet.getType() != ResultSet.TYPE_FORWARD_ONLY) {
-                while (resultSet.next())
-                    resultSetFetchedRows++;
+        // [#14191] Compute this value only once, in order to produce the same
+        //          value for all DiagnosticsListeners
+        if (!resultSetFetchedRowsComputed) {
+            resultSetFetchedRowsComputed = true;
 
-                resultSet.absolute(resultSetConsumedRows);
+            try {
+                if (resultSetClosing || resultSet.getType() != ResultSet.TYPE_FORWARD_ONLY) {
+                    while (resultSet.next())
+                        resultSetFetchedRows++;
+
+                    resultSet.absolute(resultSetConsumedRows);
+                }
             }
+            catch (SQLException ignore) {}
         }
-        catch (SQLException ignore) {}
 
         return resultSetFetchedRows;
     }

@@ -309,6 +309,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean executeLogging = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean diagnosticsLogging = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean updateRecordVersion = true;
     @XmlElement(defaultValue = "true")
     protected Boolean updateRecordTimestamp = true;
@@ -3674,6 +3676,30 @@ public class Settings
     }
 
     /**
+     * When set to true, this will add jOOQ's default logging DiagnosticsListeners.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isDiagnosticsLogging() {
+        return diagnosticsLogging;
+    }
+
+    /**
+     * Sets the value of the diagnosticsLogging property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDiagnosticsLogging(Boolean value) {
+        this.diagnosticsLogging = value;
+    }
+
+    /**
      * Whether store(), insert(), and update() methods should update the record version prior to the operation, for use with {@link #executeWithOptimisticLocking}.
      * 
      * @return
@@ -6068,6 +6094,11 @@ public class Settings
         return this;
     }
 
+    public Settings withDiagnosticsLogging(Boolean value) {
+        setDiagnosticsLogging(value);
+        return this;
+    }
+
     public Settings withUpdateRecordVersion(Boolean value) {
         setUpdateRecordVersion(value);
         return this;
@@ -6767,6 +6798,7 @@ public class Settings
         builder.append("executeListenerStartInvocationOrder", executeListenerStartInvocationOrder);
         builder.append("executeListenerEndInvocationOrder", executeListenerEndInvocationOrder);
         builder.append("executeLogging", executeLogging);
+        builder.append("diagnosticsLogging", diagnosticsLogging);
         builder.append("updateRecordVersion", updateRecordVersion);
         builder.append("updateRecordTimestamp", updateRecordTimestamp);
         builder.append("executeWithOptimisticLocking", executeWithOptimisticLocking);
@@ -7934,6 +7966,15 @@ public class Settings
                 return false;
             }
         }
+        if (diagnosticsLogging == null) {
+            if (other.diagnosticsLogging!= null) {
+                return false;
+            }
+        } else {
+            if (!diagnosticsLogging.equals(other.diagnosticsLogging)) {
+                return false;
+            }
+        }
         if (updateRecordVersion == null) {
             if (other.updateRecordVersion!= null) {
                 return false;
@@ -8735,6 +8776,7 @@ public class Settings
         result = ((prime*result)+((executeListenerStartInvocationOrder == null)? 0 :executeListenerStartInvocationOrder.hashCode()));
         result = ((prime*result)+((executeListenerEndInvocationOrder == null)? 0 :executeListenerEndInvocationOrder.hashCode()));
         result = ((prime*result)+((executeLogging == null)? 0 :executeLogging.hashCode()));
+        result = ((prime*result)+((diagnosticsLogging == null)? 0 :diagnosticsLogging.hashCode()));
         result = ((prime*result)+((updateRecordVersion == null)? 0 :updateRecordVersion.hashCode()));
         result = ((prime*result)+((updateRecordTimestamp == null)? 0 :updateRecordTimestamp.hashCode()));
         result = ((prime*result)+((executeWithOptimisticLocking == null)? 0 :executeWithOptimisticLocking.hashCode()));

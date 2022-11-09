@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
+import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.map;
 
 import java.util.function.Predicate;
@@ -60,7 +61,12 @@ final class DiagnosticsListeners implements DiagnosticsListener {
     }
 
     static final DiagnosticsListeners get(Configuration configuration) {
-        return new DiagnosticsListeners(configuration.diagnosticsListenerProviders());
+        DiagnosticsListenerProvider[] p = configuration.diagnosticsListenerProviders();
+
+        if (!FALSE.equals(configuration.settings().isDiagnosticsLogging()))
+            p = combine(DefaultDiagnosticsListenerProvider.providers(new LoggerDiagnosticsListener()), p);
+
+        return new DiagnosticsListeners(p);
     }
 
     private static final boolean check(DiagnosticsContext ctx, Predicate<? super Settings> test) {

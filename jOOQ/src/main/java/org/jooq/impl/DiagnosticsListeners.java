@@ -64,7 +64,7 @@ final class DiagnosticsListeners implements DiagnosticsListener {
         DiagnosticsListenerProvider[] p = configuration.diagnosticsListenerProviders();
 
         if (!FALSE.equals(configuration.settings().isDiagnosticsLogging()))
-            p = combine(DefaultDiagnosticsListenerProvider.providers(new LoggerDiagnosticsListener()), p);
+            p = combine(DefaultDiagnosticsListenerProvider.providers(new LoggingDiagnosticsListener()), p);
 
         return new DiagnosticsListeners(p);
     }

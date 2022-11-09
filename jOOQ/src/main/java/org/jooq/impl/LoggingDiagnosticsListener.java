@@ -51,9 +51,9 @@ import org.jooq.tools.JooqLogger;
  *
  * @author Lukas Eder
  */
-public class LoggerDiagnosticsListener implements DiagnosticsListener {
+public class LoggingDiagnosticsListener implements DiagnosticsListener {
 
-    private static final JooqLogger log = JooqLogger.getLogger(LoggerDiagnosticsListener.class);
+    private static final JooqLogger log = JooqLogger.getLogger(LoggingDiagnosticsListener.class);
 
     private void log(String text, DiagnosticsContext ctx) {
         log(text, ctx, null);

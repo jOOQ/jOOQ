@@ -57,6 +57,7 @@ import java.util.function.Predicate;
 
 // ...
 import org.jooq.Catalog;
+import org.jooq.CheckReturnValue;
 import org.jooq.Collation;
 import org.jooq.Comment;
 import org.jooq.CommonTableExpression;
@@ -238,8 +239,11 @@ public final class QOM {
             TupleImpl2
     {
         @NotNull Q1 $1();
-        @NotNull Tuple2<Q1, Q2> $1(Q1 newPart1);
         @NotNull Q2 $2();
+
+        @CheckReturnValue
+        @NotNull Tuple2<Q1, Q2> $1(Q1 newPart1);
+        @CheckReturnValue
         @NotNull Tuple2<Q1, Q2> $2(Q2 newPart2);
     }
 
@@ -287,6 +291,7 @@ public final class QOM {
          * UnmodifiableList from the combined data.
          */
         @NotNull
+        @CheckReturnValue
         default UnmodifiableList<Q> $concat(Collection<? extends Q> other) {
             QueryPartList<Q> r = new QueryPartList<>(this);
             r.addAll(other);
@@ -298,6 +303,7 @@ public final class QOM {
          * position.
          */
         @NotNull
+        @CheckReturnValue
         default UnmodifiableList<Q> $remove(int position) {
             QueryPartList<Q> r = new QueryPartList<>();
 
@@ -328,6 +334,7 @@ public final class QOM {
          * Return a new UnmodifiableList without the {@link #$first()} element.
          */
         @NotNull
+        @CheckReturnValue
         default UnmodifiableList<Q> $removeFirst() {
             QueryPartList<Q> r = new QueryPartList<>();
 
@@ -342,6 +349,7 @@ public final class QOM {
          * element.
          */
         @NotNull
+        @CheckReturnValue
         default UnmodifiableList<Q> $removeLast() {
             QueryPartList<Q> r = new QueryPartList<>();
 
@@ -356,6 +364,7 @@ public final class QOM {
          * the argument position.
          */
         @NotNull
+        @CheckReturnValue
         default UnmodifiableList<Q> $set(int position, Q newValue) {
             QueryPartList<Q> r = new QueryPartList<>();
 
@@ -373,6 +382,7 @@ public final class QOM {
          * values at the argument position.
          */
         @NotNull
+        @CheckReturnValue
         default UnmodifiableList<Q> $setAll(int position, Collection<? extends Q> newValues) {
             QueryPartList<Q> r = new QueryPartList<>();
 
@@ -417,27 +427,38 @@ public final class QOM {
     {
         @Nullable With $with();
         @NotNull  Table<R> $into();
+        @CheckReturnValue
         @NotNull  Insert<?> $into(Table<?> into);
         @NotNull  UnmodifiableList<? extends Field<?>> $columns();
+        @CheckReturnValue
         @NotNull  Insert<?> $columns(Collection<? extends Field<?>> columns);
         @Nullable Select<?> $select();
+        @CheckReturnValue
         @NotNull  Insert<?> $select(Select<?> select);
                   boolean $defaultValues();
+        @CheckReturnValue
         @NotNull  Insert<?> $defaultValues(boolean defaultValues);
         @NotNull  UnmodifiableList<? extends Row> $values();
+        @CheckReturnValue
         @NotNull  Insert<?> $values(Collection<? extends Row> values);
                   boolean $onDuplicateKeyIgnore();
+        @CheckReturnValue
         @NotNull  Insert<?> $onDuplicateKeyIgnore(boolean onDuplicateKeyIgnore);
                   boolean $onDuplicateKeyUpdate();
+        @CheckReturnValue
         @NotNull  Insert<?> $onDuplicateKeyUpdate(boolean onDuplicateKeyUpdate);
         @NotNull  UnmodifiableList<? extends Field<?>> $onConflict();
+        @CheckReturnValue
         @NotNull  Insert<?> $onConflict(Collection<? extends Field<?>> onConflictFields);
         // [#13640] TODO: What to do about the CONSTRAINT? Re-design this model?
         @Nullable Condition $onConflictWhere();
+        @CheckReturnValue
         @NotNull  Insert<?> $onConflictWhere(Condition where);
         @NotNull  UnmodifiableMap<? extends FieldOrRow, ? extends FieldOrRowOrSelect> $updateSet();
+        @CheckReturnValue
         @NotNull  Insert<?> $updateSet(Map<? extends FieldOrRow, ? extends FieldOrRowOrSelect> updateSet);
         @Nullable Condition $updateWhere();
+        @CheckReturnValue
         @NotNull  Insert<?> $updateWhere(Condition where);
     }
 
@@ -448,8 +469,10 @@ public final class QOM {
             InsertAsResultQuery
     {
         @NotNull Insert<?> $insert();
+        @CheckReturnValue
         @NotNull InsertReturning<R> $insert(Insert<?> insert);
         @NotNull UnmodifiableList<? extends SelectFieldOrAsterisk> $returning();
+        @CheckReturnValue
         @NotNull InsertReturning<?> $returning(Collection<? extends SelectFieldOrAsterisk> returning);
     }
 
@@ -462,16 +485,22 @@ public final class QOM {
     {
         @Nullable With $with();
         @NotNull  Table<R> $table();
+        @CheckReturnValue
         @NotNull  Update<?> $table(Table<?> table);
         @NotNull  UnmodifiableList<? extends Table<?>> $from();
+        @CheckReturnValue
         @NotNull  Update<R> $from(Collection<? extends Table<?>> from);
         @NotNull  UnmodifiableMap<? extends FieldOrRow, ? extends FieldOrRowOrSelect> $set();
+        @CheckReturnValue
         @NotNull  Update<R> $set(Map<? extends FieldOrRow, ? extends FieldOrRowOrSelect> set);
         @Nullable Condition $where();
+        @CheckReturnValue
         @NotNull  Update<R> $where(Condition condition);
         @NotNull  UnmodifiableList<? extends SortField<?>> $orderBy();
+        @CheckReturnValue
         @NotNull  Update<R> $orderBy(Collection<? extends SortField<?>> orderBy);
         @Nullable Field<? extends Number> $limit();
+        @CheckReturnValue
         @NotNull  Update<R> $limit(Field<? extends Number> limit);
     }
 
@@ -482,8 +511,10 @@ public final class QOM {
             UpdateAsResultQuery
     {
         @NotNull Update<?> $update();
+        @CheckReturnValue
         @NotNull UpdateReturning<R> $update(Update<?> update);
         @NotNull UnmodifiableList<? extends SelectFieldOrAsterisk> $returning();
+        @CheckReturnValue
         @NotNull UpdateReturning<?> $returning(Collection<? extends SelectFieldOrAsterisk> returning);
     }
 
@@ -496,14 +527,19 @@ public final class QOM {
     {
         @Nullable With $with();
         @NotNull  Table<R> $from();
+        @CheckReturnValue
         @NotNull  Delete<?> $from(Table<?> table);
         @NotNull  UnmodifiableList<? extends Table<?>> $using();
+        @CheckReturnValue
         @NotNull  Delete<R> $using(Collection<? extends Table<?>> using);
         @Nullable Condition $where();
+        @CheckReturnValue
         @NotNull  Delete<R> $where(Condition condition);
         @NotNull  UnmodifiableList<? extends SortField<?>> $orderBy();
+        @CheckReturnValue
         @NotNull  Delete<R> $orderBy(Collection<? extends SortField<?>> orderBy);
         @Nullable Field<? extends Number> $limit();
+        @CheckReturnValue
         @NotNull  Delete<R> $limit(Field<? extends Number> limit);
     }
 
@@ -514,8 +550,10 @@ public final class QOM {
             DeleteAsResultQuery
     {
         @NotNull Delete<?> $delete();
+        @CheckReturnValue
         @NotNull DeleteReturning<R> $delete(Delete<?> delete);
         @NotNull UnmodifiableList<? extends SelectFieldOrAsterisk> $returning();
+        @CheckReturnValue
         @NotNull DeleteReturning<?> $returning(Collection<? extends SelectFieldOrAsterisk> returning);
     }
 
@@ -1227,10 +1265,13 @@ public final class QOM {
             UOperator3<Field<V>, UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>>, Field<T>, CaseSimple<V, T>>
     {
         @NotNull  default Field<V> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull  default CaseSimple<V, T> $value(Field<V> value) { return $arg1(value); }
         @NotNull  default UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>> $when() { return $arg2(); }
+        @CheckReturnValue
         @NotNull  default CaseSimple<V, T> $when(UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>> when) { return $arg2(when); }
         @Nullable default Field<T> $else() { return $arg3(); }
+        @CheckReturnValue
         @NotNull  default CaseSimple<V, T> $else(Field<T> else_) { return $arg3(else_); }
     }
 
@@ -1240,8 +1281,10 @@ public final class QOM {
             UOperator2<UnmodifiableList<? extends Tuple2<Condition, Field<T>>>, Field<T>, CaseSearched<T>>
     {
         @NotNull  default UnmodifiableList<? extends Tuple2<Condition, Field<T>>> $when() { return $arg1(); }
+        @CheckReturnValue
         @NotNull  default CaseSearched<T> $when(UnmodifiableList<? extends Tuple2<Condition, Field<T>>> when) { return $arg1(when); }
         @Nullable default Field<T> $else() { return $arg2(); }
+        @CheckReturnValue
         @NotNull  default CaseSearched<T> $else(Field<T> else_) { return $arg2(else_); }
     }
 
@@ -1251,10 +1294,13 @@ public final class QOM {
             UOperator3<Field<V>, UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>>, Field<T>, Decode<V, T>>
     {
         @NotNull  default Field<V> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull  default Decode<V, T> $value(Field<V> value) { return $arg1(value); }
         @NotNull  default UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>> $when() { return $arg2(); }
+        @CheckReturnValue
         @NotNull  default Decode<V, T> $when(UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>> when) { return $arg2(when); }
         @Nullable default Field<T> $else() { return $arg3(); }
+        @CheckReturnValue
         @NotNull  default Decode<V, T> $else(Field<T> else_) { return $arg3(else_); }
     }
 
@@ -1368,8 +1414,11 @@ public final class QOM {
         @NotNull  Catalog $database();
                   boolean $ifExists();
         @NotNull  Catalog $renameTo();
+        @CheckReturnValue
         @NotNull  AlterDatabase $database(Catalog database);
+        @CheckReturnValue
         @NotNull  AlterDatabase $ifExists(boolean ifExists);
+        @CheckReturnValue
         @NotNull  AlterDatabase $renameTo(Catalog renameTo);
     }
 
@@ -1396,19 +1445,33 @@ public final class QOM {
                   boolean $dropNotNull();
         @Nullable Cascade $cascade();
         @Nullable Constraint $renameConstraintTo();
+        @CheckReturnValue
         @NotNull  AlterDomain<T> $domain(Domain<T> domain);
+        @CheckReturnValue
         @NotNull  AlterDomain<T> $ifExists(boolean ifExists);
+        @CheckReturnValue
         @NotNull  AlterDomain<T> $addConstraint(Constraint addConstraint);
+        @CheckReturnValue
         @NotNull  AlterDomain<T> $dropConstraint(Constraint dropConstraint);
+        @CheckReturnValue
         @NotNull  AlterDomain<T> $dropConstraintIfExists(boolean dropConstraintIfExists);
+        @CheckReturnValue
         @NotNull  AlterDomain<T> $renameTo(Domain<?> renameTo);
+        @CheckReturnValue
         @NotNull  AlterDomain<T> $renameConstraint(Constraint renameConstraint);
+        @CheckReturnValue
         @NotNull  AlterDomain<T> $renameConstraintIfExists(boolean renameConstraintIfExists);
+        @CheckReturnValue
         @NotNull  AlterDomain<T> $setDefault(Field<T> setDefault);
+        @CheckReturnValue
         @NotNull  AlterDomain<T> $dropDefault(boolean dropDefault);
+        @CheckReturnValue
         @NotNull  AlterDomain<T> $setNotNull(boolean setNotNull);
+        @CheckReturnValue
         @NotNull  AlterDomain<T> $dropNotNull(boolean dropNotNull);
+        @CheckReturnValue
         @NotNull  AlterDomain<T> $cascade(Cascade cascade);
+        @CheckReturnValue
         @NotNull  AlterDomain<T> $renameConstraintTo(Constraint renameConstraintTo);
     }
 
@@ -1425,9 +1488,13 @@ public final class QOM {
                   boolean $ifExists();
         @Nullable Table<?> $on();
         @NotNull  Index $renameTo();
+        @CheckReturnValue
         @NotNull  AlterIndex $index(Index index);
+        @CheckReturnValue
         @NotNull  AlterIndex $ifExists(boolean ifExists);
+        @CheckReturnValue
         @NotNull  AlterIndex $on(Table<?> on);
+        @CheckReturnValue
         @NotNull  AlterIndex $renameTo(Index renameTo);
     }
 
@@ -1443,8 +1510,11 @@ public final class QOM {
         @NotNull  Schema $schema();
                   boolean $ifExists();
         @NotNull  Schema $renameTo();
+        @CheckReturnValue
         @NotNull  AlterSchema $schema(Schema schema);
+        @CheckReturnValue
         @NotNull  AlterSchema $ifExists(boolean ifExists);
+        @CheckReturnValue
         @NotNull  AlterSchema $renameTo(Schema renameTo);
     }
 
@@ -1471,19 +1541,33 @@ public final class QOM {
         @Nullable CycleOption $cycle();
         @Nullable Field<T> $cache();
                   boolean $noCache();
+        @CheckReturnValue
         @NotNull  AlterSequence<T> $sequence(Sequence<T> sequence);
+        @CheckReturnValue
         @NotNull  AlterSequence<T> $ifExists(boolean ifExists);
+        @CheckReturnValue
         @NotNull  AlterSequence<T> $renameTo(Sequence<?> renameTo);
+        @CheckReturnValue
         @NotNull  AlterSequence<T> $restart(boolean restart);
+        @CheckReturnValue
         @NotNull  AlterSequence<T> $restartWith(Field<T> restartWith);
+        @CheckReturnValue
         @NotNull  AlterSequence<T> $startWith(Field<T> startWith);
+        @CheckReturnValue
         @NotNull  AlterSequence<T> $incrementBy(Field<T> incrementBy);
+        @CheckReturnValue
         @NotNull  AlterSequence<T> $minvalue(Field<T> minvalue);
+        @CheckReturnValue
         @NotNull  AlterSequence<T> $noMinvalue(boolean noMinvalue);
+        @CheckReturnValue
         @NotNull  AlterSequence<T> $maxvalue(Field<T> maxvalue);
+        @CheckReturnValue
         @NotNull  AlterSequence<T> $noMaxvalue(boolean noMaxvalue);
+        @CheckReturnValue
         @NotNull  AlterSequence<T> $cycle(CycleOption cycle);
+        @CheckReturnValue
         @NotNull  AlterSequence<T> $cache(Field<T> cache);
+        @CheckReturnValue
         @NotNull  AlterSequence<T> $noCache(boolean noCache);
     }
 
@@ -1502,11 +1586,17 @@ public final class QOM {
         @Nullable Field<String> $addValue();
         @Nullable Field<String> $renameValue();
         @Nullable Field<String> $renameValueTo();
+        @CheckReturnValue
         @NotNull  AlterType $type(Name type);
+        @CheckReturnValue
         @NotNull  AlterType $renameTo(Name renameTo);
+        @CheckReturnValue
         @NotNull  AlterType $setSchema(Schema setSchema);
+        @CheckReturnValue
         @NotNull  AlterType $addValue(Field<String> addValue);
+        @CheckReturnValue
         @NotNull  AlterType $renameValue(Field<String> renameValue);
+        @CheckReturnValue
         @NotNull  AlterType $renameValueTo(Field<String> renameValueTo);
     }
 
@@ -1525,11 +1615,17 @@ public final class QOM {
         @Nullable Comment $comment();
         @Nullable Table<?> $renameTo();
         @Nullable Select<?> $as();
+        @CheckReturnValue
         @NotNull  AlterView $view(Table<?> view);
+        @CheckReturnValue
         @NotNull  AlterView $fields(Collection<? extends Field<?>> fields);
+        @CheckReturnValue
         @NotNull  AlterView $ifExists(boolean ifExists);
+        @CheckReturnValue
         @NotNull  AlterView $comment(Comment comment);
+        @CheckReturnValue
         @NotNull  AlterView $renameTo(Table<?> renameTo);
+        @CheckReturnValue
         @NotNull  AlterView $as(Select<?> as);
     }
 
@@ -1546,9 +1642,13 @@ public final class QOM {
                   boolean $isView();
         @Nullable Field<?> $field();
         @NotNull  Comment $comment();
+        @CheckReturnValue
         @NotNull  CommentOn $table(Table<?> table);
+        @CheckReturnValue
         @NotNull  CommentOn $isView(boolean isView);
+        @CheckReturnValue
         @NotNull  CommentOn $field(Field<?> field);
+        @CheckReturnValue
         @NotNull  CommentOn $comment(Comment comment);
     }
 
@@ -1563,7 +1663,9 @@ public final class QOM {
     {
         @NotNull  Catalog $database();
                   boolean $ifNotExists();
+        @CheckReturnValue
         @NotNull  CreateDatabase $database(Catalog database);
+        @CheckReturnValue
         @NotNull  CreateDatabase $ifNotExists(boolean ifNotExists);
     }
 
@@ -1581,12 +1683,26 @@ public final class QOM {
         @NotNull  DataType<T> $dataType();
         @Nullable Field<T> $default_();
         @NotNull  UnmodifiableList<? extends Constraint> $constraints();
+        @CheckReturnValue
         @NotNull  CreateDomain<T> $domain(Domain<?> domain);
+        @CheckReturnValue
         @NotNull  CreateDomain<T> $ifNotExists(boolean ifNotExists);
+        @CheckReturnValue
         @NotNull  CreateDomain<T> $dataType(DataType<T> dataType);
+        @CheckReturnValue
         @NotNull  CreateDomain<T> $default_(Field<T> default_);
+        @CheckReturnValue
         @NotNull  CreateDomain<T> $constraints(Collection<? extends Constraint> constraints);
     }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1637,15 +1753,28 @@ public final class QOM {
         @NotNull  UnmodifiableList<? extends Field<?>> $include();
         @Nullable Condition $where();
                   boolean $excludeNullKeys();
+        @CheckReturnValue
         @NotNull  CreateIndex $unique(boolean unique);
+        @CheckReturnValue
         @NotNull  CreateIndex $index(Index index);
+        @CheckReturnValue
         @NotNull  CreateIndex $ifNotExists(boolean ifNotExists);
+        @CheckReturnValue
         @NotNull  CreateIndex $table(Table<?> table);
+        @CheckReturnValue
         @NotNull  CreateIndex $on(Collection<? extends OrderField<?>> on);
+        @CheckReturnValue
         @NotNull  CreateIndex $include(Collection<? extends Field<?>> include);
+        @CheckReturnValue
         @NotNull  CreateIndex $where(Condition where);
+        @CheckReturnValue
         @NotNull  CreateIndex $excludeNullKeys(boolean excludeNullKeys);
     }
+
+
+
+
+
 
 
 
@@ -1689,16 +1818,41 @@ public final class QOM {
         @Nullable TableCommitAction $onCommit();
         @Nullable Comment $comment();
         @Nullable SQL $storage();
+        @CheckReturnValue
         @NotNull  CreateTable $table(Table<?> table);
+        @CheckReturnValue
         @NotNull  CreateTable $temporary(boolean temporary);
+        @CheckReturnValue
         @NotNull  CreateTable $ifNotExists(boolean ifNotExists);
+        @CheckReturnValue
         @NotNull  CreateTable $tableElements(Collection<? extends TableElement> tableElements);
+        @CheckReturnValue
         @NotNull  CreateTable $select(Select<?> select);
+        @CheckReturnValue
         @NotNull  CreateTable $withData(WithOrWithoutData withData);
+        @CheckReturnValue
         @NotNull  CreateTable $onCommit(TableCommitAction onCommit);
+        @CheckReturnValue
         @NotNull  CreateTable $comment(Comment comment);
+        @CheckReturnValue
         @NotNull  CreateTable $storage(SQL storage);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1757,7 +1911,9 @@ public final class QOM {
     {
         @NotNull  Schema $schema();
                   boolean $ifNotExists();
+        @CheckReturnValue
         @NotNull  CreateSchema $schema(Schema schema);
+        @CheckReturnValue
         @NotNull  CreateSchema $ifNotExists(boolean ifNotExists);
     }
 
@@ -1781,16 +1937,27 @@ public final class QOM {
         @Nullable CycleOption $cycle();
         @Nullable Field<? extends Number> $cache();
                   boolean $noCache();
+        @CheckReturnValue
         @NotNull  CreateSequence $sequence(Sequence<?> sequence);
+        @CheckReturnValue
         @NotNull  CreateSequence $ifNotExists(boolean ifNotExists);
+        @CheckReturnValue
         @NotNull  CreateSequence $startWith(Field<? extends Number> startWith);
+        @CheckReturnValue
         @NotNull  CreateSequence $incrementBy(Field<? extends Number> incrementBy);
+        @CheckReturnValue
         @NotNull  CreateSequence $minvalue(Field<? extends Number> minvalue);
+        @CheckReturnValue
         @NotNull  CreateSequence $noMinvalue(boolean noMinvalue);
+        @CheckReturnValue
         @NotNull  CreateSequence $maxvalue(Field<? extends Number> maxvalue);
+        @CheckReturnValue
         @NotNull  CreateSequence $noMaxvalue(boolean noMaxvalue);
+        @CheckReturnValue
         @NotNull  CreateSequence $cycle(CycleOption cycle);
+        @CheckReturnValue
         @NotNull  CreateSequence $cache(Field<? extends Number> cache);
+        @CheckReturnValue
         @NotNull  CreateSequence $noCache(boolean noCache);
     }
 
@@ -1805,7 +1972,9 @@ public final class QOM {
     {
         @NotNull  Catalog $database();
                   boolean $ifExists();
+        @CheckReturnValue
         @NotNull  DropDatabase $database(Catalog database);
+        @CheckReturnValue
         @NotNull  DropDatabase $ifExists(boolean ifExists);
     }
 
@@ -1821,10 +1990,15 @@ public final class QOM {
         @NotNull  Domain<?> $domain();
                   boolean $ifExists();
         @Nullable Cascade $cascade();
+        @CheckReturnValue
         @NotNull  DropDomain $domain(Domain<?> domain);
+        @CheckReturnValue
         @NotNull  DropDomain $ifExists(boolean ifExists);
+        @CheckReturnValue
         @NotNull  DropDomain $cascade(Cascade cascade);
     }
+
+
 
 
 
@@ -1857,11 +2031,17 @@ public final class QOM {
                   boolean $ifExists();
         @Nullable Table<?> $on();
         @Nullable Cascade $cascade();
+        @CheckReturnValue
         @NotNull  DropIndex $index(Index index);
+        @CheckReturnValue
         @NotNull  DropIndex $ifExists(boolean ifExists);
+        @CheckReturnValue
         @NotNull  DropIndex $on(Table<?> on);
+        @CheckReturnValue
         @NotNull  DropIndex $cascade(Cascade cascade);
     }
+
+
 
 
 
@@ -1893,8 +2073,11 @@ public final class QOM {
         @NotNull  Schema $schema();
                   boolean $ifExists();
         @Nullable Cascade $cascade();
+        @CheckReturnValue
         @NotNull  DropSchema $schema(Schema schema);
+        @CheckReturnValue
         @NotNull  DropSchema $ifExists(boolean ifExists);
+        @CheckReturnValue
         @NotNull  DropSchema $cascade(Cascade cascade);
     }
 
@@ -1909,7 +2092,9 @@ public final class QOM {
     {
         @NotNull  Sequence<?> $sequence();
                   boolean $ifExists();
+        @CheckReturnValue
         @NotNull  DropSequence $sequence(Sequence<?> sequence);
+        @CheckReturnValue
         @NotNull  DropSequence $ifExists(boolean ifExists);
     }
 
@@ -1926,11 +2111,17 @@ public final class QOM {
         @NotNull  Table<?> $table();
                   boolean $ifExists();
         @Nullable Cascade $cascade();
+        @CheckReturnValue
         @NotNull  DropTable $temporary(boolean temporary);
+        @CheckReturnValue
         @NotNull  DropTable $table(Table<?> table);
+        @CheckReturnValue
         @NotNull  DropTable $ifExists(boolean ifExists);
+        @CheckReturnValue
         @NotNull  DropTable $cascade(Cascade cascade);
     }
+
+
 
 
 
@@ -1961,7 +2152,9 @@ public final class QOM {
     {
         @NotNull  Table<?> $view();
                   boolean $ifExists();
+        @CheckReturnValue
         @NotNull  DropView $view(Table<?> view);
+        @CheckReturnValue
         @NotNull  DropView $ifExists(boolean ifExists);
     }
 
@@ -1979,10 +2172,15 @@ public final class QOM {
         @Nullable Role $to();
                   boolean $toPublic();
                   boolean $withGrantOption();
+        @CheckReturnValue
         @NotNull  Grant $privileges(Collection<? extends Privilege> privileges);
+        @CheckReturnValue
         @NotNull  Grant $on(Table<?> on);
+        @CheckReturnValue
         @NotNull  Grant $to(Role to);
+        @CheckReturnValue
         @NotNull  Grant $toPublic(boolean toPublic);
+        @CheckReturnValue
         @NotNull  Grant $withGrantOption(boolean withGrantOption);
     }
 
@@ -2000,10 +2198,15 @@ public final class QOM {
         @NotNull  Table<?> $on();
         @Nullable Role $from();
                   boolean $fromPublic();
+        @CheckReturnValue
         @NotNull  Revoke $privileges(Collection<? extends Privilege> privileges);
+        @CheckReturnValue
         @NotNull  Revoke $grantOptionFor(boolean grantOptionFor);
+        @CheckReturnValue
         @NotNull  Revoke $on(Table<?> on);
+        @CheckReturnValue
         @NotNull  Revoke $from(Role from);
+        @CheckReturnValue
         @NotNull  Revoke $fromPublic(boolean fromPublic);
     }
 
@@ -2021,8 +2224,11 @@ public final class QOM {
         @NotNull  Name $name();
         @NotNull  Param<?> $value();
                   boolean $local();
+        @CheckReturnValue
         @NotNull  SetCommand $name(Name name);
+        @CheckReturnValue
         @NotNull  SetCommand $value(Param<?> value);
+        @CheckReturnValue
         @NotNull  SetCommand $local(boolean local);
     }
 
@@ -2038,6 +2244,7 @@ public final class QOM {
         //    SetCatalog
     {
         @NotNull  Catalog $catalog();
+        @CheckReturnValue
         @NotNull  SetCatalog $catalog(Catalog catalog);
     }
 
@@ -2053,6 +2260,7 @@ public final class QOM {
         //    SetSchema
     {
         @NotNull  Schema $schema();
+        @CheckReturnValue
         @NotNull  SetSchema $schema(Schema schema);
     }
 
@@ -2068,10 +2276,15 @@ public final class QOM {
         @NotNull  Table<R> $table();
         @Nullable IdentityRestartOption $restartIdentity();
         @Nullable Cascade $cascade();
+        @CheckReturnValue
         @NotNull  Truncate<R> $table(Table<R> table);
+        @CheckReturnValue
         @NotNull  Truncate<R> $restartIdentity(IdentityRestartOption restartIdentity);
+        @CheckReturnValue
         @NotNull  Truncate<R> $cascade(Cascade cascade);
     }
+
+
 
 
 
@@ -5044,6 +5257,7 @@ public final class QOM {
         //    AnyValue
     {
         @NotNull  Field<T> $field();
+        @CheckReturnValue
         @NotNull  AnyValue<T> $field(Field<T> field);
     }
 
@@ -5058,7 +5272,9 @@ public final class QOM {
     {
         @NotNull  Field<? extends Number> $field();
                   boolean $distinct();
+        @CheckReturnValue
         @NotNull  Avg $field(Field<? extends Number> field);
+        @CheckReturnValue
         @NotNull  Avg $distinct(boolean distinct);
     }
 
@@ -5074,6 +5290,7 @@ public final class QOM {
         //    BitAndAgg
     {
         @NotNull  Field<T> $value();
+        @CheckReturnValue
         @NotNull  BitAndAgg<T> $value(Field<T> value);
     }
 
@@ -5089,6 +5306,7 @@ public final class QOM {
         //    BitOrAgg
     {
         @NotNull  Field<T> $value();
+        @CheckReturnValue
         @NotNull  BitOrAgg<T> $value(Field<T> value);
     }
 
@@ -5104,6 +5322,7 @@ public final class QOM {
         //    BitXorAgg
     {
         @NotNull  Field<T> $value();
+        @CheckReturnValue
         @NotNull  BitXorAgg<T> $value(Field<T> value);
     }
 
@@ -5119,6 +5338,7 @@ public final class QOM {
         //    BitNandAgg
     {
         @NotNull  Field<T> $value();
+        @CheckReturnValue
         @NotNull  BitNandAgg<T> $value(Field<T> value);
     }
 
@@ -5134,6 +5354,7 @@ public final class QOM {
         //    BitNorAgg
     {
         @NotNull  Field<T> $value();
+        @CheckReturnValue
         @NotNull  BitNorAgg<T> $value(Field<T> value);
     }
 
@@ -5149,6 +5370,7 @@ public final class QOM {
         //    BitXNorAgg
     {
         @NotNull  Field<T> $value();
+        @CheckReturnValue
         @NotNull  BitXNorAgg<T> $value(Field<T> value);
     }
 
@@ -5162,6 +5384,7 @@ public final class QOM {
         //    BoolAnd
     {
         @NotNull  Condition $condition();
+        @CheckReturnValue
         @NotNull  BoolAnd $condition(Condition condition);
     }
 
@@ -5175,6 +5398,7 @@ public final class QOM {
         //    BoolOr
     {
         @NotNull  Condition $condition();
+        @CheckReturnValue
         @NotNull  BoolOr $condition(Condition condition);
     }
 
@@ -5194,7 +5418,9 @@ public final class QOM {
     {
         @NotNull  Field<? extends Number> $y();
         @NotNull  Field<? extends Number> $x();
+        @CheckReturnValue
         @NotNull  Corr $y(Field<? extends Number> y);
+        @CheckReturnValue
         @NotNull  Corr $x(Field<? extends Number> x);
     }
 
@@ -5209,7 +5435,9 @@ public final class QOM {
     {
         @NotNull  Field<?> $field();
                   boolean $distinct();
+        @CheckReturnValue
         @NotNull  Count $field(Field<?> field);
+        @CheckReturnValue
         @NotNull  Count $distinct(boolean distinct);
     }
 
@@ -5229,7 +5457,9 @@ public final class QOM {
     {
         @NotNull  Field<? extends Number> $y();
         @NotNull  Field<? extends Number> $x();
+        @CheckReturnValue
         @NotNull  CovarSamp $y(Field<? extends Number> y);
+        @CheckReturnValue
         @NotNull  CovarSamp $x(Field<? extends Number> x);
     }
 
@@ -5249,7 +5479,9 @@ public final class QOM {
     {
         @NotNull  Field<? extends Number> $y();
         @NotNull  Field<? extends Number> $x();
+        @CheckReturnValue
         @NotNull  CovarPop $y(Field<? extends Number> y);
+        @CheckReturnValue
         @NotNull  CovarPop $x(Field<? extends Number> x);
     }
 
@@ -5264,7 +5496,9 @@ public final class QOM {
     {
         @NotNull  Field<T> $field();
                   boolean $distinct();
+        @CheckReturnValue
         @NotNull  Max<T> $field(Field<T> field);
+        @CheckReturnValue
         @NotNull  Max<T> $distinct(boolean distinct);
     }
 
@@ -5278,6 +5512,7 @@ public final class QOM {
         //    Median
     {
         @NotNull  Field<? extends Number> $field();
+        @CheckReturnValue
         @NotNull  Median $field(Field<? extends Number> field);
     }
 
@@ -5292,7 +5527,9 @@ public final class QOM {
     {
         @NotNull  Field<T> $field();
                   boolean $distinct();
+        @CheckReturnValue
         @NotNull  Min<T> $field(Field<T> field);
+        @CheckReturnValue
         @NotNull  Min<T> $distinct(boolean distinct);
     }
 
@@ -5319,7 +5556,9 @@ public final class QOM {
     {
         @NotNull  Field<? extends Number> $field();
                   boolean $distinct();
+        @CheckReturnValue
         @NotNull  Product $field(Field<? extends Number> field);
+        @CheckReturnValue
         @NotNull  Product $distinct(boolean distinct);
     }
 
@@ -5339,7 +5578,9 @@ public final class QOM {
     {
         @NotNull  Field<? extends Number> $y();
         @NotNull  Field<? extends Number> $x();
+        @CheckReturnValue
         @NotNull  RegrAvgX $y(Field<? extends Number> y);
+        @CheckReturnValue
         @NotNull  RegrAvgX $x(Field<? extends Number> x);
     }
 
@@ -5359,7 +5600,9 @@ public final class QOM {
     {
         @NotNull  Field<? extends Number> $y();
         @NotNull  Field<? extends Number> $x();
+        @CheckReturnValue
         @NotNull  RegrAvgY $y(Field<? extends Number> y);
+        @CheckReturnValue
         @NotNull  RegrAvgY $x(Field<? extends Number> x);
     }
 
@@ -5379,7 +5622,9 @@ public final class QOM {
     {
         @NotNull  Field<? extends Number> $y();
         @NotNull  Field<? extends Number> $x();
+        @CheckReturnValue
         @NotNull  RegrCount $y(Field<? extends Number> y);
+        @CheckReturnValue
         @NotNull  RegrCount $x(Field<? extends Number> x);
     }
 
@@ -5399,7 +5644,9 @@ public final class QOM {
     {
         @NotNull  Field<? extends Number> $y();
         @NotNull  Field<? extends Number> $x();
+        @CheckReturnValue
         @NotNull  RegrIntercept $y(Field<? extends Number> y);
+        @CheckReturnValue
         @NotNull  RegrIntercept $x(Field<? extends Number> x);
     }
 
@@ -5419,7 +5666,9 @@ public final class QOM {
     {
         @NotNull  Field<? extends Number> $y();
         @NotNull  Field<? extends Number> $x();
+        @CheckReturnValue
         @NotNull  RegrR2 $y(Field<? extends Number> y);
+        @CheckReturnValue
         @NotNull  RegrR2 $x(Field<? extends Number> x);
     }
 
@@ -5439,7 +5688,9 @@ public final class QOM {
     {
         @NotNull  Field<? extends Number> $y();
         @NotNull  Field<? extends Number> $x();
+        @CheckReturnValue
         @NotNull  RegrSlope $y(Field<? extends Number> y);
+        @CheckReturnValue
         @NotNull  RegrSlope $x(Field<? extends Number> x);
     }
 
@@ -5459,7 +5710,9 @@ public final class QOM {
     {
         @NotNull  Field<? extends Number> $y();
         @NotNull  Field<? extends Number> $x();
+        @CheckReturnValue
         @NotNull  RegrSxx $y(Field<? extends Number> y);
+        @CheckReturnValue
         @NotNull  RegrSxx $x(Field<? extends Number> x);
     }
 
@@ -5479,7 +5732,9 @@ public final class QOM {
     {
         @NotNull  Field<? extends Number> $y();
         @NotNull  Field<? extends Number> $x();
+        @CheckReturnValue
         @NotNull  RegrSxy $y(Field<? extends Number> y);
+        @CheckReturnValue
         @NotNull  RegrSxy $x(Field<? extends Number> x);
     }
 
@@ -5499,7 +5754,9 @@ public final class QOM {
     {
         @NotNull  Field<? extends Number> $y();
         @NotNull  Field<? extends Number> $x();
+        @CheckReturnValue
         @NotNull  RegrSyy $y(Field<? extends Number> y);
+        @CheckReturnValue
         @NotNull  RegrSyy $x(Field<? extends Number> x);
     }
 
@@ -5518,6 +5775,7 @@ public final class QOM {
         //    StddevPop
     {
         @NotNull  Field<? extends Number> $field();
+        @CheckReturnValue
         @NotNull  StddevPop $field(Field<? extends Number> field);
     }
 
@@ -5536,6 +5794,7 @@ public final class QOM {
         //    StddevSamp
     {
         @NotNull  Field<? extends Number> $field();
+        @CheckReturnValue
         @NotNull  StddevSamp $field(Field<? extends Number> field);
     }
 
@@ -5550,7 +5809,9 @@ public final class QOM {
     {
         @NotNull  Field<? extends Number> $field();
                   boolean $distinct();
+        @CheckReturnValue
         @NotNull  Sum $field(Field<? extends Number> field);
+        @CheckReturnValue
         @NotNull  Sum $distinct(boolean distinct);
     }
 
@@ -5569,6 +5830,7 @@ public final class QOM {
         //    VarPop
     {
         @NotNull  Field<? extends Number> $field();
+        @CheckReturnValue
         @NotNull  VarPop $field(Field<? extends Number> field);
     }
 
@@ -5587,6 +5849,7 @@ public final class QOM {
         //    VarSamp
     {
         @NotNull  Field<? extends Number> $field();
+        @CheckReturnValue
         @NotNull  VarSamp $field(Field<? extends Number> field);
     }
 
@@ -6653,6 +6916,7 @@ public final class QOM {
     interface UOperator1<Q1, R extends org.jooq.QueryPart> extends UOperator<R> {
         Q1 $arg1();
 
+        @CheckReturnValue
         @NotNull default R $arg1(Q1 newArg1) { return $constructor().apply(newArg1); }
 
         @NotNull
@@ -6689,7 +6953,9 @@ public final class QOM {
         Q1 $arg1();
         Q2 $arg2();
 
+        @CheckReturnValue
         @NotNull default R $arg1(Q1 newArg1) { return $constructor().apply(newArg1, $arg2()); }
+        @CheckReturnValue
         @NotNull default R $arg2(Q2 newArg2) { return $constructor().apply($arg1(), newArg2); }
 
         @NotNull
@@ -6727,8 +6993,12 @@ public final class QOM {
         Q1 $arg1();
         Q2 $arg2();
         Q3 $arg3();
+
+        @CheckReturnValue
         @NotNull default R $arg1(Q1 newArg1) { return $constructor().apply(newArg1, $arg2(), $arg3()); }
+        @CheckReturnValue
         @NotNull default R $arg2(Q2 newArg2) { return $constructor().apply($arg1(), newArg2, $arg3()); }
+        @CheckReturnValue
         @NotNull default R $arg3(Q3 newArg3) { return $constructor().apply($arg1(), $arg2(), newArg3); }
 
         @NotNull
@@ -6768,9 +7038,14 @@ public final class QOM {
         Q2 $arg2();
         Q3 $arg3();
         Q4 $arg4();
+
+        @CheckReturnValue
         @NotNull default R $arg1(Q1 newArg1) { return $constructor().apply(newArg1, $arg2(), $arg3(), $arg4()); }
+        @CheckReturnValue
         @NotNull default R $arg2(Q2 newArg2) { return $constructor().apply($arg1(), newArg2, $arg3(), $arg4()); }
+        @CheckReturnValue
         @NotNull default R $arg3(Q3 newArg3) { return $constructor().apply($arg1(), $arg2(), newArg3, $arg4()); }
+        @CheckReturnValue
         @NotNull default R $arg4(Q4 newArg4) { return $constructor().apply($arg1(), $arg2(), $arg3(), newArg4); }
 
         @NotNull

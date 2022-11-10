@@ -200,4 +200,12 @@ public interface QueryPart extends Serializable {
 
 
 
+
+
+
+
+
+
+
+
 }

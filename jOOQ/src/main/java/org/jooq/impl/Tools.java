@@ -309,6 +309,7 @@ import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SortField;
 import org.jooq.Source;
 import org.jooq.Table;
+import org.jooq.TableElement;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
 // ...
@@ -5968,6 +5969,13 @@ final class Tools {
     static final <R extends Record> Table<R> unalias(Table<R> table) {
         Table<R> result = aliased(table);
         return result != null ? result : table;
+    }
+
+    static final TableElement uncollate(TableElement field) {
+        if (field instanceof QOM.Collated c)
+            return uncollate(c.$field());
+        else
+            return field;
     }
 
     static final boolean isScalarSubquery(Field<?> field) {

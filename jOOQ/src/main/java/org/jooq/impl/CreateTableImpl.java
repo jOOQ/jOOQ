@@ -503,7 +503,7 @@ implements
                 if (!first)
                     ctx.sql(',').formatSeparator();
 
-                ctx.visit(field);
+                ctx.visit(Tools.uncollate(field));
 
                 if (select == null) {
                     ctx.sql(' ');

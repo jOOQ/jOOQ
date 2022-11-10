@@ -1299,7 +1299,7 @@ implements
                 }
 
                 TableElement part = add.get(i);
-                ctx.qualify(false, c -> c.visit(part));
+                ctx.qualify(false, c -> c.visit(Tools.uncollate(part)));
 
                 if (part instanceof Field<?> f) {
                     ctx.sql(' ');
@@ -1329,7 +1329,7 @@ implements
 
 
 
-            ctx.qualify(false, c -> c.visit(addColumn)).sql(' ');
+            ctx.qualify(false, c -> c.visit(Tools.uncollate(addColumn))).sql(' ');
             toSQLDDLTypeDeclarationForAddition(ctx, addColumnType);
 
 

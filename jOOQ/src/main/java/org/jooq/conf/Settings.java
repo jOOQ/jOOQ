@@ -145,6 +145,10 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsUnnecessaryDistinct = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsUnnecessaryGroupByExpressions = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsUnnecessaryOrderByExpressions = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsUnnecessaryExistsSubqueryClauses = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCountConstant = true;
@@ -1689,6 +1693,66 @@ public class Settings
      */
     public void setTransformPatternsUnnecessaryDistinct(Boolean value) {
         this.transformPatternsUnnecessaryDistinct = value;
+    }
+
+    /**
+     * Transform <code>SELECT a, b FROM t GROUP BY a, a, b</code> to <code>SELECT a, b FROM t GROUP BY a, b</code>.
+     * <p>
+     * Duplicate <code>GROUP BY</code> expressions can be removed.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsUnnecessaryGroupByExpressions() {
+        return transformPatternsUnnecessaryGroupByExpressions;
+    }
+
+    /**
+     * Sets the value of the transformPatternsUnnecessaryGroupByExpressions property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsUnnecessaryGroupByExpressions(Boolean value) {
+        this.transformPatternsUnnecessaryGroupByExpressions = value;
+    }
+
+    /**
+     * Transform <code>SELECT a, b FROM t ORDER BY a, a, b</code> to <code>SELECT a, b FROM t ORDER BY a, b</code>.
+     * <p>
+     * Duplicate <code>ORDER BY</code> expressions can be removed.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsUnnecessaryOrderByExpressions() {
+        return transformPatternsUnnecessaryOrderByExpressions;
+    }
+
+    /**
+     * Sets the value of the transformPatternsUnnecessaryOrderByExpressions property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsUnnecessaryOrderByExpressions(Boolean value) {
+        this.transformPatternsUnnecessaryOrderByExpressions = value;
     }
 
     /**
@@ -5603,6 +5667,16 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsUnnecessaryGroupByExpressions(Boolean value) {
+        setTransformPatternsUnnecessaryGroupByExpressions(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsUnnecessaryOrderByExpressions(Boolean value) {
+        setTransformPatternsUnnecessaryOrderByExpressions(value);
+        return this;
+    }
+
     public Settings withTransformPatternsUnnecessaryExistsSubqueryClauses(Boolean value) {
         setTransformPatternsUnnecessaryExistsSubqueryClauses(value);
         return this;
@@ -6726,6 +6800,8 @@ public class Settings
         builder.append("transformPatterns", transformPatterns);
         builder.append("transformPatternsLogging", transformPatternsLogging);
         builder.append("transformPatternsUnnecessaryDistinct", transformPatternsUnnecessaryDistinct);
+        builder.append("transformPatternsUnnecessaryGroupByExpressions", transformPatternsUnnecessaryGroupByExpressions);
+        builder.append("transformPatternsUnnecessaryOrderByExpressions", transformPatternsUnnecessaryOrderByExpressions);
         builder.append("transformPatternsUnnecessaryExistsSubqueryClauses", transformPatternsUnnecessaryExistsSubqueryClauses);
         builder.append("transformPatternsCountConstant", transformPatternsCountConstant);
         builder.append("transformPatternsTrim", transformPatternsTrim);
@@ -7315,6 +7391,24 @@ public class Settings
             }
         } else {
             if (!transformPatternsUnnecessaryDistinct.equals(other.transformPatternsUnnecessaryDistinct)) {
+                return false;
+            }
+        }
+        if (transformPatternsUnnecessaryGroupByExpressions == null) {
+            if (other.transformPatternsUnnecessaryGroupByExpressions!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsUnnecessaryGroupByExpressions.equals(other.transformPatternsUnnecessaryGroupByExpressions)) {
+                return false;
+            }
+        }
+        if (transformPatternsUnnecessaryOrderByExpressions == null) {
+            if (other.transformPatternsUnnecessaryOrderByExpressions!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsUnnecessaryOrderByExpressions.equals(other.transformPatternsUnnecessaryOrderByExpressions)) {
                 return false;
             }
         }
@@ -8704,6 +8798,8 @@ public class Settings
         result = ((prime*result)+((transformPatterns == null)? 0 :transformPatterns.hashCode()));
         result = ((prime*result)+((transformPatternsLogging == null)? 0 :transformPatternsLogging.hashCode()));
         result = ((prime*result)+((transformPatternsUnnecessaryDistinct == null)? 0 :transformPatternsUnnecessaryDistinct.hashCode()));
+        result = ((prime*result)+((transformPatternsUnnecessaryGroupByExpressions == null)? 0 :transformPatternsUnnecessaryGroupByExpressions.hashCode()));
+        result = ((prime*result)+((transformPatternsUnnecessaryOrderByExpressions == null)? 0 :transformPatternsUnnecessaryOrderByExpressions.hashCode()));
         result = ((prime*result)+((transformPatternsUnnecessaryExistsSubqueryClauses == null)? 0 :transformPatternsUnnecessaryExistsSubqueryClauses.hashCode()));
         result = ((prime*result)+((transformPatternsCountConstant == null)? 0 :transformPatternsCountConstant.hashCode()));
         result = ((prime*result)+((transformPatternsTrim == null)? 0 :transformPatternsTrim.hashCode()));

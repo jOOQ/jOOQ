@@ -400,6 +400,26 @@ To enable this feature, {@link #transformPatterns} must be enabled as well.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsUnnecessaryGroupByExpressions" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>SELECT a, b FROM t GROUP BY a, a, b</code> to <code>SELECT a, b FROM t GROUP BY a, b</code>.
+<p>
+Duplicate <code>GROUP BY</code> expressions can be removed.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformPatternsUnnecessaryOrderByExpressions" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>SELECT a, b FROM t ORDER BY a, a, b</code> to <code>SELECT a, b FROM t ORDER BY a, b</code>.
+<p>
+Duplicate <code>ORDER BY</code> expressions can be removed.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsUnnecessaryExistsSubqueryClauses" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>[ NOT ] EXISTS (SELECT DISTINCT a, b FROM t ORDER BY c LIMIT d)</code> to <code>[ NOT ] EXISTS (SELECT 1 FROM t)</code>.
 <p>

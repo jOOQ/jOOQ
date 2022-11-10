@@ -270,6 +270,7 @@ import org.jooq.EnumType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
+import org.jooq.FieldOrConstraint;
 import org.jooq.FieldOrRow;
 import org.jooq.Fields;
 import org.jooq.ForeignKey;
@@ -5777,6 +5778,13 @@ final class Tools {
     static final <R extends Record> Table<R> unalias(Table<R> table) {
         Table<R> result = aliased(table);
         return result != null ? result : table;
+    }
+
+    static final FieldOrConstraint uncollate(FieldOrConstraint field) {
+        if (field instanceof QOM.Collated)
+            return uncollate(((QOM.Collated) field).$field());
+        else
+            return field;
     }
 
     static final boolean isScalarSubquery(Field<?> field) {

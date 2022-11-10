@@ -525,7 +525,7 @@ implements
                 if (identity == null && type.identity())
                     identity = columnFields.get(i);
 
-                ctx.visit(columnFields.get(i));
+                ctx.visit(Tools.uncollate(columnFields.get(i)));
 
                 if (select == null) {
                     ctx.sql(' ');

@@ -61,7 +61,7 @@ final class Collated extends AbstractField<String> implements QOM.Collated {
     private final Collation collation;
 
     Collated(Field<?> field, Collation collation) {
-        super(field.getQualifiedName(), type(field), field.getCommentPart(), binding(field));
+        super(field.getQualifiedName(), type(field).collation(collation), field.getCommentPart(), binding(field));
 
         this.field = field;
         this.collation = collation;

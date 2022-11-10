@@ -74,7 +74,7 @@ final class Rollup extends AbstractField<Object> implements QOM.Rollup {
                 break;
 
             default:
-                ctx.visit(N_ROLLUP).sql('(').visit(arguments).sql(')');
+                ctx.visit(N_ROLLUP).sql(" (").visit(arguments).sql(')');
                 break;
         }
     }

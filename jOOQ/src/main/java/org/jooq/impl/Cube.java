@@ -62,7 +62,7 @@ final class Cube extends AbstractField<Object> implements QOM.Cube {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(N_CUBE).sql('(').visit(arguments).sql(')');
+        ctx.visit(N_CUBE).sql(" (").visit(arguments).sql(')');
     }
 
     // -------------------------------------------------------------------------

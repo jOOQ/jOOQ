@@ -75,7 +75,7 @@ final class GroupingSets extends AbstractField<Object> implements QOM.GroupingSe
         for (Collection<? extends Field<?>> fieldsSet : fieldSets)
             arg.add(new WrappedList(new QueryPartList<>(fieldsSet)));
 
-        ctx.visit(K_GROUPING_SETS).sql('(').visit(arg).sql(')');
+        ctx.visit(K_GROUPING_SETS).sql(" (").visit(arg).sql(')');
     }
 
     // -------------------------------------------------------------------------

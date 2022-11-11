@@ -42,6 +42,7 @@ import static java.util.Collections.synchronizedMap;
 // ...
 // ...
 // ...
+import static org.jooq.conf.DiagnosticsConnection.OFF;
 import static org.jooq.conf.ParamType.FORCE_INDEXED;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.noCondition;
@@ -194,7 +195,16 @@ final class DiagnosticsConnection extends DefaultConnection {
         );
     }
 
+    final boolean disabled() {
+        return configuration.settings().getDiagnosticsConnection() == OFF;
+    }
+
     final String parse(String sql) {
+
+        // [#7398] Don't do anything if the feature is turned OFF
+        if (disabled())
+            return sql;
+
         Queries queries = null;
         Queries transformed = null;
         String normalised;

@@ -1088,6 +1088,10 @@ case of which, this defaults to INLINED]]></jxb:javadoc></jxb:property></appinfo
       <element name="diagnosticsLogging" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[When set to true, this will add jOOQ's default logging DiagnosticsListeners.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="diagnosticsConnection" type="jooq-runtime:DiagnosticsConnection" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to activate the DiagnosticsConnection, explicit by <code>DEFAULT</code>, implicit if <code>ON</code>, or turned <code>OFF</code> entirely.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="updateRecordVersion" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether store(), insert(), and update() methods should update the record version prior to the operation, for use with {@link #executeWithOptimisticLocking}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
@@ -1826,6 +1830,20 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
       </element>
     </all>
   </complexType>
+  
+  <simpleType name="DiagnosticsConnection">
+    <restriction base="string">
+    
+      <!-- The DiagnosticsConnection is turned on if used explicitly. -->
+      <enumeration value="DEFAULT"/>
+
+      <!-- The DiagnosticsConnection is always turned on for any user connection. -->
+      <enumeration value="ON"/>
+
+      <!-- The DiagnosticsConnection is turned off, even when used explicitly. -->
+      <enumeration value="OFF"/>
+    </restriction>
+  </simpleType>
 
   <simpleType name="BackslashEscaping">
     <restriction base="string">

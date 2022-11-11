@@ -314,6 +314,9 @@ public class Settings
     protected Boolean executeLogging = true;
     @XmlElement(defaultValue = "true")
     protected Boolean diagnosticsLogging = true;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
+    protected DiagnosticsConnection diagnosticsConnection = DiagnosticsConnection.DEFAULT;
     @XmlElement(defaultValue = "true")
     protected Boolean updateRecordVersion = true;
     @XmlElement(defaultValue = "true")
@@ -3764,6 +3767,22 @@ public class Settings
     }
 
     /**
+     * Whether to activate the DiagnosticsConnection, explicit by <code>DEFAULT</code>, implicit if <code>ON</code>, or turned <code>OFF</code> entirely.
+     * 
+     */
+    public DiagnosticsConnection getDiagnosticsConnection() {
+        return diagnosticsConnection;
+    }
+
+    /**
+     * Whether to activate the DiagnosticsConnection, explicit by <code>DEFAULT</code>, implicit if <code>ON</code>, or turned <code>OFF</code> entirely.
+     * 
+     */
+    public void setDiagnosticsConnection(DiagnosticsConnection value) {
+        this.diagnosticsConnection = value;
+    }
+
+    /**
      * Whether store(), insert(), and update() methods should update the record version prior to the operation, for use with {@link #executeWithOptimisticLocking}.
      * 
      * @return
@@ -6173,6 +6192,15 @@ public class Settings
         return this;
     }
 
+    /**
+     * Whether to activate the DiagnosticsConnection, explicit by <code>DEFAULT</code>, implicit if <code>ON</code>, or turned <code>OFF</code> entirely.
+     * 
+     */
+    public Settings withDiagnosticsConnection(DiagnosticsConnection value) {
+        setDiagnosticsConnection(value);
+        return this;
+    }
+
     public Settings withUpdateRecordVersion(Boolean value) {
         setUpdateRecordVersion(value);
         return this;
@@ -6875,6 +6903,7 @@ public class Settings
         builder.append("executeListenerEndInvocationOrder", executeListenerEndInvocationOrder);
         builder.append("executeLogging", executeLogging);
         builder.append("diagnosticsLogging", diagnosticsLogging);
+        builder.append("diagnosticsConnection", diagnosticsConnection);
         builder.append("updateRecordVersion", updateRecordVersion);
         builder.append("updateRecordTimestamp", updateRecordTimestamp);
         builder.append("executeWithOptimisticLocking", executeWithOptimisticLocking);
@@ -8069,6 +8098,15 @@ public class Settings
                 return false;
             }
         }
+        if (diagnosticsConnection == null) {
+            if (other.diagnosticsConnection!= null) {
+                return false;
+            }
+        } else {
+            if (!diagnosticsConnection.equals(other.diagnosticsConnection)) {
+                return false;
+            }
+        }
         if (updateRecordVersion == null) {
             if (other.updateRecordVersion!= null) {
                 return false;
@@ -8873,6 +8911,7 @@ public class Settings
         result = ((prime*result)+((executeListenerEndInvocationOrder == null)? 0 :executeListenerEndInvocationOrder.hashCode()));
         result = ((prime*result)+((executeLogging == null)? 0 :executeLogging.hashCode()));
         result = ((prime*result)+((diagnosticsLogging == null)? 0 :diagnosticsLogging.hashCode()));
+        result = ((prime*result)+((diagnosticsConnection == null)? 0 :diagnosticsConnection.hashCode()));
         result = ((prime*result)+((updateRecordVersion == null)? 0 :updateRecordVersion.hashCode()));
         result = ((prime*result)+((updateRecordTimestamp == null)? 0 :updateRecordTimestamp.hashCode()));
         result = ((prime*result)+((executeWithOptimisticLocking == null)? 0 :executeWithOptimisticLocking.hashCode()));

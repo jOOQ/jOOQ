@@ -59,7 +59,10 @@ final class DiagnosticsStatement extends DefaultCallableStatement {
 
     @Override
     public final ResultSet executeQuery(String sql) throws SQLException {
-        return new DiagnosticsResultSet(super.executeQuery(connection.parse(sql)), sql, this, connection);
+        if (connection.disabled())
+            return super.executeQuery(sql);
+        else
+            return new DiagnosticsResultSet(super.executeQuery(connection.parse(sql)), sql, this, connection);
     }
 
     @Override

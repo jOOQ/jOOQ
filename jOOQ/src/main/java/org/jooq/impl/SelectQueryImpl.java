@@ -548,7 +548,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             result.groupByDistinct = groupByDistinct;
             result.having.setWhere(having.getWhere());
             if (window != null)
-                result.addWindow(window);
+                result.addWindow0(window);
             result.qualify.setWhere(qualify.getWhere());
         }
 
@@ -4250,11 +4250,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void addWindow(WindowDefinition... definitions) {
-        addWindow(Arrays.asList(definitions));
+        addWindow0(Arrays.asList(definitions));
     }
 
     @Override
     public final void addWindow(Collection<? extends WindowDefinition> definitions) {
+        addWindow0(definitions);
+    }
+
+    final void addWindow0(Collection<? extends WindowDefinition> definitions) {
         if (window == null)
             window = new WindowList();
 

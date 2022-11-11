@@ -50,11 +50,17 @@ import org.jooq.tools.jdbc.DefaultCallableStatement;
 final class DiagnosticsStatement extends DefaultCallableStatement {
 
     final DiagnosticsConnection connection;
+    final String                actualStatement;
 
     DiagnosticsStatement(DiagnosticsConnection connection, Statement statement) {
+        this(connection, statement, null);
+    }
+
+    DiagnosticsStatement(DiagnosticsConnection connection, Statement statement, String actualStatement) {
         super(statement);
 
         this.connection = connection;
+        this.actualStatement = actualStatement;
     }
 
     @Override
@@ -63,6 +69,14 @@ final class DiagnosticsStatement extends DefaultCallableStatement {
             return super.executeQuery(sql);
         else
             return new DiagnosticsResultSet(super.executeQuery(connection.parse(sql)), sql, this, connection);
+    }
+
+    @Override
+    public ResultSet executeQuery() throws SQLException {
+        if (connection.disabled())
+            return super.executeQuery();
+        else
+            return new DiagnosticsResultSet(super.executeQuery(), actualStatement, this, connection);
     }
 
     @Override

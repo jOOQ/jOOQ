@@ -48,6 +48,7 @@ import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.noCondition;
 
 import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -69,7 +70,6 @@ import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
-// ...
 // ...
 import org.jooq.Select;
 import org.jooq.conf.Settings;
@@ -93,9 +93,16 @@ final class DiagnosticsConnection extends DefaultConnection {
     final RenderContext             normalisingRenderer;
     final Parser                    parser;
     final DiagnosticsListeners      listeners;
+    final boolean                   release;
 
     DiagnosticsConnection(Configuration configuration) {
-        super(configuration.connectionProvider().acquire());
+        this(configuration, null);
+    }
+
+    DiagnosticsConnection(Configuration configuration, Connection c) {
+        super(c != null ? c : configuration.connectionProvider().acquire());
+
+        this.release = c == null;
 
         // [#7527] The Settings.diagnosticsPattern flag overrides the Settings.transformPatterns flag.
         this.configuration = configuration;
@@ -176,7 +183,9 @@ final class DiagnosticsConnection extends DefaultConnection {
     @Override
     public final void close() throws SQLException {
         repeatedSQL.clear();
-        configuration.connectionProvider().release(getDelegate());
+
+        if (release)
+            configuration.connectionProvider().release(getDelegate());
     }
 
     final boolean checkPattern(Predicate<? super Settings> test) {

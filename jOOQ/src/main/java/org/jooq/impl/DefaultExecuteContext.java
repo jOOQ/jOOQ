@@ -80,6 +80,7 @@ import org.jooq.Routine;
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Update;
+import org.jooq.conf.DiagnosticsConnection;
 import org.jooq.conf.Settings;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
@@ -120,7 +121,7 @@ class DefaultExecuteContext implements ExecuteContext {
 
     ConnectionProvider                                    connectionProvider;
     private Connection                                    connection;
-    private SettingsEnabledConnection                     wrappedConnection;
+    private Connection                                    wrappedConnection;
     private PreparedStatement                             statement;
     private int                                           statementExecutionCount;
     private ResultSet                                     resultSet;
@@ -631,12 +632,19 @@ class DefaultExecuteContext implements ExecuteContext {
         if (c != null) {
             LOCAL_CONNECTION.set(c);
             connection = c;
-            wrappedConnection = wrapConnection(provider, c);
+            wrappedConnection = wrap(provider, c);
         }
     }
 
-    private final SettingsEnabledConnection wrapConnection(ConnectionProvider provider, Connection c) {
-        return new SettingsEnabledConnection(new ProviderEnabledConnection(provider, c), derivedConfiguration.settings(), this);
+    private final Connection wrap(ConnectionProvider provider, Connection c) {
+        return wrap0(new SettingsEnabledConnection(new ProviderEnabledConnection(provider, c), derivedConfiguration.settings(), this));
+    }
+
+    private final Connection wrap0(Connection c) {
+        if (derivedConfiguration.settings().getDiagnosticsConnection() == DiagnosticsConnection.ON)
+            return new org.jooq.impl.DiagnosticsConnection(derivedConfiguration, c);
+        else
+            return c;
     }
 
     final void incrementStatementExecutionCount() {
@@ -770,7 +778,7 @@ class DefaultExecuteContext implements ExecuteContext {
             if (connection == null)
                 DefaultExecuteContext.this.connection();
 
-            return wrapConnection(this, connection);
+            return wrap(this, connection);
         }
 
         @Override

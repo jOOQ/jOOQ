@@ -41,12 +41,25 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.jooq.conf.DiagnosticsConnection;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
+import org.jooq.impl.LoggingDiagnosticsListener;
 import org.jooq.impl.ParserException;
 
 /**
  * A diagnostics listener.
+ * <p>
+ * Users can implement this in order to receive and handle diagnostics events
+ * explicitly. A default implementation is available via
+ * {@link LoggingDiagnosticsListener}, which can be activated using
+ * {@link Settings#isDiagnosticsLogging()}.
+ * <p>
+ * Events are received on any {@link DSLContext#diagnosticsConnection()} or
+ * {@link DSLContext#diagnosticsDataSource()}, if
+ * {@link Settings#getDiagnosticsConnection()} is not turned
+ * {@link DiagnosticsConnection#OFF}. Use {@link DiagnosticsConnection#ON} to
+ * turn diagnostics on for all of jOOQ's {@link ConnectionProvider} usage.
  *
  * @author Lukas Eder
  */
@@ -62,6 +75,9 @@ public interface DiagnosticsListener {
      * Typically, this problem can be remedied by applying the appropriate
      * <code>LIMIT</code> clause in SQL, or
      * {@link SelectLimitStep#limit(Number)} clause in jOOQ.
+     * <p>
+     * This diagnostic can be turned off using
+     * {@link Settings#isDiagnosticsTooManyRowsFetched()}.
      *
      * @param ctx The context containing information about the diagnostic.
      */
@@ -76,6 +92,9 @@ public interface DiagnosticsListener {
      * <p>
      * Typically, this problem can be remedied by not running a
      * <code>SELECT *</code> query when this isn't strictly required.
+     * <p>
+     * This diagnostic can be turned off using
+     * {@link Settings#isDiagnosticsTooManyColumnsFetched()}.
      *
      * @param ctx The context containing information about the diagnostic.
      */
@@ -85,6 +104,9 @@ public interface DiagnosticsListener {
      * The fetched JDBC {@link ResultSet} returned a value for a column, on
      * which {@link ResultSet#wasNull()} was called unnecessarily (more than
      * once, or for a non-primitive type).
+     * <p>
+     * This diagnostic can be turned off using
+     * {@link Settings#isDiagnosticsUnnecessaryWasNullCall()}.
      *
      * @param ctx The context containing information about the diagnostic.
      */
@@ -94,6 +116,9 @@ public interface DiagnosticsListener {
      * The fetched JDBC {@link ResultSet} returned a primitive type value for a
      * column, which could have been null, but {@link ResultSet#wasNull()} was
      * not called.
+     * <p>
+     * This diagnostic can be turned off using
+     * {@link Settings#isDiagnosticsMissingWasNullCall()}.
      *
      * @param ctx The context containing information about the diagnostic.
      */
@@ -115,36 +140,54 @@ public interface DiagnosticsListener {
      * <p>
      * <h3>Whitespace differences</h3>
      * <p>
-     * <pre><code>
+     *
+     * <pre>
+     * <code>
      * SELECT * FROM  actor;
      * SELECT  * FROM actor;
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
      * <h3>Inline bind values</h3>
      * <p>
-     * <pre><code>
+     *
+     * <pre>
+     * <code>
      * SELECT * FROM actor WHERE id = 1;
      * SELECT * FROM actor WHERE id = 2;
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
      * <h3>Aliasing and qualification</h3>
      * <p>
-     * <pre><code>
+     *
+     * <pre>
+     * <code>
      * SELECT a1.* FROM actor a1 WHERE id = ?;
      * SELECT * FROM actor a2 WHERE a2.id = ?;
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
      * Examples of identical statements (which are not considered duplicate, but
      * {@link #repeatedStatements(DiagnosticsContext)}, if on the same
      * {@link Connection}) are:
      * <p>
-     * <pre><code>
+     *
+     * <pre>
+     * <code>
      * SELECT * FROM actor WHERE id = ?;
      * SELECT * FROM actor WHERE id = ?;
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
      * This is a system-wide diagnostic that is not specific to individual
      * {@link Connection} instances.
+     * <p>
+     * This diagnostic can be turned off using
+     * {@link Settings#isDiagnosticsDuplicateStatements()}.
+     * <p>
+     * Advanced duplicate statement recognition can be turned off using
+     * {@link Settings#isDiagnosticsDuplicateStatementsUsingTransformPatterns()}.
      *
      * @param ctx The context containing information about the diagnostic.
      */
@@ -186,10 +229,75 @@ public interface DiagnosticsListener {
      * <p>
      * This is a {@link Connection}-specific diagnostic that is reset every time
      * {@link Connection#close()} is called.
+     * <p>
+     * This diagnostic can be turned off using
+     * {@link Settings#isDiagnosticsRepeatedStatements()}.
      *
      * @param ctx The context containing information about the diagnostic.
      */
     default void repeatedStatements(DiagnosticsContext ctx) {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

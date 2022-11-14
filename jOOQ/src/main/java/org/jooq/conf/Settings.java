@@ -127,6 +127,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean diagnosticsConsecutiveAggregation = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean diagnosticsConcatenationInPredicates = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean diagnosticsTooManyColumnsFetched = true;
     @XmlElement(defaultValue = "true")
     protected Boolean diagnosticsTooManyRowsFetched = true;
@@ -1438,6 +1440,35 @@ public class Settings
      */
     public void setDiagnosticsConsecutiveAggregation(Boolean value) {
         this.diagnosticsConsecutiveAggregation = value;
+    }
+
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#concatenationInPredicates(org.jooq.DiagnosticsContext) diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isDiagnosticsConcatenationInPredicates() {
+        return diagnosticsConcatenationInPredicates;
+    }
+
+    /**
+     * Sets the value of the diagnosticsConcatenationInPredicates property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDiagnosticsConcatenationInPredicates(Boolean value) {
+        this.diagnosticsConcatenationInPredicates = value;
     }
 
     /**
@@ -5641,6 +5672,11 @@ public class Settings
         return this;
     }
 
+    public Settings withDiagnosticsConcatenationInPredicates(Boolean value) {
+        setDiagnosticsConcatenationInPredicates(value);
+        return this;
+    }
+
     public Settings withDiagnosticsTooManyColumnsFetched(Boolean value) {
         setDiagnosticsTooManyColumnsFetched(value);
         return this;
@@ -6819,6 +6855,7 @@ public class Settings
         builder.append("diagnosticsMissingWasNullCall", diagnosticsMissingWasNullCall);
         builder.append("diagnosticsRepeatedStatements", diagnosticsRepeatedStatements);
         builder.append("diagnosticsConsecutiveAggregation", diagnosticsConsecutiveAggregation);
+        builder.append("diagnosticsConcatenationInPredicates", diagnosticsConcatenationInPredicates);
         builder.append("diagnosticsTooManyColumnsFetched", diagnosticsTooManyColumnsFetched);
         builder.append("diagnosticsTooManyRowsFetched", diagnosticsTooManyRowsFetched);
         builder.append("diagnosticsUnnecessaryWasNullCall", diagnosticsUnnecessaryWasNullCall);
@@ -7339,6 +7376,15 @@ public class Settings
             }
         } else {
             if (!diagnosticsConsecutiveAggregation.equals(other.diagnosticsConsecutiveAggregation)) {
+                return false;
+            }
+        }
+        if (diagnosticsConcatenationInPredicates == null) {
+            if (other.diagnosticsConcatenationInPredicates!= null) {
+                return false;
+            }
+        } else {
+            if (!diagnosticsConcatenationInPredicates.equals(other.diagnosticsConcatenationInPredicates)) {
                 return false;
             }
         }
@@ -8827,6 +8873,7 @@ public class Settings
         result = ((prime*result)+((diagnosticsMissingWasNullCall == null)? 0 :diagnosticsMissingWasNullCall.hashCode()));
         result = ((prime*result)+((diagnosticsRepeatedStatements == null)? 0 :diagnosticsRepeatedStatements.hashCode()));
         result = ((prime*result)+((diagnosticsConsecutiveAggregation == null)? 0 :diagnosticsConsecutiveAggregation.hashCode()));
+        result = ((prime*result)+((diagnosticsConcatenationInPredicates == null)? 0 :diagnosticsConcatenationInPredicates.hashCode()));
         result = ((prime*result)+((diagnosticsTooManyColumnsFetched == null)? 0 :diagnosticsTooManyColumnsFetched.hashCode()));
         result = ((prime*result)+((diagnosticsTooManyRowsFetched == null)? 0 :diagnosticsTooManyRowsFetched.hashCode()));
         result = ((prime*result)+((diagnosticsUnnecessaryWasNullCall == null)? 0 :diagnosticsUnnecessaryWasNullCall.hashCode()));

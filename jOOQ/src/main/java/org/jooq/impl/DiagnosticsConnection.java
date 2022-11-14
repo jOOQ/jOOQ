@@ -73,7 +73,12 @@ import org.jooq.RenderContext;
 // ...
 import org.jooq.Select;
 import org.jooq.conf.Settings;
+import org.jooq.impl.QOM.CompareCondition;
+import org.jooq.impl.QOM.Concat;
 import org.jooq.impl.QOM.Eq;
+import org.jooq.impl.QOM.In;
+import org.jooq.impl.QOM.InList;
+import org.jooq.impl.QOM.NotInList;
 import org.jooq.tools.jdbc.DefaultConnection;
 
 /**
@@ -311,6 +316,16 @@ final class DiagnosticsConnection extends DefaultConnection {
 
 
 
+
+
+
+
+
+
+
+
+
+
             }
         }
         catch (Error e) {
@@ -326,6 +341,27 @@ final class DiagnosticsConnection extends DefaultConnection {
 
         return sql;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

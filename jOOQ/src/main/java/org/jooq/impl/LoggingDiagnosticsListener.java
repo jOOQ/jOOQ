@@ -39,8 +39,6 @@ package org.jooq.impl;
 
 import static java.util.stream.Collectors.toList;
 
-import java.util.stream.Collectors;
-
 import org.jooq.DiagnosticsContext;
 import org.jooq.DiagnosticsListener;
 import org.jooq.tools.JooqLogger;
@@ -116,6 +114,15 @@ public class LoggingDiagnosticsListener implements DiagnosticsListener {
         + "\nConsumed rows: " + ctx.resultSetConsumedRows()
         );
     }
+
+
+
+
+
+
+
+
+
 
 
 

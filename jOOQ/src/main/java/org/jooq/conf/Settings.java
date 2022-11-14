@@ -127,7 +127,9 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean diagnosticsConsecutiveAggregation = true;
     @XmlElement(defaultValue = "true")
-    protected Boolean diagnosticsConcatenationInPredicates = true;
+    protected Boolean diagnosticsConcatenationInPredicate = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean diagnosticsPossiblyWrongExpression = true;
     @XmlElement(defaultValue = "true")
     protected Boolean diagnosticsTooManyColumnsFetched = true;
     @XmlElement(defaultValue = "true")
@@ -1443,7 +1445,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#concatenationInPredicates(org.jooq.DiagnosticsContext) diagnostic.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#concatenationInPredicate(org.jooq.DiagnosticsContext) diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
      * Once configured, this diagnostic is turned on by default.
@@ -1455,20 +1457,49 @@ public class Settings
      *     {@link Boolean }
      *     
      */
-    public Boolean isDiagnosticsConcatenationInPredicates() {
-        return diagnosticsConcatenationInPredicates;
+    public Boolean isDiagnosticsConcatenationInPredicate() {
+        return diagnosticsConcatenationInPredicate;
     }
 
     /**
-     * Sets the value of the diagnosticsConcatenationInPredicates property.
+     * Sets the value of the diagnosticsConcatenationInPredicate property.
      * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
      *     
      */
-    public void setDiagnosticsConcatenationInPredicates(Boolean value) {
-        this.diagnosticsConcatenationInPredicates = value;
+    public void setDiagnosticsConcatenationInPredicate(Boolean value) {
+        this.diagnosticsConcatenationInPredicate = value;
+    }
+
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#possiblyWrongExpression(org.jooq.DiagnosticsContext) diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isDiagnosticsPossiblyWrongExpression() {
+        return diagnosticsPossiblyWrongExpression;
+    }
+
+    /**
+     * Sets the value of the diagnosticsPossiblyWrongExpression property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDiagnosticsPossiblyWrongExpression(Boolean value) {
+        this.diagnosticsPossiblyWrongExpression = value;
     }
 
     /**
@@ -5672,8 +5703,13 @@ public class Settings
         return this;
     }
 
-    public Settings withDiagnosticsConcatenationInPredicates(Boolean value) {
-        setDiagnosticsConcatenationInPredicates(value);
+    public Settings withDiagnosticsConcatenationInPredicate(Boolean value) {
+        setDiagnosticsConcatenationInPredicate(value);
+        return this;
+    }
+
+    public Settings withDiagnosticsPossiblyWrongExpression(Boolean value) {
+        setDiagnosticsPossiblyWrongExpression(value);
         return this;
     }
 
@@ -6855,7 +6891,8 @@ public class Settings
         builder.append("diagnosticsMissingWasNullCall", diagnosticsMissingWasNullCall);
         builder.append("diagnosticsRepeatedStatements", diagnosticsRepeatedStatements);
         builder.append("diagnosticsConsecutiveAggregation", diagnosticsConsecutiveAggregation);
-        builder.append("diagnosticsConcatenationInPredicates", diagnosticsConcatenationInPredicates);
+        builder.append("diagnosticsConcatenationInPredicate", diagnosticsConcatenationInPredicate);
+        builder.append("diagnosticsPossiblyWrongExpression", diagnosticsPossiblyWrongExpression);
         builder.append("diagnosticsTooManyColumnsFetched", diagnosticsTooManyColumnsFetched);
         builder.append("diagnosticsTooManyRowsFetched", diagnosticsTooManyRowsFetched);
         builder.append("diagnosticsUnnecessaryWasNullCall", diagnosticsUnnecessaryWasNullCall);
@@ -7379,12 +7416,21 @@ public class Settings
                 return false;
             }
         }
-        if (diagnosticsConcatenationInPredicates == null) {
-            if (other.diagnosticsConcatenationInPredicates!= null) {
+        if (diagnosticsConcatenationInPredicate == null) {
+            if (other.diagnosticsConcatenationInPredicate!= null) {
                 return false;
             }
         } else {
-            if (!diagnosticsConcatenationInPredicates.equals(other.diagnosticsConcatenationInPredicates)) {
+            if (!diagnosticsConcatenationInPredicate.equals(other.diagnosticsConcatenationInPredicate)) {
+                return false;
+            }
+        }
+        if (diagnosticsPossiblyWrongExpression == null) {
+            if (other.diagnosticsPossiblyWrongExpression!= null) {
+                return false;
+            }
+        } else {
+            if (!diagnosticsPossiblyWrongExpression.equals(other.diagnosticsPossiblyWrongExpression)) {
                 return false;
             }
         }
@@ -8873,7 +8919,8 @@ public class Settings
         result = ((prime*result)+((diagnosticsMissingWasNullCall == null)? 0 :diagnosticsMissingWasNullCall.hashCode()));
         result = ((prime*result)+((diagnosticsRepeatedStatements == null)? 0 :diagnosticsRepeatedStatements.hashCode()));
         result = ((prime*result)+((diagnosticsConsecutiveAggregation == null)? 0 :diagnosticsConsecutiveAggregation.hashCode()));
-        result = ((prime*result)+((diagnosticsConcatenationInPredicates == null)? 0 :diagnosticsConcatenationInPredicates.hashCode()));
+        result = ((prime*result)+((diagnosticsConcatenationInPredicate == null)? 0 :diagnosticsConcatenationInPredicate.hashCode()));
+        result = ((prime*result)+((diagnosticsPossiblyWrongExpression == null)? 0 :diagnosticsPossiblyWrongExpression.hashCode()));
         result = ((prime*result)+((diagnosticsTooManyColumnsFetched == null)? 0 :diagnosticsTooManyColumnsFetched.hashCode()));
         result = ((prime*result)+((diagnosticsTooManyRowsFetched == null)? 0 :diagnosticsTooManyRowsFetched.hashCode()));
         result = ((prime*result)+((diagnosticsUnnecessaryWasNullCall == null)? 0 :diagnosticsUnnecessaryWasNullCall.hashCode()));

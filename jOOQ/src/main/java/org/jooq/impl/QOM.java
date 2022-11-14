@@ -53,6 +53,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 // ...
@@ -139,6 +141,7 @@ import org.jooq.WindowSpecification;
 import org.jooq.XML;
 import org.jooq.XMLAttributes;
 import org.jooq.conf.Settings;
+import org.jooq.impl.QOM.UCommutativeOperator;
 import org.jooq.types.DayToSecond;
 // ...
 
@@ -8188,5 +8191,13 @@ public final class QOM {
     @Internal
     public static final <Q1 extends QueryPart, Q2 extends QueryPart> Tuple2<Q1, Q2> tuple(Q1 q1, Q2 q2) {
         return new TupleImpl2<>(q1, q2);
+    }
+
+    static final <Q extends QueryPart> boolean commutativeCheck(UCommutativeOperator<Q, ?> op, Predicate<? super Q> f) {
+        return f.test(op.$arg1()) || f.test(op.$arg2());
+    }
+
+    static final <Q extends QueryPart> boolean commutativeCheck(UCommutativeOperator<Q, ?> op, BiPredicate<? super Q, ? super Q> f) {
+        return f.test(op.$arg1(), op.$arg2()) || f.test(op.$arg2(), op.$arg1());
     }
 }

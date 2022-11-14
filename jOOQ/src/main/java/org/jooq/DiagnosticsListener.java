@@ -403,6 +403,23 @@ public interface DiagnosticsListener {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Something went wrong while diagnosing a SQL query.
      * <p>

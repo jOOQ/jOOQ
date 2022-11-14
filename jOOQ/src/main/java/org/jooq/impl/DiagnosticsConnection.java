@@ -46,6 +46,7 @@ import static org.jooq.conf.DiagnosticsConnection.OFF;
 import static org.jooq.conf.ParamType.FORCE_INDEXED;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.QOM.commutativeCheck;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -64,6 +65,7 @@ import java.util.function.Predicate;
 import org.jooq.AggregateFunction;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.Field;
 import org.jooq.Parser;
 // ...
 import org.jooq.Queries;
@@ -78,7 +80,10 @@ import org.jooq.impl.QOM.Concat;
 import org.jooq.impl.QOM.Eq;
 import org.jooq.impl.QOM.In;
 import org.jooq.impl.QOM.InList;
+import org.jooq.impl.QOM.IsDistinctFrom;
+import org.jooq.impl.QOM.Mod;
 import org.jooq.impl.QOM.NotInList;
+import org.jooq.impl.QOM.UCommutativeOperator;
 import org.jooq.tools.jdbc.DefaultConnection;
 
 /**
@@ -326,6 +331,16 @@ final class DiagnosticsConnection extends DefaultConnection {
 
 
 
+
+
+
+
+
+
+
+
+
+
             }
         }
         catch (Error e) {
@@ -341,6 +356,35 @@ final class DiagnosticsConnection extends DefaultConnection {
 
         return sql;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

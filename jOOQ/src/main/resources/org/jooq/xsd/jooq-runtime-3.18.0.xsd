@@ -322,8 +322,17 @@ Once configured, this diagnostic is turned on by default.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
-      <element name="diagnosticsConcatenationInPredicates" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#concatenationInPredicates(org.jooq.DiagnosticsContext) diagnostic.
+      <element name="diagnosticsConcatenationInPredicate" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#concatenationInPredicate(org.jooq.DiagnosticsContext) diagnostic.
+<p>
+Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+Once configured, this diagnostic is turned on by default.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="diagnosticsPossiblyWrongExpression" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#possiblyWrongExpression(org.jooq.DiagnosticsContext) diagnostic.
 <p>
 Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
 Once configured, this diagnostic is turned on by default.

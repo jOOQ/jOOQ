@@ -833,7 +833,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
         // All other reflection exceptions are intercepted
         catch (Exception e) {
-            throw new MappingException("An error ocurred when mapping record to " + type, e);
+            throw new MappingException("An error occurred when mapping record to " + type, e);
         }
     }
 
@@ -894,7 +894,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
             // All reflection exceptions are intercepted
             catch (Exception e) {
-                throw new MappingException("An error ocurred when mapping record to " + target, e);
+                throw new MappingException("An error occurred when mapping record to " + target, e);
             }
         }
     }

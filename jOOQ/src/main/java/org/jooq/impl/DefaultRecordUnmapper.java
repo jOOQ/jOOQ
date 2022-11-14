@@ -240,7 +240,7 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
 
             // All reflection exceptions are intercepted
             catch (Exception e) {
-                throw new MappingException("An error ocurred when mapping record from " + type, e);
+                throw new MappingException("An error occurred when mapping record from " + type, e);
             }
         }
     }

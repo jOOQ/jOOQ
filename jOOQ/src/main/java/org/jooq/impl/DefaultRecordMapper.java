@@ -627,7 +627,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
         // All other reflection exceptions are intercepted
         catch (Exception e) {
-            throw new MappingException("An error ocurred when mapping record to " + type, e);
+            throw new MappingException("An error occurred when mapping record to " + type, e);
         }
     }
 
@@ -759,7 +759,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 throw new MappingException("Cannot map record " + record + " to type " + type);
             }
             catch (Exception e) {
-                throw new MappingException("An error ocurred when mapping record to " + type, e);
+                throw new MappingException("An error occurred when mapping record to " + type, e);
             }
         }
     }
@@ -923,7 +923,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 return result;
             }
             catch (Exception e) {
-                throw new MappingException("An error ocurred when mapping record to " + type, e);
+                throw new MappingException("An error occurred when mapping record to " + type, e);
             }
         }
 
@@ -1134,7 +1134,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 return constructor.newInstance(nested ? mapNested(record) : mapNonnested(record));
             }
             catch (Exception e) {
-                throw new MappingException("An error ocurred when mapping record to " + type, e);
+                throw new MappingException("An error occurred when mapping record to " + type, e);
             }
         }
 

@@ -54,12 +54,28 @@ import org.jooq.impl.QOM.UEmpty;
 final class SQLImpl extends AbstractQueryPart implements SQL, UEmpty {
 
     private static final Clause[] CLAUSES = { TEMPLATE };
-    private final String          sql;
-    private final List<QueryPart> substitutes;
+    final String                  sql;
+    final boolean                 isName;
+    final List<QueryPart>         substitutes;
 
     SQLImpl(String sql, Object... input) {
         this.sql = requireNonNull(sql);
         this.substitutes = Tools.queryParts(input);
+        this.isName = substitutes.isEmpty() && isName(sql);
+    }
+
+    static final boolean isName(String sql) {
+        int l = sql.length();
+
+        // [#14215] Good enough approximation of SQL identifiers
+        if (l == 0 || !Character.isJavaIdentifierStart(sql.charAt(0)))
+            return false;
+
+        for (int i = 1; i < l; i++)
+            if (!Character.isJavaIdentifierPart(sql.charAt(i)))
+                return false;
+
+        return true;
     }
 
     @Override

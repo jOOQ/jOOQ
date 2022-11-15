@@ -73,7 +73,7 @@ import org.jooq.impl.DSL;
  * more strongly-typed API.
  *
  * @see <a href=
- *      "https://blog.jooq.org/2020/04/03/whats-a-string-in-the-jooq-api/">https://blog.jooq.org/2020/04/03/whats-a-string-in-the-jooq-api/</a>
+ *      "https://blog.jooq.org/whats-a-string-in-the-jooq-api/">https://blog.jooq.org/whats-a-string-in-the-jooq-api/</a>
  * @author Lukas Eder
  */
 public final class Stringly {

@@ -73,7 +73,7 @@ import org.jetbrains.annotations.Nullable;
  * Edition, you may be using the wrong edition, e.g. because of a transitive
  * dependency introduced by Spring Boot. See this article about how to exclude
  * such transitive dependencies from your classpath <a href=
- * "https://blog.jooq.org/2019/06/26/how-to-use-jooqs-commercial-distributions-with-spring-boot/">https://blog.jooq.org/2019/06/26/how-to-use-jooqs-commercial-distributions-with-spring-boot/</a>.
+ * "https://blog.jooq.org/how-to-use-jooqs-commercial-distributions-with-spring-boot/">https://blog.jooq.org/how-to-use-jooqs-commercial-distributions-with-spring-boot/</a>.
  *
  * @author Lukas Eder
  */

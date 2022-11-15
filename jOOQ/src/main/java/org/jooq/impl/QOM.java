@@ -4649,7 +4649,7 @@ public final class QOM {
      * integer multiplication.
      * <p>
      * More information here: <a href=
-     * "https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql</a>.
+     * "https://blog.jooq.org/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/how-to-write-a-multiplication-aggregate-function-in-sql</a>.
      */
     public /*sealed*/ interface Product
         extends

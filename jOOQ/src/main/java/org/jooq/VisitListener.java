@@ -90,8 +90,8 @@ import org.jooq.impl.CallbackVisitListener;
  * otherwise be premature optimisations may have great effect inside the
  * <code>VisitListener</code>. For more details, please refer to this article:
  * <a href=
- * "http://blog.jooq.org/2015/02/05/top-10-easy-performance-optimisations-in-java/">
- * http://blog.jooq.org/2015/02/05/top-10-easy-performance-optimisations-in-
+ * "https://blog.jooq.org/top-10-easy-performance-optimisations-in-java/">
+ * https://blog.jooq.org/top-10-easy-performance-optimisations-in-
  * java/</a>.
  *
  * @author Lukas Eder

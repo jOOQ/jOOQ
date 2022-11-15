@@ -851,6 +851,163 @@ public final class QOM {
         @NotNull Table<R> $table();
     }
 
+    public sealed interface JoinTable<R extends org.jooq.Record, J extends JoinTable<R, J>>
+        extends
+            org.jooq.Table<R>
+        permits
+            CrossJoin,
+            CrossApply,
+            OuterApply,
+            NaturalJoin,
+            NaturalLeftJoin,
+            NaturalRightJoin,
+            NaturalFullJoin,
+            QualifiedJoin
+    {
+        @NotNull Table<?> $table1();
+        @NotNull Table<?> $table2();
+        @NotNull J $table1(Table<?> table1);
+        @NotNull J $table2(Table<?> table2);
+    }
+
+    public sealed interface CrossJoin<R extends org.jooq.Record>
+        extends
+            JoinTable<R, CrossJoin<R>>
+        permits
+            org.jooq.impl.CrossJoin
+    {}
+
+    public sealed interface CrossApply<R extends org.jooq.Record>
+        extends
+            JoinTable<R, CrossApply<R>>
+        permits
+            org.jooq.impl.CrossApply
+    {}
+
+    public sealed interface OuterApply<R extends org.jooq.Record>
+        extends
+            JoinTable<R, OuterApply<R>>
+        permits
+            org.jooq.impl.OuterApply
+    {}
+
+    public sealed interface NaturalJoin<R extends org.jooq.Record>
+        extends
+            JoinTable<R, NaturalJoin<R>>
+        permits
+            org.jooq.impl.NaturalJoin
+    {}
+
+    public sealed interface NaturalLeftJoin<R extends org.jooq.Record>
+        extends
+            JoinTable<R, NaturalLeftJoin<R>>
+        permits
+            org.jooq.impl.NaturalLeftJoin
+    {
+        @NotNull UnmodifiableList<Field<?>> $partitionBy2();
+        @NotNull NaturalLeftJoin<R> $partitionBy2(Collection<? extends Field<?>> partitionBy2);
+    }
+
+    public sealed interface NaturalRightJoin<R extends org.jooq.Record>
+        extends
+            JoinTable<R, NaturalRightJoin<R>>
+        permits
+            org.jooq.impl.NaturalRightJoin
+    {
+        @NotNull UnmodifiableList<Field<?>> $partitionBy1();
+        @NotNull NaturalRightJoin<R> $partitionBy1(Collection<? extends Field<?>> partitionBy1);
+    }
+
+    public sealed interface NaturalFullJoin<R extends org.jooq.Record>
+        extends
+            JoinTable<R, NaturalFullJoin<R>>
+        permits
+            org.jooq.impl.NaturalFullJoin
+    {
+        @NotNull UnmodifiableList<Field<?>> $partitionBy1();
+        @NotNull NaturalFullJoin<R> $partitionBy1(Collection<? extends Field<?>> partitionBy1);
+        @NotNull UnmodifiableList<Field<?>> $partitionBy2();
+        @NotNull NaturalFullJoin<R> $partitionBy2(Collection<? extends Field<?>> partitionBy2);
+    }
+
+    public sealed interface QualifiedJoin<R extends org.jooq.Record, J extends QualifiedJoin<R, J>>
+        extends
+            JoinTable<R, J>
+        permits
+            Join,
+            StraightJoin,
+            LeftJoin,
+            RightJoin,
+            FullJoin,
+            LeftSemiJoin,
+            LeftAntiJoin
+    {
+        @Nullable Condition $on();
+        @NotNull J $on(Condition on);
+        @Nullable UnmodifiableList<Field<?>> $using();
+        @NotNull J $using(Collection<? extends Field<?>> using);
+    }
+
+    public sealed interface Join<R extends org.jooq.Record>
+        extends
+            QualifiedJoin<R, Join<R>>
+        permits
+            org.jooq.impl.Join
+    {}
+
+    public sealed interface StraightJoin<R extends org.jooq.Record>
+        extends
+            QualifiedJoin<R, StraightJoin<R>>
+        permits
+            org.jooq.impl.StraightJoin
+    {}
+
+    public sealed interface LeftJoin<R extends org.jooq.Record>
+        extends
+            QualifiedJoin<R, LeftJoin<R>>
+        permits
+            org.jooq.impl.LeftJoin
+    {
+        @NotNull UnmodifiableList<Field<?>> $partitionBy2();
+        @NotNull LeftJoin<R> $partitionBy2(Collection<? extends Field<?>> partitionBy2);
+    }
+
+    public sealed interface RightJoin<R extends org.jooq.Record>
+        extends
+            QualifiedJoin<R, RightJoin<R>>
+        permits
+            org.jooq.impl.RightJoin
+    {
+        @NotNull UnmodifiableList<Field<?>> $partitionBy1();
+        @NotNull RightJoin<R> $partitionBy1(Collection<? extends Field<?>> partitionBy1);
+    }
+
+    public sealed interface FullJoin<R extends org.jooq.Record>
+        extends
+            QualifiedJoin<R, FullJoin<R>>
+        permits
+            org.jooq.impl.FullJoin
+    {
+        @NotNull UnmodifiableList<Field<?>> $partitionBy1();
+        @NotNull FullJoin<R> $partitionBy1(Collection<? extends Field<?>> partitionBy1);
+        @NotNull UnmodifiableList<Field<?>> $partitionBy2();
+        @NotNull FullJoin<R> $partitionBy2(Collection<? extends Field<?>> partitionBy2);
+    }
+
+    public sealed interface LeftSemiJoin<R extends org.jooq.Record>
+        extends
+            QualifiedJoin<R, LeftSemiJoin<R>>
+        permits
+            org.jooq.impl.LeftSemiJoin
+    {}
+
+    public sealed interface LeftAntiJoin<R extends org.jooq.Record>
+        extends
+            QualifiedJoin<R, LeftAntiJoin<R>>
+        permits
+            org.jooq.impl.LeftAntiJoin
+    {}
+
     // -------------------------------------------------------------------------
     // XXX: SelectFields, GroupFields and SortFields
     // -------------------------------------------------------------------------

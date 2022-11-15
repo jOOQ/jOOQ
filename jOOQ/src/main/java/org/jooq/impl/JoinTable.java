@@ -114,6 +114,7 @@ import static org.jooq.impl.Tools.SimpleDataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -129,6 +130,7 @@ import org.jooq.Operator;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
+// ...
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
@@ -140,80 +142,68 @@ import org.jooq.TableOptionalOnStep;
 import org.jooq.TableOptions;
 import org.jooq.TableOuterJoinStep;
 import org.jooq.TablePartitionByStep;
+// ...
 import org.jooq.conf.RenderOptionalKeyword;
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
  * A table consisting of two joined tables and possibly a join condition
  *
  * @author Lukas Eder
  */
-final class JoinTable
+abstract class JoinTable<J extends JoinTable<J>>
 extends
      AbstractTable<Record>
 implements
     TableOuterJoinStep<Record>,
     TableOptionalOnStep<Record>,
     TablePartitionByStep<Record>,
-    TableOnConditionStep<Record>,
-    UNotYetImplemented
+    TableOnConditionStep<Record>
 {
 
-    private static final Clause[]         CLAUSES                    = { TABLE, TABLE_JOIN };
+    static final Clause[]         CLAUSES                    = { TABLE, TABLE_JOIN };
 
 
 
 
-    private static final Set<SQLDialect>  EMULATE_NATURAL_JOIN       = SQLDialect.supportedBy(CUBRID);
-    private static final Set<SQLDialect>  EMULATE_NATURAL_OUTER_JOIN = SQLDialect.supportedBy(CUBRID, H2, IGNITE);
-    private static final Set<SQLDialect>  EMULATE_JOIN_USING         = SQLDialect.supportedBy(CUBRID, IGNITE);
-    private static final Set<SQLDialect>  EMULATE_APPLY              = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>  EMULATE_NATURAL_JOIN       = SQLDialect.supportedBy(CUBRID);
+    static final Set<SQLDialect>  EMULATE_NATURAL_OUTER_JOIN = SQLDialect.supportedBy(CUBRID, H2, IGNITE);
+    static final Set<SQLDialect>  EMULATE_JOIN_USING         = SQLDialect.supportedBy(CUBRID, IGNITE);
+    static final Set<SQLDialect>  EMULATE_APPLY              = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTEDB);
 
-    final Table<?>                        lhs;
-    final Table<?>                        rhs;
+    final Table<?>                lhs;
+    final Table<?>                rhs;
+    final QueryPartList<Field<?>> lhsPartitionBy;
+    final QueryPartList<Field<?>> rhsPartitionBy;
 
-
-
-
-
-
-
-    final JoinType                        type;
-    final ConditionProviderImpl           condition;
-    final QueryPartList<Field<?>>         using;
+    final JoinType                type;
+    final ConditionProviderImpl   condition;
+    final QueryPartList<Field<?>> using;
 
     JoinTable(TableLike<?> lhs, TableLike<?> rhs, JoinType type) {
+        this(lhs, rhs, type, emptyList());
+    }
 
-
-
-
-
-
+    JoinTable(TableLike<?> lhs, TableLike<?> rhs, JoinType type, Collection<? extends Field<?>> lhsPartitionBy) {
         super(TableOptions.expression(), N_JOIN);
 
         this.lhs = lhs.asTable();
         this.rhs = rhs.asTable();
-
-
-
-
-
-
+        this.lhsPartitionBy = new QueryPartList<>(lhsPartitionBy);
+        this.rhsPartitionBy = new QueryPartList<>();
         this.type = type;
-
         this.condition = new ConditionProviderImpl();
         this.using = new QueryPartList<>();
     }
 
-    final JoinTable transform(Table<?> newLhs, Table<?> newRhs) {
+    @SuppressWarnings("unchecked")
+    @Deprecated
+    final J transform(Table<?> newLhs, Table<?> newRhs) {
         if (lhs == newLhs && rhs == newRhs)
-            return this;
+            return (J) this;
 
-        JoinTable result = new JoinTable(newLhs, newRhs, type);
-
-        // TODO: Retain partitionBy clause
-        return !using.isEmpty() ? result.using(using) : result.on(condition);
+        return construct(newLhs, lhsPartitionBy, rhsPartitionBy, newRhs, condition, using);
     }
 
     // ------------------------------------------------------------------------
@@ -641,49 +631,56 @@ implements
 
 
 
+
+    @SuppressWarnings("unchecked")
     @Override
-    public final JoinTable on(Condition conditions) {
+    public final J on(Condition conditions) {
         condition.addConditions(conditions);
-        return this;
+        return (J) this;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final J on(Condition... conditions) {
+        condition.addConditions(conditions);
+        return (J) this;
     }
 
     @Override
-    public final JoinTable on(Condition... conditions) {
-        condition.addConditions(conditions);
-        return this;
-    }
-
-    @Override
-    public final JoinTable on(Field<Boolean> c) {
+    public final J on(Field<Boolean> c) {
         return on(condition(c));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public final JoinTable on(SQL sql) {
+    public final J on(SQL sql) {
         and(sql);
-        return this;
+        return (J) this;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public final JoinTable on(String sql) {
+    public final J on(String sql) {
         and(sql);
-        return this;
+        return (J) this;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public final JoinTable on(String sql, Object... bindings) {
+    public final J on(String sql, Object... bindings) {
         and(sql, bindings);
-        return this;
+        return (J) this;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public final JoinTable on(String sql, QueryPart... parts) {
+    public final J on(String sql, QueryPart... parts) {
         and(sql, parts);
-        return this;
+        return (J) this;
     }
 
     @Override
-    public final JoinTable onKey() throws DataAccessException {
+    public final J onKey() throws DataAccessException {
         List<?> leftToRight = lhs.getReferencesTo(rhs);
         List<?> rightToLeft = rhs.getReferencesTo(lhs);
 
@@ -699,7 +696,7 @@ implements
     }
 
     @Override
-    public final JoinTable onKey(TableField<?, ?>... keyFields) throws DataAccessException {
+    public final J onKey(TableField<?, ?>... keyFields) throws DataAccessException {
         if (keyFields != null && keyFields.length > 0) {
 
             // [#7626] Make sure this works with aliased columns as well
@@ -736,7 +733,7 @@ implements
     }
 
     @Override
-    public final JoinTable onKey(ForeignKey<?, ?> key) {
+    public final J onKey(ForeignKey<?, ?> key) {
         if (containsUnaliasedTable(lhs, key.getTable()))
             return onKey(key, lhs, rhs);
         else if (containsUnaliasedTable(rhs, key.getTable()))
@@ -745,7 +742,7 @@ implements
         throw onKeyException(OnKeyExceptionReason.NOT_FOUND, null, null);
     }
 
-    private final JoinTable onKey(ForeignKey<?, ?> key, Table<?> fk, Table<?> pk) {
+    private final J onKey(ForeignKey<?, ?> key, Table<?> fk, Table<?> pk) {
         return and(onKey0(key, fk, pk));
     }
 
@@ -782,115 +779,211 @@ implements
     }
 
     @Override
-    public final JoinTable using(Field<?>... fields) {
+    public final J using(Field<?>... fields) {
         return using(asList(fields));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public final JoinTable using(Collection<? extends Field<?>> fields) {
+    public final J using(Collection<? extends Field<?>> fields) {
         using.addAll(fields);
-        return this;
+        return (J) this;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public final JoinTable and(Condition c) {
+    public final J and(Condition c) {
         condition.addConditions(c);
-        return this;
+        return (J) this;
     }
 
     @Override
-    public final JoinTable and(Field<Boolean> c) {
+    public final J and(Field<Boolean> c) {
         return and(condition(c));
     }
 
     @Override
-    public final JoinTable and(SQL sql) {
+    public final J and(SQL sql) {
         return and(condition(sql));
     }
 
     @Override
-    public final JoinTable and(String sql) {
+    public final J and(String sql) {
         return and(condition(sql));
     }
 
     @Override
-    public final JoinTable and(String sql, Object... bindings) {
+    public final J and(String sql, Object... bindings) {
         return and(condition(sql, bindings));
     }
 
     @Override
-    public final JoinTable and(String sql, QueryPart... parts) {
+    public final J and(String sql, QueryPart... parts) {
         return and(condition(sql, parts));
     }
 
     @Override
-    public final JoinTable andNot(Condition c) {
+    public final J andNot(Condition c) {
         return and(c.not());
     }
 
     @Override
-    public final JoinTable andNot(Field<Boolean> c) {
+    public final J andNot(Field<Boolean> c) {
         return andNot(condition(c));
     }
 
     @Override
-    public final JoinTable andExists(Select<?> select) {
+    public final J andExists(Select<?> select) {
         return and(exists(select));
     }
 
     @Override
-    public final JoinTable andNotExists(Select<?> select) {
+    public final J andNotExists(Select<?> select) {
         return and(notExists(select));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public final JoinTable or(Condition c) {
+    public final J or(Condition c) {
         condition.addConditions(Operator.OR, c);
-        return this;
+        return (J) this;
     }
 
     @Override
-    public final JoinTable or(Field<Boolean> c) {
+    public final J or(Field<Boolean> c) {
         return or(condition(c));
     }
 
     @Override
-    public final JoinTable or(SQL sql) {
+    public final J or(SQL sql) {
         return or(condition(sql));
     }
 
     @Override
-    public final JoinTable or(String sql) {
+    public final J or(String sql) {
         return or(condition(sql));
     }
 
     @Override
-    public final JoinTable or(String sql, Object... bindings) {
+    public final J or(String sql, Object... bindings) {
         return or(condition(sql, bindings));
     }
 
     @Override
-    public final JoinTable or(String sql, QueryPart... parts) {
+    public final J or(String sql, QueryPart... parts) {
         return or(condition(sql, parts));
     }
 
     @Override
-    public final JoinTable orNot(Condition c) {
+    public final J orNot(Condition c) {
         return or(c.not());
     }
 
     @Override
-    public final JoinTable orNot(Field<Boolean> c) {
+    public final J orNot(Field<Boolean> c) {
         return orNot(condition(c));
     }
 
     @Override
-    public final JoinTable orExists(Select<?> select) {
+    public final J orExists(Select<?> select) {
         return or(exists(select));
     }
 
     @Override
-    public final JoinTable orNotExists(Select<?> select) {
+    public final J orNotExists(Select<?> select) {
         return or(notExists(select));
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    abstract J construct(
+        Table<?> table1,
+        Collection<? extends Field<?>> partitionBy1,
+        Collection<? extends Field<?>> partitionBy2,
+        Table<?> table2,
+        Condition on,
+        Collection<? extends Field<?>> using
+    );
+
+    public final Table<?> $table1() {
+        return lhs;
+    }
+
+    public final J $table1(Table<?> t1) {
+        return construct(t1, $partitionBy1(), $partitionBy2(), $table2(), $on(), $using());
+    }
+
+    public final UnmodifiableList<Field<?>> $partitionBy1() {
+        return QOM.unmodifiable(lhsPartitionBy);
+    }
+
+    public final J $partitionBy1(Collection<? extends Field<?>> p1) {
+        return construct($table1(), p1, $partitionBy2(), $table2(), $on(), $using());
+    }
+
+    public final UnmodifiableList<Field<?>> $partitionBy2() {
+        return QOM.unmodifiable(rhsPartitionBy);
+    }
+
+    public final J $partitionBy2(Collection<? extends Field<?>> p2) {
+        return construct($table1(), $partitionBy1(), p2, $table2(), $on(), $using());
+    }
+
+    public final Table<?> $table2() {
+        return rhs;
+    }
+
+    public final J $table2(Table<?> t2) {
+        return construct($table1(), $partitionBy1(), $partitionBy2(), t2, $on(), $using());
+    }
+
+    public final Condition $on() {
+        return condition.getWhereOrNull();
+    }
+
+    public final J $on(Condition o) {
+        return construct($table1(), $partitionBy1(), $partitionBy2(), $table2(), o, emptyList());
+    }
+
+    public final UnmodifiableList<Field<?>> $using() {
+        return QOM.unmodifiable(using);
+    }
+
+    public final J $using(Collection<? extends Field<?>> u) {
+        return construct($table1(), $partitionBy1(), $partitionBy2(), $table2(), null, u);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

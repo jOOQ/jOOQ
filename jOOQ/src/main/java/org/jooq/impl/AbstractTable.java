@@ -72,17 +72,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 import org.jooq.Binding;
 import org.jooq.Catalog;
 import org.jooq.Check;
 import org.jooq.Clause;
 import org.jooq.Comment;
-import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.ContextConverter;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.DivideByOnStep;
@@ -107,7 +106,6 @@ import org.jooq.Row;
 import org.jooq.RowId;
 import org.jooq.SQL;
 import org.jooq.Schema;
-import org.jooq.ContextConverter;
 import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.Table;
@@ -125,8 +123,6 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.QOM.Aliasable;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.tools.JooqLogger;
-
-import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -1342,7 +1338,38 @@ implements
 
     @Override
     public final TableOptionalOnStep<Record> join(TableLike<?> table, JoinType type) {
-        return new JoinTable(this, table, type);
+        switch (type) {
+            case CROSS_APPLY:
+                return new CrossApply(this, table);
+            case CROSS_JOIN:
+                return new CrossJoin(this, table);
+            case FULL_OUTER_JOIN:
+                return new FullJoin(this, table);
+            case JOIN:
+                return new Join(this, table);
+            case LEFT_ANTI_JOIN:
+                return new LeftAntiJoin(this, table);
+            case LEFT_OUTER_JOIN:
+                return new LeftJoin(this, table);
+            case LEFT_SEMI_JOIN:
+                return new LeftSemiJoin(this, table);
+            case NATURAL_FULL_OUTER_JOIN:
+                return new NaturalFullJoin(this, table);
+            case NATURAL_JOIN:
+                return new NaturalJoin(this, table);
+            case NATURAL_LEFT_OUTER_JOIN:
+                return new NaturalLeftJoin(this, table);
+            case NATURAL_RIGHT_OUTER_JOIN:
+                return new NaturalRightJoin(this, table);
+            case OUTER_APPLY:
+                return new OuterApply(this, table);
+            case RIGHT_OUTER_JOIN:
+                return new RightJoin(this, table);
+            case STRAIGHT_JOIN:
+                return new StraightJoin(this, table);
+            default:
+                throw new IllegalArgumentException("Unsupported join type: " + type);
+        }
     }
 
     @Override

@@ -224,4 +224,19 @@ final class PartitionJoinTable implements TableOuterJoinStep<Record> {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

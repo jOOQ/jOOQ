@@ -45,12 +45,12 @@ import org.jooq.impl.QOM.UEmptyField;
 
 final class SQLField<T> extends AbstractField<T> implements UEmptyField<T>, TypedReference<T> {
 
-    private final QueryPart delegate;
+    final SQLImpl delegate;
 
     SQLField(DataType<T> type, SQL delegate) {
         super(DSL.unquotedName(delegate.toString()), type);
 
-        this.delegate = delegate;
+        this.delegate = (SQLImpl) delegate;
     }
 
     // ------------------------------------------------------------------------

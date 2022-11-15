@@ -1630,6 +1630,11 @@ final class Tools {
         return result;
     }
 
+    static final boolean reference(Field<?> field) {
+        return field instanceof TableField
+            || field instanceof SQLField && ((SQLField<?>) field).delegate.isName;
+    }
+
     static final <T> Field<T> unqualified(Field<T> field) {
         return DSL.field(field.getUnqualifiedName(), field.getDataType());
     }

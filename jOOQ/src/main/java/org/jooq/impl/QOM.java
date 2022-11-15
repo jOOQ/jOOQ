@@ -944,7 +944,7 @@ public final class QOM {
     {
         @Nullable Condition $on();
         @NotNull J $on(Condition on);
-        @Nullable UnmodifiableList<Field<?>> $using();
+        @NotNull UnmodifiableList<Field<?>> $using();
         @NotNull J $using(Collection<? extends Field<?>> using);
     }
 

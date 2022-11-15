@@ -129,7 +129,7 @@ public interface SelectSeekStep1<R extends Record, T1> extends SelectLimitStep<R
      * @see <a
      *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
      * @see <a
-     *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
+     *      href="https://blog.jooq.org/faster-sql-paging-with-jooq-using-the-seek-method/">https://blog.jooq.org/faster-sql-paging-with-jooq-using-the-seek-method</a>
      * @see #seekAfter(Object)
      */
     @NotNull @CheckReturnValue
@@ -182,7 +182,7 @@ public interface SelectSeekStep1<R extends Record, T1> extends SelectLimitStep<R
      * @see <a
      *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
      * @see <a
-     *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
+     *      href="https://blog.jooq.org/faster-sql-paging-with-jooq-using-the-seek-method/">https://blog.jooq.org/faster-sql-paging-with-jooq-using-the-seek-method</a>
      * @see #seekAfter(Field)
      */
     @NotNull @CheckReturnValue
@@ -235,7 +235,7 @@ public interface SelectSeekStep1<R extends Record, T1> extends SelectLimitStep<R
      * @see <a
      *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
      * @see <a
-     *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
+     *      href="https://blog.jooq.org/faster-sql-paging-with-jooq-using-the-seek-method/">https://blog.jooq.org/faster-sql-paging-with-jooq-using-the-seek-method</a>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -287,7 +287,7 @@ public interface SelectSeekStep1<R extends Record, T1> extends SelectLimitStep<R
      * @see <a
      *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
      * @see <a
-     *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
+     *      href="https://blog.jooq.org/faster-sql-paging-with-jooq-using-the-seek-method/">https://blog.jooq.org/faster-sql-paging-with-jooq-using-the-seek-method</a>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -339,7 +339,7 @@ public interface SelectSeekStep1<R extends Record, T1> extends SelectLimitStep<R
      * @see <a
      *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
      * @see <a
-     *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
+     *      href="https://blog.jooq.org/faster-sql-paging-with-jooq-using-the-seek-method/">https://blog.jooq.org/faster-sql-paging-with-jooq-using-the-seek-method</a>
      * @deprecated - [#7461] - SEEK BEFORE is not implemented correctly
      */
     @Deprecated
@@ -393,7 +393,7 @@ public interface SelectSeekStep1<R extends Record, T1> extends SelectLimitStep<R
      * @see <a
      *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
      * @see <a
-     *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
+     *      href="https://blog.jooq.org/faster-sql-paging-with-jooq-using-the-seek-method/">https://blog.jooq.org/faster-sql-paging-with-jooq-using-the-seek-method</a>
      * @deprecated - [#7461] - SEEK BEFORE is not implemented correctly
      */
     @Deprecated

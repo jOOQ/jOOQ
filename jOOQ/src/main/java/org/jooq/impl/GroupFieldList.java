@@ -104,7 +104,7 @@ final class GroupFieldList extends QueryPartList<GroupField> {
 
     @Override
     protected final void toSQLEmptyList(Context<?> ctx) {
-        ctx.sql(' ').visit(emptyGroupingSet());
+        ctx.visit(emptyGroupingSet());
     }
 
     @Override

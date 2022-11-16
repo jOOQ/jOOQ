@@ -197,11 +197,13 @@ final class DefaultDiagnosticsContext extends AbstractScope implements Diagnosti
 
         if (resultSet != null) {
             try {
-                ResultSetMetaData meta = resultSet.getMetaData();
+                if (!resultSet.isClosed()) {
+                    ResultSetMetaData meta = resultSet.getMetaData();
 
-                for (int i = 1; i <= meta.getColumnCount(); i++)
-                    if (fetched || resultSetWrapper.read.get(i - 1))
-                        result.add(meta.getColumnLabel(i));
+                    for (int i = 1; i <= meta.getColumnCount(); i++)
+                        if (fetched || resultSetWrapper.read.get(i - 1))
+                            result.add(meta.getColumnLabel(i));
+                }
             }
             catch (SQLException e) {
                 log.info(e);

@@ -321,6 +321,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     static final Set<SQLDialect>         NO_SUPPORT_WINDOW_CLAUSE        = SQLDialect.supportedUntil(CUBRID, DERBY, HSQLDB, IGNITE, MARIADB);
     private static final Set<SQLDialect> OPTIONAL_FROM_CLAUSE            = SQLDialect.supportedBy(DEFAULT, H2, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
     private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> NO_IMPLICIT_GROUP_BY_ON_HAVING  = SQLDialect.supportedBy(SQLITE);
 
 
 
@@ -2419,7 +2420,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // --------------------------
         context.start(SELECT_GROUP_BY);
 
-        if (!getGroupBy().isEmpty()) {
+        if (!getGroupBy().isEmpty() || getHaving().hasWhere() && NO_IMPLICIT_GROUP_BY_ON_HAVING.contains(context.dialect())) {
             context.formatSeparator()
                    .visit(K_GROUP_BY);
 

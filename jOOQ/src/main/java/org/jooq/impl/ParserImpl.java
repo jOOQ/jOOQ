@@ -8521,7 +8521,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("RANDOM_UUID") && parseEmptyParens())
                     return uuid();
 
-                else if (parseFunctionNameIf("ROW_NUMBER") && parseEmptyParens())
+                else if (parseFunctionNameIf("ROW_NUMBER", "ROWNUMBER") && parseEmptyParens())
                     return parseWindowFunction(null, null, rowNumber());
                 else if ((field = parseFieldRankIf()) != null)
                     return field;
@@ -11155,7 +11155,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseFieldDenseRankIf() {
-        if (parseFunctionNameIf("DENSE_RANK")) {
+        if (parseFunctionNameIf("DENSE_RANK", "DENSERANK")) {
             parse('(');
 
             if (parseIf(')'))

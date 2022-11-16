@@ -149,6 +149,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsUnnecessaryDistinct = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsUnnecessaryScalarSubquery = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsUnnecessaryGroupByExpressions = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsUnnecessaryOrderByExpressions = true;
@@ -1758,6 +1760,37 @@ public class Settings
      */
     public void setTransformPatternsUnnecessaryDistinct(Boolean value) {
         this.transformPatternsUnnecessaryDistinct = value;
+    }
+
+    /**
+     * Transform <code>SELECT (SELECT 1)</code> to <code>SELECT 1</code>.
+     * <p>
+     * Scalar subqueries that don't have any content other than a <code>SELECT</code> clause are unnecessary
+     * and can be removed.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsUnnecessaryScalarSubquery() {
+        return transformPatternsUnnecessaryScalarSubquery;
+    }
+
+    /**
+     * Sets the value of the transformPatternsUnnecessaryScalarSubquery property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsUnnecessaryScalarSubquery(Boolean value) {
+        this.transformPatternsUnnecessaryScalarSubquery = value;
     }
 
     /**
@@ -5758,6 +5791,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsUnnecessaryScalarSubquery(Boolean value) {
+        setTransformPatternsUnnecessaryScalarSubquery(value);
+        return this;
+    }
+
     public Settings withTransformPatternsUnnecessaryGroupByExpressions(Boolean value) {
         setTransformPatternsUnnecessaryGroupByExpressions(value);
         return this;
@@ -6902,6 +6940,7 @@ public class Settings
         builder.append("transformPatterns", transformPatterns);
         builder.append("transformPatternsLogging", transformPatternsLogging);
         builder.append("transformPatternsUnnecessaryDistinct", transformPatternsUnnecessaryDistinct);
+        builder.append("transformPatternsUnnecessaryScalarSubquery", transformPatternsUnnecessaryScalarSubquery);
         builder.append("transformPatternsUnnecessaryGroupByExpressions", transformPatternsUnnecessaryGroupByExpressions);
         builder.append("transformPatternsUnnecessaryOrderByExpressions", transformPatternsUnnecessaryOrderByExpressions);
         builder.append("transformPatternsUnnecessaryExistsSubqueryClauses", transformPatternsUnnecessaryExistsSubqueryClauses);
@@ -7512,6 +7551,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsUnnecessaryDistinct.equals(other.transformPatternsUnnecessaryDistinct)) {
+                return false;
+            }
+        }
+        if (transformPatternsUnnecessaryScalarSubquery == null) {
+            if (other.transformPatternsUnnecessaryScalarSubquery!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsUnnecessaryScalarSubquery.equals(other.transformPatternsUnnecessaryScalarSubquery)) {
                 return false;
             }
         }
@@ -8930,6 +8978,7 @@ public class Settings
         result = ((prime*result)+((transformPatterns == null)? 0 :transformPatterns.hashCode()));
         result = ((prime*result)+((transformPatternsLogging == null)? 0 :transformPatternsLogging.hashCode()));
         result = ((prime*result)+((transformPatternsUnnecessaryDistinct == null)? 0 :transformPatternsUnnecessaryDistinct.hashCode()));
+        result = ((prime*result)+((transformPatternsUnnecessaryScalarSubquery == null)? 0 :transformPatternsUnnecessaryScalarSubquery.hashCode()));
         result = ((prime*result)+((transformPatternsUnnecessaryGroupByExpressions == null)? 0 :transformPatternsUnnecessaryGroupByExpressions.hashCode()));
         result = ((prime*result)+((transformPatternsUnnecessaryOrderByExpressions == null)? 0 :transformPatternsUnnecessaryOrderByExpressions.hashCode()));
         result = ((prime*result)+((transformPatternsUnnecessaryExistsSubqueryClauses == null)? 0 :transformPatternsUnnecessaryExistsSubqueryClauses.hashCode()));

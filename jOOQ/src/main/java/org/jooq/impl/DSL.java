@@ -25525,25 +25525,6 @@ public class DSL {
 
     /**
      * Create an array literal.
-     * <p>
-     * This translates to the following databases and syntaxes:
-     * <table>
-     * <tr>
-     * <th><code>SQLDialect</code></th>
-     * <th>Java</th>
-     * <th>SQL</th>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#H2}</td>
-     * <td>array(1, 2)</td>
-     * <td>(1, 2)</td>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#HSQLDB}, {@link SQLDialect#POSTGRES}</td>
-     * <td>array(1, 2)</td>
-     * <td>array[1, 2]</td>
-     * </tr>
-     * </table>
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
@@ -25553,25 +25534,6 @@ public class DSL {
 
     /**
      * Create an array literal.
-     * <p>
-     * This translates to the following databases and syntaxes:
-     * <table>
-     * <tr>
-     * <th><code>SQLDialect</code></th>
-     * <th>Java</th>
-     * <th>SQL</th>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#H2}</td>
-     * <td>array(1, 2)</td>
-     * <td>(1, 2)</td>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#HSQLDB}, {@link SQLDialect#POSTGRES}</td>
-     * <td>array(1, 2)</td>
-     * <td>array[1, 2]</td>
-     * </tr>
-     * </table>
      */
     @SafeVarargs
     @NotNull
@@ -25582,25 +25544,6 @@ public class DSL {
 
     /**
      * Create an array literal.
-     * <p>
-     * This translates to the following databases and syntaxes:
-     * <table>
-     * <tr>
-     * <th><code>SQLDialect</code></th>
-     * <th>Java</th>
-     * <th>SQL</th>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#H2}</td>
-     * <td>array(1, 2)</td>
-     * <td>(1, 2)</td>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#HSQLDB}, {@link SQLDialect#POSTGRES}</td>
-     * <td>array(1, 2)</td>
-     * <td>array[1, 2]</td>
-     * </tr>
-     * </table>
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })

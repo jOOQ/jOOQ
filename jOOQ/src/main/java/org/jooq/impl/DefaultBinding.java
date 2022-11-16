@@ -3944,6 +3944,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 return converter.from((T) Double.valueOf(string), ctx.converterContext());
             else if (type == Float.class)
                 return converter.from((T) Float.valueOf(string), ctx.converterContext());
+
+
+
+
+
+
             else if (type == Integer.class)
                 return converter.from((T) Integer.valueOf(string), ctx.converterContext());
             else if (type == Long.class)

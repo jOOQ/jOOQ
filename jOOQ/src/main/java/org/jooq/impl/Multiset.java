@@ -52,6 +52,7 @@ import static org.jooq.impl.DSL.jsonbArray;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
+// ...
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlattributes;
@@ -109,6 +110,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
+import org.jooq.Spatial;
 import org.jooq.Table;
 import org.jooq.TableLike;
 // ...
@@ -166,9 +168,13 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
     private final void accept0(Context<?> ctx, boolean multisetCondition) {
         switch (emulateMultiset(ctx.configuration())) {
             case JSON: {
-                Table<?> t = new AliasedSelect<>(select, true, false, FORCE_LIMIT_IN_DERIVED_TABLE.contains(ctx.dialect()), fieldNames(select.getSelect().size())).as(DSL.name("t"), (Name[]) null);
+                List<Field<?>> fields = select.getSelect();
+                Table<?> t = new AliasedSelect<>(select, true, false, FORCE_LIMIT_IN_DERIVED_TABLE.contains(ctx.dialect()), fieldNames(fields.size())).as(DSL.name("t"), (Name[]) null);
 
                 switch (ctx.family()) {
+
+
+
 
 
 
@@ -232,9 +238,13 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
             }
 
             case JSONB: {
-                Table<?> t = new AliasedSelect<>(select, true, false, FORCE_LIMIT_IN_DERIVED_TABLE.contains(ctx.dialect()), fieldNames(select.getSelect().size())).as(DSL.name("t"), (Name[]) null);
+                List<Field<?>> fields = select.getSelect();
+                Table<?> t = new AliasedSelect<>(select, true, false, FORCE_LIMIT_IN_DERIVED_TABLE.contains(ctx.dialect()), fieldNames(fields.size())).as(DSL.name("t"), (Name[]) null);
 
                 switch (ctx.family()) {
+
+
+
 
 
 
@@ -481,18 +491,62 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                 return jsonxArrayAgg.apply(
                     returningClob(ctx, jsonxArray.apply(
                         map(fields.fields(), (f, i) -> JSONEntryImpl.unescapeNestedJSON(ctx,
-                            (Field<?>) (agg ? f : DSL.field(fieldName(i), f.getDataType()))
+                            castForJSON(ctx, agg ? f : DSL.field(fieldName(i), f.getDataType()))
                         ))
                     ).nullOnNull())
                 );
         }
     }
 
+    @SuppressWarnings("unchecked")
+    static final Field<?> castForJSON(Context<?> ctx, Field<?> field) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return field;
+    }
+
+    @SuppressWarnings("unchecked")
+    static final Field<?> castForXML(Context<?> ctx, Field<?> field) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return field;
+    }
+
     static final XMLAggOrderByStep<XML> xmlaggEmulation(Context<?> ctx, Fields fields, boolean agg) {
         return xmlagg(
             xmlelement(N_RECORD,
                 map(fields.fields(), (f, i) -> {
-                    Field<?> v = agg ? f : DSL.field(fieldName(i), f.getDataType());
+                    Field<?> v = castForXML(ctx, agg ? f : DSL.field(fieldName(i), f.getDataType()));
                     String n = fieldNameString(i);
                     DataType<?> t = v.getDataType();
 

@@ -458,10 +458,10 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
         return true;
     }
 
-    private static final Rendered getSQL0(ExecuteContext ctx) {
+    private static final Rendered getSQL0(DefaultExecuteContext ctx) {
         Rendered result;
         DefaultRenderContext render;
-        Configuration c = ctx.configuration();
+        Configuration c = ctx.originalConfiguration();
 
         // [#3542] [#4977] Some dialects do not support bind values in DDL statements
         // [#6474] [#6929] Can this be communicated in a leaner way?

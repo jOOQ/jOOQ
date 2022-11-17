@@ -22,7 +22,7 @@
 
         <!-- These in-memory DBs are used by jOOQ-meta-extensions and a variety of integration tests -->
         <h2.version>2.1.214</h2.version>
-        <sqlite.version>3.39.4.0</sqlite.version>
+        <sqlite.version>3.39.4.1</sqlite.version>
         <derby.version>10.14.2.0</derby.version>
         <hsqldb.version>2.7.1</hsqldb.version>
 

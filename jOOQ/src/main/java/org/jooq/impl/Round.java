@@ -115,7 +115,7 @@ implements
                 if (decimals == null) {
                     ctx.visit(DSL
                         .when(isub(value, DSL.floor(value))
-                        .lessThan((T) Double.valueOf(0.5)), DSL.floor(value))
+                        .lessThan(inline((T) Double.valueOf(0.5))), DSL.floor(value))
                         .otherwise(DSL.ceil(value)));
 
                     return;
@@ -127,7 +127,7 @@ implements
 
                     ctx.visit(DSL
                         .when(isub(mul, DSL.floor(mul))
-                        .lessThan((T) Double.valueOf(0.5)), idiv(DSL.floor(mul), factor))
+                        .lessThan(inline((T) Double.valueOf(0.5))), idiv(DSL.floor(mul), factor))
                         .otherwise(idiv(DSL.ceil(mul), factor)));
 
                     return;

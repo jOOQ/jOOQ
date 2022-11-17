@@ -429,6 +429,16 @@ To enable this feature, {@link #transformPatterns} must be enabled as well.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsUnnecessaryInnerJoin" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>SELECT * FROM t INNER JOIN u ON TRUE</code> to <code>SELECT * FROM t CROSS JOIN u</code>.
+<p>
+Some <code>INNER JOIN</code> expressions can be proven to be unnecessary.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsUnnecessaryGroupByExpressions" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>SELECT a, b FROM t GROUP BY a, a, b</code> to <code>SELECT a, b FROM t GROUP BY a, b</code>.
 <p>

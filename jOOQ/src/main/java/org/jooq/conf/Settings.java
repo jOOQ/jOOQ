@@ -151,6 +151,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsUnnecessaryScalarSubquery = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsUnnecessaryInnerJoin = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsUnnecessaryGroupByExpressions = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsUnnecessaryOrderByExpressions = true;
@@ -1791,6 +1793,36 @@ public class Settings
      */
     public void setTransformPatternsUnnecessaryScalarSubquery(Boolean value) {
         this.transformPatternsUnnecessaryScalarSubquery = value;
+    }
+
+    /**
+     * Transform <code>SELECT * FROM t INNER JOIN u ON TRUE</code> to <code>SELECT * FROM t CROSS JOIN u</code>.
+     * <p>
+     * Some <code>INNER JOIN</code> expressions can be proven to be unnecessary.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsUnnecessaryInnerJoin() {
+        return transformPatternsUnnecessaryInnerJoin;
+    }
+
+    /**
+     * Sets the value of the transformPatternsUnnecessaryInnerJoin property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsUnnecessaryInnerJoin(Boolean value) {
+        this.transformPatternsUnnecessaryInnerJoin = value;
     }
 
     /**
@@ -5796,6 +5828,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsUnnecessaryInnerJoin(Boolean value) {
+        setTransformPatternsUnnecessaryInnerJoin(value);
+        return this;
+    }
+
     public Settings withTransformPatternsUnnecessaryGroupByExpressions(Boolean value) {
         setTransformPatternsUnnecessaryGroupByExpressions(value);
         return this;
@@ -6941,6 +6978,7 @@ public class Settings
         builder.append("transformPatternsLogging", transformPatternsLogging);
         builder.append("transformPatternsUnnecessaryDistinct", transformPatternsUnnecessaryDistinct);
         builder.append("transformPatternsUnnecessaryScalarSubquery", transformPatternsUnnecessaryScalarSubquery);
+        builder.append("transformPatternsUnnecessaryInnerJoin", transformPatternsUnnecessaryInnerJoin);
         builder.append("transformPatternsUnnecessaryGroupByExpressions", transformPatternsUnnecessaryGroupByExpressions);
         builder.append("transformPatternsUnnecessaryOrderByExpressions", transformPatternsUnnecessaryOrderByExpressions);
         builder.append("transformPatternsUnnecessaryExistsSubqueryClauses", transformPatternsUnnecessaryExistsSubqueryClauses);
@@ -7560,6 +7598,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsUnnecessaryScalarSubquery.equals(other.transformPatternsUnnecessaryScalarSubquery)) {
+                return false;
+            }
+        }
+        if (transformPatternsUnnecessaryInnerJoin == null) {
+            if (other.transformPatternsUnnecessaryInnerJoin!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsUnnecessaryInnerJoin.equals(other.transformPatternsUnnecessaryInnerJoin)) {
                 return false;
             }
         }
@@ -8979,6 +9026,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsLogging == null)? 0 :transformPatternsLogging.hashCode()));
         result = ((prime*result)+((transformPatternsUnnecessaryDistinct == null)? 0 :transformPatternsUnnecessaryDistinct.hashCode()));
         result = ((prime*result)+((transformPatternsUnnecessaryScalarSubquery == null)? 0 :transformPatternsUnnecessaryScalarSubquery.hashCode()));
+        result = ((prime*result)+((transformPatternsUnnecessaryInnerJoin == null)? 0 :transformPatternsUnnecessaryInnerJoin.hashCode()));
         result = ((prime*result)+((transformPatternsUnnecessaryGroupByExpressions == null)? 0 :transformPatternsUnnecessaryGroupByExpressions.hashCode()));
         result = ((prime*result)+((transformPatternsUnnecessaryOrderByExpressions == null)? 0 :transformPatternsUnnecessaryOrderByExpressions.hashCode()));
         result = ((prime*result)+((transformPatternsUnnecessaryExistsSubqueryClauses == null)? 0 :transformPatternsUnnecessaryExistsSubqueryClauses.hashCode()));

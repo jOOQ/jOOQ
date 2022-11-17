@@ -47,6 +47,7 @@ import static org.jooq.impl.Tools.nullSafeDataType;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function2;
 import org.jooq.impl.QOM.UnmodifiableList;
@@ -60,7 +61,11 @@ final class Choose<T> extends AbstractField<T> implements QOM.Choose<T> {
     private Field<T>[]     values;
 
     Choose(Field<Integer> index, Field<T>[] values) {
-        super(N_CHOOSE, nullSafeDataType(values));
+        this(index, values, nullSafeDataType(values));
+    }
+
+    Choose(Field<Integer> index, Field<T>[] values, DataType<T> type) {
+        super(N_CHOOSE, type);
 
         this.index = index;
         this.values = values;
@@ -137,8 +142,11 @@ final class Choose<T> extends AbstractField<T> implements QOM.Choose<T> {
         return QOM.unmodifiable(values);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final Function2<? super Field<Integer>, ? super UnmodifiableList<? extends Field<T>>, ? extends Field<T>> $constructor() {
-        return (i, v) -> new Choose<T>(i, (Field<T>[]) v.toArray(EMPTY_FIELD));
+        return (i, v) -> v.isEmpty()
+            ? new Choose<T>(i, (Field<T>[]) EMPTY_FIELD, getDataType())
+            : new Choose<T>(i, (Field<T>[]) v.toArray(EMPTY_FIELD));
     }
 }

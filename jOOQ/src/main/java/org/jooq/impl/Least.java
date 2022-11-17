@@ -58,9 +58,14 @@ final class Least<T> extends AbstractField<T> implements QOM.Least<T> {
 
     private final QueryPartListView<Field<T>> args;
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked" })
     Least(Field<?>... args) {
-        super(N_LEAST, (DataType<T>) nullSafeDataType(args));
+        this(args, (DataType<T>) nullSafeDataType(args));
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    Least(Field<?>[] args, DataType<T> type) {
+        super(N_LEAST, type);
 
         this.args = (QueryPartListView) QueryPartListView.wrap(args);
     }
@@ -119,6 +124,8 @@ final class Least<T> extends AbstractField<T> implements QOM.Least<T> {
 
     @Override
     public final Function1<? super UnmodifiableList<? extends Field<T>>, ? extends Field<T>> $constructor() {
-        return a -> new Least<>(a.toArray(EMPTY_FIELD));
+        return a -> a.isEmpty()
+            ? new Least<>(EMPTY_FIELD, getDataType())
+            : new Least<>(a.toArray(EMPTY_FIELD));
     }
 }

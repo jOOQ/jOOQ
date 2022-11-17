@@ -58,9 +58,14 @@ final class Greatest<T> extends AbstractField<T> implements QOM.Greatest<T> {
 
     private final QueryPartListView<Field<T>> args;
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked" })
     Greatest(Field<?>... args) {
-        super(N_GREATEST, (DataType<T>) nullSafeDataType(args));
+        this(args, (DataType<T>) nullSafeDataType(args));
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    Greatest(Field<?>[] args, DataType<T> type) {
+        super(N_GREATEST, type);
 
         this.args = (QueryPartListView) QueryPartListView.wrap(args);
     }
@@ -119,6 +124,8 @@ final class Greatest<T> extends AbstractField<T> implements QOM.Greatest<T> {
 
     @Override
     public final Function1<? super UnmodifiableList<? extends Field<T>>, ? extends Field<T>> $constructor() {
-        return a -> new Greatest<>(a.toArray(EMPTY_FIELD));
+        return a -> a.isEmpty()
+            ? new Greatest<>(EMPTY_FIELD, getDataType())
+            : new Greatest<>(a.toArray(EMPTY_FIELD));
     }
 }

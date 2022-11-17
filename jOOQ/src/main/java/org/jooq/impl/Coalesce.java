@@ -64,7 +64,12 @@ final class Coalesce<T> extends AbstractField<T> implements QOM.Coalesce<T> {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     Coalesce(Field<?>[] fields) {
-        super(N_COALESCE, anyNotNull((DataType) OTHER, fields));
+        this(fields, anyNotNull((DataType) OTHER, fields));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    Coalesce(Field<?>[] fields, DataType<T> type) {
+        super(N_COALESCE, type);
 
         this.fields = (Field[]) fields;
     }
@@ -119,6 +124,8 @@ final class Coalesce<T> extends AbstractField<T> implements QOM.Coalesce<T> {
 
     @Override
     public final Function1<? super UnmodifiableList<? extends Field<T>>, ? extends Field<T>> $constructor() {
-        return l -> new Coalesce<>(l.toArray(EMPTY_FIELD));
+        return l -> l.isEmpty()
+            ? new Coalesce<>(EMPTY_FIELD, getDataType())
+            : new Coalesce<>(l.toArray(EMPTY_FIELD));
     }
 }

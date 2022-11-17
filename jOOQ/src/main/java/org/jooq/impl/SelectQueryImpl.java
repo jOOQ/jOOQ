@@ -2399,7 +2399,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 context.sql(' ').visit(K_DISTINCT);
 
             context.separatorRequired(true);
-            context.visit(groupBy);
+            context.visit(groupBy != null ? groupBy : new GroupFieldList());
         }
 
         context.end(SELECT_GROUP_BY);

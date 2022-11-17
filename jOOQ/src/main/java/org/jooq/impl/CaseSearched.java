@@ -39,7 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 // ...
-import static org.jooq.impl.DSL.NULL;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_CASE;
@@ -167,7 +167,7 @@ implements
             if (else_ != null)
                 ctx.visit(else_);
             else
-                ctx.visit(NULL(getDataType()));
+                ctx.visit(inline(null, getDataType()));
         }
         else {
             switch (ctx.family()) {

@@ -37,7 +37,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.NULL;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Names.N_COALESCE;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
@@ -72,7 +72,7 @@ final class Coalesce<T> extends AbstractField<T> implements QOM.Coalesce<T> {
     @Override
     public final void accept(Context<?> ctx) {
         if (fields.length == 0) {
-            ctx.visit(NULL(getDataType()));
+            ctx.visit(inline(null, getDataType()));
         }
         else if (fields.length == 1) {
             ctx.visit(fields[0]);

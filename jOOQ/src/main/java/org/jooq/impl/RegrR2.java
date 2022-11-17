@@ -116,7 +116,7 @@ implements
         Field<? extends Number> y = (Field) getArguments().get(1);
 
         ctx.visit(DSL
-            .when(fo(DSL.varPop(y(x, y))).eq(inline(BigDecimal.ZERO)), (Field) DSL.NULL(d(ctx)))
+            .when(fo(DSL.varPop(y(x, y))).eq(inline(BigDecimal.ZERO)), (Field) DSL.inline(null, d(ctx)))
             .when(fo(DSL.varPop(x(x, y))).eq(inline(BigDecimal.ZERO)), inline(BigDecimal.ONE))
             .else_(DSL.square(fo(DSL.corr(x, y))))
         );

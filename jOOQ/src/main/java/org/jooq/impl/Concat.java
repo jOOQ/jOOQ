@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.systemName;
@@ -68,7 +67,7 @@ final class Concat extends AbstractField<String> implements QOM.Concat {
     @Override
     public final void accept(Context<?> ctx) {
         if (arguments.length == 0) {
-            ctx.visit(NULL(getDataType()));
+            ctx.visit(inline(null, getDataType()));
             return;
         }
         else if (arguments.length == 1) {

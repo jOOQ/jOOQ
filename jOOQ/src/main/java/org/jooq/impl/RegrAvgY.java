@@ -125,7 +125,7 @@ implements
         Field<? extends Number> x = (Field) getArguments().get(0);
         Field<? extends Number> y = (Field) getArguments().get(1);
 
-        ctx.visit(fo(DSL.avg(DSL.nvl2(y, x, DSL.NULL(d(ctx))).cast(d(ctx)))));
+        ctx.visit(fo(DSL.avg(DSL.nvl2(y, x, DSL.inline(null, d(ctx))).cast(d(ctx)))));
     }
 
 

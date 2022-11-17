@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
@@ -70,7 +69,7 @@ final class Choose<T> extends AbstractField<T> implements QOM.Choose<T> {
     @Override
     public final void accept(Context<?> ctx) {
         if (values.length == 0) {
-            ctx.visit(NULL(getDataType()));
+            ctx.visit(inline(null, getDataType()));
             return;
         }
 

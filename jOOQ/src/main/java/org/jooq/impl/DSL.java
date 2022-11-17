@@ -15158,7 +15158,7 @@ public class DSL {
     @Support
     public static <T> Field<T> field(Select<? extends Record1<T>> select) {
         if (select == null)
-            return (Field) NULL();
+            return (Field) inline((Object) null);
         else
             return select.asField();
     }
@@ -15743,7 +15743,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> castNull(Field<T> as) {
-        return NULL().cast(as);
+        return inline((Object) null).cast(as);
     }
 
     /**
@@ -15786,7 +15786,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> castNull(DataType<T> type) {
-        return NULL().cast(type);
+        return inline((Object) null).cast(type);
     }
 
     /**
@@ -15827,7 +15827,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> castNull(Class<T> type) {
-        return NULL().cast(type);
+        return inline((Object) null).cast(type);
     }
 
     /**
@@ -33255,34 +33255,6 @@ public class DSL {
     // -------------------------------------------------------------------------
     // XXX Literals
     // -------------------------------------------------------------------------
-
-    /**
-     * Get the null field.
-     */
-    static Field<?> NULL() {
-        return field("null");
-    }
-
-    /**
-     * Get the null field.
-     */
-    static <T> Field<T> NULL(Field<T> field) {
-        return NULL(field.getDataType());
-    }
-
-    /**
-     * Get the null field.
-     */
-    static <T> Field<T> NULL(DataType<T> type) {
-        return field("null", type);
-    }
-
-    /**
-     * Get the null field.
-     */
-    static <T> Field<T> NULL(Class<T> type) {
-        return field("null", type);
-    }
 
     /**
      * @deprecated - [#11092] - 3.15.0 - This method will be removed without

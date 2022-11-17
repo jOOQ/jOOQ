@@ -37,7 +37,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.NULL;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.QOM.tuple;
 
 import java.util.List;
@@ -148,7 +148,7 @@ extends
             if (else_ != null)
                 ctx.visit(else_);
             else
-                ctx.visit(NULL(getDataType()));
+                ctx.visit(inline(null, getDataType()));
         else
             accept0(ctx);
     }

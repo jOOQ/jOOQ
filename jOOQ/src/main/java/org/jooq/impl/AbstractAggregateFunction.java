@@ -513,7 +513,7 @@ implements
      * emulations.
      */
     final <U extends Number> Field<U> x(Field<U> x, Field<? extends Number> y) {
-        return DSL.nvl2(y, x, DSL.NULL(x.getDataType()));
+        return DSL.nvl2(y, x, DSL.inline(null, x.getDataType()));
     }
 
     /**
@@ -521,7 +521,7 @@ implements
      * emulations.
      */
     final <U extends Number> Field<U> y(Field<? extends Number> x, Field<U> y) {
-        return DSL.nvl2(x, y, DSL.NULL(y.getDataType()));
+        return DSL.nvl2(x, y, DSL.inline(null, y.getDataType()));
     }
 
     /**

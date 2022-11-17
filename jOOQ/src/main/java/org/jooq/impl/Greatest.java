@@ -37,8 +37,8 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Names.N_GREATEST;
 import static org.jooq.impl.Names.N_MAX;
 import static org.jooq.impl.Names.N_MAXVALUE;
@@ -68,7 +68,7 @@ final class Greatest<T> extends AbstractField<T> implements QOM.Greatest<T> {
     @Override
     public final void accept(Context<?> ctx) {
         if (args.isEmpty()) {
-            ctx.visit(NULL(getDataType()));
+            ctx.visit(inline(null, getDataType()));
             return;
         }
         else if (args.size() == 1) {

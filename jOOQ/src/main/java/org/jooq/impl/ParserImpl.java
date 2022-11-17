@@ -12424,6 +12424,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseKeywordOrIdentifierIf("SMALLSERIAL") ||
                          parseKeywordOrIdentifierIf("SERIAL2"))
                     return SMALLINT.identity(true);
+                else if (parseKeywordOrIdentifierIf("STRING"))
+                    return parseDataTypeCollation(parseDataTypeLength(VARCHAR));
 
                 break;
 

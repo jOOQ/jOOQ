@@ -499,6 +499,26 @@ To enable this feature, {@link #transformPatterns} must be enabled as well.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsNotAnd" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>NOT(p AND q)</code> to <code>NOT(p) OR NOT(q)</code>.
+<p>
+This transformation normalises a predicate using De Morgan's rules.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformPatternsNotOr" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>NOT(p OR q)</code> to <code>NOT(p) AND NOT(q)</code>.
+<p>
+This transformation normalises a predicate using De Morgan's rules.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsNotNot" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>NOT(NOT(x))</code> to <code>x</code>.
 <p>

@@ -163,6 +163,10 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrim = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsNotAnd = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsNotOr = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNotNot = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNotComparison = true;
@@ -1985,6 +1989,66 @@ public class Settings
      */
     public void setTransformPatternsTrim(Boolean value) {
         this.transformPatternsTrim = value;
+    }
+
+    /**
+     * Transform <code>NOT(p AND q)</code> to <code>NOT(p) OR NOT(q)</code>.
+     * <p>
+     * This transformation normalises a predicate using De Morgan's rules.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsNotAnd() {
+        return transformPatternsNotAnd;
+    }
+
+    /**
+     * Sets the value of the transformPatternsNotAnd property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsNotAnd(Boolean value) {
+        this.transformPatternsNotAnd = value;
+    }
+
+    /**
+     * Transform <code>NOT(p OR q)</code> to <code>NOT(p) AND NOT(q)</code>.
+     * <p>
+     * This transformation normalises a predicate using De Morgan's rules.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsNotOr() {
+        return transformPatternsNotOr;
+    }
+
+    /**
+     * Sets the value of the transformPatternsNotOr property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsNotOr(Boolean value) {
+        this.transformPatternsNotOr = value;
     }
 
     /**
@@ -5889,6 +5953,16 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsNotAnd(Boolean value) {
+        setTransformPatternsNotAnd(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsNotOr(Boolean value) {
+        setTransformPatternsNotOr(value);
+        return this;
+    }
+
     public Settings withTransformPatternsNotNot(Boolean value) {
         setTransformPatternsNotNot(value);
         return this;
@@ -7020,6 +7094,8 @@ public class Settings
         builder.append("transformPatternsUnnecessaryExistsSubqueryClauses", transformPatternsUnnecessaryExistsSubqueryClauses);
         builder.append("transformPatternsCountConstant", transformPatternsCountConstant);
         builder.append("transformPatternsTrim", transformPatternsTrim);
+        builder.append("transformPatternsNotAnd", transformPatternsNotAnd);
+        builder.append("transformPatternsNotOr", transformPatternsNotOr);
         builder.append("transformPatternsNotNot", transformPatternsNotNot);
         builder.append("transformPatternsNotComparison", transformPatternsNotComparison);
         builder.append("transformPatternsNotNotDistinct", transformPatternsNotNotDistinct);
@@ -7689,6 +7765,24 @@ public class Settings
             }
         } else {
             if (!transformPatternsTrim.equals(other.transformPatternsTrim)) {
+                return false;
+            }
+        }
+        if (transformPatternsNotAnd == null) {
+            if (other.transformPatternsNotAnd!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsNotAnd.equals(other.transformPatternsNotAnd)) {
+                return false;
+            }
+        }
+        if (transformPatternsNotOr == null) {
+            if (other.transformPatternsNotOr!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsNotOr.equals(other.transformPatternsNotOr)) {
                 return false;
             }
         }
@@ -9078,6 +9172,8 @@ public class Settings
         result = ((prime*result)+((transformPatternsUnnecessaryExistsSubqueryClauses == null)? 0 :transformPatternsUnnecessaryExistsSubqueryClauses.hashCode()));
         result = ((prime*result)+((transformPatternsCountConstant == null)? 0 :transformPatternsCountConstant.hashCode()));
         result = ((prime*result)+((transformPatternsTrim == null)? 0 :transformPatternsTrim.hashCode()));
+        result = ((prime*result)+((transformPatternsNotAnd == null)? 0 :transformPatternsNotAnd.hashCode()));
+        result = ((prime*result)+((transformPatternsNotOr == null)? 0 :transformPatternsNotOr.hashCode()));
         result = ((prime*result)+((transformPatternsNotNot == null)? 0 :transformPatternsNotNot.hashCode()));
         result = ((prime*result)+((transformPatternsNotComparison == null)? 0 :transformPatternsNotComparison.hashCode()));
         result = ((prime*result)+((transformPatternsNotNotDistinct == null)? 0 :transformPatternsNotNotDistinct.hashCode()));

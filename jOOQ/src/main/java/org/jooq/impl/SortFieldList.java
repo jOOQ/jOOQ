@@ -39,6 +39,7 @@
 package org.jooq.impl;
 
 import static org.jooq.SortOrder.DESC;
+import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.anyMatch;
 
 import java.util.List;
@@ -74,7 +75,7 @@ final class SortFieldList extends QueryPartList<SortField<?>> {
      * all {@link SortOrder#ASC} or all {@link SortOrder#DESC}.
      */
     final boolean uniform() {
-        return !anyMatch(this, f -> (f.getOrder() == DESC) != (get(0).getOrder() == DESC));
+        return allMatch(this, f -> (f.getOrder() == DESC) == (get(0).getOrder() == DESC));
     }
 
     /**

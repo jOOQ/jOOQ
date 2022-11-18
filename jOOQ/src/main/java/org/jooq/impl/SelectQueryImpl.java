@@ -189,6 +189,7 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.aliasedFields;
+import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.camelCase;

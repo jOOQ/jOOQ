@@ -51,6 +51,7 @@ import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.FieldsImpl.fieldsRow0;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.dataTypes;
@@ -1862,7 +1863,7 @@ final class Interpreter {
             if (fields.size() != f.length)
                 return false;
             else
-                return !anyMatch(fields, (x, i) -> !x.nameEquals((UnqualifiedName) f[i].getUnqualifiedName()));
+                return allMatch(fields, (x, i) -> x.nameEquals((UnqualifiedName) f[i].getUnqualifiedName()));
         }
     }
 

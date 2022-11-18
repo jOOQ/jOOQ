@@ -43,7 +43,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DefaultDataType.getDataType;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
-import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.impl.Tools.row0;
@@ -344,7 +344,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
         if (fields.size() <= 1)
             return false;
         else
-            return !anyMatch(fields, f -> !"value".equalsIgnoreCase(f.getName()));
+            return allMatch(fields, f -> "value".equalsIgnoreCase(f.getName()));
     }
 
     @Override

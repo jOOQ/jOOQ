@@ -40,6 +40,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
+import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.isRendersSeparator;
 import static org.jooq.impl.Tools.last;
@@ -131,7 +132,7 @@ permits
 
     @Override
     public boolean isSimple(Context<?> ctx) {
-        return !anyMatch(this, e -> !Tools.isSimple(ctx, e));
+        return allMatch(this, e -> Tools.isSimple(ctx, e));
     }
 
     @Override

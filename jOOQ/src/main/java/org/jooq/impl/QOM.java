@@ -1354,6 +1354,7 @@ public final class QOM {
 
     public /*sealed*/ interface Neg<T>
         extends
+            UReturnsNullOnNullInput,
             Field<T>,
             UOperator1<Field<T>, Field<T>>
         /*permits

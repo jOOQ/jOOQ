@@ -2162,6 +2162,22 @@ final class Tools {
         return t;
     }
 
+    static final <T, E extends Exception> boolean allMatch(T[] array, ThrowingPredicate<? super T, E> test) throws E {
+        return !anyMatch(array, test.negate());
+    }
+
+    static final <T, E extends Exception> boolean allMatch(T[] array, ThrowingIntPredicate<? super T, E> test) throws E {
+        return !anyMatch(array, test.negate());
+    }
+
+    static final <T, E extends Exception> boolean allMatch(Iterable<? extends T> it, ThrowingPredicate<? super T, E> test) throws E {
+        return !anyMatch(it, test.negate());
+    }
+
+    static final <T, E extends Exception> boolean allMatch(Iterable<? extends T> it, ThrowingIntPredicate<? super T, E> test) throws E {
+        return !anyMatch(it, test.negate());
+    }
+
     static final <T, E extends Exception> boolean anyMatch(T[] array, ThrowingPredicate<? super T, E> test) throws E {
         return findAny(array, test, t -> TRUE) != null;
     }

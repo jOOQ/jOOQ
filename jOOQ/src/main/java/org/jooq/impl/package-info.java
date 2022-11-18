@@ -13,6 +13,7 @@ import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /*
@@ -61,14 +62,22 @@ interface ThrowingFunction<T, R, E extends Throwable> {
 @FunctionalInterface
 interface ThrowingPredicate<T, E extends Throwable> {
     boolean test(T t) throws E;
+
+    default ThrowingPredicate<T, E> negate() {
+        return t -> !test(t);
+    }
 }
 
 /**
- * A checked exception throwing {@link Predicate}.
+ * A checked exception throwing {@link java.util.function.Predicate}.
  */
 @FunctionalInterface
 interface ThrowingIntPredicate<T, E extends Throwable> {
     boolean test(T t, int i) throws E;
+
+    default ThrowingIntPredicate<T, E> negate() {
+        return (t, i) -> !test(t, i);
+    }
 }
 
 /**

@@ -56,6 +56,7 @@ import java.util.UUID;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collector;
 
 // ...
 import org.jooq.Catalog;
@@ -288,6 +289,10 @@ public final class QOM {
 
         // TODO: These methods could return unmodifiable views instead, to avoid
         //       copying things around...
+
+        default <R> R $collect(Collector<Q, ?, R> collector) {
+            return stream().collect(collector);
+        }
 
         /**
          * Concatenate a collection to this UnmodifiableList, returning a new

@@ -646,6 +646,15 @@ To enable this feature, {@link #transformPatterns} must be enabled as well.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsCaseSearchedToCaseSimple" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform a searched <code>CASE WHEN x = .. WHEN x = ..</code> to a simple <code>CASE x WHEN .. WHEN ..</code> expression.
+<p>
+When a searched <code>CASE</code> expression always compares the same column to a value, then it can be simplified, possibly
+unlocking further transformations that are available only to the simple <code>CASE</code> expression.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsCaseElseNull" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>CASE .. ELSE NULL</code> removing the <code>ELSE</code> clause.
 <p>

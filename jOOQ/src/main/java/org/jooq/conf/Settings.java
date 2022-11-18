@@ -193,6 +193,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsMergeBetweenSymmetricPredicates = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsCaseSearchedToCaseSimple = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCaseElseNull = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsUnreachableCaseClauses = true;
@@ -2430,6 +2432,35 @@ public class Settings
      */
     public void setTransformPatternsMergeBetweenSymmetricPredicates(Boolean value) {
         this.transformPatternsMergeBetweenSymmetricPredicates = value;
+    }
+
+    /**
+     * Transform a searched <code>CASE WHEN x = .. WHEN x = ..</code> to a simple <code>CASE x WHEN … WHEN …</code> expression.
+     * <p>
+     * When a searched <code>CASE</code> expression always compares the same column to a value, then it can be simplified, possibly
+     * unlocking further transformations that are available only to the simple <code>CASE</code> expression.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsCaseSearchedToCaseSimple() {
+        return transformPatternsCaseSearchedToCaseSimple;
+    }
+
+    /**
+     * Sets the value of the transformPatternsCaseSearchedToCaseSimple property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsCaseSearchedToCaseSimple(Boolean value) {
+        this.transformPatternsCaseSearchedToCaseSimple = value;
     }
 
     /**
@@ -5933,6 +5964,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsCaseSearchedToCaseSimple(Boolean value) {
+        setTransformPatternsCaseSearchedToCaseSimple(value);
+        return this;
+    }
+
     public Settings withTransformPatternsCaseElseNull(Boolean value) {
         setTransformPatternsCaseElseNull(value);
         return this;
@@ -6999,6 +7035,7 @@ public class Settings
         builder.append("transformPatternsMergeInLists", transformPatternsMergeInLists);
         builder.append("transformPatternsMergeRangePredicates", transformPatternsMergeRangePredicates);
         builder.append("transformPatternsMergeBetweenSymmetricPredicates", transformPatternsMergeBetweenSymmetricPredicates);
+        builder.append("transformPatternsCaseSearchedToCaseSimple", transformPatternsCaseSearchedToCaseSimple);
         builder.append("transformPatternsCaseElseNull", transformPatternsCaseElseNull);
         builder.append("transformPatternsUnreachableCaseClauses", transformPatternsUnreachableCaseClauses);
         builder.append("transformPatternsUnreachableDecodeClauses", transformPatternsUnreachableDecodeClauses);
@@ -7787,6 +7824,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsMergeBetweenSymmetricPredicates.equals(other.transformPatternsMergeBetweenSymmetricPredicates)) {
+                return false;
+            }
+        }
+        if (transformPatternsCaseSearchedToCaseSimple == null) {
+            if (other.transformPatternsCaseSearchedToCaseSimple!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsCaseSearchedToCaseSimple.equals(other.transformPatternsCaseSearchedToCaseSimple)) {
                 return false;
             }
         }
@@ -9047,6 +9093,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsMergeInLists == null)? 0 :transformPatternsMergeInLists.hashCode()));
         result = ((prime*result)+((transformPatternsMergeRangePredicates == null)? 0 :transformPatternsMergeRangePredicates.hashCode()));
         result = ((prime*result)+((transformPatternsMergeBetweenSymmetricPredicates == null)? 0 :transformPatternsMergeBetweenSymmetricPredicates.hashCode()));
+        result = ((prime*result)+((transformPatternsCaseSearchedToCaseSimple == null)? 0 :transformPatternsCaseSearchedToCaseSimple.hashCode()));
         result = ((prime*result)+((transformPatternsCaseElseNull == null)? 0 :transformPatternsCaseElseNull.hashCode()));
         result = ((prime*result)+((transformPatternsUnreachableCaseClauses == null)? 0 :transformPatternsUnreachableCaseClauses.hashCode()));
         result = ((prime*result)+((transformPatternsUnreachableDecodeClauses == null)? 0 :transformPatternsUnreachableDecodeClauses.hashCode()));

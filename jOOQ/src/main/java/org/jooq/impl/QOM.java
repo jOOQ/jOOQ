@@ -741,6 +741,7 @@ public final class QOM {
 
     public interface Between<T> extends UOperator3<Field<T>, Field<T>, Field<T>, Condition> {
         boolean $symmetric();
+        @NotNull Between<T> $symmetric(boolean symmetric);
     }
 
     public /*sealed*/ interface InList<T>

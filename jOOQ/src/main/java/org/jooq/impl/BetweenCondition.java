@@ -213,6 +213,12 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
         return symmetric;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Between<T> $symmetric(boolean s) {
+        return (Between<T>) new BetweenCondition<T>($arg1(), $arg2(), not, s).and($arg3());
+    }
+
 
 
 

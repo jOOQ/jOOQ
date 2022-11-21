@@ -105,6 +105,8 @@ implements
                 // [#5929] Check both sides of the operation for array types
                 if (value.getDataType().isArray() || content.getDataType().isArray())
                     ctx.visit(value).sql(" @> ").visit(content);
+                else if (value.getDataType().getType() == JSONB.class || content.getDataType().getType() == JSONB.class)
+                    ctx.visit(value).sql(" @> ").visit(content);
                 else
                     acceptDefault(ctx);
                 break;

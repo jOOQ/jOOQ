@@ -26228,6 +26228,33 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static JSONObjectNullStep<JSONB> jsonbObject(String key, Field<?> value) {
+        return jsonbObject(jsonEntry(key, value));
+    }
+
+    /**
+     * The JSON object constructor.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static JSONObjectNullStep<JSONB> jsonbObject(Field<String> key, Field<?> value) {
+        return jsonbObject(jsonEntry(key, value));
+    }
+
+    /**
+     * The JSON object constructor.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static JSONObjectNullStep<JSONB> jsonbObject(Field<String> key, Select<? extends Record1<?>> value) {
+        return jsonbObject(jsonEntry(key, value));
+    }
+
+    /**
+     * The JSON object constructor.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static JSONObjectNullStep<JSON> jsonObject() {
         return jsonObject(Tools.EMPTY_JSONENTRY);
     }

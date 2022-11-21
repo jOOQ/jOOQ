@@ -8108,17 +8108,21 @@ public class JavaGenerator extends AbstractGenerator {
 
     private boolean printDeprecationIfUnknownTypes(JavaWriter out, Collection<? extends ParameterDefinition> params) {
         for (ParameterDefinition param : params)
-            if (printDeprecationIfUnknownType(out, getJavaType(param.getType(resolver(out)), out)))
+            if (printDeprecationIfUnknownType(out, getJavaType(param.getType(resolver(out)), out), "Parameter type or return type is unknown. "))
                 return true;
 
         return false;
     }
 
     private boolean printDeprecationIfUnknownType(JavaWriter out, String type) {
+        return printDeprecationIfUnknownType(out, type, "");
+    }
+
+    private boolean printDeprecationIfUnknownType(JavaWriter out, String type, String precision) {
         if (generateDeprecationOnUnknownTypes() && (Object.class.getName().equals(type) || kotlin && "Any".equals(type))) {
             if (kotlin) {
                 out.println("@%s(message = \"%s\")", out.ref("kotlin.Deprecated"), escapeString(
-                      "Unknown data type. "
+                      "Unknown data type. " + precision
                     + "If this is a qualified, user-defined type, it may have been excluded from code generation. "
                     + "If this is a built-in type, you can define an explicit org.jooq.Binding to specify how this type should be handled. "
                     + "Deprecation can be turned off using <deprecationOnUnknownTypes/> in your code generator configuration."
@@ -8126,7 +8130,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 out.javadoc("@deprecated "
-                    + "Unknown data type. "
+                    + "Unknown data type. " + precision
                     + "If this is a qualified, user-defined type, it may have been excluded from code generation. "
                     + "If this is a built-in type, you can define an explicit {@link org.jooq.Binding} to specify how this type should be handled. "
                     + "Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration."

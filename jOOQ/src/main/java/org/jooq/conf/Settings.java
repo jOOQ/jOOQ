@@ -247,6 +247,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsIdempotentFunctionRepetition = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsArithmeticComparisons = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsArithmeticExpressions = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrigonometricFunctions = true;
@@ -3258,6 +3260,38 @@ public class Settings
     }
 
     /**
+     * Transform <code>a + 1 = 2</code> to <code>a = 2 - 1</code>, and other transformations.
+     * <p>
+     * It is usually best to compare single columns with constants or expressions to
+     * encourage index usage. While function based indexes are possible in some RDBMS,
+     * ordinary indexes are more reusable and should be preferred.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsArithmeticComparisons() {
+        return transformPatternsArithmeticComparisons;
+    }
+
+    /**
+     * Sets the value of the transformPatternsArithmeticComparisons property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsArithmeticComparisons(Boolean value) {
+        this.transformPatternsArithmeticComparisons = value;
+    }
+
+    /**
      * Transform <code>1 / y * x</code> to <code>x / y</code>, and other transformations.
      * <p>
      * This transformation simplifies arithmetic expressions.
@@ -6163,6 +6197,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsArithmeticComparisons(Boolean value) {
+        setTransformPatternsArithmeticComparisons(value);
+        return this;
+    }
+
     public Settings withTransformPatternsArithmeticExpressions(Boolean value) {
         setTransformPatternsArithmeticExpressions(value);
         return this;
@@ -7136,6 +7175,7 @@ public class Settings
         builder.append("transformPatternsBitNotBitXNor", transformPatternsBitNotBitXNor);
         builder.append("transformPatternsNullOnNullInput", transformPatternsNullOnNullInput);
         builder.append("transformPatternsIdempotentFunctionRepetition", transformPatternsIdempotentFunctionRepetition);
+        builder.append("transformPatternsArithmeticComparisons", transformPatternsArithmeticComparisons);
         builder.append("transformPatternsArithmeticExpressions", transformPatternsArithmeticExpressions);
         builder.append("transformPatternsTrigonometricFunctions", transformPatternsTrigonometricFunctions);
         builder.append("transformPatternsLogarithmicFunctions", transformPatternsLogarithmicFunctions);
@@ -8143,6 +8183,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsIdempotentFunctionRepetition.equals(other.transformPatternsIdempotentFunctionRepetition)) {
+                return false;
+            }
+        }
+        if (transformPatternsArithmeticComparisons == null) {
+            if (other.transformPatternsArithmeticComparisons!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsArithmeticComparisons.equals(other.transformPatternsArithmeticComparisons)) {
                 return false;
             }
         }
@@ -9214,6 +9263,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsBitNotBitXNor == null)? 0 :transformPatternsBitNotBitXNor.hashCode()));
         result = ((prime*result)+((transformPatternsNullOnNullInput == null)? 0 :transformPatternsNullOnNullInput.hashCode()));
         result = ((prime*result)+((transformPatternsIdempotentFunctionRepetition == null)? 0 :transformPatternsIdempotentFunctionRepetition.hashCode()));
+        result = ((prime*result)+((transformPatternsArithmeticComparisons == null)? 0 :transformPatternsArithmeticComparisons.hashCode()));
         result = ((prime*result)+((transformPatternsArithmeticExpressions == null)? 0 :transformPatternsArithmeticExpressions.hashCode()));
         result = ((prime*result)+((transformPatternsTrigonometricFunctions == null)? 0 :transformPatternsTrigonometricFunctions.hashCode()));
         result = ((prime*result)+((transformPatternsLogarithmicFunctions == null)? 0 :transformPatternsLogarithmicFunctions.hashCode()));

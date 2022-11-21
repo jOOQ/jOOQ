@@ -925,6 +925,18 @@ To enable this feature, {@link #transformPatterns} must be enabled as well.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsArithmeticComparisons" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>a + 1 = 2</code> to <code>a = 2 - 1</code>, and other transformations.
+<p>
+It is usually best to compare single columns with constants or expressions to
+encourage index usage. While function based indexes are possible in some RDBMS,
+ordinary indexes are more reusable and should be preferred.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsArithmeticExpressions" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>1 / y * x</code> to <code>x / y</code>, and other transformations.
 <p>

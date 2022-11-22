@@ -56,6 +56,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
@@ -77,7 +79,6 @@ import static org.jooq.impl.Names.N_SYSTEM_RANGE;
 import static org.jooq.impl.Names.N_UNNEST;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
-import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
@@ -104,7 +105,7 @@ implements
     QOM.GenerateSeries<Integer>
 {
 
-    private static final Set<SQLDialect> EMULATE_WITH_RECURSIVE = SQLDialect.supportedBy(FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> EMULATE_WITH_RECURSIVE = SQLDialect.supportedUntil(FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> EMULATE_SYSTEM_RANGE   = SQLDialect.supportedBy(H2);
 
 
@@ -173,6 +174,15 @@ implements
                 ctx.sql(')');
             }
         }
+
+
+
+
+
+
+
+
+
 
 
 

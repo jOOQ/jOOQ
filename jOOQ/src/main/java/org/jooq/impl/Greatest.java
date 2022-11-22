@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Names.N_GREATEST;
@@ -82,6 +83,10 @@ final class Greatest<T> extends AbstractField<T> implements QOM.Greatest<T> {
         }
 
         switch (ctx.family()) {
+
+
+
+
 
 
 

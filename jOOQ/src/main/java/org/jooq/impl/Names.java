@@ -233,6 +233,7 @@ final class Names {
     static final Name N_NVL2                   = systemName("nvl2");
     static final Name N_OPENJSON               = systemName("openjson");
     static final Name N_OPENXML                = systemName("openxml");
+    static final Name N_ORDINAL                = systemName("ordinal");
     static final Name N_OREPLACE               = systemName("oreplace");
     static final Name N_OTRANSLATE             = systemName("otranslate");
     static final Name N_PERCENTILE_CONT        = systemName("percentile_cont");
@@ -292,6 +293,7 @@ final class Names {
     static final Name N_STDEV_SAMP             = systemName("stdev_samp");
     static final Name N_STRFTIME               = systemName("strftime");
     static final Name N_STRING_AGG             = systemName("string_agg");
+    static final Name N_STRING_SPLIT           = systemName("string_split");
     static final Name N_STRREVERSE             = systemName("strreverse");
     static final Name N_STR_REPLACE            = systemName("str_replace");
     static final Name N_ST_NUMINTERIORRINGS    = systemName("st_numinteriorrings");

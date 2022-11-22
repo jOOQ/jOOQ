@@ -489,7 +489,7 @@ implements
      * Apply this aggregate function's <code>FILTER</code> and <code>OVER</code>
      * clauses to an argument aggregate function.
      */
-    final <U> Field<U> fo(AggregateFunction<U> function) {
+    final <U> Field<U> fo(AggregateFilterStep<U> function) {
         return o(filter.hasWhere() ? function.filterWhere(filter) : function);
     }
 

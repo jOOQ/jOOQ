@@ -95,7 +95,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (EMULATE_WITH_PERCENTILES.contains(ctx.dialect()))
-            ctx.visit(percentileCont(inline(new BigDecimal("0.5"))).withinGroupOrderBy(arguments));
+            ctx.visit(fo(percentileCont(inline(new BigDecimal("0.5"))).withinGroupOrderBy(arguments)));
         else
             super.accept(ctx);
     }

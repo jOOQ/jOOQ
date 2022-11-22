@@ -739,7 +739,11 @@ public final class QOM {
             MEndsWithIgnoreCase*/
     {}
 
-    public interface Between<T> extends UOperator3<Field<T>, Field<T>, Field<T>, Condition> {
+    public interface Between<T>
+        extends
+            Condition,
+            UOperator3<Field<T>, Field<T>, Field<T>, Condition>
+    {
         boolean $symmetric();
         @NotNull Between<T> $symmetric(boolean symmetric);
     }

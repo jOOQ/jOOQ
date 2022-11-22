@@ -61,7 +61,7 @@ import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.resource.ClassLoaderResourceAccessor;
 import liquibase.resource.CompositeResourceAccessor;
-import liquibase.resource.FileSystemResourceAccessor;
+import liquibase.resource.DirectoryResourceAccessor;
 import liquibase.resource.ResourceAccessor;
 
 /**
@@ -152,7 +152,7 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
                 new ClassLoaderResourceAccessor(),
                 new ClassLoaderResourceAccessor(Thread.currentThread().getContextClassLoader())
             )
-            : new FileSystemResourceAccessor(new File(rootPath));
+            : new DirectoryResourceAccessor(new File(rootPath));
 
         Liquibase liquibase = new Liquibase(scripts, ra, database);
         liquibase.update(contexts);

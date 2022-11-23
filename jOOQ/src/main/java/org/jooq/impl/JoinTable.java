@@ -145,6 +145,7 @@ import org.jooq.TablePartitionByStep;
 // ...
 import org.jooq.conf.RenderOptionalKeyword;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.QOM.Lateral;
 import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
@@ -163,6 +164,8 @@ implements
 {
 
     static final Clause[]         CLAUSES                    = { TABLE, TABLE_JOIN };
+
+
 
 
 
@@ -230,6 +233,14 @@ implements
 
 
 
+
+
+
+
+        accept0(ctx);
+    }
+
+    private final void accept0(Context<?> ctx) {
         JoinType translatedType = translateType(ctx);
         Clause translatedClause = translateClause(translatedType);
         Keyword keyword = translateKeyword(ctx, translatedType);
@@ -316,6 +327,31 @@ implements
         ctx.end(translatedClause)
            .formatIndentEnd();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

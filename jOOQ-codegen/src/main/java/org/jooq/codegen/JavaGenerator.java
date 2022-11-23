@@ -9377,7 +9377,20 @@ public class JavaGenerator extends AbstractGenerator {
 
         @Override
         public String classLiteral(String type) {
-            String rawtype = type.replaceAll("<.*>", "").replaceAll("\\[.*\\]", "");
+            String rawtype;
+
+            switch (language) {
+                case SCALA:
+                    rawtype = type.replaceAll("\\[.*\\]", "");
+                    break;
+
+                case KOTLIN:
+                case JAVA:
+                default:
+                    rawtype = type.replaceAll("<.*>", "");
+                    break;
+            }
+
             boolean generic = !rawtype.equals(type);
 
             switch (language) {

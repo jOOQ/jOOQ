@@ -100,6 +100,8 @@ final class Tips {
         "Client side computed columns are very useful if you have redundant behaviour in your queries and data: https://www.jooq.org/doc/dev/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-forced-types/codegen-database-forced-types-computed/",
         "A list of common anti patterns in jOOQ or SQL is available here: https://www.jooq.org/doc/latest/manual/reference/dont-do-this/",
         "In addition to <includes> and <excludes>, you can also use <includesSql> and <excludesSql> to generate regular expressions for the code generator! https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-includes-excludes/",
+        "jOOQ can run diagnostics on all the queries passed to it, including if you're using JDBC or R2DBC directly: https://www.jooq.org/doc/latest/manual/sql-execution/diagnostics/",
+        "Common SQL patterns can be matched and transformed into more optimal or simpler SQL using pattern transformation, both on jOOQ queires or ordinary JDBC based queries: https://www.jooq.org/doc/latest/manual/sql-building/queryparts/sql-transformation/transform-patterns/",
         ""
     };
 

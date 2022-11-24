@@ -2920,7 +2920,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Load data from another generated Record/POJO implementing the common interface %s", local);
 
             if (scala)
-                out.println("%sdef from(from: %s)", visibilityPublic(), qualified);
+                out.println("%sdef from(from: %s): Unit", visibilityPublic(), qualified);
             else if (kotlin)
                 out.println("%sfun from(from: %s)", visibilityPublic(), qualified);
             else
@@ -7781,7 +7781,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala) {
             out.println();
-            out.println("%s%sdef from(from: %s) {", visibilityPublic(), (override ? "override " : ""), qualified);
+            out.println("%s%sdef from(from: %s): Unit = {", visibilityPublic(), (override ? "override " : ""), qualified);
         }
         else if (kotlin) {
             out.println();

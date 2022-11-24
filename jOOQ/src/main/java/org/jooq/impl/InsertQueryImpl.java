@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -549,6 +550,14 @@ implements
                 case POSTGRES:
                 case SQLITE:
                 case YUGABYTEDB: {
+
+
+
+
+
+
+
+
                     ctx.data(DATA_MANDATORY_WHERE_CLAUSE, ctx.family() == SQLITE, c -> toSQLInsert(c, false));
 
                     ctx.formatSeparator()

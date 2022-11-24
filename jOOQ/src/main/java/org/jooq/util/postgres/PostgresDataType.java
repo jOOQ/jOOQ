@@ -163,6 +163,7 @@ public class PostgresDataType {
     public static final DataType<String>     VARBIT                     = new BuiltInDataType<>(FAMILY, SQLDataType.VARCHAR, "varbit(l)");
     public static final DataType<String>     BIT                        = new BuiltInDataType<>(FAMILY, SQLDataType.CHAR, "bit(l)");
     public static final DataType<String>     BPCHAR                     = new BuiltInDataType<>(FAMILY, SQLDataType.CHAR, "bpchar");
+    public static final DataType<Record>     RECORD                     = new BuiltInDataType<>(FAMILY, SQLDataType.RECORD, "record");
     public static final DataType<Result<Record>> REFCURSOR              = new BuiltInDataType<>(FAMILY, SQLDataType.RESULT, "refcursor");
     public static final DataType<Object>     ANY                        = new BuiltInDataType<>(FAMILY, SQLDataType.OTHER, "any");
     public static final DataType<UUID>       UUID                       = new BuiltInDataType<>(FAMILY, SQLDataType.UUID, "uuid");

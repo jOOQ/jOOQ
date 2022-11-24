@@ -506,6 +506,11 @@ implements
         //          be referred to by its name, regrettably
         if (fields.size() == 1 && fields.get(0).getDataType().isUDT())
             result = create.select(field("row(t.*)", fields.get(0).getDataType())).from("{0} as t", asField()).fetch();
+
+        // [#7503] Anonymous records have to be fetched from the projection
+        else if (fields.size() == 1 && fields.get(0).getDataType().isRecord())
+            result = create.select(asField()).fetch();
+
         else
             result = create.select(fields).from("{0}", asField()).fetch();
 

@@ -84,7 +84,7 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
         );
 
         String dataType = record.get("data_type", String.class);
-        if (dataType != null && !asList("void", "record").contains(dataType)) {
+        if (dataType != null && !asList("void").contains(dataType)) {
             SchemaDefinition typeSchema = null;
 
             String schemaName = record.get(ROUTINES.TYPE_UDT_SCHEMA);

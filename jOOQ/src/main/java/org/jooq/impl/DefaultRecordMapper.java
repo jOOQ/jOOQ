@@ -486,6 +486,24 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                         Object typeClassifier = parameter.call("getType").call("getClassifier").get();
                         String name = parameter.call("getName").get();
 
+                        // [#14283] Unnest @JvmInline value classes
+                        try {
+                            while (Reflect.on(typeClassifier).call("isValue").<Boolean>get()) {
+                                typeClassifier = kClasses
+                                    .call("getPrimaryConstructor", typeClassifier)
+                                    .call("getParameters")
+
+                                    // kotlin value classes are required to have exactly 1 parameter
+                                    .call("get", 0)
+                                    .call("getType")
+                                    .call("getClassifier")
+                                    .get();
+                            }
+                        }
+
+                        // [#14283] KClass.isValue() was added in kotlin 1.5 only
+                        catch (ReflectException ignore) {}
+
                         // [#8578] If the constructor parameter is a KTypeParameter, we need an additional step to
                         //         extract the first upper bounds' classifier, which (hopefully) is a KClass
                         parameterTypes[i] = (Class<?>) getJavaClass.invoke(

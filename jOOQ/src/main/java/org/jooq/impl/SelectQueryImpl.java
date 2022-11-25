@@ -3766,7 +3766,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             // [#7841] Each iteration must contribute new fields to the result.
             //         Otherwise, we couldn't resolve an asterisk, and must fall
             //         back to determining fields from the ResultSetMetaData
-            if (size == result.size())
+            if (resolveSupported && size == result.size())
                 return new SelectFieldList<>();
             else
                 size = result.size();

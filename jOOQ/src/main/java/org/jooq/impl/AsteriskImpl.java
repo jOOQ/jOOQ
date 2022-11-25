@@ -38,21 +38,21 @@
 package org.jooq.impl;
 
 // ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.impl.Keywords.K_EXCEPT;
 
 import java.util.Arrays;
 import java.util.Set;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
 
 import org.jooq.Asterisk;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 // ...
@@ -66,7 +66,7 @@ import org.jooq.impl.QOM.UnmodifiableList;
 final class AsteriskImpl extends AbstractQueryPart implements Asterisk {
     static final AsteriskImpl     INSTANCE                        = new AsteriskImpl(new QueryPartList<>());
     static final Set<SQLDialect>  SUPPORT_NATIVE_EXCEPT           = SQLDialect.supportedBy(H2);
-    static final Set<SQLDialect>  NO_SUPPORT_UNQUALIFIED_COMBINED = SQLDialect.supportedBy(FIREBIRD);
+    static final Set<SQLDialect>  NO_SUPPORT_UNQUALIFIED_COMBINED = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL);
     final QueryPartList<Field<?>> fields;
 
     private AsteriskImpl(QueryPartList<Field<?>> fields) {

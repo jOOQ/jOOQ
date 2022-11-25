@@ -3730,7 +3730,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#7921] TODO Find a better, more efficient way to resolve asterisks
         SelectFieldList<SelectFieldOrAsterisk> list = getSelectResolveImplicitAsterisks();
 
-        for (SelectFieldOrAsterisk s : list)
+        int size = 0;
+        for (SelectFieldOrAsterisk s : list) {
             if (s instanceof Field<?> f)
                 result.add(getResolveProjection(ctx, f));
             else if (s instanceof QualifiedAsteriskImpl q) {
@@ -3761,6 +3762,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 result.add(getResolveProjection(ctx, new TableAsField<>(t)));
             else
                 throw new AssertionError("Type not supported: " + s);
+
+            // [#7841] Each iteration must contribute new fields to the result.
+            //         Otherwise, we couldn't resolve an asterisk, and must fall
+            //         back to determining fields from the ResultSetMetaData
+            if (size == result.size())
+                return new SelectFieldList<>();
+            else
+                size = result.size();
+        }
 
         return result;
     }

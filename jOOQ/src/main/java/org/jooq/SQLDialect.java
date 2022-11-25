@@ -320,6 +320,14 @@ public enum SQLDialect {
 
 
 
+
+
+
+
+
+
+
+
     /**
      * The PostgreSQL dialect family.
      * <p>
@@ -1451,6 +1459,9 @@ public enum SQLDialect {
                 case H2:            return "org.hibernate.dialect.H2Dialect";
                 case HSQLDB:        return "org.hibernate.dialect.HSQLDialect";
                 case MARIADB:
+
+
+
 
 
 

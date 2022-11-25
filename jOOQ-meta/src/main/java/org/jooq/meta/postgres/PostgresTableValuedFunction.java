@@ -41,7 +41,6 @@ package org.jooq.meta.postgres;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.lateral;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.partitionBy;
@@ -49,18 +48,16 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.substring;
-import static org.jooq.impl.DSL.trueCondition;
-import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.postgres.PostgresRoutineDefinition.pNumericPrecision;
 import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.meta.postgres.information_schema.Tables.ROUTINES;
-import static org.jooq.meta.postgres.pg_catalog.Tables.*;
+import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRIBUTE;
+import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CLASS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_PROC;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_TYPE;
 import static org.jooq.tools.StringUtils.defaultString;
-import static org.jooq.util.postgres.PostgresDSL.oid;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -69,7 +66,6 @@ import java.util.List;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.TableOptions.TableType;
-import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -77,12 +73,12 @@ import org.jooq.meta.DefaultColumnDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.SchemaDefinition;
+import org.jooq.meta.TableDefinition;
 import org.jooq.meta.postgres.information_schema.tables.Columns;
 import org.jooq.meta.postgres.information_schema.tables.Parameters;
 import org.jooq.meta.postgres.information_schema.tables.Routines;
 import org.jooq.meta.postgres.pg_catalog.tables.PgAttribute;
 import org.jooq.meta.postgres.pg_catalog.tables.PgClass;
-import org.jooq.meta.postgres.pg_catalog.tables.PgNamespace;
 import org.jooq.meta.postgres.pg_catalog.tables.PgProc;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 
@@ -99,7 +95,11 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
     }
 
     public PostgresTableValuedFunction(SchemaDefinition schema, String name, String specificName, String comment, String source) {
-        super(schema, name, comment, TableType.FUNCTION, source);
+        this(schema, name, specificName, comment, source, null, null);
+    }
+
+    public PostgresTableValuedFunction(SchemaDefinition schema, String name, String specificName, String comment, String source, SchemaDefinition referencedSchema, String referencedName) {
+        super(schema, name, comment, TableType.FUNCTION, source, referencedSchema, referencedName);
 
         this.routine = new PostgresRoutineDefinition(schema.getDatabase(), schema.getInputName(), name, specificName);
         this.specificName = specificName;

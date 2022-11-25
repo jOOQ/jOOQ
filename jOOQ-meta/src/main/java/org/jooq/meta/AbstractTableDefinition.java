@@ -55,24 +55,36 @@ import org.jooq.TableOptions.TableType;
  * @author Lukas Eder
  */
 public abstract class AbstractTableDefinition
-extends AbstractElementContainerDefinition<ColumnDefinition>
-implements TableDefinition {
+extends
+    AbstractElementContainerDefinition<ColumnDefinition>
+implements
+    TableDefinition
+{
 
     private List<ParameterDefinition>   parameters;
     private TableDefinition             parentTable;
     private final List<TableDefinition> childTables;
     private final TableType             tableType;
+    private final SchemaDefinition      referencedSchema;
+    private final String                referencedName;
+    private TableDefinition             referencedTable;
 
     public AbstractTableDefinition(SchemaDefinition schema, String name, String comment) {
         this(schema, name, comment, TableType.TABLE, null);
     }
 
     public AbstractTableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType, String source) {
+        this(schema, name, comment, tableType, source, null, null);
+    }
+
+    public AbstractTableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType, String source, SchemaDefinition referencedSchema, String referencedName) {
         super(schema, null, name, comment, source);
 
         this.parentTable = null;
         this.childTables = new ArrayList<>();
         this.tableType = tableType;
+        this.referencedSchema = referencedSchema;
+        this.referencedName = referencedName;
     }
 
     @Override
@@ -227,6 +239,19 @@ implements TableDefinition {
     @Override
     public final boolean isTableValuedFunction() {
         return tableType == TableType.FUNCTION;
+    }
+
+    @Override
+    public final TableDefinition getReferencedTable() {
+        if (referencedTable == null) {
+            if (referencedSchema != null)
+                referencedTable = getDatabase().getTable(referencedSchema, referencedName);
+
+            if (referencedTable == null)
+                referencedTable = this;
+        }
+
+        return referencedTable;
     }
 
     @Override

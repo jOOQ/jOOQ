@@ -43,6 +43,8 @@ import java.util.List;
 import org.jooq.Record;
 import org.jooq.Table;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * The definition of a table or view.
  *
@@ -73,6 +75,7 @@ public interface TableDefinition extends Definition {
     /**
      * Whether this table is a synthetic table (e.g. a synthetic view).
      */
+    @Override
     boolean isSynthetic();
 
     /**
@@ -175,5 +178,23 @@ public interface TableDefinition extends Definition {
      * Whether this table is a table-valued function.
      */
     boolean isTableValuedFunction();
+
+    /**
+     * The referenced table type, if this {@link #isTableValuedFunction()}.
+     * <p>
+     * This returns:
+     * <ul>
+     * <li><code>this</code>, if {@link #isTableValuedFunction()} ==
+     * <code>false</code></li>
+     * <li><code>this</code>, if {@link #isTableValuedFunction()} ==
+     * <code>true</code> but the table valued function doesn't reference a table
+     * type</li>
+     * <li>Another table, if {@link #isTableValuedFunction()} ==
+     * <code>true</code> and the table valued function references a table
+     * type</li>
+     * </ul>
+     */
+    @NotNull
+    TableDefinition getReferencedTable();
 
 }

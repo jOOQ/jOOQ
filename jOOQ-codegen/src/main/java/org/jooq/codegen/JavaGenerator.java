@@ -1451,6 +1451,9 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (TableDefinition table : database.getTables(schema)) {
             try {
+                if (table.isTableValuedFunction() && table.getReferencedTable() != table)
+                    continue;
+
                 generateRecord(table);
             }
             catch (Exception e) {
@@ -5984,7 +5987,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String tableId = scala
             ? out.ref(getStrategy().getFullJavaIdentifier(table), 2)
             : getStrategy().getJavaIdentifier(table);
-        final String recordType = out.ref(getStrategy().getFullJavaClassName(table, Mode.RECORD));
+        final String recordType = out.ref(getStrategy().getFullJavaClassName(table.getReferencedTable(), Mode.RECORD));
         final String classExtends = out.ref(getStrategy().getJavaClassExtends(table, Mode.DEFAULT));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(table, Mode.DEFAULT));
         final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
@@ -8985,7 +8988,7 @@ public class JavaGenerator extends AbstractGenerator {
             return;
         }
 
-        final String recordClassName = out.ref(getStrategy().getFullJavaClassName(function, Mode.RECORD));
+        final String recordClassName = out.ref(getStrategy().getFullJavaClassName(function.getReferencedTable(), Mode.RECORD));
 
         // [#3456] Local variables should not collide with actual function arguments
         final String configurationArgument = disambiguateJavaMemberName(function.getParameters(), "configuration");
@@ -9038,8 +9041,8 @@ public class JavaGenerator extends AbstractGenerator {
                .println("}");
     }
 
-    protected void printRecordTypeMethod(JavaWriter out, Definition definition) {
-        final String className = out.ref(getStrategy().getFullJavaClassName(definition, Mode.RECORD));
+    protected void printRecordTypeMethod(JavaWriter out, Definition tableOrUDT) {
+        final String className = out.ref(getStrategy().getFullJavaClassName(tableOrUDT instanceof TableDefinition ? ((TableDefinition) tableOrUDT).getReferencedTable() : tableOrUDT, Mode.RECORD));
 
         out.javadoc("The class holding records for this type");
 

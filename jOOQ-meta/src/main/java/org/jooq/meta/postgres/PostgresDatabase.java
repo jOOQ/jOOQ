@@ -126,6 +126,7 @@ import org.jooq.Record1;
 import org.jooq.Record12;
 import org.jooq.Record5;
 import org.jooq.Record6;
+import org.jooq.Record8;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
@@ -466,8 +467,8 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         List<TableDefinition> result = new ArrayList<>();
         Map<Name, PostgresTableDefinition> map = new HashMap<>();
 
-        Select<Record6<String, String, String, String, String, String>> empty =
-            select(inline(""), inline(""), inline(""), inline(""), inline(""), inline(""))
+        Select<Record8<String, String, String, String, String, String, String, String>> empty =
+            select(inline(""), inline(""), inline(""), inline(""), inline(""), inline(""), inline(""), inline(""))
             .where(falseCondition());
 
         for (Record record : create()
@@ -480,7 +481,9 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                         PG_DESCRIPTION.DESCRIPTION,
                         when(TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
                             .else_(inline(TableType.TABLE.name())).as("table_type"),
-                        VIEWS.VIEW_DEFINITION)
+                        VIEWS.VIEW_DEFINITION,
+                        inline("").as(ROUTINES.TYPE_UDT_SCHEMA),
+                        inline("").as(ROUTINES.TYPE_UDT_NAME))
                     .from(TABLES)
                     .join(PG_CLASS)
                         .on(PG_CLASS.RELNAME.eq(TABLES.TABLE_NAME))
@@ -516,6 +519,8 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                         field("{0}::varchar", PG_CLASS.RELNAME.getDataType(), PG_CLASS.RELNAME),
                         PG_DESCRIPTION.DESCRIPTION,
                         inline(TableType.MATERIALIZED_VIEW.name()).as("table_type"),
+                        inline(""),
+                        inline(""),
                         inline(""))
                     .from(PG_CLASS)
                     .leftOuterJoin(PG_DESCRIPTION)
@@ -534,7 +539,9 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                             ROUTINES.SPECIFIC_NAME,
                             inline(""),
                             inline(TableType.FUNCTION.name()).as("table_type"),
-                            inline(""))
+                            inline(""),
+                            ROUTINES.TYPE_UDT_SCHEMA,
+                            ROUTINES.TYPE_UDT_NAME)
                         .from(ROUTINES)
                         .join(PG_PROC).on(PG_PROC.pgNamespace().NSPNAME.eq(ROUTINES.SPECIFIC_SCHEMA))
                                       .and(PG_PROC.PRONAME.concat("_").concat(PG_PROC.OID).eq(ROUTINES.SPECIFIC_NAME))
@@ -556,17 +563,26 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 source = "create view \"" + name + "\" as " + source;
 
             switch (tableType) {
-                case FUNCTION:
-                    result.add(new PostgresTableValuedFunction(schema, name, record.get(ROUTINES.SPECIFIC_NAME), comment));
+                case FUNCTION: {
+                    result.add(new PostgresTableValuedFunction(
+                        schema, name,
+                        record.get(ROUTINES.SPECIFIC_NAME),
+                        comment, null,
+                        getSchema(record.get(ROUTINES.TYPE_UDT_SCHEMA)),
+                        record.get(ROUTINES.TYPE_UDT_NAME)
+                    ));
                     break;
-                case MATERIALIZED_VIEW:
+                }
+                case MATERIALIZED_VIEW: {
                     result.add(new PostgresMaterializedViewDefinition(schema, name, comment));
                     break;
-                default:
+                }
+                default: {
                     PostgresTableDefinition t = new PostgresTableDefinition(schema, name, comment, tableType, source);
                     result.add(t);
                     map.put(name(schema.getName(), name), t);
                     break;
+                }
             }
         }
 

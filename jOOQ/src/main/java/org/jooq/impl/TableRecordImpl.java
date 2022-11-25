@@ -224,7 +224,10 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualified
             // [#1859] In some databases, not all fields can be fetched via getGeneratedKeys()
             Configuration c = configuration();
             if (TRUE.equals(c.settings().isReturnAllOnUpdatableRecord())
-                    && (REFRESH_GENERATED_KEYS.contains(c.dialect())
+
+                    // [#11620] Refresh only if the RETURNING clause didn't run
+                    //          E.g. in MySQL when there was no identity column
+                    && (REFRESH_GENERATED_KEYS.contains(c.dialect()) && record == null
                     || REFRESH_GENERATED_KEYS_ON_UPDATE.contains(c.dialect()) && query instanceof Update
 
 

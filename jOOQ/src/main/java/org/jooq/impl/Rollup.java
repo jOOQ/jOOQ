@@ -37,15 +37,22 @@
  */
 package org.jooq.impl;
 
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.Keywords.K_WITH_ROLLUP;
 import static org.jooq.impl.Names.N_ROLLUP;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.Tools.EMPTY_FIELD_OR_ROW;
 
+import java.util.Set;
+
 import org.jooq.Context;
 import org.jooq.FieldOrRow;
 import org.jooq.Function1;
 import org.jooq.GroupField;
+import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
@@ -53,7 +60,9 @@ import org.jooq.impl.QOM.UnmodifiableList;
  */
 final class Rollup extends AbstractField<Object> implements QOM.Rollup {
 
+    static final Set<SQLDialect>      SUPPORT_WITH_ROLLUP = SQLDialect.supportedBy(CUBRID, MARIADB, MYSQL);
     private QueryPartList<FieldOrRow> arguments;
+
 
     Rollup(FieldOrRow... arguments) {
         super(N_ROLLUP, OTHER);
@@ -63,20 +72,13 @@ final class Rollup extends AbstractField<Object> implements QOM.Rollup {
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
-
-            case CUBRID:
-            case MARIADB:
-            case MYSQL:
-                ctx.visit(arguments)
-                   .formatSeparator()
-                   .visit(K_WITH_ROLLUP);
-                break;
-
-            default:
-                ctx.visit(N_ROLLUP).sql(" (").visit(arguments).sql(')');
-                break;
+        if (SUPPORT_WITH_ROLLUP.contains(ctx.dialect())) {
+            ctx.visit(arguments)
+               .formatSeparator()
+               .visit(K_WITH_ROLLUP);
         }
+        else
+            ctx.visit(N_ROLLUP).sql(" (").visit(arguments).sql(')');
     }
 
     // -------------------------------------------------------------------------

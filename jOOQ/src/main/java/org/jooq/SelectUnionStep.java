@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.IGNITE;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
@@ -160,7 +161,7 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
      */
     @Override
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, HSQLDB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     SelectOrderByStep<R> exceptAll(Select<? extends R> select);
 
     /**
@@ -176,6 +177,6 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
      */
     @Override
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, HSQLDB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     SelectOrderByStep<R> intersectAll(Select<? extends R> select);
 }

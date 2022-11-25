@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.IGNITE;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -141,7 +142,7 @@ extends
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Select<R> except(Select<? extends R> select);
 
     /**
@@ -154,7 +155,7 @@ extends
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, HSQLDB, MYSQL, POSTGRES, YUGABYTEDB })
     Select<R> exceptAll(Select<? extends R> select);
 
     /**
@@ -167,7 +168,7 @@ extends
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Select<R> intersect(Select<? extends R> select);
 
     /**
@@ -180,7 +181,7 @@ extends
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, HSQLDB, MYSQL, POSTGRES, YUGABYTEDB })
     Select<R> intersectAll(Select<? extends R> select);
 
     /**

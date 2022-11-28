@@ -3734,36 +3734,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         int size = 0;
         for (SelectFieldOrAsterisk s : list) {
-            if (s instanceof Field<?> f)
-                result.add(getResolveProjection(ctx, f));
-            else if (s instanceof QualifiedAsteriskImpl q) {
-                if (q.fields.isEmpty())
-                    if (resolveSupported)
-                        result.addAll(Arrays.asList(q.qualifier().fields()));
-                    else
-                        result.add(s);
-                else if (resolveExcept)
-                    result.addAll(subtract(Arrays.asList(((QualifiedAsterisk) s).qualifier().fields()), (((QualifiedAsteriskImpl) s).fields)));
-                else
-                    result.add(s);
-            }
-            else if (s instanceof AsteriskImpl a) {
-                if (a.fields.isEmpty())
-                    if (resolveSupported || resolveUnqualifiedCombined && list.size() > 1)
-                        result.addAll(resolveAsterisk(new QueryPartList<>()));
-                    else
-                        result.add(s);
-                else if (resolveExcept)
-                    result.addAll(resolveAsterisk(new QueryPartList<>(), a.fields));
-                else
-                    result.add(s);
-            }
-            else if (s instanceof Row r)
-                result.add(getResolveProjection(ctx, new RowAsField<Row, Record>(r)));
-            else if (s instanceof Table<?> t)
-                result.add(getResolveProjection(ctx, new TableAsField<>(t)));
-            else
-                throw new AssertionError("Type not supported: " + s);
+            appendResolveSomeAsterisks0(ctx,
+                resolveSupported,
+                result,
+                resolveExcept,
+                resolveUnqualifiedCombined,
+                list,
+                s
+            );
 
             // [#7841] Each iteration must contribute new fields to the result.
             //         Otherwise, we couldn't resolve an asterisk, and must fall
@@ -3775,6 +3753,54 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         }
 
         return result;
+    }
+
+    private final void appendResolveSomeAsterisks0(
+        Scope ctx,
+        boolean resolveSupported,
+        SelectFieldList<SelectFieldOrAsterisk> result,
+        boolean resolveExcept,
+        boolean resolveUnqualifiedCombined,
+        SelectFieldList<SelectFieldOrAsterisk> list,
+        SelectFieldOrAsterisk s
+    ) {
+        if (s instanceof Field<?> f) {
+            result.add(getResolveProjection(ctx, f));
+        }
+        else if (s instanceof QualifiedAsteriskImpl q) {
+
+            // [#9743] Split join table asterisks
+            if (q.qualifier() instanceof QOM.JoinTable<?, ?> j) {
+                appendResolveSomeAsterisks0(ctx, resolveSupported, result, resolveExcept, resolveUnqualifiedCombined, list, j.$table1().asterisk());
+                appendResolveSomeAsterisks0(ctx, resolveSupported, result, resolveExcept, resolveUnqualifiedCombined, list, j.$table2().asterisk());
+            }
+            else if (q.fields.isEmpty())
+                if (resolveSupported)
+                    result.addAll(Arrays.asList(q.qualifier().fields()));
+                else
+                    result.add(s);
+            else if (resolveExcept)
+                result.addAll(subtract(Arrays.asList(((QualifiedAsterisk) s).qualifier().fields()), (((QualifiedAsteriskImpl) s).fields)));
+            else
+                result.add(s);
+        }
+        else if (s instanceof AsteriskImpl a) {
+            if (a.fields.isEmpty())
+                if (resolveSupported || resolveUnqualifiedCombined && list.size() > 1)
+                    result.addAll(resolveAsterisk(new QueryPartList<>()));
+                else
+                    result.add(s);
+            else if (resolveExcept)
+                result.addAll(resolveAsterisk(new QueryPartList<>(), a.fields));
+            else
+                result.add(s);
+        }
+        else if (s instanceof Row r)
+            result.add(getResolveProjection(ctx, new RowAsField<Row, Record>(r)));
+        else if (s instanceof Table<?> t)
+            result.add(getResolveProjection(ctx, new TableAsField<>(t)));
+        else
+            throw new AssertionError("Type not supported: " + s);
     }
 
     private final Field<?> getResolveProjection(Scope ctx, Field<?> f) {

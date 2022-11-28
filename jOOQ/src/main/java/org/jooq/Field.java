@@ -601,6 +601,7 @@ extends
      * Convenience method for {@link #sortDefault()} and then
      * {@link SortField#nullsFirst()}.
      */
+    @NotNull
     @Support
     SortField<T> nullsFirst();
 
@@ -608,6 +609,7 @@ extends
      * Convenience method for {@link #sortDefault()} and then
      * {@link SortField#nullsLast()}.
      */
+    @NotNull
     @Support
     SortField<T> nullsLast();
 

@@ -114,7 +114,6 @@ import static org.jooq.impl.Tools.SimpleDataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -655,18 +654,18 @@ implements
 
 
 
+    public final J partitionBy(Field<?>... fields) {
+        return partitionBy(Tools.list(fields));
+    }
 
 
 
 
-
-
-
-
-
-
-
-
+    @SuppressWarnings("unchecked")
+    public final J partitionBy(Collection<? extends Field<?>> fields) {
+        rhsPartitionBy.addAll(fields);
+        return (J) this;
+    }
 
     @SuppressWarnings("unchecked")
     @Override

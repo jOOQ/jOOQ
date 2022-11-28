@@ -62,6 +62,10 @@ implements
         super(lhs, rhs, JoinType.NATURAL_RIGHT_OUTER_JOIN, emptyList());
     }
 
+    NaturalRightJoin(TableLike<?> lhs, TableLike<?> rhs, Collection<? extends Field<?>> lhsPartitionBy) {
+        super(lhs, rhs, JoinType.NATURAL_RIGHT_OUTER_JOIN, lhsPartitionBy);
+    }
+
     // -------------------------------------------------------------------------
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
@@ -75,7 +79,6 @@ implements
         Condition o,
         Collection<? extends Field<?>> u
     ) {
-        // [#6116] [#11687] TODO: Partition by clauses
-        return new NaturalRightJoin(table1, table2);
+        return new NaturalRightJoin(table1, table2, partitionBy1).partitionBy(partitionBy2);
     }
 }

@@ -60,6 +60,10 @@ implements
         super(lhs, rhs, JoinType.RIGHT_OUTER_JOIN);
     }
 
+    RightJoin(TableLike<?> lhs, TableLike<?> rhs, Collection<? extends Field<?>> lhsPartitionBy) {
+        super(lhs, rhs, JoinType.RIGHT_OUTER_JOIN, lhsPartitionBy);
+    }
+
     // -------------------------------------------------------------------------
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
@@ -73,7 +77,8 @@ implements
         Condition o,
         Collection<? extends Field<?>> u
     ) {
-        // [#6116] [#11687] TODO: Partition by clauses
-        return o != null ? new RightJoin(table1, table2).on(o) : new RightJoin(table1, table2).using(u);
+        return o != null
+            ? new RightJoin(table1, table2, partitionBy1).partitionBy(partitionBy2).on(o)
+            : new RightJoin(table1, table2, partitionBy1).partitionBy(partitionBy2).using(u);
     }
 }

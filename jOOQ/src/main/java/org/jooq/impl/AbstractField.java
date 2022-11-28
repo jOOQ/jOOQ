@@ -370,6 +370,16 @@ implements
              : DSL.case_(this).mapValues(sortMap).asc();
     }
 
+    @Override
+    public final SortField<T> nullsFirst() {
+        return sortDefault().nullsFirst();
+    }
+
+    @Override
+    public final SortField<T> nullsLast() {
+        return sortDefault().nullsLast();
+    }
+
 
 
     // -------------------------------------------------------------------------

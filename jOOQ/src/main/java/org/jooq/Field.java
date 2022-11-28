@@ -597,6 +597,20 @@ extends
     @Support
     <Z> SortField<Z> sort(Map<T, Z> sortMap);
 
+    /**
+     * Convenience method for {@link #sortDefault()} and then
+     * {@link SortField#nullsFirst()}.
+     */
+    @Support
+    SortField<T> nullsFirst();
+
+    /**
+     * Convenience method for {@link #sortDefault()} and then
+     * {@link SortField#nullsLast()}.
+     */
+    @Support
+    SortField<T> nullsLast();
+
 
 
     // -------------------------------------------------------------------------

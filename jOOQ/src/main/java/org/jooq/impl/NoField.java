@@ -81,16 +81,6 @@ implements
     }
 
     @Override
-    public final SortField<T> nullsFirst() {
-        return this;
-    }
-
-    @Override
-    public final SortField<T> nullsLast() {
-        return this;
-    }
-
-    @Override
     public final Field<T> $field() {
         return this;
     }

@@ -25757,7 +25757,7 @@ public class DSL {
      * @see #rollup(Field...)
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MYSQL, POSTGRES })
     public static Field<Integer> grouping(Field<?> field) {
         return function("grouping", Integer.class, field);
     }

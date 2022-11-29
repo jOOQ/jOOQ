@@ -74,5 +74,6 @@ public interface UDTDefinition extends PackageDefinition {
     /**
      * Whether this UDT is a synthetic type.
      */
+    @Override
     boolean isSynthetic();
 }

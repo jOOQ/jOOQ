@@ -161,7 +161,7 @@ class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
         methodName = overload(definition, mode, methodName);
         methodName = convertToIdentifier(methodName, getTargetLanguage());
 
-        return disambiguateMethod(definition, methodName);
+        return disambiguateMethod(definition, mode, methodName);
     }
 
     /**
@@ -178,14 +178,23 @@ class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
      * [#182] Method name disambiguation is important to avoid name clashes due
      * to pre-existing getters / setters in super classes
      */
-    private String disambiguateMethod(Definition definition, String method) {
+    private String disambiguateMethod(Definition definition, Mode mode, String method) {
         Set<String> reserved = null;
 
-        if (definition instanceof AttributeDefinition) {
-            reserved = reservedColumns(UDTRecordImpl.class, 0);
+        if (definition instanceof AttributeDefinition a) {
+            reserved = new HashSet<>(reservedColumns(UDTRecordImpl.class, 0));
+
+
+
+
+
+
+
+
+
         }
-        else if (definition instanceof ColumnDefinition) {
-            if (((ColumnDefinition) definition).getContainer().getPrimaryKey() != null)
+        else if (definition instanceof ColumnDefinition c) {
+            if (c.getContainer().getPrimaryKey() != null)
                 reserved = reservedColumns(UpdatableRecordImpl.class, 0);
             else
                 reserved = reservedColumns(TableRecordImpl.class, 0);
@@ -197,13 +206,11 @@ class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
         }
 
         // [#9150] Member procedures and functions can collide with UDTRecord methods
-        else if (definition instanceof RoutineDefinition) {
-            RoutineDefinition routine = (RoutineDefinition) definition;
-
-            if (routine.getPackage() instanceof UDTDefinition
-                    && routine.getInParameters().size() > 0
-                    && "SELF".equalsIgnoreCase(routine.getInParameters().get(0).getName()))
-                reserved = reservedColumns(UDTRecordImpl.class, routine.getInParameters().size() - 1);
+        else if (definition instanceof RoutineDefinition r) {
+            if (r.getPackage() instanceof UDTDefinition
+                    && r.getInParameters().size() > 0
+                    && "SELF".equalsIgnoreCase(r.getInParameters().get(0).getName()))
+                reserved = reservedColumns(UDTRecordImpl.class, r.getInParameters().size() - 1);
         }
 
         // [#11032] Foreign keys produce implicit join methods that can collide with TableImpl methods

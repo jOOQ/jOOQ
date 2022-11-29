@@ -52,6 +52,7 @@ import static org.jooq.Clause.TABLE_REFERENCE;
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -118,6 +119,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
     private static final Clause[]        CLAUSES_TABLE_ALIAS                   = { TABLE, TABLE_ALIAS };
     private static final Clause[]        CLAUSES_FIELD_REFERENCE               = { FIELD, FIELD_REFERENCE };
     private static final Clause[]        CLAUSES_FIELD_ALIAS                   = { FIELD, FIELD_ALIAS };
+    private static final Set<SQLDialect> NO_SUPPORT_ALIASED_JOIN_TABLES        = SQLDialect.supportedBy(DERBY, FIREBIRD, MARIADB, MYSQL);
     private static final Set<SQLDialect> SUPPORT_AS_REQUIRED                   = SQLDialect.supportedBy(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
     private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1 = SQLDialect.supportedBy(CUBRID, FIREBIRD, MYSQL);
     private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2 = SQLDialect.supportedUntil(IGNITE, MARIADB, SQLITE);
@@ -175,9 +177,9 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
             //          makes sense. The below declareAliases(false) call was
             //          added for cases where x.as("a").as("b") leaks into the
             //          expression tree, to prevent doubly declaring an alias.
-            boolean supportsNestedAliases = wrapped instanceof JoinTable;
+            boolean aliasedJoinTable = wrapped instanceof JoinTable;
 
-            if (!supportsNestedAliases)
+            if (!aliasedJoinTable)
                 ctx.declareAliases(false);
 
 
@@ -194,7 +196,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
 
             acceptDeclareAliasStandard(ctx);
 
-            if (!supportsNestedAliases)
+            if (!aliasedJoinTable)
                 ctx.declareAliases(true);
         }
         else
@@ -412,7 +414,10 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
             else
                 ctx.sql('(');
 
-        ctx.visit(wrapped);
+        if (nestedJoinTable && NO_SUPPORT_ALIASED_JOIN_TABLES.contains(ctx.dialect()))
+            ctx.visit(select(asterisk()).from((Table<?>) wrapped));
+        else
+            ctx.visit(wrapped);
 
         if (wrap)
             if (nestedJoinTable)

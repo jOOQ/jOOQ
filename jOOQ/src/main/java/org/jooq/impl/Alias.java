@@ -170,7 +170,15 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
 
 
         if (ctx.declareAliases() && (ctx.declareFields() || ctx.declareTables())) {
-            ctx.declareAliases(false);
+
+            // [#14310] Support nesting of alias declaring parts where this
+            //          makes sense. The below declareAliases(false) call was
+            //          added for cases where x.as("a").as("b") leaks into the
+            //          expression tree, to prevent doubly declaring an alias.
+            boolean supportsNestedAliases = wrapped instanceof JoinTable;
+
+            if (!supportsNestedAliases)
+                ctx.declareAliases(false);
 
 
 
@@ -185,7 +193,9 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
 
 
             acceptDeclareAliasStandard(ctx);
-            ctx.declareAliases(true);
+
+            if (!supportsNestedAliases)
+                ctx.declareAliases(true);
         }
         else
             ctx.qualify(false, c -> c.visit(alias));
@@ -394,9 +404,21 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
     }
 
     private final void toSQLWrapped(Context<?> ctx, boolean wrap) {
-        ctx.sql(wrap ? "(" : "")
-           .visit(wrapped)
-           .sql(wrap ? ")" : "");
+        boolean nestedJoinTable = wrapped instanceof JoinTable;
+
+        if (wrap)
+            if (nestedJoinTable)
+                ctx.sqlIndentStart('(');
+            else
+                ctx.sql('(');
+
+        ctx.visit(wrapped);
+
+        if (wrap)
+            if (nestedJoinTable)
+                ctx.sqlIndentEnd(')');
+            else
+                ctx.sql(')');
     }
 
     private final void toSQLDerivedColumnList(Context<?> ctx) {

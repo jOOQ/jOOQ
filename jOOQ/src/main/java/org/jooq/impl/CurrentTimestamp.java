@@ -51,7 +51,10 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.impl.Keywords.K_CURRENT;
+import static org.jooq.impl.Keywords.K_FRACTION;
 import static org.jooq.impl.Keywords.K_TIMESTAMP;
+import static org.jooq.impl.Keywords.K_TO;
+import static org.jooq.impl.Keywords.K_YEAR;
 import static org.jooq.impl.Names.N_CURRENT_BIGDATETIME;
 import static org.jooq.impl.Names.N_CURRENT_TIMESTAMP;
 import static org.jooq.impl.Names.N_GETDATE;

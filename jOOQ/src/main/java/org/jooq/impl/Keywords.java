@@ -187,6 +187,7 @@ final class Keywords {
     static final Keyword K_FOREIGN_KEY              = keyword("foreign key");
     static final Keyword K_FORMAT                   = keyword("format");
     static final Keyword K_FOR_PORTION_OF           = keyword("for portion of");
+    static final Keyword K_FRACTION                 = keyword("fraction");
     static final Keyword K_FROM                     = keyword("from");
     static final Keyword K_FUNCTION                 = keyword("function");
     static final Keyword K_GENERATED                = keyword("generated");

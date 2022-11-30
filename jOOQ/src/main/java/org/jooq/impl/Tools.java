@@ -5699,6 +5699,12 @@ final class Tools {
 
         String typeName = type.getTypeName(ctx.configuration());
 
+
+
+
+
+
+
         // [#8070] Make sure VARCHAR(n) ARRAY types are generated as such in HSQLDB
         if (type.hasLength() || elementType.hasLength()) {
 

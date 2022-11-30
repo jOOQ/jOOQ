@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
@@ -2558,7 +2559,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 context.formatSeparator()
                        .visit(K_WHERE)
                        .sql(' ')
-                       .qualify(false, c -> c.visit(getSeekCondition()));
+                       .qualify(false, c -> c.visit(getSeekCondition(context)));
             }
         }
 
@@ -3955,7 +3956,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // - There are no unions (union is nested in derived table
         //   and SEEK predicate is applied outside). See [#7459]
         if (!getOrderBy().isEmpty() && !getSeek().isEmpty() && unionOp.isEmpty())
-            result.addConditions(getSeekCondition());
+            result.addConditions(getSeekCondition(ctx));
 
 
 
@@ -3967,7 +3968,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    final Condition getSeekCondition() {
+    final Condition getSeekCondition(Context<?> ctx) {
         SortFieldList o = getOrderBy();
         Condition c = null;
 
@@ -3979,7 +3980,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // If we have uniform sorting, more efficient row value expression
         // predicates can be applied, which can be heavily optimised on some
         // databases.
-        if (o.size() > 1 && o.uniform()) {
+        if (o.size() > 1 && o.uniform() && !FALSE.equals(ctx.settings().isRenderRowConditionForSeekClause())) {
             if (o.get(0).getOrder() != DESC ^ seekBefore)
                 c = row(o.fields()).gt(row(getSeek()));
             else

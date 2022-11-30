@@ -220,6 +220,14 @@ For details, see <a href="https://github.com/jOOQ/jOOQ/issues/3676">https://gith
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/14065">https://github.com/jOOQ/jOOQ/issues/14065</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="renderRowConditionForSeekClause" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether a <code>(a, b) < (:a, :b)</code> row predicate should be rendered for the <code>SEEK</code> clause.
+<p>
+Some RDBMS may support <code>(a, b) < (:a, :b)</code> row predicate syntax, which is very convenient for <code>SEEK</code> clause implementations, but fail to optimise this predicate as could be expected.
+This flag allows for expanding the predicate to the much more verbose, but equivalent <code>(a < :a) OR (a = :a AND b < :b)</code>. Dialects without native support for row predicates aren't affected
+by this flag.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="namePathSeparator" type="string" minOccurs="0" maxOccurs="1" default=".">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The character(s) to be used as a separator in paths encoded in a {@link Name}
 <p>

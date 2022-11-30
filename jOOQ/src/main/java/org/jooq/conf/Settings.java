@@ -105,6 +105,8 @@ public class Settings
     protected Boolean renderParenthesisAroundSetOperationQueries = false;
     @XmlElement(defaultValue = "true")
     protected Boolean renderVariablesInDerivedTablesForEmulations = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean renderRowConditionForSeekClause = true;
     @XmlElement(defaultValue = ".")
     protected String namePathSeparator = ".";
     @XmlElement(defaultValue = "false")
@@ -1148,6 +1150,34 @@ public class Settings
      */
     public void setRenderVariablesInDerivedTablesForEmulations(Boolean value) {
         this.renderVariablesInDerivedTablesForEmulations = value;
+    }
+
+    /**
+     * Whether a <code>(a, b) < (:a, :b)</code> row predicate should be rendered for the <code>SEEK</code> clause.
+     * <p>
+     * Some RDBMS may support <code>(a, b) < (:a, :b)</code> row predicate syntax, which is very convenient for <code>SEEK</code> clause implementations, but fail to optimise this predicate as could be expected.
+     * This flag allows for expanding the predicate to the much more verbose, but equivalent <code>(a < :a) OR (a = :a AND b < :b)</code>. Dialects without native support for row predicates aren't affected
+     * by this flag.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRenderRowConditionForSeekClause() {
+        return renderRowConditionForSeekClause;
+    }
+
+    /**
+     * Sets the value of the renderRowConditionForSeekClause property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRenderRowConditionForSeekClause(Boolean value) {
+        this.renderRowConditionForSeekClause = value;
     }
 
     /**
@@ -5819,6 +5849,11 @@ public class Settings
         return this;
     }
 
+    public Settings withRenderRowConditionForSeekClause(Boolean value) {
+        setRenderRowConditionForSeekClause(value);
+        return this;
+    }
+
     /**
      * The character(s) to be used as a separator in paths encoded in a {@link Name}
      * <p>
@@ -7105,6 +7140,7 @@ public class Settings
         builder.append("renderGroupConcatMaxLenSessionVariable", renderGroupConcatMaxLenSessionVariable);
         builder.append("renderParenthesisAroundSetOperationQueries", renderParenthesisAroundSetOperationQueries);
         builder.append("renderVariablesInDerivedTablesForEmulations", renderVariablesInDerivedTablesForEmulations);
+        builder.append("renderRowConditionForSeekClause", renderRowConditionForSeekClause);
         builder.append("namePathSeparator", namePathSeparator);
         builder.append("bindOffsetDateTimeType", bindOffsetDateTimeType);
         builder.append("bindOffsetTimeType", bindOffsetTimeType);
@@ -7553,6 +7589,15 @@ public class Settings
             }
         } else {
             if (!renderVariablesInDerivedTablesForEmulations.equals(other.renderVariablesInDerivedTablesForEmulations)) {
+                return false;
+            }
+        }
+        if (renderRowConditionForSeekClause == null) {
+            if (other.renderRowConditionForSeekClause!= null) {
+                return false;
+            }
+        } else {
+            if (!renderRowConditionForSeekClause.equals(other.renderRowConditionForSeekClause)) {
                 return false;
             }
         }
@@ -9193,6 +9238,7 @@ public class Settings
         result = ((prime*result)+((renderGroupConcatMaxLenSessionVariable == null)? 0 :renderGroupConcatMaxLenSessionVariable.hashCode()));
         result = ((prime*result)+((renderParenthesisAroundSetOperationQueries == null)? 0 :renderParenthesisAroundSetOperationQueries.hashCode()));
         result = ((prime*result)+((renderVariablesInDerivedTablesForEmulations == null)? 0 :renderVariablesInDerivedTablesForEmulations.hashCode()));
+        result = ((prime*result)+((renderRowConditionForSeekClause == null)? 0 :renderRowConditionForSeekClause.hashCode()));
         result = ((prime*result)+((namePathSeparator == null)? 0 :namePathSeparator.hashCode()));
         result = ((prime*result)+((bindOffsetDateTimeType == null)? 0 :bindOffsetDateTimeType.hashCode()));
         result = ((prime*result)+((bindOffsetTimeType == null)? 0 :bindOffsetTimeType.hashCode()));

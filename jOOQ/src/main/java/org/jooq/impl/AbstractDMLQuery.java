@@ -999,7 +999,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                     returnedResult =
                     create.select(returning)
                           .from(table)
-                          .where(rowid().equal(rowid().getDataType().convert(create.lastID())))
+                          .where(rowid().eq(DSL.field("last_insert_rowid()", rowid().getDataType())))
                           .fetch();
 
                     returnedResult.attach(((DefaultExecuteContext) ctx).originalConfiguration());

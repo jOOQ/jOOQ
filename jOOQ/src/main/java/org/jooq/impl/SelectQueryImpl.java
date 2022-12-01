@@ -1764,6 +1764,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
                 case CUBRID:
                 case FIREBIRD:
                 case MYSQL:
@@ -1851,6 +1852,20 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         if (context.subqueryLevel() == 0)
             context.scopeEnd();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void pushWindow(Context<?> context) {
         // [#531] [#2790] Make the WINDOW clause available to the SELECT clause

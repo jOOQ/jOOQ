@@ -269,6 +269,7 @@ import org.jooq.JoinType;
 import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.OrderField;
+import org.jooq.Param;
 // ...
 import org.jooq.QualifiedAsterisk;
 import org.jooq.QueryPart;
@@ -1764,6 +1765,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
                 case MARIADB: {
                     if (getLimit().isApplicable() && getLimit().isExpression())
                         toSQLReferenceLimitWithWindowFunctions(context);
@@ -1888,6 +1890,20 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         if (context.subqueryLevel() == 0)
             context.scopeEnd();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void pushWindow(Context<?> context) {
         // [#531] [#2790] Make the WINDOW clause available to the SELECT clause

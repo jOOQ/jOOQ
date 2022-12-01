@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
+import java.util.IdentityHashMap;
+
 import org.jooq.Binding;
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
@@ -110,6 +112,18 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
     }
 
     final void type(AbstractDataType<T> t) {
+        if (t instanceof DataTypeProxy) { DataTypeProxy<T> p = (DataTypeProxy<T>) t;
+
+            // [#11856] [#14343] Prevent cycles in DataTypeProxy chains
+            IdentityHashMap<AbstractDataType<?>, AbstractDataType<?>> m = new IdentityHashMap<>();
+            m.put(p, p);
+
+            while (p.type() instanceof DataTypeProxy<T> p2) {
+                if (m.put(p2, p2) != null)
+                    return;
+            }
+        }
+
         this.type = t;
     }
 

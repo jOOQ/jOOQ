@@ -228,6 +228,13 @@ This flag allows for expanding the predicate to the much more verbose, but equiv
 by this flag.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="renderRedundantConditionForSeekClause " type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether a redundant <code>(a <= :a)</code> predicate should be rendered for a <code>(a, b) < (:a, :b)</code> predicate for the <code>SEEK</code> clause.
+<p>
+Some RDBMS may not be able to properly optimise <code>(a, b) < ('a', 'b')</code> or <code>(a < 'a') OR (a = 'a' AND b < 'b')</code>, and choose an appropriate index. By adding an additional redundant predicate,
+jOOQ may help the optimiser, e.g. <code>(a <= :a) AND (a, b) < ('a', 'b')</code> or <code>(a <= :a) AND ((a < 'a') OR (a = 'a' AND b < 'b'))</code>]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="namePathSeparator" type="string" minOccurs="0" maxOccurs="1" default=".">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The character(s) to be used as a separator in paths encoded in a {@link Name}
 <p>

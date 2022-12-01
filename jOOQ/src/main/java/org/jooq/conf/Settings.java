@@ -107,6 +107,8 @@ public class Settings
     protected Boolean renderVariablesInDerivedTablesForEmulations = true;
     @XmlElement(defaultValue = "true")
     protected Boolean renderRowConditionForSeekClause = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean renderRedundantConditionForSeekClause = false;
     @XmlElement(defaultValue = ".")
     protected String namePathSeparator = ".";
     @XmlElement(defaultValue = "false")
@@ -1178,6 +1180,33 @@ public class Settings
      */
     public void setRenderRowConditionForSeekClause(Boolean value) {
         this.renderRowConditionForSeekClause = value;
+    }
+
+    /**
+     * Whether a redundant <code>(a <= :a)</code> predicate should be rendered for a <code>(a, b) < (:a, :b)</code> predicate for the <code>SEEK</code> clause.
+     * <p>
+     * Some RDBMS may not be able to properly optimise <code>(a, b) < ('a', 'b')</code> or <code>(a < 'a') OR (a = 'a' AND b < 'b')</code>, and choose an appropriate index. By adding an additional redundant predicate,
+     * jOOQ may help the optimiser, e.g. <code>(a <= :a) AND (a, b) < ('a', 'b')</code> or <code>(a <= :a) AND ((a < 'a') OR (a = 'a' AND b < 'b'))</code>
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRenderRedundantConditionForSeekClause() {
+        return renderRedundantConditionForSeekClause;
+    }
+
+    /**
+     * Sets the value of the renderRedundantConditionForSeekClause property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRenderRedundantConditionForSeekClause(Boolean value) {
+        this.renderRedundantConditionForSeekClause = value;
     }
 
     /**
@@ -5854,6 +5883,11 @@ public class Settings
         return this;
     }
 
+    public Settings withRenderRedundantConditionForSeekClause(Boolean value) {
+        setRenderRedundantConditionForSeekClause(value);
+        return this;
+    }
+
     /**
      * The character(s) to be used as a separator in paths encoded in a {@link Name}
      * <p>
@@ -7141,6 +7175,7 @@ public class Settings
         builder.append("renderParenthesisAroundSetOperationQueries", renderParenthesisAroundSetOperationQueries);
         builder.append("renderVariablesInDerivedTablesForEmulations", renderVariablesInDerivedTablesForEmulations);
         builder.append("renderRowConditionForSeekClause", renderRowConditionForSeekClause);
+        builder.append("renderRedundantConditionForSeekClause", renderRedundantConditionForSeekClause);
         builder.append("namePathSeparator", namePathSeparator);
         builder.append("bindOffsetDateTimeType", bindOffsetDateTimeType);
         builder.append("bindOffsetTimeType", bindOffsetTimeType);
@@ -7598,6 +7633,15 @@ public class Settings
             }
         } else {
             if (!renderRowConditionForSeekClause.equals(other.renderRowConditionForSeekClause)) {
+                return false;
+            }
+        }
+        if (renderRedundantConditionForSeekClause == null) {
+            if (other.renderRedundantConditionForSeekClause!= null) {
+                return false;
+            }
+        } else {
+            if (!renderRedundantConditionForSeekClause.equals(other.renderRedundantConditionForSeekClause)) {
                 return false;
             }
         }
@@ -9239,6 +9283,7 @@ public class Settings
         result = ((prime*result)+((renderParenthesisAroundSetOperationQueries == null)? 0 :renderParenthesisAroundSetOperationQueries.hashCode()));
         result = ((prime*result)+((renderVariablesInDerivedTablesForEmulations == null)? 0 :renderVariablesInDerivedTablesForEmulations.hashCode()));
         result = ((prime*result)+((renderRowConditionForSeekClause == null)? 0 :renderRowConditionForSeekClause.hashCode()));
+        result = ((prime*result)+((renderRedundantConditionForSeekClause == null)? 0 :renderRedundantConditionForSeekClause.hashCode()));
         result = ((prime*result)+((namePathSeparator == null)? 0 :namePathSeparator.hashCode()));
         result = ((prime*result)+((bindOffsetDateTimeType == null)? 0 :bindOffsetDateTimeType.hashCode()));
         result = ((prime*result)+((bindOffsetTimeType == null)? 0 :bindOffsetTimeType.hashCode()));

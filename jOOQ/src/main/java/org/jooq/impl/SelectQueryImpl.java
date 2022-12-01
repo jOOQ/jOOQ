@@ -4010,6 +4010,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             c = or;
         }
 
+        if (o.size() > 1 && TRUE.equals(ctx.settings().isRenderRedundantConditionForSeekClause())) {
+            if (o.get(0).getOrder() != DESC ^ seekBefore)
+                c = ((Field) o.get(0).$field()).ge(getSeek().get(0)).and(c);
+            else
+                c = ((Field) o.get(0).$field()).le(getSeek().get(0)).and(c);
+        }
+
         return c;
     }
 

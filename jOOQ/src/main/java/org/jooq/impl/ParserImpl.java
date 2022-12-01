@@ -13500,14 +13500,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             switch (c) {
                 case ' ':
-                    if (!Character.isWhitespace(sql[pos]))
+                    if (!Character.isWhitespace(character(pos)))
                         return false;
 
                     skip = skip + (afterWhitespace(pos) - pos - 1);
                     break;
 
                 default:
-                    if (upper(sql[pos]) != c)
+                    if (upper(character(pos)) != c)
                         return false;
 
                     break;

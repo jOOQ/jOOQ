@@ -345,6 +345,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2, MARIADB, POSTGRES);
     private static final Set<SQLDialect> EMULATE_DISTINCT_ON             = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
     static final Set<SQLDialect>         NO_SUPPORT_FOR_UPDATE_OF_FIELDS = SQLDialect.supportedBy(MYSQL, POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>         NO_SUPPORT_UNION_ORDER_BY_ALIAS = SQLDialect.supportedBy(FIREBIRD);
 
 
 
@@ -2521,7 +2522,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             context,
             originalFields, alternativeFields,
             false, wrapQueryExpressionBodyInDerivedTable,
-            orderBy, limit
+            false, orderBy, limit
         );
 
         // SET operations like UNION, EXCEPT, INTERSECT
@@ -2585,7 +2586,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             context,
             originalFields, alternativeFields,
             wrapQueryExpressionInDerivedTable, wrapQueryExpressionBodyInDerivedTable,
-            unionOrderBy, unionLimit
+            true, unionOrderBy, unionLimit
         ));
     }
 
@@ -3016,6 +3017,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         final List<Field<?>> alternativeFields,
         final boolean wrapQueryExpressionInDerivedTable,
         final boolean wrapQueryExpressionBodyInDerivedTable,
+        final boolean isUnionOrderBy,
         QueryPartListView<SortField<?>> actualOrderBy,
         Limit actualLimit
     ) {
@@ -3091,8 +3093,16 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
                 {
+                    if (NO_SUPPORT_UNION_ORDER_BY_ALIAS.contains(ctx.dialect()) && hasUnions() && isUnionOrderBy) {
+                        List<String> n = map(getSelect(), Field::getName);
+
+                        actualOrderBy = new QueryPartListView<>(actualOrderBy).map(t1 -> {
+                            int i = n.indexOf(t1.$field().getName());
+                            return i >= 0 ? ((SortFieldImpl<?>) t1).transform(inline(i + 1)) : t1;
+                        });
+                    }
+
                     ctx.visit(actualOrderBy);
                 }
             }

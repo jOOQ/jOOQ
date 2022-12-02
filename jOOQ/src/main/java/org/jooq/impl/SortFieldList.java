@@ -83,10 +83,10 @@ final class SortFieldList extends QueryPartList<SortField<?>> {
      * <code>NULLS FIRST</code> or <code>NULLS LAST</code> clause.
      */
     final boolean nulls() {
-        return anyMatch(this, f -> ((SortFieldImpl<?>) f).nullOrdering != null);
+        return anyMatch(this, f -> f.$nullOrdering() != null);
     }
 
     final List<Field<?>> fields() {
-        return Tools.map(this, f -> ((SortFieldImpl<?>) f).getField());
+        return Tools.map(this, f -> f.$field());
     }
 }

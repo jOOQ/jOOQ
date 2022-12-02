@@ -1695,13 +1695,12 @@ final class Interpreter {
         final List<MutableSortField> sortFields(Collection<? extends OrderField<?>> ofs) {
             return map(ofs, (OrderField<?> of) -> {
                 SortField<?> sf = Tools.sortField(of);
-                Field<?> f = ((SortFieldImpl<?>) sf).getField();
-                MutableField mf = find(fields, f);
+                MutableField mf = find(fields, sf.$field());
 
                 if (mf == null)
-                    throw new DataDefinitionException("Field does not exist in table: " + f.getQualifiedName());
+                    throw new DataDefinitionException("Field does not exist in table: " + sf.$field().getQualifiedName());
 
-                return new MutableSortField(mf, sf.getOrder());
+                return new MutableSortField(mf, sf.$sortOrder());
             });
         }
 

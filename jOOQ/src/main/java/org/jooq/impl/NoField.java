@@ -86,12 +86,27 @@ implements
     }
 
     @Override
+    public final <U> SortField<U> $field(Field<U> newField) {
+        return newField.sortDefault();
+    }
+
+    @Override
     public final SortOrder $sortOrder() {
         return SortOrder.DEFAULT;
     }
 
     @Override
+    public final SortField<T> $sortOrder(SortOrder newOrder) {
+        return this;
+    }
+
+    @Override
     public final NullOrdering $nullOrdering() {
         return null;
+    }
+
+    @Override
+    public final SortField<T> $nullOrdering(NullOrdering newOrdering) {
+        return this;
     }
 }

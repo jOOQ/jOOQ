@@ -113,6 +113,13 @@ public non-sealed interface SortField<T> extends OrderField<T> {
     @NotNull Field<T> $field();
 
     /**
+     * Experimental query object model mutator method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
+    @NotNull <U> SortField<U> $field(Field<U> newField);
+
+    /**
      * Experimental query object model accessor method, see also {@link QOM}.
      * Subject to change in future jOOQ versions, use at your own risk.
      */
@@ -120,9 +127,23 @@ public non-sealed interface SortField<T> extends OrderField<T> {
     @NotNull SortOrder $sortOrder();
 
     /**
+     * Experimental query object model mutator method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
+    @NotNull SortField<T> $sortOrder(SortOrder newOrder);
+
+    /**
      * Experimental query object model accessor method, see also {@link QOM}.
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
     @Nullable NullOrdering $nullOrdering();
+
+    /**
+     * Experimental query object model mutator method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
+    @NotNull SortField<T> $nullOrdering(NullOrdering newOrdering);
 }

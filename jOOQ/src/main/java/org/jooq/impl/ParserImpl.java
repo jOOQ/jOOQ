@@ -5097,8 +5097,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Field<?>[] fieldNames = new Field[fieldExpressions.length];
 
         for (int i = 0; i < fieldExpressions.length; i++)
-            if (fieldExpressions[i].getOrder() != SortOrder.DESC)
-                fieldNames[i] = ((SortFieldImpl<?>) fieldExpressions[i]).getField();
+            if (fieldExpressions[i].$sortOrder() != SortOrder.DESC)
+                fieldNames[i] = fieldExpressions[i].$field();
 
             // [#7899] TODO: Support this in jOOQ
             else

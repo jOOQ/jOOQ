@@ -1696,8 +1696,7 @@ final class Tools {
     }
 
     static final <T> SortField<T> unqualified(SortField<T> field) {
-        SortFieldImpl<T> i = (SortFieldImpl<T>) field;
-        return i.transform(unqualified(i.getField()));
+        return field.$field(unqualified(field.$field()));
     }
 
     static final List<Field<?>> unaliasedFields(Collection<? extends Field<?>> fields) {
@@ -6058,7 +6057,7 @@ final class Tools {
         if (orderField instanceof Field<T> f)
             return f;
         else
-            return ((SortFieldImpl<T>) orderField).getField();
+            return ((SortField<T>) orderField).$field();
     }
 
     static final Field<?>[] fields(OrderField<?>[] orderFields) {

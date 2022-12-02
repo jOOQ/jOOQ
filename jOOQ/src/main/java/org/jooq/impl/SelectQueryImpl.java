@@ -3049,12 +3049,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 // [#11904] Shift field indexes in ORDER BY <field index>, in
                 //          case we are projecting emulated nested records of some sort
                 if (RowAsField.NO_NATIVE_SUPPORT.contains(ctx.dialect())
-                    && Tools.findAny(actualOrderBy, s -> ((SortFieldImpl<?>) s).getField() instanceof Val) != null) {
+                    && Tools.findAny(actualOrderBy, s -> s.$field() instanceof Val) != null) {
                     SelectFieldIndexes s = getSelectFieldIndexes(ctx);
 
                     if (s.mapped) {
                         actualOrderBy = new QueryPartListView<>(actualOrderBy).map(t1 -> {
-                            Field<?> in = ((SortFieldImpl<?>) t1).getField();
+                            Field<?> in = t1.$field();
 
                             if (in instanceof Val && in.getDataType().isNumeric()) {
                                 Val<?> val = (Val<?>) in;
@@ -3066,7 +3066,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                                         .mapToObj(i -> val.copy(i + 1))
                                         .toArray(SelectField<?>[]::new)
                                     ));
-                                return ((SortFieldImpl<?>) t1).transform(out);
+                                return t1.$field(out);
                             }
                             else
                                 return t1;
@@ -3099,7 +3099,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                         actualOrderBy = new QueryPartListView<>(actualOrderBy).map(t1 -> {
                             int i = n.indexOf(t1.$field().getName());
-                            return i >= 0 ? ((SortFieldImpl<?>) t1).transform(inline(i + 1)) : t1;
+                            return i >= 0 ? t1.$field(inline(i + 1)) : t1;
                         });
                     }
 
@@ -4026,13 +4026,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 ConditionProviderImpl and = new ConditionProviderImpl();
 
                 for (int j = 0; j < i; j++)
-                    and.addConditions(((Field) ((SortFieldImpl<?>) o.get(j)).getField()).eq(getSeek().get(j)));
+                    and.addConditions(((Field) o.get(j).$field()).eq(getSeek().get(j)));
 
-                SortFieldImpl<?> s = (SortFieldImpl<?>) o.get(i);
+                SortField<?> s = o.get(i);
                 if (s.getOrder() != DESC ^ seekBefore)
-                    and.addConditions(((Field) s.getField()).gt(getSeek().get(i)));
+                    and.addConditions(((Field) s.$field()).gt(getSeek().get(i)));
                 else
-                    and.addConditions(((Field) s.getField()).lt(getSeek().get(i)));
+                    and.addConditions(((Field) s.$field()).lt(getSeek().get(i)));
 
                 or.addConditions(OR, and);
             }

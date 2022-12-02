@@ -2194,12 +2194,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         parseKeywordIf("FROM");
-        Table<?> table = parseTable(() -> peekKeyword(KEYWORDS_IN_DELETE_FROM));
-
-        scope.scope(table);
-
+        Table<?> table = scope.scope(parseTable(() -> peekKeyword(KEYWORDS_IN_DELETE_FROM)));
         DeleteUsingStep<?> s1 = with == null ? dsl.delete(table) : with.delete(table);
-        DeleteWhereStep<?> s2 = parseKeywordIf("USING", "FROM") ? s1.using(parseList(',', t -> parseTable(() -> peekKeyword(KEYWORDS_IN_DELETE_FROM)))) : s1;
+        DeleteWhereStep<?> s2 = parseKeywordIf("USING", "FROM") ? s1.using(parseList(',', t -> scope.scope(parseTable(() -> peekKeyword(KEYWORDS_IN_DELETE_FROM))))) : s1;
         DeleteOrderByStep<?> s3 = parseKeywordIf("ALL")
             ? s2
             : parseKeywordIf("WHERE")
@@ -2390,12 +2387,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             // percent = parseKeywordIf("PERCENT") && requireProEdition();
         }
 
-        Table<?> table = parseTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM));
-
-        scope.scope(table);
-
+        Table<?> table = scope.scope(parseTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM)));
         UpdateSetFirstStep<?> s1 = (with == null ? dsl.update(table) : with.update(table));
-        List<Table<?>> from = parseKeywordIf("FROM") ? parseList(',', t -> parseTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM))) : null;
+        List<Table<?>> from = parseKeywordIf("FROM") ? parseList(',', t -> scope.scope(parseTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM)))) : null;
 
         parseKeyword("SET");
         UpdateFromStep<?> s2;
@@ -14419,12 +14413,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
-        private final void scope(Table<?> table) {
+        private final Table<?> scope(Table<?> table) {
             tableScope.set(table.getQualifiedName(), table);
+            return table;
         }
 
-        private final void scope(Field<?> field) {
+        private final Field<?> scope(Field<?> field) {
             fieldScope.set(field.getQualifiedName(), field);
+            return field;
         }
 
         private final void scopeResolve() {

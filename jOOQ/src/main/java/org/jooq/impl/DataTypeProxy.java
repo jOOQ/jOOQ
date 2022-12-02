@@ -118,7 +118,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             IdentityHashMap<AbstractDataType<?>, AbstractDataType<?>> m = new IdentityHashMap<>();
             m.put(p, p);
 
-            while (p.type() instanceof DataTypeProxy<T> p2) {
+            while (p.type() instanceof DataTypeProxy) { DataTypeProxy<T> p2 = (DataTypeProxy<T>) p.type();
                 if (m.put(p2, p2) != null)
                     return;
             }

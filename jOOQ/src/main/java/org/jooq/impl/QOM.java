@@ -698,18 +698,65 @@ public final class QOM {
         @NotNull Name $alias();
         // TODO [#12425] Reuse MDerivedColumnList
     }
-    public interface Dual extends Table<Record>, UEmpty {}
-    public interface Lateral<R extends Record> extends Table<R>, UOperator1<Table<R>, Table<R>> {}
-    public interface DerivedTable<R extends org.jooq.Record> extends org.jooq.Table<R>, UOperator1<org.jooq.Select<R>, org.jooq.Table<R>> {}
-    public interface Values<R extends Record> extends Table<R>, UOperator1<UnmodifiableList<? extends Row>, Table<R>> {}
-    public interface DataChangeDeltaTable<R extends Record> extends Table<R> {
+
+    public sealed interface Dual
+        extends
+            Table<Record>,
+            UEmpty
+        permits
+            org.jooq.impl.Dual
+    {}
+
+    public sealed interface Lateral<R extends Record>
+        extends
+            Table<R>,
+            UOperator1<Table<R>, Table<R>>
+        permits
+            org.jooq.impl.Lateral
+    {}
+
+    public sealed interface DerivedTable<R extends org.jooq.Record>
+        extends
+            org.jooq.Table<R>,
+            UOperator1<org.jooq.Select<R>, org.jooq.Table<R>>
+        permits
+            org.jooq.impl.DerivedTable
+    {}
+
+    public sealed interface Values<R extends Record>
+        extends
+            Table<R>,
+            UOperator1<UnmodifiableList<? extends Row>, Table<R>>
+        permits
+            org.jooq.impl.Values
+    {}
+
+    public sealed interface DataChangeDeltaTable<R extends Record>
+        extends
+            Table<R>
+        permits
+            org.jooq.impl.DataChangeDeltaTable
+    {
         @NotNull ResultOption $resultOption();
         @NotNull DMLQuery<R> $query();
     }
-    public interface RowsFrom extends Table<Record> {
+
+    public sealed interface RowsFrom
+        extends
+            Table<Record>
+        permits
+            org.jooq.impl.RowsFrom
+    {
         @NotNull UnmodifiableList<? extends Table<?>> $tables();
     }
-    public interface GenerateSeries<T> extends Table<Record1<T>>, UOperator3<Field<T>, Field<T>, Field<T>, Table<Record1<T>>> {
+
+    public sealed interface GenerateSeries<T>
+        extends
+            Table<Record1<T>>,
+            UOperator3<Field<T>, Field<T>, Field<T>, Table<Record1<T>>>
+        permits
+            org.jooq.impl.GenerateSeries
+    {
         @NotNull default Field<T> $from() { return $arg1(); }
         @NotNull default Field<T> $to() { return $arg2(); }
         @Nullable default Field<T> $step() { return $arg3(); }
@@ -1154,6 +1201,11 @@ public final class QOM {
         @NotNull Table<?> $table();
         boolean $distinct();
     }
+
+
+
+
+
 
 
 

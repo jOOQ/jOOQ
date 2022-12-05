@@ -404,11 +404,11 @@ public final class QOM {
         }
     }
 
-    public /*sealed*/ interface With
+    public sealed interface With
         extends
             org.jooq.QueryPart
-        /*permits
-            WithImpl*/
+        permits
+            WithImpl
     {
         @NotNull UnmodifiableList<? extends CommonTableExpression<?>> $commonTableExpressions();
         boolean $recursive();
@@ -565,32 +565,32 @@ public final class QOM {
         @NotNull DeleteReturning<?> $returning(Collection<? extends SelectFieldOrAsterisk> returning);
     }
 
-    public /*sealed*/ interface CreateType
+    public sealed interface CreateType
         extends
             DDLQuery
-        /*permits
-            CreateTypeImpl*/
+        permits
+            CreateTypeImpl
     {
         @NotNull Name $name();
         @NotNull UnmodifiableList<? extends Field<String>> $values();
     }
 
-    public /*sealed*/ interface DropType
+    public sealed interface DropType
         extends
             DDLQuery
-        /*permits
-            DropTypeImpl*/
+        permits
+            DropTypeImpl
     {
         @NotNull UnmodifiableList<? extends Name> $names();
         boolean $ifExists();
         @Nullable Cascade $cascade();
     }
 
-    public /*sealed*/ interface CreateView<R extends Record>
+    public sealed interface CreateView<R extends Record>
         extends
             DDLQuery
-        /*permits
-            CreateViewImpl*/
+        permits
+            CreateViewImpl
     {
         boolean $ifNotExists();
         boolean $orReplace();
@@ -602,6 +602,11 @@ public final class QOM {
     // -------------------------------------------------------------------------
     // XXX: Schema
     // -------------------------------------------------------------------------
+
+
+
+
+
 
 
 
@@ -629,7 +634,12 @@ public final class QOM {
     // XXX: Statements
     // -------------------------------------------------------------------------
 
-    public interface NullStatement extends Statement {}
+    public sealed interface NullStatement
+        extends
+            Statement
+        permits
+            org.jooq.impl.NullStatement
+    {}
 
 
 
@@ -709,131 +719,134 @@ public final class QOM {
     // XXX: Conditions
     // -------------------------------------------------------------------------
 
-    public /*sealed*/ interface CombinedCondition
+    public sealed interface CombinedCondition
         extends
             Condition,
             UCommutativeOperator<Condition, Condition>
-        /*permits
-            MAnd,
-            MOr*/
+        permits
+            And,
+            Or,
+            Xor
     {}
 
-    public /*sealed*/ interface CompareCondition<T>
+    public sealed interface CompareCondition<T>
         extends
             Condition,
             UOperator2<Field<T>, Field<T>, Condition>
-        /*permits
-            MEq,
-            MNe,
-            MLt,
-            MLe,
-            MGt,
-            MGe,
-            MIsDistinctFrom,
-            MIsNotDistinctFrom,
-            MContains,
-            MContainsIgnoreCase,
-            MStartsWith,
-            MStartsWithIgnoreCase,
-            MEndsWith,
-            MEndsWithIgnoreCase*/
+        permits
+            Eq,
+            Ne,
+            Lt,
+            Le,
+            Gt,
+            Ge,
+            IsDistinctFrom,
+            IsNotDistinctFrom,
+            Contains,
+            ContainsIgnoreCase,
+            StartsWith,
+            StartsWithIgnoreCase,
+            EndsWith,
+            EndsWithIgnoreCase
     {}
 
-    public interface Between<T>
+    public sealed interface Between<T>
         extends
             Condition,
             UOperator3<Field<T>, Field<T>, Field<T>, Condition>
+        permits
+            org.jooq.impl.BetweenCondition
     {
         boolean $symmetric();
         @NotNull Between<T> $symmetric(boolean symmetric);
     }
 
-    public /*sealed*/ interface InList<T>
+    public sealed interface InList<T>
         extends
             Condition,
             UOperator2<Field<T>, UnmodifiableList<? extends Field<T>>, Condition>
-        /*permits
-            InList*/
+        permits
+            org.jooq.impl.InList
     {
         @NotNull default Field<T> $field() { return $arg1(); }
         @NotNull default UnmodifiableList<? extends Field<T>> $list() { return $arg2(); }
     }
 
-    public /*sealed*/ interface NotInList<T>
+    public sealed interface NotInList<T>
         extends
             Condition,
             UOperator2<Field<T>, UnmodifiableList<? extends Field<T>>, Condition>
-        /*permits
-            NotInList*/
+        permits
+            org.jooq.impl.NotInList
     {
         @NotNull default Field<T> $field() { return $arg1(); }
         @NotNull default UnmodifiableList<? extends Field<T>> $list() { return $arg2(); }
     }
 
-    public /*sealed*/ interface RegexpLike
+    public sealed interface RegexpLike
         extends
             Condition
-        /*permits
-            RegexpLike*/
+        permits
+            org.jooq.impl.RegexpLike
     {
         @NotNull Field<?> $search();
         @NotNull Field<String> $pattern();
     }
 
-    public /*sealed*/ interface Extract
+    public sealed interface Extract
         extends
             Field<Integer>
-        /*permits
-            Extract*/
+        permits
+            org.jooq.impl.Extract
     {
         @NotNull Field<?> $field();
         @NotNull DatePart $datePart();
     }
 
-    public /*sealed*/ interface RowIsNull
+    public sealed interface RowIsNull
         extends
             Condition,
             UOperator1<Row, Condition>
-        /*permits
-            RowIsNull*/
+        permits
+            org.jooq.impl.RowIsNull
     {
         @NotNull default Row $field() { return $arg1(); }
     }
 
-    public /*sealed*/ interface RowIsNotNull
+    public sealed interface RowIsNotNull
         extends
             Condition,
             UOperator1<Row, Condition>
-        /*permits
-            RowIsNotNull*/
+        permits
+            org.jooq.impl.RowIsNotNull
     {
         @NotNull default Row $field() { return $arg1(); }
     }
 
-    public /*sealed*/ interface RowOverlaps
+    public sealed interface RowOverlaps
         extends
             Condition,
             UOperator2<Row, Row, Condition>
-        /*permits
-            RowOverlaps*/
+        permits
+            org.jooq.impl.RowOverlaps
     {}
 
-    public /*sealed*/ interface SelectIsNull
+    public sealed interface SelectIsNull
         extends
             Condition,
             UOperator1<Select<?>, Condition>
-        /*permits
-            SelectIsNull*/
+        permits
+            org.jooq.impl.SelectIsNull
     {
         @NotNull default Select<?> $field() { return $arg1(); }
     }
 
-    public /*sealed*/ interface SelectIsNotNull
+    public sealed interface SelectIsNotNull
         extends
             Condition,
             UOperator1<Select<?>, Condition>
-        /*permits
-            SelectIsNotNull*/
+        permits
+            org.jooq.impl.SelectIsNotNull
     {
         @NotNull default Select<?> $field() { return $arg1(); }
     }
@@ -843,20 +856,20 @@ public final class QOM {
     // XXX: Rows
     // -------------------------------------------------------------------------
 
-    public /*sealed*/ interface RowAsField<R extends org.jooq.Record>
+    public sealed interface RowAsField<R extends org.jooq.Record>
         extends
             org.jooq.Field<R>
-        /*permits
-            RowAsField*/
+        permits
+            org.jooq.impl.RowAsField
     {
         @NotNull Row $row();
     }
 
-    public /*sealed*/ interface TableAsField<R extends org.jooq.Record>
+    public sealed interface TableAsField<R extends org.jooq.Record>
         extends
             org.jooq.Field<R>
-        /*permits
-            TableAsField*/
+        permits
+            org.jooq.impl.TableAsField
     {
         @NotNull Table<R> $table();
     }
@@ -1022,99 +1035,97 @@ public final class QOM {
     // XXX: SelectFields, GroupFields and SortFields
     // -------------------------------------------------------------------------
 
-    // Can't seal these types yet because of https://bugs.eclipse.org/bugs/show_bug.cgi?id=577872
-
-    public non-sealed interface EmptyGroupingSet
+    public sealed interface EmptyGroupingSet
         extends
             GroupField,
             UEmpty
-        /*permits
-            org.jooq.impl.EmptyGroupingSet*/
+        permits
+            org.jooq.impl.EmptyGroupingSet
     {}
 
-    public non-sealed interface Rollup
+    public sealed interface Rollup
         extends
             GroupField,
             UOperator1<UnmodifiableList<? extends FieldOrRow>, GroupField>
-        /*permits
-            Rollup*/
+        permits
+            org.jooq.impl.Rollup
     {}
 
-    public non-sealed interface Cube
+    public sealed interface Cube
         extends
             GroupField,
             UOperator1<UnmodifiableList<? extends FieldOrRow>, GroupField>
-        /*permits
-            Cube*/
+        permits
+            org.jooq.impl.Cube
     {}
 
-    public non-sealed interface GroupingSets
+    public sealed interface GroupingSets
         extends
             GroupField,
             UOperator1<UnmodifiableList<? extends UnmodifiableList<? extends FieldOrRow>>, GroupField>
-        /*permits
-            GroupingSets*/
+        permits
+            org.jooq.impl.GroupingSets
     {}
 
     // -------------------------------------------------------------------------
     // XXX: Aggregate functions and window functions
     // -------------------------------------------------------------------------
 
-    public /*sealed*/ interface RatioToReport
+    public sealed interface RatioToReport
         extends
             org.jooq.AggregateFunction<BigDecimal>
-        /*permits
-            RatioToReport*/
+        permits
+            org.jooq.impl.RatioToReport
     {
         @NotNull Field<? extends Number> $field();
     }
 
-    public /*sealed*/ interface Mode<T>
+    public sealed interface Mode<T>
         extends
             org.jooq.AggregateFunction<T>,
             UOperator1<Field<T>, org.jooq.AggregateFunction<T>>
-        /*permits
-            Mode*/
+        permits
+            org.jooq.impl.Mode
     {
         @NotNull default Field<T> $field() { return $arg1(); }
     }
 
-    public /*sealed*/ interface MultisetAgg<R extends Record>
+    public sealed interface MultisetAgg<R extends Record>
         extends
             org.jooq.AggregateFunction<Result<R>>
-        /*permits
-            MultisetAgg*/
+        permits
+            org.jooq.impl.MultisetAgg
     {
         @NotNull Row $row();
     }
 
-    public /*sealed*/ interface ArrayAgg<T>
+    public sealed interface ArrayAgg<T>
         extends
             org.jooq.AggregateFunction<T[]>,
             UOperator1<Field<T>, org.jooq.AggregateFunction<T[]>>
-        /*permits
-            ArrayAgg*/
+        permits
+            org.jooq.impl.ArrayAgg
     {
         @NotNull default Field<T> $field() { return $arg1(); }
         boolean $distinct();
     }
 
-    public /*sealed*/ interface XMLAgg
+    public sealed interface XMLAgg
         extends
             org.jooq.AggregateFunction<XML>,
             UOperator1<Field<XML>, org.jooq.AggregateFunction<XML>>
-        /*permits
-            XMLAgg*/
+        permits
+            org.jooq.impl.XMLAgg
     {
         @NotNull default Field<XML> $field() { return $arg1(); }
     }
 
-    public /*sealed*/ interface JSONArrayAgg<J>
+    public sealed interface JSONArrayAgg<J>
         extends
             org.jooq.AggregateFunction<J>,
             UOperator1<org.jooq.Field<?>, org.jooq.AggregateFunction<J>>
-        /*permits
-            JSONArrayAgg*/
+        permits
+            org.jooq.impl.JSONArrayAgg
     {
         @NotNull default Field<?> $field() { return $arg1(); }
         boolean $distinct();
@@ -1122,22 +1133,23 @@ public final class QOM {
         @Nullable DataType<?> $returning();
     }
 
-    public /*sealed*/ interface JSONObjectAgg<J>
+    public sealed interface JSONObjectAgg<J>
         extends
             org.jooq.AggregateFunction<J>,
             UOperator1<JSONEntry<?>, org.jooq.AggregateFunction<J>>
-        /*permits JSONObjectAgg*/
+        permits
+            org.jooq.impl.JSONObjectAgg
     {
         @NotNull default JSONEntry<?> $entry() { return $arg1(); }
         @Nullable JSONOnNull $onNull();
         @Nullable DataType<?> $returning();
     }
 
-    public /*sealed*/ interface CountTable
+    public sealed interface CountTable
         extends
             org.jooq.AggregateFunction<Integer>
-        /*permits
-            CountTable*/
+        permits
+            org.jooq.impl.CountTable
     {
         @NotNull Table<?> $table();
         boolean $distinct();
@@ -1158,54 +1170,55 @@ public final class QOM {
         @Nullable WindowDefinition $windowDefinition();
     }
 
-    public /*sealed*/ interface RowNumber
+    public sealed interface RowNumber
         extends
             WindowFunction<Integer>
-        /*permits
-            RowNumber*/
+        permits
+            org.jooq.impl.RowNumber
     {}
 
-    public /*sealed*/ interface Rank
+    public sealed interface Rank
         extends
             WindowFunction<Integer>
-        /*permits
-            Rank*/
+        permits
+            org.jooq.impl.Rank
     {}
 
-    public /*sealed*/ interface DenseRank
+    public sealed interface DenseRank
         extends
             WindowFunction<Integer>
-        /*permits
-            DenseRank*/
+        permits
+            org.jooq.impl.DenseRank
     {}
 
-    public /*sealed*/ interface PercentRank
+    public sealed interface PercentRank
         extends
             WindowFunction<BigDecimal>
-        /*permits
-            PercentRank*/
+        permits
+            org.jooq.impl.PercentRank
     {}
 
-    public /*sealed*/ interface CumeDist
+    public sealed interface CumeDist
         extends
             WindowFunction<BigDecimal>
-        /*permits
-            CumeDist*/
+        permits
+            org.jooq.impl.CumeDist
     {}
 
-    public /*sealed*/ interface Ntile
+    public sealed interface Ntile
         extends
             WindowFunction<Integer>
-        /*permits Ntile*/
+        permits
+            org.jooq.impl.Ntile
     {
         @NotNull Field<Integer> $tiles();
     }
 
-    public /*sealed*/ interface Lead<T>
+    public sealed interface Lead<T>
         extends
             WindowFunction<T>
-        /*permits
-            Lead*/
+        permits
+            org.jooq.impl.Lead
     {
         @NotNull Field<T> $field();
         @Nullable Field<Integer> $offset();
@@ -1213,11 +1226,11 @@ public final class QOM {
         @Nullable NullTreatment $nullTreatment();
     }
 
-    public /*sealed*/ interface Lag<T>
+    public sealed interface Lag<T>
         extends
             WindowFunction<T>
-        /*permits
-            Lag*/
+        permits
+            org.jooq.impl.Lag
     {
         @NotNull Field<T> $field();
         @Nullable Field<Integer> $offset();
@@ -1225,31 +1238,31 @@ public final class QOM {
         @Nullable NullTreatment $nullTreatment();
     }
 
-    public /*sealed*/ interface FirstValue<T>
+    public sealed interface FirstValue<T>
         extends
             WindowFunction<T>
-        /*permits
-            FirstValue*/
+        permits
+            org.jooq.impl.FirstValue
     {
         @NotNull Field<T> $field();
         @Nullable NullTreatment $nullTreatment();
     }
 
-    public /*sealed*/ interface LastValue<T>
+    public sealed interface LastValue<T>
         extends
             WindowFunction<T>
-        /*permits
-            LastValue*/
+        permits
+            org.jooq.impl.LastValue
     {
         @NotNull Field<T> $field();
         @Nullable NullTreatment $nullTreatment();
     }
 
-    public /*sealed*/ interface NthValue<T>
+    public sealed interface NthValue<T>
         extends
             WindowFunction<T>
-        /*permits
-            NthValue*/
+        permits
+            org.jooq.impl.NthValue
     {
         @NotNull Field<T> $field();
         @Nullable FromFirstOrLast $fromFirstOrLast();
@@ -1286,37 +1299,37 @@ public final class QOM {
         @NotNull UnmodifiableList<? extends Field<?>> $args();
     }
 
-    public /*sealed*/ interface Cast<T>
+    public sealed interface Cast<T>
         extends
             Field<T>
-        /*permits
-            Cast*/
+        permits
+            org.jooq.impl.Cast
     {
         @NotNull Field<?> $field();
     }
 
-    public /*sealed*/ interface Coerce<T>
+    public sealed interface Coerce<T>
         extends
             Field<T>
-        /*permits
-            Coerce*/
+        permits
+            org.jooq.impl.Coerce
     {
         @NotNull Field<?> $field();
     }
 
-    public /*sealed*/ interface Default<T>
+    public sealed interface Default<T>
         extends
             Field<T>,
             UEmpty
-        /*permits
-            Default*/
+        permits
+            org.jooq.impl.Default
     {}
 
-    public /*sealed*/ interface Collated
+    public sealed interface Collated
         extends
             Field<String>
-        /*permits
-            Collated*/
+        permits
+            org.jooq.impl.Collated
     {
         @NotNull Field<?> $field();
         @NotNull Collation $collation();
@@ -1340,100 +1353,102 @@ public final class QOM {
         @NotNull Select<? extends Record1<T>> $select();
     }
 
-    public /*sealed*/ interface Multiset<R extends org.jooq.Record>
+    public sealed interface Multiset<R extends org.jooq.Record>
         extends
             org.jooq.Field<org.jooq.Result<R>>
-        /*permits
-            Multiset*/
+        permits
+            org.jooq.impl.Multiset
     {
         @NotNull TableLike<R> $table();
     }
 
-    public /*sealed*/ interface ScalarSubquery<T>
+    public sealed interface ScalarSubquery<T>
         extends
             Field<T>,
             UOperator1<Select<? extends Record1<T>>, Field<T>>
-        /*permits
-            ScalarSubquery*/
+        permits
+            org.jooq.impl.ScalarSubquery
     {}
 
-    public /*sealed*/ interface Neg<T>
+    public sealed interface Neg<T>
         extends
             UReturnsNullOnNullInput,
             Field<T>,
             UOperator1<Field<T>, Field<T>>
-        /*permits
-            Neg*/
+        permits
+            org.jooq.impl.Neg
     {}
 
-    public /*sealed*/ interface Greatest<T>
+    public sealed interface Greatest<T>
         extends
             Field<T>,
             UOperator1<UnmodifiableList<? extends Field<T>>, Field<T>>
-        /*permits
-            Greatest*/
+        permits
+            org.jooq.impl.Greatest
     {}
 
-    public /*sealed*/ interface Least<T>
+    public sealed interface Least<T>
         extends
             Field<T>,
             UOperator1<UnmodifiableList<? extends Field<T>>, Field<T>>
-        /*permits
-            Least*/
+        permits
+            org.jooq.impl.Least
     {}
 
-    public /*sealed*/ interface Choose<T>
+    public sealed interface Choose<T>
         extends
             Field<T>,
             UOperator2<Field<Integer>, UnmodifiableList<? extends Field<T>>, Field<T>>
-        /*permits
-            Choose*/
+        permits
+            org.jooq.impl.Choose
     {}
 
-    public /*sealed*/ interface FieldFunction<T>
+    public sealed interface FieldFunction<T>
         extends
             Field<Integer>,
             UOperator2<Field<T>, UnmodifiableList<? extends Field<T>>, Field<Integer>>
-        /*permits
-            FieldFunction*/
+        permits
+            org.jooq.impl.FieldFunction
     {}
 
-    public /*sealed*/ interface Nvl2<T>
+    public sealed interface Nvl2<T>
         extends
             Field<T>,
             UOperator3<Field<?>, Field<T>, Field<T>, Field<T>>
-        /*permits
-            Nvl2*/
+        permits
+            org.jooq.impl.Nvl2
     {
         @NotNull default Field<?> $value() { return $arg1(); }
         @NotNull default Field<T> $ifNotNull() { return $arg2(); }
         @NotNull default Field<T> $ifIfNull() { return $arg3(); }
     }
 
-    public /*sealed*/ interface Iif<T>
+    public sealed interface Iif<T>
         extends
             Field<T>,
             UOperator3<Condition, Field<T>, Field<T>, Field<T>>
-        /*permits
-            Iif*/
+        permits
+            org.jooq.impl.Iif
     {
         @NotNull default Condition $condition() { return $arg1(); }
         @NotNull default Field<T> $ifTrue() { return $arg2(); }
         @NotNull default Field<T> $ifFalse() { return $arg3(); }
     }
 
-    public /*sealed*/ interface Coalesce<T>
+    public sealed interface Coalesce<T>
         extends
             Field<T>,
             UOperator1<UnmodifiableList<? extends Field<T>>, Field<T>>
-        /*permits
-            Coalesce*/
+        permits
+            org.jooq.impl.Coalesce
     {}
 
-    public /*sealed*/ interface CaseSimple<V, T>
+    public sealed interface CaseSimple<V, T>
         extends
             Field<T>,
             UOperator3<Field<V>, UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>>, Field<T>, CaseSimple<V, T>>
+        permits
+            org.jooq.impl.CaseSimple
     {
         @NotNull  default Field<V> $value() { return $arg1(); }
         @CheckReturnValue
@@ -1446,10 +1461,12 @@ public final class QOM {
         @NotNull  default CaseSimple<V, T> $else(Field<T> else_) { return $arg3(else_); }
     }
 
-    public /*sealed*/ interface CaseSearched<T>
+    public sealed interface CaseSearched<T>
         extends
             Field<T>,
             UOperator2<UnmodifiableList<? extends Tuple2<Condition, Field<T>>>, Field<T>, CaseSearched<T>>
+        permits
+            org.jooq.impl.CaseSearched
     {
         @NotNull  default UnmodifiableList<? extends Tuple2<Condition, Field<T>>> $when() { return $arg1(); }
         @CheckReturnValue
@@ -1459,10 +1476,12 @@ public final class QOM {
         @NotNull  default CaseSearched<T> $else(Field<T> else_) { return $arg2(else_); }
     }
 
-    public /*sealed*/ interface Decode<V, T>
+    public sealed interface Decode<V, T>
         extends
             Field<T>,
             UOperator3<Field<V>, UnmodifiableList<? extends Tuple2<Field<V>, Field<T>>>, Field<T>, Decode<V, T>>
+        permits
+            org.jooq.impl.Decode
     {
         @NotNull  default Field<V> $value() { return $arg1(); }
         @CheckReturnValue
@@ -1475,97 +1494,97 @@ public final class QOM {
         @NotNull  default Decode<V, T> $else(Field<T> else_) { return $arg3(else_); }
     }
 
-    public /*sealed*/ interface Concat
+    public sealed interface Concat
         extends
             Field<String>,
             UOperator1<UnmodifiableList<? extends Field<?>>, Field<String>>
-        /*permits
-            Concat*/
+        permits
+            org.jooq.impl.Concat
     {}
 
-    public /*sealed*/ interface TimestampDiff<T>
+    public sealed interface TimestampDiff<T>
         extends
             Field<DayToSecond>,
             UOperator2<Field<T>, Field<T>, Field<DayToSecond>>
-        /*permits
-            TimestampDiff*/
+        permits
+            org.jooq.impl.TimestampDiff
     {
         @NotNull default Field<T> $minuend() { return $arg1(); }
         @NotNull default Field<T> $subtrahend() { return $arg2(); }
     }
 
-    public /*sealed*/ interface Convert<T>
+    public sealed interface Convert<T>
         extends
             Field<T>
-        /*permits
-            ConvertDateTime*/
+        permits
+            org.jooq.impl.ConvertDateTime
     {
         @NotNull Field<?> $field();
         int $style();
     }
 
-    public /*sealed*/ interface CurrentDate<T>
+    public sealed interface CurrentDate<T>
         extends
             Field<T>,
             UEmpty
-        /*permits
-            CurrentDate*/
+        permits
+            org.jooq.impl.CurrentDate
     {}
 
-    public /*sealed*/ interface CurrentTime<T>
+    public sealed interface CurrentTime<T>
         extends
             Field<T>,
             UEmpty
-        /*permits
-            CurrentTime*/
+        permits
+            org.jooq.impl.CurrentTime
     {}
 
-    public /*sealed*/ interface CurrentTimestamp<T>
+    public sealed interface CurrentTimestamp<T>
         extends
             Field<T>,
             UEmpty
-        /*permits
-            CurrentTimestamp*/
+        permits
+            org.jooq.impl.CurrentTimestamp
     {}
 
-    public /*sealed*/ interface XMLQuery
+    public sealed interface XMLQuery
         extends
             Field<XML>
-        /*permits
-            XMLQuery*/
+        permits
+            org.jooq.impl.XMLQuery
     {
         @NotNull Field<String> $xpath();
         @NotNull Field<XML> $passing();
         @Nullable XMLPassingMechanism $passingMechanism();
     }
 
-    public /*sealed*/ interface XMLElement
+    public sealed interface XMLElement
         extends
             Field<XML>
-        /*permits
-            XMLElement*/
+        permits
+            org.jooq.impl.XMLElement
     {
         @NotNull Name $elementName();
         @NotNull XMLAttributes $attributes();
         @NotNull UnmodifiableList<? extends Field<?>> $content();
     }
 
-    public /*sealed*/ interface XMLExists
+    public sealed interface XMLExists
         extends
             Condition
-        /*permits
-            XMLExists*/
+        permits
+            org.jooq.impl.XMLExists
     {
         @NotNull Field<String> $xpath();
         @NotNull Field<XML> $passing();
         @Nullable XMLPassingMechanism $passingMechanism();
     }
 
-    public /*sealed*/ interface XMLParse
+    public sealed interface XMLParse
         extends
             Field<XML>
-        /*permits
-            XMLParse*/
+        permits
+            org.jooq.impl.XMLParse
     {
         @NotNull Field<String> $content();
         @NotNull DocumentOrContent $documentOrContent();

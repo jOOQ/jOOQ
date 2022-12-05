@@ -1337,7 +1337,7 @@ implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final TableOptionalOnStep<Record> join(TableLike<?> table, JoinType type) {
+    public final JoinTable<?> join(TableLike<?> table, JoinType type) {
         switch (type) {
             case CROSS_APPLY:
                 return new CrossApply(this, table);
@@ -1569,62 +1569,62 @@ implements
     }
 
     @Override
-    public final TableOnStep<Record> fullOuterJoin(TableLike<?> table) {
-        return join(table, FULL_OUTER_JOIN);
+    public final TablePartitionByStep<Record> fullOuterJoin(TableLike<?> table) {
+        return (TablePartitionByStep<Record>) join(table, FULL_OUTER_JOIN);
     }
 
     @Override
-    public final TableOnStep<Record> fullOuterJoin(SQL sql) {
+    public final TablePartitionByStep<Record> fullOuterJoin(SQL sql) {
         return fullOuterJoin(table(sql));
     }
 
     @Override
-    public final TableOnStep<Record> fullOuterJoin(String sql) {
+    public final TablePartitionByStep<Record> fullOuterJoin(String sql) {
         return fullOuterJoin(table(sql));
     }
 
     @Override
-    public final TableOnStep<Record> fullOuterJoin(String sql, Object... bindings) {
+    public final TablePartitionByStep<Record> fullOuterJoin(String sql, Object... bindings) {
         return fullOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final TableOnStep<Record> fullOuterJoin(String sql, QueryPart... parts) {
+    public final TablePartitionByStep<Record> fullOuterJoin(String sql, QueryPart... parts) {
         return fullOuterJoin(table(sql, parts));
     }
 
     @Override
-    public final TableOnStep<Record> fullOuterJoin(Name name) {
+    public final TablePartitionByStep<Record> fullOuterJoin(Name name) {
         return fullOuterJoin(table(name));
     }
 
     @Override
-    public final TableOnStep<Record> fullJoin(TableLike<?> table) {
+    public final TablePartitionByStep<Record> fullJoin(TableLike<?> table) {
         return fullOuterJoin(table);
     }
 
     @Override
-    public final TableOnStep<Record> fullJoin(SQL sql) {
+    public final TablePartitionByStep<Record> fullJoin(SQL sql) {
         return fullOuterJoin(sql);
     }
 
     @Override
-    public final TableOnStep<Record> fullJoin(String sql) {
+    public final TablePartitionByStep<Record> fullJoin(String sql) {
         return fullOuterJoin(sql);
     }
 
     @Override
-    public final TableOnStep<Record> fullJoin(String sql, Object... bindings) {
+    public final TablePartitionByStep<Record> fullJoin(String sql, Object... bindings) {
         return fullOuterJoin(sql, bindings);
     }
 
     @Override
-    public final TableOnStep<Record> fullJoin(String sql, QueryPart... parts) {
+    public final TablePartitionByStep<Record> fullJoin(String sql, QueryPart... parts) {
         return fullOuterJoin(sql, parts);
     }
 
     @Override
-    public final TableOnStep<Record> fullJoin(Name name) {
+    public final TablePartitionByStep<Record> fullJoin(Name name) {
         return fullOuterJoin(name);
     }
 

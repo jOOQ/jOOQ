@@ -669,6 +669,7 @@ import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
+import org.jooq.TableOuterJoinStep;
 import org.jooq.TablePartitionByStep;
 import org.jooq.Truncate;
 import org.jooq.TruncateCascadeStep;
@@ -7417,6 +7418,50 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Table<?> parseJoinedTableIf(Table<?> left, BooleanSupplier forbiddenKeywords) {
+        int p = position();
+        if (!ignoreProEdition() && parseKeywordIf("PARTITION BY") && requireProEdition()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
         JoinType joinType = parseJoinTypeIf();
 
         if (joinType == null)
@@ -7433,9 +7478,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case LEFT_OUTER_JOIN:
             case FULL_OUTER_JOIN:
             case RIGHT_OUTER_JOIN:
-                if (!ignoreProEdition() && parseKeywordIf("PARTITION BY")) {
-                    requireProEdition();
-
+                if (!ignoreProEdition() && parseKeywordIf("PARTITION BY") && requireProEdition()) {
 
 
 

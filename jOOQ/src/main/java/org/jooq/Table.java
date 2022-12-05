@@ -1618,7 +1618,7 @@ extends
      */
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
-    TableOnStep<Record> fullJoin(TableLike<?> table);
+    TablePartitionByStep<Record> fullJoin(TableLike<?> table);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -1633,7 +1633,7 @@ extends
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    TableOnStep<Record> fullJoin(SQL sql);
+    TablePartitionByStep<Record> fullJoin(SQL sql);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -1648,7 +1648,7 @@ extends
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    TableOnStep<Record> fullJoin(String sql);
+    TablePartitionByStep<Record> fullJoin(String sql);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -1663,7 +1663,7 @@ extends
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    TableOnStep<Record> fullJoin(String sql, Object... bindings);
+    TablePartitionByStep<Record> fullJoin(String sql, Object... bindings);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -1678,7 +1678,7 @@ extends
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    TableOnStep<Record> fullJoin(String sql, QueryPart... parts);
+    TablePartitionByStep<Record> fullJoin(String sql, QueryPart... parts);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -1687,7 +1687,7 @@ extends
      */
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
-    TableOnStep<Record> fullJoin(Name name);
+    TablePartitionByStep<Record> fullJoin(Name name);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -1696,7 +1696,7 @@ extends
      */
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
-    TableOnStep<Record> fullOuterJoin(TableLike<?> table);
+    TablePartitionByStep<Record> fullOuterJoin(TableLike<?> table);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -1714,7 +1714,7 @@ extends
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    TableOnStep<Record> fullOuterJoin(SQL sql);
+    TablePartitionByStep<Record> fullOuterJoin(SQL sql);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -1732,7 +1732,7 @@ extends
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    TableOnStep<Record> fullOuterJoin(String sql);
+    TablePartitionByStep<Record> fullOuterJoin(String sql);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -1751,7 +1751,7 @@ extends
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    TableOnStep<Record> fullOuterJoin(String sql, Object... bindings);
+    TablePartitionByStep<Record> fullOuterJoin(String sql, Object... bindings);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -1770,7 +1770,7 @@ extends
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    TableOnStep<Record> fullOuterJoin(String sql, QueryPart... parts);
+    TablePartitionByStep<Record> fullOuterJoin(String sql, QueryPart... parts);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -1781,7 +1781,7 @@ extends
      */
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
-    TableOnStep<Record> fullOuterJoin(Name name);
+    TablePartitionByStep<Record> fullOuterJoin(Name name);
 
     /**
      * <code>CROSS JOIN</code> a table to this table.

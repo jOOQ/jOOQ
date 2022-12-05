@@ -154,7 +154,7 @@ import org.jooq.impl.QOM.UnmodifiableList;
  */
 abstract class JoinTable<J extends JoinTable<J>>
 extends
-     AbstractTable<Record>
+    AbstractTable<Record>
 implements
     TableOuterJoinStep<Record>,
     TableOptionalOnStep<Record>,

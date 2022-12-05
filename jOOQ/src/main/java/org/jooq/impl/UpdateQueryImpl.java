@@ -50,6 +50,7 @@ import static org.jooq.Clause.UPDATE_WHERE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
@@ -65,6 +66,8 @@ import static org.jooq.SQLDialect.IGNITE;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
+// ...
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -94,6 +97,7 @@ import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.Tools.containsDeclaredTable;
 import static org.jooq.impl.Tools.findAny;
 
 import java.util.Arrays;
@@ -189,6 +193,8 @@ implements
 {
 
     private static final Clause[]        CLAUSES                       = { UPDATE };
+
+
 
 
 
@@ -758,9 +764,7 @@ implements
 
     private final void acceptFrom(Context<?> ctx) {
         ctx.start(UPDATE_FROM);
-
-        TableList f;
-
+        TableList f = new TableList();
 
 
 
@@ -770,7 +774,15 @@ implements
 
 
 
-        f = from;
+
+        f.addAll(from);
+
+
+
+
+
+
+
 
         if (!f.isEmpty())
             ctx.formatSeparator()

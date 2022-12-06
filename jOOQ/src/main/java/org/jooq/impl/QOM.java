@@ -1565,11 +1565,11 @@ public final class QOM {
         @NotNull default Field<T> $subtrahend() { return $arg2(); }
     }
 
-    public sealed interface Convert<T>
+    public /*sealed*/ interface Convert<T>
         extends
             Field<T>
-        permits
-            org.jooq.impl.ConvertDateTime
+        /*permits
+            org.jooq.impl.ConvertDateTime*/
     {
         @NotNull Field<?> $field();
         int $style();

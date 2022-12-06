@@ -64,14 +64,7 @@ import org.jooq.TableOptions;
 /**
  * @author Lukas Eder
  */
-sealed class DerivedTable<R extends Record>
-extends
-    AbstractTable<R>
-implements
-    QOM.DerivedTable<R>
-permits
-    InlineDerivedTable
-{
+class DerivedTable<R extends Record> extends AbstractTable<R> implements QOM.DerivedTable<R> {
 
     static final Set<SQLDialect> NO_SUPPORT_CORRELATED_DERIVED_TABLE = SQLDialect.supportedUntil(DERBY, H2, MARIADB);
     private final Select<R>      query;

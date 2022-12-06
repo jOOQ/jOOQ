@@ -354,12 +354,24 @@ final class MetaImpl extends AbstractMeta {
 
                 switch (family()) {
 
-                    // [#3977] [#11255] PostgreSQL returns other object types, too
+                    // [#3977] [#11255] [#14368] PostgreSQL returns other object types, too
 
 
                     case POSTGRES:
                     case YUGABYTEDB:
-                        types = new String[] { "FOREIGN TABLE", "MATERIALIZED VIEW", "SYSTEM_TABLE", "SYSTEM_VIEW", "TABLE", "VIEW" };
+                        types = new String[] {
+                            "FOREIGN TABLE",
+                            "MATERIALIZED VIEW",
+                            "PARTITIONED TABLE",
+                            "SYSTEM_TABLE",
+                            "SYSTEM TABLE",
+                            "SYSTEM_VIEW",
+                            "SYSTEM VIEW",
+                            "TABLE",
+                            "TEMPORARY TABLE",
+                            "TEMPORARY VIEW",
+                            "VIEW"
+                        };
                         break;
 
 

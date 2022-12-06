@@ -52,6 +52,8 @@ import static org.jooq.impl.DSL.jsonbArray;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 // ...
+// ...
+import static org.jooq.impl.DSL.toHex;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlattributes;
@@ -60,6 +62,7 @@ import static org.jooq.impl.DSL.xmlserializeContent;
 import static org.jooq.impl.JSONArrayAgg.patchOracleArrayAggBug;
 import static org.jooq.impl.Keywords.K_MULTISET;
 import static org.jooq.impl.Names.NQ_RESULT;
+import static org.jooq.impl.Names.N_HEX;
 import static org.jooq.impl.Names.N_JSON_QUERY;
 import static org.jooq.impl.Names.N_MULTISET;
 import static org.jooq.impl.Names.N_RECORD;
@@ -440,6 +443,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
     @SuppressWarnings("unchecked")
     static final Field<?> castForJSON(Context<?> ctx, Field<?> field) {
+
 
 
 

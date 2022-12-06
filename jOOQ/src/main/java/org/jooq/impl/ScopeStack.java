@@ -110,6 +110,10 @@ final class ScopeStack<K, V> implements Iterable<V> {
         return iterable(e -> true).iterator();
     }
 
+    final Iterable<V> iterableAtScopeLevel() {
+        return () -> new ScopeStackIterator<>(list -> list.size() == scopeLevel + 1 ? list.get(scopeLevel) : null, e -> true);
+    }
+
     final Iterable<V> iterable(Predicate<? super V> filter) {
         return () -> new ScopeStackIterator<>(list -> list.get(list.size() - 1), filter);
     }

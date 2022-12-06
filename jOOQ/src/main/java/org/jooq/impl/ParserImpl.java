@@ -14438,7 +14438,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         private final void scopeEnd(Query scopeOwner) {
             List<FieldProxy<?>> retain = new ArrayList<>();
 
-            for (FieldProxy<?> lookup : scope.lookupFields) {
+            // [#14372] Avoid looking up fields at a higher scope level
+            for (FieldProxy<?> lookup : scope.lookupFields.iterableAtScopeLevel()) {
                 Value<Field<?>> found = null;
 
                 for (Field<?> f : scope.fieldScope) {

@@ -128,7 +128,7 @@ implements
     private final void acceptEmulation(Context<?> ctx) {
 
         @SuppressWarnings({ "unchecked" })
-        final Field<Integer> f = (Field) DSL.field("{0}", arguments.get(0).getDataType(), arguments.get(0));
+        final Field<Integer> f = (Field) arguments.get(0);
         final Field<Integer> negatives = DSL.when(f.lt(zero()), inline(-1));
 
         Field<BigDecimal> negativesSum = CustomField.of("sum", NUMERIC, c -> {

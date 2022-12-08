@@ -2859,6 +2859,11 @@ final class Tools {
      */
     @SuppressWarnings("null")
     static final void renderAndBind(Context<?> ctx, String sql, List<QueryPart> substitutes) {
+        if (TRUE.equals(ctx.settings().isRenderPlainSQLTemplatesAsRaw())) {
+            ctx.sql(sql);
+            return;
+        }
+
         RenderContext render = ctx instanceof RenderContext r ? r : null;
         BindContext   bind   = ctx instanceof BindContext b   ? b : null;
 

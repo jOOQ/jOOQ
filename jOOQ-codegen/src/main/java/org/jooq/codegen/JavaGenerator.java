@@ -9799,6 +9799,8 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
+
+
             // [#5291] Some dialects report valid SQL expresions (e.g. PostgreSQL), others
             //         report actual values (e.g. MySQL).
             if (dataType.defaulted()) {
@@ -9810,9 +9812,11 @@ public class JavaGenerator extends AbstractGenerator {
                     //         a CURRENT_TIMESTAMP expression, inconsistently
                     if (d != null && d.toLowerCase(getStrategy().getTargetLocale()).startsWith("current_timestamp"))
                         sb.append(out.ref(DSL.class))
-                          .append(".field(\"")
+                          .append(".field(")
+                          .append(out.ref(DSL.class))
+                          .append(".raw(\"")
                           .append(escapeString(d))
-                          .append("\"");
+                          .append("\")");
                     else
                         sb.append(out.ref(DSL.class))
                           .append(".inline(\"")
@@ -9820,9 +9824,11 @@ public class JavaGenerator extends AbstractGenerator {
                           .append("\"");
                 else
                     sb.append(out.ref(DSL.class))
-                      .append(".field(\"")
+                      .append(".field(")
+                      .append(out.ref(DSL.class))
+                      .append(".raw(\"")
                       .append(escapeString(d))
-                      .append("\"");
+                      .append("\")");
 
                 sb.append(", ")
                   .append(sqlDataTypeRef)

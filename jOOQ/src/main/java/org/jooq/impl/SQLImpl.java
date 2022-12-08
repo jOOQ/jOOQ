@@ -56,10 +56,12 @@ final class SQLImpl extends AbstractQueryPart implements SQL, UEmpty {
     private static final Clause[] CLAUSES = { TEMPLATE };
     final String                  sql;
     final boolean                 isName;
+    final boolean                 raw;
     final List<QueryPart>         substitutes;
 
-    SQLImpl(String sql, Object... input) {
+    SQLImpl(String sql, boolean raw, Object... input) {
         this.sql = requireNonNull(sql);
+        this.raw = raw;
         this.substitutes = Tools.queryParts(input);
         this.isName = substitutes.isEmpty() && isName(sql);
     }
@@ -91,8 +93,18 @@ final class SQLImpl extends AbstractQueryPart implements SQL, UEmpty {
 
 
 
+
+
+
+
+
+
             default:
-                renderAndBind(ctx, sql, substitutes);
+                if (raw)
+                    ctx.sql(sql);
+                else
+                    renderAndBind(ctx, sql, substitutes);
+
                 break;
         }
     }

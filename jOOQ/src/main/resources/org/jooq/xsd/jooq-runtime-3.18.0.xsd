@@ -235,6 +235,10 @@ Some RDBMS may not be able to properly optimise <code>(a, b) < ('a', 'b')</code>
 jOOQ may help the optimiser, e.g. <code>(a <= :a) AND (a, b) < ('a', 'b')</code> or <code>(a <= :a) AND ((a < 'a') OR (a = 'a' AND b < 'b'))</code>]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="renderPlainSQLTemplatesAsRaw" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether plain SQL templates ({@link org.jooq.SQL}) are rendered as raw string content.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="namePathSeparator" type="string" minOccurs="0" maxOccurs="1" default=".">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The character(s) to be used as a separator in paths encoded in a {@link Name}
 <p>

@@ -13236,6 +13236,32 @@ public class DSL {
      * contain user-defined plain SQL, because sometimes it is easier to express
      * things directly in SQL.
      * <p>
+     * Unlike other ways to create plain SQL templates, this only contains raw
+     * String content, without any templating capabilities or bind values.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return A query part wrapping the plain SQL
+     * @see SQL
+     */
+    @NotNull
+    @Support
+    @PlainSQL
+    public static SQL raw(String sql) {
+        return new SQLImpl(sql, true);
+    }
+
+    /**
+     * A custom SQL clause that can render arbitrary expressions.
+     * <p>
+     * A plain SQL <code>QueryPart</code> is a <code>QueryPart</code> that can
+     * contain user-defined plain SQL, because sometimes it is easier to express
+     * things directly in SQL.
+     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -13319,7 +13345,7 @@ public class DSL {
     @Support
     @PlainSQL
     public static SQL sql(String sql, Object... bindings) {
-        return new SQLImpl(sql, bindings);
+        return new SQLImpl(sql, false, bindings);
     }
 
     // -------------------------------------------------------------------------
@@ -13832,7 +13858,7 @@ public class DSL {
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> Field<T> value(DataType<T> type) {
-        return field("{0}", type, N_VALUE);
+        return field(N_VALUE, type);
     }
 
     /**

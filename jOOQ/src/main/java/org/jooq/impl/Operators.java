@@ -37,7 +37,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.sql;
+import static org.jooq.impl.DSL.raw;
 
 import org.jooq.SQL;
 
@@ -49,20 +49,20 @@ import org.jooq.SQL;
 final class Operators {
 
     // For a list of standardised HTML entity names, see https://dev.w3.org/html5/html-author/charref
-    static final SQL OP_AMP    = sql("&");
-    static final SQL OP_AST    = sql("*");
-    static final SQL OP_COMMAT = sql("@");
-    static final SQL OP_DOLLAR = sql("$");
-    static final SQL OP_EQUALS = sql("=");
-    static final SQL OP_EXCL   = sql("!");
-    static final SQL OP_GT     = sql(">");
-    static final SQL OP_HAT    = sql("^");
-    static final SQL OP_LT     = sql("<");
-    static final SQL OP_NUM    = sql("#");
-    static final SQL OP_PERCNT = sql("%");
-    static final SQL OP_PLUS   = sql("+");
-    static final SQL OP_QUEST  = sql("?");
-    static final SQL OP_SOL    = sql("/");
-    static final SQL OP_VERBAR = sql("|");
+    static final SQL OP_AMP    = raw("&");
+    static final SQL OP_AST    = raw("*");
+    static final SQL OP_COMMAT = raw("@");
+    static final SQL OP_DOLLAR = raw("$");
+    static final SQL OP_EQUALS = raw("=");
+    static final SQL OP_EXCL   = raw("!");
+    static final SQL OP_GT     = raw(">");
+    static final SQL OP_HAT    = raw("^");
+    static final SQL OP_LT     = raw("<");
+    static final SQL OP_NUM    = raw("#");
+    static final SQL OP_PERCNT = raw("%");
+    static final SQL OP_PLUS   = raw("+");
+    static final SQL OP_QUEST  = raw("?");
+    static final SQL OP_SOL    = raw("/");
+    static final SQL OP_VERBAR = raw("|");
 
 }

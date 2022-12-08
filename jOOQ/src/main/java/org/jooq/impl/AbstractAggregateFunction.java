@@ -113,7 +113,7 @@ implements
     static final Set<SQLDialect>  SUPPORT_FILTER       = SQLDialect.supportedBy(FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB);
     static final Set<SQLDialect>  SUPPORT_DISTINCT_RVE = SQLDialect.supportedBy(H2, POSTGRES);
 
-    static final Field<Integer>   ASTERISK             = DSL.field("*", Integer.class);
+    static final Field<Integer>   ASTERISK             = DSL.field(DSL.raw("*"), Integer.class);
 
     // Other attributes
     final QueryPartList<Field<?>> arguments;

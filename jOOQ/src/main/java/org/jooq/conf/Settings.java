@@ -109,6 +109,8 @@ public class Settings
     protected Boolean renderRowConditionForSeekClause = true;
     @XmlElement(defaultValue = "false")
     protected Boolean renderRedundantConditionForSeekClause = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean renderPlainSQLTemplatesAsRaw = false;
     @XmlElement(defaultValue = ".")
     protected String namePathSeparator = ".";
     @XmlElement(defaultValue = "false")
@@ -1207,6 +1209,30 @@ public class Settings
      */
     public void setRenderRedundantConditionForSeekClause(Boolean value) {
         this.renderRedundantConditionForSeekClause = value;
+    }
+
+    /**
+     * Whether plain SQL templates ({@link org.jooq.SQL}) are rendered as raw string content.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRenderPlainSQLTemplatesAsRaw() {
+        return renderPlainSQLTemplatesAsRaw;
+    }
+
+    /**
+     * Sets the value of the renderPlainSQLTemplatesAsRaw property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRenderPlainSQLTemplatesAsRaw(Boolean value) {
+        this.renderPlainSQLTemplatesAsRaw = value;
     }
 
     /**
@@ -5888,6 +5914,11 @@ public class Settings
         return this;
     }
 
+    public Settings withRenderPlainSQLTemplatesAsRaw(Boolean value) {
+        setRenderPlainSQLTemplatesAsRaw(value);
+        return this;
+    }
+
     /**
      * The character(s) to be used as a separator in paths encoded in a {@link Name}
      * <p>
@@ -7176,6 +7207,7 @@ public class Settings
         builder.append("renderVariablesInDerivedTablesForEmulations", renderVariablesInDerivedTablesForEmulations);
         builder.append("renderRowConditionForSeekClause", renderRowConditionForSeekClause);
         builder.append("renderRedundantConditionForSeekClause", renderRedundantConditionForSeekClause);
+        builder.append("renderPlainSQLTemplatesAsRaw", renderPlainSQLTemplatesAsRaw);
         builder.append("namePathSeparator", namePathSeparator);
         builder.append("bindOffsetDateTimeType", bindOffsetDateTimeType);
         builder.append("bindOffsetTimeType", bindOffsetTimeType);
@@ -7642,6 +7674,15 @@ public class Settings
             }
         } else {
             if (!renderRedundantConditionForSeekClause.equals(other.renderRedundantConditionForSeekClause)) {
+                return false;
+            }
+        }
+        if (renderPlainSQLTemplatesAsRaw == null) {
+            if (other.renderPlainSQLTemplatesAsRaw!= null) {
+                return false;
+            }
+        } else {
+            if (!renderPlainSQLTemplatesAsRaw.equals(other.renderPlainSQLTemplatesAsRaw)) {
                 return false;
             }
         }
@@ -9284,6 +9325,7 @@ public class Settings
         result = ((prime*result)+((renderVariablesInDerivedTablesForEmulations == null)? 0 :renderVariablesInDerivedTablesForEmulations.hashCode()));
         result = ((prime*result)+((renderRowConditionForSeekClause == null)? 0 :renderRowConditionForSeekClause.hashCode()));
         result = ((prime*result)+((renderRedundantConditionForSeekClause == null)? 0 :renderRedundantConditionForSeekClause.hashCode()));
+        result = ((prime*result)+((renderPlainSQLTemplatesAsRaw == null)? 0 :renderPlainSQLTemplatesAsRaw.hashCode()));
         result = ((prime*result)+((namePathSeparator == null)? 0 :namePathSeparator.hashCode()));
         result = ((prime*result)+((bindOffsetDateTimeType == null)? 0 :bindOffsetDateTimeType.hashCode()));
         result = ((prime*result)+((bindOffsetTimeType == null)? 0 :bindOffsetTimeType.hashCode()));

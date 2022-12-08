@@ -131,7 +131,7 @@ implements
     @SuppressWarnings("unchecked")
     final QueryPart window(Context<?> ctx) {
         if (windowSpecification != null)
-            return DSL.sql("({0})", windowSpecification);
+            return CustomQueryPart.of(c -> c.sql('(').visit(windowSpecification).sql(')'));
 
         // [#3727] Referenced WindowDefinitions that contain a frame clause
         // shouldn't be referenced from within parentheses (in MySQL and PostgreSQL)
@@ -139,7 +139,7 @@ implements
             if (SUPPORT_NO_PARENS_WINDOW_REFERENCE.contains(ctx.dialect()))
                 return windowDefinition;
             else
-                return DSL.sql("({0})", windowDefinition);
+                return CustomQueryPart.of(c -> c.sql('(').visit(windowDefinition).sql(')'));
 
         // [#531] Inline window specifications if the WINDOW clause is not supported
         if (windowName != null) {
@@ -151,7 +151,7 @@ implements
             if (windows != null) {
                 for (WindowDefinition window : windows)
                     if (((WindowDefinitionImpl) window).getName().equals(windowName))
-                        return DSL.sql("({0})", window);
+                        return CustomQueryPart.of(c -> c.sql('(').visit(window).sql(')'));
             }
 
             // [#3162] If a window specification is missing from the query's WINDOW clause,

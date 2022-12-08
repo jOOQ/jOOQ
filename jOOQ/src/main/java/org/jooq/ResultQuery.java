@@ -5402,7 +5402,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * <li>PostgreSQL does not like fetch sizes being combined with
      * <code>{@link Connection#getAutoCommit()} == true</code>. For more
      * information, see <a href=
-     * "http://jdbc.postgresql.org/documentation/head/query.html#query-with-cursor"
+     * "https://jdbc.postgresql.org/documentation/query/#getting-results-based-on-a-cursor"
      * >this page here</a></li>
      * </ul>
      *

@@ -19692,6 +19692,50 @@ public class DSL {
         return new ArrayGet<>(array, index);
     }
 
+    /**
+     * The <code>ARRAY_CONCAT</code> function.
+     * <p>
+     * Concatenate two arrays.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    public static <T> Field<T[]> arrayConcat(T[] arg1, T[] arg2) {
+        return new ArrayConcat<>(Tools.field(arg1), Tools.field(arg2));
+    }
+
+    /**
+     * The <code>ARRAY_CONCAT</code> function.
+     * <p>
+     * Concatenate two arrays.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    public static <T> Field<T[]> arrayConcat(T[] arg1, Field<T[]> arg2) {
+        return new ArrayConcat<>(Tools.field(arg1), arg2);
+    }
+
+    /**
+     * The <code>ARRAY_CONCAT</code> function.
+     * <p>
+     * Concatenate two arrays.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    public static <T> Field<T[]> arrayConcat(Field<T[]> arg1, T[] arg2) {
+        return new ArrayConcat<>(arg1, Tools.field(arg2, arg1));
+    }
+
+    /**
+     * The <code>ARRAY_CONCAT</code> function.
+     * <p>
+     * Concatenate two arrays.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    public static <T> Field<T[]> arrayConcat(Field<T[]> arg1, Field<T[]> arg2) {
+        return new ArrayConcat<>(arg1, arg2);
+    }
+
     // -------------------------------------------------------------------------
     // Utility functions
     // -------------------------------------------------------------------------

@@ -4701,6 +4701,20 @@ public final class QOM {
     }
 
     /**
+     * The <code>ARRAY CONCAT</code> function.
+     * <p>
+     * Concatenate two arrays.
+     */
+    public /*sealed*/ interface ArrayConcat<T>
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<T[]>, Field<T[]>, Field<T[]>>,
+            org.jooq.Field<T[]>
+        //permits
+        //    ArrayConcat
+    {}
+
+    /**
      * The <code>NVL</code> function.
      * <p>
      * Return the first non-null argument.

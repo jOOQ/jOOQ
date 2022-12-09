@@ -7747,9 +7747,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         if (r instanceof Field)
             while (parseIf("||"))
-                r = concat((Field) r, toField(parseCollated()));
+                r = concatOperator((Field) r, toField(parseCollated()));
 
         return r;
+    }
+
+    private final Field<?> concatOperator(Field<?> a1, Field<?> a2) {
+        if (a1.getDataType().isArray() && a2.getDataType().isArray())
+            return DSL.arrayConcat((Field) a1, (Field) a2);
+        else
+            return DSL.concat(a1, a2);
     }
 
     private final FieldOrRow parseCollated() {

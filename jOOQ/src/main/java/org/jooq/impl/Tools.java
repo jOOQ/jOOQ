@@ -5802,6 +5802,17 @@ final class Tools {
         return field instanceof Coerce ? ((Coerce<?>) field).field : field;
     }
 
+    static final <R extends Record> Table<R> unwrap(Table<R> table) {
+        Table<R> r;
+
+        if (table instanceof AbstractDelegatingTable)
+            return unwrap(((AbstractDelegatingTable<R>) table).delegate);
+        else if ((r = unalias(table)) != table)
+            return unwrap(r);
+        else
+            return r;
+    }
+
     static final <R extends Record> Table<R> aliased(Table<R> table) {
         if (table instanceof TableImpl)
             return ((TableImpl<R>) table).getAliasedTable();

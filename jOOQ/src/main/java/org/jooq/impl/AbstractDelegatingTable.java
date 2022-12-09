@@ -58,7 +58,7 @@ abstract class AbstractDelegatingTable<R extends Record> extends AbstractTable<R
         this.delegate = delegate;
     }
 
-    abstract AbstractDelegatingTable<R> construct(AbstractTable<R> newDelegate);
+    abstract <O extends Record> AbstractDelegatingTable<O> construct(AbstractTable<O> newDelegate);
 
     @Override
     public final boolean declaresTables() {

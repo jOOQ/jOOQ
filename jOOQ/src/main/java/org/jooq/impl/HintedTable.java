@@ -40,13 +40,21 @@ package org.jooq.impl;
 import org.jooq.Context;
 import org.jooq.Keyword;
 import org.jooq.Name;
+import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.impl.QOM.UNotYetImplemented;
+// ...
+import org.jooq.Table;
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class HintedTable<R extends Record> extends AbstractDelegatingTable<R> implements UNotYetImplemented {
+final class HintedTable<R extends Record>
+extends
+    AbstractDelegatingTable<R>
+implements
+    QOM.HintedTable<R>
+{
 
     private final Keyword             keywords;
     private final QueryPartList<Name> arguments;
@@ -71,9 +79,13 @@ final class HintedTable<R extends Record> extends AbstractDelegatingTable<R> imp
     }
 
     @Override
-    final AbstractDelegatingTable<R> construct(AbstractTable<R> newDelegate) {
-        return new HintedTable<R>(newDelegate, keywords, arguments);
+    final <O extends Record> HintedTable<O> construct(AbstractTable<O> newDelegate) {
+        return new HintedTable<>(newDelegate, keywords, arguments);
     }
+
+    // ------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // ------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -82,4 +94,37 @@ final class HintedTable<R extends Record> extends AbstractDelegatingTable<R> imp
             .sql(" (").visit(arguments)
             .sql(')');
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+
+    @Override
+    public final Table<R> $table() {
+        return delegate;
+    }
+
+    @Override
+    public final <O extends Record> HintedTable<O> $table(Table<O> newTable) {
+        return construct((AbstractTable<O>) newTable);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

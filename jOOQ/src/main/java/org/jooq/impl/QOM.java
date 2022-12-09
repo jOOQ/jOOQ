@@ -611,6 +611,12 @@ public final class QOM {
 
 
 
+
+
+
+
+
+
     public interface HintedTable<R extends Record> extends Table<R> {
         @NotNull Table<R> $table();
         @NotNull <O extends Record> HintedTable<O> $table(Table<O> newTable);

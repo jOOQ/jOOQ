@@ -79,6 +79,7 @@ import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.anyValue;
 import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.arrayAggDistinct;
+import static org.jooq.impl.DSL.arrayConcat;
 import static org.jooq.impl.DSL.arrayGet;
 import static org.jooq.impl.DSL.ascii;
 import static org.jooq.impl.DSL.asin;
@@ -8345,6 +8346,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFieldAddDatePart(SECOND);
                 else if (parseFunctionNameIf("ARRAY_GET"))
                     return parseFunctionArgs2((f1, f2) -> arrayGet(f1, f2));
+                else if (parseFunctionNameIf("ARRAY_CAT", "ARRAY_CONCAT"))
+                    return parseFunctionArgs2((f1, f2) -> arrayConcat(f1, f2));
 
                 break;
 

@@ -41,16 +41,13 @@ import org.jooq.Context;
 import org.jooq.Keyword;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Table;
-import org.jooq.impl.QOM.Aliasable;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder
  */
-final class HintedTable<R extends Record> extends AbstractTable<R> implements UNotYetImplemented {
+final class HintedTable<R extends Record> extends AbstractDelegatingTable<R> implements UNotYetImplemented {
 
-    private final AbstractTable<R>    delegate;
     private final Keyword             keywords;
     private final QueryPartList<Name> arguments;
 
@@ -67,16 +64,15 @@ final class HintedTable<R extends Record> extends AbstractTable<R> implements UN
     }
 
     HintedTable(AbstractTable<R> delegate, Keyword keywords, QueryPartList<Name> arguments) {
-        super(delegate.getOptions(), delegate.getQualifiedName(), delegate.getSchema());
+        super(delegate);
 
-        this.delegate = delegate;
         this.keywords = keywords;
         this.arguments = arguments;
     }
 
     @Override
-    public final boolean declaresTables() {
-        return true;
+    final AbstractDelegatingTable<R> construct(AbstractTable<R> newDelegate) {
+        return new HintedTable<R>(newDelegate, keywords, arguments);
     }
 
     @Override
@@ -85,39 +81,5 @@ final class HintedTable<R extends Record> extends AbstractTable<R> implements UN
             .sql(' ').visit(keywords)
             .sql(" (").visit(arguments)
             .sql(')');
-    }
-
-    @Override
-    public final Class<? extends R> getRecordType() {
-        return delegate.getRecordType();
-    }
-
-    @Override
-    public final Table<R> as(Name alias) {
-        return new HintedTable<>(new TableAlias<>(delegate, alias), keywords, arguments);
-    }
-
-    @Override
-    public final Table<R> as(Name alias, Name... fieldAliases) {
-        return new HintedTable<>(new TableAlias<>(delegate, alias, fieldAliases), keywords, arguments);
-    }
-
-    @Override
-    final FieldsImpl<R> fields0() {
-        return delegate.fields0();
-    }
-
-    // -------------------------------------------------------------------------
-    // XXX: Query Object Model
-    // -------------------------------------------------------------------------
-
-    @Override
-    public final Table<R> $aliased() {
-        return new HintedTable<R>((AbstractTable<R>) ((Aliasable<Table<R>>) delegate).$aliased(), keywords, arguments);
-    }
-
-    @Override
-    public final Name $alias() {
-        return ((Aliasable<Table<R>>) delegate).$alias();
     }
 }

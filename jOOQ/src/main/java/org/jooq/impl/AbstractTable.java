@@ -64,6 +64,7 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.traverseJoins;
+import static org.jooq.impl.Tools.unwrap;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -598,17 +599,10 @@ implements
 
         for (ForeignKey<R, ?> reference : getReferences()) {
             traverseJoins(other, o -> {
-                if (o.equals(reference.getKey().getTable())) {
+
+                // [#1460] [#6304] [#14387] In case the other table was aliased or otherwise wrapped
+                if (unwrap(o).equals(reference.getKey().getTable()))
                     result.add((ForeignKey<R, O>) reference);
-                }
-
-                // [#1460] [#6304] In case the other table was aliased
-                else {
-                    Table<?> aliased = Tools.aliased(o);
-
-                    if (aliased != null && aliased.equals(reference.getKey().getTable()))
-                        result.add((ForeignKey<R, O>) reference);
-                }
             });
         }
 

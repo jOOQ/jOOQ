@@ -239,10 +239,18 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array_cat(anyarray, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1, 2, 3, 4, 5} = array_cat(ARRAY[1, 2], ARRAY[3, 4, 5])
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.16.0 - [#14388] - Use
+     *             {@link DSL#arrayConcat(Object[], Object[])} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayCat(T[] array1, T[] array2) {
@@ -255,7 +263,11 @@ public class PostgresDSL extends DSL {
      * Example: <pre><code>
      * {1, 2, 3, 4, 5} = array_cat(ARRAY[1, 2], ARRAY[3, 4, 5])
      * </code></pre>
+     *
+     * @deprecated - 3.16.0 - [#14388] - Use
+     *             {@link DSL#arrayConcat(Object[], Field)} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayCat(T[] array1, Field<T[]> array2) {
@@ -268,7 +280,11 @@ public class PostgresDSL extends DSL {
      * Example: <pre><code>
      * {1, 2, 3, 4, 5} = array_cat(ARRAY[1, 2], ARRAY[3, 4, 5])
      * </code></pre>
+     *
+     * @deprecated - 3.16.0 - [#14388] - Use
+     *             {@link DSL#arrayConcat(Field, Object[])} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayCat(Field<T[]> array1, T[] array2) {
@@ -281,7 +297,11 @@ public class PostgresDSL extends DSL {
      * Example: <pre><code>
      * {1, 2, 3, 4, 5} = array_cat(ARRAY[1, 2], ARRAY[3, 4, 5])
      * </code></pre>
+     *
+     * @deprecated - 3.16.0 - [#14388] - Use
+     *             {@link DSL#arrayConcat(Field, Field)} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayCat(Field<T[]> array1, Field<T[]> array2) {

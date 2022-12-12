@@ -46,6 +46,8 @@ import org.jooq.Record;
 import org.jooq.Table;
 // ...
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Lukas Eder
  */

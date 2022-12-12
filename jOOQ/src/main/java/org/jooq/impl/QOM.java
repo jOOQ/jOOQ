@@ -64,6 +64,7 @@ import org.jooq.CheckReturnValue;
 import org.jooq.Collation;
 import org.jooq.Comment;
 import org.jooq.CommonTableExpression;
+import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Constraint;
 import org.jooq.DDLQuery;
@@ -106,6 +107,7 @@ import org.jooq.JSONEntry;
 import org.jooq.Keyword;
 // ...
 import org.jooq.Name;
+import org.jooq.Operator;
 import org.jooq.OrderField;
 import org.jooq.Param;
 import org.jooq.Parameter;
@@ -242,11 +244,26 @@ public final class QOM {
         permits
             TupleImpl2
     {
+
+        /**
+         * The first value in the tuple.
+         */
         @NotNull Q1 $1();
+
+        /**
+         * The second value in the tuple.
+         */
         @NotNull Q2 $2();
 
+        /**
+         * Set the first value in the tuple.
+         */
         @CheckReturnValue
         @NotNull Tuple2<Q1, Q2> $1(Q1 newPart1);
+
+        /**
+         * Set the second value in the tuple.
+         */
         @CheckReturnValue
         @NotNull Tuple2<Q1, Q2> $2(Q2 newPart2);
     }
@@ -261,6 +278,10 @@ public final class QOM {
         permits
             AbstractQueryPartMap
     {
+
+        /**
+         * Get the {@link #entrySet()} of this map as a list of tuples.
+         */
         @NotNull UnmodifiableList<Tuple2<K, V>> $tuples();
     }
 
@@ -290,6 +311,9 @@ public final class QOM {
         // TODO: These methods could return unmodifiable views instead, to avoid
         //       copying things around...
 
+        /**
+         * Collect the contents of this list using a {@link Collector}.
+         */
         default <R> R $collect(Collector<Q, ?, R> collector) {
             return stream().collect(collector);
         }
@@ -404,6 +428,10 @@ public final class QOM {
         }
     }
 
+    /**
+     * A <code>WITH</code> clause of a {@link Select}, {@link Insert},
+     * {@link Update}, or {@link Delete} statement.
+     */
     public /*sealed*/ interface With
         extends
             org.jooq.QueryPart
@@ -414,11 +442,23 @@ public final class QOM {
         boolean $recursive();
     }
 
+    /**
+     * A {@link QueryPart} that may associate an {@link #$alias()} with the
+     * {@link #$aliased()} part.
+     */
     public interface Aliasable<Q extends org.jooq.QueryPart>
         extends
             org.jooq.QueryPart
     {
+
+        /**
+         * The aliased part (a {@link Field} or a {@link Table}).
+         */
         @NotNull Q $aliased();
+
+        /**
+         * The alias if any.
+         */
         @Nullable Name $alias();
     }
 
@@ -426,6 +466,9 @@ public final class QOM {
     // XXX: Queries
     // -------------------------------------------------------------------------
 
+    /**
+     * The <code>INSERT</code> statement.
+     */
     public sealed interface Insert<R extends Record>
         extends
             DMLQuery<R>
@@ -470,6 +513,9 @@ public final class QOM {
         @NotNull  Insert<?> $updateWhere(Condition where);
     }
 
+    /**
+     * An <code>INSERT</code> statement with a <code>RETURNING</code> clause.
+     */
     public sealed interface InsertReturning<R extends Record>
         extends
             ResultQuery<R>
@@ -484,6 +530,9 @@ public final class QOM {
         @NotNull InsertReturning<?> $returning(Collection<? extends SelectFieldOrAsterisk> returning);
     }
 
+    /**
+     * The <code>UPDATE</code> statement.
+     */
     public sealed interface Update<R extends Record>
         extends
             DMLQuery<R>
@@ -512,6 +561,9 @@ public final class QOM {
         @NotNull  Update<R> $limit(Field<? extends Number> limit);
     }
 
+    /**
+     * An <code>UPDATE</code> statement with a <code>RETURNING</code> clause.
+     */
     public sealed interface UpdateReturning<R extends Record>
         extends
             ResultQuery<R>
@@ -526,6 +578,9 @@ public final class QOM {
         @NotNull UpdateReturning<?> $returning(Collection<? extends SelectFieldOrAsterisk> returning);
     }
 
+    /**
+     * The <code>DELETE</code> statement.
+     */
     public sealed interface Delete<R extends Record>
         extends
             DMLQuery<R>
@@ -551,6 +606,9 @@ public final class QOM {
         @NotNull  Delete<R> $limit(Field<? extends Number> limit);
     }
 
+    /**
+     * An <code>DELETE</code> statement with a <code>RETURNING</code> clause.
+     */
     public sealed interface DeleteReturning<R extends Record>
         extends
             ResultQuery<R>
@@ -565,6 +623,9 @@ public final class QOM {
         @NotNull DeleteReturning<?> $returning(Collection<? extends SelectFieldOrAsterisk> returning);
     }
 
+    /**
+     * The <code>CREATE TYPE</code> statement.
+     */
     public /*sealed*/ interface CreateType
         extends
             DDLQuery
@@ -575,6 +636,9 @@ public final class QOM {
         @NotNull UnmodifiableList<? extends Field<String>> $values();
     }
 
+    /**
+     * The <code>DROP TYPE</code> statement.
+     */
     public /*sealed*/ interface DropType
         extends
             DDLQuery
@@ -586,6 +650,9 @@ public final class QOM {
         @Nullable Cascade $cascade();
     }
 
+    /**
+     * The <code>CREATE VIEW</code> statement.
+     */
     public /*sealed*/ interface CreateView<R extends Record>
         extends
             DDLQuery
@@ -617,8 +684,40 @@ public final class QOM {
 
 
 
-    public interface HintedTable<R extends Record> extends Table<R> {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * A table with a MySQL style index access hint.
+     */
+    public sealed interface HintedTable<R extends Record>
+        extends
+            Table<R>
+        permits
+            org.jooq.impl.HintedTable
+    {
         @NotNull Table<R> $table();
+        @CheckReturnValue
         @NotNull <O extends Record> HintedTable<O> $table(Table<O> newTable);
     }
 
@@ -720,6 +819,10 @@ public final class QOM {
     // XXX: Conditions
     // -------------------------------------------------------------------------
 
+    /**
+     * A {@link Condition} consisting of two {@link Condition} operands and a
+     * binary logic {@link Operator}.
+     */
     public /*sealed*/ interface CombinedCondition
         extends
             Condition,
@@ -729,6 +832,10 @@ public final class QOM {
             MOr*/
     {}
 
+    /**
+     * A {@link Condition} consisting of two {@link Field} operands and a
+     * {@link Comparator} operator.
+     */
     public /*sealed*/ interface CompareCondition<T>
         extends
             Condition,
@@ -750,6 +857,9 @@ public final class QOM {
             MEndsWithIgnoreCase*/
     {}
 
+    /**
+     * The <code>BETWEEN</code> predicate.
+     */
     public interface Between<T>
         extends
             Condition,
@@ -759,6 +869,9 @@ public final class QOM {
         @NotNull Between<T> $symmetric(boolean symmetric);
     }
 
+    /**
+     * The <code>IN</code> predicate accepting a list of values.
+     */
     public /*sealed*/ interface InList<T>
         extends
             Condition,
@@ -770,6 +883,9 @@ public final class QOM {
         @NotNull default UnmodifiableList<? extends Field<T>> $list() { return $arg2(); }
     }
 
+    /**
+     * The <code>NOT IN</code> predicate accepting a list of values.
+     */
     public /*sealed*/ interface NotInList<T>
         extends
             Condition,

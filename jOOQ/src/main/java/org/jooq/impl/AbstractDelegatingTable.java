@@ -48,7 +48,10 @@ import org.jooq.impl.QOM.Aliasable;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractDelegatingTable<R extends Record> extends AbstractTable<R> {
+abstract class AbstractDelegatingTable<R extends Record>
+extends
+    AbstractTable<R>
+{
 
     final AbstractTable<R> delegate;
 
